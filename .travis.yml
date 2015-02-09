@@ -20,3 +20,5 @@ deploy:
   app: fr-staff-app
   on:
     repo: ministryofjustice/fr-staffapp
+  run:
+  - "rake db:migrate"
