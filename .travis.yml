@@ -1,6 +1,4 @@
 language: ruby
-env:
-  global:
 rvm:
 - 2.1.5
 before_install:
@@ -9,6 +7,8 @@ before_script:
 - psql -c 'create role fr login createdb;' -U postgres
 addons:
   postgresql: 9.3
+  code_climate:
+    repo_token: 9d2abe9e2bdfe62892cf37ae25ff3e825b07dad9401025adcb6f387ac82a35a8
 script:
 - bundle exec rake db:create
 - bundle exec rake db:migrate
