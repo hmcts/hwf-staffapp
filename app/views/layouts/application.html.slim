@@ -1,0 +1,21 @@
+doctype html
+html[lang="en"]
+  head
+    meta[charset="utf-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      = content_for?(:title) ? yield(:title) : "Fee remission staff app"
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "vendor/modernizr"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  body
+    div.row
+      div.large-8.columns
+        h1 Fee remission staff app
+      div.large-2.columns
+        - if user_signed_in?
+          |connected as #{current_user.email} #{link_to 'sign out', destroy_user_session_path, :method => :delete}
+        - else
+          = link_to 'Sign in', new_user_session_path
+    = yield
