@@ -1,5 +1,8 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe "home/index.html.slim", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should contain our header' do
+    render
+    expect(rendered).to include('Your home page here')
+  end
 end
