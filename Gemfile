@@ -8,6 +8,8 @@ gem 'pg'
 
 # authentication
 gem 'devise'
+#roles
+gem 'cancancan', '~> 1.10'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
