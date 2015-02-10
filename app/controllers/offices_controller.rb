@@ -1,5 +1,7 @@
 class OfficesController < ApplicationController
 
+  before_action :set_office, only: [:show, :edit, :update, :destroy]
+
   load_and_authorize_resource
 
   respond_to :html
@@ -14,6 +16,9 @@ class OfficesController < ApplicationController
   end
 
   def new
+    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+    
+    @office = Office.new
     respond_with(@office)
   end
 
@@ -36,6 +41,11 @@ class OfficesController < ApplicationController
   end
 
   private
+    def set_office
+      @office = Office.find(params[:id])
+    end
+
+
     def office_params
       params.require(:office).permit(:name)
     end

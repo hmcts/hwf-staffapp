@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe User, :type => :model do
 
-  let(:user)      { FactoryGirl.build :user }
+  let(:user)          { FactoryGirl.build :user }
+  let(:admin_user)    { FactoryGirl.build :admin_user }
 
   it 'should pass factory build' do
     expect(user).to be_valid
@@ -44,5 +45,17 @@ describe User, :type => :model do
       expect(user.errors[:role]).to eq ["student is not a valid role"]
     end
 
+  end
+
+
+
+  describe '@admin?' do
+    it 'should resond true if admin user' do
+      expect(admin_user.admin?).to be true
+    end
+
+    it 'should respond false if not admin user' do
+      expect(user.admin?).to be false
+    end
   end
 end
