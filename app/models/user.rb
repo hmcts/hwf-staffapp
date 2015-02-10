@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
           # :rememberable, 
           :trackable, 
           :validatable
+
+  validates_format_of :email, :with => Devise::email_regexp
 end
