@@ -1,10 +1,11 @@
 class OfficesController < ApplicationController
-  before_action :set_office, only: [:show, :edit, :update, :destroy]
+
+  load_and_authorize_resource
 
   respond_to :html
 
   def index
-    @offices = Office.all
+    @offices = Office.sorted
     respond_with(@offices)
   end
 
@@ -13,7 +14,6 @@ class OfficesController < ApplicationController
   end
 
   def new
-    @office = Office.new
     respond_with(@office)
   end
 
@@ -21,7 +21,6 @@ class OfficesController < ApplicationController
   end
 
   def create
-    @office = Office.new(office_params)
     @office.save
     respond_with(@office)
   end
@@ -37,10 +36,6 @@ class OfficesController < ApplicationController
   end
 
   private
-    def set_office
-      @office = Office.find(params[:id])
-    end
-
     def office_params
       params.require(:office).permit(:name)
     end

@@ -1,5 +1,5 @@
 class Office < ActiveRecord::Base
 
-  # scope :sorted 
+  scope :sorted, -> {  all.order(:name) }
 
 end
