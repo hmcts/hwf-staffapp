@@ -1,0 +1,21 @@
+h1 Listing offices
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @offices.each do |office|
+      tr
+        td = office.name
+        td = link_to 'Show', office
+        td = link_to 'Edit', edit_office_path(office)
+        td = link_to 'Destroy', office, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Office', new_office_path

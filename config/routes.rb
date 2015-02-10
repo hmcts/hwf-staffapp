@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :offices
+
   root to: 'home#index'
 
   get 'home/index'
