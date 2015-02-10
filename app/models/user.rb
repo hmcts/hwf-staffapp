@@ -14,5 +14,10 @@ class User < ActiveRecord::Base
 
   validates :role, presence: true
   validates :role, inclusion: { in: ROLES, message: "%{value} is not a valid role", allow_nil: true }
+
+
+  def admin?
+    self.role == 'admin'
+  end
 end
 
