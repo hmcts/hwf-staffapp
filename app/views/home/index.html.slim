@@ -1,0 +1,8 @@
+div.row
+  div.large-8.columns
+    h1 Fee remission staff app
+  div.large-2.columns
+    - if user_signed_in?
+      |connected as #{current_user.email} #{link_to 'sign out', destroy_user_session_path, :method => :delete}
+    - else
+      = link_to 'Sign in', new_user_session_path
