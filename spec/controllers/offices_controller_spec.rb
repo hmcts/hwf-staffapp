@@ -20,6 +20,9 @@ require 'rails_helper'
 
 RSpec.describe OfficesController, type: :controller do
 
+  include Devise::TestHelpers
+
+
   # This should return the minimal set of attributes required to create a valid
   # Office. As you add validations to Office, be sure to
   # adjust the attributes here as well.
@@ -35,6 +38,10 @@ RSpec.describe OfficesController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # OfficesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+
+  let(:user)          { FactoryGirl.create :user }
+  let(:admin_user)    { FactoryGirl.create :admin_user }
 
   describe "GET #index" do
     it "assigns all offices as @offices" do
@@ -54,8 +61,16 @@ RSpec.describe OfficesController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new office as @office" do
+      sign_in admin_user
       get :new, {}, valid_session
       expect(assigns(:office)).to be_a_new(Office)
+    end
+
+    it 'raises if user not admin' do
+      sign_in user
+      expect {
+        get :new, {}, valid_session
+      }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
     end
   end
 

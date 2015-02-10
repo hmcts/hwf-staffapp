@@ -16,8 +16,6 @@ class OfficesController < ApplicationController
   end
 
   def new
-    puts "++++++ DEBUG notice ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-    
     @office = Office.new
     respond_with(@office)
   end
