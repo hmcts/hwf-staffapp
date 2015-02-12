@@ -47,20 +47,20 @@ RSpec.describe OfficesController, type: :controller do
     describe "GET #index" do
       it "redirects to login page" do
         get :index, {}, valid_session
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to(user_session_path)
       end
     end
     describe "GET #show" do
       it "redirects to login page" do
         office = Office.create! valid_attributes
         get :show, {:id => office.to_param}, valid_session
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to(user_session_path)
       end
     end
     describe "GET #new" do
       it "redirects to login page" do
         get :index, {}, valid_session
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to(user_session_path)
       end
     end
   end
