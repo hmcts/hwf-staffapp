@@ -26,6 +26,7 @@ class OfficesController < ApplicationController
   def create
     @office.save
     respond_with(@office)
+    flash[:notice] = 'Office was successfully created'
   end
 
   def update
