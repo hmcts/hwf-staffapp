@@ -18,4 +18,4 @@ table
 
 br
 
-= link_to 'New Office', new_office_path
+= link_to 'New Office', new_office_path if can? :create, :office
