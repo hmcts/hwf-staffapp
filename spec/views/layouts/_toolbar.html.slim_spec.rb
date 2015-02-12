@@ -14,27 +14,27 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
   context 'logged out user' do
 
-    it 'should not show offices' do
+    it 'should not see offices' do
       render
       expect(rendered).to_not include('Offices')
     end
 
-    it 'should not show admin' do
+    it 'should not see admin' do
       render
       expect(rendered).to_not include('Admin')
     end
   end
 
-  context 'logged in as user' do
+  context 'logged in user' do
 
     before(:each) { sign_in user }
 
-    it 'should not offices' do
+    it 'should see offices' do
       render
       expect(rendered).to  include('Offices')
     end
 
-    it 'should show not admin' do
+    it 'should not see admin' do
       render
       expect(rendered).to_not include('Admin')
     end
@@ -43,12 +43,12 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
     before(:each) { sign_in admin_user }
 
-    it 'should show offices' do
+    it 'should see offices' do
       render
       expect(rendered).to include('Offices')
     end
 
-    it 'should show not admin' do
+    it 'should see admin' do
       render
       expect(rendered).to include('Admin')
     end
