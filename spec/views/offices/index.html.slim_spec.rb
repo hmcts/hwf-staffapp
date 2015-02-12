@@ -21,9 +21,15 @@ RSpec.describe "offices/index", type: :view do
 
     before(:each) { sign_in user }
 
-    it 'does not see New Office link' do
+    it 'should not see the New Office link' do
       render
-      expect(rendered).to_not include('New Office')
+      expect(rendered).to_not have_link('New Office', href: new_office_path)
+    end
+
+    it 'should not see the edit or destroy links' do
+      render
+      expect(rendered).to_not have_css('a', :text => 'Edit')
+      expect(rendered).to_not have_css('a', :text => 'Destroy')
     end
   end
 
@@ -31,9 +37,15 @@ RSpec.describe "offices/index", type: :view do
 
     before(:each) { sign_in admin_user }
 
-    it 'sees New office list' do
+    it 'should see the New office link' do
       render
-      expect(rendered).to include('New Office')
+      expect(rendered).to have_link('New Office', href: new_office_path)
+    end
+
+    it 'should see the edit and destroy links' do
+      render
+      expect(rendered).to have_css('a', :text => 'Edit', count: 2)
+      expect(rendered).to have_css('a', :text => 'Destroy', count: 2)
     end
 
   end
