@@ -1,6 +1,6 @@
 h2
   = t "devise.invitations.new.header"
-= form_for resource, as: resource_name, url: user_invitation_path(resource_name), html: {:method => :post} do |f|
+= form_for resource, as: resource_name, url: user_invitation_path, html: {:method => :post} do |f|
   = devise_error_messages!
   - resource.class.invite_key_fields.each do |field|
     p
