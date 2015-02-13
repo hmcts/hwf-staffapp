@@ -1,7 +1,7 @@
 class Users::InvitationsController < Devise::InvitationsController
   respond_to :html
   before_action :authenticate_user!
-  load_and_authorize_resource class: User
+  load_and_authorize_resource User
 
   private
 
