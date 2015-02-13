@@ -1,4 +1,6 @@
 class Users::InvitationsController < Devise::InvitationsController
+  respond_to :html
+
   private
 
   def invite_resource
