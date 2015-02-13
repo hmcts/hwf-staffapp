@@ -1,0 +1,15 @@
+h2
+  = t "devise.invitations.new.header"
+= form_for resource, as: resource_name, url: user_invitation_path(resource_name), html: {:method => :post} do |f|
+  = devise_error_messages!
+  - resource.class.invite_key_fields.each do |field|
+    p
+      = f.label field
+      br
+      = f.text_field field
+    p
+  .form-group
+    = f.label(:roles, 'Role')
+    = f.collection_select :role, User::ROLES, :to_s, :humanize
+  p
+    = f.submit t("devise.invitations.new.submit_button")
