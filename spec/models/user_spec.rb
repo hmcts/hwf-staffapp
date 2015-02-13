@@ -21,8 +21,7 @@ describe User, :type => :model do
     end
 
     it 'should require a unique email' do
-
-      user1     = FactoryGirl.create(:user)
+      FactoryGirl.create(:user)
       duplicate = FactoryGirl.build(:user)
       expect(duplicate).to be_invalid
     end
@@ -38,16 +37,12 @@ describe User, :type => :model do
       expect(user.errors[:role]).to eq ["can't be blank"]
     end
 
-
     it 'should require a valid role' do
       user.role = 'student'
       expect(user).to be_invalid
       expect(user.errors[:role]).to eq ["student is not a valid role"]
     end
-
   end
-
-
 
   describe '@admin?' do
     it 'should resond true if admin user' do
