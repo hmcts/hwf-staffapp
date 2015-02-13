@@ -7,6 +7,7 @@ gem 'pg'
 
 # authentication
 gem 'devise'
+gem 'devise_invitable'
 #roles
 gem 'cancancan', '~> 1.10'
 
