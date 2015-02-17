@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   scope :sorted_by_email, -> {  all.order(:email) }
 
+  validates_format_of :email, :with => Devise::email_regexp
+
   validates :email, format: Devise.email_regexp
 
   validates :role, presence: true
