@@ -14,42 +14,45 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
   context 'logged out user' do
 
+    before(:each) { render }
+
+
     it 'should not see offices' do
-      render
       expect(rendered).to_not include('Offices')
     end
 
     it 'should not see admin' do
-      render
       expect(rendered).to_not include('Admin')
     end
   end
 
   context 'logged in user' do
 
-    before(:each) { sign_in user }
+    before(:each) do
+      sign_in user
+      render
+    end
 
     it 'should see offices' do
-      render
       expect(rendered).to  include('Offices')
     end
 
     it 'should not see admin' do
-      render
       expect(rendered).to_not include('Users')
     end
   end
   context 'logged in as admin' do
 
-    before(:each) { sign_in admin_user }
+    before(:each) do
+      sign_in admin_user
+      render
+    end
 
     it 'should see offices' do
-      render
       expect(rendered).to include('Offices')
     end
 
     it 'should see admin' do
-      render
       expect(rendered).to include('Users')
     end
   end
