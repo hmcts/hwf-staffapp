@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
           :recoverable, 
           # :rememberable, 
           :trackable, 
-          :validatable
+          :validatable,
+          :invitable
 
   validates_format_of :email, :with => Devise::email_regexp
 

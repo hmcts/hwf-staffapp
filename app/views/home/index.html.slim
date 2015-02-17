@@ -1,1 +1,8 @@
 h2 Dashboard
+-if current_user.present?
+  -if current_user.admin?
+    |Show admin dashboard with whizzy graphs and informative stuff here.
+  -else
+    |Show users their outstanding work here.
+-else
+  |This system is restricted to authorised staff only, please contact #{link_to 'support', 'mailto:support@admin.com'} if you feel you should have access.

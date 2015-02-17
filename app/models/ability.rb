@@ -35,7 +35,7 @@ class Ability
     if user.admin?
       can :manage, :all
     else
-      can :read, :all
+      can :read, Office
     end
   end
 end

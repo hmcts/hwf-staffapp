@@ -36,7 +36,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
     it 'should not see admin' do
       render
-      expect(rendered).to_not include('Admin')
+      expect(rendered).to_not include('Users')
     end
   end
   context 'logged in as admin' do
@@ -50,7 +50,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
     it 'should see admin' do
       render
-      expect(rendered).to include('Admin')
+      expect(rendered).to include('Users')
     end
   end
 end
