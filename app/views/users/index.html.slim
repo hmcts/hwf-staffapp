@@ -1,0 +1,27 @@
+h2 List users
+
+table
+  tr
+    th email
+    th Role
+    th &nbsp;
+
+  -@users.each do |user|
+    tr
+      td
+        = link_to user_path(user) do
+          =user.email
+      td
+        =user.role
+      td
+        ul.small-block-grid-2
+          li
+            =link_to edit_user_path(user) do
+              i.fi-pencil
+          li
+            =link_to user_path(user), method: :delete do
+              i.fi-x
+
+=link_to new_user_invitation_path do
+  i.fi-plus
+  |Invite new user

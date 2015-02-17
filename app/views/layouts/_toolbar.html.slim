@@ -10,11 +10,13 @@ nav.top-bar data-topbar='' role='navigation'
     - if current_user
       -if current_user.admin?
         ul.right
-          li.has-dropdown
-            =link_to 'Admin', '#'
-            ul.dropdown
-              li
-                =link_to 'Users', '#'
+          /li.has-dropdown
+          /  =link_to 'Admin', '#'
+          /  ul.dropdown
+          /   li
+          /     =link_to 'Users', users_path
+          li
+            = link_to 'Users', users_path
       ul.left
         li
-          =link_to 'Offices', offices_path
+          = link_to 'Offices', offices_path
