@@ -1,5 +1,5 @@
 class OfficesController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :set_office, only: [:show, :edit, :update, :destroy]
 
   load_and_authorize_resource
@@ -26,6 +26,7 @@ class OfficesController < ApplicationController
   def create
     @office.save
     respond_with(@office)
+    flash[:notice] = 'Office was successfully created'
   end
 
   def update

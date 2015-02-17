@@ -7,12 +7,14 @@ nav.top-bar data-topbar='' role='navigation'
 
 
   section.top-bar-section
-    ul.right
-      li.has-dropdown
-        =link_to 'Admin', '#'
-        ul.dropdown
-          li
-            =link_to 'Users', '#'
-    ul.left
-      li
-        =link_to 'Offices', offices_path
+    - if current_user
+      -if current_user.admin?
+        ul.right
+          li.has-dropdown
+            =link_to 'Admin', '#'
+            ul.dropdown
+              li
+                =link_to 'Users', '#'
+      ul.left
+        li
+          =link_to 'Offices', offices_path
