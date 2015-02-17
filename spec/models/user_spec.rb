@@ -21,8 +21,9 @@ describe User, :type => :model do
     end
 
     it 'should require a unique email' do
-      FactoryGirl.create(:user)
+      original = FactoryGirl.create(:user)
       duplicate = FactoryGirl.build(:user)
+      duplicate.email = original.email
       expect(duplicate).to be_invalid
     end
 
