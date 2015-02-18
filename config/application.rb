@@ -33,8 +33,5 @@ module FrStaffapp
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/scrapers #{config.root}/lib)
-
-    #precompile the font assets for heroku deployment
-    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   end
 end
