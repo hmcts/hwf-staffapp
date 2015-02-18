@@ -13,15 +13,7 @@ table
           =user.email
       td
         =user.role
-      td
-        ul.small-block-grid-2
-          li
-            =link_to edit_user_path(user) do
-              i.fi-pencil
-          li
-            =link_to user_path(user), method: :delete do
-              i.fi-x
+      td =link_to 'Edit', edit_user_path(user)
+      td =link_to 'Destroy', user_path(user), method: :delete
 
-=link_to new_user_invitation_path do
-  i.fi-plus
-  |Invite new user
+=link_to 'Invite new user', new_user_invitation_path
