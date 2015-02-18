@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'dwp_checker/index'
+  get 'dwp_checker' => 'dwp_checker#index'
   post 'dwp_checker/lookup'
 
   resources :offices
