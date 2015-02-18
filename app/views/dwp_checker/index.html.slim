@@ -1,0 +1,24 @@
+h2 DWP Checker
+
+= form_for(@dwp_check, url: dwp_checker_lookup_path) do |f|
+  - if @dwp_check.errors.any?
+    #error_explanation
+      h3 = "#{pluralize(@dwp_check.errors.count, "error")} prevented this DWP check from being performed:"
+      ul
+        - @dwp_check.errors.full_messages.each do |message|
+          li = message
+  fieldset
+    .form-group
+      label.form-label for="ogd_name"  Last Name
+      = f.text_field :last_name, { class: 'form-control' }
+    .form-group
+      label.form-label for="ogd_acronym"  Date of Birth
+      = f.date_field :dob, { class: 'form-control' }
+    .form-group
+      label.form-label for="ni_number"  NI Number
+      = f.text_field :ni_number, { class: 'form-control' }
+    .form-group
+      label.form-label for="date_to_check"  Date fee paid
+      = f.date_field :date_to_check, { class: 'form-control' }
+    .form-group
+      = f.submit 'Check', :id => 'save', :class => 'button small success'

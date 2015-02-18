@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'dwp_checker/index'
+  post 'dwp_checker/lookup'
+
   resources :offices
 
   root to: 'home#index'
