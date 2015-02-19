@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe "dwp_checker/new.html.slim", type: :view do
+RSpec.describe "dwp_checks/new.html.slim", type: :view do
   include Devise::TestHelpers
 
   let(:user)          { FactoryGirl.create :user }

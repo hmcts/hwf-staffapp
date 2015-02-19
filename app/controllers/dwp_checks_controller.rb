@@ -1,4 +1,7 @@
-class DwpCheckerController < ApplicationController
+class DwpChecksController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
 
   respond_to :html
   before_action :get_dwp_check, only: [:show]
@@ -24,8 +27,10 @@ class DwpCheckerController < ApplicationController
       render action: :new
     end
   end
+
   def show
   end
+
   private
 
   def get_dwp_result
