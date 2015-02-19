@@ -6,5 +6,6 @@ FactoryGirl.define do
     date_to_check nil
     checked_by nil
     laa_code nil
+    unique_number nil
   end
 end

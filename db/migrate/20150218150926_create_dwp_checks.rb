@@ -7,6 +7,7 @@ class CreateDwpChecks < ActiveRecord::Migration
       t.date :date_to_check
       t.string :checked_by
       t.string :laa_code
+      t.string :unique_number
       t.timestamps null: false
     end
   end

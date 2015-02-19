@@ -31,5 +31,12 @@ RSpec.describe DwpCheck, type: :model do
       check.ni_number = 'wrong'
       expect(check).to be_invalid
     end
+
+    it 'should allow a unique number to be set' do
+      test_unique = FactoryGirl.create :dwp_check
+      expect(test_unique.unique_number).to_not be_nil
+      expect(test_unique.unique_number).to match(/[0-9a-fA-F]{4}[-][0-9a-fA-F]{4}/)
+      expect(test_unique).to be_valid
+    end
   end
 end

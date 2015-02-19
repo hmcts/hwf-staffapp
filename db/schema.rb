@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150218150926) do
     t.date     "date_to_check"
     t.string   "checked_by"
     t.string   "laa_code"
+    t.string   "unique_number"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
