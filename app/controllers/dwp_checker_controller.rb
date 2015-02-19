@@ -16,10 +16,10 @@ class DwpCheckerController < ApplicationController
         # render json: get_dwp_result(@dwp_check)
         respond_with(@dwp_check)
       else
-        render action: :index
+        render action: :new
       end
     else
-      render action: :index
+      render action: :new
     end
   end
 

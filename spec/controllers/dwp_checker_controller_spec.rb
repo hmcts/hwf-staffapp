@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe DwpCheckerController, type: :controller do
 
-  describe "GET #index" do
+  describe "GET #new" do
     it "returns http success" do
-      get :index
+      get :new
       expect(response).to have_http_status(:success)
     end
   end

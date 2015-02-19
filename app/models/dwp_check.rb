@@ -14,6 +14,13 @@ class DwpCheck < ActiveRecord::Base
     self[:unique_number].scan(/.{1,4}/).join('-')
   end
 
+  def ni_number=(val)
+    if val.nil?
+      self[:ni_number] = nil
+    else
+      self[:ni_number] = val.upcase if val.present?
+    end
+  end
   private
 
   def generate_unique_number
