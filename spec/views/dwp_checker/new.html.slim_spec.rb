@@ -8,7 +8,7 @@ RSpec.describe "dwp_checker/new.html.slim", type: :view do
 
   it 'should contain the required fields' do
     sign_in user
-    @dwp_check = check
+    @dwp_checker = check
     render
     assert_select 'form label', :text => 'Last Name'.to_s, :count => 1
     assert_select 'form label', :text => 'Date of Birth'.to_s, :count => 1
