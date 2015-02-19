@@ -1,5 +1,8 @@
 class DwpCheckerController < ApplicationController
-  def index
+
+  respond_to :html
+
+  def new
     @dwp_check = DwpCheck.new
   end
 
@@ -7,10 +10,14 @@ class DwpCheckerController < ApplicationController
     @dwp_check = DwpCheck.new(dwp_params)
 
     if @dwp_check.valid?
-      #todo create a new record
-      #Add current_user and generated unique ID
-
-      render json: get_dwp_result(@dwp_check)
+      @dwp_check.created_by_id = current_user.id
+      @dwp_check.benefits_valid = get_dwp_result(@dwp_check)
+      if @dwp_check.save
+        # render json: get_dwp_result(@dwp_check)
+        respond_with(@dwp_check)
+      else
+        render action: :index
+      end
     else
       render action: :index
     end
@@ -18,9 +25,11 @@ class DwpCheckerController < ApplicationController
 
   private
 
-  def get_dwp_result(params)
-    @results = "true #{params.inspect}"#todo create and call dwp lookup service
-    @results
+  def get_dwp_result(dwp_check)
+
+    #todo create and call dwp lookup service
+    #menawhile generate random true false response
+    [true, false].sample==true
   end
 
   def dwp_params

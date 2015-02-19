@@ -1,5 +1,7 @@
 class DwpCheck < ActiveRecord::Base
 
+  belongs_to :created_by, class_name: 'User'
+
   before_create :generate_unique_number
 
   validates :last_name, :dob, :ni_number, presence: true

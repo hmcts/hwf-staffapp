@@ -1,0 +1,20 @@
+h2 DWP Checker
+
+#result.callout class=(@dwp_check.benefits_valid ? 'callout-passed' : 'callout-failed')
+  span.number
+    = @dwp_check.benefits_valid ? '&#x2714; Correct benefits received'.html_safe : 'Benefits not received'
+
+#dwp_data
+  .row
+    .columns.large-4.medium-5.small-6 Last name
+    .columns.large-8.medium-7.small-6 =@dwp_check.last_name
+  .row
+    .columns.large-4.medium-5.small-6 Date of Birth
+    .columns.large-8.medium-7.small-6 =@dwp_check.dob.strftime("#{@dwp_check.dob.day.ordinalize} %B %Y")
+  .row
+    .columns.large-4.medium-5.small-6 National Insurance Number
+    .columns.large-8.medium-7.small-6 =@dwp_check.ni_number
+  - if @dwp_check.date_to_check.present?
+    .row
+      .columns.large-4.medium-5.small-6 Date fee paid
+      .columns.large-8.medium-7.small-6 =@dwp_check.date_to_check.strftime("#{@dwp_check.date_to_check.day.ordinalize} %B %Y")

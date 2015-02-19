@@ -38,5 +38,14 @@ RSpec.describe DwpCheck, type: :model do
       expect(test_unique.unique_number).to match(/[0-9a-fA-F]{4}[-][0-9a-fA-F]{4}/)
       expect(test_unique).to be_valid
     end
+
+    it 'should allow the created_by_id to be set' do
+      user = FactoryGirl.create :user
+      dwp = FactoryGirl.build :dwp_check
+      dwp.created_by_id = user.id
+      expect(dwp.created_by_id).to_not be_nil
+      expect(dwp.created_by.email).to eql(user.email)
+      expect(dwp).to be_valid
+    end
   end
 end

@@ -21,12 +21,16 @@ ActiveRecord::Schema.define(version: 20150218150926) do
     t.date     "dob"
     t.string   "ni_number"
     t.date     "date_to_check"
+    t.boolean  "benefits_valid"
     t.string   "checked_by"
     t.string   "laa_code"
     t.string   "unique_number"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "created_by_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
+
+  add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
 
   create_table "offices", force: :cascade do |t|
     t.string   "name"
