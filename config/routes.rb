@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
-  get 'dwp_checker' => 'dwp_checker#new'
+  get 'dwp_checker' => 'dwp_checker#new', as: 'new_dwp_checker'
   post 'dwp_checker/lookup'
+  get 'dwp_checker/:id' => 'dwp_checker#show', as: 'dwp_checker'
+
 
   resources :offices
 

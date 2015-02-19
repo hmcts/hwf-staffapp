@@ -1,11 +1,11 @@
 h2 DWP Checker
 
-= form_for(@dwp_check, url: dwp_checker_lookup_path) do |f|
-  - if @dwp_check.errors.any?
+= form_for(@dwp_checker, url: dwp_checker_lookup_path) do |f|
+  - if @dwp_checker.errors.any?
     #error_explanation
-      h3 = "#{pluralize(@dwp_check.errors.count, "error")} prevented this DWP check from being performed:"
+      h3 = "#{pluralize(@dwp_checker.errors.count, "error")} prevented this DWP check from being performed:"
       ul
-        - @dwp_check.errors.full_messages.each do |message|
+        - @dwp_checker.errors.full_messages.each do |message|
           li = message
   .form-group
     label.form-label for="ogd_name"  Last Name
