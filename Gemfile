@@ -10,7 +10,7 @@ gem 'pg'
 # authentication
 gem 'devise'
 gem 'devise_invitable'
-#roles
+# roles
 gem 'cancancan', '~> 1.10'
 
 # Use SCSS for stylesheets
@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-#template language
+# template language
 gem 'slim-rails'
 gem 'foundation-rails'
 
@@ -55,7 +55,7 @@ group :development, :test do
   gem 'spring'
 
   gem 'rspec-rails', '~> 3.0'
-  #in browser debugging
+  # in browser debugging
   gem 'better_errors'
   gem 'binding_of_caller'
 
@@ -72,7 +72,6 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
 end
 
-#heroku deployment
+# heroku deployment
 
 gem 'rails_12factor', group: :production
-

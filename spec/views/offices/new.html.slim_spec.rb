@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "offices/new", type: :view do
   before(:each) do
-    assign(:office, Office.new(
-      :name => "MyString"
-    ))
+    assign(
+      :office,
+      Office.new(
+        name: "MyString"
+      )
+    )
   end
 
   it "renders new office form" do
