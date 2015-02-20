@@ -10,5 +10,5 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-#precompile the font assets for heroku deployment
-Rails.application.config.assets.precompile += %w(.svg .eot .woff .ttf)
+# precompile the font assets for heroku deployment
+Rails.application.config.assets.precompile += %w[.svg .eot .woff .ttf]

@@ -9,10 +9,10 @@ RSpec.describe "offices/index", type: :view do
   before(:each) do
     assign(:offices, [
       Office.create!(
-        :name => "Name"
+        name: "Name"
       ),
       Office.create!(
-        :name => "Name"
+        name: "Name"
       )
     ])
   end
@@ -24,13 +24,13 @@ RSpec.describe "offices/index", type: :view do
       render
     end
 
-    it 'should not see the New Office link' do
+    it 'not see the New Office link' do
       expect(rendered).to_not have_link('New Office', href: new_office_path)
     end
 
-    it 'should not see the edit or destroy links' do
-      expect(rendered).to_not have_css('a', :text => 'Edit')
-      expect(rendered).to_not have_css('a', :text => 'Destroy')
+    it 'not see the edit or destroy links' do
+      expect(rendered).to_not have_css('a', text: 'Edit')
+      expect(rendered).to_not have_css('a', text: 'Destroy')
     end
   end
 
@@ -41,16 +41,13 @@ RSpec.describe "offices/index", type: :view do
       render
     end
 
-    it 'should see the New office link' do
+    it 'see the New office link' do
       expect(rendered).to have_link('New Office', href: new_office_path)
     end
 
-    it 'should see the edit and destroy links' do
-      expect(rendered).to have_css('a', :text => 'Edit', count: 2)
-      expect(rendered).to have_css('a', :text => 'Destroy', count: 2)
+    it 'see the edit and destroy links' do
+      expect(rendered).to have_css('a', text: 'Edit', count: 2)
+      expect(rendered).to have_css('a', text: 'Destroy', count: 2)
     end
-
   end
-
 end
-

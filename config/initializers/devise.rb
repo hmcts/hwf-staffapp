@@ -4,7 +4,7 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = '683c6175bdc0907e2c077df6db8080788767da6434fca5c46630a61ec3d4444a7c15355a5610209f1430cf63d32804e0d61ca6d03b47da40021675ca550a289d'
+  # config.secret_key = '<insert secret key>'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -41,12 +41,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -97,7 +97,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = 'd2c58fa1ea1b236d2fac4e131a10812d1d43d5cccb23c465380c25e49fd5198294c8ab58c8a4a2ffc3ec434078e06ffb5261e326ed5e3736bae181d519ef8b89'
+  # config.pepper = '<Insert 128 character pepper>'
 
   # ==> Configuration for :invitable
   # The period the generated invitation token is valid, after

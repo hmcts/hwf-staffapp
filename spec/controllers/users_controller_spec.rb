@@ -4,23 +4,22 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-
   # This should return the minimal set of attributes required to create a valid
   # user. As you add validations to user, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {
-        email: 'test@example.com',
-        password: 'aabbccdd',
-        role: 'user'
+      email: 'test@example.com',
+      password: 'aabbccdd',
+      role: 'user'
     }
   }
 
   let(:invalid_attributes) {
     {
-        email: nil,
-        password: 'short',
-        role: 'student'
+      email: nil,
+      password: 'short',
+      role: 'student'
     }
   }
 
@@ -42,7 +41,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #show' do
       it 'redirects to login page' do
         user = User.create! valid_attributes
-        get :show, {:id => user.to_param}, valid_session
+        get :show, { id: user.to_param }, valid_session
         expect(response).to redirect_to(user_session_path)
       end
     end
@@ -61,7 +60,7 @@ RSpec.describe UsersController, type: :controller do
       it 'generates access denied error' do
         user = User.create! valid_attributes
         expect {
-          get :show, {:id => user.to_param}, valid_session
+          get :show, { id: user.to_param }, valid_session
         }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
       end
     end
@@ -79,7 +78,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #show' do
       it 'shows user details' do
         user = User.create! valid_attributes
-        get :show, {:id => user.to_param}, valid_session
+        get :show, { id: user.to_param }, valid_session
         expect(assigns(:user)).to eq(user)
       end
     end
