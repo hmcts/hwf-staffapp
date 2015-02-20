@@ -36,7 +36,9 @@ class Ability
       can :manage, :all
     else
       can :read, Office
-      can :manage, DwpCheck
+      can :new, DwpCheck
+      can :lookup, DwpCheck
+      can :show, DwpCheck
     end
   end
 end

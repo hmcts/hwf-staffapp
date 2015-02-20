@@ -32,7 +32,7 @@ RSpec.describe DwpChecksController, type: :controller do
   context 'logged out user' do
     describe 'GET #show' do
       it 'redirects to login page' do
-        dwp_check = FactoryGirl.create :dwp_check
+        dwp_check = DwpCheck.create! valid_attributes
         get :show, {:id => dwp_check.to_param}, valid_session
         expect(response).to redirect_to(user_session_path)
       end
@@ -50,15 +50,38 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in user }
 
     describe 'GET #show' do
-      it 'assigns the requested dwp_check as @dwp_check' do
+      it 'should assign the requested dwp_check as @dwp_check' do
         dwp_check = DwpCheck.create! valid_attributes
         get :show, {:id => dwp_check.to_param}, valid_session
-        expect(assigns(:dwp_check)).to eq(dwp_check)
+        expect(assigns(:dwp_checker)).to eq(dwp_check)
+        expect(response).to render_template('dwp_checks/show')
+      end
+    end
+    describe 'GET #new' do
+      it 'should render the expected view' do
+        get :new, {}, valid_session
+        expect(response.status).to eql(200)
+        expect(response).to render_template('dwp_checks/new')
       end
     end
   end
 
   context 'logged in as admin user' do
-
+    before(:each) { sign_in admin_user }
+    describe 'GET #show' do
+      it 'should assign the requested dwp_check as @dwp_check' do
+        dwp_check = DwpCheck.create! valid_attributes
+        get :show, {:id => dwp_check.to_param}, valid_session
+        expect(assigns(:dwp_checker)).to eq(dwp_check)
+        expect(response).to render_template('dwp_checks/show')
+      end
+    end
+    describe 'GET #new' do
+      it 'should render the expected view' do
+        get :new, {}, valid_session
+        expect(response.status).to eql(200)
+        expect(response).to render_template('dwp_checks/new')
+      end
+    end
   end
 end

@@ -1,16 +1,17 @@
 class DwpChecksController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
 
 
   respond_to :html
   before_action :get_dwp_check, only: [:show]
 
   def new
+    authorize! :new, DwpCheck
     @dwp_checker = DwpCheck.new
   end
 
   def lookup
+    authorize! :lookup, DwpCheck
     @dwp_checker = DwpCheck.new(dwp_params)
 
     if @dwp_checker.valid?
@@ -18,7 +19,7 @@ class DwpChecksController < ApplicationController
       @dwp_checker.benefits_valid = get_dwp_result
       if @dwp_checker.save
         # render json: get_dwp_result(@dwp_checker)
-        redirect_to dwp_checker_path(@dwp_checker.id)
+        redirect_to dwp_checks_path(@dwp_checker.id)
         # respond_with @dwp_checker
       else
         render action: :new
@@ -29,6 +30,7 @@ class DwpChecksController < ApplicationController
   end
 
   def show
+    authorize! :show, DwpCheck
   end
 
   private
