@@ -7,7 +7,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
   let(:user)          { FactoryGirl.create :user }
   let(:admin_user)    { FactoryGirl.create :admin_user }
 
-  it 'should contain our header' do
+  it 'contain our header' do
     render
     expect(rendered).to include('Home')
   end
@@ -16,12 +16,11 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
     before(:each) { render }
 
-
-    it 'should not see offices' do
+    it 'not see offices' do
       expect(rendered).to_not include('Offices')
     end
 
-    it 'should not see admin' do
+    it 'not see admin' do
       expect(rendered).to_not include('Admin')
     end
   end
@@ -33,11 +32,11 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
       render
     end
 
-    it 'should see offices' do
-      expect(rendered).to  include('Offices')
+    it 'see offices' do
+      expect(rendered).to include('Offices')
     end
 
-    it 'should not see admin' do
+    it 'not see admin' do
       expect(rendered).to_not include('Users')
     end
   end
@@ -48,14 +47,12 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
       render
     end
 
-    it 'should see offices' do
+    it 'see offices' do
       expect(rendered).to include('Offices')
     end
 
-    it 'should see admin' do
+    it 'see admin' do
       expect(rendered).to include('Users')
     end
   end
 end
-
-
