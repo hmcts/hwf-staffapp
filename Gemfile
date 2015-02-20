@@ -73,5 +73,4 @@ group :test do
 end
 
 # heroku deployment
-
 gem 'rails_12factor', group: :production
