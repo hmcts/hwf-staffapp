@@ -32,6 +32,11 @@ Metrics/MethodLength:
 RSpec/DescribeClass:
   Exclude:
     - spec/support/*
+    - spec/views/**/*
+
+RSpec/FilePath:
+  Exclude:
+    - spec/routing/**/*
 
 # private/protected/public
 Style/AccessModifierIndentation:
