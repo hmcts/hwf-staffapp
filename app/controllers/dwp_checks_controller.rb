@@ -19,7 +19,7 @@ class DwpChecksController < ApplicationController
       @dwp_checker.benefits_valid = get_dwp_result
       if @dwp_checker.save
         # render json: get_dwp_result(@dwp_checker)
-        redirect_to dwp_checks_path(@dwp_checker.id)
+        redirect_to dwp_checks_path(@dwp_checker.unique_number)
         # respond_with @dwp_checker
       else
         render action: :new
@@ -46,6 +46,6 @@ class DwpChecksController < ApplicationController
   end
 
   def get_dwp_check
-    @dwp_checker = DwpCheck.find(params[:id])
+    @dwp_checker =DwpCheck.find_by(unique_number: params[:unique_number])
   end
 end
