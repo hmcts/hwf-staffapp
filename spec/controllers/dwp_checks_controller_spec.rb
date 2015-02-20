@@ -33,7 +33,7 @@ RSpec.describe DwpChecksController, type: :controller do
     describe 'GET #show' do
       it 'redirects to login page' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:id => dwp_check.to_param}, valid_session
+        get :show, {:unique_number => dwp_check.to_param}, valid_session
         expect(response).to redirect_to(user_session_path)
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe DwpChecksController, type: :controller do
     describe 'GET #show' do
       it 'should assign the requested dwp_check as @dwp_check' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:id => dwp_check.to_param}, valid_session
+        get :show, {:unique_number => dwp_check.unique_number}, valid_session
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
@@ -71,7 +71,7 @@ RSpec.describe DwpChecksController, type: :controller do
     describe 'GET #show' do
       it 'should assign the requested dwp_check as @dwp_check' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:id => dwp_check.to_param}, valid_session
+        get :show, {:unique_number => dwp_check.unique_number}, valid_session
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
