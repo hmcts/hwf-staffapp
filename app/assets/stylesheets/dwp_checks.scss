@@ -39,5 +39,11 @@
   .row {
     border-top: 1px solid #bfc1c3;
     line-height: 3em;
+    .dwp-label {
+      color:#666666;
+    }
+    .dwp-value {
+      font-weight:bold;
+    }
   }
 }

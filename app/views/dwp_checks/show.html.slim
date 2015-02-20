@@ -6,15 +6,15 @@ h2 DWP Checker
 
 #dwp_data
   .row
-    .columns.large-4.medium-5.small-6 Last name
-    .columns.large-8.medium-7.small-6 =@dwp_checker.last_name
+    .columns.large-4.medium-5.small-6.dwp-label Last name
+    .columns.large-8.medium-7.small-6.dwp-value =@dwp_checker.last_name
   .row
-    .columns.large-4.medium-5.small-6 Date of Birth
-    .columns.large-8.medium-7.small-6 =@dwp_checker.dob.strftime("#{@dwp_checker.dob.day.ordinalize} %B %Y")
+    .columns.large-4.medium-5.small-6.dwp-label Date of Birth
+    .columns.large-8.medium-7.small-6.dwp-value =@dwp_checker.dob.strftime("#{@dwp_checker.dob.day.ordinalize} %B %Y")
   .row
-    .columns.large-4.medium-5.small-6 National Insurance Number
-    .columns.large-8.medium-7.small-6 =@dwp_checker.ni_number
+    .columns.large-4.medium-5.small-6.dwp-label National Insurance Number
+    .columns.large-8.medium-7.small-6.dwp-value =@dwp_checker.ni_number
   - if @dwp_checker.date_to_check.present?
     .row
-      .columns.large-4.medium-5.small-6 Date fee paid
-      .columns.large-8.medium-7.small-6 =@dwp_checker.date_to_check.strftime("#{@dwp_checker.date_to_check.day.ordinalize} %B %Y")
+      .columns.large-4.medium-5.small-6.dwp-label Date fee paid
+      .columns.large-8.medium-7.small-6.dwp-value =@dwp_checker.date_to_check.strftime("#{@dwp_checker.date_to_check.day.ordinalize} %B %Y")
