@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.5'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
@@ -42,10 +44,6 @@ gem 'foundation-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development do
-  gem 'guard-rspec'
-end
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -60,9 +58,14 @@ group :development, :test do
   #in browser debugging
   gem 'better_errors'
   gem 'binding_of_caller'
+
   gem 'factory_girl_rails'
 
   gem 'capybara'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'guard-rspec'
+  gem 'guard-rubocop'
 end
 
 group :test do
@@ -70,5 +73,6 @@ group :test do
 end
 
 #heroku deployment
+
 gem 'rails_12factor', group: :production
 
