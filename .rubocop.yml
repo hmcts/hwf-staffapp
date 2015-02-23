@@ -47,6 +47,11 @@ Style/AccessModifierIndentation:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  Exclude:
+    - app/controllers/users/invitations_controller.rb
+
 Style/CollectionMethods:
   PreferredMethods:
     collect: 'map'
