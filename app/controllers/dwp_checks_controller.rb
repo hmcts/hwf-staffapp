@@ -17,6 +17,7 @@ class DwpChecksController < ApplicationController
       if @dwp_checker.save
         # render json: get_dwp_result(@dwp_checker)
         redirect_to dwp_checks_path(@dwp_checker.unique_number)
+        return
       end
     end
     render action: :new
