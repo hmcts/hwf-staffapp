@@ -4,7 +4,7 @@ RSpec.describe DwpChecksController, type: :controller do
 
   include Devise::TestHelpers
 
-  # This should return the minimal set of values that should be in the session
+  # This return the minimal set of values that be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # DwpChecksController. Be sure to keep this updated too.
   let(:valid_session) { {} }
@@ -33,7 +33,7 @@ RSpec.describe DwpChecksController, type: :controller do
     describe 'GET #show' do
       it 'redirects to login page' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:unique_number => dwp_check.to_param}, valid_session
+        get :show, { unique_number: dwp_check.to_param }, valid_session
         expect(response).to redirect_to(user_session_path)
       end
     end
@@ -50,15 +50,15 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in user }
 
     describe 'GET #show' do
-      it 'should assign the requested dwp_check as @dwp_check' do
+      it 'assign the requested dwp_check as @dwp_check' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:unique_number => dwp_check.unique_number}, valid_session
+        get :show, { unique_number: dwp_check.unique_number }, valid_session
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
     end
     describe 'GET #new' do
-      it 'should render the expected view' do
+      it 'render the expected view' do
         get :new, {}, valid_session
         expect(response.status).to eql(200)
         expect(response).to render_template('dwp_checks/new')
@@ -69,15 +69,15 @@ RSpec.describe DwpChecksController, type: :controller do
   context 'logged in as admin user' do
     before(:each) { sign_in admin_user }
     describe 'GET #show' do
-      it 'should assign the requested dwp_check as @dwp_check' do
+      it 'assign the requested dwp_check as @dwp_check' do
         dwp_check = DwpCheck.create! valid_attributes
-        get :show, {:unique_number => dwp_check.unique_number}, valid_session
+        get :show, { unique_number: dwp_check.unique_number }, valid_session
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
     end
     describe 'GET #new' do
-      it 'should render the expected view' do
+      it 'render the expected view' do
         get :new, {}, valid_session
         expect(response.status).to eql(200)
         expect(response).to render_template('dwp_checks/new')

@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   # get 'dwp_checks/:id' => 'dwp_checks#show', as: 'dwp_checks'
   get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
 
-
   resources :offices
 
   root to: 'home#index'
