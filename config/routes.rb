@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   post 'dwp_checks/lookup'
   get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
 
-
   resources :offices
 
   root to: 'home#index'
