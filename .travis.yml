@@ -13,6 +13,7 @@ script:
 - bundle exec rake db:create
 - bundle exec rake db:migrate
 - bundle exec rake spec
+- bundle exec rake rubocop
 deploy:
   provider: heroku
   api_key:
