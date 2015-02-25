@@ -3,7 +3,7 @@ class Users::InvitationsController < Devise::InvitationsController
   before_action :authenticate_user!
   load_and_authorize_resource User
 
-  private
+private
 
   def invite_resource
     resource_class.invite!(invite_params, current_inviter)
@@ -12,5 +12,4 @@ class Users::InvitationsController < Devise::InvitationsController
   def invite_params
     params.require(:user).permit(:email, :role)
   end
-
 end

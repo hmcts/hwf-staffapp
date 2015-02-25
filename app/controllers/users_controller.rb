@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user
   end
 
-  protected
+protected
 
   def user_params
     params.require(:user).permit(:email, :role)
