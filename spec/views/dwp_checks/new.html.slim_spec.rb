@@ -10,9 +10,9 @@ RSpec.describe 'dwp_checks/new.html.slim', type: :view do
     sign_in user
     @dwp_checker = check
     render
-    assert_select 'form label', text: 'Last Name'.to_s, count:  1
-    assert_select 'form label', text: 'Date of Birth'.to_s, count:  1
-    assert_select 'form label', text: 'NI Number'.to_s, count:  1
-    assert_select 'form label', text: 'Date fee paid'.to_s, count:  1
+    assert_select 'form label', text: t('activerecord.attributes.dwp_check.last_name').to_s, count:  1
+    assert_select 'form label', text: t('activerecord.attributes.dwp_check.dob').to_s, count:  1
+    assert_select 'form label', text: t('activerecord.attributes.dwp_check.ni_number').to_s, count:  1
+    assert_select 'form label', text: t('activerecord.attributes.dwp_check.date_to_check').to_s, count:  1
   end
 end
