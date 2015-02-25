@@ -1,0 +1,49 @@
+// Place all the styles related to the DwpChecker controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+#result.callout {
+  padding:30px 15px;
+  margin-bottom: 2em;
+
+  &.callout-warning {
+    border: 3px solid #df3034;
+    color:black;
+    margin-top: 20px;
+    padding: 15px;
+  }
+
+  &.callout-passed{
+    background: #28a197;
+    color:#ffffff;
+  }
+  &.callout-failed {
+    background: lightgray;
+    color:#000000;
+    border-left: darkgray 5px solid;
+  }
+  p
+  {
+    margin:0;
+  }
+  .number{
+    font-weight: bold;
+    font-size: 48px;
+  }
+}
+#dwp_data {
+  .row:nth-child(odd) { background-color: #eeeeee;}
+  .row:last-child { border-bottom: 1px solid #bfc1c3; }
+  .row {
+    border-top: 1px solid #bfc1c3;
+    line-height: 3em;
+    .dwp-label {
+      color:#666666;
+    }
+    .dwp-value {
+      font-weight:bold;
+    }
+  }
+}
