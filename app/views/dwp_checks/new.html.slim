@@ -1,4 +1,4 @@
-h2 DWP Checker
+h2 Check benefits status
 
 = form_for(@dwp_checker, url: dwp_checks_lookup_path, html: { autocomplete: 'off' } ) do |f|
   - if @dwp_checker.errors.any?
@@ -8,16 +8,16 @@ h2 DWP Checker
         - @dwp_checker.errors.full_messages.each do |message|
           li = message
   .form-group
-    label.form-label for="ogd_name"  Last Name
+    = f.label :last_name
     = f.text_field :last_name, { class: 'form-control' }
   .form-group
-    label.form-label for="ogd_acronym"  Date of Birth
+    = f.label :dob
     = f.date_field :dob, { class: 'form-control' }
   .form-group
-    label.form-label for="ni_number"  NI Number
-    = f.text_field :ni_number, { class: 'form-control' }
+    = f.label :ni_number
+    = f.text_field :ni_number, { class: 'form-control transform-upper' }
   .form-group
-    label.form-label for="date_to_check"  Date fee paid
+    = f.label :date_to_check
     = f.date_field :date_to_check, { class: 'form-control' }
   .form-group
     = f.submit 'Check', :id => 'save', :class => 'button small success'

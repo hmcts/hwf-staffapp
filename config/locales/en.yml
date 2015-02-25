@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      dwp_check:
+        last_name: 'Last name'
+        ni_number: 'National Insurance number'
+        dob: 'Date of birth'
+        date_to_check: 'Date application made'
