@@ -73,8 +73,4 @@ group :test do
 end
 
 # heroku deployment
-<<<<<<< HEAD
-=======
-
->>>>>>> 1108cbe6bb57b347acfb7d733e0aef46d2dc5ae6
 gem 'rails_12factor', group: :production
