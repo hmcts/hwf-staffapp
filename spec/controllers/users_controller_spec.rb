@@ -45,6 +45,13 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(user_session_path)
       end
     end
+    describe 'GET #edit' do
+      it 'redirects to login page' do
+        user = User.create! valid_attributes
+        get :edit, { id: user.to_param }, valid_session
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
   end
 
   context 'standard user' do
@@ -57,6 +64,14 @@ RSpec.describe UsersController, type: :controller do
       end
     end
     describe 'GET #show' do
+      it 'generates access denied error' do
+        user = User.create! valid_attributes
+        expect {
+          get :edit, { id: user.to_param }, valid_session
+        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+      end
+    end
+    describe 'GET #edit' do
       it 'generates access denied error' do
         user = User.create! valid_attributes
         expect {
@@ -80,6 +95,56 @@ RSpec.describe UsersController, type: :controller do
         user = User.create! valid_attributes
         get :show, { id: user.to_param }, valid_session
         expect(assigns(:user)).to eq(user)
+      end
+    end
+    describe 'GET #edit' do
+      it 'shows edit page' do
+        user = User.create! valid_attributes
+        get :edit, { id: user.to_param }, valid_session
+        expect(assigns(:user)).to eq(user)
+      end
+    end
+    describe 'PUT #update' do
+      context 'with valid params' do
+        let(:new_attributes) {
+          {
+            email: 'new_attributes@example.com',
+            password: 'aabbccdd',
+            role: 'user'
+          }
+        }
+
+        it 'updates the requested user' do
+          user = User.create! valid_attributes
+          put :update, { id: user.to_param, user: new_attributes }, valid_session
+          user.reload
+        end
+
+        it 'assigns the requested user as @user' do
+          user = User.create! valid_attributes
+          put :update, { id: user.to_param, user: valid_attributes }, valid_session
+          expect(assigns(:user)).to eq(user)
+        end
+
+        it 'redirects to the user' do
+          user = User.create! valid_attributes
+          put :update, { id: user.to_param, user: valid_attributes }, valid_session
+          expect(response).to redirect_to(user_path)
+        end
+      end
+
+      context 'with invalid params' do
+        it 'assigns the user as @user' do
+          user = User.create! valid_attributes
+          put :update, { id: user.to_param, user: invalid_attributes }, valid_session
+          expect(assigns(:user)).to eq(user)
+        end
+
+        it 're-renders the "edit" template' do
+          user = User.create! valid_attributes
+          put :update, { id: user.to_param, user: invalid_attributes }, valid_session
+          expect(response).to render_template('edit')
+        end
       end
     end
   end
