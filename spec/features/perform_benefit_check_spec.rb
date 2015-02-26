@@ -19,7 +19,7 @@ RSpec.feature 'Undertake benefit check', type: :feature do
       click_button 'Check'
 
       expect(page).to have_css('div.dwp-value', text: 'AB123456A', count: 1)
-      expect(page).to have_css('div.callout > span.number', text: /benefits/, count: 1)
+      expect(page).to have_css('div.callout > span.number', text: /[Bb]enefits/, count: 1)
     end
   end
 end
