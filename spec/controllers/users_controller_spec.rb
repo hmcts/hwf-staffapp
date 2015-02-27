@@ -94,14 +94,12 @@ RSpec.describe UsersController, type: :controller do
     end
     describe 'GET #show' do
       it 'shows user details' do
-        # test_user = User.create! valid_attributes
         get :show, { id: test_user.to_param }, valid_session
         expect(assigns(:user)).to eq(test_user)
       end
     end
     describe 'GET #edit' do
       it 'shows edit page' do
-        # test_user = User.create! valid_attributes
         get :edit, { id: test_user.to_param }, valid_session
         expect(assigns(:user)).to eq(test_user)
       end
@@ -117,19 +115,16 @@ RSpec.describe UsersController, type: :controller do
         }
 
         it 'updates the requested user' do
-          # test_user = User.create! valid_attributes
           put :update, { id: test_user.to_param, user: new_attributes }, valid_session
           user.reload
         end
 
         it 'assigns the requested user as @user' do
-          # test_user = User.create! valid_attributes
           put :update, { id: test_user.to_param, user: valid_attributes }, valid_session
           expect(assigns(:user)).to eq(test_user)
         end
 
         it 'redirects to the user' do
-          # test_user = User.create! valid_attributes
           put :update, { id: test_user.to_param, user: valid_attributes }, valid_session
           expect(response).to redirect_to(user_path)
         end
@@ -137,13 +132,11 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
         it 'assigns the user as @user' do
-          # test_user = User.create! valid_attributes
           put :update, { id: test_user.to_param, user: invalid_attributes }, valid_session
           expect(assigns(:user)).to eq(test_user)
         end
 
         it 're-renders the "edit" template' do
-          # test_user = User.create! valid_attributes
           put :update, { id: test_user.to_param, user: invalid_attributes }, valid_session
           expect(response).to render_template('edit')
         end
