@@ -83,25 +83,27 @@ RSpec.describe UsersController, type: :controller do
 
   context 'admin user' do
     before(:each) { sign_in admin_user }
+    let(:test_user) { User.create! valid_attributes }
     describe 'GET #index' do
       it 'shows user list' do
-        user = User.create! valid_attributes
         get :index, {}, valid_session
-        expect(assigns(:users).first).to eq(user)
+        test_user
+        user
+        expect(assigns(:users).last).to eql(user)
       end
     end
     describe 'GET #show' do
       it 'shows user details' do
-        user = User.create! valid_attributes
-        get :show, { id: user.to_param }, valid_session
-        expect(assigns(:user)).to eq(user)
+        # test_user = User.create! valid_attributes
+        get :show, { id: test_user.to_param }, valid_session
+        expect(assigns(:user)).to eq(test_user)
       end
     end
     describe 'GET #edit' do
       it 'shows edit page' do
-        user = User.create! valid_attributes
-        get :edit, { id: user.to_param }, valid_session
-        expect(assigns(:user)).to eq(user)
+        # test_user = User.create! valid_attributes
+        get :edit, { id: test_user.to_param }, valid_session
+        expect(assigns(:user)).to eq(test_user)
       end
     end
     describe 'PUT #update' do
@@ -115,34 +117,34 @@ RSpec.describe UsersController, type: :controller do
         }
 
         it 'updates the requested user' do
-          user = User.create! valid_attributes
-          put :update, { id: user.to_param, user: new_attributes }, valid_session
+          # test_user = User.create! valid_attributes
+          put :update, { id: test_user.to_param, user: new_attributes }, valid_session
           user.reload
         end
 
         it 'assigns the requested user as @user' do
-          user = User.create! valid_attributes
-          put :update, { id: user.to_param, user: valid_attributes }, valid_session
-          expect(assigns(:user)).to eq(user)
+          # test_user = User.create! valid_attributes
+          put :update, { id: test_user.to_param, user: valid_attributes }, valid_session
+          expect(assigns(:user)).to eq(test_user)
         end
 
         it 'redirects to the user' do
-          user = User.create! valid_attributes
-          put :update, { id: user.to_param, user: valid_attributes }, valid_session
+          # test_user = User.create! valid_attributes
+          put :update, { id: test_user.to_param, user: valid_attributes }, valid_session
           expect(response).to redirect_to(user_path)
         end
       end
 
       context 'with invalid params' do
         it 'assigns the user as @user' do
-          user = User.create! valid_attributes
-          put :update, { id: user.to_param, user: invalid_attributes }, valid_session
-          expect(assigns(:user)).to eq(user)
+          # test_user = User.create! valid_attributes
+          put :update, { id: test_user.to_param, user: invalid_attributes }, valid_session
+          expect(assigns(:user)).to eq(test_user)
         end
 
         it 're-renders the "edit" template' do
-          user = User.create! valid_attributes
-          put :update, { id: user.to_param, user: invalid_attributes }, valid_session
+          # test_user = User.create! valid_attributes
+          put :update, { id: test_user.to_param, user: invalid_attributes }, valid_session
           expect(response).to render_template('edit')
         end
       end
