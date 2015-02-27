@@ -30,6 +30,7 @@ RSpec.describe UsersController, type: :controller do
 
   let(:user)          { FactoryGirl.create :user }
   let(:admin_user)    { FactoryGirl.create :admin_user }
+  let(:test_user) { User.create! valid_attributes }
 
   context 'logged out user' do
     describe 'GET #index' do
@@ -40,15 +41,13 @@ RSpec.describe UsersController, type: :controller do
     end
     describe 'GET #show' do
       it 'redirects to login page' do
-        user = User.create! valid_attributes
-        get :show, { id: user.to_param }, valid_session
+        get :show, { id: test_user.to_param }, valid_session
         expect(response).to redirect_to(user_session_path)
       end
     end
     describe 'GET #edit' do
       it 'redirects to login page' do
-        user = User.create! valid_attributes
-        get :edit, { id: user.to_param }, valid_session
+        get :edit, { id: test_user.to_param }, valid_session
         expect(response).to redirect_to(user_session_path)
       end
     end
@@ -65,17 +64,15 @@ RSpec.describe UsersController, type: :controller do
     end
     describe 'GET #show' do
       it 'generates access denied error' do
-        user = User.create! valid_attributes
         expect {
-          get :edit, { id: user.to_param }, valid_session
+          get :edit, { id: test_user.to_param }, valid_session
         }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
       end
     end
     describe 'GET #edit' do
       it 'generates access denied error' do
-        user = User.create! valid_attributes
         expect {
-          get :show, { id: user.to_param }, valid_session
+          get :show, { id: test_user.to_param }, valid_session
         }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
       end
     end
@@ -83,7 +80,6 @@ RSpec.describe UsersController, type: :controller do
 
   context 'admin user' do
     before(:each) { sign_in admin_user }
-    let(:test_user) { User.create! valid_attributes }
     describe 'GET #index' do
       it 'shows user list' do
         get :index, {}, valid_session
