@@ -81,17 +81,17 @@ Rails.application.configure do
   config.after_initialize do
     sending_host = ENV['SENDING_HOST'] || 'localhost'
 
-    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http'}
-    ActionMailer::Base.default :from => Settings.mail_from
-    ActionMailer::Base.default :reply_to => Settings.mail_reply_to
+    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http' }
+    ActionMailer::Base.default from: Settings.mail_from
+    ActionMailer::Base.default reply_to: Settings.mail_reply_to
     ActionMailer::Base.smtp_settings = {
-        :address        => 'smtp.sendgrid.net',
-        :port           => '587',
-        :authentication => :plain,
-        :user_name      => ENV['SENDGRID_USERNAME'],
-        :password       => ENV['SENDGRID_PASSWORD'],
-        :domain         => 'feeremissions.dsd.io',
-        :enable_starttls_auto => true
+      address:              'smtp.sendgrid.net',
+      port:                 '587',
+      authentication:       :plain,
+      user_name:            ENV['SENDGRID_USERNAME'],
+      password:             ENV['SENDGRID_PASSWORD'],
+      domain:               'feeremissions.dsd.io',
+      enable_starttls_auto: true
     }
   end
 end

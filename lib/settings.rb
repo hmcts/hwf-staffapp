@@ -1,7 +1,9 @@
 module Settings
-  module_function
+
+module_function
+
   file_path = File.expand_path('../config/settings.yml', __dir__)
-  @h        = YAML::load_file(file_path)
+  @h        = YAML.load_file(file_path)
 
   def mail_from
     @h['mail_from']
