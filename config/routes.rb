@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
 
+  get 'dwp_checks' => 'dwp_checks#new', as: 'new_dwp_checks'
+  post 'dwp_checks/lookup'
+  get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
+
   resources :offices
 
   root to: 'home#index'
 
   get 'home/index'
 
-  devise_for :users, :controllers => { :invitations => 'users/invitations' }
+  devise_for :users, controllers: { invitations: 'users/invitations' }
   resources :users
 
-  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

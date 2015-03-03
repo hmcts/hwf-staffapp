@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.all.order('lower(email)')
+    @users = User.sorted_by_email
   end
 
   def edit
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-    redirect_to users_path
+    respond_with(@user)
   end
 
   def destroy
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user
   end
 
-  protected
+protected
 
   def user_params
     params.require(:user).permit(:email, :role)

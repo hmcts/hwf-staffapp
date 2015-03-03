@@ -3,20 +3,18 @@ nav.top-bar data-topbar='' role='navigation'
     li.name
       h1
         =link_to 'Home', root_path
-    
-
 
   section.top-bar-section
     - if current_user
-      -if current_user.admin?
         ul.right
-          /li.has-dropdown
-          /  =link_to 'Admin', '#'
-          /  ul.dropdown
-          /   li
-          /     =link_to 'Users', users_path
           li
-            = link_to 'Users', users_path
-      ul.left
-        li
-          = link_to 'Offices', offices_path
+            =link_to 'Offices', offices_path
+          -if current_user.admin?
+            li.has-dropdown
+              =link_to 'Admin', '#'
+              ul.dropdown
+                li
+                  =link_to 'Users', users_path
+        ul.left
+          li
+            = link_to 'DWP check', new_dwp_checks_path

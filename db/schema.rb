@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213114039) do
+ActiveRecord::Schema.define(version: 20150218150926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dwp_checks", force: :cascade do |t|
+    t.string   "last_name"
+    t.date     "dob"
+    t.string   "ni_number"
+    t.date     "date_to_check"
+    t.boolean  "benefits_valid"
+    t.string   "checked_by"
+    t.string   "laa_code"
+    t.string   "unique_number"
+    t.integer  "created_by_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
 
   create_table "offices", force: :cascade do |t|
     t.string   "name"

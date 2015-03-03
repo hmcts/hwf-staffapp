@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.5'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
@@ -8,7 +10,7 @@ gem 'pg'
 # authentication
 gem 'devise'
 gem 'devise_invitable'
-#roles
+# roles
 gem 'cancancan', '~> 1.10'
 
 # Use SCSS for stylesheets
@@ -29,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-#template language
+# template language
 gem 'slim-rails'
 gem 'foundation-rails'
 
@@ -42,10 +44,6 @@ gem 'foundation-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development do
-  gem 'guard-rspec'
-end
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -57,18 +55,22 @@ group :development, :test do
   gem 'spring'
 
   gem 'rspec-rails', '~> 3.0'
-  #in browser debugging
+  # in browser debugging
   gem 'better_errors'
   gem 'binding_of_caller'
+
   gem 'factory_girl_rails'
 
   gem 'capybara'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'guard-rspec'
+  gem 'guard-rubocop'
 end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
 end
 
-#heroku deployment
+# heroku deployment
 gem 'rails_12factor', group: :production
-

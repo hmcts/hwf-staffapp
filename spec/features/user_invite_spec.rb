@@ -9,17 +9,19 @@ RSpec.feature 'Office management', type: :feature do
   let(:admin_user)    { FactoryGirl.create :admin_user }
 
   context 'Admin user' do
-    scenario 'creates a new office' do
+    scenario 'invites a user' do
 
-      new_court = 'new court'
+      new_email = 'test@email.com'
 
       login_as(admin_user, scope: :user)
-      visit new_office_path
+      visit new_user_invitation_path
 
-      fill_in 'office_name', with: new_court
-      click_button 'Create Office'
+      fill_in 'user_email', with: new_email
+      select('User', from: 'user_role')
+      click_button 'Send an invitation'
 
-      expect(page).to have_text("Name:#{new_court}")
+      expect(page).to have_css('a', text: new_email, count: 1)
+
     end
   end
 end

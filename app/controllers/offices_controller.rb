@@ -39,13 +39,13 @@ class OfficesController < ApplicationController
     respond_with(@office)
   end
 
-  private
-    def set_office
-      @office = Office.find(params[:id])
-    end
+private
 
+  def set_office
+    @office = Office.find(params[:id])
+  end
 
-    def office_params
-      params.require(:office).permit(:name)
-    end
+  def office_params
+    params.require(:office).permit(:name)
+  end
 end
