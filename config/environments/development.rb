@@ -52,13 +52,12 @@ Rails.application.configure do
     ActionMailer::Base.default reply_to: Settings.mail_reply_to
     ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http', port: '3000' }
     ActionMailer::Base.smtp_settings = {
-      address: ENV['SMTP_HOSTNAME'] || 'localhost',
-      port: ENV['SMTP_PORT'] || 587,
-      domain: sending_host,
-      user_name: ENV['SMTP_USERNAME'] || '',
-      password: ENV['SMTP_PASSWORD'] || '',
-      authentication: :login,
-      enable_starttls_auto: true
-    }
+      address:              'smtp.sendgrid.net',
+      port:                 '587',
+      authentication:       :plain,
+      user_name:            ENV['SENDGRID_USERNAME'],
+      password:             ENV['SENDGRID_PASSWORD'],
+      domain:               'feeremissions.dsd.io',
+      enable_starttls_auto: true    }
   end
 end
