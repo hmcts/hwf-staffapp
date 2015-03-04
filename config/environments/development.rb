@@ -39,6 +39,26 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+
   # configure devise mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.after_initialize do
+    sending_host = ENV['SENDING_HOST'] || 'localhost'
+    ActionMailer::Base.delivery_method = :sendmail
+    ActionMailer::Base.default from: Settings.mail_from
+    ActionMailer::Base.default reply_to: Settings.mail_reply_to
+    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http', port: '3000' }
+    ActionMailer::Base.smtp_settings = {
+      address: ENV['SMTP_HOSTNAME'] || 'localhost',
+      port: ENV['SMTP_PORT'] || 587,
+      domain: sending_host,
+      user_name: ENV['SMTP_USERNAME'] || '',
+      password: ENV['SMTP_PASSWORD'] || '',
+      authentication: :login,
+      enable_starttls_auto: true
+    }
+  end
 end
