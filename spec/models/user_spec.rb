@@ -27,6 +27,11 @@ describe User, type: :model do
       expect(duplicate).to be_invalid
     end
 
+    it 'requires a name' do
+      user.name = nil
+      expect(user).to be_invalid
+    end
+
     it 'require a minimum 8 character password' do
       user.password = 'aabbcc'
       expect(user).to be_invalid

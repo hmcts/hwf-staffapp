@@ -11,7 +11,8 @@ RSpec.describe UsersController, type: :controller do
     {
       email: 'test@example.com',
       password: 'aabbccdd',
-      role: 'user'
+      role: 'user',
+      name: 'test'
     }
   }
 
@@ -19,7 +20,8 @@ RSpec.describe UsersController, type: :controller do
     {
       email: nil,
       password: 'short',
-      role: 'student'
+      role: 'student',
+      name: nil
     }
   }
 
