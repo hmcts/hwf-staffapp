@@ -10,6 +10,6 @@ private
   end
 
   def invite_params
-    params.require(:user).permit(:email, :role)
+    params.require(:user).permit(:email, :role, :name)
   end
 end
