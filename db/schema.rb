@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150218150926) do
+ActiveRecord::Schema.define(version: 20150313151421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20150218150926) do
     t.integer  "created_by_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "dwp_result"
+    t.string   "dwp_id"
   end
 
   add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
@@ -59,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150218150926) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
