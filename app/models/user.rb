@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   scope :sorted_by_email, -> {  all.order(:email) }
 
   validates :email, format: Devise.email_regexp
-  validates :role, presence: true
+  validates :role, :name, presence: true
   validates :role, inclusion: {
     in: ROLES,
     message: "%{value} is not a valid role",
