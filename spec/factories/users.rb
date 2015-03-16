@@ -8,5 +8,4 @@ FactoryGirl.define do
       role 'admin'
     end
   end
-
 end
