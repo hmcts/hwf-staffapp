@@ -16,11 +16,11 @@ en:
         submit_button: "Set my password"
     mailer:
       invitation_instructions:
-        subject: 'Invitation instructions'
+        subject: 'Set up your account to use the benefit checker'
         hello: 'Dear %{name}'
         someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
         accept: 'Accept invitation'
-        ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above and set your password."
+        ignore: "You won't be able to use your account until you access the link above and set your password.<br />If you weren't expecting this invitation, please ignore this email."
         set_up: 'You need to set up an account to use the online benefits checker %{url}'
         guidance: "You'll need:"
         list_1: 'your email address'
