@@ -35,9 +35,14 @@ private
   end
 
   def dwp_result
-    # TODO: create and call dwp lookup service
-    # meanwhile generate random true false response
-    [true, false].sample == true
+    params = {
+      ni_number: @dwp_checker.ni_number,
+      surname: @dwp_checker.last_name,
+      birth_date: @dwp_checker.dob
+    }
+
+    response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
+    JSON.parse(response)['benefit_checker_status'] == 'Yes' ? true : false
   end
 
   def dwp_params

@@ -70,7 +70,10 @@ end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
+  gem 'webmock'
 end
 
 # heroku deployment
 gem 'rails_12factor', group: :production
+
+gem 'rest-client'
