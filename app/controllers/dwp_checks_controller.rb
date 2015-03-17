@@ -13,7 +13,7 @@ class DwpChecksController < ApplicationController
     @dwp_checker = DwpCheck.new(dwp_params)
 
     if @dwp_checker.valid?
-      process_dwp_check(@dwp_checker)
+      process_dwp_check
       if @dwp_checker.save
         # render json: get_dwp_result(@dwp_checker)
         redirect_to dwp_checks_path(@dwp_checker.unique_number)
@@ -29,9 +29,9 @@ class DwpChecksController < ApplicationController
 
 private
 
-  def process_dwp_check(dwp_check)
-    dwp_check.created_by_id = current_user.id
-    dwp_check.benefits_valid = dwp_result
+  def process_dwp_check
+    @dwp_checker.created_by_id = current_user.id
+    @dwp_checker.benefits_valid = dwp_result
   end
 
   def dwp_result
