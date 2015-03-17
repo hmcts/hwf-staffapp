@@ -10,22 +10,25 @@ html[lang="en"]
     = javascript_include_tag "application"
     = csrf_meta_tags
   body
-    .row
-      .large-8.columns
-        h1 Fee remission staff app
-      .large-2.columns
-        - if user_signed_in?
-          |connected as #{current_user.email} #{link_to 'sign out', destroy_user_session_path, :method => :delete}
-        - else
-          = link_to 'Sign in', new_user_session_path
-    .row
-      =render 'layouts/toolbar'
+    .contain-to-grid
+      nav.top-bar(data-topbar)
+        ul.title-area
+          li.name
+            h1 =link_to 'Help with fees', root_url
+        section.top-bar-section
+          ul.right
+            li
+              - if user_signed_in?
+                = link_to "sign out as #{current_user.name}", destroy_user_session_path, :method => :delete, class: 'inline'
+              - else
+                = link_to 'Sign in', new_user_session_path
+    =render 'layouts/toolbar'
     .row
       .large-12.columns
         - flash.each do |key, value|
           .alert-box class="#{key}" data-alert=''
             |#{value}
-            = link_to '&times;'.html_safe, "#", class: 'close'
+            = link_to '&times;'.html_safe, '#', class: 'close'
     .row
       .large-12.columns
         = yield
