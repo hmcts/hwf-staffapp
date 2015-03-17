@@ -85,8 +85,8 @@ RSpec.describe DwpChecksController, type: :controller do
     end
   end
 
-  context 'logged in as admin user' do
-    before(:each) { sign_in admin_user }
+  context 'logged in as standard user' do
+    before(:each) { sign_in user }
 
     describe 'POST #lookup' do
       let(:dwp_params) do
