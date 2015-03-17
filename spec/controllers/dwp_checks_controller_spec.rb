@@ -89,6 +89,9 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in user }
 
     describe 'POST #lookup' do
+
+      before { WebMock.disable_net_connect! }
+
       context 'valid request' do
 
         let(:dwp_params) do
@@ -100,7 +103,15 @@ RSpec.describe DwpChecksController, type: :controller do
           }
         end
 
-        before(:each) { post :lookup, dwp_check: dwp_params }
+        before(:each) do
+          json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
+                  "confirmation_ref": "T1426267181940",
+                  "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
+          stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+            with(body: {'birth_date': '1980-01-01', 'ni_number': 'AB123456A', 'surname': 'last_name'}).
+            to_return(status: 200, body: json, headers: {})
+          post :lookup, dwp_check: dwp_params
+        end
 
         it 'should return the redirect status code' do
           expect(response.status).to eql(302)
