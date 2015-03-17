@@ -89,23 +89,43 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in user }
 
     describe 'POST #lookup' do
-      let(:dwp_params) do
-        {
-          last_name: 'last_name',
-          dob: '1980-01-01',
-          ni_number: 'AB123456A',
-          date_to_check: "#{Date.today}"
-        }
+      context 'valid request' do
+
+        let(:dwp_params) do
+          {
+            last_name: 'last_name',
+            dob: '1980-01-01',
+            ni_number: 'AB123456A',
+            date_to_check: "#{Date.today}"
+          }
+        end
+
+        before(:each) { post :lookup, dwp_check: dwp_params }
+
+        it 'should return the redirect status code' do
+          expect(response.status).to eql(302)
+        end
+
+        it 'should return the redirect status code' do
+          expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
+        end
       end
 
-      before(:each) { post :lookup, dwp_check: dwp_params }
+      context 'invalid request' do
+        let(:dwp_params) do
+          {
+            last_name: 'last_name',
+            dob: '1980-01-01',
+            ni_number: '',
+            date_to_check: "#{Date.today}"
+          }
+        end
 
-      it 'should return the redirect status code' do
-        expect(response.status).to eql(302)
-      end
+        before(:each) { post :lookup, dwp_check: dwp_params }
 
-      it 'should return the redirect status code' do
-        expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
+        it 'should re-render the form' do
+          expect(response).to render_template(:new)
+        end
       end
     end
   end
