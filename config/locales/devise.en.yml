@@ -20,12 +20,12 @@ en:
       confirmation_instructions:
         subject: "Confirmation instructions"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Please confirm your new password request"
         hello: "Dear %{name}"
-        someone_requested_reset: "Someone has requested a link to change your password. You can do this through the link below."
-        link_text: "Change my password"
-        ignore_this: "If you didn't request this, please ignore this email."
-        warning: "Your password won't change until you access the link above and create a new one."
+        someone_requested_reset: "We received a request to change your password."
+        guide: "You can follow this link to "
+        link_text: "change your password."
+        ignore_this: "If you didn't request this change, please ignore this email."
       unlock_instructions:
         subject: "Unlock instructions"
     omniauth_callbacks:
