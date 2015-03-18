@@ -1,0 +1,11 @@
+#!/bin/sh
+
+sleep 1
+exec 2>&1
+export HOME=/srv/strike2
+cd $HOME
+if [ "$RAILS_ENV" = "development" ]; then
+  exec chpst -u $WEBUSER java -jar /srv/strike2/target/strike2-${STRIKE2_VERSION}-standalone.jar
+else
+  exec chpst -u $WEBUSER java -jar /srv/strike2/target/strike2-${STRIKE2_VERSION}-standalone.jar
+fi
