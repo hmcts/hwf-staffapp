@@ -3,7 +3,8 @@
     dl.sub-nav
       dd
         =link_to 'DWP check', new_dwp_checks_path
-      dd.right
-        =link_to 'Users', users_path
+      -if current_user.admin?
+        dd.right
+          =link_to 'Users', users_path
       dd.right
         =link_to 'Offices', offices_path
