@@ -37,12 +37,17 @@ private
   def dwp_result
     params = {
       ni_number: @dwp_checker.ni_number,
-      surname: @dwp_checker.last_name,
-      birth_date: @dwp_checker.dob
+      surname: @dwp_checker.last_name.upcase,
+      birth_date: @dwp_checker.dob.strftime('%Y%m%d'),
+      entitlement_check_date: process_check_date
     }
-
     response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
     JSON.parse(response)['benefit_checker_status'] == 'Yes' ? true : false
+  end
+
+  def process_check_date
+    check_date= @dwp_checker.date_to_check ? @dwp_checker.date_to_check : Date.today
+    check_date.strftime('%Y%m%d')
   end
 
   def dwp_params
