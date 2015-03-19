@@ -90,7 +90,7 @@ RSpec.describe DwpChecksController, type: :controller do
 
     describe 'POST #lookup' do
 
-      before { WebMock.disable_net_connect! }
+      before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
 
       context 'valid request' do
 
