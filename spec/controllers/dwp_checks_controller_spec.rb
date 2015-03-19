@@ -99,7 +99,7 @@ RSpec.describe DwpChecksController, type: :controller do
             last_name: 'last_name',
             dob: '1980-01-01',
             ni_number: 'AB123456A',
-            date_to_check: "#{Date.today}"
+            entitlement_check_date: "#{Date.today}"
           }
         end
 
@@ -108,16 +108,16 @@ RSpec.describe DwpChecksController, type: :controller do
                   "confirmation_ref": "T1426267181940",
                   "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-            with(body: {'birth_date': '1980-01-01', 'ni_number': 'AB123456A', 'surname': 'last_name'}).
+            with(body: { "birth_date": "19800101", "entitlement_check_date": "20150319", "ni_number": "AB123456A", "surname": "LAST_NAME" }).
             to_return(status: 200, body: json, headers: {})
           post :lookup, dwp_check: dwp_params
         end
 
-        it 'should return the redirect status code' do
+        it 'returns the redirect status code' do
           expect(response.status).to eql(302)
         end
 
-        it 'should return the redirect status code' do
+        it 'returns the redirect status code' do
           expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
         end
       end
@@ -134,7 +134,7 @@ RSpec.describe DwpChecksController, type: :controller do
 
         before(:each) { post :lookup, dwp_check: dwp_params }
 
-        it 'should re-render the form' do
+        it 're-renders the form' do
           expect(response).to render_template(:new)
         end
       end
