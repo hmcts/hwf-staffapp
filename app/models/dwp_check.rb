@@ -13,7 +13,7 @@ class DwpCheck < ActiveRecord::Base
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/,
     message: 'is not valid'
-  }
+  }, allow_blank: true
 
   def date_to_check_must_be_valid
     if date_to_check.present? && (
