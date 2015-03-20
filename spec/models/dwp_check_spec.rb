@@ -24,6 +24,13 @@ RSpec.describe DwpCheck, type: :model do
       check.dob = nil
       expect(check).to be_invalid
     end
+
+    it 'requires date of birth to be in the past' do
+      check.dob = Date.today
+      expect(check).to be_invalid
+      expect(check.errors[:dob]).to eq ['must be before today']
+    end
+
     it 'require a NI number' do
       check.ni_number = nil
       expect(check).to be_invalid
