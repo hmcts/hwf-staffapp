@@ -13,6 +13,13 @@ RSpec.describe DwpCheck, type: :model do
       check.last_name = nil
       expect(check).to be_invalid
     end
+
+    it 'requires last name to be at least 2 characters' do
+      check.last_name = 'a'
+      expect(check).to be_invalid
+      expect(check.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
+    end
+
     it 'require a date of birth' do
       check.dob = nil
       expect(check).to be_invalid
