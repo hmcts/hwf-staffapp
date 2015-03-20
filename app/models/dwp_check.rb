@@ -26,9 +26,6 @@ class DwpCheck < ActiveRecord::Base
 
   def date_of_birth_must_be_valid
     if dob.present? && dob >= Date.today
-      puts '.'
-      puts 'dob is present and greater than today'
-      puts "---------#{dob}"
       errors.add(:dob, 'must be before today')
     end
   end
