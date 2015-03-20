@@ -117,7 +117,7 @@ RSpec.describe DwpChecksController, type: :controller do
           expect(response.status).to eql(302)
         end
 
-        it 'returns the redirect status code' do
+        it 'redirects to the result page' do
           expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
         end
       end
