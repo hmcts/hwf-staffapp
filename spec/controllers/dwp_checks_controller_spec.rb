@@ -108,7 +108,7 @@ RSpec.describe DwpChecksController, type: :controller do
                   "confirmation_ref": "T1426267181940",
                   "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-            with(body: { 'birth_date': '19800101', 'entitlement_check_date': Date.today.strftime('%Y%m%d'), 'ni_number': 'AB123456A', 'surname': 'LAST_NAME' }).
+            with(body: { birth_date: '19800101', entitlement_check_date: Date.today.strftime('%Y%m%d'), ni_number: 'AB123456A', surname: 'LAST_NAME' }).
             to_return(status: 200, body: json, headers: {})
           post :lookup, dwp_check: dwp_params
         end
