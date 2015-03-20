@@ -5,6 +5,7 @@ class DwpCheck < ActiveRecord::Base
   before_create :generate_unique_number
 
   validates :last_name, :dob, :ni_number, presence: true
+  validates :last_name, length: { minimum: 2 }, allow_blank: true
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/,
     message: 'is not valid'
