@@ -29,9 +29,15 @@ RSpec.describe DwpCheck, type: :model do
       expect(check).to be_invalid
     end
 
-    it 'allow a date to check to be passed' do
+    it 'allows a date to check to be passed' do
       check.date_to_check = Date.today
       expect(check).to be_valid
+    end
+
+    it 'requires date to check to be in the last three months' do
+      check.date_to_check = Date.today.-3.months.+1.day
+      expect(check).to be_invalid
+      expect(check.errors[:date_to_check]).to eq ['must be in the last 3 months']
     end
 
     it 'only allow valid NI numbers' do
