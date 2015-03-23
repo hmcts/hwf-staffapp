@@ -24,8 +24,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-
-    @user
+    respond_with(@user)
   end
 
 protected

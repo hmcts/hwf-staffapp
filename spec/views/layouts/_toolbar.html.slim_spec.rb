@@ -7,11 +7,6 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
   let(:user)          { FactoryGirl.create :user }
   let(:admin_user)    { FactoryGirl.create :admin_user }
 
-  it 'contain our header' do
-    render
-    expect(rendered).to include('Home')
-  end
-
   context 'logged out user' do
 
     before(:each) { render }
