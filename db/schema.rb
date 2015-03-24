@@ -28,8 +28,6 @@ ActiveRecord::Schema.define(version: 20150313151421) do
     t.integer  "created_by_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.string   "dwp_result"
-    t.string   "dwp_id"
   end
 
   add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
