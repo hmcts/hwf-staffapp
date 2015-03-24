@@ -39,7 +39,7 @@ gem 'foundation-rails'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 gem 'logstasher'
 
 # Use Capistrano for deployment
