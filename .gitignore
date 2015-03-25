@@ -16,6 +16,9 @@
 /log/*.json
 /tmp
 
+# Ignore .env files
+.env
+
 # coverage files
 coverage
 coverage/*
