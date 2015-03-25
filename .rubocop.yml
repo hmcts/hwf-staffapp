@@ -14,6 +14,8 @@ AllCops:
     - 'lib/tasks/cucumber.rake'
     - 'features/support/env.rb'
     - 'script/cucumber'
+    - 'lib/log_stuff.rb'
+
   RunRailsCops: true
 
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
