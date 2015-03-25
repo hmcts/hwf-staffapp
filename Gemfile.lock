@@ -131,6 +131,10 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    logstash-event (1.1.5)
+    logstasher (0.6.2)
+      logstash-event (~> 1.1.0)
+      request_store
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
@@ -196,6 +200,7 @@ GEM
       ffi (>= 0.5.0)
     rb-readline (0.5.2)
     rdoc (4.2.0)
+    request_store (1.1.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec (3.2.0)
@@ -309,6 +314,7 @@ DEPENDENCIES
   guard-rubocop
   jbuilder (~> 2.2)
   jquery-rails
+  logstasher
   pg
   rails (= 4.2.0)
   rails_12factor
