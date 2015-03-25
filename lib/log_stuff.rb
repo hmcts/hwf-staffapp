@@ -9,16 +9,16 @@ class LogStuff
 
   def self.get_thread_current(name)
     Thread.current[NAMESPACE] ||= {
-        :current_fields => {},
-        :current_tags => Set.new
+      current_fields: {},
+      current_tags: Set.new
     }
     Thread.current[NAMESPACE][name].dup
   end
 
   def self.set_thread_current(name, value)
     Thread.current[NAMESPACE] ||= {
-        :current_fields => {},
-        :current_tags => Set.new
+      current_fields: {},
+      current_tags: Set.new
     }
     Thread.current[NAMESPACE][name] = value.dup
   end
@@ -36,12 +36,12 @@ class LogStuff
     local_tags   = Set.new
     args.each do |arg|
       case arg
-        when Hash
-          local_fields.merge!(arg)
-        when Symbol
-          local_tags.add(arg)
-        when Array
-          local_tags.merge(arg)
+      when Hash
+        local_fields.merge!(arg)
+      when Symbol
+        local_tags.add(arg)
+      when Array
+        local_tags.merge(arg)
       end
     end
 
@@ -60,7 +60,7 @@ class LogStuff
     end
   end
 
-  %w( fatal error warn info debug ).each do |severity|
+  %w[fatal error warn info debug].each do |severity|
     eval <<-EOM, nil, __FILE__, __LINE__ + 1
       def self.#{severity}(*args, &block)
         self.log(:#{severity}, *args, &block )
@@ -68,7 +68,7 @@ class LogStuff
     EOM
   end
 
-  def self.tag(*tags, &block)
+  def self.tag(*tags, _block)
     original_tags = get_thread_current(:current_tags)
     current_tags = original_tags.dup + tags.flatten
     set_thread_current(:current_tags, current_tags)
@@ -76,11 +76,11 @@ class LogStuff
     set_thread_current(:current_tags, original_tags)
   end
 
-  def self.metadata(*pairs, &block)
+  def self.metadata(*pairs, _block)
     original_fields = get_thread_current(:current_fields) || {}
     current_fields = original_fields.dup
     pairs.flatten.each do |pair|
-      pair.each do |k,v|
+      pair.each do |k, v|
         current_fields[k.to_sym] = v
       end
     end
