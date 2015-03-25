@@ -13,7 +13,11 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/*.json
 /tmp
+
+# Ignore .env files
+.env
 
 # coverage files
 coverage
