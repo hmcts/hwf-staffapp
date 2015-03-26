@@ -84,4 +84,60 @@ RSpec.describe DwpChecksController, type: :controller do
       end
     end
   end
+
+  context 'logged in as standard user' do
+    before(:each) { sign_in user }
+
+    describe 'POST #lookup' do
+
+      before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
+
+      context 'valid request' do
+
+        let(:dwp_params) do
+          {
+            last_name: 'last_name',
+            dob: '1980-01-01',
+            ni_number: 'AB123456A',
+            entitlement_check_date: "#{Date.today}"
+          }
+        end
+
+        before(:each) do
+          json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
+                  "confirmation_ref": "T1426267181940",
+                  "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
+          stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+            with(body: { birth_date: '19800101', entitlement_check_date: Date.today.strftime('%Y%m%d'), ni_number: 'AB123456A', surname: 'LAST_NAME' }).
+            to_return(status: 200, body: json, headers: {})
+          post :lookup, dwp_check: dwp_params
+        end
+
+        it 'returns the redirect status code' do
+          expect(response.status).to eql(302)
+        end
+
+        it 'redirects to the result page' do
+          expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
+        end
+      end
+
+      context 'invalid request' do
+        let(:dwp_params) do
+          {
+            last_name: 'last_name',
+            dob: '1980-01-01',
+            ni_number: '',
+            date_to_check: "#{Date.today}"
+          }
+        end
+
+        before(:each) { post :lookup, dwp_check: dwp_params }
+
+        it 're-renders the form' do
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
 end

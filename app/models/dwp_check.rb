@@ -5,10 +5,30 @@ class DwpCheck < ActiveRecord::Base
   before_create :generate_unique_number
 
   validates :last_name, :dob, :ni_number, presence: true
+  validates :last_name, length: { minimum: 2 }, allow_blank: true
+
+  validate :date_to_check_must_be_valid
+  validate :date_of_birth_must_be_valid
+
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/,
     message: 'is not valid'
-  }
+  }, allow_blank: true
+
+  def date_to_check_must_be_valid
+    if date_to_check.present? && (
+      date_to_check > Date.today ||
+      date_to_check < Date.today - 3.months
+    )
+      errors.add(:date_to_check, 'must be in the last 3 months')
+    end
+  end
+
+  def date_of_birth_must_be_valid
+    if dob.present? && dob >= Date.today
+      errors.add(:dob, 'must be before today')
+    end
+  end
 
   def ni_number=(val)
     if val.nil?
