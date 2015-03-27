@@ -9,4 +9,4 @@ RUN apt-get update && apt-get install -y
 
 EXPOSE $UNICORN_PORT
 
-CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
+CMD ./run.sh
