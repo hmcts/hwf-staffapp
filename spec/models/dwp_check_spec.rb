@@ -13,18 +13,38 @@ RSpec.describe DwpCheck, type: :model do
       check.last_name = nil
       expect(check).to be_invalid
     end
+
+    it 'requires last name to be at least 2 characters' do
+      check.last_name = 'a'
+      expect(check).to be_invalid
+      expect(check.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
+    end
+
     it 'require a date of birth' do
       check.dob = nil
       expect(check).to be_invalid
     end
+
+    it 'requires date of birth to be in the past' do
+      check.dob = Date.today
+      expect(check).to be_invalid
+      expect(check.errors[:dob]).to eq ['must be before today']
+    end
+
     it 'require a NI number' do
       check.ni_number = nil
       expect(check).to be_invalid
     end
 
-    it 'allow a date to check to be passed' do
+    it 'allows a date to check to be passed' do
       check.date_to_check = Date.today
       expect(check).to be_valid
+    end
+
+    it 'requires date to check to be in the last three months' do
+      check.date_to_check = Date.today.-3.months.+1.day
+      expect(check).to be_invalid
+      expect(check.errors[:date_to_check]).to eq ['must be in the last 3 months']
     end
 
     it 'only allow valid NI numbers' do
