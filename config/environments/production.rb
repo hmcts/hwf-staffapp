@@ -76,6 +76,13 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # Custom Logging
+  config.logstasher.enabled = true
+  config.logstasher.suppress_app_log = true
+  config.logstasher.log_level = Logger::INFO
+  config.logstasher.logger_path = "#{Rails.root}/log/logstash_#{Rails.env}.json"
+  config.logstasher.source = 'logstasher'
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
