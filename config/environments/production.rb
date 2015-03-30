@@ -80,19 +80,19 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.after_initialize do
-    sending_host = ENV['SENDING_HOST'] || 'localhost'
+    smtp_domain = ENV['SMTP_DOMAIN'] || 'localhost'
 
-    ActionMailer::Base.default_url_options = { host: sending_host, protocol: ENV['SMTP_PROTOCOL'] }
-    ActionMailer::Base.default from: Settings.mail_from
-    ActionMailer::Base.default reply_to: Settings.mail_reply_to
+    ActionMailer::Base.default_url_options = { host: smtp_domain, protocol:  ENV['SMTP_PROTOCOL'] || 'http' }
+    ActionMailer::Base.default :from => Settings.mail_from
+    ActionMailer::Base.default :reply_to => Settings.mail_reply_to
     ActionMailer::Base.smtp_settings = {
-      address:              'smtp.sendgrid.net',
-      port:                 '587',
-      authentication:       :login,
-      user_name:            ENV['SENDGRID_USERNAME'],
-      password:             ENV['SENDGRID_PASSWORD'],
-      domain:               ENV['SMTP_DOMAIN'],
-      enable_starttls_auto: true
+        address: ENV['SMTP_HOSTNAME'] || 'localhost',
+        port: ENV['SMTP_PORT'] || 587,
+        domain: smtp_domain,
+        user_name: ENV['SMTP_USERNAME'] || '',
+        password: ENV['SMTP_PASSWORD'] || '',
+        authentication: :login,
+        enable_starttls_auto: true
     }
   end
 end
