@@ -40,6 +40,7 @@ gem 'foundation-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+gem 'logstasher'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
