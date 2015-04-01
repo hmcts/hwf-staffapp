@@ -19,3 +19,6 @@
 # coverage files
 coverage
 coverage/*
+
+
+/.vagrant/*
