@@ -1,6 +1,8 @@
 language: ruby
 rvm:
 - ruby-2.2.1
+env:
+-RUBY_VERSION=ruby-2.2.1
 before_install:
 - sudo apt-get update -qq
 before_script:
