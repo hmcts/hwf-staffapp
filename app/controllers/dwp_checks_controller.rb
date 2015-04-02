@@ -30,6 +30,8 @@ private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
+    @dwp_checker.dob = process_incoming_date(dwp_params[:dob])
+    @dwp_checker.date_to_check = process_incoming_date(dwp_params[:date_to_check])
   end
 
   def process_dwp_check
@@ -47,6 +49,14 @@ private
     }
     response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
     JSON.parse(response)['benefit_checker_status']
+  end
+
+  def process_incoming_date(date_str)
+    return nil if date_str.blank?
+    Date.parse(date_str)
+  rescue
+    format_str = "%d/%m/" + (date_str =~ /\d{4}/ ? "%Y" : "%y")
+    Date.strptime(date_str, format_str)
   end
 
   def process_check_date
