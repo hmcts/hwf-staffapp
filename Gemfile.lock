@@ -102,6 +102,8 @@ GEM
       sass (>= 3.3.0, < 3.5)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
+    groupdate (2.4.0)
+      activesupport (>= 3)
     guard (2.12.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -317,6 +319,7 @@ DEPENDENCIES
   devise_invitable
   factory_girl_rails
   foundation-rails
+  groupdate
   guard-rspec
   guard-rubocop
   jbuilder (~> 2.2)
