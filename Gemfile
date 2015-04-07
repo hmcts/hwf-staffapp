@@ -76,3 +76,5 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'rest-client'
+gem 'chartkick'
+gem 'groupdate'

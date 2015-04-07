@@ -1,8 +1,9 @@
 h2 Dashboard
 -if current_user.present?
   -if current_user.admin?
-    |Show admin dashboard with whizzy graphs and informative stuff here.
+    = pie_chart DwpCheck.group(:dwp_result).count, { library: { is3D: true, title: 'All time responses by type' } }
+    = column_chart DwpCheck.group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.-6.days)).count, { library: { is3D: true, title: 'Checks made by date (last 7 days)' } }
   -else
-    |Show users their outstanding work here.
+    |Define a user dashboard requirement.
 -else
   |This system is restricted to authorised staff only, please contact #{link_to 'support', "mailto:#{Settings.mail_tech_support}"} if you feel you should have access.
