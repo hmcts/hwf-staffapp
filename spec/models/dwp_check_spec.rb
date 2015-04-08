@@ -12,7 +12,7 @@ RSpec.describe DwpCheck, type: :model do
       check.created_by = FactoryGirl.create(:user, name: 'Test User')
       check.save!
       expect(check).to be_valid
-      check_val = "TestUser@#{check.created_at.strftime('%y%m%d%H%M')}.#{check.unique_number}"
+      check_val = "testuser@#{check.created_at.strftime('%y%m%d%H%M')}.#{check.unique_number}"
       expect(check.unique_token).to eql(check_val)
     end
   end
