@@ -15,7 +15,6 @@ RSpec.feature 'Undertake benefit check', type: :feature do
                  "confirmation_ref": "T1426267181940",
                  "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
         stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-          with(body: { birth_date: '19800101', entitlement_check_date: Date.today.strftime('%Y%m%d'), ni_number: 'AB123456A', surname: 'BRUCE' }).
           to_return(status: 200, body: json, headers: {})
       end
 
@@ -28,7 +27,6 @@ RSpec.feature 'Undertake benefit check', type: :feature do
         fill_in 'dwp_check_dob', with: '01/01/1980'
         fill_in 'dwp_check_ni_number', with: 'AB123456A'
         click_button 'Check'
-
         expect(page).to have_css('div.dwp-value', text: 'AB123456A', count: 1)
         expect(page).to have_css('div.callout > span.number', text: /[Bb]enefits/, count: 1)
       end
