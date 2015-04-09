@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150417125341) do
     t.decimal  "income"
     t.decimal  "remittance"
     t.decimal  "to_pay"
+    t.string   "type"
     t.integer  "created_by_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
