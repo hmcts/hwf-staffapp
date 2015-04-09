@@ -7,6 +7,7 @@ class CreateR2Calculators < ActiveRecord::Migration
       t.decimal :income
       t.decimal :remittance
       t.decimal :to_pay
+      t.string :type
       t.references :created_by, references: :users, index: true
 
       t.timestamps null: false
