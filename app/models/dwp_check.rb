@@ -41,7 +41,7 @@ class DwpCheck < ActiveRecord::Base
   def unique_token
     return '' unless persisted?
     short_name = created_by.name.gsub(' ', '').downcase
-    "#{short_name.truncate(29)}@#{created_at.strftime('%y%m%d%H%M')}.#{unique_number}"
+    "#{short_name.truncate(27)}@#{created_at.strftime('%y%m%d%H%M%S')}.#{unique_number}"
   end
 
 private
