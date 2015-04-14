@@ -26,7 +26,10 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
       sign_in user
       render
     end
-
+    it 'can see an income check link' do
+      expect(rendered).to include('Income check')
+      assert_select 'a', text: t('descriptors.r2_calculator').to_s, count:  1
+    end
     it 'see offices' do
       expect(rendered).to_not include('Offices')
     end

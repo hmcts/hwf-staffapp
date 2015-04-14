@@ -3,6 +3,7 @@
     dl.sub-nav
       dd
         =link_to 'DWP check', new_dwp_checks_path
+        =link_to t('descriptors.r2_calculator').to_s, calculator_income_path
       -if current_user.admin?
         dd.right
           =link_to 'Users', users_path
