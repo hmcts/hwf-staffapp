@@ -1,0 +1,46 @@
+h2 Income check
+
+#r2_calculator
+  .row
+    .small-12.medium-3.large-3.columns
+      label for='r2_fee' Fee
+      .row.collapse.prefix-radius
+        .small-2.medium-2.large-3.columns
+          span.prefix
+            label.inline for='r2_fee' £
+        .small-10.medium-10.large-9.columns style="padding:0px;"
+          input id="r2_fee" name="r2_fee" type="number"
+  .row
+    .small-12.medium-6.large-5.columns
+      .row
+        .small-12.columns
+          label for='couple-no'
+            input id='couple-no' name="couple" type="radio" value='false'
+            |  Single
+          label for='couple-yes'
+            input id='couple-yes' name="couple" type="radio" value='true'
+            |  Part of a couple
+  .row
+    .small-12.medium-6.large-5.columns
+      label.inline
+        | Number of children
+        .row
+          .columns.small-3
+            input type="number" min=0
+  .row
+    .small-12.medium-3.large-3.columns
+      label for='r2_income'
+        | Total monthly income
+      .small-2.medium-2.large-3.columns style="padding:0px;"
+        span.prefix £
+      .small-10.medium-10.large-9.columns style="padding:0px;"
+        input name="r2_income" id="r2_income" type="number"
+  .row
+    .small-12.medium-8.large-5.columns
+      a.button.small.no_selection Check
+
+  .row
+    .small-12.medium-7.large-7.columns
+      .panel.callout
+        p Amount remitted: {{ feeRemitted() | currency:"£" }}
+        p Amount to pay: {{ feePayable() | currency:"£" }}
