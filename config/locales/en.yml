@@ -21,6 +21,8 @@
 
 en:
   hello: "Hello world"
+  descriptors:
+    r2_calculator: 'Income check'
   activerecord:
     attributes:
       dwp_check:
@@ -28,3 +30,4 @@ en:
         ni_number: 'National Insurance number'
         dob: 'Date of birth'
         date_to_check: 'Date application made'
+      r2_calculator:
