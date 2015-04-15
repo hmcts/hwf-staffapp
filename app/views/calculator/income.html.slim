@@ -12,7 +12,7 @@ h2 Income check
           input data-check='fee' id="fee" name="fee" type="number"
         small.error data-check-error='fee' Please enter a fee value
   .row
-    .small-12.medium-6.large-5.columns
+    .small-12.medium-3.large-3.columns
       .row
         .small-12.columns
           label for='couple-no'
@@ -54,6 +54,7 @@ h2 Income check
       p
         |Amount to pay:
         span#fee-payable
+      span#json-result
 .row
   .small-12.medium-8.large-5.columns
     a.button.small.success.no_selection#clear_btn Perform new check
@@ -65,7 +66,6 @@ javascript:
 
   $(document).ready(function () {
     $('dl.sub-nav dd#income-calc').addClass('active');
-    console.log('doc ready');
     setupPage();
     $('#check_btn').on('click', function () {
       if (checkValidation()) {
@@ -79,21 +79,21 @@ javascript:
 
   function calculate() {
     var $children_val = $('#children').val() * $pp_child;
-    var $add_single_supp = $("input:radio[name=couple]").val()=='false' ? 0 : $couple_supp ;
-    var $check_val = $('#income').val()-($min_val + $children_val + $add_single_supp);
+    var $add_single_supp = $("input:radio[name=couple]").val() == 'false' ? 0 : $couple_supp;
+    var $check_val = $('#income').val() - ($min_val + $children_val + $add_single_supp);
     var $curr_fee = parseFloat($('#fee').val());
 
-    if($check_val>4000) {
+    var $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee);
+    var $remittance = Math.max($curr_fee - $max_to_pay, 0);
+
+    if ($check_val > 4000) {
       $('#fee-payable').text(formatCurrency($curr_fee));
       $('#fee-remit').text('£0');
     } else {
-      var $max_to_pay = Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0);
-      var $remittance = Math.max($curr_fee - $max_to_pay, 0);
-
       $('#fee-payable').text(formatCurrency($max_to_pay));
       $('#fee-remit').text(formatCurrency($remittance));
     }
-    sendToDatabase();
+    sendToDatabase($remittance, $max_to_pay);
     $('.panel.callout').show();
     $('#check_btn').hide();
     $('#clear_btn').show();
@@ -104,9 +104,29 @@ javascript:
     return '£' + val.toFixed(2);
   }
 
-  function sendToDatabase() {
-    //do stuff here
-    console.log('Send data to DB here');
+  function sendToDatabase(remit, pay) {
+    $.ajax({
+      method: "POST",
+      url: "#{Rails.application.routes.url_helpers.calculator_record_search_path}",
+      data: {
+        r2_calculator: {
+          fee: $('#fee').val(),
+          married: $("input:radio[name=couple]").val() == 'true',
+          children: $('#children').val(),
+          income: $('#income').val(),
+          remittance: remit,
+          to_pay: pay
+        }
+      },
+      success: function (data) {
+        $('#json-result').text('Check ' + data.id + ' saved');
+        return false;
+      },
+      error: function (data) {
+        $('#json-result').text('Save failed with ' + data.errors.count + ' errors');
+        alert("error");
+      }
+    });
   }
 
   function checkValidation() {
@@ -121,10 +141,8 @@ javascript:
     });
     return ($('small.error:visible').length == 0)
   }
-  ;
 
   function setupPage() {
-    console.log('setupPage');
     $('.panel.callout').hide();
     $('#r2_calculator :input').attr('disabled', false);
     $('#check_btn').show();
@@ -136,4 +154,3 @@ javascript:
     $('#couple-no').prop('checked', false);
     $('.error').addClass('hide');
   }
-  ;
