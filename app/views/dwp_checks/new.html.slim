@@ -34,3 +34,7 @@ h2 Check benefits status
       .form-group
         = f.submit 'Check', :id => 'save', :class => 'button small success'
 
+javascript:
+  $(document).ready(function () {
+    $('dl.sub-nav dd#dwp-check').addClass('active')
+  });
