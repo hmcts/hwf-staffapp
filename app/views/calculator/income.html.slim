@@ -3,13 +3,14 @@ h2 Income check
 #r2_calculator
   .row
     .small-12.medium-3.large-3.columns
-      label for='r2_fee' Fee
+      label for='fee' Fee
       .row.collapse.prefix-radius
         .small-2.medium-2.large-3.columns
           span.prefix
-            label.inline for='r2_fee' £
+            label.inline for='fee' £
         .small-10.medium-10.large-9.columns style="padding:0px;"
-          input id="r2_fee" name="r2_fee" type="number"
+          input data-check='fee' id="fee" name="fee" type="number"
+        small.error data-check-error='fee' Please enter a fee value
   .row
     .small-12.medium-6.large-5.columns
       .row
@@ -18,29 +19,113 @@ h2 Income check
             input id='couple-no' name="couple" type="radio" value='false'
             |  Single
           label for='couple-yes'
-            input id='couple-yes' name="couple" type="radio" value='true'
+            input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
             |  Part of a couple
-  .row
-    .small-12.medium-6.large-5.columns
-      label.inline
-        | Number of children
-        .row
-          .columns.small-3
-            input type="number" min=0
-  .row
-    .small-12.medium-3.large-3.columns
-      label for='r2_income'
-        | Total monthly income
-      .small-2.medium-2.large-3.columns style="padding:0px;"
-        span.prefix £
-      .small-10.medium-10.large-9.columns style="padding:0px;"
-        input name="r2_income" id="r2_income" type="number"
-  .row
-    .small-12.medium-8.large-5.columns
-      a.button.small.no_selection Check
+      small.error data-check-error='couple' Please select a marital status
 
   .row
-    .small-12.medium-7.large-7.columns
-      .panel.callout
-        p Amount remitted: {{ feeRemitted() | currency:"£" }}
-        p Amount to pay: {{ feePayable() | currency:"£" }}
+    .small-12.medium-6.large-5.columns
+      label for='children' Number of children
+      .row
+        .columns.small-3
+          input data-check='children' id='children' type="number" min=0
+      small.error data-check-error='children' Please select a number of children
+
+  .row
+    .small-12.medium-3.large-3.columns
+      label for='income' Total monthly income
+      .row.collapse.prefix-radius
+        .small-2.medium-2.large-3.columns
+          span.prefix
+            label.inline for='income' £
+        .small-10.medium-10.large-9.columns
+          input data-check='income' name="income" id="income" type="number"
+        small.error data-check-error='income' Please enter an income
+
+.row
+  .small-12.medium-8.large-5.columns
+    a.button.small.no_selection#check_btn Check
+.row
+  .small-12.medium-7.large-7.columns
+    .panel.callout
+      p
+        |Amount remitted:
+        span#fee-remit
+      p
+        |Amount to pay:
+        span#fee-payable
+.row
+  .small-12.medium-8.large-5.columns
+    a.button.small.success.no_selection#clear_btn Perform new check
+
+javascript:
+  var $min_val = 1085;
+  var $pp_child = 245;
+  var $couple_supp = 160;
+
+  $(document).ready(function () {
+    console.log('doc ready');
+    setupPage();
+    $('dl.sub-nav dd#income-calc').addClass('active');
+    $('#check_btn').on('click', function () {
+      if (checkValidation()) {
+        calculate();
+      }
+    });
+    $('#clear_btn').on('click', function () {
+      setupPage();
+    });
+  });
+
+  function calculate() {
+    $children_val = $('#children').val() * $pp_child;
+    $add_single_supp = $("input:radio[name=couple]").val()=='false' ? 0 : $couple_supp ;
+    $check_val = $('#income').val()-($min_val+$children_val+$add_single_supp);
+
+    if($check_val>4000) {
+      alert('Not eligible');
+    } else {
+
+      $max_to_pay = Math.max(Math.floor($check_val/10)*10*0.5,0);
+      $('#fee-payable').val($max_to_pay.to_s);
+      sendToDatabase();
+      $('.panel.callout').show();
+      $('#check_btn').hide();
+      $('#clear_btn').show();
+      $('#r2_calculator :input').attr('disabled', true);
+    }
+  }
+
+  function sendToDatabase() {
+    //do stuff here
+    console.log('do stuff here');
+  }
+
+  function checkValidation() {
+    $("input[data-check]").each(function () {
+      test = $(this);
+      error = $('small.error[data-check-error=' + test.data('check') + ']');
+      if ((test.val().length == 0) || (test.is(":radio") && $('input[name=' + test.attr('name') + ']:checked').val() == undefined)) {
+        error.removeClass('hide');
+      } else {
+        error.addClass('hide');
+      }
+    });
+    return ($('small.error:visible').length == 0)
+  }
+  ;
+
+  function setupPage() {
+    console.log('setupPage');
+    $('.panel.callout').hide();
+    $('#r2_calculator :input').attr('disabled', false);
+    $('#check_btn').show();
+    $('#clear_btn').hide();
+    $('#fee').val('');
+    $('#children').val('0');
+    $('#income').val('');
+    $('#couple-yes').prop('checked', false);
+    $('#couple-no').prop('checked', false);
+    $('.error').addClass('hide');
+  }
+  ;
