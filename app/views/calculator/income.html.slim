@@ -64,9 +64,9 @@ javascript:
   var $couple_supp = 160;
 
   $(document).ready(function () {
+    $('dl.sub-nav dd#income-calc').addClass('active');
     console.log('doc ready');
     setupPage();
-    $('dl.sub-nav dd#income-calc').addClass('active');
     $('#check_btn').on('click', function () {
       if (checkValidation()) {
         calculate();
@@ -78,27 +78,35 @@ javascript:
   });
 
   function calculate() {
-    $children_val = $('#children').val() * $pp_child;
-    $add_single_supp = $("input:radio[name=couple]").val()=='false' ? 0 : $couple_supp ;
-    $check_val = $('#income').val()-($min_val+$children_val+$add_single_supp);
+    var $children_val = $('#children').val() * $pp_child;
+    var $add_single_supp = $("input:radio[name=couple]").val()=='false' ? 0 : $couple_supp ;
+    var $check_val = $('#income').val()-($min_val + $children_val + $add_single_supp);
+    var $curr_fee = parseFloat($('#fee').val());
 
     if($check_val>4000) {
-      alert('Not eligible');
+      $('#fee-payable').text(formatCurrency($curr_fee));
+      $('#fee-remit').text('£0');
     } else {
+      var $max_to_pay = Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0);
+      var $remittance = Math.max($curr_fee - $max_to_pay, 0);
 
-      $max_to_pay = Math.max(Math.floor($check_val/10)*10*0.5,0);
-      $('#fee-payable').val($max_to_pay.to_s);
-      sendToDatabase();
-      $('.panel.callout').show();
-      $('#check_btn').hide();
-      $('#clear_btn').show();
-      $('#r2_calculator :input').attr('disabled', true);
+      $('#fee-payable').text(formatCurrency($max_to_pay));
+      $('#fee-remit').text(formatCurrency($remittance));
     }
+    sendToDatabase();
+    $('.panel.callout').show();
+    $('#check_btn').hide();
+    $('#clear_btn').show();
+    $('#r2_calculator :input').attr('disabled', true);
+  }
+
+  function formatCurrency(val) {
+    return '£' + val.toFixed(2);
   }
 
   function sendToDatabase() {
     //do stuff here
-    console.log('do stuff here');
+    console.log('Send data to DB here');
   }
 
   function checkValidation() {
