@@ -12,9 +12,9 @@ class CalculatorController < ApplicationController
 
     respond_to do |format|
       if @r2_calculator.save
-        format.json { render json: @r2_calculator, status: :created}
+        format.json { render json: @r2_calculator, status: :created }
       else
-        format.json { render json: @r2_calculator.errors, status: :unprocessable_entity}
+        format.json { render json: @r2_calculator.errors, status: :unprocessable_entity }
       end
     end
   end
