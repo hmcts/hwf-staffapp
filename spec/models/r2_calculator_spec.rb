@@ -60,4 +60,27 @@ RSpec.describe R2Calculator, type: :model do
       expect(r2_calc.to_pay + r2_calc.remittance).to eql(r2_calc.fee)
     end
   end
+  describe 'responds' do
+    it 'to type' do
+      expect(r2_calc).to respond_to(:type)
+    end
+  end
+  describe 'types' do
+    it 'returns none if remittance is zero' do
+      r2_calc.remittance = 0
+      r2_calc.to_pay = 9.99
+      expect(r2_calc.type).to eql('None')
+    end
+    it 'returns part if remittance and to_pay have values' do
+      r2_calc.remittance = 4.44
+      r2_calc.to_pay = 5.55
+      expect(r2_calc.type).to eql('Part')
+    end
+    it 'returns full if to_pay has a value and remittance is zero' do
+      r2_calc.remittance = 9.99
+      r2_calc.to_pay = 0
+      expect(r2_calc).to be_valid
+      expect(r2_calc.type).to eql('Full')
+    end
+  end
 end
