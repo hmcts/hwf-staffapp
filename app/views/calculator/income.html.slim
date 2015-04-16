@@ -54,11 +54,11 @@ h2 Income check
       p
         |Amount to pay:
         span#fee-payable
-      span#json-result
 .row
-  .small-12.medium-8.large-5.columns
+  .small-12.columns
     a.button.small.success.no_selection#clear_btn Perform new check
-
+  .small-12.columns
+    #json-result
 javascript:
   var $min_val = 1085;
   var $pp_child = 245;
@@ -108,6 +108,7 @@ javascript:
     $.ajax({
       method: "POST",
       url: "#{Rails.application.routes.url_helpers.calculator_record_search_path}",
+      dataType: "json",
       data: {
         r2_calculator: {
           fee: $('#fee').val(),
@@ -119,7 +120,7 @@ javascript:
         }
       },
       success: function (data) {
-        $('#json-result').text('Check ' + data.id + ' saved');
+        $('#json-result').text('Check recorded');
         return false;
       },
       error: function (data) {
