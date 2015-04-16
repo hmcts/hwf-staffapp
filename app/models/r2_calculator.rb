@@ -10,6 +10,7 @@ class R2Calculator < ActiveRecord::Base
     :to_pay,
     numericality: { greater_than_or_equal_to: 0 }
   validate :fee_equals_remittance_and_to_pay
+  before_save :build_type
 
   def fee_equals_remittance_and_to_pay
     return '' if remittance.blank? || to_pay.blank?
@@ -19,22 +20,30 @@ class R2Calculator < ActiveRecord::Base
   end
 
   def full?
-    to_pay == 0 && remittance > 0
+    :type == 'Full'
   end
 
   def part?
-    to_pay > 0 && remittance > 0
+    :type == 'Part'
   end
 
   def none?
-    to_pay > 0 && remittance == 0
+    :type == 'None'
   end
 
-  def type
-    return 'Invalid' if self.invalid?
-    return 'None' if none?
-    return 'Part' if part?
-    return 'Full' if full?
-    'Error'
+private
+
+  def build_type
+    if to_pay == 0.00
+      type = 'Full'
+    else
+      if remittance > 0.00
+        type = 'Part'
+      else
+        type = 'None'
+      end
+    end
+    self.type = type
   end
+
 end
