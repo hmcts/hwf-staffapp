@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150417125341) do
     t.integer  "created_by_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "type"
   end
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
