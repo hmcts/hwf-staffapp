@@ -17,4 +17,24 @@ class R2Calculator < ActiveRecord::Base
       errors.add(:base, 'remittances must equal fee')
     end
   end
+
+  def full?
+    to_pay == 0 && remittance > 0
+  end
+
+  def part?
+    to_pay > 0 && remittance > 0
+  end
+
+  def none?
+    to_pay > 0 && remittance == 0
+  end
+
+  def type
+    return 'Invalid' if self.invalid?
+    return 'None' if none?
+    return 'Part' if part?
+    return 'Full' if full?
+    'Error'
+  end
 end
