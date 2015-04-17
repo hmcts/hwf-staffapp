@@ -19,7 +19,7 @@ RSpec.feature 'User can accept invite', type: :feature do
 
       click_button 'Set my password'
 
-      expect(page).to have_css('h2', text: 'Dashboard', count: 1)
+      expect(page).to have_css('div', text: 'dashboard', count: 2)
       expect(page).to have_css('div.alert-box.notice', count: 1)
       expect(page).to have_css('div.alert-box.notice', text: 'Your password was set successfully. You are now signed in.')
     end
