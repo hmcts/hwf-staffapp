@@ -14,5 +14,8 @@ h2
   .form-group
     = f.label(:roles, 'Role')
     = f.collection_select :role, User::ROLES, :to_s, :humanize
+  .form-group
+    = f.label(:office, 'Office')
+    = f.collection_select :office, Office.all, :id, :name
   p
     = f.submit t("devise.invitations.new.submit_button")

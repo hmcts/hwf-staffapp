@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  belongs_to :office
 
   ROLES = %w[admin user]
   # Include default devise modules. Others available are:

@@ -6,6 +6,7 @@ RSpec.feature 'Office management', type: :feature do
   Warden.test_mode!
 
   let(:admin_user)    { FactoryGirl.create :admin_user }
+  let!(:offices)      { Office.create!(name: 'Bristol') }
 
   context 'Admin user' do
     scenario 'invites a user' do
@@ -18,6 +19,7 @@ RSpec.feature 'Office management', type: :feature do
       fill_in 'user_email', with: new_email
       fill_in 'user_name', with: new_name
       select('User', from: 'user_role')
+      select('Bristol', from: 'user_office')
 
       click_button 'Send an invitation'
 
