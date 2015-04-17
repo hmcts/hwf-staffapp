@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326131421) do
+ActiveRecord::Schema.define(version: 20150416130439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,21 @@ ActiveRecord::Schema.define(version: 20150326131421) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "r2_calculators", force: :cascade do |t|
+    t.decimal  "fee"
+    t.boolean  "married"
+    t.integer  "children"
+    t.decimal  "income"
+    t.decimal  "remittance"
+    t.decimal  "to_pay"
+    t.integer  "created_by_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "type"
+  end
+
+  add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -70,4 +85,5 @@ ActiveRecord::Schema.define(version: 20150326131421) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "r2_calculators", "users", column: "created_by_id"
 end
