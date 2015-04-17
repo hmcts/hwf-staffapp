@@ -7,7 +7,7 @@ class CalculatorController < ApplicationController
   end
 
   def record_search
-    authorize! :record_search, R2Calculator
+    authorize! :create, R2Calculator
     @r2_calculator = create_from_params
 
     respond_to do |format|
