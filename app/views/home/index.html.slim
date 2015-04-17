@@ -4,9 +4,9 @@ h2 Dashboard
     = pie_chart DwpCheck.group(:dwp_result).count, { library: { is3D: true, title: 'All time responses by type' } }
     .row
       .columns.small-6
-        = column_chart DwpCheck.group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.-6.days)).count, { library: { title: 'Checks made by date (last 7 days)', vAxis: { ticks: [0,1,2,3,4,5,6,7,8,9,10], format: '#' } } }
+        = column_chart DwpCheck.group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.-6.days)).count, { library: { title: 'Remission 1 checks (last 7 days)', vAxis: { ticks: [0,1,2,3,4,5,6,7,8,9,10], format: '#' } } }
       .columns.small-6
-        = column_chart R2Calculator.group(:type).group_by_day(:created_at, format: "%d %b %y").count, { library: { isStacked: true, title: 'Remission 2', vAxis: { format: '#' } } }
+        = column_chart R2Calculator.group(:type).group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.-6.days)).count, { library: { isStacked: true, title: 'Remission 2 (last 7 days)', vAxis: { format: '#' } } }
   -else
     |Define a user dashboard requirement.
 -else
