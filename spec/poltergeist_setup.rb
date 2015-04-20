@@ -6,6 +6,12 @@ Capybara.default_wait_time = 5
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
     timeout: 60,
-    phantomjs_options: ['--ignore-ssl-errors=yes', '--ssl-protocol=tlsv1']
+    logger: nil,
+    js_errors: false,
+    phantomjs_options: [
+      '--load-images=no',
+      '--ignore-ssl-errors=yes',
+      '--ssl-protocol=tlsv1'
+    ]
   )
 end
