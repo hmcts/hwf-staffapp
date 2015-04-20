@@ -7,6 +7,8 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
     timeout: 60,
     logger: nil,
+    inspector: true,
+    debug: false,
     js_errors: false,
     phantomjs_options: [
       '--load-images=no',
