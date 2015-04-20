@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'calculator/income' => 'calculator#income'
+  post 'calculator/record_search' => 'calculator#record_search'
+
   get 'dwp_checks' => 'dwp_checks#new', as: 'new_dwp_checks'
   post 'dwp_checks/lookup'
   get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
