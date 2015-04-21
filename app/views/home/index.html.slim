@@ -5,13 +5,13 @@
       h2 Total
       .columns.small-12
         = column_chart DwpCheck.group(:dwp_result).count, { library: { title: 'All time responses by type', width:'200px' } }
-    -Office.where('name!=?', 'Digital').each do |office|
-      .row.small-collapse
-        .columns.small-12.medium-6
-          h3 #{office.name} R1 chart
-          = column_chart @checks_by_day, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
-        .columns.small-12.medium-6
-          h3 R2 chart
+    .row.small-collapse
+      .columns.small-12.medium-6
+        h3 #{current_user.office.name} R1 chart
+        = column_chart @checks_by_day, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
+      .columns.small-12.medium-6
+        h3 R2 chart
+        = column_chart @r2_checks, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
   -else
     |Define a user dashboard requirement.
 -else
