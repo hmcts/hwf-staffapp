@@ -87,6 +87,7 @@ RSpec.describe R2Calculator, type: :model do
   end
 
   describe 'scopes' do
+    before(:each) { described_class.delete_all }
     describe 'checks_by_day' do
       let!(:old_check) do
         old = FactoryGirl.create :r2_calculator
