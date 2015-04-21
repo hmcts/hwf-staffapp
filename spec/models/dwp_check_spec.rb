@@ -70,7 +70,7 @@ RSpec.describe DwpCheck, type: :model do
   end
 
   context 'scopes' do
-    before(:each) { DwpCheck.delete_all }
+    before(:each) { described_class.delete_all }
 
     describe 'checks_by_day' do
       let!(:old_check) do
@@ -82,8 +82,8 @@ RSpec.describe DwpCheck, type: :model do
         check.update(created_at: "#{Date.today.-5.days}")
       end
 
-      it 'should find only checks for the past week' do
-        expect(DwpCheck.checks_by_day.count).to eq 1
+      it 'finds only checks for the past week' do
+        expect(described_class.checks_by_day.count).to eq 1
       end
     end
 
@@ -110,9 +110,9 @@ RSpec.describe DwpCheck, type: :model do
         check.update(created_by_id: another_user.id)
       end
 
-      it 'should list all the checks from the same office' do
-        expect(DwpCheck.by_office(user.office_id).count).to eq 1
-        expect(DwpCheck.by_office(another_user.office_id).count).to eq 1
+      it 'lists all the checks from the same office' do
+        expect(described_class.by_office(user.office_id).count).to eq 1
+        expect(described_class.by_office(another_user.office_id).count).to eq 1
       end
     end
   end
