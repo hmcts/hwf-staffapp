@@ -15,6 +15,22 @@ class DwpCheck < ActiveRecord::Base
     message: 'is not valid'
   }, allow_blank: true
 
+  scope :checks_by_day, lambda {
+    group_by_day('dwp_checks.created_at', format: "%d %b %y").
+      where('dwp_checks.created_at > ?', (Date.today.-6.days)).count
+  }
+
+  scope :by_office, lambda { |office_id|
+    joins('left outer join users on dwp_checks.created_by_id = users.id').
+      where('users.office_id = ?', office_id)
+  }
+  scope :by_office_grouped_by_type, lambda { |office_id|
+    joins('left outer join users on dwp_checks.created_by_id = users.id').
+      where('users.office_id = ?', office_id).
+      group(:dwp_result).
+      order('length(dwp_result)')
+  }
+
   def date_to_check_must_be_valid
     if date_to_check.present? && (
       date_to_check > Date.today ||

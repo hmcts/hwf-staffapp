@@ -8,7 +8,6 @@ html[lang="en"]
     = stylesheet_link_tag    "application"
     = javascript_include_tag "vendor/modernizr"
     = javascript_include_tag "application"
-    = javascript_include_tag "//www.google.com/jsapi", "chartkick"
     = yield(:javascript) if content_for?(:javascript)
     = csrf_meta_tags
   body

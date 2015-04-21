@@ -9,6 +9,6 @@ RSpec.describe "home/index.html.slim", type: :view do
   it 'contain our dashboard header' do
     sign_in user
     render
-    expect(rendered).to include('Dashboard')
+    expect(rendered).to include('dashboard')
   end
 end
