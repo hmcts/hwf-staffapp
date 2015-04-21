@@ -115,5 +115,24 @@ RSpec.describe DwpCheck, type: :model do
         expect(described_class.by_office(another_user.office_id).count).to eq 1
       end
     end
+    describe 'by_office_grouped_by_type' do
+      let!(:user) do
+        user = FactoryGirl.create :user
+        user.update(office_id: 1)
+        user
+      end
+      let!(:check) do
+        check = FactoryGirl.create(:dwp_check, dwp_result: 'Deceased')
+        check.update(created_by_id: user.id)
+      end
+      let!(:another_check) do
+        check = FactoryGirl.create(:dwp_check, dwp_result: 'No')
+        check.update(created_by_id: user.id)
+      end
+      it 'lists checks by length of dwp_result' do
+        expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')
+        expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[1]).to eql('Deceased')
+      end
+    end
   end
 end

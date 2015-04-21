@@ -12,6 +12,16 @@ class R2Calculator < ActiveRecord::Base
   validate :fee_equals_remittance_and_to_pay
   before_save :build_type
 
+  scope :checks_by_day, lambda {
+    group_by_day('r2_calculators.created_at', format: "%d %b %y").
+      where('r2_calculators.created_at > ?', (Date.today.-6.days)).count
+  }
+  scope :by_office_grouped_by_type, lambda { |office_id|
+    joins('left outer join users on r2_calculators.created_by_id = users.id').
+      where('users.office_id = ?', office_id).
+      group(:type)
+  }
+
   def fee_equals_remittance_and_to_pay
     return '' if remittance.blank? || to_pay.blank?
     if remittance + to_pay != fee
