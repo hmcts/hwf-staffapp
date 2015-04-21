@@ -21,6 +21,8 @@
 
 en:
   hello: "Hello world"
+  descriptors:
+    r2_calculator: 'Income check'
   activerecord:
     attributes:
       dwp_check:

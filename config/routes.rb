@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   get 'charts/dwp_results' => 'charts#dwp_results'
   get 'charts/dwp_results_last_week' => 'charts#dwp_results_last_week'
+  get 'calculator/income' => 'calculator#income'
+  post 'calculator/record_search' => 'calculator#record_search'
 
   get 'dwp_checks' => 'dwp_checks#new', as: 'new_dwp_checks'
   post 'dwp_checks/lookup'
