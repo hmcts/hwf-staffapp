@@ -7,7 +7,6 @@ RSpec.feature 'Undertake an income calculation', type: :feature do
 
   let(:user)          { FactoryGirl.create :user }
   before { WebMock.disable_net_connect!(allow: '127.0.0.1') }
-  after { page.driver.reset! }
 
   context 'as user' do
     before(:each) do
