@@ -5,22 +5,13 @@
       h2 Total
       .columns.small-12
         = column_chart charts_dwp_results_path, { library: { title: 'All time responses by type', width:'200px' } }
-    .row.small-collapse
-      .columns.small-12.medium-6
-        h3 Bristol R1 chart
-        = column_chart DwpCheck.group(:dwp_result).group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.- 6.days)).order('length(dwp_result)').count, width: '200px', colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
-      .columns.small-12.medium-6
-        h3 Bristol R2 chart
-    .row.small-collapse
-      .columns.small-12.medium-6
-        h3 CFC R1 chart
-      .columns.small-12.medium-6
-        h3 CFC R2 chart
-    .row.small-collapse
-      .columns.small-12.medium-6
-        h3 Salford R1 chart
-      .columns.small-12.medium-6
-        h3 Salford R2 chart
+    -Office.where('name!=?', 'Digital').each do |office|
+      .row.small-collapse
+        .columns.small-12.medium-6
+          h3 #{office.name} R1 chart
+          = column_chart DwpCheck.group(:dwp_result).group_by_day(:created_at, format: "%d %b %y").where('created_at > ?', (Date.today.- 6.days)).order('length(dwp_result)').count, width: '200px', colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
+        .columns.small-12.medium-6
+          h3 #{office.name} R2 chart
   -else
     |Define a user dashboard requirement.
 -else
