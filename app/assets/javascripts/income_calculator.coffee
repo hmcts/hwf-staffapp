@@ -67,9 +67,11 @@ checkValidation = ->
     test = $(this)
     error = $('small.error[data-check-error=' + test.data('check') + ']')
     if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
+      console.log 'show errors'
       error.removeClass 'hide'
     else
       error.addClass 'hide'
+      console.log 'hide errors'
     return
   $('small.error:visible').length == 0
 
