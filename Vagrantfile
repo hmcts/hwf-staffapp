@@ -37,23 +37,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: $docker_setup
 
   # build image and start the application
+  config.vm.provision "shell", inline: <<-EOF
+    sudo apt-get update && sudo apt-get -y install postgresql
+    cp /vagrant/config/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+    sudo service postgresql restart
+  EOF
   #  rails 4.2.0 need explicit binding to 0.0.0.0 now
   #  use /tmp/server.pid so that we don't prevent future runs from firing up.
   config.vm.provision "docker" do |d|
     d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}"
     d.run "#{DOCKER_IMAGE_TAG}",
           image: "#{DOCKER_IMAGE_TAG}",
-          args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000"
+          args: "-v /vagrant:/usr/src/app -p #{UNICORN_PORT}:3000 -v /var/run/postgresql:/var/run/postgresql -e DB_USERNAME=postgres -e DOCKER_STATE=vagrant"
     # cmd: "bundle exec rails server -P /tmp/server.pid --binding=0.0.0.0"
   end
   # print out help
   config.vm.provision "shell", inline: <<-EOF
+    echo "# To use docker locally, set:"
+    echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
     echo "#---------------------------------------"
     echo "# Application should be available at:"
     echo "#  http://localhost:#{UNICORN_PORT}"
     echo "#---------------------------------------"
-    echo "# To use docker locally, set:"
-    echo "export DOCKER_HOST=tcp://localhost:#{DOCKER_PORT}"
   EOF
 
 end
