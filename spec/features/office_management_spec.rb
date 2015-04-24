@@ -13,7 +13,7 @@ RSpec.feature 'Office management', type: :feature do
 
       new_court = 'new court'
 
-      login_as(admin_user, scope: :user)
+      login_as admin_user
       visit new_office_path
 
       fill_in 'office_name', with: new_court
