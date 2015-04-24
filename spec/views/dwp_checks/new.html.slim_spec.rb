@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'dwp_checks/new.html.slim', type: :view do
   include Devise::TestHelpers
