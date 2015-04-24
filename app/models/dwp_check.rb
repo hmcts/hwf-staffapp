@@ -1,5 +1,7 @@
 class DwpCheck < ActiveRecord::Base
 
+  include CommonScopes
+
   belongs_to :created_by, class_name: 'User'
 
   before_create :generate_unique_number
@@ -14,11 +16,6 @@ class DwpCheck < ActiveRecord::Base
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/,
     message: 'is not valid'
   }, allow_blank: true
-
-  scope :checks_by_day, lambda {
-    group_by_day('dwp_checks.created_at', format: "%d %b %y").
-      where('dwp_checks.created_at > ?', (Date.today.-6.days)).count
-  }
 
   scope :by_office, lambda { |office_id|
     joins('left outer join users on dwp_checks.created_by_id = users.id').
