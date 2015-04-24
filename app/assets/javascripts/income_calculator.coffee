@@ -55,7 +55,6 @@ sendToDatabase = (remit, pay) ->
       false
     error: (data) ->
       $('#json-result').text 'Save failed with ' + data + ' errors'
-      alert 'error'
       return
   return
 
