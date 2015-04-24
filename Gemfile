@@ -60,7 +60,6 @@ group :development, :test do
 
   gem 'factory_girl_rails'
 
-  gem 'capybara'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'guard-rspec'
@@ -70,6 +69,9 @@ end
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'webmock'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'capybara-webkit'
 end
 
 # heroku deployment

@@ -71,18 +71,21 @@ RSpec.describe R2Calculator, type: :model do
       r2_calc.to_pay = 9.99
       r2_calc.save!
       expect(r2_calc.type).to eql('None')
+      expect(r2_calc.none?).to eql(true)
     end
     it 'returns part if remittance and to_pay have values' do
       r2_calc.remittance = 4.44
       r2_calc.to_pay = 5.55
-      r2_calc.save
+      r2_calc.save!
       expect(r2_calc.type).to eql('Part')
+      expect(r2_calc.part?).to eql(true)
     end
     it 'returns full if to_pay has a value and remittance is zero' do
       r2_calc.remittance = 9.99
       r2_calc.to_pay = 0
-      r2_calc.save
+      r2_calc.save!
       expect(r2_calc.type).to eql('Full')
+      expect(r2_calc.full?).to eql(true)
     end
   end
 

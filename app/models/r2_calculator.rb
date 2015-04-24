@@ -30,15 +30,15 @@ class R2Calculator < ActiveRecord::Base
   end
 
   def full?
-    :type == 'Full'
+    type == 'Full'
   end
 
   def part?
-    :type == 'Part'
+    type == 'Part'
   end
 
   def none?
-    :type == 'None'
+    type == 'None'
   end
 
 private

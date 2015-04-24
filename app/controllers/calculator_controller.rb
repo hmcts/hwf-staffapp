@@ -10,12 +10,10 @@ class CalculatorController < ApplicationController
     authorize! :create, R2Calculator
     @r2_calculator = create_from_params
 
-    respond_to do |format|
-      if @r2_calculator.save
-        format.json { render json: @r2_calculator, status: :created }
-      else
-        format.json { render json: @r2_calculator.errors, status: :unprocessable_entity }
-      end
+    if @r2_calculator.save
+      render json: @r2_calculator, status: :created
+    else
+      render json: @r2_calculator.errors, status: :unprocessable_entity
     end
   end
 

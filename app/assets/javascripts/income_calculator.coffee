@@ -1,26 +1,39 @@
+# set values
 $min_val = 1085
 $pp_child = 245
 $couple_supp = 160
 
+# global variables
+$low_threshold = 0
+$high_threshold = 0
+$income = 0
+
 calculate = ->
   $children_val = $('#children').val() * $pp_child
   $add_single_supp = if $('input:radio[name=couple]').val() == 'false' then 0 else $couple_supp
-  $check_val = $('#income').val() - $min_val + $children_val + $add_single_supp
   $curr_fee = parseFloat($('#fee').val())
-  $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee)
-  $remittance = Math.max($curr_fee - $max_to_pay, 0)
-  if $check_val > 4000
+  $income = $('#income').val()
+  $low_threshold = $min_val + $children_val + $add_single_supp
+  $high_threshold = $low_threshold + Math.min(4000, $curr_fee * 2)
+  if $income < $low_threshold
+    $('#fee-payable').text '£0'
+    $('#fee-remit').text formatCurrency($curr_fee)
+  else if $income > $high_threshold
     $('#fee-payable').text formatCurrency($curr_fee)
     $('#fee-remit').text '£0'
   else
+    $check_val = $income - $low_threshold
+    $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee)
+    $remittance = Math.max($curr_fee - $max_to_pay, 0)
     $('#fee-payable').text formatCurrency($max_to_pay)
     $('#fee-remit').text formatCurrency($remittance)
+
   sendToDatabase $remittance, $max_to_pay
   $('.panel.callout').show()
   $('#check_btn').hide()
   $('#clear_btn').show()
   $('#r2_calculator :input').attr 'disabled', true
-  return
+  return true
 
 formatCurrency = (val) ->
   '£' + val.toFixed(2)
@@ -41,7 +54,7 @@ sendToDatabase = (remit, pay) ->
       $('#json-result').text 'Check recorded'
       false
     error: (data) ->
-      $('#json-result').text 'Save failed with ' + data.errors.count + ' errors'
+      $('#json-result').text 'Save failed with ' + data + ' errors'
       alert 'error'
       return
   return
@@ -58,7 +71,6 @@ checkValidation = ->
   $('small.error:visible').length == 0
 
 setupPage = ->
-  console.log 'setupPage'
   $('.panel.callout').hide()
   $('#r2_calculator :input').attr 'disabled', false
   $('#check_btn').show()
