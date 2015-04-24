@@ -15,7 +15,7 @@ calculate = ->
   $income = $('#income').val()
   $low_threshold = $min_val + $children_val + $add_single_supp
   $high_threshold = $low_threshold + Math.min(4000, $curr_fee * 2)
-  if fullRemittance()
+  if $income < $low_threshold
     $('#fee-payable').text '£0'
     $('#fee-remit').text formatCurrency($curr_fee)
   else if $income > $high_threshold
@@ -34,9 +34,6 @@ calculate = ->
   $('#clear_btn').show()
   $('#r2_calculator :input').attr 'disabled', true
   return true
-
-fullRemittance = ->
-  return ($income < $low_threshold)
 
 formatCurrency = (val) ->
   '£' + val.toFixed(2)
