@@ -15,13 +15,13 @@ record the decision, and collect statistics.
 - Coffeescript in preference to Javascript
 
 ## Pre-requisites
-To run the headless tests you __will__ need to install quicktime for capybara-webkit:
-You can install them by running the following commands
+To run the headless tests you will need to install quicktime for capybara-webkit:
 ```
 brew install qt 
 ```
-You may need to run following for capybara-webkit in non-osx environments:
+You will need to run the following to enable capybara-webkit in ubuntu environments:
 ```
+sudo apt-get install libqt4-dev
 sudo apt-get install xvfb
 ```
 
