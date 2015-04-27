@@ -6,7 +6,6 @@
 This app is used by staff in the courts and tribunals to enter data regarding fee remission applications, 
 record the decision, and collect statistics.
 
-
 ## Project Standards
 
 - Authentications via Devise / CanCanCan
@@ -14,6 +13,17 @@ record the decision, and collect statistics.
 - Slim templating language
 - Foundation view framework
 - Coffeescript in preference to Javascript
+
+## Pre-requisites
+To run the headless tests you __will__ need to install quicktime for capybara-webkit:
+You can install them by running the following commands
+```
+brew install qt 
+```
+You may need to run following for capybara-webkit in non-osx environments:
+```
+sudo apt-get install xvfb
+```
 
 #### Creating initial user
 There is a rake task that takes email, password and role
