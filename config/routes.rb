@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'ping' => 'ping#index'
 
   get 'calculator/income' => 'calculator#income'
   post 'calculator/record_search' => 'calculator#record_search'
