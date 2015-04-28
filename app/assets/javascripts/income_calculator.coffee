@@ -15,6 +15,9 @@ calculate = ->
   $income = $('#income').val()
   $low_threshold = $min_val + $children_val + $add_single_supp
   $high_threshold = $low_threshold + Math.min(4000, $curr_fee * 2)
+  $check_val = $income - $low_threshold
+  $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee)
+  $remittance = Math.max($curr_fee - $max_to_pay, 0)
   if $income < $low_threshold
     $('#fee-payable').text '£0'
     $('#fee-remit').text formatCurrency($curr_fee)
@@ -22,9 +25,6 @@ calculate = ->
     $('#fee-payable').text formatCurrency($curr_fee)
     $('#fee-remit').text '£0'
   else
-    $check_val = $income - $low_threshold
-    $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee)
-    $remittance = Math.max($curr_fee - $max_to_pay, 0)
     $('#fee-payable').text formatCurrency($max_to_pay)
     $('#fee-remit').text formatCurrency($remittance)
 
@@ -54,8 +54,9 @@ sendToDatabase = (remit, pay) ->
       $('#json-result').text 'Check recorded'
       false
     error: (data) ->
-      $('#json-result').text 'Save failed with ' + data + ' errors'
-      return
+      $('#json-result').text 'Save failed with ' + JSON.parse(data) + ' errors'
+      false
+  $('#json-result').show()
   return
 
 checkValidation = ->
@@ -72,6 +73,7 @@ checkValidation = ->
 setupPage = ->
   $('.panel.callout').hide()
   $('#r2_calculator :input').attr 'disabled', false
+  $('#json-result').hide()
   $('#check_btn').show()
   $('#clear_btn').hide()
   $('#fee').val ''
