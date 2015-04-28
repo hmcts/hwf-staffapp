@@ -19,7 +19,8 @@ RSpec.feature 'Office management', type: :feature do
       fill_in 'office_name', with: new_court
       click_button 'Create Office'
 
-      expect(page).to have_text("Name:#{new_court}")
+      expect(page).to have_xpath('//p/strong', text: 'Name:')
+      expect(page).to have_xpath('//p', text: new_court)
     end
   end
 end

@@ -23,8 +23,7 @@ RSpec.feature 'Office management', type: :feature do
 
       click_button 'Send an invitation'
 
-      expect(page).to have_css('a', text: new_name, count: 1)
-
+      expect(page).to have_xpath('//a', text: new_name)
     end
   end
 end

@@ -29,8 +29,8 @@ RSpec.feature 'Undertake benefit check', type: :feature do
         fill_in 'dwp_check_ni_number', with: 'AB123456A'
         click_button 'Check'
 
-        expect(page).to have_css('div.dwp-value', text: 'AB123456A', count: 1)
-        expect(page).to have_css('div.callout > span.number', text: /[Bb]enefits/, count: 1)
+        expect(page).to have_xpath('//div[contains(@class, "dwp-value")]', text: 'AB123456A')
+        expect(page).to have_xpath('//div[contains(@class, "callout")]/span[@class="number"]', text: /[Bb]enefits/)
       end
     end
     context 'with invalid data' do
@@ -42,8 +42,8 @@ RSpec.feature 'Undertake benefit check', type: :feature do
         fill_in 'dwp_check_dob', with: '01/01/2001'
         fill_in 'dwp_check_ni_number', with: 'AB123'
         click_button 'Check'
-        expect(page).to have_css('div#error_explanation > h3', text: /1 error prevented/, count: 1)
-        expect(page).to have_selector('input[type="text"][value="AB123"]')
+        expect(page).to have_xpath('//div[@id="error_explanation"]/h3', text: /1 error prevented/)
+        expect(page).to have_xpath('//input[@type="text"][@value="AB123"]')
       end
     end
   end
