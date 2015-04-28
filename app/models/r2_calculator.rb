@@ -1,4 +1,7 @@
 class R2Calculator < ActiveRecord::Base
+
+  include CommonScopes
+
   belongs_to :created_by, class_name: 'User'
 
   validates :fee, :children, :income, :remittance, :to_pay, :created_by_id, presence: true
