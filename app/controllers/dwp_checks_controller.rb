@@ -10,11 +10,10 @@ class DwpChecksController < ApplicationController
 
   def lookup
     authorize! :lookup, DwpCheck
-
     if @dwp_checker.valid?
       begin
-        process_dwp_check
-        return redirect_to dwp_checks_path(@dwp_checker.unique_number) if @dwp_checker.save
+        ProcessDwpService.new(@dwp_checker)
+        return redirect_to dwp_checks_path(@dwp_checker.unique_number) if @dwp_checker.reload
       rescue => e
         flash.now[:alert] = e.message
       end
@@ -30,25 +29,9 @@ private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
+    @dwp_checker.created_by_id = current_user.id
     @dwp_checker.dob = process_incoming_date(dwp_params[:dob])
     @dwp_checker.date_to_check = process_incoming_date(dwp_params[:date_to_check])
-  end
-
-  def process_dwp_check
-    @dwp_checker.created_by_id = current_user.id
-    @dwp_checker.dwp_result = query_proxy_api
-    @dwp_checker.benefits_valid = (@dwp_checker.dwp_result == 'Yes' ? true : false)
-  end
-
-  def query_proxy_api
-    params = {
-      ni_number: @dwp_checker.ni_number,
-      surname: @dwp_checker.last_name.upcase,
-      birth_date: @dwp_checker.dob.strftime('%Y%m%d'),
-      entitlement_check_date: process_check_date
-    }
-    response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
-    JSON.parse(response)['benefit_checker_status']
   end
 
   def process_incoming_date(date_str)
@@ -57,11 +40,6 @@ private
   rescue
     format_str = "%d/%m/" + (date_str =~ /\d{4}/ ? "%Y" : "%y")
     Date.strptime(date_str, format_str)
-  end
-
-  def process_check_date
-    check_date = @dwp_checker.date_to_check ? @dwp_checker.date_to_check : Date.today
-    check_date.strftime('%Y%m%d')
   end
 
   def dwp_params
