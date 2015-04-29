@@ -29,6 +29,7 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*'
+    - 'app/models/ability.rb'
 
 # No need to check for describe class param in support files.
 RSpec/DescribeClass:
