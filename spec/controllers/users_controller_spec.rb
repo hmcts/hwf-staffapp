@@ -9,7 +9,7 @@ RSpec.describe UsersController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {
-      email: 'test@example.com',
+      email: 'test@digital.justice.gov.uk',
       password: 'aabbccdd',
       role: 'user',
       name: 'test'

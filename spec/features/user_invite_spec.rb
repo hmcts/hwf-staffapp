@@ -11,7 +11,7 @@ RSpec.feature 'Office management', type: :feature do
   context 'Admin user' do
     scenario 'invites a user' do
 
-      new_email = 'test@email.com'
+      new_email = 'test@digital.justice.gov.uk'
       new_name = 'Test'
       login_as(admin_user, scope: :user)
       visit new_user_invitation_path
