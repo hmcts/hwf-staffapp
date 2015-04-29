@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
 
   scope :sorted_by_email, -> {  all.order(:email) }
 
-  validates :email, format: Devise.email_regexp
+  email_regex = /\A([^@\s]+)@(hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
+  validates :email, format: { with: email_regex, on: :create }
   validates :role, :name, presence: true
   validates :role, inclusion: {
     in: ROLES,
