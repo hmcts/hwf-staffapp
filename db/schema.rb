@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417125341) do
+ActiveRecord::Schema.define(version: 20150429102242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(version: 20150417125341) do
 
   add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.string   "experience"
+    t.string   "ideas"
+    t.integer  "rating"
+    t.integer  "help"
+    t.integer  "user_id"
+    t.integer  "office_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "feedbacks", ["office_id"], name: "index_feedbacks_on_office_id", using: :btree
+  add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
+
   create_table "offices", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -51,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150417125341) do
     t.integer  "created_by_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "type"
   end
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
@@ -87,5 +100,7 @@ ActiveRecord::Schema.define(version: 20150417125341) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "feedbacks", "offices"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
 end
