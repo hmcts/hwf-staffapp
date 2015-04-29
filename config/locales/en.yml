@@ -25,6 +25,11 @@ en:
     r2_calculator: 'Income check'
   activerecord:
     attributes:
+      feedback:
+        experience: 'What is your experience of using the service so far?'
+        ideas: 'Do you have any ideas for how this service could be improved?'
+        rating: 'How would you rate this service?'
+        help: 'Did you need any help with using this service?'
       dwp_check:
         last_name: 'Last name'
         ni_number: 'National Insurance number'

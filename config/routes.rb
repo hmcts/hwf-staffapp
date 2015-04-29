@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'feedback' => 'feedback#new'
+
+  post 'feedback/create' => 'feedback#create'
+
   get 'calculator/income' => 'calculator#income'
   post 'calculator/record_search' => 'calculator#record_search'
 

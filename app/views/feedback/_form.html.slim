@@ -1,0 +1,72 @@
+= form_for @feedback, url: feedback_create_path do |f|
+
+  .row
+    .small-12.columns
+      - if @feedback.errors.any?
+        #error_explanation
+          h3 = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
+          ul
+            - @feedback.errors.full_messages.each do |message|
+              li = message
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :experience, class: 'feedback-header'
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.text_area :experience, rows: 6
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :ideas, class: 'feedback-header'
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+         = f.text_area :ideas, rows: 6
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :rating, class: 'feedback-header'
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.radio_button :rating, 1
+        = f.label :rating_1, '1 - very poor'
+      .form-group
+        = f.radio_button :rating, 2
+        = f.label :rating_2, '2'
+      .form-group
+        = f.radio_button :rating, 3
+        = f.label :rating_3, '3'
+      .form-group
+        = f.radio_button :rating, 4
+        = f.label :rating_4, '4'
+      .form-group
+        = f.radio_button :rating, 5
+        = f.label :rating_5, '5 - very good'
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :help, class: 'feedback-header'
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.radio_button :help, 1
+        = f.label :help_1, 'No'
+      .form-group
+        = f.radio_button :help, 2
+        = f.label :help_2, 'I used an accessibility tool such as a screen reader'
+      .form-group
+        = f.radio_button :help, 3
+        = f.label :help_3, 'I needed other kind of help'
+      .form-group
+        = f.radio_button :help, 4
+        = f.label :help_4, 'Other'
+  .actions
+    = f.submit 'Send feedback', class: 'button small success'
