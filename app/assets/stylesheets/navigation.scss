@@ -22,9 +22,7 @@ dl.sub-nav {
   }
   .title-area {
     h1 > a {
-      background-image: asset_url('crest.png');
-      background-repeat: no-repeat;
-      background-position: left;
+      background: asset_url('crest.png') no-repeat 0% 40%;
       padding-left: 30px;
       vertical-align: middle;
     }
