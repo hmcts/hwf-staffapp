@@ -7,8 +7,27 @@ RSpec.describe DwpCheck, type: :model do
   it 'pass factory build' do
     expect(check).to be_valid
   end
-
+  context 'methods' do
+    it 'generates a unique token for API checks' do
+      check.created_by = FactoryGirl.create(:user, name: 'Test User')
+      check.save!
+      expect(check).to be_valid
+      check_val = "testuser@#{check.created_at.strftime('%y%m%d%H%M%S')}.#{check.unique_number}"
+      expect(check.unique_token).to eql(check_val)
+    end
+  end
+  context 'associations' do
+    it 'responds with a unique_token' do
+      expect(check).to respond_to(:unique_token)
+    end
+  end
   context 'validations' do
+    it 'requires unique_token to be between 3 and 50 characters' do
+      user = FactoryGirl.create(:user, name: 'a' * 50)
+      check.created_by = user
+      check.save
+      expect(check.unique_token.length).to eql(50)
+    end
     it 'require a last name' do
       check.last_name = nil
       expect(check).to be_invalid
