@@ -52,7 +52,12 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
   gem 'rspec-rails', '~> 3.2'
+  # in browser debugging
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
   gem 'factory_girl_rails'
 
   gem 'rubocop', require: false
@@ -62,10 +67,7 @@ group :development, :test do
 end
 
 group :test do
-  # in browser debugging
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'codeclimate-test-reporter', require: nil
+  gem "codeclimate-test-reporter", require: nil
   gem 'webmock'
   gem 'capybara'
   gem 'launchy'
