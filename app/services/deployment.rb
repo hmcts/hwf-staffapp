@@ -1,4 +1,6 @@
 module Deployment
+  module_function
+
   def info
     {
       version_number: version_number,
@@ -24,5 +26,4 @@ module Deployment
     ENV['APP_BUILD_TAG'] || 'unknown'
   end
 
-  extend self
 end
