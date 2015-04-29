@@ -2,7 +2,6 @@ class ProcessDwpService
   def initialize(dwp_check)
     @dwp_checker = dwp_check
     check_remote_api
-    @dwp_checker
   end
 
 private
