@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150429102242) do
     t.string   "experience"
     t.string   "ideas"
     t.integer  "rating"
-    t.integer  "help"
+    t.string   "help"
     t.integer  "user_id"
     t.integer  "office_id"
     t.datetime "created_at", null: false

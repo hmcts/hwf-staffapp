@@ -4,7 +4,7 @@ class CreateFeedbacks < ActiveRecord::Migration
       t.string :experience
       t.string :ideas
       t.integer :rating
-      t.integer :help
+      t.string :help
       t.references :user, index: true
       t.references :office, index: true
 
