@@ -23,6 +23,11 @@ en:
   hello: "Hello world"
   descriptors:
     r2_calculator: 'Income check'
+  feedback:
+    rating_1: 'No'
+    rating_2: 'I used an accessibility tool such as a screen reader'
+    rating_3: 'I needed other kind of help'
+    rating_4: 'Other'
   activerecord:
     attributes:
       feedback:

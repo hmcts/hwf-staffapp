@@ -58,15 +58,31 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.radio_button :help, 1
-        = f.label :help_1, 'No'
+        = f.label :help_1, t('feedback.rating_1'), class: 'help-radio'
       .form-group
         = f.radio_button :help, 2
-        = f.label :help_2, 'I used an accessibility tool such as a screen reader'
+        = f.label :help_2, t('feedback.rating_2'), class: 'help-radio'
       .form-group
         = f.radio_button :help, 3
-        = f.label :help_3, 'I needed other kind of help'
+        = f.label :help_3, t('feedback.rating_3'), class: 'help-radio'
       .form-group
         = f.radio_button :help, 4
-        = f.label :help_4, 'Other'
+        = f.label :help_4, t('feedback.rating_4'), class: 'help-radio'
+        = text_field_tag 'help_text'
   .actions
     = f.submit 'Send feedback', class: 'button small success'
+
+javascript:
+  $(document).ready( function() {
+    $('#help_text').hide();
+    $('.help-radio').on('click', function() {
+      if(this.innerText=='Other') {
+        $('#help_text').val('');
+        $('#help_text').show();
+        $('#help_text').focus();
+      } else {
+        $('#help_text').val(this.innerText);
+        $('#help_text').hide();
+      }
+    });
+  });
