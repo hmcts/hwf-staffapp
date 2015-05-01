@@ -11,8 +11,12 @@
  * file per style scope.
  *
  *= require foundation_and_overrides
+ *= require base
+ *= require navigation
+ *= require dwp_checks
+ *= require users
+ *= require r2_calculator
  *= require_tree .
  *= require_self
-
 
  */

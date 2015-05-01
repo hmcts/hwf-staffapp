@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 describe User, type: :model do
@@ -10,21 +11,36 @@ describe User, type: :model do
   end
 
   describe 'validations' do
-    it 'require an email' do
-      user.email = nil
-      expect(user).to be_invalid
-    end
+    context 'email' do
+      it 'require an email' do
+        user.email = nil
+        expect(user).to be_invalid
+      end
 
-    it 'require a valid email' do
-      user.email = 'testemail'
-      expect(user).to be_invalid
-    end
+      it 'require a valid email' do
+        user.email = 'testemail'
+        expect(user).to be_invalid
+      end
 
-    it 'require a unique email' do
-      original = FactoryGirl.create(:user)
-      duplicate = FactoryGirl.build(:user)
-      duplicate.email = original.email
-      expect(duplicate).to be_invalid
+      it 'require a unique email' do
+        original = FactoryGirl.create(:user)
+        duplicate = FactoryGirl.build(:user)
+        duplicate.email = original.email
+        expect(duplicate).to be_invalid
+      end
+
+      context '(hmcts.gsi|digital.justice).gov.uk email addresses' do
+        let(:user) { FactoryGirl.build(:user) }
+
+        it 'requires only whitelisted email addresses' do
+          expect(user).to be_valid
+        end
+
+        it 'will not accept non white listed emails' do
+          user.email = 'valid.email.that.rocks@gmail.com'
+          expect(user).to be_invalid
+        end
+      end
     end
 
     it 'requires a name' do
