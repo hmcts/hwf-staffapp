@@ -14,4 +14,4 @@ h2 Edit #{@user.email}
   .form-group
     = f.label(:roles, 'Role')
     = f.collection_select :role, User::ROLES, :to_s, :humanize
-  .actions = f.submit
+  .actions = f.submit class: 'button btn tiny'
