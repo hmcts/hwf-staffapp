@@ -1,3 +1,5 @@
+@import 'colours';
+
 @font-face {
   font-family: 'nta';
   src: asset_url('fonts/NTA-Light-20130221.woff') format('woff');
@@ -27,4 +29,16 @@
 a {
   color: #005ea5;
   text-decoration: underline;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+.btn {
+  background-color: $button-colour;
+  box-shadow: 0 2px 0 #003518;
+}
+.btn:hover {
+  background-color: $green;
 }
