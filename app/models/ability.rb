@@ -12,7 +12,6 @@ class Ability
       can :lookup, DwpCheck
       can :show, DwpCheck
       can :create, R2Calculator
-      can :new, Feedback
       can :create, Feedback
     end
   end

@@ -1,16 +1,18 @@
 class FeedbackController < ApplicationController
   before_action :authenticate_user!
 
-  load_and_authorize_resource
-
   respond_to :html
 
   def new
+    authorize! :create, Feedback
+
     @feedback = Feedback.new
     respond_with(@feedback)
   end
 
   def create
+    authorize! :create, Feedback
+
     @feedback = Feedback.new(feedback_params)
     @feedback.user = current_user
     @feedback.office = current_user.office
