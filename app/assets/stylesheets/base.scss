@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'nta';
+  src: asset_url('fonts/NTA-Light-20130221.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nta';
+  src: asset_url('fonts/NTA-Bold-20130221.woff') format('woff');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'ntatabularnumbers';
+  src: asset_url('fonts/NTATabularNumbers-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ntatabularnumbers';
+  src: asset_url('fonts/NTATabularNumbers-Bold.woff') format('woff');
+  font-weight: bold;
+}
+
+a {
+  color: #005ea5;
+  text-decoration: underline;
+}

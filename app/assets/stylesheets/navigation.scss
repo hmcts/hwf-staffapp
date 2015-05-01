@@ -1,7 +1,34 @@
 dl.sub-nav {
-  background-color: #f2f2f2;
-  padding: 10px 10px 10px 0;
+  background-color: #dee0e2;
+  padding: 14px 10px 10px 0;
   display: block;
   width: auto;
   overflow: hidden;
+}
+
+.top-bar {
+  background: #000000;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .top-bar-section {
+    li:not(.has-form) a:not(.button) {
+      background: #000000;
+    }
+  }
+  .title-area {
+    h1 > a {
+      background: asset_url('crest.png') no-repeat 0% 40%;
+      padding-left: 30px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.contain-to-grid {
+  background: #000000;
 }
