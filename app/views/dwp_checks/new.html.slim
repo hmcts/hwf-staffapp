@@ -13,6 +13,7 @@ h2 Check benefits status
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :last_name
+        = "<div class='field_with_errors'>#{@dwp_checker.errors[:last_name].join(',')}</div>".html_safe if @dwp_checker.errors[:last_name]
         = f.text_field :last_name, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
