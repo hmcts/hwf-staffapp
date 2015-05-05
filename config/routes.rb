@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'guide/index'
+
   get 'ping' => 'ping#index'
 
   get 'feedback' => 'feedback#new'
