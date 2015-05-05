@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'guide/index'
+  get 'guide' => 'guide#index'
 
   get 'ping' => 'ping#index'
 
