@@ -19,11 +19,12 @@ RSpec.feature 'Office management', type: :feature do
       fill_in 'user_email', with: new_email
       fill_in 'user_name', with: new_name
       select('User', from: 'user_role')
-      select('Bristol', from: 'user_office')
+      select('Bristol', from: 'user_office_id')
 
       click_button 'Send an invitation'
 
       expect(page).to have_xpath('//a', text: new_name)
+      expect(page).to have_xpath('//td', text: offices.name)
     end
   end
 end

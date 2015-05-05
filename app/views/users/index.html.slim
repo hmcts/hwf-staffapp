@@ -4,6 +4,7 @@ table
   tr
     th Name
     th Role
+    th Office
     th colspan="2" &nbsp;
 
   -@users.each do |user|
@@ -13,6 +14,7 @@ table
           =user.name
       td
         =user.role
+      td =user.office.name if user.office.present?
       td =link_to 'Edit', edit_user_path(user)
       td =link_to 'Destroy', user_path(user), method: :delete
 
