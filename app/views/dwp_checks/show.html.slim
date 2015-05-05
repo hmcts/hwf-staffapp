@@ -2,9 +2,14 @@ h2 Check benefits status
 
 #result.callout class=(@dwp_checker.benefits_valid ? 'callout-passed' : 'callout-failed')
   span.number
-    = @dwp_checker.benefits_valid ? '&#x2714; Correct benefits received'.html_safe : 'Benefits not received'
-    - unless @dwp_checker.benefits_valid || @dwp_checker.dwp_result == 'No'
-      span.number #{": " + @dwp_checker.dwp_result}
+    = @dwp_checker.benefits_valid ? '&#x2714; Correct benefits received'.html_safe : ''
+    - unless @dwp_checker.benefits_valid
+      -if @dwp_checker.dwp_result == 'No'
+        span.number Benefits not received
+      -elsif @dwp_checker.dwp_result == 'Undetermined'
+        span.number =I18n.t 'activerecord.attributes.dwp_check.undetermined'
+      -else
+        span.number #{"Benefits not received: #{@dwp_checker.dwp_result}"}
 
 #dwp_data
   .row

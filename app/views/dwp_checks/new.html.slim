@@ -2,33 +2,32 @@ h2 Check benefits status
 
 = form_for(@dwp_checker, url: dwp_checks_lookup_path, html: { autocomplete: 'off' } ) do |f|
   .row
-    .small-12.columns
-      - if @dwp_checker.errors.any?
-        #error_explanation
-          h3 = "#{pluralize(@dwp_checker.errors.count, "error")} prevented this benefit check from being performed:"
-          ul
-            - @dwp_checker.errors.full_messages.each do |message|
-              li = message
-  .row
     .small-12.medium-8.large-5.columns
       .form-group
+        = f.label :last_name, @dwp_checker.errors[:last_name].join(', '), class: 'error' if @dwp_checker.errors[:last_name].present?
         = f.label :last_name
-        = "<div class='field_with_errors'>#{@dwp_checker.errors[:last_name].join(',')}</div>".html_safe if @dwp_checker.errors[:last_name]
+          = t('activerecord.attributes.dwp_check.last_name')
+          span.hint.block = t('activerecord.attributes.dwp_check.last_name_hint')
         = f.text_field :last_name, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
       .form-group
+        = f.label :dob, @dwp_checker.errors[:dob].join(', '), class: 'error' if @dwp_checker.errors[:dob].present?
         = f.label :dob
         = f.text_field :dob, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
       .form-group
+        = f.label :ni_number, @dwp_checker.errors[:ni_number].join(', '), class: 'error' if @dwp_checker.errors[:ni_number].present?
         = f.label :ni_number
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
   .row
     .small-12.medium-8.large-5.columns
       .form-group
+        = f.label :date_to_check, @dwp_checker.errors.full_messages_for(:date_to_check).join(', '), class: 'error' if @dwp_checker.errors[:date_to_check].present?
         = f.label :date_to_check
+          = t('activerecord.attributes.dwp_check.date_to_check')
+          span.hint.block = t('activerecord.attributes.dwp_check.date_to_check_hint')
         = f.text_field :date_to_check, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
