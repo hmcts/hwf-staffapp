@@ -1,0 +1,64 @@
+//Cut down gov.uk style import
+@import 'colours';
+//Settings
+$gutter: 30px;
+$gutter-one-quarter: $gutter/4;
+$gutter-one-third: $gutter/3;
+$gutter-half: $gutter/2;
+$gutter-two-thirds: $gutter - $gutter-one-third;
+
+.feedback-header {
+  font-weight: bold;
+  color: #222222;
+  text-rendering: optimizeLegibility;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+fieldset.radio label {
+
+  display: block;
+  float: none;
+  clear: left;
+  position: relative;
+
+  background: $panel-colour;
+  border: 1px solid $panel-colour;
+  padding: (18px $gutter $gutter-half $gutter*1.5);
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  cursor: pointer; // Encourage clicking on block labels
+
+  // Absolutely position inputs within label, to allow text to wrap
+  input {
+    position: absolute;
+    top: 18px;
+    left: $gutter-half;
+    cursor: pointer;
+  }
+
+  // Change border on hover
+  &:hover {
+    border-color: $black;
+  }
+}
+
+// Selected and focused states
+
+// Add selected state
+.js-enabled label.selected {
+  background: $white;
+  border-color: $black;
+}
+
+// Add focus to block labels
+.js-enabled label.focused {
+  outline: 3px solid $yellow;
+}
+
+// Remove focus from radio/checkboxes
+.js-enabled .focused input:focus {
+  outline: none;
+}

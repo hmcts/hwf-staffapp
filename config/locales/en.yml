@@ -23,8 +23,19 @@ en:
   hello: "Hello world"
   descriptors:
     r2_calculator: 'Income check'
+    feedback: 'Feedback'
+  feedback:
+    rating_1: 'No'
+    rating_2: 'I used an accessibility tool such as a screen reader'
+    rating_3: 'I needed other kind of help'
+    rating_4: 'Other'
   activerecord:
     attributes:
+      feedback:
+        experience: 'What is your experience of using the service so far?'
+        ideas: 'Do you have any ideas for how this service could be improved?'
+        rating: 'How would you rate this service?'
+        help: 'Did you need any help with using this service?'
       dwp_check:
         last_name: 'Last name'
         ni_number: 'National Insurance number'

@@ -1,0 +1,118 @@
+= form_for @feedback, url: feedback_create_path do |f|
+
+  .row
+    .small-12.columns
+      - if @feedback.errors.any?
+        #error_explanation
+          h3 = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
+          ul
+            - @feedback.errors.full_messages.each do |message|
+              li = message
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :experience, class: 'feedback-header'
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.text_area :experience, rows: 6
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :ideas, class: 'feedback-header'
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+         = f.text_area :ideas, rows: 6
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :rating, class: 'feedback-header'
+
+  .row
+    .small-12.medium-8.columns
+      fieldset.radio
+        .options
+          .option
+            = f.label :rating_1
+              = f.radio_button :rating, 1
+              |1 - very poor
+          .option
+            = f.label :rating_2
+              = f.radio_button :rating, 2
+              |2
+          .option
+            = f.label :rating_3
+              = f.radio_button :rating, 3
+              |3
+          .option
+            = f.label :rating_4
+              = f.radio_button :rating, 4
+              |4
+          .option
+            = f.label :rating_5
+              = f.radio_button :rating, 5
+              |5 - very good
+
+  .row
+    .small-12.columns
+      .form-group
+        = f.label :help, class: 'feedback-header'
+  .row
+    .small-12.medium-8.columns
+      fieldset.radio
+        .options
+          .option
+            = label_tag 'help_score_1', class: 'help-radio-lbl'
+              = radio_button_tag 'help_score', 1, class: 'help-radio-btn'
+              = t('feedback.rating_1')
+          .option
+            = label_tag 'help_score_2', class: 'help-radio-lbl'
+              = radio_button_tag 'help_score', 2, class: 'help-radio-btn'
+              = t('feedback.rating_2')
+          .option
+            = label_tag 'help_score_3', class: 'help-radio-lbl'
+              = radio_button_tag 'help_score', 3, class: 'help-radio-btn'
+              = t('feedback.rating_3')
+          .option
+            = label_tag 'help_score_4', class: 'help-radio-lbl'
+              = radio_button_tag 'help_score', 4, class: 'help-radio-btn', value: false
+              = t('feedback.rating_4')
+            #extra
+              .label.inline Please enter details
+              = text_field_tag 'feedback[help]'
+  .actions
+    = f.submit 'Send feedback', class: 'button btn small'
+
+javascript:
+  $(document).ready( function() {
+    setupPage();
+
+    $('.help-radio-lbl').on('click', function() {
+      showText(this);
+    });
+
+    $("input[name='help_score']").on('change', function () {
+      showText($(this).parent());
+    });
+
+    function showText(ctrl) {
+      if (ctrl.innerText == 'Other') {
+        $('#feedback_help').val('');
+        $('#extra').show();
+        $('#feedback_help').focus();
+      } else {
+        $('#feedback_help').val(ctrl.innerText);
+        $('#extra').hide();
+      }
+    }
+
+    function setupPage() {
+      $('dl.sub-nav dd#feedback').addClass('active')
+      $('#extra').hide();
+      $("[name=help_score]").removeAttr("checked");
+    }
+  });
