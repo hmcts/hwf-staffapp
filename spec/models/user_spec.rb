@@ -39,6 +39,8 @@ describe User, type: :model do
         it 'will not accept non white listed emails' do
           user.email = 'valid.email.that.rocks@gmail.com'
           expect(user).to be_invalid
+        end
+
         context 'non white listed emails' do
           let(:invalid_email) { 'email.that.rocks@gmail.com' }
           before(:each) { user.email = invalid_email }
