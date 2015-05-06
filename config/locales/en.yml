@@ -20,7 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
   descriptors:
     r2_calculator: 'Income check'
     feedback: 'Feedback'
@@ -30,6 +29,18 @@ en:
     rating_3: 'I needed other kind of help'
     rating_4: 'Other'
   activerecord:
+    errors:
+      models:
+        dwp_check:
+          attributes:
+            last_name:
+              blank: 'Enter the applicant’s last name'
+            dob:
+              blank: 'Enter the applicant’s date of birth'
+              invalid: 'Enter the date as ‘day, month, year DD/MM/YY'
+            ni_number:
+              blank: 'Enter the applicant’s National Insurance number'
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
     attributes:
       feedback:
         experience: 'What is your experience of using the service so far?'
@@ -37,7 +48,10 @@ en:
         rating: 'How would you rate this service?'
         help: 'Did you need any help with using this service?'
       dwp_check:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
         last_name: 'Last name'
+        last_name_hint: 'First 3 letters only'
         ni_number: 'National Insurance number'
         dob: 'Date of birth'
         date_to_check: 'Date application made'
+        date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'

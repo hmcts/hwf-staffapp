@@ -41,7 +41,7 @@ RSpec.feature 'Undertake benefit check', type: :feature do
         fill_in 'dwp_check_dob', with: '01/01/2001'
         fill_in 'dwp_check_ni_number', with: 'AB123'
         click_button 'Check'
-        expect(page).to have_xpath('//div[@id="error_explanation"]/h3', text: /1 error prevented/)
+        expect(page).to have_xpath('//label[@class="error"]', text: I18n.t('activerecord.errors.models.dwp_check.attributes.ni_number.invalid'))
         expect(page).to have_xpath('//input[@type="text"][@value="AB123"]')
       end
     end
