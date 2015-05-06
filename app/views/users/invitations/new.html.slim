@@ -1,19 +1,40 @@
 h2
   = t "devise.invitations.new.header"
 = form_for resource, as: resource_name, url: user_invitation_path, html: {:method => :post} do |f|
-  = devise_error_messages!
   - resource.class.invite_key_fields.each do |field|
-    .form-group
-      = f.label field
-      = f.text_field field
-  .form-group
-    = f.label :name
-    = f.text_field :name, { class: 'form-control' }
-  .form-group
-    = f.label(:roles, 'Role')
-    = f.collection_select :role, User::ROLES, :to_s, :humanize
-  .form-group
-    = f.label(:office_id, 'Office')
-    = f.collection_select :office_id, Office.all, :id, :name
+    .row
+      .small-12.columns
+        .form-group
+          .row
+            .columns.small-12
+              = f.label field, resource.errors[field].join(', ').html_safe, class: 'error' if resource.errors[field].present?
+          .row
+            .columns.small-12.medium-8.large-5
+              = f.label field
+              = f.text_field field
+    .row
+      .small-12.columns
+        .form-group
+          .row
+            .columns.small-12
+              = f.label :name, resource.errors[:name].join(', ').html_safe, class: 'error' if resource.errors[:name].present?
+          .row
+            .columns.small-12.medium-8.large-5
+              = f.label :name
+              = f.text_field :name, { class: 'form-control' }
+  .row
+    .small-12.columns
+      .form-group
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label(:roles, 'Role')
+            = f.collection_select :role, User::ROLES, :to_s, :humanize
+  .row
+    .small-12.columns
+      .form-group
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label(:office_id, 'Office')
+            = f.collection_select :office_id, Office.all, :id, :name
   p
     = f.submit t("devise.invitations.new.submit_button"), class: 'button btn tiny'

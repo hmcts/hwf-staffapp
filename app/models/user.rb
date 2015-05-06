@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   scope :sorted_by_email, -> {  all.order(:email) }
 
   email_regex = /\A([^@\s]+)@(hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
-  validates :email, format: { with: email_regex, on: :create }
   validates :role, :name, presence: true
+  validates :email, format: { with: email_regex, on: :create, allow_nil: true }
   validates :role, inclusion: {
     in: ROLES,
     message: "%{value} is not a valid role",

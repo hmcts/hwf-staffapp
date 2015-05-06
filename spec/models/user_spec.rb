@@ -39,6 +39,18 @@ describe User, type: :model do
         it 'will not accept non white listed emails' do
           user.email = 'valid.email.that.rocks@gmail.com'
           expect(user).to be_invalid
+        context 'non white listed emails' do
+          let(:invalid_email) { 'email.that.rocks@gmail.com' }
+          before(:each) { user.email = invalid_email }
+
+          it 'will not accept non white listed emails' do
+            expect(user).to be_invalid
+          end
+
+          it 'has an informative error message for non white listed emails' do
+            user.valid?
+            expect(user.errors.messages[:email].first).to match I18n.t('activerecord.errors.models.user.attributes.email.invalid')
+          end
         end
       end
     end
