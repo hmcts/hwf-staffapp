@@ -3,8 +3,6 @@
     dl.sub-nav
       dd#dwp-check
         =link_to 'DWP check', new_dwp_checks_path
-      dd#income-calc
-        =link_to t('descriptors.r2_calculator').to_s, calculator_income_path
       dd#feedback
         =link_to t('descriptors.feedback').to_s, feedback_path
       -if current_user.admin?

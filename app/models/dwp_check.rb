@@ -13,8 +13,7 @@ class DwpCheck < ActiveRecord::Base
   validate :date_of_birth_must_be_valid
 
   validates :ni_number, format: {
-    with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/,
-    message: 'is not valid'
+    with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
   }, allow_blank: true
 
   scope :by_office, lambda { |office_id|

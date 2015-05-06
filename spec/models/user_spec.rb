@@ -36,9 +36,19 @@ describe User, type: :model do
           expect(user).to be_valid
         end
 
-        it 'will not accept non white listed emails' do
-          user.email = 'valid.email.that.rocks@gmail.com'
-          expect(user).to be_invalid
+        context 'non white listed emails' do
+          let(:invalid_email) { 'email.that.rocks@gmail.com' }
+          before(:each) { user.email = invalid_email }
+
+          it 'will not accept non white listed emails' do
+            expect(user).to be_invalid
+          end
+
+          it 'has an informative error message for non white listed emails' do
+            message = "you’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, contact us via #{Settings.mail_tech_support}"
+            user.valid?
+            expect(user.errors.messages[:email].first).to match message
+          end
         end
 
         context 'non white listed emails' do

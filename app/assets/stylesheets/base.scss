@@ -42,3 +42,8 @@ h2 {
 .btn:hover {
   background-color: $green;
 }
+
+span.hint.block {
+  display: block;
+  color: $secondary-text-colour;
+}

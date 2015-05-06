@@ -55,7 +55,10 @@ en:
         rating: 'How would you rate this service?'
         help: 'Did you need any help with using this service?'
       dwp_check:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
         last_name: 'Last name'
+        last_name_hint: 'First 3 letters only'
         ni_number: 'National Insurance number'
         dob: 'Date of birth'
         date_to_check: 'Date application made'
+        date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
