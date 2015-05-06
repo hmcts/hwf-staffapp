@@ -18,6 +18,14 @@ dl.sub-nav {
   .top-bar-section {
     li:not(.has-form) a:not(.button) {
       background: #000000;
+      color: #fff;
+    }
+    li div.inline {
+      background: #000000;
+      color: #fff;
+      a {
+        text-decoration: underline;
+      }
     }
   }
   .title-area {

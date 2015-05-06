@@ -20,7 +20,9 @@ html[lang="en"]
           ul.right
             li
               - if user_signed_in?
-                = link_to "sign out as #{current_user.name}", destroy_user_session_path, :method => :delete, class: 'inline'
+                .inline
+                  = "Welcome #{current_user.name}"
+                  = link_to "Sign out", destroy_user_session_path, :method => :delete
               - else
                 = link_to 'Sign in', new_user_session_path
     =render 'layouts/toolbar'
