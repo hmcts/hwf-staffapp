@@ -21,8 +21,8 @@
 
 en:
   descriptors:
-    r2_calculator: 'Income check'
-    feedback: 'Feedback'
+    r2_calculator: 'Calculate fee'
+    feedback: 'Give feedback'
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
