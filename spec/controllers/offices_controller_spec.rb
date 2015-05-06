@@ -71,7 +71,7 @@ RSpec.describe OfficesController, type: :controller do
       it 'assigns all offices as @offices' do
         office = Office.create! valid_attributes
         get :index, {}, valid_session
-        expect(assigns(:offices)).to eq([office])
+        expect(assigns(:offices)).to include(office)
       end
     end
 
@@ -143,7 +143,7 @@ RSpec.describe OfficesController, type: :controller do
       it 'assigns all offices as @offices' do
         office = Office.create! valid_attributes
         get :index, {}, valid_session
-        expect(assigns(:offices)).to eq([office])
+        expect(assigns(:offices)).to include(office)
       end
     end
 
