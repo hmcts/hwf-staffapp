@@ -20,6 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  dictionary:
+    invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
   descriptors:
     r2_calculator: 'Income check'
     feedback: 'Feedback'
@@ -35,7 +37,6 @@ en:
           attributes:
             email:
               blank: 'You must enter an @hmcts.gsi.gov.uk email address'
-              invalid: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:fee-remission@digital.justice.gov.uk'>contact us</a>"
             name:
               blank: You must enter a name for the user
         dwp_check:

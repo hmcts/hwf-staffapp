@@ -14,7 +14,12 @@ class User < ActiveRecord::Base
 
   email_regex = /\A([^@\s]+)@(hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
   validates :role, :name, presence: true
-  validates :email, format: { with: email_regex, on: :create, allow_nil: true }
+  validates :email, format: {
+    with: email_regex,
+    on: :create,
+    allow_nil: true,
+    message: I18n.t('dictionary.invalid_email', email: Settings.mail_tech_support)
+  }
   validates :role, inclusion: {
     in: ROLES,
     message: "%{value} is not a valid role",
