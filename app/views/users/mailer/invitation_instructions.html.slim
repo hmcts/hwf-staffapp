@@ -2,14 +2,13 @@ p
   = t("devise.mailer.invitation_instructions.hello", name: @resource.name)
 p
   = t("devise.mailer.invitation_instructions.set_up", url: root_url)
-p
-  = t("devise.mailer.invitation_instructions.guidance")
-ul
+ol
   li
     = t("devise.mailer.invitation_instructions.list_1")
   li
     = t("devise.mailer.invitation_instructions.list_2")
-p
-  = link_to t("devise.mailer.invitation_instructions.set_up_text"), accept_user_invitation_url(@resource, invitation_token: @token)
+    = link_to(accept_user_invitation_url(@resource, invitation_token: @token), accept_user_invitation_url(@resource, invitation_token: @token))
+  li
+    = t("devise.mailer.invitation_instructions.list_3")
 p
   = t("devise.mailer.invitation_instructions.ignore").html_safe
