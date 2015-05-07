@@ -1,4 +1,6 @@
 @import 'colours';
+@import 'foundation_and_overrides';
+
 
 dl.sub-nav {
   background-color: #dee0e2;
@@ -40,9 +42,13 @@ dl.sub-nav {
     li div.inline {
       background: #000000;
       color: #fff;
+      @media screen and (max-width: upper-bound($small-range)) {
+        padding-left:15px;
+      }
+
       a {
         text-decoration: underline;
-        @media screen and (max-width: 25em) {
+        @media screen and (max-width: upper-bound($small-range)) {
           padding-left:15px;
         }
       }
@@ -53,7 +59,7 @@ dl.sub-nav {
       background: asset_url('crest.png') no-repeat 0% 40%;
       padding-left: 30px;
       vertical-align: middle;
-      @media screen and (max-width: 1024px) {
+      @media screen and (max-width: upper-bound($small-range)) {
         background: asset_url('crest.png') no-repeat 15px 40%;
         padding-left:45px;
       }
