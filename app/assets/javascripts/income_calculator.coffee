@@ -63,7 +63,7 @@ checkValidation = ->
   $('input[data-check]').each ->
     test = $(this)
     error = $('label.error[data-check-error=' + test.data('check') + ']')
-    parent = error.parents('.form-group')
+    parent = error.parents('.form-group').children('div')
     if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
       error.removeClass 'hide'
       parent.addClass 'field_with_errors'

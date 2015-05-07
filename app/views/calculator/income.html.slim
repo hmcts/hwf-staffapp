@@ -4,51 +4,51 @@ h2 Income check
 
 #r2_calculator
   .row
-    .small-12.medium-3.large-3.columns
-      label for='fee' Fee
-      .row.collapse.prefix-radius
-        .small-2.medium-2.large-3.columns
-          span.prefix
-            label.inline for='fee' £
-        .small-10.medium-10.large-9.columns style="padding:0px;"
-          input data-check='fee' id="fee" name="fee" type="number"
-        label.error data-check-error='fee' Please enter a fee value
+    .small-12.medium-3.large-3.columns.form-group
+      #fee-block
+        label.error data-check-error='fee' for='fee' Please enter a fee value
+        label for='fee' Fee
+        .row.collapse.prefix-radius
+          .small-2.medium-2.large-3.columns
+            span.prefix
+              label.inline for='fee' £
+          .small-10.medium-10.large-9.columns style="padding:0px;"
+            input data-check='fee' id="fee" name="fee" type="number"
   .row
-    .small-12.columns
-      .form-group
-        #couple
-          .row
-            .columns.small-12
-              label.error data-check-error='couple' Please select a marital status
-          .row
-            .columns.small-4
-              label Marital status
-              label for='couple-no'
-                input id='couple-no' name="couple" type="radio" value='false'
-                |  Single
-              label for='couple-yes'
-                input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
-                |  Part of a couple
+    .small-12.columns.form-group
+      #status-block
+        label.error data-check-error='couple' Please select a marital status
+        .row
+          .columns.small-4
+            label Marital status
+            label for='couple-no'
+              input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
+              |  Single
+            label for='couple-yes'
+              input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
+              |  Part of a couple
 
 
   .row
-    .small-12.medium-6.large-5.columns
-      label for='children' Number of children
-      .row
-        .columns.small-3
-          input data-check='children' id='children' type="number" min=0
-      label.error data-check-error='children' Please select a number of children
+    .small-12.medium-6.large-5.columns.form-group
+      #child-block
+        label.error data-check-error='children' for='children' Please select a number of children
+        label for='children' Number of children
+        .row
+          .columns.small-3
+            input data-check='children' id='children' type="number" min=0
 
   .row
-    .small-12.medium-3.large-3.columns
-      label for='income' Total monthly income
-      .row.collapse.prefix-radius
-        .small-2.medium-2.large-3.columns
-          span.prefix
-            label.inline for='income' £
-        .small-10.medium-10.large-9.columns
-          input data-check='income' name="income" id="income" type="number"
-        label.error data-check-error='income' Please enter an income
+    .small-12.medium-3.large-3.columns.form-group
+      #income-block
+        label.error data-check-error='income' for='income' Please enter an income
+        label for='income' Total monthly income
+        .row.collapse.prefix-radius
+          .small-2.medium-2.large-3.columns
+            span.prefix
+              label.inline for='income' £
+          .small-10.medium-10.large-9.columns
+            input data-check='income' name="income" id="income" type="number"
 
 .row
   .small-12.medium-8.large-5.columns
