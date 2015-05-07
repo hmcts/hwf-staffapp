@@ -1,9 +1,16 @@
 h2 Forgot your password?
+#instructions Enter your email address and click ‘get new password’. You’ll receive an email with a link to create a new password.
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    = f.email_field :email, autofocus: true
+  .row
+    .small-12.columns
+      .form-group
+        .row
+          .columns.small-12
+            = f.label :email, resource.errors[:email].join(', ').html_safe, class: 'error' if resource.errors[:email].present?
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label :email
+            = f.text_field :email, { class: 'form-control' }
   .actions
     = f.submit "Send me reset password instructions", class: 'button btn tiny'
 = render "devise/shared/links"
