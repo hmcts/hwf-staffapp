@@ -62,13 +62,17 @@ sendToDatabase = (remit, pay) ->
 checkValidation = ->
   $('input[data-check]').each ->
     test = $(this)
-    error = $('small.error[data-check-error=' + test.data('check') + ']')
+    error = $('label.error[data-check-error=' + test.data('check') + ']')
+    parent = error.parents('.form-group').children('div')
     if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
       error.removeClass 'hide'
+      parent.addClass 'field_with_errors'
     else
       error.addClass 'hide'
+      parent.removeClass 'field_with_errors'
+
     return
-  $('small.error:visible').length == 0
+  $('label.error:visible').length == 0
 
 setupPage = ->
   $('.panel.callout').hide()

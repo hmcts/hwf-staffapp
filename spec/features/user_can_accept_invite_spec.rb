@@ -17,7 +17,7 @@ RSpec.feature 'User can accept invite', type: :feature do
       fill_in 'user_password', with: password
       fill_in 'user_password_confirmation', with: password
 
-      click_button 'Set my password'
+      click_button I18n.t('devise.invitations.edit.submit_button')
 
       expect(page).to have_xpath('//div', text: 'dashboard', count: 2)
       expect(page).to have_xpath('//div[@class="alert-box notice"]',

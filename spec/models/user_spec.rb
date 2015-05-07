@@ -45,9 +45,8 @@ describe User, type: :model do
           end
 
           it 'has an informative error message for non white listed emails' do
-            message = "you’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, contact us via #{Settings.mail_tech_support}"
             user.valid?
-            expect(user.errors.messages[:email].first).to match message
+            expect(user.errors.messages[:email].first).to match I18n.t('dictionary.invalid_email', email: Settings.mail_tech_support)
           end
         end
       end
