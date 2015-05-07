@@ -6,7 +6,8 @@ ol
   li
     = t("devise.mailer.invitation_instructions.list_1")
   li
-    = t("devise.mailer.invitation_instructions.list_2", url: accept_user_invitation_url(@resource, invitation_token: @token))
+    = t("devise.mailer.invitation_instructions.list_2")
+    = link_to(accept_user_invitation_url(@resource, invitation_token: @token), accept_user_invitation_url(@resource, invitation_token: @token))
   li
     = t("devise.mailer.invitation_instructions.list_3")
 p
