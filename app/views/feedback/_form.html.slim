@@ -92,20 +92,22 @@ javascript:
     setupPage();
 
     $('.help-radio-lbl').on('click', function() {
+      console.log('clicked label ' + $(this).text())
       showText(this);
     });
 
     $("input[name='help_score']").on('change', function () {
+      console.log('changed radio button ' + $(this).attr('name'))
       showText($(this).parent());
     });
 
     function showText(ctrl) {
-      if (ctrl.innerText == 'Other') {
+      if (ctrl.attr('for') === 'help_score_4') {
         $('#feedback_help').val('');
         $('#extra').show();
         $('#feedback_help').focus();
       } else {
-        $('#feedback_help').val(ctrl.innerText);
+        $('#feedback_help').val(ctrl.text().trim());
         $('#extra').hide();
       }
     }
