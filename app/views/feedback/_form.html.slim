@@ -92,12 +92,10 @@ javascript:
     setupPage();
 
     $('.help-radio-lbl').on('click', function() {
-      console.log('clicked label ' + $(this).text())
       showText(this);
     });
 
     $("input[name='help_score']").on('change', function () {
-      console.log('changed radio button ' + $(this).attr('name'))
       showText($(this).parent());
     });
 
