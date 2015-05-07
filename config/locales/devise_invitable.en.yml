@@ -23,7 +23,7 @@ en:
         set_up: 'You need to set up a password to use the online benefits checker. Follow these steps:'
         guidance: "You'll need:"
         list_1: 'Open the Firefox web browser'
-        list_2: 'Copy and paste this address into your browser’s address bar: %{url}'
+        list_2: 'Copy and paste this address into your browser’s address bar: '
         list_3: 'You can then create a password'
         ignore: "You won’t be able to use the benefits checker until you create a password.<br />If you weren't expecting this invitation, please ignore this email."
         set_up_text: 'Set up your account now'
