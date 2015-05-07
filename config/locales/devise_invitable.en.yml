@@ -20,9 +20,10 @@ en:
         hello: 'Dear %{name}'
         someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
         accept: 'Accept invitation'
-        ignore: "You won't be able to use your account until you access the link above and set your password.<br />If you weren't expecting this invitation, please ignore this email."
-        set_up: 'You need to set up an account to use the online benefits checker %{url}'
+        set_up: 'You need to set up a password to use the online benefits checker. Follow these steps:'
         guidance: "You'll need:"
-        list_1: 'your email address'
-        list_2: 'to set up a password'
+        list_1: 'Open the Firefox web browser'
+        list_2: 'Copy and paste this address into your browser’s address bar: %{url}'
+        list_3: 'You can then create a password'
+        ignore: "You won’t be able to use the benefits checker until you create a password.<br />If you weren't expecting this invitation, please ignore this email."
         set_up_text: 'Set up your account now'
