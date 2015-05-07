@@ -24,6 +24,8 @@ en:
     dwp_check: Check benefits
     r2_calculator: 'Calculate fee'
     feedback: 'Give feedback'
+  dictionary:
+    invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
@@ -32,6 +34,18 @@ en:
   activerecord:
     errors:
       models:
+        user:
+          attributes:
+            email:
+              blank: 'Enter your email address'
+              not_found: That email is not registered on our system
+            name:
+              blank: You must enter a name for the user
+            password:
+              blank: You must enter a password of at least %{count} characters
+              too_short: The password should be at least %{count} characters
+            password_confirmation:
+              confirmation: This must match the password above
         dwp_check:
           attributes:
             last_name:
@@ -43,6 +57,9 @@ en:
               blank: 'Enter the applicant’s National Insurance number'
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
     attributes:
+      user:
+        password: New password
+        password_confirmation: Confirm new password
       feedback:
         experience: 'What is your experience of using the service so far?'
         ideas: 'Do you have any ideas for how this service could be improved?'

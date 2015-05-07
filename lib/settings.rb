@@ -17,4 +17,7 @@ module_function
     @h['mail_tech_support']
   end
 
+  def mail_feedback
+    @h['mail_feedback']
+  end
 end

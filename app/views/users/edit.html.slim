@@ -1,14 +1,9 @@
-h2 Edit #{@user.email}
+h2 Edit #{@user.name}
 
 = form_for @user do |f|
-  - if @user.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-      ul
-        - @user.errors.full_messages.each do |message|
-          li = message
 
   .form-group
+    = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
     = f.label :email
     = f.text_field :email
   .form-group

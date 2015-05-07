@@ -12,8 +12,8 @@ en:
         header: "Send invitation"
         submit_button: "Send an invitation"
       edit:
-        header: "Set your password"
-        submit_button: "Set my password"
+        header: "Create a new password"
+        submit_button: "Update password"
     mailer:
       invitation_instructions:
         subject: 'Set up your account to use the benefit checker'
