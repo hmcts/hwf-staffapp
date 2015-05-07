@@ -100,12 +100,12 @@ javascript:
     });
 
     function showText(ctrl) {
-      if (ctrl.innerText == 'Other') {
+      if (ctrl.attr('for') === 'help_score_4') {
         $('#feedback_help').val('');
         $('#extra').show();
         $('#feedback_help').focus();
       } else {
-        $('#feedback_help').val(ctrl.innerText);
+        $('#feedback_help').val(ctrl.text().trim());
         $('#extra').hide();
       }
     }
