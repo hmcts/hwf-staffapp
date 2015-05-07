@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :role, :name, presence: true
   validates :email, format: {
     with: email_regex,
-    on: :create,
+    on: [:create, :update],
     allow_nil: true,
     message: I18n.t('dictionary.invalid_email', email: Settings.mail_tech_support)
   }

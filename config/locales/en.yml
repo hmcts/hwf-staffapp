@@ -37,7 +37,6 @@ en:
           attributes:
             email:
               blank: 'Enter your email address'
-              invalid: You must enter an @hmcts.gsi.gov.uk email address
               not_found: That email is not registered on our system
             name:
               blank: You must enter a name for the user
