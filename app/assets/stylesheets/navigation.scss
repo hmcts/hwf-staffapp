@@ -1,9 +1,26 @@
+@import 'colours';
+
 dl.sub-nav {
   background-color: #dee0e2;
   padding: 14px 10px 10px 0;
   display: block;
   width: auto;
   overflow: hidden;
+  a {
+    color: $link-colour;
+    text-decoration:underline;
+  }
+  a:hover {
+    color: $link-hover-colour;
+  }
+  dd.active a {
+    color: $white;
+    background: $link-hover-colour;
+    text-decoration:none;
+    :hover {
+      background: $link-colour;
+    }
+  }
 }
 
 .top-bar {
@@ -25,6 +42,9 @@ dl.sub-nav {
       color: #fff;
       a {
         text-decoration: underline;
+        @media screen and (max-width: 25em) {
+          padding-left:15px;
+        }
       }
     }
   }
@@ -33,6 +53,10 @@ dl.sub-nav {
       background: asset_url('crest.png') no-repeat 0% 40%;
       padding-left: 30px;
       vertical-align: middle;
+      @media screen and (max-width: 1024px) {
+        background: asset_url('crest.png') no-repeat 15px 40%;
+        padding-left:45px;
+      }
     }
   }
 }

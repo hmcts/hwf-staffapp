@@ -1445,4 +1445,13 @@ $include-html-global-classes: $include-html-classes;
 // $include-accessibility-classes: true;
 
 $body-font-family: 'nta', Arial, sans-serif;
+
+$screen: "only screen";
+$tiny-range: (0em, 25em);
+$small-range: (25.063em, 40em);
+$medium-range: (40.063em, 64em);
+
+$topbar-breakpoint: #{upper-bound($tiny-range)};
+$topbar-media-query: "#{$screen} and (min-width:#{lower-bound($topbar-breakpoint)})";
+
 @import 'foundation';
