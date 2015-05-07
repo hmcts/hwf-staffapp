@@ -2,10 +2,13 @@
   .row
     dl.sub-nav
       dd#dwp-check
-        =link_to 'Check benefits', new_dwp_checks_path
+        =link_to t('functions.dwp_check'), new_dwp_checks_path
+
       dd#feedback
-        =link_to t('descriptors.feedback').to_s, feedback_path
+        =link_to t('functions.feedback').to_s, feedback_path
       -if current_user.admin?
+        dd#income-calc
+          = link_to t('functions.r2_calculator').to_s, calculator_income_path
         dd.right
           =link_to 'Users', users_path
         dd.right

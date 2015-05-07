@@ -20,7 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  descriptors:
+  functions:
+    dwp_check: Check benefits
     r2_calculator: 'Calculate fee'
     feedback: 'Give feedback'
   feedback:
