@@ -5,8 +5,9 @@ class DwpCheck < ActiveRecord::Base
   belongs_to :created_by, class_name: 'User'
 
   before_create :generate_unique_number
+  after_create :generate_api_token
 
-  validates :last_name, :dob, :ni_number, presence: true
+  validates :last_name, :dob, :ni_number, :office_id, presence: true
   validates :last_name, length: { minimum: 2 }, allow_blank: true
 
   validate :date_to_check_must_be_valid
@@ -50,12 +51,6 @@ class DwpCheck < ActiveRecord::Base
     end
   end
 
-  def unique_token
-    return '' unless persisted?
-    short_name = created_by.name.gsub(' ', '').downcase
-    "#{short_name.truncate(27)}@#{created_at.strftime('%y%m%d%H%M%S')}.#{unique_number}"
-  end
-
 private
 
   def generate_unique_number
@@ -67,4 +62,8 @@ private
     self.unique_number = new_uid
   end
 
+  def generate_api_token
+    short_name = created_by.name.gsub(' ', '').downcase.truncate(27)
+    self.our_api_token = "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{unique_number}"
+  end
 end

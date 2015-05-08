@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe DwpCheck, type: :model do
-
+  let(:user)  { FactoryGirl.create :user }
   let(:check)      { FactoryGirl.build :dwp_check }
 
   it 'pass factory build' do
+    puts ">>>>>> #{check.office_id}"
     expect(check).to be_valid
   end
   context 'methods' do
@@ -13,20 +14,19 @@ RSpec.describe DwpCheck, type: :model do
       check.save!
       expect(check).to be_valid
       check_val = "testuser@#{check.created_at.strftime('%y%m%d%H%M%S')}.#{check.unique_number}"
-      expect(check.unique_token).to eql(check_val)
-    end
-  end
-  context 'associations' do
-    it 'responds with a unique_token' do
-      expect(check).to respond_to(:unique_token)
+      expect(check.our_api_token).to eql(check_val)
     end
   end
   context 'validations' do
-    it 'requires unique_token to be between 3 and 50 characters' do
+    it 'requires an office_id to be saved' do
+      check.office_id = nil
+      expect(check).to be_invalid
+    end
+    it 'requires our_api_token to be between 3 and 50 characters' do
       user = FactoryGirl.create(:user, name: 'a' * 50)
       check.created_by = user
       check.save
-      expect(check.unique_token.length).to eql(50)
+      expect(check.our_api_token.length).to eql(50)
     end
     it 'require a last name' do
       check.last_name = nil
@@ -72,7 +72,7 @@ RSpec.describe DwpCheck, type: :model do
     end
 
     it 'allow a unique number to be set' do
-      test_unique = FactoryGirl.create :dwp_check
+      test_unique = FactoryGirl.create(:dwp_check, created_by: user)
       expect(test_unique.unique_number).to_not be_nil
       expect(test_unique.unique_number).to match(/[0-9a-fA-F]{4}[-][0-9a-fA-F]{4}/)
       expect(test_unique).to be_valid
@@ -93,11 +93,11 @@ RSpec.describe DwpCheck, type: :model do
 
     describe 'checks_by_day' do
       let!(:old_check) do
-        old = FactoryGirl.create :dwp_check
+        old = FactoryGirl.create(:dwp_check, created_by: user)
         old.update(created_at: "#{Date.today.-8.days}")
       end
       let!(:new_check) do
-        check = FactoryGirl.create :dwp_check
+        check = FactoryGirl.create(:dwp_check, created_by: user)
         check.update(created_at: "#{Date.today.-5.days}")
       end
 
@@ -114,8 +114,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       let!(:check) do
-        check = FactoryGirl.create :dwp_check
-        check.update(created_by_id: user.id)
+        FactoryGirl.create :dwp_check, created_by_id: user.id
       end
 
       let!(:another_user) do
@@ -125,8 +124,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       let!(:another_check) do
-        check = FactoryGirl.create :dwp_check
-        check.update(created_by_id: another_user.id)
+        FactoryGirl.create :dwp_check, created_by_id: another_user.id
       end
 
       it 'lists all the checks from the same office' do
@@ -141,12 +139,10 @@ RSpec.describe DwpCheck, type: :model do
         user
       end
       let!(:check) do
-        check = FactoryGirl.create(:dwp_check, dwp_result: 'Deceased')
-        check.update(created_by_id: user.id)
+        FactoryGirl.create(:dwp_check, dwp_result: 'Deceased', created_by: user)
       end
       let!(:another_check) do
-        check = FactoryGirl.create(:dwp_check, dwp_result: 'No')
-        check.update(created_by_id: user.id)
+        FactoryGirl.create(:dwp_check, dwp_result: 'No', created_by_id: user.id)
       end
       it 'lists checks by length of dwp_result' do
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')

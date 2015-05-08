@@ -16,14 +16,15 @@ private
 
   def query_proxy_api
     params = {
-      id: @dwp_checker.unique_token,
+      id: @dwp_checker.our_api_token,
       ni_number: @dwp_checker.ni_number,
       surname: @dwp_checker.last_name.upcase,
       birth_date: @dwp_checker.dob.strftime('%Y%m%d'),
       entitlement_check_date: process_check_date
     }
-    response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
-    @dwp_checker.parse(response)['benefit_checker_status']
+    response = JSON.parse(RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params)
+    @dwp_checker.dwp_result = response['benefit_checker_status']
+    @dwp_checker.dwp_id = response['confirmation_ref']
   end
 
   def process_check_date
