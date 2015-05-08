@@ -20,14 +20,15 @@ html[lang="en"]
             a href="#"
               span
         section.top-bar-section
-          ul.right
-            li
-              - if user_signed_in?
-                .inline
-                  = "Welcome #{current_user.name}"
-                  = link_to "Sign out", destroy_user_session_path, :method => :delete
-              - else
-                = link_to 'Sign in', new_user_session_path
+          -if !current_page?(new_user_session_path)
+            ul.right
+                li
+                  - if user_signed_in?
+                    .inline
+                      = "Welcome #{current_user.name}"
+                      = link_to "Sign out", destroy_user_session_path, :method => :delete
+                  - else
+                    = link_to 'Sign in', new_user_session_path
     =render 'layouts/toolbar'
     .row
       .large-12.columns
