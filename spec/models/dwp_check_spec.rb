@@ -5,7 +5,6 @@ RSpec.describe DwpCheck, type: :model do
   let(:check)      { FactoryGirl.build :dwp_check }
 
   it 'pass factory build' do
-    puts ">>>>>> #{check.office_id}"
     expect(check).to be_valid
   end
   context 'methods' do

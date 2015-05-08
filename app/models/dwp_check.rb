@@ -3,6 +3,7 @@ class DwpCheck < ActiveRecord::Base
   include CommonScopes
 
   belongs_to :created_by, class_name: 'User'
+  belongs_to :office
 
   before_create :generate_unique_number
   after_create :generate_api_token
