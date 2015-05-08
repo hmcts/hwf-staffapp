@@ -8,7 +8,8 @@ private
 
   def check_remote_api
     @dwp_checker.save!
-    @dwp_checker.dwp_result = query_proxy_api
+    # @dwp_checker.dwp_result = query_proxy_api
+    query_proxy_api
     @dwp_checker.benefits_valid = (@dwp_checker.dwp_result == 'Yes' ? true : false)
     @dwp_checker.save!
   end
@@ -22,7 +23,7 @@ private
       entitlement_check_date: process_check_date
     }
     response = RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params
-    JSON.parse(response)['benefit_checker_status']
+    @dwp_checker.parse(response)['benefit_checker_status']
   end
 
   def process_check_date
