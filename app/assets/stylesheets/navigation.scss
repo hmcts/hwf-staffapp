@@ -1,9 +1,28 @@
+@import 'colours';
+@import 'foundation_and_overrides';
+
+
 dl.sub-nav {
   background-color: #dee0e2;
   padding: 14px 10px 10px 0;
   display: block;
   width: auto;
   overflow: hidden;
+  a {
+    color: $link-colour;
+    text-decoration:underline;
+  }
+  a:hover {
+    color: $link-hover-colour;
+  }
+  dd.active a {
+    color: $white;
+    background: $link-hover-colour;
+    text-decoration:none;
+    :hover {
+      background: $link-colour;
+    }
+  }
 }
 
 .top-bar {
@@ -18,6 +37,21 @@ dl.sub-nav {
   .top-bar-section {
     li:not(.has-form) a:not(.button) {
       background: #000000;
+      color: #fff;
+    }
+    li div.inline {
+      background: #000000;
+      color: #fff;
+      @media screen and (max-width: upper-bound($small-range)) {
+        padding-left:15px;
+      }
+
+      a {
+        text-decoration: underline;
+        @media screen and (max-width: upper-bound($small-range)) {
+          padding-left:15px;
+        }
+      }
     }
   }
   .title-area {
@@ -25,6 +59,10 @@ dl.sub-nav {
       background: asset_url('crest.png') no-repeat 0% 40%;
       padding-left: 30px;
       vertical-align: middle;
+      @media screen and (max-width: upper-bound($small-range)) {
+        background: asset_url('crest.png') no-repeat 15px 40%;
+        padding-left:45px;
+      }
     }
   }
 }

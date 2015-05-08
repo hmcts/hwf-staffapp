@@ -20,11 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  functions:
+    dwp_check: Check benefits
+    r2_calculator: 'Calculate fee'
+    feedback: 'Give feedback'
   dictionary:
     invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
-  descriptors:
-    r2_calculator: 'Income check'
-    feedback: 'Feedback'
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'

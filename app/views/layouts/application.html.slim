@@ -16,11 +16,16 @@ html[lang="en"]
         ul.title-area
           li.name
             h1 =link_to 'Help with fees', root_url
+          li.toggle-topbar.menu-icon
+            a href="#"
+              span
         section.top-bar-section
           ul.right
             li
               - if user_signed_in?
-                = link_to "sign out as #{current_user.name}", destroy_user_session_path, :method => :delete, class: 'inline'
+                .inline
+                  = "Welcome #{current_user.name}"
+                  = link_to "Sign out", destroy_user_session_path, :method => :delete
               - else
                 = link_to 'Sign in', new_user_session_path
     =render 'layouts/toolbar'
