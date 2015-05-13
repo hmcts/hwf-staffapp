@@ -7,5 +7,7 @@ FactoryGirl.define do
     checked_by nil
     laa_code nil
     unique_number nil
+    our_api_token 'name@20150101.ab12-cd34'
+    association :office
   end
 end

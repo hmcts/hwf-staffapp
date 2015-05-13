@@ -29,9 +29,12 @@ private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
-    @dwp_checker.created_by_id = current_user.id
-    @dwp_checker.dob = process_incoming_date(dwp_params[:dob])
-    @dwp_checker.date_to_check = process_incoming_date(dwp_params[:date_to_check])
+    @dwp_checker.update(
+      created_by_id: current_user.id,
+      office_id: current_user.office_id,
+      dob: process_incoming_date(dwp_params[:dob]),
+      date_to_check: process_incoming_date(dwp_params[:date_to_check])
+    )
   end
 
   def process_incoming_date(date_str)
