@@ -10,7 +10,7 @@ h2
             = f.label :password, resource.errors[:password].join(', ').html_safe, class: 'error' if resource.errors[:password].present?
         .row
           .columns.small-12.medium-8.large-5
-            = f.label :password
+            = f.label t('activerecord.attributes.user.new_password')
             = f.password_field :password, { class: 'form-control' }
   .row
     .small-12.columns

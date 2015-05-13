@@ -58,7 +58,8 @@ en:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
     attributes:
       user:
-        password: New password
+        password: Password
+        new_password: New password
         password_confirmation: Confirm new password
       feedback:
         experience: 'What is your experience of using the service so far?'
