@@ -21,12 +21,15 @@ h2 Income calculator
         .row
           .columns.small-4
             label Marital status
-            label for='couple-no'
-              input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
-              |  Single
-            label for='couple-yes'
-              input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
-              |  Part of a couple
+            .options
+              .option
+                label for='couple-no'
+                  input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
+                  |  Single
+              .option
+                label for='couple-yes'
+                  input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
+                  |  Part of a couple
 
 
   .row
