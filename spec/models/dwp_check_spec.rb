@@ -21,12 +21,14 @@ RSpec.describe DwpCheck, type: :model do
       check.office_id = nil
       expect(check).to be_invalid
     end
+
     it 'requires our_api_token to be between 3 and 50 characters' do
       user = FactoryGirl.create(:user, name: 'a' * 50)
       check.created_by = user
       check.save
       expect(check.our_api_token.length).to eql(50)
     end
+
     it 'require a last name' do
       check.last_name = nil
       expect(check).to be_invalid
