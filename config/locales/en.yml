@@ -42,7 +42,7 @@ en:
             name:
               blank: You must enter a name for the user
             password:
-              blank: You must enter a password of at least %{count} characters
+              blank: You must enter a password
               too_short: Your password must be at least %{count} characters
             password_confirmation:
               confirmation: This must match the password above

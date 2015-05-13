@@ -1,0 +1,26 @@
+h2 =t('devise.invitations.edit.header')
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+  = f.hidden_field :reset_password_token
+  .row
+    .small-12.columns
+      .form-group
+        .row
+          .columns.small-12
+            = f.label :password, resource.errors[:password].join(', ').html_safe, class: 'error' if resource.errors[:password].present?
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label :password
+            = f.password_field :password, autofocus: true, autocomplete: "off"
+  .row
+    .small-12.columns
+      .form-group
+        .row
+          .columns.small-12
+            = f.label :password_confirmation, resource.errors[:password_confirmation].join(', ').html_safe, class: 'error' if resource.errors[:password_confirmation].present?
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, autofocus: true, autocomplete: "off"
+  .actions
+    = f.submit t('devise.invitations.edit.submit_button')
+= render "devise/shared/links"
