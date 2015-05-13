@@ -30,5 +30,4 @@ private
     check_date = @dwp_checker.date_to_check ? @dwp_checker.date_to_check : Date.today
     check_date.strftime('%Y%m%d')
   end
-
 end
