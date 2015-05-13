@@ -38,7 +38,7 @@ en:
           attributes:
             email:
               blank: 'Enter your email address'
-              not_found: That email is not registered on our system
+              not_found: Your email address has not been recognised. First check that you've typed it correctly. For more help <a href='mailto:trial.feedback@digital.justice.gov.uk'>contact us</a>
             name:
               blank: You must enter a name for the user
             password:

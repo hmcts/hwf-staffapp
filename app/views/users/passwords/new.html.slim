@@ -6,11 +6,11 @@ h2 = t 'devise.passwords.new.header'
       .form-group
         .row
           .columns.small-12
-            = f.label :email, resource.errors[:email].join(', ').html_safe, class: 'error' if resource.errors[:email].present?
+            = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
         .row
           .columns.small-12.medium-8.large-5
             = f.label :email
             = f.text_field :email, { class: 'form-control' }
   .actions
     = f.submit t('devise.passwords.new.submit_button'), class: 'button btn tiny'
-= render "devise/shared/links"
+= render "users/shared/links"
