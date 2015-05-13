@@ -8,7 +8,6 @@ private
 
   def check_remote_api
     @dwp_checker.save!
-    # @dwp_checker.dwp_result = query_proxy_api
     query_proxy_api
     @dwp_checker.benefits_valid = (@dwp_checker.dwp_result == 'Yes' ? true : false)
     @dwp_checker.save!
