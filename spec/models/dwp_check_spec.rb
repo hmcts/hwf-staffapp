@@ -115,7 +115,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       let!(:check) do
-        FactoryGirl.create :dwp_check, created_by_id: user.id
+        FactoryGirl.create :dwp_check, created_by_id: user.id, office_id: user.office_id
       end
 
       let!(:another_user) do
@@ -125,7 +125,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       let!(:another_check) do
-        FactoryGirl.create :dwp_check, created_by_id: another_user.id
+        FactoryGirl.create :dwp_check, created_by_id: another_user.id, office_id: another_user.office_id
       end
 
       it 'lists all the checks from the same office' do
@@ -140,10 +140,10 @@ RSpec.describe DwpCheck, type: :model do
         user
       end
       let!(:check) do
-        FactoryGirl.create(:dwp_check, dwp_result: 'Deceased', created_by: user)
+        FactoryGirl.create(:dwp_check, dwp_result: 'Deceased', created_by: user, office_id: user.office_id)
       end
       let!(:another_check) do
-        FactoryGirl.create(:dwp_check, dwp_result: 'No', created_by_id: user.id)
+        FactoryGirl.create(:dwp_check, dwp_result: 'No', created_by_id: user.id, office_id: user.office_id)
       end
       it 'lists checks by length of dwp_result' do
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')

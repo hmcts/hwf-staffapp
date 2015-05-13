@@ -20,11 +20,11 @@ class DwpCheck < ActiveRecord::Base
 
   scope :by_office, lambda { |office_id|
     joins('left outer join users on dwp_checks.created_by_id = users.id').
-      where('users.office_id = ?', office_id)
+      where('dwp_checks.office_id = ?', office_id)
   }
   scope :by_office_grouped_by_type, lambda { |office_id|
     joins('left outer join users on dwp_checks.created_by_id = users.id').
-      where('users.office_id = ?', office_id).
+      where('dwp_checks.office_id = ?', office_id).
       group(:dwp_result).
       order('length(dwp_result)')
   }
