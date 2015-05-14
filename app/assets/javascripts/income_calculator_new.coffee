@@ -7,13 +7,23 @@ class IncomeCalculator
   pp_child = 245
   couple_supp = 160
 
-  # variables
-  low_threshold = 0
-  high_threshold = 0
-  income = 0
-
   calculate: (fee, status, children, income) ->
-    return { type: 'full', to_pay: '£0' }
+    child_uplift = children * pp_child
+    curr_fee = parseFloat(fee)
+    single_supp = if status then couple_supp else 0
+
+    max_cont = Math.max(Math.floor((income - ( min_val + child_uplift + single_supp))/10,0)*10*0.5,0)
+    user_to_pay = Math.min(max_cont, curr_fee)
+
+    if user_to_pay == 0
+      result = { type: 'full', to_pay: '£0' }
+    else if user_to_pay == curr_fee
+      result = { type: 'none', to_pay: this.formatCurrency(user_to_pay) }
+    else if user_to_pay > 0 and user_to_pay < curr_fee
+      result = { type: 'part', to_pay: this.formatCurrency(user_to_pay) }
+    else
+      result = { type: 'error', to_pay: '' }
+    return result
 
 
   formatCurrency: (val) ->
