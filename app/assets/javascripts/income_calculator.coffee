@@ -25,6 +25,20 @@ class IncomeCalculator
       result = { type: 'error', to_pay: '' }
     return result
 
+  checkValidation = ->
+    $('input[data-check]').each ->
+      test = $(this)
+      error = $('label.error[data-check-error=' + test.data('check') + ']')
+      parent = error.parents('.form-group').children('div')
+      if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
+        error.removeClass 'hide'
+        parent.addClass 'field_with_errors'
+      else
+        error.addClass 'hide'
+        parent.removeClass 'field_with_errors'
+
+      return
+    $('label.error:visible').length == 0
 
   formatCurrency: (val) ->
     return '£' + val.toFixed(2)
@@ -45,6 +59,11 @@ class IncomeCalculator
 
   setup: ->
     IncomeCalculator.setupPage()
+    $('#check_btn').on 'click', ->
+      if checkValidation()
+        calculate()
+      return
+
 
 root.IncomeCalculator = IncomeCalculator
 
