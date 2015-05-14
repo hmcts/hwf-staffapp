@@ -36,7 +36,7 @@
     .small-12.medium-8.columns
       .options.radio
         .option
-          = f.label :rating_1
+          = f.label :rating_1, class: 'first'
             = f.radio_button :rating, 1
             |1 - very poor
         .option
@@ -64,7 +64,7 @@
     .small-12.medium-8.columns
       .options.radio
         .option
-          = label_tag 'help_score_1', class: 'help-radio-lbl'
+          = label_tag 'help_score_1', class: 'help-radio-lbl first'
             = radio_button_tag 'help_score', 1, class: 'help-radio-btn'
             = t('feedback.rating_1')
         .option

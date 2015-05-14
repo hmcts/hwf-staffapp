@@ -46,4 +46,7 @@ $gutter-two-thirds: $gutter - $gutter-one-third;
     background: #fff;
     border-color: #0b0c0c;
   }
+  &.first {
+    margin-top: 0px;
+  }
 }
