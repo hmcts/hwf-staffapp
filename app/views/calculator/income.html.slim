@@ -56,15 +56,11 @@ h2 Income calculator
 .row
   .small-12.medium-8.large-5.columns
     button.button.btn.small.no_selection#check_btn Check
-.row
-  .small-12.medium-7.large-7.columns
-    .panel.callout
-      p
-        |Amount remitted:
-        span#fee-remit
-      p
-        |Amount to pay:
-        span#fee-payable
+
+#result.callout
+  span.number
+    span#fee-remit
+
 .row
   .small-12.columns
     button.button.btn.small.no_selection#clear_btn Perform new check
