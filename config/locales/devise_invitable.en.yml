@@ -14,6 +14,11 @@ en:
       edit:
         header: "Create a new password"
         submit_button: "Update password"
+    passwords:
+      new:
+        header: Get a new password
+        instructions: "Enter your email address and click 'Get new password'. You’ll receive an email with a link to create a new password."
+        submit_button: Get new password
     mailer:
       invitation_instructions:
         subject: 'Set up your account to use the benefit checker'
