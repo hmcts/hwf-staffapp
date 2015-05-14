@@ -34,28 +34,27 @@
 
   .row
     .small-12.medium-8.columns
-      fieldset.radio
-        .options
-          .option
-            = f.label :rating_1
-              = f.radio_button :rating, 1
-              |1 - very poor
-          .option
-            = f.label :rating_2
-              = f.radio_button :rating, 2
-              |2
-          .option
-            = f.label :rating_3
-              = f.radio_button :rating, 3
-              |3
-          .option
-            = f.label :rating_4
-              = f.radio_button :rating, 4
-              |4
-          .option
-            = f.label :rating_5
-              = f.radio_button :rating, 5
-              |5 - very good
+      .options.radio
+        .option
+          = f.label :rating_1, class: 'first'
+            = f.radio_button :rating, 1
+            |1 - very poor
+        .option
+          = f.label :rating_2
+            = f.radio_button :rating, 2
+            |2
+        .option
+          = f.label :rating_3
+            = f.radio_button :rating, 3
+            |3
+        .option
+          = f.label :rating_4
+            = f.radio_button :rating, 4
+            |4
+        .option
+          = f.label :rating_5
+            = f.radio_button :rating, 5
+            |5 - very good
 
   .row
     .small-12.columns
@@ -63,33 +62,37 @@
         = f.label :help, class: 'feedback-header'
   .row
     .small-12.medium-8.columns
-      fieldset.radio
-        .options
-          .option
-            = label_tag 'help_score_1', class: 'help-radio-lbl'
-              = radio_button_tag 'help_score', 1, class: 'help-radio-btn'
-              = t('feedback.rating_1')
-          .option
-            = label_tag 'help_score_2', class: 'help-radio-lbl'
-              = radio_button_tag 'help_score', 2, class: 'help-radio-btn'
-              = t('feedback.rating_2')
-          .option
-            = label_tag 'help_score_3', class: 'help-radio-lbl'
-              = radio_button_tag 'help_score', 3, class: 'help-radio-btn'
-              = t('feedback.rating_3')
-          .option
-            = label_tag 'help_score_4', class: 'help-radio-lbl'
-              = radio_button_tag 'help_score', 4, class: 'help-radio-btn', value: false
-              = t('feedback.rating_4')
-            #extra
-              .label.inline Please enter details
-              = text_field_tag 'feedback[help]'
+      .options.radio
+        .option
+          = label_tag 'help_score_1', class: 'help-radio-lbl first'
+            = radio_button_tag 'help_score', 1, class: 'help-radio-btn'
+            = t('feedback.rating_1')
+        .option
+          = label_tag 'help_score_2', class: 'help-radio-lbl'
+            = radio_button_tag 'help_score', 2, class: 'help-radio-btn'
+            = t('feedback.rating_2')
+        .option
+          = label_tag 'help_score_3', class: 'help-radio-lbl'
+            = radio_button_tag 'help_score', 3, class: 'help-radio-btn'
+            = t('feedback.rating_3')
+        .option
+          = label_tag 'help_score_4', class: 'help-radio-lbl'
+            = radio_button_tag 'help_score', 4, class: 'help-radio-btn', value: false
+            = t('feedback.rating_4')
+          #extra
+            .label.inline Please enter details
+            = text_field_tag 'feedback[help]'
   .actions
     = f.submit 'Send feedback', class: 'button btn small'
 
 javascript:
   $(document).ready( function() {
     setupPage();
+
+    $('input[type=radio]').on('change', function() {
+      $("[name='" + $(this).attr('name') + "']").parent().removeClass("selected");
+      $(this).parent().addClass('selected');
+    });
 
     $('.help-radio-lbl').on('click', function() {
       showText(this);

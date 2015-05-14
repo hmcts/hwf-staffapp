@@ -16,7 +16,7 @@ $gutter-two-thirds: $gutter - $gutter-one-third;
   font-size: 1.25rem;
 }
 
-fieldset.radio label {
+.options.radio label {
 
   display: block;
   float: none;
@@ -38,27 +38,15 @@ fieldset.radio label {
     left: $gutter-half;
     cursor: pointer;
   }
-
   // Change border on hover
   &:hover {
     border-color: $black;
   }
-}
-
-// Selected and focused states
-
-// Add selected state
-.js-enabled label.selected {
-  background: $white;
-  border-color: $black;
-}
-
-// Add focus to block labels
-.js-enabled label.focused {
-  outline: 3px solid $yellow;
-}
-
-// Remove focus from radio/checkboxes
-.js-enabled .focused input:focus {
-  outline: none;
+  &.selected {
+    background: #fff;
+    border-color: #0b0c0c;
+  }
+  &.first {
+    margin-top: 0px;
+  }
 }
