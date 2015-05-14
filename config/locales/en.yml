@@ -42,8 +42,8 @@ en:
             name:
               blank: You must enter a name for the user
             password:
-              blank: You must enter a password of at least %{count} characters
-              too_short: The password should be at least %{count} characters
+              blank: You must enter a password
+              too_short: Your password must be at least %{count} characters
             password_confirmation:
               confirmation: This must match the password above
         dwp_check:
@@ -58,7 +58,8 @@ en:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
     attributes:
       user:
-        password: New password
+        password: Password
+        new_password: New password
         password_confirmation: Confirm new password
       feedback:
         experience: 'What is your experience of using the service so far?'
