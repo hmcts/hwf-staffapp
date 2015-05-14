@@ -66,5 +66,6 @@ private
   def generate_api_token
     short_name = created_by.name.gsub(' ', '').downcase.truncate(27)
     self.our_api_token = "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{unique_number}"
+    self.save!
   end
 end
