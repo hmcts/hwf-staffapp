@@ -1,4 +1,4 @@
-//=require income_calculator_new
+//=require income_calculator
 
 describe "income_calculator", ->
 
