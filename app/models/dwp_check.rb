@@ -37,10 +37,7 @@ class DwpCheck < ActiveRecord::Base
   end
 
   def date_to_check_must_be_valid
-    if date_to_check.present? && (
-      date_to_check > Date.today ||
-      date_to_check < Date.today - 3.months
-    )
+    if date_to_check.present? && within_valid_range?
       errors.add(:date_to_check, 'must be in the last 3 months')
     end
   end
@@ -74,5 +71,17 @@ private
     short_name = created_by.name.gsub(' ', '').downcase.truncate(27)
     self.our_api_token = "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{unique_number}"
     self.save!
+  end
+
+  def before_today?
+    date_to_check > Date.today
+  end
+
+  def within_three_months_in_the_past?
+    date_to_check < Date.today - 3.months
+  end
+
+  def within_valid_range?
+    before_today? || within_three_months_in_the_past?
   end
 end
