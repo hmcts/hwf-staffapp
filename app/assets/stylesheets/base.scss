@@ -45,6 +45,11 @@ h3.bold {
   background-color: $green;
 }
 
+img {
+  width:400px;
+  padding:20px;
+  border:blue 1px solid;
+}
 span.hint.block {
   display: block;
   color: $secondary-text-colour;
