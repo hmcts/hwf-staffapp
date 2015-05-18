@@ -41,31 +41,35 @@ class incomeCalculator
     $('label.error:visible').length == 0
 
   formatCurrency: (val) ->
-    return '£' + val.toFixed(2)
+    return '£' + parseFloat(val).toFixed(2)
 
   showResult = (data) ->
-    add_class = 'callout-passed'
+    add_class = 'callout-' + data.type
     show_text = 'The applicant has £0 to pay'
     switch data.type
       when 'none'
-        add_class = 'callout-warning'
         show_text = 'The applicant must pay the full fee'
       when 'part'
         show_text = 'The applicant must pay ' + data.to_pay + ' towards the fee'
 
-    $('#result.callout').addClass(add_class)
-    $('span#fee-remit').text show_text
-    $('#result.callout').show()
-
+    $('#calculator.callout').removeClass('callout-none callout-part callout-full')
+    $('#calculator.callout').addClass(add_class)
+    $('h3#fee-remit').text show_text
+    $('#confirm_fee').text incomeCalculator.prototype.formatCurrency($('#fee').val())
+    $('#confirm_status').text $('input:radio[name=couple]:checked').parent().text()
+    $('#confirm_children').text $('#children').val()
+    $('#confirm_income').text incomeCalculator.prototype.formatCurrency($('#income').val())
+    $('#r2_calculator_result').show()
+#    $('#r2_calculator_income').hide()
 
   setupPage: ->
-    $('#result.callout').hide()
+    $('#r2_calculator_result').hide()
     $('#r2_calculator :input').attr 'disabled', false
     $('#json-result').hide()
     $('#check_btn').show()
     $('#clear_btn').hide()
     $('#fee').val ''
-    $('#children').val '0'
+    $('#children').val ''
     $('#income').val ''
     $('#couple-yes').prop 'checked', false
     $('#couple-no').prop 'checked', false

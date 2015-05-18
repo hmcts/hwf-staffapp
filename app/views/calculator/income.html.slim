@@ -1,15 +1,12 @@
 =content_for(:javascript) { javascript_include_tag 'income_calculator' }
 
-h2 Income calculator
-
-=image_tag 'crest.png'
-
-#r2_calculator
+#r2_calculator_income
+  h2 =t('functions.r2_calculator')
   .row
     .small-12.medium-3.large-3.columns.form-group
       #fee-block
         label.error data-check-error='fee' for='fee' Please enter a fee value
-        label for='fee' Fee
+        label for='fee' =t('activerecord.attributes.r2_calc.labels.fee')
         .row.collapse.prefix-radius
           .small-2.medium-2.large-3.columns
             span.prefix
@@ -22,32 +19,32 @@ h2 Income calculator
         label.error data-check-error='couple' Please select a marital status
         .row
           .columns.small-12
-            label Marital status
+            label =t('activerecord.attributes.r2_calc.labels.status')
             .options.radio
               .option
                 label for='couple-no'
                   input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
-                  |  Single
+                  |Single
               .option
                 label for='couple-yes'
                   input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
-                  |  Part of a couple
+                  |Part of a couple
 
 
   .row
     .small-12.medium-6.large-5.columns.form-group
       #child-block
         label.error data-check-error='children' for='children' Please select a number of children
-        label for='children' Number of children
+        label for='children' =t('activerecord.attributes.r2_calc.labels.children')
         .row
           .columns.small-3
-            input data-check='children' id='children' type="number" min=0
+            input data-check='children' id='children' type="number" min=0 value=""
 
   .row
     .small-12.medium-3.large-3.columns.form-group
       #income-block
         label.error data-check-error='income' for='income' Please enter an income
-        label for='income' Total monthly income
+        label for='income' =t('activerecord.attributes.r2_calc.labels.income')
         .row.collapse.prefix-radius
           .small-2.medium-2.large-3.columns
             span.prefix
@@ -55,19 +52,37 @@ h2 Income calculator
           .small-10.medium-10.large-9.columns
             input data-check='income' name="income" id="income" type="number"
 
-.row
-  .small-12.medium-8.large-5.columns
-    button.button.btn.small.no_selection#check_btn Check
+  .row
+    .small-12.medium-8.large-5.columns
+      button.button.btn.small.no_selection#check_btn Check
 
-#result.callout
-  span.number
-    span#fee-remit
+#r2_calculator_result
+  .row
+    .columns.small-12.medium-10.large-8
+      #calculator.callout
+        h3#fee-remit
 
-.row
-  .small-12.columns
-    button.button.btn.small.no_selection#clear_btn Perform new check
-  .small-12.columns
-    #json-result
+  .row
+    .columns.small-12.medium-10.large-8
+      #dwp_data
+        .row
+          .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.fee')
+          .columns.large-8.medium-7.small-6.dwp-value#confirm_fee
+        .row
+          .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.status')
+          .columns.large-8.medium-7.small-6.dwp-value#confirm_status
+        .row
+          .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.children')
+          .columns.large-8.medium-7.small-6.dwp-value#confirm_children
+        .row
+          .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.income')
+          .columns.large-8.medium-7.small-6.dwp-value#confirm_income
+
+  .row
+    .small-12.columns
+      button.button.btn.small.no_selection#clear_btn Perform new check
+    .small-12.columns
+      #json-result
 
 javascript:
   $(document).ready(function () {

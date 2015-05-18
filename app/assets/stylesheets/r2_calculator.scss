@@ -1,5 +1,29 @@
-#r2_calculator {
+@import 'colours';
+
+#r2_calculator_income {
   .form-group {
     margin-bottom:1em;
+  }
+}
+
+#calculator.callout {
+  padding:30px 15px;
+  margin-bottom: 2em;
+
+  h3 {
+    color: $page-colour;
+  }
+  &.callout-none {
+    background-color: $error-colour;
+  }
+  &.callout-full {
+    background: $turquoise;
+  }
+  &.callout-part {
+    background: $orange;
+  }
+  p
+  {
+    margin:0;
   }
 }

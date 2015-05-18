@@ -22,7 +22,7 @@
 en:
   functions:
     dwp_check: Check benefits
-    r2_calculator: 'Calculate fee'
+    r2_calculator: 'Income calculator'
     feedback: 'Give feedback'
   dictionary:
     invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
@@ -74,3 +74,9 @@ en:
         dob: 'Date of birth'
         date_to_check: 'Date application made'
         date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
+      r2_calc:
+        labels:
+          fee: Fee
+          status: Status
+          children: Number of children
+          income: Total monthly income
