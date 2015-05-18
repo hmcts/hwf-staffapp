@@ -1,23 +1,24 @@
-//=require income_calculator_new
+//=require income_calculator
 
 describe "income_calculator", ->
 
   it 'will convert numbers to currency', ->
-    calc = new IncomeCalculator
+    calc = new incomeCalculator
     expect(calc.formatCurrency(12)).toBe('£12.00')
 
   describe 'calculator', ->
     it 'will return a json object', ->
-      calc = new IncomeCalculator
+      calc = new(incomeCalculator)
+      calc.setup()
       expect(calc.calculate('a', 'b','c', 'd')).toEqual({ type: 'error', to_pay: '' })
 
     it 'will return correct values', ->
-      calc = new IncomeCalculator
+      calc = new incomeCalculator
       first_res = calc.calculate(410, false, 2, 2000)
       expect(first_res.type).toEqual('part')
 
     it 'parses all seed data', ->
-      calc = new IncomeCalculator
+      calc = new incomeCalculator
       for t in seed_data
         match = calc.calculate(t.fee, t.married_status, t.children, t.income)
         expect(match.type).toEqual(t.type)
