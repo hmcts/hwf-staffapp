@@ -1,4 +1,4 @@
-##Processing the updated ‘apply for help with fees’ form - a guide for staff taking part in the trial
+##Processing the updated ‘apply for help with fees’ form - a guide for staff taking part in the trial 
 
 
 ### An updated application form
@@ -46,7 +46,7 @@ Use the new online benefits checker to make sure that applicants are eligible fo
 
 3. Click on [CHECK] ‘DWP check’
 
-[SCREENSHOT]
+![sign in image](<%= image_url('staff_signin.png') %>)
 
 Enter the first 3 letters of the applicant’s last name, date of birth and National Insurance number on this page
 
