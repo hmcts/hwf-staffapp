@@ -31,12 +31,11 @@ RSpec.feature 'Undertake an income calculation', type: :feature do
 
       end
       scenario 'shows a successful result', js: true do
-        expect(page).to have_xpath('//div[@class="panel callout"]', visible: true)
+        expect(page).to have_xpath('//div[@class="callout"]', visible: true)
         expect(page).to have_xpath('//label[@class="error hide"]', count: 0)
       end
       scenario 'calculates correct values', js: true do
-        expect(page).to have_xpath('//span[@id="fee-remit"]', text: '£200')
-        expect(page).to have_xpath('//span[@id="fee-payable"]', text: '£210')
+        expect(page).to have_xpath('//span[@id="fee-remit"]', text: 'The applicant must pay £210.00 towards the fee')
       end
 
     end
@@ -45,7 +44,7 @@ RSpec.feature 'Undertake an income calculation', type: :feature do
 
         click_button 'Check'
 
-        expect(page).to have_xpath('//div[@class="panel callout"]', visible: false)
+        expect(page).to have_xpath('//div[@class="callout"]', visible: false)
         expect(page).to have_xpath('//label[@class="error"]', count: 3)
       end
     end
