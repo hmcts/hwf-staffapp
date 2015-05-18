@@ -29,7 +29,7 @@
 }
 
 .calculator-data {
-  .row:first-child { border-top: none;}
+  .row.hide-top:first-child { border-top: none;}
   .row:last-child { border-bottom: 1px solid #bfc1c3; }
   .row {
     border-top: 1px solid #bfc1c3;
