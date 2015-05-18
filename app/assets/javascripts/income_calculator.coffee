@@ -40,8 +40,9 @@ class incomeCalculator
       return
     $('label.error:visible').length == 0
 
-  formatCurrency: (val) ->
-    return '£' + parseFloat(val).toFixed(2)
+  formatCurrency: (val, dec = 2) ->
+    result = parseFloat(val).toFixed(dec).replace(/\.0{2}/,'');
+    return '£' + result
 
   showResult = (data) ->
     add_class = 'callout-' + data.type
