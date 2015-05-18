@@ -30,7 +30,6 @@
                   input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
                   |Part of a couple
 
-
   .row
     .small-12.medium-6.large-5.columns.form-group
       #child-block
@@ -61,22 +60,23 @@
     .columns.small-12.medium-10.large-8
       #calculator.callout
         h3#fee-remit
-
   .row
     .columns.small-12.medium-10.large-8
-      #dwp_data
+      .calculator-data
         .row
           .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.fee')
-          .columns.large-8.medium-7.small-6.dwp-value#confirm_fee
+          .columns.large-8.medium-7.small-6.highlight#confirm_fee
         .row
           .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.status')
-          .columns.large-8.medium-7.small-6.dwp-value#confirm_status
+          .columns.large-8.medium-7.small-6.highlight#confirm_status
         .row
           .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.children')
-          .columns.large-8.medium-7.small-6.dwp-value#confirm_children
+          .columns.large-8.medium-7.small-6.highlight#confirm_children
         .row
           .columns.large-4.medium-5.small-6.dwp-label =t('activerecord.attributes.r2_calc.labels.income')
-          .columns.large-8.medium-7.small-6.dwp-value#confirm_income
+          .columns.large-8.medium-7.small-6.highlight#confirm_income
+
+  =render 'calculator/work_out'
 
   .row
     .small-12.columns
