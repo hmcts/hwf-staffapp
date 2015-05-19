@@ -35,7 +35,7 @@ RSpec.feature 'Undertake an income calculation', type: :feature do
         expect(page).to have_xpath('//label[@class="error hide"]', count: 0)
       end
       scenario 'calculates correct values', js: true do
-        expect(page).to have_xpath('//h3[@id="fee-remit"]', text: 'The applicant must pay £210.00 towards the fee')
+        expect(page).to have_xpath('//h3[@id="fee-remit"]', text: 'The applicant must pay £210 towards the fee')
       end
 
     end
