@@ -1,20 +1,21 @@
 
 .row.pad-top-thirty-pix
   .columns.small-12
-    =link_to 'How is this worked out?', '#'
-    .panel-indent
-      div If the applicants income is less than the amount in table 1, they don't have to pay.
-      .row.calculator-data.pad-left-fifteen-px
-        =render 'calculator/table1_small'
-        =render 'calculator/table1_medium_up'
+    details
+      summary How is this worked out?
+      .panel-indent
+        div If the applicants income is less than the amount in table 1, they don't have to pay.
+        .row.calculator-data.pad-left-fifteen-px
+          =render 'calculator/table1_small'
+          =render 'calculator/table1_medium_up'
 
-      .pad-top-thirty-pix
-        |If the applicant's income is more than the amount in table 1, but less than the amount in table 2
-          , they will get a fee reduction.  For every £10 of income they have over the amount set in table 1, they
-          will have to pay £5 towards their court or tribunal fee.
-      .row.calculator-data.pad-left-fifteen-px
-        =render 'calculator/table2_small'
-        =render 'calculator/table2_medium_up'
+        .pad-top-thirty-pix
+          |If the applicant's income is more than the amount in table 1, but less than the amount in table 2
+            , they will get a fee reduction.  For every £10 of income they have over the amount set in table 1, they
+            will have to pay £5 towards their court or tribunal fee.
+        .row.calculator-data.pad-left-fifteen-px
+          =render 'calculator/table2_small'
+          =render 'calculator/table2_medium_up'
 
-      .pad-top-thirty-pix
-        |If the applicant's income is more than the amount in table 2, they have to pay the full fee.
+        .pad-top-thirty-pix
+          |If the applicant's income is more than the amount in table 2, they have to pay the full fee.
