@@ -16,6 +16,7 @@ script:
 - bundle exec rake db:migrate
 - DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec
 - bundle exec rake rubocop
+- bundle exec rake teaspoon
 deploy:
   provider: heroku
   api_key:
