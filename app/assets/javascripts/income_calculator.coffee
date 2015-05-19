@@ -61,7 +61,7 @@ class incomeCalculator
     $('#confirm_children').text $('#children').val()
     $('#confirm_income').text incomeCalculator.prototype.formatCurrency($('#income').val())
     $('#r2_calculator_result').show()
-#    $('#r2_calculator_income').hide()
+    $('#r2_calculator_income').hide()
 
   setupPage: ->
     $('#r2_calculator_result').hide()
