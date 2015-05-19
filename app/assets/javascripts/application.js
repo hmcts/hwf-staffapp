@@ -15,5 +15,6 @@
 //= require foundation
 //= require jquery.turbolinks
 //= require radio_buttons
+//= require details.polyfill
 
 $(function(){ $(document).foundation(); });
