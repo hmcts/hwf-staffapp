@@ -1,10 +1,10 @@
-//=require income_calculator
+//=require 'income_calculator'
 
 describe "income_calculator", ->
 
   it 'will convert numbers to currency', ->
     calc = new incomeCalculator
-    expect(calc.formatCurrency(12)).toBe('£12.00')
+    expect(calc.formatCurrency(12)).toBe('£12')
 
   describe 'calculator', ->
     it 'will return a json object', ->
@@ -23,7 +23,6 @@ describe "income_calculator", ->
         match = calc.calculate(t.fee, t.married_status, t.children, t.income)
         expect(match.type).toEqual(t.type)
         expect(match.they_pay).toEqual(t.to_pay)
-
 
 seed_data = [
   { fee: '100', married_status: true, children: '0', income: '100', remit: '100', they_pay: '0', type: 'full', },
