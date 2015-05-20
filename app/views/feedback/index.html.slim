@@ -6,12 +6,12 @@ h2 Feedback received
       thead
         tr
           th User
-          th experience
-          th ideas
-          th rating
-          th help
-          th office
-          th created
+          th Experience so far
+          th Ideas for improvement
+          th Rating score
+          th Help
+          th Office
+          th Created
       tbody
       -@feedback.each do |f|
         tr
@@ -21,4 +21,4 @@ h2 Feedback received
           td =f.rating
           td =f.help
           td =f.office.name
-          td =f.created_at.
+          td =f.created_at
