@@ -1,13 +1,12 @@
 =content_for(:javascript) { javascript_include_tag 'income_calculator' }
 
-h2 Income calculator
-
-#r2_calculator
+#r2_calculator_income
+  h2 =t('functions.r2_calculator')
   .row
     .small-12.medium-3.large-3.columns.form-group
       #fee-block
         label.error data-check-error='fee' for='fee' Please enter a fee value
-        label for='fee' Fee
+        label for='fee' =t('activerecord.attributes.r2_calc.labels.fee')
         .row.collapse.prefix-radius
           .small-2.medium-2.large-3.columns
             span.prefix
@@ -15,34 +14,36 @@ h2 Income calculator
           .small-10.medium-10.large-9.columns style="padding:0px;"
             input data-check='fee' id="fee" name="fee" type="number"
   .row
-    .small-12.columns.form-group
+    .small-12.medium-3.large-3.columns.form-group
       #status-block
         label.error data-check-error='couple' Please select a marital status
         .row
-          .columns.small-4
-            label Marital status
-            label for='couple-no'
-              input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
-              |  Single
-            label for='couple-yes'
-              input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
-              |  Part of a couple
-
+          .columns.small-12
+            label =t('activerecord.attributes.r2_calc.labels.status')
+            .options.radio
+              .option
+                label for='couple-no'
+                  input data-check='couple' id='couple-no' name="couple" type="radio" value='false'
+                  |Single
+              .option
+                label for='couple-yes'
+                  input data-check='couple' id='couple-yes' name="couple" type="radio" value='true'
+                  |Part of a couple
 
   .row
     .small-12.medium-6.large-5.columns.form-group
       #child-block
         label.error data-check-error='children' for='children' Please select a number of children
-        label for='children' Number of children
+        label for='children' =t('activerecord.attributes.r2_calc.labels.children')
         .row
           .columns.small-3
-            input data-check='children' id='children' type="number" min=0
+            input data-check='children' id='children' type="number" min=0 value=""
 
   .row
     .small-12.medium-3.large-3.columns.form-group
       #income-block
         label.error data-check-error='income' for='income' Please enter an income
-        label for='income' Total monthly income
+        label for='income' =t('activerecord.attributes.r2_calc.labels.income')
         .row.collapse.prefix-radius
           .small-2.medium-2.large-3.columns
             span.prefix
@@ -50,23 +51,38 @@ h2 Income calculator
           .small-10.medium-10.large-9.columns
             input data-check='income' name="income" id="income" type="number"
 
-.row
-  .small-12.medium-8.large-5.columns
-    button.button.btn.small.no_selection#check_btn Check
-.row
-  .small-12.medium-7.large-7.columns
-    .panel.callout
-      p
-        |Amount remitted:
-        span#fee-remit
-      p
-        |Amount to pay:
-        span#fee-payable
-.row
-  .small-12.columns
-    button.button.btn.small.no_selection#clear_btn Perform new check
-  .small-12.columns
-    #json-result
+  .row
+    .small-12.medium-8.large-5.columns
+      button.button.btn.small.no_selection#check_btn Check
+
+#r2_calculator_result
+  .row
+    .columns.small-12.medium-10.large-8
+      #calculator.callout
+        h3.bold#fee-remit
+  .row
+    .columns.small-12.medium-10.large-8
+      .calculator-data
+        .row.first
+          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.fee')
+          .columns.large-8.medium-7.small-6#confirm_fee
+        .row
+          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.status')
+          .columns.large-8.medium-7.small-6#confirm_status
+        .row
+          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.children')
+          .columns.large-8.medium-7.small-6#confirm_children
+        .row
+          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.income')
+          .columns.large-8.medium-7.small-6#confirm_income
+
+      =render 'calculator/work_out'
+
+  .row
+    .small-12.columns
+      button.button.btn.small.no_selection#clear_btn Perform new check
+    .small-12.columns
+      #json-result
 
 javascript:
   $(document).ready(function () {

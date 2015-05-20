@@ -1,7 +1,7 @@
 // Place all the styles related to the DwpChecker controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+@import 'colours';
 
 .transform-upper {
   text-transform: uppercase;
@@ -12,12 +12,11 @@
   margin-bottom: 2em;
 
   &.callout-warning {
-    border: 3px solid #df3034;
-    color:black;
+    background-color: $red;
+    color:white;
     margin-top: 20px;
     padding: 15px;
   }
-
   &.callout-passed{
     background: #28a197;
     color:#ffffff;

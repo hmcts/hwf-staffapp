@@ -1,100 +1,92 @@
-# set values
-$min_val = 1085
-$pp_child = 245
-$couple_supp = 160
+root = exports ? this
 
-# global variables
-$low_threshold = 0
-$high_threshold = 0
-$income = 0
+class incomeCalculator
 
-calculate = ->
-  $children_val = $('#children').val() * $pp_child
-  $add_single_supp = if $('input:radio[name=couple]').val() == 'false' then 0 else $couple_supp
-  $curr_fee = parseFloat($('#fee').val())
-  $income = $('#income').val()
-  $low_threshold = $min_val + $children_val + $add_single_supp
-  $high_threshold = $low_threshold + Math.min(4000, $curr_fee * 2)
-  $check_val = $income - $low_threshold
-  $max_to_pay = Math.min(Math.max(Math.floor($check_val / 10) * 10 * 0.5, 0), $curr_fee)
-  $remittance = Math.max($curr_fee - $max_to_pay, 0)
-  if $income < $low_threshold
-    $('#fee-payable').text '£0'
-    $('#fee-remit').text formatCurrency($curr_fee)
-  else if $income > $high_threshold
-    $('#fee-payable').text formatCurrency($curr_fee)
-    $('#fee-remit').text '£0'
-  else
-    $('#fee-payable').text formatCurrency($max_to_pay)
-    $('#fee-remit').text formatCurrency($remittance)
+  # preset values
+  min_val = 1085
+  pp_child = 245
+  couple_supp = 160
 
-  sendToDatabase $remittance, $max_to_pay
-  $('.panel.callout').show()
-  $('#check_btn').hide()
-  $('#clear_btn').show()
-  $('#r2_calculator :input').attr 'disabled', true
-  return true
+  calculate: (fee, status, children, income) ->
+    child_uplift = children * pp_child
+    curr_fee = parseFloat(fee)
+    married_supp = if status=='true' or status==true then couple_supp else 0
 
-formatCurrency = (val) ->
-  '£' + val.toFixed(2)
+    max_cont = Math.max(Math.floor((income - ( min_val + child_uplift + married_supp))/10,0)*10*0.5,0)
+    user_to_pay = Math.min(max_cont, curr_fee)
 
-sendToDatabase = (remit, pay) ->
-  $.ajax
-    method: 'POST'
-    url: '/calculator/record_search'
-    dataType: 'json'
-    data: r2_calculator:
-      fee: $('#fee').val()
-      married: $('input:radio[name=couple]').val() == 'true'
-      children: $('#children').val()
-      income: $('#income').val()
-      remittance: remit
-      to_pay: pay
-    success: (data) ->
-      $('#json-result').text 'Check recorded'
-      false
-    error: (data) ->
-      $('#json-result').text 'Save failed with ' + JSON.parse(data) + ' errors'
-      false
-  $('#json-result').show()
-  return
-
-checkValidation = ->
-  $('input[data-check]').each ->
-    test = $(this)
-    error = $('label.error[data-check-error=' + test.data('check') + ']')
-    parent = error.parents('.form-group').children('div')
-    if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
-      error.removeClass 'hide'
-      parent.addClass 'field_with_errors'
+    if user_to_pay == 0
+      result = { type: 'full', to_pay: '£0' }
+    else if user_to_pay == curr_fee
+      result = { type: 'none', to_pay: this.formatCurrency(user_to_pay) }
+    else if user_to_pay > 0 and user_to_pay < curr_fee
+      result = { type: 'part', to_pay: this.formatCurrency(user_to_pay) }
     else
-      error.addClass 'hide'
-      parent.removeClass 'field_with_errors'
+      result = { type: 'error', to_pay: '' }
+    return result
 
-    return
-  $('label.error:visible').length == 0
+  checkValidation = ->
+    $('input[data-check]').each ->
+      test = $(this)
+      error = $('label.error[data-check-error=' + test.data('check') + ']')
+      parent = error.parents('.form-group').children('div')
+      if test.val().length == 0 or test.is(':radio') and $('input[name=' + test.attr('name') + ']:checked').val() == undefined
+        error.removeClass 'hide'
+        parent.addClass 'field_with_errors'
+      else
+        error.addClass 'hide'
+        parent.removeClass 'field_with_errors'
 
-setupPage = ->
-  $('.panel.callout').hide()
-  $('#r2_calculator :input').attr 'disabled', false
-  $('#json-result').hide()
-  $('#check_btn').show()
-  $('#clear_btn').hide()
-  $('#fee').val ''
-  $('#children').val '0'
-  $('#income').val ''
-  $('#couple-yes').prop 'checked', false
-  $('#couple-no').prop 'checked', false
-  $('.error').addClass 'hide'
-  return
+      return
+    $('label.error:visible').length == 0
 
-$(document).ready ->
-  setupPage()
-  $('#check_btn').on 'click', ->
-    if checkValidation()
-      calculate()
+  formatCurrency: (val, dec = 2) ->
+    result = parseFloat(val).toFixed(dec).replace(/\.0{2}/,'');
+    return '£' + result
+
+  showResult = (data) ->
+    add_class = 'callout-' + data.type
+    show_text = 'The applicant has £0 to pay'
+    switch data.type
+      when 'none'
+        show_text = 'The applicant must pay the full fee'
+      when 'part'
+        show_text = 'The applicant must pay ' + data.to_pay + ' towards the fee'
+
+    $('#calculator.callout').removeClass('callout-none callout-part callout-full')
+    $('#calculator.callout').addClass(add_class)
+    $('h3#fee-remit').text show_text
+    $('#confirm_fee').text incomeCalculator.prototype.formatCurrency($('#fee').val())
+    $('#confirm_status').text $('input:radio[name=couple]:checked').parent().text()
+    $('#confirm_children').text $('#children').val()
+    $('#confirm_income').text incomeCalculator.prototype.formatCurrency($('#income').val())
+    $('#r2_calculator_result').show()
+    $('#r2_calculator_income').hide()
+
+  setupPage: ->
+    $('#r2_calculator_result').hide()
+    $('#r2_calculator :input').attr 'disabled', false
+    $('#json-result').hide()
+    $('#check_btn').show()
+    $('#clear_btn').hide()
+    $('#fee').val ''
+    $('#children').val ''
+    $('#income').val ''
+    $('#couple-yes').prop 'checked', false
+    $('#couple-no').prop 'checked', false
+    $('.error').addClass 'hide'
     return
-  $('#clear_btn').on 'click', ->
-    setupPage()
-    return
-  return
+
+  setup: ->
+    this.setupPage()
+    $('#check_btn').on 'click', ->
+      if checkValidation()
+        result = incomeCalculator.prototype.calculate($('#fee').val(), $('input:radio[name=couple]:checked').val(), $('#children').val(), $('#income').val())
+        showResult(result)
+      return
+
+root.incomeCalculator = incomeCalculator
+
+jQuery ->
+  calc = new(incomeCalculator)
+  calc.setup()

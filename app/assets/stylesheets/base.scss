@@ -26,7 +26,7 @@
   font-weight: bold;
 }
 
-a {
+a, details > summary {
   color: #005ea5;
   text-decoration: underline;
 }
@@ -34,7 +34,9 @@ a {
 h2 {
   font-weight: bold;
 }
-
+h3.bold {
+  font-weight: bold;
+}
 .btn {
   background-color: $button-colour;
   box-shadow: 0 2px 0 #003518;
@@ -50,4 +52,19 @@ span.hint.block {
 
 .pad-top-thirty-pix {
   padding-top: 30px;
+}
+
+.pad-bottom-thirty-pix {
+  padding-bottom: 30px;
+}
+
+.pad-left-fifteen-px {
+  padding-left: 15px;
+}
+
+.panel-indent {
+  clear: both;
+  border-left: 4px solid #bfc1c3;
+  padding: 10px 0 10px 15px;
+  margin: 30px 15px 45px 0;
 }
