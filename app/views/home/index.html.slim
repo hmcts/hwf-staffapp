@@ -4,7 +4,7 @@
     .row.small-collapse
       h2 Total
       .columns.small-12
-        = column_chart DwpCheck.group(:dwp_result).count, { library: { title: 'All time responses by type', width:'200px' } }
+        = column_chart DwpCheck.non_digital.group(:dwp_result).count, { library: { title: 'All time responses by type', width:'200px' } }
     .row.small-collapse
       .columns.small-12.medium-6
         h3 #{current_user.office.name} R1 chart

@@ -20,6 +20,8 @@ class DwpCheck < ActiveRecord::Base
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
   }, allow_blank: true
 
+  scope :non_digital, -> { joins(:office).where('offices.name != ?', 'Digital') }
+
   scope :by_office, lambda { |office_id|
     joins('left outer join users on dwp_checks.created_by_id = users.id').
       where('dwp_checks.office_id = ?', office_id)
