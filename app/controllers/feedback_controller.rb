@@ -5,6 +5,7 @@ class FeedbackController < ApplicationController
 
   def index
     authorize! :read, Feedback
+    @feedback = Feedback.order(created_at: :desc)
   end
 
   def new
