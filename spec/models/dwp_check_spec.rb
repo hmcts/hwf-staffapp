@@ -72,6 +72,12 @@ RSpec.describe DwpCheck, type: :model do
       expect(check).to be_invalid
     end
 
+    it 'trims whitespace from NI numbers' do
+      check.ni_number = '  AB123456A '
+      expect(check).to be_valid
+      expect(check.ni_number).to eql('AB123456A')
+    end
+
     it 'allow a unique number to be set' do
       test_unique = FactoryGirl.create(:dwp_check, created_by: user)
       expect(test_unique.unique_number).to_not be_nil
