@@ -3,6 +3,10 @@ class FeedbackController < ApplicationController
 
   respond_to :html
 
+  def index
+    authorize! :read, Feedback
+  end
+
   def new
     authorize! :create, Feedback
 
