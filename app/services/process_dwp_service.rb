@@ -4,6 +4,10 @@ class ProcessDwpService
     check_remote_api
   end
 
+  def result
+    {'key':'value'}.to_json
+  end
+
 private
 
   def check_remote_api

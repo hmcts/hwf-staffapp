@@ -3,7 +3,6 @@ require 'rails_helper'
 describe ProcessDwpService do
 
   before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
-
   context 'called with invalid object' do
     it 'fails' do
       expect {
@@ -29,6 +28,14 @@ describe ProcessDwpService do
         expect {
           described_class.new(check)
         }.not_to raise_error
+      end
+
+      it 'returns a json object' do
+        parsed = JSON.parse(described_class.new(check).result)
+        expect(parsed.count).to eql(3)
+        expect(parsed['result']).to eql(['is not a number'])
+        expect(parsed['dwp_check']).to eql(['remittances must equal fee'])
+        expect(parsed['message']).to eql(['remittances must equal fee'])
       end
 
       it 'sets the dwp_result' do
