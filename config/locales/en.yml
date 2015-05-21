@@ -24,6 +24,7 @@ en:
   descriptors:
     r2_calculator: 'Income check'
     feedback: 'Feedback'
+    staff_guide: Staff guide
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
