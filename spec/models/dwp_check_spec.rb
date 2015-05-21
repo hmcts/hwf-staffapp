@@ -40,9 +40,37 @@ RSpec.describe DwpCheck, type: :model do
       expect(check.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
     end
 
-    it 'require a date of birth' do
-      check.dob = nil
-      expect(check).to be_invalid
+    context 'date of birth' do
+      it 'require a date of birth' do
+        check.dob = nil
+        expect(check).to be_invalid
+      end
+
+      context 'maximum age' do
+        describe 'invalid maximum age' do
+          before do
+            check.dob = Date.today - 121.years
+            check.valid?
+          end
+
+          it "doesn't allow date of birth to be over 120 years" do
+            expect(check).to be_invalid
+          end
+
+          it 'has an error message' do
+            error = ["can't be over #{DwpCheck::MAX_AGE} years old"]
+            expect(check.errors.messages[:dob]).to eq error
+          end
+        end
+
+        describe 'valid maximum age' do
+          before { check.dob = Date.today - 120.years }
+
+          it 'does allow date of birth to be under 120 years' do
+            expect(check).to be_valid
+          end
+        end
+      end
     end
 
     it 'requires date of birth to be in the past' do

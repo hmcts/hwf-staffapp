@@ -1,5 +1,7 @@
 class DwpCheck < ActiveRecord::Base
 
+  MAX_AGE = 120
+
   include CommonScopes
 
   belongs_to :created_by, class_name: 'User'
@@ -83,5 +85,11 @@ private
 
   def within_valid_range?
     before_today? || within_three_months_in_the_past?
+  end
+
+  def validate_dob_maximum
+    if dob < Date.today - MAX_AGE.years
+      errors.add(:dob, "can't be over #{MAX_AGE} years old")
+    end
   end
 end
