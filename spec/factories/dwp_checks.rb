@@ -3,7 +3,7 @@ FactoryGirl.define do
     last_name "Smith"
     dob "2000-01-01"
     ni_number "AB123456C"
-    date_to_check nil
+    date_to_check Date.yesterday
     checked_by nil
     laa_code nil
     unique_number nil

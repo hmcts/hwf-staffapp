@@ -15,8 +15,10 @@ class DwpCheck < ActiveRecord::Base
   validates :last_name, :dob, :ni_number, :office_id, presence: true
   validates :last_name, length: { minimum: 2 }, allow_blank: true
 
+  validates :dob, date: true, presence: true
+  validate :dob_age_valid?
+
   validate :date_to_check_must_be_valid
-  validate :date_of_birth_must_be_valid
 
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
@@ -39,14 +41,16 @@ class DwpCheck < ActiveRecord::Base
   end
 
   def date_to_check_must_be_valid
-    if date_to_check.present? && within_valid_range?
-      errors.add(:date_to_check, 'must be in the last 3 months')
-    end
-  end
+    if date_to_check.present?
+      if within_valid_range?
+        errors.add(:date_to_check, 'must be in the last 3 months')
+      end
 
-  def date_of_birth_must_be_valid
-    if dob.present? && dob >= Date.today
-      errors.add(:dob, 'must be before today')
+      begin
+        Date.parse "#{date_to_check}"
+      rescue ArgumentError
+        errors.add(:date_to_check, 'ffffffffff')
+      end
     end
   end
 
@@ -85,6 +89,11 @@ private
 
   def within_valid_range?
     before_today? || within_three_months_in_the_past?
+  end
+
+  def dob_age_valid?
+    errors.add(:dob, "can't contain non numbers") if dob =~ /a-zA-Z/
+    validate_dob_maximum unless dob.blank?
   end
 
   def validate_dob_maximum
