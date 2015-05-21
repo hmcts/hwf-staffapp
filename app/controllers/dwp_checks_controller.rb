@@ -14,8 +14,12 @@ class DwpChecksController < ApplicationController
       begin
         ProcessDwpService.new(@dwp_checker)
         return redirect_to dwp_checks_path(@dwp_checker.unique_number) if @dwp_checker.reload
+      rescue Errno::ECONNREFUSED
+        @dwp_checker.update!(dwp_result: 'Server unavailable')
+        flash[:alert] = t('error_messages.dwp_checker.unavailable')
       rescue => e
-        flash.now[:alert] = e.message
+        @dwp_checker.update!(dwp_result: 'Unspecified error')
+        flash[:alert] = e.message
       end
     end
     render action: :new
