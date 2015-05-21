@@ -72,6 +72,12 @@ RSpec.describe DwpCheck, type: :model do
       expect(check).to be_invalid
     end
 
+    it 'trims whitespace from NI numbers' do
+      check.ni_number = '  AB123456A '
+      expect(check).to be_valid
+      expect(check.ni_number).to eql('AB123456A')
+    end
+
     it 'allow a unique number to be set' do
       test_unique = FactoryGirl.create(:dwp_check, created_by: user)
       expect(test_unique.unique_number).to_not be_nil
@@ -90,7 +96,23 @@ RSpec.describe DwpCheck, type: :model do
   end
 
   context 'scopes' do
-    before(:each) { described_class.delete_all }
+    before(:each) do
+      described_class.delete_all
+      Office.delete_all
+    end
+
+    let(:digital) { FactoryGirl.create(:office, name: 'Digital') }
+    let(:bristol) { FactoryGirl.create(:office, name: 'Bristol') }
+
+    describe 'non_digital' do
+      before(:each) do
+        FactoryGirl.create(:dwp_check, office: digital, created_by: user)
+        FactoryGirl.create(:dwp_check, office: bristol, created_by: user)
+      end
+      it 'excludes dwp checks by digital staff' do
+        expect(described_class.non_digital.count).to eql(1)
+      end
+    end
 
     describe 'checks_by_day' do
       let!(:old_check) do

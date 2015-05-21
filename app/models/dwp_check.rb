@@ -8,6 +8,8 @@ class DwpCheck < ActiveRecord::Base
   before_create :generate_unique_number
   after_create :generate_api_token
 
+  before_validation :strip_whitespace
+
   validates :last_name, :dob, :ni_number, :office_id, presence: true
   validates :last_name, length: { minimum: 2 }, allow_blank: true
 
@@ -17,6 +19,8 @@ class DwpCheck < ActiveRecord::Base
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
   }, allow_blank: true
+
+  scope :non_digital, -> { joins(:office).where('offices.name != ?', 'Digital') }
 
   scope :by_office, lambda { |office_id|
     joins('left outer join users on dwp_checks.created_by_id = users.id').
@@ -28,6 +32,9 @@ class DwpCheck < ActiveRecord::Base
       group(:dwp_result).
       order('length(dwp_result)')
   }
+  def strip_whitespace
+    ni_number && ni_number.strip!
+  end
 
   def date_to_check_must_be_valid
     if date_to_check.present? && (
