@@ -3,6 +3,11 @@ class FeedbackController < ApplicationController
 
   respond_to :html
 
+  def index
+    authorize! :read, Feedback
+    @feedback = Feedback.order(created_at: :desc)
+  end
+
   def new
     authorize! :create, Feedback
 

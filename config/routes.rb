@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'ping' => 'ping#index'
 
   get 'feedback' => 'feedback#new'
+  get 'feedback/display' => 'feedback#index'
 
   post 'feedback/create' => 'feedback#create'
 
