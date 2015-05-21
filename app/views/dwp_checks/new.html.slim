@@ -1,6 +1,6 @@
 h2 Check benefits
 
-= form_for(@dwp_checker, url: dwp_checks_lookup_path, html: { autocomplete: 'off' } ) do |f|
+= form_for(@dwp_checker, url: dwp_checks_lookup_path, method: 'post', html: { autocomplete: 'off' } ) do |f|
   .row
     .small-12.medium-8.large-5.columns
       .form-group
