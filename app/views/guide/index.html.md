@@ -37,7 +37,7 @@ In the future applicants won’t need to bring evidence that they’re getting o
 
 ####Signing up to use the online benefits checker
 
-Use the new online benefits checker to make sure that applicants are eligible for remission
+Use the online benefits checker to make sure that applicants are eligible for remission
 
 * You’ll get an email with a link to set up your password for the benefits checker
 
@@ -45,11 +45,17 @@ Use the new online benefits checker to make sure that applicants are eligible fo
 
 ![sign in image](<%= image_url('Staff_signin.png') %>)
 
+* Click 'Check benefits' at the top of the page 
+
 * Enter the first 3 letters of the applicant’s last name, date of birth and National Insurance number on this page
 
 ![start DWP check image](<%= image_url('DWP_startcheck.png') %>)
 
 If you’re processing an application for a refund of a fee that’s already been paid, then enter the date in ‘Date application made’. The benefits checker can check eligibility up to 3 months in the past.
+
+* **If an applicant started receiving benefits in the last 48 hours** then the benefits checker may not yet have the most up to date information  
+
+####Benefits check results 
 
 **If the National Insurance number is not valid, you’ll see this message:**
 
@@ -80,16 +86,20 @@ If you are still getting this message, ask the applicant to provide more evidenc
 
 The system records the results of each benefits check. This means the online tool should only be used for processing application forms.
 
+####Paper evidence needs to be checked too 
 
-For the trial only, you’ll still need to check the evidence that the applicant has submitted.
+You still need to check the paper evidence submitted by the applicant. (This is for the trial only.) 
 
-*For remission 1 this is an official letter confirming the benefit received.*
+**For remission 1**, applicants need an official letter confirming the benefit received.
 
-It must show the applicant’s title, full name, address and postcode and confirm that they currently receive that benefit.
+It must show: 
 
-If the applicant is part of a couple who receive a shared benefit and their name is not on the shared benefit notice, they must provide evidence showing that they live at the same address as their partner.
++ the applicant’s title 
++ full name 
++ address and postcode 
 
-Evidence should be in the form of an official document, such as a utility bill, and should show the applicant’s title, full name and address.
+It must also confirm that they currently receive one of the 6 'gateway benefits'.
+
 
 The letter must be in the following form:
 
@@ -103,11 +113,17 @@ The letter must be in the following form:
 |Scottish Civil Legal Aid | Scottish Legal Aid Board | Recent letter clearly showing a grant of support for the claim which you are bringing or have brought
 
 
+#####Evidence for being 'part of a couple' 
+If the applicant is part of a couple who receive a shared benefit and their name is not on the shared benefit notice, they must provide evidence showing that they live at the same address as their partner.
+
+Evidence should be in the form of an official document, such as a utility bill, and should show the applicant’s title, full name and address.
+
+
 
 ### <a id="calculate_income"></a> Calculating the fee based on income (remission 2) 
 
 
-*For remission 2, the applicant still needs to provide evidence of their income.*
+The applicant needs to provide evidence of their income.
 
 
 **Bank statements**
