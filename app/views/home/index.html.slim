@@ -13,6 +13,13 @@
         h3 R2 chart
         = column_chart @r2_checks, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
   -else
-    |Define a user dashboard requirement.
+    p 
+      span.bold 'Check benefits'
+      |&nbsp;to see if an applicant is eligible for benefits-based remission.
+    p
+      |Use the
+      span.bold 'Income calculator'
+      |&nbsp;to see if an applicant can get help with their fees based on their income.
+      br You'll also be able to calculate part-remissions.
 -else
   |This system is restricted to authorised staff only, please contact #{link_to 'support', "mailto:#{Settings.mail_tech_support}"} if you feel you should have access.

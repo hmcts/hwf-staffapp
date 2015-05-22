@@ -37,6 +37,9 @@ h2 {
 h3.bold {
   font-weight: bold;
 }
+.bold {
+  font-weight: bold;
+}
 .btn {
   background-color: $button-colour;
   box-shadow: 0 2px 0 #003518;
@@ -45,6 +48,11 @@ h3.bold {
   background-color: $green;
 }
 
+img {
+  width:400px;
+  padding:20px;
+  border:blue 1px solid;
+}
 span.hint.block {
   display: block;
   color: $secondary-text-colour;
