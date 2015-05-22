@@ -30,6 +30,10 @@ a, details > summary {
   color: #005ea5;
   text-decoration: underline;
 }
+.alert > a.close {
+  text-decoration: none;
+  margin-top: -0.4875rem;
+}
 
 h2 {
   font-weight: bold;
