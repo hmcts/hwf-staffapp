@@ -7,6 +7,8 @@
         =link_to t('descriptors.r2_calculator').to_s, calculator_income_path
       dd#feedback
         =link_to t('descriptors.feedback').to_s, feedback_path
+      dd#staff-guide
+        =link_to t('descriptors.staff_guide').to_s, guide_path
       -if current_user.admin?
         dd.right
           =link_to 'Users', users_path
