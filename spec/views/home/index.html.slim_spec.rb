@@ -9,6 +9,6 @@ RSpec.describe "home/index.html.slim", type: :view do
   it 'contain our dashboard header' do
     sign_in user
     render
-    expect(rendered).to include('dashboard')
+    expect(rendered).to include('eligible for benefits-based remission')
   end
 end
