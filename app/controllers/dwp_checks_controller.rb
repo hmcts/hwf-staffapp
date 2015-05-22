@@ -11,15 +11,11 @@ class DwpChecksController < ApplicationController
   def lookup
     authorize! :lookup, DwpCheck
     if @dwp_checker.valid?
-      begin
-        ProcessDwpService.new(@dwp_checker)
+      check = JSON.parse(ProcessDwpService.new(@dwp_checker).result)
+      if check['success']
         return redirect_to dwp_checks_path(@dwp_checker.unique_number) if @dwp_checker.reload
-      rescue Errno::ECONNREFUSED
-        @dwp_checker.update!(dwp_result: 'Server unavailable')
-        flash[:alert] = t('error_messages.dwp_checker.unavailable')
-      rescue => e
-        @dwp_checker.update!(dwp_result: 'Unspecified error')
-        flash[:alert] = e.message
+      else
+        flash[:alert] = check['message']
       end
     end
     render action: :new
