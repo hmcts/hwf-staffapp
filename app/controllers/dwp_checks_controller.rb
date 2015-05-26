@@ -29,10 +29,8 @@ private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
-    @dwp_checker.update(
-      created_by_id: current_user.id,
-      office_id: current_user.office_id,
-    )
+    @dwp_checker.update(created_by_id: current_user.id,
+                        office_id: current_user.office_id)
   end
 
   def dwp_params
