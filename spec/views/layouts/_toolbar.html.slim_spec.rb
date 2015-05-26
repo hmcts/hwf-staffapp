@@ -6,6 +6,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
   let(:user)          { FactoryGirl.create :user }
   let(:admin_user)    { FactoryGirl.create :admin_user }
+  let(:manager)       { FactoryGirl.create :manager }
 
   context 'logged out user' do
 
@@ -52,6 +53,21 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
 
     it 'see offices' do
       expect(rendered).to include('Offices')
+    end
+
+    it 'see admin' do
+      expect(rendered).to include('Users')
+    end
+  end
+  context 'logged in as manager' do
+
+    before(:each) do
+      sign_in manager
+      render
+    end
+
+    it 'see offices' do
+      expect(rendered).not_to include('Offices')
     end
 
     it 'see admin' do
