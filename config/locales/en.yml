@@ -53,10 +53,14 @@ en:
               blank: 'Enter the applicant’s last name'
             dob:
               blank: 'Enter the applicant’s date of birth'
-              invalid: 'Enter the date as ‘day, month, year DD/MM/YY'
+              invalid: 'Enter the date as ‘day, month, year DD/MM/YYYY'
+              not_a_date: 'Enter the date as ‘day, month, year DD/MM/YYYY'
             ni_number:
               blank: 'Enter the applicant’s National Insurance number'
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+            date_to_check:
+              not_a_date: 'Enter the date the application was made'
+              invalid: 'Enter the date in this format day month, year DD/MM/YYYY'
     attributes:
       user:
         password: Password

@@ -40,15 +40,44 @@ RSpec.describe DwpCheck, type: :model do
       expect(check.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
     end
 
-    it 'require a date of birth' do
-      check.dob = nil
-      expect(check).to be_invalid
+    context 'date of birth' do
+      it 'require a date of birth' do
+        check.dob = nil
+        expect(check).to be_invalid
+      end
+
+      context 'maximum age' do
+        describe 'invalid maximum age' do
+          before do
+            check.dob = Date.today - 121.years
+            check.valid?
+          end
+
+          it "doesn't allow date of birth to be over 120 years" do
+            expect(check).to be_invalid
+          end
+
+          it 'has an error message' do
+            error = ["can't be over #{DwpCheck::MAX_AGE} years old"]
+            expect(check.errors.messages[:dob]).to eq error
+          end
+        end
+
+        describe 'valid maximum age' do
+          before { check.dob = Date.today - 120.years }
+
+          it 'does allow date of birth to be under 120 years' do
+            expect(check).to be_valid
+          end
+        end
+      end
     end
 
-    it 'requires date of birth to be in the past' do
+    it 'requires date of birth to be in the past, (more than 16 years ago!)' do
       check.dob = Date.today
+      check.valid?
       expect(check).to be_invalid
-      expect(check.errors[:dob]).to eq ['must be before today']
+      expect(check.errors[:dob]).to eq ["can't be under 16 years old"]
     end
 
     it 'require a NI number' do
@@ -56,15 +85,56 @@ RSpec.describe DwpCheck, type: :model do
       expect(check).to be_invalid
     end
 
-    it 'allows a date to check to be passed' do
-      check.date_to_check = Date.today
-      expect(check).to be_valid
-    end
+    context 'date to check' do
+      it 'allows a date to check to be passed' do
+        check.date_to_check = Date.today
+        expect(check).to be_valid
+      end
 
-    it 'requires date to check to be in the last three months' do
-      check.date_to_check = Date.today.-3.months.+1.day
-      expect(check).to be_invalid
-      expect(check.errors[:date_to_check]).to eq ['must be in the last 3 months']
+      it 'requires date to check to be in the last three months' do
+        check.date_to_check = Date.today.-3.months.+1.day
+        expect(check).to be_invalid
+        expect(check.errors[:date_to_check]).to eq ['must be in the last 3 months']
+      end
+
+      it 'allows blank values as valid' do
+        check.date_to_check = ''
+        expect(check).to be_valid
+      end
+
+      context 'in format DD/MM/YY' do
+        let(:date) { Date.yesterday.strftime("%d/%m/%y") }
+
+        it "doesn't accepts date in format DD/MM/YY" do
+          check.date_to_check = "#{date}"
+          expect(check).to be_invalid
+        end
+
+        it "does accept date in format 'DD/MM/YY' + some string" do
+          check.date_to_check = "#{date}a"
+          expect(check).to be_invalid
+        end
+      end
+
+      context 'in format DD/MM/YYYY' do
+        let(:date) { Date.yesterday.strftime("%d/%m/%Y") }
+
+        it 'accepts the date in format DD/MM/YYYY' do
+          check.date_to_check = date
+          expect(check).to be_valid
+        end
+
+        it "does accept date in format 'DD/MM/YYYY' + some string" do
+          check.date_to_check = "#{date}aaaaa"
+          expect(check).to be_valid
+        end
+
+        it "does accept date in format 'some string' + 'DD/MM/YYYY' + some string" do
+          check.date_to_check = "aaaaa#{date}bbbb"
+          expect(check).to be_valid
+        end
+      end
+
     end
 
     it 'only allow valid NI numbers' do

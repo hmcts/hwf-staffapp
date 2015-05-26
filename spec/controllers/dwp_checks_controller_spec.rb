@@ -17,7 +17,7 @@ RSpec.describe DwpChecksController, type: :controller do
     {
       id: nil,
       last_name: 'Smith',
-      dob: '2000-01-01',
+      dob: Date.today - 20.years,
       ni_number: 'AB123456C',
       date_to_check: nil,
       checked_by: nil,
@@ -84,21 +84,13 @@ RSpec.describe DwpChecksController, type: :controller do
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
             to_return(status: 200, body: json, headers: {})
         end
-        it 'accepts d/m/yy' do
+
+        it "doesn't accepts d/m/yy date format" do
           dwp_params[:dob] = '1/1/80'
           post :lookup, dwp_check: dwp_params
-          expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
+          expect(response).to render_template('dwp_checks/new')
         end
-        it 'accepts dd/mm/yy' do
-          dwp_params[:dob] = '01/01/80'
-          post :lookup, dwp_check: dwp_params
-          expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
-        end
-        it 'accepts dd mmm yy' do
-          dwp_params[:dob] = '01 Jan 80'
-          post :lookup, dwp_check: dwp_params
-          expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
-        end
+
         it 'accepts dd mmmm yyyy' do
           dwp_params[:dob] = '01 January 1980'
           post :lookup, dwp_check: dwp_params

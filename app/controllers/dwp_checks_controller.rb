@@ -29,20 +29,8 @@ private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
-    @dwp_checker.update(
-      created_by_id: current_user.id,
-      office_id: current_user.office_id,
-      dob: process_incoming_date(dwp_params[:dob]),
-      date_to_check: process_incoming_date(dwp_params[:date_to_check])
-    )
-  end
-
-  def process_incoming_date(date_str)
-    return nil if date_str.blank?
-    Date.parse(date_str)
-  rescue
-    format_str = "%d/%m/" + (date_str =~ /\d{4}/ ? "%Y" : "%y")
-    Date.strptime(date_str, format_str)
+    @dwp_checker.update(created_by_id: current_user.id,
+                        office_id: current_user.office_id)
   end
 
   def dwp_params
