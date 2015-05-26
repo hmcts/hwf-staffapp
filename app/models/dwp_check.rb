@@ -13,7 +13,7 @@ class DwpCheck < ActiveRecord::Base
 
   before_validation :strip_whitespace
 
-  validates :last_name, :dob, :ni_number, :office_id, presence: true
+  validates :last_name, :ni_number, :office_id, presence: true
   validates :last_name, length: { minimum: 2 }, allow_blank: true
 
   validates :dob, date: true, presence: true
