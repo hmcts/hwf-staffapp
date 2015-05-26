@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :office
 
-  ROLES = %w[admin user]
+  ROLES = %w[user manager admin]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable
   devise :database_authenticatable,
@@ -28,5 +28,9 @@ class User < ActiveRecord::Base
 
   def admin?
     role == 'admin'
+  end
+
+  def manager?
+    role == 'manager'
   end
 end
