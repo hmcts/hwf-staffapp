@@ -73,10 +73,11 @@ RSpec.describe DwpCheck, type: :model do
       end
     end
 
-    pending 'requires date of birth to be in the past, (more than 16 years ago!)' do
+    it 'requires date of birth to be in the past, (more than 16 years ago!)' do
       check.dob = Date.today
+      check.valid?
       expect(check).to be_invalid
-      expect(check.errors[:dob]).to eq ['must be before today']
+      expect(check.errors[:dob]).to eq ["can't be under 16 years old"]
     end
 
     it 'require a NI number' do

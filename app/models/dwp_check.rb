@@ -1,6 +1,7 @@
 class DwpCheck < ActiveRecord::Base
 
   MAX_AGE = 120
+  MIN_AGE = 16
 
   include CommonScopes
 
@@ -94,11 +95,18 @@ private
   def dob_age_valid?
     errors.add(:dob, "can't contain non numbers") if dob =~ /a-zA-Z/
     validate_dob_maximum unless dob.blank?
+    validate_dob_minimum unless dob.blank?
   end
 
   def validate_dob_maximum
     if dob < Date.today - MAX_AGE.years
       errors.add(:dob, "can't be over #{MAX_AGE} years old")
+    end
+  end
+
+  def validate_dob_minimum
+    if dob > Date.today - MIN_AGE.years
+      errors.add(:dob, "can't be under #{MIN_AGE} years old")
     end
   end
 end
