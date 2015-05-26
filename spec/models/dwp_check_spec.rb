@@ -58,7 +58,7 @@ RSpec.describe DwpCheck, type: :model do
           end
 
           it 'has an error message' do
-            error = ["can't be over #{DwpCheck::MAX_AGE} years old"]
+            error = ["The applicant can't be over #{DwpCheck::MAX_AGE} years old"]
             expect(check.errors.messages[:dob]).to eq error
           end
         end
@@ -77,7 +77,7 @@ RSpec.describe DwpCheck, type: :model do
       check.dob = Date.today
       check.valid?
       expect(check).to be_invalid
-      expect(check.errors[:dob]).to eq ["can't be under 16 years old"]
+      expect(check.errors[:dob]).to eq ["The applicant can't be under 16 years old"]
     end
 
     it 'require a NI number' do
@@ -94,7 +94,13 @@ RSpec.describe DwpCheck, type: :model do
       it 'requires date to check to be in the last three months' do
         check.date_to_check = Date.today.-3.months.+1.day
         expect(check).to be_invalid
-        expect(check.errors[:date_to_check]).to eq ['must be in the last 3 months']
+        expect(check.errors[:date_to_check]).to eq ['The application must have been made in the last 3 months']
+      end
+
+      it 'requires date to check to not be in the future' do
+        check.date_to_check = Date.tomorrow
+        expect(check).to be_invalid
+        expect(check.errors[:date_to_check]).to eq ['The application cannot be a future date']
       end
 
       it 'allows blank values as valid' do
