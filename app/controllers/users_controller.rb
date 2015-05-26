@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.sorted_by_email
+    if current_user.admin?
+      @users = User.sorted_by_email
+    elsif current_user.manager?
+      @users = User.by_office(current_user.office_id).sorted_by_email
+    end
   end
 
   def edit

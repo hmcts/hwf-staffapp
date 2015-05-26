@@ -3,11 +3,28 @@ require 'rails_helper'
 
 describe User, type: :model do
 
-  let(:user)          { FactoryGirl.build :user }
-  let(:admin_user)    { FactoryGirl.build :admin_user }
+  let(:user)       { FactoryGirl.build :user }
+  let(:admin_user) { FactoryGirl.build :admin_user }
+  let(:manager)    { FactoryGirl.build :manager }
 
   it 'pass factory build' do
     expect(user).to be_valid
+  end
+
+  describe 'scopes' do
+    describe 'by_office' do
+      before { described_class.delete_all }
+      it 'filters users by office' do
+        office1 = FactoryGirl.create(:office)
+        office2 = FactoryGirl.create(:office)
+        FactoryGirl.create(:user, office: office1)
+        FactoryGirl.create_list :user, 3, office: office2
+
+        expect(described_class.by_office(office1).count).to eql(1)
+        expect(described_class.by_office(office2).count).to eql(3)
+
+      end
+    end
   end
 
   describe 'validations' do
@@ -75,12 +92,43 @@ describe User, type: :model do
     end
   end
 
+  describe '@elevated?' do
+    it 'respond true if manager user' do
+      expect(manager.elevated?).to be true
+    end
+
+    it 'respond true if admin user' do
+      expect(admin_user.elevated?).to be true
+    end
+
+    it 'respond false if  user' do
+      expect(user.elevated?).to be false
+    end
+  end
+
+  describe '@manager?' do
+    it 'respond true if manager user' do
+      expect(manager.manager?).to be true
+    end
+
+    it 'respond false if admin user' do
+      expect(admin_user.manager?).to be false
+    end
+
+    it 'respond false if  user' do
+      expect(user.manager?).to be false
+    end
+  end
+
   describe '@admin?' do
-    it 'resond true if admin user' do
+    it 'respond true if admin user' do
       expect(admin_user.admin?).to be true
     end
 
-    it 'respond false if not admin user' do
+    it 'respond false if manager' do
+      expect(manager.admin?).to be false
+    end
+    it 'respond false if user' do
       expect(user.admin?).to be false
     end
   end

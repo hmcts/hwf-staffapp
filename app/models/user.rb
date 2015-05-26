@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   scope :sorted_by_email, -> {  all.order(:email) }
 
+  scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
+
   email_regex = /\A([^@\s]+)@(hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
   validates :role, :name, presence: true
   validates :email, format: {
@@ -25,6 +27,10 @@ class User < ActiveRecord::Base
     message: "%{value} is not a valid role",
     allow_nil: true
   }
+
+  def elevated?
+    admin? || manager?
+  end
 
   def admin?
     role == 'admin'
