@@ -1,0 +1,22 @@
+.row.small-collapse
+  h2 Manager summary for #{current_user.office.name}
+.row
+  .columns.small-12
+    table
+      thead
+        tr
+          th Staff member
+          th Date made
+          th Remission Type
+          th Decision
+      tbody
+        -@dwpchecks.each do |dwp|
+          tr
+            td =dwp.created_by.name
+            td =dwp.created_at.strftime('%d/%m/%y')
+            td R1
+            td =link_to dwp.dwp_result.nil? ? dwp.unique_number : dwp.dwp_result, dwp_checks_path(dwp.unique_number)
+.row
+  .columns.small-12.digg_pagination
+    = page_entries_info @dwpchecks
+    = will_paginate @dwpchecks

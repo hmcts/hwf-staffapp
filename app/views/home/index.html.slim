@@ -12,6 +12,8 @@
       .columns.small-12.medium-6
         h3 R2 chart
         = column_chart @r2_checks, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
+  -elsif current_user.manager?
+    =render 'home/manager'
   -else
     p 
       span.bold 'Check benefits'
