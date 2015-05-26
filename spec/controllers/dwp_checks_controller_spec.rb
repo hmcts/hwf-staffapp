@@ -17,7 +17,7 @@ RSpec.describe DwpChecksController, type: :controller do
     {
       id: nil,
       last_name: 'Smith',
-      dob: '2000-01-01',
+      dob: Date.today - 20.years,
       ni_number: 'AB123456C',
       date_to_check: nil,
       checked_by: nil,

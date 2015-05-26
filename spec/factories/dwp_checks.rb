@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :dwp_check do
     last_name "Smith"
-    dob "2000-01-01"
+    dob Date.today - 20.years
     ni_number "AB123456C"
     date_to_check Date.yesterday
     checked_by nil
