@@ -31,7 +31,7 @@ describe ProcessDwpService do
       described_class.new(check)
     end
 
-    it 'succeeds' do
+    it 'does not raise error' do
       expect {
         described_class.new(check)
       }.not_to raise_error
@@ -51,6 +51,32 @@ describe ProcessDwpService do
 
     it 'sets the dwp_id' do
       expect(check.dwp_id).to eql('T1426267181940')
+    end
+
+    it 'sets the benefits valid' do
+      expect(check.benefits_valid).to eql(true)
+    end
+
+    it 'sets the dwp_id' do
+      expect(check.dwp_id).to eql('T1426267181940')
+    end
+
+    context 'returns a result object' do
+      let(:parsed) { JSON.parse(described_class.new(check).result) }
+      it 'as json' do
+        expect(parsed.count).to eql(3)
+      end
+      describe 'containing a field named' do
+        it 'success' do
+          expect(parsed).to include('success')
+        end
+        it 'dwp_check' do
+          expect(parsed).to include('dwp_check')
+        end
+        it 'message' do
+          expect(parsed).to include('message')
+        end
+      end
     end
 
     context 'returns a result object' do
