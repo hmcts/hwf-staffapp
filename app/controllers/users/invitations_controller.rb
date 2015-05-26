@@ -3,6 +3,11 @@ class Users::InvitationsController < Devise::InvitationsController
   before_action :authenticate_user!
   load_and_authorize_resource User, except: [:edit, :update]
 
+  def new
+    @user = User.new
+    render :new
+  end
+
 private
 
   def invite_resource
