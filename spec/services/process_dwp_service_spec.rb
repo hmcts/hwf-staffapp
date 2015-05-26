@@ -16,15 +16,21 @@ describe ProcessDwpService do
 
       let(:user) { FactoryGirl.create(:user) }
       let(:check) { FactoryGirl.create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+
       before(:each) do
         json = '{"original_client_ref": "' + check.our_api_token + '", "benefit_checker_status": "Yes",
                "confirmation_ref": "T1426267181940",
                "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
         stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-          with(body: { id: check.unique_token, birth_date: '19800101', entitlement_check_date: Date.yesterday.strftime('%Y%m%d'), ni_number: 'AB123456A', surname: 'LAST_NAME' }).
+          with(body: { id: check.our_api_token,
+                       birth_date: '19800101',
+                       entitlement_check_date: "#{Date.yesterday.strftime('%Y%m%d')}",
+                       ni_number: 'AB123456A',
+                       surname: 'LAST_NAME' }).
           to_return(status: 200, body: json, headers: {})
         described_class.new(check)
       end
+
       it 'succeeds' do
         expect {
           described_class.new(check)
