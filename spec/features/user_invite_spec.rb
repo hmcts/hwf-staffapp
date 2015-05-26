@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Office management', type: :feature do
+RSpec.feature 'User management,', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
