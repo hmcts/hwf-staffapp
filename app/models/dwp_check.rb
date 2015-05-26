@@ -50,7 +50,7 @@ class DwpCheck < ActiveRecord::Base
       begin
         Date.parse "#{date_to_check}"
       rescue ArgumentError
-        errors.add(:date_to_check, 'ffffffffff')
+        errors.add(:date_to_check, 'invalid date given')
       end
     end
   end
