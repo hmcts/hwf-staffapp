@@ -54,6 +54,7 @@ en:
             dob:
               blank: 'Enter the applicant’s date of birth'
               invalid: 'Enter the date as ‘day, month, year DD/MM/YYYY'
+              not_a_date: 'Enter the date as ‘day, month, year DD/MM/YYYY'
             ni_number:
               blank: 'Enter the applicant’s National Insurance number'
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
