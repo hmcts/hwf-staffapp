@@ -5,6 +5,11 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def new
     @user = User.new
+    if current_user.admin?
+      @roles = User::ROLES
+    else
+      @roles = User::ROLES - %w[admin]
+    end
     render :new
   end
 
