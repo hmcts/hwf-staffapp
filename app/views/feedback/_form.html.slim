@@ -16,7 +16,7 @@
   .row
     .small-12.medium-8.large-5.columns
       .form-group
-        = f.text_area :experience, rows: 6
+        = f.text_area :experience, rows: 3
 
   .row
     .small-12.columns
@@ -25,7 +25,7 @@
   .row
     .small-12.medium-8.large-5.columns
       .form-group
-         = f.text_area :ideas, rows: 6
+         = f.text_area :ideas, rows: 3
 
   .row
     .small-12.columns
@@ -33,7 +33,7 @@
         = f.label :rating, class: 'feedback-header'
 
   .row
-    .small-12.medium-8.columns
+    .small-12.medium-8.large-5.columns
       .options.radio
         .option
           = f.label :rating_1, class: 'first'
@@ -61,7 +61,7 @@
       .form-group
         = f.label :help, class: 'feedback-header'
   .row
-    .small-12.medium-8.columns
+    .small-12.medium-8.large-5.columns
       .options.radio
         .option
           = label_tag 'help_score_1', class: 'help-radio-lbl first'
