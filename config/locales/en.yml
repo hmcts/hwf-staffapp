@@ -35,6 +35,11 @@ en:
     rating_2: 'I used an accessibility tool such as a screen reader'
     rating_3: 'I needed other kind of help'
     rating_4: 'Other'
+  unauthorized:
+    manage:
+      user: You are not authorized to access this page.
+    show:
+      user: You can only access accounts in your office
   activerecord:
     errors:
       models:

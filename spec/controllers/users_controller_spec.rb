@@ -27,7 +27,8 @@ RSpec.describe UsersController, type: :controller do
 
   let(:user)          { FactoryGirl.create :user }
   let(:admin_user)    { FactoryGirl.create :admin_user }
-  let(:test_user) { User.create! valid_attributes }
+  let(:manager)       { FactoryGirl.create :manager }
+  let(:test_user)     { User.create! valid_attributes }
 
   context 'logged out user' do
     describe 'GET #index' do
@@ -70,11 +71,55 @@ RSpec.describe UsersController, type: :controller do
       it 'generates access denied error' do
         expect {
           get :show, id: test_user.to_param
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
       end
     end
   end
-
+  context 'manager' do
+    before do
+      User.delete_all
+      FactoryGirl.create_list :user, 3, office: manager.office
+      FactoryGirl.create_list :user, 3, office: FactoryGirl.create(:office)
+    end
+    before(:each) do
+      sign_in manager
+    end
+    describe 'GET #index' do
+      it 'only shows users from the current_users office' do
+        get :index
+        expect(assigns(:users).count).to eql(4)
+        expect(User.count).to eql(7)
+      end
+    end
+    describe 'GET #show' do
+      context 'for a user in their office' do
+        before(:each) { get :show, id: User.first.to_param }
+        it 'renders the view' do
+          expect(response).to render_template :show
+        end
+        it 'returns a success code' do
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context 'for a user not in their office' do
+        it 'returns a redirect code' do
+          expect {
+            get :show, id: User.last.to_param
+          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+        end
+        it 'renders the index view' do
+          expect {
+            get :show, id: User.last.to_param
+          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+        end
+        it 'displays a flash message' do
+          expect {
+            get :show, id: User.last.to_param
+          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+        end
+      end
+    end
+  end
   context 'admin user' do
     before(:each) { sign_in admin_user }
     describe 'GET #index' do
