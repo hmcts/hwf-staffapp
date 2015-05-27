@@ -25,6 +25,9 @@ en:
     r2_calculator: 'Income calculator'
     feedback: 'Give feedback'
     staff_guide: Staff guide
+  error_messages:
+    dwp_checker:
+      unavailable: 'The benefits checker is not available at the moment. Please check again later.'
   dictionary:
     invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
   feedback:
@@ -85,4 +88,4 @@ en:
           fee: Fee
           status: Status
           children: Number of children
-          income: Total monthly income
+          income: Total monthly incomes
