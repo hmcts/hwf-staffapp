@@ -2,8 +2,9 @@
   .columns.small-12.medium-10.large-8
     #result.callout class=(@dwp_checker.benefits_valid ? 'received' : 'not-received')
       h3.bold#fee-remit
-        = @dwp_checker.benefits_valid ? 'Correct benefits received'.html_safe : ''
-        - unless @dwp_checker.benefits_valid
+        -if @dwp_checker.benefits_valid
+          'Correct benefits received'
+        -else
           -if @dwp_checker.dwp_result == 'No'
             span.number Benefits not received
           -elsif @dwp_checker.dwp_result == 'Undetermined'
