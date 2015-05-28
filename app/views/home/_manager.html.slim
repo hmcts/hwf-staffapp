@@ -1,5 +1,4 @@
-.row.small-collapse
-  h2 Manager summary for #{current_user.office.name}
+h2 Manager summary for #{current_user.office.name}
 .row
   .columns.small-12
     table
@@ -18,5 +17,4 @@
             td =link_to dwp.dwp_result.nil? ? dwp.unique_number : dwp.dwp_result, dwp_checks_path(dwp.unique_number)
 .row
   .columns.small-12.digg_pagination
-    = page_entries_info @dwpchecks
     = will_paginate @dwpchecks
