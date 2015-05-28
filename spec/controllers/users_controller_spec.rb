@@ -75,6 +75,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
   context 'manager' do
     before do
       User.delete_all
@@ -120,20 +121,40 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
   context 'admin user' do
+    before do
+      User.delete_all
+      FactoryGirl.create_list :user, 3, office: admin_user.office
+      FactoryGirl.create_list :user, 3, office: FactoryGirl.create(:office)
+    end
     before(:each) { sign_in admin_user }
     describe 'GET #index' do
       it 'shows user list' do
-        get :index, {}
-        test_user
-        user
-        expect(assigns(:users).last).to eql(user)
+        get :index
+        expect(assigns(:users).count).to eql(7)
       end
     end
     describe 'GET #show' do
-      it 'shows user details' do
-        get :show, id: test_user.to_param
-        expect(assigns(:user)).to eq(test_user)
+      context 'for a user in their office' do
+        before(:each) do
+          get :show, id: User.first.to_param
+        end
+        it 'renders the view' do
+          expect(response).to render_template :show
+        end
+        it 'returns a success code' do
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context 'for a user not in their office' do
+        before(:each) { get :show, id: User.last.to_param }
+        it 'returns a success code' do
+          expect(response).to have_http_status(:success)
+        end
+        it 'renders the index view' do
+          expect(response).to render_template :show
+        end
       end
     end
     describe 'GET #edit' do
