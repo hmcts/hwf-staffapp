@@ -16,10 +16,14 @@ class DwpCheck < ActiveRecord::Base
   validates :last_name, :ni_number, :office_id, presence: true
   validates :last_name, length: { minimum: 2 }, allow_blank: true
 
-  validates :dob, date: true, presence: true
+  validates :dob, date: true
   validate :dob_age_valid?
 
-  validate :date_to_check_must_be_valid
+  validates :date_to_check, date: {
+    allow_nil: true,
+    after: proc { Date.today - 3.months },
+    before: proc { Date.today + 1.day }
+  }
 
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
@@ -37,22 +41,9 @@ class DwpCheck < ActiveRecord::Base
       group(:dwp_result).
       order('length(dwp_result)')
   }
+
   def strip_whitespace
     ni_number && ni_number.strip!
-  end
-
-  def date_to_check_must_be_valid
-    if date_to_check.present?
-      if within_valid_range?
-        errors.add(:date_to_check, 'must be in the last 3 months')
-      end
-
-      begin
-        Date.parse "#{date_to_check}"
-      rescue ArgumentError
-        errors.add(:date_to_check, 'invalid date given')
-      end
-    end
   end
 
   def ni_number=(val)
@@ -80,18 +71,6 @@ private
     self.save!
   end
 
-  def before_today?
-    date_to_check > Date.today
-  end
-
-  def within_three_months_in_the_past?
-    date_to_check < Date.today - 3.months
-  end
-
-  def within_valid_range?
-    before_today? || within_three_months_in_the_past?
-  end
-
   def dob_age_valid?
     errors.add(:dob, "can't contain non numbers") if dob =~ /a-zA-Z/
     validate_dob_maximum unless dob.blank?
@@ -100,13 +79,13 @@ private
 
   def validate_dob_maximum
     if dob < Date.today - MAX_AGE.years
-      errors.add(:dob, "can't be over #{MAX_AGE} years old")
+      errors.add(:dob, I18n.t('activerecord.attributes.dwp_check.dob_too_old', max_age: MAX_AGE))
     end
   end
 
   def validate_dob_minimum
     if dob > Date.today - MIN_AGE.years
-      errors.add(:dob, "can't be under #{MIN_AGE} years old")
+      errors.add(:dob, I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE))
     end
   end
 end
