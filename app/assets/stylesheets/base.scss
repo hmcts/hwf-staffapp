@@ -57,9 +57,11 @@ img {
   padding:20px;
   border:blue 1px solid;
 }
-span.hint.block {
-  display: block;
+span.hint {
   color: $secondary-text-colour;
+  &.block {
+    display: block;
+  }
 }
 
 .pad-top-thirty-pix {
