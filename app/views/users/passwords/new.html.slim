@@ -1,6 +1,6 @@
 h2 = t 'devise.passwords.new.header'
 #instructions = t 'devise.passwords.new.instructions'
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { autocomplete: 'off', method: :post }) do |f|
   .row
     .small-12.columns
       .form-group
