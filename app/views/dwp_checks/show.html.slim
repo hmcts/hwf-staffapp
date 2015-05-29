@@ -3,14 +3,14 @@
     #result.callout class=(@dwp_checker.benefits_valid ? 'received' : 'not-received')
       h3.bold#fee-remit
         -if @dwp_checker.benefits_valid
-          'Correct benefits received'
+          |Correct benefits received
         -else
           -if @dwp_checker.dwp_result == 'No'
-            span.number Benefits not received
+            |Benefits not received
           -elsif @dwp_checker.dwp_result == 'Undetermined'
-            span.number =I18n.t 'activerecord.attributes.dwp_check.undetermined'
+            =I18n.t 'activerecord.attributes.dwp_check.undetermined'
           -else
-            span.number #{"Benefits not received: #{@dwp_checker.dwp_result}"}
+            |#{"Benefits not received: #{@dwp_checker.dwp_result}"}
 
 .row
   .columns.small-12.medium-10.large-8
