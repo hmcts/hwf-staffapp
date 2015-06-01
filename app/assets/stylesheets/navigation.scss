@@ -16,12 +16,15 @@ dl.sub-nav {
   a:hover {
     color: $link-hover-colour;
   }
-  dd.active a {
-    color: $white;
-    background: $link-hover-colour;
-    text-decoration:none;
-    :hover {
-      background: $link-colour;
+  dd {
+    font-size: 1rem;
+    .active a {
+      color: $white;
+      background: $link-hover-colour;
+      text-decoration: none;
+      :hover {
+        background: $link-colour;
+      }
     }
   }
 }

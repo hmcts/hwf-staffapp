@@ -91,3 +91,14 @@ span.hint {
 .actions {
   margin-top: 32px;
 }
+
+* {
+  color:$text-colour;
+}
+
+label,
+button,
+input[type="button"],
+input[type="submit"] {
+  font-size: 1rem;
+}
