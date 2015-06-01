@@ -9,9 +9,6 @@
       .columns.small-12.medium-6
         h3 #{current_user.office.name} R1 chart
         = column_chart @checks_by_day, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
-      .columns.small-12.medium-6
-        h3 R2 chart
-        = column_chart @r2_checks, colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
   -else
     p 
       span.bold 'Check benefits'
