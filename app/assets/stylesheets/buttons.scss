@@ -1,0 +1,30 @@
+@import 'colours';
+@import 'measurements';
+@import 'design_patterns/govuk_buttons';
+
+@function em($px, $base: 19) {
+  @return ($px / $base) + em;
+}
+
+.button {
+  @include button ($button-colour);
+  margin: 0 $gutter-half $gutter-half 0;
+  padding: em(10) em(15) em(5) em(15);
+  vertical-align: top;
+  &:focus {
+    outline: 3px solid $yellow;
+  }
+  &.primary {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+}
+
+// Disabled buttons
+.button[disabled="disabled"] {
+  background: $button-colour;
+}
+
+.button[disabled="disabled"]:focus {
+  outline: none;
+}
