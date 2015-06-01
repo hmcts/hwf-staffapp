@@ -1,11 +1,7 @@
 //Cut down gov.uk style import
 @import 'colours';
 //Settings
-$gutter: 30px;
-$gutter-one-quarter: $gutter/4;
-$gutter-one-third: $gutter/3;
-$gutter-half: $gutter/2;
-$gutter-two-thirds: $gutter - $gutter-one-third;
+@import 'measurements';
 
 .feedback-header {
   font-weight: bold;
