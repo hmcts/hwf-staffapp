@@ -8,12 +8,14 @@ h2 Check benefits
         = f.label :last_name
           = t('activerecord.attributes.dwp_check.last_name')
           span.hint.block = t('activerecord.attributes.dwp_check.last_name_hint')
-        = f.text_field :last_name, { class: 'form-control' }
+        = f.text_field :last_name, autofocus:true, class: 'form-control'
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :dob, @dwp_checker.errors[:dob].join(', '), class: 'error' if @dwp_checker.errors[:dob].present?
         = f.label :dob
+          = t('activerecord.attributes.dwp_check.dob')
+          span.hint.block = t('activerecord.attributes.dwp_check.dob_hint')
         = f.text_field :dob, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
@@ -24,7 +26,7 @@ h2 Check benefits
   .row
     .small-12.medium-8.large-5.columns
       .form-group
-        = f.label :date_to_check, @dwp_checker.errors.full_messages_for(:date_to_check).join(', '), class: 'error' if @dwp_checker.errors[:date_to_check].present?
+        = f.label :date_to_check, @dwp_checker.errors[:date_to_check].join(', '), class: 'error' if @dwp_checker.errors[:date_to_check].present?
         = f.label :date_to_check
           = t('activerecord.attributes.dwp_check.date_to_check')
           span.hint.block = t('activerecord.attributes.dwp_check.date_to_check_hint')
@@ -32,7 +34,7 @@ h2 Check benefits
   .row
     .small-12.medium-8.large-5.columns
       .form-group
-        = f.submit 'Check', :id => 'save', class: 'button btn small'
+        = f.submit 'Check', :id => 'save', class: 'button primary'
 
 javascript:
   $(document).ready(function () {

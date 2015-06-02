@@ -29,7 +29,9 @@
 a, details > summary {
   color: #005ea5;
   text-decoration: underline;
+  cursor: pointer;
 }
+
 .alert > a.close {
   text-decoration: none;
   margin-top: -0.4875rem;
@@ -57,13 +59,19 @@ img {
   padding:20px;
   border:blue 1px solid;
 }
-span.hint.block {
-  display: block;
+span.hint {
   color: $secondary-text-colour;
+  &.block {
+    display: block;
+  }
 }
 
 .pad-top-thirty-pix {
   padding-top: 30px;
+}
+
+.pad-top-fifteen-px {
+  padding-top: 15px;
 }
 
 .pad-bottom-thirty-pix {
@@ -82,4 +90,15 @@ span.hint.block {
 }
 .actions {
   margin-top: 32px;
+}
+
+* {
+  color:$text-colour;
+}
+
+label,
+button,
+input[type="button"],
+input[type="submit"] {
+  font-size: 1rem;
 }

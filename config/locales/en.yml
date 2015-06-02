@@ -61,14 +61,16 @@ en:
               blank: 'Enter the applicant’s last name'
             dob:
               blank: 'Enter the applicant’s date of birth'
-              invalid: 'Enter the date as ‘day, month, year DD/MM/YYYY'
-              not_a_date: 'Enter the date as ‘day, month, year DD/MM/YYYY'
+              invalid: 'Enter the date as day, month, year DD/MM/YYYY'
+              not_a_date: 'Enter the date in this format 01/11/1980'
             ni_number:
               blank: 'Enter the applicant’s National Insurance number'
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             date_to_check:
-              not_a_date: 'Enter the date the application was made'
-              invalid: 'Enter the date in this format day month, year DD/MM/YYYY'
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
     attributes:
       user:
         password: Password
@@ -86,6 +88,9 @@ en:
         last_name_hint: 'First 3 letters only'
         ni_number: 'National Insurance number'
         dob: 'Date of birth'
+        dob_hint: For example 01/11/1980
+        dob_too_young: The applicant can't be under %{min_age} years old
+        dob_too_old: The applicant can't be over %{max_age} years old
         date_to_check: 'Date application made'
         date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
       r2_calc:
@@ -93,4 +98,4 @@ en:
           fee: Fee
           status: Status
           children: Number of children
-          income: Total monthly incomes
+          income: Total monthly income

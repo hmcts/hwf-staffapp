@@ -28,8 +28,8 @@ RSpec.feature 'Undertake benefit check', type: :feature do
         fill_in 'dwp_check_ni_number', with: 'AB123456A'
         click_button 'Check'
 
-        expect(page).to have_xpath('//div[contains(@class, "dwp-value")]', text: 'AB123456A')
-        expect(page).to have_xpath('//div[contains(@class, "callout")]/span[@class="number"]', text: /[Bb]enefits/)
+        expect(page).to have_xpath('//div', text: 'AB123456A')
+        expect(page).to have_xpath('//h3[contains(@class, "bold")]', text: /[Bb]enefits/)
       end
     end
     context 'with invalid data' do
