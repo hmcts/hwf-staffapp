@@ -201,3 +201,7 @@ If the benefits checker and the paper evidence don’t match up, base your decis
 If both the benefits checker and the evidence submitted by the applicant show that they are eligible for help with their fees, then log this in the usual way.
 
 If the benefits checker and the paper evidence don’t match up, base your decision on the paper evidence.
+
+<pre>
+     <script>$('dl.sub-nav dd#staff-guide').addClass('active')</script>
+</pre>
