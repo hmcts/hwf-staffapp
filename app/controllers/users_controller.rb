@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if current_user.admin?
       @users = User.sorted_by_email
     elsif current_user.manager?
-      @users = User.by_office(current_user.office_id).sorted_by_email
+      @users = User.by_office(current_user.office_id).where.not(role: 'admin').sorted_by_email
     end
   end
 
