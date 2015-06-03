@@ -71,7 +71,7 @@ RSpec.describe UsersController, type: :controller do
       it 'generates access denied error' do
         expect {
           get :show, id: test_user.to_param
-        }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
       end
     end
   end
@@ -106,17 +106,32 @@ RSpec.describe UsersController, type: :controller do
         it 'returns a redirect code' do
           expect {
             get :show, id: User.last.to_param
-          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
         it 'renders the index view' do
           expect {
             get :show, id: User.last.to_param
-          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
-        it 'displays a flash message' do
+      end
+    end
+    describe 'GET #edit' do
+      context 'for a user not in their office' do
+        it 'returns a redirect code' do
           expect {
             get :show, id: User.last.to_param
-          }.to raise_error CanCan::AccessDenied, 'You can only access accounts in your office'
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+        end
+        it 'renders the index view' do
+          expect {
+            get :show, id: User.last.to_param
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+        end
+      end
+      context 'for a user in their office' do
+        it 'shows edit page' do
+          get :edit, id: User.first.to_param
+          expect(response).to render_template :edit
         end
       end
     end
