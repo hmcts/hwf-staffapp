@@ -91,6 +91,12 @@ RSpec.describe UsersController, type: :controller do
         expect(assigns(:users).count).to eql(4)
         expect(User.count).to eql(7)
       end
+      it 'does not show admins assigned to their office' do
+        FactoryGirl.create :admin_user, office: manager.office
+        get :index
+        expect(User.count).to eql(8)
+        expect(assigns(:users).count).to eql(4)
+      end
     end
     describe 'GET #show' do
       context 'for a user in their office' do
