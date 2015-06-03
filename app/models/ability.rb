@@ -7,11 +7,21 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.manager?
-      can [:read, :create, :show], User, office_id: user.office_id
+      can [:manage], User do |staff_member|
+        can_manage_user?(user, staff_member)
+      end
       users_can
     else
       users_can
     end
+  end
+
+  def can_manage_user?(manager, staff_member)
+    if staff_member.office_id != manager.office_id
+      raise CanCan::AccessDenied.new(I18n.t('unauthorized.manage.wrong_office'), User, :manage)
+    end
+
+    true
   end
 
 private

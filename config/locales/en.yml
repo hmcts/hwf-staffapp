@@ -37,9 +37,8 @@ en:
     rating_4: 'Other'
   unauthorized:
     manage:
-      user: You are not authorized to access this page.
-    show:
-      user: You can only access accounts in your office
+      all: You are not authorized to access this page.
+      wrong_office: You are not authorized to manage this user.
   activerecord:
     errors:
       models:
