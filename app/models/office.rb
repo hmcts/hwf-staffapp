@@ -6,4 +6,8 @@ class Office < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def managers
+    users.where(office_id: id, role: 'manager')
+  end
+
 end
