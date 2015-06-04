@@ -29,12 +29,6 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    respond_with(@user)
-  end
-
 protected
 
   def user_params
