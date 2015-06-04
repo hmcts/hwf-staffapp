@@ -13,6 +13,11 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if current_user.admin?
+      @roles = User::ROLES
+    else
+      @roles = User::ROLES - %w[admin]
+    end
   end
 
   def show
