@@ -9,4 +9,7 @@ h2 Edit #{@user.name}
   .form-group
     = f.label(:roles, 'Role')
     = f.collection_select :role, @roles, :to_s, :humanize
+  .form-group
+    = f.label :office_id
+    = f.collection_select :office_id, @offices, :id, :name
   .actions = f.submit class: 'button btn tiny'
