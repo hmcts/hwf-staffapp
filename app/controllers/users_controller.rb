@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   respond_to :html
   before_action :authenticate_user!
+  before_action :find_user, only: [:edit, :show, :update]
+  before_action :populate_roles, only: [:edit]
+  before_action :populate_offices, only: [:edit]
   load_and_authorize_resource
 
   def index
@@ -12,21 +15,17 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-    if current_user.admin?
-      @roles = User::ROLES
-    else
-      @roles = User::ROLES - %w[admin]
-    end
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
+    if current_user_can_change_office?(@user)
+      flash[:notice] = t('error_messages.user.moved_offices', office_name: @user.office.name)
+      return redirect_to users_path
+    end
     respond_with(@user)
   end
 
@@ -39,6 +38,26 @@ class UsersController < ApplicationController
 protected
 
   def user_params
-    params.require(:user).permit(:email, :role)
+    params.require(:user).permit(:email, :role, :office_id)
+  end
+
+  def current_user_can_change_office?(user)
+    current_user.manager? && (user.office != current_user.office)
+  end
+
+  def find_user
+    @user = User.find(params[:id])
+  end
+
+  def populate_roles
+    if current_user.admin?
+      @roles = User::ROLES
+    else
+      @roles = User::ROLES - %w[admin]
+    end
+  end
+
+  def populate_offices
+    @offices = Office.all
   end
 end

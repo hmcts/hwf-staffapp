@@ -77,12 +77,10 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context 'manager' do
-    before do
+    before(:each) do
       User.delete_all
       FactoryGirl.create_list :user, 3, office: manager.office
       FactoryGirl.create_list :user, 3, office: FactoryGirl.create(:office)
-    end
-    before(:each) do
       sign_in manager
     end
     describe 'GET #index' do
@@ -141,6 +139,69 @@ RSpec.describe UsersController, type: :controller do
         end
       end
     end
+    describe 'PUT #update' do
+      context 'with valid params' do
+        let(:new_attributes) {
+          {
+            email: 'new_attributes@hmcts.gsi.gov.uk',
+            role: 'user',
+            office_id: manager.office_id
+          }
+        }
+        before(:each) { put :update, id: User.first.to_param, user: new_attributes }
+        it 'updates the requested user' do
+          User.first.reload
+        end
+
+        it 'assigns the requested user as @user' do
+          expect(assigns(:user)).to eq(User.first)
+        end
+
+        it 'redirects to the user' do
+          assigns(:user)
+          expect(response).to redirect_to(user_path)
+        end
+        context 'and changing office' do
+          let(:new_office) { FactoryGirl.create(:office) }
+          let(:new_office_attributes) {
+            {
+              email: 'new_attributes@hmcts.gsi.gov.uk',
+              password: 'aabbccdd',
+              role: 'user',
+              office_id: new_office.id
+            }
+          }
+          before(:each) { put :update, id: User.first.to_param, user: new_office_attributes }
+          it 'updates the user' do
+            user.reload
+          end
+          it 'returns a redirect status' do
+            expect(response).to have_http_status(:redirect)
+          end
+          it 'redirects to the user list' do
+            expect(response).to redirect_to users_path
+          end
+          it 'displays an alert containing contact details for the new manager' do
+            err_msg = "User moved to #{new_office.name}, you will need to contact a manager there if this was done in error"
+            expect(flash[:notice]).to be_present
+            expect(flash[:notice]).to eql(err_msg)
+          end
+        end
+      end
+
+      context 'with invalid params' do
+        it 'assigns the user as @user' do
+          put :update, id: User.first.to_param, user: invalid_attributes
+          expect(assigns(:user)).to eq(User.first)
+        end
+
+        it 're-renders the "edit" template' do
+          put :update, id: User.first.to_param, user: invalid_attributes
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
   end
 
   context 'admin user' do
@@ -188,24 +249,22 @@ RSpec.describe UsersController, type: :controller do
       context 'with valid params' do
         let(:new_attributes) {
           {
-            email: 'new_attributes@example.com',
+            email: 'new_attributes@hmcts.gsi.gov.uk',
             password: 'aabbccdd',
-            role: 'user'
+            role: 'user',
+            office_id: test_user.office_id
           }
         }
-
+        before(:each) { put :update, id: test_user.to_param, user: new_attributes }
         it 'updates the requested user' do
-          put :update, id: test_user.to_param, user: new_attributes
           user.reload
         end
 
         it 'assigns the requested user as @user' do
-          put :update, id: test_user.to_param, user: valid_attributes
           expect(assigns(:user)).to eq(test_user)
         end
 
         it 'redirects to the user' do
-          put :update, id: test_user.to_param, user: valid_attributes
           expect(response).to redirect_to(user_path)
         end
       end
