@@ -31,3 +31,4 @@ There is a rake task that takes email, password and role
 rake "user:create[user@gmail.com, 123456789, admin, name]"
 ```
 __Note:__ the quotes around the task are important!
+
