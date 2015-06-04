@@ -8,5 +8,5 @@ h2 Edit #{@user.name}
     = f.text_field :email
   .form-group
     = f.label(:roles, 'Role')
-    = f.collection_select :role, User::ROLES, :to_s, :humanize
+    = f.collection_select :role, @roles, :to_s, :humanize
   .actions = f.submit class: 'button btn tiny'
