@@ -31,4 +31,23 @@ RSpec.describe Office, type: :model do
       expect(office.managers.count).to eql 1
     end
   end
+  describe 'managers_email' do
+    let(:office)      { FactoryGirl.create :office }
+    context 'managers are empty' do
+      before(:each) { User.delete_all }
+      it 'returns a text prompt' do
+        FactoryGirl.create_list :user, 3, office: office
+        expect(office.managers_email).to eql('a manager')
+      end
+    end
+    context 'managers are populated' do
+      before(:each) { User.delete_all }
+      it 'returns an html string of emails of users in the manager role' do
+        manager1 = FactoryGirl.create :manager, office: office
+        manager2 = FactoryGirl.create :manager, office: office
+        expected = "<a href=\"mailto:#{manager1.email}\">#{manager1.name}</a>, <a href=\"mailto:#{manager2.email}\">#{manager2.name}</a>"
+        expect(office.managers_email).to eql(expected)
+      end
+    end
+  end
 end
