@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :office
 
-  ROLES = %w[admin user]
+  ROLES = %w[user manager admin]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable
   devise :database_authenticatable,
@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
     :invitable
 
   scope :sorted_by_email, -> {  all.order(:email) }
+
+  scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
 
   email_regex = /\A([^@\s]+)@(hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
   validates :role, :name, presence: true
@@ -26,7 +28,15 @@ class User < ActiveRecord::Base
     allow_nil: true
   }
 
+  def elevated?
+    admin? || manager?
+  end
+
   def admin?
     role == 'admin'
+  end
+
+  def manager?
+    role == 'manager'
   end
 end
