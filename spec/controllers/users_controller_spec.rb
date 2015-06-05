@@ -182,7 +182,7 @@ RSpec.describe UsersController, type: :controller do
             expect(response).to redirect_to users_path
           end
           it 'displays an alert containing contact details for the new manager' do
-            err_msg = "User moved to #{new_office.name}, you will need to contact a manager there if this was done in error"
+            err_msg = I18n.t('error_messages.user.moved_offices', user: User.first.name, office: new_office.name, contact: new_office.managers_email)
             expect(flash[:notice]).to be_present
             expect(flash[:notice]).to eql(err_msg)
           end
