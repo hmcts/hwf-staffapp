@@ -49,6 +49,7 @@ en:
             email:
               blank: 'Enter your email address'
               not_found: Your email address has not been recognised. First check that you've typed it correctly. For more help <a href='mailto:trial.feedback@digital.justice.gov.uk'>contact us</a>
+              taken: This email has already been taken
             name:
               blank: You must enter a name for the user
             password:
