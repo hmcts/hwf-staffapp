@@ -1,6 +1,29 @@
-h2 =@user.email
+h2 User details
 
-div
-  =@user.role
-
-div =@user.office.name
+#user-data.calculator-data
+  .row
+    .columns.small-4.large-2
+      label Name
+    .columns.small-6.large-10
+      =@user.name
+  .row
+    .columns.small-4.large-2
+      label Email
+    .columns.small-6.large-10
+      =@user.email
+  .row
+    .columns.small-4.large-2
+      label Role
+    .columns.small-6.large-10
+      =@user.role
+  .row
+    .columns.small-4.large-2
+      label Office
+    .columns.small-6.large-10
+      =@user.office.name
+.row.pad-top-thirty-pix
+  .columns.small-12
+    =link_to 'Edit this user', edit_user_path(@user)
+.row.pad-top-fifteen-px
+  .columns.small-12
+    =link_to 'Back to user list', users_path
