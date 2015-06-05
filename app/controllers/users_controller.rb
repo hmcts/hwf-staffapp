@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def update
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
     if current_user_can_change_office?(@user)
-      flash[:notice] = t('error_messages.user.moved_offices', office_name: @user.office.name)
+      flash[:notice] = user_transfer_message(@user)
       return redirect_to users_path
     end
     respond_with(@user)
@@ -37,6 +37,15 @@ protected
 
   def current_user_can_change_office?(user)
     current_user.manager? && (user.office != current_user.office)
+  end
+
+  def user_transfer_message(user)
+    office = user.office
+    t('error_messages.user.moved_offices',
+      user: user.name,
+      office: office.name,
+      contact: office.managers_email
+    )
   end
 
   def find_user

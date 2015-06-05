@@ -29,7 +29,7 @@ en:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
     user:
-      moved_offices: "User moved to %{office_name}, you will need to contact a manager there if this was done in error"
+      moved_offices: "%{user} moved to %{office}, you will need to contact %{contact} there if this was done in error"
   dictionary:
     invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
   feedback:
