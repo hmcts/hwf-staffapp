@@ -1,7 +1,11 @@
-h2 Edit #{@user.name}
+h2 Edit user
 
 = form_for @user do |f|
 
+  .form-group
+    = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
+    = f.label :name
+    = f.text_field :name
   .form-group
     = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
     = f.label :email
@@ -12,4 +16,4 @@ h2 Edit #{@user.name}
   .form-group
     = f.label :office_id
     = f.collection_select :office_id, @offices, :id, :name
-  .actions = f.submit class: 'button btn tiny'
+  .actions = f.submit class: 'button'

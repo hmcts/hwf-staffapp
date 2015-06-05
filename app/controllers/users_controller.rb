@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   respond_to :html
   before_action :authenticate_user!
   before_action :find_user, only: [:edit, :show, :update]
-  before_action :populate_roles, only: [:edit]
-  before_action :populate_offices, only: [:edit]
+  before_action :populate_roles, only: [:edit, :update]
+  before_action :populate_offices, only: [:edit, :update]
   load_and_authorize_resource
 
   def index
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 protected
 
   def user_params
-    params.require(:user).permit(:email, :role, :office_id)
+    params.require(:user).permit(:name, :email, :role, :office_id)
   end
 
   def current_user_can_change_office?(user)
