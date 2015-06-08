@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Office, type: :model do
 
-  let(:office)      { FactoryGirl.build :office }
+  let(:office)      { build :office }
 
   context 'validations' do
     it 'not accept office with no name' do

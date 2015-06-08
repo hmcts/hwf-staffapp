@@ -38,8 +38,8 @@ RSpec.describe OfficesController, type: :controller do
   # OfficesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  let(:user)          { FactoryGirl.create :user }
-  let(:admin_user)    { FactoryGirl.create :admin_user }
+  let(:user)          { create :user }
+  let(:admin_user)    { create :admin_user }
 
   context 'logged out user' do
     describe 'GET #index' do

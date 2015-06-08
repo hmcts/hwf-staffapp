@@ -13,8 +13,8 @@ describe ProcessDwpService do
   end
   context 'called with valid params' do
 
-    let(:user) { FactoryGirl.create(:user) }
-    let(:check) { FactoryGirl.create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+    let(:user) { create(:user) }
+    let(:check) { create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
 
     before(:each) do
       json = '{"original_client_ref": "' + check.our_api_token + '", "benefit_checker_status": "Yes",
@@ -97,8 +97,8 @@ describe ProcessDwpService do
       end
     end
     context 'simulating a 500 error' do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:check) { FactoryGirl.create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+      let(:user) { create(:user) }
+      let(:check) { create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
 
       before(:each) do
         stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").

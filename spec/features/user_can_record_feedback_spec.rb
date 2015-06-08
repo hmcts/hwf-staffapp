@@ -5,7 +5,7 @@ RSpec.feature 'Recording feedback', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user)          { FactoryGirl.create :user, office: FactoryGirl.create(:office) }
+  let(:user)          { create :user, office: create(:office) }
 
   context 'as a user' do
     scenario 'creates a feedback record' do

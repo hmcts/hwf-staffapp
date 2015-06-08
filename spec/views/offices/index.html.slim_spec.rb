@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "offices/index", type: :view do
   include Devise::TestHelpers
 
-  let(:user)          { FactoryGirl.create :user }
-  let(:admin_user)    { FactoryGirl.create :admin_user }
+  let(:user)          { create :user }
+  let(:admin_user)    { create :admin_user }
 
   before(:each) do
     assign(:offices, [

@@ -19,7 +19,7 @@ RSpec.describe GuideController, type: :controller do
   end
 
   describe 'as a signed in user' do
-    let(:user)    { FactoryGirl.create :user }
+    let(:user)    { create :user }
     before(:each) do
       sign_in user
     end

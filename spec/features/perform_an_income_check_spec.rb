@@ -5,7 +5,7 @@ RSpec.feature 'Undertake an income calculation', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user)          { FactoryGirl.create :user }
+  let(:user)          { create :user }
 
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])

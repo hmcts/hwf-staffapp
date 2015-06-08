@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'feedback/new.html.slim', type: :view do
   include Devise::TestHelpers
 
-  let(:user)          { FactoryGirl.create :user }
-  let(:feedback)      { FactoryGirl.build :feedback }
+  let(:user)          { create :user }
+  let(:feedback)      { build :feedback }
 
   it 'contain the required fields' do
     sign_in user

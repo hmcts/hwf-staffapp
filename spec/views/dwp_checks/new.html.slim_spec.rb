@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'dwp_checks/new.html.slim', type: :view do
   include Devise::TestHelpers
 
-  let(:user)          { FactoryGirl.create :user }
-  let(:check)      { FactoryGirl.build :dwp_check }
+  let(:user)          { create :user }
+  let(:check)      { build :dwp_check }
 
   it 'contain the required fields' do
     sign_in user

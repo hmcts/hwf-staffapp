@@ -4,8 +4,8 @@ RSpec.describe FeedbackController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)          { FactoryGirl.create :user, office: FactoryGirl.create(:office) }
-  let(:admin)         { FactoryGirl.create :admin_user, office: FactoryGirl.create(:office) }
+  let(:user)          { create :user, office: create(:office) }
+  let(:admin)         { create :admin_user, office: create(:office) }
   let(:good_feedback) {
     {
       experience: 'aaa',
@@ -39,7 +39,7 @@ RSpec.describe FeedbackController, type: :controller do
   context 'as a signed in user' do
 
     before(:each) { sign_in user }
-    let(:feedback) { FactoryGirl.build(:feedback, ideas: 'None') }
+    let(:feedback) { build(:feedback, ideas: 'None') }
 
     describe 'GET #index' do
       it 'returns http redirect' do
@@ -80,7 +80,7 @@ RSpec.describe FeedbackController, type: :controller do
   context 'as a signed in admin' do
 
     before(:each) { sign_in admin }
-    let(:feedback) { FactoryGirl.build(:feedback, ideas: 'None') }
+    let(:feedback) { build(:feedback, ideas: 'None') }
 
     describe 'GET #index' do
       before(:each) { get :index }
