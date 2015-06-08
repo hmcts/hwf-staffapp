@@ -4,6 +4,7 @@ require 'rails_helper'
 describe User, type: :model do
 
   let(:user)          { build :user }
+  let(:manager)       { build :manager }
   let(:admin_user)    { build :admin_user }
 
   it 'pass factory build' do

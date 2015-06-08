@@ -11,5 +11,9 @@ FactoryGirl.define do
     factory :manager do
       role 'manager'
     end
+    factory :invalid_user do
+      email nil
+      name nil
+    end
   end
 end
