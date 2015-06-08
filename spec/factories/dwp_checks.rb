@@ -9,5 +9,9 @@ FactoryGirl.define do
     unique_number nil
     our_api_token 'name@20150101.ab12-cd34'
     association :office
+
+    factory :invalid_dwp_check do
+      last_name nil
+    end
   end
 end

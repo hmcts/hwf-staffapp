@@ -163,8 +163,7 @@ RSpec.describe DwpCheck, type: :model do
 
     it 'allow the created_by_id to be set' do
       user = create :user
-      dwp = build :dwp_check
-      dwp.created_by_id = user.id
+      dwp = build :dwp_check, created_by_id: user.id
       expect(dwp.created_by_id).to_not be_nil
       expect(dwp.created_by.email).to eql(user.email)
       expect(dwp).to be_valid
@@ -206,21 +205,13 @@ RSpec.describe DwpCheck, type: :model do
     end
 
     describe 'by_office' do
-      let!(:user) do
-        user = create :user
-        user.update(office_id: 1)
-        user
-      end
+      let!(:user) { create(:user, office_id: 1) }
 
       let!(:check) do
         create :dwp_check, created_by_id: user.id, office_id: user.office_id
       end
 
-      let!(:another_user) do
-        user = create :user
-        user.update(office_id: 2)
-        user
-      end
+      let!(:another_user) { create(:user, office_id: 2) }
 
       let!(:another_check) do
         create :dwp_check, created_by_id: another_user.id, office_id: another_user.office_id
@@ -232,11 +223,7 @@ RSpec.describe DwpCheck, type: :model do
       end
     end
     describe 'by_office_grouped_by_type' do
-      let!(:user) do
-        user = create :user
-        user.update(office_id: 1)
-        user
-      end
+      let!(:user) { create(:user, office_id: 1) }
       let!(:check) do
         create(:dwp_check, dwp_result: 'Deceased', created_by: user, office_id: user.office_id)
       end
