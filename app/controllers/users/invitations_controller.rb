@@ -3,6 +3,16 @@ class Users::InvitationsController < Devise::InvitationsController
   before_action :authenticate_user!
   load_and_authorize_resource User, except: [:edit, :update]
 
+  def new
+    @user = User.new
+    if current_user.admin?
+      @roles = User::ROLES
+    else
+      @roles = User::ROLES - %w[admin]
+    end
+    render :new
+  end
+
 private
 
   def invite_resource

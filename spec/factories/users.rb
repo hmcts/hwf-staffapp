@@ -8,5 +8,8 @@ FactoryGirl.define do
     factory :admin_user do
       role 'admin'
     end
+    factory :manager do
+      role 'manager'
+    end
   end
 end
