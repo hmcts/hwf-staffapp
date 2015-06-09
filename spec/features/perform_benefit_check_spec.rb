@@ -5,7 +5,7 @@ RSpec.feature 'Undertake benefit check', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user)          { FactoryGirl.create :user }
+  let(:user)          { create :user }
 
   context 'as user' do
 

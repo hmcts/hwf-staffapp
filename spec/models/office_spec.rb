@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Office, type: :model do
 
-  let(:office)      { FactoryGirl.build :office }
+  let(:office)      { build :office }
+
+  it 'has a valid factory' do
+    expect(office).to be_valid
+  end
 
   context 'validations' do
-    it 'not accept office with no name' do
-      office.name = nil
-      expect(office).to be_invalid
+    it 'is invalid with no name' do
+      office = build(:invalid_office)
+      expect(office).to_not be_valid
       expect(office.errors[:name]).to eq ["can't be blank"]
-    end
-
-    it 'validate' do
-      expect(office).to be_valid
     end
   end
 

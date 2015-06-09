@@ -4,9 +4,9 @@ RSpec.describe "home/index.html.slim", type: :view do
 
   include Devise::TestHelpers
 
-  let(:user)      { FactoryGirl.create :user }
-  let(:manager)   { FactoryGirl.create :manager }
-  let(:admin)     { FactoryGirl.create :admin_user }
+  let(:user)      { create :user }
+  let(:manager)   { create :manager }
+  let(:admin)     { create :admin_user }
 
   context 'public access' do
     it 'shows a restriction message' do
