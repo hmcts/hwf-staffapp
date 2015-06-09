@@ -5,6 +5,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
   include Devise::TestHelpers
 
   let(:user)          { create :user }
+  let(:manager)       { create :manager }
   let(:admin_user)    { create :admin_user }
 
   context 'logged out user' do
