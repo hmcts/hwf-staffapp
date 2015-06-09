@@ -96,22 +96,49 @@ describe ProcessDwpService do
         end
       end
     end
+
+    context 'when api_proxy returns undetermined' do
+      before(:each) do
+        json = '{"original_client_ref": "' + check.our_api_token + '", "benefit_checker_status": "Undetermined",
+             "confirmation_ref": "T1426267181940",
+             "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
+        stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
+          {
+            id: check.our_api_token,
+            birth_date: '19800101',
+            entitlement_check_date: "#{Date.yesterday.strftime('%Y%m%d')}",
+            ni_number: 'AB123456A',
+            surname: 'LAST_NAME'
+          }).to_return(status: 200, body: json, headers: {})
+      end
+
+      let(:parsed) { JSON.parse(described_class.new(check).result) }
+
+      it 'returns the error message' do
+        expect(parsed['message']).to eql('The details you’ve entered are incorrect, check and try again')
+      end
+
+      it 'returns fail' do
+        expect(parsed['success']).to eql(false)
+      end
+    end
+
     context 'simulating a 500 error' do
       let(:user) { create(:user) }
       let(:check) { create(:dwp_check, created_by_id: user.id, dob: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
 
       before(:each) do
         stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-          to_return(status: 500, headers: {})
+          to_return(status: 500, body: '', headers: {})
       end
 
+      let(:parsed) { JSON.parse(described_class.new(check).result) }
+
       it 'returns the error in message' do
-        parsed = JSON.parse(described_class.new(check).result)
         expect(parsed['message']).to eql('500 Internal Server Error')
       end
 
-      it 'returns success fail' do
-        parsed = JSON.parse(described_class.new(check).result)
+      it 'returns fail' do
         expect(parsed['success']).to eql(false)
       end
     end
