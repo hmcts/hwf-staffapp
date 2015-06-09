@@ -3,9 +3,9 @@ require 'rails_helper'
 
 describe User, type: :model do
 
-  let(:user)       { FactoryGirl.build :user }
-  let(:admin_user) { FactoryGirl.build :admin_user }
-  let(:manager)    { FactoryGirl.build :manager }
+  let(:user)          { build :user }
+  let(:manager)       { build :manager }
+  let(:admin_user)    { build :admin_user }
 
   it 'pass factory build' do
     expect(user).to be_valid
@@ -40,14 +40,14 @@ describe User, type: :model do
       end
 
       it 'require a unique email' do
-        original = FactoryGirl.create(:user)
-        duplicate = FactoryGirl.build(:user)
+        original = create(:user)
+        duplicate = build(:user)
         duplicate.email = original.email
         expect(duplicate).to be_invalid
       end
 
       context '(hmcts.gsi|digital.justice).gov.uk email addresses' do
-        let(:user) { FactoryGirl.build(:user) }
+        let(:user) { build(:user) }
 
         it 'requires only whitelisted email addresses' do
           expect(user).to be_valid

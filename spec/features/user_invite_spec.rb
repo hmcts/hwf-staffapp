@@ -5,7 +5,7 @@ RSpec.feature 'User management,', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:admin_user)    { FactoryGirl.create :admin_user }
+  let(:admin_user)    { create :admin_user }
   let!(:offices)      { Office.create!(name: 'Bristol') }
 
   context 'Admin user' do

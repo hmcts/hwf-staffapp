@@ -4,6 +4,9 @@ FactoryGirl.define do
 
   factory :office do
     name
+    factory :invalid_office do
+      name nil
+    end
   end
 
 end

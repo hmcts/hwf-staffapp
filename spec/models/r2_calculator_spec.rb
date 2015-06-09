@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe R2Calculator, type: :model do
 
-  let(:r2_calc) { FactoryGirl.build :r2_calculator }
+  let(:r2_calc) { build :r2_calculator }
 
   it 'passes factory build' do
     expect(r2_calc).to be_valid
@@ -92,14 +92,8 @@ RSpec.describe R2Calculator, type: :model do
   describe 'scopes' do
     before(:each) { described_class.delete_all }
     describe 'checks_by_day' do
-      let!(:old_check) do
-        old = FactoryGirl.create :r2_calculator
-        old.update(created_at: "#{Date.today.-8.days}")
-      end
-      let!(:new_check) do
-        check = FactoryGirl.create :r2_calculator
-        check.update(created_at: "#{Date.today.-5.days}")
-      end
+      let!(:old_check) { create(:r2_calculator, created_at: "#{Date.today.-8.days}") }
+      let!(:new_check) { create(:r2_calculator, created_at: "#{Date.today.-5.days}") }
 
       it 'finds only checks for the past week' do
         expect(described_class.checks_by_day.count).to eq 1
@@ -107,19 +101,10 @@ RSpec.describe R2Calculator, type: :model do
     end
 
     describe 'by_office_grouped_by_type' do
-      let!(:user) do
-        user = FactoryGirl.create :user
-        user.update(office_id: 1)
-        user
-      end
-      let!(:calc) do
-        calc = FactoryGirl.create(:r2_calculator)
-        calc.update(created_by_id: user.id)
-      end
-      let!(:full_calc) do
-        calc = FactoryGirl.create(:r2_calculator, remittance: 9.99, to_pay: 0)
-        calc.update(created_by_id: user.id)
-      end
+      let!(:user) { create(:user, office_id: 1) }
+      let!(:calc) { create(:r2_calculator, created_by_id: user.id) }
+      let!(:full_calc) { create(:r2_calculator, remittance: 9.99, to_pay: 0, created_by_id: user.id) }
+
       it 'lists checks by length of dwp_result' do
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('Full')
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[1]).to eql('Part')

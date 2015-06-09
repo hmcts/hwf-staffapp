@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'offices/edit', type: :view do
-  let(:office) { assign(:office, FactoryGirl.create(:office)) }
+  let(:office) { assign(:office, create(:office)) }
 
   it 'renders the edit office form' do
     office

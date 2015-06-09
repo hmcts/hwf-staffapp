@@ -7,6 +7,9 @@ FactoryGirl.define do
     association :created_by, factory: 'user'
     remittance 4.44
     to_pay 5.55
-  end
 
+    factory :invalid_calculator do
+      fee 'invalid'
+    end
+  end
 end
