@@ -7,6 +7,7 @@ RSpec.describe HomeController, type: :controller do
   describe 'GET #index' do
     let(:user)      { create :user }
     let(:manager)   { create :manager }
+    let(:admin)     { create :admin_user }
 
     context 'when the user is authenticated' do
       context 'as a user' do
@@ -22,6 +23,22 @@ RSpec.describe HomeController, type: :controller do
 
         it 'renders the index view' do
           expect(response).to render_template :index
+        end
+      end
+
+      context 'as an admin' do
+        before(:each) do
+          DwpCheck.delete_all
+          Office.delete_all
+          FactoryGirl.create_list :dwp_check, 2, created_by: manager, office: manager.office
+          sign_in admin
+          get :index
+        end
+        it 'returns http success' do
+          expect(response).to have_http_status(:success)
+        end
+        it 'populates a list of report_data' do
+          expect(assigns(:report_data).count).to eql(2)
         end
       end
     end
