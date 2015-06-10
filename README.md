@@ -27,8 +27,14 @@ sudo apt-get install xvfb
 
 #### Creating initial user
 There is a rake task that takes email, password and role
+
 ```
-rake "user:create[user@gmail.com, 123456789, admin, name]"
+rake user:create
+```
+
+If you want to add any custom options, use the below as an example:
+
+```
+rake "user:create[user@hmcts.gsi.gov.uk, 123456789, admin, name]"
 ```
 __Note:__ the quotes around the task are important!
-
