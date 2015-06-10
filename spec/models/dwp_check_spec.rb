@@ -205,13 +205,15 @@ RSpec.describe DwpCheck, type: :model do
     end
 
     describe 'by_office' do
-      let!(:user) { create(:user, office_id: 1) }
+      let!(:office1) { create(:office) }
+      let!(:office2) { create(:office) }
+      let!(:user) { create(:user, office_id: office1.id) }
 
       let!(:check) do
         create :dwp_check, created_by_id: user.id, office_id: user.office_id
       end
 
-      let!(:another_user) { create(:user, office_id: 2) }
+      let!(:another_user) { create(:user, office_id: office2.id) }
 
       let!(:another_check) do
         create :dwp_check, created_by_id: another_user.id, office_id: another_user.office_id
@@ -222,14 +224,17 @@ RSpec.describe DwpCheck, type: :model do
         expect(described_class.by_office(another_user.office_id).count).to eq 1
       end
     end
+
     describe 'by_office_grouped_by_type' do
-      let!(:user) { create(:user, office_id: 1) }
+      let!(:office) { create(:office) }
+      let!(:user) { create(:user, office_id: office.id) }
       let!(:check) do
         create(:dwp_check, dwp_result: 'Deceased', created_by: user, office_id: user.office_id)
       end
       let!(:another_check) do
         create(:dwp_check, dwp_result: 'No', created_by_id: user.id, office_id: user.office_id)
       end
+
       it 'lists checks by length of dwp_result' do
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[1]).to eql('Deceased')
