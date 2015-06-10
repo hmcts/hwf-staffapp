@@ -148,6 +148,11 @@ RSpec.describe UsersController, type: :controller do
 
         before(:each) { put :update, id: User.first.to_param, user: new_attributes }
 
+        it "doesn't update the user's email" do
+          assigns(:user)
+          expect(User.first.email).to_not eq new_attributes[:email]
+        end
+
         it 'updates the requested user' do
           User.first.reload
         end
@@ -286,7 +291,12 @@ RSpec.describe UsersController, type: :controller do
 
         it 'updates the requested user' do
           test_user.reload
-          expect(test_user.email).to eql('new_attributes@hmcts.gsi.gov.uk')
+          expect(test_user.role).to eql 'user'
+        end
+
+        it "does''t update the requested user's email" do
+          test_user.reload
+          expect(test_user.email).not_to eql new_attributes[:email]
         end
 
         it 'assigns the requested user as @user' do
