@@ -153,10 +153,6 @@ RSpec.describe UsersController, type: :controller do
           expect(User.first.email).to_not eq new_attributes[:email]
         end
 
-        it 'updates the requested user' do
-          User.first.reload
-        end
-
         it 'assigns the requested user as @user' do
           expect(assigns(:user)).to eq(User.first)
         end
