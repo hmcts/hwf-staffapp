@@ -12,7 +12,8 @@ module ActionView
         @markdown ||= Redcarpet::Markdown.new(
           Redcarpet::Render::HTML.new(
             hard_wrap:          true,
-            with_toc_data:      true
+            with_toc_data:      true,
+            filter_html:        true
           ),
           autolink:             true,
           no_intra_emphasis:    true,
