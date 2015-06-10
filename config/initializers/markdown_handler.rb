@@ -9,20 +9,13 @@ module ActionView
       # @return [String] Ruby code that when evaluated will return the rendered
       #   content
       def call(template)
-        @markdown ||= Redcarpet::Markdown.new(
-          Redcarpet::Render::HTML.new(
-            hard_wrap:          true,
-            with_toc_data:      true,
-            filter_html:        true
-          ),
-          autolink:             true,
-          no_intra_emphasis:    true,
-          fenced_code_blocks:   true,
-          lax_html_blocks:      true,
-          strikethrough:        true,
-          superscript:          true,
-          tables:               true
+        renderer = ::Redcarpet::Render::HTML.new(
+          hard_wrap: true,
+          with_toc_data: true,
+          filter_html: true
         )
+        options = Rails.application.config.redcarpet_markdown_options
+        @markdown ||= Redcarpet::Markdown.new(renderer, options)
         "#{@markdown.render(template.source).inspect}.html_safe"
       end
     end
