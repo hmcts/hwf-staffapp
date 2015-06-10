@@ -7,8 +7,8 @@ h2 Edit user
     = f.label :name
     = f.text_field :name
   .form-group
-      = f.label :email
-      = "#{@user.email}"
+    = f.label :email
+    = "#{@user.email}"
   .form-group
     = f.label(:roles, 'Role')
     = f.collection_select :role, @roles, :to_s, :humanize
