@@ -13,9 +13,9 @@ class DwpChecksController < ApplicationController
     if @dwp_checker.valid?
       check = JSON.parse(ProcessDwpService.new(@dwp_checker).result)
       if check['success']
-        return redirect_to dwp_checks_path(@dwp_checker.unique_number) if @dwp_checker.reload
+        return redirect_to dwp_checks_path(@dwp_checker.unique_number)
       else
-        flash[:alert] = check['message']
+        flash.now[:alert] = check['message']
       end
     end
     render action: :new
