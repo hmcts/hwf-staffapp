@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 protected
 
   def user_params
-    params.require(:user).permit(:name, :email, :role, :office_id)
+    params.require(:user).permit(:name, :role, :office_id)
   end
 
   def current_user_can_change_office?(user)

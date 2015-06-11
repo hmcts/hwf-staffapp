@@ -101,7 +101,8 @@ RSpec.describe R2Calculator, type: :model do
     end
 
     describe 'by_office_grouped_by_type' do
-      let!(:user) { create(:user, office_id: 1) }
+      let!(:office) { create(:office) }
+      let!(:user) { create(:user, office_id: office.id) }
       let!(:calc) { create(:r2_calculator, created_by_id: user.id) }
       let!(:full_calc) { create(:r2_calculator, remittance: 9.99, to_pay: 0, created_by_id: user.id) }
 
