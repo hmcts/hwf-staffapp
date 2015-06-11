@@ -137,7 +137,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'PUT #update' do
-      context 'with valid params' do
+      context 'with valid params and a new email' do
         let(:new_attributes) {
           {
             email: 'new_attributes@hmcts.gsi.gov.uk',
@@ -272,7 +272,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'PUT #update' do
-      context 'with valid params' do
+      context 'with valid params and a new email' do
 
         let(:new_attributes) {
           {
