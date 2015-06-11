@@ -1,8 +1,6 @@
 class ProcessDwpService
 
-  attr_accessor :result
-  attr_accessor :message
-  attr_accessor :response
+  attr_accessor :result, :message, :response
 
   def initialize(dwp_check)
     @result = false
@@ -37,14 +35,6 @@ private
     @result = true
   rescue Exceptions::UndeterminedDwpCheck
     log_error I18n.t('activerecord.attributes.dwp_check.undetermined'), 'Undetermined'
-  rescue Errno::ECONNREFUSED
-    log_error I18n.t('error_messages.dwp_checker.unavailable'), 'Server unavailable'
-  rescue => e
-    log_error(e.message, 'Unspecified error')
-  end
-
-  def generate_api_response
-    yield
   rescue Errno::ECONNREFUSED
     log_error I18n.t('error_messages.dwp_checker.unavailable'), 'Server unavailable'
   rescue => e
