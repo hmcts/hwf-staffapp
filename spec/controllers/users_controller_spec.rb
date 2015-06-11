@@ -290,7 +290,7 @@ RSpec.describe UsersController, type: :controller do
           expect(test_user.role).to eql 'user'
         end
 
-        it "does''t update the requested user's email" do
+        it "does't update the requested user's email" do
           test_user.reload
           expect(test_user.email).not_to eql new_attributes[:email]
         end
