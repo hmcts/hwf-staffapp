@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'guide' => 'guide#index'
 
   get 'ping' => 'health_status#ping'
+  get 'healthcheck' => 'health_status#healthcheck'
 
   get 'feedback' => 'feedback#new'
   get 'feedback/display' => 'feedback#index'
