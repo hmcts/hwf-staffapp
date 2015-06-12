@@ -31,4 +31,40 @@ RSpec.describe HealthStatusController, type: :controller do
       end
     end
   end
+
+  describe 'GET #healthcheck' do
+    context 'when all the components are operational' do
+      before(:each) { get :healthcheck }
+
+      it 'returns JSON' do
+        expect(response.content_type).to eq('application/json')
+      end
+
+      it 'completes with status code 200' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when database is down' do
+      before(:each) do
+        hash = {
+          ok: false,
+          database: {
+            description: "Postgres database",
+            ok: false
+          }
+        }
+        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        get :healthcheck
+      end
+
+      it 'returns JSON' do
+        expect(response.content_type).to eq('application/json')
+      end
+
+      it 'completes with error status code 500' do
+        expect(response.status).to eql 500
+      end
+    end
+  end
 end
