@@ -1,8 +1,7 @@
 class HealthStatus
 
   def self.current_status
-    {
-      ok: [database, smtp].all?,
+    services = {
       database: {
         description: "Postgres database",
         ok: database
@@ -12,6 +11,7 @@ class HealthStatus
         ok: smtp
       }
     }
+    services.merge(services.all? { |service| service[:ok] })
   end
 
   def self.database
