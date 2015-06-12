@@ -34,7 +34,21 @@ RSpec.describe HealthStatusController, type: :controller do
 
   describe 'GET #healthcheck' do
     context 'when all the components are operational' do
-      before(:each) { get :healthcheck }
+      before(:each) do
+        hash = {
+          ok: true,
+          database: {
+            description: "Postgres database",
+            ok: true
+          },
+          smtp: {
+            description: "SMTP server",
+            ok: true
+          }
+        }
+        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        get :healthcheck
+      end
 
       it 'returns JSON' do
         expect(response.content_type).to eq('application/json')
@@ -51,6 +65,32 @@ RSpec.describe HealthStatusController, type: :controller do
           ok: false,
           database: {
             description: "Postgres database",
+            ok: false
+          }
+        }
+        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        get :healthcheck
+      end
+
+      it 'returns JSON' do
+        expect(response.content_type).to eq('application/json')
+      end
+
+      it 'completes with error status code 500' do
+        expect(response.status).to eql 500
+      end
+    end
+
+    context 'when SMTP server is down' do
+      before(:each) do
+        hash = {
+          ok: false,
+          database: {
+            description: "Postgres database",
+            ok: true
+          },
+          smtp: {
+            description: "SMTP server",
             ok: false
           }
         }
