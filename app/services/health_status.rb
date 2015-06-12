@@ -3,23 +3,19 @@ class HealthStatus
   def self.current_status
     services = {
       database: {
-        description: "Postgres database",
-        ok: database
+        description: "Postgres database", ok: database
       },
       smtp: {
-        description: "SMTP server",
-        ok: smtp
+        description: "SMTP server", ok: smtp
       }
     }
     services.merge(services.all? { |service| service[:ok] })
   end
 
   def self.database
-    begin
-      ActiveRecord::Base.connection.active?
-    rescue PG::ConnectionBad
-      false
-    end
+    ActiveRecord::Base.connection.active?
+  rescue PG::ConnectionBad
+    false
   end
 
   def self.smtp
