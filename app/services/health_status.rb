@@ -18,6 +18,7 @@ class HealthStatus
     false
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.smtp
     host = ActionMailer::Base.smtp_settings[:address]
     port = ActionMailer::Base.smtp_settings[:port]
