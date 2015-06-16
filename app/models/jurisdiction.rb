@@ -6,4 +6,10 @@ class Jurisdiction < ActiveRecord::Base
   def display
     self.abbr ||= name
   end
+
+  def display_full
+    result = name
+    result.concat(" (#{abbr})") unless abbr.blank?
+    result
+  end
 end
