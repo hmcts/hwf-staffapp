@@ -7,9 +7,12 @@ class HealthStatus
       },
       smtp: {
         description: "SMTP server", ok: smtp
+      },
+      api: {
+        description: "DWP API", ok: api
       }
     }
-    services.merge(services.all? { |service| service[:ok] })
+    services.merge(ok: services.all? { |key, value| value[:ok] })
   end
 
   def self.database
@@ -31,6 +34,16 @@ class HealthStatus
       true
     rescue StandardError => error
       Rails.logger.error "The SMTP server errored with: #{error}"
+      false
+    end
+  end
+
+  def self.api
+    # TODO: revisit this as it isn't complete/good
+    begin
+      response = JSON.parse RestClient.get "#{ENV['DWP_API_PROXY']}/api/healthcheck"
+      response[:ok]
+    rescue Errno::ECONNREFUSED
       false
     end
   end
