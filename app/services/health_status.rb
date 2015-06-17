@@ -39,11 +39,11 @@ class HealthStatus
   end
 
   def self.api
-    # TODO: revisit this as it isn't complete/good
     begin
       response = JSON.parse RestClient.get "#{ENV['DWP_API_PROXY']}/api/healthcheck"
       response[:ok]
-    rescue Errno::ECONNREFUSED
+    rescue StandardError => error
+      Rails.logger.error "The DWP API errored with: #{error}"
       false
     end
   end
