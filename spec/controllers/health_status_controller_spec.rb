@@ -106,5 +106,58 @@ RSpec.describe HealthStatusController, type: :controller do
         expect(response.status).to eql 500
       end
     end
+
+    context 'when DWP proxy API is up' do
+
+      before(:each) {
+        hash = {
+          ok: true,
+          database: {
+            description: 'Postgres database',
+            ok: true
+          },
+          smtp: {
+            description: 'SMTP server',
+            ok: true
+          },
+          api: {
+            description: 'DWP API',
+            ok: true
+          }
+        }
+        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        get :healthcheck
+      }
+
+      it 'completes successfully' do
+        expect(response.status).to eql 200
+      end
+    end
+
+    context 'when DWP proxy API is down' do
+      before(:each) do
+        hash = {
+          ok: false,
+          database: {
+            description: 'Postgres database',
+            ok: true
+          },
+          smtp: {
+            description: 'SMTP server',
+            ok: true
+          },
+          api: {
+            description: 'DWP API',
+            ok: false
+          }
+        }
+        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        get :healthcheck
+      end
+
+      it 'completes with error status code 500' do
+        expect(response.status).to eql 500
+      end
+    end
   end
 end
