@@ -1,6 +1,6 @@
 class HealthStatus
 
-  def self.current_status
+  def self.current_status # rubocop:disable Metrics/MethodLength
     services = {
       database: {
         description: "Postgres database", ok: database
@@ -12,7 +12,7 @@ class HealthStatus
         description: "DWP API", ok: api
       }
     }
-    services.merge(ok: services.all? { |key, value| value[:ok] })
+    services.merge(ok: services.all? { |_, value| value[:ok] })
   end
 
   def self.database
@@ -39,12 +39,10 @@ class HealthStatus
   end
 
   def self.api
-    begin
-      response = JSON.parse RestClient.get "#{ENV['DWP_API_PROXY']}/api/healthcheck"
-      response[:ok]
-    rescue StandardError => error
-      Rails.logger.error "The DWP API errored with: #{error}"
-      false
-    end
+    response = JSON.parse RestClient.get "#{ENV['DWP_API_PROXY']}/api/healthcheck"
+    response[:ok]
+  rescue StandardError => error
+    Rails.logger.error "The DWP API errored with: #{error}"
+    false
   end
 end
