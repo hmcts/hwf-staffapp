@@ -1,12 +1,12 @@
 ##Processing the updated ‘apply for help with fees’ form - a guide for staff 
 
-* [An updated application form](#updated_form)
-* [Using the benefits checker](#use_benefits_checker)
-* [Calculating the fee based on income (remission 2)](#calculate_income)
+* [An updated application form](#an-updated-application-form)
+* [Using the benefits checker](#using-the-benefits-checker)
+* [Calculating the fee based on income (remission 2)](#calculating-the-fee-based-on-income-(remission-2))
 
 
 
-### <a id="updated_form"></a>An updated application form 
+###An updated application form 
 The updated form is designed to be easier to use. The main changes are:
 
 **it's called ‘apply for help with fees’ rather than ‘fee remission’** - many people did not understand what the word ‘remission’ meant in connection to fees.
@@ -18,7 +18,7 @@ The updated form is designed to be easier to use. The main changes are:
 **applicants don't have to select ‘remission 1’ or ‘remission 2’** - the updated form still asks about benefits and income, but doesn’t use the terms ‘remission 1’ and remission 2’ to avoid confusion.
 
 
-### <a id="use_benefits_checker"></a> Using the benefits checker 
+###Using the benefits checker 
 
 You can now check whether an applicant is receiving one of the 6 ‘gateway benefits’ that automatically entitles them to help with their court fees.
 
@@ -120,7 +120,7 @@ Evidence should be in the form of an official document, such as a utility bill, 
 
 
 
-### <a id="calculate_income"></a> Calculating the fee based on income (remission 2) 
+###Calculating the fee based on income (remission 2) 
 
 
 The applicant needs to provide evidence of their income.
