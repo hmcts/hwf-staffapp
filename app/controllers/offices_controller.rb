@@ -17,6 +17,7 @@ class OfficesController < ApplicationController
 
   def new
     @office = Office.new
+    @office.jurisdictions = []
     respond_with(@office)
   end
 
@@ -24,6 +25,7 @@ class OfficesController < ApplicationController
   end
 
   def create
+    @office = Office.new(office_params)
     @office.save
     respond_with(@office)
     flash[:notice] = 'Office was successfully created'

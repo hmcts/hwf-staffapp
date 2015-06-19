@@ -23,7 +23,7 @@ RSpec.describe Jurisdiction, type: :model do
       new = build(:jurisdiction, abbr: jurisdiction.abbr)
       expect(new).to be_invalid
     end
-    
+
     it 'allows multiple empty abbreviations' do
       create(:jurisdiction, name: 'High Court', abbr: nil)
       new = create(:jurisdiction, name: 'County Court', abbr: nil)
