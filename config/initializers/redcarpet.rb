@@ -4,5 +4,6 @@ Rails.application.config.redcarpet_markdown_options = {
   fenced_code_blocks: true,
   lax_html_blocks:    true,
   strikethrough:      true,
-  superscript:        true
+  superscript:        true,
+  tables:             true
 }
