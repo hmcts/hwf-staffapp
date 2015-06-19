@@ -1,6 +1,7 @@
 class OfficesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_office, only: [:show, :edit, :update, :destroy]
+  before_action :list_jurisdictions, only: [:new, :edit]
 
   load_and_authorize_resource
 
@@ -48,6 +49,10 @@ private
   end
 
   def office_params
-    params.require(:office).permit(:name)
+    params.require(:office).permit(:name, jurisdiction_ids: [])
+  end
+
+  def list_jurisdictions
+    @jurisdictions = Jurisdiction.all
   end
 end

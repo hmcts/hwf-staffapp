@@ -2,6 +2,12 @@ p
   strong Name:
   = @office.name
 
+-if @office.jurisdictions.present?
+  strong Jurisdictions
+  ul
+    - @office.jurisdictions.each do |j|
+      li =j.display
+
 = link_to 'Edit', edit_office_path(@office)
 '|
 = link_to 'Back', offices_path
