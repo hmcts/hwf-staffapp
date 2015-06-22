@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610082113) do
+ActiveRecord::Schema.define(version: 20150616100546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,10 +51,19 @@ ActiveRecord::Schema.define(version: 20150610082113) do
   add_index "feedbacks", ["office_id"], name: "index_feedbacks_on_office_id", using: :btree
   add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
 
+  create_table "jurisdictions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "abbr"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "offices", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "be_code"
   end
 
   create_table "r2_calculators", force: :cascade do |t|
