@@ -18,7 +18,6 @@ class OfficesController < ApplicationController
 
   def new
     @office = Office.new
-    @office.jurisdictions = []
     respond_with(@office)
   end
 
