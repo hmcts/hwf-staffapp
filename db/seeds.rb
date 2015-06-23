@@ -2,7 +2,6 @@ Office.find_or_create_by(name: 'Digital')
 Office.find_or_create_by(name: 'Bristol')
 
 unless ENV=='production'
-  puts 'Creating users'
   User.create([{
                 name: 'Admin',
                 email: 'fee-remission@digital.justice.gov.uk',

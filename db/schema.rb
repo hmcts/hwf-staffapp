@@ -122,6 +122,8 @@ ActiveRecord::Schema.define(version: 20150619115804) do
 
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
+  add_foreign_key "office_jurisdictions", "jurisdictions"
+  add_foreign_key "office_jurisdictions", "offices"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
   add_foreign_key "users", "offices"
 end
