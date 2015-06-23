@@ -30,7 +30,6 @@ RSpec.describe "offices/index", type: :view do
 
     it 'not see the edit or destroy links' do
       expect(rendered).to_not have_css('a', text: 'Edit')
-      expect(rendered).to_not have_css('a', text: 'Destroy')
     end
   end
 
@@ -47,7 +46,6 @@ RSpec.describe "offices/index", type: :view do
 
     it 'see the edit and destroy links' do
       expect(rendered).to have_css('a', text: 'Edit', count: 2)
-      expect(rendered).to have_css('a', text: 'Destroy', count: 2)
     end
   end
 end

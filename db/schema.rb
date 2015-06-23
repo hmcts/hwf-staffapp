@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616100546) do
+ActiveRecord::Schema.define(version: 20150619115804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 20150616100546) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "office_jurisdictions", id: false, force: :cascade do |t|
+    t.integer "office_id",       null: false
+    t.integer "jurisdiction_id", null: false
+  end
+
+  add_index "office_jurisdictions", ["office_id", "jurisdiction_id"], name: "index_office_jurisdictions_on_office_id_and_jurisdiction_id", using: :btree
+
   create_table "offices", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -104,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150616100546) do
     t.integer  "invitations_count",      default: 0
     t.string   "name"
     t.integer  "office_id",                           null: false
+    t.integer  "jurisdiction_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -114,6 +122,8 @@ ActiveRecord::Schema.define(version: 20150616100546) do
 
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
+  add_foreign_key "office_jurisdictions", "jurisdictions"
+  add_foreign_key "office_jurisdictions", "offices"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
   add_foreign_key "users", "offices"
 end

@@ -20,6 +20,35 @@ RSpec.describe Office, type: :model do
     it 'managers' do
       expect(office).to respond_to(:managers)
     end
+
+    it 'jurisdictions' do
+      expect(office).to respond_to(:jurisdictions)
+    end
+  end
+
+  describe 'jurisdiction' do
+    it 'can be nil' do
+      office.jurisdictions.clear
+      expect(office.jurisdictions.count).to eq 0
+      expect(office).to be_valid
+    end
+
+    it 'can be added' do
+      office.save
+      office.jurisdictions.clear
+      office.jurisdictions << create(:jurisdiction)
+      office.save
+      expect(office.jurisdictions.count).to eq 1
+    end
+
+    it 'can have multiple added' do
+      office.save
+      office.jurisdictions.clear
+      office.jurisdictions << create(:jurisdiction)
+      office.jurisdictions << create(:jurisdiction)
+      office.save
+      expect(office.jurisdictions.count).to eq 2
+    end
   end
 
   describe 'managers' do

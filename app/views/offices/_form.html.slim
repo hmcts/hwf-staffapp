@@ -9,4 +9,16 @@
   .field
     = f.label :name
     = f.text_field :name
+
+  .row
+    .small-12.columns.form-group
+      label Jurisdictions
+      .row
+        .options.radio
+          =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
+            .columns.small-12.medium-6.large-4.end
+              = b.label do
+                = b.check_box
+                = b.text
+
   .actions = f.submit class: 'button btn'
