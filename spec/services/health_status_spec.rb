@@ -15,7 +15,7 @@ describe HealthStatus do
               ok: false
             },
             smtp: {
-              description: 'SMTP server',
+              description: 'SendGrid',
               ok: false
             },
             api: {
@@ -42,7 +42,7 @@ describe HealthStatus do
               ok: true
             },
             smtp: {
-              description: 'SMTP server',
+              description: 'SendGrid',
               ok: true
             },
             api: {
