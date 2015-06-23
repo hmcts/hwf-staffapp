@@ -6,7 +6,7 @@ class HealthStatus
         description: "Postgres database", ok: database
       },
       smtp: {
-        description: "SMTP server", ok: smtp
+        description: "SendGrid", ok: smtp
       },
       api: {
         description: "DWP API", ok: api
