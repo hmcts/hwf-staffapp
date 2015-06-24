@@ -14,6 +14,7 @@ class Ability
       users_can
     else
       users_can
+      users_can_view_and_edit_their_profile
     end
   end
 
@@ -34,6 +35,10 @@ private
     can :show, DwpCheck
     can :create, R2Calculator
     can :create, Feedback
+  end
+
+  def users_can_view_and_edit_their_profile
     can :show, User
+    can :edit, User
   end
 end

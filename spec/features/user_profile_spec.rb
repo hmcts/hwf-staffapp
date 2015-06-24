@@ -24,5 +24,10 @@ RSpec.feature 'User profile', type: :feature do
       expect(page).to have_text 'User details'
       expect(page).to have_text "#{user.email}"
     end
+
+    scenario 'edit their profile' do
+      visit edit_user_path user.id
+      expect(page).to have_text 'Edit user'
+    end
   end
 end
