@@ -14,6 +14,12 @@ RSpec.describe Office, type: :model do
       expect(office).to_not be_valid
       expect(office.errors[:name]).to eq ["can't be blank"]
     end
+
+    it 'must have a unique name' do
+      original = create(:office)
+      duplicate = build(:office, name: original.name)
+      expect(duplicate).to be_invalid
+    end
   end
 
   context 'responds to' do
