@@ -8,11 +8,21 @@ RSpec.feature 'User profile', type: :feature do
   let(:user) { create :user, office: create(:office) }
 
   context 'as a user' do
-    scenario 'view their profile' do
+
+    before(:each) do
       login_as user
       visit '/'
+    end
+
+    scenario 'link to their profile' do
       top_right_corner = "//nav/section/ul[@class='right']/li/div[@class='inline']/a[1]"
       expect(page).to have_xpath(top_right_corner, text: "#{user.name}")
+    end
+
+    scenario 'view their profile' do
+      click_link "#{user.name}"
+      expect(page).to have_text 'User details'
+      expect(page).to have_text "#{user.email}"
     end
   end
 end

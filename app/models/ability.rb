@@ -34,5 +34,6 @@ private
     can :show, DwpCheck
     can :create, R2Calculator
     can :create, Feedback
+    can :show, User
   end
 end
