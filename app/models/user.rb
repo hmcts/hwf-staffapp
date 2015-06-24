@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :office
+  belongs_to :jurisdiction
 
   ROLES = %w[user manager admin]
   # Include default devise modules. Others available are:
@@ -27,6 +28,7 @@ class User < ActiveRecord::Base
     message: "%{value} is not a valid role",
     allow_nil: true
   }
+  validate :jurisdiction_is_valid
 
   def elevated?
     admin? || manager?
@@ -38,5 +40,13 @@ class User < ActiveRecord::Base
 
   def manager?
     role == 'manager'
+  end
+
+private
+
+  def jurisdiction_is_valid
+    unless jurisdiction_id.nil? || Jurisdiction.exists?(jurisdiction_id)
+      errors.add(:jurisdiction, 'Jurisdiction must exist')
+    end
   end
 end

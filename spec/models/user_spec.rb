@@ -27,6 +27,12 @@ describe User, type: :model do
     end
   end
 
+  describe 'responds to' do
+    it 'jurisdiction' do
+      expect(user).to respond_to :jurisdiction
+    end
+  end
+
   describe 'validations' do
     context 'email' do
       it 'require an email' do
@@ -89,6 +95,19 @@ describe User, type: :model do
       user.role = 'student'
       expect(user).to be_invalid
       expect(user.errors[:role]).to eq ["student is not a valid role"]
+    end
+
+    describe 'jurisdiction' do
+      it 'must be valid' do
+        user.jurisdiction_id = -999
+        expect(user).to be_invalid
+        expect(user.errors[:jurisdiction]).to eq ["Jurisdiction must exist"]
+      end
+
+      it 'may be nil' do
+        user.jurisdiction = nil
+        expect(user).to be_valid
+      end
     end
   end
 

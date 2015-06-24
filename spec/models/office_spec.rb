@@ -27,23 +27,23 @@ RSpec.describe Office, type: :model do
   end
 
   describe 'jurisdiction' do
-    it 'can be nil' do
+    before(:each) do
+      office.save
       office.jurisdictions.clear
+    end
+
+    it 'can be nil' do
       expect(office.jurisdictions.count).to eq 0
       expect(office).to be_valid
     end
 
     it 'can be added' do
-      office.save
-      office.jurisdictions.clear
       office.jurisdictions << create(:jurisdiction)
       office.save
       expect(office.jurisdictions.count).to eq 1
     end
 
     it 'can have multiple added' do
-      office.save
-      office.jurisdictions.clear
       office.jurisdictions << create(:jurisdiction)
       office.jurisdictions << create(:jurisdiction)
       office.save
