@@ -2,7 +2,10 @@ h2 Editing office
 
 == render 'form'
 
-= link_to 'Show', @office
-'|
-= link_to 'Back', offices_path
-
+.row.pad-top-thirty-pix
+  .columns.small-12
+    =link_to 'Show this office', @office
+-unless current_user.manager?
+  .row.pad-top-fifteen-px
+    .columns.small-12
+      =link_to 'Back to office list', offices_path

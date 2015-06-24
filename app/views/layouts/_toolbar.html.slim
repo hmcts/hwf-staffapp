@@ -12,6 +12,9 @@
       -if current_user.elevated?
         dd.right
           =link_to 'Users', users_path
-      -if current_user.admin?
-        dd.right
-          =link_to 'Offices', offices_path
+        -if current_user.admin?
+          dd.right
+            =link_to 'Offices', offices_path
+        -if current_user.manager?
+          dd.right
+            =link_to 'My office', current_user.office

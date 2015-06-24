@@ -1,14 +1,14 @@
 = form_for @office do |f|
-  - if @office.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@office.errors.count, "error")} prohibited this office from being saved:"
-      ul
-        - @office.errors.full_messages.each do |message|
-          li = message
 
-  .field
-    = f.label :name
-    = f.text_field :name
+  .row
+    .small-12.columns.form-group
+      .row
+        .columns.small-12
+          = f.label :name, @office.errors[:name].join(', ').html_safe, class: 'error' if @office.errors[:name].present?
+      .row
+        .columns.small-12.medium-8.large-5
+          = f.label :name
+          = f.text_field :name, { class: 'form-control' }
 
   .row
     .small-12.columns.form-group
@@ -21,4 +21,4 @@
                 = b.check_box
                 = b.text
 
-  .actions = f.submit class: 'button btn'
+  .actions = f.submit class: 'button'

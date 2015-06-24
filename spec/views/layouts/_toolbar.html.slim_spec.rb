@@ -67,7 +67,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
     end
 
     it 'see offices' do
-      expect(rendered).not_to include('Offices')
+      expect(rendered).to include('My office')
     end
 
     it 'see admin' do
