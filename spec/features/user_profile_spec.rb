@@ -6,6 +6,7 @@ RSpec.feature 'User profile', type: :feature do
   Warden.test_mode!
 
   let(:user) { create :user, office: create(:office) }
+  let(:another_user) { create :user, office: create(:office) }
 
   context 'as a user' do
 
@@ -19,10 +20,17 @@ RSpec.feature 'User profile', type: :feature do
       expect(page).to have_xpath(top_right_corner, text: "#{user.name}")
     end
 
-    scenario 'view their profile' do
-      click_link "#{user.name}"
-      expect(page).to have_text 'User details'
-      expect(page).to have_text "#{user.email}"
+    context 'show view' do
+      scenario 'view their profile' do
+        click_link "#{user.name}"
+        expect(page).to have_text 'User details'
+        expect(page).to have_text "#{user.email}"
+      end
+
+      scenario 'only view their own profile' do
+        visit user_path(another_user.id)
+        expect(page).not_to have_text "#{another_user.email}"
+      end
     end
 
     scenario 'edit their profile' do

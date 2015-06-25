@@ -18,6 +18,11 @@ class UsersController < ApplicationController
   end
 
   def show
+    if current_user.id == @user.id
+      respond_with(@user)
+    else
+      redirect_to root_path
+    end
   end
 
   def update

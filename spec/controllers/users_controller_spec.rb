@@ -45,10 +45,18 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET #show' do
-      it 'generates access denied error' do
-        expect {
-          get :edit, id: test_user.to_param
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+      context "when viewing somebody elses's profile" do
+        it 'redirects to the home page' do
+          get :show, id: test_user.to_param
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context 'when viewing their own profile' do
+        it 'shows them their profile' do
+          get :show, id: user.to_param
+          expect(response).to have_http_status(:success)
+        end
       end
     end
 
