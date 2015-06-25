@@ -15,14 +15,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+    user_or_redirect
   end
 
   def show
-    if current_user.id == @user.id
-      respond_with(@user)
-    else
-      redirect_to root_path
-    end
+    user_or_redirect
   end
 
   def update
@@ -66,5 +63,21 @@ protected
 
   def populate_offices
     @offices = Office.all
+  end
+
+  def user_or_redirect
+    if admin_or_user_themselves?
+      respond_with(@user)
+    else
+      redirect_to root_path
+    end
+  end
+
+  def admin_or_user_themselves?
+    current_user.admin? || user_themselves?
+  end
+
+  def user_themselves?
+    current_user.id == @user.id
   end
 end
