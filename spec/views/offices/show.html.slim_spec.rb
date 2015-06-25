@@ -29,6 +29,7 @@ RSpec.describe "offices/show", type: :view do
       expect(rendered).not_to have_xpath("//a[@href='#{offices_path}']")
     end
   end
+
   context 'as an admin' do
     before(:each) do
       sign_in admin
