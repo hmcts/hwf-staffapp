@@ -38,7 +38,15 @@ protected
   end
 
   def current_user_can_change_office?(user)
-    current_user.manager? && (user.office != current_user.office)
+    if current_user.manager?
+      not_their_office?
+    else
+      user_themselves?
+    end
+  end
+
+  def not_their_office?
+    current_user.office != @user.office
   end
 
   def user_transfer_message(user)

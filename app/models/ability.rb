@@ -14,7 +14,7 @@ class Ability
       users_can
     else
       users_can
-      users_can_view_and_edit_their_profile
+      users_can_manage_their_profile
     end
   end
 
@@ -37,8 +37,9 @@ private
     can :create, Feedback
   end
 
-  def users_can_view_and_edit_their_profile
+  def users_can_manage_their_profile
     can :show, User
     can :edit, User
+    can :update, User
   end
 end

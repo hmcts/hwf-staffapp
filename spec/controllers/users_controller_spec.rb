@@ -75,6 +75,23 @@ RSpec.describe UsersController, type: :controller do
         end
       end
     end
+
+    describe 'POST #update' do
+
+      before(:each) { sign_in user }
+
+      context 'when trying to update their own profile' do
+        it 'allows them to update the information' do
+          new_name = 'Updated Name'
+          post :update, id: user.id, user: { name: new_name }
+          expect(response.code).to eq '302'
+          user.reload
+          expect(user.name).to eq new_name
+        end
+      end
+
+      context "when trying to edit somebody else's profile"
+    end
   end
 
   context 'manager' do
