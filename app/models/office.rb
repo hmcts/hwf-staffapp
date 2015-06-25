@@ -6,7 +6,7 @@ class Office < ActiveRecord::Base
   scope :sorted, -> {  all.order(:name) }
   scope :non_digital, -> { where.not(name: 'Digital') }
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
   def managers
     users.where(office_id: id, role: 'manager')

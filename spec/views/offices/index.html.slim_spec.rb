@@ -7,14 +7,7 @@ RSpec.describe "offices/index", type: :view do
   let(:admin_user)    { create :admin_user }
 
   before(:each) do
-    assign(:offices, [
-      Office.create!(
-        name: "Name"
-      ),
-      Office.create!(
-        name: "Name"
-      )
-    ])
+    assign(:offices, create_list(:office, 2))
   end
 
   context 'logged in user' do
