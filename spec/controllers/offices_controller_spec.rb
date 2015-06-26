@@ -6,6 +6,7 @@ RSpec.describe OfficesController, type: :controller do
 
   let(:user)        { create :user }
   let(:admin_user)  { create :admin_user }
+  let(:manager)     { create :manager }
   let(:office)      { create(:office) }
 
   context 'logged out user' do
@@ -94,7 +95,95 @@ RSpec.describe OfficesController, type: :controller do
     end
   end
 
-  context 'admin_user' do
+  context 'as a manager' do
+
+    before(:each) { sign_in manager }
+
+    describe 'GET #index' do
+      it 'assigns all offices as @offices' do
+        get :index
+        expect(assigns(:offices)).to include(office)
+      end
+    end
+
+    describe 'GET #show' do
+      it 'assigns the requested office as @office' do
+        get :show, id: office.to_param
+        expect(assigns(:office)).to eq office
+      end
+    end
+
+    describe 'GET #new' do
+      it 'returns a cancan error' do
+        expect {
+          get :new
+        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+      end
+    end
+
+    describe 'GET #edit' do
+      context 'for their own office' do
+        it 'assigns the requested office as @office' do
+          get :edit, id: manager.office.to_param
+          expect(assigns(:office)).to eq(manager.office)
+        end
+      end
+
+      context 'for a different office' do
+        it 'returns a cancan error' do
+          expect {
+            get :edit, id: create(:office).to_param
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        end
+      end
+    end
+
+    describe 'POST #create' do
+      context 'with valid params' do
+        it 'returns a cancan error' do
+          expect {
+            post :create, office: attributes_for(:office)
+          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        end
+      end
+    end
+
+    describe 'PUT #update' do
+      context 'with valid params' do
+        it 'assigns the requested office as @office' do
+          put :update, id: manager.office.to_param, office: attributes_for(:office)
+          expect(assigns(:office)).to eq(manager.office)
+        end
+
+        it 'redirects to the office' do
+          put :update, id: manager.office.to_param, office: attributes_for(:office)
+          expect(response).to redirect_to(manager.office)
+        end
+      end
+
+      context 'with invalid params' do
+        it 'assigns the office as @office' do
+          put :update, id: manager.office.to_param, office: attributes_for(:invalid_office)
+          expect(assigns(:office)).to eq(manager.office)
+        end
+
+        it 're-renders the "edit" template' do
+          put :update, id: manager.office.to_param, office: attributes_for(:invalid_office)
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      it 'is unauthorised' do
+        expect {
+          delete :destroy, id: office.to_param
+        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+      end
+    end
+  end
+
+  context 'admin user' do
 
     before(:each) { sign_in admin_user }
 
