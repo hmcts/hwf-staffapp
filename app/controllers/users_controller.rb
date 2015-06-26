@@ -24,10 +24,7 @@ class UsersController < ApplicationController
 
   def update
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-
-    if current_user_can_change_office?
-      flash[:notice] = user_transfer_message
-    end
+    flash[:notice] = user_transfer_message if no_longer_manages?
 
     respond_with @user
   end
@@ -38,12 +35,8 @@ protected
     params.require(:user).permit(:name, :role, :office_id)
   end
 
-  def current_user_can_change_office?
-    if current_user.manager?
-      not_their_office?
-    else
-      user_themselves?
-    end
+  def no_longer_manages?
+    current_user.manager? && not_their_office?
   end
 
   def not_their_office?
