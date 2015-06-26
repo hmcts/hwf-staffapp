@@ -24,8 +24,9 @@ class UsersController < ApplicationController
 
   def update
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-    if current_user_can_change_office?(@user)
-      flash[:notice] = user_transfer_message(@user)
+
+    if current_user_can_change_office?
+      flash[:notice] = user_transfer_message
     end
 
     respond_with @user
@@ -37,7 +38,7 @@ protected
     params.require(:user).permit(:name, :role, :office_id)
   end
 
-  def current_user_can_change_office?(user)
+  def current_user_can_change_office?
     if current_user.manager?
       not_their_office?
     else
@@ -49,10 +50,10 @@ protected
     current_user.office != @user.office
   end
 
-  def user_transfer_message(user)
-    office = user.office
+  def user_transfer_message
+    office = @user.office
     t('error_messages.user.moved_offices',
-      user: user.name,
+      user: @user.name,
       office: office.name,
       contact: office.managers_email)
   end
