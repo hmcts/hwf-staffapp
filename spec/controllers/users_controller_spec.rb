@@ -81,16 +81,26 @@ RSpec.describe UsersController, type: :controller do
       before(:each) { sign_in user }
 
       context 'when trying to update their own profile' do
-        it 'allows them to update the information' do
-          new_name = 'Updated Name'
-          post :update, id: user.id, user: { name: new_name }
-          expect(response.code).to eq '302'
+        new_name = 'Updated Name'
+        before(:each) { post :update, id: user.id, user: { name: new_name } }
+
+        it 'updates the user details' do
           user.reload
           expect(user.name).to eq new_name
         end
+
+        it 'redirects back to the user show view' do
+          expect(response.code).to eq '302'
+          expect(request).to redirect_to user_path
+        end
       end
 
-      context "when trying to edit somebody else's profile"
+      context "when trying to edit somebody else's profile" do
+        it "doesn't allow editing of the user details" do
+          post :update, id: test_user.id, user: { name: 'random value' }
+          expect redirect_to user_path(user.id)
+        end
+      end
     end
   end
 
@@ -218,7 +228,7 @@ RSpec.describe UsersController, type: :controller do
           end
 
           it 'redirects to the user list' do
-            expect(response).to redirect_to users_path
+            expect(response).to redirect_to user_path
           end
 
           it 'displays an alert containing contact details for the new manager' do

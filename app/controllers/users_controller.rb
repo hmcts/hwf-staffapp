@@ -26,9 +26,9 @@ class UsersController < ApplicationController
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
     if current_user_can_change_office?(@user)
       flash[:notice] = user_transfer_message(@user)
-      return redirect_to users_path
     end
-    respond_with(@user)
+
+    respond_with @user
   end
 
 protected
