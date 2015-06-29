@@ -116,10 +116,6 @@ Style/SignalException:
 Style/TrivialAccessors:
   AllowPredicates: true
 
-# Rubucop can't enforce Weirich style, so just turn this off.
-Blocks:
-  Enabled: false
-
 # Prefer sensible naming to comments everywhere.
 Documentation:
   Description: Document classes and non-namespace modules.
