@@ -21,8 +21,8 @@ class DwpCheck < ActiveRecord::Base
 
   validates :date_to_check, date: {
     allow_nil: true,
-    after: proc { Date.today - 3.months },
-    before: proc { Date.today + 1.day }
+    after: proc { Time.zone.today - 3.months },
+    before: proc { Time.zone.today + 1.day }
   }
 
   validates :ni_number, format: {
@@ -76,13 +76,13 @@ private
   end
 
   def validate_dob_maximum
-    if dob < Date.today - MAX_AGE.years
+    if dob < Time.zone.today - MAX_AGE.years
       errors.add(:dob, I18n.t('activerecord.attributes.dwp_check.dob_too_old', max_age: MAX_AGE))
     end
   end
 
   def validate_dob_minimum
-    if dob > Date.today - MIN_AGE.years
+    if dob > Time.zone.today - MIN_AGE.years
       errors.add(:dob, I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE))
     end
   end
