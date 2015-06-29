@@ -44,8 +44,7 @@ protected
     t('error_messages.user.moved_offices',
       user: user.name,
       office: office.name,
-      contact: office.managers_email
-    )
+      contact: office.managers_email)
   end
 
   def find_user
