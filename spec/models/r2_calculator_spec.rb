@@ -92,8 +92,8 @@ RSpec.describe R2Calculator, type: :model do
   describe 'scopes' do
     before(:each) { described_class.delete_all }
     describe 'checks_by_day' do
-      let!(:old_check) { create(:r2_calculator, created_at: "#{Date.today.-8.days}") }
-      let!(:new_check) { create(:r2_calculator, created_at: "#{Date.today.-5.days}") }
+      let!(:old_check) { create(:r2_calculator, created_at: "#{Time.zone.today.-8.days}") }
+      let!(:new_check) { create(:r2_calculator, created_at: "#{Time.zone.today.-5.days}") }
 
       it 'finds only checks for the past week' do
         expect(described_class.checks_by_day.count).to eq 1

@@ -49,7 +49,7 @@ RSpec.describe DwpCheck, type: :model do
       context 'maximum age' do
         describe 'invalid maximum age' do
           before do
-            check.dob = Date.today - 121.years
+            check.dob = Time.zone.today - 121.years
             check.valid?
           end
 
@@ -64,7 +64,7 @@ RSpec.describe DwpCheck, type: :model do
         end
 
         describe 'valid maximum age' do
-          before { check.dob = Date.today - 120.years }
+          before { check.dob = Time.zone.today - 120.years }
 
           it 'does allow date of birth to be under 120 years' do
             expect(check).to be_valid
@@ -74,7 +74,7 @@ RSpec.describe DwpCheck, type: :model do
     end
 
     it 'requires date of birth to be in the past, (more than 16 years ago!)' do
-      check.dob = Date.today
+      check.dob = Time.zone.today
       check.valid?
       expect(check).to be_invalid
       expect(check.errors[:dob]).to eq ["The applicant can't be under 16 years old"]
@@ -87,18 +87,18 @@ RSpec.describe DwpCheck, type: :model do
 
     context 'date to check' do
       it 'allows a date to check to be passed' do
-        check.date_to_check = Date.today
+        check.date_to_check = Time.zone.today
         expect(check).to be_valid
       end
 
       it 'requires date to check to be in the last three months' do
-        check.date_to_check = Date.today.-3.months.+1.day
+        check.date_to_check = Time.zone.today.-3.months.+1.day
         expect(check).to be_invalid
         expect(check.errors[:date_to_check]).to eq ['The application must have been made in the last 3 months']
       end
 
       it 'requires date to check to not be in the future' do
-        check.date_to_check = Date.tomorrow
+        check.date_to_check = Time.zone.tomorrow
         expect(check).to be_invalid
         expect(check.errors[:date_to_check]).to eq ['The application cannot be a future date']
       end
@@ -109,7 +109,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       context 'in format DD/MM/YY' do
-        let(:date) { Date.yesterday.strftime("%d/%m/%y") }
+        let(:date) { Time.zone.yesterday.strftime("%d/%m/%y") }
 
         it "doesn't accepts date in format DD/MM/YY" do
           check.date_to_check = "#{date}"
@@ -123,7 +123,7 @@ RSpec.describe DwpCheck, type: :model do
       end
 
       context 'in format DD/MM/YYYY' do
-        let(:date) { Date.yesterday.strftime("%d/%m/%Y") }
+        let(:date) { Time.zone.yesterday.strftime("%d/%m/%Y") }
 
         it 'accepts the date in format DD/MM/YYYY' do
           check.date_to_check = date
@@ -192,11 +192,11 @@ RSpec.describe DwpCheck, type: :model do
     describe 'checks_by_day' do
       let!(:old_check) do
         old = create(:dwp_check, created_by: user)
-        old.update(created_at: "#{Date.today.-8.days}")
+        old.update(created_at: "#{Time.zone.today.-8.days}")
       end
       let!(:new_check) do
         check = create(:dwp_check, created_by: user)
-        check.update(created_at: "#{Date.today.-5.days}")
+        check.update(created_at: "#{Time.zone.today.-5.days}")
       end
 
       it 'finds only checks for the past week' do

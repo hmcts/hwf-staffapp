@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 describe ProcessDwpService do
@@ -24,7 +25,7 @@ describe ProcessDwpService do
         {
           id: check.our_api_token,
           birth_date: '19800101',
-          entitlement_check_date: "#{Date.yesterday.strftime('%Y%m%d')}",
+          entitlement_check_date: "#{Time.zone.yesterday.strftime('%Y%m%d')}",
           ni_number: 'AB123456A',
           surname: 'LAST_NAME'
         }).to_return(status: 200, body: json, headers: {})
@@ -106,7 +107,7 @@ describe ProcessDwpService do
           {
             id: check.our_api_token,
             birth_date: '19800101',
-            entitlement_check_date: "#{Date.yesterday.strftime('%Y%m%d')}",
+            entitlement_check_date: "#{Time.zone.yesterday.strftime('%Y%m%d')}",
             ni_number: 'AB123456A',
             surname: 'LAST_NAME'
           }).to_return(status: 200, body: json, headers: {})

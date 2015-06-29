@@ -17,7 +17,7 @@ class R2Calculator < ActiveRecord::Base
 
   scope :checks_by_day, lambda {
     group_by_day('r2_calculators.created_at', format: "%d %b %y").
-      where('r2_calculators.created_at > ?', (Date.today.-6.days)).count
+      where('r2_calculators.created_at > ?', (Time.zone.today.-6.days)).count
   }
   scope :by_office_grouped_by_type, lambda { |office_id|
     joins('left outer join users on r2_calculators.created_by_id = users.id').
