@@ -25,6 +25,13 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
 
+# Allow expect {}.to blocks in specs
+# but not in the code
+Style/BlockDelimiters:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
 # Don't worry about long methods in specs.
 Metrics/MethodLength:
   Exclude:
