@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  render_views
 
   include Devise::TestHelpers
 
@@ -44,9 +45,15 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'when trying to edit their own profile' do
+
+        before(:each) { get :edit, id: user.to_param }
+
         it 'shows them their profile' do
-          get :edit, id: user.to_param
           expect(response).to have_http_status(:success)
+        end
+
+        it 'shows them their office' do
+          expect(response.body).to match /#{user.office.name}/
         end
       end
     end
