@@ -45,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'when trying to edit their own profile' do
         it 'shows them their profile' do
-          get :show, id: user.to_param
+          get :edit, id: user.to_param
           expect(response).to have_http_status(:success)
         end
       end
