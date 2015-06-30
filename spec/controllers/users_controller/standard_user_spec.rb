@@ -64,12 +64,19 @@ RSpec.describe UsersController, type: :controller do
 
       context 'when trying to update their own profile' do
         new_name = 'Updated Name'
-        before(:each) { post :update, id: user.id, user: { name: new_name } }
+        let(:new_office) { create :office }
+        before(:each) do
+          post :update, id: user.id, user: { name: new_name, office_id: new_office.id }
+          user.reload
+        end
 
         it 'updates the user details' do
-          user.reload
           expect(user.name).to eq new_name
+          expect(user.office).to eq new_office
         end
+
+        # TODO: don't allow the user to update their own role
+        pending "doesn't update their own role"
 
         it 'redirects back to the user show view' do
           expect(response.code).to eq '302'
