@@ -32,12 +32,10 @@ These are:
 + Scottish Legal Aid
 
 
-In the future applicants won’t need to bring evidence that they’re getting one of these benefits. **For the trial though, they’ll still need to bring evidence.**
-
 
 ####Signing up to use the online benefits checker
 
-Use the online benefits checker to make sure that applicants are eligible for remission
+Use the online benefits checker to make sure that applicants are eligible for financial help
 
 * You’ll get an email with a link to set up your password for the benefits checker
 
@@ -86,11 +84,17 @@ If you are still getting this message, ask the applicant to provide more evidenc
 
 The system records the results of each benefits check. This means the online tool should only be used for processing application forms.
 
-####Paper evidence needs to be checked too 
+#### You no longer need to check paper evidence for benefits 
 
-You still need to check the paper evidence submitted by the applicant. (This is for the trial only.) 
+Applicants no longer need to include paper evidence to show they're receiving one of the 6 benefits. Instead, you'll be able to rely on the results of the online DWP check. 
 
-**For remission 1**, applicants need an official letter confirming the benefit received.
+####What if the online DWP check isn't available? 
+
+The occasional technical fault may mean that the online DWP check isn't available. Usually this will be fixed quickly. 
+
+When the online check isn't available you should first of all try again later. If you're dealing with an applicant at the counter, you can ask them to return with paper evidence if this is possible. 
+
+**In an emergency**, (for example an eviction), you can ask the applicant to provide an official letter to show that they're receiving benefits.   
 
 It must show: 
 
@@ -100,31 +104,15 @@ It must show:
 
 It must also confirm that they currently receive one of the 6 'gateway benefits'.
 
+Alternatively you can refer the case to the court manager who may be able to grant an undertaking.   
 
-The letter must be in the following form:
+#### What if the DWP check doesn't match what the applicant has stated?  
 
-| **Benefit** | **Evidence letter from** | **Dated** |
-| ------------- |:-------------:| -----:|
-|Income-based Jobseeker’s Allowance | Job Centre Plus / Department for Work and Pensions (DWP) | No more than three months old
-|Income-related Employment and Support Allowance | Job Centre Plus / Department for Work and Pensions (DWP) | No more than three months old
-|Income support	 | Job Centre Plus / Department for Work and Pensions (DWP) | No more than three months old
-|Universal Credit – with gross annual earnings of less than £6,000 | Job Centre Plus / Department for Work and Pensions | No more than three months old
-|State Pension - Guarantee Credit | he Pension Service / Department for Work and Pensions (DWP) | Assessed Income Period should cover the current financial year
-|Scottish Civil Legal Aid | Scottish Legal Aid Board | Recent letter clearly showing a grant of support for the claim which you are bringing or have brought
+If the applicant has recently started receiving one of the 6 benefits (eg in the last week) then the online DWP check may not be up to date. If you're processing the application at the counter, ask the applicant to provide a paper evidence if possible. 
 
-
-#####Evidence for being 'part of a couple' 
-If the applicant is part of a couple who receive a shared benefit and their name is not on the shared benefit notice, they must provide evidence showing that they live at the same address as their partner.
-
-Evidence should be in the form of an official document, such as a utility bill, and should show the applicant’s title, full name and address.
-
-
-
-###Calculating the fee based on income (remission 2) 
-
+###Calculating the fee based on income 
 
 The applicant needs to provide evidence of their income.
-
 
 **Bank statements**
 
@@ -181,26 +169,6 @@ If they’re receiving any of these benefits (or others that are not listed in q
 
 If they receive any other income, for example from investments or selling goods on the internet, they must provide official evidence that shows the amount of income received, how it is received, and how often.
 
-
-**When the benefits check and paper evidence don't match**
-
-If the evidence provided by the applicant is different to the results of the benefits check, please make sure you record this in the Excel spreadsheet under this column:  b) ‘Did DWP check match paper evidence?’ (To be completed with Yes/No)
-
-You should base your decision about accepting or rejecting an application on the paper evidence rather than the DWP check (if they are different).
-
-
-**Rejecting an application**
-
-If both the benefits check and the evidence provided by the applicant show that they’re not eligible for help with their fees, please record this in the spreadsheet, and create a letter explaining why their application has not been successful.
-
-If the benefits checker and the paper evidence don’t match up, base your decision on the paper evidence.
-
-
-**Accepting an application**
-
-If both the benefits checker and the evidence submitted by the applicant show that they are eligible for help with their fees, then log this in the usual way.
-
-If the benefits checker and the paper evidence don’t match up, base your decision on the paper evidence.
 
 <pre>
      <script>$('dl.sub-nav dd#staff-guide').addClass('active')</script>
