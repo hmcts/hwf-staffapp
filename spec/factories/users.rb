@@ -5,6 +5,7 @@ FactoryGirl.define do
     password 'password'
     name 'user'
     association :office
+    association :jurisdiction
     factory :admin_user do
       role 'admin'
     end
