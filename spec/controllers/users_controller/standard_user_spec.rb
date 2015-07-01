@@ -53,11 +53,11 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it 'shows them their office' do
-          expect(response.body).to match /#{user.office.name}/
+          expect(response.body).to match "#{user.office.name}"
         end
 
         it 'shows them their jurisdiction' do
-          expect(response.body).to match /#{user.jurisdiction.name}/
+          expect(response.body).to match "#{user.jurisdiction.name}"
         end
       end
     end
