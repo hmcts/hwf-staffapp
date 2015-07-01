@@ -15,4 +15,7 @@ h2 Edit user
   .form-group
     = f.label :office_id
     = f.collection_select :office_id, @offices, :id, :name
+  .form-group
+    = f.label :jurisdiction_id
+    = f.collection_select :jurisdiction_id, @jurisdictions, :id, :name
   .actions = f.submit class: 'button'

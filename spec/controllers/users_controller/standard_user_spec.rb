@@ -5,8 +5,9 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)        { create :user }
-  let(:test_user)   { create :user }
+  let(:jurisdiction) { create :jurisdiction }
+  let(:user)         { create :user, jurisdiction: jurisdiction }
+  let(:test_user)    { create :user }
 
   context 'standard user' do
 
@@ -45,7 +46,6 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'when trying to edit their own profile' do
-
         before(:each) { get :edit, id: user.to_param }
 
         it 'shows them their profile' do
@@ -54,6 +54,10 @@ RSpec.describe UsersController, type: :controller do
 
         it 'shows them their office' do
           expect(response.body).to match /#{user.office.name}/
+        end
+
+        it 'shows them their jurisdiction' do
+          expect(response.body).to match /#{user.jurisdiction.name}/
         end
       end
     end
@@ -64,15 +68,18 @@ RSpec.describe UsersController, type: :controller do
 
       context 'when trying to update their own profile' do
         new_name = 'Updated Name'
-        let(:new_office) { create :office }
+        let!(:new_office) { create :office }
+        let!(:new_jurisdiction) { create :jurisdiction }
         before(:each) do
-          post :update, id: user.id, user: { name: new_name, office_id: new_office.id }
+          params = { name: new_name, office_id: new_office.id, jurisdiction_id: new_jurisdiction.id }
+          post :update, id: user.id, user: params
           user.reload
         end
 
         it 'updates the user details' do
           expect(user.name).to eq new_name
           expect(user.office).to eq new_office
+          expect(user.jurisdiction).to eq new_jurisdiction
         end
 
         # TODO: don't allow the user to update their own role

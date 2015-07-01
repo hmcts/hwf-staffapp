@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :show, :update]
   before_action :populate_roles, only: [:edit, :update]
   before_action :populate_offices, only: [:edit, :update]
+  before_action :populate_jurisdictions, only: [:edit, :update]
   load_and_authorize_resource
 
   def index
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
 protected
 
   def user_params
-    params.require(:user).permit(:name, :role, :office_id)
+    params.require(:user).permit(:name, :role, :office_id, :jurisdiction_id)
   end
 
   def no_longer_manages?
@@ -65,6 +66,10 @@ protected
 
   def populate_offices
     @offices = Office.all
+  end
+
+  def populate_jurisdictions
+    @jurisdictions = Jurisdiction.all
   end
 
   def user_or_redirect

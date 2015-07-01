@@ -33,9 +33,14 @@ RSpec.feature 'User profile', type: :feature do
       end
     end
 
-    scenario 'edit their profile' do
-      visit edit_user_path user.id
-      expect(page).to have_text 'Edit user'
+    context 'edit' do
+      before(:each) { visit edit_user_path user.id }
+
+      scenario 'their profile' do
+        ['Edit user',
+         'Office',
+         'Jurisdiction'].each { |value| expect(page).to have_text value }
+      end
     end
   end
 end
