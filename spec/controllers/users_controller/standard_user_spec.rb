@@ -81,9 +81,6 @@ RSpec.describe UsersController, type: :controller do
           expect(user.jurisdiction).to eq new_jurisdiction
         end
 
-        # TODO: don't allow the user to update their own role
-        pending "doesn't update their own role"
-
         it 'redirects back to the user show view' do
           expect(response.code).to eq '302'
           expect(request).to redirect_to user_path
