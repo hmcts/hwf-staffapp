@@ -5,7 +5,6 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)        { create :user }
   let(:admin_user)  { create :admin_user }
   let(:test_user)   { create :user }
 
