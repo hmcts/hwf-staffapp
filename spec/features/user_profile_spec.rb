@@ -25,6 +25,7 @@ RSpec.feature 'User profile', type: :feature do
         click_link "#{user.name}"
         expect(page).to have_text 'User details'
         expect(page).to have_text "#{user.email}"
+        expect(page).to have_text "#{user.role}"
       end
 
       scenario 'only view their own profile' do
@@ -39,7 +40,12 @@ RSpec.feature 'User profile', type: :feature do
       scenario 'their profile' do
         ['Edit user',
          'Office',
-         'Jurisdiction'].each { |value| expect(page).to have_text value }
+         'Jurisdiction',
+         'Role'].each { |value| expect(page).to have_text value }
+      end
+
+      scenario 'their role should not be editable' do
+        expect(page).not_to have_select('user[role]', options: ['User', 'Manager'])
       end
     end
   end

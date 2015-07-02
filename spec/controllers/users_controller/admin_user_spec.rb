@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  render_views
 
   include Devise::TestHelpers
 
@@ -65,6 +66,21 @@ RSpec.describe UsersController, type: :controller do
       it 'shows edit page' do
         get :edit, id: test_user.to_param
         expect(assigns(:user)).to eq(test_user)
+      end
+
+      context 'role' do
+        before(:each) do
+          sign_in admin_user
+          get :edit, id: admin_user.to_param
+        end
+
+        it 'shows them their role' do
+          expect(response.body).to match "#{admin_user.role}"
+        end
+
+        it 'does not show them the options to change their role' do
+          expect(response.body).to have_select('user[role]', options: ['User', 'Manager', 'Admin'])
+        end
       end
     end
 

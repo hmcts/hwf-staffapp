@@ -51,6 +51,16 @@ RSpec.describe UsersController, type: :controller do
           expect(response).to have_http_status(:success)
         end
 
+        context 'role' do
+          it 'shows them their role' do
+            expect(response.body).to match "#{user.role}"
+          end
+
+          it 'does not show them the options to change their role' do
+            expect(response.body).not_to have_select('user[role]')
+          end
+        end
+
         it 'shows them their office' do
           expect(response.body).to match "#{user.office.name}"
         end

@@ -11,7 +11,10 @@ h2 Edit user
     = "#{@user.email}"
   .form-group
     = f.label(:roles, 'Role')
-    = f.collection_select :role, @roles, :to_s, :humanize
+    - if @user.elevated?
+      = f.collection_select :role, @roles, :to_s, :humanize
+    - else
+      = "#{@user.role}"
   .form-group
     = f.label :office_id
     = f.collection_select :office_id, @offices, :id, :name
