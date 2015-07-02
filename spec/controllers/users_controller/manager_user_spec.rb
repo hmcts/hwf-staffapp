@@ -125,22 +125,17 @@ RSpec.describe UsersController, type: :controller do
           expect(response).to redirect_to(user_path)
         end
 
-        context 'and changing office' do
-
+        context 'and changing office and role' do
           let(:new_office) { create(:office) }
-          let(:new_office_attributes) {
-            {
-              email: 'new_attributes@hmcts.gsi.gov.uk',
-              password: 'aabbccdd',
-              role: 'user',
-              office_id: new_office.id
-            }
-          }
+          let(:role) { 'user' }
 
-          before(:each) { put :update, id: User.first.to_param, user: new_office_attributes }
+          before(:each) do
+            put :update, id: User.first.to_param, user: { office_id: new_office.id, role: role }
+          end
 
           it 'updates the user' do
-            user.reload
+            expect(User.first.office_id).to eq new_office.id
+            expect(User.first.role).to eq role
           end
 
           it 'returns a redirect status' do
