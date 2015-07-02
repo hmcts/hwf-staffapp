@@ -22,6 +22,10 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
+  %w[400 404 500 503].each do |error|
+    get "static/#{error}" => "static##{error}"
+  end
+
   devise_for :users, controllers: { invitations: 'users/invitations' }
   resources :users
 end
