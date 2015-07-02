@@ -80,13 +80,13 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
-            get :show, id: User.last.to_param
+            get :edit, id: User.last.to_param
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
 
         it 'renders the index view' do
           expect {
-            get :show, id: User.last.to_param
+            get :edit, id: User.last.to_param
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
       end
