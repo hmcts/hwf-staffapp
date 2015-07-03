@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :show, :update]
   before_action :populate_roles, only: [:edit, :update]
   before_action :populate_offices, only: [:edit, :update]
+  before_action :populate_jurisdictions, only: [:edit, :update]
   load_and_authorize_resource
 
   def index
@@ -15,34 +16,38 @@ class UsersController < ApplicationController
   end
 
   def edit
+    user_or_redirect
   end
 
   def show
+    user_or_redirect
   end
 
   def update
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-    if current_user_can_change_office?(@user)
-      flash[:notice] = user_transfer_message(@user)
-      return redirect_to users_path
-    end
-    respond_with(@user)
+    flash[:notice] = user_transfer_message if no_longer_manages?
+
+    respond_with @user
   end
 
 protected
 
   def user_params
-    params.require(:user).permit(:name, :role, :office_id)
+    params.require(:user).permit(:name, :role, :office_id, :jurisdiction_id)
   end
 
-  def current_user_can_change_office?(user)
-    current_user.manager? && (user.office != current_user.office)
+  def no_longer_manages?
+    current_user.manager? && not_their_office?
   end
 
-  def user_transfer_message(user)
-    office = user.office
+  def not_their_office?
+    current_user.office != @user.office
+  end
+
+  def user_transfer_message
+    office = @user.office
     t('error_messages.user.moved_offices',
-      user: user.name,
+      user: @user.name,
       office: office.name,
       contact: office.managers_email)
   end
@@ -61,5 +66,25 @@ protected
 
   def populate_offices
     @offices = Office.all
+  end
+
+  def populate_jurisdictions
+    @jurisdictions = Jurisdiction.all
+  end
+
+  def user_or_redirect
+    if admin_or_user_themselves?
+      respond_with(@user)
+    else
+      redirect_to root_path
+    end
+  end
+
+  def admin_or_user_themselves?
+    current_user.admin? || user_themselves?
+  end
+
+  def user_themselves?
+    current_user.id == @user.id
   end
 end
