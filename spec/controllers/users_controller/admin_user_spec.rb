@@ -12,7 +12,7 @@ RSpec.describe UsersController, type: :controller do
     before do
       User.delete_all
       create_list :user, 3, office: admin_user.office
-      create_list :user, 3, office: create(:office)
+      create_list :user, 3
     end
 
     before(:each) { sign_in admin_user }
