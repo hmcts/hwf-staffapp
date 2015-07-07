@@ -5,8 +5,9 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)         { create :user }
-  let(:test_user)    { create :user }
+  let(:jurisdictions) { create_list :jurisdiction, 3 }
+  let(:user)          { create :user, jurisdiction: jurisdictions[0], office: create(:office, jurisdictions: jurisdictions) }
+  let(:test_user)     { create :user }
 
   context 'standard user' do
 
