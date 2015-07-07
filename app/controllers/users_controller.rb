@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   end
 
   def populate_jurisdictions
-    @jurisdictions = Jurisdiction.all
+    @jurisdictions = @user.office.jurisdictions
   end
 
   def user_or_redirect

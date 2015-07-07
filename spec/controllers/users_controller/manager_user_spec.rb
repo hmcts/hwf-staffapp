@@ -43,6 +43,7 @@ RSpec.describe UsersController, type: :controller do
         it 'renders the view' do
           expect(response).to render_template :show
         end
+
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
         end
