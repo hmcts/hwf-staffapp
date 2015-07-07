@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  sequence(:name)     { |n| "Office no. #{n}" }
+  sequence(:name) { |n| "#{Faker::Company.name} #{n}" }
 
   factory :office do
     name
