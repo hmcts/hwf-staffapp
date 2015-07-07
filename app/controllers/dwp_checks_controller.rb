@@ -3,6 +3,7 @@ class DwpChecksController < ApplicationController
   respond_to :html
   before_action :find_dwp_check, only: [:show]
   before_action :new_from_params, only: [:lookup]
+
   def new
     authorize! :new, DwpCheck
     @dwp_checker = DwpCheck.new
