@@ -51,7 +51,7 @@ RSpec/FilePath:
 
 # private/protected/public
 Style/AccessModifierIndentation:
-  EnforcedStyle: outdent
+  EnforcedStyle: indent
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.

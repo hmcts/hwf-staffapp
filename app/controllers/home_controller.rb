@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def index
   end
 
-private
+  private
 
   def load_dwp_data
     @dwpchecks = DwpCheck.

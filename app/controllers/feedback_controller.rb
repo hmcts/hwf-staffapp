@@ -29,7 +29,7 @@ class FeedbackController < ApplicationController
     end
   end
 
-private
+  private
 
   def feedback_params
     params.require(:feedback).permit(:experience, :ideas, :rating, :help)

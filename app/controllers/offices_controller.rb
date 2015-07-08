@@ -41,7 +41,7 @@ class OfficesController < ApplicationController
     respond_with(@office)
   end
 
-private
+  private
 
   def set_office
     @office = Office.find(params[:id])

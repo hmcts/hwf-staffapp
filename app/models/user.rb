@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     role == 'manager'
   end
 
-private
+  private
 
   def jurisdiction_is_valid
     unless jurisdiction_id.nil? || Jurisdiction.exists?(jurisdiction_id)

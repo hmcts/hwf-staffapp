@@ -26,7 +26,7 @@ class Ability
     true
   end
 
-private
+  private
 
   def users_can
     can :read, Office

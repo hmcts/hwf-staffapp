@@ -25,7 +25,7 @@ class DwpChecksController < ApplicationController
     authorize! :show, DwpCheck
   end
 
-private
+  private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)

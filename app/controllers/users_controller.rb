@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-protected
+  protected
 
   def user_params
     params.require(:user).permit(:name, :role, :office_id, :jurisdiction_id)

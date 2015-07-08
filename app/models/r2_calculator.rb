@@ -44,7 +44,7 @@ class R2Calculator < ActiveRecord::Base
     type == 'None'
   end
 
-private
+  private
 
   def build_type
     if to_pay == 0.00
