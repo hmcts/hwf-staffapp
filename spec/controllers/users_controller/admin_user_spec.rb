@@ -11,6 +11,8 @@ RSpec.describe UsersController, type: :controller do
   context 'admin user' do
     before do
       User.delete_all
+      Office.delete_all
+      Jurisdiction.delete_all
       create_list :user, 3, office: admin_user.office
       create_list :user, 3
     end
