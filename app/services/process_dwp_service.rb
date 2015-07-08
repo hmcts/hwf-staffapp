@@ -16,7 +16,7 @@ class ProcessDwpService
     }.to_json
   end
 
-private
+  private
 
   def check_remote_api
     @dwp_checker.save!

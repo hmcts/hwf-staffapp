@@ -17,7 +17,7 @@ class CalculatorController < ApplicationController
     end
   end
 
-private
+  private
 
   def create_from_params
     @r2 = R2Calculator.new(r2_calc_params)

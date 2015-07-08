@@ -13,7 +13,7 @@ class Users::InvitationsController < Devise::InvitationsController
     render :new
   end
 
-private
+  private
 
   def invite_resource
     resource_class.invite!(invite_params, current_inviter)

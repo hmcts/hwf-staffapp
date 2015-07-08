@@ -52,7 +52,7 @@ class DwpCheck < ActiveRecord::Base
     end
   end
 
-private
+  private
 
   def generate_unique_number
     new_uid = ''
