@@ -2,7 +2,7 @@
 
 * [An updated application form](#an-updated-application-form)
 * [Using the benefits checker](#using-the-benefits-checker)
-* [Calculating the fee based on income (remission 2)](#calculating-the-fee-based-on-income-(remission-2))
+* [Calculating the fee based on income](#calculating-the-fee-based-on-income)
 
 
 
