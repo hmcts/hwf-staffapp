@@ -35,6 +35,14 @@ RSpec.describe DwpChecksController, type: :controller do
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
+
+      context 'when invalid request is made' do
+        let(:invalid_number) { "'" }
+
+        it 'throws an error when invalid request is made' do
+          expect { get :show, unique_number: invalid_number }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
     end
 
     describe 'GET #new' do

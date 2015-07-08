@@ -3,6 +3,7 @@ class DwpChecksController < ApplicationController
   respond_to :html
   before_action :find_dwp_check, only: [:show]
   before_action :new_from_params, only: [:lookup]
+
   def new
     authorize! :new, DwpCheck
     @dwp_checker = DwpCheck.new
@@ -38,6 +39,6 @@ private
   end
 
   def find_dwp_check
-    @dwp_checker = DwpCheck.find_by(unique_number: params[:unique_number])
+    @dwp_checker = DwpCheck.find_by!(unique_number: params[:unique_number])
   end
 end
