@@ -39,10 +39,6 @@ class DwpChecksController < ApplicationController
   end
 
   def find_dwp_check
-    if /\A[a-z\d]{4}-[a-z\d]{4}\z/.match(params[:unique_number])
-      @dwp_checker = DwpCheck.find_by(unique_number: params[:unique_number])
-    else
-      render file: 'public/404.html', status: 404
-    end
+    @dwp_checker = DwpCheck.find_by!(unique_number: params[:unique_number])
   end
 end

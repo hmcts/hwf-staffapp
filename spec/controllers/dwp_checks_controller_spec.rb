@@ -38,14 +38,9 @@ RSpec.describe DwpChecksController, type: :controller do
 
       context 'when invalid request is made' do
         let(:invalid_number) { "'" }
-        before(:each) { get :show, unique_number: invalid_number }
 
-        it 'returns 404 on invalid request' do
-          expect(response.status).to eql 404
-        end
-
-        it 'renders 404 page' do
-          expect(response.status).to render_template(file: '404.html')
+        it 'throws an error when invalid request is made' do
+          expect { get :show, unique_number: invalid_number }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
