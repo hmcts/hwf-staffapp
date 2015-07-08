@@ -20,9 +20,9 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: dkfq0S/ZZ6gFYMw2xIAxb+icoA369uTdYCVQZBalAocjVax1Idfqw1eAYrBlaBJ1P8vD87H5ziYcXJnszCd+qXwlLwD86OmrtPMrpZo2kvO+2aH4zffookWMfbcH1IV6qtICjWXV3NSF5xspmj2Ho/D/CB0/HYisr9eBE9eoJls=
+    secure: iw1rF38MIxU03c2njmliHZv0bV9XMkBeOf11pGr2OSozr6q0MJUUkg9D+E08LgHxDdUwsi9DP7U/cD81M2T9FpIUXiN8GJ/qUAM87QzaOBqwb72Ydh3QHz6uyMPRkMUarDnwFxWqovDvcpHEP+WhL3G1XGcr1b5qH9WZUFliYBA=
   app: fr-staff-app
   on:
     repo: ministryofjustice/fr-staffapp
   run:
-  - "rake db:migrate"
+  - rake db:migrate
