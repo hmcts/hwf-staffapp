@@ -26,7 +26,7 @@ class DwpChecksController < ApplicationController
     authorize! :show, DwpCheck
   end
 
-private
+  private
 
   def new_from_params
     @dwp_checker = DwpCheck.new(dwp_params)
@@ -39,6 +39,10 @@ private
   end
 
   def find_dwp_check
-    @dwp_checker = DwpCheck.find_by(unique_number: params[:unique_number])
+    if /\A[a-z\d]{4}-[a-z\d]{4}\z/.match(params[:unique_number])
+      @dwp_checker = DwpCheck.find_by(unique_number: params[:unique_number])
+    else
+      render file: 'public/404.html', status: 404
+    end
   end
 end
