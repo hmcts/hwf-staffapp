@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :jurisdiction do
-    name { Faker::Company.name }
+    name { |n| "#{Faker::Company.name}#{n}" }
     abbr { |n| "#{Faker::Hacker.abbreviation} #{n}" }
     active true
     factory :invalid_jurisdiction do

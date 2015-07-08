@@ -13,6 +13,8 @@ RSpec.describe UsersController, type: :controller do
 
     before(:each) do
       User.delete_all
+      Office.delete_all
+      Jurisdiction.delete_all
       create_list :user, 3, office: manager.office
       create_list :user, 3, office: create(:office)
       sign_in manager
