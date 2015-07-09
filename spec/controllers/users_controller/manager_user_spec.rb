@@ -114,15 +114,15 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before(:each) { put :update, id: User.first.to_param, user: new_attributes }
+        before(:each) { put :update, id: user_on_my_team.to_param, user: new_attributes }
 
         it "doesn't update the user's email" do
           assigns(:user)
-          expect(User.first.email).to_not eq new_attributes[:email]
+          expect(user_on_my_team.email).to_not eq new_attributes[:email]
         end
 
         it 'assigns the requested user as @user' do
-          expect(assigns(:user)).to eq(User.first)
+          expect(assigns(:user)).to eq(user_on_my_team)
         end
 
         it 'redirects to the user' do
@@ -135,12 +135,13 @@ RSpec.describe UsersController, type: :controller do
           let(:role) { 'user' }
 
           before(:each) do
-            put :update, id: User.first.to_param, user: { office_id: new_office.id, role: role }
+            put :update, id: user_on_my_team.to_param, user: { office_id: new_office.id, role: role }
           end
 
           it 'updates the user' do
-            expect(User.first.office_id).to eq new_office.id
-            expect(User.first.role).to eq role
+            user_on_my_team.reload
+            expect(user_on_my_team.office_id).to eq new_office.id
+            expect(user_on_my_team.role).to eq role
           end
 
           it 'returns a redirect status' do
@@ -148,11 +149,11 @@ RSpec.describe UsersController, type: :controller do
           end
 
           it 'redirects to the user list' do
-            expect(response).to redirect_to user_path
+            expect(response).to redirect_to users_path
           end
 
           it 'displays an alert containing contact details for the new manager' do
-            err_msg = I18n.t('error_messages.user.moved_offices', user: User.first.name, office: new_office.name, contact: new_office.managers_email)
+            err_msg = I18n.t('error_messages.user.moved_offices', user: user_on_my_team.name, office: new_office.name, contact: new_office.managers_email)
             expect(flash[:notice]).to be_present
             expect(flash[:notice]).to eql(err_msg)
           end
@@ -160,13 +161,14 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'with invalid params' do
+
+        before { put :update, id: user_on_my_team.to_param, user: attributes_for(:invalid_user) }
+
         it 'assigns the user as @user' do
-          put :update, id: User.first.to_param, user: attributes_for(:invalid_user)
-          expect(assigns(:user)).to eq(User.first)
+          expect(assigns(:user)).to eq(user_on_my_team)
         end
 
         it 're-renders the "edit" template' do
-          put :update, id: User.first.to_param, user: attributes_for(:invalid_user)
           expect(response).to render_template('edit')
         end
       end
