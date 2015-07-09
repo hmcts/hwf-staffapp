@@ -5,9 +5,9 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)        { create :user }
-  let(:admin_user)  { create :admin_user }
-  let(:manager)     { create :manager }
+  let(:manager)           { create :manager }
+  let(:user_on_my_team)   { create :user, office: manager.office }
+  let(:user_not_my_team)  { create :user }
 
   context 'manager' do
 
@@ -15,30 +15,30 @@ RSpec.describe UsersController, type: :controller do
       User.delete_all
       Office.delete_all
       Jurisdiction.delete_all
-      create_list :user, 3, office: manager.office
-      create_list :user, 3, office: create(:office)
+      create_list :user, 2, office: manager.office
+      create_list :user, 2, office: create(:office)
       sign_in manager
     end
 
     describe 'GET #index' do
       it 'only shows users from the current_users office' do
         get :index
-        expect(assigns(:users).count).to eql(4)
-        expect(User.count).to eql(7)
+        expect(assigns(:users).count).to eql(3)
+        expect(User.count).to eql(5)
       end
 
       it 'does not show admins assigned to their office' do
         create :admin_user, office: manager.office
         get :index
-        expect(User.count).to eql(8)
-        expect(assigns(:users).count).to eql(4)
+        expect(User.count).to eql(6)
+        expect(assigns(:users).count).to eql(3)
       end
     end
 
     describe 'GET #show' do
       context 'for a user in their office' do
 
-        before(:each) { get :show, id: User.first.to_param }
+        before(:each) { get :show, id: user_on_my_team.to_param }
 
         it 'renders the view' do
           expect(response).to render_template :show
@@ -51,13 +51,13 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
-            get :show, id: User.last.to_param
+            get :show, id: user_not_my_team.to_param
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
 
         it 'renders the index view' do
           expect {
-            get :show, id: User.last.to_param
+            get :show, id: user_not_my_team.to_param
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
         end
       end

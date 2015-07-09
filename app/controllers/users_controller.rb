@@ -73,18 +73,22 @@ class UsersController < ApplicationController
   end
 
   def user_or_redirect
-    if admin_or_user_themselves?
+    if admin_manager_or_user_themselves?
       respond_with(@user)
     else
       redirect_to root_path
     end
   end
 
-  def admin_or_user_themselves?
-    current_user.admin? || user_themselves?
+  def admin_manager_or_user_themselves?
+    current_user.admin? || manages_user? || user_themselves?
   end
 
   def user_themselves?
     current_user.id == @user.id
+  end
+
+  def manages_user?
+    current_user.manager? && current_user.office == @user.office
   end
 end
