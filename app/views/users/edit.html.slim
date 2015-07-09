@@ -20,5 +20,8 @@ h2 Edit user
     = f.collection_select :office_id, @offices, :id, :name
   .form-group
     = f.label :jurisdiction_id
-    = f.collection_select :jurisdiction_id, @jurisdictions, :id, :name
+    - if @jurisdictions.present?
+      = f.collection_select :jurisdiction_id, @jurisdictions, :id, :name, { include_blank: 'No default jurisdiction' }
+    - else
+      = t('error_messages.jurisdictions.none_in_office')
   .actions = f.submit class: 'button'
