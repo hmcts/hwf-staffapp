@@ -151,4 +151,31 @@ describe User, type: :model do
       expect(user.admin?).to be false
     end
   end
+
+  describe 'soft deletion' do
+    before { [admin_user, manager, user].each { |u| u.save } }
+
+
+    context 'to start off' do
+      it 'will have 3 users' do
+        expect(User.count).to eq 3
+      end
+    end
+
+    context 'when soft deleted' do
+      before { user.destroy }
+
+      it 'removes the user from the default scope' do
+        expect(User.count).to eq 2
+      end
+
+      it 'throws an error when using the default scope' do
+        expect(User.find(user.id)).to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'soft deletes them' do
+        expect(User.with_deleted.find user.id).to eq user
+      end
+    end
+  end
 end
