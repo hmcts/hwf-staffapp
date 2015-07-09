@@ -28,7 +28,7 @@ h2 Edit user
         .row
           .columns.small-12.medium-8.large-5.columns.form-group
             = f.label(:roles, 'Role')
-            -if @user.elevated?
+            -if current_user.elevated?
               .row
                 .options.radio
                   =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
