@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     flash[:notice] = 'User updated' if @user.update_attributes(user_params)
     flash[:notice] = user_transfer_message if no_longer_manages?
 
-    respond_with @user
+    user_or_redirect
   end
 
   protected
@@ -75,6 +75,8 @@ class UsersController < ApplicationController
   def user_or_redirect
     if admin_manager_or_user_themselves?
       respond_with(@user)
+    elsif current_user.manager?
+      redirect_to users_path
     else
       redirect_to root_path
     end
