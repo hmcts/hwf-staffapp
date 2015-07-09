@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html
   before_action :authenticate_user!
-  before_action :find_user, only: [:edit, :show, :update]
+  before_action :find_user, only: [:edit, :show, :update, :destroy]
   before_action :populate_roles, only: [:edit, :update]
   before_action :populate_offices, only: [:edit, :update]
   before_action :populate_jurisdictions, only: [:edit, :update]
@@ -28,6 +28,11 @@ class UsersController < ApplicationController
     flash[:notice] = user_transfer_message if no_longer_manages?
 
     user_or_redirect
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path
   end
 
   protected

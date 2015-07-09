@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
   include Devise::TestHelpers
 
   let(:admin_user)              { create :admin_user }
-  let(:user_on_admins_team)     { create :user, office: admin_user.office }
+  let(:user_on_admins_team)     { create :user, name: 'Bob', office: admin_user.office }
   let(:user_not_on_admins_team) { create :user }
 
   context 'admin user' do
@@ -21,9 +21,18 @@ RSpec.describe UsersController, type: :controller do
     before(:each) { sign_in admin_user }
 
     describe 'GET #index' do
+
+      before(:each) { get :index }
+
       it 'shows user list' do
-        get :index
         expect(assigns(:users).count).to eql(7)
+      end
+
+      context 'when one user is deleted' do
+        it "doesn't show that user" do
+          user_on_admins_team.destroy
+          expect(response.body).not_to match user_on_admins_team.name
+        end
       end
     end
 
@@ -40,6 +49,10 @@ RSpec.describe UsersController, type: :controller do
 
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
+        end
+
+        it 'has delete user link' do
+          expect(response.body).to have_content 'Delete this user'
         end
       end
 
@@ -133,6 +146,14 @@ RSpec.describe UsersController, type: :controller do
         it 're-renders the "edit" template' do
           expect(response).to render_template('edit')
         end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      before(:each) { get :destroy, id: user_on_admins_team.to_param }
+
+      it 'redirects to the user index' do
+        expect(response).to redirect_to(users_path)
       end
     end
   end
