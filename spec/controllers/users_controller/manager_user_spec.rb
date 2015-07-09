@@ -75,8 +75,10 @@ RSpec.describe UsersController, type: :controller do
           expect(response.body).to match "#{manager.role}"
         end
 
-        it 'does not show them the options to change their role' do
-          expect(response.body).to have_select('user[role]', options: ['User', 'Manager'])
+        it 'only shows them options to change their role or below' do
+          expect(response.body).to have_xpath('//input[@name="user[role]"]', count: 2)
+          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="manager"]')
+          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="user"]')
         end
       end
 
