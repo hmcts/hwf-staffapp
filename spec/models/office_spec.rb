@@ -59,6 +59,7 @@ RSpec.describe Office, type: :model do
 
   describe 'managers' do
     let(:office)      { FactoryGirl.create :office }
+
     it 'returns a list of user in the manager role' do
       User.delete_all
       FactoryGirl.create_list :user, 3, office: office
@@ -66,15 +67,19 @@ RSpec.describe Office, type: :model do
       expect(office.managers.count).to eql 1
     end
   end
+
   describe 'managers_email' do
     let(:office)      { FactoryGirl.create :office }
+
     context 'managers are empty' do
       before(:each) { User.delete_all }
+
       it 'returns a text prompt' do
         FactoryGirl.create_list :user, 3, office: office
         expect(office.managers_email).to eql('a manager')
       end
     end
+
     context 'managers are populated' do
       before(:each) { User.delete_all }
       let(:manager1) { FactoryGirl.create :manager, office: office }
