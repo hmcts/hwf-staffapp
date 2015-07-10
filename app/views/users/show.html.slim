@@ -29,6 +29,10 @@ h2 User details
 .row.pad-top-thirty-pix
   .columns.small-12
     =link_to 'Edit this user', edit_user_path(@user)
+-if current_user == @user
+  .row.pad-top-fifteen-px
+    .columns.small-12
+      = link_to "Change your password", edit_user_registration_path(@user)
 -if current_user.elevated?
   .row.pad-top-fifteen-pix
     .columns.small-12
