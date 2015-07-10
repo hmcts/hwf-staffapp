@@ -5,8 +5,9 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:admin_user)  { create :admin_user }
-  let(:test_user)   { create :user }
+  let(:admin_user)              { create :admin_user }
+  let(:user_on_admins_team)     { create :user, name: 'Bob', office: admin_user.office }
+  let(:user_not_on_admins_team) { create :user }
 
   context 'admin user' do
     before do
@@ -20,9 +21,18 @@ RSpec.describe UsersController, type: :controller do
     before(:each) { sign_in admin_user }
 
     describe 'GET #index' do
+
+      before(:each) { get :index }
+
       it 'shows user list' do
-        get :index
         expect(assigns(:users).count).to eql(7)
+      end
+
+      context 'when one user is deleted' do
+        it "doesn't show that user" do
+          user_on_admins_team.destroy
+          expect(response.body).not_to match user_on_admins_team.name
+        end
       end
     end
 
@@ -40,11 +50,15 @@ RSpec.describe UsersController, type: :controller do
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
         end
+
+        it 'has delete user link' do
+          expect(response.body).to have_content 'Delete this user'
+        end
       end
 
       context 'for a user not in their office' do
 
-        before(:each) { get :show, id: User.last.to_param }
+        before(:each) { get :show, id: user_not_on_admins_team.to_param }
 
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
@@ -58,15 +72,15 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #show' do
       it 'shows user details' do
-        get :show,  id: test_user.to_param
-        expect(assigns(:user)).to eq(test_user)
+        get :show,  id: user_not_on_admins_team.to_param
+        expect(assigns(:user)).to eq(user_not_on_admins_team)
       end
     end
 
     describe 'GET #edit' do
       it 'shows edit page' do
-        get :edit, id: test_user.to_param
-        expect(assigns(:user)).to eq(test_user)
+        get :edit, id: user_not_on_admins_team.to_param
+        expect(assigns(:user)).to eq(user_not_on_admins_team)
       end
 
       context 'role' do
@@ -96,24 +110,24 @@ RSpec.describe UsersController, type: :controller do
             email: 'new_attributes@hmcts.gsi.gov.uk',
             password: 'aabbccdd',
             role: 'user',
-            office_id: test_user.office_id
+            office_id: user_not_on_admins_team.office_id
           }
         }
 
-        before(:each) { put :update, id: test_user.to_param, user: new_attributes }
+        before(:each) { put :update, id: user_not_on_admins_team.to_param, user: new_attributes }
 
         it 'updates the requested user' do
-          test_user.reload
-          expect(test_user.role).to eql 'user'
+          user_not_on_admins_team.reload
+          expect(user_not_on_admins_team.role).to eql 'user'
         end
 
         it "does't update the requested user's email" do
-          test_user.reload
-          expect(test_user.email).not_to eql new_attributes[:email]
+          user_not_on_admins_team.reload
+          expect(user_not_on_admins_team.email).not_to eql new_attributes[:email]
         end
 
         it 'assigns the requested user as @user' do
-          expect(assigns(:user)).to eq(test_user)
+          expect(assigns(:user)).to eq(user_not_on_admins_team)
         end
 
         it 'redirects to the user' do
@@ -123,15 +137,23 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
 
-        before(:each) { put :update, id: test_user.to_param, user: attributes_for(:invalid_user) }
+        before(:each) { put :update, id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) }
 
         it 'assigns the user as @user' do
-          expect(assigns(:user)).to eq(test_user)
+          expect(assigns(:user)).to eq(user_not_on_admins_team)
         end
 
         it 're-renders the "edit" template' do
           expect(response).to render_template('edit')
         end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      before(:each) { get :destroy, id: user_on_admins_team.to_param }
+
+      it 'redirects to the user index' do
+        expect(response).to redirect_to(users_path)
       end
     end
   end

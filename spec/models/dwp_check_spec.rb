@@ -7,6 +7,7 @@ RSpec.describe DwpCheck, type: :model do
   it 'pass factory build' do
     expect(check).to be_valid
   end
+
   context 'methods' do
     it 'generates a unique token for API checks' do
       check.created_by = create(:user, name: 'Test User')
@@ -16,6 +17,7 @@ RSpec.describe DwpCheck, type: :model do
       expect(check.our_api_token).to eql(check_val)
     end
   end
+
   context 'validations' do
     it 'requires an office_id to be saved' do
       check.office_id = nil
@@ -239,6 +241,18 @@ RSpec.describe DwpCheck, type: :model do
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')
         expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[1]).to eql('Deceased')
       end
+    end
+  end
+
+  context 'when the user is deleted' do
+    before do
+      check.created_by = user
+      check.save
+      user.destroy
+    end
+
+    it 'shows the user as the creator of the check' do
+      expect(check.created_by).to eq user
     end
   end
 end
