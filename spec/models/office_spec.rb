@@ -84,12 +84,10 @@ RSpec.describe Office, type: :model do
       before(:each) { User.delete_all }
       let(:manager1) { FactoryGirl.create :manager, office: office }
       let(:manager2) { FactoryGirl.create :manager, office: office }
-      let(:manager_emails) { office.managers_email }
 
       it 'returns an html string of emails of users in the manager role' do
         [manager1, manager2].each do |manager|
-          expect(office.managers_email).to include "#{manager.email}"
-          expect(office.managers_email).to include "#{manager.name}"
+          expect(office.managers_email).to include "<a href=\"mailto:#{manager.email}\">#{manager.name}</a>"
         end
       end
     end
