@@ -7,6 +7,7 @@ RSpec.describe DwpCheck, type: :model do
   it 'pass factory build' do
     expect(check).to be_valid
   end
+
   context 'methods' do
     it 'generates a unique token for API checks' do
       check.created_by = create(:user, name: 'Test User')
@@ -16,6 +17,7 @@ RSpec.describe DwpCheck, type: :model do
       expect(check.our_api_token).to eql(check_val)
     end
   end
+
   context 'validations' do
     it 'requires an office_id to be saved' do
       check.office_id = nil
