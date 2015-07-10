@@ -241,4 +241,16 @@ RSpec.describe DwpCheck, type: :model do
       end
     end
   end
+
+  context 'when the user is deleted' do
+    before do
+      check.created_by = user
+      check.save
+      user.destroy
+    end
+
+    it 'shows the user as the creator of the check' do
+      expect(check.created_by).to eq user
+    end
+  end
 end
