@@ -153,12 +153,11 @@ describe User, type: :model do
   end
 
   describe 'soft deletion' do
-    before { [admin_user, manager, user].each { |u| u.save } }
-
+    before { [admin_user, manager, user].map(&:save) }
 
     context 'to start off' do
       it 'will have 3 users' do
-        expect(User.count).to eq 3
+        expect(described_class.count).to eq 3
       end
     end
 
@@ -166,15 +165,15 @@ describe User, type: :model do
       before { user.destroy }
 
       it 'removes the user from the default scope' do
-        expect(User.count).to eq 2
+        expect(described_class.count).to eq 2
       end
 
       it 'throws an error when using the default scope' do
-        expect(User.find(user.id)).to raise_error(ActiveRecord::RecordNotFound)
+        expect { described_class.find(user.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      it 'soft deletes them' do
-        expect(User.with_deleted.find user.id).to eq user
+      it 'still keeps the user information around' do
+        expect(described_class.with_deleted.find user.id).to eq user
       end
     end
   end
