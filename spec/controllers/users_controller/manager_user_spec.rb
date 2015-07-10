@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/shared_examples/default_user_shared'
 
 RSpec.describe UsersController, type: :controller do
   render_views
@@ -19,6 +20,8 @@ RSpec.describe UsersController, type: :controller do
       create_list :user, 2, office: create(:office)
       sign_in manager
     end
+
+    it_behaves_like 'a user regardless of role'
 
     describe 'GET #index' do
       it 'only shows users from the current_users office' do

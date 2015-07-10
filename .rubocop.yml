@@ -42,7 +42,7 @@ Metrics/MethodLength:
 # No need to check for describe class param in support files.
 RSpec/DescribeClass:
   Exclude:
-    - spec/support/*
+    - spec/support/**/*
     - spec/views/**/*
 
 RSpec/FilePath:
