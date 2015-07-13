@@ -74,12 +74,6 @@ RSpec.describe UsersController, type: :controller do
         it 'shows them their role' do
           expect(response.body).to match "#{manager.role}"
         end
-
-        it 'only shows them options to change their role or below' do
-          expect(response.body).to have_xpath('//input[@name="user[role]"]', count: 2)
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="manager"]')
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="user"]')
-        end
       end
 
       context 'for a user not in their office' do
