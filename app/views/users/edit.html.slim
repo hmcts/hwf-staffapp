@@ -31,7 +31,7 @@ h2 Edit user
             -if current_user.elevated?
               .row
                 .columns.small-4.large-2
-                  - if current_user.manager?
+                  - if (@user.manager? && (@user == current_user))
                     = current_user.role
                   - else
                     .options.radio
