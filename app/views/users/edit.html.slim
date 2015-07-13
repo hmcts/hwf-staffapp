@@ -30,11 +30,15 @@ h2 Edit user
             = f.label(:roles, 'Role')
             -if current_user.elevated?
               .row
-                .options.radio
-                  =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
-                    = b.label do
-                      = b.radio_button(class: 'form-control')
-                      = b.text
+                .columns.small-4.large-2
+                  - if current_user.manager?
+                    = current_user.role
+                  - else
+                    .options.radio
+                      =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
+                        = b.label do
+                          = b.radio_button(class: 'form-control')
+                          = b.text
             -else
               .form-control #{@user.role}
 
