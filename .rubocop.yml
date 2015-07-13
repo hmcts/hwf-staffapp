@@ -62,6 +62,7 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: nested
   Exclude:
     - app/controllers/users/invitations_controller.rb
+    - app/controllers/users/registrations_controller.rb
 
 Style/CollectionMethods:
   PreferredMethods:

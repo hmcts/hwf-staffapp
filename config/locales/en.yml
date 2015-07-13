@@ -56,7 +56,7 @@ en:
               blank: You must enter a name for the user
             current_password:
               blank: You must enter your current password
-              invalid: This password does not match our records
+              invalid: Your password has not been recognised
             password:
               blank: You must enter a password
               too_short: Your password must be at least %{count} characters
@@ -110,4 +110,5 @@ en:
           income: Total monthly income
   devise:
     registrations:
-      updated: "Your password was updated successfully."
+      heading: Change your password
+      updated: Your password was updated successfully
