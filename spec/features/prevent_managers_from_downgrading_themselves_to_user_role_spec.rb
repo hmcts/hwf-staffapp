@@ -17,7 +17,7 @@ RSpec.feature 'Prevent managers from downgrading themselves to user role', type:
       expect(page).to have_text 'Role'
     end
 
-    it "doens't allow editing of the role" do
+    it "doesn't allow editing of the role" do
       expect(page).to_not have_xpath '//*[@id="user_role_user"]'
     end
   end
