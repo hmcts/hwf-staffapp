@@ -54,11 +54,14 @@ en:
               taken: This email has already been taken
             name:
               blank: You must enter a name for the user
+            current_password:
+              blank: You must enter your current password
+              invalid: Your password has not been recognised
             password:
               blank: You must enter a password
               too_short: Your password must be at least %{count} characters
             password_confirmation:
-              confirmation: This must match the password above
+              confirmation: Your password must match the one you entered above 
         dwp_check:
           attributes:
             last_name:
@@ -77,6 +80,8 @@ en:
               before: The application cannot be a future date
     attributes:
       user:
+        current_password: Current password
+        current_password_hint: We need this to confirm your changes
         password: Password
         new_password: New password
         new_password_hint: Use at least 8 numbers or letters for your password.
@@ -103,3 +108,7 @@ en:
           status: Status
           children: Number of children
           income: Total monthly income
+  devise:
+    registrations:
+      heading: Change your password
+      updated: Your password was updated successfully

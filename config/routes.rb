@@ -26,6 +26,10 @@ Rails.application.routes.draw do
     get "static/#{error}" => "static##{error}"
   end
 
-  devise_for :users, controllers: { invitations: 'users/invitations' }
+  devise_for :users, skip: :registrations, controllers: { invitations: 'users/invitations' }
   resources :users
+  as :user do
+    get 'users/:id/change_password' => 'devise/registrations#edit', as: 'edit_user_registration'
+    patch 'users/:id/change_password' => 'users/registrations#update', as: 'user_registration'
+  end
 end

@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
     :recoverable,
     :trackable,
     :validatable,
-    :invitable
+    :invitable,
+    :registerable
 
   scope :sorted_by_email, -> {  all.order(:email) }
 

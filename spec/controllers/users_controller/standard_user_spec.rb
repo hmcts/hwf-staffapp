@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/shared_examples/default_user_shared'
 
 RSpec.describe UsersController, type: :controller do
   render_views
@@ -12,6 +13,8 @@ RSpec.describe UsersController, type: :controller do
   context 'standard user' do
 
     before(:each) { sign_in user }
+
+    it_behaves_like 'a user regardless of role'
 
     describe 'GET #index' do
       it 'generates access denied error' do
