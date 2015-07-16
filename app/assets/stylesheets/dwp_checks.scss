@@ -28,21 +28,6 @@
   }
 }
 
-#dwp_data {
-  .row:last-child { border-bottom: 1px solid #bfc1c3; }
-  .row {
-    border-top: 1px solid #bfc1c3;
-    line-height: 1em;
-    padding: 1.5em 0em;
-    .table-label {
-      color:#666666;
-      padding-bottom: .5em;
-    }
-  }
-  .highlight {
-    font-weight:bold;
-  }
-}
 @media only screen and (min-width: upper-bound($medium-range)) {
   #dwp_data {
     .row {
