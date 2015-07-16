@@ -56,25 +56,25 @@
       button.button.primary#check_btn Check
 
 #r2_calculator_result
-  .row
+  .row.collapse
     .columns.small-12.medium-10.large-8
       #calculator.callout
         h3.bold#fee-remit
-  .row
+  .row.collapse
     .columns.small-12.medium-10.large-8
-      .calculator-data
-        .row.first
-          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.fee')
-          .columns.large-8.medium-7.small-6#confirm_fee
+      #dwp_data
         .row
-          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.status')
-          .columns.large-8.medium-7.small-6#confirm_status
+          .columns.large-4.medium-5.small-12.table-label =t('activerecord.attributes.r2_calc.labels.fee')
+          .columns.large-8.medium-7.small-12#confirm_fee
         .row
-          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.children')
-          .columns.large-8.medium-7.small-6#confirm_children
+          .columns.large-4.medium-5.small-12.table-label =t('activerecord.attributes.r2_calc.labels.status')
+          .columns.large-8.medium-7.small-12#confirm_status
         .row
-          .columns.large-4.medium-5.small-6.table-label =t('activerecord.attributes.r2_calc.labels.income')
-          .columns.large-8.medium-7.small-6#confirm_income
+          .columns.large-4.medium-5.small-12.table-label =t('activerecord.attributes.r2_calc.labels.children')
+          .columns.large-8.medium-7.small-12#confirm_children
+        .row
+          .columns.large-4.medium-5.small-12.table-label =t('activerecord.attributes.r2_calc.labels.income')
+          .columns.large-8.medium-7.small-12#confirm_income
 
       =render 'calculator/work_out'
 
