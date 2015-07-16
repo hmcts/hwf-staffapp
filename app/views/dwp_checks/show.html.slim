@@ -1,4 +1,4 @@
-.row
+.row.collapse
   .columns.small-12.medium-10.large-8
     #result.callout class=(@dwp_checker.benefits_valid ? 'received' : 'not-received')
       h3.bold#fee-remit
@@ -12,7 +12,7 @@
           -else
             |#{"Benefits not received: #{@dwp_checker.dwp_result}"}
 
-.row
+.row.collapse
   .columns.small-12.medium-10.large-8
     #dwp_data
       .row
