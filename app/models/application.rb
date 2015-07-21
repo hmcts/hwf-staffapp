@@ -1,5 +1,7 @@
 class Application < ActiveRecord::Base
 
+  belongs_to :jurisdiction
+
   MAX_AGE = 120
   MIN_AGE = 16
 
@@ -16,6 +18,30 @@ class Application < ActiveRecord::Base
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
   }, allow_blank: true
   # End step 1 validation
+
+  # Step 2 - Application details validation
+  with_options if: :active_or_application_details? do
+    validates :fee, :jurisdiction_id, presence: true
+    validates :fee, numericality: { allow_blank: true }
+    validates :date_received, date: {
+      after: proc { Time.zone.today - 3.months },
+      before: proc { Time.zone.today + 1.day }
+    }
+    with_options if: :probate? do
+      validates :deceased_name, presence: true
+      validates :date_of_death, date: {
+        before: proc { Time.zone.today + 1.day }
+      }
+
+    end
+    with_options if: :refund? do
+      validates :date_fee_paid, date: {
+        after: proc { Time.zone.today - 3.months },
+        before: proc { Time.zone.today + 1.day }
+      }
+    end
+  end
+  # End step 2 validation
 
   def ni_number=(val)
     if val.nil?
@@ -46,11 +72,11 @@ class Application < ActiveRecord::Base
   end
 
   def active_or_application_details?
-    status.include?('application_details') || active?
+    status.to_s.include?('application_details') || active?
   end
 
   def active_or_summary?
-    status.include?('summary') || active?
+    status.to_s.include?('summary') || active?
   end
 
   def dob_age_valid?
