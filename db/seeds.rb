@@ -22,7 +22,7 @@ end
 Jurisdiction.create([{ name: 'County Court', abbr: nil },
                      { name: 'High Court', abbr: nil },
                      { name: 'Insolvency', abbr: nil },
-                     { name: 'Family SFC', abbr: nil },
+                     { name: 'Family Court', abbr: nil },
                      { name: 'Probate', abbr: nil },
                      { name: 'Court of Protection', abbr: 'COP' },
                      { name: 'Magistrates Civil', abbr: nil },
