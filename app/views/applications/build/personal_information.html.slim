@@ -41,10 +41,10 @@
 
 
   .row
-    .small-12.medium-8.large-5.columns.form-group
-      #status-block
+    .small-12.medium-8.large-5.columns
+      .form-group
         = f.label :married, @application.errors[:married].join(', '), class: 'error' if @application.errors[:married].present?
-        .row
+        .row.collapse
           .columns.small-12
             = f.label :married
             .options.radio

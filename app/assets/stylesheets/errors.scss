@@ -4,11 +4,25 @@ div.field_with_errors input {
   border-color: $error-colour;
 }
 
-div.form-group div.field_with_errors {
+span.prefix > div.field_with_errors {
+}
+
+div.form-group > div.field_with_errors {
+  border-left: 2px solid $error-colour;
+  padding-left: 10px;
+}
+
+div.form-group div.field_with_errors + div.row.collapse {
   border-left: 2px solid $error-colour;
   padding-left: 10px;
 }
 
 div.field_with_errors label.error {
   color: $error-colour;
+  margin-top: 0rem;
+}
+
+div.row.collapse div.field_with_errors input {
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
 }
