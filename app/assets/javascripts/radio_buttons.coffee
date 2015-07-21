@@ -4,8 +4,8 @@ RadioButtonsModule =
 
   bindToRadioButtons: ->
     $('input[type=radio]').on 'change', ->
-      $("[name='" + $(this).attr('name') + "']").parent().removeClass("selected")
-      $(this).parent().addClass('selected')
+      $("[name='" + $(this).attr('name') + "']").parents('label').removeClass("selected")
+      $(this).parents('label').addClass('selected')
 
   setup: ->
     RadioButtonsModule.bindToRadioButtons()

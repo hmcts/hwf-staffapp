@@ -92,6 +92,30 @@ en:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             married:
               inclusion: Please select a marital status
+            fee:
+              blank: Enter the fee
+              not_a_number: The fee should be numeric
+            jurisdiction_id:
+              blank: You must select a jurisdiction
+            date_received:
+              blank: Enter the date the application was received
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+            date_of_death:
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
+            deceased_name:
+              blank: The deceased's name should be entered
+            date_fee_paid:
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+              blank: The date fee paid should be entered
     attributes:
       user:
         current_password: Current password
@@ -122,6 +146,7 @@ en:
         first_name: First and middle names
         last_name: 'Last name'
         last_name_hint: 'First 3 letters only'
+        full_name: Full name
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
         date_of_birth_hint: For example 01/11/1980
@@ -130,6 +155,17 @@ en:
         married: Status
         married_false: Single
         married_true: Married or living with someone and sharing an income
+        fee: Fee
+        jurisdiction_id: Jurisdiction
+        date_received: Date application received
+        form_name: Form name or number related to this application
+        form_name_summary: Form name or number
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
       r2_calc:
         labels:
           fee: Fee
