@@ -50,6 +50,7 @@ h3.bold {
   background-color: $button-colour;
   box-shadow: 0 2px 0 #003518;
 }
+
 .btn:hover {
   background-color: $green;
 }
@@ -101,8 +102,17 @@ button,
 input[type="button"],
 input[type="submit"] {
   font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+label.inline {
+  font-size: 0.875rem;
 }
 
 td.center {
   text-align: center;
+}
+
+.start-hidden {
+  display:none;
 }
