@@ -11,10 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709131316) do
+ActiveRecord::Schema.define(version: 20150716155052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "date_of_birth"
+    t.string   "ni_number"
+    t.boolean  "married"
+    t.decimal  "fee"
+    t.string   "status"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "jurisdiction_id"
+    t.date     "date_received"
+    t.string   "form_name"
+    t.string   "case_number"
+    t.boolean  "probate"
+    t.string   "deceased_name"
+    t.date     "date_of_death"
+    t.boolean  "refund"
+    t.date     "date_fee_paid"
+    t.integer  "user_id"
+    t.integer  "office_id"
+  end
+
+  add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
+  add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
   create_table "dwp_checks", force: :cascade do |t|
     t.string   "last_name"
@@ -121,6 +148,8 @@ ActiveRecord::Schema.define(version: 20150709131316) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "applications", "offices"
+  add_foreign_key "applications", "users"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
