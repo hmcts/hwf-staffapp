@@ -125,7 +125,6 @@ en-GB:
               inclusion: You must answer the benefits question
             children:
               inclusion: 'You must answer the dependent children question'
-
     attributes:
       user:
         current_password: Current password
