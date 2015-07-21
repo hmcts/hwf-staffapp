@@ -79,6 +79,19 @@ en:
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
+        application:
+          attributes:
+            last_name:
+              blank: Enter the applicant's last name
+            date_of_birth:
+              blank: Enter the applicant's date of birth
+              invalid: 'Enter the date as day, month, year DD/MM/YYYY'
+              not_a_date: 'Enter the date in this format 01/11/1980'
+            ni_number:
+              blank: 'Enter the applicant’s National Insurance number'
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+            married:
+              inclusion: Please select a marital status
     attributes:
       user:
         current_password: Current password
@@ -101,8 +114,22 @@ en:
         dob_hint: For example 01/11/1980
         dob_too_young: The applicant can't be under %{min_age} years old
         dob_too_old: The applicant can't be over %{max_age} years old
-        date_to_check: 'Date application received'
-        date_to_check_hint: 'For refunds enter the date the fee was paid.'
+        date_to_check: 'Date application made'
+        date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
+      application:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        title: Title
+        first_name: First and middle names
+        last_name: 'Last name'
+        last_name_hint: 'First 3 letters only'
+        ni_number: 'National Insurance number'
+        date_of_birth: 'Date of birth'
+        date_of_birth_hint: For example 01/11/1980
+        date_of_birth_too_young: The applicant can't be under %{min_age} years old
+        date_of_birth_too_old: The applicant can't be over %{max_age} years old
+        married: Status
+        married_false: Single
+        married_true: Married or living with someone and sharing an income
       r2_calc:
         labels:
           fee: Fee
