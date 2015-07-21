@@ -44,6 +44,8 @@ gem 'logstasher'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'wicked'
+
 # Date validation
 gem 'date_validator'
 gem 'will_paginate'
