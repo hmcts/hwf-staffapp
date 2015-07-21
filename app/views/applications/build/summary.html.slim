@@ -1,0 +1,20 @@
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Check details
+  .row
+    .small-12.medium-7.large-8.columns
+      h4 Personal details
+    .small-12.medium-5.large-4.columns.text-right =link_to 'Change personal information', wizard_path(:personal_information)
+  .row
+    .small-12.medium-5.large-4.columns.subheader Full name
+    .small-12.medium-7.large-8.columns =@application.full_name
+  .row
+    .small-12.medium-5.large-4.columns.subheader Date of birth
+    .small-12.medium-7.large-8.columns =@application.date_of_birth
+  .row
+    .small-12.medium-5.large-4.columns.subheader National Insurance number
+    .small-12.medium-7.large-8.columns = @application.ni_number_display
+  .row
+    .small-12.medium-5.large-4.columns.subheader Status
+    .small-12.medium-7.large-8.columns =@application.married ? t('activerecord.attributes.application.married_true') : t('activerecord.attributes.application.married_false')
