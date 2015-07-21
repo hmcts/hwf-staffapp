@@ -4,11 +4,45 @@ div.field_with_errors input {
   border-color: $error-colour;
 }
 
-div.form-group div.field_with_errors {
+div.form-group > div.field_with_errors {
   border-left: 2px solid $error-colour;
   padding-left: 10px;
 }
 
+div.form-group > .row.collapse div.field_with_errors label:not(.inline) {
+  border-left: 2px solid $error-colour;
+  padding-left: 10px;
+  margin-top: 1.5rem;
+}
+
+div.form-group > .row.collapse div.field_with_errors label.error {
+  margin-top: 0rem;
+}
+
+
+div.form-group div.field_with_errors + div.row.collapse,
+div.form-group div.field_with_errors + div.options.radio {
+  border-left: 2px solid $error-colour;
+  padding-left: 10px;
+}
+
+div.options.radio label:first-child {
+  margin-top: 0rem;
+}
+div.options.radio div.options label:last-child {
+  margin-bottom: 0rem;
+}
+
 div.field_with_errors label.error {
   color: $error-colour;
+  margin-top: 0rem;
+}
+
+div.row.collapse div.field_with_errors input {
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
+}
+
+div.form-group div.row.collapse div.field_with_errors label {
+  margin-top: 0rem;
 }
