@@ -101,6 +101,19 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
+
+      context 'when trying to escalate their own role' do
+
+        before do
+          post :update, id: user.id, user: { role: 'admin' }
+          user.reload
+        end
+
+        it "doesn't escalates their role" do
+          expect(user.role).not_to eq 'admin'
+        end
+      end
+
       context "when trying to edit somebody else's profile" do
         it "doesn't allow editing of the user details" do
           post :update, id: test_user.id, user: { name: 'random value' }
