@@ -101,7 +101,6 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
-
       context 'when trying to escalate their own role' do
 
         before do

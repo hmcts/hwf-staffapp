@@ -38,10 +38,13 @@ class UsersController < ApplicationController
   protected
 
   def user_params
-    if @user.admin?
-      params.require(:user).permit(:name, :role, :office_id, :jurisdiction_id)
+    all_params   = [:name, :office_id, :jurisdiction_id, :role]
+    all_but_role = [:name, :office_id, :jurisdiction_id]
+
+    if current_user.admin? || manager_doesnt_escalate_to_admin?
+      params.require(:user).permit(all_params)
     else
-      params.require(:user).permit(:name, :office_id, :jurisdiction_id)
+      params.require(:user).permit(all_but_role)
     end
   end
 
@@ -101,5 +104,9 @@ class UsersController < ApplicationController
 
   def manages_user?
     current_user.manager? && current_user.office == @user.office
+  end
+
+  def manager_doesnt_escalate_to_admin?
+    manages_user? && params[:user][:role] != 'admin'
   end
 end
