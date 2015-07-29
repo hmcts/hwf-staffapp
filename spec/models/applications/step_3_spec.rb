@@ -14,7 +14,7 @@ RSpec.describe Application, type: :model do
       describe 'savings_threshold' do
         describe 'presence' do
           before do
-            application.savings_threshold = nil
+            application.threshold_exceeded = nil
             application.valid?
           end
 
@@ -23,8 +23,30 @@ RSpec.describe Application, type: :model do
           end
 
           it 'returns an error if missing' do
-            expect(application.errors[:savings_threshold]).to eq ['You must answer the savings question']
+            expect(application.errors[:threshold_exceeded]).to eq ['You must answer the savings question']
           end
+        end
+      end
+
+      context 'threshold_exceeded is true' do
+        before { application.threshold_exceeded = true }
+
+        describe 'over_61' do
+          before do
+            application.over_61 = nil
+            application.valid?
+          end
+
+          it 'must be present' do
+            expect(application).to be_invalid
+          end
+        end
+      end
+
+      context 'savings_threshold is false' do
+        describe 'over_61' do
+          it 'must be nil'
+
         end
       end
     end
