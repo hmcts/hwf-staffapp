@@ -46,6 +46,7 @@ class Application < ActiveRecord::Base
   # Step 3 - Savings and investments validation
   with_options if: :active_or_savings_investments? do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
+    validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
   end
   # End step 3 validation
 
