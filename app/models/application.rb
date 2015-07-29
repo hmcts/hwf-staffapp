@@ -43,6 +43,12 @@ class Application < ActiveRecord::Base
   end
   # End step 2 validation
 
+  # Step 3 - Savings and investments validation
+  with_options if: :active_or_savings_investments? do
+    validates :threshold_exceeded, inclusion: { in: [true, false] }
+  end
+  # End step 3 validation
+
   def ni_number=(val)
     if val.nil?
       self[:ni_number] = nil
@@ -73,6 +79,10 @@ class Application < ActiveRecord::Base
 
   def active_or_application_details?
     status.to_s.include?('application_details') || active?
+  end
+
+  def active_or_savings_investments?
+    status.to_s.include?('savings_investments') || active?
   end
 
   def active_or_summary?
