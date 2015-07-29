@@ -8,6 +8,7 @@ FactoryGirl.define do
     married false
     fee '310.00'
     association :jurisdiction
+    date_received Time.zone.today
 
     factory :probate_application do
       probate true
