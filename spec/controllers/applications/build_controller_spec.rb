@@ -10,7 +10,7 @@ RSpec.describe Applications::BuildController, type: :controller do
   context 'as a logged in user' do
     before { sign_in user }
 
-    describe 'GET #create' do
+    describe 'GET applications/build#create' do
       before { get :create }
 
       it 'redirect to the personal_information view' do
@@ -18,15 +18,24 @@ RSpec.describe Applications::BuildController, type: :controller do
       end
     end
 
-    describe 'GET build#show' do
-      context 'personal_information' do
-        it 'displays the personal information view'
+    describe 'GET ' do
 
+      let(:application) { create :application }
+
+      context 'personal_information' do
+        before { get :show, application_id: application.id, id: :personal_information }
+
+        it 'displays the personal information view' do
+          expect(response).to render_template :personal_information
+        end
       end
 
       context 'application_details' do
-        it 'displays the application details view'
+        before { get :show, application_id: application.id, id: :application_details }
 
+        it 'displays the application details view' do
+          expect(response).to render_template :application_details
+        end
       end
 
       context 'savings_investments' do
@@ -34,8 +43,11 @@ RSpec.describe Applications::BuildController, type: :controller do
       end
 
       context 'summary' do
-        it 'displays the summary view'
+        before { get :show, application_id: application.id, id: :summary }
 
+        it 'displays the summary view' do
+          expect(response).to render_template :summary
+        end
       end
     end
   end
