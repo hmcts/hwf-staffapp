@@ -1,4 +1,4 @@
-class Application < ActiveRecord::Base
+class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   belongs_to :jurisdiction
 
@@ -67,7 +67,11 @@ class Application < ActiveRecord::Base
 
   def fee=(val)
     super
-    self.threshold = val.to_i <= 1000 ? 3000 : 4000
+    if known_over_61?
+      self.threshold = 16000
+    else
+      self.threshold = val.to_i <= 1000 ? 3000 : 4000
+    end
   end
 
   def threshold_exceeded=(val)
@@ -75,8 +79,25 @@ class Application < ActiveRecord::Base
     self.over_61 = nil unless val == true
   end
 
+  def savings_investment_result?
+    result = false
+    if threshold_exceeded == false || (threshold_exceeded && over_61 == false)
+      result = true
+    end
+    result
+  end
+
   def full_name
     [title, first_name, last_name].join(' ')
+  end
+
+  def known_over_61?
+    applicant_age >= 61
+  end
+
+  def applicant_age
+    now = Time.zone.now.utc.to_date
+    now.year - date_of_birth.year - (date_of_birth.to_date.change(year: now.year) > now ? 1 : 0)
   end
 
   private
