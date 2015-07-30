@@ -63,6 +63,7 @@ Style/ClassAndModuleChildren:
   Exclude:
     - app/controllers/users/invitations_controller.rb
     - app/controllers/users/registrations_controller.rb
+    - app/controllers/applications/build_controller.rb
 
 Style/CollectionMethods:
   PreferredMethods:
