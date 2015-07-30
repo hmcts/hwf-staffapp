@@ -70,6 +70,11 @@ class Application < ActiveRecord::Base
     self.threshold = val.to_i <= 1000 ? 3000 : 4000
   end
 
+  def threshold_exceeded=(val)
+    super
+    self.over_61 = nil unless val == true
+  end
+
   def full_name
     [title, first_name, last_name].join(' ')
   end
