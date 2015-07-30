@@ -1,0 +1,14 @@
+form {
+  .panel-indent {
+    label {
+      margin-top: 0rem;
+    }
+
+    div.field_with_errors label:not(.inline) {
+      margin-top: 0rem !important;
+    }
+    div.field_with_errors label:not(.error) {
+      margin-top: 0.75rem !important;
+    }
+  }
+}
