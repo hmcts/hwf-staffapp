@@ -169,6 +169,8 @@ en:
         date_of_death: Date of their death
         refund: This is a refund case
         date_fee_paid: Date fee paid
+        benefits_false: 'No'
+        benefits_true: 'Yes'
       r2_calc:
         labels:
           fee: Fee
