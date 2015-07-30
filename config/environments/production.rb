@@ -81,7 +81,7 @@ Rails.application.configure do
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
-  config.logstasher.logger_path = "#{Rails.root}/log/logstash_#{Rails.env}.json"
+  config.logstasher.logger_path = STDOUT
   config.logstasher.source = 'logstasher'
 
   # Do not dump schema after migrations.
