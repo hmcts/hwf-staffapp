@@ -112,8 +112,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     status == 'active'
   end
 
-  def active_or_status_is? status_name
-    active? || status.to_s.include? status_name
+  def active_or_status_is?(status_name)
+    active? || status.to_s.include?(status_name)
   end
 
   def dob_age_valid?
