@@ -46,6 +46,14 @@ RSpec.describe Applications::BuildController, type: :controller do
         end
       end
 
+      context 'benefits' do
+        before { get :show, application_id: application.id, id: :benefits }
+
+        it 'displays the savings and investments view' do
+          expect(response).to render_template :benefits
+        end
+      end
+
       context 'summary' do
         before { get :show, application_id: application.id, id: :summary }
 
