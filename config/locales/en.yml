@@ -116,8 +116,8 @@ en:
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
               blank: The date fee paid should be entered
-            saving_exceeded:
-              inclusion: Please confirm the savings level
+            threshold_exceeded:
+              inclusion: You must answer the savings question
             over_61:
               inclusion: Please confirm the ages
             benefits:
