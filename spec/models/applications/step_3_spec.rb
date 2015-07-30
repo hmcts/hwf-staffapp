@@ -30,7 +30,7 @@ RSpec.describe Application, type: :model do
     end
 
     describe 'validations' do
-      describe 'savings_threshold' do
+      describe 'threshold_exceeded' do
         describe 'presence' do
           before do
             application.threshold_exceeded = nil
@@ -83,6 +83,26 @@ RSpec.describe Application, type: :model do
 
             it 'returns invalid' do
               expect(application).to be_invalid
+            end
+          end
+        end
+      end
+
+      context 'when threshold_exceeded is true' do
+        before { application.threshold_exceeded = true }
+
+        context 'and over_61 is not nil' do
+          before { application.over_61 = true }
+
+          context 'setting threshold_exceeded to false' do
+            before { application.threshold_exceeded = false }
+
+            it 'resets over_61 to nil' do
+              expect(application.over_61).to eq nil
+            end
+
+            it 'leaves the application as valid' do
+              expect(application).to be_valid
             end
           end
         end
