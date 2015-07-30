@@ -61,7 +61,7 @@ en:
               blank: You must enter a password
               too_short: Your password must be at least %{count} characters
             password_confirmation:
-              confirmation: Your password must match the one you entered above 
+              confirmation: Your password must match the one you entered above
         dwp_check:
           attributes:
             last_name:
@@ -117,10 +117,11 @@ en:
               blank: The date fee paid should be entered
             threshold_exceeded:
               inclusion: You must answer the savings question
-            saving_exceeded:
-              inclusion: Please confirm the savings level
             over_61:
               inclusion: Please confirm the ages
+            benefits:
+              inclusion: You must answer the benefits question
+
     attributes:
       user:
         current_password: Current password
@@ -171,7 +172,7 @@ en:
         date_of_death: Date of their death
         refund: This is a refund case
         date_fee_paid: Date fee paid
-        over_61: Is the applicant's partner 61 or over?
+        over_61: "Is the applicant's partner 61 or over?"
         page_3:
           header: Savings and investments
           maximum_prompt: 'Maximum amount of savings and investments allowed:'
@@ -184,7 +185,8 @@ en:
           passed: Passed
           failed: Failed
           savings_investments: Maximum savings allowed
-
+        benefits_false: 'No'
+        benefits_true: 'Yes'
       r2_calc:
         labels:
           fee: Fee

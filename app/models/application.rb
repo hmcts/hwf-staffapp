@@ -6,7 +6,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   MIN_AGE = 16
 
   # Step 1 - Personal detail validation
-  with_options if: :active_or_personal_information? do
+  with_options if: proc { active_or_status_is? 'personal_information' } do
     validates :last_name, presence: true
     validates :married, inclusion: { in: [true, false] }
     validates :last_name, length: { minimum: 2 }, allow_blank: true
@@ -20,7 +20,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   # End step 1 validation
 
   # Step 2 - Application details validation
-  with_options if: :active_or_application_details? do
+  with_options if: proc { active_or_status_is? 'application_details' } do
     validates :fee, :jurisdiction_id, presence: true
     validates :fee, numericality: { allow_blank: true }
     validates :date_received, date: {
@@ -44,12 +44,18 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   # End step 2 validation
 
   # Step 3 - Savings and investments validation
-  with_options if: :active_or_savings_investments? do
+  with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
     validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
     validates :over_61, inclusion: { in: [nil] }, unless: :threshold_exceeded
   end
   # End step 3 validation
+
+  # Step 4 - Benefits
+  with_options if: proc { active_or_status_is? 'benefits' } do
+    validates :benefits, inclusion: { in: [true, false] }
+  end
+  # End step 4 validation
 
   def ni_number=(val)
     if val.nil?
@@ -106,20 +112,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     status == 'active'
   end
 
-  def active_or_personal_information?
-    status.to_s.include?('personal_information') || active?
-  end
-
-  def active_or_application_details?
-    status.to_s.include?('application_details') || active?
-  end
-
-  def active_or_savings_investments?
-    status.to_s.include?('savings_investments') || active?
-  end
-
-  def active_or_summary?
-    status.to_s.include?('summary') || active?
+  def active_or_status_is?(status_name)
+    active? || status.to_s.include?(status_name)
   end
 
   def dob_age_valid?
