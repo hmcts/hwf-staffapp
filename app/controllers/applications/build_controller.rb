@@ -4,7 +4,7 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
-  steps :personal_information, :application_details, :summary
+  steps :personal_information, :application_details, :savings_investments, :benefits, :summary
 
   def create
     @application = Application.create(
@@ -51,6 +51,9 @@ class Applications::BuildController < ApplicationController
       :date_of_death,
       :refund,
       :date_fee_paid,
+      # Page 3
+      :threshold_exceeded,
+      :over_61,
       :status
     )
   end
