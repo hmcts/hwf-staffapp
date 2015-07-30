@@ -51,6 +51,12 @@ class Application < ActiveRecord::Base
   end
   # End step 3 validation
 
+  # Step 4 - Benefits
+  with_options if: :active_or_benefits? do
+    validates :benefits, inclusion: { in: [true, false] }
+  end
+  # End step 4 validation
+
   def ni_number=(val)
     if val.nil?
       self[:ni_number] = nil
@@ -94,6 +100,10 @@ class Application < ActiveRecord::Base
 
   def active_or_summary?
     status.to_s.include?('summary') || active?
+  end
+
+  def active_or_benefits?
+    status.to_s.include?('benefits') || active?
   end
 
   def dob_age_valid?

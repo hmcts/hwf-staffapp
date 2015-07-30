@@ -61,7 +61,7 @@ en:
               blank: You must enter a password
               too_short: Your password must be at least %{count} characters
             password_confirmation:
-              confirmation: Your password must match the one you entered above 
+              confirmation: Your password must match the one you entered above
         dwp_check:
           attributes:
             last_name:
@@ -117,6 +117,8 @@ en:
               blank: The date fee paid should be entered
             threshold_exceeded:
               inclusion: You must answer the savings question
+            benefits:
+              inclusion: You must answer the benefits question
     attributes:
       user:
         current_password: Current password

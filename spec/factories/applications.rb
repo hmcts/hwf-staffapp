@@ -9,6 +9,7 @@ FactoryGirl.define do
     fee '310.00'
     association :jurisdiction
     date_received Time.zone.today
+    benefits true
 
     factory :probate_application do
       probate true
