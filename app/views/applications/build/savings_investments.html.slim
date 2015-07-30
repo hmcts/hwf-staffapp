@@ -1,0 +1,59 @@
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 =t('activerecord.attributes.application.page_3.header')
+
+  .row
+    .small-12.medium-8.large-7.columns
+      label =t('activerecord.attributes.application.page_3.maximum_prompt')
+      #result.callout.received
+        .row
+          .small-12.columns
+            h3 £#{@application.threshold.floor}
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .row.collapse
+          .columns.small-12
+            = f.label :threshold_exceeded, t("activerecord.attributes.application.page_3.savings.#{@application.married ? 'married' : 'single'}")
+            = f.label :threshold_exceeded, @application.errors[:threshold_exceeded].join(', '), class: 'error' if @application.errors[:threshold_exceeded].present?
+            .options.radio
+              .option
+                label for='application_threshold_exceeded_false'
+                  = f.radio_button :threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'over-61', show: 'false' } }
+                  = t('activerecord.attributes.application.page_3.savings.less_than')
+              .option
+                label for='application_threshold_exceeded_true'
+                  = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
+                  = t('activerecord.attributes.application.page_3.savings.more_than')
+
+  -if @application.known_over_61?
+    =f.hidden_field :over_61, value: 'true'
+  -else
+    #over-61-only.start-hidden
+      .row
+        .small-12.medium-8.large-5.columns
+          .form-group.panel-indent
+            .row.collapse
+              .columns.small-12
+                = f.label :over_61, t('activerecord.attributes.application.over_61')
+                = f.label :over_61, @application.errors[:over_61].join(', '), class: 'error' if @application.errors[:over_61].present?
+                .options.radio
+                  .option
+                    label for='application_over_61_false'
+                      = f.radio_button :over_61, 'false'
+                      = t('no')
+                  .option
+                    label for='application_over_61_true'
+                      = f.radio_button :over_61, 'true'
+                      = t('yes')
+
+  = f.submit 'Next', :class => 'button primary'
+
+javascript:
+  $('#application_threshold_exceeded_false').on('click', function () {
+    $('#application_over_61_true').prop('checked', false);
+    $('#application_over_61_false').prop('checked', false);
+  });
+

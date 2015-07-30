@@ -118,6 +118,10 @@ en:
               blank: The date fee paid should be entered
             threshold_exceeded:
               inclusion: You must answer the savings question
+            saving_exceeded:
+              inclusion: Please confirm the savings level
+            over_61:
+              inclusion: Please confirm the ages
     attributes:
       user:
         current_password: Current password
@@ -168,6 +172,20 @@ en:
         date_of_death: Date of their death
         refund: This is a refund case
         date_fee_paid: Date fee paid
+        over_61: Is the applicant's partner 61 or over?
+        page_3:
+          header: Savings and investments
+          maximum_prompt: 'Maximum amount of savings and investments allowed:'
+          savings:
+           single: The applicant has
+           married: The applicant and their partner have
+           less_than: Less than this amount
+           more_than: More than this amount
+        summary:
+          passed: Passed
+          failed: Failed
+          savings_investments: Maximum savings allowed
+
       r2_calc:
         labels:
           fee: Fee
