@@ -1,0 +1,17 @@
+h2 Benefits
+
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .options.radio
+          .option
+            label for='benefits_false'
+              = f.radio_button :benefits, 'false'
+              = t('activerecord.attributes.application.benefits_false')
+          .option
+            label for='benefits_true'
+              = f.radio_button :benefits, 'true'
+              = t('activerecord.attributes.application.benefits_true')
+
+  = f.submit 'Next', :class => 'button primary'
