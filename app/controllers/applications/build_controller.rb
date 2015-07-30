@@ -51,6 +51,9 @@ class Applications::BuildController < ApplicationController
       :date_of_death,
       :refund,
       :date_fee_paid,
+      # Page 3
+      :threshold_exceeded,
+      :over_61,
       :status
     )
   end

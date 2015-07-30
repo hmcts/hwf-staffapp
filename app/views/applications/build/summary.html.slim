@@ -21,35 +21,45 @@
       .small-12.medium-5.large-4.columns.subheader Status
       .small-12.medium-7.large-8.columns =@application.married ? t('activerecord.attributes.application.married_true') : t('activerecord.attributes.application.married_false')
 
-  .row
-    .small-12.medium-7.large-8.columns
-      h4 Application details
-    .small-12.medium-5.large-4.columns.text-right =link_to 'Change application details', wizard_path(:application_details)
-  .row
-    .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.fee')
-    .small-12.medium-7.large-8.columns £#{@application.fee.floor}
-  .row
-    .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.jurisdiction_id')
-    .small-12.medium-7.large-8.columns =@application.jurisdiction.display_full
-  .row
-    .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_received')
-    .small-12.medium-7.large-8.columns =@application.date_received.to_s(:gov_uk_long)
-  -if @application.form_name.present?
+  .summary-section
     .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.form_name_summary')
-      .small-12.medium-7.large-8.columns =@application.form_name
-  -if @application.case_number.present?
+      .small-12.medium-7.large-8.columns
+        h4 Application details
+      .small-12.medium-5.large-4.columns.text-right =link_to 'Change application details', wizard_path(:application_details)
     .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.case_number')
-      .small-12.medium-7.large-8.columns =@application.case_number
-  -if @application.probate
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.fee')
+      .small-12.medium-7.large-8.columns £#{@application.fee.floor}
     .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.deceased_name')
-      .small-12.medium-7.large-8.columns =@application.deceased_name
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.jurisdiction_id')
+      .small-12.medium-7.large-8.columns =@application.jurisdiction.display_full
     .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_of_death')
-      .small-12.medium-7.large-8.columns =@application.date_of_death.to_s(:gov_uk_long)
-  -if @application.refund
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_received')
+      .small-12.medium-7.large-8.columns =@application.date_received.to_s(:gov_uk_long)
+    -if @application.form_name.present?
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.form_name_summary')
+        .small-12.medium-7.large-8.columns =@application.form_name
+    -if @application.case_number.present?
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.case_number')
+        .small-12.medium-7.large-8.columns =@application.case_number
+    -if @application.probate
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.deceased_name')
+        .small-12.medium-7.large-8.columns =@application.deceased_name
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_of_death')
+        .small-12.medium-7.large-8.columns =@application.date_of_death.to_s(:gov_uk_long)
+    -if @application.refund
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_fee_paid')
+        .small-12.medium-7.large-8.columns =@application.date_fee_paid.to_s(:gov_uk_long)
+
+  .summary-section
     .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_fee_paid')
-      .small-12.medium-7.large-8.columns =@application.date_fee_paid.to_s(:gov_uk_long)
+      .small-12.medium-7.large-8.columns
+        h4 =t('activerecord.attributes.application.page_3.header')
+      .small-12.medium-5.large-4.columns.text-right =link_to 'Change savings and investments', wizard_path(:savings_investments)
+    .row
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.savings_investments')
+      .small-12.medium-7.large-8.columns =t("activerecord.attributes.application.summary.#{@application.savings_investment_result? ? 'passed' : 'failed'}")
