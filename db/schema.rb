@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150729150135) do
     t.date     "date_fee_paid"
     t.integer  "user_id"
     t.integer  "office_id"
+    t.decimal  "threshold"
     t.boolean  "threshold_exceeded"
     t.boolean  "over_61"
   end
