@@ -47,6 +47,7 @@ class Application < ActiveRecord::Base
   with_options if: :active_or_savings_investments? do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
     validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
+    validates :over_61, inclusion: { in: [nil] }, unless: :threshold_exceeded
   end
   # End step 3 validation
 
@@ -62,6 +63,11 @@ class Application < ActiveRecord::Base
     unless self[:ni_number].nil?
       self[:ni_number].gsub(/(.{2})/, '\1 ')
     end
+  end
+
+  def fee=(val)
+    super
+    self.threshold = val.to_i <= 1000 ? 3000 : 4000
   end
 
   def full_name
