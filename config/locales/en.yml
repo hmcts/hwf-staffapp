@@ -191,6 +191,10 @@ en-GB:
           passed: '&#10003; Passed'
           failed: '&#10007; Failed'
           savings_investments: Maximum savings allowed
+        benefits_false: 'No'
+        benefits_true: 'Yes'
+        income_false: 'No'
+        income_true: 'Yes'
       r2_calc:
         labels:
           fee: Fee
