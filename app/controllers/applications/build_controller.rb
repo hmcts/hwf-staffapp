@@ -4,7 +4,12 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
-  steps :personal_information, :application_details, :savings_investments, :benefits, :summary
+  steps :personal_information,
+        :application_details,
+        :savings_investments,
+        :benefits,
+        :income,
+        :summary
 
   def create
     @application = Application.create(

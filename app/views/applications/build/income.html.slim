@@ -1,0 +1,17 @@
+h2 Icome
+
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .options.radio
+          .option
+            label for='income_false'
+              = f.radio_button :income, 'false'
+              = t('activerecord.attributes.application.income_false')
+          .option
+            label for='income_true'
+              = f.radio_button :income, 'true'
+              = t('activerecord.attributes.application.income_true')
+
+  = f.submit 'Next', :class => 'button primary'
