@@ -48,7 +48,7 @@ RSpec.describe Application, type: :model do
           end
 
           it 'must be at least 2 characters' do
-            expect(application.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
+            expect(application.errors[:last_name]).to eq ['Last name is too short (minimum is 2 characters)']
           end
         end
       end
