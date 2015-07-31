@@ -57,6 +57,12 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
   # End step 4 validation
 
+  # Step 5 - Income
+  with_options if: proc { active_or_status_is? 'income' } do
+    validates :children, numericality: true
+  end
+  # End step 5 validation
+
   def ni_number=(val)
     if val.nil?
       self[:ni_number] = nil
