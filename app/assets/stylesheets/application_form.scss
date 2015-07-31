@@ -1,3 +1,5 @@
+@import 'colours';
+
 form {
   .panel-indent {
     label {
@@ -9,6 +11,18 @@ form {
     }
     div.field_with_errors label:not(.error) {
       margin-top: 0.75rem !important;
+    }
+  }
+
+  .summary-section {
+    .summary-result{
+      font-weight: bold;
+      &.success {
+        color: #28A197;
+      }
+      &.failure {
+        color: $error-colour;
+      }
     }
   }
 }
