@@ -10,6 +10,7 @@ FactoryGirl.define do
     association :jurisdiction
     date_received Time.zone.today
     benefits true
+    children 1
 
     factory :probate_application do
       probate true

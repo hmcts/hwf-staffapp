@@ -123,6 +123,9 @@ en-GB:
               inclusion: Please confirm the ages
             benefits:
               inclusion: You must answer the benefits question
+            children:
+              inclusion: 'You must answer the dependent children question'
+
     attributes:
       user:
         current_password: Current password
