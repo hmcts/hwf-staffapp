@@ -183,8 +183,8 @@ en:
            less_than: Less than this amount
            more_than: More than this amount
         summary:
-          passed: Passed
-          failed: Failed
+          passed: '&#10003; Passed'
+          failed: '&#10007; Failed'
           savings_investments: Maximum savings allowed
         benefits_false: 'No'
         benefits_true: 'Yes'
