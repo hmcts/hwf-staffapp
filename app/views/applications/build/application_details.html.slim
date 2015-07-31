@@ -60,18 +60,19 @@
             = t('activerecord.attributes.application.probate')
 
   #probate-only.start-hidden
-    .row
-      .small-12.medium-8.large-5.columns
-        .form-group
-          = f.label :deceased_name
-          = f.label :deceased_name, @application.errors[:deceased_name].join(', '), class: 'error' if @application.errors[:deceased_name].present?
-          = f.text_field :deceased_name, { class: 'form-control' }
-    .row
-      .small-12.medium-8.large-5.columns
-        .form-group
-          = f.label :date_of_death
-          = f.label :date_of_death, @application.errors[:date_of_death].join(', '), class: 'error' if @application.errors[:date_of_death].present?
-          = f.text_field :date_of_death, { class: 'form-control' }
+    .panel-indent
+      .row
+        .small-12.medium-8.large-5.columns
+          .form-group
+            = f.label :deceased_name
+            = f.label :deceased_name, @application.errors[:deceased_name].join(', '), class: 'error' if @application.errors[:deceased_name].present?
+            = f.text_field :deceased_name, { class: 'form-control' }
+      .row
+        .small-12.medium-8.large-5.columns
+          .form-group
+            = f.label :date_of_death
+            = f.label :date_of_death, @application.errors[:date_of_death].join(', '), class: 'error' if @application.errors[:date_of_death].present?
+            = f.text_field :date_of_death, { class: 'form-control' }
 
   .row
     .small-12.medium-8.large-5.columns
@@ -84,7 +85,7 @@
   #refund-only.start-hidden
     .row
       .small-12.medium-8.large-5.columns
-        .form-group
+        .form-group.panel-indent
           = f.label :date_fee_paid
           = f.label :date_fee_paid, @application.errors[:date_fee_paid].join(', '), class: 'error' if @application.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control' }
