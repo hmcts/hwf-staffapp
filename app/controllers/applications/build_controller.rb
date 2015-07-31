@@ -31,31 +31,17 @@ class Applications::BuildController < ApplicationController
     @application = Application.find(params[:application_id])
   end
 
-  def application_params # rubocop:disable Metrics/MethodLength
-    params.require(:application).permit(
-      # Page 1
-      :title,
-      :first_name,
-      :last_name,
-      :date_of_birth,
-      :ni_number,
-      :married,
-      # Page 2
-      :fee,
-      :jurisdiction_id,
-      :date_received,
-      :form_name,
-      :case_number,
-      :probate,
-      :deceased_name,
-      :date_of_death,
-      :refund,
-      :date_fee_paid,
-      # Page 3
-      :threshold_exceeded,
-      :over_61,
-      :status
-    )
+  def application_params # rubocop:enable Metrics/MethodLength
+    all_params            = [:status]
+    personal_information  = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :married]
+    application_details   = [:fee, :jurisdiction_id, :date_received, :form_name, :case_number,
+                             :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid]
+    savings_investments   = [:threshold_exceeded, :over_61]
+    benefits              = [:benefits]
+
+    all_params << personal_information << application_details << savings_investments << benefits
+
+    params.require(:application).permit(all_params.flatten)
   end
 
   def populate_jurisdictions
