@@ -51,6 +51,24 @@
 
   = f.submit 'Next', :class => 'button primary'
 
+.row
+  .small-12.columns
+    .row
+      .small-12.medium-8.large-7.columns
+        details
+          summary.primary Our calculation is based on this information
+          #result_table.row.pad-top-fifteen-px
+            .columns.small-12
+              .row
+                .columns.small-4.table-label Age
+                .columns.small-8 #{@application.applicant_age} years old
+              .row
+                .columns.small-4.table-label Status
+                .columns.small-8 =@application.married ? t('activerecord.attributes.application.page_1.married_true') : t('activerecord.attributes.application.page_1.married_false')
+              .row
+                .columns.small-4.table-label Fee
+                .columns.small-8 £#{@application.fee.floor}
+
 javascript:
   $('#application_threshold_exceeded_false').on('click', function () {
     $('#application_over_61_true').prop('checked', false);
