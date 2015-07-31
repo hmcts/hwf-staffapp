@@ -83,6 +83,7 @@ en:
           attributes:
             last_name:
               blank: Enter the applicant's last name
+              too_short: Last name is too short (minimum is 2 characters)
             date_of_birth:
               blank: Enter the applicant's date of birth
               invalid: 'Enter the date as day, month, year DD/MM/YYYY'
@@ -122,7 +123,6 @@ en:
               inclusion: Please confirm the ages
             benefits:
               inclusion: You must answer the benefits question
-
     attributes:
       user:
         current_password: Current password
@@ -156,17 +156,11 @@ en:
         full_name: Full name
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
-        date_of_birth_hint: For example 01/11/1980
-        date_of_birth_too_young: The applicant can't be under %{min_age} years old
-        date_of_birth_too_old: The applicant can't be over %{max_age} years old
         married: Status
-        married_false: Single
-        married_true: Married or living with someone and sharing an income
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
         form_name: Form name or number related to this application
-        form_name_summary: Form name or number
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
@@ -174,20 +168,27 @@ en:
         refund: This is a refund case
         date_fee_paid: Date fee paid
         over_61: "Is the applicant's partner 61 or over?"
+        benefits: Is the applicant receiving one of the benefits listed in question 9?
+        page_1:
+          date_of_birth_hint: For example 01/11/1980
+          married_false: Single
+          married_true: Married or living with someone and sharing an income
+          form_name_summary: Form name or number
         page_3:
           header: Savings and investments
           maximum_prompt: 'Maximum amount of savings and investments allowed:'
           savings:
-           single: The applicant has
-           married: The applicant and their partner have
-           less_than: Less than this amount
-           more_than: More than this amount
+            single: The applicant has
+            married: The applicant and their partner have
+            less_than: Less than this amount
+            more_than: More than this amount
+        page_4:
+          benefits_false: 'No'
+          benefits_true: 'Yes'
         summary:
           passed: '&#10003; Passed'
           failed: '&#10007; Failed'
           savings_investments: Maximum savings allowed
-        benefits_false: 'No'
-        benefits_true: 'Yes'
       r2_calc:
         labels:
           fee: Fee
