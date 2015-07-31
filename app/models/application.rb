@@ -101,12 +101,12 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     applicant_age >= 61
   end
 
-  private
-
   def applicant_age
     now = Time.zone.now.utc.to_date
     now.year - date_of_birth.year - (date_of_birth.to_date.change(year: now.year) > now ? 1 : 0)
   end
+
+  private
 
   def active?
     status == 'active'
