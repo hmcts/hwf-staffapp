@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg'
+gem 'rails-i18n', '~> 4.0.0'
 
 # authentication
 gem 'devise'
