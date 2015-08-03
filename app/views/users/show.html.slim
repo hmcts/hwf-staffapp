@@ -26,7 +26,7 @@ h2 User details
       label Jurisdiction
     .columns.small-6.large-10
       =@user.jurisdiction.name if @user.jurisdiction.present?
-.row.pad-top-thirty-pix
+.row.pad-top-thirty-px
   .columns.small-12
     =link_to 'Edit this user', edit_user_path(@user)
 -if current_user == @user
