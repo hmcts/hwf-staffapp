@@ -51,7 +51,7 @@
         = f.label :case_number, @application.errors[:case_number].join(', '), class: 'error' if @application.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
-  .row
+  .row.pad-top-thirty-px
     .small-12.medium-8.large-5.columns
       .options.radio
         .option
