@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+
+  get '/applications/new' => 'applications/build#create'
+  resources :applications do
+    resources :build, controller: 'applications/build'
+  end
+
   get 'guide' => 'guide#index'
 
   get 'ping' => 'health_status#ping'
