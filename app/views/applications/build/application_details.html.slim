@@ -1,0 +1,93 @@
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Application details
+  .row
+    .small-12.medium-4.large-3.columns
+      .form-group
+        = f.label :fee
+        = f.label :fee, @application.errors[:fee].join(', '), class: 'error' if @application.errors[:fee].present?
+        .row.collapse
+          .small-2.medium-3.large-3.columns
+            span.prefix
+              = f.label :fee, '£', class: 'inline'
+          .small-10.medium-9.large-9.columns
+            = f.text_field :fee, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .row.collapse
+          .columns.small-12
+            = f.label :jurisdiction_id
+            = f.label :jurisdiction_id, @application.errors[:jurisdiction_id].join(', '), class: 'error' if @application.errors[:jurisdiction_id].present?
+            - if @jurisdictions.present?
+              .options.radio
+                =collection_radio_buttons(:application, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
+                  = b.label do
+                    = b.radio_button(class: 'form-control')
+                    = b.text
+            - else
+              = t('error_messages.jurisdictions.none_in_office')
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :date_received
+        = f.label :date_received, @application.errors[:date_received].join(', '), class: 'error' if @application.errors[:date_received].present?
+        = f.text_field :date_received, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :form_name
+        = f.label :form_name, @application.errors[:form_name].join(', '), class: 'error' if @application.errors[:form_name].present?
+        = f.text_field :form_name, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :case_number
+        = f.label :case_number, @application.errors[:case_number].join(', '), class: 'error' if @application.errors[:case_number].present?
+        = f.text_field :case_number, { class: 'form-control' }
+
+  .row.pad-top-thirty-px
+    .small-12.medium-8.large-5.columns
+      .options.radio
+        .option
+          = f.label :probate
+            = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
+            = t('activerecord.attributes.application.probate')
+
+  #probate-only.start-hidden
+    .panel-indent
+      .row
+        .small-12.medium-8.large-5.columns
+          .form-group
+            = f.label :deceased_name
+            = f.label :deceased_name, @application.errors[:deceased_name].join(', '), class: 'error' if @application.errors[:deceased_name].present?
+            = f.text_field :deceased_name, { class: 'form-control' }
+      .row
+        .small-12.medium-8.large-5.columns
+          .form-group
+            = f.label :date_of_death
+            = f.label :date_of_death, @application.errors[:date_of_death].join(', '), class: 'error' if @application.errors[:date_of_death].present?
+            = f.text_field :date_of_death, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .options.radio
+        .option
+          = f.label :refund
+            = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
+            = t('activerecord.attributes.application.refund')
+
+  #refund-only.start-hidden
+    .row
+      .small-12.medium-8.large-5.columns
+        .form-group.panel-indent
+          = f.label :date_fee_paid
+          = f.label :date_fee_paid, @application.errors[:date_fee_paid].join(', '), class: 'error' if @application.errors[:date_fee_paid].present?
+          = f.text_field :date_fee_paid, { class: 'form-control' }
+
+  = f.submit 'Next', class: 'button primary'
