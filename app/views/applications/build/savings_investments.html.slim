@@ -9,7 +9,7 @@
       #result.callout.received
         .row
           .small-12.columns
-            h3 £#{@application.threshold.floor}
+            h3 =number_to_currency(@application.threshold.floor, precision: 0)
 
   .row
     .small-12.medium-8.large-5.columns
