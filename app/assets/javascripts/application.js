@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require foundation
 //= require jquery.turbolinks
-//= require radio_buttons
+//= require radio_buttons_module
 //= require show_hide_checkboxes
 //= require details.polyfill
 
