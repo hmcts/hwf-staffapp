@@ -19,16 +19,15 @@ unless ENV=='production'
               ])
 end
 
-Jurisdiction.create([{ name: 'County Court', abbr: nil },
-                     { name: 'High Court', abbr: nil },
+Jurisdiction.create([{ name: 'County', abbr: nil },
+                     { name: 'Family', abbr: nil },
+                     { name: 'High', abbr: nil },
                      { name: 'Insolvency', abbr: nil },
-                     { name: 'Family Court', abbr: nil },
+                     { name: 'Magistrates', abbr: nil },
                      { name: 'Probate', abbr: nil },
-                     { name: 'Court of Protection', abbr: 'COP' },
-                     { name: 'Magistrates Civil', abbr: nil },
+                     { name: 'Employment', abbr: nil },
                      { name: 'Gambling', abbr: nil },
-                     { name: 'Employment Tribunal', abbr: nil },
-                     { name: 'Gender Tribunal', abbr: nil },
-                     { name: 'Land & Property Chamber', abbr: nil },
-                     { name: 'Immigration Appeal Chamber', abbr: 'IAC' },
-                     { name: 'Upper Tribunal Immigration Appeal Chamber', abbr: 'UTIAC' }])
+                     { name: 'Gender recognition', abbr: nil },
+                     { name: 'Immigration (first-tier)', abbr: nil },
+                     { name: 'Immigration (upper)', abbr: nil },
+                     { name: 'Property', abbr: nil }])
