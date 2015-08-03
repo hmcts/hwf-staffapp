@@ -27,9 +27,10 @@ html[lang="en"]
                 - if user_signed_in?
                   .inline
                     = link_to current_user.name, user_path(current_user.id)
-                    = link_to "Sign out", destroy_user_session_path, :method => :delete
+                    = link_to 'Sign out', destroy_user_session_path, :method => :delete
                 - else
-                  = link_to 'Sign in', new_user_session_path
+                  .inline
+                    = link_to 'Sign in', new_user_session_path
     =render 'layouts/toolbar'
     .row
       .large-12.columns
