@@ -28,7 +28,7 @@
       .small-12.medium-5.large-4.columns.text-right =link_to 'Change application details', wizard_path(:application_details)
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.fee')
-      .small-12.medium-7.large-8.columns £#{@application.fee.floor}
+      .small-12.medium-7.large-8.columns =number_to_currency(@application.fee.floor, precision: 0)
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.jurisdiction_id')
       .small-12.medium-7.large-8.columns =@application.jurisdiction.display_full
