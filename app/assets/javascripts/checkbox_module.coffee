@@ -1,6 +1,6 @@
 root = exports ? this
 
-ShowHideCheckboxesModule =
+CheckboxModule =
 
   expandOnLoad: ->
     $('input.show-hide-checkbox:checkbox').each ->
@@ -17,10 +17,10 @@ ShowHideCheckboxesModule =
       $(this).parents('label').toggleClass('selected', $(this).is(':checked'))
 
   setup: ->
-    ShowHideCheckboxesModule.bindToCheckboxes()
-    ShowHideCheckboxesModule.expandOnLoad()
+    CheckboxModule.bindToCheckboxes()
+    CheckboxModule.expandOnLoad()
 
-root.ShowHideCheckboxesModule = ShowHideCheckboxesModule
+root.CheckboxModule = CheckboxModule
 
 jQuery ->
-  ShowHideCheckboxesModule.setup()
+  CheckboxModule.setup()
