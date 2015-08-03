@@ -7,6 +7,9 @@ RadioButtonsModule =
       if $(this).is(':checked')
         $('#' + $(this).data('section') + '-only').toggle($(this).data('show'))
 
+    $('input[type=radio]').each ->
+      $(this).parents('label').toggleClass('selected', $(this).is(':checked'))
+
   bindToRadioButtons: ->
     $('input.show-hide-section:radio').on 'change', ->
       $('#' + $(this).data('section') + '-only').toggle($(this).data('show'))
