@@ -34,5 +34,21 @@ RSpec.feature 'User management,', type: :feature do
       expect(page).to_not have_xpath("//input[@value='#{user.email}']")
       expect(page).to have_content "#{user.email}"
     end
+
+    scenario 'invites a user with an invalid email address' do
+      new_email = 'invalid@email.com'
+      login_as(admin_user, scope: :user)
+      visit new_user_invitation_path
+
+      fill_in 'user_email', with: new_email
+      fill_in 'user_name', with: 'Test name'
+      select('User', from: 'user_role')
+      select('Bristol', from: 'user_office_id')
+
+      click_button 'Send an invitation'
+
+      expect(page).to have_xpath('//div[contains(@class, "field_with_errors")]/label[@for="user_email" and @class="error"]', text: /not able to create an account with this email address/)
+      expect(page).to have_xpath("//input[@value='#{new_email}']")
+    end
   end
 end
