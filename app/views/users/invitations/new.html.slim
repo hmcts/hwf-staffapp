@@ -1,27 +1,20 @@
 h2
   = t "devise.invitations.new.header"
+
 = form_for @user, url: user_invitation_path, html: {:method => :post} do |f|
   - User.invite_key_fields.each do |field|
     .row
-      .small-12.columns
+      .columns.small-12.medium-8.large-5
         .form-group
-          .row
-            .columns.small-12
-              = f.label field, @user.errors[field].join(', ').html_safe, class: 'error' if @user.errors[field].present?
-          .row
-            .columns.small-12.medium-8.large-5
-              = f.label field
-              = f.text_field field
+          = f.label field
+          = f.label field, @user.errors[field].join(', ').html_safe, class: 'error' if @user.errors[field].present?
+          = f.text_field field
     .row
-      .small-12.columns
+      .columns.small-12.medium-8.large-5
         .form-group
-          .row
-            .columns.small-12
-              = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
-          .row
-            .columns.small-12.medium-8.large-5
-              = f.label :name
-              = f.text_field :name, { class: 'form-control' }
+          = f.label :name
+          = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
+          = f.text_field :name, { class: 'form-control' }
   .row
     .small-12.columns
       .form-group
