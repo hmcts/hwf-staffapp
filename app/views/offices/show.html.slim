@@ -3,7 +3,7 @@ h2 Office details
 #result_table
   .row
     .columns.small-4.large-2
-      label Name
+      label Name of office
     .columns.small-8.large-10
       =@office.name
   .row
@@ -15,8 +15,8 @@ h2 Office details
 
 .row.pad-top-thirty-pix
   .columns.small-12
-    =link_to 'Edit this office', edit_office_path(@office)
+    =link_to 'Change details', edit_office_path(@office)
 -unless current_user.manager?
   .row.pad-top-fifteen-px
     .columns.small-12
-      =link_to 'Back to office list', offices_path
+      =link_to 'Back to list of offices', offices_path

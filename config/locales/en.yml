@@ -25,13 +25,14 @@ en:
     r2_calculator: 'Income calculator'
     feedback: 'Give feedback'
     staff_guide: Staff guide
+    log_in: Sign in
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
     user:
       moved_offices: "%{user} moved to %{office}, you will need to contact %{contact} there if this was done in error"
     jurisdictions:
-      none_in_office: 'Ask your manager to assign jurisdictions for your team.'
+      none_in_office: 'Ask your manager to assign jurisdictions to your office.'
   dictionary:
     invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
   feedback:
@@ -100,8 +101,8 @@ en:
         dob_hint: For example 01/11/1980
         dob_too_young: The applicant can't be under %{min_age} years old
         dob_too_old: The applicant can't be over %{max_age} years old
-        date_to_check: 'Date application made'
-        date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
+        date_to_check: 'Date application received'
+        date_to_check_hint: 'For refunds enter the date the fee was paid.'
       r2_calc:
         labels:
           fee: Fee
