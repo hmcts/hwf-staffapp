@@ -55,7 +55,7 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it 'has delete user link' do
-          expect(response.body).to have_content 'Delete this user'
+          expect(response.body).to have_content 'Remove staff member'
         end
       end
 

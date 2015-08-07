@@ -56,7 +56,7 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
     end
 
     it 'see admin' do
-      expect(rendered).to include('Users')
+      expect(rendered).to include('Staff')
     end
   end
   context 'logged in as manager' do
@@ -67,11 +67,11 @@ RSpec.describe "layouts/_toolbar.html.slim", type: :view do
     end
 
     it 'see offices' do
-      expect(rendered).to include('My office')
+      expect(rendered).to include('Office')
     end
 
     it 'see admin' do
-      expect(rendered).to include('Users')
+      expect(rendered).to include('Staff')
     end
   end
 end
