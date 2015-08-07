@@ -1,153 +1,93 @@
 require 'rails_helper'
 
 RSpec.describe Application, type: :model do
-  let(:application)      { build :application }
 
-  it 'has a valid factory build' do
-    expect(application).to be_valid
+  let(:user)  { create :user }
+  let(:application) { described_class.create(user_id: user.id) }
+
+  before do
+    stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
+    {
+      birth_date: (Time.zone.today - 18.years).strftime('%Y%m%d'),
+      entitlement_check_date: (Time.zone.today - 1.month).strftime('%Y%m%d'),
+      id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
+      ni_number: 'AB123456A',
+      surname: 'TEST'
+    }).to_return(status: 200, body: '', headers: {})
+
+    application.date_of_birth = Time.zone.today - 18.years
+    application.date_received = Time.zone.today - 1.month
+    application.ni_number = 'AB123456A'
   end
 
-  describe 'Step 1 - Personal details' do
-    before { application.status = 'personal_information' }
+  context 'when saved without required fields' do
+    it 'does not run a benefit check' do
+      expect { application.save } .to_not change { application.benefit_checks.count }
+    end
+  end
 
-    describe 'methods' do
-      describe 'full_name' do
-        it 'provides response' do
-          application.title = 'Mr'
-          application.first_name = 'John'
-          application.last_name = 'Smith'
-          expect(application.full_name).to eq 'Mr John Smith'
-        end
+  context 'when the final item required is saved' do
+    before { application.last_name = 'TEST' }
+    it 'runs a benefit check ' do
+      expect { application.save } .to change { application.benefit_checks.count }.by 1
+    end
+
+    context 'when other fields are changed' do
+      before do
+        application.last_name = 'TEST'
+        application.save
+        application.fee = 300
+      end
+
+      it 'does not perform another benefit check' do
+        expect { application.save } .to_not change { application.benefit_checks.count }
       end
     end
-    describe 'validation for' do
-      describe 'last name' do
-        describe 'presence' do
-          before do
-            application.last_name = nil
-            application.valid?
-          end
 
-          it 'is required' do
-            expect(application).to be_invalid
-          end
+    context 'when date_fee_paid is updated' do
+      before do
+        stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
+        {
+          birth_date: (Time.zone.today - 18.years).strftime('%Y%m%d'),
+          entitlement_check_date: (Time.zone.today - 2.weeks).strftime('%Y%m%d'),
+          id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
+          ni_number: 'AB123456A',
+          surname: 'TEST'
+        }).to_return(status: 200, body: '', headers: {})
 
-          it 'returns an error message' do
-            expect(application.errors[:last_name]).to eq ["Enter the applicant's last name"]
-          end
-        end
-
-        describe 'length' do
-          before do
-            application.last_name = 'Q'
-            application.valid?
-          end
-
-          it 'must be at least 2 characters' do
-            expect(application).to be_invalid
-          end
-
-          it 'must be at least 2 characters' do
-            expect(application.errors[:last_name]).to eq ['is too short (minimum is 2 characters)']
-          end
-        end
+        application.last_name = 'TEST'
+        application.save
+        application.date_fee_paid = Time.zone.today - 2.weeks
       end
 
-      describe 'date of birth' do
-        it 'is required' do
-          application.date_of_birth = nil
-          expect(application).to be_invalid
-        end
-
-        describe 'maximum age' do
-          before do
-            application.date_of_birth = Time.zone.today - 121.years
-            application.valid?
-          end
-
-          it 'must be under 120 years' do
-            expect(application).to be_invalid
-          end
-
-          it 'returns an error message' do
-            error = ["The applicant can't be over #{Application::MAX_AGE} years old"]
-            expect(application.errors.messages[:date_of_birth]).to eq error
-          end
-        end
-
-        describe 'minimum age' do
-          before do
-            application.date_of_birth = Time.zone.today
-            application.valid?
-          end
-
-          it 'must be over 16' do
-            expect(application).to be_invalid
-          end
-
-          it 'returns an error message' do
-            error = ["The applicant can't be under #{Application::MIN_AGE} years old"]
-            expect(application.errors[:date_of_birth]).to eq error
-          end
-        end
+      it 'runs a benefit check' do
+        expect { application.save } .to change { application.benefit_checks.count }.by 1
       end
 
-      describe 'marital status' do
-        it 'accepts true as a value' do
-          application.married = true
-          expect(application).to be_valid
-        end
+      it 'sets the new benefit check date' do
+        application.save
+        expect(application.last_benefit_check.date_to_check).to eq Time.zone.today - 2.weeks
+      end
+    end
 
-        it 'accepts false as a value' do
-          application.married = false
-          expect(application).to be_valid
-        end
+    context 'when a benefit check field is changed' do
+      before do
+        stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
+        {
+          birth_date: (Time.zone.today - 18.years).strftime('%Y%m%d'),
+          entitlement_check_date: (Time.zone.today - 1.month).strftime('%Y%m%d'),
+          id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
+          ni_number: 'AB123456A',
+          surname: 'NEW NAME'
+        }).to_return(status: 200, body: '', headers: {})
 
-        it 'is required' do
-          application.married = nil
-          expect(application).to be_invalid
-        end
-
-        it 'returns an error message if not set' do
-          application.married = nil
-          application.valid?
-          error = ['Please select a marital status']
-          expect(application.errors[:married]).to eq error
-        end
+        application.last_name = 'TEST'
+        application.save
+        application.last_name = 'New name'
       end
 
-      describe 'national insurance number' do
-        it 'is not required' do
-          application.ni_number = nil
-          expect(application).to be_valid
-        end
-
-        it 'is displayed in the required format' do
-          application.ni_number = 'CD123456D'
-          expect(application.ni_number_display).to eq 'CD 12 34 56 D'
-        end
-
-        it 'can be duplicated' do
-          create(:application, ni_number: 'AB123456A')
-          duplicate = build(:application, ni_number: 'AB123456A')
-          expect(duplicate).to be_valid
-        end
-
-        describe 'invalid format' do
-          before do
-            application.ni_number = 'bob'
-            application.valid?
-          end
-
-          it 'is rejected' do
-            expect(application).to be_invalid
-          end
-
-          it 'return an error message' do
-            error = ['Enter 2 letters, 6 numbers and 1 letter for the National Insurance number']
-            expect(application.errors[:ni_number]).to eq error
-          end
-        end
+      it 'runs a benefit check' do
+        expect { application.save } .to change { application.benefit_checks.count }.by 1
       end
     end
   end
