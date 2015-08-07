@@ -6,12 +6,12 @@ h2 Income
       .form-group
         .options.radio
           .option
-            label for='application_income_false'
-              = f.radio_button :income, 'false'
+            label for='application_dependents_false'
+              = f.radio_button :dependents, 'false'
               = t('activerecord.attributes.application.income_false')
           .option
-            label for='application_income_true'
-              = f.radio_button :income, 'true'
+            label for='application_dependents_true'
+              = f.radio_button :dependents, 'true'
               = t('activerecord.attributes.application.income_true')
 
   .row.collapse#children-and-income
