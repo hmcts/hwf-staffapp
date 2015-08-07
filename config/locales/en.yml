@@ -44,6 +44,36 @@ en-GB:
     manage:
       all: You are not authorized to access this page.
       wrong_office: You are not authorized to manage this user.
+  benefit_checks:
+    :yes:
+      heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
+    :no:
+      heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+    deceased:
+      heading: The personal details entered belong to someone who has died
+    undetermined:
+      heading: Please check the personal details you’ve entered
+      explain: The personal details you’ve entered have not been recognised by the Department for Work and Pensions.
+      progress: Check the personal details again and update them if necessary.
+    technical_fault:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    unspecified_error:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    server_unavailable:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    superseded:
+      heading: The applicant’s details are incorrect
+      explain: The applicant’s National Insurance number is no longer valid as they have been issued with a another National Insurance number.
+      progress: You’ll need to ask the applicant to provide evidence confirming that they’re receiving benefits.
+    general:
+      work_out: How is this worked out?
+      explain: "The applicant's name, date of birth and National Insurance number have been checked by the Department for Work and Pensions."
+      does_not_match:
+        heading: What if the benefits check result doesn’t match the paper form?
+        text: If the applicant has started receiving benefits very recently (in the last week) the Department for Work and Pensions result may not be up-to-date.  You’ll need to ask for evidence confirming that they are receiving benefits.
+    error:
+      explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
+      progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
   activerecord:
     errors:
       models:
