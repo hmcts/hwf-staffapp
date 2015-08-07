@@ -55,7 +55,7 @@ RSpec.describe Applications::BuildController, type: :controller do
       end
 
       context 'income' do
-        before { get :show, application_id: application.id, id: :income, children: 5, income: 5 }
+        before { get :show, dependents: true, application_id: application.id, id: :income, children: 5, income: 5 }
 
         it 'displays the income view' do
           expect(response).to render_template :income
