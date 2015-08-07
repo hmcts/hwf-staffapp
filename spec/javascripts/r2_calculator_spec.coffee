@@ -1,4 +1,4 @@
-//=require 'income_calculator'
+#=require 'income_calculator'
 
 runScenario=(t) ->
   it "id #{t.id} passes", ->
