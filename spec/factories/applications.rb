@@ -4,7 +4,7 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     date_of_birth Time.zone.today - 20.years
-    ni_number "AB123456C"
+    ni_number nil
     married false
     fee '310.00'
     association :jurisdiction

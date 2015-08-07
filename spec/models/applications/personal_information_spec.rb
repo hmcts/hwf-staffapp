@@ -128,7 +128,7 @@ RSpec.describe Application, type: :model do
         end
 
         it 'can be duplicated' do
-          create(:application, ni_number: 'AB123456A')
+          create(:application, ni_number: 'AB123456A', date_received: nil)
           duplicate = build(:application, ni_number: 'AB123456A')
           expect(duplicate).to be_valid
         end
