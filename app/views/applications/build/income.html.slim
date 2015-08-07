@@ -18,20 +18,20 @@ h2 Income
     .small-12.medium-6.large-5.columns.form-group.panel-indent
       .row
         .columns.small-12
-          label.error data-check-error='children' for='children' Please select a number of children
           label for='children' Number of children
+          = f.label :children, @application.errors[:children].join(', '), class: 'error' if @application.errors[:children].present?
           .row.collapse
             .columns.small-4.medium-4.large-4
-              input data-check='children' id='children' type="number" min=0 value=""
+              = f.text_field :children
       .row
         .columns.small-12
-          label.error data-check-error='income' for='income' Please enter an income
           label for='income' Total monthly income
+          = f.label :income, @application.errors[:income].join(', '), class: 'error' if @application.errors[:income].present?
           .row.collapse.prefix-radius
             .small-2.medium-4.large-3.columns
               span.prefix
                 label.inline for='income' £
             .small-10.medium-9.large-9.columns
-              input data-check='income' name="income" id="income" type="number" value=""
+              = f.text_field :income
 
   = f.submit 'Next', class: 'button primary'

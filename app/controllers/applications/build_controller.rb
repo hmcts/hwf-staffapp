@@ -56,7 +56,7 @@ class Applications::BuildController < ApplicationController
     all_params            = [:status]
     savings_investments   = [:threshold_exceeded, :over_61]
     benefits              = [:benefits]
-    income                = [:income]
+    income                = [:income, :children]
 
     all_params << personal_information << application_details <<
       savings_investments << benefits << income
