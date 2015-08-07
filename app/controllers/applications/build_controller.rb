@@ -5,11 +5,11 @@ class Applications::BuildController < ApplicationController
   before_action :populate_jurisdictions, only: [:show, :update]
 
   steps :personal_information,
-        :application_details,
-        :savings_investments,
-        :benefits,
-        :income,
-        :summary
+    :application_details,
+    :savings_investments,
+    :benefits,
+    :income,
+    :summary
 
   def create
     @application = Application.create(
@@ -36,15 +36,30 @@ class Applications::BuildController < ApplicationController
     @application = Application.find(params[:application_id])
   end
 
-  def application_params # rubocop:enable Metrics/MethodLength
+  def personal_information
+    [:title,
+     :first_name,
+     :last_name,
+     :date_of_birth,
+     :ni_number,
+     :married]
+  end
+
+  def application_details
+    [:fee, :jurisdiction_id, :date_received,
+     :form_name, :case_number, :probate,
+     :deceased_name, :date_of_death, :refund,
+     :date_fee_paid]
+  end
+
+  def application_params
     all_params            = [:status]
-    personal_information  = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :married]
-    application_details   = [:fee, :jurisdiction_id, :date_received, :form_name, :case_number,
-                             :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid]
     savings_investments   = [:threshold_exceeded, :over_61]
     benefits              = [:benefits]
+    income                = [:income]
 
-    all_params << personal_information << application_details << savings_investments << benefits
+    all_params << personal_information << application_details <<
+      savings_investments << benefits << income
 
     params.require(:application).permit(all_params.flatten)
   end
