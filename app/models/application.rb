@@ -1,9 +1,13 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
+  belongs_to :user
   belongs_to :jurisdiction
+  has_many :benefit_checks
 
   MAX_AGE = 120
   MIN_AGE = 16
+
+  after_save :run_benefit_check
 
   # Step 1 - Personal detail validation
   with_options if: proc { active_or_status_is? 'personal_information' } do
@@ -114,7 +118,57 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     now.year - date_of_birth.year - (date_of_birth.to_date.change(year: now.year) > now ? 1 : 0)
   end
 
+  def can_check_benefits?
+    [
+      last_name.present?,
+      date_of_birth.present?,
+      ni_number.present?,
+      (date_received.present? || date_fee_paid.present?)
+    ].all?
+  end
+
+  def last_benefit_check
+    benefit_checks.last
+  end
+
   private
+
+  def run_benefit_check # rubocop:disable MethodLength
+    if can_check_benefits? && new_benefit_check_needed?
+      BenefitCheckService.new(
+        benefit_checks.create(
+          last_name: last_name,
+          date_of_birth: date_of_birth,
+          ni_number: ni_number,
+          date_to_check: benefit_check_date,
+          our_api_token: generate_api_token,
+          parameter_hash: build_hash
+        )
+      )
+    end
+  end
+
+  def benefit_check_date
+    if date_fee_paid.present?
+      date_fee_paid
+    elsif date_received.present?
+      date_received
+    end
+  end
+
+  def new_benefit_check_needed?
+    last_benefit_check.nil? || last_benefit_check.parameter_hash != build_hash
+  end
+
+  def build_hash
+    Base64.encode64([last_name, date_of_birth, ni_number, benefit_check_date].to_s)
+  end
+
+  def generate_api_token
+    user = User.find(user_id)
+    short_name = user.name.gsub(' ', '').downcase.truncate(27)
+    "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{id}"
+  end
 
   def active?
     status == 'active'
