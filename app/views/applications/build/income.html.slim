@@ -1,4 +1,4 @@
-h2 Icome
+h2 Income
 
 = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   .row
@@ -6,12 +6,32 @@ h2 Icome
       .form-group
         .options.radio
           .option
-            label for='income_false'
+            label for='application_income_false'
               = f.radio_button :income, 'false'
               = t('activerecord.attributes.application.income_false')
           .option
-            label for='income_true'
+            label for='application_income_true'
               = f.radio_button :income, 'true'
               = t('activerecord.attributes.application.income_true')
 
-  = f.submit 'Next', :class => 'button primary'
+  .row.collapse#children-and-income
+    .small-12.medium-6.large-5.columns.form-group.panel-indent
+      .row
+        .columns.small-12
+          label.error data-check-error='children' for='children' Please select a number of children
+          label for='children' Number of children
+          .row.collapse
+            .columns.small-4.medium-4.large-4
+              input data-check='children' id='children' type="number" min=0 value=""
+      .row
+        .columns.small-12
+          label.error data-check-error='income' for='income' Please enter an income
+          label for='income' Total monthly income
+          .row.collapse.prefix-radius
+            .small-2.medium-4.large-3.columns
+              span.prefix
+                label.inline for='income' £
+            .small-10.medium-9.large-9.columns
+              input data-check='income' name="income" id="income" type="number" value=""
+
+  = f.submit 'Next', class: 'button primary'

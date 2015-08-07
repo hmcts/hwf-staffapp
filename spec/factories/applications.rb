@@ -11,6 +11,7 @@ FactoryGirl.define do
     date_received Time.zone.today
     benefits true
     children 1
+    income 500
 
     factory :probate_application do
       probate true
