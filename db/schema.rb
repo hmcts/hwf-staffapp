@@ -50,6 +50,24 @@ ActiveRecord::Schema.define(version: 20150807143711) do
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
+  create_table "benefit_checks", force: :cascade do |t|
+    t.string  "last_name"
+    t.date    "date_of_birth"
+    t.string  "ni_number"
+    t.date    "date_to_check"
+    t.string  "parameter_hash"
+    t.boolean "benefits_valid"
+    t.string  "dwp_result"
+    t.string  "error_message"
+    t.string  "dwp_api_token"
+    t.string  "our_api_token"
+    t.integer "application_id"
+    t.integer "user_id"
+  end
+
+  add_index "benefit_checks", ["application_id"], name: "index_benefit_checks_on_application_id", using: :btree
+  add_index "benefit_checks", ["user_id"], name: "index_benefit_checks_on_user_id", using: :btree
+
   create_table "dwp_checks", force: :cascade do |t|
     t.string   "last_name"
     t.date     "dob"
@@ -157,6 +175,8 @@ ActiveRecord::Schema.define(version: 20150807143711) do
 
   add_foreign_key "applications", "offices"
   add_foreign_key "applications", "users"
+  add_foreign_key "benefit_checks", "applications"
+  add_foreign_key "benefit_checks", "users"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
