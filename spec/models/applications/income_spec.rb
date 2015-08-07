@@ -11,6 +11,17 @@ RSpec.describe Application, type: :model do
     before { application.status = 'income' }
 
     describe 'validations' do
+      describe 'dependents' do
+        before do
+          application.dependents = nil
+          application.valid?
+        end
+
+        it 'must be entered' do
+          expect(application).to be_invalid
+        end
+      end
+
       describe 'income' do
         describe 'presence' do
           before do
