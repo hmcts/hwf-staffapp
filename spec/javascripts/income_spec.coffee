@@ -4,8 +4,8 @@ describe "IncomeModule", ->
   element = null
   beforeEach ->
     element = $("""
-    <div id="application_income_true"/>
-    <div id="application_income_false"/>
+    <div id="application_dependents_true"/>
+    <div id="application_dependents_false"/>
     <section id="test-section">
       <div id="children-and-income">
         <input data-check="children" id="children" min="0" value="" type="number">
@@ -23,13 +23,13 @@ describe "IncomeModule", ->
 
   describe 'when the user selects "Yes" answer for dependant children question', ->
     it 'shows #children-and-income', ->
-      $('#application_income_true').trigger('click')
+      $('#application_dependents_true').trigger('click')
       expect($('#children-and-income').is(':visible')).toBe(true)
 
   describe 'when the user selects "No" answer for dependant children question', ->
     it 'hides #children-and-income', ->
       $('#children-and-income').show()
-      $('#application_income_false').trigger('click')
+      $('#application_dependents_false').trigger('click')
       expect($('#children-and-income').is(':visible')).toBe(false)
 
   describe 'input form values', ->
@@ -42,7 +42,7 @@ describe "IncomeModule", ->
 
     describe 'when the "Yes" option is chosen', ->
       beforeEach ->
-        $('#application_income_true').trigger('click')
+        $('#application_dependents_true').trigger('click')
 
       describe 'and the number of children & income is declared', ->
         beforeEach ->
@@ -51,7 +51,7 @@ describe "IncomeModule", ->
 
         describe 'and the "No" option is chosen', ->
           beforeEach ->
-            $('#application_income_false').trigger('click')
+            $('#application_dependents_false').trigger('click')
 
           it 'blanks out income value', ->
             expect($('#income').val()).toBe('0')

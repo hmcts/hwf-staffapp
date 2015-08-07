@@ -3,11 +3,11 @@ root = exports ? this
 IncomeModule =
 
   showChildrenAndIncomeInputs: ->
-    $('#application_income_true').on 'click', ->
+    $('#application_dependents_true').on 'click', ->
       $('#children-and-income').show()
 
   hideChildrenAndIncomeInputs: ->
-    $('#application_income_false').on 'click', ->
+    $('#application_dependents_false').on 'click', ->
       $('#children').val('')
       $('#income').val(0)
       $('#children-and-income').hide()
