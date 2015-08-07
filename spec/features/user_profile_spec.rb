@@ -40,7 +40,7 @@ RSpec.feature 'User profile', type: :feature do
       scenario 'their profile' do
         ['Change details',
          'Office',
-         'Jurisdiction',
+         'Main jurisdiction',
          'Role'].each { |value| expect(page).to have_text value }
       end
 
