@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20150807143711) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "applications", "jurisdictions"
   add_foreign_key "applications", "offices"
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
