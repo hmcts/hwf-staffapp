@@ -1,4 +1,4 @@
-h2 Edit user
+h2 Change details
 
 = form_for @user do |f|
   .row
@@ -45,7 +45,7 @@ h2 Edit user
   .row
     .columns.small-12.medium-8.large-5.columns
       .form-group
-        label Jurisdictions
+        label Main jurisdiction
         = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
         - if @jurisdictions.present?
           .row.collapse
@@ -60,4 +60,4 @@ h2 Edit user
         - else
           = t('error_messages.jurisdictions.none_in_office')
 
-  .actions = f.submit 'Update user', class: 'button'
+  .actions = f.submit 'Save changes', class: 'button'

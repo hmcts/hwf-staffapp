@@ -1,11 +1,11 @@
-h2 List users
+h2 Staff
 
 table
   tr
-    th Name
+    th Full name
     th Role
     th Office
-    th Jurisdiction
+    th Main jurisdiction
     th &nbsp;
 
   -@users.each do |user|
@@ -17,6 +17,6 @@ table
         =user.role
       td =user.office.name if user.office.present?
       td =user.jurisdiction.display if user.jurisdiction.present?
-      td =link_to 'Edit', edit_user_path(user)
+      td =link_to 'Change details', edit_user_path(user)
 
-=link_to 'Invite new user', new_user_invitation_path
+=link_to 'Add staff', new_user_invitation_path
