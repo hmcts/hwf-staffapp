@@ -18,4 +18,7 @@
 //= require checkbox_module
 //= require details.polyfill
 
-$(function(){ $(document).foundation(); });
+$(function(){
+  Foundation.global.namespace = '';
+  $(document).foundation();
+});
