@@ -17,6 +17,7 @@
 //= require radio_buttons_module
 //= require checkbox_module
 //= require details.polyfill
+//= require income
 
 $(function(){
   Foundation.global.namespace = '';
