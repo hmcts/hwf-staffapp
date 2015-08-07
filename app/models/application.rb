@@ -59,6 +59,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   # Step 5 - Income
   with_options if: proc { active_or_status_is? 'income' } do
+    validates :dependents, inclusion: { in: [true, false] }
     validates :income, numericality: true
     validates :children, numericality: true
   end
