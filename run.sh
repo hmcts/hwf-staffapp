@@ -23,4 +23,4 @@ create)
     bundle exec rake db:seed
     ;;
 esac
-bundle exec unicorn -p 3000
+bundle exec unicorn -p 3000 -c ./config/unicorn.rb
