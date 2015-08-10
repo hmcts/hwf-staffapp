@@ -9,9 +9,9 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:admin)     { create :admin_user }
 
   context 'public access' do
-    it 'shows a restriction message' do
+    it 'shows a get help message' do
       render
-      expect(rendered).to have_xpath('//div', text: /This system is restricted/)
+      expect(rendered).to have_xpath('//h4', text: /Get help/)
     end
   end
 
