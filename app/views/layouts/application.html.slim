@@ -30,7 +30,7 @@ html[lang="en"]
                     = link_to 'Sign out', destroy_user_session_path, :method => :delete
                 - else
                   .inline
-                    = link_to 'Sign in', new_user_session_path
+                    = link_to t('functions.log_in'), new_user_session_path
     =render 'layouts/toolbar'
     .row
       .large-12.columns

@@ -14,4 +14,12 @@
       |&nbsp;to see if an applicant can get help with their fees based on their income.
       br You'll also be able to calculate part-remissions.
 -else
-  .pad-top-fifteen-px This system is restricted to authorised staff only, please contact #{link_to 'support', "mailto:#{Settings.mail_tech_support}"} if you feel you should have access.
+  .pad-top-fifteen-px 
+    = link_to t('functions.log_in'), new_user_session_path, class: 'button'
+    h4  
+      |Get help
+    div.bold Don't have an account
+    div Contact your manager to set up your account. You will then receive an email to sign in.
+    div.bold Having technical issues
+    div Contact support
+    div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
