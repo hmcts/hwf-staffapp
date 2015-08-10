@@ -2,7 +2,7 @@ h2 Check benefits
 
 = form_for(@dwp_checker, url: dwp_checks_lookup_path, method: 'post', html: { autocomplete: 'off' } ) do |f|
   .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-7.large-4.columns
       .form-group
         = f.label :last_name, @dwp_checker.errors[:last_name].join(', '), class: 'error' if @dwp_checker.errors[:last_name].present?
         = f.label :last_name
@@ -10,7 +10,7 @@ h2 Check benefits
           span.hint.block = t('activerecord.attributes.dwp_check.last_name_hint')
         = f.text_field :last_name, autofocus:true, class: 'form-control'
   .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-7.large-4.columns
       .form-group
         = f.label :dob, @dwp_checker.errors[:dob].join(', '), class: 'error' if @dwp_checker.errors[:dob].present?
         = f.label :dob
@@ -18,13 +18,13 @@ h2 Check benefits
           span.hint.block = t('activerecord.attributes.dwp_check.dob_hint')
         = f.text_field :dob, { class: 'form-control' }
   .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-7.large-4.columns
       .form-group
         = f.label :ni_number, @dwp_checker.errors[:ni_number].join(', '), class: 'error' if @dwp_checker.errors[:ni_number].present?
         = f.label :ni_number
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
   .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-7.large-4.columns
       .form-group
         = f.label :date_to_check, @dwp_checker.errors[:date_to_check].join(', '), class: 'error' if @dwp_checker.errors[:date_to_check].present?
         = f.label :date_to_check
@@ -32,7 +32,7 @@ h2 Check benefits
           span.hint.block = t('activerecord.attributes.dwp_check.date_to_check_hint')
         = f.text_field :date_to_check, { class: 'form-control' }
   .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-7.large-4.columns
       .form-group
         = f.submit 'Check', :id => 'save', class: 'button primary'
 
