@@ -8,8 +8,8 @@ class Applications::BuildController < ApplicationController
     :application_details,
     :savings_investments,
     :benefits,
-    :income,
     :benefits_result,
+    :income,
     :summary
 
   def create
@@ -24,8 +24,9 @@ class Applications::BuildController < ApplicationController
   def show
     case step
     when :benefits_result
-      # TODO: change summary to income calculator when AS merges
-      jump_to(:summary) unless @application.benefits
+      jump_to(:income) unless @application.benefits
+    when :income
+      jump_to(:summary) if @application.benefits
     end
     render_wizard
   end
