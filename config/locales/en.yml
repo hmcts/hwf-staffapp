@@ -207,7 +207,7 @@ en-GB:
           married_true: Married or living with someone and sharing an income
           form_name_summary: Form name or number
         page_3:
-          header: Savings and investments
+          header: Assessment
           maximum_prompt: 'Maximum amount of savings and investments allowed:'
           savings:
             single: The applicant has
@@ -220,7 +220,8 @@ en-GB:
         summary:
           passed: '&#10003; Passed'
           failed: '&#10007; Failed'
-          savings_investments: Maximum savings allowed
+          savings_investments: Savings and investments
+          benefits: Benefits
         benefits_false: 'No'
         benefits_true: 'Yes'
         income_false: 'No'

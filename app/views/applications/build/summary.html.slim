@@ -66,3 +66,10 @@
         .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
       -else
         .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
+    -if @application.benefits
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.benefits')
+        -if @application.last_benefit_check && @application.last_benefit_check.benefits_valid
+          .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
+        -else
+          .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
