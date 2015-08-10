@@ -16,4 +16,4 @@ h2 =t('devise.invitations.edit.header')
         = f.label :password_confirmation, resource.errors[:password_confirmation].join(', ').html_safe, class: 'error' if resource.errors[:password_confirmation].present?
         = f.password_field :password_confirmation, autofocus: true, autocomplete: "off"
   .actions
-    = f.submit t('devise.invitations.edit.submit_button'), class: 'button btn tiny'
+    = f.submit t('devise.invitations.edit.submit_button'), class: 'button'
