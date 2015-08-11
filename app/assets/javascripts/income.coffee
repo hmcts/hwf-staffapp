@@ -1,21 +1,20 @@
 root = exports ? this
 
 IncomeModule =
-
-  showChildrenAndIncomeInputs: ->
-    $('#application_dependents_true').on 'click', ->
-      $('#children-and-income').show()
-
-  hideChildrenAndIncomeInputs: ->
-    $('#application_dependents_false').on 'click', ->
-      $('#children').val('')
-      $('#income').val(0)
-      $('#children-and-income').hide()
+  showIncomeInput: ->
+    $('input[id*="application_dependents"]').on 'click', ->
+      $('#income-input').show()
 
   setup: ->
-    $('#children-and-income').hide()
-    IncomeModule.showChildrenAndIncomeInputs()
-    IncomeModule.hideChildrenAndIncomeInputs()
+    if $('input[id*="application_dependents"]').is(':checked')
+      if $('#application_dependents_true').is(':checked')
+        $('#children-only').show()
+      $('#income-input').show()
+    else
+      $('#children-only').hide()
+      $('#income-input').hide()
+
+    IncomeModule.showIncomeInput()
 
 root.IncomeModule = IncomeModule
 

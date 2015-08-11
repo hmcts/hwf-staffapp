@@ -1,60 +1,99 @@
-//= require income
+#= require radio_buttons_module
+#= require income
 
 describe "IncomeModule", ->
   element = null
   beforeEach ->
     element = $("""
-    <div id="application_dependents_true"/>
-    <div id="application_dependents_false"/>
-    <section id="test-section">
-      <div id="children-and-income">
-        <input data-check="children" id="children" min="0" value="" type="number">
-        <input data-check="income" id="income" name="income" value="0" type="number">
+    <div class="small-12 medium-8 large-5 columns">
+      <div class="form-group">
+        <div class="options radio">
+          <div class="option">
+            <label for="application_dependents_false">
+              <input class="show-hide-section" data-section="children" data-show="false" type="radio" value="false" name="application[dependents]" id="application_dependents_false">
+              No
+            </label>
+          </div>
+          <div class="option">
+            <label for="application_dependents_true">
+              <input class="show-hide-section" data-section="children" data-show="true" type="radio" value="true" name="application[dependents]" id="application_dependents_true">
+              Yes
+            </label>
+          </div>
+        </div>
       </div>
-    </section>
+      <div class="row collapse panel-indent" id="children-only">
+        <div class="small-12 medium-6 large-5 columns form-group">
+          <label for="application_children">Children</label>
+          <div class="row collapse">
+            <div class="columns small-4 medium-4 large-4">
+              <input type="text" name="application[children]" id="application_children">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row collapse panel-indent" id="income-input">
+        <div class="small-12 medium-6 large-5 columns form-group">
+          <label for="application_income">Income</label>
+          <div class="row collapse prefix-radius">
+            <div class="small-2 medium-4 large-3 columns">
+              <span class="prefix"><label class="inline" for="income">£</label></span>
+            </div>
+            <div class="small-10 medium-8 large-9 columns">
+              <input type="text" name="application[income]" id="application_income">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     """)
     $(document.body).append(element)
-    @detail = $('#test-section')
     IncomeModule.setup()
+    window.RadioButtonsModule.setup()
 
-  describe 'initial hiding', ->
-    it 'hides "#children-and-income"', ->
-      expect($('#children-and-income').is(':visible')).toBe(false)
+  describe 'on initial load', ->
+    describe 'when children is checked', ->
+      beforeEach ->
+        $('#application_dependents_true').prop('checked', true)
+        window.RadioButtonsModule.setup()
+
+      it 'shows children field', ->
+        expect($('#application_children').is(':visible')).toBe(true)
+
+  describe 'on initial load', ->
+    beforeEach ->
+      $('#application_dependents_false').prop('checked', false)
+      $('#application_dependents_true').prop('checked', false)
+      window.RadioButtonsModule.setup()
+
+    describe 'no choice is made', ->
+      describe 'sets initial value', ->
+        it 'income amount to empty ', ->
+          expect($('#application_income').val()).toBe('')
+
+        it 'number of children to empty', ->
+          expect($('#application_children').val()).toBe('')
+
+      it 'hides income field', ->
+        expect($('#application_income').is(':visible')).toBe(false)
+
+      it 'hides children field', ->
+        expect($('#application_children').is(':visible')).toBe(false)
 
   describe 'when the user selects "Yes" answer for dependant children question', ->
-    it 'shows #children-and-income', ->
+    beforeEach ->
       $('#application_dependents_true').trigger('click')
-      expect($('#children-and-income').is(':visible')).toBe(true)
+
+    it 'shows children field', ->
+      expect($('#application_children').is(':visible')).toBe(true)
+    it 'shows the income field', ->
+      expect($('#application_income').is(':visible')).toBe(true)
 
   describe 'when the user selects "No" answer for dependant children question', ->
-    it 'hides #children-and-income', ->
-      $('#children-and-income').show()
+    beforeEach ->
       $('#application_dependents_false').trigger('click')
-      expect($('#children-and-income').is(':visible')).toBe(false)
 
-  describe 'input form values', ->
-    describe 'initial values', ->
-      it 'income amount', ->
-        expect($('#income').val()).toBe('0')
-
-      it 'number of children', ->
-        expect($('#children').val()).toBe('')
-
-    describe 'when the "Yes" option is chosen', ->
-      beforeEach ->
-        $('#application_dependents_true').trigger('click')
-
-      describe 'and the number of children & income is declared', ->
-        beforeEach ->
-          $('#income').val(5000)
-          $('#children').val(1)
-
-        describe 'and the "No" option is chosen', ->
-          beforeEach ->
-            $('#application_dependents_false').trigger('click')
-
-          it 'blanks out income value', ->
-            expect($('#income').val()).toBe('0')
-
-          it 'blanks out children value', ->
-            expect($('#children').val()).toBe('')
+    it 'hides children field', ->
+      expect($('#application_children').is(':visible')).toBe(false)
+    it 'shows the income field', ->
+      expect($('#application_income').is(':visible')).toBe(true)
