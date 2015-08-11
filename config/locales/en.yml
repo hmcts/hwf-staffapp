@@ -153,7 +153,7 @@ en-GB:
               inclusion: Please confirm the ages
             benefits:
               inclusion: You must answer the benefits question
-            children:
+            dependents:
               inclusion: 'You must answer the dependent children question'
     attributes:
       user:
@@ -201,6 +201,9 @@ en-GB:
         date_fee_paid: Date fee paid
         over_61: "Is the applicant's partner 61 or over?"
         benefits: Is the applicant receiving one of the benefits listed in question 9?
+        dependents: Are there any financially dependent children?
+        children: Number of children
+        income: Total monthly income
         page_1:
           date_of_birth_hint: For example 01/11/1980
           married_false: Single
