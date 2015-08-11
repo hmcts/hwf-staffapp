@@ -8,6 +8,7 @@ class Applications::BuildController < ApplicationController
     :application_details,
     :savings_investments,
     :benefits,
+    :benefits_result,
     :income,
     :summary
 
@@ -21,6 +22,12 @@ class Applications::BuildController < ApplicationController
   end
 
   def show
+    case step
+    when :benefits_result
+      jump_to(:income) unless @application.benefits
+    when :income
+      jump_to(:summary) if @application.benefits
+    end
     render_wizard
   end
 
