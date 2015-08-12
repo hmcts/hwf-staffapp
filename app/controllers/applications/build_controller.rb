@@ -10,6 +10,7 @@ class Applications::BuildController < ApplicationController
     :benefits,
     :benefits_result,
     :income,
+    :income_result,
     :summary
 
   def create
