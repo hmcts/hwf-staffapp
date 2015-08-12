@@ -73,3 +73,10 @@
           .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
         -else
           .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
+    -else
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.children')
+        .small-12.medium-7.large-8.columns =@application.children
+      .row
+        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.income')
+        .small-12.medium-7.large-8.columns =number_to_currency(@application.income.floor, precision: 0)
