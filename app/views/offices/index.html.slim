@@ -1,10 +1,10 @@
-h2 Listing offices
+h2 Offices
 
 table
   thead
     tr
-      th Name
-      th Jurisdiction(s)
+      th Name of office
+      th Jurisdictions
       th &nbsp;
 
   tbody
@@ -13,7 +13,7 @@ table
         td = link_to office.name, office
         td.center = office.jurisdictions.count
         - if can? :update, :office
-          td = link_to 'Edit', edit_office_path(office)
+          td = link_to 'Change details', edit_office_path(office)
 
 br
 

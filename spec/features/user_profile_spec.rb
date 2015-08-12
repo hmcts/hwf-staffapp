@@ -23,7 +23,7 @@ RSpec.feature 'User profile', type: :feature do
     context 'show view' do
       scenario 'view their profile' do
         click_link "#{user.name}"
-        expect(page).to have_text 'User details'
+        expect(page).to have_text 'Staff details'
         expect(page).to have_text "#{user.email}"
         expect(page).to have_text "#{user.role}"
       end
