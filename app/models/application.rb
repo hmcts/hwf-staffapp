@@ -1,5 +1,6 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
+  include IncomeCalculator
   belongs_to :user
   belongs_to :jurisdiction
   has_many :benefit_checks
@@ -7,7 +8,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   MAX_AGE = 120
   MIN_AGE = 16
 
-  after_save :run_benefit_check
+  after_save :run_auto_checks
 
   # Step 1 - Personal detail validation
   with_options if: proc { active_or_status_is? 'personal_information' } do
@@ -137,6 +138,11 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   private
+
+  def run_auto_checks
+    run_benefit_check
+    calculate if can_calculate?
+  end
 
   def children_numbers
     errors.add(
