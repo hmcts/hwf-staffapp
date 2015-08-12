@@ -74,6 +74,11 @@ en-GB:
     error:
       explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
+  remissions:
+    full: '&#10003; &nbsp; The applicant doesn’t have to pay the fee'
+    part: The applicant must pay %{amount_to_pay} towards the fee
+    none: '&#10007; &nbsp; The applicant must pay the full fee'
+    error: An error occured in the calculation
   activerecord:
     errors:
       models:
@@ -215,7 +220,7 @@ en-GB:
           married_true: Married or living with someone and sharing an income
           form_name_summary: Form name or number
         page_3:
-          header: Assessment
+          header: Savings and investments
           maximum_prompt: 'Maximum amount of savings and investments allowed:'
           savings:
             single: The applicant has
@@ -225,11 +230,14 @@ en-GB:
         page_4:
           benefits_false: 'No'
           benefits_true: 'Yes'
+        income_page:
+          header: Application result
         summary:
           passed: '&#10003; Passed'
           failed: '&#10007; Failed'
           savings_investments: Savings and investments
           benefits: Benefits
+          income: Income
         benefits_false: 'No'
         benefits_true: 'Yes'
         income_false: 'No'

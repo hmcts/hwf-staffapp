@@ -14,7 +14,7 @@
     color: $page-colour;
     margin: 0;
   }
-  &.callout-none {
+  &.callout-none, &.callout-error {
     background-color: $error-colour;
   }
   &.callout-full {
