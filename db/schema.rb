@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807143711) do
+ActiveRecord::Schema.define(version: 20150812114215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20150807143711) do
     t.boolean  "married"
     t.decimal  "fee"
     t.string   "status"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "jurisdiction_id"
     t.date     "date_received"
     t.string   "form_name"
@@ -45,6 +45,9 @@ ActiveRecord::Schema.define(version: 20150807143711) do
     t.integer  "children"
     t.integer  "income"
     t.boolean  "dependents"
+    t.string   "application_type"
+    t.string   "application_outcome"
+    t.integer  "amount_to_pay"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
