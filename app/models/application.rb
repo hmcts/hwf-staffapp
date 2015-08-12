@@ -66,6 +66,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     validates :dependents, inclusion: { in: [true, false] }
     validates :income, numericality: true
     validates :children, numericality: true
+    validate :children_numbers
   end
   # End step 5 validation
 
@@ -75,6 +76,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     else
       self[:ni_number] = val.upcase if val.present?
     end
+  end
+
+  def children=(val)
+    self[:children] = dependents? ? val : 0
   end
 
   def ni_number_display
@@ -132,6 +137,21 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   private
+
+  def children_numbers
+    errors.add(
+      :children,
+      I18n.t('activerecord.errors.models.application.attributes.children.not_a_number')
+    ) if dependents? && no_children?
+  end
+
+  def no_children?
+    children_present? && children == 0
+  end
+
+  def children_present?
+    children.present?
+  end
 
   def run_benefit_check # rubocop:disable MethodLength
     if can_check_benefits? && new_benefit_check_needed?
