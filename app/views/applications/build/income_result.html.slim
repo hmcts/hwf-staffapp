@@ -1,0 +1,31 @@
+h2 Income
+
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  .row.collapse
+    .columns.small-12.medium-10.large-8
+      #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+        h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay.floor, precision: 0)).html_safe
+  = f.hidden_field :status
+  = f.submit 'Next', :class => 'button primary'
+
+.row
+  .small-12.columns
+    .row
+      .small-12.medium-8.large-7.columns
+        details
+          summary.primary Our calculation is based on this information
+          #result_table.row.pad-top-fifteen-px
+            .columns.small-12
+              .row
+                .columns.small-4.table-label Fee
+                .columns.small-8 £#{@application.fee.floor}
+              .row
+                .columns.small-4.table-label Status
+                .columns.small-8 =@application.married ? t('activerecord.attributes.application.page_1.married_true') : t('activerecord.attributes.application.page_1.married_false')
+              .row
+                .columns.small-4.table-label =t('activerecord.attributes.application.children')
+                .columns.small-8 =@application.children
+              .row
+                .columns.small-4.table-label =t('activerecord.attributes.application.income')
+                .columns.small-8 =number_to_currency(@application.income.floor, precision: 0)
