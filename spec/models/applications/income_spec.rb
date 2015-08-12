@@ -12,46 +12,86 @@ RSpec.describe Application, type: :model do
 
     describe 'validations' do
       describe 'dependents' do
-        before do
-          application.dependents = nil
-          application.valid?
-        end
-
-        it 'must be entered' do
-          expect(application).to be_invalid
-        end
-      end
-
-      describe 'income' do
-        describe 'presence' do
+        context 'when nil' do
           before do
-            application.income = nil
+            application.dependents = nil
             application.valid?
           end
 
           it 'must be entered' do
             expect(application).to be_invalid
           end
-
-          it 'returns an error if missing' do
-            expect(application.errors[:income]).to eq ['is not a number']
-          end
         end
-      end
 
-      describe 'children' do
-        describe 'presence' do
+        context 'when true' do
           before do
-            application.children = nil
+            application.dependents = true
             application.valid?
           end
 
-          it 'must be entered' do
-            expect(application).to be_invalid
+          context 'children equals zero' do
+            before do
+              application.children = 0
+              application.valid?
+            end
+
+            it 'returns an error' do
+              expect(application.errors[:children]).to eq ['Choose number of children']
+            end
+
+            it 'invalidates the object' do
+              expect(application).to be_invalid
+            end
+          end
+        end
+
+        context 'when false' do
+          before do
+            application.dependents = false
+            application.valid?
           end
 
-          it 'returns an error if missing' do
-            expect(application.errors[:children]).to eq ['is not a number']
+          context 'children greater than zero' do
+            before do
+              application.children = 1
+              application.valid?
+            end
+
+            it 'resets children to 0' do
+              expect(application.children).to eq 0
+            end
+          end
+        end
+
+        context 'when either true or false' do
+          [true, false].each do |val|
+            before { application.dependents = val }
+
+            context 'income is set' do
+              before do
+                application.income = '300'
+                application.valid?
+              end
+
+              it 'is valid' do
+                expect(application).to be_valid
+              end
+            end
+
+            context 'income is empty' do
+              before do
+                application.income = nil
+                application.valid?
+              end
+
+              it 'invalidates the object' do
+                expect(application).to be_invalid
+              end
+
+              it 'adds an error message' do
+                expect(application.errors[:income]).to eq ['Enter the total monthly income']
+              end
+            end
           end
         end
       end

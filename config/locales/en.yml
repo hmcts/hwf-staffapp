@@ -155,6 +155,11 @@ en-GB:
               inclusion: You must answer the benefits question
             dependents:
               inclusion: 'You must answer the dependent children question'
+            children:
+              not_a_number: Choose number of children
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
     attributes:
       user:
         current_password: Current password
