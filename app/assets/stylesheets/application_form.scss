@@ -14,15 +14,16 @@ form {
     }
   }
 
-  .summary-section {
-    .summary-result{
-      font-weight: bold;
-      &.success {
-        color: #28A197;
-      }
-      &.failure {
-        color: $error-colour;
-      }
+  .summary-result{
+    font-weight: bold;
+    &.success {
+      color: $turquoise;
+    }
+    &.partial {
+      color: $orange;
+    }
+    &.failure {
+      color: $error-colour;
     }
   }
 }
