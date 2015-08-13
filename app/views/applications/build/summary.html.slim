@@ -55,28 +55,41 @@
         .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_fee_paid')
         .small-12.medium-7.large-8.columns =@application.date_fee_paid.to_s(:gov_uk_long)
 
-  .summary-section
+  .row
+    .small-12.medium-7.large-8.columns
+      h4 =t('activerecord.attributes.application.page_3.header')
+    .small-12.medium-5.large-4.columns.text-right =link_to 'Change savings and investments', wizard_path(:savings_investments)
+  .row
+    .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.savings_investments')
+    -if @application.savings_investment_result?
+      .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
+    -else
+      .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
+  -if @application.benefits
     .row
-      .small-12.medium-7.large-8.columns
-        h4 =t('activerecord.attributes.application.page_3.header')
-      .small-12.medium-5.large-4.columns.text-right =link_to 'Change savings and investments', wizard_path(:savings_investments)
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.savings_investments')
-      -if @application.savings_investment_result?
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.benefits')
+      -if @application.last_benefit_check && @application.last_benefit_check.benefits_valid
         .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
       -else
         .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
-    -if @application.benefits
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.benefits')
-        -if @application.last_benefit_check && @application.last_benefit_check.benefits_valid
-          .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
-        -else
-          .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
-    -else
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.children')
-        .small-12.medium-7.large-8.columns =@application.children
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.income')
-        .small-12.medium-7.large-8.columns =number_to_currency(@application.income.floor, precision: 0)
+  -else
+    .row
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.income')
+      -if @application.application_outcome == 'none'
+        .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
+      -else
+        .small-12.medium-7.large-8.columns.summary-result class=(@application.application_outcome == 'full' ? 'success' : 'partial')
+          =t('activerecord.attributes.application.summary.passed').html_safe
+    .row
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.children')
+      .small-12.medium-7.large-8.columns =@application.children
+    .row
+      .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.income')
+      .small-12.medium-7.large-8.columns =number_to_currency(@application.income.floor, precision: 0)
+
+  .row
+    .small-12.columns
+      .row.collapse.medium-10.large-8
+          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay.floor, precision: 0))
+
