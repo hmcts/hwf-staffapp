@@ -8,6 +8,10 @@
       .form-group
         = f.label :title, @application.errors[:title].join(', '), class: 'error' if @application.errors[:title].present?
         = f.label :title
+        = f.label :title
+          span.hint
+            = t('general.optional')
+            |&nbsp;(optional            
         = f.text_field :title, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
