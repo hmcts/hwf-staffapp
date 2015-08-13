@@ -26,6 +26,8 @@ en-GB:
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+  general:
+    optional: '&nbsp; (optional)'
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
