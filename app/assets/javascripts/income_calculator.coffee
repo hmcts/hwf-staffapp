@@ -46,10 +46,10 @@ class incomeCalculator
 
   showResult = (data) ->
     add_class = 'callout-' + data.type
-    show_text = 'The applicant has £0 to pay'
+    show_text = '\u2713\u00a0 The applicant doesn’t have to pay the fee'
     switch data.type
       when 'none'
-        show_text = 'The applicant must pay the full fee'
+        show_text = '\u2717\u00a0 The applicant must pay the full fee'
       when 'part'
         show_text = 'The applicant must pay ' + data.to_pay + ' towards the fee'
 
