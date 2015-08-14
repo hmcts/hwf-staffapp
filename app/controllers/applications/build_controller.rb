@@ -22,8 +22,10 @@ class Applications::BuildController < ApplicationController
     redirect_to wizard_path(steps.first, application_id: @application.id)
   end
 
-  def show
+  def show # rubocop:disable CyclomaticComplexity
     case step
+    when :benefits
+      jump_to(:summary) unless @application.savings_investment_result?
     when :benefits_result
       jump_to(:income) unless @application.benefits
     when :income
@@ -62,7 +64,7 @@ class Applications::BuildController < ApplicationController
 
   def application_params
     all_params            = [:status]
-    savings_investments   = [:threshold_exceeded, :over_61]
+    savings_investments   = [:threshold_exceeded, :over_61, :high_threshold_exceeded]
     benefits              = [:benefits]
     income                = [:dependents, :income, :children]
 
