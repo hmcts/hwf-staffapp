@@ -30,6 +30,8 @@
 
   -if @application.known_over_61?
     =f.hidden_field :over_61, value: 'true'
+  -elsif !@application.married?
+    =f.hidden_field :over_61, value: 'false'
   -else
     #over-61-only.start-hidden
       .row
@@ -42,12 +44,26 @@
                 .options.radio
                   .option
                     label for='application_over_61_false'
-                      = f.radio_button :over_61, 'false'
+                      = f.radio_button :over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
                       = t('no')
                   .option
                     label for='application_over_61_true'
-                      = f.radio_button :over_61, 'true'
+                      = f.radio_button :over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
                       = t('yes')
+                #high-threshold-only.start-hidden
+                  .row
+                    .small-12.medium-12.large-12.columns
+                      .panel-indent
+                        =f.label :high_threshold_exceeded
+                        .options.radio
+                          .option
+                            label for="application_high_threshold_exceeded_false"
+                              = f.radio_button :high_threshold_exceeded, 'false'
+                              = t('activerecord.attributes.application.page_3.savings.less_than_high')
+                          .option
+                            label for="application_high_threshold_exceeded_true"
+                              = f.radio_button :high_threshold_exceeded, 'true'
+                              = t('activerecord.attributes.application.page_3.savings.more_than_high')
 
   = f.hidden_field :status
   = f.submit 'Next', :class => 'button primary'

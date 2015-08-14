@@ -216,6 +216,7 @@ en-GB:
         dependents: Are there any financially dependent children?
         children: Number of children
         income: Total monthly income
+        high_threshold_exceeded: The applicant and their partner have
         page_1:
           date_of_birth_hint: For example 01/11/1980
           married_false: Single
@@ -229,6 +230,8 @@ en-GB:
             married: The applicant and their partner have
             less_than: Less than this amount
             more_than: More than this amount
+            less_than_high: Less than £16,000
+            more_than_high: More than £16,000
         page_4:
           benefits_false: 'No'
           benefits_true: 'Yes'
