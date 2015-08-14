@@ -41,6 +41,8 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :form_name
+          =t('activerecord.attributes.application.form_name')
+          span.hint =t('general.optional').html_safe
         = f.label :form_name, @application.errors[:form_name].join(', '), class: 'error' if @application.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
@@ -48,6 +50,8 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :case_number
+          =t('activerecord.attributes.application.case_number')
+          span.hint =t('general.optional').html_safe
         = f.label :case_number, @application.errors[:case_number].join(', '), class: 'error' if @application.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
