@@ -72,7 +72,7 @@
         .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
       -else
         .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe
-  -else
+  -elsif @application.income.present?
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.income')
       -if @application.application_outcome == 'none'
@@ -91,5 +91,4 @@
     .small-12.columns
       .row.collapse.medium-10.large-8
           #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
-            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay.floor, precision: 0))
-
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency( @application.amount_to_pay.present? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
