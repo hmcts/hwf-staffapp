@@ -61,7 +61,7 @@
     .small-12.medium-5.large-4.columns.text-right =link_to 'Change savings and investments', wizard_path(:savings_investments)
   .row
     .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.savings_investments')
-    -if @application.savings_investment_result?
+    -if @application.savings_investment_valid?
       .small-12.medium-7.large-8.columns.summary-result.success =t('activerecord.attributes.application.summary.passed').html_safe
     -else
       .small-12.medium-7.large-8.columns.summary-result.failure =t('activerecord.attributes.application.summary.failed').html_safe

@@ -25,7 +25,7 @@ class Applications::BuildController < ApplicationController
   def show # rubocop:disable CyclomaticComplexity
     case step
     when :benefits
-      jump_to(:summary) unless @application.savings_investment_result?
+      jump_to(:summary) unless @application.savings_investment_valid?
     when :benefits_result
       jump_to(:income) unless @application.benefits
     when :income
