@@ -12,6 +12,30 @@ RSpec.describe Application, type: :model do
 
     describe 'methods' do
       describe 'savings_investment_result' do
+        context 'high_threshold_exceeded is true' do
+          before do
+            application.threshold_exceeded = true
+            application.over_61 = true
+            application.high_threshold_exceeded = true
+          end
+
+          it 'returns false' do
+            expect(application.savings_investment_result?).to eq false
+          end
+        end
+
+        context 'high_threshold_exceeded is true' do
+          before do
+            application.threshold_exceeded = true
+            application.over_61 = true
+            application.high_threshold_exceeded = false
+          end
+
+          it 'returns true' do
+            expect(application.savings_investment_result?).to eq true
+          end
+        end
+
         context 'threshold_exceeded is true' do
           before { application.threshold_exceeded = true }
 
@@ -176,6 +200,22 @@ RSpec.describe Application, type: :model do
               expect(application).to be_valid
             end
           end
+        end
+      end
+
+      context 'when high_threshold_exceeded is true' do
+        before { application.high_threshold_exceeded = true }
+
+        it 'sets the application_outcome to be none' do
+          expect(application.application_outcome).to eq 'none'
+        end
+      end
+
+      context 'when high_threshold_exceeded is false' do
+        before { application.high_threshold_exceeded = false }
+
+        it 'sets the application_outcome to be nil' do
+          expect(application.application_outcome).to eq nil
         end
       end
     end

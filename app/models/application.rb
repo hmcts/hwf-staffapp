@@ -105,7 +105,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def savings_investment_result?
     result = false
-    if threshold_exceeded == false || (threshold_exceeded && over_61 == false)
+    if threshold_exceeded == false ||
+       (
+         threshold_exceeded && (over_61 == false || over_61 && high_threshold_exceeded == false)
+       )
       result = true
     end
     result

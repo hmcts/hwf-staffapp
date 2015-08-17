@@ -12,6 +12,7 @@ FactoryGirl.define do
     benefits true
     children 1
     income 500
+    threshold_exceeded false
 
     factory :probate_application do
       probate true
