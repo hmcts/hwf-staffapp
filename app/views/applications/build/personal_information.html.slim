@@ -8,11 +8,15 @@
       .form-group
         = f.label :title, @application.errors[:title].join(', '), class: 'error' if @application.errors[:title].present?
         = f.label :title
+          =t('activerecord.attributes.application.title')
+          span.hint =t('general.optional').html_safe
         = f.text_field :title, { class: 'form-control' }
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :first_name
+          =t('activerecord.attributes.application.first_name')
+          span.hint =t('general.optional').html_safe
         = f.label :first_name, @application.errors[:first_name].join(', '), class: 'error' if @application.errors[:first_name].present?
         = f.text_field :first_name, { class: 'form-control' }
 
@@ -36,6 +40,8 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :ni_number
+          =t('activerecord.attributes.application.ni_number')
+          span.hint =t('general.optional').html_safe
         = f.label :ni_number, @application.errors[:ni_number].join(', '), class: 'error' if @application.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
 

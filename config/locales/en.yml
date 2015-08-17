@@ -26,6 +26,8 @@ en-GB:
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+  general:
+    optional: '&nbsp; (optional)'
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
@@ -202,7 +204,7 @@ en-GB:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
-        form_name: Form name or number related to this application
+        form_name: Form number or name
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
