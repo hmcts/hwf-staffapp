@@ -53,6 +53,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     validates :threshold_exceeded, inclusion: { in: [true, false] }
     validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
     validates :over_61, inclusion: { in: [nil] }, unless: :threshold_exceeded
+    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :over_61
   end
   # End step 3 validation
 
@@ -103,12 +104,15 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     self.over_61 = nil unless val == true
   end
 
+  def high_threshold_exceeded=(val)
+    super
+    self.application_outcome = (high_threshold_exceeded? ? 'none' : nil)
+  end
+
   def savings_investment_result?
     result = false
     if threshold_exceeded == false ||
-       (
-         threshold_exceeded && (over_61 == false || over_61 && high_threshold_exceeded == false)
-       )
+       (threshold_exceeded && (over_61 && high_threshold_exceeded == false))
       result = true
     end
     result
