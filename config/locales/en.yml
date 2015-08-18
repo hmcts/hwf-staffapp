@@ -51,6 +51,8 @@ en-GB:
       heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
     :no:
       heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+    deleted:
+      heading: The applicant is not receiving benefits
     deceased:
       heading: The personal details entered belong to someone who has died
     undetermined:
