@@ -14,7 +14,7 @@ table
         = link_to user_path(user) do
           =user.name
       td
-        =user.role
+        =user.role.humanize
       td =user.office.name if user.office.present?
       td =user.jurisdiction.display if user.jurisdiction.present?
       td =link_to 'Change details', edit_user_path(user)
