@@ -48,10 +48,29 @@ RSpec.describe Applications::BuildController, type: :controller do
       end
 
       context 'benefits' do
-        before { get :show, application_id: application.id, id: :benefits }
+        context 'when savings_investment_valid? is false' do
+          before do
+            application.threshold_exceeded = true
+            application.over_61 = false
+            application.save
+            get :show, application_id: application.id, id: :benefits
+          end
 
-        it 'displays the benefits view' do
-          expect(response).to render_template :benefits
+          it 'redirects' do
+            expect(response).to have_http_status(:redirect)
+          end
+
+          it 'redirects to the summary page' do
+            expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :summary))
+          end
+        end
+
+        context 'when savings_investment_valid? is true' do
+          before { get :show, application_id: application.id, id: :benefits }
+
+          it 'displays the benefits view' do
+            expect(response).to render_template :benefits
+          end
         end
       end
 
@@ -81,7 +100,7 @@ RSpec.describe Applications::BuildController, type: :controller do
           end
 
           it 'redirects to the summary page' do
-            expect(response).to redirect_to redirect_to(application_build_path(application_id: assigns(:application).id, id: :summary))
+            expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :summary))
           end
         end
       end
@@ -120,7 +139,7 @@ RSpec.describe Applications::BuildController, type: :controller do
           end
 
           it 'redirects to the income page' do
-            expect(response).to redirect_to redirect_to(application_build_path(application_id: assigns(:application).id, id: :income))
+            expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :income))
           end
         end
       end

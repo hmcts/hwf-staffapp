@@ -32,7 +32,10 @@ RSpec.describe Application, type: :model do
       end
 
       context 'when at more than one check has been made' do
-        before { application.benefit_checks.new }
+        before do
+          application.benefit_checks.new
+          application.save
+        end
 
         it 'returns a benefit check' do
           expect(application.last_benefit_check).to be_a BenefitCheck

@@ -127,6 +127,11 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     result
   end
 
+  def benefits=(val)
+    super
+    self.application_type = benefits? ? 'benefit' : 'income'
+  end
+
   def full_name
     [title, first_name, last_name].join(' ')
   end
@@ -150,7 +155,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   def last_benefit_check
-    benefit_checks.last
+    benefit_checks.order(:id).last
   end
 
   private
@@ -187,6 +192,19 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
           parameter_hash: build_hash
         )
       )
+      update(
+        application_type: 'benefit',
+        application_outcome: outcome_from_dwp_result
+      )
+    end
+  end
+
+  def outcome_from_dwp_result
+    case last_benefit_check.dwp_result
+    when 'Yes'
+      'full'
+    when 'No'
+      'none'
     end
   end
 

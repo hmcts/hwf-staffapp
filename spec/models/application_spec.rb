@@ -97,9 +97,9 @@ RSpec.describe Application, type: :model do
     end
   end
 
-  describe 'calculator scenarios' do
+  describe 'calculator' do
     CalculatorTestData.seed_data.each do |src|
-      it "run scenario #{src[:id]}" do
+      it "scenario \##{src[:id]} passes" do
         application.update(
           fee: src[:fee],
           married: src[:married_status],
@@ -107,6 +107,7 @@ RSpec.describe Application, type: :model do
           children: src[:children],
           income: src[:income]
         )
+        expect(application.application_type).to eq 'income'
         expect(application.application_outcome).to eq src[:type]
         expect(application.amount_to_pay).to eq src[:they_pay].to_i
       end
@@ -124,6 +125,11 @@ RSpec.describe Application, type: :model do
       before { application.last_name = 'TEST' }
       it 'runs a benefit check ' do
         expect { application.save } .to change { application.benefit_checks.count }.by 1
+      end
+
+      it 'sets application_type to benefit' do
+        application.save
+        expect(application.application_type).to eq 'benefit'
       end
 
       context 'when other fields are changed' do
