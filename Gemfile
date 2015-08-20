@@ -83,6 +83,7 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'webmock'
   gem 'capybara'
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'capybara-webkit'
   gem 'faker'
