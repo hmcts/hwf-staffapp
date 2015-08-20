@@ -26,6 +26,31 @@ RSpec.describe Application, type: :model do
             expect(application.errors[:benefits]).to eq ['You must answer the benefits question']
           end
         end
+
+        describe 'validation' do
+          context 'when user selects yes for benefits' do
+            before do
+              application.income = nil
+              application.benefits = true
+              application.save
+            end
+
+            it 'sets application_type to benefits' do
+              expect(application.application_type).to eq 'benefit'
+            end
+          end
+
+          context 'when user selects no for benefits' do
+            before do
+              application.benefits = false
+              application.save
+            end
+
+            it 'sets application_type to income' do
+              expect(application.application_type).to eq 'income'
+            end
+          end
+        end
       end
     end
   end

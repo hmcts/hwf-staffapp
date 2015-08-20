@@ -52,7 +52,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
     validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
-    validates :over_61, inclusion: { in: [nil] }, unless: :threshold_exceeded
+    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :over_61
   end
   # End step 3 validation
 
@@ -100,15 +100,36 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def threshold_exceeded=(val)
     super
-    self.over_61 = nil unless val == true
+    self.over_61 = nil unless threshold_exceeded?
+    if threshold_exceeded? && !over_61
+      self.application_type = 'none'
+      self.application_outcome = 'none'
+    end
   end
 
-  def savings_investment_result?
+  def high_threshold_exceeded=(val)
+    super
+    if high_threshold_exceeded?
+      self.application_type = 'none'
+      self.application_outcome = 'none'
+    else
+      self.application_type = nil
+      self.application_outcome = nil
+    end
+  end
+
+  def savings_investment_valid?
     result = false
-    if threshold_exceeded == false || (threshold_exceeded && over_61 == false)
+    if threshold_exceeded == false ||
+       (threshold_exceeded && (over_61 && high_threshold_exceeded == false))
       result = true
     end
     result
+  end
+
+  def benefits=(val)
+    super
+    self.application_type = benefits? ? 'benefit' : 'income'
   end
 
   def full_name
@@ -134,7 +155,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   def last_benefit_check
-    benefit_checks.last
+    benefit_checks.order(:id).last
   end
 
   private
@@ -171,6 +192,19 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
           parameter_hash: build_hash
         )
       )
+      update(
+        application_type: 'benefit',
+        application_outcome: outcome_from_dwp_result
+      )
+    end
+  end
+
+  def outcome_from_dwp_result
+    case last_benefit_check.dwp_result
+    when 'Yes'
+      'full'
+    when 'No'
+      'none'
     end
   end
 

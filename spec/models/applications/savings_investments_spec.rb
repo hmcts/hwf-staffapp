@@ -11,19 +11,43 @@ RSpec.describe Application, type: :model do
     before { application.status = 'savings_investments' }
 
     describe 'methods' do
-      describe 'savings_investment_result' do
+      describe 'savings_investment_valid?' do
+        context 'high threshold is exceeded' do
+          before do
+            application.threshold_exceeded = true
+            application.over_61 = true
+            application.high_threshold_exceeded = true
+          end
+
+          it 'returns false' do
+            expect(application.savings_investment_valid?).to eq false
+          end
+        end
+
+        context 'high threshold is not exceeded' do
+          before do
+            application.threshold_exceeded = true
+            application.over_61 = true
+            application.high_threshold_exceeded = false
+          end
+
+          it 'returns true' do
+            expect(application.savings_investment_valid?).to eq true
+          end
+        end
+
         context 'threshold_exceeded is true' do
           before { application.threshold_exceeded = true }
 
-          it 'returns failed' do
-            expect(application.savings_investment_result?).to eq false
+          it 'returns false' do
+            expect(application.savings_investment_valid?).to eq false
           end
 
           context 'over_61 is true' do
             before { application.over_61 = true }
 
-            it 'returns failed' do
-              expect(application.savings_investment_result?).to eq false
+            it 'returns false' do
+              expect(application.savings_investment_valid?).to eq false
             end
           end
         end
@@ -31,8 +55,8 @@ RSpec.describe Application, type: :model do
         context 'threshold_exceeded is false' do
           before { application.threshold_exceeded = false }
 
-          it 'returns passed' do
-            expect(application.savings_investment_result?).to eq true
+          it 'returns true' do
+            expect(application.savings_investment_valid?).to eq true
           end
         end
         context 'threshold_exceeded is true' do
@@ -41,8 +65,8 @@ RSpec.describe Application, type: :model do
           context 'over_61 is false' do
             before { application.over_61 = false }
 
-            it 'returns passed' do
-              expect(application.savings_investment_result?).to eq true
+            it 'returns false' do
+              expect(application.savings_investment_valid?).to eq false
             end
           end
         end
@@ -122,13 +146,30 @@ RSpec.describe Application, type: :model do
         before { application.threshold_exceeded = true }
 
         describe 'over_61' do
-          before do
-            application.over_61 = nil
-            application.valid?
+          context 'is missing' do
+            before do
+              application.over_61 = nil
+              application.valid?
+            end
+
+            it 'must be present' do
+              expect(application).to be_invalid
+            end
           end
 
-          it 'must be present' do
-            expect(application).to be_invalid
+          context 'is true' do
+            before do
+              application.over_61 = false
+              application.valid?
+            end
+
+            it 'sets the application_type to be none' do
+              expect(application.application_type).to eq 'none'
+            end
+
+            it 'sets the application_outcome to be none' do
+              expect(application.application_outcome).to eq 'none'
+            end
           end
         end
       end
@@ -176,6 +217,26 @@ RSpec.describe Application, type: :model do
               expect(application).to be_valid
             end
           end
+        end
+      end
+
+      context 'when high_threshold_exceeded is true' do
+        before { application.high_threshold_exceeded = true }
+
+        it 'sets the application_type to be none' do
+          expect(application.application_type).to eq 'none'
+        end
+
+        it 'sets the application_outcome to be none' do
+          expect(application.application_outcome).to eq 'none'
+        end
+      end
+
+      context 'when high_threshold_exceeded is false' do
+        before { application.high_threshold_exceeded = false }
+
+        it 'sets the application_outcome to be nil' do
+          expect(application.application_outcome).to eq nil
         end
       end
     end
