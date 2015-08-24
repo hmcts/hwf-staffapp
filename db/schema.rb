@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20150817083012) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "entity_code"
   end
 
   create_table "r2_calculators", force: :cascade do |t|

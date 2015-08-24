@@ -7,6 +7,6 @@ FactoryGirl.define do
     factory :invalid_office do
       name nil
     end
+    entity_code 'EC111'
   end
-
 end
