@@ -1,5 +1,5 @@
-Office.find_or_create_by(name: 'Digital')
-Office.find_or_create_by(name: 'Bristol')
+Office.create(name: 'Digital', entity_code: 'MA105')
+Office.create(name: 'Bristol', entity_code: 'DB402')
 
 unless ENV=='production'
   User.create([{

@@ -95,3 +95,5 @@ gem 'rails_12factor', group: :production
 gem 'rest-client'
 gem 'chartkick'
 gem 'groupdate'
+
+gem 'base32_pure'
