@@ -25,6 +25,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# use GDS assets, styles etc...
+gem 'govuk_frontend_toolkit', '~> 4.2.1'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -57,6 +60,12 @@ gem 'will_paginate'
 
 # Soft deletion
 gem "paranoia", "~> 2.0"
+
+group :development do
+  # speed up local development via livereload
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
