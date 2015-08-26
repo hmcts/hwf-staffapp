@@ -48,7 +48,7 @@ class OfficesController < ApplicationController
   end
 
   def office_params
-    params.require(:office).permit(:name, jurisdiction_ids: [])
+    params.require(:office).permit(:name, :entity_code, jurisdiction_ids: [])
   end
 
   def list_jurisdictions
