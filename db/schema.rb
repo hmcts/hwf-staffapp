@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824134632) do
+ActiveRecord::Schema.define(version: 20150826083936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,15 +145,13 @@ ActiveRecord::Schema.define(version: 20150824134632) do
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
 
   create_table "references", force: :cascade do |t|
-    t.binary   "secure_random",  null: false
-    t.string   "reference_hash", null: false
     t.integer  "application_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "reference",      null: false
   end
 
   add_index "references", ["application_id"], name: "index_references_on_application_id", using: :btree
-  add_index "references", ["reference_hash"], name: "index_references_on_reference_hash", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
