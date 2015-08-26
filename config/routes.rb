@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  get 'out_of_box/password' => 'out_of_box#password'
+  get 'out_of_box/office' => 'out_of_box#office'
+  get 'out_of_box/details' => 'out_of_box#details'
+
   get 'guide' => 'guide#index'
 
   get 'ping' => 'health_status#ping'

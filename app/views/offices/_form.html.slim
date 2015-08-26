@@ -11,12 +11,12 @@
           = f.text_field :name, { class: 'form-control' }
 
   .row
-    .small-12.columns.form-group
+    .small-12.large-6.columns.form-group
       label Jurisdictions
       .row
         .options.radio
           =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
-            .columns.small-12.medium-6.large-4.end
+            .columns.small-12.end
               = b.label do
                 = b.check_box
                 = b.text
