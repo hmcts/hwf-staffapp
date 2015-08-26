@@ -4,7 +4,6 @@ class OutOfBoxController < ApplicationController
   respond_to :html
 
   def password
-    @user = current_user
   end
 
   def office
