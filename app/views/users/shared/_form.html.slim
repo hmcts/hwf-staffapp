@@ -13,49 +13,10 @@
             = f.label :email
             .form-control #{@user.email}
 
-  .row
-    .columns.small-12.medium-8.large-5.columns.form-group
-      .form-group
-        = f.label(:roles, 'Role')
-        = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error' if @user.errors[:role].present?
-        -if current_user.elevated?
-          .row.collapse
-            .columns.small-4.large-2
-            - if (@user.manager? && (@user == current_user))
-              = current_user.role
-            - else
-              .options.radio
-                =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
-                  = b.label do
-                    = b.radio_button(class: 'form-control')
-                    = b.text
-        -else
-          .form-control #{@user.role}
+  = render(partial: 'users/shared/form_roles', locals: {f: f})
 
-  .row
-    .columns.small-12.medium-8.large-5
-      .form-group
-        = f.label :office_id
-        = f.label :office_id, @user.errors[:office_id].join(', ').html_safe, class: 'error' if @user.errors[:office_id].present?
-        = f.collection_select :office_id, @offices, :id, :name, { class: 'form-control' }
+  = render(partial: 'users/shared/form_office', locals: {f: f})
 
-
-  .row
-    .columns.small-12.medium-8.large-5.columns
-      .form-group
-        label Main jurisdiction
-        = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
-        - if @jurisdictions.present?
-          .row.collapse
-            .options.radio
-              label for="user_jurisdiction_id"
-                input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true"
-                  |No main jurisdiction
-              =collection_radio_buttons(:user, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
-                = b.label do
-                  = b.radio_button(class: 'form-control')
-                  = b.text
-        - else
-          = t('error_messages.jurisdictions.none_in_office')
+  = render(partial: 'users/shared/form_jurisdiction', locals: {f: f})
 
   .actions = f.submit 'Save changes', class: 'button'
