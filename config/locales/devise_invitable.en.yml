@@ -1,5 +1,9 @@
 en:
   devise:
+    out_of_box:
+      password:
+        header: 'Choose password'
+        submit_button: 'next'
     failure:
       invited: 'You have a pending invitation, accept it to finish creating your account.'
     invitations:
