@@ -24,7 +24,7 @@ h2 Change details
           .row.collapse
             .columns.small-4.large-2
             - if (@user.manager? && (@user == current_user))
-              = current_user.role
+              = current_user.role.humanize
             - else
               .options.radio
                 =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
@@ -32,7 +32,7 @@ h2 Change details
                     = b.radio_button(class: 'form-control')
                     = b.text
         -else
-          .form-control #{@user.role}
+          .form-control #{@user.role.humanize}
 
   .row
     .columns.small-12.medium-8.large-5
