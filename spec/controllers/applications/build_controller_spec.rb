@@ -145,7 +145,10 @@ RSpec.describe Applications::BuildController, type: :controller do
       end
 
       context 'summary' do
-        before { get :show, application_id: application.id, id: :summary }
+        before do
+          application.update(application_type: 'none')
+          get :show, application_id: application.id, id: :summary
+        end
 
         it 'displays the summary view' do
           expect(response).to render_template :summary
