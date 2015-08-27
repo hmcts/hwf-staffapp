@@ -77,6 +77,8 @@ group :development, :test do
   gem 'guard-rubocop'
   gem 'guard-teaspoon'
   gem 'teaspoon-jasmine'
+
+  gem 'timecop'
 end
 
 group :test do
