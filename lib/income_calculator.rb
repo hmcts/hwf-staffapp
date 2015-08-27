@@ -1,7 +1,7 @@
 module IncomeCalculator
 
   def can_calculate?
-    [children, fee, !married.nil?, income].all?
+    [children, fee, !married.nil?, income, !dependents.nil?].all?
   end
 
   def calculate

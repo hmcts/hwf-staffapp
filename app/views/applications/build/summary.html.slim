@@ -77,7 +77,7 @@
       .small-12.columns
         .row.collapse.medium-10.large-8
           #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-            h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
   -when 'income'
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.summary.income')

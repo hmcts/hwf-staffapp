@@ -33,6 +33,7 @@ RSpec.describe Application, type: :model do
     context 'can_calculate?' do
       context 'when required fields are complete' do
         before do
+          application.dependents = true
           application.fee = 300
           application.married = true
           application.income = 1000
@@ -64,6 +65,7 @@ RSpec.describe Application, type: :model do
   describe 'auto running calculator' do
     context 'without required fields' do
       before do
+        application.dependents = true
         application.fee = nil
         application.married = true
         application.income = 1000
@@ -81,6 +83,7 @@ RSpec.describe Application, type: :model do
 
     context 'with required fields' do
       before do
+        application.dependents = true
         application.fee = 300
         application.married = true
         application.income = 1000

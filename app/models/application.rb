@@ -104,6 +104,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     if threshold_exceeded? && !over_61
       self.application_type = 'none'
       self.application_outcome = 'none'
+      self.dependents = nil
     end
   end
 
@@ -112,6 +113,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     if high_threshold_exceeded?
       self.application_type = 'none'
       self.application_outcome = 'none'
+      self.dependents = nil
     else
       self.application_type = nil
       self.application_outcome = nil
