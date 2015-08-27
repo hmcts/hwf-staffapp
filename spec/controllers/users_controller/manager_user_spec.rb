@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/shared_examples/default_user_shared'
 
 RSpec.describe UsersController, type: :controller do
   render_views
