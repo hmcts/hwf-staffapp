@@ -4,6 +4,11 @@ RSpec.describe ApplicationBuilder do
 
   let(:user) { create :user }
   let(:application_builder) { described_class.new(user) }
+  let(:entity_code) { user.office.entity_code }
+  let(:current_year) { Time.zone.now.strftime('%y') }
+  let(:counter) do
+    Reference.where("reference like ?", "#{entity_code}-#{current_year}-%").count + 1
+  end
 
   describe '#create_application' do
     let(:application_params) do
@@ -25,7 +30,8 @@ RSpec.describe ApplicationBuilder do
 
     let(:reference_params) do
       {
-        application_id: application_builder.application.id
+        application_id: application_builder.application.id,
+        reference: "#{entity_code}-#{current_year}-#{counter}"
       }
     end
 
