@@ -31,7 +31,8 @@ html[lang="en"]
                 - else
                   .inline
                     = link_to t('functions.log_in'), new_user_session_path
-    =render 'layouts/toolbar'
+    -if params[:controller] != 'out_of_box'                
+      =render 'layouts/toolbar'
     .row
       .large-12.columns
         - flash.each do |key, value|
