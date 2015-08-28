@@ -114,7 +114,7 @@ en:
       heading: Change your password
       updated: Your password was updated successfully
   out_of_box:
-    ie_warning: IE User! We recommend you use Firefox for a superior experience
+    ie_warning: Please use Mozilla Firefox for this service as it will work better than Internet Explorer.
     office:
       title: Office details
       heading: Choose jurisdictions

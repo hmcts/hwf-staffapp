@@ -1,8 +1,21 @@
+@import "colours";
+@import "measurements";
+
 .phase-banner{
-  padding:10px 0;
+  margin-bottom:$gutter;
+  .row{
+    border-top: 10px solid $link-colour;
+    border-bottom: 1px solid $grey-3;
+    padding:10px 0;
+  }
   p {
     margin:0;
   }
   strong.phase-tag{
-    color:white;background-color:#f47738;padding:2px 5px;text-transform:uppercase;margin-right:8px;display:inline-block;
-  }}
+    color:white;
+    background-color:#f47738;
+    padding:2px 5px 0;
+    text-transform:uppercase;
+    margin-right:8px;
+  }
+}

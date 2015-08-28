@@ -12,14 +12,6 @@ html[lang="en"]
     = csrf_meta_tags
   body
     main#main(role="main")
-      .phase-banner
-        .row
-          p
-            strong.phase-tag BETA
-            span 
-              | This is a new service – your 
-              a href="https://designpatterns.hackpad.com/GOV.UK-elements-feedback-sKrDyQxcfA2" feedback 
-              | will help us to improve it.
       .contain-to-grid
         nav.top-bar(data-topbar)
           ul.title-area
@@ -40,6 +32,14 @@ html[lang="en"]
                   - else
                     .inline
                       = link_to t('functions.log_in'), new_user_session_path
+      .phase-banner
+        .row
+          p
+            strong.phase-tag BETA
+            span 
+              | This is a new service – your 
+              a href="https://designpatterns.hackpad.com/GOV.UK-elements-feedback-sKrDyQxcfA2" feedback 
+              | will help us to improve it.
       -if params[:controller] != 'out_of_box'                
         =render 'layouts/toolbar'
       .row
