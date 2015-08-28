@@ -8,7 +8,11 @@ RSpec.describe Application, type: :model do
   end
 
   describe 'Step 5 - Income' do
-    before { application.status = 'income' }
+    before do
+      application.threshold_exceeded = false
+      application.benefits = false
+      application.status = 'income'
+    end
 
     describe 'validations' do
       describe 'dependents' do
