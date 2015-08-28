@@ -14,11 +14,10 @@ class Applications::BuildController < ApplicationController
     :summary
 
   def create
-    @application = Application.create(
-      jurisdiction_id: current_user.jurisdiction_id,
-      office_id: current_user.office_id,
-      user_id: current_user.id
-    )
+    application_builder = ApplicationBuilder.new(current_user)
+    application_builder.create_application
+    application_builder.create_reference
+    @application = application_builder.application
     redirect_to wizard_path(steps.first, application_id: @application.id)
   end
 

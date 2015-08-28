@@ -20,6 +20,11 @@ RSpec.describe Office, type: :model do
       duplicate = build(:office, name: original.name)
       expect(duplicate).to be_invalid
     end
+
+    it 'must have entity_code' do
+      office.entity_code = ''
+      expect(office).to be_invalid
+    end
   end
 
   context 'responds to' do
