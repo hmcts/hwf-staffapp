@@ -1,4 +1,5 @@
 @import 'colours';
+@import 'measurements';
 
 @font-face {
   font-family: 'nta';
@@ -26,6 +27,10 @@
   font-weight: bold;
 }
 
+body {
+  color: $text-colour;
+}
+
 a, details > summary {
   color: #005ea5;
   text-decoration: underline;
@@ -37,21 +42,23 @@ a, details > summary {
   margin-top: -0.4875rem;
 }
 
-h2 {
-  font-weight: bold;
+@for $i from 1 through 6 {
+  h#{$i},
+	.h#{$i}{
+		font-weight: 700;
+    font-style: normal;
+	}
 }
-h3.bold {
-  font-weight: bold;
-}
+
 .bold {
-  font-weight: bold;
+  font-weight: 700;
 }
 .btn {
   background-color: $button-colour;
   box-shadow: 0 2px 0 #003518;
-}
-.btn:hover {
-  background-color: $green;
+  &:hover {
+    background-color: $green;
+  }
 }
 
 img {
@@ -67,19 +74,19 @@ span.hint {
 }
 
 .pad-top-thirty-pix {
-  padding-top: 30px;
+  padding-top: $gutter;
 }
 
 .pad-top-fifteen-px {
-  padding-top: 15px;
+  padding-top: $gutter-half;
 }
 
 .pad-bottom-thirty-pix {
-  padding-bottom: 30px;
+  padding-bottom: $gutter;
 }
 
 .pad-left-fifteen-px {
-  padding-left: 15px;
+  padding-left: $gutter-half;
 }
 
 .panel-indent {
@@ -90,10 +97,6 @@ span.hint {
 }
 .actions {
   margin-top: 32px;
-}
-
-* {
-  color:$text-colour;
 }
 
 label,

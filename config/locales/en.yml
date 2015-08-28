@@ -113,3 +113,9 @@ en:
     registrations:
       heading: Change your password
       updated: Your password was updated successfully
+  out_of_box:
+    ie_warning: IE User! We recommend you use Firefox for a superior experience
+    office:
+      title: Office details
+      heading: Choose jurisdictions
+      advice: Select all the jurisdictions that are handled in your office

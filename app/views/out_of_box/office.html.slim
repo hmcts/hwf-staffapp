@@ -1,11 +1,27 @@
-h2 Office details
+h2 = t('out_of_box.office.title')
 
-== render 'offices/form'
+= form_for @office do |f|
 
-.row.pad-top-thirty-pix
-  .columns.small-12
-    =link_to 'Show this office', @office
--unless current_user.manager?
-  .row.pad-top-fifteen-px
+  .row
     .columns.small-12
-      =link_to 'Back to list of offices', offices_path
+      = f.label :name, @office.errors[:name].join(', ').html_safe, class: 'error' if @office.errors[:name].present?
+  .row
+    .columns.small-12.medium-8.large-5
+      = f.label :name
+      = f.text_field :name, { class: 'form-control' }
+
+  .row
+    .columns.small-12.large-6
+      h3= t('out_of_box.office.heading')
+      p= t('out_of_box.office.advice')
+      
+      .options-collection
+        label.h5 Court jurisdictions
+        .options.radio
+          =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
+            .jurisdiction
+              = b.label do
+                = b.check_box
+                = b.text
+
+  .actions = f.submit class: 'button'

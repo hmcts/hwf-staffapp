@@ -1,0 +1,30 @@
+// Details
+// ==========================================================================
+// GOV.UK front end toolkit dependencies
+@import "colours";
+@import "measurements";
+// Show & hide links
+
+details {
+  display: block;
+  margin:$gutter-half/4 0 $gutter-half;
+  summary {
+    display: block;
+    color: $govuk-blue;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: em(5);
+    &:hover {
+      color: $link-hover-colour;
+    }
+    &:focus {
+      outline: 3px solid $yellow;
+    }
+  }
+  .summary {
+    text-decoration: underline;
+  }
+  .arrow {
+    margin-right: 0.35em;
+  }
+}

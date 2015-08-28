@@ -7,14 +7,13 @@ h2 Your details
         = f.label :name
         = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
         = f.text_field :name, { class: 'form-control' }
+
   .row
-    .small-12.columns
+    .columns.small-12.medium-8.large-5
       .form-group
-        .row
-          .columns.small-12.medium-8.large-5
-            = f.label :email
-            input type="text" name="user_email" disabled="disabled" value="#{@user.email}"
+        = f.label :email
+        = f.text_field :email, { class: 'form-control', disabled: 'disabled' }
 
   = render(partial: 'users/shared/form_jurisdiction', locals: {f: f})
 
-  .actions = f.submit 'Save changes', class: 'button'
+  .actions = f.submit 'Finish', class: 'button'
