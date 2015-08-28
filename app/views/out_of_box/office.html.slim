@@ -7,7 +7,7 @@ h2 = t('out_of_box.office.title')
       = f.label :name, @office.errors[:name].join(', ').html_safe, class: 'error' if @office.errors[:name].present?
   .row
     .columns.small-12.medium-8.large-5
-      = f.label :name
+      = f.label :name, t('out_of_box.office.label_name')
       = f.text_field :name, { class: 'form-control' }
 
   .row
@@ -16,7 +16,7 @@ h2 = t('out_of_box.office.title')
       p= t('out_of_box.office.advice')
       
       .options-collection
-        label.h5 Court jurisdictions
+        label.h5 Courts
         .options.radio
           =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
             .jurisdiction

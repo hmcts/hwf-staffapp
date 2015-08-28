@@ -116,6 +116,7 @@ en:
   out_of_box:
     ie_warning: Please use Mozilla Firefox for this service as it will work better than Internet Explorer.
     office:
+      label_name: Name of office
       title: Office details
-      heading: Choose jurisdictions
-      advice: Select all the jurisdictions that are handled in your office
+      heading: Areas of work
+      advice: "Select all that apply:"
