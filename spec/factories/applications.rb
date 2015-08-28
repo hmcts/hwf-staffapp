@@ -28,5 +28,11 @@ FactoryGirl.define do
     factory :no_benefits do
       benefits false
     end
+
+    factory :application_confirm do
+      benefits false
+      application_outcome 'full'
+      application_type 'income'
+    end
   end
 end

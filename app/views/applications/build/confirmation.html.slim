@@ -6,15 +6,12 @@ h2 Application processed
     .small-12.columns
       .row.collapse.medium-10.large-8
         -case @application.application_type
-        -when 'benefit'
-          #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-            h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
-        -when 'income'
-          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
-            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
         -when 'none'
           #calculator.callout.callout-none
             h3.bold =t('remissions.none').html_safe
+        -else
+          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
   .row
     .small-12.medium-12.large-12.columns
       h4 Next steps
@@ -28,4 +25,4 @@ h2 Application processed
 
   = @application.errors.full_messages if @application.errors.present?
   = f.hidden_field :status
-  = f.submit 'Next', :class => 'button primary'
+  = f.submit 'Back to start', :class => 'button primary'

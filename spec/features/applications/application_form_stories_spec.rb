@@ -12,6 +12,7 @@ RSpec.feature 'Completing the application details', type: :feature do
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
     Capybara.current_driver = :webkit
+    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
@@ -308,6 +309,22 @@ RSpec.feature 'Completing the application details', type: :feature do
                         expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                         expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
                         expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                      end
+                    end
+                  end
+
+                  context 'when the user clicks continue' do
+                    before { click_button 'Continue' }
+
+                    scenario 'the confirmation is shown' do
+                      expect(page).to have_xpath('//h2', text: 'Application processed')
+                    end
+
+                    context 'when the user clicks Back to Start' do
+                      before { click_button 'Back to start' }
+
+                      scenario 'the home page is shown' do
+                        expect(page).to have_xpath('//span[@class="bold"]', text: 'Check benefits')
                       end
                     end
                   end

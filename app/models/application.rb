@@ -58,7 +58,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   # Step 4 - Benefits
   with_options if: proc { active_or_status_is? 'benefits' } do
-    validates :benefits, inclusion: { in: [true, false] }, if: :savings_investment_valid?
+    validates :benefits, inclusion: { in: [true, false] }, if: :benefits_required?
   end
   # End step 4 validation
 
@@ -160,15 +160,19 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     benefit_checks.order(:id).last
   end
 
+  private
+
   def income_required?
-    !benefits? && savings_investment_valid?
+    active_or_status_is?('income') & !benefits? && savings_investment_valid?
   end
 
   def income_children_required?
     income_required? && dependents?
   end
 
-  private
+  def benefits_required?
+    active_or_status_is?('benefits') && :savings_investment_valid?
+  end
 
   def run_auto_checks
     run_benefit_check
