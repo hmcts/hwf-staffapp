@@ -7,7 +7,7 @@
           = f.label :name, @office.errors[:name].join(', ').html_safe, class: 'error' if @office.errors[:name].present?
       .row
         .columns.small-12.medium-8.large-5
-          = f.label :name
+          = f.label :name, t('functions.offices.label_name')
           = f.text_field :name, { class: 'form-control' }
 
   .row

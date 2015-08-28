@@ -26,6 +26,8 @@ en:
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+    offices:
+      label_name: Name of office
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
