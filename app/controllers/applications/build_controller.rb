@@ -11,7 +11,8 @@ class Applications::BuildController < ApplicationController
     :benefits_result,
     :income,
     :income_result,
-    :summary
+    :summary,
+    :confirmation
 
   def create
     application_builder = ApplicationBuilder.new(current_user)

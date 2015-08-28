@@ -154,6 +154,14 @@ RSpec.describe Applications::BuildController, type: :controller do
           expect(response).to render_template :summary
         end
       end
+
+      context 'confirmation' do
+        before { get :show, application_id: application.id, id: :confirmation }
+
+        it 'displays the confirmation view' do
+          expect(response).to render_template :confirmation
+        end
+      end
     end
   end
 end
