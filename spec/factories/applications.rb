@@ -24,5 +24,15 @@ FactoryGirl.define do
       refund true
       date_fee_paid Time.zone.yesterday
     end
+
+    factory :no_benefits do
+      benefits false
+    end
+
+    factory :application_confirm do
+      benefits false
+      application_outcome 'full'
+      application_type 'income'
+    end
   end
 end

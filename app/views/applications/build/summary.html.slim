@@ -112,3 +112,6 @@
     .row
       .small-12.columns
         h5 =@application.inspect
+
+  = f.hidden_field :status
+  = f.submit 'Continue', :class => 'button primary'
