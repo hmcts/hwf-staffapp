@@ -8,11 +8,11 @@ RSpec.feature 'Manager transfers user', type: :feature do
   context 'Manager' do
     let(:manager) { create :manager, office: office }
 
-    let(:office) { create :office}
+    let(:office) { create :office }
     let(:manager) { create :manager, office: office }
     let(:user) { create :user, office: office }
 
-    let!(:another_office) { create :office}
+    let!(:another_office) { create :office }
     let!(:another_manager) { create :manager, office: another_office }
 
     scenario 'transfers user from his office to another' do
