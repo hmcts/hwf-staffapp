@@ -1,11 +1,14 @@
+h1 Dashboard
+
 =content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 -if current_user.present?
   -if current_user.admin?
     =render 'home/admin'
   -elsif current_user.manager?
     =render 'home/manager'
+    =render 'home/shared_section'
   -else
-    p 
+    p
       span.bold 'Check benefits'
       |&nbsp;to see if an applicant is eligible for benefits-based remission.
     p
@@ -13,6 +16,7 @@
       span.bold &nbsp;'Income calculator'
       |&nbsp;to see if an applicant can get help with their fees based on their income.
       br You'll also be able to calculate part-remissions.
+      =render 'home/shared_section'
 -else
   .pad-top-thirty-px
     = link_to t('functions.log_in'), new_user_session_path, class: 'button'

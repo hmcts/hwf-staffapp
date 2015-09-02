@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root to: 'home#dashboard'
 
-  get 'home/dashboard'
+  get 'home/dashboard', as: 'dashboard'
 
   get '/applications/new' => 'applications/build#create'
   resources :applications do
