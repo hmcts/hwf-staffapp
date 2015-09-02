@@ -4,7 +4,7 @@ RSpec.describe HomeController, type: :controller do
 
   include Devise::TestHelpers
 
-  describe 'GET #index' do
+  describe 'GET #dashboard' do
     let(:user)      { create :user }
     let(:manager)   { create :manager }
     let(:admin)     { create :admin_user }
@@ -14,15 +14,15 @@ RSpec.describe HomeController, type: :controller do
 
         before(:each) do
           sign_in user
-          get :index
+          get :dashboard
         end
 
         it 'returns http success' do
           expect(response).to have_http_status(:success)
         end
 
-        it 'renders the index view' do
-          expect(response).to render_template :index
+        it 'renders the dashboard view' do
+          expect(response).to render_template :dashboard
         end
       end
 
@@ -32,11 +32,13 @@ RSpec.describe HomeController, type: :controller do
           Office.delete_all
           FactoryGirl.create_list :dwp_check, 2, created_by: manager, office: manager.office
           sign_in admin
-          get :index
+          get :dashboard
         end
+
         it 'returns http success' do
           expect(response).to have_http_status(:success)
         end
+
         it 'populates a list of report_data' do
           expect(assigns(:report_data).count).to eql(2)
         end
@@ -49,7 +51,7 @@ RSpec.describe HomeController, type: :controller do
         DwpCheck.delete_all
         create_list :dwp_check, 2, created_by: manager, office: manager.office
         sign_in manager
-        get :index
+        get :dashboard
       end
 
       it 'returns http success' do
@@ -60,8 +62,8 @@ RSpec.describe HomeController, type: :controller do
         expect(assigns(:dwpchecks).count).to eql(2)
       end
 
-      it 'renders the index view' do
-        expect(response).to render_template :index
+      it 'renders the dashboard view' do
+        expect(response).to render_template :dashboard
       end
     end
 
@@ -69,15 +71,15 @@ RSpec.describe HomeController, type: :controller do
 
       before(:each) do
         sign_out user
-        get :index
+        get :dashboard
       end
 
       it 'returns http success' do
         expect(response).to have_http_status(:success)
       end
 
-      it 'renders the index view' do
-        expect(response).to render_template :index
+      it 'renders the dashboard view' do
+        expect(response).to render_template :dashboard
       end
     end
   end

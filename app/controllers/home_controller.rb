@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
-  before_action :load_dwp_data, only: [:index], if: 'user_signed_in? && current_user.manager?'
-  before_action :load_graph_data, only: [:index], if: 'user_signed_in? && current_user.admin?'
+  before_action :load_dwp_data, only: [:dashboard], if: 'user_signed_in? && current_user.manager?'
+  before_action :load_graph_data, only: [:dashboard], if: 'user_signed_in? && current_user.admin?'
 
-  def index
+  def dashboard
   end
 
   private

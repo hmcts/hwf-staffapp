@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  root to: 'home#index'
+  root to: 'home#dashboard'
 
-  get 'home/index'
+  get 'home/dashboard'
 
   get '/applications/new' => 'applications/build#create'
   resources :applications do
