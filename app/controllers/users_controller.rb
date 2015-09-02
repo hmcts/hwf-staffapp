@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   before_action :populate_jurisdictions, only: [:edit, :update]
   load_and_authorize_resource
 
+  include FlashMessageHelper
+
   def index
     if current_user.admin?
       @users = User.sorted_by_email
@@ -61,7 +63,7 @@ class UsersController < ApplicationController
     t('error_messages.user.moved_offices',
       user: @user.name,
       office: office.name,
-      contact: office.managers_email)
+      contact: format_managers_contacts(office.managers))
   end
 
   def find_user
