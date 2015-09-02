@@ -89,6 +89,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-webkit'
   gem 'faker'
+  gem 'shoulda-matchers'
 end
 
 # heroku deployment

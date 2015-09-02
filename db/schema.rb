@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826083936) do
+ActiveRecord::Schema.define(version: 20150907185903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,14 @@ ActiveRecord::Schema.define(version: 20150826083936) do
 
   add_index "references", ["application_id"], name: "index_references_on_application_id", using: :btree
 
+  create_table "spotchecks", force: :cascade do |t|
+    t.integer  "application_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spotchecks", ["application_id"], name: "index_spotchecks_on_application_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -191,7 +199,6 @@ ActiveRecord::Schema.define(version: 20150826083936) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
-  add_foreign_key "dwp_checks", "offices"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"

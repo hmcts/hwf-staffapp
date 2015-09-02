@@ -6,6 +6,9 @@ RSpec.describe Application, type: :model do
   let(:user)  { create :user }
   let(:application) { described_class.create(user_id: user.id) }
 
+  it { is_expected.to have_one(:spotcheck) }
+  it { is_expected.not_to validate_presence_of(:spotcheck) }
+
   before do
     stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
     {
@@ -193,6 +196,22 @@ RSpec.describe Application, type: :model do
           expect { application.save } .to change { application.benefit_checks.count }.by 1
         end
       end
+    end
+  end
+
+  describe '#spotcheck?', focus: true do
+    subject { application.spotcheck? }
+
+    context 'when the application has spotcheck model associated' do
+      before do
+        create :spotcheck, application: application
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the application does not have spotcheck model associated' do
+      it { is_expected.to be false }
     end
   end
 end

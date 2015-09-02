@@ -4,6 +4,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   belongs_to :user
   belongs_to :jurisdiction
   has_many :benefit_checks
+  has_one :spotcheck, required: false
 
   MAX_AGE = 120
   MIN_AGE = 16
@@ -158,6 +159,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def last_benefit_check
     benefit_checks.order(:id).last
+  end
+
+  def spotcheck?
+    !spotcheck.nil?
   end
 
   private
