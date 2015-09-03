@@ -13,23 +13,24 @@ FactoryGirl.define do
     children 1
     income 500
     threshold_exceeded false
+    refund false
 
-    factory :probate_application do
+    trait :probate do
       probate true
       deceased_name 'John Smith'
       date_of_death Time.zone.yesterday
     end
 
-    factory :refund_application do
+    trait :refund do
       refund true
       date_fee_paid Time.zone.yesterday
     end
 
-    factory :no_benefits do
+    trait :no_benefits do
       benefits false
     end
 
-    factory :application_confirm do
+    trait :confirm do
       benefits false
       application_outcome 'full'
       application_type 'income'
