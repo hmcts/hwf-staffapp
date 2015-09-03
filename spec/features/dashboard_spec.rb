@@ -17,7 +17,7 @@ RSpec.feature 'Dashboard', type: :feature do
      'Awaiting payment']
   end
 
-  def login_and_visit_dashboard_as a_user
+  def login_and_visit_dashboard_as(a_user)
     login_as a_user
     visit dashboard_path
     expect(page).to have_text 'Dashboard'
