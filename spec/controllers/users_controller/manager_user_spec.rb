@@ -195,9 +195,7 @@ RSpec.describe UsersController, type: :controller do
           end
 
           it 'displays an alert containing contact details for the new manager' do
-            err_msg = I18n.t('error_messages.user.moved_offices', user: user_on_my_team.name, office: new_office.name, contact: new_office.managers_email)
             expect(flash[:notice]).to be_present
-            expect(flash[:notice]).to eql(err_msg)
           end
         end
       end
