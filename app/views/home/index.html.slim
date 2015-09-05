@@ -5,14 +5,23 @@
   -elsif current_user.manager?
     =render 'home/manager'
   -else
-    p 
-      span.bold 'Check benefits'
-      |&nbsp;to see if an applicant is eligible for benefits-based remission.
-    p
-      |Use the
-      span.bold &nbsp;'Income calculator'
-      |&nbsp;to see if an applicant can get help with their fees based on their income.
-      br You'll also be able to calculate part-remissions.
+    .small-12.medium-8.large-5.columns
+      h2.pad-top-thirty-px Process application
+      p You'll need:
+      ul 
+        li the 'Apply for help with fees' EX160 application
+        li the court or tribunal form related to the application
+      .actions
+        button.button Start now
+        
+    .small-12.medium-8.large-5.columns
+      .info-box
+        h3.bold Get Help
+        p =link_to t('functions.staff_guide').to_s, guide_path
+        p =link_to t('functions.feedback').to_s, feedback_path
+        details 
+          summary Contact us 
+          p Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
 -else
   .pad-top-thirty-px
     = link_to t('functions.log_in'), new_user_session_path, class: 'button'

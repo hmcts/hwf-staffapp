@@ -24,5 +24,6 @@
       div.bold Don't have an account
       div Contact your manager to set up your account. You will then receive an email to sign in.
       div.bold.pad-top-fifteen-px Having technical issues
-      div Contact support
-      div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
+      details 
+        summary Contact support
+        div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}

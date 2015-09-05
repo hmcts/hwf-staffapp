@@ -26,7 +26,7 @@ html[lang="en"]
               li
                 - if user_signed_in?
                   .inline
-                    = link_to current_user.name, user_path(current_user.id)
+                    span Welcome #{current_user.name} #{link_to "View profile", user_path(current_user.id)}
                     = link_to 'Sign out', destroy_user_session_path, :method => :delete
                 - else
                   .inline

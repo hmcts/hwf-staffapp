@@ -1,22 +1,16 @@
-h2 Manager summary for #{current_user.office.name}
 .row
-  .columns.small-12
-    table
-      thead
-        tr
-          th Staff member
-          th Date made
-          th Remission Type
-          th Decision
-      tbody
-        -if @dwpchecks.present?
-          -@dwpchecks.each do |dwp|
-            tr
-              td =dwp.created_by.name
-              td =dwp.created_at.strftime('%d/%m/%y')
-              td R1
-              td =link_to dwp.dwp_result.nil? ? dwp.unique_number : dwp.dwp_result, dwp_checks_path(dwp.unique_number)
--if @dwp_checks.present?
-  .row
-    .columns.small-12.pagination
-      = will_paginate @dwpchecks
+  .small-12.medium-8.large-5.columns
+    h2.pad-top-thirty-px Manager actions
+    p =link_to 'View Staff', users_path
+    p =link_to 'View Office', current_user.office
+    p Process application
+
+
+  .small-12.medium-8.large-5.columns
+    .info-box
+      h3.bold Get Help
+      p =link_to t('functions.staff_guide').to_s, guide_path
+      p =link_to t('functions.feedback').to_s, feedback_path
+      details 
+        summary Contact us 
+        p Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
