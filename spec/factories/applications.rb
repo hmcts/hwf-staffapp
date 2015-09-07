@@ -61,28 +61,22 @@ FactoryGirl.define do
       income 3000
       dependents false
     end
-  end
 
-  factory :income_based_application, class: Application do
-    last_name { Faker::Name.last_name }
-    date_of_birth Time.zone.today - 20.years
-
-    jurisdiction
-
-    married false
-    fee 500
-    date_received Time.zone.today
-    threshold 3000
-    threshold_exceeded false
-    benefits false
-    refund false
-    children 0
-    over_61 false
-    dependents false
-    income 500
-    application_type 'income'
-    application_outcome 'full'
-    amount_to_pay 0
-    status 'income_result'
+    factory :income_based_application do
+      married false
+      fee 500
+      threshold 3000
+      threshold_exceeded false
+      benefits false
+      refund false
+      children 0
+      over_61 false
+      dependents false
+      income 500
+      application_type 'income'
+      application_outcome 'full'
+      amount_to_pay 0
+      status 'income_result'
+    end
   end
 end
