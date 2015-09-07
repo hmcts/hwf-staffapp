@@ -36,11 +36,18 @@ class Applications::BuildController < ApplicationController
 
   def update
     params[:application][:status] = (step == steps.last) ? 'active' : step.to_s
+
+    spotcheck_selection
+
     @application.update(application_params)
     render_wizard @application
   end
 
   private
+
+  def spotcheck_selection
+    SpotcheckSelector.new(@application).decide! if next_step?(:summary)
+  end
 
   def find_application
     @application = Application.find(params[:application_id])

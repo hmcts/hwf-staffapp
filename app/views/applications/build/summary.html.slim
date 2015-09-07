@@ -95,8 +95,12 @@
     .row
       .small-12.columns
         .row.collapse.medium-10.large-8
-          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
-            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor: 0, precision: 0)).html_safe
+          - if @application.spotcheck?
+            #calculator.callout.callout-spotcheck
+              h3.bold =t('spotcheck')
+          - else
+            #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+              h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor: 0, precision: 0)).html_safe
   -when 'none'
     .row
       .small-12.columns

@@ -83,6 +83,7 @@ en-GB:
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '&#10007; &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
+  spotcheck: 'This application has been chosen for investigation. You’ll need to ask for supporting evidence.'
   activerecord:
     errors:
       models:
