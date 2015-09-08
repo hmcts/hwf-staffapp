@@ -8,6 +8,10 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
   let(:user) { create :user, office: create(:office) }
   let(:application) { create(:application_part_remission) }
 
+  def visit_confirmation_page
+    visit application_build_path(application_id: application.id, id: 'confirmation')
+  end
+
   context 'as a signed in user', js: true do
     before do
       WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
@@ -37,9 +41,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
       end
 
       context 'after user continues to confirmation page' do
-        before do
-          visit application_build_path(application_id: application.id, id: 'confirmation')
-        end
+        before { visit_confirmation_page }
 
         scenario 'the part remission copy is show' do
           part_remission_copy.each {|line| expect(page).to have_text line }
@@ -56,12 +58,9 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
       end
 
       context 'after user continues to confirmation page' do
-        before do
-          visit application_build_path(application_id: application.id, id: 'confirmation')
-        end
+        before { visit_confirmation_page }
 
         scenario 'the full remission copy is shown' do
-          expect(application.application_outcome).to eq 'full'
           full_remission_copy.each {|line| expect(page).to have_text line }
         end
       end
