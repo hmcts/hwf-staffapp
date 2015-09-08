@@ -41,20 +41,6 @@ RSpec.feature 'Confirmation page', type: :feature do
       scenario 'the next button is rendered' do
         expect(page).to have_xpath('//input[@type="submit"]')
       end
-
-      context 'when the applicant must pay' do
-        let(:application) { create(:application_confirm, application_outcome: 'none') }
-
-        scenario 'the correct bullet point is shown' do
-          expect(page).to have_xpath('//li', text: 'Write to the applicant and send back all the documents')
-        end
-      end
-
-      context 'when the applicant is granted a full remission' do
-        scenario 'the correct bullet point is shown' do
-          expect(page).to have_xpath('//li', text: 'Copy this reference number into the case management system')
-        end
-      end
     end
   end
 end
