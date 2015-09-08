@@ -16,20 +16,33 @@ RSpec.describe "home/index.html.slim", type: :view do
   end
 
   context 'user access' do
-    it 'displays guidance' do
+    before do
       sign_in user
       render
-      expect(rendered).to have_xpath('//span[@class="bold"]', text: /Check benefits/)
-      expect(rendered).to have_xpath('//p', text: /eligible for benefits-based remission/)
+    end
+
+    it 'displays title' do
+      expect(rendered).to have_text 'Process applications for help with fees'
+    end
+
+    it 'shows the start button' do
+      expect(rendered).to have_link 'Start now'
     end
   end
 
   context 'manager access' do
-    it 'displays a dwp checklist' do
+    before do
       sign_in manager
       render
-      expect(rendered).to have_xpath('//h2', text: /Manager summary for/)
-      expect(rendered).to have_xpath('//th', text: 'Staff member')
+    end
+
+    it 'has a link to staff' do
+      expect(rendered).to have_link 'Staff overview'
+
+    end
+
+    it 'has a link to their office' do
+      expect(rendered).to have_link 'Your Office'
     end
   end
 
