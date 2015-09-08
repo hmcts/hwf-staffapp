@@ -29,27 +29,41 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in user }
 
     describe 'GET #show' do
-      it 'assign the requested dwp_check as @dwp_check' do
+      let(:dwp_check) do
+        create(:dwp_check, created_by: user)
+      end
+
+      xit 'assign the requested dwp_check as @dwp_check' do
         dwp_check = create(:dwp_check, created_by: user)
         get :show, unique_number: dwp_check.unique_number
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
 
+      it 'redirects to home page' do
+        get :show, unique_number: dwp_check.unique_number
+        expect(response).to redirect_to root_path
+      end
+
       context 'when invalid request is made' do
         let(:invalid_number) { "'" }
 
-        it 'throws an error when invalid request is made' do
+        xit 'throws an error when invalid request is made' do
           expect { get :show, unique_number: invalid_number }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
 
     describe 'GET #new' do
-      it 'render the expected view' do
+      xit 'render the expected view' do
         get :new, {}
         expect(response.status).to eql(200)
         expect(response).to render_template('dwp_checks/new')
+      end
+
+      it 'redirects to home page' do
+        get :new, {}
+        expect(response).to redirect_to root_path
       end
     end
 
@@ -67,14 +81,24 @@ RSpec.describe DwpChecksController, type: :controller do
             to_return(status: 200, body: json, headers: {})
         end
 
-        it "doesn't accepts d/m/yy date format" do
+        xit "doesn't accepts d/m/yy date format" do
           post :lookup, dwp_check: attributes_for(:dwp_check, dob: '1/1/80')
           expect(response).to render_template('dwp_checks/new')
         end
 
-        it 'accepts dd mmmm yyyy' do
+        it 'redirects to home page' do
+          post :lookup, dwp_check: attributes_for(:dwp_check, dob: '1/1/80')
+          expect(response).to redirect_to root_path
+        end
+
+        xit 'accepts dd mmmm yyyy' do
           post :lookup, dwp_check: attributes_for(:dwp_check, dob: '01 January 1980')
           expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
+        end
+
+        it 'redirects to home page' do
+          post :lookup, dwp_check: attributes_for(:dwp_check, dob: '01 January 1980')
+          expect(response).to redirect_to root_path
         end
       end
 
@@ -93,11 +117,11 @@ RSpec.describe DwpChecksController, type: :controller do
           expect(response.status).to eql(302)
         end
 
-        it 'redirects to the result page' do
+        xit 'redirects to the result page' do
           expect(response).to redirect_to dwp_checks_path(DwpCheck.last.unique_number)
         end
 
-        context 'when service encounters an error' do
+        pending 'when service encounters an error' do
 
           before(:each) do
             stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
@@ -120,9 +144,14 @@ RSpec.describe DwpChecksController, type: :controller do
       end
 
       context 'invalid request' do
-        it 're-renders the form' do
+        xit 're-renders the form' do
           post :lookup, dwp_check: attributes_for(:invalid_dwp_check)
           expect(response).to render_template(:new)
+        end
+
+        it 'redirects to home page' do
+          post :lookup, dwp_check: attributes_for(:invalid_dwp_check)
+          expect(response).to redirect_to root_path
         end
       end
     end
@@ -133,19 +162,31 @@ RSpec.describe DwpChecksController, type: :controller do
     before(:each) { sign_in admin_user }
 
     describe 'GET #show' do
-      it 'assign the requested dwp_check as @dwp_check' do
+      let(:dwp_check) { create(:dwp_check, created_by: user) }
+
+      xit 'assign the requested dwp_check as @dwp_check' do
         dwp_check = create(:dwp_check, created_by: user)
         get :show, unique_number: dwp_check.unique_number
         expect(assigns(:dwp_checker)).to eq(dwp_check)
         expect(response).to render_template('dwp_checks/show')
       end
+
+      it 'redirects to home page' do
+        get :show, unique_number: dwp_check.unique_number
+        expect(response).to redirect_to root_path
+      end
     end
 
     describe 'GET #new' do
-      it 'render the expected view' do
+      xit 'render the expected view' do
         get :new, {}
         expect(response.status).to eql(200)
         expect(response).to render_template('dwp_checks/new')
+      end
+
+      it 'redirects to home page' do
+        get :new, {}
+        expect(response).to redirect_to root_path
       end
     end
   end

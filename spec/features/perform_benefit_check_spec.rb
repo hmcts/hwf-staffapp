@@ -18,7 +18,7 @@ RSpec.feature 'Undertake benefit check', type: :feature do
           to_return(status: 200, body: json, headers: {})
       end
 
-      scenario 'generates a result page' do
+      pending 'generates a result page' do
 
         login_as user
         visit new_dwp_checks_path
@@ -33,7 +33,7 @@ RSpec.feature 'Undertake benefit check', type: :feature do
       end
     end
     context 'with invalid data' do
-      scenario 'returns to input page' do
+      pending 'returns to input page' do
         login_as user
         visit new_dwp_checks_path
 

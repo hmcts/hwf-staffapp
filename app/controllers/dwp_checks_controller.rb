@@ -1,5 +1,6 @@
 class DwpChecksController < ApplicationController
   before_action :authenticate_user!
+  before_action :redirect_to_home_page
   respond_to :html
   before_action :find_dwp_check, only: [:show]
   before_action :new_from_params, only: [:lookup]
@@ -40,5 +41,9 @@ class DwpChecksController < ApplicationController
 
   def find_dwp_check
     @dwp_checker = DwpCheck.find_by!(unique_number: params[:unique_number])
+  end
+
+  def redirect_to_home_page
+    redirect_to root_path
   end
 end
