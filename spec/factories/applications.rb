@@ -52,5 +52,13 @@ FactoryGirl.define do
       married true
       dependents true
     end
+
+    factory :application_no_remission do
+      fee 410
+      married false
+      children 1
+      income 3000
+      dependents false
+    end
   end
 end
