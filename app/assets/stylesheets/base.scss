@@ -97,6 +97,10 @@ span.hint {
 }
 .actions {
   margin-top: 32px;
+  input[type="submit"] {
+    font-size: 1.3rem;
+    margin: 0;
+  }
 }
 
 * {
@@ -121,4 +125,14 @@ td.center {
 
 .start-hidden {
   display:none;
+}
+
+.info-box {
+  border-top: 10px solid $govuk-blue;
+  margin: 2.5em 0 0 0; 
+  h3 {
+    font-size: 1.5em;
+    margin: 0.5em 0 0 0;
+
+  }
 }
