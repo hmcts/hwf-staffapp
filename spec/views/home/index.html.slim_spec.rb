@@ -22,7 +22,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     end
 
     it 'displays title' do
-      expect(rendered).to have_text 'Process applications for help with fees'
+      expect(rendered).to have_text 'Process application'
     end
 
     it 'shows the start button' do

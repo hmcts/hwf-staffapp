@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.feature 'Completing the application details', type: :feature do
@@ -324,7 +325,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                       before { click_button 'Back to start' }
 
                       scenario 'the home page is shown' do
-                        expect(page).to have_text 'Process applications for help with fees'
+                        expect(page).to have_text 'Process application'
                       end
                     end
                   end
