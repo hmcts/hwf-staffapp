@@ -20,12 +20,12 @@ module IncomeCalculator
     married? ? Settings.couple_supp : 0
   end
 
-  def set_remission_type(curr_fee, user_to_pay)
+  def set_remission_type(current_fee, user_to_pay)
     if user_to_pay == 0
       type = 'full'
-    elsif user_to_pay == curr_fee
+    elsif user_to_pay == current_fee
       type = 'none'
-    elsif user_to_pay > 0 && user_to_pay < curr_fee
+    elsif user_to_pay > 0 && user_to_pay < current_fee
       type = 'part'
     else
       type = 'error'
@@ -33,15 +33,15 @@ module IncomeCalculator
     type
   end
 
-  def max_contribution(child_uplift, income, married_supp, min_val)
-    [((income - (min_val + child_uplift + married_supp)) / 10) * 10 * 0.5, 0].max
+  def max_contribution(child_uplift, income, married_supplement, min_val)
+    [((income - (min_val + child_uplift + married_supplement)) / 10) * 10 * 0.5, 0].max
   end
 
   def child_uplift
     children * Settings.pp_child
   end
 
-  def minimum_value(curr_fee, max_contribution)
-    [max_contribution, curr_fee].min
+  def minimum_value(current_fee, max_contribution)
+    [max_contribution, current_fee].min
   end
 end

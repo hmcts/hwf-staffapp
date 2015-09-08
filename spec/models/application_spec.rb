@@ -21,7 +21,7 @@ RSpec.describe Application, type: :model do
     application.ni_number = 'AB123456A'
   end
 
-  describe 'methods' do
+  describe 'income calculation' do
     it 'includes can_calculate?' do
       expect(application).to respond_to :can_calculate?
     end
