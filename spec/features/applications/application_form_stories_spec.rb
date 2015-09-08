@@ -324,7 +324,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                       before { click_button 'Back to start' }
 
                       scenario 'the home page is shown' do
-                        expect(page).to have_xpath('//span[@class="bold"]', text: 'Check benefits')
+                        expect(page).to have_text 'Process applications for help with fees'
                       end
                     end
                   end

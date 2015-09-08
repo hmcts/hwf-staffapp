@@ -46,6 +46,9 @@ dl.sub-nav {
     li div.inline {
       background: #000000;
       color: #fff;
+      span {
+        color:#fff;
+      }
       @media screen and (max-width: upper-bound($small-range)) {
         padding-left:15px;
       }

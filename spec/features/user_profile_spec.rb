@@ -16,16 +16,16 @@ RSpec.feature 'User profile', type: :feature do
     end
 
     scenario 'link to their profile' do
-      top_right_corner = "//nav/section/ul[@class='right']/li/div[@class='inline']/a[1]"
+      top_right_corner = '/html/body/div[1]/nav/section/ul/li/div/span/text()'
       expect(page).to have_xpath(top_right_corner, text: "#{user.name}")
     end
 
     context 'show view' do
       scenario 'view their profile' do
-        click_link "#{user.name}"
-        expect(page).to have_text 'Staff details'
-        expect(page).to have_text "#{user.email}"
-        expect(page).to have_text "#{user.role}"
+        click_link 'View profile'
+        ['Staff details',
+         "#{user.email}",
+         "#{user.role}"].each { |line| expect(page).to have_text line }
       end
 
       scenario 'only view their own profile' do
