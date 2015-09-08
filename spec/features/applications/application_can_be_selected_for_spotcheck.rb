@@ -12,10 +12,10 @@ RSpec.feature 'Application can be selected for spotcheck', type: :feature do
   end
 
   context 'Non-refund application' do
-    let(:application) { create :income_based_application }
+    let(:application) { create :application_full_remission }
 
     before do
-      create_list :income_based_application, 9
+      create_list :application_full_remission, 9
     end
 
     scenario 'Every 10th application is selected for spotcheck' do
@@ -28,10 +28,10 @@ RSpec.feature 'Application can be selected for spotcheck', type: :feature do
   end
 
   context 'Refund application' do
-    let(:application) { create :income_based_application, :refund }
+    let(:application) { create :application_full_remission, :refund }
 
     before do
-      create_list :income_based_application, 1, :refund
+      create_list :application_full_remission, 1, :refund
     end
 
     scenario 'Every 2nd application is selected for spotcheck' do

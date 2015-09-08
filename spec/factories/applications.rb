@@ -10,6 +10,7 @@ FactoryGirl.define do
     association :jurisdiction
     date_received Time.zone.today
     benefits true
+    dependents true
     children 1
     income 500
     threshold_exceeded false
@@ -40,43 +41,26 @@ FactoryGirl.define do
       fee 410
       benefits false
       income 2000
+      dependents true
       children 3
       married true
-      dependents true
     end
 
     factory :application_full_remission do
       fee 410
       benefits false
       income 10
+      dependents true
       children 1
       married true
-      dependents true
     end
 
     factory :application_no_remission do
       fee 410
       married false
+      dependents false
       children 1
       income 3000
-      dependents false
-    end
-
-    factory :income_based_application do
-      married false
-      fee 500
-      threshold 3000
-      threshold_exceeded false
-      benefits false
-      refund false
-      children 0
-      over_61 false
-      dependents false
-      income 500
-      application_type 'income'
-      application_outcome 'full'
-      amount_to_pay 0
-      status 'income_result'
     end
   end
 end
