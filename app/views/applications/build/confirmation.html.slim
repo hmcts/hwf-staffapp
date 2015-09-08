@@ -16,10 +16,10 @@ h2 Application processed
     .small-12.medium-12.large-12.columns
       h4 Next steps
       ul
-        li Complete the remission register with the application details
-        li Write the reference number form the remission register on the top right corner of the paper form
         -if @application.application_outcome == 'full'
-          li Copy this reference number into the case management system
+          li Complete the remission register with the application details
+          li Write the reference number form the remission register on the top right corner of the paper form
+          li Write to the applicant and send back all the documents
         -else
           li Write to the applicant with details of how much they have to pay
           li Complete the remission register with the application details
