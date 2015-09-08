@@ -31,7 +31,6 @@ html[lang="en"]
                 - else
                   .inline
                     = link_to t('functions.log_in'), new_user_session_path
-    =render 'layouts/welcome_banner'
     .row
       .large-12.columns
         - flash.each do |key, value|
