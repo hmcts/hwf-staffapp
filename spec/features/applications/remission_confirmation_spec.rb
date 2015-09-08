@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.feature 'Confirmation page for remission', type: :feature do
@@ -57,8 +58,9 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
       let(:application) { create(:application_full_remission) }
       let(:full_remission_copy) do
         ['Complete the remission register with the application details',
-         'Write the reference number form the remission register on the top right corner of the paper form',
-         'Write to the applicant and send back all the documents']
+         'Write the reference number on the top right corner of the paper form',
+         'Copy the reference number into the case management system',
+         'The applicant’s process can now be issued']
       end
 
       context 'after user continues to confirmation page' do
