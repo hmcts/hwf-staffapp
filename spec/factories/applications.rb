@@ -34,5 +34,23 @@ FactoryGirl.define do
       application_outcome 'full'
       application_type 'income'
     end
+
+    factory :application_part_remission do
+      fee 410
+      benefits false
+      income 2000
+      children 3
+      married true
+      dependents true
+    end
+
+    factory :application_full_remission do
+      fee 410
+      benefits false
+      income 10
+      children 1
+      married true
+      dependents true
+    end
   end
 end
