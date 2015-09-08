@@ -1,22 +1,33 @@
 =content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
+-if user_signed_in? 
+  =render 'layouts/welcome_banner'
 -if current_user.present?
   -if current_user.admin?
     =render 'home/admin'
   -elsif current_user.manager?
     =render 'home/manager'
   -else
-    p 
-      span.bold 'Check benefits'
-      |&nbsp;to see if an applicant is eligible for benefits-based remission.
-    p
-      |Use the
-      span.bold &nbsp;'Income calculator'
-      |&nbsp;to see if an applicant can get help with their fees based on their income.
-      br You'll also be able to calculate part-remissions.
+    .small-12.medium-8.large-5.columns
+      div.pad-top-thirty-px
+      p You'll need:
+      ul 
+        li the help with fees application form (EX160) 
+        li the court or tribunal form related to the application
+      .actions
+        =link_to 'Start now', new_application_path, class: 'button success'
+
+    .small-12.medium-8.large-5.columns
+      .info-box
+        h3.bold Get Help
+        p =link_to t('functions.staff_guide').to_s, guide_path
+        p =link_to t('functions.feedback').to_s, feedback_path
+        details 
+          summary Contact us 
+          div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
 -else
-  .pad-top-thirty-pix 
+  .pad-top-thirty-px
     = link_to t('functions.log_in'), new_user_session_path, class: 'button'
-  h4.pad-top-thirty-pix Get help
+  h4.pad-top-thirty-px Get help
   div.bold Don't have an account
   div Contact your manager to set up your account. You will then receive an email to sign in.
   div.bold.pad-top-fifteen-px Having technical issues

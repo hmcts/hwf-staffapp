@@ -1,0 +1,37 @@
+h2 Application processed
+
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  .row
+    .small-12.columns
+      .row.collapse.medium-10.large-8
+        -case @application.application_type
+        -when 'none'
+          #calculator.callout.callout-none
+            h3.bold =t('remissions.none').html_safe
+        -else
+          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
+  .row
+    .small-12.medium-12.large-12.columns
+      h4 Next steps
+      ul
+        -if @application.application_outcome == 'full'
+          li Complete the remission register with the application details
+          li Write the reference number on the top right corner of the paper form
+          li Copy the reference number into the case management system
+          li The applicant’s process can now be issued
+        -elsif @application.application_outcome == 'part'
+          li Write to the applicant with details of how much they have to pay
+          li Complete the remission register with the application details
+          li Write the reference number on the top right corner of the paper form
+          li Copy the reference number into the case management system
+        -else
+          li Complete the remission register with the application details
+          li Write the reference number on the top right corner of the paper form
+          li Copy the reference number into the case management system
+          li Write to the applicant and send back all the documents
+
+  = @application.errors.full_messages if @application.errors.present?
+  = f.hidden_field :status
+  = f.submit 'Back to start', :class => 'button primary'

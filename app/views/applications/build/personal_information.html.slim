@@ -1,0 +1,65 @@
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Personal details
+
+  .row
+    .small-12.medium-4.large-2.columns
+      .form-group
+        = f.label :title, @application.errors[:title].join(', '), class: 'error' if @application.errors[:title].present?
+        = f.label :title
+          =t('activerecord.attributes.application.title')
+          span.hint =t('general.optional').html_safe
+        = f.text_field :title, { class: 'form-control' }
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :first_name
+          =t('activerecord.attributes.application.first_name')
+          span.hint =t('general.optional').html_safe
+        = f.label :first_name, @application.errors[:first_name].join(', '), class: 'error' if @application.errors[:first_name].present?
+        = f.text_field :first_name, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :last_name
+        = f.label :last_name, @application.errors[:last_name].join(', '), class: 'error' if @application.errors[:last_name].present?
+        = f.text_field :last_name, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :date_of_birth
+          = t('activerecord.attributes.application.date_of_birth')
+          span.hint.block = t('activerecord.attributes.application.page_1.date_of_birth_hint')
+        = f.label :date_of_birth, @application.errors[:date_of_birth].join(', '), class: 'error' if @application.errors[:date_of_birth].present?
+        = f.text_field :date_of_birth, { class: 'form-control' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :ni_number
+          =t('activerecord.attributes.application.ni_number')
+          span.hint =t('general.optional').html_safe
+        = f.label :ni_number, @application.errors[:ni_number].join(', '), class: 'error' if @application.errors[:ni_number].present?
+        = f.text_field :ni_number, { class: 'form-control transform-upper' }
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .row.collapse
+          .columns.small-12
+            = f.label :married
+            = f.label :married, @application.errors[:married].join(', '), class: 'error' if @application.errors[:married].present?
+            .options.radio
+              .option
+                label for='application_married_false'
+                  = f.radio_button :married, 'false'
+                  = t('activerecord.attributes.application.page_1.married_false')
+              .option
+                label for='application_married_true'
+                  = f.radio_button :married, 'true'
+                  = t('activerecord.attributes.application.page_1.married_true')
+
+  = f.submit 'Next', :class => 'button primary'

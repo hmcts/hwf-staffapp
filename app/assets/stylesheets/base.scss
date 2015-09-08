@@ -50,6 +50,7 @@ h3.bold {
   background-color: $button-colour;
   box-shadow: 0 2px 0 #003518;
 }
+
 .btn:hover {
   background-color: $green;
 }
@@ -66,7 +67,7 @@ span.hint {
   }
 }
 
-.pad-top-thirty-pix {
+.pad-top-thirty-px {
   padding-top: 30px;
 }
 
@@ -74,7 +75,7 @@ span.hint {
   padding-top: 15px;
 }
 
-.pad-bottom-thirty-pix {
+.pad-bottom-thirty-px {
   padding-bottom: 30px;
 }
 
@@ -87,9 +88,19 @@ span.hint {
   border-left: 4px solid #bfc1c3;
   padding: 10px 0 10px 15px;
   margin: 30px 15px 45px 0;
+  ul {
+    margin-bottom: 0rem;
+  }
+  .panel-indent {
+    margin-bottom: 0rem;
+  }
 }
 .actions {
   margin-top: 32px;
+  input[type="submit"] {
+    font-size: 1.3rem;
+    margin: 0;
+  }
 }
 
 * {
@@ -101,8 +112,44 @@ button,
 input[type="button"],
 input[type="submit"] {
   font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+label.inline {
+  font-size: 0.875rem;
 }
 
 td.center {
   text-align: center;
+}
+
+.start-hidden {
+  display:none;
+}
+
+.info-box {
+  border-top: 10px solid $govuk-blue;
+  margin: 2.5em 0 0 0; 
+  h3 {
+    font-size: 1.5em;
+    margin: 0.5em 0 0 0;
+
+  }
+}
+
+#welcome_banner {
+  background: #1EA297;
+  padding: 1em 0 0 2em;
+  h1, p, strong {
+    color: #fff;
+    }
+  p {
+  font-size: 1.1em;
+
+  }
+
+}
+
+i.arrow.arrow-closed, i.arrow.arrow-open {
+  color:#005ea5
 }

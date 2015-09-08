@@ -20,4 +20,16 @@ module Settings
   def mail_feedback
     @h['mail_feedback']
   end
+
+  def min_val
+    @h['calculator_min_val']
+  end
+
+  def pp_child
+    @h['calculator_pp_child']
+  end
+
+  def couple_supp
+    @h['calculator_couple_supp']
+  end
 end

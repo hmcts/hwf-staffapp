@@ -11,10 +11,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709131316) do
+ActiveRecord::Schema.define(version: 20150826083936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "date_of_birth"
+    t.string   "ni_number"
+    t.boolean  "married"
+    t.decimal  "fee"
+    t.string   "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "jurisdiction_id"
+    t.date     "date_received"
+    t.string   "form_name"
+    t.string   "case_number"
+    t.boolean  "probate"
+    t.string   "deceased_name"
+    t.date     "date_of_death"
+    t.boolean  "refund"
+    t.date     "date_fee_paid"
+    t.integer  "user_id"
+    t.integer  "office_id"
+    t.decimal  "threshold"
+    t.boolean  "threshold_exceeded"
+    t.boolean  "over_61"
+    t.boolean  "benefits"
+    t.integer  "children"
+    t.integer  "income"
+    t.boolean  "dependents"
+    t.string   "application_type"
+    t.string   "application_outcome"
+    t.integer  "amount_to_pay"
+    t.boolean  "high_threshold_exceeded"
+  end
+
+  add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
+  add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
+
+  create_table "benefit_checks", force: :cascade do |t|
+    t.string  "last_name"
+    t.date    "date_of_birth"
+    t.string  "ni_number"
+    t.date    "date_to_check"
+    t.string  "parameter_hash"
+    t.boolean "benefits_valid"
+    t.string  "dwp_result"
+    t.string  "error_message"
+    t.string  "dwp_api_token"
+    t.string  "our_api_token"
+    t.integer "application_id"
+    t.integer "user_id"
+  end
+
+  add_index "benefit_checks", ["application_id"], name: "index_benefit_checks_on_application_id", using: :btree
+  add_index "benefit_checks", ["user_id"], name: "index_benefit_checks_on_user_id", using: :btree
 
   create_table "dwp_checks", force: :cascade do |t|
     t.string   "last_name"
@@ -70,6 +126,7 @@ ActiveRecord::Schema.define(version: 20150709131316) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "entity_code"
   end
 
   create_table "r2_calculators", force: :cascade do |t|
@@ -86,6 +143,15 @@ ActiveRecord::Schema.define(version: 20150709131316) do
   end
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
+
+  create_table "references", force: :cascade do |t|
+    t.integer  "application_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "reference",      null: false
+  end
+
+  add_index "references", ["application_id"], name: "index_references_on_application_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -121,11 +187,17 @@ ActiveRecord::Schema.define(version: 20150709131316) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "applications", "offices"
+  add_foreign_key "applications", "users"
+  add_foreign_key "benefit_checks", "applications"
+  add_foreign_key "benefit_checks", "users"
+  add_foreign_key "dwp_checks", "offices"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
+  add_foreign_key "references", "applications"
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end

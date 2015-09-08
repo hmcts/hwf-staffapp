@@ -1,22 +1,29 @@
-= form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
-  .row.pad-top-thirty-pix
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.label :email
-        = f.email_field :email, autofocus: true, class: 'form-control'
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.label :password
-        = f.password_field :password, autocomplete: "off"
+.row
+  .small-12.medium-8.large-6.columns
+    h2.pad-top-thirty-px Sign in
+    = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
+      .row
+        .small-12.medium-8.large-10.columns
+          .form-group
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'form-control'
+      .row
+        .small-12.medium-8.large-10.columns
+          .form-group
+            = f.label :password
+            = f.password_field :password, autocomplete: "off"
+      .actions
+        = f.submit "Sign in", class: 'button'
 
-  - if devise_mapping.rememberable?
-    .row
-      .small-12.medium-8.large-5.columns
-        .form-group
-          = f.check_box :remember_me
-          = f.label :remember_me
-  .actions
-    = f.submit "Sign in", class: 'button'
-hr
-= render "users/shared/links"
+
+  .small-12.medium-8.large-5.columns
+    .info-box
+      h3.bold Get Help
+      div.bold Forgotten your password
+      p Follow these steps to get a new password #{ link_to "get a new password", new_password_path(resource_name)}
+      div.bold Don't have an account
+      div Contact your manager to set up your account.
+      div.bold.pad-top-fifteen-px Having technical issues
+      details 
+        summary Contact support
+        div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}

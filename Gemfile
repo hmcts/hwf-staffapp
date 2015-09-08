@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4'
 # Use postgresql as the database for Active Record
 gem 'pg'
+gem 'rails-i18n', '~> 4.0.0'
 
 # authentication
 gem 'devise'
@@ -14,7 +15,7 @@ gem 'cancancan', '~> 1.10'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 5.0.3'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '>= 2.7.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -43,6 +44,8 @@ gem 'logstasher', github: 'shadabahmed/logstasher', ref: '0b80e972753ba7ef36854b
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'wicked'
 
 # Date validation
 gem 'date_validator'
@@ -74,12 +77,15 @@ group :development, :test do
   gem 'guard-rubocop'
   gem 'guard-teaspoon'
   gem 'teaspoon-jasmine'
+
+  gem 'timecop'
 end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'webmock'
   gem 'capybara'
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'capybara-webkit'
   gem 'faker'

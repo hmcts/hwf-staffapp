@@ -26,7 +26,7 @@ h2 Staff details
       label Main jurisdiction
     .columns.small-6.large-10
       =@user.jurisdiction.name if @user.jurisdiction.present?
-.row.pad-top-thirty-pix
+.row.pad-top-thirty-px
   .columns.small-12
     =link_to 'Change details', edit_user_path(@user)
 -if current_user == @user
@@ -34,7 +34,7 @@ h2 Staff details
     .columns.small-12
       = link_to "Change your password", edit_user_registration_path(@user)
 -if current_user.elevated?
-  .row.pad-top-fifteen-pix
+  .row.pad-top-fifteen-px
     .columns.small-12
       =link_to 'Remove staff member', user_path(@user), method: :delete
   .row.pad-top-fifteen-px

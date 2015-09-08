@@ -14,7 +14,12 @@
 //= require jquery_ujs
 //= require foundation
 //= require jquery.turbolinks
-//= require radio_buttons
+//= require radio_buttons_module
+//= require checkbox_module
 //= require details.polyfill
+//= require income
 
-$(function(){ $(document).foundation(); });
+$(function(){
+  Foundation.global.namespace = '';
+  $(document).foundation();
+});

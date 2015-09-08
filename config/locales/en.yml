@@ -19,13 +19,15 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+en-GB:
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+  general:
+    optional: '&nbsp; (optional)'
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
@@ -44,6 +46,43 @@ en:
     manage:
       all: You are not authorized to access this page.
       wrong_office: You are not authorized to manage this user.
+  benefit_checks:
+    :yes:
+      heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
+    :no:
+      heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+    deleted:
+      heading: The applicant is not receiving benefits
+    deceased:
+      heading: The personal details entered belong to someone who has died
+    undetermined:
+      heading: Please check the personal details you’ve entered
+      explain: The personal details you’ve entered have not been recognised by the Department for Work and Pensions.
+      progress: Check the personal details again and update them if necessary.
+    technical_fault:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    unspecified_error:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    server_unavailable:
+      heading: Sorry, the Department for Work and Pensions checker is not available
+    superseded:
+      heading: The applicant’s details are incorrect
+      explain: The applicant’s National Insurance number is no longer valid as they have been issued with a another National Insurance number.
+      progress: You’ll need to ask the applicant to provide evidence confirming that they’re receiving benefits.
+    general:
+      work_out: How is this worked out?
+      explain: "The applicant's name, date of birth and National Insurance number have been checked by the Department for Work and Pensions."
+      does_not_match:
+        heading: What if the benefits check result doesn’t match the paper form?
+        text: If the applicant has started receiving benefits very recently (in the last week) the Department for Work and Pensions result may not be up-to-date.  You’ll need to ask for evidence confirming that they are receiving benefits.
+    error:
+      explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
+      progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
+  remissions:
+    full: '&#10003; &nbsp; The applicant doesn’t have to pay the fee'
+    part: The applicant must pay %{amount_to_pay} towards the fee
+    none: '&#10007; &nbsp; The applicant must pay the full fee'
+    error: An error occured in the calculation
   activerecord:
     errors:
       models:
@@ -62,7 +101,7 @@ en:
               blank: You must enter a password
               too_short: Your password must be at least %{count} characters
             password_confirmation:
-              confirmation: Your password must match the one you entered above 
+              confirmation: Your password must match the one you entered above
         dwp_check:
           attributes:
             last_name:
@@ -79,6 +118,57 @@ en:
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
+        application:
+          attributes:
+            last_name:
+              blank: Enter the applicant's last name
+              too_short: Last name is too short (minimum is 2 characters)
+            date_of_birth:
+              blank: Enter the applicant's date of birth
+              invalid: 'Enter the date as day, month, year DD/MM/YYYY'
+              not_a_date: 'Enter the date in this format 01/11/1980'
+            ni_number:
+              blank: 'Enter the applicant’s National Insurance number'
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+            married:
+              inclusion: Please select a marital status
+            fee:
+              blank: Enter the fee
+              not_a_number: The fee should be numeric
+            jurisdiction_id:
+              blank: You must select a jurisdiction
+            date_received:
+              blank: Enter the date the application was received
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+            date_of_death:
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
+            deceased_name:
+              blank: The deceased's name should be entered
+            date_fee_paid:
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+              blank: The date fee paid should be entered
+            threshold_exceeded:
+              inclusion: You must answer the savings question
+            over_61:
+              inclusion: Please confirm the ages
+            benefits:
+              inclusion: You must answer the benefits question
+            dependents:
+              inclusion: 'You must answer the dependent children question'
+            children:
+              not_a_number: Choose number of children
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
     attributes:
       user:
         current_password: Current password
@@ -101,8 +191,64 @@ en:
         dob_hint: For example 01/11/1980
         dob_too_young: The applicant can't be under %{min_age} years old
         dob_too_old: The applicant can't be over %{max_age} years old
-        date_to_check: 'Date application received'
-        date_to_check_hint: 'For refunds enter the date the fee was paid.'
+        date_to_check: 'Date application made'
+        date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
+      application:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        title: Title
+        first_name: First and middle names
+        last_name: 'Last name'
+        last_name_hint: 'First 3 letters only'
+        full_name: Full name
+        ni_number: 'National Insurance number'
+        date_of_birth: 'Date of birth'
+        married: Status
+        fee: Fee
+        jurisdiction_id: Jurisdiction
+        date_received: Date application received
+        form_name: Form number or name
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
+        over_61: "Is the applicant's partner 61 or over?"
+        benefits: Is the applicant receiving one of the benefits listed in question 9?
+        dependents: Are there any financially dependent children?
+        children: Number of children
+        income: Total monthly income
+        high_threshold_exceeded: The applicant and their partner have
+        page_1:
+          date_of_birth_hint: For example 01/11/1980
+          married_false: Single
+          married_true: Married or living with someone and sharing an income
+          form_name_summary: Form name or number
+        page_3:
+          header: Savings and investments
+          maximum_prompt: 'Maximum amount of savings and investments allowed:'
+          savings:
+            single: The applicant has
+            married: The applicant and their partner have
+            less_than: Less than this amount
+            more_than: More than this amount
+            less_than_high: Less than £16,000
+            more_than_high: More than £16,000
+        page_4:
+          benefits_false: 'No'
+          benefits_true: 'Yes'
+        income_page:
+          header: Application result
+        summary:
+          passed: '&#10003; Passed'
+          failed: '&#10007; Failed'
+          savings_investments: Savings and investments
+          benefits: Benefits
+          income: Income
+        benefits_false: 'No'
+        benefits_true: 'Yes'
+        income_false: 'No'
+        income_true: 'Yes'
       r2_calc:
         labels:
           fee: Fee
