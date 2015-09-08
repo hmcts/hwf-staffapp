@@ -1,16 +1,17 @@
 .row
   .small-12.medium-8.large-5.columns
-    div.pad-top-thirty-px
-    p =link_to 'Staff overview', users_path
-    p =link_to 'Your Office', current_user.office
-    
-    h3 Process an application for help with fees 
+    h3.pad-top-thirty-px.bold Process application 
     p You'll need:
     ul 
       li the help with fees application form (EX160)
       li the court or tribunal form related to the application
     .actions
       =link_to 'Start now', new_application_path, class: 'button success'
+
+    h3.pad-top-thirty-px.bold Manage your office 
+    p =link_to 'Staff overview', users_path
+    p =link_to 'Your Office', current_user.office
+     
   
   .small-12.medium-8.large-5.columns
     .info-box

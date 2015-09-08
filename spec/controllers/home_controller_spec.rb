@@ -72,12 +72,8 @@ RSpec.describe HomeController, type: :controller do
         get :index
       end
 
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'renders the index view' do
-        expect(response).to render_template :index
+      it 'redirects to sign in page' do
+        expect(response).to redirect_to(:new_user_session)
       end
     end
   end

@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!, only: [:index]
   before_action :load_dwp_data, only: [:index], if: 'user_signed_in? && current_user.manager?'
   before_action :load_graph_data, only: [:index], if: 'user_signed_in? && current_user.admin?'
 
