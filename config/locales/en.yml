@@ -26,6 +26,7 @@ en-GB:
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+    new_application: Start
   general:
     optional: '&nbsp; (optional)'
   error_messages:

@@ -6,12 +6,15 @@ FactoryGirl.define do
     name 'user'
     association :office
     association :jurisdiction
+
     factory :admin_user do
       role 'admin'
     end
+
     factory :manager do
       role 'manager'
     end
+
     factory :invalid_user do
       email nil
       name nil

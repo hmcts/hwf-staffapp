@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  root to: 'home#dashboard'
+
+  get 'home/dashboard', as: 'dashboard'
+
   get '/applications/new' => 'applications/build#create'
   resources :applications do
     resources :build, controller: 'applications/build'
@@ -23,10 +27,6 @@ Rails.application.routes.draw do
   get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
 
   resources :offices
-
-  root to: 'home#index'
-
-  get 'home/index'
 
   %w[400 404 500 503].each do |error|
     get "static/#{error}" => "static##{error}"
