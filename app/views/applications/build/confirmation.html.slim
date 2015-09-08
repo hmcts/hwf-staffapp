@@ -18,8 +18,9 @@ h2 Application processed
       ul
         -if @application.application_outcome == 'full'
           li Complete the remission register with the application details
-          li Write the reference number form the remission register on the top right corner of the paper form
-          li Write to the applicant and send back all the documents
+          li Write the reference number on the top right corner of the paper form
+          li Copy the reference number into the case management system
+          li The applicant’s process can now be issued
         -elsif @application.application_outcome == 'part'
           li Write to the applicant with details of how much they have to pay
           li Complete the remission register with the application details
