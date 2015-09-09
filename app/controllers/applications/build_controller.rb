@@ -4,6 +4,9 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
+  before_action :spotcheck_show_redirect, only: :show
+  before_action :spotcheck_update_redirect, only: :update
+
   steps :personal_information,
     :application_details,
     :savings_investments,
@@ -83,5 +86,17 @@ class Applications::BuildController < ApplicationController
 
   def populate_jurisdictions
     @jurisdictions = current_user.office.jurisdictions
+  end
+
+  def spotcheck_show_redirect
+    redirect_if_spotcheck if step == :confirmation
+  end
+
+  def spotcheck_update_redirect
+    redirect_if_spotcheck if next_step == :confirmation
+  end
+
+  def redirect_if_spotcheck
+    redirect_to(spotcheck_path(@application.spotcheck.id)) if @application.spotcheck?
   end
 end
