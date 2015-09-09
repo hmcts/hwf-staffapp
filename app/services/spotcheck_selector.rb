@@ -10,13 +10,17 @@ class SpotcheckSelector
   private
 
   def spotcheck?
-    unless @application.benefits? || !%w[full part].include?(@application.application_outcome)
-      if @application.refund?
-        get_spotcheck(2, true)
-      else
-        get_spotcheck(10, false)
-      end
+    if Application.spotcheckable.exists?(@application.id)
+      @application.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
+  end
+
+  def check_every_other_refund
+    get_spotcheck(2, true)
+  end
+
+  def check_every_tenth_non_refund
+    get_spotcheck(10, false)
   end
 
   def get_spotcheck(frequency, refund)
@@ -25,12 +29,6 @@ class SpotcheckSelector
   end
 
   def application_position(refund)
-    values = [@application.id, refund]
-    application_base_list.where('id <= ? AND refund = ?', *values).count
-  end
-
-  def application_base_list
-    Application.
-      where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+    Application.spotcheckable.where('id <= ? AND refund = ?', @application.id, refund).count
   end
 end

@@ -6,6 +6,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   has_many :benefit_checks
   has_one :spotcheck, required: false
 
+  scope :spotcheckable, lambda {
+    where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+  }
+
   MAX_AGE = 120
   MIN_AGE = 16
 

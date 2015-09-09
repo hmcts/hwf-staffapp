@@ -199,7 +199,7 @@ RSpec.describe Application, type: :model do
     end
   end
 
-  describe '#spotcheck?', focus: true do
+  describe '#spotcheck?' do
     subject { application.spotcheck? }
 
     context 'when the application has spotcheck model associated' do
@@ -212,6 +212,18 @@ RSpec.describe Application, type: :model do
 
     context 'when the application does not have spotcheck model associated' do
       it { is_expected.to be false }
+    end
+  end
+
+  describe '.spotcheckable' do
+    subject { described_class.spotcheckable }
+
+    let!(:application_1) { create :application_part_remission }
+    let!(:application_2) { create :application_full_remission }
+    let!(:application_3) { create :application_no_remission }
+
+    it 'includes only part and full remission applications' do
+      is_expected.to match_array([application_1, application_2])
     end
   end
 end
