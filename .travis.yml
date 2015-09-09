@@ -13,8 +13,8 @@ addons:
   code_climate:
     repo_token: 9d2abe9e2bdfe62892cf37ae25ff3e825b07dad9401025adcb6f387ac82a35a8
 script:
+- bundle exec rake rubocop
 - bundle exec rake db:create
 - bundle exec rake db:migrate
 - DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec
-- bundle exec rake rubocop
 - bundle exec rake teaspoon
