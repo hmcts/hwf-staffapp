@@ -74,6 +74,22 @@ dl.sub-nav {
   }
 }
 
+ul.title-area li.name {
+  float:left;
+}
+ul.title-area li.beta {
+  background-color: #F17939;
+  width: 3em;
+  padding: 0 4px;
+  float: left;
+  margin-top: 0.5em;
+    span {
+      color: #fff;
+      font-weight: bold;
+    }
+  } 
+
 .contain-to-grid {
   background: #000000;
 }
+  
