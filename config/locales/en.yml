@@ -86,6 +86,7 @@ en-GB:
   spotcheck:
     callout: This application has been chosen for investigation. You’ll need to ask for supporting evidence.
     page_title: Application waiting for evidence
+    back_to_start: Back to start
     next_steps:
       title: Next steps
       steps:
