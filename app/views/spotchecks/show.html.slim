@@ -17,7 +17,7 @@
   .row
     .small-12.medium-12.large-12.columns
       .spotcheck-letter
-        =t('spotcheck.letter_html', reference: 'UNKNOWN', full_name: @application.full_name, user_name: current_user.name, evidence_date: 'UNKNOWN')
+        =t('spotcheck.letter_html', reference: 'UNKNOWN', full_name: @application.full_name, user_name: current_user.name, expiry_date: @spotcheck.expires_at.to_date)
 
   .row
     .small-12.medium-12.large-12.columns

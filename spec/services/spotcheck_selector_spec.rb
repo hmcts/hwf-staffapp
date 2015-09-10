@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 describe SpotcheckSelector do
-  subject(:spotcheck_selector) { described_class.new(application) }
+  let(:current_time) { Time.zone.now }
+  let(:expires_in_days) { 2 }
+  subject(:spotcheck_selector) { described_class.new(application, expires_in_days) }
 
   describe '#decide!' do
     subject do
-      spotcheck_selector.decide!
+      Timecop.freeze(current_time) do
+        spotcheck_selector.decide!
+      end
 
-      application.reload
-      application.spotcheck?
+      application.spotcheck
     end
 
     context 'for a benefit application' do
@@ -19,7 +22,7 @@ describe SpotcheckSelector do
       end
 
       it 'never selects the application for spotcheck' do
-        is_expected.to be false
+        is_expected.to be nil
       end
     end
 
@@ -31,7 +34,7 @@ describe SpotcheckSelector do
       end
 
       it 'never selects the application for spotcheck' do
-        is_expected.to be false
+        is_expected.to be nil
       end
     end
 
@@ -45,8 +48,12 @@ describe SpotcheckSelector do
             create_list :application, 5
           end
 
-          it 'sets the spotcheck flag on the application to true' do
-            is_expected.to be true
+          it 'creates spotcheck record for the application' do
+            is_expected.to be_a(Spotcheck)
+          end
+
+          it 'sets expiration on the spotcheck' do
+            expect(subject.expires_at).to eql(current_time + expires_in_days.days)
           end
         end
 
@@ -56,8 +63,8 @@ describe SpotcheckSelector do
             create_list :application, 5
           end
 
-          it 'sets the spotcheck flag on the application to false' do
-            is_expected.to be false
+          it 'does not create spotcheck record for the application' do
+            is_expected.to be nil
           end
         end
       end
@@ -71,8 +78,12 @@ describe SpotcheckSelector do
             create_list :application, 5
           end
 
-          it 'sets the spotcheck flag on the application to true' do
-            is_expected.to be true
+          it 'creates spotcheck record for the application' do
+            is_expected.to be_a(Spotcheck)
+          end
+
+          it 'sets expiration on the spotcheck' do
+            expect(subject.expires_at).to eql(current_time + expires_in_days.days)
           end
         end
 
@@ -82,8 +93,8 @@ describe SpotcheckSelector do
             create_list :application, 3
           end
 
-          it 'sets the spotcheck flag on the application to true' do
-            is_expected.to be false
+          it 'does not create spotcheck record for the application' do
+            is_expected.to be nil
           end
         end
       end

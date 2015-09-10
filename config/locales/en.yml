@@ -109,7 +109,7 @@ en-GB:
           <li>documentation of any other income that you’re receiving.</li>
         </ul>
 
-        <p>Please send this to us by %{evidence_date} so that we can process your application.</p>
+        <p>Please send this to us by %{expiry_date} so that we can process your application.</p>
 
         <p>Yours sincerely,</p>
 

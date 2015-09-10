@@ -1,10 +1,11 @@
 class SpotcheckSelector
-  def initialize(application)
+  def initialize(application, expires_in_days)
     @application = application
+    @expires_in_days = expires_in_days
   end
 
   def decide!
-    @application.create_spotcheck if spotcheck?
+    @application.create_spotcheck(expires_at: expires_at) if spotcheck?
   end
 
   private
@@ -30,5 +31,9 @@ class SpotcheckSelector
 
   def application_position(refund)
     Application.spotcheckable.where('id <= ? AND refund = ?', @application.id, refund).count
+  end
+
+  def expires_at
+    @expires_in_days.days.from_now
   end
 end

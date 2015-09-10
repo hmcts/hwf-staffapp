@@ -49,7 +49,9 @@ class Applications::BuildController < ApplicationController
   private
 
   def spotcheck_selection
-    SpotcheckSelector.new(@application).decide! if next_step?(:summary)
+    if next_step?(:summary)
+      SpotcheckSelector.new(@application, Settings.spotcheck_expires_in_days).decide!
+    end
   end
 
   def find_application

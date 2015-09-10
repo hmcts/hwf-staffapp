@@ -32,4 +32,8 @@ module Settings
   def couple_supp
     @h['calculator_couple_supp']
   end
+
+  def spotcheck_expires_in_days
+    @h['spotcheck_expires_in_days'].to_i
+  end
 end
