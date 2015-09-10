@@ -83,7 +83,36 @@ en-GB:
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '&#10007; &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
-  spotcheck: 'This application has been chosen for investigation. You’ll need to ask for supporting evidence.'
+  spotcheck:
+    callout: This application has been chosen for investigation. You’ll need to ask for supporting evidence.
+    page_title: Application waiting for evidence
+    next_steps:
+      title: Next steps
+      steps:
+        - 'Write the reference number on the top right corner of the paper form'
+        - 'Store and application and documents in a secure location'
+        - 'Write to the applicant asking them to send evidence in support of their application. You can copy and paste the letter below:'
+    letter_html: |
+        <p>Reference: %{reference}</p>
+
+        <p>Dear %{full_name}</p>
+
+        <p>We have received your application for help with fees and need some more information from you.</p>
+
+        <p>Please provide the following:</p>
+
+        <ul>
+          <li>last month’s bank statement for your main bank account</li>
+          <li>if you're employed - your most recent payslip which should be no more than 6 weeks old.</li>
+          <li>if you're self employed - your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation. If you’re self-employed and don’t have either of these documents, you’ll need to provide bank statements that show income for the previous tax year.</li>
+          <li>documentation of any other income that you’re receiving.</li>
+        </ul>
+
+        <p>Please send this to us by %{evidence_date} so that we can process your application.</p>
+
+        <p>Yours sincerely,</p>
+
+        <p>%{user_name}</p>
   activerecord:
     errors:
       models:

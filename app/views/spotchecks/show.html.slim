@@ -1,7 +1,20 @@
-h2 Application waiting for evidence
+.spotcheck
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 =t('spotcheck.page_title')
 
-h3 Next steps
-ul
-  li Write the reference number on the top right corner of the paper form
-  li store and application and documents in a secure location
-  li Write to the applicant asking them to send evidence in support of their application. You can copy and paste the letter below:
+  .row
+    .small-12.medium-12.large-12.columns
+      .spotcheck-reference UNKNOWN
+
+  .row
+    .small-12.medium-12.large-12.columns
+      h3 =t('spotcheck.next_steps.title')
+      ul
+        - t('spotcheck.next_steps.steps').each do |step|
+          li =step
+
+  .row
+    .small-12.medium-12.large-12.columns
+      .spotcheck-letter
+        =t('spotcheck.letter_html', reference: 'UNKNOWN', full_name: @application.full_name, user_name: current_user.name, evidence_date: 'UNKNOWN')
