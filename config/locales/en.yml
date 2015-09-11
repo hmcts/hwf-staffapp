@@ -213,12 +213,12 @@ en-GB:
         date_of_death: Date of their death
         refund: This is a refund case
         date_fee_paid: Date fee paid
-        over_61: "Is the applicant's partner 61 or over?"
+        over_61: "In question 8, is the applicant's partner 61 or over"
         benefits: Is the applicant receiving one of the benefits listed in question 9?
         dependents: Are there any financially dependent children?
         children: Number of children
         income: Total monthly income
-        high_threshold_exceeded: The applicant and their partner have
+        high_threshold_exceeded: In question 8, the applicant and their partner have
         page_1:
           date_of_birth_hint: For example 01/11/1980
           married_false: Single
@@ -229,7 +229,7 @@ en-GB:
           maximum_prompt: 'Maximum amount of savings and investments allowed:'
           savings:
             single: The applicant has
-            married: The applicant and their partner have
+            married: In question 7, the applicant and their partner have
             less_than: Less than this amount
             more_than: More than this amount
             less_than_high: Less than £16,000
