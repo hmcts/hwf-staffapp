@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :application do
+    sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
     title { Faker::Name.prefix }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }

@@ -4,10 +4,18 @@ require 'support/calculator_test_data'
 RSpec.describe Application, type: :model do
 
   let(:user)  { create :user }
-  let(:application) { described_class.create(user_id: user.id) }
+  let(:attributes) { attributes_for :application }
+  let(:application) { described_class.create(user_id: user.id, reference: attributes[:reference]) }
+
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:jurisdiction) }
+  it { is_expected.to belong_to(:office) }
 
   it { is_expected.to have_one(:spotcheck) }
   it { is_expected.not_to validate_presence_of(:spotcheck) }
+
+  it { is_expected.to validate_presence_of(:reference) }
+  it { is_expected.to validate_uniqueness_of(:reference) }
 
   before do
     stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:

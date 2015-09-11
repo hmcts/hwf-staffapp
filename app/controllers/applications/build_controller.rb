@@ -19,9 +19,7 @@ class Applications::BuildController < ApplicationController
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
-    application_builder.create_application
-    application_builder.create_reference
-    @application = application_builder.application
+    @application = application_builder.create
     redirect_to wizard_path(steps.first, application_id: @application.id)
   end
 
