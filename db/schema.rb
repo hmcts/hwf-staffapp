@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910151042) do
+ActiveRecord::Schema.define(version: 20150911101229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,9 +49,11 @@ ActiveRecord::Schema.define(version: 20150910151042) do
     t.string   "application_outcome"
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
+    t.string   "reference"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
+  add_index "applications", ["reference"], name: "index_applications_on_reference", unique: true, using: :btree
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
   create_table "benefit_checks", force: :cascade do |t|
@@ -144,15 +146,6 @@ ActiveRecord::Schema.define(version: 20150910151042) do
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
 
-  create_table "references", force: :cascade do |t|
-    t.integer  "application_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "reference",      null: false
-  end
-
-  add_index "references", ["application_id"], name: "index_references_on_application_id", using: :btree
-
   create_table "spotchecks", force: :cascade do |t|
     t.integer  "application_id", null: false
     t.datetime "created_at"
@@ -205,7 +198,6 @@ ActiveRecord::Schema.define(version: 20150910151042) do
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
-  add_foreign_key "references", "applications"
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end
