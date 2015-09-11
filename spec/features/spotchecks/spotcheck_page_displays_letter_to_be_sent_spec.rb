@@ -18,6 +18,7 @@ RSpec.feature 'Spotcheck page displays letter to be sent', type: :feature do
     visit spotcheck_path(spotcheck)
 
     within '.spotcheck-letter' do
+      expect(page).to have_content(application.reference)
       expect(page).to have_content(application.full_name)
       expect(page).to have_content(user.name)
       expect(page).to have_content(spotcheck.expires_at.to_date)
