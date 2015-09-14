@@ -1,11 +1,11 @@
 .row.collapse
   .columns.small-12
     h2 Total
-    = column_chart DwpCheck.non_digital.group(:dwp_result).count, { library: { title: 'All time responses by type', width: '200px' } }
+    = column_chart BenefitCheck.group(:dwp_result).count, { library: { title: 'All time responses by type', width: '200px' } }
 .row.collapse
   .columns.small-12
     h2 Time of day
-    = column_chart DwpCheck.non_digital.group_by_hour_of_day("dwp_checks.created_at", format: '%l %p').count, { library: { title: 'Checks by time of day', width: '200px' } }
+    = column_chart BenefitCheck.joins(:application).group_by_hour_of_day("applications.created_at", format: '%l %p').count, { library: { title: 'Checks by time of day', width: '200px' } }
 -if @report_data.present?
   .row
     -@report_data.each do |data|
