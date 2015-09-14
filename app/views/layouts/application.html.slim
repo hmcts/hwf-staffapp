@@ -12,14 +12,6 @@ html[lang="en"]
     = csrf_meta_tags
   body
     main#main(role="main")
-      .phase-banner
-        .row
-          p
-            strong.phase-tag BETA
-            span 
-              | This is a new service – your 
-              a href="https://designpatterns.hackpad.com/GOV.UK-elements-feedback-sKrDyQxcfA2" feedback 
-              | will help us to improve it.
       .contain-to-grid
         nav.top-bar(data-topbar)
           ul.title-area
@@ -30,6 +22,9 @@ html[lang="en"]
                 a href="#"
                   span
           -unless hide_login_menu?(request.env['PATH_INFO'])
+          .phase-banner
+            span
+              strong.phase-tag BETA
             section.top-bar-section
               ul.right
                 li
@@ -37,11 +32,6 @@ html[lang="en"]
                     .inline
                       span Welcome #{current_user.name} #{link_to "View profile", user_path(current_user.id)}
                       = link_to 'Sign out', destroy_user_session_path, :method => :delete
-                  - else
-                    .inline
-                      = link_to t('functions.log_in'), new_user_session_path
-      -if params[:controller] != 'out_of_box'                
-        =render 'layouts/toolbar'
       .row
         .large-12.columns
           /![if IE]><h1 class='ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
