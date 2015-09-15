@@ -132,6 +132,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def benefits=(val)
     super
     self.application_type = benefits? ? 'benefit' : 'income'
+    self.dependents = nil if benefits?
+    self.application_outcome = outcome_from_dwp_result if benefits? && last_benefit_check.present?
   end
 
   def full_name
