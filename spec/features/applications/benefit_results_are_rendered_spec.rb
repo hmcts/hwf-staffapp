@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.feature 'Benefit Results', type: :feature do
@@ -11,7 +12,7 @@ RSpec.feature 'Benefit Results', type: :feature do
   context 'as a signed in user' do
 
     before do
-      WebMock.disable_net_connect!(allow: 'codeclimate.com')
+      dwp_api_response 'Yes'
       login_as user
     end
 

@@ -4,7 +4,6 @@ RSpec.describe Applications::BuildController, type: :controller do
   render_views
 
   include Devise::TestHelpers
-  before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
 
   let(:user)          { create :user }
 

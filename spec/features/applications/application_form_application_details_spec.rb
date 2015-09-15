@@ -12,7 +12,6 @@ RSpec.feature 'Completing the application details page of an application form', 
   let(:persona)             { single_under_61 }
 
   before do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
     dwp_api_response 'Yes'
     Capybara.current_driver = :webkit
   end

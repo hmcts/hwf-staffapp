@@ -11,7 +11,6 @@ RSpec.feature 'Completing the application details', type: :feature do
   let!(:user)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   before do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
     Capybara.current_driver = :webkit
     Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end

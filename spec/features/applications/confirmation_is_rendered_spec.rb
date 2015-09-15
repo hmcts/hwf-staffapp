@@ -10,7 +10,6 @@ RSpec.feature 'Confirmation page', type: :feature do
 
   context 'as a signed in user', js: true do
     before do
-      WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
       Capybara.current_driver = :webkit
       dwp_api_response 'Yes'
       login_as user
