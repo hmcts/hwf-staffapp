@@ -1,5 +1,5 @@
 
-def dwp_response(response)
+def dwp_api_response(response)
   json = { "original_client_ref": "unique",
            "benefit_checker_status": "#{response}",
            "confirmation_ref": "T1426267181940",

@@ -13,11 +13,7 @@ RSpec.feature 'Completing the application details page of an application form', 
 
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
-    json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
-                  "confirmation_ref": "T1426267181940",
-                  "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
-    stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-      to_return(status: 200, body: json, headers: {})
+    dwp_api_response 'Yes'
     Capybara.current_driver = :webkit
   end
 
