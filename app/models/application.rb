@@ -101,7 +101,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def threshold_exceeded=(val)
     super
     self.over_61 = nil unless threshold_exceeded?
-    if threshold_exceeded? && !over_61
+    if threshold_exceeded? && (!over_61 || known_over_61?)
       self.application_type = 'none'
       self.application_outcome = 'none'
       self.dependents = nil
