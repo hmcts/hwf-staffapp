@@ -14,14 +14,28 @@ RSpec.feature 'Spotcheck page displays letter to be sent', type: :feature do
   let(:application) { create :application_full_remission }
   let(:spotcheck) { create :spotcheck, application: application }
 
-  scenario 'User navigates to the spot check page, which has all required details' do
-    visit spotcheck_path(spotcheck)
+  context 'when the Spotcheck feature is enabled' do
+    enable_spotcheck
 
-    within '.spotcheck-letter' do
-      expect(page).to have_content(application.reference)
-      expect(page).to have_content(application.full_name)
-      expect(page).to have_content(user.name)
-      expect(page).to have_content(spotcheck.expires_at.to_date)
+    scenario 'User navigates to the spot check page, which has all required details' do
+      visit spotcheck_path(spotcheck)
+
+      within '.spotcheck-letter' do
+        expect(page).to have_content(application.reference)
+        expect(page).to have_content(application.full_name)
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(spotcheck.expires_at.to_date)
+      end
+    end
+  end
+
+  context 'when the Spotcheck feature is disabled' do
+    disable_spotcheck
+
+    scenario 'User can not navigate to the spot check page' do
+      visit spotcheck_path(spotcheck)
+
+      expect(page.status_code).to be 404
     end
   end
 end

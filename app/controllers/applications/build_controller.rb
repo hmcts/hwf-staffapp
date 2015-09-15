@@ -97,6 +97,8 @@ class Applications::BuildController < ApplicationController
   end
 
   def redirect_if_spotcheck
-    redirect_to(spotcheck_path(@application.spotcheck.id)) if @application.spotcheck?
+    if spotcheck_enabled? && @application.spotcheck?
+      redirect_to(spotcheck_path(@application.spotcheck.id))
+    end
   end
 end
