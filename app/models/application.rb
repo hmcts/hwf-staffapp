@@ -52,7 +52,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
     validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
-    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :over_61
+    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :check_high_threshold?
   end
   # End step 3 validation
 
@@ -101,7 +101,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def threshold_exceeded=(val)
     super
     self.over_61 = nil unless threshold_exceeded?
-    if threshold_exceeded? && !over_61
+    if threshold_exceeded? && (!over_61 || known_over_61?)
       self.application_type = 'none'
       self.application_outcome = 'none'
       self.dependents = nil
@@ -140,6 +140,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def known_over_61?
     applicant_age >= 61
+  end
+
+  def check_high_threshold?
+    over_61? && !known_over_61?
   end
 
   def applicant_age
