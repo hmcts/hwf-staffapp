@@ -56,10 +56,6 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to have_http_status(:success)
       end
 
-      it 'populates a list of dwp_checks' do
-        expect(assigns(:dwpchecks).count).to eql(2)
-      end
-
       it 'renders the index view' do
         expect(response).to render_template :index
       end
