@@ -4,6 +4,9 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
+  before_action :spotcheck_show_redirect, only: :show
+  before_action :spotcheck_update_redirect, only: :update
+
   steps :personal_information,
     :application_details,
     :savings_investments,
@@ -16,9 +19,7 @@ class Applications::BuildController < ApplicationController
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
-    application_builder.create_application
-    application_builder.create_reference
-    @application = application_builder.application
+    @application = application_builder.create
     redirect_to wizard_path(steps.first, application_id: @application.id)
   end
 
@@ -46,7 +47,9 @@ class Applications::BuildController < ApplicationController
   private
 
   def spotcheck_selection
-    SpotcheckSelector.new(@application).decide! if next_step?(:summary)
+    if next_step?(:summary)
+      SpotcheckSelector.new(@application, Settings.spotcheck_expires_in_days).decide!
+    end
   end
 
   def find_application
@@ -83,5 +86,17 @@ class Applications::BuildController < ApplicationController
 
   def populate_jurisdictions
     @jurisdictions = current_user.office.jurisdictions
+  end
+
+  def spotcheck_show_redirect
+    redirect_if_spotcheck if step == :confirmation
+  end
+
+  def spotcheck_update_redirect
+    redirect_if_spotcheck if next_step == :confirmation
+  end
+
+  def redirect_if_spotcheck
+    redirect_to(spotcheck_path(@application.spotcheck.id)) if @application.spotcheck?
   end
 end

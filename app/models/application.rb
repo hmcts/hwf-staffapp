@@ -3,8 +3,11 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   include IncomeCalculator
   belongs_to :user
   belongs_to :jurisdiction
+  belongs_to :office
   has_many :benefit_checks
   has_one :spotcheck, required: false
+
+  validates :reference, presence: true, uniqueness: true
 
   scope :spotcheckable, lambda {
     where(benefits: false, application_type: 'income', application_outcome: %w[part full])

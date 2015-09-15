@@ -5,3 +5,4 @@ mail_feedback: trial-feedback@digital.justice.gov.uk
 calculator_min_val: 1085
 calculator_pp_child: 245
 calculator_couple_supp: 160
+spotcheck_expires_in_days: 7
