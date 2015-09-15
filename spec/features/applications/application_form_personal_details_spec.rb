@@ -9,10 +9,7 @@ RSpec.feature 'Starting an application form', type: :feature do
   let!(:office)        { create(:office, jurisdictions: jurisdictions) }
   let!(:user)          { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
-  before do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
-    Capybara.current_driver = :webkit
-  end
+  before { Capybara.current_driver = :webkit }
 
   after { Capybara.use_default_driver }
 

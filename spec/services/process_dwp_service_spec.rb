@@ -3,8 +3,6 @@ require 'rails_helper'
 
 describe ProcessDwpService do
 
-  before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
-
   context 'called with invalid object' do
     it 'fails' do
       expect {
