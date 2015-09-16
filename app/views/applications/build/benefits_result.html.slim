@@ -1,15 +1,24 @@
 h2 Benefits
 
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+- if @application.can_check_benefits?
+
+  = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+    .row.collapse
+      .columns.small-12.medium-10.large-8
+        #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
+          h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
+
+    -if @application.last_benefit_check.dwp_result.parameterize.underscore == 'undetermined'
+      =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
+      =link_to 'Check personal details', wizard_path(:personal_information)
+    -else
+      = f.hidden_field :status
+      = f.submit 'Next', :class => 'button primary'
+      =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
+
+- else
   .row.collapse
     .columns.small-12.medium-10.large-8
-      #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-        h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
-
-  -if @application.last_benefit_check.dwp_result.parameterize.underscore == 'undetermined'
-    =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
-    =link_to 'Check personal details', wizard_path(:personal_information)
-  -else
-    = f.hidden_field :status
-    = f.submit 'Next', :class => 'button primary'
-    =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
+      #result.callout.details_missing
+        h3.bold DWP check couldn't be performed, please provide all required fields
+  =link_to 'Check personal details', wizard_path(:personal_information)
