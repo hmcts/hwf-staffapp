@@ -39,7 +39,7 @@ module IncomeCalculator
   end
 
   def child_uplift
-    children * Settings.calculator.pp_child
+    children * Settings.calculator.uplift_per_child
   end
 
   def minimum_value(current_fee, max_contribution)
