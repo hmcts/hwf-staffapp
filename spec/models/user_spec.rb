@@ -74,7 +74,7 @@ describe User, type: :model do
 
           it 'has an informative error message for non white listed emails' do
             user.valid?
-            expect(user.errors.messages[:email].first).to match I18n.t('dictionary.invalid_email', email: Settings.mail_tech_support)
+            expect(user.errors.messages[:email].first).to match I18n.t('dictionary.invalid_email', email: Settings.mail.tech_support)
           end
         end
       end

@@ -114,7 +114,7 @@ RSpec.describe Application, type: :model do
       end
 
       describe 'probate' do
-        let(:probate)      { build :probate_application }
+        let(:probate) { build :application, :probate }
 
         it 'has a valid factory build' do
           expect(probate).to be_valid
@@ -168,7 +168,7 @@ RSpec.describe Application, type: :model do
       end
 
       describe 'refund' do
-        let(:refund) { build :refund_application }
+        let(:refund) { build :application, :refund }
 
         it 'has a valid factory build' do
           expect(refund).to be_valid

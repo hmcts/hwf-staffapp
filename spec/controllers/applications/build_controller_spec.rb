@@ -77,7 +77,7 @@ RSpec.describe Applications::BuildController, type: :controller do
       context 'income' do
         context 'user has selected "no" to benefits' do
           before do
-            application = create(:no_benefits, dependents: false)
+            application = create(:application, :no_benefits, dependents: false)
             get :show, application_id: application.id, id: :income
           end
 
@@ -128,7 +128,7 @@ RSpec.describe Applications::BuildController, type: :controller do
 
         context 'user has selected "no" to benefits' do
           before do
-            application = create(:no_benefits, dependents: false)
+            application = create(:application, :no_benefits, dependents: false)
             application.valid?
             get :show, application_id: application.id, id: :benefits_result
           end

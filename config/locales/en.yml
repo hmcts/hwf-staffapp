@@ -83,6 +83,71 @@ en-GB:
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '&#10007; &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
+  spotcheck:
+    callout: This application has been chosen for investigation. You’ll need to ask for supporting evidence.
+    page_title: Application waiting for evidence
+    back_to_start: Back to start
+    next_steps:
+      title: Next steps
+      steps:
+        - 'Write the reference number on the top right corner of the paper form'
+        - 'Store and application and documents in a secure location'
+        - 'Write to the applicant asking them to send evidence in support of their application. You can copy and paste the letter below:'
+    letter_html: |
+        <p>Dear %{full_name}</p>
+
+        <p><strong>Reference: %{reference}</strong></p>
+
+        <p>We have received your application for help with fees and need some more information from you.</p>
+
+        <p>Please provide your last month’s bank statement for your main bank account.</p>
+
+        <p>Plus any of the following that apply:</p>
+
+        <p><strong>Wages</strong></p>
+        <ul>
+          <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
+          <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.</li>
+        </ul>
+        <p>If you’re self-employed and don’t have either of these documents, you’ll need to provide bank statements that show income for the previous tax year.</p>
+
+        <p><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></p>
+        <p>A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit.</p>
+        <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
+
+        <p><strong>Child maintenance payments</strong></p>
+        <p>Document(s) showing the payment amounts and how often they are made.</p>
+        <p>This can be one of the following:</p>
+        <ul>
+          <li>sealed court order</li>
+          <li>Child Support Agency Assessment</li>
+          <li>signed voluntary agreement or letter of agreement signed by both parties</li>
+        </ul>
+
+        <p><strong>Contribution-based Jobseeker’s Allowance (JSA), Contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></p>
+        <p>A letter from the Department for Work and Pensions (DWP) dated in the last 3 months.</p>
+
+        <p><strong>Pensions (state, work, private)</strong></p>
+        <p>A letter or statement showing pension payments.</p>
+
+        <p><strong>Rent from anyone living with you</strong></p>
+        <p>A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.</p>
+
+        <p><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></p>
+        <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (eg family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
+
+        <p><strong>Prisoner’s income</strong></p>
+        <p>Prisoner Income and Expenditure Statement (PIES) showing earnings, spending, private cash and savings.</p>
+        <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+
+        <p><strong>Any other monthly income</strong></p>
+        <p>Documentation of any other income that you’re receiving. </p>
+
+        <p>Please send this to us by %{expiry_date} so that we can process your application.</p>
+
+        <p>Yours sincerely,</p>
+
+        <p>%{user_name}</p>
   activerecord:
     errors:
       models:

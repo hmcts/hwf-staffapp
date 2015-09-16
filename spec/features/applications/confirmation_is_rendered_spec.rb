@@ -6,7 +6,7 @@ RSpec.feature 'Confirmation page', type: :feature do
   Warden.test_mode!
 
   let(:user) { create :user, office: create(:office) }
-  let(:application) { create(:application_confirm) }
+  let(:application) { create(:application, :confirm) }
 
   context 'as a signed in user', js: true do
     before do

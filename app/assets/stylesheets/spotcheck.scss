@@ -1,0 +1,21 @@
+@import "colours";
+@import "measurements";
+
+.spotcheck .row {
+  margin-bottom: $gutter;
+}
+
+.spotcheck-reference {
+  color: $white;
+  background-color: $grey-1;
+  border: 1px solid $grey-3;
+  display: inline-block;
+  padding: $gutter-half $gutter;
+  font-size: 2em;
+}
+
+.spotcheck-letter {
+  border: 1px solid $grey-3;
+  background-color: $grey-4;
+  padding: $gutter-half;
+}

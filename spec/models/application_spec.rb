@@ -4,7 +4,18 @@ require 'support/calculator_test_data'
 RSpec.describe Application, type: :model do
 
   let(:user)  { create :user }
-  let(:application) { described_class.create(user_id: user.id) }
+  let(:attributes) { attributes_for :application }
+  let(:application) { described_class.create(user_id: user.id, reference: attributes[:reference]) }
+
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:jurisdiction) }
+  it { is_expected.to belong_to(:office) }
+
+  it { is_expected.to have_one(:spotcheck) }
+  it { is_expected.not_to validate_presence_of(:spotcheck) }
+
+  it { is_expected.to validate_presence_of(:reference) }
+  it { is_expected.to validate_uniqueness_of(:reference) }
 
   before do
     stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
@@ -193,6 +204,34 @@ RSpec.describe Application, type: :model do
           expect { application.save } .to change { application.benefit_checks.count }.by 1
         end
       end
+    end
+  end
+
+  describe '#spotcheck?' do
+    subject { application.spotcheck? }
+
+    context 'when the application has spotcheck model associated' do
+      before do
+        create :spotcheck, application: application
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the application does not have spotcheck model associated' do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '.spotcheckable' do
+    subject { described_class.spotcheckable }
+
+    let!(:application_1) { create :application_part_remission }
+    let!(:application_2) { create :application_full_remission }
+    let!(:application_3) { create :application_no_remission }
+
+    it 'includes only part and full remission applications' do
+      is_expected.to match_array([application_1, application_2])
     end
   end
 end

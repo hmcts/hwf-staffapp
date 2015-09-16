@@ -23,7 +23,7 @@
         p =link_to t('functions.feedback').to_s, feedback_path
         details 
           summary Contact us 
-          div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
+          div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}
 -else
   .pad-top-thirty-px
     = link_to t('functions.log_in'), new_user_session_path, class: 'button'
@@ -32,4 +32,4 @@
   div Contact your manager to set up your account. You will then receive an email to sign in.
   div.bold.pad-top-fifteen-px Having technical issues
   div Contact support
-  div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
+  div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}

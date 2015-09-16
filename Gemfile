@@ -6,6 +6,9 @@ gem 'rails', '4.2.4'
 gem 'pg'
 gem 'rails-i18n', '~> 4.0.0'
 
+# configuration
+gem 'config'
+
 # authentication
 gem 'devise'
 gem 'devise_invitable'
@@ -57,6 +60,7 @@ gem "paranoia", "~> 2.0"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'pry-rails'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.1'
@@ -89,6 +93,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-webkit'
   gem 'faker'
+  gem 'shoulda-matchers'
 end
 
 # heroku deployment

@@ -3,7 +3,15 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   include IncomeCalculator
   belongs_to :user
   belongs_to :jurisdiction
+  belongs_to :office
   has_many :benefit_checks
+  has_one :spotcheck, required: false
+
+  validates :reference, presence: true, uniqueness: true
+
+  scope :spotcheckable, lambda {
+    where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+  }
 
   MAX_AGE = 120
   MIN_AGE = 16
@@ -164,6 +172,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def last_benefit_check
     benefit_checks.order(:id).last
+  end
+
+  def spotcheck?
+    !spotcheck.nil?
   end
 
   private

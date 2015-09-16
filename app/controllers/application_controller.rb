@@ -6,4 +6,10 @@ class ApplicationController < ActionController::Base
   def after_invite_path_for(*)
     users_path
   end
+
+  private
+
+  def spotcheck_enabled?
+    Settings.spotcheck.enabled == true
+  end
 end
