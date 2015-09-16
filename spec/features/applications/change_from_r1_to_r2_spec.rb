@@ -20,11 +20,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
   context 'complete r2 path as a signed in user with default jurisdiction', js: true do
     before do
-      json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
-             "confirmation_ref": "T1426267181940",
-             "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
-      stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-        to_return(status: 200, body: json, headers: {})
+      dwp_api_response 'Yes'
 
       login_as user
       visit applications_new_path

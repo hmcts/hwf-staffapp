@@ -11,17 +11,7 @@ RSpec.feature 'Benefit Results', type: :feature do
 
     before do
       WebMock.disable_net_connect!(allow: 'codeclimate.com')
-      json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
-                  "confirmation_ref": "T1426267181940",
-                  "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
-      stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
-        {
-          birth_date: application.date_of_birth.strftime('%Y%m%d'),
-          entitlement_check_date: application.date_received.strftime('%Y%m%d'),
-          id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
-          ni_number: application.ni_number,
-          surname: application.last_name.upcase
-        }).to_return(status: 200, body: json, headers: {})
+      dwp_api_response 'Yes'
     end
 
     before do
