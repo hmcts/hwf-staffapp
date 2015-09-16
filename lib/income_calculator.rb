@@ -5,7 +5,8 @@ module IncomeCalculator
   end
 
   def calculate
-    max_contribution = max_contribution(child_uplift, income, married_supplement, Settings.min_val)
+    min_val = Settings.calculator.min_val
+    max_contribution = max_contribution(child_uplift, income, married_supplement, min_val)
     # update application
     update_columns(
       application_type: 'income',
@@ -17,7 +18,7 @@ module IncomeCalculator
   private
 
   def married_supplement
-    married? ? Settings.couple_supp : 0
+    married? ? Settings.calculator.couple_supp : 0
   end
 
   def set_remission_type(current_fee, user_to_pay)
@@ -38,7 +39,7 @@ module IncomeCalculator
   end
 
   def child_uplift
-    children * Settings.pp_child
+    children * Settings.calculator.pp_child
   end
 
   def minimum_value(current_fee, max_contribution)

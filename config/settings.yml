@@ -1,8 +1,12 @@
-mail_from: no-reply@helpwithcourtfees.dsd.io
-mail_reply_to: enquiries@helpwithcourtfees.dsd.io
-mail_tech_support: helpwithfees.support@digital.justice.gov.uk
-mail_feedback: trial-feedback@digital.justice.gov.uk
-calculator_min_val: 1085
-calculator_pp_child: 245
-calculator_couple_supp: 160
-spotcheck_expires_in_days: 7
+mail:
+  from: no-reply@helpwithcourtfees.dsd.io
+  reply_to: enquiries@helpwithcourtfees.dsd.io
+  tech_support: helpwithfees.support@digital.justice.gov.uk
+  feedback: trial-feedback@digital.justice.gov.uk
+calculator:
+  min_val: 1085
+  pp_child: 245
+  couple_supp: 160
+spotcheck:
+  enabled: <%= ENV['SPOTCHECK_ENABLED'] || false %>
+  expires_in_days: 7

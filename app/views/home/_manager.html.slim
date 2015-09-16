@@ -20,4 +20,4 @@
       p =link_to t('functions.feedback').to_s, feedback_path
       details 
         summary Contact us 
-        div Email: #{link_to Settings.mail_tech_support, "mailto:#{Settings.mail_tech_support}"}
+        div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}

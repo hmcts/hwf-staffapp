@@ -48,7 +48,7 @@ class Applications::BuildController < ApplicationController
 
   def spotcheck_selection
     if next_step?(:summary)
-      SpotcheckSelector.new(@application, Settings.spotcheck_expires_in_days).decide!
+      SpotcheckSelector.new(@application, Settings.spotcheck.expires_in_days).decide!
     end
   end
 
@@ -97,6 +97,8 @@ class Applications::BuildController < ApplicationController
   end
 
   def redirect_if_spotcheck
-    redirect_to(spotcheck_path(@application.spotcheck.id)) if @application.spotcheck?
+    if spotcheck_enabled? && @application.spotcheck?
+      redirect_to(spotcheck_path(@application.spotcheck.id))
+    end
   end
 end

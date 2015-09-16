@@ -94,8 +94,8 @@ Rails.application.configure do
       host: smtp_domain,
       protocol:  ENV['SMTP_PROTOCOL'] || 'http'
     }
-    ActionMailer::Base.default from: Settings.mail_from
-    ActionMailer::Base.default reply_to: Settings.mail_reply_to
+    ActionMailer::Base.default from: Settings.mail.from
+    ActionMailer::Base.default reply_to: Settings.mail.reply_to
     ActionMailer::Base.smtp_settings = {
       address: ENV['SMTP_HOSTNAME'] || 'localhost',
       port: ENV['SMTP_PORT'] || 587,
