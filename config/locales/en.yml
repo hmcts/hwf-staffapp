@@ -28,6 +28,7 @@ en-GB:
     log_in: Sign in
   general:
     optional: '&nbsp; (optional)'
+    required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'

@@ -41,7 +41,7 @@
       .form-group
         = f.label :ni_number
           =t('activerecord.attributes.application.ni_number')
-          span.hint =t('general.optional').html_safe
+          span.hint =t('general.required_for_benefits').html_safe
         = f.label :ni_number, @application.errors[:ni_number].join(', '), class: 'error' if @application.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
 
