@@ -11,14 +11,14 @@ class FeeThreshold
       { lower: 6001, upper: 7000, amount: 14000 }
     ]
 
-  def initialize(application)
-    @application = application
+  def initialize(fee)
+    return if fee.nil?
+    @fee = fee.round
   end
 
   def band
-    return if fee.nil?
-    return 3000 if fee <= 1000
-    return 16000 if fee >= 7001
+    return 3000 if @fee <= 1000
+    return 16000 if @fee >= 7001
     FEE_BANDS.each do |band|
       result = find_band band
       return result unless result.nil?
@@ -27,13 +27,9 @@ class FeeThreshold
 
   private
 
-  def fee
-    @application.fee.round
-  end
-
   def find_band(line)
     amount, lower, upper = get_band_values(line)
-    amount if fee.between?(lower, upper)
+    amount if @fee.between?(lower, upper)
   end
 
   def get_band_values(line)
