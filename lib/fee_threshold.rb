@@ -16,6 +16,7 @@ class FeeThreshold
   end
 
   def band
+    return if fee.nil?
     return 3000 if fee <= 1000
     return 16000 if fee >= 7001
     FEE_BANDS.each do |band|

@@ -102,7 +102,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     if known_over_61?
       self.threshold = 16000
     else
-      # self.threshold = val.to_i <= 1000 ? 3000 : 4000
       self.threshold = FeeThreshold.new(self).band
     end
   end
