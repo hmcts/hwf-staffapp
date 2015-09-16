@@ -38,13 +38,7 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
         end
 
         context 'when the dwp says the applicant is not on benefits' do
-          before do
-            json = '{"original_client_ref": "unique", "benefit_checker_status": "Yes",
-             "confirmation_ref": "T1426267181940",
-             "@xmlns": "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"}'
-            stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-              to_return(status: 200, body: json, headers: {})
-          end
+          before { dwp_api_response 'Yes' }
 
           context 'after completing the application_details page' do
             before do
