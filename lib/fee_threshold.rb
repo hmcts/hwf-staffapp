@@ -1,24 +1,41 @@
 class FeeThreshold
+  FEE_BANDS =
+    [
+      { lower: 1001, upper: 1335, amount: 4000 },
+      { lower: 1336, upper: 1665, amount: 5000 },
+      { lower: 1666, upper: 2000, amount: 6000 },
+      { lower: 2001, upper: 2330, amount: 7000 },
+      { lower: 2331, upper: 4000, amount: 8000 },
+      { lower: 4001, upper: 5000, amount: 10000 },
+      { lower: 5001, upper: 6000, amount: 12000 },
+      { lower: 6001, upper: 7000, amount: 14000 }
+    ]
+
   def initialize(application)
     @application = application
   end
 
   def band
     return 3000 if fee <= 1000
-    return 4000 if fee.between?(1001, 1335)
-    return 5000 if fee.between?(1336, 1665)
-    return 6000 if fee.between?(1666, 2000)
-    return 7000 if fee.between?(2001, 2330)
-    return 8000 if fee.between?(2331, 4000)
-    return 10000 if fee.between?(4001, 5000)
-    return 12000 if fee.between?(5001, 6000)
-    return 14000 if fee.between?(6001, 7000)
     return 16000 if fee >= 7001
+    FEE_BANDS.each do |band|
+      result = find_band band
+      return result unless result.nil?
+    end
   end
 
   private
 
   def fee
     @application.fee
+  end
+
+  def find_band(line)
+    amount, lower, upper = get_band_values(line)
+    amount if fee.between?(lower, upper)
+  end
+
+  def get_band_values(line)
+    [line[:amount], line[:lower], line[:upper]]
   end
 end

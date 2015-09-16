@@ -16,16 +16,7 @@ RSpec.describe FeeThreshold do
       end
     end
 
-    [
-      { lower: 1001, upper: 1335, amount: 4000 },
-      { lower: 1336, upper: 1665, amount: 5000 },
-      { lower: 1666, upper: 2000, amount: 6000 },
-      { lower: 2001, upper: 2330, amount: 7000 },
-      { lower: 2331, upper: 4000, amount: 8000 },
-      { lower: 4001, upper: 5000, amount: 10000 },
-      { lower: 5001, upper: 6000, amount: 12000 },
-      { lower: 6001, upper: 7000, amount: 14000 }
-    ].each do |band|
+    described_class::FEE_BANDS.each do |band|
       context "when amount is between #{band[:lower]} and #{band[:upper]}" do
         before { application.fee = band[:lower] + 5 }
         it "returns #{band[:amount]}" do
