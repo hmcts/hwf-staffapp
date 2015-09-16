@@ -28,7 +28,7 @@ class FeeThreshold
   private
 
   def fee
-    @application.fee
+    @application.fee.round
   end
 
   def find_band(line)
