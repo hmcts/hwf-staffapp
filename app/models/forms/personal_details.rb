@@ -13,7 +13,7 @@ module Forms
 
     validates :last_name, presence: true, length: { minimum: 2 }
     validates :date_of_birth, presence: true
-    validates :married, inclusion: { in: [true, false] }
+    validates :married, presence: true
 
     private
 

@@ -24,6 +24,10 @@ class Applications::BuildController < ApplicationController
   end
 
   def show # rubocop:disable CyclomaticComplexity
+    if step == :personal_information
+      @form = Forms::PersonalDetails.new(@application)
+    end
+
     case step
     when :benefits
       jump_to(:summary) unless @application.savings_investment_valid?
@@ -36,12 +40,25 @@ class Applications::BuildController < ApplicationController
   end
 
   def update
-    params[:application][:status] = (step == steps.last) ? 'active' : step.to_s
+    status = (step == steps.last) ? 'active' : step.to_s
 
     spotcheck_selection
 
-    @application.update(application_params)
-    render_wizard @application
+    if step == :personal_information
+      form_params = params.require(:application).permit(Forms::PersonalDetails::PERMITTED_ATTRIBUTES)
+      @form = Forms::PersonalDetails.new(form_params)
+      @form.valid?
+      puts "valid:#{@form.errors.messages}"
+      if @form.valid?
+        @application.update(form_params.merge({ status: status }))
+        render_wizard @application
+      else
+        render_wizard
+      end
+    else
+      @application.update(application_params.merge({ status: status }))
+      render_wizard @application
+    end
   end
 
   private
