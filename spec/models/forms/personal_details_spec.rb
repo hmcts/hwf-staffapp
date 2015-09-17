@@ -18,6 +18,26 @@ RSpec.describe Forms::PersonalDetails do
 
     it { is_expected.to validate_presence_of(:date_of_birth) }
 
-  end
+    describe 'marital status' do
+      before do
+        subject.last_name = 'foo'
+        subject.date_of_birth = '01 01 1970'
+      end
 
+      it 'accepts true as a value' do
+        subject.married = true
+        expect(subject).to be_valid
+      end
+
+      it 'accepts false as a value' do
+        subject.married = false
+        expect(subject).to be_valid
+      end
+
+      it 'is required' do
+        subject.married = nil
+        expect(subject).to be_invalid
+      end
+    end
+  end
 end
