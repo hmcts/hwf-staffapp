@@ -17,6 +17,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   MIN_AGE = 16
 
   after_save :run_auto_checks
+  before_validation :format_ni_number
 
   # Step 1 - Personal detail validation
   with_options if: proc { active_or_status_is? 'personal_information' } do
@@ -292,5 +293,9 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE)
       )
     end
+  end
+
+  def format_ni_number
+    ni_number.gsub!(' ', '') unless ni_number.nil?
   end
 end
