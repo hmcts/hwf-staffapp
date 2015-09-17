@@ -52,6 +52,8 @@ en-GB:
       heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
     :no:
       heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+    details_missing:
+      heading: DWP check couldn't be performed, please make sure you've provided all personal details including National Insurance number
     deleted:
       heading: The applicant is not receiving benefits
     deceased:
