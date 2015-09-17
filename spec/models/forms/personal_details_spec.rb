@@ -41,12 +41,23 @@ RSpec.describe Forms::PersonalDetails do
     end
   end
 
-  describe 'construct form object from application' do
+  describe 'when Application object is passed in' do
     let(:form) { described_class.new(application) }
 
     PARAMS_LIST.each do |attr_name|
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq application.send(attr_name)
+      end
+    end
+  end
+
+  describe 'when a Hash is passed in' do
+    let(:hash) { application.attributes }
+    let(:form) { described_class.new(hash) }
+
+    PARAMS_LIST.each do |attr_name|
+      it "assigns #{attr_name}" do
+        expect(form.send(attr_name)).to eq hash[attr_name.to_s]
       end
     end
   end
