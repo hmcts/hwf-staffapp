@@ -85,11 +85,11 @@ RSpec.describe Application, type: :model do
         end
 
         it 'does not update remission type' do
-          expect { application.save } .to_not change { application.application_type }
+          expect { application.save }.to_not change { application.application_type }
         end
 
         it 'does not update amount_to_pay' do
-          expect { application.save } .to_not change { application.amount_to_pay }
+          expect { application.save }.to_not change { application.amount_to_pay }
         end
       end
 
@@ -103,11 +103,11 @@ RSpec.describe Application, type: :model do
         end
 
         it 'updates remission type' do
-          expect { application.save } .to change { application.application_type }
+          expect { application.save }.to change { application.application_type }
         end
 
         it 'updates amount_to_pay' do
-          expect { application.save } .to change { application.amount_to_pay }
+          expect { application.save }.to change { application.amount_to_pay }
         end
       end
     end
@@ -132,14 +132,14 @@ RSpec.describe Application, type: :model do
     describe 'auto running benefit checks' do
       context 'when saved without required fields' do
         it 'does not run a benefit check' do
-          expect { application.save } .to_not change { application.benefit_checks.count }
+          expect { application.save }.to_not change { application.benefit_checks.count }
         end
       end
 
       context 'when the final item required is saved' do
         before { application.last_name = 'TEST' }
         it 'runs a benefit check ' do
-          expect { application.save } .to change { application.benefit_checks.count }.by 1
+          expect { application.save }.to change { application.benefit_checks.count }.by 1
         end
 
         it 'sets application_type to benefit' do
@@ -155,7 +155,7 @@ RSpec.describe Application, type: :model do
           end
 
           it 'does not perform another benefit check' do
-            expect { application.save } .to_not change { application.benefit_checks.count }
+            expect { application.save }.to_not change { application.benefit_checks.count }
           end
         end
 
@@ -176,7 +176,7 @@ RSpec.describe Application, type: :model do
           end
 
           it 'runs a benefit check' do
-            expect { application.save } .to change { application.benefit_checks.count }.by 1
+            expect { application.save }.to change { application.benefit_checks.count }.by 1
           end
 
           it 'sets the new benefit check date' do
@@ -202,7 +202,7 @@ RSpec.describe Application, type: :model do
           end
 
           it 'runs a benefit check' do
-            expect { application.save } .to change { application.benefit_checks.count }.by 1
+            expect { application.save }.to change { application.benefit_checks.count }.by 1
           end
         end
       end
