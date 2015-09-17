@@ -1,4 +1,4 @@
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   .row
     .small-12.medium-12.large-12.columns
       h2 Personal details
@@ -6,7 +6,7 @@
   .row
     .small-12.medium-4.large-2.columns
       .form-group
-        = f.label :title, @application.errors[:title].join(', '), class: 'error' if @application.errors[:title].present?
+        = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title
           =t('activerecord.attributes.application.title')
           span.hint =t('general.optional').html_safe
@@ -17,14 +17,14 @@
         = f.label :first_name
           =t('activerecord.attributes.application.first_name')
           span.hint =t('general.optional').html_safe
-        = f.label :first_name, @application.errors[:first_name].join(', '), class: 'error' if @application.errors[:first_name].present?
+        = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'form-control' }
 
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :last_name
-        = f.label :last_name, @application.errors[:last_name].join(', '), class: 'error' if @application.errors[:last_name].present?
+        = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
         = f.text_field :last_name, { class: 'form-control' }
 
   .row
@@ -33,7 +33,7 @@
         = f.label :date_of_birth
           = t('activerecord.attributes.application.date_of_birth')
           span.hint.block = t('activerecord.attributes.application.page_1.date_of_birth_hint')
-        = f.label :date_of_birth, @application.errors[:date_of_birth].join(', '), class: 'error' if @application.errors[:date_of_birth].present?
+        = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
         = f.text_field :date_of_birth, { class: 'form-control' }
 
   .row
@@ -42,7 +42,7 @@
         = f.label :ni_number
           =t('activerecord.attributes.application.ni_number')
           span.hint =t('general.required_for_benefits').html_safe
-        = f.label :ni_number, @application.errors[:ni_number].join(', '), class: 'error' if @application.errors[:ni_number].present?
+        = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
 
   .row
@@ -51,7 +51,7 @@
         .row.collapse
           .columns.small-12
             = f.label :married
-            = f.label :married, @application.errors[:married].join(', '), class: 'error' if @application.errors[:married].present?
+            = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
             .options.radio
               .option
                 label for='application_married_false'
