@@ -28,6 +28,7 @@ en-GB:
     log_in: Sign in
   general:
     optional: '&nbsp; (optional)'
+    required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
   error_messages:
     dwp_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
@@ -51,6 +52,8 @@ en-GB:
       heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
     :no:
       heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+    details_missing:
+      heading: DWP check couldn't be performed, please make sure you've provided all personal details including National Insurance number
     deleted:
       heading: The applicant is not receiving benefits
     deceased:
