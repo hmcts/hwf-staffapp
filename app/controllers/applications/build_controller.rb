@@ -42,32 +42,36 @@ class Applications::BuildController < ApplicationController
   end
 
   def update
-    status = (step == steps.last) ? 'active' : step.to_s
-
     spotcheck_selection
 
     if FORM_OBJECTS.include?(step)
       handle_form_object(params, step)
     else
-      @application.update(application_params.merge({ status: status }))
+      status = { status: get_status(step) }
+      @application.update(application_params.merge(status))
       render_wizard @application
     end
   end
 
   private
 
+  def get_status(step)
+    (step == steps.last) ? 'active' : step.to_s
+  end
+
   def derive_class(status)
     ['Forms::', status.to_s.classify].join('').constantize
   end
 
-  def handle_form_object(params, status)
-    class_name = derive_class(status)
+  def handle_form_object(params, step)
+    class_name = derive_class(step)
 
     form_params = params.require(:application).permit(class_name::PERMITTED_ATTRIBUTES)
     @form = class_name.new(form_params)
 
     if @form.valid?
-      @application.update(form_params.merge({ status: status }))
+      status = { status: get_status(step) }
+      @application.update(form_params.merge(status))
       render_wizard @application
     else
       render_wizard
