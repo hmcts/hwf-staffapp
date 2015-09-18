@@ -5,6 +5,7 @@ module Forms
     PERMITTED_ATTRIBUTES = %i[last_name date_of_birth married title ni_number first_name]
     NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
+    # rubocop:disable AmbiguousOperator
     attr_accessor *PERMITTED_ATTRIBUTES
 
     def initialize(object)
