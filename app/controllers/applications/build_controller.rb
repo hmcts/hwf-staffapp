@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength
 class Applications::BuildController < ApplicationController
   include Wicked::Wizard
   before_action :authenticate_user!
@@ -25,6 +26,7 @@ class Applications::BuildController < ApplicationController
     redirect_to wizard_path(steps.first, application_id: @application.id)
   end
 
+  # rubocop:disable MethodLength
   def show # rubocop:disable CyclomaticComplexity
     if FORM_OBJECTS.include?(step)
       @form = derive_class(step).new(@application)
