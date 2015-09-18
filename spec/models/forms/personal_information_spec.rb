@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forms::PersonalDetails do
+RSpec.describe Forms::PersonalInformation do
   PARAMS_LIST = %i[last_name date_of_birth married title first_name ni_number]
 
   let(:application) { create :application }

@@ -1,5 +1,5 @@
 module Forms
-  class PersonalDetails
+  class PersonalInformation
     include ActiveModel::Model
 
     PERMITTED_ATTRIBUTES = %i[last_name date_of_birth married title ni_number first_name]
