@@ -17,6 +17,8 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
+  FORM_OBJECTS = %i[personal_information]
+
   def create
     application_builder = ApplicationBuilder.new(current_user)
     @application = application_builder.create
@@ -24,8 +26,8 @@ class Applications::BuildController < ApplicationController
   end
 
   def show # rubocop:disable CyclomaticComplexity
-    if step == :personal_information
-      @form = Forms::PersonalDetails.new(@application)
+    if FORM_OBJECTS.include?(step)
+      @form = derive_class(step).new(@application)
     end
 
     case step
@@ -44,8 +46,8 @@ class Applications::BuildController < ApplicationController
 
     spotcheck_selection
 
-    if step == :personal_information
-      handle_personal_information(params, status)
+    if FORM_OBJECTS.include?(step)
+      handle_form_object(params, step)
     else
       @application.update(application_params.merge({ status: status }))
       render_wizard @application
@@ -54,9 +56,16 @@ class Applications::BuildController < ApplicationController
 
   private
 
-  def handle_personal_information(params, status)
-    form_params = params.require(:application).permit(Forms::PersonalDetails::PERMITTED_ATTRIBUTES)
-    @form = Forms::PersonalDetails.new(form_params)
+  def derive_class(status)
+    ['Forms::', status.to_s.classify].join('').constantize
+  end
+
+  def handle_form_object(params, status)
+    class_name = derive_class(status)
+
+    form_params = params.require(:application).permit(class_name::PERMITTED_ATTRIBUTES)
+    @form = class_name.new(form_params)
+
     if @form.valid?
       @application.update(form_params.merge({ status: status }))
       render_wizard @application
