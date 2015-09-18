@@ -32,6 +32,14 @@ RSpec.describe HealthStatusController, type: :controller do
     end
   end
 
+  describe 'GET #raise_exception' do
+    it "raises an exception" do
+      assert_raises Exception do
+        get :raise_exception
+      end
+    end
+  end
+
   describe 'GET #healthcheck' do
     context 'when all the components are operational' do
       before(:each) do

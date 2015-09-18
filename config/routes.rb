@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get 'ping' => 'health_status#ping'
   get 'healthcheck' => 'health_status#healthcheck'
+  get 'raise_exception' => 'health_status#raise_exception'
 
   get 'feedback' => 'feedback#new'
   get 'feedback/display' => 'feedback#index'
