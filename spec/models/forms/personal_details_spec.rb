@@ -19,6 +19,32 @@ RSpec.describe Forms::PersonalDetails do
     it { is_expected.to validate_presence_of(:date_of_birth) }
 
     it { is_expected.to validate_presence_of(:married) }
+
+    describe 'ni_number' do
+      context 'when valid' do
+        before { application.ni_number = 'AB112233A' }
+
+        it 'passes validation' do
+          expect(application.valid?).to be true
+        end
+      end
+
+      context 'when blank' do
+        before { application.ni_number = '' }
+
+        it 'passes validation' do
+          expect(application.valid?).to be true
+        end
+      end
+
+      context 'when invalid' do
+        before { application.ni_number = 'FOOBAR' }
+
+        it 'passes validation' do
+          expect(application.valid?).to be false
+        end
+      end
+    end
   end
 
   describe 'when Application object is passed in' do
