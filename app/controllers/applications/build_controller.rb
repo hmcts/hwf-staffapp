@@ -45,16 +45,7 @@ class Applications::BuildController < ApplicationController
     spotcheck_selection
 
     if step == :personal_information
-      form_params = params.require(:application).permit(Forms::PersonalDetails::PERMITTED_ATTRIBUTES)
-      @form = Forms::PersonalDetails.new(form_params)
-      @form.valid?
-      puts "valid:#{@form.errors.messages}"
-      if @form.valid?
-        @application.update(form_params.merge({ status: status }))
-        render_wizard @application
-      else
-        render_wizard
-      end
+      handle_personal_information(params, status)
     else
       @application.update(application_params.merge({ status: status }))
       render_wizard @application
@@ -62,6 +53,17 @@ class Applications::BuildController < ApplicationController
   end
 
   private
+
+  def handle_personal_information(params, status)
+    form_params = params.require(:application).permit(Forms::PersonalDetails::PERMITTED_ATTRIBUTES)
+    @form = Forms::PersonalDetails.new(form_params)
+    if @form.valid?
+      @application.update(form_params.merge({ status: status }))
+      render_wizard @application
+    else
+      render_wizard
+    end
+  end
 
   def spotcheck_selection
     if next_step?(:summary)
