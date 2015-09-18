@@ -21,23 +21,13 @@ module Forms
     private
 
     def extract_params(object)
-      if object.is_a? Application
-        extract_from_class(object)
-      elsif object.is_a? Hash
-        extract_from_hash(object)
-      end
-    end
-
-    def extract_from_class(object)
-      object.attributes.select do |key, _|
+      get_attribs(object).select do |key, _|
         PERMITTED_ATTRIBUTES.include?(key.to_sym)
       end
     end
 
-    def extract_from_hash(object)
-      object.select do |key, _|
-        PERMITTED_ATTRIBUTES.include?(key.to_sym)
-      end
+    def get_attribs(object)
+      object.is_a?(Application) ? object.attributes : object
     end
   end
 end
