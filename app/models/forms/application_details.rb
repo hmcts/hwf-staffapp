@@ -26,10 +26,19 @@ module Forms
                 }
     end
 
+    with_options if: :refund? do
+      validates :date_fee_paid, date: {
+        after: proc { Time.zone.today - 3.months },
+        before: proc { Time.zone.today + 1.day }
+      }
+    end
+
     private
 
-    def probate?
-      probate
+    [:probate, :refund].each do |attr|
+      define_method("#{attr.to_s}?") do
+        send("#{attr}")
+      end
     end
 
     def extract_params(object)

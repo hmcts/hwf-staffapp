@@ -170,5 +170,77 @@ RSpec.describe Forms::ApplicationDetails do
         end
       end
     end
+
+    describe 'refund' do
+      let(:refund) do
+        described_class.new({ jurisdiction_id: 1,
+                              fee: 500,
+                              date_received: Time.zone.yesterday,
+                              refund: true,
+                              date_fee_paid: Time.zone.yesterday })
+      end
+
+      it 'has a valid factory build' do
+        expect(refund).to be_valid
+      end
+
+      it 'passes if refund unchecked' do
+        refund.refund = false
+        refund.date_fee_paid = nil
+        expect(refund).to be_valid
+      end
+      describe 'date fee paid' do
+        describe 'range' do
+          it 'allows between today and 3 months ago' do
+            refund.date_fee_paid = Time.zone.today
+            expect(refund).to be_valid
+          end
+
+          describe 'maximum' do
+            before do
+              refund.date_fee_paid = Time.zone.today.-3.months.+1.day
+              refund.valid?
+            end
+
+            it 'is 3 months' do
+              expect(refund).to be_invalid
+            end
+
+            it 'returns an error if exceeded' do
+              expect(refund.errors[:date_fee_paid]).to eq ['The application must have been made in the last 3 months']
+            end
+          end
+
+          describe 'minimum' do
+            before do
+              refund.date_fee_paid = Time.zone.tomorrow
+              refund.valid?
+            end
+
+            it 'is today' do
+              expect(refund).to be_invalid
+            end
+
+            it 'returns an error if too low' do
+              expect(refund.errors[:date_fee_paid]).to eq ['The application cannot be a future date']
+            end
+          end
+        end
+
+        describe 'presence' do
+          before do
+            refund.date_fee_paid = nil
+            refund.valid?
+          end
+
+          it 'is required' do
+            expect(refund).to be_invalid
+          end
+          it 'returns an error if missing' do
+            expect(refund.errors[:date_fee_paid]).to eq ['Enter the date in this format 01/01/2015']
+          end
+        end
+      end
+    end
   end
 end
