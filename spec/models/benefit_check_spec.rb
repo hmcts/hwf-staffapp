@@ -68,19 +68,17 @@ RSpec.describe BenefitCheck, type: :model do
       end
     end
 
-    xdescribe 'by_office_grouped_by_type' do
-      let!(:office) { create(:office) }
-      let!(:user) { create(:user, office_id: office.id) }
-      let!(:check) do
-        create(:dwp_check, dwp_result: 'Deceased', created_by: user, office_id: user.office_id)
-      end
-      let!(:another_check) do
-        create(:dwp_check, dwp_result: 'No', created_by_id: user.id, office_id: user.office_id)
+    describe 'by_office_grouped_by_type' do
+      let(:digital_application) { create(:application, office: digital, user: user) }
+      before do
+        digital_application.benefit_checks.new dwp_result: 'No'
+        digital_application.benefit_checks.new dwp_result: 'Deceased'
+        digital_application.save
       end
 
       it 'lists checks by length of dwp_result' do
-        expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[0]).to eql('No')
-        expect(described_class.by_office_grouped_by_type(user.office_id).count.keys[1]).to eql('Deceased')
+        expect(described_class.by_office_grouped_by_type(digital.id).count.keys[0]).to eql('No')
+        expect(described_class.by_office_grouped_by_type(digital.id).count.keys[1]).to eql('Deceased')
       end
     end
   end
