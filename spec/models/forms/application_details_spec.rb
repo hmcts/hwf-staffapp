@@ -34,8 +34,6 @@ RSpec.describe Forms::ApplicationDetails do
     end
   end
 
-
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
@@ -43,7 +41,7 @@ RSpec.describe Forms::ApplicationDetails do
     context 'when fee is blank' do
       let(:application_details) do
         params = { jurisdiction_id: 1, fee: nil }
-        Forms::ApplicationDetails.new(params)
+        described_class.new(params)
       end
 
       it 'invalidates the object' do
@@ -53,7 +51,8 @@ RSpec.describe Forms::ApplicationDetails do
 
     describe 'Date application received' do
       let(:application_details) do
-        described_class.new({ jurisdiction_id: 1, fee: 500 })
+        params = { jurisdiction_id: 1, fee: 500 }
+        described_class.new(params)
       end
 
       describe 'presence' do
@@ -111,12 +110,13 @@ RSpec.describe Forms::ApplicationDetails do
 
     describe 'probate' do
       let(:probate) do
-        described_class.new({ jurisdiction_id: 1,
-                              fee: 500,
-                              date_received: Time.zone.yesterday,
-                              probate: true,
-                              deceased_name: 'Bob the builder',
-                              date_of_death: Time.zone.yesterday })
+        params = { jurisdiction_id: 1,
+                   fee: 500,
+                   date_received: Time.zone.yesterday,
+                   probate: true,
+                   deceased_name: 'Bob the builder',
+                   date_of_death: Time.zone.yesterday }
+        described_class.new(params)
       end
 
       it 'has a valid factory build' do
