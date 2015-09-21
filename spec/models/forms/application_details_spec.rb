@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Forms::ApplicationDetails do
-  PARAMS_LIST = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid]
+  params_list = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid]
 
   let(:application) { create :application }
 
@@ -9,14 +9,14 @@ RSpec.describe Forms::ApplicationDetails do
 
   describe 'PERMITTED_ATTRIBUTES' do
     it 'returns a list of attributes' do
-      expect(described_class::PERMITTED_ATTRIBUTES).to match_array(PARAMS_LIST)
+      expect(described_class::PERMITTED_ATTRIBUTES).to match_array(params_list)
     end
   end
 
   describe 'when Application object is passed in' do
     let(:form) { described_class.new(application) }
 
-    PARAMS_LIST.each do |attr_name|
+    params_list.each do |attr_name|
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq application.send(attr_name)
       end
@@ -27,7 +27,7 @@ RSpec.describe Forms::ApplicationDetails do
     let(:hash) { application.attributes }
     let(:form) { described_class.new(hash) }
 
-    PARAMS_LIST.each do |attr_name|
+    params_list.each do |attr_name|
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq hash[attr_name.to_s]
       end
