@@ -3,6 +3,7 @@ module Forms
     include ActiveModel::Model
     PERMITTED_ATTRIBUTES = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid]
 
+    # rubocop:disable AmbiguousOperator
     attr_accessor *PERMITTED_ATTRIBUTES
 
     def initialize(object)
@@ -15,15 +16,13 @@ module Forms
     validates :jurisdiction_id, presence: true
 
     validates :date_received, date: {
-                after: proc { Time.zone.today - 3.months },
-                before: proc { Time.zone.today + 1.day }
-              }
+      after: proc { Time.zone.today - 3.months },
+      before: proc { Time.zone.today + 1.day }
+    }
 
     with_options if: :probate? do
       validates :deceased_name, presence: true
-      validates :date_of_death, date: {
-                  before: proc { Time.zone.today + 1.day }
-                }
+      validates :date_of_death, date: { before: proc { Time.zone.today + 1.day } }
     end
 
     with_options if: :refund? do
@@ -35,11 +34,7 @@ module Forms
 
     private
 
-    [:probate, :refund].each do |attr|
-      define_method("#{attr.to_s}?") do
-        send("#{attr}")
-      end
-    end
+    [:probate, :refund].each { |attr| define_method("#{attr}?") { send("#{attr}") } }
 
     def extract_params(object)
       get_attribs(object).select do |key, _|
