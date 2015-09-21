@@ -51,24 +51,20 @@ RSpec.describe BenefitCheck, type: :model do
       end
     end
 
-    xdescribe 'by_office' do
-      let!(:office1) { create(:office) }
-      let!(:office2) { create(:office) }
-      let!(:user) { create(:user, office_id: office1.id) }
+    describe 'by_office' do
+      let(:digital_application) { create(:application, office: digital, user: user) }
+      let(:bristol_application) { create(:application, office: bristol, user: user) }
 
-      let!(:check) do
-        create :dwp_check, created_by_id: user.id, office_id: user.office_id
-      end
-
-      let!(:another_user) { create(:user, office_id: office2.id) }
-
-      let!(:another_check) do
-        create :dwp_check, created_by_id: another_user.id, office_id: another_user.office_id
+      before(:each) do
+        digital_application.benefit_checks.new
+        bristol_application.benefit_checks.new
+        digital_application.save
+        bristol_application.save
       end
 
       it 'lists all the checks from the same office' do
-        expect(described_class.by_office(user.office_id).count).to eq 1
-        expect(described_class.by_office(another_user.office_id).count).to eq 1
+        expect(described_class.by_office(bristol.id).count).to eq 1
+        expect(described_class.by_office(digital.id).count).to eq 1
       end
     end
 
