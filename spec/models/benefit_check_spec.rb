@@ -18,7 +18,6 @@ RSpec.describe BenefitCheck, type: :model do
       application.status = 'benefits_result'
     end
 
-
     describe 'non_digital' do
       let(:digital_application) { create(:application, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
@@ -36,18 +35,16 @@ RSpec.describe BenefitCheck, type: :model do
       end
     end
 
-    xdescribe 'checks_by_day' do
+    describe 'checks_by_day' do
       let!(:old_check) do
         create(:benefit_check,
-               created_at: "#{Time.zone.today.-8.days}",
-               application_id: application.id
-        )
+          created_at: "#{Time.zone.today.-8.days}",
+          application_id: application.id)
       end
       let!(:new_check) do
         create(:benefit_check,
-               created_at: "#{Time.zone.today.-5.days}",
-               application_id: application.id
-        )
+          created_at: "#{Time.zone.today.-5.days}",
+          application_id: application.id)
       end
       it 'finds only checks for the past week' do
         expect(described_class.checks_by_day.count).to eq 1
