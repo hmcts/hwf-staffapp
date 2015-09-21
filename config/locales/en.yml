@@ -162,6 +162,13 @@ en-GB:
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
+            date_of_death:
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
+            deceased_name:
+              blank: The deceased's name should be entered
   activerecord:
     errors:
       models:
