@@ -5,9 +5,9 @@ RSpec.describe HomeController, type: :controller do
   include Devise::TestHelpers
 
   describe 'GET #index' do
-    let(:user)      { create :user }
-    let(:manager)   { create :manager }
-    let(:admin)     { create :admin_user }
+    let(:user)    { create :user }
+    let(:manager) { create :manager }
+    let(:admin)   { create :admin_user }
 
     context 'when the user is authenticated' do
       context 'as a user' do
@@ -44,7 +44,6 @@ RSpec.describe HomeController, type: :controller do
     end
 
     context 'as a manager' do
-
       before(:each) do
         DwpCheck.delete_all
         create_list :dwp_check, 2, created_by: manager, office: manager.office
@@ -52,16 +51,27 @@ RSpec.describe HomeController, type: :controller do
         get :index
       end
 
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
+      context 'when the manager\'s office has been setup' do
+        let(:office) { create :office_with_jurisdictions }
+        let(:manager) { create :manager, sign_in_count: 10, office: office }
+
+        it 'returns http success' do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'populates a list of dwp_checks' do
+          expect(assigns(:dwpchecks).count).to eql(2)
+        end
+
+        it 'renders the index view' do
+          expect(response).to render_template :index
+        end
       end
 
-      it 'populates a list of dwp_checks' do
-        expect(assigns(:dwpchecks).count).to eql(2)
-      end
-
-      it 'renders the index view' do
-        expect(response).to render_template :index
+      context 'when the manager has not setup the office yet' do
+        it 'redirects to the office edit page' do
+          expect(response).to redirect_to(edit_office_path(manager.office))
+        end
       end
     end
 
