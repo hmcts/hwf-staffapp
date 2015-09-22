@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Forms::ApplicationDetails do
-  params_list = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid]
+RSpec.describe Forms::ApplicationDetail do
+  params_list = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid form_name case_number]
 
   let(:application) { create :application }
 
@@ -9,7 +9,7 @@ RSpec.describe Forms::ApplicationDetails do
 
   describe 'PERMITTED_ATTRIBUTES' do
     it 'returns a list of attributes' do
-      expect(described_class::PERMITTED_ATTRIBUTES).to match_array(params_list)
+      expect(described_class::PERMITTED_ATTRIBUTES.keys).to match_array(params_list)
     end
   end
 

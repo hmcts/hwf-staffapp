@@ -154,7 +154,7 @@ en-GB:
   activemodel:
     errors:
       models:
-        forms/application_details:
+        forms/application_detail:
           attributes:
             date_received:
               blank: Enter the date the application was received

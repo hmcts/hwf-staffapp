@@ -1,4 +1,4 @@
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   .row
     .small-12.medium-12.large-12.columns
       h2 Application details
@@ -6,13 +6,13 @@
     .small-12.medium-4.large-3.columns
       .form-group
         = f.label :fee
-        = f.label :fee, @application.errors[:fee].join(', '), class: 'error' if @application.errors[:fee].present?
+        = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .row.collapse
           .small-2.medium-3.large-3.columns
             span.prefix
               = f.label :fee, '£', class: 'inline'
           .small-10.medium-9.large-9.columns
-            = f.text_field :fee, { value: "#{@application.fee.floor if @application.fee}", class: 'form-control' }
+            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
 
   .row
     .small-12.medium-8.large-5.columns
@@ -20,7 +20,7 @@
         .row.collapse
           .columns.small-12
             = f.label :jurisdiction_id
-            = f.label :jurisdiction_id, @application.errors[:jurisdiction_id].join(', '), class: 'error' if @application.errors[:jurisdiction_id].present?
+            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
             - if @jurisdictions.present?
               .options.radio
                 =collection_radio_buttons(:application, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
@@ -34,7 +34,7 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :date_received
-        = f.label :date_received, @application.errors[:date_received].join(', '), class: 'error' if @application.errors[:date_received].present?
+        = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control' }
 
   .row
@@ -43,7 +43,7 @@
         = f.label :form_name
           =t('activerecord.attributes.application.form_name')
           span.hint =t('general.optional').html_safe
-        = f.label :form_name, @application.errors[:form_name].join(', '), class: 'error' if @application.errors[:form_name].present?
+        = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
   .row
@@ -52,7 +52,7 @@
         = f.label :case_number
           =t('activerecord.attributes.application.case_number')
           span.hint =t('general.optional').html_safe
-        = f.label :case_number, @application.errors[:case_number].join(', '), class: 'error' if @application.errors[:case_number].present?
+        = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
   .row.pad-top-thirty-px
@@ -69,13 +69,13 @@
         .small-12.medium-8.large-5.columns
           .form-group
             = f.label :deceased_name
-            = f.label :deceased_name, @application.errors[:deceased_name].join(', '), class: 'error' if @application.errors[:deceased_name].present?
+            = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
             = f.text_field :deceased_name, { class: 'form-control' }
       .row
         .small-12.medium-8.large-5.columns
           .form-group
             = f.label :date_of_death
-            = f.label :date_of_death, @application.errors[:date_of_death].join(', '), class: 'error' if @application.errors[:date_of_death].present?
+            = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
             = f.text_field :date_of_death, { class: 'form-control' }
 
   .row
@@ -91,7 +91,7 @@
       .small-12.medium-8.large-5.columns
         .form-group.panel-indent
           = f.label :date_fee_paid
-          = f.label :date_fee_paid, @application.errors[:date_fee_paid].join(', '), class: 'error' if @application.errors[:date_fee_paid].present?
+          = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control' }
 
   = f.submit 'Next', class: 'button primary'

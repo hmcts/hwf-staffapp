@@ -81,11 +81,7 @@ RSpec.describe Forms::PersonalInformation do
     let(:form) { described_class.new(hash) }
     most_attribs = params_list.reject { |k, _| k == :date_of_birth }
 
-<<<<<<< HEAD
     most_attribs.each do |attr_name|
-=======
-    params_list.each do |attr_name|
->>>>>>> Use a variable instead of constant
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq hash[attr_name]
       end

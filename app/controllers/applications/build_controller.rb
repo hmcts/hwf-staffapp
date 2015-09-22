@@ -18,7 +18,7 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  FORM_OBJECTS = %i[personal_information]
+  FORM_OBJECTS = %i[personal_information application_details]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)

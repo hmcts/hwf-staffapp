@@ -1,17 +1,22 @@
 module Forms
-  class ApplicationDetails
-    include ActiveModel::Model
-    PERMITTED_ATTRIBUTES = [:fee,
-                            :jurisdiction_id,
-                            :date_received,
-                            :probate,
-                            :date_of_death,
-                            :deceased_name,
-                            :refund,
-                            :date_fee_paid]
+  class ApplicationDetail
+    include Virtus.model(nullify_blank: true)
 
-    # rubocop:disable AmbiguousOperator
-    attr_accessor *PERMITTED_ATTRIBUTES
+    include ActiveModel::Model
+
+    PERMITTED_ATTRIBUTES = { fee: Integer,
+                             jurisdiction_id: Integer,
+                             date_received: Date,
+                             probate: Boolean,
+                             date_of_death: Date,
+                             deceased_name: String,
+                             refund: Boolean,
+                             date_fee_paid: Date,
+                             form_name: String,
+                             case_number: String }
+
+
+    PERMITTED_ATTRIBUTES.each { |attr, type| attribute attr, type }
 
     def initialize(object)
       attrs = extract_params(object)
@@ -29,7 +34,9 @@ module Forms
 
     with_options if: :probate? do
       validates :deceased_name, presence: true
-      validates :date_of_death, date: { before: proc { Time.zone.today + 1.day } }
+      validates :date_of_death, date: {
+                  after: proc { Time.zone.today - 3.months },
+                  before: proc { Time.zone.today + 1.day } }
     end
 
     with_options if: :refund? do
@@ -40,8 +47,6 @@ module Forms
     end
 
     private
-
-    [:probate, :refund].each { |attr| define_method("#{attr}?") { send("#{attr}") } }
 
     def extract_params(object)
       get_attribs(object).select do |key, _|
