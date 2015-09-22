@@ -68,7 +68,7 @@ class Applications::BuildController < ApplicationController
   def handle_form_object(params, step)
     class_name = derive_class(step)
 
-    form_params = params.require(:application).permit(class_name::PERMITTED_ATTRIBUTES)
+    form_params = params.require(:application).permit(class_name::PERMITTED_ATTRIBUTES.keys)
     @form = class_name.new(form_params)
 
     if @form.valid?

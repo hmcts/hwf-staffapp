@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Forms::PersonalInformation do
-  PARAMS_LIST = %i[last_name date_of_birth married title first_name ni_number]
+  params_list = %i[last_name date_of_birth married title first_name ni_number]
 
-  let(:application) { create :application }
-  subject { described_class.new(application) }
+  let(:personal_information) { attributes_for :personal_information }
+  subject { described_class.new(personal_information) }
 
   describe 'PERMITTED_ATTRIBUTES' do
     it 'returns a list of attributes' do
-      expect(described_class::PERMITTED_ATTRIBUTES).to match_array(PARAMS_LIST)
+      expect(described_class::PERMITTED_ATTRIBUTES.keys).to match_array(params_list)
     end
   end
 
@@ -18,39 +18,58 @@ RSpec.describe Forms::PersonalInformation do
 
     it { is_expected.to validate_presence_of(:date_of_birth) }
 
-    it { is_expected.to validate_presence_of(:married) }
+    describe 'married' do
+      context 'when true' do
+        before { personal_information[:married] = true }
+
+        it { expect(subject.valid?).to be true }
+      end
+
+      context 'when false' do
+        before { personal_information[:married] = false }
+
+        it { expect(subject.valid?).to be true }
+      end
+
+      context 'when not a boolean value' do
+        before { personal_information[:married] = 'string' }
+
+        it { expect(subject.valid?).to be false }
+      end
+    end
 
     describe 'ni_number' do
       context 'when valid' do
-        before { application.ni_number = 'AB112233A' }
+        before { personal_information[:ni_number] = 'AB112233A' }
 
         it 'passes validation' do
-          expect(application.valid?).to be true
+          expect(subject.valid?).to be true
         end
       end
 
       context 'when blank' do
-        before { application.ni_number = '' }
+        before { subject.ni_number = '' }
 
         it 'passes validation' do
-          expect(application.valid?).to be true
+          expect(subject.valid?).to be true
         end
       end
 
       context 'when invalid' do
-        before { application.ni_number = 'FOOBAR' }
+        before { subject.ni_number = 'FOOBAR' }
 
         it 'passes validation' do
-          expect(application.valid?).to be false
+          expect(subject.valid?).to be false
         end
       end
     end
   end
 
   describe 'when Application object is passed in' do
+    let(:application) { create :application }
     let(:form) { described_class.new(application) }
 
-    PARAMS_LIST.each do |attr_name|
+    params_list.each do |attr_name|
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq application.send(attr_name)
       end
@@ -58,13 +77,18 @@ RSpec.describe Forms::PersonalInformation do
   end
 
   describe 'when a Hash is passed in' do
-    let(:hash) { application.attributes }
+    let(:hash) { attributes_for :full_personal_information }
     let(:form) { described_class.new(hash) }
+    most_attribs = params_list.reject { |k,v| k == :date_of_birth }
 
-    PARAMS_LIST.each do |attr_name|
+    most_attribs.each do |attr_name|
       it "assigns #{attr_name}" do
-        expect(form.send(attr_name)).to eq hash[attr_name.to_s]
+        expect(form.send(attr_name)).to eq hash[attr_name]
       end
+    end
+
+    it 'assign date_of_birth attribute' do
+      expect(form.date_of_birth).to eq hash[:date_of_birth].to_date
     end
   end
 end
