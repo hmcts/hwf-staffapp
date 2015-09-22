@@ -173,11 +173,12 @@ RSpec.describe Forms::ApplicationDetails do
 
     describe 'refund' do
       let(:refund) do
-        described_class.new({ jurisdiction_id: 1,
-                              fee: 500,
-                              date_received: Time.zone.yesterday,
-                              refund: true,
-                              date_fee_paid: Time.zone.yesterday })
+        params = { jurisdiction_id: 1,
+                   fee: 500,
+                   date_received: Time.zone.yesterday,
+                   refund: true,
+                   date_fee_paid: Time.zone.yesterday }
+        described_class.new(params)
       end
 
       it 'has a valid factory build' do
