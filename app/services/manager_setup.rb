@@ -4,14 +4,20 @@ class ManagerSetup
   end
 
   def setup_office?
-    if @user.manager?
-      if @user.sign_in_count == 1
-        true
-      else
-        @user.office.jurisdictions.empty?
-      end
-    else
-      false
-    end
+    @user.manager? && (first_time_login? || office_not_setup?)
+  end
+
+  def setup_profile?
+    @user.manager? && first_time_login?
+  end
+
+  private
+
+  def first_time_login?
+    @user.sign_in_count == 1
+  end
+
+  def office_not_setup?
+    @user.office.jurisdictions.empty?
   end
 end
