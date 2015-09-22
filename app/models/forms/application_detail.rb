@@ -15,7 +15,6 @@ module Forms
                              form_name: String,
                              case_number: String }
 
-
     PERMITTED_ATTRIBUTES.each { |attr, type| attribute attr, type }
 
     def initialize(object)
@@ -34,9 +33,7 @@ module Forms
 
     with_options if: :probate? do
       validates :deceased_name, presence: true
-      validates :date_of_death, date: {
-                  after: proc { Time.zone.today - 3.months },
-                  before: proc { Time.zone.today + 1.day } }
+      validates :date_of_death, date: { before: proc { Time.zone.today + 1.day } }
     end
 
     with_options if: :refund? do
