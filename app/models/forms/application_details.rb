@@ -1,7 +1,14 @@
 module Forms
   class ApplicationDetails
     include ActiveModel::Model
-    PERMITTED_ATTRIBUTES = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid]
+    PERMITTED_ATTRIBUTES = [:fee,
+                            :jurisdiction_id,
+                            :date_received,
+                            :probate,
+                            :date_of_death,
+                            :deceased_name,
+                            :refund,
+                            :date_fee_paid]
 
     # rubocop:disable AmbiguousOperator
     attr_accessor *PERMITTED_ATTRIBUTES
