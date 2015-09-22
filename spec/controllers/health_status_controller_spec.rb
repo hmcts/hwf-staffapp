@@ -32,6 +32,10 @@ RSpec.describe HealthStatusController, type: :controller do
     end
   end
 
+  describe 'GET #raise_exception' do
+    it { expect { get :raise_exception }.to raise_exception }
+  end
+
   describe 'GET #healthcheck' do
     context 'when all the components are operational' do
       before(:each) do
