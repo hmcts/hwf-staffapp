@@ -12,10 +12,7 @@ module Forms
 
     NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
-    # rubocop:disable AmbiguousOperator
-    PERMITTED_ATTRIBUTES.each do |attr, type|
-      attribute attr, type
-    end
+    PERMITTED_ATTRIBUTES.each { |attr, type| attribute attr, type }
 
     def initialize(object)
       attrs = extract_params(object)
