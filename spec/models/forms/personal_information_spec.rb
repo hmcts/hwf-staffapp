@@ -79,7 +79,7 @@ RSpec.describe Forms::PersonalInformation do
   describe 'when a Hash is passed in' do
     let(:hash) { attributes_for :full_personal_information }
     let(:form) { described_class.new(hash) }
-    most_attribs = params_list.reject { |k,v| k == :date_of_birth }
+    most_attribs = params_list.reject { |k, _| k == :date_of_birth }
 
     most_attribs.each do |attr_name|
       it "assigns #{attr_name}" do
