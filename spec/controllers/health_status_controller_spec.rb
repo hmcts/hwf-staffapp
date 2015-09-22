@@ -33,11 +33,7 @@ RSpec.describe HealthStatusController, type: :controller do
   end
 
   describe 'GET #raise_exception' do
-    it "raises an exception" do
-      assert_raises Exception do
-        get :raise_exception
-      end
-    end
+    it { expect { get :raise_exception }.to raise_exception }
   end
 
   describe 'GET #healthcheck' do
