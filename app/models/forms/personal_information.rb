@@ -1,12 +1,21 @@
 module Forms
   class PersonalInformation
+    include Virtus.model
     include ActiveModel::Model
 
-    PERMITTED_ATTRIBUTES = %i[last_name date_of_birth married title ni_number first_name]
+    PERMITTED_ATTRIBUTES = { last_name: String,
+                             date_of_birth: Date,
+                             married: Boolean,
+                             title: String,
+                             ni_number: String,
+                             first_name: String }
+
     NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
     # rubocop:disable AmbiguousOperator
-    attr_accessor *PERMITTED_ATTRIBUTES
+    PERMITTED_ATTRIBUTES.each do |attr, type|
+      attribute attr, type
+    end
 
     def initialize(object)
       attrs = extract_params(object)
@@ -15,7 +24,7 @@ module Forms
 
     validates :last_name, presence: true, length: { minimum: 2 }
     validates :date_of_birth, presence: true
-    validates :married, presence: true
+    validates :married, inclusion: { in: [true, false] }
     validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
 
     private
