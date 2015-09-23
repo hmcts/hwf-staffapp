@@ -8,8 +8,7 @@ RSpec.feature 'Manager has to setup their office and preferences', type: :featur
   let(:manager) { create :manager, office: office, sign_in_count: sign_in_count }
 
   before do
-    login_as(manager)
-    visit root_path
+    manager_login
   end
 
   context 'Manager logging in for the first time' do
@@ -28,9 +27,16 @@ RSpec.feature 'Manager has to setup their office and preferences', type: :featur
     end
 
     context 'when the office is not setup' do
-      scenario 'the office setup page is displayed' do
+      scenario 'the office setup page is displayed', focus: true do
         expect(page.current_path).to eql "/offices/#{office.id}/edit"
       end
     end
+  end
+
+  def manager_login
+    visit new_user_session_path
+    fill_in 'user_email', with: manager.email
+    fill_in 'user_password', with: manager.password
+    click_button 'Sign in'
   end
 end

@@ -51,27 +51,16 @@ RSpec.describe HomeController, type: :controller do
         get :index
       end
 
-      context 'when the manager\'s office has been setup' do
-        let(:office) { create :office_with_jurisdictions }
-        let(:manager) { create :manager, sign_in_count: 10, office: office }
-
-        it 'returns http success' do
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'populates a list of dwp_checks' do
-          expect(assigns(:dwpchecks).count).to eql(2)
-        end
-
-        it 'renders the index view' do
-          expect(response).to render_template :index
-        end
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
       end
 
-      context 'when the manager has not setup the office yet' do
-        it 'redirects to the office edit page' do
-          expect(response).to redirect_to(edit_office_path(manager.office))
-        end
+      it 'populates a list of dwp_checks' do
+        expect(assigns(:dwpchecks).count).to eql(2)
+      end
+
+      it 'renders the index view' do
+        expect(response).to render_template :index
       end
     end
 

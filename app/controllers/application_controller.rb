@@ -7,6 +7,15 @@ class ApplicationController < ActionController::Base
     users_path
   end
 
+  def after_sign_in_path_for(resource)
+    manager_setup = ManagerSetup.new(resource)
+    if manager_setup.setup_office?
+      edit_office_path(current_user.office)
+    else
+      root_path
+    end
+  end
+
   private
 
   def spotcheck_enabled?
