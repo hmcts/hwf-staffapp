@@ -12,6 +12,12 @@ RSpec.describe ContactDwpHelper do
       to_return(status: 200, body: json, headers: {})
   end
 
+  describe '#query_proxy_api' do
+    it 'exists' do
+      expect(helper).to respond_to :query_proxy_api
+    end
+  end
+
   describe '#params' do
     it 'exists' do
       expect(helper).to respond_to :params
@@ -33,6 +39,18 @@ RSpec.describe ContactDwpHelper do
   describe '#process_check_date' do
     it 'exists' do
       expect(helper).to respond_to :process_check_date
+    end
+  end
+
+  describe '#log_error' do
+    it 'exists' do
+      expect(helper).to respond_to :log_error
+    end
+  end
+
+  describe '#check_remote_api' do
+    it 'exists'do
+      expect(helper).to respond_to :check_remote_api
     end
   end
 end
