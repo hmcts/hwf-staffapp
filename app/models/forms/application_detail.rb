@@ -4,6 +4,8 @@ module Forms
 
     include ActiveModel::Model
 
+    TIME_LIMIT_FOR_PROBATE = 20
+
     PERMITTED_ATTRIBUTES = { fee: Integer,
                              jurisdiction_id: Integer,
                              date_received: Date,
@@ -14,7 +16,6 @@ module Forms
                              date_fee_paid: Date,
                              form_name: String,
                              case_number: String }
-
 
     PERMITTED_ATTRIBUTES.each { |attr, type| attribute attr, type }
 
@@ -35,8 +36,9 @@ module Forms
     with_options if: :probate? do
       validates :deceased_name, presence: true
       validates :date_of_death, date: {
-                  after: proc { Time.zone.today - 3.months },
-                  before: proc { Time.zone.today + 1.day } }
+        after: proc { Time.zone.today - TIME_LIMIT_FOR_PROBATE.years },
+        before: proc { Time.zone.today + 1.day }
+      }
     end
 
     with_options if: :refund? do
