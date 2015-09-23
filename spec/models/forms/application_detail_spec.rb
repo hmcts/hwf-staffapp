@@ -7,9 +7,9 @@ RSpec.describe Forms::ApplicationDetail do
 
   subject { described_class.new(application) }
 
-  describe 'PERMITTED_ATTRIBUTES' do
+  describe '.permitted_attributes' do
     it 'returns a list of attributes' do
-      expect(described_class::PERMITTED_ATTRIBUTES.keys).to match_array(params_list)
+      expect(described_class.permitted_attributes.keys).to match_array(params_list)
     end
   end
 
