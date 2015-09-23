@@ -4,12 +4,12 @@ class BenefitCheckService
 
   def initialize(benefit_check)
     @result = false
-    @benefit_check = benefit_check
+    @check_item = benefit_check
     begin
       validate_inputs
       check_remote_api
     rescue
-      @benefit_check.benefits_valid = @result
+      @check_item.benefits_valid = @result
       log_error I18n.t('activerecord.attributes.dwp_check.undetermined'), 'Undetermined'
     end
   end
@@ -21,14 +21,14 @@ class BenefitCheckService
   end
 
   def check_remote_api
-    @benefit_check.save!
+    @check_item.save!
     query_proxy_api
     if @result
-      @benefit_check.dwp_result = @response['benefit_checker_status']
-      @benefit_check.dwp_api_token = @response['confirmation_ref']
+      @check_item.dwp_result = @response['benefit_checker_status']
+      @check_item.dwp_api_token = @response['confirmation_ref']
     end
-    @benefit_check.benefits_valid = (@benefit_check.dwp_result == 'Yes' ? true : false)
-    @benefit_check.save!
+    @check_item.benefits_valid = (@check_item.dwp_result == 'Yes' ? true : false)
+    @check_item.save!
   end
 
   def query_proxy_api
@@ -45,22 +45,22 @@ class BenefitCheckService
 
   def set_params
     {
-      id: @benefit_check.our_api_token,
-      ni_number: @benefit_check.ni_number,
-      surname: @benefit_check.last_name.upcase,
-      birth_date: @benefit_check.date_of_birth.strftime('%Y%m%d'),
+      id: @check_item.our_api_token,
+      ni_number: @check_item.ni_number,
+      surname: @check_item.last_name.upcase,
+      birth_date: @check_item.date_of_birth.strftime('%Y%m%d'),
       entitlement_check_date: process_check_date
     }
   end
 
   def log_error(message, result)
-    @benefit_check.error_message = message
-    @benefit_check.update!(dwp_result: result)
+    @check_item.error_message = message
+    @check_item.update!(dwp_result: result)
     LogStuff.log 'Benefit check', message
   end
 
   def process_check_date
-    check_date = @benefit_check.date_to_check ? @benefit_check.date_to_check : Time.zone.today
+    check_date = @check_item.date_to_check ? @check_item.date_to_check : Time.zone.today
     check_date.strftime('%Y%m%d')
   end
 end
