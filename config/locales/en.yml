@@ -175,6 +175,12 @@ en-GB:
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
               blank: The date fee paid should be entered
+            date_of_death:
+              after: The date of death should be entered
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
   activerecord:
     errors:
       models:
