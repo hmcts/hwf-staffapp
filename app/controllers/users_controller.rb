@@ -26,10 +26,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    flash[:notice] = 'User updated' if @user.update_attributes(user_params)
-    flash[:notice] = user_transfer_message if no_longer_manages?
+    update_successfull = @user.update_attributes(user_params)
+    if update_successfull && manager_setup.in_progress?
+      redirect_to root_path
+    else
+      flash[:notice] = 'User updated' if update_successfull
+      flash[:notice] = user_transfer_message if no_longer_manages?
 
-    user_or_redirect
+      user_or_redirect
+    end
   end
 
   def destroy
@@ -110,5 +115,9 @@ class UsersController < ApplicationController
 
   def manager_doesnt_escalate_to_admin?
     manages_user? && params[:user][:role] != 'admin'
+  end
+
+  def manager_setup
+    @manager_setup ||= ManagerSetup.new(current_user, session)
   end
 end
