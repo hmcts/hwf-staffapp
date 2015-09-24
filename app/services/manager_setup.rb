@@ -1,6 +1,9 @@
 class ManagerSetup
-  def initialize(user)
+  SESSION_KEY = :manager_setup_in_progress
+
+  def initialize(user, session)
     @user = user
+    @session = session
   end
 
   def setup_office?
@@ -9,6 +12,18 @@ class ManagerSetup
 
   def setup_profile?
     @user.manager? && first_time_login?
+  end
+
+  def start!
+    @session[SESSION_KEY] = true
+  end
+
+  def in_progress?
+    @session.key?(SESSION_KEY)
+  end
+
+  def finish!
+    @session.delete(SESSION_KEY)
   end
 
   private
