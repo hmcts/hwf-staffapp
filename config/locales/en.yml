@@ -170,6 +170,10 @@ en-GB:
               too_short: Your password must be at least %{count} characters
             password_confirmation:
               confirmation: Your password must match the one you entered above
+        office:
+          attributes:
+            jurisdictions:
+              blank: Please select at least one jurisdiction
         dwp_check:
           attributes:
             last_name:

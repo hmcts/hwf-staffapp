@@ -9,6 +9,9 @@ RSpec.describe OfficesController, type: :controller do
   let(:manager)     { create :manager }
   let(:office)      { create(:office) }
 
+  let(:jurisdiction) { create :jurisdiction }
+  let(:valid_params) { attributes_for(:office).merge(jurisdiction_ids: [jurisdiction.id]) }
+
   context 'logged out user' do
     describe 'GET #index' do
       it 'redirects to login page' do
@@ -70,7 +73,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'returns a cancan error' do
           expect {
-            post :create, office: attributes_for(:office)
+            post :create, office: valid_params
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
         end
       end
@@ -80,7 +83,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'is unauthorised' do
           expect {
-            put :update, id: office.to_param, office: attributes_for(:office)
+            put :update, id: office.to_param, office: valid_params
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
         end
       end
@@ -134,7 +137,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'returns a cancan error' do
           expect {
-            post :create, office: attributes_for(:office)
+            post :create, office: valid_params
           }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
         end
       end
@@ -143,12 +146,12 @@ RSpec.describe OfficesController, type: :controller do
     describe 'PUT #update' do
       context 'with valid params' do
         it 'assigns the requested office as @office' do
-          put :update, id: manager.office.to_param, office: attributes_for(:office)
+          put :update, id: manager.office.to_param, office: valid_params
           expect(assigns(:office)).to eq(manager.office)
         end
 
         it 'redirects to the office' do
-          put :update, id: manager.office.to_param, office: attributes_for(:office)
+          put :update, id: manager.office.to_param, office: valid_params
           expect(response).to redirect_to(manager.office)
         end
       end
@@ -203,18 +206,18 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'creates a new Office' do
           expect {
-            post :create, office: attributes_for(:office)
+            post :create, office: valid_params
           }.to change(Office, :count).by(1)
         end
 
         it 'assigns a newly created office as @office' do
-          post :create, office: attributes_for(:office)
+          post :create, office: valid_params
           expect(assigns(:office)).to be_a(Office)
           expect(assigns(:office)).to be_persisted
         end
 
         it 'redirects to the created office' do
-          post :create, office: attributes_for(:office)
+          post :create, office: valid_params
           expect(response).to redirect_to(Office.last)
         end
       end
@@ -240,12 +243,12 @@ RSpec.describe OfficesController, type: :controller do
         end
 
         it 'assigns the requested office as @office' do
-          put :update, id: office.to_param, office: attributes_for(:office)
+          put :update, id: office.to_param, office: valid_params
           expect(assigns(:office)).to eq(office)
         end
 
         it 'redirects to the office' do
-          put :update, id: office.to_param, office: attributes_for(:office)
+          put :update, id: office.to_param, office: valid_params
           expect(response).to redirect_to(office)
         end
       end

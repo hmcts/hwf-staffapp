@@ -74,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it 'shows them their role' do
-          expect(response.body).to match "#{manager.role}"
+          expect(response.body).to match 'Manager'
         end
       end
 

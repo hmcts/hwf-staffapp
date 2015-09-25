@@ -1,7 +1,7 @@
 class OfficesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_office, only: [:show, :edit, :update, :destroy]
-  before_action :list_jurisdictions, only: [:new, :edit]
+  before_action :list_jurisdictions, only: [:new, :edit, :update]
 
   load_and_authorize_resource
 

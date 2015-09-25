@@ -4,11 +4,17 @@ RSpec.describe Office, type: :model do
 
   let(:office)      { build :office }
 
+  it { is_expected.to have_many(:users) }
+  it { is_expected.to have_many(:office_jurisdictions) }
+  it { is_expected.to have_many(:jurisdictions).through(:office_jurisdictions) }
+
   it 'has a valid factory' do
     expect(office).to be_valid
   end
 
   context 'validations' do
+    it { is_expected.to validate_presence_of(:jurisdictions) }
+
     it 'is invalid with no name' do
       office = build(:invalid_office)
       expect(office).to_not be_valid
@@ -24,41 +30,6 @@ RSpec.describe Office, type: :model do
     it 'must have entity_code' do
       office.entity_code = ''
       expect(office).to be_invalid
-    end
-  end
-
-  context 'responds to' do
-    it 'managers' do
-      expect(office).to respond_to(:managers)
-    end
-
-    it 'jurisdictions' do
-      expect(office).to respond_to(:jurisdictions)
-    end
-  end
-
-  describe 'jurisdiction' do
-    before(:each) do
-      office.save
-      office.jurisdictions.clear
-    end
-
-    it 'can be nil' do
-      expect(office.jurisdictions.count).to eq 0
-      expect(office).to be_valid
-    end
-
-    it 'can be added' do
-      office.jurisdictions << create(:jurisdiction)
-      office.save
-      expect(office.jurisdictions.count).to eq 1
-    end
-
-    it 'can have multiple added' do
-      office.jurisdictions << create(:jurisdiction)
-      office.jurisdictions << create(:jurisdiction)
-      office.save
-      expect(office.jurisdictions.count).to eq 2
     end
   end
 

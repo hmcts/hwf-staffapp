@@ -14,7 +14,10 @@
 
   .row
     .small-12.columns.form-group
-      label Jurisdictions
+      .row
+        .columns.small-12
+          = f.label :jurisdictions
+          = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
       .row
         .options.radio
           =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
