@@ -63,5 +63,20 @@ FactoryGirl.define do
       children 1
       income 3000
     end
+
+    factory :applicant_under_61 do
+      married true
+      date_of_birth Time.zone.today - 60.years
+    end
+
+    factory :married_applicant_under_61 do
+      married true
+      date_of_birth Time.zone.today - 60.years
+    end
+
+    factory :married_applicant_over_61 do
+      married true
+      date_of_birth Time.zone.today - 65.years
+    end
   end
 end
