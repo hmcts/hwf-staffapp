@@ -22,15 +22,7 @@ RSpec.describe ManagerSetup, type: :service do
       context 'when does not sign for the first time' do
         let(:user) { create :manager, office: office, sign_in_count: 2 }
 
-        context 'when the office has not been setup' do
-          it { is_expected.to be true }
-        end
-
-        context 'when the office has been setup' do
-          let(:office) { create :office_with_jurisdictions }
-
-          it { is_expected.to be false }
-        end
+        it { is_expected.to be false }
       end
     end
 

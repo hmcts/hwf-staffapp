@@ -7,7 +7,7 @@ class ManagerSetup
   end
 
   def setup_office?
-    @user.manager? && (first_time_login? || office_not_setup?)
+    @user.manager? && first_time_login?
   end
 
   def setup_profile?
@@ -30,9 +30,5 @@ class ManagerSetup
 
   def first_time_login?
     @user.sign_in_count == 1
-  end
-
-  def office_not_setup?
-    @user.office.jurisdictions.empty?
   end
 end
