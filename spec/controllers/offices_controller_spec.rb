@@ -85,14 +85,6 @@ RSpec.describe OfficesController, type: :controller do
         end
       end
     end
-
-    describe 'DELETE #destroy' do
-      it 'is unauthorised' do
-        expect {
-          delete :destroy, id: office.to_param
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
-      end
-    end
   end
 
   context 'as a manager' do
@@ -171,14 +163,6 @@ RSpec.describe OfficesController, type: :controller do
           put :update, id: manager.office.to_param, office: attributes_for(:invalid_office)
           expect(response).to render_template('edit')
         end
-      end
-    end
-
-    describe 'DELETE #destroy' do
-      it 'is unauthorised' do
-        expect {
-          delete :destroy, id: office.to_param
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
       end
     end
   end
@@ -276,20 +260,6 @@ RSpec.describe OfficesController, type: :controller do
           put :update, id: office.to_param, office: attributes_for(:invalid_office)
           expect(response).to render_template('edit')
         end
-      end
-    end
-
-    describe 'DELETE #destroy' do
-      it 'removes the requested office' do
-        office = create(:office)
-        expect {
-          delete :destroy, id: office.to_param
-        }.to change(Office, :count).by(-1)
-      end
-
-      it 'redirects to the offices list' do
-        delete :destroy, id: office.to_param
-        expect(response).to redirect_to(offices_url)
       end
     end
   end

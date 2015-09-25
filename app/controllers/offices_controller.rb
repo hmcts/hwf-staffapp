@@ -39,11 +39,6 @@ class OfficesController < ApplicationController
     end
   end
 
-  def destroy
-    @office.destroy
-    respond_with(@office)
-  end
-
   private
 
   def set_office
