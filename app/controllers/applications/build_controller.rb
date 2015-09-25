@@ -18,7 +18,7 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  FORM_OBJECTS = %i[personal_information application_details]
+  FORM_OBJECTS = %i[personal_information application_details savings_investments]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
@@ -65,14 +65,20 @@ class Applications::BuildController < ApplicationController
     ['Forms::', status.to_s.classify].join('').constantize
   end
 
+  def process_params(class_name, params)
+    form_params = params.require(:application).permit(class_name.permitted_attributes.keys)
+    form_params.merge!({application_id: params['application_id']}) # if form_params['status'] == 'application_details'
+    form_params
+  end
+
   def handle_form_object(params, step)
     class_name = derive_class(step)
-
-    form_params = params.require(:application).permit(class_name.permitted_attributes.keys)
+    form_params = process_params(class_name, params)
     @form = class_name.new(form_params)
 
     if @form.valid?
       status = { status: get_status(step) }
+      form_params.delete('application_id')
       @application.update(form_params.merge(status))
       render_wizard @application
     else
