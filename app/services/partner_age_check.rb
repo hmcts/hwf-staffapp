@@ -6,8 +6,6 @@ class PartnerAgeCheck
   end
 
   def verify
-    if @record.threshold_exceeded?
-      [true, false].include?(@record.over_61) ? @record.over_61 : false
-    end
+    [true, false].include?(@record.over_61) if @record.threshold_exceeded?
   end
 end

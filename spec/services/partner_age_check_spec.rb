@@ -11,17 +11,19 @@ RSpec.describe PartnerAgeCheck do
     context 'when partner is over 61' do
       let(:partner_over_61) { true }
 
-      it 'verifies if the applicant fits the "over_61" criteria' do
-        expect(over_61_check.verify).to be true
-      end
+      it { expect(over_61_check.verify).to be true }
     end
 
     context 'when partner is under 61' do
       let(:partner_over_61) { false }
 
-      it 'verifies if the applicant fits the "over_61" criteria' do
-        expect(over_61_check.verify).to be false
-      end
+      it { expect(over_61_check.verify).to be true }
+    end
+
+    context 'when partner over 61 is assigned not boolean value' do
+      let(:partner_over_61) { 'a string' }
+
+      it { expect(over_61_check.verify).to be false }
     end
   end
 end
