@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   before_action :load_graph_data, only: [:index], if: 'user_signed_in? && current_user.admin?'
 
   def index
+    manager_setup = ManagerSetup.new(current_user, session)
+    manager_setup.finish! if manager_setup.in_progress?
   end
 
   private

@@ -5,9 +5,9 @@ RSpec.describe HomeController, type: :controller do
   include Devise::TestHelpers
 
   describe 'GET #index' do
-    let(:user)      { create :user }
-    let(:manager)   { create :manager }
-    let(:admin)     { create :admin_user }
+    let(:user)    { create :user }
+    let(:manager) { create :manager }
+    let(:admin)   { create :admin_user }
 
     context 'when the user is authenticated' do
       context 'as a user' do
@@ -44,7 +44,6 @@ RSpec.describe HomeController, type: :controller do
     end
 
     context 'as a manager' do
-
       before(:each) do
         DwpCheck.delete_all
         create_list :dwp_check, 2, created_by: manager, office: manager.office

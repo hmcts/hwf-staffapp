@@ -1,7 +1,7 @@
 class OfficesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_office, only: [:show, :edit, :update, :destroy]
-  before_action :list_jurisdictions, only: [:new, :edit]
+  before_action :list_jurisdictions, only: [:new, :edit, :update]
 
   load_and_authorize_resource
 
@@ -32,13 +32,11 @@ class OfficesController < ApplicationController
   end
 
   def update
-    @office.update(office_params)
-    respond_with(@office)
-  end
-
-  def destroy
-    @office.destroy
-    respond_with(@office)
+    if @office.update(office_params) && manager_setup.in_progress?
+      redirect_to out_of_the_box_redirect
+    else
+      respond_with(@office)
+    end
   end
 
   private
@@ -53,5 +51,13 @@ class OfficesController < ApplicationController
 
   def list_jurisdictions
     @jurisdictions = Jurisdiction.all
+  end
+
+  def manager_setup
+    @manager_setup ||= ManagerSetup.new(current_user, session)
+  end
+
+  def out_of_the_box_redirect
+    manager_setup.setup_profile? ? edit_user_path(current_user) : root_path
   end
 end
