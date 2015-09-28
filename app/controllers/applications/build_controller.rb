@@ -67,7 +67,8 @@ class Applications::BuildController < ApplicationController
 
   def process_params(class_name, params)
     form_params = params.require(:application).permit(class_name.permitted_attributes.keys)
-    form_params.merge!({application_id: params['application_id']}) # if form_params['status'] == 'application_details'
+    application_id_param = { application_id: params['application_id'] }
+    form_params.merge!(application_id_param)
     form_params
   end
 
