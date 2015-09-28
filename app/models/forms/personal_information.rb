@@ -2,12 +2,14 @@ module Forms
   class PersonalInformation < Base
 
     def self.permitted_attributes
-       { last_name: String,
-         date_of_birth: Date,
-         married: Boolean,
-         title: String,
-         ni_number: String,
-         first_name: String }
+      {
+        last_name: String,
+        date_of_birth: Date,
+        married: Boolean,
+        title: String,
+        ni_number: String,
+        first_name: String
+      }
     end
 
     define_attributes
