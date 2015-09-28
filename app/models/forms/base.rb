@@ -13,9 +13,8 @@ module Forms
     end
 
     def self.define_attributes
-      self.permitted_attributes.each { |attr, type| attribute attr, type }
+      permitted_attributes.each { |attr, type| attribute attr, type }
     end
-
 
     private
 
