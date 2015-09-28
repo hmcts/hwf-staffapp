@@ -1,10 +1,14 @@
 class HomeController < ApplicationController
   before_action :authenticate_user!, only: [:index]
-  before_action :load_graph_data, only: [:index], if: 'user_signed_in? && current_user.admin?'
 
   def index
     manager_setup = ManagerSetup.new(current_user, session)
     manager_setup.finish! if manager_setup.in_progress?
+    if current_user.admin?
+      load_graph_data
+      @total_type_count = BenefitCheck.group(:dwp_result).count
+      @time_of_day_count = BenefitCheck.group_by_hour_of_day("created_at", format: '%l %p').count
+    end
   end
 
   private
