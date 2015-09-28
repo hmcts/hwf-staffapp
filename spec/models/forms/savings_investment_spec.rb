@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Forms::SavingsInvestment do
   params_list = %i[threshold_exceeded over_61 high_threshold_exceeded status application_id]
 
-
   let(:hash) { {} }
 
   subject { described_class.new(hash) }
