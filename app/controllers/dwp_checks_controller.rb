@@ -13,7 +13,7 @@ class DwpChecksController < ApplicationController
   def lookup
     authorize! :lookup, DwpCheck
     if @dwp_checker.valid?
-      check = JSON.parse(ProcessDwpService.new(@dwp_checker).result)
+      check = JSON.parse(BenefitCheckService.new(@dwp_checker).result)
       if check['success']
         return redirect_to dwp_checks_path(@dwp_checker.unique_number)
       else
