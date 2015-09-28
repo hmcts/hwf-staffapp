@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Forms::Base do
 
+  # rubocop:disable ClassAndModuleChildren
   class Forms::TestClass < Forms::Base
     def self.permitted_attributes
       { id: Integer, fee: Integer }
@@ -9,6 +10,7 @@ RSpec.describe Forms::Base do
 
     define_attributes
   end
+
   params_list = Forms::TestClass.permitted_attributes.keys
 
   describe 'when Application object is passed in' do
