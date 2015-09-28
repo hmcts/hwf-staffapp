@@ -62,6 +62,22 @@ RSpec.describe Forms::PersonalInformation do
           expect(subject.valid?).to be false
         end
       end
+
+      context 'when passed in as lower case' do
+        before { subject.ni_number = 'ab112233a' }
+
+        it 'up-cases it to pass the validation' do
+          expect(subject.valid?).to be true
+        end
+      end
+
+      context 'when white space is passed in' do
+        before { subject.ni_number = ' AB112233A' }
+
+        it 'strips it away to pass the validation' do
+          expect(subject.valid?).to be true
+        end
+      end
     end
   end
 
