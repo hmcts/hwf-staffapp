@@ -23,9 +23,9 @@
             = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
             - if @jurisdictions.present?
               .options.radio
-                =collection_radio_buttons(:application, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
+                =collection_radio_buttons(:application, :jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
                   = b.label do
-                    = b.radio_button(class: 'form-control')
+                    = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
                     = b.text
             - else
               = t('error_messages.jurisdictions.none_in_office')
