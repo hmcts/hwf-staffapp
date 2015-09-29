@@ -1,13 +1,14 @@
 h2 Benefits
 
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         .row.collapse
           .columns.small-12
             = f.label :benefits
-            = f.label :benefits, @application.errors[:benefits].join(', '), class: 'error' if @application.errors[:benefits].present?
+            = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
+            = f.hidden_field :benefits, value: nil
             .options.radio
               .option
                 label for='application_benefits_false'
@@ -18,7 +19,6 @@ h2 Benefits
                   = f.radio_button :benefits, 'true'
                   = t('activerecord.attributes.application.page_4.benefits_true')
 
-  = f.hidden_field :status
   = f.submit 'Next', :class => 'button primary'
 
 .row
