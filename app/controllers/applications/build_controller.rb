@@ -97,7 +97,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def application_params
-    all_params = %i[status benefits dependents income children]
+    all_params = %i[status dependents income children]
     params.require(:application).permit(all_params.flatten)
   end
 
