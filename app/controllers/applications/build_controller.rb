@@ -1,4 +1,3 @@
-# rubocop:disable ClassLength
 class Applications::BuildController < ApplicationController
   include Wicked::Wizard
   before_action :authenticate_user!
@@ -97,31 +96,8 @@ class Applications::BuildController < ApplicationController
     @application = Application.find(params[:application_id])
   end
 
-  def personal_information
-    [:title,
-     :first_name,
-     :last_name,
-     :date_of_birth,
-     :ni_number,
-     :married]
-  end
-
-  def application_details
-    [:fee, :jurisdiction_id, :date_received,
-     :form_name, :case_number, :probate,
-     :deceased_name, :date_of_death, :refund,
-     :date_fee_paid]
-  end
-
   def application_params
-    all_params            = [:status]
-    savings_investments   = [:threshold_exceeded, :over_61, :high_threshold_exceeded]
-    benefits              = [:benefits]
-    income                = [:dependents, :income, :children]
-
-    all_params << personal_information << application_details <<
-      savings_investments << benefits << income
-
+    all_params = %i[status benefits dependents income children]
     params.require(:application).permit(all_params.flatten)
   end
 
