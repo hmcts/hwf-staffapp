@@ -10,5 +10,6 @@ module Forms
 
     define_attributes
 
+    validates :dependents, inclusion: { in: [true, false] }
   end
 end
