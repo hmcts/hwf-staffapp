@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911101229) do
+ActiveRecord::Schema.define(version: 20150921084620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,18 +57,20 @@ ActiveRecord::Schema.define(version: 20150911101229) do
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
   create_table "benefit_checks", force: :cascade do |t|
-    t.string  "last_name"
-    t.date    "date_of_birth"
-    t.string  "ni_number"
-    t.date    "date_to_check"
-    t.string  "parameter_hash"
-    t.boolean "benefits_valid"
-    t.string  "dwp_result"
-    t.string  "error_message"
-    t.string  "dwp_api_token"
-    t.string  "our_api_token"
-    t.integer "application_id"
-    t.integer "user_id"
+    t.string   "last_name"
+    t.date     "date_of_birth"
+    t.string   "ni_number"
+    t.date     "date_to_check"
+    t.string   "parameter_hash"
+    t.boolean  "benefits_valid"
+    t.string   "dwp_result"
+    t.string   "error_message"
+    t.string   "dwp_api_token"
+    t.string   "our_api_token"
+    t.integer  "application_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "benefit_checks", ["application_id"], name: "index_benefit_checks_on_application_id", using: :btree
