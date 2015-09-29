@@ -17,7 +17,7 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  FORM_OBJECTS = %i[personal_information application_details savings_investments]
+  FORM_OBJECTS = %i[personal_information application_details savings_investments benefits]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
@@ -97,7 +97,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def application_params
-    all_params = %i[status benefits dependents income children]
+    all_params = %i[status dependents income children]
     params.require(:application).permit(all_params.flatten)
   end
 

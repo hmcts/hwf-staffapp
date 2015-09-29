@@ -152,6 +152,9 @@ en-GB:
 
         <p>%{user_name}</p>
   activemodel:
+    attributes:
+      forms/benefit:
+        benefits: Is the applicant receiving one of the benefits listed in question 9?
     errors:
       models:
         forms/application_detail:
@@ -181,6 +184,10 @@ en-GB:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               before: The date of death cannot be a future date
+        forms/benefit:
+          attributes:
+            benefits:
+              inclusion: You must answer the benefits question
   activerecord:
     errors:
       models:
