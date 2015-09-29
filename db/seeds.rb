@@ -1,5 +1,19 @@
-Office.create(name: 'Digital', entity_code: 'MA105')
-Office.create(name: 'Bristol', entity_code: 'DB402')
+
+Jurisdiction.create([{ name: 'County', abbr: nil },
+{ name: 'Family', abbr: nil },
+{ name: 'High', abbr: nil },
+{ name: 'Insolvency', abbr: nil },
+{ name: 'Magistrates', abbr: nil },
+{ name: 'Probate', abbr: nil },
+{ name: 'Employment', abbr: nil },
+{ name: 'Gambling', abbr: nil },
+{ name: 'Gender recognition', abbr: nil },
+{ name: 'Immigration (first-tier)', abbr: nil },
+{ name: 'Immigration (upper)', abbr: nil },
+{ name: 'Property', abbr: nil }])
+
+Office.create(name: 'Digital', entity_code: 'MA105', jurisdiction_ids: [1])
+Office.create(name: 'Bristol', entity_code: 'DB402', jurisdiction_ids: [1])
 
 unless ENV=='production'
   User.create([{
@@ -18,16 +32,3 @@ unless ENV=='production'
               }
               ])
 end
-
-Jurisdiction.create([{ name: 'County', abbr: nil },
-                     { name: 'Family', abbr: nil },
-                     { name: 'High', abbr: nil },
-                     { name: 'Insolvency', abbr: nil },
-                     { name: 'Magistrates', abbr: nil },
-                     { name: 'Probate', abbr: nil },
-                     { name: 'Employment', abbr: nil },
-                     { name: 'Gambling', abbr: nil },
-                     { name: 'Gender recognition', abbr: nil },
-                     { name: 'Immigration (first-tier)', abbr: nil },
-                     { name: 'Immigration (upper)', abbr: nil },
-                     { name: 'Property', abbr: nil }])
