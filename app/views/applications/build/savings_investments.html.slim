@@ -1,8 +1,9 @@
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+
   .row
     .small-12.medium-12.large-12.columns
       h2 =t('activerecord.attributes.application.page_3.header')
-
   .row
     .small-12.medium-8.large-7.columns
       label =t('activerecord.attributes.application.page_3.maximum_prompt')
@@ -18,7 +19,7 @@
         .row.collapse
           .columns.small-12
             = f.label :threshold_exceeded, t("activerecord.attributes.application.page_3.savings.#{@application.married ? 'married' : 'single'}")
-            = f.label :threshold_exceeded, @application.errors[:threshold_exceeded].join(', '), class: 'error' if @application.errors[:threshold_exceeded].present?
+            = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
             .options.radio
               .option
                 label for='application_threshold_exceeded_false'
@@ -31,6 +32,7 @@
 
   -if @application.known_over_61?
     =f.hidden_field :over_61, value: 'true'
+    =f.hidden_field :high_threshold_exceeded, value: 'true'
   -elsif !@application.married?
     =f.hidden_field :over_61, value: 'false'
   -else
@@ -41,7 +43,7 @@
             .row.collapse
               .columns.small-12
                 = f.label :over_61, t('activerecord.attributes.application.over_61')
-                = f.label :over_61, @application.errors[:over_61].join(', '), class: 'error' if @application.errors[:over_61].present?
+                = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
                 .options.radio
                   .option
                     label for='application_over_61_false'
@@ -56,6 +58,7 @@
                     .small-12.medium-12.large-12.columns
                       .panel-indent
                         =f.label :high_threshold_exceeded
+                        = f.label :high_threshold_exceeded, @form.errors[:high_threshold_exceeded].join(', '), class: 'error' if @form.errors[:high_threshold_exceeded].present?
                         .options.radio
                           .option
                             label for="application_high_threshold_exceeded_false"

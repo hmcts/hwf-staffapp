@@ -151,6 +151,36 @@ en-GB:
         <p>Yours sincerely,</p>
 
         <p>%{user_name}</p>
+  activemodel:
+    errors:
+      models:
+        forms/application_detail:
+          attributes:
+            date_received:
+              blank: Enter the date the application was received
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+            date_of_death:
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
+            deceased_name:
+              blank: "The deceased's name should be entered"
+            date_fee_paid:
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              after: The application must have been made in the last 3 months
+              before: The application cannot be a future date
+              blank: The date fee paid should be entered
+            date_of_death:
+              after: The date of death should be entered
+              blank: The date of death should be entered
+              not_a_date: Enter the date in this format 01/01/2015
+              invalid: Enter the date in this format day month, year DD/MM/YYYY
+              before: The date of death cannot be a future date
   activerecord:
     errors:
       models:

@@ -312,7 +312,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                     end
 
                     context 'when the user clicks Back to Start' do
-                      before { click_button 'Back to start' }
+                      before { click_link 'Back to start' }
 
                       scenario 'the home page is shown' do
                         expect(page).to have_text 'Process application'

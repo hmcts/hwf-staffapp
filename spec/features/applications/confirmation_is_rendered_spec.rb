@@ -29,7 +29,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the next button is rendered' do
-        expect(page).to have_xpath('//input[@type="submit"]')
+        expect(page).to have_link('Back to start')
       end
     end
   end
