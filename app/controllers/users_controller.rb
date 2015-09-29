@@ -2,9 +2,7 @@ class UsersController < ApplicationController
   respond_to :html
   before_action :authenticate_user!
   before_action :find_user, only: [:edit, :show, :update, :destroy]
-  before_action :populate_roles, only: [:edit, :update]
-  before_action :populate_offices, only: [:edit, :update]
-  before_action :populate_jurisdictions, only: [:edit, :update]
+  before_action :populate_lookups, only: [:edit, :update]
   load_and_authorize_resource
 
   include FlashMessageHelper
@@ -32,14 +30,18 @@ class UsersController < ApplicationController
     else
       flash[:notice] = 'User updated' if update_successfull
       flash[:notice] = user_transfer_message if no_longer_manages?
-
       user_or_redirect
     end
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path
+    if user_themselves?
+      flash[:alert] = 'You cannot delete your own account'
+      redirect_to user_path(@user)
+    else
+      @user.destroy
+      redirect_to users_path
+    end
   end
 
   protected
@@ -75,19 +77,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def populate_roles
+  def populate_lookups
     if current_user.admin?
       @roles = User::ROLES
     else
       @roles = User::ROLES - %w[admin]
     end
-  end
-
-  def populate_offices
     @offices = Office.all
-  end
-
-  def populate_jurisdictions
     @jurisdictions = @user.office.jurisdictions
   end
 

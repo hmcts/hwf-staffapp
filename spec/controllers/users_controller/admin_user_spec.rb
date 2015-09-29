@@ -42,7 +42,7 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user in their office' do
 
         before(:each) do
-          get :show, id: User.first.to_param
+          get :show, id: user_on_admins_team.to_param
         end
 
         it 'renders the view' do
@@ -55,6 +55,13 @@ RSpec.describe UsersController, type: :controller do
 
         it 'has delete user link' do
           expect(response.body).to have_content 'Remove staff member'
+        end
+      end
+
+      context 'for themselves' do
+        before { get :show, id: admin_user }
+        it 'does not have a delete user link' do
+          expect(response.body).not_to have_content 'Remove staff member'
         end
       end
 
@@ -152,10 +159,24 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'DELETE #destroy' do
-      before(:each) { get :destroy, id: user_on_admins_team.to_param }
+      context 'when viewing themselves' do
+        before(:each) { get :destroy, id: admin_user.to_param }
 
-      it 'redirects to the user index' do
-        expect(response).to redirect_to(users_path)
+        it 'displays a flash message' do
+          expect(flash[:alert]).to be_present
+        end
+
+        it 'displays the error description in the flash message' do
+          expect(flash[:alert]).to eql('You cannot delete your own account')
+        end
+
+      end
+
+      context 'deleting another user' do
+        before(:each) { get :destroy, id: user_on_admins_team.to_param }
+        it 'redirects to the user index' do
+          expect(response).to redirect_to(users_path)
+        end
       end
     end
   end
