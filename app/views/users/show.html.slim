@@ -33,7 +33,7 @@ h2 Staff details
   .row.pad-top-fifteen-px
     .columns.small-12
       = link_to "Change your password", edit_user_registration_path(@user)
--if current_user.elevated? && current_user != @user
+-if UserManagement.new(current_user, @user).deletion_permitted?
   .row.pad-top-fifteen-px
     .columns.small-12
       =link_to 'Remove staff member', user_path(@user), method: :delete

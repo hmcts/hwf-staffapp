@@ -1,1 +1,23 @@
 h2 Deleted staff
+
+table
+  tr
+    th Full name
+    th Role
+    th Office
+    th email
+    th Deleted on
+    th &nbsp;
+
+  -@users.each do |user|
+    tr
+      td =user.name
+      td =user.role.humanize
+      td =user.office.name if user.office.present?
+      td =user.email
+      td =user.deleted_at
+      td =link_to 'Restore staff member', restore_user_path(user), method: :patch
+
+.row.pad-top-fifteen-px
+  .columns.small-12
+    =link_to 'Back to list of staff', users_path
