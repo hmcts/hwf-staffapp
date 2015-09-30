@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   respond_to :html
   before_action :authenticate_user!
   before_action :find_user, only: [:edit, :show, :update, :destroy]
+  before_action :find_deleted_user, only: [:restore]
   before_action :populate_lookups, only: [:edit, :update]
   load_and_authorize_resource
 
@@ -13,6 +14,11 @@ class UsersController < ApplicationController
     elsif current_user.manager?
       @users = User.by_office(current_user.office_id).where.not(role: 'admin').sorted_by_email
     end
+  end
+
+  def deleted
+    authorize! :list_deleted, User
+    @users = User.only_deleted.sorted_by_email
   end
 
   def edit
@@ -42,6 +48,11 @@ class UsersController < ApplicationController
       @user.destroy
       redirect_to users_path
     end
+  end
+
+  def restore
+    @user.restore
+    redirect_to redirect_after_restore
   end
 
   protected
@@ -77,6 +88,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def find_deleted_user
+    @user = User.only_deleted.find(params[:id])
+  end
+
   def populate_lookups
     if current_user.admin?
       @roles = User::ROLES
@@ -95,6 +110,10 @@ class UsersController < ApplicationController
     else
       redirect_to root_path
     end
+  end
+
+  def redirect_after_restore
+    User.only_deleted.count > 0 ? deleted_users_path : users_path
   end
 
   def admin_manager_or_user_themselves?

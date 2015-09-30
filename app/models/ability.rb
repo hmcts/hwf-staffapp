@@ -10,6 +10,7 @@ class Ability
       can [:manage], User do |staff_member|
         can_manage_user?(user, staff_member)
       end
+      cannot [:list_deleted], User
       can [:edit, :update], Office, id: user.office_id
       users_can
     else
