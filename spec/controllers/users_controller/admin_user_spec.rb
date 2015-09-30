@@ -158,6 +158,29 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
+    describe 'GET #deleted' do
+      before(:each) { get :deleted }
+
+      it 'returns a success code' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'renders the index view' do
+        expect(response).to render_template :deleted
+      end
+    end
+
+    describe 'PATCH #restore' do
+      let!(:deleted_user) { create :user, deleted_at: Time.zone.now }
+      before do
+        patch :restore, id: deleted_user.to_param
+      end
+
+      it 'returns a redirect code' do
+        expect(response).to have_http_status(:redirect)
+      end
+    end
+
     describe 'DELETE #destroy' do
       context 'when viewing themselves' do
         before(:each) { get :destroy, id: admin_user.to_param }

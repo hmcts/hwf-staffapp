@@ -100,6 +100,14 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
+    describe 'GET #deleted' do
+      it 'raises a CanCan error' do
+        expect {
+          get :deleted
+        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+      end
+
+    end
     describe 'PUT #update' do
 
       context 'role escalation' do

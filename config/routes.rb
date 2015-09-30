@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     get "static/#{error}" => "static##{error}"
   end
 
+  get 'users/deleted' => 'users#deleted', as: 'deleted_users'
+  patch 'users/:id/restore' => 'users#restore', as: 'restore_user'
   devise_for :users, skip: :registrations, controllers: { invitations: 'users/invitations' }
   resources :users
   as :user do
