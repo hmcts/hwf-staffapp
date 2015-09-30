@@ -188,6 +188,11 @@ en-GB:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
+        forms/income:
+          attributes:
+            children:
+              not_a_number: Choose number of children
+              cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
   activerecord:
     errors:
       models:
