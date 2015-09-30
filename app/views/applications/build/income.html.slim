@@ -1,13 +1,13 @@
 h2 Income
 
-= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         .row.collapse
           .columns.small-12
             = f.label :dependents
-            = f.label :dependents, @application.errors[:dependents].join(', '), class: 'error' if @application.errors[:dependents].present?
+            = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
             .options.radio
               .option
                 label for='application_dependents_false'
@@ -21,14 +21,14 @@ h2 Income
       .row.collapse.panel-indent#children-only
         .small-12.medium-6.large-6.columns.form-group
           = f.label :children
-          = f.label :children, @application.errors[:children].join(', '), class: 'error' if @application.errors[:children].present?
+          = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
           .row.collapse
             .columns.small-4.medium-4.large-4
               = f.text_field :children
       .row.collapse.panel-indent#income-input
         .small-12.medium-6.large-6.columns.form-group
           = f.label :income
-          = f.label :income, @application.errors[:income].join(', '), class: 'error' if @application.errors[:income].present?
+          = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
           .row.collapse.prefix-radius
             .small-2.medium-4.large-3.columns
               span.prefix
