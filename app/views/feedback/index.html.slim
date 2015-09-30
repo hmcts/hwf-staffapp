@@ -15,7 +15,7 @@ h2 Feedback received
       tbody
       -@feedback.each do |f|
         tr
-          td =f.user.name
+          td =mail_to f.user.email, f.user.name, target: 'blank'
           td =f.experience
           td =f.ideas
           td =f.rating
