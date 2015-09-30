@@ -19,8 +19,8 @@ module Forms
     def number_of_children_when_no_dependents
       errors.add(
         :children,
-        "you assign children if you don't have any dependants"
-      ) if !dependents && children > 0
+        t('activemodel.errors.models.forms/income.attributes.children.cant_have_children_assigned')
+      ) if !dependents && children.to_i > 0
     end
   end
 end
