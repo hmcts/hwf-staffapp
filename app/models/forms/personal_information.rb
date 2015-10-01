@@ -37,11 +37,12 @@ module Forms
     private
 
     def dob_age_valid?
-      Date.parse date_of_birth
-      validate_dob_minimum unless date_of_birth.blank?
-      validate_dob_maximum unless date_of_birth.blank?
-      rescue ArgumentError
-        errors.add(:date_of_birth, :non_date)
+      if date_of_birth =~ /[a-zA-Z]/
+        errors.add(:date_of_birth, "can't contain non numbers")
+      else
+        validate_dob_minimum unless date_of_birth.blank?
+        validate_dob_maximum unless date_of_birth.blank?
+      end
     end
 
     def validate_dob_minimum
