@@ -24,7 +24,7 @@ namespace :static_pages do
       if resp == 200
         File.delete(outpath) if File.exist?(outpath)
         File.open(outpath, 'w') do |f|
-          f.write(app.response.body)
+          f.write(app.response.body.sub!('http://www.example.com', ''))
         end
       else
         puts "Error generating #{output}!"
