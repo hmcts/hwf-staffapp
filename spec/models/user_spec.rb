@@ -67,6 +67,7 @@ describe User, type: :model do
         context 'non white listed emails' do
           let(:invalid_email) { 'email.that.rocks@gmail.com' }
           before(:each) { user.email = invalid_email }
+          error_message = I18n.t('activerecord.errors.models.user.attributes.email.invalid_email', email: Settings.mail.tech_support)
 
           it 'will not accept non white listed emails' do
             expect(user).to be_invalid
@@ -74,7 +75,7 @@ describe User, type: :model do
 
           it 'has an informative error message for non white listed emails' do
             user.valid?
-            expect(user.errors.messages[:email].first).to match I18n.t('dictionary.invalid_email', email: Settings.mail.tech_support)
+            expect(user.errors.messages[:email].first).to match error_message
           end
         end
       end
