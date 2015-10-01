@@ -1,6 +1,7 @@
 module Forms
   class PersonalInformation < Base
     MINIMUM_AGE = 16
+    MAXIMUM_AGE = 120
     NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
     include ActiveModel::Validations::Callbacks
@@ -37,11 +38,18 @@ module Forms
 
     def dob_age_valid?
       validate_dob_minimum unless date_of_birth.blank?
+      validate_dob_maximum unless date_of_birth.blank?
     end
 
     def validate_dob_minimum
       if date_of_birth > Time.zone.today - MINIMUM_AGE.years
         errors.add(:date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
+      end
+    end
+
+    def validate_dob_maximum
+      if date_of_birth < Time.zone.today - MAXIMUM_AGE.years
+        errors.add(:date_of_birth, :too_old, maximum_age: MAXIMUM_AGE)
       end
     end
   end

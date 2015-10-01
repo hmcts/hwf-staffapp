@@ -163,6 +163,7 @@ en-GB:
           attributes:
             date_of_birth:
               too_young: "The applicant can't be under %{minimum_age} years old"
+              too_old: "The applicant can't be over %{maximum_age} years old"
         forms/application_detail:
           attributes:
             date_received:
