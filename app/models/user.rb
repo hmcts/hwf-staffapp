@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     with: email_regex,
     on: [:create, :update],
     allow_nil: true,
-    message: I18n.t('dictionary.invalid_email', email: Settings.mail.tech_support)
+    message: :invalid_email, email: Settings.mail.tech_support
   }
   validates :role, inclusion: {
     in: ROLES,
