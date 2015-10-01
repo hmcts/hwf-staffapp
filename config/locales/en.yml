@@ -159,6 +159,10 @@ en-GB:
         dependents: Are there any financially dependent children?
     errors:
       models:
+        forms/personal_information:
+          attributes:
+            date_of_birth:
+              too_young: "The applicant can't be under %{minimum_age} years old"
         forms/application_detail:
           attributes:
             date_received:

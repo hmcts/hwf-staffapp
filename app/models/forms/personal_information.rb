@@ -1,5 +1,7 @@
 module Forms
   class PersonalInformation < Base
+    MINIMUM_AGE = 16
+    NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
     include ActiveModel::Validations::Callbacks
 
@@ -16,8 +18,6 @@ module Forms
 
     define_attributes
 
-    NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-
     before_validation :format_ni_number
 
     def format_ni_number
@@ -29,7 +29,20 @@ module Forms
 
     validates :last_name, presence: true, length: { minimum: 2 }
     validates :date_of_birth, presence: true
+    validate :dob_age_valid?
     validates :married, inclusion: { in: [true, false] }
     validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
+
+    private
+
+    def dob_age_valid?
+      validate_dob_minimum unless date_of_birth.blank?
+    end
+
+    def validate_dob_minimum
+      if date_of_birth > Time.zone.today - MINIMUM_AGE.years
+        errors.add(:date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
+      end
+    end
   end
 end

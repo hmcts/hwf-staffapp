@@ -16,7 +16,17 @@ RSpec.describe Forms::PersonalInformation do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_length_of(:last_name).is_at_least(2) }
 
-    it { is_expected.to validate_presence_of(:date_of_birth) }
+    describe 'date_of_birth' do
+      it { is_expected.to validate_presence_of(:date_of_birth) }
+
+      context 'when the date_of_birth is less than minimum age allowed' do
+        before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
+
+        it { expect(subject.valid?).not_to be true }
+      end
+
+      context 'when the date_of_birth exceeds maximum allowed age'
+    end
 
     describe 'married' do
       context 'when true' do
