@@ -2,8 +2,6 @@ require 'rails_helper'
 
 describe HealthStatus do
 
-  before { WebMock.disable_net_connect!(allow: 'codeclimate.com') }
-
   describe '.current_status' do
     describe 'DWP API' do
       context "when it's down" do
