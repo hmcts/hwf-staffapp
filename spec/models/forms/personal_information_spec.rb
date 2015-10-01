@@ -30,6 +30,12 @@ RSpec.describe Forms::PersonalInformation do
 
         it { expect(subject.valid?).not_to be true }
       end
+
+      context 'when the date_of_birth is a non date value' do
+        before { personal_information[:date_of_birth] = 'some string' }
+
+        it { expect(subject.valid?).not_to be true }
+      end
     end
 
     describe 'married' do
