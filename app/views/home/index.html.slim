@@ -22,7 +22,8 @@
         p =link_to t('functions.staff_guide').to_s, guide_path
         p =link_to t('functions.feedback').to_s, feedback_path
         details 
-          summary Contact us 
+          summary
+            span.summary Contact us
           div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}
 -else
   .pad-top-thirty-px

@@ -31,7 +31,7 @@ body {
   color: $text-colour;
 }
 
-a, details > summary {
+a, details > span.summary {
   color: #005ea5;
   text-decoration: underline;
   cursor: pointer;
