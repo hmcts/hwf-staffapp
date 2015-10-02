@@ -101,16 +101,16 @@ RSpec.describe Application, type: :model do
         end
       end
 
-      describe 'known_partner_over_61?' do
+      describe 'applicant_over_61?' do
         it 'is recognised' do
-          expect(application).to respond_to :known_partner_over_61?
+          expect(application).to respond_to :applicant_over_61?
         end
 
         context 'when applicant is over 61' do
           before { application.date_of_birth = Time.zone.today - 61.years }
 
           it 'returns true' do
-            expect(application.known_partner_over_61?).to eq true
+            expect(application.applicant_over_61?).to eq true
           end
         end
 
@@ -118,7 +118,7 @@ RSpec.describe Application, type: :model do
           before { application.date_of_birth = Time.zone.today - 01.years }
 
           it 'returns false' do
-            expect(application.known_partner_over_61?).to eq false
+            expect(application.applicant_over_61?).to eq false
           end
         end
       end

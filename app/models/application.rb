@@ -100,7 +100,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def fee=(val)
     super
-    if known_partner_over_61?
+    if applicant_over_61?
       self.threshold = 16000
     else
       self.threshold = FeeThreshold.new(fee).band
@@ -110,7 +110,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def threshold_exceeded=(val)
     super
     self.partner_over_61 = nil unless threshold_exceeded?
-    if threshold_exceeded? && (!partner_over_61 || known_partner_over_61?)
+    if threshold_exceeded? && (!partner_over_61 || applicant_over_61?)
       self.application_type = 'none'
       self.application_outcome = 'none'
       self.dependents = nil
@@ -149,12 +149,12 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     [title, first_name, last_name].join(' ')
   end
 
-  def known_partner_over_61?
+  def applicant_over_61?
     applicant_age >= 61
   end
 
   def check_high_threshold?
-    partner_over_61? && !known_partner_over_61?
+    partner_over_61? && !applicant_over_61?
   end
 
   def applicant_age

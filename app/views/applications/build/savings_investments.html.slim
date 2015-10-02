@@ -30,7 +30,7 @@
                   = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
                   = t('activerecord.attributes.application.page_3.savings.more_than')
 
-  -if @application.known_partner_over_61?
+  -if @application.applicant_over_61?
     =f.hidden_field :partner_over_61, value: 'true'
     =f.hidden_field :high_threshold_exceeded, value: 'true'
   -elsif !@application.married?
