@@ -316,6 +316,8 @@ en-GB:
         dob_too_old: The applicant can't be over %{max_age} years old
         date_to_check: 'Date application made'
         date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
+      office:
+        name: Name of office
       application:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
