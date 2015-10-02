@@ -50,7 +50,7 @@ RSpec.describe Applications::BuildController, type: :controller do
         context 'when savings_investment_valid? is false' do
           before do
             application.threshold_exceeded = true
-            application.over_61 = false
+            application.partner_over_61 = false
             application.save
             get :show, application_id: application.id, id: :benefits
           end

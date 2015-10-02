@@ -30,11 +30,11 @@
                   = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
                   = t('activerecord.attributes.application.page_3.savings.more_than')
 
-  -if @application.known_over_61?
-    =f.hidden_field :over_61, value: 'true'
+  -if @application.applicant_over_61?
+    =f.hidden_field :partner_over_61, value: 'true'
     =f.hidden_field :high_threshold_exceeded, value: 'true'
   -elsif !@application.married?
-    =f.hidden_field :over_61, value: 'false'
+    =f.hidden_field :partner_over_61, value: 'false'
   -else
     #over-61-only.start-hidden
       .row
@@ -42,16 +42,16 @@
           .form-group.panel-indent
             .row.collapse
               .columns.small-12
-                = f.label :over_61, t('activerecord.attributes.application.over_61')
-                = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                = f.label :partner_over_61, t('activerecord.attributes.application.partner_over_61')
+                = f.label :partner_over_61, @form.errors[:partner_over_61].join(', '), class: 'error' if @form.errors[:partner_over_61].present?
                 .options.radio
                   .option
-                    label for='application_over_61_false'
-                      = f.radio_button :over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
+                    label for='application_partner_over_61_false'
+                      = f.radio_button :partner_over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
                       = t('no')
                   .option
-                    label for='application_over_61_true'
-                      = f.radio_button :over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
+                    label for='application_partner_over_61_true'
+                      = f.radio_button :partner_over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
                       = t('yes')
                 #high-threshold-only.start-hidden
                   .row
@@ -92,6 +92,6 @@
 
 javascript:
   $('#application_threshold_exceeded_false').on('click', function () {
-    $('#application_over_61_true').prop('checked', false);
-    $('#application_over_61_false').prop('checked', false);
+    $('#application_partner_over_61_true').prop('checked', false);
+    $('#application_partner_over_61_false').prop('checked', false);
   });

@@ -60,7 +60,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
-    validates :over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
+    validates :partner_over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
     validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :check_high_threshold?
   end
   # End step 3 validation
@@ -100,7 +100,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def fee=(val)
     super
-    if known_over_61?
+    if applicant_over_61?
       self.threshold = 16000
     else
       self.threshold = FeeThreshold.new(fee).band
@@ -109,8 +109,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def threshold_exceeded=(val)
     super
-    self.over_61 = nil unless threshold_exceeded?
-    if threshold_exceeded? && (!over_61 || known_over_61?)
+    self.partner_over_61 = nil unless threshold_exceeded?
+    if threshold_exceeded? && (!partner_over_61 || applicant_over_61?)
       self.application_type = 'none'
       self.application_outcome = 'none'
       self.dependents = nil
@@ -132,7 +132,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def savings_investment_valid?
     result = false
     if threshold_exceeded == false ||
-       (threshold_exceeded && (over_61 && high_threshold_exceeded == false))
+       (threshold_exceeded && (partner_over_61 && high_threshold_exceeded == false))
       result = true
     end
     result
@@ -149,12 +149,12 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     [title, first_name, last_name].join(' ')
   end
 
-  def known_over_61?
+  def applicant_over_61?
     applicant_age >= 61
   end
 
   def check_high_threshold?
-    over_61? && !known_over_61?
+    partner_over_61? && !applicant_over_61?
   end
 
   def applicant_age
