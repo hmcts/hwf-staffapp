@@ -1,0 +1,18 @@
+.row
+  .columns.small-12.medium-8.large-5.columns.form-group
+    .form-group
+      = f.label(:roles, 'Role')
+      = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error' if @user.errors[:role].present?
+      -if current_user.elevated?
+        .row.collapse
+          .columns.small-4.large-2
+          - if (@user.manager? && (@user == current_user))
+            = current_user.role.humanize
+          - else
+            .options.radio
+              =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
+                = b.label do
+                  = b.radio_button(class: 'form-control')
+                  = b.text
+      -else
+        .form-control #{@user.role.humanize}

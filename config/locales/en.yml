@@ -26,6 +26,8 @@ en-GB:
     feedback: 'Give feedback'
     staff_guide: Staff guide
     log_in: Sign in
+    offices:
+      label_name: Name of office
   general:
     optional: '&nbsp; (optional)'
     required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
@@ -381,3 +383,9 @@ en-GB:
     registrations:
       heading: Change your password
       updated: Your password was updated successfully
+  out_of_box:
+    ie_warning: IE User! We recommend you use Firefox for a superior experience
+    office:
+      title: Office details
+      heading: Choose jurisdictions
+      advice: Select all the jurisdictions that are handled in your office

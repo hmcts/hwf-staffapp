@@ -1,10 +1,11 @@
 @import 'colours';
 
-div.field_with_errors input {
+.field_with_errors input {
   border-color: $error-colour;
 }
 
-div.form-group > div.field_with_errors {
+
+.form-group > .field_with_errors {
   border-left: 2px solid $error-colour;
   padding-left: 10px;
 }
@@ -33,7 +34,8 @@ div.options.radio div.options label:last-child {
   margin-bottom: 0rem;
 }
 
-div.field_with_errors label.error {
+
+.field_with_errors label.error {
   color: $error-colour;
   margin-top: 0rem;
 }
@@ -45,4 +47,8 @@ div.row.collapse div.field_with_errors input {
 
 div.form-group div.row.collapse div.field_with_errors label {
   margin-top: 0rem;
+}
+.ie-warning{
+  color:$error-colour;
+  background: $error-background;
 }

@@ -1,0 +1,7 @@
+@import 'colours';
+
+input[type=text]{
+  &:disabled{
+    background-color: $grey-3;
+  }
+}

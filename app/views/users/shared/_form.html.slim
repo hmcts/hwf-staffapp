@@ -1,0 +1,23 @@
+= form_for @user do |f|
+  .row
+    .columns.small-12.medium-8.large-5
+      .form-group
+        = f.label :name
+        = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
+        = f.text_field :name, { class: 'form-control' }
+  .row
+    .small-12.columns
+      .form-group style="margin-bottom:16px;"
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label :email
+            .form-control #{@user.email}
+
+  = render(partial: 'users/shared/form_roles', locals: {f: f})
+
+  = render(partial: 'users/shared/form_office', locals: {f: f})
+
+  = render(partial: 'users/shared/form_jurisdiction', locals: {f: f})
+
+  .actions = f.submit 'Save changes', class: 'button'
+
