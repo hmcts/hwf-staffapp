@@ -90,9 +90,3 @@
               .row
                 .columns.small-4.table-label Fee
                 .columns.small-8 £#{@application.fee.floor}
-
-javascript:
-  $('#application_threshold_exceeded_false').on('click', function () {
-    $('#application_partner_over_61_true').prop('checked', false);
-    $('#application_partner_over_61_false').prop('checked', false);
-  });

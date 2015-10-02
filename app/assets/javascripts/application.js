@@ -18,6 +18,7 @@
 //= require checkbox_module
 //= require details.polyfill
 //= require income
+//= require applicants_partner_over_61
 
 $(function(){
   Foundation.global.namespace = '';
