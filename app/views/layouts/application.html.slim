@@ -17,6 +17,8 @@ html[lang="en"]
           li.name
             h1 =link_to 'Help with fees', root_url
           -unless hide_login_menu?(request.env['PATH_INFO'])
+            li.beta 
+              span BETA
             li.toggle-topbar.menu-icon
               a href="#"
                 span
