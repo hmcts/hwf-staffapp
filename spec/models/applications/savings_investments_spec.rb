@@ -15,7 +15,7 @@ RSpec.describe Application, type: :model do
         context 'high threshold is exceeded' do
           before do
             application.threshold_exceeded = true
-            application.over_61 = true
+            application.partner_over_61 = true
             application.high_threshold_exceeded = true
           end
 
@@ -27,7 +27,7 @@ RSpec.describe Application, type: :model do
         context 'high threshold is not exceeded' do
           before do
             application.threshold_exceeded = true
-            application.over_61 = true
+            application.partner_over_61 = true
             application.high_threshold_exceeded = false
           end
 
@@ -43,8 +43,8 @@ RSpec.describe Application, type: :model do
             expect(application.savings_investment_valid?).to eq false
           end
 
-          context 'over_61 is true' do
-            before { application.over_61 = true }
+          context 'partner_over_61 is true' do
+            before { application.partner_over_61 = true }
 
             it 'returns false' do
               expect(application.savings_investment_valid?).to eq false
@@ -62,8 +62,8 @@ RSpec.describe Application, type: :model do
         context 'threshold_exceeded is true' do
           before { application.threshold_exceeded = true }
 
-          context 'over_61 is false' do
-            before { application.over_61 = false }
+          context 'partner_over_61 is false' do
+            before { application.partner_over_61 = false }
 
             it 'returns false' do
               expect(application.savings_investment_valid?).to eq false
@@ -101,16 +101,16 @@ RSpec.describe Application, type: :model do
         end
       end
 
-      describe 'known_over_61?' do
+      describe 'known_partner_over_61?' do
         it 'is recognised' do
-          expect(application).to respond_to :known_over_61?
+          expect(application).to respond_to :known_partner_over_61?
         end
 
         context 'when applicant is over 61' do
           before { application.date_of_birth = Time.zone.today - 61.years }
 
           it 'returns true' do
-            expect(application.known_over_61?).to eq true
+            expect(application.known_partner_over_61?).to eq true
           end
         end
 
@@ -118,7 +118,7 @@ RSpec.describe Application, type: :model do
           before { application.date_of_birth = Time.zone.today - 01.years }
 
           it 'returns false' do
-            expect(application.known_over_61?).to eq false
+            expect(application.known_partner_over_61?).to eq false
           end
         end
       end
@@ -145,10 +145,10 @@ RSpec.describe Application, type: :model do
       context 'threshold_exceeded is true' do
         before { application.threshold_exceeded = true }
 
-        describe 'over_61' do
+        describe 'partner_over_61' do
           context 'is missing' do
             before do
-              application.over_61 = nil
+              application.partner_over_61 = nil
               application.valid?
             end
 
@@ -159,7 +159,7 @@ RSpec.describe Application, type: :model do
 
           context 'is true' do
             before do
-              application.over_61 = false
+              application.partner_over_61 = false
               application.valid?
             end
 
@@ -177,9 +177,9 @@ RSpec.describe Application, type: :model do
       context 'savings_threshold is false' do
         before { application.threshold_exceeded = false }
 
-        describe 'over_61' do
+        describe 'partner_over_61' do
           before do
-            application.over_61 = nil
+            application.partner_over_61 = nil
             application.valid?
           end
 
@@ -189,7 +189,7 @@ RSpec.describe Application, type: :model do
 
           context 'not nil' do
             before do
-              application.over_61 = true
+              application.partner_over_61 = true
               application.valid?
             end
 
@@ -203,14 +203,14 @@ RSpec.describe Application, type: :model do
       context 'when threshold_exceeded is true' do
         before { application.threshold_exceeded = true }
 
-        context 'and over_61 is not nil' do
-          before { application.over_61 = true }
+        context 'and partner_over_61 is not nil' do
+          before { application.partner_over_61 = true }
 
           context 'setting threshold_exceeded to false' do
             before { application.threshold_exceeded = false }
 
-            it 'resets over_61 to nil' do
-              expect(application.over_61).to eq nil
+            it 'resets partner_over_61 to nil' do
+              expect(application.partner_over_61).to eq nil
             end
 
             it 'leaves the application as valid' do

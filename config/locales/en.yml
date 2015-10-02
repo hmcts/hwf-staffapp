@@ -279,7 +279,7 @@ en-GB:
               blank: The date fee paid should be entered
             threshold_exceeded:
               inclusion: You must answer the savings question
-            over_61:
+            partner_over_61:
               inclusion: Please confirm the ages
             benefits:
               inclusion: You must answer the benefits question
@@ -334,7 +334,7 @@ en-GB:
         date_of_death: Date of their death
         refund: This is a refund case
         date_fee_paid: Date fee paid
-        over_61: "In question 8, is the applicant's partner 61 or over?"
+        partner_over_61: "In question 8, is the applicant's partner 61 or over?"
         benefits: Is the applicant receiving one of the benefits listed in question 9?
         dependents: Are there any financially dependent children?
         children: Number of children
