@@ -153,19 +153,13 @@ en-GB:
         <p>%{user_name}</p>
   activemodel:
     attributes:
-      forms/benefit:
+      applikation/forms/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
-      forms/income:
+      applikation/forms/income:
         dependents: Are there any financially dependent children?
     errors:
       models:
-        forms/personal_information:
-          attributes:
-            date_of_birth:
-              too_young: "The applicant can't be under %{minimum_age} years old"
-              too_old: "The applicant can't be over %{maximum_age} years old"
-              non_date: "You must provide a valid date of birth"
-        forms/application_detail:
+        applikation/forms/application_detail:
           attributes:
             date_received:
               blank: Enter the date the application was received
@@ -192,11 +186,17 @@ en-GB:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               before: The date of death cannot be a future date
-        forms/benefit:
+        applikation/forms/personal_information:
+          attributes:
+            date_of_birth:
+              too_young: "The applicant can't be under %{minimum_age} years old"
+              too_old: "The applicant can't be over %{maximum_age} years old"
+              non_date: "You must provide a valid date of birth"
+        applikation/forms/benefit:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
-        forms/income:
+        applikation/forms/income:
           attributes:
             children:
               not_a_number: Choose number of children

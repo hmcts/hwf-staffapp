@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forms::Income do
+RSpec.describe Applikation::Forms::Income do
   params_list = %i[income dependents children]
 
   subject { described_class.new(hash) }
