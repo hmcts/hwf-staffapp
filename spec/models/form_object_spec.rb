@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe FormObject do
 
-  # rubocop:disable ClassAndModuleChildren
   class FormTestClass < FormObject
     def self.permitted_attributes
       { id: Integer, fee: Integer }
