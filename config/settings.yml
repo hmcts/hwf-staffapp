@@ -7,6 +7,6 @@ calculator:
   min_val: 1085
   pp_child: 245
   couple_supp: 160
-spotcheck:
-  enabled: <%= ENV['SPOTCHECK_ENABLED'] || false %>
+evidence_check:
+  enabled: <%= ENV['EVIDENCE_CHECK_ENABLED'] || false %>
   expires_in_days: 7
