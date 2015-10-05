@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Spot check page displayed instead of confirmation', type: :feature do
+RSpec.feature 'Evidence check page displayed instead of confirmation', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -13,10 +13,10 @@ RSpec.feature 'Spot check page displayed instead of confirmation', type: :featur
 
   let(:application) { create :application_full_remission }
 
-  context 'when the Spotcheck feature is enabled' do
-    enable_spotcheck
+  context 'when the Evidence check feature is enabled' do
+    enable_evidence_check
 
-    scenario 'User continues from the summary page when building the application and is redirected to spot check' do
+    scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
       create_list :application_full_remission, 9
 
       visit application_build_path(application_id: application.id, id: 'income_result')
@@ -24,20 +24,20 @@ RSpec.feature 'Spot check page displayed instead of confirmation', type: :featur
       click_button 'Next'
       click_button 'Continue'
 
-      expect(spotcheck_rendered?).to be true
+      expect(evidence_check_rendered?).to be true
     end
 
-    scenario 'User tries to display confirmation page directly and is redirected to spot check' do
-      create :spotcheck, application: application
+    scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
+      create :evidence_check, application: application
 
       visit application_build_path(application_id: application.id, id: 'confirmation')
 
-      expect(spotcheck_rendered?).to be true
+      expect(evidence_check_rendered?).to be true
     end
   end
 
-  context 'when the Spotcheck feature is disabled' do
-    disable_spotcheck
+  context 'when the Evidence_check feature is disabled' do
+    disable_evidence_check
 
     scenario 'User continues from the summary page when building the application and lands on confirmation page' do
       create_list :application_full_remission, 9
@@ -51,7 +51,7 @@ RSpec.feature 'Spot check page displayed instead of confirmation', type: :featur
     end
 
     scenario 'User tries to display confirmation page directly and the confirmation page is displayed' do
-      create :spotcheck, application: application
+      create :evidence_check, application: application
 
       visit application_build_path(application_id: application.id, id: 'confirmation')
 
@@ -63,7 +63,7 @@ RSpec.feature 'Spot check page displayed instead of confirmation', type: :featur
     (%r{\/applications/#{application.id}/build/confirmation}) != nil
   end
 
-  def spotcheck_rendered?
-    (%r{\/spotchecks\/#{application.spotcheck.id}} =~ page.current_url) != nil
+  def evidence_check_rendered?
+    (%r{\/evidence_checks\/#{application.evidence_check.id}} =~ page.current_url) != nil
   end
 end

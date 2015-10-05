@@ -11,8 +11,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to belong_to(:jurisdiction) }
   it { is_expected.to belong_to(:office) }
 
-  it { is_expected.to have_one(:spotcheck) }
-  it { is_expected.not_to validate_presence_of(:spotcheck) }
+  it { is_expected.to have_one(:evidence_check) }
+  it { is_expected.not_to validate_presence_of(:evidence_check) }
 
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
@@ -208,24 +208,24 @@ RSpec.describe Application, type: :model do
       end
     end
 
-    describe '#spotcheck?' do
-      subject { application.spotcheck? }
+    describe '#evidence_check?' do
+      subject { application.evidence_check? }
 
-      context 'when the application has spotcheck model associated' do
+      context 'when the application has evidence_check model associated' do
         before do
-          create :spotcheck, application: application
+          create :evidence_check, application: application
         end
 
         it { is_expected.to be true }
       end
 
-      context 'when the application does not have spotcheck model associated' do
+      context 'when the application does not have evidence_check model associated' do
         it { is_expected.to be false }
       end
     end
 
-    describe '.spotcheckable' do
-      subject { described_class.spotcheckable }
+    describe '.evidencecheckable' do
+      subject { described_class.evidencecheckable }
 
       let!(:application_1) { create :application_part_remission }
       let!(:application_2) { create :application_full_remission }

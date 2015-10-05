@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :applications do
     resources :build, controller: 'applications/build'
   end
-  resources :spotchecks, only: :show
+  resources :evidence_checks, only: :show
 
   get 'guide' => 'guide#index'
 

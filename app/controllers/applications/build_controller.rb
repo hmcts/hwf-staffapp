@@ -4,8 +4,8 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
-  before_action :spotcheck_show_redirect, only: :show
-  before_action :spotcheck_update_redirect, only: :update
+  before_action :evidence_check_show_redirect, only: :show
+  before_action :evidence_check_update_redirect, only: :update
 
   steps :personal_information,
     :application_details,
@@ -43,7 +43,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def update
-    spotcheck_selection
+    evidence_check_selection
 
     if FORM_OBJECTS.include?(step)
       handle_form_object(params, step)
@@ -86,9 +86,9 @@ class Applications::BuildController < ApplicationController
     end
   end
 
-  def spotcheck_selection
+  def evidence_check_selection
     if next_step?(:summary)
-      SpotcheckSelector.new(@application, Settings.spotcheck.expires_in_days).decide!
+      EvidenceCheckSelector.new(@application, Settings.evidence_check.expires_in_days).decide!
     end
   end
 
@@ -105,17 +105,17 @@ class Applications::BuildController < ApplicationController
     @jurisdictions = current_user.office.jurisdictions
   end
 
-  def spotcheck_show_redirect
-    redirect_if_spotcheck if step == :confirmation
+  def evidence_check_show_redirect
+    redirect_if_evidence_check if step == :confirmation
   end
 
-  def spotcheck_update_redirect
-    redirect_if_spotcheck if next_step == :confirmation
+  def evidence_check_update_redirect
+    redirect_if_evidence_check if next_step == :confirmation
   end
 
-  def redirect_if_spotcheck
-    if spotcheck_enabled? && @application.spotcheck?
-      redirect_to(spotcheck_path(@application.spotcheck.id))
+  def redirect_if_evidence_check
+    if evidence_check_enabled? && @application.evidence_check?
+      redirect_to(evidence_check_path(@application.evidence_check.id))
     end
   end
 end
