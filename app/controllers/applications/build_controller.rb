@@ -61,7 +61,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def derive_class(status)
-    ['Forms::', status.to_s.classify].join('').constantize
+    ['Applikation::Forms::', status.to_s.classify].join('').constantize
   end
 
   def process_params(class_name, params)

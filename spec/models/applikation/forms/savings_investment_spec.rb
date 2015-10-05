@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forms::SavingsInvestment do
+RSpec.describe Applikation::Forms::SavingsInvestment do
   params_list = %i[threshold_exceeded partner_over_61 high_threshold_exceeded status application_id]
 
   let(:hash) { {} }

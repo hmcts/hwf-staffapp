@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forms::ApplicationDetail do
+RSpec.describe Applikation::Forms::ApplicationDetail do
   params_list = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid form_name case_number]
 
   let(:application) { create :application }
