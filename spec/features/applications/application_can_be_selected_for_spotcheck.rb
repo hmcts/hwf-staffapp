@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Application can be selected for spotcheck', type: :feature do
+RSpec.feature 'Application can be selected for evidence check', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -18,7 +18,7 @@ RSpec.feature 'Application can be selected for spotcheck', type: :feature do
       create_list :application_full_remission, 9
     end
 
-    scenario 'Every 10th application is selected for spotcheck' do
+    scenario 'Every 10th application is selected for evidence check' do
       visit application_build_path(application_id: application.id, id: 'income_result')
 
       click_button 'Next'
@@ -34,7 +34,7 @@ RSpec.feature 'Application can be selected for spotcheck', type: :feature do
       create_list :application_full_remission, 1, :refund
     end
 
-    scenario 'Every 2nd application is selected for spotcheck' do
+    scenario 'Every 2nd application is selected for evidence check' do
       visit application_build_path(application_id: application.id, id: 'income_result')
 
       click_button 'Next'
