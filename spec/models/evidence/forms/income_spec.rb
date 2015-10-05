@@ -13,8 +13,6 @@ RSpec.describe Evidence::Forms::Income do
   end
 
   describe 'validation' do
-    it { is_expected.to validate_presence_of(:amount) }
-
     context 'when the income is 0' do
       let(:income) { { amount: '0' } }
 
@@ -27,10 +25,29 @@ RSpec.describe Evidence::Forms::Income do
       it { expect(subject.valid?).to be false }
     end
 
+    context 'when income is a Float' do
+      before(:each) { subject.valid? }
+
+      context 'round up' do
+        let(:income) { { amount: '0.5' } }
+
+        it { expect(subject.amount).to eq '1' }
+      end
+
+      context 'round down' do
+        let(:income) { { amount: '0.49' } }
+
+        it { expect(subject.amount).to eq '0' }
+      end
+    end
+
     context 'when the income is string' do
+      before { subject.valid? }
       let(:income) { { amount: 'a string' } }
 
-      it { expect(subject.valid?).to be false }
+      it 'turns the string into 0' do
+        expect(subject.amount).to eq '0'
+      end
     end
   end
 end
