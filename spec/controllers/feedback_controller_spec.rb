@@ -81,12 +81,21 @@ RSpec.describe FeedbackController, type: :controller do
 
     describe 'GET #index' do
       before(:each) { get :index }
-      it 'returns http redirect' do
+      it 'returns http success' do
         expect(response).to have_http_status(:success)
       end
 
-      it 'redirects to the sign in page' do
+      it 'renders the correct template' do
         expect(response).to render_template(:index)
+      end
+
+      context 'when there is feedback from a deleted user' do
+        let(:user) { create :deleted_user, office: create(:office) }
+        before { create(:feedback, ideas: 'None', user: user, office: user.office) }
+
+        it 'renders the correct template' do
+          expect(response).to render_template(:index)
+        end
       end
     end
 
