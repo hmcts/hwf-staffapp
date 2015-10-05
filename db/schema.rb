@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151002094114) do
+ActiveRecord::Schema.define(version: 20151005074759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,15 @@ ActiveRecord::Schema.define(version: 20151002094114) do
   add_index "dwp_checks", ["created_by_id"], name: "index_dwp_checks_on_created_by_id", using: :btree
   add_index "dwp_checks", ["office_id"], name: "index_dwp_checks_on_office_id", using: :btree
 
+  create_table "evidence_checks", force: :cascade do |t|
+    t.integer  "application_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "expires_at",     null: false
+  end
+
+  add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree
+
   create_table "feedbacks", force: :cascade do |t|
     t.string   "experience"
     t.string   "ideas"
@@ -148,15 +157,6 @@ ActiveRecord::Schema.define(version: 20151002094114) do
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
 
-  create_table "spotchecks", force: :cascade do |t|
-    t.integer  "application_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "expires_at",     null: false
-  end
-
-  add_index "spotchecks", ["application_id"], name: "index_spotchecks_on_application_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20151002094114) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "applications", "jurisdictions"
   add_foreign_key "applications", "offices"
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
