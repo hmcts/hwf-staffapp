@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def spotcheck_enabled?
-    Settings.spotcheck.enabled == true
+  def evidence_check_enabled?
+    Settings.evidence_check.enabled == true
   end
 end
