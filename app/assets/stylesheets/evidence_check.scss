@@ -1,11 +1,11 @@
 @import "colours";
 @import "measurements";
 
-.spotcheck .row {
+.evidence-check .row {
   margin-bottom: $gutter;
 }
 
-.spotcheck-reference {
+.evidence-check-reference {
   color: $white;
   background-color: $grey-1;
   border: 1px solid $grey-3;
@@ -14,7 +14,7 @@
   font-size: 2em;
 }
 
-.spotcheck-letter {
+.evidence-check-letter {
   border: 1px solid $grey-3;
   background-color: $grey-4;
   padding: $gutter-half;
