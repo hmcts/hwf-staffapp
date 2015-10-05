@@ -16,5 +16,8 @@ FactoryGirl.define do
       email nil
       name nil
     end
+    factory :deleted_user do
+      deleted_at Time.zone.yesterday
+    end
   end
 end
