@@ -5,11 +5,11 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   belongs_to :jurisdiction
   belongs_to :office
   has_many :benefit_checks
-  has_one :spotcheck, required: false
+  has_one :evidence_check, required: false
 
   validates :reference, presence: true, uniqueness: true
 
-  scope :spotcheckable, lambda {
+  scope :evidencecheckable, lambda {
     where(benefits: false, application_type: 'income', application_outcome: %w[part full])
   }
 
@@ -175,8 +175,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     benefit_checks.order(:id).last
   end
 
-  def spotcheck?
-    !spotcheck.nil?
+  def evidence_check?
+    !evidence_check.nil?
   end
 
   private
