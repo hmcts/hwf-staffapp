@@ -13,11 +13,11 @@ h2 Benefits
               .option
                 label for='application_benefits_false'
                   = f.radio_button :benefits, 'false'
-                  = t('activerecord.attributes.application.page_4.benefits_false')
+                  = t('activemodel.attributes.applikation/forms/benefit.benefits_false')
               .option
                 label for='application_benefits_true'
                   = f.radio_button :benefits, 'true'
-                  = t('activerecord.attributes.application.page_4.benefits_true')
+                  = t('activemodel.attributes.applikation/forms/benefit.benefits_true')
 
   = f.submit 'Next', :class => 'button primary'
 

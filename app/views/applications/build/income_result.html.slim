@@ -23,7 +23,7 @@ h2 Income
                 .columns.small-8 £#{@application.fee.floor}
               .row
                 .columns.small-4.table-label Status
-                .columns.small-8 =@application.married ? t('activerecord.attributes.application.page_1.married_true') : t('activerecord.attributes.application.page_1.married_false')
+                .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
               .row
                 .columns.small-4.table-label =t('activerecord.attributes.application.children')
                 .columns.small-8 =@application.children

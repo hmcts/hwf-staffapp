@@ -22,13 +22,13 @@ module Applikation
 
       def check_partner_over_61
         if PartnerAgeCheck.new(self).verify == false
-          errors.add(:partner_over_61, 'some error')
+          errors.add(:partner_over_61, I18n.t('activemodel.errors.models.applikation/forms/savings_investment.attributes.partner_over_61.inclusion') )
         end
       end
 
       def maximum_threshold_exceeded
         if partner_over_61? && high_threshold_not_boolean?
-          errors.add(:high_threshold_exceeded, 'high_threshold_exceeded error')
+          errors.add(:high_threshold_exceeded, I18n.t('activemodel.errors.models.applikation/forms/savings_investment.attributes.threshold_exceeded.inclusion'))
         end
       end
 

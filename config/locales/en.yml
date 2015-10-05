@@ -243,17 +243,90 @@ en-GB:
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant
-      applikation/forms/benefit:
-        benefits: Is the applicant receiving one of the benefits listed in question 9?
-      applikation/forms/income:
-        dependents: Are there any financially dependent children?
+      applikation/forms/personal_information:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        title: Title
+        first_name: First and middle names
+        last_name: 'Last name'
+        last_name_hint: 'First 3 letters only'
+        full_name: Full name
+        ni_number: 'National Insurance number'
+        date_of_birth: 'Date of birth'
+        married: Status
+        date_of_birth_hint: For example 01/11/1980
+        married_false: Single
+        married_true: Married or living with someone and sharing an income
+        form_name_summary: Form name or number
       applikation/forms/application_detail:
+        fee: Fee
+        jurisdiction_id: Jurisdiction
+        date_received: Date application received
+        form_name: Form number or name
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
+      applikation/forms/savings_investment:
+        header: Savings and investments
+        maximum_prompt: 'Maximum amount of savings and investments allowed:'
+        explanation: This amount may be different to what’s on the form. It’s calculated on the applicant’s age and fee amount.
+        single: In question 7, the applicant has
+        married: In question 7, the applicant and their partner have
+        partner_over_61: "In question 8, is the applicant's partner 61 or over?"
+        less_than: Less than this amount
+        more_than: More than this amount
+        less_than_high: Less than £16,000
+        more_than_high: More than £16,000
+        high_threshold_exceeded: In question 8, the applicant and their partner have
+      applikation/forms/benefit:
+        benefits: Is the applicant receiving one of the benefits listed in question 9?
+        benefits_false: 'No'
+        benefits_true: 'Yes'
+      applikation/forms/income:
+        dependents: Are there any financially dependent children?
+        income_false: 'No'
+        income_true: 'Yes'
+        children: Number of children
+        income: Total monthly income
+      applikation/forms/summary:
+        passed: '✓ Passed'
+        failed: '✗ Failed'
+        full: '✓ Passed'
+        part: '✓ Passed'
+        none: '✗ Failed'
+        'true': '✓ Passed'
+        'false': '✗ Failed'
+        savings_investments: Savings and investments
+        benefits: Benefits
+        income: Income
     errors:
       models:
+        applikation/forms/personal_information:
+          attributes:
+            last_name:
+              blank: Enter the applicant's last name
+              too_short: Last name is too short (minimum is 2 characters)
+            date_of_birth:
+              too_young: "The applicant can't be under %{minimum_age} years old"
+              too_old: "The applicant can't be over %{maximum_age} years old"
+              non_date: "You must provide a valid date of birth"
+              not_a_date: Enter the date in this format 01/11/1980
+            ni_number:
+              blank: 'Enter the applicant’s National Insurance number'
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+            married:
+              inclusion: Please select a marital status
         applikation/forms/application_detail:
           attributes:
+            fee:
+              blank: Enter the fee
+              not_a_number: The fee should be numeric
+            jurisdiction_id:
+              blank: You must select a jurisdiction
             date_received:
               blank: Enter the date the application was received
               not_a_date: Enter the date in this format 01/01/2015
@@ -282,22 +355,26 @@ en-GB:
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
               too_long: "is too long, it needs to be less than 500 characters"
-        applikation/forms/personal_information:
+        applikation/forms/savings_investment:
           attributes:
-            date_of_birth:
-              too_young: "The applicant can't be under %{minimum_age} years old"
-              too_old: "The applicant can't be over %{maximum_age} years old"
-              non_date: "You must provide a valid date of birth"
-              not_a_date: Enter the date in this format 01/11/1980
+            threshold_exceeded:
+              inclusion: You must answer the savings question
+            partner_over_61:
+              inclusion: Please confirm the ages
         applikation/forms/benefit:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
         applikation/forms/income:
           attributes:
+            dependents:
+              inclusion: 'You must answer the dependent children question'
             children:
               not_a_number: Choose number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
   activerecord:
     errors:
       models:
@@ -338,57 +415,6 @@ en-GB:
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after: The application must have been made in the last 3 months
               before: The application cannot be a future date
-        application:
-          attributes:
-            last_name:
-              blank: Enter the applicant's last name
-              too_short: Last name is too short (minimum is 2 characters)
-            date_of_birth:
-              blank: Enter the applicant's date of birth
-              invalid: 'Enter the date as day, month, year DD/MM/YYYY'
-              not_a_date: 'Enter the date in this format 01/11/1980'
-            ni_number:
-              blank: 'Enter the applicant’s National Insurance number'
-              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
-            married:
-              inclusion: Please select a marital status
-            fee:
-              blank: Enter the fee
-              not_a_number: The fee should be numeric
-            jurisdiction_id:
-              blank: You must select a jurisdiction
-            date_received:
-              blank: Enter the date the application was received
-              not_a_date: Enter the date in this format 01/01/2015
-              invalid: Enter the date in this format day month, year DD/MM/YYYY
-              after: The application must have been made in the last 3 months
-              before: The application cannot be a future date
-            date_of_death:
-              blank: The date of death should be entered
-              not_a_date: Enter the date in this format 01/01/2015
-              invalid: Enter the date in this format day month, year DD/MM/YYYY
-              before: The date of death cannot be a future date
-            deceased_name:
-              blank: The deceased's name should be entered
-            date_fee_paid:
-              not_a_date: Enter the date in this format 01/01/2015
-              invalid: Enter the date in this format day month, year DD/MM/YYYY
-              after: The application must have been made in the last 3 months
-              before: The application cannot be a future date
-              blank: The date fee paid should be entered
-            threshold_exceeded:
-              inclusion: You must answer the savings question
-            partner_over_61:
-              inclusion: Please confirm the ages
-            benefits:
-              inclusion: You must answer the benefits question
-            dependents:
-              inclusion: 'You must answer the dependent children question'
-            children:
-              not_a_number: Choose number of children
-            income:
-              blank: Enter the total monthly income
-              not_a_number: Enter the total monthly income
     attributes:
       user:
         current_password: Current password
@@ -415,69 +441,6 @@ en-GB:
         date_to_check_hint: 'For refunds enter the date the case or claim was issued by the court.'
       office:
         name: Name of office
-      application:
-        undetermined: 'The details you’ve entered are incorrect, check and try again'
-        title: Title
-        first_name: First and middle names
-        last_name: 'Last name'
-        last_name_hint: 'First 3 letters only'
-        full_name: Full name
-        ni_number: 'National Insurance number'
-        date_of_birth: 'Date of birth'
-        married: Status
-        fee: Fee
-        jurisdiction_id: Jurisdiction
-        date_received: Date application received
-        form_name: Form number or name
-        case_number: Case number
-        probate: This is a probate case
-        deceased_name: Name of the deceased
-        date_of_death: Date of their death
-        refund: This is a refund case
-        date_fee_paid: Date fee paid
-        partner_over_61: "In question 8, is the applicant's partner 61 or over?"
-        benefits: Is the applicant receiving one of the benefits listed in question 9?
-        dependents: Are there any financially dependent children?
-        children: Number of children
-        income: Total monthly income
-        high_threshold_exceeded: In question 8, the applicant and their partner have
-        page_1:
-          date_of_birth_hint: For example 01/11/1980
-          married_false: Single
-          married_true: Married or living with someone and sharing an income
-          form_name_summary: Form name or number
-        page_3:
-          header: Savings and investments
-          maximum_prompt: 'Maximum amount of savings and investments allowed:'
-          explanation: This amount may be different to what’s on the form. It’s calculated on the applicant’s age and fee amount.
-          savings:
-            single: In question 7, the applicant has
-            married: In question 7, the applicant and their partner have
-            less_than: Less than this amount
-            more_than: More than this amount
-            less_than_high: Less than £16,000
-            more_than_high: More than £16,000
-        page_4:
-          benefits_false: 'No'
-          benefits_true: 'Yes'
-        income_page:
-          header: Application result
-        summary:
-          passed: '✓ Passed'
-          failed: '✗ Failed'
-          full: '✓ Passed'
-          part: '✓ Passed'
-          none: '✗ Failed'
-          'true': '✓ Passed'
-          'false': '✗ Failed'
-          savings_investments: Savings and investments
-          benefits: Benefits
-          income: Income
-        benefits_false: 'No'
-        benefits_true: 'Yes'
-        income_false: 'No'
-        income_true: 'Yes'
-        emergency_reason: Emergency reason
       r2_calc:
         labels:
           fee: Fee
