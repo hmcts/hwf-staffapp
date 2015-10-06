@@ -54,3 +54,20 @@ h2 Waiting for evidence
     .row
       .small-12.medium-5.large-4.columns.subheader Form name or number
       .small-12.medium-7.large-8.columns =@overview.form_name
+
+  .summary-section
+    .row
+      .small-12.medium-7.large-8.columns
+        h4 Assessment
+    .row
+      .small-12.medium-5.large-4.columns.subheader Savings and investments
+      .small-12.medium-7.large-8.columns =@overview.savings.html_safe
+    .row
+      .small-12.medium-5.large-4.columns.subheader Income
+      .small-12.medium-7.large-8.columns =@overview.income.html_safe
+    .row
+      .small-12.medium-5.large-4.columns.subheader Number of Children
+      .small-12.medium-7.large-8.columns =@overview.number_of_children
+    .row
+      .small-12.medium-5.large-4.columns.subheader Total monthly income
+      .small-12.medium-7.large-8.columns £#{@overview.total_monthly_income}

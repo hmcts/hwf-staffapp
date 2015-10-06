@@ -39,6 +39,29 @@ module Evidence
       def fee
         @evidence.application.fee.round
       end
+
+      def number_of_children
+        @evidence.application.children
+      end
+
+      def total_monthly_income
+        @evidence.application.income.round
+      end
+
+      def income
+        {
+          'full' => '&#10003; Passed',
+          'part' => '&#10003; Passed',
+          'none' => '&#10007; Failed'
+        }[@evidence.application.application_outcome]
+      end
+
+      def savings
+        {
+          'true' => '&#10003; Passed',
+          'false' => '&#10007; Failed'
+        }[@evidence.application.savings_investment_valid?.to_s]
+      end
     end
   end
 end

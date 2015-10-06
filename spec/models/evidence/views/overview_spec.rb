@@ -8,7 +8,9 @@ RSpec.describe Evidence::Views::Overview do
   let(:application) { create(:application, user: user, office: user.office, fee: fee_amount) }
   let(:evidence) { application.build_evidence_check(expires_at: expiration_date) }
   let(:overview) { described_class.new(evidence) }
-  symbols = %i[reference processed_by expires date_of_birth full_name ni_number status fee jurisdiction date_received form_name]
+  symbols = %i[reference processed_by expires date_of_birth full_name ni_number status fee
+               jurisdiction date_received form_name number_of_children total_monthly_income
+               income]
 
   symbols.each do |symbol|
     let(:expiration_date) { Time.zone.today + 14.days }
@@ -56,6 +58,40 @@ RSpec.describe Evidence::Views::Overview do
       it 'formats the fee amount correctly' do
         expect(overview.fee).to eq 0
       end
+    end
+  end
+
+  describe '#income' do
+    context 'when the application is a full remission' do
+      before { allow(application).to receive(:application_outcome).and_return('full') }
+
+      it { expect(overview.income).to eq '&#10003; Passed' }
+    end
+
+    context 'when the application is a part remission' do
+      before { allow(application).to receive(:application_outcome).and_return('part') }
+
+      it { expect(overview.income).to eq '&#10003; Passed' }
+    end
+
+    context 'when the application is a non remission' do
+      before { allow(application).to receive(:application_outcome).and_return('none') }
+
+      it { expect(overview.income).to eq '&#10007; Failed' }
+    end
+  end
+
+  describe '#savings' do
+    context 'when the application has valid savings and investments' do
+      before { allow(application).to receive(:savings_investment_valid?).and_return(true) }
+
+      it { expect(overview.savings).to eq '&#10003; Passed' }
+    end
+
+    context 'when the application does not have valid savings and investments' do
+      before { allow(application).to receive(:savings_investment_valid?).and_return(false) }
+
+      it { expect(overview.savings).to eq '&#10007; Failed' }
     end
   end
 end
