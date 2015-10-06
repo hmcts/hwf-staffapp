@@ -2,7 +2,8 @@ module Evidence
   module Views
     class Overview
 
-      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number date_received form_name]
+      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number
+                             date_received form_name amount_to_pay]
       APPLICATION_ATTRS.each do |attr|
         define_method(attr) do
           @evidence.application.send(attr)
@@ -60,6 +61,10 @@ module Evidence
           'true' => '&#10003; Passed',
           'false' => '&#10007; Failed'
         }[@evidence.application.savings_investment_valid?.to_s]
+      end
+
+      def result
+        @evidence.application.application_outcome
       end
     end
   end

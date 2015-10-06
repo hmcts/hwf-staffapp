@@ -107,4 +107,24 @@ RSpec.describe Evidence::Views::Overview do
       it { expect(overview.savings).to eq '&#10007; Failed' }
     end
   end
+
+  describe '#result' do
+    context 'when the application is a full remission' do
+      before { allow(application).to receive(:application_outcome).and_return('full') }
+
+      it { expect(overview.result).to eq 'full' }
+    end
+
+    context 'when the application is a part remission' do
+      before { allow(application).to receive(:application_outcome).and_return('part') }
+
+      it { expect(overview.result).to eq 'part' }
+    end
+
+    context 'when the application is a full remission' do
+      before { allow(application).to receive(:application_outcome).and_return('none') }
+
+      it { expect(overview.result).to eq 'none' }
+    end
+  end
 end
