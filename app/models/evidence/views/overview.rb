@@ -49,18 +49,41 @@ module Evidence
       end
 
       def income
-        {
-          'full' => '&#10003; Passed',
-          'part' => '&#10003; Passed',
-          'none' => '&#10007; Failed'
-        }[@evidence.application.application_outcome]
+        result_hash[@evidence.application.application_outcome]
+      end
+
+      def income_css
+        css_hash[@evidence.application.application_outcome]
       end
 
       def savings
+        result_hash[@evidence.application.savings_investment_valid?.to_s]
+      end
+
+      def savings_css
+        css_hash[@evidence.application.savings_investment_valid?.to_s]
+      end
+
+      private
+
+      def result_hash
         {
+          'full' => '&#10003; Passed',
+          'part' => '&#10003; Passed',
+          'none' => '&#10007; Failed',
           'true' => '&#10003; Passed',
           'false' => '&#10007; Failed'
-        }[@evidence.application.savings_investment_valid?.to_s]
+        }
+      end
+
+      def css_hash
+        {
+          'full' => 'success',
+          'part' => 'partial',
+          'none' => 'failure',
+          'true' => 'success',
+          'false' => 'failure'
+        }
       end
     end
   end
