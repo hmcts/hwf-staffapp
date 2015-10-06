@@ -1,7 +1,14 @@
 module Evidence
   module Views
     class Overview
-      EVIDENCE = %i[expires_at]
+
+      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number]
+      APPLICATION_ATTRS.each do |attr|
+        define_method(attr) do
+          @evidence.application.send(attr)
+        end
+      end
+
       def initialize(evidence)
         @evidence = evidence
       end
@@ -17,12 +24,12 @@ module Evidence
         end
       end
 
-      def reference
-        @evidence.application.reference
-      end
-
       def processed_by
         @evidence.application.user.name
+      end
+
+      def status
+        @evidence.application.married? ? 'Married' : 'Single'
       end
     end
   end

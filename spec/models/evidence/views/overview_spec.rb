@@ -7,7 +7,7 @@ RSpec.describe Evidence::Views::Overview do
   let(:evidence) { application.build_evidence_check(expires_at: expiration_date) }
   let(:overview) { Evidence::Views::Overview.new(evidence) }
 
-  %i[reference processed_by expires].each do |symbol|
+  %i[reference processed_by expires date_of_birth full_name ni_number status].each do |symbol|
     let(:expiration_date) { Time.zone.today + 14.days }
     it 'has the attribute #{symbol} for "Processing details" section' do
       expect(overview.methods).to include(symbol)
