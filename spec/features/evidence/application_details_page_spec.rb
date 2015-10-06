@@ -8,7 +8,7 @@ RSpec.feature 'Application details page', type: :feature do
   let(:user) { create :user }
   let(:application) { create :application_full_remission, user: user }
   let!(:evidence) { create :evidence_check, application_id: application.id }
-  headings = ['Waiting for evidence', 'Process evidence', 'Processing details', 'Personal details', 'Application details']
+  headings = ['Waiting for evidence', 'Process evidence', 'Processing details', 'Personal details', 'Application details', 'Assessment']
 
   before do
     login_as user
