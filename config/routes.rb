@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :applications do
     resources :build, controller: 'applications/build'
   end
+
+  resources :evidence, only: :show
   resources :evidence_checks, only: :show
 
   get 'guide' => 'guide#index'
