@@ -1,0 +1,22 @@
+h2 Waiting for evidence
+
+.row
+  .small-12.medium-6.columns
+    .panel
+      h4 Process evidence
+      # You'll need the applicant's evidence of income
+      a.button.success href='#' Start now
+
+  .summary-section
+    .row
+      .small-12.medium-7.large-8.columns
+        h4 Processing details
+    .row
+      .small-12.medium-5.large-4.columns.subheader Reference
+      .small-12.medium-7.large-8.columns =@evidence.application.reference
+    .row
+      .small-12.medium-5.large-4.columns.subheader Processed by
+      .small-12.medium-7.large-8.columns =@evidence.application.user.name
+    .row
+      .small-12.medium-5.large-4.columns.subheader Evidence
+      .small-12.medium-7.large-8.columns =distance_of_time_in_words(Time.zone.today, @evidence.expires_at)
