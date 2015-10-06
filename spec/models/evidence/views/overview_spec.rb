@@ -43,7 +43,7 @@ RSpec.describe Evidence::Views::Overview do
 
   describe '#fee' do
     context 'rounds down' do
-      let(:fee_amount) { '100.49'}
+      let(:fee_amount) { '100.49' }
 
       it 'formats the fee amount correctly' do
         expect(overview.fee).to eq 100
@@ -51,7 +51,7 @@ RSpec.describe Evidence::Views::Overview do
     end
 
     context 'when its under £1' do
-      let(:fee_amount) { '0.49'}
+      let(:fee_amount) { '0.49' }
 
       it 'formats the fee amount correctly' do
         expect(overview.fee).to eq 0
