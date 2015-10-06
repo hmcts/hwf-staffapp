@@ -2,7 +2,7 @@ module Evidence
   module Views
     class Overview
 
-      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number]
+      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number date_received form_name]
       APPLICATION_ATTRS.each do |attr|
         define_method(attr) do
           @evidence.application.send(attr)
@@ -30,6 +30,14 @@ module Evidence
 
       def status
         @evidence.application.married? ? 'Married' : 'Single'
+      end
+
+      def jurisdiction
+        @evidence.application.jurisdiction.name
+      end
+
+      def fee
+        @evidence.application.fee.round
       end
     end
   end
