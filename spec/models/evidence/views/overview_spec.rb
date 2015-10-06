@@ -16,13 +16,13 @@ RSpec.describe Evidence::Views::Overview do
 
   describe '#expires' do
     context 'when the evidence check expires in a few days' do
-      let(:expiration_date) { Time.zone.today + 3.days }
+      let(:expiration_date) { Time.zone.now + 3.days }
 
       it { expect(overview.expires).to eq '3 days' }
     end
 
     context 'when the evidence check expires today' do
-      let(:expiration_date) { Time.zone.today }
+      let(:expiration_date) { Time.zone.now }
 
       it { expect(overview.expires).to eq 'expired' }
     end
