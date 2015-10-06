@@ -1,11 +1,11 @@
 class EvidenceController < ApplicationController
   def show
-    get_evidence
+    build_overview
   end
 
   private
 
-  def get_evidence
+  def build_overview
     evidence ||= EvidenceCheck.find(params[:id])
     @overview = Evidence::Views::Overview.new(evidence)
   end
