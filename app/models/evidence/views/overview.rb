@@ -14,7 +14,7 @@ module Evidence
       end
 
       def expires
-        return 'expired' if (@evidence.expires_at < Time.zone.now)
+        return 'expired' if @evidence.expires_at < Time.zone.now
         days = (((@evidence.expires_at - Time.zone.now) / 86400).round)
         if days > 1
           "#{days} days"
