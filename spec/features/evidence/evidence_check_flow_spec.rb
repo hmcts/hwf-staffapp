@@ -25,6 +25,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
         expect(page).to have_content heading_title
       end
     end
+
+    scenario 'when clicked on "Next", goes to the next page' do
+      click_link 'Next'
+      expect(page).to have_content 'Is the evidence correct?'
+    end
   end
 
   context 'when on "Evidence accuracy" page' do
