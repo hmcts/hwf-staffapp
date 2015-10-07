@@ -11,8 +11,8 @@ RSpec.describe Evidence::Views::Overview do
 
   context 'required methods' do
     symbols = %i[reference processed_by expires date_of_birth full_name ni_number status fee
-               jurisdiction date_received form_name number_of_children total_monthly_income
-               income]
+                 jurisdiction date_received form_name number_of_children total_monthly_income
+                 income]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
