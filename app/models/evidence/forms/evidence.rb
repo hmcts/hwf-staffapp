@@ -12,6 +12,7 @@ module Evidence
 
       define_attributes
 
+      validates :id, numericality: { only_integer: true }
       validates :correct, inclusion: { in: [true, false] }
       validate :no_reason_when_correct
 
