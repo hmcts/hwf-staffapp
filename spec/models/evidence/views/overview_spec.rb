@@ -76,19 +76,19 @@ RSpec.describe Evidence::Views::Overview do
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }
 
-      it { expect(overview.income).to eq '&#10003; Passed' }
+      it { expect(overview.income).to eq '✓ Passed' }
     end
 
     context 'when the application is a part remission' do
       let(:outcome) { 'part' }
 
-      it { expect(overview.income).to eq '&#10003; Passed' }
+      it { expect(overview.income).to eq '✓ Passed' }
     end
 
     context 'when the application is a non remission' do
       let(:outcome) { 'none' }
 
-      it { expect(overview.income).to eq '&#10007; Failed' }
+      it { expect(overview.income).to eq '✗ Failed' }
     end
   end
 
@@ -98,13 +98,13 @@ RSpec.describe Evidence::Views::Overview do
     context 'when the application has valid savings and investments' do
       let(:result) { true }
 
-      it { expect(overview.savings).to eq '&#10003; Passed' }
+      it { expect(overview.savings).to eq '✓ Passed' }
     end
 
     context 'when the application does not have valid savings and investments' do
       let(:result) { false }
 
-      it { expect(overview.savings).to eq '&#10007; Failed' }
+      it { expect(overview.savings).to eq '✗ Failed' }
     end
   end
 
