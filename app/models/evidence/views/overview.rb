@@ -37,7 +37,7 @@ module Evidence
       end
 
       def fee
-        @evidence.application.fee.round
+        "£#{@evidence.application.fee.round}"
       end
 
       def number_of_children
@@ -45,7 +45,7 @@ module Evidence
       end
 
       def total_monthly_income
-        @evidence.application.income.round
+        "£#{@evidence.application.income.round}"
       end
 
       def income

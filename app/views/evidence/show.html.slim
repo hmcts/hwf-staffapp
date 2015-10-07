@@ -7,69 +7,9 @@ h2 Waiting for evidence
       #note You'll need the applicant's evidence of income
       a.button.success href='#' Start now
 
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Processing details
-    .row
-      .small-12.medium-5.large-4.columns.subheader Reference
-      .small-12.medium-7.large-8.columns =@overview.reference
-    .row
-      .small-12.medium-5.large-4.columns.subheader Processed by
-      .small-12.medium-7.large-8.columns =@overview.processed_by
-    .row
-      .small-12.medium-5.large-4.columns.subheader Expires
-      .small-12.medium-7.large-8.columns =@overview.expires
-
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Personal details
-    .row
-      .small-12.medium-5.large-4.columns.subheader Full name
-      .small-12.medium-7.large-8.columns =@overview.full_name
-    .row
-      .small-12.medium-5.large-4.columns.subheader Date of birth
-      .small-12.medium-7.large-8.columns =@overview.date_of_birth
-    .row
-      .small-12.medium-5.large-4.columns.subheader NI number
-      .small-12.medium-7.large-8.columns =@overview.ni_number
-    .row
-      .small-12.medium-5.large-4.columns.subheader Status
-      .small-12.medium-7.large-8.columns =@overview.status
-
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Application details
-    .row
-      .small-12.medium-5.large-4.columns.subheader Fee
-      .small-12.medium-7.large-8.columns  £#{@overview.fee}
-    .row
-      .small-12.medium-5.large-4.columns.subheader Jurisdiction
-      .small-12.medium-7.large-8.columns =@overview.jurisdiction
-    .row
-      .small-12.medium-5.large-4.columns.subheader Date application received
-      .small-12.medium-7.large-8.columns =@overview.date_received
-    .row
-      .small-12.medium-5.large-4.columns.subheader Form name or number
-      .small-12.medium-7.large-8.columns =@overview.form_name
-
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Assessment
-    .row
-      .small-12.medium-5.large-4.columns.subheader Savings and investments
-      .small-12.medium-7.large-8.columns =@overview.savings.html_safe
-    .row
-      .small-12.medium-5.large-4.columns.subheader Income
-      .small-12.medium-7.large-8.columns =@overview.income.html_safe
-    .row
-      .small-12.medium-5.large-4.columns.subheader Number of Children
-      .small-12.medium-7.large-8.columns =@overview.number_of_children
-    .row
-      .small-12.medium-5.large-4.columns.subheader Total monthly income
-      .small-12.medium-7.large-8.columns £#{@overview.total_monthly_income}
+  =build_section 'Processing details', @overview, %w[reference processed_by expires]
+  =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
+  =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
+  =build_section 'Assessment', @overview, %w[savings income number_of_children total_monthly_income]
 
   =render(partial: 'shared/remission_type', locals: { source: @overview })
