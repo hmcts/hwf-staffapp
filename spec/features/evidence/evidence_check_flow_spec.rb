@@ -39,8 +39,8 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     scenario 'fill in the form' do
-      choose 'evidence_correct_true'
-      click_button 'Next'
+      choose 'evidence_correct_false'
+      expect(page).to have_content 'What is incorrect about evidence?'
     end
   end
 end

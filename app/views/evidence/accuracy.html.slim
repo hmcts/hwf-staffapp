@@ -16,4 +16,11 @@ h2 Evidence
                 label for='evidence_correct_true'
                   = f.radio_button :correct, 'true'
                   = t('evidence.correct')
+
+        .row.collapse.panel-indent#reason-input
+          .small-12.medium-6.large-6.columns.form-group
+              .small-10.medium-8.large-9.columns
+                # What is incorrect about evidence?
+                = f.text_field :reason
+
   = f.submit 'Next', :class => 'button primary'

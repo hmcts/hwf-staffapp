@@ -19,6 +19,7 @@
 //= require details.polyfill
 //= require income
 //= require applicants_partner_over_61
+//= require evidence_confirmation
 
 $(function(){
   Foundation.global.namespace = '';
