@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :build, controller: 'applications/build'
   end
 
-  get 'evidence/:id', to: 'evidence#show'
+  get 'evidence/:id', to: 'evidence#show', as: :evidence_show
   get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
 
   resources :evidence_checks, only: :show
