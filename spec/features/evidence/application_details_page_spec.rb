@@ -8,16 +8,24 @@ RSpec.feature 'Application details page', type: :feature do
   let(:user) { create :user }
   let(:application) { create :application_full_remission, user: user }
   let!(:evidence) { create :evidence_check, application_id: application.id }
-  headings = ['Waiting for evidence', 'Process evidence', 'Processing details', 'Personal details', 'Application details', 'Assessment']
 
-  before do
-    login_as user
-    visit evidence_path(id: evidence.id)
-  end
+  before { login_as user }
 
-  headings.each do |heading_title|
-    it "has a heading titled #{heading_title}" do
-      expect(page).to have_content heading_title
+  context 'when on "Evidence show" page' do
+    before { visit evidence_show_path(id: evidence.id) }
+    headings = ['Waiting for evidence',
+                'Process evidence',
+                'Processing details',
+                'Personal details',
+                'Application details',
+                'Assessment']
+
+    headings.each do |heading_title|
+      it "has a heading titled #{heading_title}" do
+        expect(page).to have_content heading_title
+      end
     end
   end
+
+  context 'when on "Evidence accuracy" page'
 end
