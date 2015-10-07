@@ -1,6 +1,7 @@
 class IncomeCalculation
-  def initialize(application)
+  def initialize(application, income = nil)
     @application = application
+    @income = income
   end
 
   def calculate
@@ -14,7 +15,7 @@ class IncomeCalculation
       @application.children,
       @application.fee,
       !@application.married.nil?,
-      @application.income,
+      income,
       !@application.dependents.nil?
     ].all?
   end
@@ -26,8 +27,12 @@ class IncomeCalculation
     }
   end
 
+  def income
+    @income ||= @application.income
+  end
+
   def applicants_maximum_contribution
-    [((@application.income - total_supplements) / 10) * 10 * 0.5, 0].max
+    [((income - total_supplements) / 10) * 10 * 0.5, 0].max
   end
 
   def total_supplements
