@@ -1,6 +1,6 @@
 class EvidenceController < ApplicationController
   def show
-    build_overview
+    evidence_overview
   end
 
   def accuracy
@@ -13,9 +13,13 @@ class EvidenceController < ApplicationController
 
   private
 
-  def build_overview
-    evidence ||= EvidenceCheck.find(params[:id])
-    @overview = Evidence::Views::Overview.new(evidence)
+  def prepare_evidence
+    @evidence ||= EvidenceCheck.find(params[:id])
+  end
+
+  def evidence_overview
+    prepare_evidence
+    @overview = Evidence::Views::Overview.new(@evidence)
   end
 
   def accuracy_form
