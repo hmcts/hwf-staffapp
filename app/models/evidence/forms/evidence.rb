@@ -14,6 +14,15 @@ module Evidence
       validates :correct, inclusion: { in: [true, false] }
       validate :no_reason_when_correct
 
+      def save
+        if valid?
+          persist!
+          true
+        else
+          false
+        end
+      end
+
       private
 
       def no_reason_when_correct
@@ -24,6 +33,9 @@ module Evidence
 
       def evidence_correct
         correct.equal?(true)
+      end
+
+      def persist!
       end
     end
   end

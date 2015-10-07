@@ -37,4 +37,15 @@ RSpec.describe Evidence::Forms::Evidence do
       it { expect(subject.valid?).to be false }
     end
   end
+
+  describe '#save' do
+    before do
+      allow(subject).to receive(:valid?).and_return(true)
+      allow(subject).to receive(:persist!)
+    end
+
+    it 'save the form data into appropriate models' do
+      expect(subject.save).to eq true
+    end
+  end
 end
