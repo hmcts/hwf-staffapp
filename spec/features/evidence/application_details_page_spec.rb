@@ -27,5 +27,15 @@ RSpec.feature 'Application details page', type: :feature do
     end
   end
 
-  context 'when on "Evidence accuracy" page'
+  context 'when on "Evidence accuracy" page' do
+    before { visit evidence_accuracy_path(id: evidence.id) }
+
+    it 'displays the title of the page' do
+      expect(page).to have_content 'Evidence'
+    end
+
+    it 'displays the form label' do
+      expect(page).to have_content 'Is the evidence correct?'
+    end
+  end
 end
