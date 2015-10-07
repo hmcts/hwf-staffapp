@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Application details page', type: :feature do
+RSpec.feature 'Evidence check flow', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
