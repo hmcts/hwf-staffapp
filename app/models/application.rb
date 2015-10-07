@@ -1,6 +1,5 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
-  include IncomeCalculator
   belongs_to :user
   belongs_to :jurisdiction
   belongs_to :office
@@ -195,7 +194,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def run_auto_checks
     run_benefit_check
-    calculate if can_calculate?
+    run_income_calculation
   end
 
   def children_numbers
@@ -228,6 +227,17 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
       update(
         application_type: 'benefit',
         application_outcome: outcome_from_dwp_result
+      )
+    end
+  end
+
+  def run_income_calculation
+    income_calculation_result = IncomeCalculation.new(self).calculate
+    if income_calculation_result
+      update_columns(
+        application_type: 'income',
+        application_outcome: income_calculation_result[:outcome],
+        amount_to_pay: income_calculation_result[:amount]
       )
     end
   end
