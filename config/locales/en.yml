@@ -153,6 +153,22 @@ en-GB:
         <p>%{user_name}</p>
   activemodel:
     attributes:
+      evidence/views/overview:
+        reference: Reference
+        processed_by: Processed by
+        expires: Expires
+        full_name: Full name
+        date_of_birth: Date of birth
+        ni_number: NI Number
+        status: Status
+        fee: Fee
+        jurisdiction: Jurisdiction
+        date_received: Date received
+        form_name: Form name or number
+        savings: Savings and investments
+        income: Income
+        number_of_children: Number of Children
+        total_monthly_income: Total monthly income
       applikation/forms/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
       applikation/forms/income:
