@@ -12,6 +12,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     where(benefits: false, application_type: 'income', application_outcome: %w[part full])
   }
 
+  scope :waiting_for_evidence, lambda {
+    includes(:evidence_check).references(:evidence_check).where.not(evidence_checks: { id: nil })
+  }
+
   MAX_AGE = 120
   MIN_AGE = 16
 

@@ -199,6 +199,18 @@ RSpec.describe Application, type: :model do
         is_expected.to match_array([application_1, application_2])
       end
     end
+
+    describe '.waiting_for_evidence', focus: true do
+      let!(:application1) { create :application }
+      let!(:application2) { create :application }
+      let!(:evidence_check) { create :evidence_check, application: application1 }
+
+      subject { described_class.waiting_for_evidence }
+
+      it 'returns only applications which have EvidenceCheck reference' do
+        is_expected.to match_array([application1])
+      end
+    end
   end
 
   describe 'ni_number' do
