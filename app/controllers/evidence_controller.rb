@@ -3,6 +3,9 @@ class EvidenceController < ApplicationController
     build_overview
   end
 
+  def accuracy
+  end
+
   private
 
   def build_overview
