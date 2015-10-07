@@ -13,28 +13,30 @@ RSpec.describe Evidence::Forms::Evidence do
   end
 
   describe 'validations' do
-    context 'when true' do
-      let(:evidence) { { correct: true } }
+    context 'for attribute "correct"' do
+      context 'when true' do
+        let(:evidence) { { correct: true } }
 
-      it { expect(subject.valid?).to be true }
+        it { expect(subject.valid?).to be true }
 
-      describe 'the reason' do
-        let(:evidence) { { correct: true, reason: 'some reason' } }
+        describe 'the reason' do
+          let(:evidence) { { correct: true, reason: 'some reason' } }
+
+          it { expect(subject.valid?).to be false }
+        end
+      end
+
+      context 'when false' do
+        let(:evidence) { { correct: false } }
+
+        it { expect(subject.valid?).to be true }
+      end
+
+      context 'when not a boolean value' do
+        let(:evidence) { { correct: 'some string' } }
 
         it { expect(subject.valid?).to be false }
       end
-    end
-
-    context 'when false' do
-      let(:evidence) { { correct: false } }
-
-      it { expect(subject.valid?).to be true }
-    end
-
-    context 'when not a boolean value' do
-      let(:evidence) { { correct: 'some string' } }
-
-      it { expect(subject.valid?).to be false }
     end
   end
 
