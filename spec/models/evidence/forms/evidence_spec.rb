@@ -64,6 +64,8 @@ RSpec.describe Evidence::Forms::Evidence do
     before do
       allow(subject).to receive(:valid?).and_return(true)
       allow(subject).to receive(:persist!)
+      allow(EvidenceCheck).to receive(:find)
+      allow_any_instance_of(EvidenceCheck).to receive(:save)
     end
 
     it 'save the form data into appropriate models' do

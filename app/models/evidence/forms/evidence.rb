@@ -38,6 +38,8 @@ module Evidence
       end
 
       def persist!
+        @evidence = EvidenceCheck.find(id)
+        @evidence.save(correct: correct)
       end
     end
   end
