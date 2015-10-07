@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Forms::Evidence do
-  params_list = %i[correct reason]
+  params_list = %i[correct reason id]
 
   let(:evidence) { { correct: true } }
   subject { described_class.new(evidence) }
