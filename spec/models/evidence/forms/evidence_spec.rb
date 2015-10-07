@@ -13,9 +13,29 @@ RSpec.describe Evidence::Forms::Evidence do
   end
 
   describe 'validations' do
+    context 'for attribute "id"' do
+      context 'when an integer' do
+        let(:evidence) { { correct: true, id: 1 } }
+
+        it { expect(subject.valid?).to be true }
+      end
+
+      context 'when not an integer' do
+        let(:evidence) { { correct: true, id: 'foo' } }
+
+        it { expect(subject.valid?).to be false }
+      end
+
+      context 'when not present' do
+        let(:evidence) { { correct: true } }
+
+        it { expect(subject.valid?).to be false }
+      end
+    end
+
     context 'for attribute "correct"' do
       context 'when true' do
-        let(:evidence) { { correct: true } }
+        let(:evidence) { { correct: true, id: 1 } }
 
         it { expect(subject.valid?).to be true }
 
@@ -27,7 +47,7 @@ RSpec.describe Evidence::Forms::Evidence do
       end
 
       context 'when false' do
-        let(:evidence) { { correct: false } }
+        let(:evidence) { { correct: false, id: 1 } }
 
         it { expect(subject.valid?).to be true }
       end
