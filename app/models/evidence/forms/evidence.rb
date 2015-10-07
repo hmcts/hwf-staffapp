@@ -39,7 +39,8 @@ module Evidence
 
       def persist!
         @evidence = EvidenceCheck.find(id)
-        @evidence.save(correct: correct)
+        @evidence.update(correct: correct)
+        @evidence.build_reason(explanation: reason).save unless reason.blank?
       end
     end
   end
