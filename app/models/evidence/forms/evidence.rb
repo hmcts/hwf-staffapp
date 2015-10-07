@@ -4,6 +4,7 @@ module Evidence
 
       def self.permitted_attributes
         {
+          id: Integer,
           correct: Boolean,
           reason: String
         }
