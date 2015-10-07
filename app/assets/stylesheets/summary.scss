@@ -4,4 +4,17 @@ div.summary-section {
   border-bottom: solid 1px $grey-2;
   margin-bottom: 1em;
   padding-bottom: .5em;
+
+  .summary-result{
+    font-weight: bold;
+    &.full {
+      color: $turquoise;
+    }
+    &.part {
+      color: $orange;
+    }
+    &.none {
+      color: $error-colour;
+    }
+  }
 }
