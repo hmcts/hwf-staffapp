@@ -50,16 +50,16 @@ module Evidence
 
       def income
         {
-          'full' => '&#10003; Passed',
-          'part' => '&#10003; Passed',
-          'none' => '&#10007; Failed'
+          'full' => I18n.t('activerecord.attributes.application.summary.passed'),
+          'part' => I18n.t('activerecord.attributes.application.summary.passed'),
+          'none' => I18n.t('activerecord.attributes.application.summary.failed')
         }[@evidence.application.application_outcome]
       end
 
       def savings
         {
-          'true' => '&#10003; Passed',
-          'false' => '&#10007; Failed'
+          'true' => I18n.t('activerecord.attributes.application.summary.passed'),
+          'false' => I18n.t('activerecord.attributes.application.summary.failed')
         }[@evidence.application.savings_investment_valid?.to_s]
       end
 
