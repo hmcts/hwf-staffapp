@@ -37,5 +37,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
     it 'displays the form label' do
       expect(page).to have_content 'Is the evidence correct?'
     end
+
+    scenario 'fill in the form' do
+      choose 'evidence_correct_true'
+      click_button 'Next'
+    end
   end
 end

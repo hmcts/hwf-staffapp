@@ -27,4 +27,12 @@ RSpec.describe EvidenceController, type: :controller do
       expect(response).to render_template('accuracy')
     end
   end
+
+  describe 'POST #accuracy_save' do
+    before(:each) { post :accuracy_save, id: evidence }
+
+    it 'returns the correct status code' do
+      expect(response.status).to eq 302
+    end
+  end
 end
