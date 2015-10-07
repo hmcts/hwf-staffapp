@@ -57,7 +57,7 @@ RSpec.describe Evidence::Views::Overview do
       let(:fee_amount) { 100.49 }
 
       it 'formats the fee amount correctly' do
-        expect(overview.fee).to eq 100
+        expect(overview.fee).to eq '£100'
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Evidence::Views::Overview do
       let(:fee_amount) { 0.49 }
 
       it 'formats the fee amount correctly' do
-        expect(overview.fee).to eq 0
+        expect(overview.fee).to eq '£0'
       end
     end
   end
