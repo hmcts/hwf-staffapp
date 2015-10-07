@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en-GB:
+  evidence:
+    correct: 'Yes'
+    incorrect: 'No'
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
