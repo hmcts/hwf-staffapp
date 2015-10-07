@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe IncomeCalculation do
   let(:application) { create :application }
-  subject { described_class.new(application) }
+  subject(:calculation) { described_class.new(application) }
 
   describe '.calculate' do
+    subject { calculation.calculate }
+
     context 'when data for calculation is present' do
-      it 'returns application with income calculation' do
-        expect(subject.calculate).to be_a Application
+      it 'returns Hash with income calculation' do
+        is_expected.to be_a Hash
       end
 
       CalculatorTestData.seed_data.each do |src|
@@ -18,10 +20,8 @@ RSpec.describe IncomeCalculation do
             children: src[:children],
             income: src[:income]
           )
-          subject.calculate
-          expect(application.application_type).to eq 'income'
-          expect(application.application_outcome).to eq src[:type]
-          expect(application.amount_to_pay).to eq src[:they_pay].to_i
+
+          is_expected.to eql(outcome: src[:type], amount: src[:they_pay].to_i)
         end
       end
     end
@@ -29,7 +29,7 @@ RSpec.describe IncomeCalculation do
     context 'when data for calculation is missing' do
       before { application.fee = nil }
       it 'returns false' do
-        expect(subject.calculate).to eq false
+        is_expected.to be nil
       end
     end
   end

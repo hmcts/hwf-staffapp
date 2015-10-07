@@ -4,12 +4,7 @@ class IncomeCalculation
   end
 
   def calculate
-    if calculation_inputs_present?
-      assign_type_and_payable
-      @application
-    else
-      false
-    end
+    return_outcome_and_amount if calculation_inputs_present?
   end
 
   private
@@ -19,14 +14,16 @@ class IncomeCalculation
       @application.children,
       @application.fee,
       !@application.married.nil?,
-      @application.income
+      @application.income,
+      !@application.dependents.nil?
     ].all?
   end
 
-  def assign_type_and_payable
-    @application.application_type = 'income'
-    @application.application_outcome = remission_type
-    @application.amount_to_pay = minimum_payable_to_applicant
+  def return_outcome_and_amount
+    {
+      outcome: remission_type,
+      amount: minimum_payable_to_applicant.to_i
+    }
   end
 
   def applicants_maximum_contribution
