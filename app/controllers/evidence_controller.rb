@@ -37,7 +37,7 @@ class EvidenceController < ApplicationController
     @form = Evidence::Forms::Evidence.new(evidence_params)
 
     if @form.save
-      redirect_to evidence_show_path
+      redirect_to evidence_income_path
     else
       render :accuracy
     end

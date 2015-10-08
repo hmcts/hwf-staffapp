@@ -51,10 +51,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
       expect(page).to have_content 'Is the evidence correct?'
     end
 
-    scenario 'fill in the form' do
+    scenario 'fill in the form takes me to the income page' do
       choose 'evidence_correct_false'
       expect(page).to have_content 'What is incorrect about the evidence?'
       click_button 'Next'
+      expect(page).to have_content 'Total monthly income from evidence'
     end
   end
 
@@ -63,7 +64,6 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     it 'displays the input label' do
       expect(page).to have_content 'Total monthly income from evidence'
-      click_button 'Next'
     end
   end
 end
