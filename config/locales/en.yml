@@ -156,6 +156,9 @@ en-GB:
         <p>%{user_name}</p>
   activemodel:
     attributes:
+      evidence/forms/evidence:
+        correct: Is the evidence correct?
+        reason: What is incorrect about the evidence?
       evidence/views/overview:
         reference: Reference
         processed_by: Processed by
