@@ -11,6 +11,9 @@ class EvidenceController < ApplicationController
     save_accuracy_form
   end
 
+  def income
+  end
+
   private
 
   def prepare_evidence

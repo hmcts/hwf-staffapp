@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'evidence/:id', to: 'evidence#show', as: :evidence_show
   get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
   post 'evidence/:id/accuracy_save', to: 'evidence#accuracy_save', as: :evidence_accuracy_save
+  get 'evidence/:id/income', to: 'evidence#income', as: :evidence_income
 
   resources :evidence_checks, only: :show
 

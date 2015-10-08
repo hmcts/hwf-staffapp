@@ -57,4 +57,13 @@ RSpec.feature 'Evidence check flow', type: :feature do
       click_button 'Next'
     end
   end
+
+  context 'when on "Income" page' do
+    before { visit evidence_income_path(id: evidence.id) }
+
+    it 'displays the input label' do
+      expect(page).to have_content 'Total monthly income from evidence'
+      click_button 'Next'
+    end
+  end
 end
