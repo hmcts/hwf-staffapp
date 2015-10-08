@@ -76,10 +76,27 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'POST #income_save' do
-    before(:each) { post :income_save, id: evidence, evidence: { amount: '50' } }
+    before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
+    before(:each) { post :income_save, id: evidence, evidence: { amount: amount } }
 
-    it 'returns the correct status code' do
-      expect(response.status).to eq 302
+    context 'when the form is filled in correctly' do
+      let(:amount) { '50' }
+
+      it 'returns the correct status code' do
+        expect(response).to redirect_to(evidence_show_path)
+      end
+
+      it 'returns the correct status code' do
+        expect(response.status).to eq 302
+      end
+    end
+
+    context 'when the form is filled in with nothing' do
+      let(:amount) { '' }
+
+      it 'returns the correct status code' do
+        expect(response).to redirect_to evidence_show_path
+      end
     end
   end
 end

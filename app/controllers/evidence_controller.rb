@@ -16,7 +16,7 @@ class EvidenceController < ApplicationController
   end
 
   def income_save
-    redirect_to evidence_show_path
+    income_form_save
   end
 
   private
@@ -50,6 +50,19 @@ class EvidenceController < ApplicationController
 
   def income_form
     @form = Evidence::Forms::Income.new({})
+  end
+
+  def income_form_save
+    evidence_params = { id: params['id'],
+                        amount: params['evidence']['amount'] }
+
+    @form = Evidence::Forms::Income.new(evidence_params)
+
+    if @form.save
+      redirect_to evidence_show_path
+    else
+      render :income
+    end
   end
 
   # TODO: permitted params setup
