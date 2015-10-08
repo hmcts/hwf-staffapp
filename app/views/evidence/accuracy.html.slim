@@ -6,7 +6,7 @@ h2 Evidence
       .form-group
         .row.collapse
           .columns.small-12
-            # Is the evidence correct?
+            = f.label :correct
             .options.radio
               .option
                 label for='evidence_correct_false'
@@ -17,10 +17,9 @@ h2 Evidence
                   = f.radio_button :correct, 'true'
                   = t('evidence.correct')
 
-        .row.collapse.panel-indent#reason-input
-          .small-12.medium-6.large-6.columns.form-group
-              .small-10.medium-8.large-9.columns
-                # What is incorrect about evidence?
-                = f.text_field :reason
+      .panel-indent.form-group.row.collapse#reason-input
+        .columns.small-12
+          = f.label :reason
+          = f.text_area :reason, rows: 3
 
   = f.submit 'Next', :class => 'button primary'
