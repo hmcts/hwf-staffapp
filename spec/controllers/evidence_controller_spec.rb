@@ -74,4 +74,12 @@ RSpec.describe EvidenceController, type: :controller do
       expect(response).to render_template('income')
     end
   end
+
+  describe 'POST #income_save' do
+    before(:each) { post :income_save, id: evidence, evidence: { amount: '50' } }
+
+    it 'returns the correct status code' do
+      expect(response.status).to eq 302
+    end
+  end
 end

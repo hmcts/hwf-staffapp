@@ -15,6 +15,10 @@ class EvidenceController < ApplicationController
      income_form
   end
 
+  def income_save
+    redirect_to evidence_show_path
+  end
+
   private
 
   def prepare_evidence
