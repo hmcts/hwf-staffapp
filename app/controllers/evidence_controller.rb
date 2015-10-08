@@ -19,6 +19,10 @@ class EvidenceController < ApplicationController
     income_form_save
   end
 
+  def result
+    evidence_result
+  end
+
   private
 
   def prepare_evidence
@@ -28,6 +32,11 @@ class EvidenceController < ApplicationController
   def evidence_overview
     prepare_evidence
     @overview = Evidence::Views::Overview.new(@evidence)
+  end
+
+  def evidence_result
+    prepare_evidence
+    @result = Evidence::Views::Result.new(@evidence)
   end
 
   def accuracy_form

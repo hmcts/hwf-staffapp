@@ -7,7 +7,9 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
   let(:user) { create :user }
   let(:application) { create :application_full_remission, user: user }
-  let!(:evidence) { create :evidence_check, application_id: application.id }
+  let(:outcome) { nil }
+  let(:amount) { nil }
+  let!(:evidence) { create :evidence_check, application_id: application.id, outcome: outcome, amount_to_pay: amount }
 
   before { login_as user }
 
@@ -66,6 +68,37 @@ RSpec.feature 'Evidence check flow', type: :feature do
       expect(page).to have_content 'Total monthly income from evidence'
       fill_in 'evidence_amount', with: 500
       click_button 'Next'
+    end
+  end
+
+  context 'when on "income result" page' do
+    before { visit evidence_result_path(id: evidence.id) }
+
+    it 'displays the title of the page' do
+      expect(page).to have_content('Income')
+    end
+
+    it 'displays a result block' do
+      expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
+    end
+
+    context 'when the evidence check returns none' do
+      let(:outcome) { 'none' }
+
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee') }
+    end
+
+    context 'when the evidence check returns [part]' do
+      let(:outcome) { 'part' }
+      let(:amount) { 45 }
+
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £45 towards the fee') }
+    end
+
+    context 'when the evidence check returns full' do
+      let(:outcome) { 'full' }
+
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee') }
     end
   end
 end

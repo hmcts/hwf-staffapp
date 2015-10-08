@@ -1,0 +1,7 @@
+.row
+  .columns.small-12
+    h2 Income
+
+=render(partial: 'shared/remission_type', locals: { source: @result })
+
+= link_to 'Next', 'evidence_summary_path_when_set', class: 'button success'
