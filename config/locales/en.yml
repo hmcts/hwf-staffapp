@@ -159,7 +159,6 @@ en-GB:
       no_evidence_checks: There are no applications waiting for evidence
       table_header:
         reference: Reference
-        form_name: Form
         full_name: Applicant
         processed_by: Processed by
         expires: Expired
