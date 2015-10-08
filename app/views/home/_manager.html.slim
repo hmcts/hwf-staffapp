@@ -20,10 +20,10 @@
 
 .row
   .small-12.medium-12.large-12.columns
-    =render('home/waiting_for_evidence')
-
-.row
-  .small-12.medium-12.large-12.columns
     h3.pad-top-thirty-px.bold Manage your office
     p =link_to 'Staff overview', users_path
     p =link_to 'Your Office', current_user.office
+
+.row
+  .small-12.medium-12.large-12.columns
+    =render('home/waiting_for_evidence')
