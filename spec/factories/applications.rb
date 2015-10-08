@@ -16,6 +16,7 @@ FactoryGirl.define do
     income 500
     threshold_exceeded false
     refund false
+    user
 
     trait :probate do
       probate true
