@@ -7,7 +7,7 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
   Warden.test_mode!
 
   let(:office) { create :office }
-  let(:user) { create :manager, office: office }
+  let(:user) { create :user, office: office }
 
   let(:application1) { create :application_full_remission, office: office }
   let!(:evidence1) { create :evidence_check, application: application1 }

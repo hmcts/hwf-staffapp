@@ -23,7 +23,9 @@ class HomeController < ApplicationController
   end
 
   def load_applications_waiting_for_evidence
-    @waiting_for_evidence = current_user.office.applications.waiting_for_evidence
+    unless current_user.admin?
+      @waiting_for_evidence = current_user.office.applications.waiting_for_evidence
+    end
   end
 
   def load_graph_data
