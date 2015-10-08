@@ -7,9 +7,9 @@ h2 Waiting for evidence
       #note You'll need the applicant's evidence of income
       = link_to 'Next', evidence_accuracy_path(@evidence), class: 'button success'
 
-  =build_section 'Processing details', @overview, %w[reference processed_by expires]
-  =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
-  =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
-  =build_section 'Assessment', @overview, %w[savings income number_of_children total_monthly_income]
+=build_section 'Processing details', @overview, %w[reference processed_by expires]
+=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
+=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
+=build_section 'Assessment', @overview, %w[savings income number_of_children total_monthly_income]
 
-  =render(partial: 'shared/remission_type', locals: { source: @overview })
+=render(partial: 'shared/remission_type', locals: { source: @overview })
