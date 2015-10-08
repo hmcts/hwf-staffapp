@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008082514) do
+ActiveRecord::Schema.define(version: 20151008102856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,9 @@ ActiveRecord::Schema.define(version: 20151008082514) do
     t.datetime "updated_at"
     t.datetime "expires_at",     null: false
     t.boolean  "correct"
+    t.integer  "income"
+    t.string   "outcome"
+    t.integer  "amount_to_pay"
   end
 
   add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree
