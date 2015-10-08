@@ -1,21 +1,21 @@
-- if evidence_check_enabled?
-  h3 Waiting for evidence
+- if @evidence_enabled
+  h3 =t('evidence_check.dashboard.heading')
 
   - if @waiting_for_evidence.present?
     table.waiting-for-evidence
       tr
-        th Reference
-        th Form
-        th Applicant
-        th Processed by
-        th Expires
-      - @waiting_for_evidence.each do |application|
+        th =t('evidence_check.dashboard.table_header.reference')
+        th =t('evidence_check.dashboard.table_header.form_name')
+        th =t('evidence_check.dashboard.table_header.full_name')
+        th =t('evidence_check.dashboard.table_header.processed_by')
+        th =t('evidence_check.dashboard.table_header.expires')
+      - @waiting_for_evidence.each do |evidence|
         tr
-          td =link_to(application.reference, evidence_show_path(application.evidence_check))
-          td =application.form_name
-          td =application.full_name
-          td =application.user.name
-          td =application.evidence_check.expires_at.to_s(:gov_uk_long)
+          td =link_to(evidence.reference, evidence_show_path(evidence.evidence))
+          td =evidence.form_name
+          td =evidence.full_name
+          td =evidence.processed_by
+          td =evidence.expires
 
   - else
-    p There are no applications waiting for evidence
+    p =t('evidence_check.dashboard.no_evidence_checks')

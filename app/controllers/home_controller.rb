@@ -24,8 +24,17 @@ class HomeController < ApplicationController
 
   def load_applications_waiting_for_evidence
     if evidence_check_enabled? && !current_user.admin?
-      @waiting_for_evidence = current_user.office.applications.waiting_for_evidence
+      @evidence_enabled = true
+      @waiting_for_evidence = waiting_for_evidence.map do |application|
+        Evidence::Views::Overview.new(application.evidence_check)
+      end
+    else
+      @evidence_enabled = false
     end
+  end
+
+  def waiting_for_evidence
+    current_user.office.applications.waiting_for_evidence
   end
 
   def load_graph_data
