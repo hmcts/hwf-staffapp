@@ -53,11 +53,17 @@ RSpec.feature 'Evidence check flow', type: :feature do
       expect(page).to have_content 'Is the evidence correct?'
     end
 
-    scenario 'fill in the form takes me to the income page' do
+    scenario 'confirming the evidence is correct redirects to the income page' do
+      choose 'evidence_correct_true'
+      click_button 'Next'
+      expect(page).to have_content 'Total monthly income from evidence'
+    end
+
+    scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
       expect(page).to have_content 'What is incorrect about the evidence?'
       click_button 'Next'
-      expect(page).to have_content 'Total monthly income from evidence'
+      expect(page).to have_content 'Check details'
     end
   end
 
