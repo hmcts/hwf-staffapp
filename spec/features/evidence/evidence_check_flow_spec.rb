@@ -35,6 +35,14 @@ RSpec.feature 'Evidence check flow', type: :feature do
   context 'when on "Evidence accuracy" page' do
     before { visit evidence_accuracy_path(id: evidence.id) }
 
+    context 'when the page is submitted without anything filled in' do
+      before { click_button 'Next' }
+
+      it 're-renders the page' do
+        expect(page).to have_content 'Is the evidence correct?'
+      end
+    end
+
     it 'displays the title of the page' do
       expect(page).to have_content 'Evidence'
     end

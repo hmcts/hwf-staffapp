@@ -8,7 +8,7 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_save
-    redirect_to evidence_show_path
+    save_accuracy_form
   end
 
   private
@@ -25,4 +25,20 @@ class EvidenceController < ApplicationController
   def accuracy_form
     @form = Evidence::Forms::Evidence.new({})
   end
+
+  def save_accuracy_form
+    evidence_params = { id: params['id'],
+                        correct: params['evidence']['correct'],
+                        reason: params['evidence']['reason'] }
+
+    @form = Evidence::Forms::Evidence.new(evidence_params)
+
+    if @form.save
+      redirect_to evidence_show_path
+    else
+      render :accuracy
+    end
+  end
+
+  # TODO: permitted params setup
 end
