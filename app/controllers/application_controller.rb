@@ -22,4 +22,5 @@ class ApplicationController < ActionController::Base
   def evidence_check_enabled?
     Settings.evidence_check.enabled == true
   end
+  helper_method :evidence_check_enabled?
 end

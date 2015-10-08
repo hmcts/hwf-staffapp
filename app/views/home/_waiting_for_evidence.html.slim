@@ -1,20 +1,21 @@
-h3 Waiting for evidence
+- if evidence_check_enabled?
+  h3 Waiting for evidence
 
-- if @waiting_for_evidence.present?
-  table.waiting-for-evidence
-    tr
-      th Reference
-      th Form
-      th Applicant
-      th Processed by
-      th Expires
-    - @waiting_for_evidence.each do |application|
+  - if @waiting_for_evidence.present?
+    table.waiting-for-evidence
       tr
-        td =link_to(application.reference, evidence_show_path(application.evidence_check))
-        td =application.form_name
-        td =application.full_name
-        td =application.user.name
-        td =application.evidence_check.expires_at.to_s(:gov_uk_long)
+        th Reference
+        th Form
+        th Applicant
+        th Processed by
+        th Expires
+      - @waiting_for_evidence.each do |application|
+        tr
+          td =link_to(application.reference, evidence_show_path(application.evidence_check))
+          td =application.form_name
+          td =application.full_name
+          td =application.user.name
+          td =application.evidence_check.expires_at.to_s(:gov_uk_long)
 
-- else
-  p There are no applications waiting for evidence
+  - else
+    p There are no applications waiting for evidence
