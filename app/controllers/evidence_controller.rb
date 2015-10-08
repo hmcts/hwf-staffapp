@@ -12,6 +12,7 @@ class EvidenceController < ApplicationController
   end
 
   def income
+     income_form
   end
 
   private
@@ -41,6 +42,10 @@ class EvidenceController < ApplicationController
     else
       render :accuracy
     end
+  end
+
+  def income_form
+    @form = Evidence::Forms::Income.new({})
   end
 
   # TODO: permitted params setup

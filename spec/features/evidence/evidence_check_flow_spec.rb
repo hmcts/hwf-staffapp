@@ -62,7 +62,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   context 'when on "Income" page' do
     before { visit evidence_income_path(id: evidence.id) }
 
-    it 'displays the input label' do
+    it 'displays the income form' do
       expect(page).to have_content 'Total monthly income from evidence'
     end
   end
