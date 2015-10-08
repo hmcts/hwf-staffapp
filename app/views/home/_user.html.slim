@@ -1,0 +1,18 @@
+.small-12.medium-8.large-5.columns
+  h2.pad-top-thirty-px.bold Process application
+  p You'll need:
+  ul
+    li the help with fees application form (EX160)
+    li the court or tribunal form related to the application
+  .actions
+    =link_to 'Start now', new_application_path, class: 'button success'
+
+.small-12.medium-8.large-5.columns
+  .info-box
+    h3.bold Get Help
+    p =link_to t('functions.staff_guide').to_s, guide_path
+    p =link_to t('functions.feedback').to_s, feedback_path
+    details
+      summary
+        span.summary Contact us
+      div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}
