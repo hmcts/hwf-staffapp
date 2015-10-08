@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Forms::Income do
-  params_list = %i[amount]
+  params_list = %i[id amount]
 
-  let(:income) { { amount: '500' } }
+  let(:income) { { id: 1, amount: '500' } }
   subject { described_class.new(income) }
 
   describe '.permitted_attributes' do
@@ -48,6 +48,19 @@ RSpec.describe Evidence::Forms::Income do
       it 'turns the string into 0' do
         expect(subject.amount).to eq '0'
       end
+    end
+  end
+
+  describe '#save' do
+    before do
+      allow(subject).to receive(:valid?).and_return(true)
+      allow(subject).to receive(:persist!)
+      allow(EvidenceCheck).to receive(:find)
+      allow_any_instance_of(EvidenceCheck).to receive(:update)
+    end
+
+    it 'saves the form data into appropriate models' do
+      expect(subject.save).to eq true
     end
   end
 end
