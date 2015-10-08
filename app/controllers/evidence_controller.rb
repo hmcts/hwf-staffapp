@@ -12,7 +12,7 @@ class EvidenceController < ApplicationController
   end
 
   def income
-     income_form
+    income_form
   end
 
   def income_save
