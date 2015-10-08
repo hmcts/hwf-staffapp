@@ -10,7 +10,7 @@ h3 Waiting for evidence
       th Expires
     - @waiting_for_evidence.each do |application|
       tr
-        td =application.reference
+        td =link_to(application.reference, evidence_show_path(application.evidence_check))
         td =application.form_name
         td =application.full_name
         td =application.user.name
