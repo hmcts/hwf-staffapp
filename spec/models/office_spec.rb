@@ -5,6 +5,7 @@ RSpec.describe Office, type: :model do
   let(:office)      { build :office }
 
   it { is_expected.to have_many(:users) }
+  it { is_expected.to have_many(:applications) }
   it { is_expected.to have_many(:office_jurisdictions) }
   it { is_expected.to have_many(:jurisdictions).through(:office_jurisdictions) }
 

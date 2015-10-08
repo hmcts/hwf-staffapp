@@ -1,6 +1,7 @@
 module Evidence
   module Views
     class Overview
+      attr_reader :evidence
 
       APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number
                              date_received form_name amount_to_pay]
