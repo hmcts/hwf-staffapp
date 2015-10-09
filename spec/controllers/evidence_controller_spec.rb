@@ -83,7 +83,7 @@ RSpec.describe EvidenceController, type: :controller do
       let(:amount) { '50' }
 
       it 'returns the correct status code' do
-        expect(response).to redirect_to(evidence_show_path)
+        expect(response).to redirect_to(evidence_result_path)
       end
 
       it 'returns the correct status code' do
