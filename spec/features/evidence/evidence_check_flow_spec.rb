@@ -101,4 +101,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
       it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee') }
     end
   end
+
+  context 'when on "Evidence confirmation" page' do
+    before { visit evidence_confirmation_path(id: evidence.id) }
+
+    it { expect(page).to have_content 'Processing complete' }
+  end
 end
