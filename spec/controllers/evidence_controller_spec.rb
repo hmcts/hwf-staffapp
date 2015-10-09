@@ -76,10 +76,10 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'POST #income_save' do
-    before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
-    before(:each) { post :income_save, id: evidence, evidence: { amount: amount } }
-
     context 'when the form is filled in correctly' do
+      before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
+      before(:each) { post :income_save, id: evidence, evidence: { amount: amount } }
+
       let(:amount) { '50' }
 
       it 'returns the correct status code' do
@@ -92,10 +92,14 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     context 'when the form is filled in with nothing' do
+      before do
+        allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(false)
+        post :income_save, id: evidence, evidence: { amount: amount }
+      end
       let(:amount) { '' }
 
-      it 'returns the correct status code' do
-        expect(response).to redirect_to evidence_show_path
+      it 're-renders the view' do
+        expect(response).to render_template :income
       end
     end
   end

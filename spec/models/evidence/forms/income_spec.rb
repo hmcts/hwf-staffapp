@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Evidence::Forms::Income do
   params_list = %i[id amount]
 
-  let(:income) { { id: 1, amount: '500' } }
+  let(:amount) { '500' }
+  let(:income) { { id: 1, amount: amount } }
+
   subject { described_class.new(income) }
 
   describe '.permitted_attributes' do
@@ -14,39 +16,30 @@ RSpec.describe Evidence::Forms::Income do
 
   describe 'validation' do
     context 'when the income is 0' do
-      let(:income) { { amount: '0' } }
+      let(:amount) { '0' }
 
       it { expect(subject.valid?).to be true }
     end
 
     context 'when the income is negative' do
-      let(:income) { { amount: '-1' } }
+      let(:amount) { '-1' }
 
       it { expect(subject.valid?).to be false }
     end
 
-    context 'when income is a Float' do
-      before(:each) { subject.valid? }
+    context 'when the income is string' do
+      let(:amount) { 'a string' }
 
-      context 'round up' do
-        let(:income) { { amount: '0.5' } }
-
-        it { expect(subject.amount).to eq '1' }
-      end
-
-      context 'round down' do
-        let(:income) { { amount: '0.49' } }
-
-        it { expect(subject.amount).to eq '0' }
+      it 'does not pass validation' do
+        expect(subject.valid?).to be false
       end
     end
 
-    context 'when the income is string' do
-      before { subject.valid? }
-      let(:income) { { amount: 'a string' } }
+    context 'when the income is blank' do
+      let(:amount) { '' }
 
-      it 'turns the string into 0' do
-        expect(subject.amount).to eq '0'
+      it 'does not pass validation' do
+        expect(subject.valid?).to be false
       end
     end
   end

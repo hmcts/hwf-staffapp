@@ -2,8 +2,6 @@ module Evidence
   module Forms
     class Income < ::FormObject
 
-      include ActiveModel::Validations::Callbacks
-
       def self.permitted_attributes
         {
           id: Integer,
@@ -12,8 +10,6 @@ module Evidence
       end
 
       define_attributes
-
-      before_validation :format_amount
 
       validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
@@ -34,6 +30,7 @@ module Evidence
 
       def persist!
         @evidence = EvidenceCheck.find(id)
+        format_amount
         @evidence.update(income: amount)
       end
 
