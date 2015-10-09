@@ -77,7 +77,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
   end
 
-  context 'when on "income result" page' do
+  context 'when on "income result" page', focus: true do
     before { visit evidence_result_path(id: evidence_check.id) }
 
     it 'displays the title of the page' do
@@ -92,6 +92,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:outcome) { 'none' }
 
       it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee') }
+
+      it 'clicking the Next button redirects to the summary page' do
+        click_link_or_button 'Next'
+        expect(page).to have_content('Check details')
+      end
     end
 
     context 'when the evidence check returns [part]' do
@@ -99,12 +104,22 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:amount) { 45 }
 
       it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £45 towards the fee') }
+
+      it 'clicking the Next button redirects to the summary page' do
+        click_link_or_button 'Next'
+        expect(page).to have_content('Check details')
+      end
     end
 
     context 'when the evidence check returns full' do
       let(:outcome) { 'full' }
 
       it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee') }
+
+      it 'clicking the Next button redirects to the summary page' do
+        click_link_or_button 'Next'
+        expect(page).to have_content('Check details')
+      end
     end
   end
 
