@@ -39,8 +39,14 @@ module Evidence
 
       def persist!
         @evidence = EvidenceCheck.find(id)
-        @evidence.update(correct: correct)
+        @evidence.update(fields_to_update)
         @evidence.build_reason(explanation: reason).save unless reason.blank?
+      end
+
+      def fields_to_update
+        { correct: correct }.tap do |fields|
+          fields[:outcome] = 'none' unless correct
+        end
       end
     end
   end

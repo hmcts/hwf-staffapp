@@ -7,13 +7,13 @@ div.summary-section {
 
   .summary-result{
     font-weight: bold;
-    &.full {
+    &.full, &.passed {
       color: $turquoise;
     }
     &.part {
       color: $orange;
     }
-    &.none {
+    &.none, &.failed {
       color: $error-colour;
     }
   }

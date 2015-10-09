@@ -23,6 +23,12 @@ class EvidenceController < ApplicationController
     evidence_result
   end
 
+  def summary
+    evidence_view
+    evidence_overview
+    evidence_result
+  end
+
   def confirmation
     evidence_confirmation
   end
@@ -38,6 +44,11 @@ class EvidenceController < ApplicationController
     @overview = Evidence::Views::Overview.new(@evidence)
   end
 
+  def evidence_view
+    prepare_evidence
+    @evidence_view = Evidence::Views::Evidence.new(@evidence)
+  end
+
   def accuracy_form
     @form = Evidence::Forms::Evidence.new({})
   end
@@ -50,9 +61,17 @@ class EvidenceController < ApplicationController
     @form = Evidence::Forms::Evidence.new(evidence_params)
 
     if @form.save
-      redirect_to evidence_income_path
+      redirect_after_accuracy_save
     else
       render :accuracy
+    end
+  end
+
+  def redirect_after_accuracy_save
+    if @form.correct
+      redirect_to evidence_income_path
+    else
+      redirect_to evidence_summary_path
     end
   end
 
