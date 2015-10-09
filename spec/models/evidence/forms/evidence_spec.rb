@@ -39,10 +39,16 @@ RSpec.describe Evidence::Forms::Evidence do
 
         it { expect(subject.valid?).to be true }
 
-        describe 'the reason' do
-          let(:evidence) { { correct: true, reason: 'some reason' } }
+        context 'if the reason had been set' do
+          let(:evidence) { { id: 1, correct: true, reason: 'some reason' } }
 
-          it { expect(subject.valid?).to be false }
+          it 'removes the reason' do
+            subject.valid?
+
+            expect(subject.reason).to be nil
+          end
+
+          it { expect(subject.valid?).to be true }
         end
       end
 
@@ -85,6 +91,18 @@ RSpec.describe Evidence::Forms::Evidence do
         subject && evidence_check.reload
 
         expect(evidence_check.outcome).to be nil
+      end
+
+      context 'if the reason already existed' do
+        before do
+          create :reason, evidence_check: evidence_check
+        end
+
+        it 'deletes the reason' do
+          subject && evidence_check.reload
+
+          expect(evidence_check.reason).to be nil
+        end
       end
     end
 
