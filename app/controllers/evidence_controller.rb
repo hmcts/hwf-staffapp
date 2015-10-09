@@ -24,6 +24,7 @@ class EvidenceController < ApplicationController
   end
 
   def confirmation
+    evidence_confirmation
   end
 
   private
@@ -75,6 +76,10 @@ class EvidenceController < ApplicationController
   def evidence_result
     prepare_evidence
     @result = Evidence::Views::Result.new(@evidence)
+  end
+
+  def evidence_confirmation
+    @confirmation = EvidenceCheck.find(params[:id])
   end
 
   # TODO: permitted params setup

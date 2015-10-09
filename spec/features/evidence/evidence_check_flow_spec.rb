@@ -106,5 +106,25 @@ RSpec.feature 'Evidence check flow', type: :feature do
     before { visit evidence_confirmation_path(id: evidence.id) }
 
     it { expect(page).to have_content 'Processing complete' }
+
+    context 'when the remission is' do
+      context 'full' do
+        let(:outcome) { 'full' }
+
+        it { expect(page).not_to have_content /(not\ correct\|part-fee)/ }
+      end
+
+      context 'part' do
+        let(:outcome) { 'part' }
+
+        it { expect(page).to have_content 'part-fee' }
+      end
+
+      context 'rejected' do
+        let(:outcome) { 'none' }
+
+        it { expect(page).to have_content 'not correct' }
+      end
+    end
   end
 end
