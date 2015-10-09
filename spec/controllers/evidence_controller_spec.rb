@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe EvidenceController, type: :controller do
 
-  let(:evidence_check) { build_stubbed(:evidence_check) }
+  let(:evidence) { build_stubbed(:evidence_check) }
 
   before do
-    allow(EvidenceCheck).to receive(:find).with(evidence_check.id.to_s).and_return(evidence_check)
+    allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
   end
 
   describe 'GET #show' do
     before do
-      get :show, id: evidence_check.id
+      get :show, id: evidence.id
     end
 
     it 'returns the correct status code' do
@@ -30,16 +30,16 @@ RSpec.describe EvidenceController, type: :controller do
     let(:form) { double }
     let(:expected_form_params) do
       {
-        id: evidence_check.id,
-        correct: evidence_check.correct,
-        reason: evidence_check.reason.try(:explanation)
+        id: evidence.id,
+        correct: evidence.correct,
+        reason: evidence.reason.try(:explanation)
       }
     end
 
     before(:each) do
       allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
 
-      get :accuracy, id: evidence_check.id
+      get :accuracy, id: evidence.id
     end
 
     it 'returns the correct status code' do
@@ -58,13 +58,13 @@ RSpec.describe EvidenceController, type: :controller do
   describe 'POST #accuracy_save' do
     let(:form) { double }
     let(:params) { { correct: true, reason: 'reason' } }
-    let(:expected_form_params) { { id: evidence_check.id.to_s }.merge(params) }
+    let(:expected_form_params) { { id: evidence.id.to_s }.merge(params) }
 
     before do
       allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
       allow(form).to receive(:save).and_return(form_save)
 
-      post :accuracy_save, id: evidence_check.id, evidence: params
+      post :accuracy_save, id: evidence.id, evidence: params
     end
 
     context 'when the form can be saved' do
@@ -74,14 +74,14 @@ RSpec.describe EvidenceController, type: :controller do
         let(:form) { double(correct: true) }
 
         it 'redirects to the income page' do
-          expect(response).to redirect_to(evidence_income_path(evidence_check))
+          expect(response).to redirect_to(evidence_income_path(evidence))
         end
       end
       context 'when the form evidence is not correct' do
         let(:form) { double(correct: false) }
 
         it 'redirects to the income page' do
-          expect(response).to redirect_to(evidence_summary_path(evidence_check))
+          expect(response).to redirect_to(evidence_summary_path(evidence))
         end
       end
     end
@@ -103,14 +103,14 @@ RSpec.describe EvidenceController, type: :controller do
     let(:form) { double }
     let(:expected_form_params) do
       {
-        id: evidence_check.id,
-        amount: evidence_check.income
+        id: evidence.id,
+        amount: evidence.income
       }
     end
 
     before do
       allow(Evidence::Forms::Income).to receive(:new).with(expected_form_params).and_return(form)
-      get :income, id: evidence_check.id
+      get :income, id: evidence.id
     end
 
     it 'returns the correct status code' do
@@ -129,7 +129,7 @@ RSpec.describe EvidenceController, type: :controller do
   describe 'POST #income_save' do
     context 'when the form is filled in correctly' do
       before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
-      before(:each) { post :income_save, id: evidence_check.id, evidence: { amount: amount } }
+      before(:each) { post :income_save, id: evidence.id, evidence: { amount: amount } }
 
       let(:amount) { '50' }
 
@@ -145,7 +145,7 @@ RSpec.describe EvidenceController, type: :controller do
     context 'when the form is filled in with nothing' do
       before do
         allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(false)
-        post :income_save, id: evidence_check.id, evidence: { amount: amount }
+        post :income_save, id: evidence.id, evidence: { amount: amount }
       end
       let(:amount) { '' }
 
@@ -156,30 +156,30 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'GET #result' do
-    before do
-      allow(EvidenceCheck).to receive(:find)
-      get :result, id: evidence
+    before { get :result, id: evidence }
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
     end
 
     it 'renders the correct template' do
       expect(response).to render_template :result
     end
+  end
+
+  describe 'GET #confirmation' do
+    before(:each) { get :confirmation, id: evidence }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
     end
-  end
-
-  describe 'GET #confirmation' do
-    before { allow(EvidenceCheck).to receive(:find) }
-    before(:each) { get :confirmation, id: evidence }
 
     it 'renders the correct template' do
       expect(response).to render_template('confirmation')
     end
 
     it 'assigns the evidence check as confirmation' do
-      expect(assigns(:confirmation)).to eql(evidence_check)
+      expect(assigns(:confirmation)).to eql(evidence)
     end
   end
 end
