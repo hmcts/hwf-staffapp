@@ -1,8 +1,8 @@
 module SummaryHelper
 
-  def build_section(summary_text, object, fields)
+  def build_section(summary_text, object, fields, link_title = nil, link_url = nil)
     content_tag(:div, class: 'summary-section') do
-      content = build_header summary_text
+      content = build_header(summary_text, link_title, link_url)
       fields.each do |row|
         content << build_data_row(object, row)
       end
@@ -12,10 +12,18 @@ module SummaryHelper
 
   private
 
-  def build_header(summary_name)
+  def build_header(summary_name, link_title, link_url)
     content_tag(:div, class: 'row') do
       content_tag(:div, class: 'small-12 medium-7 large-8 columns') do
         content_tag(:h4, "#{summary_name}")
+      end + build_link(link_title, link_url)
+    end
+  end
+
+  def build_link(link_title, link_url)
+    if link_title.present? && link_url.present?
+      content_tag(:div, class: 'small-12 medium-4 large-3 columns') do
+        link_to(link_title, link_url)
       end
     end
   end
