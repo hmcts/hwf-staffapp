@@ -71,7 +71,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
   end
 
-  context 'when on "income result" page' do
+  context 'when on "Income result" page' do
     before { visit evidence_result_path(id: evidence.id) }
 
     it 'displays the title of the page' do
