@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'evidence/:id/income', to: 'evidence#income', as: :evidence_income
   post 'evidence/:id/income_save', to: 'evidence#income_save', as: :evidence_income_save
   get 'evidence/:id/result', to: 'evidence#result', as: :evidence_result
+  get 'evidence/:id/confirmation', to: 'evidence#confirmation', as: :evidence_confirmation
 
   resources :evidence_checks, only: :show
 
