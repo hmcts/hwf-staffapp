@@ -35,16 +35,12 @@ module SummaryHelper
   end
 
   def value_style(value)
-    base_class = 'small-12 medium-7 large-8 columns'
-    extended_class = case value.to_s
-                     when /✓/
-                       ' summary-result passed'
-                     when /✗/
-                       ' summary-result failed'
-                     else
-                       ''
-                     end
-
-    base_class + extended_class
+    ['small-12 medium-7 large-8 columns',
+     (
+      {
+        '✓' => ' summary-result passed',
+        '✗' => ' summary-result failed'
+      }[value.to_s.first] || '')
+    ].join
   end
 end
