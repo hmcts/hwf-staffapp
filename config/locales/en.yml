@@ -23,6 +23,25 @@ en-GB:
   evidence:
     correct: 'Yes'
     incorrect: 'No'
+    part-remission:
+      letter_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your application for help with fees.
+        <p>You are eligible to make a part-fee payment and must pay £%{fee} towards the fee.
+        <p><b>How to pay</b></p>
+        <p>- by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</p>
+        <p>- by debit card over the phone</p>
+        <p>- in person with a cheque, cash or debit card at the court counter</p>
+        <p>Please make sure you pay this amount by %{date}.</p>
+        <p>Yours sincerely,</p>
+        <p>%{current_user}</p>
+    no-remission:
+      letter_html: |
+        <p>Dear Mr %{full_name}</p>
+        <p>We have received your documents however they are not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
+        <p>You will need to make a new application if you still require help.</p>
+        <p>Yours sincerely,</p>
+        <p>%{current_user}</p>
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
@@ -159,7 +178,6 @@ en-GB:
       no_evidence_checks: There are no applications waiting for evidence
       table_header:
         reference: Reference
-        form_name: Form
         full_name: Applicant
         processed_by: Processed by
         expires: Expired
@@ -186,6 +204,13 @@ en-GB:
         income: Income
         number_of_children: Number of Children
         total_monthly_income: Total monthly income
+      evidence/views/evidence:
+        correct: Correct
+        reason: Reason
+        income: Income
+      evidence/views/result:
+        savings: Savings
+        income: Income
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant

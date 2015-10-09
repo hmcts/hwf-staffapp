@@ -3,30 +3,20 @@ require 'rails_helper'
 
 RSpec.describe Evidence::Views::Result do
 
-  let(:application) { build_stubbed(:application) }
-  let(:evidence) { build_stubbed(:evidence_check) }
-  let(:review) { described_class.new(evidence) }
+  subject(:result) { described_class.new(evidence) }
 
-  before { allow(evidence).to receive(:application).and_return(application) }
-
-  context 'required methods' do
-    symbols = %i[result amount_to_pay]
-
-    symbols.each do |symbol|
-      it 'has the method #{symbol}' do
-        expect(review.methods).to include(symbol)
-      end
-    end
-  end
+  let(:string_passed) { '✓ Passed' }
+  let(:string_failed) { '✗ Failed' }
 
   describe '#amount_to_pay' do
-    before { allow(evidence).to receive(:amount_to_pay).and_return(amount) }
+    let(:evidence) { build_stubbed(:evidence_check, amount_to_pay: amount) }
+    subject { result.amount_to_pay }
 
     context 'rounds down' do
       let(:amount) { 100.49 }
 
       it 'formats the fee amount correctly' do
-        expect(review.amount_to_pay).to eq '£100'
+        is_expected.to eq '£100'
       end
     end
 
@@ -34,7 +24,7 @@ RSpec.describe Evidence::Views::Result do
       let(:amount) { 0.49 }
 
       it 'formats the fee amount correctly' do
-        expect(review.amount_to_pay).to eq '£0'
+        is_expected.to eq '£0'
       end
     end
 
@@ -42,28 +32,70 @@ RSpec.describe Evidence::Views::Result do
       let(:amount) { nil }
 
       it 'returns nil' do
-        expect(review.amount_to_pay).to eq nil
+        is_expected.to be nil
       end
     end
   end
 
   describe '#result' do
-    context 'when the application is a full remission' do
-      before { allow(evidence).to receive(:outcome).and_return('full') }
+    let(:evidence) { build_stubbed(:evidence_check, outcome: outcome) }
+    subject { result.result }
 
-      it { expect(review.result).to eq 'full' }
+    %w[full part none].each do |result|
+      context "when the application is a #{result} remission" do
+        let(:outcome) { result }
+
+        it { is_expected.to eq result }
+      end
     end
 
-    context 'when the application is a part remission' do
-      before { allow(evidence).to receive(:outcome).and_return('part') }
+    context 'for an unknown outcome' do
+      let(:outcome) { 'unknown' }
 
-      it { expect(review.result).to eq 'part' }
+      it { is_expected.to eq 'error' }
+    end
+  end
+
+  describe '#savings' do
+    let(:application) { build_stubbed(:application) }
+    let(:evidence) { build_stubbed(:evidence_check, application: application) }
+
+    subject { result.savings }
+
+    before do
+      allow(application).to receive(:savings_investment_valid?).and_return(savings_valid)
     end
 
-    context 'when the application is a full remission' do
-      before { allow(evidence).to receive(:outcome).and_return('none') }
+    context 'when savings and investment is valid' do
+      let(:savings_valid) { true }
 
-      it { expect(review.result).to eq 'none' }
+      it { is_expected.to eql(string_passed) }
+    end
+
+    context 'when savings and investment is not valid' do
+      let(:savings_valid) { false }
+
+      it { is_expected.to eql(string_failed) }
+    end
+  end
+
+  describe '#income' do
+    let(:evidence) { build_stubbed(:evidence_check, outcome: outcome) }
+
+    subject { result.income }
+
+    %w[full part].each do |outcome|
+      context "when result is #{outcome}" do
+        let(:outcome) { outcome }
+
+        it { is_expected.to eql(string_passed) }
+      end
+    end
+
+    context 'when result is something else' do
+      let(:outcome) { 'none' }
+
+      it { is_expected.to eql(string_failed) }
     end
   end
 end

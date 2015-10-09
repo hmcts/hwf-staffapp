@@ -4,7 +4,7 @@ RSpec.describe Evidence::Forms::Evidence do
   params_list = %i[correct reason id]
 
   let(:evidence) { { correct: true } }
-  subject { described_class.new(evidence) }
+  subject(:evidence_form) { described_class.new(evidence) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -60,17 +60,52 @@ RSpec.describe Evidence::Forms::Evidence do
     end
   end
 
-  describe '#save' do
-    before do
-      allow(subject).to receive(:valid?).and_return(true)
-      allow(subject).to receive(:persist!)
-      allow(EvidenceCheck).to receive(:find)
-      allow_any_instance_of(EvidenceCheck).to receive(:update)
-      allow_any_instance_of(Reason).to receive(:save)
+  describe '#save', focus: true do
+    let(:evidence_check) { create(:evidence_check) }
+    subject { evidence_form.save }
+
+    context 'for an invalid form' do
+      let(:evidence) { {} }
+
+      it { is_expected.to be false }
     end
 
-    it 'save the form data into appropriate models' do
-      expect(subject.save).to eq true
+    context 'for a valid form when the evidence is correct' do
+      let(:evidence) { { id: evidence_check.id, correct: true } }
+
+      it { is_expected.to be true }
+
+      it 'updates the correct field on evidence check' do
+        subject && evidence_check.reload
+
+        expect(evidence_check.correct).to be true
+      end
+
+      it 'keeps the outcome empty' do
+        subject && evidence_check.reload
+
+        expect(evidence_check.outcome).to be nil
+      end
+    end
+
+    context 'for a valid form when the evidence is incorrect' do
+      let(:reason) { 'REASON' }
+      let(:evidence) { { id: evidence_check.id, correct: false, reason: reason } }
+
+      it { is_expected.to be true }
+
+      it 'updates the correct field on evidence check and creates reason record with explanation' do
+        subject && evidence_check.reload
+
+        expect(evidence_check.correct).to be false
+        expect(evidence_check.reason.explanation).to eql(reason)
+      end
+
+      it 'sets the outcome to none' do
+        subject && evidence_check.reload
+
+        expect(evidence_check.outcome).to eql('none')
+      end
     end
   end
 end

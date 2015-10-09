@@ -24,18 +24,23 @@ module SummaryHelper
     label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
     value = object.send(field)
 
-    value_classes = 'small-12 medium-7 large-8 columns'
-    value_classes << " summary-result #{object.result}" if value_needs_styling?(value)
+    unless value.nil?
+      rows = content_tag(:div, label, class: 'small-12 medium-5 large-4 columns subheader')
+      rows << content_tag(:div, value, class: value_style(value))
 
-    rows = content_tag(:div, label, class: 'small-12 medium-5 large-4 columns subheader')
-    rows << content_tag(:div, value, class: value_classes)
-
-    content_tag(:div, class: 'row') do
-      rows
+      content_tag(:div, class: 'row') do
+        rows
+      end
     end
   end
 
-  def value_needs_styling?(value)
-    %w[✓ ✗].any? { |char| value.to_s.include? char }
+  def value_style(value)
+    ['small-12 medium-7 large-8 columns',
+     (
+      {
+        '✓' => ' summary-result passed',
+        '✗' => ' summary-result failed'
+      }[value.to_s.first] || '')
+    ].join
   end
 end
