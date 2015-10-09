@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.feature 'Evidence check flow', type: :feature do
@@ -111,7 +112,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'full' do
         let(:outcome) { 'full' }
 
-        it { expect(page).not_to have_content /(not\ correct\|part-fee)/ }
+        it { expect(page).to have_no_content(/(not\ correct\|part-fee)/) }
       end
 
       context 'part' do
