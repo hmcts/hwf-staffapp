@@ -100,7 +100,18 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'GET #income' do
-    before { get :income, id: evidence_check.id }
+    let(:form) { double }
+    let(:expected_form_params) do
+      {
+        id: evidence_check.id,
+        amount: evidence_check.income
+      }
+    end
+
+    before do
+      allow(Evidence::Forms::Income).to receive(:new).with(expected_form_params).and_return(form)
+      get :income, id: evidence_check.id
+    end
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -111,7 +122,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     it 'assigns the income form' do
-      expect(assigns(:form)).to be_a(Evidence::Forms::Income)
+      expect(assigns(:form)).to eql(form)
     end
   end
 
