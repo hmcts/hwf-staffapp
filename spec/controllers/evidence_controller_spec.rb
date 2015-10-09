@@ -27,7 +27,20 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'GET #accuracy' do
-    before(:each) { get :accuracy, id: evidence_check.id }
+    let(:form) { double }
+    let(:expected_form_params) do
+      {
+        id: evidence_check.id,
+        correct: evidence_check.correct,
+        reason: evidence_check.reason.try(:explanation)
+      }
+    end
+
+    before(:each) do
+      allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
+
+      get :accuracy, id: evidence_check.id
+    end
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -38,16 +51,17 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     it 'assigns the evidence form' do
-      expect(assigns(:form)).to be_a(Evidence::Forms::Evidence)
+      expect(assigns(:form)).to eql(form)
     end
   end
 
   describe 'POST #accuracy_save' do
     let(:form) { double }
     let(:params) { { correct: true, reason: 'reason' } }
+    let(:expected_form_params) { { id: evidence_check.id.to_s }.merge(params) }
 
     before do
-      allow(Evidence::Forms::Evidence).to receive(:new).with({ id: evidence_check.id.to_s }.merge(params)).and_return(form)
+      allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
       allow(form).to receive(:save).and_return(form_save)
 
       post :accuracy_save, id: evidence_check.id, evidence: params

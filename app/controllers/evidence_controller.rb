@@ -48,21 +48,25 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_form
-    @form = Evidence::Forms::Evidence.new({})
+    @form = Evidence::Forms::Evidence.new(accuracy_params)
   end
 
   def save_accuracy_form
-    evidence_params = { id: params['id'],
-                        correct: params['evidence']['correct'],
-                        reason: params['evidence']['reason'] }
-
-    @form = Evidence::Forms::Evidence.new(evidence_params)
+    @form = Evidence::Forms::Evidence.new(accuracy_params_for_save)
 
     if @form.save
       redirect_after_accuracy_save
     else
       render :accuracy
     end
+  end
+
+  def accuracy_params
+    { id: evidence.id, correct: evidence.correct, reason: evidence.reason.try(:explanation) }
+  end
+
+  def accuracy_params_for_save
+    { id: params['id'] }.merge(params.require(:evidence).permit(:correct, :reason).symbolize_keys)
   end
 
   def redirect_after_accuracy_save
