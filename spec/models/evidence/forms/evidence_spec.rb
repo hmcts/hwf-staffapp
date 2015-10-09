@@ -42,12 +42,6 @@ RSpec.describe Evidence::Forms::Evidence do
         context 'if the reason had been set' do
           let(:evidence) { { id: 1, correct: true, reason: 'some reason' } }
 
-          it 'removes the reason' do
-            subject.valid?
-
-            expect(subject.reason).to be nil
-          end
-
           it { expect(subject.valid?).to be true }
         end
       end
