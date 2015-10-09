@@ -37,7 +37,7 @@ module Evidence
 
       def income_calculation
         application = Application.find @evidence.application_id
-        calculation_result = IncomeCalculation.new(application, amount.to_i).calculate
+        IncomeCalculation.new(application, amount.to_i).calculate
       end
     end
   end
