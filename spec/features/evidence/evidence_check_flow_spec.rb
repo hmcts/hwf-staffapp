@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.feature 'Evidence check flow', type: :feature do
@@ -77,7 +78,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
   end
 
-  context 'when on "income result" page', focus: true do
+  context 'when on "Income result" page' do
     before { visit evidence_result_path(id: evidence_check.id) }
 
     it 'displays the title of the page' do
@@ -172,6 +173,32 @@ RSpec.feature 'Evidence check flow', type: :feature do
       expect(page).to have_content(outcome)
       fields.each do |title, value|
         expect(page).to have_content("#{title}#{value}")
+      end
+    end
+  end
+
+  context 'when on "Evidence confirmation" page' do
+    before { visit evidence_confirmation_path(id: evidence.id) }
+
+    it { expect(page).to have_content 'Processing complete' }
+
+    context 'when the remission is' do
+      context 'full' do
+        let(:outcome) { 'full' }
+
+        it { expect(page).to have_no_content(/(not\ correct\|part-fee)/) }
+      end
+
+      context 'part' do
+        let(:outcome) { 'part' }
+
+        it { expect(page).to have_content 'part-fee' }
+      end
+
+      context 'rejected' do
+        let(:outcome) { 'none' }
+
+        it { expect(page).to have_content 'not correct' }
       end
     end
   end

@@ -103,4 +103,17 @@ RSpec.describe EvidenceController, type: :controller do
       end
     end
   end
+
+  describe 'GET #confirmation' do
+    before { allow(EvidenceCheck).to receive(:find) }
+    before(:each) { get :confirmation, id: evidence }
+
+    it 'returns the correct status code' do
+      expect(response.status).to eq 200
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template('confirmation')
+    end
+  end
 end
