@@ -35,18 +35,16 @@ class EvidenceController < ApplicationController
 
   private
 
-  def prepare_evidence
+  def evidence
     @evidence ||= EvidenceCheck.find(params[:id])
   end
 
   def evidence_overview
-    prepare_evidence
-    @overview = Evidence::Views::Overview.new(@evidence)
+    @overview = Evidence::Views::Overview.new(evidence)
   end
 
   def evidence_view
-    prepare_evidence
-    @evidence_view = Evidence::Views::Evidence.new(@evidence)
+    @evidence_view = Evidence::Views::Evidence.new(evidence)
   end
 
   def accuracy_form
@@ -93,12 +91,11 @@ class EvidenceController < ApplicationController
   end
 
   def evidence_result
-    prepare_evidence
-    @result = Evidence::Views::Result.new(@evidence)
+    @result = Evidence::Views::Result.new(evidence)
   end
 
   def evidence_confirmation
-    @confirmation = EvidenceCheck.find(params[:id])
+    @confirmation = evidence
   end
 
   # TODO: permitted params setup

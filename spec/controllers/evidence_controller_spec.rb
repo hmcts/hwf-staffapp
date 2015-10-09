@@ -2,83 +2,109 @@ require 'rails_helper'
 
 RSpec.describe EvidenceController, type: :controller do
 
-  let(:evidence) { build_stubbed(:evidence_check) }
+  let(:evidence_check) { build_stubbed(:evidence_check) }
+
+  before do
+    allow(EvidenceCheck).to receive(:find).with(evidence_check.id.to_s).and_return(evidence_check)
+  end
 
   describe 'GET #show' do
     before do
-      allow(EvidenceCheck).to receive(:find)
-      get :show, id: evidence
+      get :show, id: evidence_check.id
     end
 
     it 'returns the correct status code' do
-      expect(response.status).to eq 200
+      expect(response).to have_http_status(200)
     end
 
     it 'renders the correct template' do
       expect(response).to render_template('show')
     end
+
+    it 'assigns the overview model' do
+      expect(assigns(:overview)).to be_a(Evidence::Views::Overview)
+    end
   end
 
   describe 'GET #accuracy' do
-    before(:each) { get :accuracy, id: evidence }
+    before(:each) { get :accuracy, id: evidence_check.id }
 
     it 'returns the correct status code' do
-      expect(response.status).to eq 200
+      expect(response).to have_http_status(200)
     end
 
     it 'renders the correct template' do
       expect(response).to render_template('accuracy')
     end
+
+    it 'assigns the evidence form' do
+      expect(assigns(:form)).to be_a(Evidence::Forms::Evidence)
+    end
   end
 
   describe 'POST #accuracy_save' do
-    before { allow_any_instance_of(Evidence::Forms::Evidence).to receive(:save).and_return(true) }
-    before(:each) { post :accuracy_save, id: evidence, evidence: { correct: correct, reason: reason } }
+    let(:form) { double }
+    let(:params) { { correct: true, reason: 'reason' } }
 
-    context 'when the evidence is correct' do
-      let(:correct) { true }
-      let(:reason) { '' }
+    before do
+      allow(Evidence::Forms::Evidence).to receive(:new).with({ id: evidence_check.id.to_s }.merge(params)).and_return(form)
+      allow(form).to receive(:save).and_return(form_save)
 
-      it 'returns the correct status code' do
-        expect(response.status).to eq 302
+      post :accuracy_save, id: evidence_check.id, evidence: params
+    end
+
+    context 'when the form can be saved' do
+      let(:form_save) { true }
+
+      context 'when the form evidence is correct' do
+        let(:form) { double(correct: true) }
+
+        it 'redirects to the income page' do
+          expect(response).to redirect_to(evidence_income_path(evidence_check))
+        end
+      end
+      context 'when the form evidence is not correct' do
+        let(:form) { double(correct: false) }
+
+        it 'redirects to the income page' do
+          expect(response).to redirect_to(evidence_summary_path(evidence_check))
+        end
       end
     end
 
-    context 'when the evidence is not correct and reason is given' do
-      let(:correct) { false }
-      let(:reason) { 'They are earning more than they claimed' }
+    context 'when the form can not be saved' do
+      let(:form_save) { false }
 
-      it 'returns the correct status code' do
-        expect(response.status).to eq 302
+      it 'assigns the form' do
+        expect(assigns(:form)).to eql(form)
       end
-    end
 
-    context 'when the evidence is not correct and no reason is given' do
-      let(:correct) { false }
-      let(:reason) { '' }
-
-      it 'returns the correct status code' do
-        expect(response.status).to eq 302
+      it 'renders the accuracy template again' do
+        expect(response).to render_template(:accuracy)
       end
     end
   end
 
   describe 'GET #income' do
-    before { get :income, id: evidence }
+    before { get :income, id: evidence_check.id }
 
     it 'returns the correct status code' do
-      expect(response.status).to eq 200
+      expect(response).to have_http_status(200)
     end
 
     it 'renders the correct template' do
       expect(response).to render_template('income')
+    end
+
+    it 'assigns the income form' do
+      expect(assigns(:form)).to be_a(Evidence::Forms::Income)
     end
   end
 
   describe 'POST #income_save' do
     context 'when the form is filled in correctly' do
       before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
-      before(:each) { post :income_save, id: evidence, evidence: { amount: amount } }
+      before(:each) { post :income_save, id: evidence_check.id, evidence: { amount: amount } }
 
       let(:amount) { '50' }
 
@@ -94,7 +120,7 @@ RSpec.describe EvidenceController, type: :controller do
     context 'when the form is filled in with nothing' do
       before do
         allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(false)
-        post :income_save, id: evidence, evidence: { amount: amount }
+        post :income_save, id: evidence_check.id, evidence: { amount: amount }
       end
       let(:amount) { '' }
 
@@ -115,7 +141,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     it 'returns the correct status code' do
-      expect(response.status).to eq 200
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -125,6 +151,10 @@ RSpec.describe EvidenceController, type: :controller do
 
     it 'renders the correct template' do
       expect(response).to render_template('confirmation')
+    end
+
+    it 'assigns the evidence check as confirmation' do
+      expect(assigns(:confirmation)).to eql(evidence_check)
     end
   end
 end
