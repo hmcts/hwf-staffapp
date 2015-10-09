@@ -25,7 +25,7 @@ module Evidence
       private
 
       def format_amount
-        self.amount = amount.to_f.round.to_i
+        self.amount = amount.to_f.round
       end
 
       def persist!
@@ -37,7 +37,7 @@ module Evidence
 
       def income_calculation
         application = Application.find @evidence.application_id
-        IncomeCalculation.new(application, amount).calculate
+        IncomeCalculation.new(application, amount.to_i).calculate
       end
     end
   end
