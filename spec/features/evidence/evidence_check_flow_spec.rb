@@ -183,7 +183,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Evidence confirmation" page' do
-    before { visit evidence_confirmation_path(id: evidence.id) }
+    before { visit evidence_confirmation_path(id: evidence_check.id) }
 
     it { expect(page).to have_content 'Processing complete' }
 
