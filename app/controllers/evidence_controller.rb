@@ -23,6 +23,9 @@ class EvidenceController < ApplicationController
     evidence_result
   end
 
+  def confirmation
+  end
+
   private
 
   def prepare_evidence
