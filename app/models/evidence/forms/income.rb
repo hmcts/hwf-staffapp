@@ -31,9 +31,14 @@ module Evidence
       def persist!
         @evidence = EvidenceCheck.find(id)
         format_amount
-        @evidence.update(income: amount)
+        result = income_calculation
+        @evidence.update(income: amount, outcome: result[:outcome], amount_to_pay: result[:amount])
       end
 
+      def income_calculation
+        application = Application.find @evidence.application_id
+        calculation_result = IncomeCalculation.new(application, amount.to_i).calculate
+      end
     end
   end
 end
