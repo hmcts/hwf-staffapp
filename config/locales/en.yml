@@ -186,6 +186,13 @@ en-GB:
         income: Income
         number_of_children: Number of Children
         total_monthly_income: Total monthly income
+      evidence/views/evidence:
+        correct: Correct
+        reason: Reason
+        income: Income
+      evidence/views/result:
+        savings: Savings
+        income: Income
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant
