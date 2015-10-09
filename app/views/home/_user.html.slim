@@ -1,8 +1,8 @@
 .row
   .small-12.medium-8.large-5.columns
-    h3.pad-top-thirty-px.bold Process application 
+    h2.pad-top-thirty-px.bold Process application
     p You'll need:
-    ul 
+    ul
       li the help with fees application form (EX160)
       li the court or tribunal form related to the application
     .actions
@@ -13,16 +13,10 @@
       h3.bold Get Help
       p =link_to t('functions.staff_guide').to_s, guide_path
       p =link_to t('functions.feedback').to_s, feedback_path
-      details 
+      details
         summary
           span.summary Contact us
         div Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}
-
-.row
-  .small-12.medium-12.large-12.columns
-    h3.pad-top-thirty-px.bold Manage your office
-    p =link_to 'Staff overview', users_path
-    p =link_to 'Your Office', current_user.office
 
 .row
   .small-12.medium-12.large-12.columns

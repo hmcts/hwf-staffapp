@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en-GB:
+  evidence:
+    correct: 'Yes'
+    incorrect: 'No'
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
@@ -49,9 +52,9 @@ en-GB:
       wrong_office: You are not authorized to manage this user.
   benefit_checks:
     :yes:
-      heading: '&#10003; &nbsp; The applicant is receiving the correct benefits'
+      heading: '✓ &nbsp; The applicant is receiving the correct benefits'
     :no:
-      heading: '&#10007; &nbsp; The applicant is not receiving benefits'
+      heading: '✗ &nbsp; The applicant is not receiving benefits'
     details_missing:
       heading: DWP check couldn't be performed, please make sure you've provided all personal details including National Insurance number
     deleted:
@@ -82,9 +85,9 @@ en-GB:
       explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
   remissions:
-    full: '&#10003; &nbsp; The applicant doesn’t have to pay the fee'
+    full: '✓ &nbsp; The applicant doesn’t have to pay the fee'
     part: The applicant must pay %{amount_to_pay} towards the fee
-    none: '&#10007; &nbsp; The applicant must pay the full fee'
+    none: '✗ &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
   evidence_check:
     callout: This application has been chosen for investigation. You’ll need to ask for supporting evidence.
@@ -151,8 +154,41 @@ en-GB:
         <p>Yours sincerely,</p>
 
         <p>%{user_name}</p>
+    dashboard:
+      heading: Waiting for evidence
+      no_evidence_checks: There are no applications waiting for evidence
+      table_header:
+        reference: Reference
+        form_name: Form
+        full_name: Applicant
+        processed_by: Processed by
+        expires: Expired
   activemodel:
     attributes:
+      evidence/forms/evidence:
+        correct: Is the evidence correct?
+        reason: What is incorrect about the evidence?
+      evidence/forms/income:
+        amount: Total monthly income from evidence
+      evidence/views/overview:
+        reference: Reference
+        processed_by: Processed by
+        expires: Expires
+        full_name: Full name
+        date_of_birth: Date of birth
+        ni_number: NI Number
+        status: Status
+        fee: Fee
+        jurisdiction: Jurisdiction
+        date_received: Date received
+        form_name: Form name or number
+        savings: Savings and investments
+        income: Income
+        number_of_children: Number of Children
+        total_monthly_income: Total monthly income
+      evidence/views/dashboard:
+        form_name: Form
+        full_name: Applicant
       applikation/forms/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
       applikation/forms/income:
@@ -366,8 +402,8 @@ en-GB:
         income_page:
           header: Application result
         summary:
-          passed: '&#10003; Passed'
-          failed: '&#10007; Failed'
+          passed: '✓ Passed'
+          failed: '✗ Failed'
           savings_investments: Savings and investments
           benefits: Benefits
           income: Income

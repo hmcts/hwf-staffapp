@@ -4,6 +4,14 @@ Rails.application.routes.draw do
   resources :applications do
     resources :build, controller: 'applications/build'
   end
+
+  get 'evidence/:id', to: 'evidence#show', as: :evidence_show
+  get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
+  post 'evidence/:id/accuracy_save', to: 'evidence#accuracy_save', as: :evidence_accuracy_save
+  get 'evidence/:id/income', to: 'evidence#income', as: :evidence_income
+  post 'evidence/:id/income_save', to: 'evidence#income_save', as: :evidence_income_save
+  get 'evidence/:id/result', to: 'evidence#result', as: :evidence_result
+
   resources :evidence_checks, only: :show
 
   get 'guide' => 'guide#index'

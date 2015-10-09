@@ -1,5 +1,6 @@
 class Office < ActiveRecord::Base
   has_many :users
+  has_many :applications
   has_many :office_jurisdictions
   has_many :jurisdictions, through: :office_jurisdictions
 

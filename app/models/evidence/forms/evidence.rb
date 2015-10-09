@@ -4,6 +4,7 @@ module Evidence
 
       def self.permitted_attributes
         {
+          id: Integer,
           correct: Boolean,
           reason: String
         }
@@ -11,8 +12,18 @@ module Evidence
 
       define_attributes
 
+      validates :id, numericality: { only_integer: true }
       validates :correct, inclusion: { in: [true, false] }
       validate :no_reason_when_correct
+
+      def save
+        if valid?
+          persist!
+          true
+        else
+          false
+        end
+      end
 
       private
 
@@ -24,6 +35,12 @@ module Evidence
 
       def evidence_correct
         correct.equal?(true)
+      end
+
+      def persist!
+        @evidence = EvidenceCheck.find(id)
+        @evidence.update(correct: correct)
+        @evidence.build_reason(explanation: reason).save unless reason.blank?
       end
     end
   end

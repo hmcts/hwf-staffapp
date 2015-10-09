@@ -33,98 +33,62 @@ RSpec.describe Application, type: :model do
       application.ni_number = 'AB123456A'
     end
 
-    describe 'income calculation' do
-      it 'includes can_calculate?' do
-        expect(application).to respond_to :can_calculate?
-      end
+    # The income calculation is not included as a module any more, but it's still linked
+    # from the Application and called after every `save`. Therefore I'm keeping these
+    # tests here, until we can get rid of the hook and do the calculation in a controller.
+    describe 'using the IncomeCalculation' do
+      describe 'auto running calculator' do
+        context 'without required fields' do
+          before do
+            application.dependents = true
+            application.fee = nil
+            application.married = true
+            application.income = 1000
+            application.children = 1
+          end
 
-      it 'includes calculate' do
-        expect(application).to respond_to :calculate
-      end
+          it 'does not update remission type' do
+            expect { application.save }.to_not change { application.application_type }
+          end
 
-      context 'can_calculate?' do
-        context 'when required fields are complete' do
+          it 'does not update amount_to_pay' do
+            expect { application.save }.to_not change { application.amount_to_pay }
+          end
+        end
+
+        context 'with required fields' do
           before do
             application.dependents = true
             application.fee = 300
             application.married = true
             application.income = 1000
             application.children = 1
-            application.valid?
           end
 
-          before { application.valid? }
-          it 'returns true' do
-            expect(application.can_calculate?).to eq true
-          end
-        end
-        context 'when required fields are missing' do
-          before do
-            application.fee = nil
-            application.married = true
-            application.income = 1000
-            application.children = 1
-            application.valid?
+          it 'updates remission type' do
+            expect { application.save }.to change { application.application_type }
           end
 
-          it 'returns false' do
-            expect(application.can_calculate?).to eq false
+          it 'updates amount_to_pay' do
+            expect { application.save }.to change { application.amount_to_pay }
           end
         end
       end
-    end
 
-    describe 'auto running calculator' do
-      context 'without required fields' do
-        before do
-          application.dependents = true
-          application.fee = nil
-          application.married = true
-          application.income = 1000
-          application.children = 1
-        end
-
-        it 'does not update remission type' do
-          expect { application.save }.to_not change { application.application_type }
-        end
-
-        it 'does not update amount_to_pay' do
-          expect { application.save }.to_not change { application.amount_to_pay }
-        end
-      end
-
-      context 'with required fields' do
-        before do
-          application.dependents = true
-          application.fee = 300
-          application.married = true
-          application.income = 1000
-          application.children = 1
-        end
-
-        it 'updates remission type' do
-          expect { application.save }.to change { application.application_type }
-        end
-
-        it 'updates amount_to_pay' do
-          expect { application.save }.to change { application.amount_to_pay }
-        end
-      end
-    end
-
-    describe 'calculator' do
-      CalculatorTestData.seed_data.each do |src|
-        it "scenario \##{src[:id]} passes" do
-          application.update(
-            fee: src[:fee],
-            married: src[:married_status],
-            dependents: src[:children].to_i > 0,
-            children: src[:children],
-            income: src[:income]
-          )
-          expect(application.application_type).to eq 'income'
-          expect(application.application_outcome).to eq src[:type]
-          expect(application.amount_to_pay).to eq src[:they_pay].to_i
+      describe 'calculator' do
+        CalculatorTestData.seed_data.each do |src|
+          it "scenario \##{src[:id]} passes" do
+            application.update(
+              fee: src[:fee],
+              married: src[:married_status],
+              dependents: src[:children].to_i > 0,
+              children: src[:children],
+              income: src[:income]
+            )
+            expect(application.application_type).to eq 'income'
+            expect(application.application_outcome).to eq src[:type]
+            expect(application.amount_to_pay).to eq src[:they_pay].to_i
+          end
         end
       end
     end
@@ -233,6 +197,18 @@ RSpec.describe Application, type: :model do
 
       it 'includes only part and full remission applications' do
         is_expected.to match_array([application_1, application_2])
+      end
+    end
+
+    describe '.waiting_for_evidence', focus: true do
+      let!(:application1) { create :application }
+      let!(:application2) { create :application }
+      let!(:evidence_check) { create :evidence_check, application: application1 }
+
+      subject { described_class.waiting_for_evidence }
+
+      it 'returns only applications which have EvidenceCheck reference' do
+        is_expected.to match_array([application1])
       end
     end
   end

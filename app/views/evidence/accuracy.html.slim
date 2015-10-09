@@ -1,0 +1,25 @@
+h2 Evidence
+
+= form_for @form, as: :evidence, url: :evidence_accuracy_save, method: :post, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .row.collapse
+          .columns.small-12
+            = f.label :correct
+            .options.radio
+              .option
+                label for='evidence_correct_false'
+                  = f.radio_button :correct, 'false'
+                  = t('evidence.incorrect')
+              .option
+                label for='evidence_correct_true'
+                  = f.radio_button :correct, 'true'
+                  = t('evidence.correct')
+
+      .panel-indent.form-group.row.collapse#reason-input
+        .columns.small-12
+          = f.label :reason
+          = f.text_area :reason, rows: 3
+
+  = f.submit 'Next', :class => 'button primary'

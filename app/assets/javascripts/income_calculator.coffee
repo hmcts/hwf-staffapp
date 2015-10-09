@@ -4,11 +4,11 @@ class incomeCalculator
 
   # preset values
   min_val = 1085
-  pp_child = 245
+  uplift_per_child = 245
   couple_supp = 160
 
   calculate: (fee, status, children, income) ->
-    child_uplift = children * pp_child
+    child_uplift = children * uplift_per_child
     curr_fee = parseFloat(fee)
     married_supp = if status=='true' or status==true then couple_supp else 0
 
