@@ -10,12 +10,12 @@ RSpec.feature 'Evidence check flow', type: :feature do
   let(:application) { create :application_full_remission, user: user }
   let(:outcome) { nil }
   let(:amount) { nil }
-  let(:evidence_check) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount }
+  let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount }
 
   before { login_as user }
 
   context 'when on "Evidence show" page' do
-    before { visit evidence_show_path(id: evidence_check.id) }
+    before { visit evidence_show_path(id: evidence.id) }
     headings = ['Waiting for evidence',
                 'Process evidence',
                 'Processing details',
@@ -36,7 +36,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Evidence accuracy" page' do
-    before { visit evidence_accuracy_path(id: evidence_check.id) }
+    before { visit evidence_accuracy_path(id: evidence.id) }
 
     context 'when the page is submitted without anything filled in' do
       before { click_button 'Next' }
@@ -69,7 +69,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Income" page' do
-    before { visit evidence_income_path(id: evidence_check.id) }
+    before { visit evidence_income_path(id: evidence.id) }
 
     it 'fill in the income form takes me to the next page' do
       expect(page).to have_content 'Total monthly income from evidence'
@@ -79,7 +79,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Income result" page' do
-    before { visit evidence_result_path(id: evidence_check.id) }
+    before { visit evidence_result_path(id: evidence.id) }
 
     it 'displays the title of the page' do
       expect(page).to have_content('Income')
@@ -125,14 +125,14 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "summary" page' do
-    before { visit evidence_summary_path(id: evidence_check.id) }
+    before { visit evidence_summary_path(id: evidence.id) }
 
     context 'for an unsuccessful outcome' do
-      let(:evidence_check) { create :evidence_check_incorrect }
+      let(:evidence) { create :evidence_check_incorrect }
       let(:expected_fields) do
         {
           'Correct' => 'No',
-          'Reason' => evidence_check.reason.explanation
+          'Reason' => evidence.reason.explanation
         }
       end
 
@@ -142,25 +142,25 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a part remission outcome' do
-      let(:evidence_check) { create :evidence_check_part_outcome }
+      let(:evidence) { create :evidence_check_part_outcome }
       let(:expected_fields) do
         {
           'Correct' => 'Yes',
-          'Income' => "£#{evidence_check.income}"
+          'Income' => "£#{evidence.income}"
         }
       end
 
       it 'renders correct outcome' do
-        page_expectation("The applicant must pay £#{evidence_check.amount_to_pay} towards the fee", expected_fields)
+        page_expectation("The applicant must pay £#{evidence.amount_to_pay} towards the fee", expected_fields)
       end
     end
 
     context 'for a full remission outcome' do
-      let(:evidence_check) { create :evidence_check_full_outcome }
+      let(:evidence) { create :evidence_check_full_outcome }
       let(:expected_fields) do
         {
           'Correct' => 'Yes',
-          'Income' => "£#{evidence_check.income}"
+          'Income' => "£#{evidence.income}"
         }
       end
 
