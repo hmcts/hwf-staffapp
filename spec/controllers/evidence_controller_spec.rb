@@ -37,7 +37,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     before(:each) do
-      allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
+      allow(Evidence::Forms::Accuracy).to receive(:new).with(expected_form_params).and_return(form)
 
       get :accuracy, id: evidence.id
     end
@@ -61,7 +61,7 @@ RSpec.describe EvidenceController, type: :controller do
     let(:expected_form_params) { { id: evidence.id.to_s }.merge(params) }
 
     before do
-      allow(Evidence::Forms::Evidence).to receive(:new).with(expected_form_params).and_return(form)
+      allow(Evidence::Forms::Accuracy).to receive(:new).with(expected_form_params).and_return(form)
       allow(form).to receive(:save).and_return(form_save)
 
       post :accuracy_save, id: evidence.id, evidence: params

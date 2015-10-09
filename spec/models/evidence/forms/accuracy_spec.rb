@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Forms::Evidence do
+RSpec.describe Evidence::Forms::Accuracy do
   params_list = %i[correct reason id]
 
   let(:evidence) { { correct: true } }

@@ -1,6 +1,6 @@
 module Evidence
   module Forms
-    class Evidence < ::FormObject
+    class Accuracy < ::FormObject
       def self.permitted_attributes
         {
           id: Integer,

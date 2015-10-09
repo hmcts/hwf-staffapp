@@ -48,11 +48,11 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_form
-    @form = Evidence::Forms::Evidence.new(accuracy_params)
+    @form = Evidence::Forms::Accuracy.new(accuracy_params)
   end
 
   def save_accuracy_form
-    @form = Evidence::Forms::Evidence.new(accuracy_params_for_save)
+    @form = Evidence::Forms::Accuracy.new(accuracy_params_for_save)
 
     if @form.save
       redirect_after_accuracy_save

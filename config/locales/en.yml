@@ -183,7 +183,7 @@ en-GB:
         expires: Expired
   activemodel:
     attributes:
-      evidence/forms/evidence:
+      evidence/forms/accuracy:
         correct: Is the evidence correct?
         reason: What is incorrect about the evidence?
       evidence/forms/income:
