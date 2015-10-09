@@ -34,11 +34,6 @@ class EvidenceController < ApplicationController
     @overview = Evidence::Views::Overview.new(@evidence)
   end
 
-  def evidence_result
-    prepare_evidence
-    @result = Evidence::Views::Result.new(@evidence)
-  end
-
   def accuracy_form
     @form = Evidence::Forms::Evidence.new({})
   end
@@ -72,6 +67,11 @@ class EvidenceController < ApplicationController
     else
       render :income
     end
+  end
+
+  def evidence_result
+    prepare_evidence
+    @result = Evidence::Views::Result.new(@evidence)
   end
 
   # TODO: permitted params setup
