@@ -23,7 +23,7 @@ RSpec.feature 'User list shows emails', type: :feature do
 
     scenario 'there are links to email addresses' do
       emails.each do |email|
-        expect(page).to have_xpath("//a[contains(@href,email)]")
+        expect(page).to have_content email
       end
     end
   end
