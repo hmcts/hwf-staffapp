@@ -70,8 +70,8 @@ describe "EvidenceConfirmationModule", ->
         @reason.append('EXPLANATION')
         @yes_button.trigger('click')
 
-      it 'removes the reason text', ->
+      it 'hides the reason section', ->
         expect(@reason_section.is(':visible')).toBe false
 
-      it 'removes the reason explanation', ->
-        expect(@reason.val()).toEqual ""
+      it 'does not remove the reason explanation', ->
+        expect(@reason.val()).toEqual 'EXPLANATION'
