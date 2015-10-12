@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Forms::Evidence do
+RSpec.describe Evidence::Forms::Accuracy do
   params_list = %i[correct reason id]
 
   let(:evidence) { { correct: true } }
@@ -39,10 +39,10 @@ RSpec.describe Evidence::Forms::Evidence do
 
         it { expect(subject.valid?).to be true }
 
-        describe 'the reason' do
-          let(:evidence) { { correct: true, reason: 'some reason' } }
+        context 'if the reason had been set' do
+          let(:evidence) { { id: 1, correct: true, reason: 'some reason' } }
 
-          it { expect(subject.valid?).to be false }
+          it { expect(subject.valid?).to be true }
         end
       end
 
@@ -85,6 +85,18 @@ RSpec.describe Evidence::Forms::Evidence do
         subject && evidence_check.reload
 
         expect(evidence_check.outcome).to be nil
+      end
+
+      context 'if the reason already existed' do
+        before do
+          create :reason, evidence_check: evidence_check
+        end
+
+        it 'deletes the reason' do
+          subject && evidence_check.reload
+
+          expect(evidence_check.reason).to be nil
+        end
       end
     end
 

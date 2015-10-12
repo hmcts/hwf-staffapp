@@ -179,6 +179,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       fields.each do |title, value|
         expect(page).to have_content("#{title}#{value}")
       end
+      expect(page).to have_link('Change application evidence', href: evidence_accuracy_path(evidence))
     end
   end
 

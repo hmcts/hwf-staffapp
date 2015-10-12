@@ -35,36 +35,38 @@ class EvidenceController < ApplicationController
 
   private
 
-  def prepare_evidence
+  def evidence
     @evidence ||= EvidenceCheck.find(params[:id])
   end
 
   def evidence_overview
-    prepare_evidence
-    @overview = Evidence::Views::Overview.new(@evidence)
+    @overview = Evidence::Views::Overview.new(evidence)
   end
 
   def evidence_view
-    prepare_evidence
-    @evidence_view = Evidence::Views::Evidence.new(@evidence)
+    @evidence_view = Evidence::Views::Evidence.new(evidence)
   end
 
   def accuracy_form
-    @form = Evidence::Forms::Evidence.new({})
+    @form = Evidence::Forms::Accuracy.new(accuracy_params)
   end
 
   def save_accuracy_form
-    evidence_params = { id: params['id'],
-                        correct: params['evidence']['correct'],
-                        reason: params['evidence']['reason'] }
-
-    @form = Evidence::Forms::Evidence.new(evidence_params)
+    @form = Evidence::Forms::Accuracy.new(accuracy_params_for_save)
 
     if @form.save
       redirect_after_accuracy_save
     else
       render :accuracy
     end
+  end
+
+  def accuracy_params
+    { id: evidence.id, correct: evidence.correct, reason: evidence.reason.try(:explanation) }
+  end
+
+  def accuracy_params_for_save
+    { id: params['id'] }.merge(params.require(:evidence).permit(:correct, :reason).symbolize_keys)
   end
 
   def redirect_after_accuracy_save
@@ -76,14 +78,11 @@ class EvidenceController < ApplicationController
   end
 
   def income_form
-    @form = Evidence::Forms::Income.new({})
+    @form = Evidence::Forms::Income.new(income_params)
   end
 
   def income_form_save
-    evidence_params = { id: params['id'],
-                        amount: params['evidence']['amount'] }
-
-    @form = Evidence::Forms::Income.new(evidence_params)
+    @form = Evidence::Forms::Income.new(income_params_for_save)
 
     if @form.save
       redirect_to evidence_result_path
@@ -92,13 +91,20 @@ class EvidenceController < ApplicationController
     end
   end
 
+  def income_params
+    { id: evidence.id, amount: evidence.income }
+  end
+
+  def income_params_for_save
+    { id: params['id'] }.merge(params.require(:evidence).permit(:amount).symbolize_keys)
+  end
+
   def evidence_result
-    prepare_evidence
-    @result = Evidence::Views::Result.new(@evidence)
+    @result = Evidence::Views::Result.new(evidence)
   end
 
   def evidence_confirmation
-    @confirmation = EvidenceCheck.find(params[:id])
+    @confirmation = evidence
   end
 
   # TODO: permitted params setup
