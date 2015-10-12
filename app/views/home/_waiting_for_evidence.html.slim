@@ -1,0 +1,19 @@
+- if @evidence_enabled
+  h3 =t('evidence_check.dashboard.heading')
+
+  - if @waiting_for_evidence.present?
+    table.waiting-for-evidence
+      tr
+        th =t('evidence_check.dashboard.table_header.reference')
+        th =t('evidence_check.dashboard.table_header.full_name')
+        th =t('evidence_check.dashboard.table_header.processed_by')
+        th =t('evidence_check.dashboard.table_header.expires')
+      - @waiting_for_evidence.each do |evidence|
+        tr
+          td =link_to(evidence.reference, evidence_show_path(evidence.evidence))
+          td =evidence.full_name
+          td =evidence.processed_by
+          td =evidence.expires
+
+  - else
+    p =t('evidence_check.dashboard.no_evidence_checks')

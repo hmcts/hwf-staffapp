@@ -4,6 +4,16 @@ Rails.application.routes.draw do
   resources :applications do
     resources :build, controller: 'applications/build'
   end
+
+  get 'evidence/:id', to: 'evidence#show', as: :evidence_show
+  get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
+  post 'evidence/:id/accuracy_save', to: 'evidence#accuracy_save', as: :evidence_accuracy_save
+  get 'evidence/:id/income', to: 'evidence#income', as: :evidence_income
+  post 'evidence/:id/income_save', to: 'evidence#income_save', as: :evidence_income_save
+  get 'evidence/:id/result', to: 'evidence#result', as: :evidence_result
+  get 'evidence/:id/summary', to: 'evidence#summary', as: :evidence_summary
+  get 'evidence/:id/confirmation', to: 'evidence#confirmation', as: :evidence_confirmation
+
   resources :evidence_checks, only: :show
 
   get 'guide' => 'guide#index'
@@ -19,10 +29,6 @@ Rails.application.routes.draw do
 
   get 'calculator/income' => 'calculator#income'
   post 'calculator/record_search' => 'calculator#record_search'
-
-  get 'dwp_checks' => 'dwp_checks#new', as: 'new_dwp_checks'
-  post 'dwp_checks/lookup'
-  get 'dwp_checks/:unique_number' => 'dwp_checks#show', as: 'dwp_checks'
 
   resources :offices
 

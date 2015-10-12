@@ -1,6 +1,5 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
-  include IncomeCalculator
   belongs_to :user
   belongs_to :jurisdiction
   belongs_to :office
@@ -11,6 +10,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   scope :evidencecheckable, lambda {
     where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+  }
+
+  scope :waiting_for_evidence, lambda {
+    includes(:evidence_check).references(:evidence_check).where.not(evidence_checks: { id: nil })
   }
 
   MAX_AGE = 120
@@ -195,7 +198,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def run_auto_checks
     run_benefit_check
-    calculate if can_calculate?
+    run_income_calculation
   end
 
   def children_numbers
@@ -228,6 +231,17 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
       update(
         application_type: 'benefit',
         application_outcome: outcome_from_dwp_result
+      )
+    end
+  end
+
+  def run_income_calculation
+    income_calculation_result = IncomeCalculation.new(self).calculate
+    if income_calculation_result
+      update_columns(
+        application_type: 'income',
+        application_outcome: income_calculation_result[:outcome],
+        amount_to_pay: income_calculation_result[:amount]
       )
     end
   end
