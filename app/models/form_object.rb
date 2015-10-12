@@ -7,6 +7,12 @@ class FormObject
     super(attrs)
   end
 
+  def update_attributes(params)
+    params.each do |name, value|
+      public_send("#{name}=", value)
+    end
+  end
+
   def self.permitted_attributes
     {}
   end
@@ -24,6 +30,6 @@ class FormObject
   end
 
   def get_attribs(object)
-    object.is_a?(Application) ? object.attributes : object
+    object.is_a?(ActiveRecord::Base) ? object.attributes : object
   end
 end
