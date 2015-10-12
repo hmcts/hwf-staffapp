@@ -22,7 +22,8 @@ module SummaryHelper
 
   def build_link(link_title, link_url)
     if link_title.present? && link_url.present?
-      content_tag(:div, class: 'small-12 medium-4 large-3 columns') do
+      link_class = 'small-12 medium-5 large-4 columns medium-text-right large-text-right'
+      content_tag(:div, class: link_class) do
         link_to(link_title, link_url)
       end
     end
