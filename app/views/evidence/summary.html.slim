@@ -6,3 +6,5 @@ h2 Check details
 =build_section 'Result', @result, %w[savings income]
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
+
+= link_to 'Next', evidence_confirmation_path(@evidence), class: 'button success'

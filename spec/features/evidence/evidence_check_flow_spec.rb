@@ -169,6 +169,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
     end
 
+    it 'clicking the Next button redirects to the confirmation page' do
+      click_link_or_button 'Next'
+      expect(page).to have_content('Processing complete')
+    end
+
     def page_expectation(outcome, fields = {})
       expect(page).to have_content(outcome)
       fields.each do |title, value|
