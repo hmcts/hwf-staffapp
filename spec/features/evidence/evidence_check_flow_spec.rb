@@ -170,7 +170,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     it 'clicking the Next button redirects to the confirmation page' do
-      click_link_or_button 'Next'
+      click_link_or_button 'Complete processing'
       expect(page).to have_content('Processing complete')
     end
 
