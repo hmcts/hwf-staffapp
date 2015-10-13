@@ -10,8 +10,8 @@ module Evidence
         @evidence.correct? ? 'Yes' : 'No'
       end
 
-      def reason
-        @evidence.reason ? @evidence.reason.explanation : nil
+      def incorrect_reason
+        @evidence.incorrect_reason
       end
 
       def income

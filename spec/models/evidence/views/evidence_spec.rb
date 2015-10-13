@@ -22,22 +22,13 @@ RSpec.describe Evidence::Views::Evidence do
     end
   end
 
-  describe 'reason' do
-    let(:evidence_check) { build_stubbed(:evidence_check, reason: reason) }
+  describe 'incorrect_reason' do
+    let(:evidence_check) { build_stubbed(:evidence_check_incorrect) }
 
-    subject { evidence.reason }
+    subject { evidence.incorrect_reason }
 
-    context 'when reason exists' do
-      let(:explanation) { 'EXPLANATION' }
-      let(:reason) { build_stubbed(:reason, explanation: explanation) }
-
-      it { is_expected.to eql(explanation) }
-    end
-
-    context 'when reason does not exists' do
-      let(:reason) { nil }
-
-      it { is_expected.to be nil }
+    it 'returns the incorrect reason from the evidence check' do
+      is_expected.to eql(evidence_check.incorrect_reason)
     end
   end
 

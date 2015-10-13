@@ -31,7 +31,7 @@ RSpec.describe EvidenceController, type: :controller do
     let(:expected_form_params) do
       {
         correct: evidence.correct,
-        reason: evidence.reason.try(:explanation)
+        incorrect_reason: evidence.incorrect_reason
       }
     end
 
@@ -56,7 +56,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'POST #accuracy_save', focus: true do
     let(:form) { double }
-    let(:expected_form_params) { { correct: true, reason: 'reason' } }
+    let(:expected_form_params) { { correct: true, incorrect_reason: 'reason' } }
 
     before do
       allow(Evidence::Forms::Accuracy).to receive(:new).with(evidence).and_return(form)

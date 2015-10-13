@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Forms::Accuracy do
-  params_list = %i[correct reason]
+  params_list = %i[correct incorrect_reason]
 
   let(:evidence) { build_stubbed :evidence_check }
   subject(:form) { described_class.new(evidence) }
@@ -26,7 +26,7 @@ RSpec.describe Evidence::Forms::Accuracy do
         it { is_expected.to be true }
 
         context 'if the reason had been set' do
-          let(:params) { { correct: true, reason: 'some reason' } }
+          let(:params) { { correct: true, incorrect_reason: 'some reason' } }
 
           it { is_expected.to be true }
         end
@@ -78,20 +78,16 @@ RSpec.describe Evidence::Forms::Accuracy do
         expect(evidence.outcome).to be nil
       end
 
-      context 'if the reason already existed' do
-        let(:evidence) { create :evidence_check_incorrect }
+      it 'keeps the incorrect reason empty' do
+        subject && evidence.reload
 
-        it 'deletes the reason' do
-          subject && evidence.reload
-
-          expect(evidence.reason).to be nil
-        end
+        expect(evidence.incorrect_reason).to be nil
       end
     end
 
     context 'for a valid form when the evidence is incorrect' do
-      let(:reason) { 'REASON' }
-      let(:params) { { correct: false, reason: reason } }
+      let(:incorrect_reason) { 'REASON' }
+      let(:params) { { correct: false, incorrect_reason: incorrect_reason } }
 
       it { is_expected.to be true }
 
@@ -99,7 +95,7 @@ RSpec.describe Evidence::Forms::Accuracy do
         subject && evidence.reload
 
         expect(evidence.correct).to be false
-        expect(evidence.reason.explanation).to eql(reason)
+        expect(evidence.incorrect_reason).to eql(incorrect_reason)
       end
 
       it 'sets the outcome to none' do

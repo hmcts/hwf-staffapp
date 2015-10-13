@@ -132,7 +132,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:expected_fields) do
         {
           'Correct' => 'No',
-          'Reason' => evidence.reason.explanation
+          'Reason' => evidence.incorrect_reason
         }
       end
 
