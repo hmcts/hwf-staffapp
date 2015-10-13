@@ -30,14 +30,13 @@ RSpec.describe EvidenceController, type: :controller do
     let(:form) { double }
     let(:expected_form_params) do
       {
-        id: evidence.id,
         correct: evidence.correct,
         reason: evidence.reason.try(:explanation)
       }
     end
 
     before(:each) do
-      allow(Evidence::Forms::Accuracy).to receive(:new).with(expected_form_params).and_return(form)
+      allow(Evidence::Forms::Accuracy).to receive(:new).with(evidence).and_return(form)
 
       get :accuracy, id: evidence.id
     end
@@ -55,16 +54,16 @@ RSpec.describe EvidenceController, type: :controller do
     end
   end
 
-  describe 'POST #accuracy_save' do
+  describe 'POST #accuracy_save', focus: true do
     let(:form) { double }
-    let(:params) { { correct: true, reason: 'reason' } }
-    let(:expected_form_params) { { id: evidence.id.to_s }.merge(params) }
+    let(:expected_form_params) { { correct: true, reason: 'reason' } }
 
     before do
-      allow(Evidence::Forms::Accuracy).to receive(:new).with(expected_form_params).and_return(form)
+      allow(Evidence::Forms::Accuracy).to receive(:new).with(evidence).and_return(form)
+      allow(form).to receive(:update_attributes).with(expected_form_params)
       allow(form).to receive(:save).and_return(form_save)
 
-      post :accuracy_save, id: evidence.id, evidence: params
+      post :accuracy_save, id: evidence.id, evidence: expected_form_params
     end
 
     context 'when the form can be saved' do
