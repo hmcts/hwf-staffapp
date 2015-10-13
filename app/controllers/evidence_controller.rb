@@ -19,11 +19,18 @@ class EvidenceController < ApplicationController
   end
 
   def income
-    income_form
+    @form = Evidence::Forms::Income.new(evidence)
   end
 
   def income_save
-    income_form_save
+    @form = Evidence::Forms::Income.new(evidence)
+    @form.update_attributes(income_params)
+
+    if @form.save
+      redirect_to evidence_result_path
+    else
+      render :income
+    end
   end
 
   def result
@@ -66,26 +73,8 @@ class EvidenceController < ApplicationController
     end
   end
 
-  def income_form
-    @form = Evidence::Forms::Income.new(income_params)
-  end
-
-  def income_form_save
-    @form = Evidence::Forms::Income.new(income_params_for_save)
-
-    if @form.save
-      redirect_to evidence_result_path
-    else
-      render :income
-    end
-  end
-
   def income_params
-    { id: evidence.id, amount: evidence.income }
-  end
-
-  def income_params_for_save
-    { id: params['id'] }.merge(params.require(:evidence).permit(:amount).symbolize_keys)
+    params.require(:evidence).permit(*Evidence::Forms::Income.permitted_attributes)
   end
 
   def evidence_result

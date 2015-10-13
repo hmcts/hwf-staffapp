@@ -187,7 +187,7 @@ en-GB:
         correct: Is the evidence correct?
         incorrect_reason: What is incorrect about the evidence?
       evidence/forms/income:
-        amount: Total monthly income from evidence
+        income: Total monthly income from evidence
       evidence/views/overview:
         reference: Reference
         processed_by: Processed by

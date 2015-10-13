@@ -100,15 +100,9 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #income' do
     let(:form) { double }
-    let(:expected_form_params) do
-      {
-        id: evidence.id,
-        amount: evidence.income
-      }
-    end
 
     before do
-      allow(Evidence::Forms::Income).to receive(:new).with(expected_form_params).and_return(form)
+      allow(Evidence::Forms::Income).to receive(:new).with(evidence).and_return(form)
       get :income, id: evidence.id
     end
 
@@ -126,13 +120,20 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'POST #income_save' do
+    let(:form) { double }
+    let(:expected_form_params) { { income: '1000' } }
+
+    before do
+      allow(Evidence::Forms::Income).to receive(:new).with(evidence).and_return(form)
+      allow(form).to receive(:update_attributes).with(expected_form_params)
+      allow(form).to receive(:save).and_return(form_save)
+
+      post :income_save, id: evidence.id, evidence: expected_form_params
+    end
+
     context 'when the form is filled in correctly' do
-      before { allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(true) }
-      before(:each) { post :income_save, id: evidence.id, evidence: { amount: amount } }
-
-      let(:amount) { '50' }
-
-      it 'returns the correct status code' do
+      let(:form_save) { true }
+      it 'returns redirects to the result page' do
         expect(response).to redirect_to(evidence_result_path)
       end
 
@@ -141,12 +142,8 @@ RSpec.describe EvidenceController, type: :controller do
       end
     end
 
-    context 'when the form is filled in with nothing' do
-      before do
-        allow_any_instance_of(Evidence::Forms::Income).to receive(:save).and_return(false)
-        post :income_save, id: evidence.id, evidence: { amount: amount }
-      end
-      let(:amount) { '' }
+    context 'when the form is filled incorrectly' do
+      let(:form_save) { false }
 
       it 're-renders the view' do
         expect(response).to render_template :income
