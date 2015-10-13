@@ -43,6 +43,10 @@ class EvidenceController < ApplicationController
     evidence_result
   end
 
+  def summary_save
+    record_confirmation
+  end
+
   def confirmation
     evidence_confirmation
   end
@@ -71,6 +75,14 @@ class EvidenceController < ApplicationController
     else
       redirect_to evidence_summary_path
     end
+  end
+
+  def record_confirmation
+    evidence.update(
+      completed_at: Time.zone.now,
+      completed_by: current_user
+    )
+    redirect_to evidence_confirmation_path
   end
 
   def income_params

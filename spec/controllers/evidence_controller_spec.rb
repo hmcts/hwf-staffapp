@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EvidenceController, type: :controller do
+  include Devise::TestHelpers
 
   let(:evidence) { build_stubbed(:evidence_check) }
 
@@ -160,6 +161,40 @@ RSpec.describe EvidenceController, type: :controller do
 
     it 'renders the correct template' do
       expect(response).to render_template :result
+    end
+  end
+
+  describe 'GET #summary' do
+    before { get :summary, id: evidence }
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template :summary
+    end
+  end
+
+  describe 'POST #summary_save' do
+    let(:user)     { create :user, office: create(:office) }
+    let(:evidence) { create :evidence_check }
+
+    before(:each) do
+      sign_in user
+      post :summary_save, id: evidence
+    end
+
+    it 'redirects to the correct page' do
+      expect(response).to redirect_to(evidence_confirmation_path)
+    end
+
+    it 'returns the correct status code' do
+      expect(response.status).to eq 302
+    end
+
+    it 'updates the completed by field' do
+      expect(evidence.completed_by).to eq user
     end
   end
 
