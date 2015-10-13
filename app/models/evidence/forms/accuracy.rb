@@ -3,7 +3,6 @@ module Evidence
     class Accuracy < ::FormObject
       def self.permitted_attributes
         {
-          id: Integer,
           correct: Boolean,
           reason: String
         }
@@ -11,7 +10,12 @@ module Evidence
 
       define_attributes
 
-      validates :id, numericality: { only_integer: true }
+      def initialize(evidence)
+        super(evidence)
+        @evidence = evidence
+        self.reason = evidence.reason.explanation if evidence.reason
+      end
+
       validates :correct, inclusion: { in: [true, false] }
 
       def save
@@ -26,10 +30,16 @@ module Evidence
       private
 
       def persist!
-        @evidence = EvidenceCheck.find(id)
         @evidence.update(fields_to_update)
-        @evidence.reason.destroy if correct && @evidence.reason
+        cleanup_reason
         @evidence.create_reason(explanation: reason) unless reason.blank?
+      end
+
+      def cleanup_reason
+        if correct
+          self.reason = nil
+          @evidence.reason.destroy if @evidence.reason
+        end
       end
 
       def fields_to_update
