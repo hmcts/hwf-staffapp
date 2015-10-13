@@ -4,11 +4,18 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy
-    accuracy_form
+    @form = Evidence::Forms::Accuracy.new(evidence)
   end
 
   def accuracy_save
-    save_accuracy_form
+    @form = Evidence::Forms::Accuracy.new(evidence)
+    @form.update_attributes(accuracy_params)
+
+    if @form.save
+      redirect_after_accuracy_save
+    else
+      render :accuracy
+    end
   end
 
   def income
@@ -45,21 +52,6 @@ class EvidenceController < ApplicationController
 
   def evidence_view
     @evidence_view = Evidence::Views::Evidence.new(evidence)
-  end
-
-  def accuracy_form
-    @form = Evidence::Forms::Accuracy.new(evidence)
-  end
-
-  def save_accuracy_form
-    @form = Evidence::Forms::Accuracy.new(evidence)
-    @form.update_attributes(accuracy_params)
-
-    if @form.save
-      redirect_after_accuracy_save
-    else
-      render :accuracy
-    end
   end
 
   def accuracy_params
