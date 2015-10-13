@@ -10,21 +10,7 @@ module Evidence
 
       define_attributes
 
-      def initialize(evidence)
-        super(evidence)
-        @evidence = evidence
-      end
-
       validates :income, numericality: { greater_than_or_equal_to: 0 }
-
-      def save
-        if valid?
-          persist!
-          true
-        else
-          false
-        end
-      end
 
       private
 
@@ -33,7 +19,7 @@ module Evidence
       end
 
       def persist!
-        @evidence.update(fields_to_update)
+        @object.update(fields_to_update)
       end
 
       def fields_to_update
@@ -42,7 +28,7 @@ module Evidence
       end
 
       def income_calculation
-        IncomeCalculation.new(@evidence.application, formatted_income.to_i).calculate
+        IncomeCalculation.new(@object.application, formatted_income.to_i).calculate
       end
     end
   end

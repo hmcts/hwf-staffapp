@@ -3,6 +3,7 @@ class FormObject
   include ActiveModel::Model
 
   def initialize(object)
+    store_if_model_passed(object)
     attrs = extract_params(object)
     super(attrs)
   end
@@ -21,7 +22,24 @@ class FormObject
     permitted_attributes.each { |attr, type| attribute attr, type }
   end
 
+  def save
+    if valid?
+      persist!
+      true
+    else
+      false
+    end
+  end
+
   private
+
+  def persist!
+    raise NotImplementedError
+  end
+
+  def store_if_model_passed(object)
+    @object = object if object.is_a?(ActiveRecord::Base)
+  end
 
   def extract_params(object)
     get_attribs(object).select do |key, _|

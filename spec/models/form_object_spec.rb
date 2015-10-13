@@ -47,4 +47,37 @@ RSpec.describe FormObject do
       expect(form.fee).to eql(params[:fee])
     end
   end
+
+  describe 'save' do
+    before do
+      allow(form).to receive(:valid?).and_return(valid)
+      allow(form).to receive(:persist!)
+    end
+
+    subject { form.save }
+
+    context 'when the form is valid' do
+      let(:valid) { true }
+
+      it 'method #persist! is called' do
+        subject
+
+        expect(form).to have_received(:persist!)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the form is not valid' do
+      let(:valid) { false }
+
+      it 'does not call #persist!' do
+        subject
+
+        expect(form).not_to have_received(:persist!)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end

@@ -10,26 +10,12 @@ module Evidence
 
       define_attributes
 
-      def initialize(evidence)
-        super(evidence)
-        @evidence = evidence
-      end
-
       validates :correct, inclusion: { in: [true, false] }
-
-      def save
-        if valid?
-          persist!
-          true
-        else
-          false
-        end
-      end
 
       private
 
       def persist!
-        @evidence.update(fields_to_update)
+        @object.update(fields_to_update)
       end
 
       def fields_to_update
