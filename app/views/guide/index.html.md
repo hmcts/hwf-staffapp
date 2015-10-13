@@ -1,4 +1,4 @@
-##Processing the updated ‘apply for help with fees’ form - a guide for staff 
+##Processing the updated ‘apply for help with fees’ form - a guide for staff
 
 * [An updated application form](#an-updated-application-form)
 * [Using the benefits checker](#using-the-benefits-checker)
@@ -6,7 +6,7 @@
 
 
 
-###An updated application form 
+###An updated application form
 The updated form is designed to be easier to use. The main changes are:
 
 **it's called ‘apply for help with fees’ rather than ‘fee remission’** - many people did not understand what the word ‘remission’ meant in connection to fees.
@@ -18,7 +18,7 @@ The updated form is designed to be easier to use. The main changes are:
 **applicants don't have to select ‘remission 1’ or ‘remission 2’** - the updated form still asks about benefits and income, but doesn’t use the terms ‘remission 1’ and remission 2’ to avoid confusion.
 
 
-###Using the benefits checker 
+###Using the benefits checker
 
 You can now check whether an applicant is receiving one of the 6 ‘gateway benefits’ that automatically entitles them to help with their court fees.
 
@@ -43,7 +43,7 @@ Use the online benefits checker to make sure that applicants are eligible for fi
 
 ![sign in image](<%= image_url('Staff_signin.png') %>)
 
-* Click 'Check benefits' at the top of the page 
+* Click 'Check benefits' at the top of the page
 
 * Enter the first 3 letters of the applicant’s last name, date of birth and National Insurance number on this page
 
@@ -53,7 +53,7 @@ If you’re processing an application for a refund of a fee that’s already bee
 
 * **If an applicant started receiving benefits in the last 48 hours** then the benefits checker may not yet have the most up to date information  
 
-####Benefits check results 
+####Benefits check results
 
 **If the National Insurance number is not valid, you’ll see this message:**
 
@@ -84,23 +84,23 @@ If you are still getting this message, ask the applicant to provide more evidenc
 
 The system records the results of each benefits check. This means the online tool should only be used for processing application forms.
 
-#### You no longer need to check paper evidence for benefits 
+#### You no longer need to check paper evidence for benefits
 
-Applicants no longer need to include paper evidence to show they're receiving one of the 6 benefits. Instead, you'll be able to rely on the results of the online DWP check. 
+Applicants no longer need to include paper evidence to show they're receiving one of the 6 benefits. Instead, you'll be able to rely on the results of the online DWP check.
 
-####What if the online DWP check isn't available? 
+####What if the online DWP check isn't available?
 
-The occasional technical fault may mean that the online DWP check isn't available. Usually this will be fixed quickly. 
+The occasional technical fault may mean that the online DWP check isn't available. Usually this will be fixed quickly.
 
-When the online check isn't available you should first of all try again later. If you're dealing with an applicant at the counter, you can ask them to return with paper evidence if this is possible. 
+When the online check isn't available you should first of all try again later. If you're dealing with an applicant at the counter, you can ask them to return with paper evidence if this is possible.
 
 **In an emergency**, (for example an eviction), you can ask the applicant to provide an official letter to show that they're receiving benefits.   
 
-It must show: 
+It must show:
 
-+ the applicant’s title 
-+ full name 
-+ address and postcode 
++ the applicant’s title
++ full name
++ address and postcode
 
 It must also confirm that they currently receive one of the 6 'gateway benefits'.
 
@@ -108,9 +108,9 @@ Alternatively you can refer the case to the court manager who may be able to gra
 
 #### What if the DWP check doesn't match what the applicant has stated?  
 
-If the applicant has recently started receiving one of the 6 benefits (eg in the last week) then the online DWP check may not be up to date. If you're processing the application at the counter, ask the applicant to provide a paper evidence if possible. 
+If the applicant has recently started receiving one of the 6 benefits (eg in the last week) then the online DWP check may not be up to date. If you're processing the application at the counter, ask the applicant to provide a paper evidence if possible.
 
-###Calculating the fee based on income 
+###Calculating the fee based on income
 
 The applicant needs to provide evidence of their income.
 
@@ -171,5 +171,5 @@ If they receive any other income, for example from investments or selling goods 
 
 
 <pre>
-     <script>$('dl.sub-nav dd#staff-guide').addClass('active')</script>
+     <script>(function(){var el = document.getElementById('staff-guide');el.className = 'active';})();</script>
 </pre>
