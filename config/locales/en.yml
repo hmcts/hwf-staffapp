@@ -192,7 +192,7 @@ en-GB:
         reference: Reference
         processed_by: Processed by
         expires: Expires
-      evidence/views/overview:
+      views/application_overview:
         full_name: Full name
         date_of_birth: Date of birth
         ni_number: NI Number

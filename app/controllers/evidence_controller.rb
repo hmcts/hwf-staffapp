@@ -1,7 +1,7 @@
 class EvidenceController < ApplicationController
   def show
     processing_details
-    evidence_overview
+    application_overview
   end
 
   def accuracy
@@ -40,7 +40,7 @@ class EvidenceController < ApplicationController
 
   def summary
     evidence_view
-    evidence_overview
+    application_overview
     evidence_result
   end
 
@@ -62,8 +62,8 @@ class EvidenceController < ApplicationController
     @processing_details = Views::Evidence::ProcessingDetails.new(evidence)
   end
 
-  def evidence_overview
-    @overview = Evidence::Views::Overview.new(evidence)
+  def application_overview
+    @overview = Views::ApplicationOverview.new(evidence.application)
   end
 
   def evidence_view
