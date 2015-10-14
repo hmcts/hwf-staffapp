@@ -66,21 +66,17 @@ RSpec.describe Evidence::Forms::Accuracy do
 
       it { is_expected.to be true }
 
-      it 'updates the correct field on evidence check' do
-        subject && evidence.reload
+      before { subject && evidence.reload }
 
+      it 'updates the correct field on evidence check' do
         expect(evidence.correct).to be true
       end
 
       it 'keeps the outcome empty' do
-        subject && evidence.reload
-
         expect(evidence.outcome).to be nil
       end
 
       it 'keeps the incorrect reason empty' do
-        subject && evidence.reload
-
         expect(evidence.incorrect_reason).to be nil
       end
     end
@@ -91,16 +87,14 @@ RSpec.describe Evidence::Forms::Accuracy do
 
       it { is_expected.to be true }
 
-      it 'updates the correct field on evidence check and creates reason record with explanation' do
-        subject && evidence.reload
+      before { subject && evidence.reload }
 
+      it 'updates the correct field on evidence check and creates reason record with explanation' do
         expect(evidence.correct).to be false
         expect(evidence.incorrect_reason).to eql(incorrect_reason)
       end
 
       it 'sets the outcome to none' do
-        subject && evidence.reload
-
         expect(evidence.outcome).to eql('none')
       end
     end

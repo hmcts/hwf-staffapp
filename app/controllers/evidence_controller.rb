@@ -84,6 +84,4 @@ class EvidenceController < ApplicationController
   def evidence_confirmation
     @confirmation = evidence
   end
-
-  # TODO: permitted params setup
 end
