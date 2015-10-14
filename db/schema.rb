@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014114305) do
+ActiveRecord::Schema.define(version: 20151015143356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20151014114305) do
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
     t.string   "reference"
+    t.string   "emergency_reason"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
@@ -106,9 +107,9 @@ ActiveRecord::Schema.define(version: 20151014114305) do
     t.integer  "income"
     t.string   "outcome"
     t.integer  "amount_to_pay"
-    t.string   "incorrect_reason"
     t.datetime "completed_at"
     t.integer  "completed_by_id"
+    t.string   "incorrect_reason"
   end
 
   add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree

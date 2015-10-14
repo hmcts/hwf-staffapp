@@ -94,4 +94,20 @@
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control' }
 
+  .row
+    .small-12.medium-8.large-5.columns
+      .options.radio
+        .option
+          = f.label :emergency
+            = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
+            = t('activemodel.attributes.applikation/forms/application_detail.emergency')
+
+  #emergency-only.start-hidden
+    .row
+      .small-12.medium-8.large-5.columns
+        .form-group.panel-indent
+          = f.label :emergency_reason
+          = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+          = f.text_area :emergency_reason, { class: 'form-control' }
+
   = f.submit 'Next', class: 'button primary'
