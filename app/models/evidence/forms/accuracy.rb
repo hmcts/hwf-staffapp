@@ -3,37 +3,24 @@ module Evidence
     class Accuracy < ::FormObject
       def self.permitted_attributes
         {
-          id: Integer,
           correct: Boolean,
-          reason: String
+          incorrect_reason: String
         }
       end
 
       define_attributes
 
-      validates :id, numericality: { only_integer: true }
       validates :correct, inclusion: { in: [true, false] }
-
-      def save
-        if valid?
-          persist!
-          true
-        else
-          false
-        end
-      end
 
       private
 
       def persist!
-        @evidence = EvidenceCheck.find(id)
-        @evidence.update(fields_to_update)
-        @evidence.reason.destroy if correct && @evidence.reason
-        @evidence.create_reason(explanation: reason) unless reason.blank?
+        @object.update(fields_to_update)
       end
 
       def fields_to_update
-        { correct: correct }.tap do |fields|
+        self.incorrect_reason = nil if correct
+        { correct: correct, incorrect_reason: incorrect_reason }.tap do |fields|
           fields[:outcome] = 'none' unless correct
         end
       end

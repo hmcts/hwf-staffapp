@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008102856) do
+ActiveRecord::Schema.define(version: 20151013143545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,14 +98,15 @@ ActiveRecord::Schema.define(version: 20151008102856) do
   add_index "dwp_checks", ["office_id"], name: "index_dwp_checks_on_office_id", using: :btree
 
   create_table "evidence_checks", force: :cascade do |t|
-    t.integer  "application_id", null: false
+    t.integer  "application_id",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "expires_at",     null: false
+    t.datetime "expires_at",       null: false
     t.boolean  "correct"
     t.integer  "income"
     t.string   "outcome"
     t.integer  "amount_to_pay"
+    t.string   "incorrect_reason"
   end
 
   add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree
@@ -161,13 +162,6 @@ ActiveRecord::Schema.define(version: 20151008102856) do
 
   add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
 
-  create_table "reasons", force: :cascade do |t|
-    t.string  "explanation"
-    t.integer "evidence_check_id"
-  end
-
-  add_index "reasons", ["evidence_check_id"], name: "index_reasons_on_evidence_check_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -202,7 +196,6 @@ ActiveRecord::Schema.define(version: 20151008102856) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "applications", "jurisdictions"
   add_foreign_key "applications", "offices"
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
@@ -212,7 +205,6 @@ ActiveRecord::Schema.define(version: 20151008102856) do
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
   add_foreign_key "r2_calculators", "users", column: "created_by_id"
-  add_foreign_key "reasons", "evidence_checks"
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end

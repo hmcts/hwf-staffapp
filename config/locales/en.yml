@@ -185,9 +185,9 @@ en-GB:
     attributes:
       evidence/forms/accuracy:
         correct: Is the evidence correct?
-        reason: What is incorrect about the evidence?
+        incorrect_reason: What is incorrect about the evidence?
       evidence/forms/income:
-        amount: Total monthly income from evidence
+        income: Total monthly income from evidence
       evidence/views/overview:
         reference: Reference
         processed_by: Processed by
@@ -206,7 +206,7 @@ en-GB:
         total_monthly_income: Total monthly income
       evidence/views/evidence:
         correct: Correct
-        reason: Reason
+        incorrect_reason: Reason
         income: Income
       evidence/views/result:
         savings: Savings

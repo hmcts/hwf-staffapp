@@ -73,7 +73,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     it 'fill in the income form takes me to the next page' do
       expect(page).to have_content 'Total monthly income from evidence'
-      fill_in 'evidence_amount', with: 500
+      fill_in 'evidence_income', with: 500
       click_button 'Next'
     end
   end
@@ -132,7 +132,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:expected_fields) do
         {
           'Correct' => 'No',
-          'Reason' => evidence.reason.explanation
+          'Reason' => evidence.incorrect_reason
         }
       end
 

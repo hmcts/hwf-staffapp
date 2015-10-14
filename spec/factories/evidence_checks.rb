@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :evidence_check do
     application
     expires_at { rand(3..7).days.from_now }
+    incorrect_reason nil
     outcome nil
     amount_to_pay nil
 
@@ -20,11 +21,8 @@ FactoryGirl.define do
 
     factory :evidence_check_incorrect do
       correct false
+      incorrect_reason 'SOME REASON'
       outcome 'none'
-
-      after(:build) do |evidence_check|
-        build :reason, evidence_check: evidence_check
-      end
     end
   end
 end
