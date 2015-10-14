@@ -87,7 +87,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def evidence_check_selection
-    if next_step?(:summary)
+    if next_step?(:summary) && evidence_check_enabled?
       EvidenceCheckSelector.new(@application, Settings.evidence_check.expires_in_days).decide!
     end
   end

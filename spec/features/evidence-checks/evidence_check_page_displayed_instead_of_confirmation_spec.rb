@@ -22,6 +22,9 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
       visit application_build_path(application_id: application.id, id: 'income_result')
 
       click_button 'Next'
+
+      expect(page).to have_content 'Evidence of income needs to be checked for this application'
+
       click_button 'Continue'
 
       expect(evidence_check_rendered?).to be true
@@ -45,6 +48,9 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
       visit application_build_path(application_id: application.id, id: 'income_result')
 
       click_button 'Next'
+
+      expect(page).to have_content '✓ The applicant doesn’t have to pay the fee'
+
       click_button 'Continue'
 
       expect(confirmation_rendered?).to be true
