@@ -9,4 +9,4 @@ calculator:
   couple_supp: 160
 evidence_check:
   enabled: <%= ENV['EVIDENCE_CHECK_ENABLED'] || false %>
-  expires_in_days: 7
+  expires_in_days: 14
