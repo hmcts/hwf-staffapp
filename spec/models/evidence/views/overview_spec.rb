@@ -10,7 +10,7 @@ RSpec.describe Evidence::Views::Overview do
   before { allow(evidence).to receive(:application).and_return(application) }
 
   context 'required methods' do
-    symbols = %i[reference processed_by expires date_of_birth full_name ni_number status fee
+    symbols = %i[date_of_birth full_name ni_number status fee
                  jurisdiction date_received form_name number_of_children total_monthly_income
                  income]
 
@@ -18,28 +18,6 @@ RSpec.describe Evidence::Views::Overview do
       it 'has the method #{symbol}' do
         expect(overview.methods).to include(symbol)
       end
-    end
-  end
-
-  describe '#expires' do
-    before { allow(evidence).to receive(:expires_at).and_return(expiration_date) }
-
-    context 'when the evidence check expires in a few days' do
-      let(:expiration_date) { Time.zone.now + 3.days }
-
-      it { expect(overview.expires).to eq '3 days' }
-    end
-
-    context 'when the evidence check expires today' do
-      let(:expiration_date) { Time.zone.now }
-
-      it { expect(overview.expires).to eq 'expired' }
-    end
-
-    context 'when the evidence check has expired' do
-      let(:expiration_date) { Time.zone.yesterday }
-
-      it { expect(overview.expires).to eq 'expired' }
     end
   end
 

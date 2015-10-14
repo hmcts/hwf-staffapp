@@ -3,7 +3,7 @@ module Evidence
     class Overview
       attr_reader :evidence
 
-      APPLICATION_ATTRS = %i[date_of_birth reference full_name ni_number
+      APPLICATION_ATTRS = %i[date_of_birth full_name ni_number
                              date_received form_name amount_to_pay]
       APPLICATION_ATTRS.each do |attr|
         define_method(attr) do
@@ -13,20 +13,6 @@ module Evidence
 
       def initialize(evidence)
         @evidence = evidence
-      end
-
-      def expires
-        return 'expired' if @evidence.expires_at < Time.zone.now
-        days = (((@evidence.expires_at - Time.zone.now) / 86400).round)
-        if days > 1
-          "#{days} days"
-        elsif days == 1
-          "1 day"
-        end
-      end
-
-      def processed_by
-        @evidence.application.user.name
       end
 
       def status

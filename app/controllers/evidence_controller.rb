@@ -1,5 +1,6 @@
 class EvidenceController < ApplicationController
   def show
+    processing_details
     evidence_overview
   end
 
@@ -55,6 +56,10 @@ class EvidenceController < ApplicationController
 
   def evidence
     @evidence ||= EvidenceCheck.find(params[:id])
+  end
+
+  def processing_details
+    @processing_details = Views::Evidence::ProcessingDetails.new(evidence)
   end
 
   def evidence_overview

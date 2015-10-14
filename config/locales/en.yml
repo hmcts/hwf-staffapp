@@ -178,9 +178,9 @@ en-GB:
       no_evidence_checks: There are no applications waiting for evidence
       table_header:
         reference: Reference
-        full_name: Applicant
+        applicant: Applicant
         processed_by: Processed by
-        expires: Expired
+        expires: Expires
   activemodel:
     attributes:
       evidence/forms/accuracy:
@@ -188,10 +188,11 @@ en-GB:
         incorrect_reason: What is incorrect about the evidence?
       evidence/forms/income:
         income: Total monthly income from evidence
-      evidence/views/overview:
+      views/evidence/processing_details:
         reference: Reference
         processed_by: Processed by
         expires: Expires
+      evidence/views/overview:
         full_name: Full name
         date_of_birth: Date of birth
         ni_number: NI Number
