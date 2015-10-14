@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20151013143545) do
     t.string   "outcome"
     t.integer  "amount_to_pay"
     t.string   "incorrect_reason"
+    t.datetime "completed_at"
+    t.integer  "completed_by_id"
   end
 
   add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree
