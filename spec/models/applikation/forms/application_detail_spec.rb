@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Applikation::Forms::ApplicationDetail do
-  params_list = %i[fee jurisdiction_id date_received probate date_of_death deceased_name refund date_fee_paid form_name case_number]
+  params_list = %i[fee jurisdiction_id date_received probate date_of_death
+                   deceased_name refund date_fee_paid form_name case_number
+                   emergency emergency_reason]
 
   let(:application) { create :application }
 
@@ -17,6 +19,7 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
     let(:form) { described_class.new(application) }
 
     params_list.each do |attr_name|
+      next if attr_name.equal?(:emergency)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq application.send(attr_name)
       end
@@ -240,6 +243,43 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
           it 'returns an error if missing' do
             expect(refund.errors[:date_fee_paid]).to eq ['Enter the date in this format 01/01/2015']
           end
+        end
+      end
+    end
+
+    describe 'evidence_reason' do
+      let(:reason) do
+        params = { jurisdiction_id: 1,
+                   fee: 500,
+                   date_received: Time.zone.yesterday,
+                   emergency: true,
+                   emergency_reason: 'REASON' }
+        described_class.new(params)
+      end
+
+      it 'has a valid factory build' do
+        expect(reason).to be_valid
+      end
+
+      context 'emergency is true' do
+        before do
+          reason.emergency = false
+          reason.emergency_reason = nil
+        end
+
+        it 'passes if emergency unchecked' do
+          expect(reason.valid?).to eq true
+        end
+      end
+
+      context 'emergency is false' do
+        before do
+          reason.emergency = true
+          reason.emergency_reason = nil
+        end
+
+        it 'the reason is not filled in' do
+          expect(reason.valid?).not_to eq true
         end
       end
     end

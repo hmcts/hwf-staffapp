@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20151016153328) do
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
     t.string   "reference"
+    t.string   "emergency_reason"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
