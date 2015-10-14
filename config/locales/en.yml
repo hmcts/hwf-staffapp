@@ -109,7 +109,7 @@ en-GB:
     none: '✗ &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
   evidence_check:
-    callout: This application has been chosen for investigation. You’ll need to ask for supporting evidence.
+    callout: Evidence of income needs to be checked for this application
     page_title: Application waiting for evidence
     back_to_start: Back to start
     next_steps:
