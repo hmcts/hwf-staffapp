@@ -209,7 +209,7 @@ en-GB:
         correct: Correct
         incorrect_reason: Reason
         income: Income
-      evidence/views/result:
+      views/application_result:
         savings: Savings
         income: Income
       evidence/views/dashboard:
