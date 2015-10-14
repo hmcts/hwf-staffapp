@@ -35,13 +35,13 @@ class EvidenceController < ApplicationController
   end
 
   def result
-    evidence_result
+    application_result
   end
 
   def summary
     evidence_view
     application_overview
-    evidence_result
+    application_result
   end
 
   def summary_save
@@ -94,8 +94,8 @@ class EvidenceController < ApplicationController
     params.require(:evidence).permit(*Evidence::Forms::Income.permitted_attributes)
   end
 
-  def evidence_result
-    @result = Evidence::Views::Result.new(evidence)
+  def application_result
+    @result = Views::ApplicationResult.new(evidence)
   end
 
   def evidence_confirmation

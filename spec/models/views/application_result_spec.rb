@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'rails_helper'
 
-RSpec.describe Evidence::Views::Result do
+RSpec.describe Views::ApplicationResult do
 
   subject(:result) { described_class.new(evidence) }
 
