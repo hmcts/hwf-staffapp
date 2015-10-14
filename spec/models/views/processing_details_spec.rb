@@ -1,14 +1,16 @@
 # coding: utf-8
 require 'rails_helper'
 
-RSpec.describe Views::Evidence::ProcessingDetails do
-  let(:evidence) { build_stubbed(:evidence_check) }
-  subject(:view) { described_class.new(evidence) }
+RSpec.describe Views::ProcessingDetails do
+  let(:application) { build_stubbed(:application) }
+  let(:record) { double(application: application) }
+
+  subject(:view) { described_class.new(record) }
 
   it { is_expected.to delegate_method(:reference).to(:application) }
 
   describe '#expires' do
-    let(:evidence) { build_stubbed(:evidence_check, expires_at: expiration_date) }
+    let(:record) { double(application: application, expires_at: expiration_date) }
 
     subject { view.expires }
 
@@ -35,7 +37,7 @@ RSpec.describe Views::Evidence::ProcessingDetails do
     subject { view.processed_by }
 
     it 'returns the name of the user who created the application' do
-      is_expected.to eql(evidence.application.user.name)
+      is_expected.to eql(application.user.name)
     end
   end
 
@@ -43,7 +45,7 @@ RSpec.describe Views::Evidence::ProcessingDetails do
     subject { view.applicant }
 
     it 'returns the full name of the applicant' do
-      is_expected.to eql(evidence.application.full_name)
+      is_expected.to eql(application.full_name)
     end
   end
 end

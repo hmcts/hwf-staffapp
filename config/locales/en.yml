@@ -188,7 +188,7 @@ en-GB:
         incorrect_reason: What is incorrect about the evidence?
       evidence/forms/income:
         income: Total monthly income from evidence
-      views/evidence/processing_details:
+      views/processing_details:
         reference: Reference
         processed_by: Processed by
         expires: Expires

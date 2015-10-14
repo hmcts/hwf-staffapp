@@ -10,7 +10,7 @@
         th =t('evidence_check.dashboard.table_header.expires')
       - @waiting_for_evidence.each do |evidence|
         tr
-          td =link_to(evidence.reference, evidence_show_path(evidence.evidence))
+          td =link_to(evidence.reference, evidence_show_path(evidence.evidence_or_payment))
           td =evidence.applicant
           td =evidence.processed_by
           td =evidence.expires

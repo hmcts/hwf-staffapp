@@ -59,7 +59,7 @@ class EvidenceController < ApplicationController
   end
 
   def processing_details
-    @processing_details = Views::Evidence::ProcessingDetails.new(evidence)
+    @processing_details = Views::ProcessingDetails.new(evidence)
   end
 
   def application_overview
@@ -95,7 +95,7 @@ class EvidenceController < ApplicationController
   end
 
   def application_result
-    @result = Views::ApplicationResult.new(evidence)
+    @result = Views::ApplicationResult.new(evidence.application)
   end
 
   def evidence_confirmation
