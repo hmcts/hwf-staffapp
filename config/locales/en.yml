@@ -225,6 +225,9 @@ en-GB:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
       applikation/forms/income:
         dependents: Are there any financially dependent children?
+      applikation/forms/application_detail:
+        emergency: This is an emergency case
+        emergency_reason: Reason for emergency
     errors:
       models:
         applikation/forms/application_detail:
@@ -254,6 +257,8 @@ en-GB:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               before: The date of death cannot be a future date
+            emergency_reason:
+              cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
         applikation/forms/personal_information:
           attributes:
             date_of_birth:
