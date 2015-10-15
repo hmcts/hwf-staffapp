@@ -28,4 +28,36 @@ RSpec.feature 'Payments flow', type: :feature do
       end
     end
   end
+
+  context 'when on accuracy page' do
+    before { visit accuracy_payment_path(id: payment.id) }
+
+    it 'displays the title of the page' do
+      expect(page).to have_content 'Payment details'
+    end
+
+    it 'displays the form label' do
+      expect(page).to have_content 'Is the payment correct?'
+    end
+
+    scenario 'it re-renders the page when the page is submitted without anything filled in' do
+      click_button 'Next'
+
+      expect(page).to have_content 'Is the payment correct?'
+    end
+
+    scenario 'confirming the payment is correct redirects to the summary' do
+      choose 'payment_correct_true'
+      click_button 'Next'
+      expect(page).to have_content 'Check details'
+    end
+
+    scenario 'rejecting the payment redirects to the summary page' do
+      choose 'payment_correct_false'
+      expect(page).to have_content 'What is incorrect about the payment?'
+      click_button 'Next'
+      expect(page).to have_content 'Check details'
+    end
+  end
+
 end
