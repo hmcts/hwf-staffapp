@@ -1,0 +1,14 @@
+h2 Waiting for payment
+
+.row
+  .small-12.medium-6.columns
+    .panel
+      h4 Process payment
+      = link_to 'Start now', '#', class: 'button success'
+
+=build_section 'Processing details', @processing_details, %w[reference processed_by expires]
+=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
+=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
+=build_section 'Result', @result, %w[savings income]
+
+=render(partial: 'shared/remission_type', locals: { source: @result })

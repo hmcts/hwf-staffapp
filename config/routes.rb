@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: :show
 
+  resources :payments, only: :show
+
   get 'guide' => 'guide#index'
 
   get 'ping' => 'health_status#ping'
