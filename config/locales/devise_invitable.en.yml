@@ -21,14 +21,15 @@ en-GB:
         submit_button: Get new password
     mailer:
       invitation_instructions:
-        subject: 'Set up your account to use the benefit checker'
+        subject: 'Set up your account to process applications for help with fees'
         hello: 'Dear %{name}'
         someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
         accept: 'Accept invitation'
-        set_up: 'You need to set up a password to use the online benefits checker. Follow these steps:'
-        guidance: "You'll need:"
+        set_up: 'You need to create a password to start processing applications for help with fees.'
+        guidance: "Follow these steps:"
         list_1: 'Open the Firefox web browser'
         list_2: 'Copy and paste this address into your browser’s address bar: '
         list_3: 'You can then create a password'
-        ignore: "You won’t be able to use the benefits checker until you create a password.<br />If you weren't expecting this invitation, please ignore this email."
+        warning: "You won't be able to use the help with fees processing service until you create a password."
+        ignore: "If you weren't expecting this invitation, please ignore this email."
         set_up_text: 'Set up your account now'
