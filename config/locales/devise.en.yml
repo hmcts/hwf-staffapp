@@ -23,7 +23,7 @@ en-GB:
         subject: "Please confirm your new password request"
         hello: "Dear %{name}"
         someone_requested_reset: "We received a request to change your password."
-        guide: "To do this, copy and paste the link below into a firefox browser window: "
+        guide: "To do this, copy and paste the link below into a Firefox browser window: "
         link_text: "change your password."
         ignore_this: "If you didn't request this change, please ignore this email."
       unlock_instructions:
