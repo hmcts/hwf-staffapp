@@ -430,6 +430,11 @@ en-GB:
         summary:
           passed: '✓ Passed'
           failed: '✗ Failed'
+          full: '✓ Passed'
+          part: '✓ Passed'
+          none: '✗ Failed'
+          'true': '✓ Passed'
+          'false': '✗ Failed'
           savings_investments: Savings and investments
           benefits: Benefits
           income: Income

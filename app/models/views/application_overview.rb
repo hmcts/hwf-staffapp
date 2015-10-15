@@ -32,22 +32,22 @@ module Views
     end
 
     def income
-      {
-        'full' => I18n.t('activerecord.attributes.application.summary.passed'),
-        'part' => I18n.t('activerecord.attributes.application.summary.passed'),
-        'none' => I18n.t('activerecord.attributes.application.summary.failed')
-      }[@application.application_outcome]
+      format_locale(@application.application_outcome)
     end
 
     def savings
-      {
-        'true' => I18n.t('activerecord.attributes.application.summary.passed'),
-        'false' => I18n.t('activerecord.attributes.application.summary.failed')
-      }[@application.savings_investment_valid?.to_s]
+      format_locale(@application.savings_investment_valid?.to_s)
     end
 
     def result
       @application.application_outcome
+    end
+
+    private
+
+    def format_locale(suffix)
+      prefix = 'activerecord.attributes.application.summary'
+      I18n.t(suffix, scope: prefix)
     end
   end
 end

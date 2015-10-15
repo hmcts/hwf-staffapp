@@ -16,11 +16,11 @@ module Views
     end
 
     def savings
-      result_translations[@application.savings_investment_valid?.to_s]
+      format_locale(@application.savings_investment_valid?.to_s)
     end
 
     def income
-      result_translations[%w[full part].include?(result).to_s]
+      format_locale(%w[full part].include?(result).to_s)
     end
 
     private
@@ -38,11 +38,11 @@ module Views
       @application.evidence_check || @application
     end
 
-    def result_translations
-      {
-        'true' => I18n.t('activerecord.attributes.application.summary.passed'),
-        'false' => I18n.t('activerecord.attributes.application.summary.failed')
-      }
+    private
+
+    def format_locale(suffix)
+      prefix = 'activerecord.attributes.application.summary'
+      I18n.t(suffix, scope: prefix)
     end
   end
 end
