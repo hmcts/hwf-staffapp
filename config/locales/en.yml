@@ -42,6 +42,12 @@ en-GB:
         <p>You will need to make a new application if you still require help.</p>
         <p>Yours sincerely,</p>
         <p>%{current_user}</p>
+  payments:
+    correct: 'Yes'
+    incorrect: 'No'
+    labels:
+      correct: Is the payment correct?
+      incorrect_reason: What is incorrect about the payment?
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
