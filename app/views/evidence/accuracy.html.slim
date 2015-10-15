@@ -1,6 +1,6 @@
 h2 Evidence
 
-= form_for @form, as: :evidence, url: :evidence_accuracy_save, method: :post, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :evidence, url: :evidence_accuracy_save, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .row
     .small-12.medium-8.large-5.columns
       .form-group

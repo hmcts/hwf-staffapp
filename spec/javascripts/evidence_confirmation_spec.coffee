@@ -4,35 +4,40 @@
 describe "EvidenceConfirmationModule", ->
   element = null
   beforeEach ->
-    element = $("""<div class="small-12 medium-8 large-5 columns">
-    <div class="form-group">
-      <div class="row collapse">
-        <div class="columns small-12">
-          <label for="evidence_correct">Is the evidence correct?</label>
-          <div class="options radio">
-            <div class="option">
-              <label for="evidence_correct_false">
-                <input type="radio" value="false" name="evidence[correct]" id="evidence_correct_false">
-                  No
-               </label>
-            </div>
-            <div class="option">
-              <label for="evidence_correct_true">
-                <input type="radio" value="true" name="evidence[correct]" id="evidence_correct_true">
-                Yes
-              </label>
+    element = $("""
+    <div class="small-12 medium-8 large-5 columns">
+      <form id="accuracy-form">
+        <div class="form-group">
+          <div class="row collapse">
+            <div class="columns small-12">
+              <label for="evidence_correct">Is the evidence correct?</label>
+              <div class="options radio">
+                <div class="option">
+                  <label for="evidence_correct_false">
+                    <input type="radio" value="false" name="evidence[correct]" id="evidence_correct_false">
+                      No
+                   </label>
+                </div>
+                <div class="option">
+                  <label for="evidence_correct_true">
+                    <input type="radio" value="true" name="evidence[correct]" id="evidence_correct_true">
+                    Yes
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="panel-indent form-group row collapse" id="reason-input" style="display: none;">
-      <div class="columns small-12">
-        <label for="evidence_reason">What is incorrect about the evidence?</label>
-          <textarea rows="3" name="evidence[reason]" id="evidence_reason"></textarea>
+        <div class="panel-indent form-group row collapse" id="reason-input" style="display: none;">
+          <div class="columns small-12">
+            <label for="evidence_reason">What is incorrect about the evidence?</label>
+              <textarea rows="3" name="evidence[reason]" id="evidence_reason"></textarea>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>""")
+      </form>
+    </div>
+    """)
     $(document.body).append(element)
     EvidenceConfirmationModule.setup()
     window.RadioButtonsModule.setup()
