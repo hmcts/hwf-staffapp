@@ -1,6 +1,7 @@
 class EvidenceController < ApplicationController
   def show
-    evidence_overview
+    processing_details
+    application_overview
   end
 
   def accuracy
@@ -34,13 +35,13 @@ class EvidenceController < ApplicationController
   end
 
   def result
-    evidence_result
+    application_result
   end
 
   def summary
     evidence_view
-    evidence_overview
-    evidence_result
+    application_overview
+    application_result
   end
 
   def summary_save
@@ -57,8 +58,12 @@ class EvidenceController < ApplicationController
     @evidence ||= EvidenceCheck.find(params[:id])
   end
 
-  def evidence_overview
-    @overview = Evidence::Views::Overview.new(evidence)
+  def processing_details
+    @processing_details = Views::ProcessingDetails.new(evidence)
+  end
+
+  def application_overview
+    @overview = Views::ApplicationOverview.new(evidence.application)
   end
 
   def evidence_view
@@ -89,8 +94,8 @@ class EvidenceController < ApplicationController
     params.require(:evidence).permit(*Evidence::Forms::Income.permitted_attributes)
   end
 
-  def evidence_result
-    @result = Evidence::Views::Result.new(evidence)
+  def application_result
+    @result = Views::ApplicationResult.new(evidence.application)
   end
 
   def evidence_confirmation

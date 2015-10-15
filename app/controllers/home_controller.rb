@@ -26,7 +26,7 @@ class HomeController < ApplicationController
     if evidence_check_enabled? && !current_user.admin?
       @evidence_enabled = true
       @waiting_for_evidence = waiting_for_evidence.map do |application|
-        Evidence::Views::Overview.new(application.evidence_check)
+        Views::ProcessingDetails.new(application.evidence_check)
       end
     else
       @evidence_enabled = false

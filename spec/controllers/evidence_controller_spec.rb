@@ -23,7 +23,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     it 'assigns the overview model' do
-      expect(assigns(:overview)).to be_a(Evidence::Views::Overview)
+      expect(assigns(:overview)).to be_a(Views::ApplicationOverview)
     end
   end
 
