@@ -10,7 +10,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   validates :reference, presence: true, uniqueness: true
 
   scope :evidencecheckable, lambda {
-    where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+    where(benefits: false,
+          application_type: 'income',
+          emergency_reason: nil,
+          application_outcome: %w[part full])
   }
 
   scope :waiting_for_evidence, lambda {
