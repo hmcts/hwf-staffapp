@@ -5,11 +5,11 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy
-    @form = Evidence::Forms::Accuracy.new(evidence)
+    @form = Forms::Evidence::Accuracy.new(evidence)
   end
 
   def accuracy_save
-    @form = Evidence::Forms::Accuracy.new(evidence)
+    @form = Forms::Evidence::Accuracy.new(evidence)
     @form.update_attributes(accuracy_params)
 
     if @form.save
@@ -71,7 +71,7 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_params
-    params.require(:evidence).permit(*Evidence::Forms::Accuracy.permitted_attributes)
+    params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes)
   end
 
   def redirect_after_accuracy_save

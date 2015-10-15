@@ -34,6 +34,6 @@ class PaymentsController < ApplicationController
   end
 
   def accuracy_params
-    params.require(:payment).permit(*Evidence::Forms::Accuracy.permitted_attributes)
+    params.require(:payment).permit(*Forms::Accuracy.permitted_attributes)
   end
 end

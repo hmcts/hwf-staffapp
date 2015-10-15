@@ -42,7 +42,10 @@ en-GB:
         <p>You will need to make a new application if you still require help.</p>
         <p>Yours sincerely,</p>
         <p>%{current_user}</p>
-  payments:
+    labels:
+      correct: Is the evidence correct?
+      incorrect_reason: What is incorrect about the evidence?
+  payment:
     correct: 'Yes'
     incorrect: 'No'
     labels:
@@ -189,9 +192,6 @@ en-GB:
         expires: Expires
   activemodel:
     attributes:
-      evidence/forms/accuracy:
-        correct: Is the evidence correct?
-        incorrect_reason: What is incorrect about the evidence?
       evidence/forms/income:
         income: Total monthly income from evidence
       views/processing_details:
