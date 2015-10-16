@@ -10,26 +10,17 @@ RSpec.describe Views::ProcessingDetails do
   it { is_expected.to delegate_method(:reference).to(:application) }
 
   describe '#expires' do
-    let(:record) { double(application: application, expires_at: expiration_date) }
+    let(:expires_at) { 2.days.from_now }
+    let(:record) { double(application: application, expires_at: expires_at) }
 
     subject { view.expires }
 
-    context 'when the evidence check expires in a few days' do
-      let(:expiration_date) { Time.zone.now + 3.days }
-
-      it { is_expected.to eq '3 days' }
+    it 'returns just date' do
+      is_expected.to be_a(Date)
     end
 
-    context 'when the evidence check expires today' do
-      let(:expiration_date) { Time.zone.now }
-
-      it { is_expected.to eq 'expired' }
-    end
-
-    context 'when the evidence check has expired' do
-      let(:expiration_date) { Time.zone.yesterday }
-
-      it { is_expected.to eq 'expired' }
+    it 'returns the correct date from the record\'s expires_at' do
+      is_expected.to eq(expires_at.to_date)
     end
   end
 
