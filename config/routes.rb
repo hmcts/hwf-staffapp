@@ -28,6 +28,11 @@ Rails.application.routes.draw do
   end
 
   get 'guide' => 'guide#index'
+  get 'guide/process_application' => 'guide#process_application'
+  get 'guide/evidence_checks' => 'guide#evidence_checks'
+  get 'guide/part_payments' => 'guide#part_payments'
+  get 'guide/appeals' => 'guide#appeals'
+  get 'guide/suspected_fraud' => 'guide#suspected_fraud'
 
   get 'ping' => 'health_status#ping'
   get 'healthcheck' => 'health_status#healthcheck'
