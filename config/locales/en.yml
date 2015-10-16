@@ -45,6 +45,14 @@ en-GB:
     labels:
       correct: Is the evidence correct?
       incorrect_reason: What is incorrect about the evidence?
+    dashboard:
+      heading: Waiting for evidence
+      no_evidence_checks: There are no applications waiting for evidence
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        processed_by: Processed by
+        expires: Expires
   payment:
     correct: 'Yes'
     incorrect: 'No'
@@ -190,14 +198,6 @@ en-GB:
         <p>Yours sincerely,</p>
 
         <p>%{user_name}</p>
-    dashboard:
-      heading: Waiting for evidence
-      no_evidence_checks: There are no applications waiting for evidence
-      table_header:
-        reference: Reference
-        applicant: Applicant
-        processed_by: Processed by
-        expires: Expires
   activemodel:
     attributes:
       evidence/forms/income:
