@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :accuracy
       post :accuracy_save
       get :summary
+      post :summary_save
+      get :confirmation
     end
   end
 

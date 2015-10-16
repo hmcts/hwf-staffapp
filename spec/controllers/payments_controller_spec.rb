@@ -101,8 +101,39 @@ RSpec.describe PaymentsController, type: :controller do
     end
 
     it 'assigns the view models' do
+      expect(assigns(:payment)).to eql(payment)
       expect(assigns(:overview)).to eql(application_overview)
       expect(assigns(:result)).to eql(payment_result)
+    end
+  end
+
+  describe 'POST #summary_save' do
+    let(:current_time) { Time.zone.now }
+    let(:user) { create :user }
+    let(:payment) { create(:payment) }
+
+    before do
+      allow(Payment).to receive(:find).with(payment.id).and_return(payment)
+
+      Timecop.freeze(current_time) do
+        sign_in user
+        get :summary_save, id: payment
+      end
+    end
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(302)
+    end
+
+    it 'redirects to the confirmation page' do
+      expect(response).to redirect_to(confirmation_payment_path(payment))
+    end
+
+    it 'updates the payment completed_at and completed_by' do
+      payment.reload
+
+      expect(payment.completed_at).to eql(current_time)
+      expect(payment.completed_by).to eql(user)
     end
   end
 end
