@@ -69,7 +69,7 @@ en-GB:
         expires: Expires
     result:
       'yes': The applicant has paid %{amount_to_pay} towards the fee
-      'no': The applicant will have to make a new application
+      'no': The applicant will need to make a new application
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'

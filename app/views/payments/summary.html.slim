@@ -4,6 +4,5 @@ h2 Check details
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
 =build_section 'Result', @result, %w[savings income part_payment reason]
 
-
 #result.callout class=@result.callout
   h3.bold =t("payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
