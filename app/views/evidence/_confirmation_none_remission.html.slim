@@ -1,4 +1,6 @@
 .row
   .small-12.medium-12.large-12.columns
     .evidence-confirmation-letter
-      =t('evidence.no-remission.letter_html')
+      =t('evidence.no-remission.letter_html',
+         full_name: confirmation.application.full_name,
+         current_user: current_user.name)
