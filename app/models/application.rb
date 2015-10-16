@@ -14,11 +14,17 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   }
 
   scope :waiting_for_evidence, lambda {
-    includes(:evidence_check).references(:evidence_check).where.not(evidence_checks: { id: nil })
+    includes(:evidence_check).
+      references(:evidence_check).
+      where.not(evidence_checks: { id: nil }).
+      order('evidence_checks.expires_at ASC')
   }
 
   scope :waiting_for_payment, lambda {
-    includes(:payment).references(:payment).where.not(payments: { id: nil })
+    includes(:payment).
+      references(:payment).
+      where.not(payments: { id: nil }).
+      order('payments.expires_at ASC')
   }
 
   MAX_AGE = 120
