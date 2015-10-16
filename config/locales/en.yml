@@ -67,6 +67,9 @@ en-GB:
         applicant: Applicant
         processed_by: Processed by
         expires: Expires
+    result:
+      'yes': The applicant has paid %{amount_to_pay} towards the fee
+      'no': The applicant will need to make a new application
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
@@ -226,6 +229,11 @@ en-GB:
       views/application_result:
         savings: Savings
         income: Income
+      views/payment/result:
+        savings: Savings
+        income: Income
+        part_payment: Part payment
+        reason: Reason
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant

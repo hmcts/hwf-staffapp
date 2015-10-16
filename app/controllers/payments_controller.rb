@@ -21,6 +21,8 @@ class PaymentsController < ApplicationController
   end
 
   def summary
+    @overview = Views::ApplicationOverview.new(application)
+    @result = Views::Payment::Result.new(payment)
   end
 
   private
