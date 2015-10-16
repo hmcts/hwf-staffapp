@@ -17,7 +17,13 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: :show
 
-  resources :payments, only: :show
+  resources :payments, only: :show do
+    member do
+      get :accuracy
+      post :accuracy_save
+      get :summary
+    end
+  end
 
   get 'guide' => 'guide#index'
 

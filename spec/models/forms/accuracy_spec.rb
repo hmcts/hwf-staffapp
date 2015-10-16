@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Forms::Accuracy do
+RSpec.describe Forms::Accuracy do
   params_list = %i[correct incorrect_reason]
 
   let(:evidence) { build_stubbed :evidence_check }
@@ -72,10 +72,6 @@ RSpec.describe Evidence::Forms::Accuracy do
         expect(evidence.correct).to be true
       end
 
-      it 'keeps the outcome empty' do
-        expect(evidence.outcome).to be nil
-      end
-
       it 'keeps the incorrect reason empty' do
         expect(evidence.incorrect_reason).to be nil
       end
@@ -92,10 +88,6 @@ RSpec.describe Evidence::Forms::Accuracy do
       it 'updates the correct field on evidence check and creates reason record with explanation' do
         expect(evidence.correct).to be false
         expect(evidence.incorrect_reason).to eql(incorrect_reason)
-      end
-
-      it 'sets the outcome to none' do
-        expect(evidence.outcome).to eql('none')
       end
     end
   end
