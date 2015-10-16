@@ -79,6 +79,7 @@ class Applications::BuildController < ApplicationController
     if @form.valid?
       status = { status: get_status(step) }
       form_params.delete('application_id')
+      form_params.delete('emergency') if form_params.key?(:emergency)
       @application.update(form_params.merge(status))
       render_wizard @application
     else
