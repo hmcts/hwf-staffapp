@@ -199,12 +199,24 @@ RSpec.feature 'Evidence check flow', type: :feature do
         let(:outcome) { 'part' }
 
         it { expect(page).to have_content 'part-fee' }
+
+        it { expect(page).to have_content(evidence.application.full_name) }
+
+        it { expect(page).to have_content(user.name) }
+
+        it { expect(page).to have_content(evidence.amount_to_pay) }
+
+        it { expect(page).to have_content(evidence.expires_at.strftime('%-d %B %Y')) }
       end
 
       context 'rejected' do
         let(:outcome) { 'none' }
 
         it { expect(page).to have_content 'not correct' }
+
+        it { expect(page).to have_content(evidence.application.full_name) }
+
+        it { expect(page).to have_content(user.name) }
       end
     end
   end

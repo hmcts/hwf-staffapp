@@ -3,6 +3,6 @@
     h2 Processing complete
 
     - unless @confirmation.outcome == 'full'
-      = render(partial: "confirmation_#{@confirmation.outcome}_remission")
+      = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
 
 = link_to 'Back to start', root_path, class: 'button success'
