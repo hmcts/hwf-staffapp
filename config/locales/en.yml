@@ -51,6 +51,14 @@ en-GB:
     labels:
       correct: Is the payment correct?
       incorrect_reason: What is incorrect about the payment?
+    dashboard:
+      heading: Waiting for payment
+      no_evidence_checks: There are no applications waiting for payment
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        processed_by: Processed by
+        expires: Expires
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'

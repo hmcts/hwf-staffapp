@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_applications_waiting_for_evidence
+    load_applications_waiting_for_payment
   end
 
   private
@@ -24,17 +25,26 @@ class HomeController < ApplicationController
 
   def load_applications_waiting_for_evidence
     if evidence_check_enabled? && !current_user.admin?
-      @evidence_enabled = true
       @waiting_for_evidence = waiting_for_evidence.map do |application|
         Views::ProcessingDetails.new(application.evidence_check)
       end
-    else
-      @evidence_enabled = false
     end
   end
 
   def waiting_for_evidence
     current_user.office.applications.waiting_for_evidence
+  end
+
+  def load_applications_waiting_for_payment
+    if payment_enabled? && !current_user.admin?
+      @waiting_for_payment = waiting_for_payment.map do |application|
+        Views::ProcessingDetails.new(application.payment)
+      end
+    end
+  end
+
+  def waiting_for_payment
+    current_user.office.applications.waiting_for_payment
   end
 
   def load_graph_data
