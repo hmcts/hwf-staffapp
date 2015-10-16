@@ -45,12 +45,28 @@ en-GB:
     labels:
       correct: Is the evidence correct?
       incorrect_reason: What is incorrect about the evidence?
+    dashboard:
+      heading: Waiting for evidence
+      no_evidence_checks: There are no applications waiting for evidence
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        processed_by: Processed by
+        expires: Expires
   payment:
     correct: 'Yes'
     incorrect: 'No'
     labels:
       correct: Is the payment correct?
       incorrect_reason: What is incorrect about the payment?
+    dashboard:
+      heading: Waiting for payment
+      no_evidence_checks: There are no applications waiting for payment
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        processed_by: Processed by
+        expires: Expires
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
@@ -182,14 +198,6 @@ en-GB:
         <p>Yours sincerely,</p>
 
         <p>%{user_name}</p>
-    dashboard:
-      heading: Waiting for evidence
-      no_evidence_checks: There are no applications waiting for evidence
-      table_header:
-        reference: Reference
-        applicant: Applicant
-        processed_by: Processed by
-        expires: Expires
   activemodel:
     attributes:
       evidence/forms/income:

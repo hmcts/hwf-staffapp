@@ -10,3 +10,5 @@ calculator:
 evidence_check:
   enabled: <%= ENV['EVIDENCE_CHECK_ENABLED'] || false %>
   expires_in_days: 14
+payment:
+  enabled: <%= ENV['PAYMENT_ENABLED'] || false %>
