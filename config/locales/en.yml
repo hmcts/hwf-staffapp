@@ -37,7 +37,7 @@ en-GB:
         <p>%{current_user}</p>
     no-remission:
       letter_html: |
-        <p>Dear Mr %{full_name}</p>
+        <p>Dear %{full_name}</p>
         <p>We have received your documents however they are not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
         <p>You will need to make a new application if you still require help.</p>
         <p>Yours sincerely,</p>
