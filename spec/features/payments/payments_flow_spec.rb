@@ -67,6 +67,12 @@ RSpec.feature 'Payments flow', type: :feature do
       expect(page).to have_content 'Check details'
     end
 
+    scenario 'confirming payment directs to confirmation page' do
+      click_button 'Complete processing'
+
+      expect(page).to have_content 'Processing complete'
+    end
+
     context 'for correct payment' do
       let(:application) { create :application_part_remission, user: user }
       let(:payment) { create :payment, application: application, correct: true }
@@ -87,6 +93,30 @@ RSpec.feature 'Payments flow', type: :feature do
         expect(page).to have_content 'Part payment✗ Failed'
         expect(page).to have_content 'ReasonREASON'
         expect(page).to have_content 'The applicant will need to make a new application'
+      end
+    end
+  end
+
+  context 'when on the confirmation page' do
+    before { visit confirmation_payment_path(id: payment.id) }
+
+    it 'displays the title of the page' do
+      expect(page).to have_content 'Processing complete'
+    end
+
+    context 'for a successful payment' do
+      let(:payment) { create :payment, correct: true }
+
+      scenario 'a letter copy is not presented' do
+        expect(page).to have_no_content 'We have received your payment however it was not correct'
+      end
+    end
+
+    context 'for a failed payment' do
+      let(:payment) { create :payment, correct: false }
+
+      scenario 'a letter copy is presented' do
+        expect(page).to have_content 'We have received your payment however it was not correct'
       end
     end
   end

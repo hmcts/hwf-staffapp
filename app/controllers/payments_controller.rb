@@ -36,6 +36,8 @@ class PaymentsController < ApplicationController
   end
 
   def confirmation
+    @overview = Views::ApplicationOverview.new(application)
+    @result = Views::Payment::Result.new(payment)
   end
 
   private

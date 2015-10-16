@@ -136,4 +136,21 @@ RSpec.describe PaymentsController, type: :controller do
       expect(payment.completed_by).to eql(user)
     end
   end
+
+  describe 'GET #confirmation' do
+    before { get :confirmation, id: payment }
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template :confirmation
+    end
+
+    it 'assigns the view models' do
+      expect(assigns(:result)).to eql(payment_result)
+      expect(assigns(:overview)).to eql(application_overview)
+    end
+  end
 end
