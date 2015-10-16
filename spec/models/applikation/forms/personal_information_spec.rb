@@ -36,6 +36,17 @@ RSpec.describe Applikation::Forms::PersonalInformation do
 
         it { expect(subject.valid?).not_to be true }
       end
+
+      context 'when the the date_of_birth is passed a two digit year' do
+        before { personal_information[:date_of_birth] = '1/11/80' }
+
+        it { expect(subject.valid?).not_to be true }
+
+        it 'returns an error message, if omitted' do
+          subject.valid?
+          expect(subject.errors[:date_of_birth]).to eq ['Enter the date in this format 01/11/1980']
+        end
+      end
     end
 
     describe 'married' do
