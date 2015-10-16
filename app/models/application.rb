@@ -17,6 +17,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     includes(:evidence_check).references(:evidence_check).where.not(evidence_checks: { id: nil })
   }
 
+  scope :waiting_for_payment, lambda {
+    includes(:payment).references(:payment).where.not(payments: { id: nil })
+  }
+
   MAX_AGE = 120
   MIN_AGE = 16
 

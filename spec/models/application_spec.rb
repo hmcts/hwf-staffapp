@@ -203,7 +203,7 @@ RSpec.describe Application, type: :model do
       end
     end
 
-    describe '.waiting_for_evidence', focus: true do
+    describe '.waiting_for_evidence' do
       let!(:application1) { create :application }
       let!(:application2) { create :application }
       let!(:evidence_check) { create :evidence_check, application: application1 }
@@ -211,6 +211,18 @@ RSpec.describe Application, type: :model do
       subject { described_class.waiting_for_evidence }
 
       it 'returns only applications which have EvidenceCheck reference' do
+        is_expected.to match_array([application1])
+      end
+    end
+
+    describe '.waiting_for_payment', focus: true do
+      let!(:application1) { create :application }
+      let!(:application2) { create :application }
+      let!(:payment) { create :payment, application: application1 }
+
+      subject { described_class.waiting_for_payment }
+
+      it 'returns only applications which have Payment reference' do
         is_expected.to match_array([application1])
       end
     end
