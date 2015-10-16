@@ -47,4 +47,20 @@ RSpec.describe Views::Payment::Result do
       it { is_expected.to be nil }
     end
   end
+
+  describe '#callout' do
+    subject { view.callout }
+
+    context 'when the payment is correct' do
+      let(:payment) { build_stubbed :payment, application: application, correct: true }
+
+      it { is_expected.to eql('yes') }
+    end
+
+    context 'when the payment is not correct' do
+      let(:payment) { build_stubbed :payment, application: application, correct: false }
+
+      it { is_expected.to eql('no') }
+    end
+  end
 end

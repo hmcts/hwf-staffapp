@@ -14,6 +14,10 @@ module Views
       def reason
         @payment.incorrect_reason
       end
+
+      def callout
+        @payment.correct? ? 'yes' : 'no'
+      end
     end
   end
 end
