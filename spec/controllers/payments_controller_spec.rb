@@ -9,6 +9,7 @@ RSpec.describe PaymentsController, type: :controller do
   let(:application_overview) { double }
   let(:application_result) { double }
   let(:accuracy_form) { double }
+  let(:payment_result) { double }
 
   before do
     allow(Payment).to receive(:find).with(payment.id.to_s).and_return(payment)
@@ -16,6 +17,7 @@ RSpec.describe PaymentsController, type: :controller do
     allow(Views::ApplicationOverview).to receive(:new).with(payment.application).and_return(application_overview)
     allow(Views::ApplicationResult).to receive(:new).with(payment.application).and_return(application_result)
     allow(Forms::Accuracy).to receive(:new).with(payment).and_return(accuracy_form)
+    allow(Views::Payment::Result).to receive(:new).with(payment).and_return(payment_result)
   end
 
   describe 'GET #show' do
@@ -96,6 +98,11 @@ RSpec.describe PaymentsController, type: :controller do
 
     it 'renders the correct template' do
       expect(response).to render_template :summary
+    end
+
+    it 'assigns the view models' do
+      expect(assigns(:overview)).to eql(application_overview)
+      expect(assigns(:result)).to eql(payment_result)
     end
   end
 end

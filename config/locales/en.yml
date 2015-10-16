@@ -226,6 +226,11 @@ en-GB:
       views/application_result:
         savings: Savings
         income: Income
+      views/payment/result:
+        savings: Savings
+        income: Income
+        part_payment: Part payment
+        reason: Reason
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant
