@@ -8,6 +8,20 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:manager)   { create :manager }
   let(:admin)     { create :admin_user }
 
+  module FeatureHelper
+    def evidence_check_enabled?
+      false
+    end
+
+    def payment_enabled?
+      false
+    end
+  end
+
+  before do
+    view.extend FeatureHelper
+  end
+
   context 'public access' do
     it 'shows a get help message' do
       render

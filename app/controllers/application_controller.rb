@@ -22,4 +22,10 @@ class ApplicationController < ActionController::Base
   def evidence_check_enabled?
     Settings.evidence_check.enabled == true
   end
+  helper_method :evidence_check_enabled?
+
+  def payment_enabled?
+    Settings.payment.enabled == true
+  end
+  helper_method :payment_enabled?
 end
