@@ -38,11 +38,18 @@ module Applikation
       private
 
       def dob_age_valid?
+        validate_dob
+        unless errors.include?(:date_of_birth)
+          validate_dob_minimum
+          validate_dob_maximum
+        end
+      end
+
+      def validate_dob
         if date_of_birth =~ /[a-zA-Z]/
           errors.add(:date_of_birth, "can't contain non numbers")
-        else
-          validate_dob_minimum unless date_of_birth.blank?
-          validate_dob_maximum unless date_of_birth.blank?
+        elsif !date_of_birth.is_a?(Date)
+          errors.add(:date_of_birth, :not_a_date)
         end
       end
 
