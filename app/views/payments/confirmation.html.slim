@@ -1,0 +1,10 @@
+.row
+  .columns.small-12
+    h2 Processing complete
+
+    - if @result.callout == 'no'
+      = render('failed_letter', locals: { confirmation: @confirmation })
+
+.row
+  .columns.small-12
+    = link_to 'Back to start', root_path, class: 'button success'

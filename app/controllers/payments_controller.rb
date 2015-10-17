@@ -21,6 +21,21 @@ class PaymentsController < ApplicationController
   end
 
   def summary
+    @payment = payment
+    @overview = Views::ApplicationOverview.new(application)
+    @result = Views::Payment::Result.new(payment)
+  end
+
+  def summary_save
+    payment.update(
+      completed_at: Time.zone.now,
+      completed_by: current_user
+    )
+
+    redirect_to(confirmation_payment_path(payment))
+  end
+
+  def confirmation
     @overview = Views::ApplicationOverview.new(application)
     @result = Views::Payment::Result.new(payment)
   end

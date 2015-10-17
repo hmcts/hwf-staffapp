@@ -6,3 +6,6 @@ h2 Check details
 
 #result.callout class=@result.callout
   h3.bold =t("payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
+
+= form_for @payment, url: :summary_save_payment, method: :post, html: { autocomplete: 'off' } do |f|
+  = f.submit 'Complete processing', :class => 'button primary'

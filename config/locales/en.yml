@@ -70,6 +70,12 @@ en-GB:
     result:
       'yes': The applicant has paid %{amount_to_pay} towards the fee
       'no': The applicant will need to make a new application
+    failed_letter_html: |
+      <p>Dear %{full_name}</p>
+      <p>We have received your payment however it was not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
+      <p>You will need to make a new application if you still require help.</p>
+      <p>Yours sincerely,</p>
+      <p>%{user}</p>
   functions:
     dwp_check: Check benefits
     r2_calculator: 'Income calculator'
