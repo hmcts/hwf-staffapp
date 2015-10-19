@@ -12,11 +12,11 @@ h2 Income
               .option
                 label for='application_dependents_false'
                   = f.radio_button :dependents, 'false', { class: 'show-hide-section', data: { section: 'children', show: 'false' } }
-                  = t('activerecord.attributes.application.income_false')
+                  = t('activemodel.attributes.applikation/forms/income.income_false')
               .option
                 label for='application_dependents_true'
                   = f.radio_button :dependents, 'true', { class: 'show-hide-section', data: { section: 'children', show: 'true' } }
-                  = t('activerecord.attributes.application.income_true')
+                  = t('activemodel.attributes.applikation/forms/income.income_true')
 
       .row.collapse.panel-indent#children-only
         .small-12.medium-6.large-6.columns.form-group

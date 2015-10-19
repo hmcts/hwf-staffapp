@@ -41,7 +41,7 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :form_name
-          =t('activerecord.attributes.application.form_name')
+          =t('activemodel.attributes.applikation/forms/application_detail.form_name')
           span.hint =t('general.optional').html_safe
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
@@ -50,7 +50,7 @@
     .small-12.medium-8.large-5.columns
       .form-group
         = f.label :case_number
-          =t('activerecord.attributes.application.case_number')
+          =t('activemodel.attributes.applikation/forms/application_detail.case_number')
           span.hint =t('general.optional').html_safe
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
@@ -61,7 +61,7 @@
         .option
           = f.label :probate
             = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
-            = t('activerecord.attributes.application.probate')
+            = t('activemodel.attributes.applikation/forms/application_detail.probate')
 
   #probate-only.start-hidden
     .panel-indent
@@ -84,7 +84,7 @@
         .option
           = f.label :refund
             = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-            = t('activerecord.attributes.application.refund')
+            = t('activemodel.attributes.applikation/forms/application_detail.refund')
 
   #refund-only.start-hidden
     .row

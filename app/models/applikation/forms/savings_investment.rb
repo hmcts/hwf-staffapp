@@ -2,6 +2,8 @@ module Applikation
   module Forms
     class SavingsInvestment < ::FormObject
 
+      LOCALE = 'activemodel.errors.models.applikation/forms/savings_investment.attributes'
+
       def self.permitted_attributes
         {
           application_id: Integer,
@@ -22,13 +24,14 @@ module Applikation
 
       def check_partner_over_61
         if PartnerAgeCheck.new(self).verify == false
-          errors.add(:partner_over_61, 'some error')
+          errors.add(:partner_over_61, I18n.t('partner_over_61.inclusion', scope: LOCALE))
         end
       end
 
       def maximum_threshold_exceeded
         if partner_over_61? && high_threshold_not_boolean?
-          errors.add(:high_threshold_exceeded, 'high_threshold_exceeded error')
+          error_message = I18n.t('threshold_exceeded.inclusion', scope: LOCALE)
+          errors.add(:high_threshold_exceeded, error_message)
         end
       end
 

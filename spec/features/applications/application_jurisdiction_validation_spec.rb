@@ -36,14 +36,14 @@ RSpec.feature 'While filling in the application details', type: :feature do
       end
 
       context 'when only the jurisdiction is selected' do
-        scenario "and the form resubmitted, jurisdiction selection is not shown" do
+        scenario 'and the form resubmitted, jurisdiction selection is not shown' do
           find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
           click_button 'Next'
           expect(page).to have_xpath('//h2', text: 'Application details')
           fill_in 'application_fee', with: '300'
           fill_in 'application_date_received', with: Time.zone.today - 3.days
           click_button 'Next'
-          expect(page).to have_content "can't be blank"
+          expect(page).to have_content 'You must select a jurisdiction'
           # TODO: the bug manifests here if we resubmit the form, the
           # selection for the Jurisdiction is gone!
         end
