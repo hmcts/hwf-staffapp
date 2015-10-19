@@ -183,6 +183,17 @@ RSpec.describe Application, type: :model do
       end
     end
 
+    describe '#emergency_reason' do
+      context 'when a blank string is provided' do
+        let(:application) { create :application_full_remission }
+
+        it "doesn't save it as a string" do
+          application.reload
+          expect(application.emergency_reason).to be nil
+        end
+      end
+    end
+
     describe '.evidencecheckable' do
       subject { described_class.evidencecheckable }
 

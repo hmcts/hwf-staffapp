@@ -54,10 +54,15 @@ module Applikation
           :emergency_reason,
           :cant_have_emergency_reason_without_emergency
         ) if emergency_without_reason?
+        format_reason
       end
 
       def emergency_without_reason?
         emergency? && emergency_reason.blank?
+      end
+
+      def format_reason
+        self.emergency_reason = nil if emergency_reason.blank?
       end
     end
   end
