@@ -302,7 +302,8 @@ en-GB:
         'false': '✗ Failed'
         savings_investments: Savings and investments
         benefits: Benefits
-        income: Total monthly income
+        total_income: Total monthly income
+        income: Income
         children: Number of children
     errors:
       models:
