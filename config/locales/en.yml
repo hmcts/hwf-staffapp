@@ -281,6 +281,7 @@ en-GB:
               before: The date of death cannot be a future date
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
+              too_long: "is too long, it needs to be less than 500 characters"
         applikation/forms/personal_information:
           attributes:
             date_of_birth:

@@ -282,6 +282,14 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
           expect(reason.valid?).not_to eq true
         end
       end
+
+      context 'is over 500 characters' do
+        before { reason.emergency_reason = ('a' * 500).concat('1') }
+
+        it 'is not valid' do
+          expect(reason.valid?).to eq false
+        end
+      end
     end
   end
 end

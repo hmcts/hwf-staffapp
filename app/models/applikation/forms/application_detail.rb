@@ -26,6 +26,7 @@ module Applikation
       validates :fee, presence: true
       validates :jurisdiction_id, presence: true
       validate :reason
+      validate :emergency_reason_size
 
       validates :date_received, date: {
         after: proc { Time.zone.today - 3.months },
@@ -59,6 +60,17 @@ module Applikation
 
       def emergency_without_reason?
         emergency? && emergency_reason.blank?
+      end
+
+      def emergency_reason_present_and_too_long?
+        !emergency_reason.blank? && emergency_reason.size > 500
+      end
+
+      def emergency_reason_size
+        errors.add(
+          :emergency_reason,
+          :too_long
+        ) if emergency_reason_present_and_too_long?
       end
 
       def format_reason
