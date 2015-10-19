@@ -1,3 +1,4 @@
+# rubocop:disable ClassLength
 class Applications::BuildController < ApplicationController
   include Wicked::Wizard
   before_action :authenticate_user!
@@ -44,6 +45,7 @@ class Applications::BuildController < ApplicationController
 
   def update
     evidence_check_selection
+    create_payment_if_needed
 
     if FORM_OBJECTS.include?(step)
       handle_form_object(params, step)
@@ -90,6 +92,12 @@ class Applications::BuildController < ApplicationController
   def evidence_check_selection
     if next_step?(:summary) && evidence_check_enabled?
       EvidenceCheckSelector.new(@application, Settings.evidence_check.expires_in_days).decide!
+    end
+  end
+
+  def create_payment_if_needed
+    if next_step?(:summary) && payment_enabled?
+      PaymentBuilder.new(@application, Settings.payment.expires_in_days).decide!
     end
   end
 

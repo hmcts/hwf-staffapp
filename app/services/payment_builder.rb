@@ -11,7 +11,9 @@ class PaymentBuilder
   private
 
   def part_payment?
-    @application.application_outcome == 'part' && !@application.evidence_check?
+    unless @application.payment?
+      @application.application_outcome == 'part' && !@application.evidence_check?
+    end
   end
 
   def expires_at
