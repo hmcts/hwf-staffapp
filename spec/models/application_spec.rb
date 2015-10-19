@@ -22,15 +22,7 @@ RSpec.describe Application, type: :model do
 
   context 'with running benefit check' do
     before do
-      stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
-      {
-        birth_date: (Time.zone.today - 18.years).strftime('%Y%m%d'),
-        entitlement_check_date: (Time.zone.today - 1.month).strftime('%Y%m%d'),
-        id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
-        ni_number: 'AB123456A',
-        surname: 'TEST'
-      }).to_return(status: 200, body: '', headers: {})
-
+      dwp_api_response 'Yes'
       application.date_of_birth = Time.zone.today - 18.years
       application.date_received = Time.zone.today - 1.month
       application.ni_number = 'AB123456A'
