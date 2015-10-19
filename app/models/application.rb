@@ -10,7 +10,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   validates :reference, presence: true, uniqueness: true
 
   scope :evidencecheckable, lambda {
-    where(benefits: false, application_type: 'income', application_outcome: %w[part full])
+    where(benefits: false,
+          application_type: 'income',
+          emergency_reason: nil,
+          application_outcome: %w[part full])
   }
 
   scope :waiting_for_evidence, lambda {
@@ -32,6 +35,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   after_save :run_auto_checks
   before_validation :format_ni_number
+  before_validation :nullify_blank_emergency_reason
 
   # Step 1 - Personal detail validation
   with_options if: proc { active_or_status_is? 'personal_information' } do
@@ -322,5 +326,9 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def format_ni_number
     ni_number.gsub!(' ', '') unless ni_number.nil?
+  end
+
+  def nullify_blank_emergency_reason
+    self.emergency_reason = nil if emergency_reason.blank?
   end
 end

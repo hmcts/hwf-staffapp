@@ -54,6 +54,10 @@
       .row
         .small-12.medium-5.large-4.columns.subheader =t('activerecord.attributes.application.date_fee_paid')
         .small-12.medium-7.large-8.columns =@application.date_fee_paid.to_s(:gov_uk_long)
+    -unless @application.emergency_reason.blank?
+      .row
+        .small-12.medium-5.large-4.columns.subheader = t('activerecord.attributes.application.emergency_reason')
+        .small-12.medium-7.large-8.columns = @application.emergency_reason
 
   .row
     .small-12.medium-7.large-8.columns

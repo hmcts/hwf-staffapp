@@ -22,15 +22,7 @@ RSpec.describe Application, type: :model do
 
   context 'with running benefit check' do
     before do
-      stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").with(body:
-      {
-        birth_date: (Time.zone.today - 18.years).strftime('%Y%m%d'),
-        entitlement_check_date: (Time.zone.today - 1.month).strftime('%Y%m%d'),
-        id: "#{user.name.gsub(' ', '').downcase.truncate(27)}@#{application.created_at.strftime('%y%m%d%H%M%S')}.#{application.id}",
-        ni_number: 'AB123456A',
-        surname: 'TEST'
-      }).to_return(status: 200, body: '', headers: {})
-
+      dwp_api_response 'Yes'
       application.date_of_birth = Time.zone.today - 18.years
       application.date_received = Time.zone.today - 1.month
       application.ni_number = 'AB123456A'
@@ -191,15 +183,31 @@ RSpec.describe Application, type: :model do
       end
     end
 
+    describe '#emergency_reason' do
+      context 'when a blank string is provided' do
+        let(:application) { create :application_full_remission }
+
+        it "doesn't save it as a string" do
+          application.reload
+          expect(application.emergency_reason).to be nil
+        end
+      end
+    end
+
     describe '.evidencecheckable' do
       subject { described_class.evidencecheckable }
 
       let!(:application_1) { create :application_part_remission }
       let!(:application_2) { create :application_full_remission }
       let!(:application_3) { create :application_no_remission }
+      let!(:emergency_application) { create :application_full_remission, emergency_reason: 'REASON' }
 
       it 'includes only part and full remission applications' do
         is_expected.to match_array([application_1, application_2])
+      end
+
+      it 'does not include emergency applications' do
+        is_expected.not_to include emergency_application
       end
     end
 
