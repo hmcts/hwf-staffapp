@@ -476,6 +476,7 @@ en-GB:
         benefits_true: 'Yes'
         income_false: 'No'
         income_true: 'Yes'
+        emergency_reason: Emergency reason
       r2_calc:
         labels:
           fee: Fee
