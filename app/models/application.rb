@@ -26,6 +26,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   scope :waiting_for_payment, lambda {
     includes(:payment).
       references(:payment).
+      where('payments.completed_at IS NULL').
       where.not(payments: { id: nil }).
       order('payments.expires_at ASC')
   }

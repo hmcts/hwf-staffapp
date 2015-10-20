@@ -15,6 +15,8 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: 
   let!(:payment2) { create :payment, application: application2 }
   let(:other_application) { create :application_full_remission }
   let!(:other_payment) { create :payment, application: other_application }
+  let(:application3) { create :application_full_remission, office: office }
+  let!(:completed_payment) { create :payment, application: application3, completed_at: Time.zone.now }
 
   before do
     login_as user
@@ -27,6 +29,14 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: 
       expect(page).to have_content(application1.reference)
       expect(page).to have_content(application2.reference)
       expect(page).not_to have_content(other_application.reference)
+    end
+  end
+
+  scenario 'User is presented the list of applications awaiting payment, excluding completed payments' do
+    visit root_path
+
+    within '.waiting-for-payment' do
+      expect(page).not_to have_content(application3.reference)
     end
   end
 end
