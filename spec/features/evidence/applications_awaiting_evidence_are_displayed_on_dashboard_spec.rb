@@ -15,6 +15,8 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
   let!(:evidence2) { create :evidence_check, application: application2 }
   let(:other_application) { create :application_full_remission }
   let!(:other_evidence) { create :evidence_check, application: other_application }
+  let(:application3) { create :application_full_remission, office: office }
+  let!(:completed_payment) { create :evidence_check, application: application3, completed_at: Time.zone.now }
 
   before do
     login_as user
@@ -27,6 +29,14 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
       expect(page).to have_content(application1.reference)
       expect(page).to have_content(application2.reference)
       expect(page).not_to have_content(other_application.reference)
+    end
+  end
+
+  scenario 'User is presented the list of applications awaiting payment, excluding completed payments' do
+    visit root_path
+
+    within '.waiting-for-evidence' do
+      expect(page).not_to have_content(application3.reference)
     end
   end
 end

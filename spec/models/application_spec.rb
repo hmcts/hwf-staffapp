@@ -217,10 +217,11 @@ RSpec.describe Application, type: :model do
       let!(:application3) { create :application }
       let!(:evidence_check1) { create :evidence_check, application: application1, expires_at: 2.days.from_now }
       let!(:evidence_check2) { create :evidence_check, application: application2, expires_at: 1.days.from_now }
+      let!(:evidence_check3) { create :evidence_check, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago }
 
       subject { described_class.waiting_for_evidence }
 
-      it 'returns only applications which have EvidenceCheck reference in order of expiry' do
+      it 'returns only applications which have uncompleted EvidenceCheck reference in order of expiry' do
         is_expected.to eq([application2, application1])
       end
     end
@@ -231,11 +232,11 @@ RSpec.describe Application, type: :model do
       let!(:application3) { create :application }
       let!(:payment1) { create :payment, application: application1, expires_at: 2.days.from_now }
       let!(:payment2) { create :payment, application: application2, expires_at: 1.days.from_now }
-      let!(:payment3) { create :payment, application: application2, expires_at: 1.days.from_now, completed_at: 2.days.ago }
+      let!(:payment3) { create :payment, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago }
 
       subject { described_class.waiting_for_payment }
 
-      it 'returns only applications which have Payment reference in order of expiry' do
+      it 'returns only applications which have uncompleted Payment reference in order of expiry' do
         is_expected.to eq([application2, application1])
       end
     end
