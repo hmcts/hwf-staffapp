@@ -19,6 +19,7 @@ RSpec.feature 'Benefit Results', type: :feature do
     context 'after user selects yes to benefits' do
       context 'when NI has not been provided', focus: true do
         let(:ni_number) { nil }
+        let(:error_message) { "The applicant's details could not be checked with the Depatment for Work and Pensions" }
 
         scenario 'the page is rendered with message prompting to fill all details' do
           visit application_build_path(application_id: application.id, id: 'benefits')
@@ -26,7 +27,7 @@ RSpec.feature 'Benefit Results', type: :feature do
           choose 'application_benefits_true'
           click_button 'Next'
 
-          expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "details_missing")]/h3[@class="bold"]')
+          expect(page).to have_content error_message
         end
       end
 

@@ -25,7 +25,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
       expect(page).to have_content 'Evidence of income needs to be checked for this application'
 
-      click_button 'Continue'
+      click_button 'Complete processing'
 
       expect(evidence_check_rendered?).to be true
     end
@@ -51,7 +51,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
       expect(page).to have_content '✓ The applicant doesn’t have to pay the fee'
 
-      click_button 'Continue'
+      click_button 'Complete processing'
 
       expect(confirmation_rendered?).to be true
     end

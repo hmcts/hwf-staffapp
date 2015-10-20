@@ -80,8 +80,11 @@
     .row
       .small-12.columns
         .row.collapse.medium-10.large-8
-          #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
+          - if @application.application_outcome.nil?
+            = render 'applications/partials/full_fee'
+          - else
+            #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
+              h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
   -when 'income'
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.income')
@@ -122,4 +125,4 @@
         h5 =@application.inspect
 
   = f.hidden_field :status
-  = f.submit 'Continue', :class => 'button primary'
+  = f.submit 'Complete processing', class: 'button primary'
