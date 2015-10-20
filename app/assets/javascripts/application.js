@@ -20,6 +20,7 @@
 //= require income
 //= require applicants_partner_over_61
 //= require evidence_confirmation
+//= require guide
 
 $(function(){
   Foundation.global.namespace = '';
