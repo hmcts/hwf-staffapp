@@ -12,3 +12,4 @@ evidence_check:
   expires_in_days: 14
 payment:
   enabled: <%= ENV['PAYMENT_ENABLED'] || false %>
+  expires_in_days: 14

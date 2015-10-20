@@ -198,6 +198,10 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     !evidence_check.nil?
   end
 
+  def payment?
+    !payment.nil?
+  end
+
   private
 
   def income_required?
