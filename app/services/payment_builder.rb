@@ -5,15 +5,21 @@ class PaymentBuilder
   end
 
   def decide!
-    @application.create_payment(expires_at: expires_at) if part_payment?
+    @application.create_payment(expires_at: expires_at) if part_payment_needed?
   end
 
   private
 
-  def part_payment?
-    unless @application.payment?
-      @application.application_outcome == 'part' && evidence_check_payment_validation?
-    end
+  def part_payment_needed?
+    part_remission_or_not_evidence_checked unless application_has_payment?
+  end
+
+  def application_has_payment?
+    @application.payment?
+  end
+
+  def part_remission_or_not_evidence_checked
+    @application.application_outcome.eql?('part') && evidence_check_payment_validation?
   end
 
   def evidence_check_payment_validation?
