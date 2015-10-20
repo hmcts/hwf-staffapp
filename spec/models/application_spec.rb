@@ -231,6 +231,7 @@ RSpec.describe Application, type: :model do
       let!(:application3) { create :application }
       let!(:payment1) { create :payment, application: application1, expires_at: 2.days.from_now }
       let!(:payment2) { create :payment, application: application2, expires_at: 1.days.from_now }
+      let!(:payment3) { create :payment, application: application2, expires_at: 1.days.from_now, completed_at: 2.days.ago }
 
       subject { described_class.waiting_for_payment }
 
