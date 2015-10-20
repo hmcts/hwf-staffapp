@@ -29,6 +29,13 @@ unless ENV=='production'
                 password: '987654321',
                 role: 'user',
                 office: Office.find_by(name: 'Bristol')
+              },
+              {
+                name: 'Manager',
+                email: 'bristol.manager@hmcts.gsi.gov.uk',
+                password: '987654321',
+                role: 'manager',
+                office: Office.find_by(name: 'Bristol')
               }
               ])
 end
