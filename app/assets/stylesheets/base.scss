@@ -156,3 +156,27 @@ td.center {
 i.arrow.arrow-closed, i.arrow.arrow-open {
   color:#005ea5
 }
+//
+header {
+  padding: 30px 0;
+}
+.page-footer {
+  background-color: #dee0e2;
+  border-top: 10px solid #005ea5;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+img{
+  border: none;
+}
+.guide-cols {
+  width: 18%;
+  display: inline-block;
+  margin-right:15px;
+}
+.icon-column img{
+  padding:0;
+}
+.panel.callout.blue{
+  background-color: $govuk-blue;
+}
