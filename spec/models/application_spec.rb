@@ -11,6 +11,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to belong_to(:jurisdiction) }
   it { is_expected.to belong_to(:office) }
 
+  it { is_expected.to have_one(:applicant) }
+
   it { is_expected.to have_one(:evidence_check) }
   it { is_expected.not_to validate_presence_of(:evidence_check) }
 
