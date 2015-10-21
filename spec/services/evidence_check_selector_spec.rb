@@ -40,7 +40,7 @@ describe EvidenceCheckSelector do
 
     context 'for a non-benefit remission application' do
       context 'for a non-refund application' do
-        let(:application) { create :application_full_remission }
+        let(:application) { create :application_full_remission, reference: 'XY55-22-3' }
 
         context 'when the application is the 10th (10% gets checked)' do
           before do
