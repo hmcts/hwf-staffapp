@@ -166,6 +166,11 @@ header {
   padding-top: 40px;
   padding-bottom: 40px;
   margin-top:30px;
+  img{
+    width: auto;
+    padding: 0;
+    float: right;
+  }
 }
 img{
   border: none;
@@ -174,11 +179,20 @@ img{
   width: 18%;
   display: inline-block;
   float: left;
-  margin-right:15px;
+  margin:0 15px 0 0;
+  min-height:240px;
+  position: relative;
+  a {
+    text-decoration: none;
+    display: block;
+  }
   img {
     padding:0;
     display: block;
-    margin-top:20px;
+    padding:20px;
+    position: absolute;
+    top:20%;
+    left:0;
   }
 }
 .icon-column img{
