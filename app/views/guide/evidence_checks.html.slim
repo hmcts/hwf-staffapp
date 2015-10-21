@@ -90,19 +90,21 @@ header
     ul
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
       li include their partner’s income (if they have one)
-      li subtract any <a href="/guide/process_application#excluded-income">excluded benefits</a>
+      li subtract any #{link_to 'excluded benefits', guide_process_application_path, anchor: 'excluded-income', target: '_blank'  }
       li check the total against the bank statements 
   
     br
     br
     h3 id="not-include" What not to include as income
     ul
-      li =link_to '6 benefits', '/staff/guide-processing.html#benefits', target: '_blank' 
-      that qualify for benefits-based applications 
+      li 
+        | #{link_to '6 benefits', guide_process_application_path, anchor: 'benefits', target: '_blank' } <br>
+        | that qualify for benefits-based applications 
 
 
-      li =link_to 'excluded benefits', '/guide-processing.html#excluded-income', target: '_blank' 
-      such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit. 
+      li 
+        | #{link_to 'excluded benefits', guide_process_application_path, anchor: 'excluded-income', target: '_blank' } <br>
+        | such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit. 
 
     br
     br
@@ -155,7 +157,7 @@ header
           td
             p A letter dated in the last 3 months confirming how much is being received and how often. 
 
-            p Note that the <a href="/guide/process_application#benefits">6 eligible benefits</a> and the <a href="0_mainguide.html#excluded-income">excluded benefits</a> shouldn’t be included as income.
+            p Note that the #{link_to '6 eligible benefits', guide_process_application_path, anchor: 'benefits', target: '_blank'  } and the #{link_to 'excluded benefits', guide_process_application_path, anchor: 'excluded-income', target: '_blank'  } shouldn’t be included as income.
         tr
           td
             p Pensions 
