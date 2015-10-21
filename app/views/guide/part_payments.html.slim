@@ -1,0 +1,104 @@
+header
+  .row
+    .small-12.medium-12.large-12.columns
+      .row
+        .small-1.columns.icon-column
+          = image_tag("icon-sml-part-fee.png")
+        .small-11.columns
+          h4 style="margin-bottom:0px; font-weight:normal;"
+            span.hint Staff guide
+          h2 Part payments
+      h4 style="font-weight:normal;" What to do when the applicant must pay only part of the fee.  
+
+.row
+  .small-12.medium-4.large-4.columns
+    h5 Contents
+    p
+      a href='#intro' Introduction
+    p
+      a href='#before-start' Before you start
+    p
+      a href='#what-to-do' What to do
+    p
+      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
+
+
+  .small-12.medium-8.large-8.columns
+
+    h3 id="intro" Introduction
+
+    p Applicants may be eligible to pay only part of their fee, depending on their income, whether they have any dependent children or if they are part of a couple. 
+
+    p The exact amount will be worked out for you and a letter generated for you to send to the applicant requesting the part fee payment. 
+
+    p The applicant will have 14 calendar days to provide payment. 
+
+    h3 id="before-start" Before you start
+    h5 Check the payment:
+    ul
+      li is for the correct amount
+      li is made out to 'HM Courts & Tribunals Service'
+      li is dated within 14 days from the date the letter was sent requesting payment
+
+    br
+    .panel
+      h3 id="what-to-do" What to do
+      
+      h5 When correct payment is received:
+
+      ul
+        li select the application from the list ‘Awaiting payment’
+        li log the payment as being received
+
+      br
+      h5 When incorrect payment is received:
+
+      ul
+        li try to contact the applicant by phone to request the correct payment
+        li if this is unsuccessful, write to the applicant requesting the correct payment
+        li For over-payments, return the cheque
+        li For under-payments, request a cheque for the additional amount
+
+      br
+      h5 When no payment is received after 14 calendar days:
+
+      ul
+        li select the application from the list ‘Awaiting payment’
+        li select 'write letter to the applicant' and a letter will be generated for you
+        li post the letter and all the documents back to the applicant
+
+.row
+  .small-12.columns
+    .panel.callout.blue
+      h4 style="color:white; font-weight:normal;" id="more-guides" More guides
+
+.row
+  .small-12.columns
+    .row
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_process_application_path
+              | Process application
+              = image_tag("icon-process.png")
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_evidence_checks_path
+              | Evidence checks
+              = image_tag("icon-evidence.png")
+
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_appeals_path
+              | Appeals
+              = image_tag("icon-appeals.png")
+    
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_suspected_fraud_path
+              | Suspected fraud 
+              = image_tag("icon-fraud.png")
+      

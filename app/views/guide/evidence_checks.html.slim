@@ -1,0 +1,232 @@
+header
+  .row
+    .small-12.medium-12.large-12.columns
+      .row
+        .small-1.columns.icon-column
+          = image_tag("icon-sml-evidence.png")
+        .small-11.columns
+          h4 style="margin-bottom:0px; font-weight:normal;"
+            span.hint Staff guide
+          h2 Evidence checks
+      h4 style="font-weight:normal;" What to do when an application is marked for an evidence check.   
+
+.row
+  .small-12.medium-4.large-4.columns
+    h5 Contents
+    p
+      a href='#intro' Introduction
+    p
+      a href='#before-start' Before you start
+    p
+      a href='#problems-evidence' Problems with the evidence
+    p
+      a href='#what-to-do' What to do
+    p
+      a href='#calculate' How to calculate total monthly income
+    p
+      a href='#not-include' What not to include as income
+    p
+      a href='#sources' Sources of evidence
+    p
+      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
+
+
+  .small-12.medium-8.large-8.columns
+
+    h3 id="intro" Introduction
+
+    p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
+    p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
+    p Evidence checks are a way for HMCTS to make sure that applicants are providing accurate information about their income. 
+    p If an application is marked for an evidence check, write to the applicant and ask them to send evidence of their income. You’ll be provided with a letter to use.  
+    br
+
+    h3 id="before-start" Before you start
+    h5 When you receive the evidence: 
+    ul 
+      li check the name on the evidence matches the name on the application
+      li check the evidence is dated within 3 months of receiving the application
+      li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid) 
+    br
+
+    h3 id="problems-evidence" Problems with the evidence 
+    br You may not be able to process the evidence provided by an applicant. Common problems are: 
+    ol 
+      li the name on the evidence doesn't match the name of the applicant
+      li the evidence is out of date 
+      li the applicant has not provided all evidence required 
+    p In all of these cases, you should return the evidence to the applicant and tell them why it can't be accepted. If they still require help with fees they'll need to apply again.  
+    p If a couple is receiving a shared benefit but the benefits letter doesn't state the applicant’s name the applicant must provide additional evidence to show they live at the same address as their partner. 
+    p A letter will be generated for you to send to the applicant along with the evidence. 
+    br 
+
+    .panel 
+      h3 id="what-to-do" What to do
+
+      br
+      h5 To process evidence:
+      ul
+        li select the application from the list ‘Awaiting evidence’
+        li select 'Process evidence'
+        li calculate the applicant's total monthly income from the evidence received (not the application form)
+        li enter the total in the field on the screen
+        li get the result and follow the next steps to process the application
+        li store the evidence securely, separate from the case file
+
+      br
+      h5 Returning evidence
+      p You should not return evidence to the applicant unless they ask for it and provide payment for postage costs.
+
+      h5 When no evidence is received after 14 calendar days:
+      ul
+        li select the application from the list ‘Awaiting evidence'
+        li select 'write letter to the applicant' and a letter will be generated for you
+        li post the letter and all the documents back to the applicant
+
+    br
+    br
+    h3 id="calculate" How to calculate total monthly income
+    h5 You need to: 
+    ul
+      li add up all the income from payslips and evidence <br>(before tax and National Insurance)
+      li include their partner’s income (if they have one)
+      li subtract any <a href="/guide/process_application#excluded-income">excluded benefits</a>
+      li check the total against the bank statements 
+  
+    br
+    br
+    h3 id="not-include" What not to include as income
+    ul
+      li =link_to '6 benefits', '/staff/guide-processing.html#benefits', target: '_blank' 
+      that qualify for benefits-based applications 
+
+
+      li =link_to 'excluded benefits', '/guide-processing.html#excluded-income', target: '_blank' 
+      such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit. 
+
+    br
+    br
+    h3 id="sources" Sources of evidence
+
+    table
+      tbody
+        tr
+          td 
+            p Bank statements
+          td 
+            p The applicant will be asked to provide the most recent month’s bank statement for any and all current accounts. Check the money coming in matches the amounts shown on the supporting evidence. 
+        tr
+          td 
+            p Wages
+          td 
+            p Employed: Applicants should provide their most recent payslip which should be no more than 6 weeks old.
+  
+            p Self employed:  Applicants should provide their most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation. 
+          
+            p If a self-employed applicant doesn’t have either of these documents, they will need to provide bank statements that show income for the previous tax year. 
+        tr
+          td 
+            p Child Benefit
+            p Working Tax Credit
+            p Child Tax Credit
+          td 
+            p A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that the applicant is receiving Child Benefit, Working Tax Credit or Child Tax Credit.  
+
+            p In some cases an applicant may not have a Child Benefit Award Notice dated within the last three months. If this is the case, check their bank statements for evidence of money coming in. 
+        tr
+          td 
+            p Child maintenance payments 
+          td 
+            p Document(s) showing the payment amounts and how often they are made. This can be one of the following:
+            ul
+              li sealed court order 
+              li Child Support Agency Assessment 
+              li signed voluntary agreement or letter of agreement signed by both parties
+        tr
+          td
+            p Contribution-based Jobseeker’s Allowance (JSA)
+            p Contribution-based Employment and Support Allowance (ESA)
+            p Universal Credit
+          td 
+            p A letter from the Department for Work and Pensions (DWP) dated in the last 3 months confirming how much is being received and how often.  
+        tr
+          td
+            p Any other benefits 
+          td
+            p A letter dated in the last 3 months confirming how much is being received and how often. 
+
+            p Note that the <a href="/guide/process_application#benefits">6 eligible benefits</a> and the <a href="0_mainguide.html#excluded-income">excluded benefits</a> shouldn’t be included as income.
+        tr
+          td
+            p Pensions 
+          td
+            p A letter or statement showing pension payments.
+        tr
+          td
+            p Rent from people living with the applicant 
+          td
+            p A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.
+        tr
+          td
+            p Rent from any properties owned 
+          td
+            p Tenancy agreement or lease relating to each property showing the rents currently being paid and how often. 
+        tr
+          td
+            p Stocks, shares, bonds, savings and/or any other financial arrangements 
+          td
+            p Current statements or certificates showing the arrangement and how much income is obtained. Only the interest paid out on stocks, bonds, shares, savings etc can be considered as income. 
+        tr
+          td
+            p Income received by any other means such as selling goods publicly or privately, including sales over the internet 
+          td
+            p Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (e.g. family heirlooms), would normally be classified as ‘savings and investments’ rather than income.
+        tr
+          td
+            p Prisoner’s income
+          td
+            p Prisoners should provide a Prisoner Income and Expenditure Statement (PIES). This shows the amount of their earnings, spending, private cash and savings. 
+            p If the prisoner is in a private prison the format of their financial statement may be slightly different. You need to check details of earnings and private cash. 
+  
+    br
+    h3 id="non-english" Evidence in languages other than English 
+
+    p Evidence must be supplied in English. However, courts and tribunals in Wales can also accept evidence in Welsh. 
+
+    p If the original evidence is in another language, then it must be provided along with a certified translation.
+
+.row
+  .small-12.columns
+    .panel.callout.blue
+      h4 style="color:white; font-weight:normal;" id="more-guides" More guides
+
+.row
+  .small-12.columns
+    .row
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_process_application_path
+              | Process application
+              = image_tag("icon-process.png")
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_part_payments_path
+              | Part payments 
+              = image_tag("icon-part-fee.png")
+
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_appeals_path
+              | Appeals
+              = image_tag("icon-appeals.png")
+    
+      .small-12.medium-6.large-3.columns
+        .panel
+          h5
+            = link_to guide_suspected_fraud_path
+              | Suspected fraud 
+              = image_tag("icon-fraud.png")
+      

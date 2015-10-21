@@ -131,7 +131,7 @@ td.center {
 
 .info-box {
   border-top: 10px solid $govuk-blue;
-  margin: 2.5em 0 0 0; 
+  margin: 2.5em 0 0 0;
   h3 {
     font-size: 1.5em;
     margin: 0.5em 0 0 0;
@@ -142,6 +142,7 @@ td.center {
 #welcome_banner {
   background: #1EA297;
   padding: 1em 0 0 2em;
+  margin-bottom: 30px;
   h1, p, strong {
     color: #fff;
     }
@@ -154,4 +155,52 @@ td.center {
 
 i.arrow.arrow-closed, i.arrow.arrow-open {
   color:#005ea5
+}
+//
+header {
+  padding: 30px 0;
+}
+.page-footer {
+  background-color: #dee0e2;
+  border-top: 10px solid #005ea5;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top:30px;
+  img{
+    width: auto;
+    padding: 0;
+    float: right;
+  }
+}
+img{
+  border: none;
+}
+.guide-cols {
+  width: 18%;
+  display: inline-block;
+  float: left;
+  margin:0 15px 0 0;
+  min-height:240px;
+  position: relative;
+  a {
+    text-decoration: none;
+    display: block;
+  }
+  img {
+    padding:0;
+    display: block;
+    padding:20px;
+    position: absolute;
+    top:20%;
+    left:0;
+  }
+}
+.icon-column img{
+  padding:0;
+}
+.panel.callout.blue{
+  background-color: $govuk-blue;
+}
+a.button.alternative{
+  background-color: $link-colour;
 }
