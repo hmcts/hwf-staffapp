@@ -19,9 +19,8 @@ header
       a href='#before-start' Before you start
     p
       a href='#what-to-do' What to do
-    br
     p
-      a.button href="#more-guides" More guides &nbsp; &nbsp; ⬇
+      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
   .small-12.medium-8.large-8.columns
@@ -79,24 +78,27 @@ header
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-processing.html" style="text-decoration:none;" Process applications
-          = image_tag("icon-process.png")
+            = link_to guide_process_application_path
+              | Process application
+              = image_tag("icon-process.png")
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-evidence.html" style="text-decoration:none;" Evidence checks
-          = image_tag("icon-evidence.png")
+            = link_to guide_evidence_checks_path
+              | Evidence checks
+              = image_tag("icon-evidence.png")
 
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-appeals.html" style="text-decoration:none;" Appeals
-          = image_tag("icon-appeals.png")
+            = link_to guide_appeals_path
+              | Appeals
+              = image_tag("icon-appeals.png")
     
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-fraud.html" style="text-decoration:none;" Suspected fraud
-          = image_tag("icon-fraud.png")
-      
+            = link_to guide_suspected_fraud_path
+              | Suspected fraud 
+              = image_tag("icon-fraud.png")
       

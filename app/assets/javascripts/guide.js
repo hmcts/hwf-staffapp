@@ -6,13 +6,14 @@ FR.equalHeightColumns = function() {
 
   cols.each(function(i, el) {
     var height = Math.max($(el).height());
-    max = (height >= max) ? height : max;
-    cols.height(max);
+    if(height >= max) {
+      max = height;
+    }
   });
 };
 
 $(function(){
   if($('.guide-cols'.length)){
-    // FR.equalHeightColumns();
+    FR.equalHeightColumns();
   }
 });

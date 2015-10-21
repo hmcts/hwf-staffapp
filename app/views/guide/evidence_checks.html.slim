@@ -27,9 +27,8 @@ header
       a href='#not-include' What not to include as income
     p
       a href='#sources' Sources of evidence
-    br
     p
-      a.button href="#more-guides" More guides &nbsp; &nbsp; ⬇
+      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
   .small-12.medium-8.large-8.columns
@@ -37,7 +36,7 @@ header
     h3 id="intro" Introduction
 
     p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
-    p See more about <a href='#'> what to do if you suspect fraud </a>
+    p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
     p Evidence checks are a way for HMCTS to make sure that applicants are providing accurate information about their income. 
     p If an application is marked for an evidence check, write to the applicant and ask them to send evidence of their income. You’ll be provided with a letter to use.  
     br
@@ -50,7 +49,7 @@ header
       li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid) 
     br
 
-    h3 id="Problems with the evidence" Problems with the evidence 
+    h3 id="problems-evidence" Problems with the evidence 
     br You may not be able to process the evidence provided by an applicant. Common problems are: 
     ol 
       li the name on the evidence doesn't match the name of the applicant
@@ -91,7 +90,7 @@ header
     ul
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
       li include their partner’s income (if they have one)
-      li subtract any <a href="#">excluded benefits</a>
+      li subtract any <a href="/guide/process_application#excluded-income">excluded benefits</a>
       li check the total against the bank statements 
   
     br
@@ -156,7 +155,7 @@ header
           td
             p A letter dated in the last 3 months confirming how much is being received and how often. 
 
-            p Note that the <a href="0_mainguide.html#benefits">6 eligible benefits</a> and the <a href="0_mainguide.html#excluded-income">excluded benefits</a> shouldn’t be included as income.
+            p Note that the <a href="/guide/process_application#benefits">6 eligible benefits</a> and the <a href="0_mainguide.html#excluded-income">excluded benefits</a> shouldn’t be included as income.
         tr
           td
             p Pensions 
@@ -207,23 +206,27 @@ header
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-processing.html" style="text-decoration:none;" Process applications
-          = image_tag("icon-process.png")
+            = link_to guide_process_application_path
+              | Process application
+              = image_tag("icon-process.png")
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-part-payments.html" style="text-decoration:none;" Part payments 
-          = image_tag("icon-part-fee.png")
+            = link_to guide_part_payments_path
+              | Part payments 
+              = image_tag("icon-part-fee.png")
 
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-appeals.html" style="text-decoration:none;" Appeals
-          = image_tag("icon-appeals.png")
+            = link_to guide_appeals_path
+              | Appeals
+              = image_tag("icon-appeals.png")
     
       .small-12.medium-6.large-3.columns
         .panel
           h5
-            a href="guide-fraud.html" style="text-decoration:none;" Suspected fraud
-          = image_tag("icon-fraud.png")
+            = link_to guide_suspected_fraud_path
+              | Suspected fraud 
+              = image_tag("icon-fraud.png")
       

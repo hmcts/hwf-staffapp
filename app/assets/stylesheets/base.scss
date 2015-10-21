@@ -165,6 +165,7 @@ header {
   border-top: 10px solid #005ea5;
   padding-top: 40px;
   padding-bottom: 40px;
+  margin-top:30px;
 }
 img{
   border: none;
@@ -172,11 +173,20 @@ img{
 .guide-cols {
   width: 18%;
   display: inline-block;
+  float: left;
   margin-right:15px;
+  img {
+    padding:0;
+    display: block;
+    margin-top:20px;
+  }
 }
 .icon-column img{
   padding:0;
 }
 .panel.callout.blue{
   background-color: $govuk-blue;
+}
+a.button.alternative{
+  background-color: $link-colour;
 }
