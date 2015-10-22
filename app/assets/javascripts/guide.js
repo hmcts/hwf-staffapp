@@ -1,22 +1,21 @@
 var FR = {};
 
-FR.equalHeightColumns = function() {
-  var wrapper = $('.guide-cols-container');
-  var cols = wrapper.find('.guide-cols');
+FR.equalHeightBoxes = function(wrapper, panel) {
+  var panels = $(wrapper).find(panel);
   var max = 0;
   var arr = [];
 
-  cols.each(function(i, el) {
+  panels.each(function(i, el) {
     var height = Math.max($(el).outerHeight());
     if(height >= max) {
       max = height;
     }
   });
-  cols.height(max);
+  return panels.height(max);
 };
 
 $(function(){
-  if($('.guide-cols-container'.length)){
-    FR.equalHeightColumns();
+  if($('.equal-heightboxes'.length)){
+    FR.equalHeightBoxes('.equal-heightboxes', '.panel');
   }
 });
