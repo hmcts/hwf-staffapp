@@ -6,7 +6,7 @@ FR.equalHeightBoxes = function(wrapper, panel) {
   var arr = [];
 
   panels.each(function(i, el) {
-    var height = Math.max($(el).outerHeight());
+    var height = FR.getHeight($(el));
     if(height >= max) {
       max = height;
     }
@@ -14,8 +14,16 @@ FR.equalHeightBoxes = function(wrapper, panel) {
   return panels.height(max);
 };
 
+FR.getHeight = function(panel) {
+  if(panel.hasClass('guide-cols')){
+    return Math.max(panel.outerHeight());
+  } else {
+    return Math.max(panel.height());
+  }
+}
+
 $(function(){
-  if($('.equal-heightboxes').length){
+  if($('.equal-heightboxes').length) {
     FR.equalHeightBoxes('.equal-heightboxes', '.panel');
   }
 });
