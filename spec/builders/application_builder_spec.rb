@@ -36,6 +36,11 @@ RSpec.describe ApplicationBuilder do
         expect(subject.office).to eql(user.office)
       end
 
+      it 'has applicant record created' do
+        expect(subject.applicant).to be_a(Applicant)
+        expect(subject.applicant).to be_persisted
+      end
+
       describe 'the generated reference' do
         subject(:reference) { create_result.reference }
 

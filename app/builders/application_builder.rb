@@ -11,7 +11,8 @@ class ApplicationBuilder
       jurisdiction_id: @user.jurisdiction_id,
       office_id: @user.office_id,
       user_id: @user.id,
-      reference: generate_reference
+      reference: generate_reference,
+      applicant: build_applicant
     )
   end
 
@@ -24,5 +25,9 @@ class ApplicationBuilder
     counter = Application.where('reference like ?', "#{code_and_year}-%").count + 1
 
     "#{code_and_year}-#{counter}"
+  end
+
+  def build_applicant
+    Applicant.new
   end
 end
