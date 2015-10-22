@@ -47,7 +47,7 @@ en-GB:
       incorrect_reason: What is incorrect about the evidence?
     dashboard:
       heading: Waiting for evidence
-      no_evidence_checks: There are no applications waiting for evidence
+      no_records: There are no applications waiting for evidence
       table_header:
         reference: Reference
         applicant: Applicant
@@ -61,7 +61,7 @@ en-GB:
       incorrect_reason: What is incorrect about the payment?
     dashboard:
       heading: Waiting for payment
-      no_evidence_checks: There are no applications waiting for payment
+      no_records: There are no applications waiting for payment
       table_header:
         reference: Reference
         applicant: Applicant
