@@ -103,14 +103,9 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     end
   end
 
-  def fee=(val)
-    super
-    # Fixme create a #threshold method to calculate this on demand
-    # if applicant_over_61?
-    #   self.threshold = 16000
-    # else
-    #   self.threshold = FeeThreshold.new(fee).band
-    # end
+  #fixme Remove the threshold field from db as it's read only now
+  def threshold
+    applicant_over_61? ? 16000 : FeeThreshold.new(fee).band
   end
 
   def threshold_exceeded=(val)
