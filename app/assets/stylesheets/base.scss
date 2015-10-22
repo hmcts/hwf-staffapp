@@ -156,7 +156,7 @@ td.center {
 i.arrow.arrow-closed, i.arrow.arrow-open {
   color:#005ea5
 }
-//
+
 header {
   padding: 30px 0;
 }
@@ -204,3 +204,11 @@ img{
 a.button.alternative{
   background-color: $link-colour;
 }
+
+.accordion-navigation > a:after {
+  content: "⬇︎";
+  padding-left: 5px;
+  float: right;
+  font-size: 20px; }
+.accordion-navigation.active > a:after {
+  content: "⬆︎"; }
