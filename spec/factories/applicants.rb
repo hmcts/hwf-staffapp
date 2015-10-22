@@ -4,12 +4,14 @@ FactoryGirl.define do
       application nil
     end
 
-    title { Faker::Name.prefix }
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    date_of_birth Time.zone.today - 20.years
-    ni_number nil
-    married false
+    factory :applicant_with_all_details do
+      title { Faker::Name.prefix }
+      first_name { Faker::Name.first_name }
+      last_name { Faker::Name.last_name }
+      date_of_birth Time.zone.today - 20.years
+      ni_number nil
+      married false
+    end
 
     trait :married do
       married true

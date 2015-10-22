@@ -5,7 +5,8 @@ RSpec.describe Application, type: :model do
 
   let(:user)  { create :user }
   let(:attributes) { attributes_for :application }
-  let(:application) { described_class.create(user_id: user.id, reference: attributes[:reference]) }
+  let(:applicant) { create(:applicant) }
+  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant) }
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:jurisdiction) }
@@ -240,42 +241,6 @@ RSpec.describe Application, type: :model do
 
       it 'returns only applications which have uncompleted Payment reference in order of expiry' do
         is_expected.to eq([application2, application1])
-      end
-    end
-  end
-
-  describe 'ni_number' do
-    let(:expected_ni_number) { 'JN010203A' }
-    let(:application) { build :application, user: user, ni_number: ni_number }
-
-    before do
-      allow(BenefitCheckService).to receive(:new)
-      allow(application).to receive(:outcome_from_dwp_result).and_return('none')
-
-      application.save
-    end
-
-    context 'with spaces' do
-      let(:ni_number) { 'JN 01 02 03 A' }
-
-      it 'is stripped of all spaces before stored' do
-        expect(application.ni_number).to eql(expected_ni_number)
-      end
-    end
-
-    context 'without spaces' do
-      let(:ni_number) { expected_ni_number }
-
-      it 'is stored as inputted' do
-        expect(application.ni_number).to eql(expected_ni_number)
-      end
-    end
-
-    context 'when nil' do
-      let(:ni_number) { nil }
-
-      it 'is nil' do
-        expect(application.ni_number).to be nil
       end
     end
   end
