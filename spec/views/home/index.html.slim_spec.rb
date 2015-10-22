@@ -10,11 +10,11 @@ RSpec.describe "home/index.html.slim", type: :view do
 
   module FeatureHelper
     def evidence_check_enabled?
-      false
+      true
     end
 
     def payment_enabled?
-      false
+      true
     end
   end
 
@@ -57,6 +57,18 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'has a link to their office' do
       expect(rendered).to have_link 'Your Office'
+    end
+
+    context 'when evidence_checks are enabled' do
+      it 'has a table for awaited evidence' do
+        expect(rendered).to have_content 'Waiting for evidence'
+      end
+    end
+
+    context 'when payments are enabled' do
+      it 'has a table for awaiting payments' do
+        expect(rendered).to have_content 'Waiting for payment'
+      end
     end
   end
 
