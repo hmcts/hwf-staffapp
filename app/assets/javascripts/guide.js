@@ -15,7 +15,7 @@ FR.equalHeightBoxes = function(wrapper, panel) {
 };
 
 $(function(){
-  if($('.equal-heightboxes'.length)){
+  if($('.equal-heightboxes').length){
     FR.equalHeightBoxes('.equal-heightboxes', '.panel');
   }
 });
