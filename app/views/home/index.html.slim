@@ -3,15 +3,8 @@
   =render 'layouts/welcome_banner'
 -if current_user.present?
   -if current_user.admin?
-    ul.accordion data-accordion=''
-      l1.accordion-navigation
-        =link_to 'Manager panel', '#manager-panel'
-        .content#manager-panel
-          =render 'home/manager'
-      l1.accordion-navigation.active
-        =link_to 'Admin panel', '#admin-panel'
-        .content.active#admin-panel
-           =render 'home/admin'
+    =render 'home/manager'
+    =render 'home/admin'
   -elsif current_user.manager?
     =render 'home/manager'
   -else
