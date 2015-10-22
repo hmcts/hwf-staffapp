@@ -57,10 +57,9 @@ header
     p 
       |Phone: 020 3334 6729
       br
-      |Email: <a href="mailto:investigations@hmcts.gsi.gov.uk">investigations@hmcts.gsi.gov.uk</a>
+      |Email: #{link_to 'investigations@hmcts.gsi.gov.uk', 'mailto:investigations@hmcts.gsi.gov.uk'}
 
-    p For more information
-      <a href="http://libra.lcd.gsi.gov.uk/hmcts/governance-assurance/fraud-investigations/index.htm"> visit the fraud page on the intranet</a>.
+    p For more information #{link_to 'visit the fraud page on the intranet', 'http://libra.lcd.gsi.gov.uk/hmcts/governance-assurance/fraud-investigations/index.htm'}.
 
 .row
   .small-12.columns
