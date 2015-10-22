@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 def personal_details_without_ni_number
@@ -35,6 +36,8 @@ RSpec.feature 'No NI number provided', type: :feature do
   let!(:jurisdictions) { create_list :jurisdiction, 3 }
   let!(:office)        { create(:office, jurisdictions: jurisdictions) }
   let!(:user)          { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
+  let(:paper_evidence) { 'The applicant has provided paper evidence' }
+  let(:no_remission)   { 'The applicant must pay the full fee' }
 
   before do
     personal_details_without_ni_number
@@ -43,29 +46,67 @@ RSpec.feature 'No NI number provided', type: :feature do
     benefits_page
   end
 
-  scenario 'correct warning message' do
-    warning_string = "The applicant's details could not be checked with the Depatment for Work and Pensions"
+  scenario 'correct content on the page' do
+    warning_string = "The applicant's details could not be checked with the Department for Work and Pensions"
     expect(page).to have_content warning_string
+    expect(page).to have_button 'Next'
+    expect(page).to have_text paper_evidence
   end
 
-  scenario '"Next" button' do
-    expect(page).to have_button 'Next'
+  context 'when the user tries to process paper evidence' do
+    before { click_link paper_evidence }
+
+    context 'when the evidence is valid' do
+      let(:full_remission) { "The applicant doesn’t have to pay the fee" }
+
+      before do
+        choose 'benefit_override_correct_true'
+        click_button 'Next'
+      end
+
+      scenario 'has the correct title and message' do
+        expect(page).to have_content 'Check details'
+        expect(page).to have_content full_remission
+      end
+
+      context 'when the user progresses to the confirmation page' do
+        before { click_button 'Complete processing' }
+
+        scenario 'shows the full remission message' do
+          expect(page).to have_content full_remission
+        end
+      end
+    end
+
+    context 'when the evidence is invalid' do
+      before do
+        choose 'benefit_override_correct_false'
+        click_button 'Next'
+      end
+
+      scenario 'takes them the confirmation page' do
+        expect(page).to have_content 'Check details'
+      end
+
+      it { expect(page).to have_content no_remission }
+    end
   end
 
   context 'when the user progresses to the summary page' do
     before { click_button 'Next' }
-    let(:error_message) { 'The applicant must pay the full fee' }
 
-    it { expect(page).to have_content error_message }
-
-    it { expect(page).to have_button 'Complete processing' }
+    it do
+      expect(page).to have_content no_remission
+      expect(page).to have_content 'Check details'
+    end
 
     context 'when the user completes the application' do
       before { click_button 'Complete processing' }
 
-      it { expect(page).to have_content 'Application processed' }
-
-      it { expect(page).to have_content 'The applicant must pay the full fee' }
+      it do
+        expect(page).to have_content 'Application processed'
+        expect(page).to have_content no_remission
+      end
     end
   end
 end

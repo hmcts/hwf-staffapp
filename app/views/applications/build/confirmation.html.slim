@@ -3,15 +3,19 @@ h2 Application processed
 .row
   .small-12.columns
     .row.collapse.medium-10.large-8
-    - if @application.application_outcome.nil?
-      = render 'applications/partials/full_fee'
+    - if !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
+      #result.callout class='callout-full'
+        h3.bold =t('remissions.full').html_safe
     - else
-      -case @application.application_type
-      -when 'none'
+      - if @application.application_outcome.nil?
         = render 'applications/partials/full_fee'
-      -else
-        #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
-          h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
+      - else
+        -case @application.application_type
+        -when 'none'
+          = render 'applications/partials/full_fee'
+        -else
+          #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
+            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
 .row
   .small-12.medium-12.large-12.columns
     h4 Next steps

@@ -19,7 +19,7 @@ RSpec.feature 'Benefit Results', type: :feature do
     context 'after user selects yes to benefits' do
       context 'when NI has not been provided', focus: true do
         let(:ni_number) { nil }
-        let(:error_message) { "The applicant's details could not be checked with the Depatment for Work and Pensions" }
+        let(:error_message) { "The applicant's details could not be checked with the Department for Work and Pensions" }
 
         scenario 'the page is rendered with message prompting to fill all details' do
           visit application_build_path(application_id: application.id, id: 'benefits')
@@ -120,19 +120,15 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the next button is not rendered' do
-            expect(page).not_to have_xpath('//input[@type="submit"]')
+            expect(page).to have_xpath('//input[@type="submit"]')
           end
 
           scenario 'a link to personal details is rendered' do
-            expect(page).to have_xpath('//a', text: 'Check personal details')
+            expect(page).to have_content "The applicant's details could not be checked with the Department for Work and Pensions"
           end
 
           scenario 'the view is rendered with the correct style' do
-            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "undetermined")]/h3[@class="bold"]')
-          end
-
-          scenario 'the view is rendered with the correct information' do
-            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "undetermined")]/h3[@class="bold"]', text: I18n.t('benefit_checks.undetermined.heading'))
+            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]')
           end
         end
 

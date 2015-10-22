@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get '/applications/new' => 'applications/build#create'
   resources :applications do
     resources :build, controller: 'applications/build'
+    get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
+    post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
   end
 
   get 'evidence/:id', to: 'evidence#show', as: :evidence_show
