@@ -1,12 +1,10 @@
 FactoryGirl.define do
   factory :application do
+    transient do
+      applicant_traits []
+    end
+
     sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
-    title { Faker::Name.prefix }
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    date_of_birth Time.zone.today - 20.years
-    ni_number nil
-    married false
     fee '310.00'
     association :jurisdiction
     date_received Time.zone.today
@@ -40,44 +38,44 @@ FactoryGirl.define do
     end
 
     factory :application_part_remission do
+      applicant_traits [ :married ]
       fee 410
       benefits false
       income 2000
       dependents true
       children 3
-      married true
     end
 
     factory :application_full_remission do
+      applicant_traits [ :married ]
       fee 410
       benefits false
       income 10
       dependents true
       children 1
-      married true
     end
 
     factory :application_no_remission do
       fee 410
-      married false
       dependents false
       children 1
       income 3000
     end
 
     factory :applicant_under_61 do
-      married true
-      date_of_birth Time.zone.today - 60.years
+      applicant_traits [ :married, :under_61 ]
     end
 
     factory :married_applicant_under_61 do
-      married true
-      date_of_birth Time.zone.today - 60.years
+      applicant_traits [ :married, :under_61 ]
     end
 
     factory :married_applicant_over_61 do
-      married true
-      date_of_birth Time.zone.today - 65.years
+      applicant_traits [ :married, :over_61 ]
+    end
+
+    after(:build) do |application, evaluator|
+      application.applicant = build(:applicant, *evaluator.applicant_traits, application: application)
     end
   end
 end
