@@ -9,6 +9,5 @@ footer.page-footer
     	h4 Your feedback
     	hr[style="color:bfc1c3;"]
   		h5 Tell us what you think
-  		p 
-        = link_to 'Give feedback', feedback_path
+  		p = link_to 'Give feedback', current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
   		= image_tag("copyright.png")
