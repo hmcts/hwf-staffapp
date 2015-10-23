@@ -113,12 +113,12 @@ RSpec.describe Applikation::Forms::PersonalInformation do
   end
 
   describe 'when Application object is passed in' do
-    let(:application) { build_stubbed(:application) }
-    let(:form) { described_class.new(application) }
+    let(:applicant) { build(:applicant) }
+    let(:form) { described_class.new(applicant) }
 
     params_list.each do |attr_name|
       it "assigns #{attr_name}" do
-        expect(form.send(attr_name)).to eq application.send(attr_name)
+        expect(form.send(attr_name)).to eq applicant.send(attr_name)
       end
     end
   end
@@ -140,8 +140,13 @@ RSpec.describe Applikation::Forms::PersonalInformation do
   end
 
   describe '#save' do
-    let(:application) { create :application }
-    subject(:form) { described_class.new(application) }
+    let(:applicant) { create :applicant }
+    subject(:form) { described_class.new(applicant) }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }
@@ -158,23 +163,21 @@ RSpec.describe Applikation::Forms::PersonalInformation do
       let(:params_without_dob) { params.delete(:date_of_birth); params }
       let(:parsed_dob) { Date.parse(dob) }
 
+      it { is_expected.to be true }
+
       before do
-        dwp_api_response 'Yes'
-        application.update_attributes(params)
+        subject
+        applicant.reload
       end
 
-      subject { form.save }
-
-      it 'saves the parameters in the application' do
-        application.reload
-
+      it 'saves the parameters in the applicant' do
         params_without_dob.each do |key, value|
-          expect(application.send(key)).to eql(value)
+          expect(applicant.send(key)).to eql(value)
         end
       end
 
-      it 'returns the correct date' do
-        expect(application.date_of_birth).to eql(parsed_dob)
+      it 'saves the correct date of birth' do
+        expect(applicant.date_of_birth).to eql(parsed_dob)
       end
     end
 
@@ -182,10 +185,8 @@ RSpec.describe Applikation::Forms::PersonalInformation do
       let(:dob) { '01/01/1980' }
       let(:params) { { last_name: '' } }
 
-      before { application.update_attributes(params) }
-
-      it "returns false" do
-        expect(subject.save).to be_falsey
+      it 'returns false' do
+        is_expected.to be false
       end
     end
   end

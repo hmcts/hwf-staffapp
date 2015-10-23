@@ -19,8 +19,8 @@ RSpec.describe Applications::BuildController, type: :controller do
     end
 
     describe 'GET ' do
-
-      let(:application) { create :application, user_id: user.id }
+      let(:applicant) { create :applicant_with_all_details }
+      let(:application) { create :application, user_id: user.id, applicant: applicant }
 
       context 'personal_information' do
         before { get :show, application_id: application.id, id: :personal_information }

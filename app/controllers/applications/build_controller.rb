@@ -29,7 +29,7 @@ class Applications::BuildController < ApplicationController
   # rubocop:disable MethodLength
   def show # rubocop:disable CyclomaticComplexity
     if FORM_OBJECTS.include?(step)
-      @form = derive_class(step).new(@application)
+      prepare_form_object(step)
     end
 
     case step
@@ -73,16 +73,59 @@ class Applications::BuildController < ApplicationController
     form_params
   end
 
+  def prepare_form_object(step)
+    class_name = derive_class(step)
+
+    if class_name == Applikation::Forms::PersonalInformation
+      prepare_form_object_personal_details
+    else
+      prepare_form_object_type_1(class_name)
+    end
+  end
+
+  def prepare_form_object_type_1(class_name)
+    @form = class_name.new(@application)
+  end
+
+  def prepare_form_object_personal_details
+    @form = Applikation::Forms::PersonalInformation.new(@application.applicant)
+  end
+
+
   def handle_form_object(params, step)
     class_name = derive_class(step)
     form_params = process_params(class_name, params)
-    @form = class_name.new(form_params)
 
+    if class_name == Applikation::Forms::PersonalInformation
+      handle_form_object_personal_details(step)
+    else
+      handle_form_object_type_1(class_name, form_params, step)
+    end
+  end
+
+  def handle_form_object_type_1(class_name, form_params, step)
+    @form = class_name.new(form_params)
     if @form.valid?
       status = { status: get_status(step) }
       form_params.delete('application_id')
       form_params.delete('emergency') if form_params.key?(:emergency)
       @application.update(form_params.merge(status))
+      render_wizard @application
+    else
+      render_wizard
+    end
+  end
+
+  def handle_form_object_personal_details(step)
+    class_name = Applikation::Forms::PersonalInformation
+    @form = class_name.new(@application.applicant)
+
+    form_params = params.require(:application).permit(class_name.permitted_attributes.keys)
+    @form.update_attributes(form_params)
+
+    if @form.save
+      status = { status: get_status(step) }
+      @application.update(status)
       render_wizard @application
     else
       render_wizard
