@@ -7,8 +7,10 @@ Rails.application.routes.draw do
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
-    get 'personal_information', to: 'applications/process#personal_information', as: :personal_information
-    put 'personal_information', to: 'applications/process#personal_information_save', as: :personal_information_save
+    get 'personal_information',
+      to: 'applications/process#personal_information', as: :personal_information
+    put 'personal_information',
+      to: 'applications/process#personal_information_save', as: :personal_information_save
   end
 
   get 'evidence/:id', to: 'evidence#show', as: :evidence_show

@@ -23,7 +23,7 @@ RSpec.describe Applications::BuildController, type: :controller do
       let(:application) { create :application, user_id: user.id, applicant: applicant }
 
       describe 'personal_information' do
-        before { put :update, application_id: application.id, id: :personal_information, application: { last_name: 'asd'} }
+        before { put :update, application_id: application.id, id: :personal_information, application: { last_name: 'asd' } }
 
         it 'renders 400 error' do
           expect(response).to have_http_status(400)
