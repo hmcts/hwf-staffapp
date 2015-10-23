@@ -1,7 +1,10 @@
-h2 Application processed
+header
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Application processed
 
 .row
-  .small-12.columns
+  .small-12.medium-8.large-7.columns
     .row.collapse.medium-10.large-8
     - if !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
       #result.callout class='callout-full'
@@ -16,24 +19,25 @@ h2 Application processed
         -else
           #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
             h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
-.row
-  .small-12.medium-12.large-12.columns
-    h4 Next steps
-    ul
-      -if @application.application_outcome == 'full'
-        li Complete the remission register with the application details
-        li Write the reference number on the top right corner of the paper form
-        li Copy the reference number into the case management system
-        li The applicant’s process can now be issued
-      -elsif @application.application_outcome == 'part'
-        li Write to the applicant with details of how much they have to pay
-        li Complete the remission register with the application details
-        li Write the reference number on the top right corner of the paper form
-        li Copy the reference number into the case management system
-      -else
-        li Complete the remission register with the application details
-        li Write the reference number on the top right corner of the paper form
-        li Copy the reference number into the case management system
-        li Write to the applicant and send back all the documents
+    .row
+      .small-12.medium-12.large-12.columns
+        h4 Next steps
+        ul
+          -if @application.application_outcome == 'full'
+            li Complete the remission register with the application details
+            li Write the reference number on the top right corner of the paper form
+            li Copy the reference number into the case management system
+            li The applicant’s process can now be issued
+          -elsif @application.application_outcome == 'part'
+            li Write to the applicant with details of how much they have to pay
+            li Complete the remission register with the application details
+            li Write the reference number on the top right corner of the paper form
+            li Copy the reference number into the case management system
+          -else
+            li Complete the remission register with the application details
+            li Write the reference number on the top right corner of the paper form
+            li Copy the reference number into the case management system
+            li Write to the applicant and send back all the documents
 
-= link_to 'Back to start', root_path, class: 'button primary'
+    = link_to 'Back to start', root_path, class: 'button primary'
+  = render :partial => 'shared/guide_help'

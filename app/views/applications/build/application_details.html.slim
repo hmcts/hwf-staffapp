@@ -14,7 +14,7 @@
             span.prefix
               = f.label :fee, '£', class: 'inline'
           .small-10.medium-9.large-9.columns
-            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
+            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field' }
 
       .form-group
         .row.collapse
@@ -33,7 +33,7 @@
       .form-group
         = f.label :date_received
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
-        = f.text_field :date_received, { class: 'form-control' }
+        = f.text_field :date_received, { class: 'form-control medium-field' }
 
       .form-group
         = f.label :form_name
@@ -94,4 +94,28 @@
           = f.text_area :emergency_reason, { class: 'form-control' }
 
       = f.submit 'Next', class: 'button primary'
-    = render :partial => 'shared/guide_help'
+    
+    #guidance.small-12.medium-4.large-5.columns
+      .row
+        #sidebar.small-12.columns
+          h4 Refunds 
+          span
+          	strong Check the refund:
+          ul
+            li is for a fee paid less than 3 months ago
+            li hasn't already been refunded
+          p  = link_to 'What to do if fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds')
+          p 
+          h4 Emergency cases
+          p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
+          span
+          	strong Example of emergency cases:
+          ul
+          	li suspending an eviction
+          	li debtor insolvency petition
+          	li children or vulnerable adults
+          	li domestic violence
+          	li injunctions
+          	li ‘out of hours’ provisions at the Royal Courts of Justice
+
+          p  =link_to 'What to do if the application can’t be processed before the emergency application is heard', guide_process_application_path(anchor: 'emergency')
