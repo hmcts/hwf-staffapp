@@ -2,7 +2,7 @@ mail:
   from: no-reply@helpwithcourtfees.service.gov.uk
   reply_to: enquiries@helpwithcourtfees.dsd.io
   tech_support: helpwithfees.support@digital.justice.gov.uk
-  feedback: trial-feedback@digital.justice.gov.uk
+  feedback: helpwithfees.feedback@digital.justice.gov.uk
 calculator:
   min_val: 1085
   uplift_per_child: 245
