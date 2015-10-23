@@ -1,132 +1,30 @@
+.row
+  .small-12.columns
+    h2 Check details
+
+- change_link = ['Change personal information', wizard_path(:personal_information)]
+=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status], *change_link
+
+- change_link = ['Change application details', wizard_path(:application_details)]
+=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason], *change_link
+
+- change_link = 'Change savings and investments', wizard_path(:savings_investments)
+=build_section 'Savings and investments', @overview, @overview.savings_investment_params, *change_link
+
+.row
+  .small-12.columns
+    .row.collapse.medium-10.large-8
+      - if @application.evidence_check?
+        #result.callout.callout-evidence-check
+          h3.bold =t('evidence_check.callout')
+      - elsif !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
+        #result.callout class='callout-full'
+          h3.bold =t('remissions.full').html_safe
+      - elsif @application.application_outcome.nil?
+        = render 'applications/partials/full_fee'
+      - else
+        =render(partial: 'shared/remission_type', locals: { source: @result })
+
 = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
-  .row
-    .small-12.medium-12.large-12.columns
-      h2 Check details
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Personal details
-      .small-12.medium-5.large-4.columns.text-right =link_to 'Change personal information', wizard_path(:personal_information)
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/personal_information.full_name')
-      .small-12.medium-7.large-8.columns =@application.full_name
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/personal_information.date_of_birth')
-      .small-12.medium-7.large-8.columns =@application.date_of_birth.to_s(:gov_uk_long)
-    -if @application.ni_number.present?
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/personal_information.ni_number')
-        .small-12.medium-7.large-8.columns = @application.ni_number_display
-    .row
-      .small-12.medium-5.large-4.columns.subheader Status
-      .small-12.medium-7.large-8.columns =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
-
-  .summary-section
-    .row
-      .small-12.medium-7.large-8.columns
-        h4 Application details
-      .small-12.medium-5.large-4.columns.text-right =link_to 'Change application details', wizard_path(:application_details)
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.fee')
-      .small-12.medium-7.large-8.columns =number_to_currency(@application.fee.floor, precision: 0)
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.jurisdiction_id')
-      .small-12.medium-7.large-8.columns =@application.jurisdiction.display_full
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.date_received')
-      .small-12.medium-7.large-8.columns =@application.date_received.to_s(:gov_uk_long)
-    -if @application.form_name.present?
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.form_name_summary')
-        .small-12.medium-7.large-8.columns =@application.form_name
-    -if @application.case_number.present?
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.case_number')
-        .small-12.medium-7.large-8.columns =@application.case_number
-    -if @application.probate
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.deceased_name')
-        .small-12.medium-7.large-8.columns =@application.deceased_name
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.date_of_death')
-        .small-12.medium-7.large-8.columns =@application.date_of_death.to_s(:gov_uk_long)
-    -if @application.refund
-      .row
-        .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/application_detail.date_fee_paid')
-        .small-12.medium-7.large-8.columns =@application.date_fee_paid.to_s(:gov_uk_long)
-    -unless @application.emergency_reason.blank?
-      .row
-        .small-12.medium-5.large-4.columns.subheader = t('activerecord.attributes.application.emergency_reason')
-        .small-12.medium-7.large-8.columns = @application.emergency_reason
-
-  .row
-    .small-12.medium-7.large-8.columns
-      h4 =t('activemodel.attributes.applikation/forms/savings_investment.header')
-    .small-12.medium-5.large-4.columns.text-right =link_to 'Change savings and investments', wizard_path(:savings_investments)
-  .row
-    .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.savings_investments')
-    -if @application.savings_investment_valid?
-      .small-12.medium-7.large-8.columns.summary-result.success =t('activemodel.attributes.applikation/forms/summary.passed').html_safe
-    -else
-      .small-12.medium-7.large-8.columns.summary-result.failure =t('activemodel.attributes.applikation/forms/summary.failed').html_safe
-  -case @application.application_type
-  -when 'benefit'
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.benefits')
-      -if (@application.last_benefit_check && @application.last_benefit_check.benefits_valid) || (!@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true))
-        .small-12.medium-7.large-8.columns.summary-result.success =t('activemodel.attributes.applikation/forms/summary.passed').html_safe
-      -else
-        .small-12.medium-7.large-8.columns.summary-result.failure =t('activemodel.attributes.applikation/forms/summary.failed').html_safe
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          - if !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
-            #result.callout class='callout-full'
-              h3.bold =t('remissions.full').html_safe
-          - else
-            - if @application.application_outcome.nil?
-              = render 'applications/partials/full_fee'
-            - else
-              #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-                h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
-  -when 'income'
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.income')
-      -if @application.application_outcome == 'none'
-        .small-12.medium-7.large-8.columns.summary-result.failure =t('activemodel.attributes.applikation/forms/summary.failed').html_safe
-      -else
-        .small-12.medium-7.large-8.columns.summary-result class=(@application.application_outcome == 'full' ? 'success' : 'partial')
-          =t('activemodel.attributes.applikation/forms/summary.passed').html_safe
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.children')
-      .small-12.medium-7.large-8.columns =@application.children
-    .row
-      .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.total_income')
-      .small-12.medium-7.large-8.columns =number_to_currency(@application.income.floor, precision: 0)
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          - if @application.evidence_check?
-            #calculator.callout.callout-evidence-check
-              h3.bold =t('evidence_check.callout')
-          - else
-            #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
-              h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor: 0, precision: 0)).html_safe
-  -when 'none'
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          #calculator.callout.callout-none
-            h3.bold =t('remissions.none').html_safe
-  -else
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          #calculator.callout.callout-none
-            h3.bold No application_type has been set
-    .row
-      .small-12.columns
-        h5 =@application.inspect
-
   = f.hidden_field :status
   = f.submit 'Complete processing', class: 'button primary'

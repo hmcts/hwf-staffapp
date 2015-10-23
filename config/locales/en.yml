@@ -125,6 +125,7 @@ en-GB:
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '✗ &nbsp; The applicant must pay the full fee'
     error: An error occured in the calculation
+    callout: Evidence of income needs to be checked for this application
   evidence_check:
     callout: Evidence of income needs to be checked for this application
     page_title: Application waiting for evidence
@@ -201,15 +202,23 @@ en-GB:
       views/application_overview:
         full_name: Full name
         date_of_birth: Date of birth
-        ni_number: NI Number
+        ni_number: National Insurance number
         status: Status
         fee: Fee
         jurisdiction: Jurisdiction
         date_received: Date received
         form_name: Form name or number
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
+        emergency_reason: Reason for emergency
         savings: Savings and investments
+        benefits: Benefits
         income: Income
-        number_of_children: Number of Children
+        number_of_children: Number of children
         total_monthly_income: Total monthly income
       evidence/views/evidence:
         correct: Correct
@@ -279,13 +288,12 @@ en-GB:
         passed: '✓ Passed'
         failed: '✗ Failed'
         full: '✓ Passed'
-        part: '✓ Passed'
+        part: '✓ Partial'
         none: '✗ Failed'
         'true': '✓ Passed'
         'false': '✗ Failed'
         savings_investments: Savings and investments
         benefits: Benefits
-        total_income: Total monthly income
         income: Income
         children: Number of children
     errors:

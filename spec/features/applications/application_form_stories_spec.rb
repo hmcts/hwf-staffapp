@@ -67,7 +67,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 0)
                 expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                 expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
               end
             end
 
@@ -102,10 +102,10 @@ RSpec.feature 'Completing the application details', type: :feature do
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 1)
+                    expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 1)
                     expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                     expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
                   end
                 end
               end
@@ -152,8 +152,8 @@ RSpec.feature 'Completing the application details', type: :feature do
                         expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                         expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                         expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 1)
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 1)
+                        expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 2)
+                        expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                         expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 0)
                         expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £85 towards the fee')
                       end
@@ -178,10 +178,10 @@ RSpec.feature 'Completing the application details', type: :feature do
                             expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                             expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                             expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                            expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 0)
+                            expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
                             expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                             expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
                           end
                         end
                       end
@@ -231,10 +231,10 @@ RSpec.feature 'Completing the application details', type: :feature do
                 expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                 expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                 expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 0)
+                expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
                 expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                 expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
               end
             end
 
@@ -269,10 +269,10 @@ RSpec.feature 'Completing the application details', type: :feature do
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                     expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 2)
+                    expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 2)
                     expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                     expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 0)
-                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "yes")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
+                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
                   end
 
                   context 'when the user returns to the savings threshold' do
@@ -295,10 +295,10 @@ RSpec.feature 'Completing the application details', type: :feature do
                         expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
                         expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
                         expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 0)
+                        expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
                         expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
                         expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
                       end
                     end
                   end

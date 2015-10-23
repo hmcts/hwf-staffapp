@@ -60,7 +60,7 @@ RSpec.feature 'Completing the application details', type: :feature do
       end
 
       scenario 'shows benefit result on summary page' do
-        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "yes")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
+        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
       end
     end
   end
