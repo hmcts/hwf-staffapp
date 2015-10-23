@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 20151018115056) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
+  add_foreign_key "dwp_checks", "offices"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
