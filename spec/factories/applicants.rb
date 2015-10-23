@@ -25,7 +25,7 @@ FactoryGirl.define do
       date_of_birth Time.zone.today - 65.years
     end
 
-    after(:build) do |applicant, evaluator|
+    after(:build, :stub) do |applicant, evaluator|
       app = evaluator.application
       applicant.application = app.present? ? app : build(:application, applicant: applicant)
     end
