@@ -17,7 +17,7 @@ class Applications::ProcessController < ApplicationController
   end
 
   def personal_information_params
-    params.require(:personal_information).permit(*Applikation::Forms::PersonalInformation.permitted_attributes.keys)
+    params.require(:application).permit(*Applikation::Forms::PersonalInformation.permitted_attributes.keys)
   end
 
   private

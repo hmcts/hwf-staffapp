@@ -41,7 +41,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       allow(personal_information_form).to receive(:update_attributes).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
 
-      put :personal_information_save, application_id: application.id, personal_information: expected_params
+      put :personal_information_save, application_id: application.id, application: expected_params
     end
 
     context 'when the form can be saved' do
