@@ -32,25 +32,26 @@ header
 
 
   .small-12.medium-8.large-8.columns
-
-    h3 id="intro" Introduction
+    
+    a id="intro"
+    h3 Introduction
 
     p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
     p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
     p Evidence checks are a way for HMCTS to make sure that applicants are providing accurate information about their income. 
     p If an application is marked for an evidence check, write to the applicant and ask them to send evidence of their income. You’ll be provided with a letter to use.  
-    br
-
-    h3 id="before-start" Before you start
+    
+    a id="before-start"
+    h3 Before you start
     h5 When you receive the evidence: 
     ul 
       li check the name on the evidence matches the name on the application
       li check the evidence is dated within 3 months of receiving the application
       li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid) 
-    br
-
-    h3 id="problems-evidence" Problems with the evidence 
-    br You may not be able to process the evidence provided by an applicant. Common problems are: 
+    
+    a id="problems-evidence"
+    h3 Problems with the evidence 
+    p You may not be able to process the evidence provided by an applicant. Common problems are: 
     ol 
       li the name on the evidence doesn't match the name of the applicant
       li the evidence is out of date 
@@ -58,12 +59,11 @@ header
     p In all of these cases, you should return the evidence to the applicant and tell them why it can't be accepted. If they still require help with fees they'll need to apply again.  
     p If a couple is receiving a shared benefit but the benefits letter doesn't state the applicant’s name the applicant must provide additional evidence to show they live at the same address as their partner. 
     p A letter will be generated for you to send to the applicant along with the evidence. 
-    br 
 
-    .panel 
-      h3 id="what-to-do" What to do
+    .panel
+      a href="what-to-do"
+      h3 What to do
 
-      br
       h5 To process evidence:
       ul
         li select the application from the list ‘Awaiting evidence’
@@ -73,7 +73,6 @@ header
         li get the result and follow the next steps to process the application
         li store the evidence securely, separate from the case file
 
-      br
       h5 Returning evidence
       p You should not return evidence to the applicant unless they ask for it and provide payment for postage costs.
 
@@ -83,9 +82,8 @@ header
         li select 'write letter to the applicant' and a letter will be generated for you
         li post the letter and all the documents back to the applicant
 
-    br
-    br
-    h3 id="calculate" How to calculate total monthly income
+    a id="calculate"
+    h3 How to calculate total monthly income
     h5 You need to: 
     ul
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
@@ -93,9 +91,8 @@ header
       li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income')}
       li check the total against the bank statements 
   
-    br
-    br
-    h3 id="not-include" What not to include as income
+    a id="not-include"
+    h3 What not to include as income
     ul
       li 
         | #{link_to '6 benefits', guide_process_application_path(anchor: 'benefits')} <br>
@@ -105,10 +102,9 @@ header
       li 
         | #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income')} <br>
         | such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit. 
-
-    br
-    br
-    h3 id="sources" Sources of evidence
+        
+    a id="sources"    
+    h3  Sources of evidence
 
     table
       tbody
@@ -190,8 +186,8 @@ header
             p Prisoners should provide a Prisoner Income and Expenditure Statement (PIES). This shows the amount of their earnings, spending, private cash and savings. 
             p If the prisoner is in a private prison the format of their financial statement may be slightly different. You need to check details of earnings and private cash. 
   
-    br
-    h3 id="non-english" Evidence in languages other than English 
+    a id="non-english"
+    h3 Evidence in languages other than English 
 
     p Evidence must be supplied in English. However, courts and tribunals in Wales can also accept evidence in Welsh. 
 
@@ -211,6 +207,7 @@ header
             = link_to guide_process_application_path
               | Process application
               = image_tag("icon-process.png")
+
       .small-12.medium-6.large-3.columns
         .panel
           h5

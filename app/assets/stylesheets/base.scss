@@ -212,3 +212,9 @@ a.button.alternative{
   font-size: 20px; }
 .accordion-navigation.active > a:after {
   content: "⬆︎"; }
+
+#sidebar{
+  border-top: 5px solid $govuk-blue;
+  padding-top:$gutter-half;
+  margin-top:$gutter;
+}

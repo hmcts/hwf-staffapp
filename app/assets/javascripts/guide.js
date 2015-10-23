@@ -3,7 +3,6 @@ var FR = {};
 FR.equalHeightBoxes = function(wrapper, panel) {
   var panels = $(wrapper).find(panel);
   var max = 0;
-  var arr = [];
 
   panels.each(function(i, el) {
     var height = FR.getHeight($(el));
