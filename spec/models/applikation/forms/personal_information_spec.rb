@@ -113,7 +113,7 @@ RSpec.describe Applikation::Forms::PersonalInformation do
   end
 
   describe 'when Application object is passed in' do
-    let(:application) { create :application }
+    let(:application) { build_stubbed(:application) }
     let(:form) { described_class.new(application) }
 
     params_list.each do |attr_name|
@@ -136,6 +136,57 @@ RSpec.describe Applikation::Forms::PersonalInformation do
 
     it 'assign date_of_birth attribute' do
       expect(form.date_of_birth).to eq hash[:date_of_birth].to_date
+    end
+  end
+
+  describe '#save' do
+    let(:application) { create :application }
+    subject(:form) { described_class.new(application) }
+
+    context 'when the attributes are correct' do
+      let(:dob) { '01/01/1980' }
+      let(:params) do
+        {
+          title: 'Mr',
+          last_name: 'foo',
+          first_name: 'bar',
+          date_of_birth: dob,
+          married: true,
+          ni_number: 'AB123456A'
+        }
+      end
+      let(:params_without_dob) { params.delete(:date_of_birth); params }
+      let(:parsed_dob) { Date.parse(dob) }
+
+      before do
+        dwp_api_response 'Yes'
+        application.update_attributes(params)
+      end
+
+      subject { form.save }
+
+      it 'saves the parameters in the application' do
+        application.reload
+
+        params_without_dob.each do |key, value|
+          expect(application.send(key)).to eql(value)
+        end
+      end
+
+      it 'returns the correct date' do
+        expect(application.date_of_birth).to eql(parsed_dob)
+      end
+    end
+
+    context 'when the attributes are incorrect' do
+      let(:dob) { '01/01/1980' }
+      let(:params) { { last_name: '' } }
+
+      before { application.update_attributes(params) }
+
+      it "returns false" do
+        expect(subject.save).to be_falsey
+      end
     end
   end
 end
