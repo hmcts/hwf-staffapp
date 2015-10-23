@@ -160,7 +160,7 @@ RSpec.describe Applikation::Forms::PersonalInformation do
           ni_number: 'AB123456A'
         }
       end
-      let(:params_without_dob) { params.delete(:date_of_birth); params }
+      let(:params_without_dob) { params.tap { |p| p.delete(:date_of_birth) } }
       let(:parsed_dob) { Date.parse(dob) }
 
       it { is_expected.to be true }

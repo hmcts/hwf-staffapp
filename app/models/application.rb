@@ -35,8 +35,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   }
 
   # Fixme remove this delegation methods when all tests are clean
-  APPLICANT_GETTERS = %i(title first_name last_name date_of_birth ni_number married married?)
-  APPLICANT_SETTERS = %i(title= first_name= last_name= date_of_birth= ni_number= married=)
+  APPLICANT_GETTERS = %i[title first_name last_name date_of_birth ni_number married married?]
+  APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
   delegate(*APPLICANT_GETTERS, to: :applicant)
   delegate(*APPLICANT_SETTERS, to: :applicant)
 
@@ -103,7 +103,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     end
   end
 
-  #fixme Remove the threshold field from db as it's read only now
+  # FIXME: Remove the threshold field from db as it's read only now
   def threshold
     applicant_over_61? ? 16000 : FeeThreshold.new(fee).band
   end

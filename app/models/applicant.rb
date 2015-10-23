@@ -4,8 +4,8 @@ class Applicant < ActiveRecord::Base
   before_validation :format_ni_number
 
   validates :ni_number, format: {
-      with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-    }, allow_blank: true
+    with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
+  }, allow_blank: true
 
   private
 

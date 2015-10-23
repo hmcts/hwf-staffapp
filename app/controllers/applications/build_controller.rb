@@ -91,7 +91,6 @@ class Applications::BuildController < ApplicationController
     @form = Applikation::Forms::PersonalInformation.new(@application.applicant)
   end
 
-
   def handle_form_object(params, step)
     class_name = derive_class(step)
     form_params = process_params(class_name, params)

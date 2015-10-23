@@ -249,7 +249,7 @@ RSpec.describe Application, type: :model do
     subject { application.threshold }
 
     context 'when applicant is over 61' do
-      let(:applicant) { create(:applicant, :over_61)}
+      let(:applicant) { create(:applicant, :over_61) }
 
       it 'returns 16000' do
         is_expected.to eq(16000)
@@ -257,7 +257,7 @@ RSpec.describe Application, type: :model do
     end
 
     context 'when applicant is under 61' do
-      let(:applicant) { create(:applicant, :under_61)}
+      let(:applicant) { create(:applicant, :under_61) }
       let(:fee_threshold) { double(band: 845) }
 
       before do

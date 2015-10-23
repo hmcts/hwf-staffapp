@@ -7,7 +7,7 @@ RSpec.feature 'Benefit Results', type: :feature do
   Warden.test_mode!
 
   let(:user) { create :user, office: create(:office) }
-  let(:applicant) { create :applicant_with_all_details, ni_number: ni_number}
+  let(:applicant) { create :applicant_with_all_details, ni_number: ni_number }
   let(:application) { create :application, user_id: user.id, applicant: applicant, benefits: true, status: 'benefits_result' }
 
   context 'as a signed in user' do

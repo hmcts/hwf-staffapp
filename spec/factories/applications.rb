@@ -42,7 +42,7 @@ FactoryGirl.define do
 
     factory :application_part_remission do
       applicant_factory :applicant_with_all_details
-      applicant_traits [ :married ]
+      applicant_traits [:married]
       fee 410
       benefits false
       income 2000
@@ -52,7 +52,7 @@ FactoryGirl.define do
 
     factory :application_full_remission do
       applicant_factory :applicant_with_all_details
-      applicant_traits [ :married ]
+      applicant_traits [:married]
       fee 410
       benefits false
       income 10
@@ -70,17 +70,17 @@ FactoryGirl.define do
 
     factory :applicant_under_61 do
       applicant_factory :applicant_with_all_details
-      applicant_traits [ :married, :under_61 ]
+      applicant_traits [:married, :under_61]
     end
 
     factory :married_applicant_under_61 do
       applicant_factory :applicant_with_all_details
-      applicant_traits [ :married, :under_61 ]
+      applicant_traits [:married, :under_61]
     end
 
     factory :married_applicant_over_61 do
       applicant_factory :applicant_with_all_details
-      applicant_traits [ :married, :over_61 ]
+      applicant_traits [:married, :over_61]
     end
 
     after(:build, :stub) do |application, evaluator|
