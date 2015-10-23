@@ -40,4 +40,22 @@ header
             li Write to the applicant and send back all the documents
 
     = link_to 'Back to start', root_path, class: 'button primary'
-  = render :partial => 'shared/guide_help'
+    #guidance.small-12.medium-4.large-5.columns
+      .row
+        #sidebar.small-12.columns
+          -if @application.application_outcome == 'full'
+            h4 Next steps
+            ul
+              li write reference on the top right corner of the form
+              li copy reference into the case management system
+          -elsif @application.application_outcome == 'part'
+            h4 Next steps
+            ul
+              li write reference on the top right corner of the form
+              li store application in a secure location
+              li write to applicant asking for evidence using the template provided
+          -else
+            h4 Next steps
+            ul
+              li write to applicant using the template provided
+              li post the letter an all the documents back to the applicant

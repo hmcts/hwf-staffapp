@@ -1,32 +1,36 @@
-h2 Income
-
 = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
 
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 Income
+        
   .row.collapse
-    .columns.small-12.medium-10.large-8
+    .small-12.medium-8.large-6.columns
       #calculator.callout class="callout-#{@application.application_outcome ? @application.application_outcome : 'error'}"
         h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay.floor, precision: 0)).html_safe
-  = f.hidden_field :status
-  = f.submit 'Next', :class => 'button primary'
+      = f.hidden_field :status
+      = f.submit 'Next', :class => 'button primary'
 
-.row
-  .small-12.columns
-    .row
-      .small-12.medium-8.large-7.columns
-        details
-          summary
-            span.summary.primary Our calculation is based on this information
-          #result_table.row.pad-top-fifteen-px
-            .columns.small-12
-              .row
-                .columns.small-4.table-label Fee
-                .columns.small-8 £#{@application.fee.floor}
-              .row
-                .columns.small-4.table-label Status
-                .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
-              .row
-                .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.children')
-                .columns.small-8 =@application.children
-              .row
-                .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.income')
-                .columns.small-8 =number_to_currency(@application.income.floor, precision: 0)
+      details
+        summary
+          span.summary.primary Our calculation is based on this information
+        #result_table.row.pad-top-fifteen-px
+          .columns.small-12
+            .row
+              .columns.small-4.table-label Fee
+              .columns.small-8 £#{@application.fee.floor}
+            .row
+              .columns.small-4.table-label Status
+              .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
+            .row
+              .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.children')
+              .columns.small-8 =@application.children
+            .row
+              .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.income')
+              .columns.small-8 =number_to_currency(@application.income.floor, precision: 0)
+
+    #guidance.small-12.medium-4.large-5.columns
+      .row
+        #sidebar.small-12.columns
+          h2 something goes here
