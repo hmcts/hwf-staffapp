@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe FormObject do
 
+  describe '.permitted_attributes' do
+    it { expect(described_class.permitted_attributes).to eq({}) }
+  end
+
   class FormTestClass < FormObject
     def self.permitted_attributes
       { id: Integer, fee: Integer }
