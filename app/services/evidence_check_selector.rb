@@ -11,7 +11,7 @@ class EvidenceCheckSelector
   private
 
   def evidence_check?
-    if Application.evidencecheckable.exists?(@application.id)
+    if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
       @application.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
   end
@@ -30,7 +30,10 @@ class EvidenceCheckSelector
   end
 
   def application_position(refund)
-    Application.evidencecheckable.where('id <= ? AND refund = ?', @application.id, refund).count
+    Query::EvidenceCheckable.new.find_all.where(
+      'id <= ? AND refund = ?',
+      @application.id,
+      refund).count
   end
 
   def expires_at
