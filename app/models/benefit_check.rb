@@ -1,6 +1,8 @@
 class BenefitCheck < ActiveRecord::Base
   belongs_to :application
 
+  include CommonScopes
+
   scope :by_office, lambda { |office_id|
     joins(:application).
       where('applications.office_id = ?', office_id)
@@ -17,10 +19,4 @@ class BenefitCheck < ActiveRecord::Base
       group(:dwp_result).
       order('length(dwp_result)')
   }
-
-  scope :checks_by_day, lambda {
-    group_by_day("benefit_checks.created_at", format: "%d %b %y").
-      where("benefit_checks.created_at > ?", (Time.zone.today.-6.days)).count
-  }
-
 end
