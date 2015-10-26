@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018115056) do
+ActiveRecord::Schema.define(version: 20151021112859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(version: 20151018115056) do
 
   add_index "benefit_checks", ["application_id"], name: "index_benefit_checks_on_application_id", using: :btree
   add_index "benefit_checks", ["user_id"], name: "index_benefit_checks_on_user_id", using: :btree
+
+  create_table "benefit_overrides", force: :cascade do |t|
+    t.integer  "application_id",  null: false
+    t.boolean  "correct"
+    t.integer  "completed_by_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "benefit_overrides", ["application_id"], name: "index_benefit_overrides_on_application_id", using: :btree
 
   create_table "dwp_checks", force: :cascade do |t|
     t.string   "last_name"
@@ -216,6 +226,7 @@ ActiveRecord::Schema.define(version: 20151018115056) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
+  add_foreign_key "benefit_overrides", "applications"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"

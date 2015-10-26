@@ -1,0 +1,20 @@
+h2 Evidence
+
+= form_for @form, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        .row.collapse
+          .columns.small-12
+            = f.label :correct, t('benefit_override.title')
+            .options.radio
+              .option
+                label for='benefit_override_correct_false'
+                  = f.radio_button :correct, 'false'
+                  = t('benefit_override.incorrect')
+              .option
+                label for='benefit_override_correct_true'
+                  = f.radio_button :correct, 'true'
+                  = t('benefit_override.correct')
+
+  = f.submit 'Next', class: 'button primary'

@@ -73,15 +73,22 @@
   -when 'benefit'
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.benefits')
-      -if @application.last_benefit_check && @application.last_benefit_check.benefits_valid
+      -if (@application.last_benefit_check && @application.last_benefit_check.benefits_valid) || (!@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true))
         .small-12.medium-7.large-8.columns.summary-result.success =t('activemodel.attributes.applikation/forms/summary.passed').html_safe
       -else
         .small-12.medium-7.large-8.columns.summary-result.failure =t('activemodel.attributes.applikation/forms/summary.failed').html_safe
     .row
       .small-12.columns
         .row.collapse.medium-10.large-8
-          #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-            h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
+          - if !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
+            #result.callout class='callout-full'
+              h3.bold =t('remissions.full').html_safe
+          - else
+            - if @application.application_outcome.nil?
+              = render 'applications/partials/full_fee'
+            - else
+              #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
+                h3.bold =t("remissions.#{@application.application_outcome ? @application.application_outcome : 'error'}").html_safe
   -when 'income'
     .row
       .small-12.medium-5.large-4.columns.subheader =t('activemodel.attributes.applikation/forms/summary.income')
@@ -122,4 +129,4 @@
         h5 =@application.inspect
 
   = f.hidden_field :status
-  = f.submit 'Continue', :class => 'button primary'
+  = f.submit 'Complete processing', class: 'button primary'

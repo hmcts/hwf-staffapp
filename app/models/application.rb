@@ -6,6 +6,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   has_many :benefit_checks
   has_one :evidence_check, required: false
   has_one :payment, required: false
+  has_one :benefit_override, required: false
 
   validates :reference, presence: true, uniqueness: true
 

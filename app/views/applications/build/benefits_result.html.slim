@@ -1,24 +1,16 @@
 h2 Benefits
 
-- if @application.can_check_benefits?
-
-  = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
-    .row.collapse
-      .columns.small-12.medium-10.large-8
-        #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
-          h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
-
-    -if @application.last_benefit_check.dwp_result.parameterize.underscore == 'undetermined'
-      =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
-      =link_to 'Check personal details', wizard_path(:personal_information)
+.row.collapse
+  .columns.small-12.medium-10.large-8
+    -if @application.can_check_benefits? &&  @application.last_benefit_check.dwp_result.parameterize.underscore != 'undetermined'
+      #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
+        h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
     -else
-      = f.hidden_field :status
-      = f.submit 'Next', :class => 'button primary'
-      =render("applications/partials/#{@application.last_benefit_check.dwp_result.parameterize.underscore}")
-
-- else
-  .row.collapse
-    .columns.small-12.medium-10.large-8
-      #result.callout.details_missing
+      #result.callout.callout-none
         h3.bold =t('benefit_checks.details_missing.heading')
-  =link_to 'Check personal details', wizard_path(:personal_information)
+
+      =link_to 'The applicant has provided paper evidence', application_benefit_override_paper_evidence_path(@application)
+
+= form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+  = f.hidden_field(:status)
+  = f.submit 'Next', class: 'button primary'
