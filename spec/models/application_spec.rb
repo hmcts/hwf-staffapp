@@ -5,11 +5,14 @@ RSpec.describe Application, type: :model do
 
   let(:user)  { create :user }
   let(:attributes) { attributes_for :application }
-  let(:application) { described_class.create(user_id: user.id, reference: attributes[:reference]) }
+  let(:applicant) { create(:applicant) }
+  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant) }
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:jurisdiction) }
   it { is_expected.to belong_to(:office) }
+
+  it { is_expected.to have_one(:applicant) }
 
   it { is_expected.to have_one(:evidence_check) }
   it { is_expected.not_to validate_presence_of(:evidence_check) }
@@ -242,38 +245,27 @@ RSpec.describe Application, type: :model do
     end
   end
 
-  describe 'ni_number' do
-    let(:expected_ni_number) { 'JN010203A' }
-    let(:application) { build :application, user: user, ni_number: ni_number }
+  describe '#threshold' do
+    subject { application.threshold }
 
-    before do
-      allow(BenefitCheckService).to receive(:new)
-      allow(application).to receive(:outcome_from_dwp_result).and_return('none')
+    context 'when applicant is over 61' do
+      let(:applicant) { create(:applicant, :over_61) }
 
-      application.save
-    end
-
-    context 'with spaces' do
-      let(:ni_number) { 'JN 01 02 03 A' }
-
-      it 'is stripped of all spaces before stored' do
-        expect(application.ni_number).to eql(expected_ni_number)
+      it 'returns 16000' do
+        is_expected.to eq(16000)
       end
     end
 
-    context 'without spaces' do
-      let(:ni_number) { expected_ni_number }
+    context 'when applicant is under 61' do
+      let(:applicant) { create(:applicant, :under_61) }
+      let(:fee_threshold) { double(band: 845) }
 
-      it 'is stored as inputted' do
-        expect(application.ni_number).to eql(expected_ni_number)
+      before do
+        allow(FeeThreshold).to receive(:new).with(application.fee).and_return(fee_threshold)
       end
-    end
 
-    context 'when nil' do
-      let(:ni_number) { nil }
-
-      it 'is nil' do
-        expect(application.ni_number).to be nil
+      it 'calculates the threshold from the fee' do
+        is_expected.to eq(845)
       end
     end
   end

@@ -113,12 +113,12 @@ RSpec.describe Applikation::Forms::PersonalInformation do
   end
 
   describe 'when Application object is passed in' do
-    let(:application) { create :application }
-    let(:form) { described_class.new(application) }
+    let(:applicant) { build(:applicant) }
+    let(:form) { described_class.new(applicant) }
 
     params_list.each do |attr_name|
       it "assigns #{attr_name}" do
-        expect(form.send(attr_name)).to eq application.send(attr_name)
+        expect(form.send(attr_name)).to eq applicant.send(attr_name)
       end
     end
   end
@@ -136,6 +136,58 @@ RSpec.describe Applikation::Forms::PersonalInformation do
 
     it 'assign date_of_birth attribute' do
       expect(form.date_of_birth).to eq hash[:date_of_birth].to_date
+    end
+  end
+
+  describe '#save' do
+    let(:applicant) { create :applicant }
+    subject(:form) { described_class.new(applicant) }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
+
+    context 'when the attributes are correct' do
+      let(:dob) { '01/01/1980' }
+      let(:params) do
+        {
+          title: 'Mr',
+          last_name: 'foo',
+          first_name: 'bar',
+          date_of_birth: dob,
+          married: true,
+          ni_number: 'AB123456A'
+        }
+      end
+      let(:params_without_dob) { params.tap { |p| p.delete(:date_of_birth) } }
+      let(:parsed_dob) { Date.parse(dob) }
+
+      it { is_expected.to be true }
+
+      before do
+        subject
+        applicant.reload
+      end
+
+      it 'saves the parameters in the applicant' do
+        params_without_dob.each do |key, value|
+          expect(applicant.send(key)).to eql(value)
+        end
+      end
+
+      it 'saves the correct date of birth' do
+        expect(applicant.date_of_birth).to eql(parsed_dob)
+      end
+    end
+
+    context 'when the attributes are incorrect' do
+      let(:dob) { '01/01/1980' }
+      let(:params) { { last_name: '' } }
+
+      it 'returns false' do
+        is_expected.to be false
+      end
     end
   end
 end

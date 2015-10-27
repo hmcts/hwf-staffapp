@@ -64,6 +64,21 @@ module Applikation
           errors.add(:date_of_birth, :too_old, maximum_age: MAXIMUM_AGE)
         end
       end
+
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        {
+          title: title,
+          last_name: last_name,
+          first_name: first_name,
+          date_of_birth: date_of_birth,
+          married: married,
+          ni_number: ni_number
+        }
+      end
     end
   end
 end

@@ -14,19 +14,32 @@ RSpec.describe Applications::BuildController, type: :controller do
       before { get :create }
 
       it 'redirect to the personal_information view' do
-        expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :personal_information))
+        expect(response).to redirect_to(application_personal_information_path(assigns(:application)))
+      end
+    end
+
+    describe 'PUT' do
+      let(:applicant) { create :applicant_with_all_details }
+      let(:application) { create :application, user_id: user.id, applicant: applicant }
+
+      describe 'personal_information' do
+        before { put :update, application_id: application.id, id: :personal_information, application: { last_name: 'asd' } }
+
+        it 'renders 400 error' do
+          expect(response).to have_http_status(400)
+        end
       end
     end
 
     describe 'GET ' do
-
-      let(:application) { create :application, user_id: user.id }
+      let(:applicant) { create :applicant_with_all_details }
+      let(:application) { create :application, user_id: user.id, applicant: applicant }
 
       context 'personal_information' do
         before { get :show, application_id: application.id, id: :personal_information }
 
-        it 'displays the personal information view' do
-          expect(response).to render_template :personal_information
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_personal_information_path(application))
         end
       end
 

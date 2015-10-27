@@ -5,6 +5,9 @@ class Applications::BuildController < ApplicationController
   before_action :find_application, only: [:show, :update]
   before_action :populate_jurisdictions, only: [:show, :update]
 
+  before_action :redirect_to_process_controller, only: :show
+  before_action :render_bad_request_for_process_controller_action, only: :update
+
   before_action :evidence_check_show_redirect, only: :show
   before_action :evidence_check_update_redirect, only: :update
 
@@ -18,12 +21,13 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  FORM_OBJECTS = %i[personal_information application_details savings_investments benefits income]
+  PROCESS_CONTROLLER_ACTIONS = %i[personal_information]
+  FORM_OBJECTS = %i[application_details savings_investments benefits income]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
     @application = application_builder.create
-    redirect_to wizard_path(steps.first, application_id: @application.id)
+    redirect_to application_personal_information_path(@application)
   end
 
   # rubocop:disable MethodLength
@@ -76,8 +80,8 @@ class Applications::BuildController < ApplicationController
   def handle_form_object(params, step)
     class_name = derive_class(step)
     form_params = process_params(class_name, params)
-    @form = class_name.new(form_params)
 
+    @form = class_name.new(form_params)
     if @form.valid?
       status = { status: get_status(step) }
       form_params.delete('application_id')
@@ -125,6 +129,18 @@ class Applications::BuildController < ApplicationController
   def redirect_if_evidence_check
     if evidence_check_enabled? && @application.evidence_check?
       redirect_to(evidence_check_path(@application.evidence_check.id))
+    end
+  end
+
+  def redirect_to_process_controller
+    if PROCESS_CONTROLLER_ACTIONS.include?(step)
+      redirect_to(application_personal_information_path(@application))
+    end
+  end
+
+  def render_bad_request_for_process_controller_action
+    if PROCESS_CONTROLLER_ACTIONS.include?(step)
+      render nothing: true, status: 400
     end
   end
 end

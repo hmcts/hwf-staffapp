@@ -4,6 +4,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   belongs_to :jurisdiction
   belongs_to :office
   has_many :benefit_checks
+  has_one :applicant
   has_one :evidence_check, required: false
   has_one :payment, required: false
   has_one :benefit_override, required: false
@@ -33,26 +34,17 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
       order('payments.expires_at ASC')
   }
 
+  # Fixme remove this delegation methods when all tests are clean
+  APPLICANT_GETTERS = %i[title first_name last_name date_of_birth ni_number married married?]
+  APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
+  delegate(*APPLICANT_GETTERS, to: :applicant)
+  delegate(*APPLICANT_SETTERS, to: :applicant)
+
   MAX_AGE = 120
   MIN_AGE = 16
 
   after_save :run_auto_checks
-  before_validation :format_ni_number
   before_validation :nullify_blank_emergency_reason
-
-  # Step 1 - Personal detail validation
-  with_options if: proc { active_or_status_is? 'personal_information' } do
-    validates :last_name, presence: true
-    validates :married, inclusion: { in: [true, false] }
-    validates :last_name, length: { minimum: 2 }, allow_blank: true
-    validates :date_of_birth, date: true
-    validate :dob_age_valid?
-  end
-
-  validates :ni_number, format: {
-    with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-  }, allow_blank: true
-  # End step 1 validation
 
   # Step 2 - Application details validation
   with_options if: proc { active_or_status_is? 'application_details' } do
@@ -101,14 +93,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
   # End step 5 validation
 
-  def ni_number=(val)
-    if val.nil?
-      self[:ni_number] = nil
-    else
-      self[:ni_number] = val.upcase if val.present?
-    end
-  end
-
   def children=(val)
     self[:children] = dependents? ? val : 0
   end
@@ -119,13 +103,9 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     end
   end
 
-  def fee=(val)
-    super
-    if applicant_over_61?
-      self.threshold = 16000
-    else
-      self.threshold = FeeThreshold.new(fee).band
-    end
+  # FIXME: Remove the threshold field from db as it's read only now
+  def threshold
+    applicant_over_61? ? 16000 : FeeThreshold.new(fee).band
   end
 
   def threshold_exceeded=(val)
@@ -329,10 +309,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE)
       )
     end
-  end
-
-  def format_ni_number
-    ni_number.gsub!(' ', '') unless ni_number.nil?
   end
 
   def nullify_blank_emergency_reason

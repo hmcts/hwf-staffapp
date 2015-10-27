@@ -11,18 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021112859) do
+ActiveRecord::Schema.define(version: 20151021134920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "applications", force: :cascade do |t|
+  create_table "applicants", force: :cascade do |t|
+    t.integer  "application_id", null: false
     t.string   "title"
     t.string   "first_name"
     t.string   "last_name"
     t.date     "date_of_birth"
     t.string   "ni_number"
     t.boolean  "married"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
+
+  create_table "applications", force: :cascade do |t|
     t.decimal  "fee"
     t.string   "status"
     t.datetime "created_at",              null: false
