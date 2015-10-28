@@ -8,11 +8,11 @@ class ApplicationBuilder
 
   def create
     Application.create(
-      jurisdiction_id: @user.jurisdiction_id,
       office_id: @user.office_id,
       user_id: @user.id,
       reference: generate_reference,
-      applicant: build_applicant
+      applicant: build_applicant,
+      detail: build_details
     )
   end
 
@@ -29,5 +29,9 @@ class ApplicationBuilder
 
   def build_applicant
     Applicant.new
+  end
+
+  def build_details
+    Detail.new(jurisdiction_id: @user.jurisdiction_id)
   end
 end
