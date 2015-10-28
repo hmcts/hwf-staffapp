@@ -5,6 +5,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   belongs_to :office
   has_many :benefit_checks
   has_one :applicant
+  has_one :detail
   has_one :evidence_check, required: false
   has_one :payment, required: false
   has_one :benefit_override, required: false
