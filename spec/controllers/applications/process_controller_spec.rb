@@ -7,11 +7,13 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:application) { build_stubbed(:application) }
 
   let(:personal_information_form) { double }
+  let(:application_details_form) { double }
 
   before do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Applikation::Forms::PersonalInformation).to receive(:new).with(application.applicant).and_return(personal_information_form)
+    allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application).and_return(application_details_form)
   end
 
   describe 'GET #personal_information' do
@@ -89,4 +91,23 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
+  describe 'GET #application_details' do
+    before do
+      get :application_details, application_id: application.id
+    end
+
+    context 'when the application does exist' do
+      it 'responds with 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:application_details)
+      end
+
+      it 'assigns the correct form' do
+        expect(assigns(:form)).to eql(application_details_form)
+      end
+    end
+  end
 end

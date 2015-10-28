@@ -31,6 +31,7 @@ module Applications
     end
 
     def application_details
+      @form = Applikation::Forms::ApplicationDetail.new(application)
     end
 
     def application_details_save
