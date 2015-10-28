@@ -6,10 +6,10 @@ RSpec.describe Application, type: :model do
   let(:user)  { create :user }
   let(:attributes) { attributes_for :application }
   let(:applicant) { create(:applicant) }
-  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant) }
+  let(:detail) { create(:detail) }
+  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant, detail: detail) }
 
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:jurisdiction) }
   it { is_expected.to belong_to(:office) }
 
   it { is_expected.to have_one(:applicant) }
@@ -25,6 +25,39 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_uniqueness_of(:reference) }
 
   it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
+
+  describe 'temporary methods delegation to sliced models' do
+    let(:param) { true }
+
+    describe '-> Applicant' do
+      described_class::APPLICANT_GETTERS.each do |getter|
+        it { is_expected.to delegate_method(getter).to(:applicant) }
+      end
+
+      described_class::APPLICANT_SETTERS.each do |setter|
+        it "should delegate #{setter} to #applicant object" do
+          expect(applicant).to receive(setter).with(param)
+          application.send(setter, param)
+        end
+      end
+    end
+
+    describe '-> Detail' do
+      described_class::DETAIL_GETTERS.each do |getter|
+        it { is_expected.to delegate_method(getter).to(:detail) }
+      end
+
+      described_class::DETAIL_SETTERS.each do |setter|
+        it "should delegate #{setter} to #detail object" do
+          # this is a hack to make sure the bellow expectation is not tested when the factories are being created
+          application
+
+          expect(detail).to receive(setter).with(param)
+          application.send(setter, param)
+        end
+      end
+    end
+  end
 
   context 'with running benefit check' do
     before do
