@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       to: 'applications/process#personal_information', as: :personal_information
     put 'personal_information',
       to: 'applications/process#personal_information_save', as: :personal_information_save
+    get 'application_details',
+      to: 'applications/process#application_details', as: :application_details
+    put 'application_details',
+      to: 'applications/process#application_details_save', as: :application_details_save
     get 'summary', to: 'applications/process#summary', as: :summary
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end

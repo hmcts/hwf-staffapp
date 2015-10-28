@@ -30,6 +30,12 @@ module Applications
       end
     end
 
+    def application_details
+    end
+
+    def application_details_save
+    end
+
     private
 
     def personal_information_params

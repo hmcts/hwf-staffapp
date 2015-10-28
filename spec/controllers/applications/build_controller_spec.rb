@@ -29,11 +29,20 @@ RSpec.describe Applications::BuildController, type: :controller do
           expect(response).to have_http_status(400)
         end
       end
+
+      describe 'application_details' do
+        before { put :update, application_id: application.id, id: :application_details, application: { fee: 300 } }
+
+        it 'renders 400 error' do
+          expect(response).to have_http_status(400)
+        end
+      end
     end
 
     describe 'GET ' do
       let(:applicant) { create :applicant_with_all_details }
-      let(:application) { create :application, user_id: user.id, applicant: applicant }
+      let(:detail) { create :complete_detail }
+      let(:application) { create :application, user_id: user.id, applicant: applicant, detail: detail }
 
       context 'personal_information' do
         before { get :show, application_id: application.id, id: :personal_information }
@@ -46,8 +55,8 @@ RSpec.describe Applications::BuildController, type: :controller do
       context 'application_details' do
         before { get :show, application_id: application.id, id: :application_details }
 
-        it 'displays the application details view' do
-          expect(response).to render_template :application_details
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_application_details_path(application))
         end
       end
 

@@ -5,6 +5,11 @@ FactoryGirl.define do
     end
 
     factory :complete_detail do
+      association :jurisdiction
+      fee 310
+      date_received Time.zone.today
+      refund false
+      probate nil
     end
 
     trait :probate do
