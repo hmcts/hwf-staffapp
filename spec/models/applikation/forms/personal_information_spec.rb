@@ -112,7 +112,7 @@ RSpec.describe Applikation::Forms::PersonalInformation do
     end
   end
 
-  describe 'when Application object is passed in' do
+  describe 'when Applicant object is passed in' do
     let(:applicant) { build(:applicant) }
     let(:form) { described_class.new(applicant) }
 
