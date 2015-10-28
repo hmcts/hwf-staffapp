@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe FormObject do
 
+  describe '.permitted_attributes' do
+    it { expect(described_class.permitted_attributes).to eq({}) }
+  end
+
   class FormTestClass < FormObject
     def self.permitted_attributes
       { id: Integer, fee: Integer }
@@ -48,7 +52,7 @@ RSpec.describe FormObject do
     end
   end
 
-  describe 'save' do
+  describe '#save' do
     before do
       allow(form).to receive(:valid?).and_return(valid)
       allow(form).to receive(:persist!)
