@@ -247,20 +247,6 @@ RSpec.describe Application, type: :model do
     end
   end
 
-  describe '#age' do
-    subject { application.applicant_age }
-
-    context 'when applicant is born on Feb 29th in a leap year' do
-      before { application.applicant.date_of_birth = Date.new(1964, 2, 29) }
-
-      it 'returns a value' do
-        Timecop.freeze(Date.new(2014, 10, 28)) do
-          is_expected.to eq 50
-        end
-      end
-    end
-  end
-
   describe '#threshold' do
     subject { application.threshold }
 
