@@ -68,12 +68,12 @@
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
             = f.text_field :date_of_death, { class: 'form-control' }
           
-          .form-group
-            .options.radio
-              .option
-                = f.label :refund
-                  = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-                  = t('activemodel.attributes.applikation/forms/application_detail.refund')
+      .form-group
+        .options.radio
+          .option
+            = f.label :refund
+              = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
+              = t('activemodel.attributes.applikation/forms/application_detail.refund')
 
       #refund-only.start-hidden
         .form-group.panel-indent
@@ -81,6 +81,7 @@
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control' }
 
+      .form-group
         .options.radio
           .option
             = f.label :emergency
