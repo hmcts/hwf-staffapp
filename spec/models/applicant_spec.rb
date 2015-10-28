@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Applicant, type: :model do
   let(:application) { build_stubbed(:application) }
+  let(:applicant) { build :applicant, application: application }
 
   it { is_expected.to belong_to(:application) }
   it { is_expected.to validate_presence_of(:application) }
@@ -72,6 +73,36 @@ RSpec.describe Applicant, type: :model do
         let(:ni_number) { 'AB121212C' }
 
         it { is_expected.to be true }
+      end
+    end
+  end
+
+  describe '#age' do
+    subject { applicant.age }
+
+    context 'when applicant is earlier in the year' do
+      before { applicant.date_of_birth = (Time.zone.now - 3.months) - 17.years }
+
+      it 'returns the correct value' do
+        is_expected.to eq 17
+      end
+    end
+
+    context 'when applicants birthday is later in the year' do
+      before { applicant.date_of_birth = (Time.zone.now + 3.months) - 17.years }
+
+      it 'returns the correct value' do
+        is_expected.to eq 16
+      end
+    end
+
+    context 'when applicant is born on Feb 29th in a leap year' do
+      before { applicant.date_of_birth = Date.new(1964, 2, 29) }
+
+      it 'returns the correct value' do
+        Timecop.freeze(Date.new(2014, 10, 28)) do
+          is_expected.to eq 50
+        end
       end
     end
   end

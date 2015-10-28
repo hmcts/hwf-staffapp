@@ -23,6 +23,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
 
+  it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
+
   context 'with running benefit check' do
     before do
       dwp_api_response 'Yes'

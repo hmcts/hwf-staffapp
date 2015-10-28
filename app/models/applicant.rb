@@ -7,7 +7,24 @@ class Applicant < ActiveRecord::Base
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
   }, allow_blank: true
 
+  def age
+    @now = Time.zone.now.utc.to_date
+    @now.year - date_of_birth.year - compare_months
+  end
+
   private
+
+  def compare_months
+    current_month_past_date_of_birth_month || current_day_past_date_of_birth_day ? 0 : 1
+  end
+
+  def current_month_past_date_of_birth_month
+    @now.month > date_of_birth.month
+  end
+
+  def current_day_past_date_of_birth_day
+    @now.month == date_of_birth.month && @now.day >= date_of_birth.day
+  end
 
   def format_ni_number
     ni_number.gsub!(' ', '') && ni_number.upcase! unless ni_number.nil?
