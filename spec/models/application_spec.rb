@@ -23,6 +23,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
 
+  it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
+
   context 'with running benefit check' do
     before do
       dwp_api_response 'Yes'
@@ -241,6 +243,20 @@ RSpec.describe Application, type: :model do
 
       it 'returns only applications which have uncompleted Payment reference in order of expiry' do
         is_expected.to eq([application2, application1])
+      end
+    end
+  end
+
+  describe '#age' do
+    subject { application.applicant_age }
+
+    context 'when applicant is born on Feb 29th in a leap year' do
+      before { application.applicant.date_of_birth = Date.new(1964, 2, 29) }
+
+      it 'returns a value' do
+        Timecop.freeze(Date.new(2014, 10, 28)) do
+          is_expected.to eq 50
+        end
       end
     end
   end

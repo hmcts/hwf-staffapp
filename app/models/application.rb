@@ -39,6 +39,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
   delegate(*APPLICANT_GETTERS, to: :applicant)
   delegate(*APPLICANT_SETTERS, to: :applicant)
+  delegate(:age, to: :applicant, prefix: true)
 
   MAX_AGE = 120
   MIN_AGE = 16
@@ -151,16 +152,11 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   def applicant_over_61?
-    applicant_age >= 61
+    applicant.age >= 61
   end
 
   def check_high_threshold?
     partner_over_61? && !applicant_over_61?
-  end
-
-  def applicant_age
-    now = Time.zone.now.utc.to_date
-    now.year - date_of_birth.year - (date_of_birth.to_date.change(year: now.year) > now ? 1 : 0)
   end
 
   def can_check_benefits?
