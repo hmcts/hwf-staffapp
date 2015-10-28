@@ -21,7 +21,7 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  PROCESS_CONTROLLER_ACTIONS = %i[personal_information]
+  PROCESS_CONTROLLER_ACTIONS = %i[personal_information summary]
   FORM_OBJECTS = %i[application_details savings_investments benefits income]
 
   def create
@@ -134,7 +134,7 @@ class Applications::BuildController < ApplicationController
 
   def redirect_to_process_controller
     if PROCESS_CONTROLLER_ACTIONS.include?(step)
-      redirect_to(application_personal_information_path(@application))
+      redirect_to(send("application_#{step}_path", @application))
     end
   end
 

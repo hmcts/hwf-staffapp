@@ -10,7 +10,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
   let(:application) { create(:application_part_remission) }
 
   def visit_confirmation_page
-    visit application_build_path(application_id: application.id, id: 'confirmation')
+    visit application_confirmation_path(application_id: application.id)
   end
 
   context 'as a signed in user', js: true do
