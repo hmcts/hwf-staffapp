@@ -19,7 +19,7 @@ FR.getHeight = function(panel) {
   } else {
     return Math.max(panel.height());
   }
-}
+};
 
 $(function(){
   if($('.equal-heightboxes').length) {
