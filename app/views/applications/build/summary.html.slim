@@ -14,16 +14,7 @@
 .row
   .small-12.columns
     .row.collapse.medium-10.large-8
-      - if @application.evidence_check?
-        #result.callout.callout-evidence-check
-          h3.bold =t('evidence_check.callout')
-      - elsif !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
-        #result.callout class='callout-full'
-          h3.bold =t('remissions.full').html_safe
-      - elsif @application.application_outcome.nil?
-        = render 'applications/partials/full_fee'
-      - else
-        =render(partial: 'shared/remission_type', locals: { source: @result })
+      =render(partial: 'shared/remission_type', locals: { source: @result })
 
 = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
   = f.hidden_field :status
