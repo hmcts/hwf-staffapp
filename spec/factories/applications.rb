@@ -15,6 +15,7 @@ FactoryGirl.define do
       date_fee_paid nil
       probate nil
       jurisdiction nil
+      emergency_reason nil
     end
 
     sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
@@ -99,7 +100,7 @@ FactoryGirl.define do
         application.detail = evaluator.detail
       else
         overrides = { application: application }
-        %i[fee date_received refund date_fee_paid probate jurisdiction].each do |field|
+        %i[fee date_received refund date_fee_paid probate jurisdiction emergency_reason].each do |field|
           value = evaluator.send(field)
           overrides[field] = value if value.present?
         end
