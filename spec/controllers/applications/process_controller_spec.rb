@@ -108,6 +108,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it 'assigns the correct form' do
         expect(assigns(:form)).to eql(application_details_form)
       end
+
+      it 'assigns user\'s jurisdictions' do
+        expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
+      end
     end
   end
 
@@ -138,6 +142,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns the correct form' do
         expect(assigns(:form)).to eql(application_details_form)
+      end
+
+      it 'assigns user\'s jurisdictions' do
+        expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
       end
     end
   end

@@ -21,9 +21,10 @@
           .columns.small-12
             = f.label :jurisdiction_id
             = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+            = f.hidden_field :jurisdiction_id, value: nil
             - if @jurisdictions.present?
               .options.radio
-                =collection_radio_buttons(:application, :jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+                =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
                   = b.label do
                     = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
                     = b.text

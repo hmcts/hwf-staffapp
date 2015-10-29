@@ -32,6 +32,7 @@ module Applications
 
     def application_details
       @form = Applikation::Forms::ApplicationDetail.new(application.detail)
+      @jurisdictions = user_jurisdictions
     end
 
     def application_details_save
@@ -41,6 +42,7 @@ module Applications
       if @form.save
         redirect_to(application_build_path(application.id, :savings_investments))
       else
+        @jurisdictions = user_jurisdictions
         render :application_details
       end
     end
@@ -59,6 +61,10 @@ module Applications
 
     def application
       Application.find(params[:application_id])
+    end
+
+    def user_jurisdictions
+      current_user.office.jurisdictions
     end
   end
 end
