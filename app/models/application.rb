@@ -94,6 +94,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
   # End step 5 validation
 
+  alias_attribute :outcome, :application_outcome
+
   def children=(val)
     self[:children] = dependents? ? val : 0
   end
