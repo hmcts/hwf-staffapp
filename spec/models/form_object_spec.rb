@@ -16,7 +16,7 @@ RSpec.describe FormObject do
 
   params_list = FormTestClass.permitted_attributes.keys
 
-  let(:application) { create :application }
+  let(:application) { create :detail }
   let(:object_or_hash) { application }
   subject(:form) { FormTestClass.new(object_or_hash) }
 

@@ -8,10 +8,13 @@ FactoryGirl.define do
 
       detail nil
       detail_traits []
+      detail_factory :complete_detail
       fee '310.00'
       date_received Time.zone.today
       refund false
+      date_fee_paid nil
       probate nil
+      jurisdiction nil
     end
 
     sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
@@ -96,12 +99,12 @@ FactoryGirl.define do
         application.detail = evaluator.detail
       else
         overrides = { application: application }
-        %i[fee date_received refund probate].each do |field|
+        %i[fee date_received refund date_fee_paid probate jurisdiction].each do |field|
           value = evaluator.send(field)
           overrides[field] = value if value.present?
         end
 
-        application.detail = build(:detail,
+        application.detail = build(evaluator.detail_factory,
           *evaluator.detail_traits, overrides)
       end
     end
