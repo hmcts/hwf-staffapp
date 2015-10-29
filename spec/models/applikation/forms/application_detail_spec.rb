@@ -293,7 +293,37 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
   end
 
   describe '#save' do
+    let(:jurisdiction) { build_stubbed(:jurisdiction) }
     let(:detail) { create :detail }
     subject(:form) { described_class.new(detail) }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
+
+    context 'when attributes are correct' do
+      let(:attributes) { attributes_for(:complete_detail, :probate, :refund, :emergency) }
+      let(:params) { attributes.merge(jurisdiction_id: jurisdiction.id) }
+
+      it { is_expected.to be true }
+
+      before do
+        subject
+        detail.reload
+      end
+
+      it 'saves the parameters in the detail' do
+        params.each do |key, value|
+          expect(detail.send(key)).to eql(value)
+        end
+      end
+    end
+
+    context 'when attributes are incorrect' do
+      let(:params) { { fee: '' } }
+
+      it { is_expected.to be false }
+    end
   end
 end

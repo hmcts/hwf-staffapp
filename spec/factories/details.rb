@@ -18,6 +18,11 @@ FactoryGirl.define do
       date_of_death Time.zone.yesterday
     end
 
+    trait :refund do
+      refund true
+      date_fee_paid Time.zone.yesterday
+    end
+
     trait :emergency do
       emergency_reason 'It can not wait'
     end
