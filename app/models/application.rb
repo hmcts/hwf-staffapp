@@ -101,9 +101,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   def ni_number_display
-    unless self[:ni_number].nil?
-      self[:ni_number].gsub(/(.{2})/, '\1 ')
-    end
+    ni_number.gsub(/(.{2})/, '\1 ') unless ni_number.nil?
   end
 
   # FIXME: Remove the threshold field from db as it's read only now
