@@ -11,7 +11,7 @@ module Applications
       @form.update_attributes(personal_information_params)
 
       if @form.save
-        redirect_to(application_build_path(application.id, :application_details))
+        redirect_to(action: :application_details)
       else
         render :personal_information
       end
@@ -35,12 +35,25 @@ module Applications
     end
 
     def application_details_save
+      @form = Applikation::Forms::ApplicationDetail.new(application.detail)
+      @form.update_attributes(application_defails_params)
+
+      if @form.save
+        redirect_to(application_build_path(application.id, :savings_investments))
+      else
+        render :application_details
+      end
     end
 
     private
 
     def personal_information_params
       permitted_attributes = *Applikation::Forms::PersonalInformation.permitted_attributes.keys
+      params.require(:application).permit(permitted_attributes)
+    end
+
+    def application_defails_params
+      permitted_attributes = *Applikation::Forms::ApplicationDetail.permitted_attributes.keys
       params.require(:application).permit(permitted_attributes)
     end
 

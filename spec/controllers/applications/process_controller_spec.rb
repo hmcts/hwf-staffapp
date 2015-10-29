@@ -49,8 +49,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'redirects to application_details in the old BuildController' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :application_details))
+      it 'redirects to application_details' do
+        expect(response).to redirect_to(application_application_details_path(application))
       end
     end
 
@@ -100,6 +100,37 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it 'responds with 200' do
         expect(response).to have_http_status(200)
       end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:application_details)
+      end
+
+      it 'assigns the correct form' do
+        expect(assigns(:form)).to eql(application_details_form)
+      end
+    end
+  end
+
+  describe 'PUT #application_details_save' do
+    let(:expected_params) { { fee: '300' } }
+
+    before do
+      allow(application_details_form).to receive(:update_attributes).with(expected_params)
+      allow(application_details_form).to receive(:save).and_return(form_save)
+
+      put :application_details_save, application_id: application.id, application: expected_params
+    end
+
+    context 'when the form can be saved' do
+      let(:form_save) { true }
+
+      it 'redirects to savings_investments in the old BuildController' do
+        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :savings_investments))
+      end
+    end
+
+    context 'when the form can not be saved' do
+      let(:form_save) { false }
 
       it 'renders the correct template' do
         expect(response).to render_template(:application_details)
