@@ -13,7 +13,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Applikation::Forms::PersonalInformation).to receive(:new).with(application.applicant).and_return(personal_information_form)
-    allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application).and_return(application_details_form)
+    allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application.detail).and_return(application_details_form)
   end
 
   describe 'GET #personal_information' do
