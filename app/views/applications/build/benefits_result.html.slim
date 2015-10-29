@@ -4,7 +4,7 @@ header
       h2 Benefits
 
 .row
-  .columns.small-12.medium-8.large-7
+  .columns.small-12.medium-8.large-5
     -if @application.can_check_benefits? &&  @application.last_benefit_check.dwp_result.parameterize.underscore != 'undetermined'
       #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
         h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
