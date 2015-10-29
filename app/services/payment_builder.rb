@@ -10,6 +10,19 @@ class PaymentBuilder
 
   private
 
+  def outcome
+    case evidence_or_application
+    when EvidenceCheck
+      evidence_or_application.outcome
+    when Application
+      evidence_or_application.application_outcome
+    end
+  end
+
+  def evidence_or_application
+    @application.evidence_check || @application
+  end
+
   def part_payment_needed?
     part_remission_or_not_evidence_checked unless application_has_payment?
   end
@@ -19,7 +32,7 @@ class PaymentBuilder
   end
 
   def part_remission_or_not_evidence_checked
-    @application.application_outcome.eql?('part') && evidence_check_payment_validation?
+    outcome.eql?('part') && evidence_check_payment_validation?
   end
 
   def evidence_check_payment_validation?

@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Evidence check flow', type: :feature do
-
+  enable_payment
   include Warden::Test::Helpers
   Warden.test_mode!
 
@@ -152,6 +152,13 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       it 'renders correct outcome' do
         page_expectation("The applicant must pay £#{evidence.amount_to_pay} towards the fee", expected_fields)
+      end
+
+      context 'clicking the Next button' do
+        before { click_link_or_button 'Complete processing' }
+        it 'creates a payment record' do
+          expect(evidence.application.payment?).to be true
+        end
       end
     end
 
