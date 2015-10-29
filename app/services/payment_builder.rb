@@ -1,6 +1,7 @@
 class PaymentBuilder
-  def initialize(application, expires_in_days)
-    @application = application
+  def initialize(initiator, expires_in_days)
+    @initiator = initiator
+    @application = load_application
     @expires_in_days = expires_in_days
   end
 
@@ -10,17 +11,13 @@ class PaymentBuilder
 
   private
 
-  def outcome
-    case evidence_or_application
+  def load_application
+    case @initiator
     when EvidenceCheck
-      evidence_or_application.outcome
+      @initiator.application
     when Application
-      evidence_or_application.application_outcome
+      @initiator
     end
-  end
-
-  def evidence_or_application
-    @application.evidence_check || @application
   end
 
   def part_payment_needed?
@@ -32,7 +29,7 @@ class PaymentBuilder
   end
 
   def part_remission_or_not_evidence_checked
-    outcome.eql?('part') && evidence_check_payment_validation?
+    @initiator.outcome.eql?('part') && evidence_check_payment_validation?
   end
 
   def evidence_check_payment_validation?
