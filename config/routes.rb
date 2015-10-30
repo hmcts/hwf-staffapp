@@ -53,9 +53,6 @@ Rails.application.routes.draw do
 
   post 'feedback/create' => 'feedback#create'
 
-  get 'calculator/income' => 'calculator#income'
-  post 'calculator/record_search' => 'calculator#record_search'
-
   resources :offices
 
   root to: 'home#index'

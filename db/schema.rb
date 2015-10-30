@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021134920) do
+ActiveRecord::Schema.define(version: 20151030114257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,21 +181,6 @@ ActiveRecord::Schema.define(version: 20151021134920) do
 
   add_index "payments", ["application_id"], name: "index_payments_on_application_id", using: :btree
 
-  create_table "r2_calculators", force: :cascade do |t|
-    t.decimal  "fee"
-    t.boolean  "married"
-    t.integer  "children"
-    t.decimal  "income"
-    t.decimal  "remittance"
-    t.decimal  "to_pay"
-    t.string   "type"
-    t.integer  "created_by_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -239,7 +224,6 @@ ActiveRecord::Schema.define(version: 20151021134920) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
-  add_foreign_key "r2_calculators", "users", column: "created_by_id"
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end
