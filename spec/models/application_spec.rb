@@ -199,21 +199,6 @@ RSpec.describe Application, type: :model do
       end
     end
 
-    describe '.waiting_for_evidence', focus: true do
-      let!(:application1) { create :application }
-      let!(:application2) { create :application }
-      let!(:application3) { create :application }
-      let!(:evidence_check1) { create :evidence_check, application: application1, expires_at: 2.days.from_now }
-      let!(:evidence_check2) { create :evidence_check, application: application2, expires_at: 1.days.from_now }
-      let!(:evidence_check3) { create :evidence_check, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago }
-
-      subject { described_class.waiting_for_evidence }
-
-      it 'returns only applications which have uncompleted EvidenceCheck reference in order of expiry' do
-        is_expected.to eq([application2, application1])
-      end
-    end
-
     describe '.waiting_for_payment', focus: true do
       let!(:application1) { create :application }
       let!(:application2) { create :application }
