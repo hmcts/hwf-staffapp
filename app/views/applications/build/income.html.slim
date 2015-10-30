@@ -41,15 +41,12 @@
 
       = f.submit 'Next', class: 'button primary'
     
-    #guidance.small-12.medium-4.large-5.columns
-      .row
-        #sidebar.small-12.columns
-          h4 Total monthly income
-          ul 
-            li If the applicant is part of a couple they must have provided details of their partner’s income
-
-            li Add the 2 monthly income amounts and enter the result 
-
-            li Some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
-          p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
-          p: strong= link_to 'See the guides', guide_path, target: 'blank'
+    .large-5.columns
+      .guidance
+        h4 Total monthly income
+        ul 
+          li If the applicant is part of a couple they must have provided details of their partner’s income
+          li Add the 2 monthly income amounts and enter the result 
+          li Some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+        p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

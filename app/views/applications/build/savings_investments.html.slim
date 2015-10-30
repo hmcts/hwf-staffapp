@@ -79,9 +79,8 @@
             .row
               .columns.small-4.table-label Fee
               .columns.small-8 £#{@application.fee.floor}
-    #guidance.small-12.medium-4.large-5.columns
-      .row
-        #sidebar.small-12.columns
-          h4 Savings and investments
-          p  =link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
-          p: strong= link_to 'See the guides', guide_path, target: 'blank'
+    .large-5.columns
+      .guidance
+        h4 Savings and investments
+        p  =link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

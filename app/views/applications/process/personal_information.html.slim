@@ -38,7 +38,7 @@
           =t('activemodel.attributes.applikation/forms/personal_information.ni_number')
           span.hint =t('general.required_for_benefits').html_safe
         = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
-        = f.text_field :ni_number, { class: 'form-control transform-upper medium-field' }
+        = f.text_field :ni_number, { class: 'form-control transform-upper' }
 
       .form-group
         .row.collapse
@@ -57,32 +57,29 @@
 
       = f.submit 'Next', :class => 'button primary'
     
-    #guidance.small-12.medium-4.large-5.columns
-      .row
-        #sidebar.small-12.columns
-          h4 Before you start
-          p Check the statement of truth has been signed.
-          span
-            strong Check the applicant is not:
-          ul
-            li receiving legal aid
-            li a vexatious litigant, or bound by an order
-            li a company, charity or not for profit organisation
-          p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'before-start'), target: 'blank'
-          span
-            strong Check the fee:
-          ul
-            li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
-            li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
-          h4 National Insurance number
-          span
-            strong If NI number isn't provided:
-          ul
-            li Check answer to question 9
-            li If 'No', continue to process without NI number
-            li If 'Yes', don't process and contact applicant by phone to ask for their NI number
-          p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
-          h4 Status
-          p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
-          p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
-          p: strong = link_to 'See the guides', guide_path, target: 'blank'
+    .large-5.columns
+      .guidance
+        h4 Before you start
+        p Check the statement of truth has been signed.
+        span
+          strong Check the applicant is not:
+        ul
+          li receiving legal aid
+          li a vexatious litigant, or bound by an order
+          li a company, charity or not for profit organisation
+        p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'before-start'), target: 'blank'
+          strong Check the fee:
+        ul
+          li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
+          li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
+        h4 National Insurance number
+        p: strong If NI number isn't provided:
+        ul
+          li Check answer to question 9
+          li If 'No', continue to process without NI number
+          li If 'Yes', don't process and contact applicant by phone to ask for their NI number
+        p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
+        h4 Status
+        p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
+        p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
