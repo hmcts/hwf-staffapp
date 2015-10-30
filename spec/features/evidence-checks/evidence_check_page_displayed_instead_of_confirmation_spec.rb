@@ -11,7 +11,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
     login_as user
   end
 
-  let(:application) { create :application_full_remission }
+  let(:application) { create :application_full_remission, reference: Random.srand }
 
   context 'when the Evidence check feature is enabled' do
     enable_evidence_check

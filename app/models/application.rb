@@ -11,29 +11,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   validates :reference, presence: true, uniqueness: true
 
-  scope :evidencecheckable, lambda {
-    where(benefits: false,
-          application_type: 'income',
-          emergency_reason: nil,
-          application_outcome: %w[part full])
-  }
-
-  scope :waiting_for_evidence, lambda {
-    includes(:evidence_check).
-      references(:evidence_check).
-      where('evidence_checks.completed_at IS NULL').
-      where.not(evidence_checks: { id: nil }).
-      order('evidence_checks.expires_at ASC')
-  }
-
-  scope :waiting_for_payment, lambda {
-    includes(:payment).
-      references(:payment).
-      where('payments.completed_at IS NULL').
-      where.not(payments: { id: nil }).
-      order('payments.expires_at ASC')
-  }
-
   # Fixme remove this delegation methods when all tests are clean
   APPLICANT_GETTERS = %i[title first_name last_name date_of_birth ni_number married married?]
   APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
