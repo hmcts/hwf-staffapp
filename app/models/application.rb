@@ -28,30 +28,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   after_save :run_auto_checks
 
-  # Step 2 - Application details validation
-  # with_options if: proc { active_or_status_is? 'application_details' } do
-  #   validates :fee, :jurisdiction_id, presence: true
-  #   validates :fee, numericality: { allow_blank: true }
-  #   validates :date_received, date: {
-  #     after: proc { Time.zone.today - 3.months },
-  #     before: proc { Time.zone.today + 1.day }
-  #   }
-  #   with_options if: :probate? do
-  #     validates :deceased_name, presence: true
-  #     validates :date_of_death, date: {
-  #       before: proc { Time.zone.today + 1.day }
-  #     }
-  #
-  #   end
-  #   with_options if: :refund? do
-  #     validates :date_fee_paid, date: {
-  #       after: proc { Time.zone.today - 3.months },
-  #       before: proc { Time.zone.today + 1.day }
-  #     }
-  #   end
-  # end
-  # End step 2 validation
-
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
