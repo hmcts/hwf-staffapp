@@ -99,12 +99,11 @@
     .large-5.columns
       .guidance
         h4 Refunds 
-        span
-        	strong Check the refund:
+        p: strong Check the refund:
         ul
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
-        p  = link_to 'What to do if fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
+        p = link_to 'What to do if fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
         h4 Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
         p: strong Example of emergency cases:
@@ -116,5 +115,5 @@
         	li injunctions
         	li ‘out of hours’ provisions at the Royal Courts of Justice
 
-        p  =link_to 'What to do if the application can’t be processed before the emergency application is heard', guide_process_application_path(anchor: 'emergency'), target: 'blank'
-        p: strong= link_to 'See the guides', guide_path, target: 'blank'
+        p = link_to 'What to do if the application can’t be processed before the emergency application is heard', guide_process_application_path(anchor: 'emergency'), target: 'blank'
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
