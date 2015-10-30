@@ -67,30 +67,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
-  describe 'GET #summary' do
-    before do
-      get :summary, application_id: application.id
-    end
-
-    context 'when the application does exist' do
-      it 'responds with 200' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'renders the correct template' do
-        expect(response).to render_template(:summary)
-      end
-    end
-  end
-
-  context 'GET #confirmation' do
-    before { get :confirmation, application_id: application.id }
-
-    it 'displays the confirmation view' do
-      expect(response).to render_template :confirmation
-    end
-  end
-
   describe 'GET #application_details' do
     before do
       get :application_details, application_id: application.id
@@ -121,7 +97,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     before do
       allow(application_details_form).to receive(:update_attributes).with(expected_params)
       allow(application_details_form).to receive(:save).and_return(form_save)
-      # Fixme: this should be removed asap (both test and code)
+      # FIXME: this should be removed asap (both test and code)
       allow(application).to receive(:update)
 
       put :application_details_save, application_id: application.id, application: expected_params
@@ -149,6 +125,30 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it 'assigns user\'s jurisdictions' do
         expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
       end
+    end
+  end
+
+  describe 'GET #summary' do
+    before do
+      get :summary, application_id: application.id
+    end
+
+    context 'when the application does exist' do
+      it 'responds with 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:summary)
+      end
+    end
+  end
+
+  context 'GET #confirmation' do
+    before { get :confirmation, application_id: application.id }
+
+    it 'displays the confirmation view' do
+      expect(response).to render_template :confirmation
     end
   end
 end

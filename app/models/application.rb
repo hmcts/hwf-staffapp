@@ -18,8 +18,14 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   delegate(*APPLICANT_SETTERS, to: :applicant)
   delegate(:age, to: :applicant, prefix: true)
 
-  DETAIL_GETTERS = %i[fee jurisdiction date_received form_name case_number probate probate? deceased_name date_of_death refund refund? date_fee_paid emergency_reason]
-  DETAIL_SETTERS = %i[fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name= date_of_death= refund= date_fee_paid= emergency_reason=]
+  DETAIL_GETTERS = %i[
+    fee jurisdiction date_received form_name case_number probate probate? deceased_name
+    date_of_death refund refund? date_fee_paid emergency_reason
+  ]
+  DETAIL_SETTERS = %i[
+    fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
+    date_of_death= refund= date_fee_paid= emergency_reason=
+  ]
   delegate(*DETAIL_GETTERS, to: :detail)
   delegate(*DETAIL_SETTERS, to: :detail)
 

@@ -27,7 +27,7 @@ FactoryGirl.define do
     user
 
     trait :probate do
-      detail_traits [ :probate ]
+      detail_traits [:probate]
     end
 
     trait :refund do

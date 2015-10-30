@@ -8,14 +8,22 @@ module Query
       @relation.
         includes(:detail).
         references(:detail).
-        where(
-          applications: {
-            benefits: false,
-            application_type: 'income',
-            application_outcome: %w[part full],
-          },
-          details: { emergency_reason: nil }
-        )
+        where(where_condition)
+    end
+
+    private
+
+    def where_condition
+      {
+        applications: {
+          benefits: false,
+          application_type: 'income',
+          application_outcome: %w[part full]
+        },
+        details: {
+          emergency_reason: nil
+        }
+      }
     end
   end
 end
