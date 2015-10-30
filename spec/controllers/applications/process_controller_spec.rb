@@ -64,4 +64,29 @@ RSpec.describe Applications::ProcessController, type: :controller do
       end
     end
   end
+
+  describe 'GET #summary' do
+    before do
+      get :summary, application_id: application.id
+    end
+
+    context 'when the application does exist' do
+      it 'responds with 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:summary)
+      end
+    end
+  end
+
+  context 'GET #confirmation' do
+    before { get :confirmation, application_id: application.id }
+
+    it 'displays the confirmation view' do
+      expect(response).to render_template :confirmation
+    end
+  end
+
 end

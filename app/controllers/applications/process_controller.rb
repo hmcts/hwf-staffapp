@@ -17,12 +17,25 @@ module Applications
       end
     end
 
+    def summary
+      @result = Views::Applikation::Result.new(application)
+      @overview = Views::ApplicationOverview.new(application)
+    end
+
+    def confirmation
+      if evidence_check_enabled? && application.evidence_check?
+        redirect_to(evidence_check_path(application.evidence_check.id))
+      else
+        @application = application
+      end
+    end
+
+    private
+
     def personal_information_params
       permitted_attributes = *Applikation::Forms::PersonalInformation.permitted_attributes.keys
       params.require(:application).permit(permitted_attributes)
     end
-
-    private
 
     def application
       Application.find(params[:application_id])

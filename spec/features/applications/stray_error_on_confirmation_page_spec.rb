@@ -39,7 +39,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
       click_button 'Next'
 
       expect(page).to have_xpath('//h2', text: 'Check details')
-      click_button 'Complete processing'
+      click_link 'Complete processing'
     end
 
     context 'when on application processed page' do

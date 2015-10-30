@@ -38,8 +38,6 @@ module Views
       @application.evidence_check || @application
     end
 
-    private
-
     def format_locale(suffix)
       prefix = 'activemodel.attributes.applikation/forms/summary'
       I18n.t(suffix, scope: prefix)
