@@ -66,7 +66,7 @@
           .form-group
             = f.label :date_of_death
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
-            = f.text_field :date_of_death, { class: 'form-control' }
+            = f.text_field :date_of_death, { class: 'form-control medium-field' }
           
       .form-group
         .options.radio
@@ -79,7 +79,7 @@
         .form-group.panel-indent
           = f.label :date_fee_paid
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
-          = f.text_field :date_fee_paid, { class: 'form-control' }
+          = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
       .form-group
         .options.radio
