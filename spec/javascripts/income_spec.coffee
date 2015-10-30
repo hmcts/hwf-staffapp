@@ -51,6 +51,10 @@ describe "IncomeModule", ->
     IncomeModule.setup()
     window.RadioButtonsModule.setup()
 
+  afterEach ->
+    element.remove()
+    element = null
+
   describe 'on initial load', ->
     describe 'when children is checked', ->
       beforeEach ->
