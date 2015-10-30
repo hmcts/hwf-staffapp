@@ -42,7 +42,7 @@ class HomeController < ApplicationController
   end
 
   def waiting_for_evidence
-    current_user.office.applications.waiting_for_evidence
+    Query::WaitingForEvidence.new(current_user).find
   end
 
   def waiting_for_payment
