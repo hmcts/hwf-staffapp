@@ -121,6 +121,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     before do
       allow(application_details_form).to receive(:update_attributes).with(expected_params)
       allow(application_details_form).to receive(:save).and_return(form_save)
+      # Fixme: this should be removed asap (both test and code)
+      allow(application).to receive(:update)
 
       put :application_details_save, application_id: application.id, application: expected_params
     end

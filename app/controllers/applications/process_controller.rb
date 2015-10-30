@@ -40,6 +40,9 @@ module Applications
       @form.update_attributes(application_defails_params)
 
       if @form.save
+        # Fixme: this is a temporary hack to trigger the after_save callback on the Application, which has to run
+        #        when the benefit checker and income calculators are removed from it, this should be as well
+        application.update(status: application.status)
         redirect_to(application_build_path(application.id, :savings_investments))
       else
         @jurisdictions = user_jurisdictions
