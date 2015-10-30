@@ -68,7 +68,7 @@
             li receiving legal aid
             li a vexatious litigant, or bound by an order
             li a company, charity or not for profit organisation
-          p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'before-start')
+          p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'before-start'), target: 'blank'
           span
             strong Check the fee:
           ul
@@ -81,8 +81,8 @@
             li Check answer to question 9
             li If 'No', continue to process without NI number
             li If 'Yes', don't process and contact applicant by phone to ask for their NI number
-          p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number')
+          p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
           h4 Status
           p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
-          p = link_to 'Read more about status', guide_process_application_path(anchor: 'status')
-          span = link_to 'See the guides', guide_path
+          p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
+          p: strong = link_to 'See the guides', guide_path, target: 'blank'
