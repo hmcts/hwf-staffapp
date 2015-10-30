@@ -5,7 +5,7 @@ module Views
       def result
         if @application.evidence_check?
           'callout'
-        elsif !benefit_overridden? && benefit_ovveride_correct?
+        elsif !benefit_overridden? && benefit_overide_correct?
           'full'
         elsif @application.application_outcome.nil?
           'none'
@@ -16,7 +16,7 @@ module Views
 
       private
 
-      def benefit_ovveride_correct?
+      def benefit_overide_correct?
         @application.benefit_override.correct.equal?(true)
       end
 

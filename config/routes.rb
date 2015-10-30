@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     put 'personal_information',
       to: 'applications/process#personal_information_save', as: :personal_information_save
     get 'summary', to: 'applications/process#summary', as: :summary
-    get 'summary_save', to: 'applications/process#summary_save', as: :summary_save
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
 
