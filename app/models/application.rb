@@ -1,6 +1,6 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
   belongs_to :jurisdiction
   belongs_to :office
   has_many :benefit_checks
