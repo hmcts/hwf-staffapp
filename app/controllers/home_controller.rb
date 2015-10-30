@@ -46,7 +46,7 @@ class HomeController < ApplicationController
   end
 
   def waiting_for_payment
-    current_user.office.applications.waiting_for_payment
+    Query::WaitingForPayment.new(current_user).find
   end
 
   def load_graph_data
