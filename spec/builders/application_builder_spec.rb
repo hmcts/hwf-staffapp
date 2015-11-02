@@ -28,10 +28,6 @@ RSpec.describe ApplicationBuilder do
         expect(subject.user).to eql(user)
       end
 
-      it 'has jurisdiction assigned from the user' do
-        expect(subject.jurisdiction).to eql(user.jurisdiction)
-      end
-
       it 'has office assigned from the user' do
         expect(subject.office).to eql(user.office)
       end
@@ -39,6 +35,15 @@ RSpec.describe ApplicationBuilder do
       it 'has applicant record created' do
         expect(subject.applicant).to be_a(Applicant)
         expect(subject.applicant).to be_persisted
+      end
+
+      it 'has detail record created' do
+        expect(subject.detail).to be_a(Detail)
+        expect(subject.detail).to be_persisted
+      end
+
+      it 'has jurisdiction assigned to the detail from the user' do
+        expect(subject.detail.jurisdiction).to eql(user.jurisdiction)
       end
 
       describe 'the generated reference' do

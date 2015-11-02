@@ -5,12 +5,25 @@ module Query
     end
 
     def find_all
-      @relation.where(
-        benefits: false,
-        application_type: 'income',
-        emergency_reason: nil,
-        application_outcome: %w[part full]
-      )
+      @relation.
+        includes(:detail).
+        references(:detail).
+        where(where_condition)
+    end
+
+    private
+
+    def where_condition
+      {
+        applications: {
+          benefits: false,
+          application_type: 'income',
+          application_outcome: %w[part full]
+        },
+        details: {
+          emergency_reason: nil
+        }
+      }
     end
   end
 end

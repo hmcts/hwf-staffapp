@@ -5,24 +5,29 @@ FactoryGirl.define do
       applicant nil
       applicant_factory :applicant
       applicant_traits []
+
+      detail nil
+      detail_traits []
+      detail_factory :complete_detail
+      fee '310.00'
+      date_received Time.zone.today
+      refund false
+      date_fee_paid nil
+      probate nil
+      jurisdiction nil
+      emergency_reason nil
     end
 
     sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
-    fee '310.00'
-    association :jurisdiction
-    date_received Time.zone.today
     benefits true
     dependents true
     children 1
     income 500
     threshold_exceeded false
-    refund false
     user
 
     trait :probate do
-      probate true
-      deceased_name 'John Smith'
-      date_of_death Time.zone.yesterday
+      detail_traits [:probate]
     end
 
     trait :refund do
@@ -89,6 +94,19 @@ FactoryGirl.define do
       else
         application.applicant = build(evaluator.applicant_factory,
           *evaluator.applicant_traits, application: application, ni_number: evaluator.ni_number)
+      end
+
+      if evaluator.detail
+        application.detail = evaluator.detail
+      else
+        overrides = { application: application }
+        %i[fee date_received refund date_fee_paid probate jurisdiction emergency_reason].each do |field|
+          value = evaluator.send(field)
+          overrides[field] = value if value.present?
+        end
+
+        application.detail = build(evaluator.detail_factory,
+          *evaluator.detail_traits, overrides)
       end
     end
   end

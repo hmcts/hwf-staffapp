@@ -1,10 +1,10 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   belongs_to :user, -> { with_deleted }
-  belongs_to :jurisdiction
   belongs_to :office
   has_many :benefit_checks
   has_one :applicant
+  has_one :detail, inverse_of: :application
   has_one :evidence_check, required: false
   has_one :payment, required: false
   has_one :benefit_override, required: false
@@ -18,35 +18,21 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   delegate(*APPLICANT_SETTERS, to: :applicant)
   delegate(:age, to: :applicant, prefix: true)
 
+  DETAIL_GETTERS = %i[
+    fee jurisdiction date_received form_name case_number probate probate? deceased_name
+    date_of_death refund refund? date_fee_paid emergency_reason
+  ]
+  DETAIL_SETTERS = %i[
+    fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
+    date_of_death= refund= date_fee_paid= emergency_reason=
+  ]
+  delegate(*DETAIL_GETTERS, to: :detail)
+  delegate(*DETAIL_SETTERS, to: :detail)
+
   MAX_AGE = 120
   MIN_AGE = 16
 
   after_save :run_auto_checks
-  before_validation :nullify_blank_emergency_reason
-
-  # Step 2 - Application details validation
-  with_options if: proc { active_or_status_is? 'application_details' } do
-    validates :fee, :jurisdiction_id, presence: true
-    validates :fee, numericality: { allow_blank: true }
-    validates :date_received, date: {
-      after: proc { Time.zone.today - 3.months },
-      before: proc { Time.zone.today + 1.day }
-    }
-    with_options if: :probate? do
-      validates :deceased_name, presence: true
-      validates :date_of_death, date: {
-        before: proc { Time.zone.today + 1.day }
-      }
-
-    end
-    with_options if: :refund? do
-      validates :date_fee_paid, date: {
-        after: proc { Time.zone.today - 3.months },
-        before: proc { Time.zone.today + 1.day }
-      }
-    end
-  end
-  # End step 2 validation
 
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
@@ -282,9 +268,5 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE)
       )
     end
-  end
-
-  def nullify_blank_emergency_reason
-    self.emergency_reason = nil if emergency_reason.blank?
   end
 end

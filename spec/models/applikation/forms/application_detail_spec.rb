@@ -5,9 +5,9 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
                    deceased_name refund date_fee_paid form_name case_number
                    emergency emergency_reason]
 
-  let(:application) { create :application }
+  let(:detail) { attributes_for :detail }
 
-  subject { described_class.new(application) }
+  subject(:form) { described_class.new(detail) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -15,24 +15,23 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
     end
   end
 
-  describe 'when Application object is passed in' do
-    let(:form) { described_class.new(application) }
+  describe 'when Detail object is passed in' do
+    let(:detail) { build_stubbed(:complete_detail) }
 
     params_list.each do |attr_name|
       next if attr_name.equal?(:emergency)
       it "assigns #{attr_name}" do
-        expect(form.send(attr_name)).to eq application.send(attr_name)
+        expect(form.send(attr_name)).to eq detail.send(attr_name)
       end
     end
   end
 
   describe 'when a Hash is passed in' do
-    let(:hash) { application.attributes }
-    let(:form) { described_class.new(hash) }
+    let(:detail) { attributes_for :complete_detail }
 
     params_list.each do |attr_name|
       it "assigns #{attr_name}" do
-        expect(form.send(attr_name)).to eq hash[attr_name.to_s]
+        expect(form.send(attr_name)).to eq detail[attr_name]
       end
     end
   end
@@ -290,6 +289,41 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
           expect(reason.valid?).to eq false
         end
       end
+    end
+  end
+
+  describe '#save' do
+    let(:jurisdiction) { build_stubbed(:jurisdiction) }
+    let(:detail) { create :detail }
+    subject(:form) { described_class.new(detail) }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
+
+    context 'when attributes are correct' do
+      let(:attributes) { attributes_for(:complete_detail, :probate, :refund, :emergency) }
+      let(:params) { attributes.merge(jurisdiction_id: jurisdiction.id) }
+
+      it { is_expected.to be true }
+
+      before do
+        subject
+        detail.reload
+      end
+
+      it 'saves the parameters in the detail' do
+        params.each do |key, value|
+          expect(detail.send(key)).to eql(value)
+        end
+      end
+    end
+
+    context 'when attributes are incorrect' do
+      let(:params) { { fee: '' } }
+
+      it { is_expected.to be false }
     end
   end
 end

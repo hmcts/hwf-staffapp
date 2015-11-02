@@ -31,7 +31,7 @@ class EvidenceCheckSelector
 
   def application_position(refund)
     Query::EvidenceCheckable.new.find_all.where(
-      'id <= ? AND refund = ?',
+      'applications.id <= ? AND details.refund = ?',
       @application.id,
       refund).count
   end
