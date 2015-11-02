@@ -245,28 +245,4 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   def active_or_status_is?(status_name)
     active? || status.to_s.include?(status_name)
   end
-
-  def dob_age_valid?
-    errors.add(:date_of_birth, "can't contain non numbers") if date_of_birth =~ /a-zA-Z/
-    validate_dob_maximum unless date_of_birth.blank?
-    validate_dob_minimum unless date_of_birth.blank?
-  end
-
-  def validate_dob_maximum
-    if date_of_birth < Time.zone.today - MAX_AGE.years
-      errors.add(
-        :date_of_birth,
-        I18n.t('activerecord.attributes.dwp_check.dob_too_old', max_age: MAX_AGE)
-      )
-    end
-  end
-
-  def validate_dob_minimum
-    if date_of_birth > Time.zone.today - MIN_AGE.years
-      errors.add(
-        :date_of_birth,
-        I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE)
-      )
-    end
-  end
 end
