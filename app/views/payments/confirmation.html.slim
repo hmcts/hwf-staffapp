@@ -1,10 +1,25 @@
-.row
-  .columns.small-12
-    h2 Processing complete
+header
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Processing complete
 
-    - if @result.callout == 'no'
-      = render('failed_letter', locals: { confirmation: @confirmation })
+      - if @result.callout == 'no'
+        = render('failed_letter', locals: { confirmation: @confirmation })
 
 .row
-  .columns.small-12
+  .small-12.medium-8.large-5.columns
     = link_to 'Back to start', root_path, class: 'button success'
+  
+  .large-5.columns
+    .guidance
+      h4 Next steps      
+      ul
+        -if @result.outcome == 'full'
+          li complete the remission register with the application details
+          li copy reference into the case management system
+        - else
+        	li complete the remission register with the application details
+        	li write to applicant using the template provided
+        	li add the reference to the letter
+        	li post the letter and all the documents back to the applicant
+      p: strong= link_to 'See the guides', guide_path, target: 'blank'
