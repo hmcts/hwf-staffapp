@@ -28,9 +28,8 @@ RSpec.describe HomeController, type: :controller do
 
       context 'as an admin' do
         before(:each) do
-          DwpCheck.delete_all
           Office.delete_all
-          FactoryGirl.create_list :dwp_check, 2, created_by: manager, office: manager.office
+          create_list :benefit_check, 2, user_id: manager.id
           sign_in admin
           get :index
         end
@@ -45,8 +44,7 @@ RSpec.describe HomeController, type: :controller do
 
     context 'as a manager' do
       before(:each) do
-        DwpCheck.delete_all
-        create_list :dwp_check, 2, created_by: manager, office: manager.office
+        create_list :benefit_check, 2, user_id: manager.id
         sign_in manager
         get :index
       end

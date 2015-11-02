@@ -11,4 +11,4 @@
     -@report_data.each do |data|
       .columns.small-12.medium-8.large-6.end
         h3 #{data[:name]} R1
-        = column_chart data[:dwp_checks], colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
+        = column_chart data[:benefit_checks], colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
