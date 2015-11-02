@@ -93,6 +93,7 @@ group :development, :test do
   gem 'teaspoon-jasmine'
 
   gem 'timecop'
+  gem 'climate_control'
 end
 
 group :test do

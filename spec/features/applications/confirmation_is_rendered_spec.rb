@@ -19,7 +19,7 @@ RSpec.feature 'Confirmation page', type: :feature do
 
     context 'after user continues from summary' do
       before do
-        visit application_build_path(application_id: application.id, id: 'confirmation')
+        visit application_confirmation_path(application_id: application.id)
       end
 
       scenario 'the correct view is rendered' do

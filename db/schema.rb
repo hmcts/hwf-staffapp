@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021134920) do
+ActiveRecord::Schema.define(version: 20151030164736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,19 +31,9 @@ ActiveRecord::Schema.define(version: 20151021134920) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
-    t.decimal  "fee"
     t.string   "status"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "jurisdiction_id"
-    t.date     "date_received"
-    t.string   "form_name"
-    t.string   "case_number"
-    t.boolean  "probate"
-    t.string   "deceased_name"
-    t.date     "date_of_death"
-    t.boolean  "refund"
-    t.date     "date_fee_paid"
     t.integer  "user_id"
     t.integer  "office_id"
     t.decimal  "threshold"
@@ -58,7 +48,6 @@ ActiveRecord::Schema.define(version: 20151021134920) do
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
     t.string   "reference"
-    t.string   "emergency_reason"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
@@ -94,6 +83,25 @@ ActiveRecord::Schema.define(version: 20151021134920) do
   end
 
   add_index "benefit_overrides", ["application_id"], name: "index_benefit_overrides_on_application_id", using: :btree
+
+  create_table "details", force: :cascade do |t|
+    t.integer  "application_id",   null: false
+    t.decimal  "fee"
+    t.integer  "jurisdiction_id"
+    t.date     "date_received"
+    t.string   "form_name"
+    t.string   "case_number"
+    t.boolean  "probate"
+    t.string   "deceased_name"
+    t.date     "date_of_death"
+    t.boolean  "refund"
+    t.date     "date_fee_paid"
+    t.string   "emergency_reason"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree
 
   create_table "dwp_checks", force: :cascade do |t|
     t.string   "last_name"
@@ -181,21 +189,6 @@ ActiveRecord::Schema.define(version: 20151021134920) do
 
   add_index "payments", ["application_id"], name: "index_payments_on_application_id", using: :btree
 
-  create_table "r2_calculators", force: :cascade do |t|
-    t.decimal  "fee"
-    t.boolean  "married"
-    t.integer  "children"
-    t.decimal  "income"
-    t.decimal  "remittance"
-    t.decimal  "to_pay"
-    t.string   "type"
-    t.integer  "created_by_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "r2_calculators", ["created_by_id"], name: "index_r2_calculators_on_created_by_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -239,7 +232,6 @@ ActiveRecord::Schema.define(version: 20151021134920) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
-  add_foreign_key "r2_calculators", "users", column: "created_by_id"
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end

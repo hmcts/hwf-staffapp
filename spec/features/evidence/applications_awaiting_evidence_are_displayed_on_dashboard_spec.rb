@@ -8,6 +8,7 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
 
   let(:office) { create :office }
   let(:user) { create :user, office: office }
+  let(:deleted_user) { create :deleted_user, office: office }
 
   let(:application1) { create :application_full_remission, office: office }
   let!(:evidence1) { create :evidence_check, application: application1 }
@@ -17,6 +18,8 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
   let!(:other_evidence) { create :evidence_check, application: other_application }
   let(:application3) { create :application_full_remission, office: office }
   let!(:completed_payment) { create :evidence_check, application: application3, completed_at: Time.zone.now }
+  let(:application4) { create :application_full_remission, office: office, user: deleted_user }
+  let!(:evidence4) { create :evidence_check, application: application4 }
 
   before do
     login_as user
@@ -37,6 +40,14 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
 
     within '.waiting-for-evidence' do
       expect(page).not_to have_content(application3.reference)
+    end
+  end
+
+  scenario 'applications by deleted users are shown' do
+    visit root_path
+
+    within '.waiting-for-evidence' do
+      expect(page).to have_content(application4.reference)
     end
   end
 end

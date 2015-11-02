@@ -76,6 +76,18 @@ module Applikation
       def format_reason
         self.emergency_reason = nil if emergency_reason.blank?
       end
+
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        {}.tap do |fields|
+          (self.class.permitted_attributes.keys - [:emergency]).each do |name|
+            fields[name] = send(name)
+          end
+        end
+      end
     end
   end
 end

@@ -33,7 +33,7 @@ module SummaryHelper
     label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
     value = object.send(field)
 
-    unless value.nil?
+    unless value.blank?
       rows = content_tag(:div, label, class: 'small-12 medium-5 large-4 columns subheader')
       rows << content_tag(:div, value, class: value_style(value))
 

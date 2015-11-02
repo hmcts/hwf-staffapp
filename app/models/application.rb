@@ -1,38 +1,15 @@
 class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
-  belongs_to :user
-  belongs_to :jurisdiction
+  belongs_to :user, -> { with_deleted }
   belongs_to :office
   has_many :benefit_checks
   has_one :applicant
+  has_one :detail, inverse_of: :application
   has_one :evidence_check, required: false
   has_one :payment, required: false
   has_one :benefit_override, required: false
 
   validates :reference, presence: true, uniqueness: true
-
-  scope :evidencecheckable, lambda {
-    where(benefits: false,
-          application_type: 'income',
-          emergency_reason: nil,
-          application_outcome: %w[part full])
-  }
-
-  scope :waiting_for_evidence, lambda {
-    includes(:evidence_check).
-      references(:evidence_check).
-      where('evidence_checks.completed_at IS NULL').
-      where.not(evidence_checks: { id: nil }).
-      order('evidence_checks.expires_at ASC')
-  }
-
-  scope :waiting_for_payment, lambda {
-    includes(:payment).
-      references(:payment).
-      where('payments.completed_at IS NULL').
-      where.not(payments: { id: nil }).
-      order('payments.expires_at ASC')
-  }
 
   # Fixme remove this delegation methods when all tests are clean
   APPLICANT_GETTERS = %i[title first_name last_name date_of_birth ni_number married married?]
@@ -41,35 +18,21 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   delegate(*APPLICANT_SETTERS, to: :applicant)
   delegate(:age, to: :applicant, prefix: true)
 
+  DETAIL_GETTERS = %i[
+    fee jurisdiction date_received form_name case_number probate probate? deceased_name
+    date_of_death refund refund? date_fee_paid emergency_reason
+  ]
+  DETAIL_SETTERS = %i[
+    fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
+    date_of_death= refund= date_fee_paid= emergency_reason=
+  ]
+  delegate(*DETAIL_GETTERS, to: :detail)
+  delegate(*DETAIL_SETTERS, to: :detail)
+
   MAX_AGE = 120
   MIN_AGE = 16
 
   after_save :run_auto_checks
-  before_validation :nullify_blank_emergency_reason
-
-  # Step 2 - Application details validation
-  with_options if: proc { active_or_status_is? 'application_details' } do
-    validates :fee, :jurisdiction_id, presence: true
-    validates :fee, numericality: { allow_blank: true }
-    validates :date_received, date: {
-      after: proc { Time.zone.today - 3.months },
-      before: proc { Time.zone.today + 1.day }
-    }
-    with_options if: :probate? do
-      validates :deceased_name, presence: true
-      validates :date_of_death, date: {
-        before: proc { Time.zone.today + 1.day }
-      }
-
-    end
-    with_options if: :refund? do
-      validates :date_fee_paid, date: {
-        after: proc { Time.zone.today - 3.months },
-        before: proc { Time.zone.today + 1.day }
-      }
-    end
-  end
-  # End step 2 validation
 
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
@@ -94,14 +57,14 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
   # End step 5 validation
 
+  alias_attribute :outcome, :application_outcome
+
   def children=(val)
     self[:children] = dependents? ? val : 0
   end
 
   def ni_number_display
-    unless self[:ni_number].nil?
-      self[:ni_number].gsub(/(.{2})/, '\1 ')
-    end
+    ni_number.gsub(/(.{2})/, '\1 ') unless ni_number.nil?
   end
 
   # FIXME: Remove the threshold field from db as it's read only now
@@ -305,9 +268,5 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         I18n.t('activerecord.attributes.dwp_check.dob_too_young', min_age: MIN_AGE)
       )
     end
-  end
-
-  def nullify_blank_emergency_reason
-    self.emergency_reason = nil if emergency_reason.blank?
   end
 end

@@ -88,7 +88,7 @@ class EvidenceController < ApplicationController
       completed_by: current_user
     )
     if payment_enabled?
-      PaymentBuilder.new(@evidence.application, Settings.payment.expires_in_days).decide!
+      PaymentBuilder.new(@evidence, Settings.payment.expires_in_days).decide!
     end
     redirect_to evidence_confirmation_path
   end

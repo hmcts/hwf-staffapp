@@ -70,7 +70,7 @@ RSpec.feature 'No NI number provided', type: :feature do
       end
 
       context 'when the user progresses to the confirmation page' do
-        before { click_button 'Complete processing' }
+        before { click_link 'Complete processing' }
 
         scenario 'shows the full remission message' do
           expect(page).to have_content full_remission
@@ -101,7 +101,7 @@ RSpec.feature 'No NI number provided', type: :feature do
     end
 
     context 'when the user completes the application' do
-      before { click_button 'Complete processing' }
+      before { click_link 'Complete processing' }
 
       it do
         expect(page).to have_content 'Application processed'

@@ -7,9 +7,10 @@ RSpec.describe Views::ApplicationOverview do
   subject(:view) { described_class.new(application) }
 
   context 'required methods' do
-    symbols = %i[date_of_birth full_name ni_number status fee
-                 jurisdiction date_received form_name number_of_children total_monthly_income
-                 income]
+    symbols = %i[date_of_birth full_name ni_number status
+                 fee jurisdiction date_received form_name case_number
+                 deceased_name date_of_death date_fee_paid emergency_reason
+                 number_of_children total_monthly_income income benefits]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
@@ -84,6 +85,29 @@ RSpec.describe Views::ApplicationOverview do
 
     context 'when the application does not have valid savings and investments' do
       let(:result) { false }
+
+      it { is_expected.to eq '✗ Failed' }
+    end
+  end
+
+  describe 'benefits' do
+    let(:benefit_check) { build_stubbed(:benefit_check, application: application) }
+
+    subject { view.benefits }
+
+    before do
+      allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+      allow(benefit_check).to receive(:dwp_result).and_return(result)
+    end
+
+    context 'when the dwp_result is Yes' do
+      let(:result) { 'Yes' }
+
+      it { is_expected.to eq '✓ Passed' }
+    end
+
+    context 'when the dwp_result is No' do
+      let(:result) { 'No' }
 
       it { is_expected.to eq '✗ Failed' }
     end

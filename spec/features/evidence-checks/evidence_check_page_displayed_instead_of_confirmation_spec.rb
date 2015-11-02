@@ -11,7 +11,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
     login_as user
   end
 
-  let(:application) { create :application_full_remission }
+  let(:application) { create :application_full_remission, reference: Random.srand }
 
   context 'when the Evidence check feature is enabled' do
     enable_evidence_check
@@ -25,7 +25,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
       expect(page).to have_content 'Evidence of income needs to be checked for this application'
 
-      click_button 'Complete processing'
+      click_link 'Complete processing'
 
       expect(evidence_check_rendered?).to be true
     end
@@ -33,7 +33,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
     scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
       create :evidence_check, application: application
 
-      visit application_build_path(application_id: application.id, id: 'confirmation')
+      visit application_confirmation_path(application.id)
 
       expect(evidence_check_rendered?).to be true
     end
@@ -51,7 +51,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
       expect(page).to have_content '✓ The applicant doesn’t have to pay the fee'
 
-      click_button 'Complete processing'
+      click_link 'Complete processing'
 
       expect(confirmation_rendered?).to be true
     end
@@ -59,7 +59,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
     scenario 'User tries to display confirmation page directly and the confirmation page is displayed' do
       create :evidence_check, application: application
 
-      visit application_build_path(application_id: application.id, id: 'confirmation')
+      visit application_confirmation_path(application.id)
 
       expect(confirmation_rendered?).to be true
     end

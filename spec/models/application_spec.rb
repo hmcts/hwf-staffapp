@@ -6,13 +6,14 @@ RSpec.describe Application, type: :model do
   let(:user)  { create :user }
   let(:attributes) { attributes_for :application }
   let(:applicant) { create(:applicant) }
-  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant) }
+  let(:detail) { create(:detail) }
+  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant, detail: detail) }
 
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:jurisdiction) }
   it { is_expected.to belong_to(:office) }
 
   it { is_expected.to have_one(:applicant) }
+  it { is_expected.to have_one(:detail) }
 
   it { is_expected.to have_one(:evidence_check) }
   it { is_expected.not_to validate_presence_of(:evidence_check) }
@@ -24,6 +25,39 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_uniqueness_of(:reference) }
 
   it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
+
+  describe 'temporary methods delegation to sliced models' do
+    let(:param) { true }
+
+    describe '-> Applicant' do
+      described_class::APPLICANT_GETTERS.each do |getter|
+        it { is_expected.to delegate_method(getter).to(:applicant) }
+      end
+
+      described_class::APPLICANT_SETTERS.each do |setter|
+        it "should delegate #{setter} to #applicant object" do
+          expect(applicant).to receive(setter).with(param)
+          application.send(setter, param)
+        end
+      end
+    end
+
+    describe '-> Detail' do
+      described_class::DETAIL_GETTERS.each do |getter|
+        it { is_expected.to delegate_method(getter).to(:detail) }
+      end
+
+      described_class::DETAIL_SETTERS.each do |setter|
+        it "should delegate #{setter} to #detail object" do
+          # this is a hack to make sure the bellow expectation is not tested when the factories are being created
+          application
+
+          expect(detail).to receive(setter).with(param)
+          application.send(setter, param)
+        end
+      end
+    end
+  end
 
   context 'with running benefit check' do
     before do
@@ -196,53 +230,6 @@ RSpec.describe Application, type: :model do
           application.reload
           expect(application.emergency_reason).to be nil
         end
-      end
-    end
-
-    describe '.evidencecheckable' do
-      subject { described_class.evidencecheckable }
-
-      let!(:application_1) { create :application_part_remission }
-      let!(:application_2) { create :application_full_remission }
-      let!(:application_3) { create :application_no_remission }
-      let!(:emergency_application) { create :application_full_remission, emergency_reason: 'REASON' }
-
-      it 'includes only part and full remission applications' do
-        is_expected.to match_array([application_1, application_2])
-      end
-
-      it 'does not include emergency applications' do
-        is_expected.not_to include emergency_application
-      end
-    end
-
-    describe '.waiting_for_evidence', focus: true do
-      let!(:application1) { create :application }
-      let!(:application2) { create :application }
-      let!(:application3) { create :application }
-      let!(:evidence_check1) { create :evidence_check, application: application1, expires_at: 2.days.from_now }
-      let!(:evidence_check2) { create :evidence_check, application: application2, expires_at: 1.days.from_now }
-      let!(:evidence_check3) { create :evidence_check, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago }
-
-      subject { described_class.waiting_for_evidence }
-
-      it 'returns only applications which have uncompleted EvidenceCheck reference in order of expiry' do
-        is_expected.to eq([application2, application1])
-      end
-    end
-
-    describe '.waiting_for_payment', focus: true do
-      let!(:application1) { create :application }
-      let!(:application2) { create :application }
-      let!(:application3) { create :application }
-      let!(:payment1) { create :payment, application: application1, expires_at: 2.days.from_now }
-      let!(:payment2) { create :payment, application: application2, expires_at: 1.days.from_now }
-      let!(:payment3) { create :payment, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago }
-
-      subject { described_class.waiting_for_payment }
-
-      it 'returns only applications which have uncompleted Payment reference in order of expiry' do
-        is_expected.to eq([application2, application1])
       end
     end
   end
