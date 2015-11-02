@@ -8,20 +8,6 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:manager)   { create :manager }
   let(:admin)     { create :admin_user }
 
-  module FeatureHelper
-    def evidence_check_enabled?
-      true
-    end
-
-    def payment_enabled?
-      true
-    end
-  end
-
-  before do
-    view.extend FeatureHelper
-  end
-
   context 'public access' do
     it 'shows a get help message' do
       render
@@ -59,16 +45,12 @@ RSpec.describe "home/index.html.slim", type: :view do
       expect(rendered).to have_link 'Your Office'
     end
 
-    context 'when evidence_checks are enabled' do
-      it 'has a table for awaited evidence' do
-        expect(rendered).to have_content 'Waiting for evidence'
-      end
+    it 'has a table for awaited evidence' do
+      expect(rendered).to have_content 'Waiting for evidence'
     end
 
-    context 'when payments are enabled' do
-      it 'has a table for awaiting payments' do
-        expect(rendered).to have_content 'Waiting for payment'
-      end
+    it 'has a table for awaiting payments' do
+      expect(rendered).to have_content 'Waiting for payment'
     end
   end
 

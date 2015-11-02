@@ -13,60 +13,26 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
   let(:application) { create :application_full_remission, reference: Random.srand }
 
-  context 'when the Evidence check feature is enabled' do
-    enable_evidence_check
+  scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
+    create_list :application_full_remission, 9
 
-    scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
-      create_list :application_full_remission, 9
+    visit application_build_path(application_id: application.id, id: 'income_result')
 
-      visit application_build_path(application_id: application.id, id: 'income_result')
+    click_button 'Next'
 
-      click_button 'Next'
+    expect(page).to have_content 'Evidence of income needs to be checked for this application'
 
-      expect(page).to have_content 'Evidence of income needs to be checked for this application'
+    click_link 'Complete processing'
 
-      click_link 'Complete processing'
-
-      expect(evidence_check_rendered?).to be true
-    end
-
-    scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
-      create :evidence_check, application: application
-
-      visit application_confirmation_path(application.id)
-
-      expect(evidence_check_rendered?).to be true
-    end
+    expect(evidence_check_rendered?).to be true
   end
 
-  context 'when the Evidence_check feature is disabled' do
-    disable_evidence_check
+  scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
+    create :evidence_check, application: application
 
-    scenario 'User continues from the summary page when building the application and lands on confirmation page' do
-      create_list :application_full_remission, 9
+    visit application_confirmation_path(application.id)
 
-      visit application_build_path(application_id: application.id, id: 'income_result')
-
-      click_button 'Next'
-
-      expect(page).to have_content '✓ The applicant doesn’t have to pay the fee'
-
-      click_link 'Complete processing'
-
-      expect(confirmation_rendered?).to be true
-    end
-
-    scenario 'User tries to display confirmation page directly and the confirmation page is displayed' do
-      create :evidence_check, application: application
-
-      visit application_confirmation_path(application.id)
-
-      expect(confirmation_rendered?).to be true
-    end
-  end
-
-  def confirmation_rendered?
-    (%r{\/applications/#{application.id}/build/confirmation}) != nil
+    expect(evidence_check_rendered?).to be true
   end
 
   def evidence_check_rendered?

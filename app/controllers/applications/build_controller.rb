@@ -94,13 +94,13 @@ class Applications::BuildController < ApplicationController
   end
 
   def evidence_check_selection
-    if next_step?(:summary) && evidence_check_enabled?
+    if next_step?(:summary)
       EvidenceCheckSelector.new(@application, Settings.evidence_check.expires_in_days).decide!
     end
   end
 
   def create_payment_if_needed
-    if next_step?(:summary) && payment_enabled?
+    if next_step?(:summary)
       PaymentBuilder.new(@application, Settings.payment.expires_in_days).decide!
     end
   end
@@ -127,7 +127,7 @@ class Applications::BuildController < ApplicationController
   end
 
   def redirect_if_evidence_check
-    if evidence_check_enabled? && @application.evidence_check?
+    if @application.evidence_check?
       redirect_to(evidence_check_path(@application.evidence_check.id))
     end
   end

@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Evidence check flow', type: :feature do
-  enable_payment
   include Warden::Test::Helpers
   Warden.test_mode!
 

@@ -22,5 +22,5 @@
 
 .row
   .small-12.medium-12.large-12.columns
-    =render('home/waiting_applications', enabled: evidence_check_enabled?, type: :evidence, list: @waiting_for_evidence, start_path: :evidence_show_path)
-    =render('home/waiting_applications', enabled: payment_enabled?, type: :payment, list: @waiting_for_payment, start_path: :payment_path)
+    =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_show_path)
+    =render('home/waiting_applications', type: :payment, list: @waiting_for_payment, start_path: :payment_path)

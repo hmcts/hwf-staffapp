@@ -1,6 +1,5 @@
 class EvidenceChecksController < ApplicationController
   before_action :authenticate_user!
-  before_action :render_not_found, unless: :evidence_check_enabled?
 
   def show
     @application = evidence_check.application

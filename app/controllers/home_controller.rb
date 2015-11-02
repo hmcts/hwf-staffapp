@@ -24,8 +24,8 @@ class HomeController < ApplicationController
 
   def load_waiting_applications
     unless current_user.admin?
-      assign_waiting_for_evidence if evidence_check_enabled?
-      assign_waiting_for_payment if payment_enabled?
+      assign_waiting_for_evidence
+      assign_waiting_for_payment
     end
   end
 
