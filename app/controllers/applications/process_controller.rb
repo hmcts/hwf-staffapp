@@ -40,7 +40,7 @@ module Applications
     end
 
     def confirmation
-      if evidence_check_enabled? && application.evidence_check?
+      if application.evidence_check?
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @application = application

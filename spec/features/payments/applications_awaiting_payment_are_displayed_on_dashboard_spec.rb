@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: :feature do
-  enable_payment
-
   include Warden::Test::Helpers
   Warden.test_mode!
 

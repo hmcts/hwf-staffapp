@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type: :feature do
-  enable_evidence_check
-
   include Warden::Test::Helpers
   Warden.test_mode!
 
