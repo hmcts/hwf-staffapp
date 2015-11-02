@@ -1,6 +1,9 @@
-h2 Income
-
 = form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 Income
   .row
     .small-12.medium-8.large-5.columns
       .form-group
@@ -36,4 +39,14 @@ h2 Income
             .small-10.medium-8.large-9.columns
               = f.text_field :income
 
-  = f.submit 'Next', class: 'button primary'
+      = f.submit 'Next', class: 'button primary'
+    
+    .large-5.columns
+      .guidance
+        h4 Total monthly income
+        ul 
+          li If the applicant is part of a couple they must have provided details of their partner’s income
+          li Add the 2 monthly income amounts and enter the result 
+          li Some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+        p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

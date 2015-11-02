@@ -1,5 +1,6 @@
 @import 'colours';
 @import 'measurements';
+@import 'sizes';
 
 @font-face {
   font-family: 'nta';
@@ -64,7 +65,7 @@ a, details > span.summary {
 img {
   width:400px;
   padding:20px;
-  border:blue 1px solid;
+  border: none;
 }
 span.hint {
   color: $secondary-text-colour;
@@ -76,15 +77,12 @@ span.hint {
 .pad-top-thirty-px {
   padding-top: $gutter;
 }
-
 .pad-top-fifteen-px {
   padding-top: $gutter-half;
 }
-
 .pad-bottom-thirty-px {
   padding-bottom: $gutter;
 }
-
 .pad-left-fifteen-px {
   padding-left: $gutter-half;
 }
@@ -172,9 +170,7 @@ header {
     float: right;
   }
 }
-img{
-  border: none;
-}
+
 .guide-cols {
   width: 18%;
   display: inline-block;
@@ -212,3 +208,22 @@ a.button.alternative{
   font-size: 20px; }
 .accordion-navigation.active > a:after {
   content: "⬆︎"; }
+
+.guidance{
+  border-top: 5px solid $govuk-blue;
+  padding:$gutter-half $gutter-half/2 0;
+}
+input.small-field{
+    width:50%;
+    @media screen and (max-width: upper-bound($small-range)) {
+      width:100%;
+      border:10px solid red;
+    }
+}
+input.medium-field{
+    width:70%;
+}
+
+span.hint {
+  padding-left:5px;
+}

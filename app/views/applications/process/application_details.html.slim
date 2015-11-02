@@ -1,21 +1,21 @@
 = form_for @form, as: :application, url: application_application_details_save_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 Application details
   .row
-    .small-12.medium-12.large-12.columns
-      h2 Application details
-  .row
-    .small-12.medium-4.large-3.columns
+    .small-12.medium-8.large-5.columns
       .form-group
         = f.label :fee
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
-        .row.collapse
-          .small-2.medium-3.large-3.columns
+        .row.collapse.prefix-radius
+          .small-2.medium-2.large-2.columns
             span.prefix
               = f.label :fee, '£', class: 'inline'
-          .small-10.medium-9.large-9.columns
-            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
+          .small-10.medium-10.large-10.columns
+            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field' }
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
         .row.collapse
           .columns.small-12
@@ -31,15 +31,11 @@
             - else
               = t('error_messages.jurisdictions.none_in_office')
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
         = f.label :date_received
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
-        = f.text_field :date_received, { class: 'form-control' }
+        = f.text_field :date_received, { class: 'form-control medium-field' }
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
         = f.label :form_name
           =t('activemodel.attributes.applikation/forms/application_detail.form_name')
@@ -47,8 +43,6 @@
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
         = f.label :case_number
           =t('activemodel.attributes.applikation/forms/application_detail.case_number')
@@ -56,59 +50,71 @@
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
-  .row.pad-top-thirty-px
-    .small-12.medium-8.large-5.columns
-      .options.radio
-        .option
-          = f.label :probate
-            = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
-            = t('activemodel.attributes.applikation/forms/application_detail.probate')
+      .form-group
+        .options.radio
+          .option
+            = f.label :probate
+              = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
+              = t('activemodel.attributes.applikation/forms/application_detail.probate')
 
-  #probate-only.start-hidden
-    .panel-indent
-      .row
-        .small-12.medium-8.large-5.columns
+      #probate-only.start-hidden
+        .panel-indent
           .form-group
             = f.label :deceased_name
             = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
             = f.text_field :deceased_name, { class: 'form-control' }
-      .row
-        .small-12.medium-8.large-5.columns
+
           .form-group
             = f.label :date_of_death
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
-            = f.text_field :date_of_death, { class: 'form-control' }
+            = f.text_field :date_of_death, { class: 'form-control medium-field' }
+          
+      .form-group
+        .options.radio
+          .option
+            = f.label :refund
+              = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
+              = t('activemodel.attributes.applikation/forms/application_detail.refund')
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .options.radio
-        .option
-          = f.label :refund
-            = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-            = t('activemodel.attributes.applikation/forms/application_detail.refund')
-
-  #refund-only.start-hidden
-    .row
-      .small-12.medium-8.large-5.columns
+      #refund-only.start-hidden
         .form-group.panel-indent
           = f.label :date_fee_paid
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
-          = f.text_field :date_fee_paid, { class: 'form-control' }
+          = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .options.radio
-        .option
-          = f.label :emergency
-            = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
-            = t('activemodel.attributes.applikation/forms/application_detail.emergency')
+      .form-group
+        .options.radio
+          .option
+            = f.label :emergency
+              = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
+              = t('activemodel.attributes.applikation/forms/application_detail.emergency')
 
-  #emergency-only.start-hidden
-    .row
-      .small-12.medium-8.large-5.columns
+      #emergency-only.start-hidden
         .form-group.panel-indent
           = f.label :emergency_reason
           = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
           = f.text_area :emergency_reason, { class: 'form-control' }
 
-  = f.submit 'Next', class: 'button primary'
+      = f.submit 'Next', class: 'button primary'
+    
+    .large-5.columns
+      .guidance
+        h4 Refunds 
+        p: strong Check the refund:
+        ul
+          li is for a fee paid less than 3 months ago
+          li hasn't already been refunded
+        p = link_to 'What to do if fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
+        h4 Emergency cases
+        p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
+        p: strong Example of emergency cases:
+        ul
+        	li suspending an eviction
+        	li debtor insolvency petition
+        	li children or vulnerable adults
+        	li domestic violence
+        	li injunctions
+        	li ‘out of hours’ provisions at the Royal Courts of Justice
+
+        p = link_to 'What to do if the application can’t be processed before the emergency application is heard', guide_process_application_path(anchor: 'emergency'), target: 'blank'
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

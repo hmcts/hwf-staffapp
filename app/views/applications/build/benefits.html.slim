@@ -1,6 +1,10 @@
-h2 Benefits
-
 = form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 Benefits
+
   .row
     .small-12.medium-8.large-5.columns
       .form-group
@@ -19,32 +23,26 @@ h2 Benefits
                   = f.radio_button :benefits, 'true'
                   = t('activemodel.attributes.applikation/forms/benefit.benefits_true')
 
-  = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', :class => 'button primary'
 
-.row
-  .small-12.columns
-    br
-    .row
-      .small-12.columns
-        details
-          summary
-            span.summary.primary.round#ben-ok See the full list of benefits
-          .panel-indent
-            ul.info-list
-              li
-                span Income-based Jobseeker's Allowance
-                span.hint &nbsp;(JSA)
-              li
-                span Income-related Employment and Support Allowance
-                span.hint &nbsp;(ESA)
-              li
-                span Income Support
-              li
-                span Universal Credit
-                span.hint &nbsp;(and you’re earning less than £6,000)
-              li
-                span State Pension
-                span.hint &nbsp;(Guarantee Credit)
-              li
-                span Scottish Civil Legal Aid
-                span.hint &nbsp;(not Advice and Assistance or Advice by Way of Representation)
+    .large-5.columns
+      .guidance
+        h4 Benefits 
+        ul
+        	li Income-based Jobseeker's Allowance
+        	 	span.hint
+              | (JSA)  
+        	li Income-related Employment and Support Allowance
+      	  	span.hint 
+              | (ESA)
+        	li Income Support
+        	li Universal Credit
+      	  	span.hint 
+              | (and you’re earning less than £6,000)
+        	li State Pension
+      	  	span.hint 
+              | (Guarantee Credit)
+        	li Scottish Civil Legal Aid
+      	  	span.hint 
+              | (not Advice and Assistance or Advice by Way of Representation)
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

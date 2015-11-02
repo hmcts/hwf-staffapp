@@ -1,20 +1,17 @@
 = form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 =t('activemodel.attributes.applikation/forms/savings_investment.header')
   .row
-    .small-12.medium-12.large-12.columns
-      h2 =t('activemodel.attributes.applikation/forms/savings_investment.header')
-  .row
-    .small-12.medium-8.large-7.columns
-      label =t('activemodel.attributes.applikation/forms/savings_investment.maximum_prompt')
-      #result.callout.received
-        .row
-          .small-12.columns
-            h3 =number_to_currency(@application.threshold.floor, precision: 0)
-      label =t('activemodel.attributes.applikation/forms/savings_investment.explanation')
-
-  .row
-    .small-12.medium-8.large-5.columns
+    .small-12.medium-8.large-5.columns  
+      .form-group
+        label =t('activemodel.attributes.applikation/forms/savings_investment.maximum_prompt')
+        #result.callout.received
+          h3 =number_to_currency(@application.threshold.floor, precision: 0)
+        label =t('activemodel.attributes.applikation/forms/savings_investment.explanation')
+  
       .form-group
         .row.collapse
           .columns.small-12
@@ -30,15 +27,13 @@
                   = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
                   = t('activemodel.attributes.applikation/forms/savings_investment.more_than')
 
-  -if @application.applicant_over_61?
-    =f.hidden_field :partner_over_61, value: 'true'
-    =f.hidden_field :high_threshold_exceeded, value: 'true'
-  -elsif !@application.married?
-    =f.hidden_field :partner_over_61, value: 'false'
-  -else
-    #over-61-only.start-hidden
-      .row
-        .small-12.medium-8.large-5.columns
+      -if @application.applicant_over_61?
+        =f.hidden_field :partner_over_61, value: 'true'
+        =f.hidden_field :high_threshold_exceeded, value: 'true'
+      -elsif !@application.married?
+        =f.hidden_field :partner_over_61, value: 'false'
+      -else
+        #over-61-only.start-hidden
           .form-group.panel-indent
             .row.collapse
               .columns.small-12
@@ -54,8 +49,6 @@
                       = f.radio_button :partner_over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
                       = t('yes')
                 #high-threshold-only.start-hidden
-                  .row
-                    .small-12.medium-12.large-12.columns
                       .panel-indent
                         =f.label :high_threshold_exceeded
                         = f.label :high_threshold_exceeded, @form.errors[:high_threshold_exceeded].join(', '), class: 'error' if @form.errors[:high_threshold_exceeded].present?
@@ -69,24 +62,25 @@
                               = f.radio_button :high_threshold_exceeded, 'true'
                               = t('activemodel.attributes.applikation/forms/savings_investment.more_than_high')
 
-  = f.hidden_field :status
-  = f.submit 'Next', :class => 'button primary'
+      = f.hidden_field :status
+      = f.submit 'Next', :class => 'button primary'
 
-.row
-  .small-12.columns
-    .row
-      .small-12.medium-8.large-7.columns
-        details
-          summary
-            span.summary.primary Our calculation is based on this information
-          #result_table.row.pad-top-fifteen-px
-            .columns.small-12
-              .row
-                .columns.small-4.table-label Age
-                .columns.small-8 #{@application.applicant_age} years old
-              .row
-                .columns.small-4.table-label Status
-                .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
-              .row
-                .columns.small-4.table-label Fee
-                .columns.small-8 £#{@application.fee.floor}
+      details
+        summary
+          span.summary.primary Our calculation is based on this information
+        #result_table.row
+          .columns.small-12
+            .row
+              .columns.small-4.table-label Age
+              .columns.small-8 #{@application.applicant_age} years old
+            .row
+              .columns.small-4.table-label Status
+              .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
+            .row
+              .columns.small-4.table-label Fee
+              .columns.small-8 £#{@application.fee.floor}
+    .large-5.columns
+      .guidance
+        h4 Savings and investments
+        p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

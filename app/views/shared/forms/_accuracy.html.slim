@@ -1,23 +1,18 @@
 = form_for form, as: model, url: url, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :correct, t("#{model}.labels.correct")
-            .options.radio
-              .option
-                label for="#{model}_correct_false"
-                  = f.radio_button :correct, 'false'
-                  = t("#{model}.incorrect")
-              .option
-                label for="#{model}_correct_true"
-                  = f.radio_button :correct, 'true'
-                  = t("#{model}.correct")
+  .form-group
+    = f.label :correct, t("#{model}.labels.correct")
+    .options.radio
+      .option
+        label for="#{model}_correct_false"
+          = f.radio_button :correct, 'false'
+          = t("#{model}.incorrect")
+      .option
+        label for="#{model}_correct_true"
+          = f.radio_button :correct, 'true'
+          = t("#{model}.correct")
 
-      .panel-indent.form-group.row.collapse#reason-input
-        .columns.small-12
-          = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason")
-          = f.text_area :incorrect_reason, rows: 3
+    .panel-indent.form-group.row.collapse#reason-input
+      = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason")
+      = f.text_area :incorrect_reason, rows: 3
 
   = f.submit 'Next', :class => 'button primary'
