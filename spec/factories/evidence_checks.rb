@@ -24,5 +24,10 @@ FactoryGirl.define do
       incorrect_reason 'SOME REASON'
       outcome 'none'
     end
+
+    trait :completed do
+      completed_at Time.zone.yesterday
+      association :completed_by, factory: :user
+    end
   end
 end
