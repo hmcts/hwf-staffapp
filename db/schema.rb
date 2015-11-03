@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 20151030164736) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "date_of_birth"
+    t.string   "ni_number"
+    t.boolean  "married"
     t.string   "status"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -227,7 +233,6 @@ ActiveRecord::Schema.define(version: 20151030164736) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
-  add_foreign_key "benefit_overrides", "applications"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
