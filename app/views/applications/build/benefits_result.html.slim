@@ -8,6 +8,8 @@ header
     -if @application.can_check_benefits? &&  @application.last_benefit_check.dwp_result.parameterize.underscore != 'undetermined'
       #result.callout class=(@application.last_benefit_check.dwp_result.parameterize.underscore)
         h3.bold =t("benefit_checks.#{@application.last_benefit_check.dwp_result.parameterize.underscore}.heading").html_safe
+      - unless @application.last_benefit_check.benefits_valid?
+        =link_to 'The applicant has provided paper evidence', application_benefit_override_paper_evidence_path(@application)
     -else
       #result.callout.callout-none
         h3.bold =t('benefit_checks.details_missing.heading')
@@ -17,7 +19,7 @@ header
     = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
       = f.hidden_field(:status)
       = f.submit 'Next', class: 'button primary'
-  
+
   .large-5.columns
     .guidance
       h4 How is this worked out?
