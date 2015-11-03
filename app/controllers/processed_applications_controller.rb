@@ -6,4 +6,10 @@ class ProcessedApplicationsController < ApplicationController
       Views::ApplicationList.new(application)
     end
   end
+
+  def show
+    @application = Application.find(params[:id])
+    @overview = Views::ApplicationOverview.new(@application)
+    @result = Views::ApplicationResult.new(@application)
+  end
 end

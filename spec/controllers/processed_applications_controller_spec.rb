@@ -37,4 +37,37 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       expect(assigns(:applications)).to eq([view1, view2])
     end
   end
+
+  describe 'GET #show' do
+    let(:overview) { double }
+    let(:result) { double }
+
+    before do
+      allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
+      allow(Views::ApplicationOverview).to receive(:new).with(application1).and_return(overview)
+      allow(Views::ApplicationResult).to receive(:new).with(application1).and_return(result)
+
+      get :show, id: application1.id
+    end
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'assigns the Application model' do
+      expect(assigns(:application)).to eql(application1)
+    end
+
+    it 'assigns the ApplicationOverview view model' do
+      expect(assigns(:overview)).to eql(overview)
+    end
+
+    it 'assigns the ApplicationResult view model' do
+      expect(assigns(:result)).to eql(overview)
+    end
+  end
 end
