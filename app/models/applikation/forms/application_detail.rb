@@ -3,6 +3,10 @@ module Applikation
     class ApplicationDetail < ::FormObject
 
       TIME_LIMIT_FOR_PROBATE = 20
+      TODAY = Time.zone.today
+      MIN_DATE = TODAY - 3.months
+      MAX_DATE = TODAY + 1.day
+      MIN_DATE_PROBATE = TODAY - TIME_LIMIT_FOR_PROBATE.years
 
       # rubocop:disable MethodLength
       def self.permitted_attributes
@@ -29,22 +33,22 @@ module Applikation
       validate :emergency_reason_size
 
       validates :date_received, date: {
-        after: proc { Time.zone.today - 3.months },
-        before: proc { Time.zone.today + 1.day }
+        after: proc { MIN_DATE },
+        before: proc { MAX_DATE }
       }
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
         validates :date_of_death, date: {
-          after: proc { Time.zone.today - TIME_LIMIT_FOR_PROBATE.years },
-          before: proc { Time.zone.today + 1.day }
+          after: proc { MIN_DATE_PROBATE },
+          before: proc { MAX_DATE }
         }
       end
 
       with_options if: :refund? do
         validates :date_fee_paid, date: {
-          after: proc { Time.zone.today - 3.months },
-          before: proc { Time.zone.today + 1.day }
+          after: proc { MIN_DATE },
+          before: proc { MAX_DATE }
         }
       end
 
