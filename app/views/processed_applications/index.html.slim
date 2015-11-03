@@ -15,7 +15,7 @@
         tbody
           - @applications.each do |application|
             tr
-              td= application.reference
+              td= link_to(application.reference, processed_application_path(application.application))
               td= application.applicant
               td= application.processed_by
               td= application.emergency
