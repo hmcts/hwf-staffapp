@@ -1,12 +1,13 @@
 h2 Evidence
 
-= form_for @form, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
   .row
     .small-12.medium-8.large-5.columns
       .form-group
         .row.collapse
           .columns.small-12
             = f.label :correct, t('benefit_override.title')
+            = f.hidden_field :correct, value: nil
             .options.radio
               .option
                 label for='benefit_override_correct_false'

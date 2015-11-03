@@ -28,6 +28,12 @@ RSpec.describe BenefitOverridesController, type: :controller do
           post :paper_evidence_save, application_id: application.id
         }.to raise_error ActionController::ParameterMissing
       end
+
+      it 'redirects to paper_evidence' do
+        expect(
+          post :paper_evidence_save, application_id: application.id, benefit_override: { correct: nil }
+        ).to redirect_to(action: :paper_evidence)
+      end
     end
   end
 end
