@@ -54,7 +54,7 @@ class HomeController < ApplicationController
     Office.non_digital.each do |office|
       @report_data << {
         name: office.name,
-        dwp_checks: BenefitCheck.by_office_grouped_by_type(office.id).checks_by_day
+        benefit_checks: BenefitCheck.by_office_grouped_by_type(office.id).checks_by_day
       }
     end
   end
