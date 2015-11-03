@@ -1,0 +1,25 @@
+.row
+  .small-12.medium-12.large-12.columns
+    h2 Processed applications
+
+.row
+  .small-12.medium-12.large-12.columns
+    - unless @applications.empty?
+      table.processed-applications
+        thead
+          tr
+            th Reference
+            th Applicant
+            th Processed by
+            th Emergency
+        tbody
+          - @applications.each do |application|
+            tr
+              td= application.reference
+              td= application.applicant
+              td= application.processed_by
+              td= application.emergency
+
+
+    - else
+      p There are no processed applications for your office.

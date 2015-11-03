@@ -1,4 +1,8 @@
 en-GB:
+  emergency:
+    status:
+      :true: 'Yes'
+      :false: ''
   benefit_override:
     title: 'Do you have a letter confirming the applicant is receiving one of the benefits listed in question 9?'
     incorrect: 'No'
