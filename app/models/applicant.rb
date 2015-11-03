@@ -12,6 +12,10 @@ class Applicant < ActiveRecord::Base
     @now.year - date_of_birth.year - compare_months
   end
 
+  def full_name
+    [title, first_name, last_name].select(&:present?).join(' ')
+  end
+
   private
 
   def compare_months

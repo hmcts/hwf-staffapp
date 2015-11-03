@@ -106,4 +106,32 @@ RSpec.describe Applicant, type: :model do
       end
     end
   end
+
+  describe '#full_name' do
+    subject { applicant.full_name }
+
+    context 'when title, first_name and last_name are set' do
+      let(:applicant) { build :applicant, application: application, title: 't', first_name: 'f', last_name: 'l' }
+
+      it 'returns all parts with spaces between' do
+        is_expected.to eql('t f l')
+      end
+    end
+
+    context 'when only some of the name fields are set' do
+      let(:applicant) { build :applicant, application: application, title: 't', first_name: nil, last_name: 'l' }
+
+      it 'returns all only the set parts with spaces between' do
+        is_expected.to eql('t l')
+      end
+    end
+
+    context 'when non of the name fields are set' do
+      let(:applicant) { build :applicant, application: application, title: nil, first_name: nil, last_name: nil }
+
+      it 'returns an empty string' do
+        is_expected.to eql('')
+      end
+    end
+  end
 end
