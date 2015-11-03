@@ -11,3 +11,5 @@ evidence_check:
   expires_in_days: 14
 payment:
   expires_in_days: 14
+processed_applications:
+  enabled: <%= ENV['PROCESSED_APPLICATIONS_ENABLED'] || false %>

@@ -8,6 +8,16 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:manager)   { create :manager }
   let(:admin)     { create :admin_user }
 
+  module FeatureHelper
+    def processed_applications_enabled?
+      true
+    end
+  end
+
+  before do
+    view.extend FeatureHelper
+  end
+
   context 'public access' do
     it 'shows a get help message' do
       render
@@ -27,6 +37,22 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'shows the start button' do
       expect(rendered).to have_link 'Start now'
+    end
+
+    it 'has a table for awaited evidence' do
+      expect(rendered).to have_content 'Waiting for evidence'
+    end
+
+    it 'has a table for awaiting payments' do
+      expect(rendered).to have_content 'Waiting for payment'
+    end
+
+    it 'has a link to processed application' do
+      expect(rendered).to have_content 'Processed applications'
+
+      within '.processed-applications' do
+        expect(rendered).to have_link 'View all'
+      end
     end
   end
 
@@ -51,6 +77,14 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'has a table for awaiting payments' do
       expect(rendered).to have_content 'Waiting for payment'
+    end
+
+    it 'has a link to processed application' do
+      expect(rendered).to have_content 'Processed applications'
+
+      within '.processed-applications' do
+        expect(rendered).to have_link 'View all'
+      end
     end
   end
 

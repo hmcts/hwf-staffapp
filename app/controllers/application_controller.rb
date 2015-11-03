@@ -16,4 +16,11 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
+
+  private
+
+  def processed_applications_enabled?
+    Settings.processed_applications.enabled.equal?(true)
+  end
+  helper_method :processed_applications_enabled?
 end
