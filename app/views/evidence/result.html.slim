@@ -12,11 +12,5 @@ header
   .large-5.columns
     .guidance
       h4 Total monthly income
-      ul
-          li add up all the income from payslips and evidence (before tax and National Insurance)
-          li include their partner’s income (if they have one)
-          li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank'}
-          li check the total against the bank statements 
-      
-      p = link_to 'Read more about how to calculate total monthly income from evidence', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
+      p = link_to 'Read about the maximum amount of income allowed', guide_process_application_path(anchor: 'income'), target: 'blank'
       p: strong= link_to 'See the guides', guide_path, target: 'blank'
