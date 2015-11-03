@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :processed_applications, only: :index
+
   get 'guide' => 'guide#index'
   get 'guide/process_application' => 'guide#process_application'
   get 'guide/evidence_checks' => 'guide#evidence_checks'

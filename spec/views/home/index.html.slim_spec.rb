@@ -49,10 +49,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'has a link to processed application' do
       expect(rendered).to have_content 'Processed applications'
-
-      within '.processed-applications' do
-        expect(rendered).to have_link 'View all'
-      end
+      expect(rendered).to have_link 'View all', href: processed_applications_path
     end
   end
 
@@ -81,10 +78,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'has a link to processed application' do
       expect(rendered).to have_content 'Processed applications'
-
-      within '.processed-applications' do
-        expect(rendered).to have_link 'View all'
-      end
+      expect(rendered).to have_link 'View all', href: processed_applications_path
     end
   end
 
