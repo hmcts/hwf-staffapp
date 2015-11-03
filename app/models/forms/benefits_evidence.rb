@@ -7,8 +7,13 @@ module Forms
     define_attributes
 
     validates :correct, inclusion: { in: [true, false] }
+    validate :isnt_blank
 
     private
+
+    def isnt_blank
+      !correct.blank?
+    end
 
     def fields_to_update
       { correct: correct }

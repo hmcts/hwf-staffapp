@@ -36,6 +36,12 @@ RSpec.describe Forms::BenefitsEvidence do
 
       it { is_expected.to be false }
     end
+
+    context 'when no value is passed in' do
+      let(:params) { { correct: '' } }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#save' do
