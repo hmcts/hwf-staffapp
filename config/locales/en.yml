@@ -4,8 +4,8 @@ en-GB:
     incorrect: 'No'
     correct: Yes, the letter is for the correct applicant and dated in the last 3 months
   evidence:
-    correct: 'Yes'
-    incorrect: 'No'
+    correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+    incorrect: 'No, there is a problem with the evidence and it needs to be returned'
     part-remission:
       letter_html: |
         <p>Dear %{full_name}</p>
@@ -26,8 +26,8 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{current_user}</p>
     labels:
-      correct: Is the evidence correct?
-      incorrect_reason: What is incorrect about the evidence?
+      correct: Is the evidence ready to process?
+      incorrect_reason: Describe the problem with the evidence
     dashboard:
       heading: Waiting for evidence
       no_records: There are no applications waiting for evidence
