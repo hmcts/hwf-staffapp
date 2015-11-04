@@ -2,9 +2,6 @@
 require 'rails_helper'
 
 def personal_details_page
-  login_as user
-  visit applications_new_path
-
   fill_in 'application_last_name', with: 'Smith'
   fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
   fill_in 'application_ni_number', with: 'AB123456A'
@@ -40,6 +37,8 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
   before do
     dwp_api_response 'No'
+    login_as user
+    visit applications_new_path
     personal_details_page
     application_details
     savings_and_investments
@@ -48,5 +47,18 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
   scenario 'there should be link for accept the proof for benefit claiming' do
     expect(page).to have_content 'The applicant has provided paper evidence'
+  end
+
+  context 'when displaying the summary' do
+    before do
+      click_link 'The applicant has provided paper evidence'
+      choose 'benefit_override_correct_true'
+      click_button 'Next'
+    end
+
+    scenario 'shows the benefits result as passed' do
+      expect(page).to have_content 'Check details'
+      expect(page).to have_content '✓ Passed (paper evidence checked)'
+    end
   end
 end
