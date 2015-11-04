@@ -3,7 +3,7 @@ module Views
     attr_reader :application
 
     APPLICATION_ATTRS = %i[full_name form_name amount_to_pay case_number
-                           deceased_name emergency_reason]
+                           deceased_name emergency_reason reference]
 
     delegate(*APPLICATION_ATTRS, to: :application)
 
@@ -84,6 +84,10 @@ module Views
       else
         %w[savings]
       end
+    end
+
+    def processed_by
+      @application.user.name
     end
 
     private

@@ -67,7 +67,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     end
 
     it 'assigns the ApplicationResult view model' do
-      expect(assigns(:result)).to eql(overview)
+      expect(assigns(:result)).to eql(result)
     end
   end
 end

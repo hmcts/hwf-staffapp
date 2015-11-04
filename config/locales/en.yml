@@ -224,6 +224,8 @@ en-GB:
         income: Income
         number_of_children: Number of children
         total_monthly_income: Total monthly income
+        processed_by: Processed by
+        reference: Reference
       evidence/views/evidence:
         correct: Correct
         incorrect_reason: Reason

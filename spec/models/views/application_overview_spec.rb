@@ -136,4 +136,16 @@ RSpec.describe Views::ApplicationOverview do
       it { is_expected.to eq 'none' }
     end
   end
+
+  describe '#processed_by' do
+    it 'returns the name of the user who created the application' do
+      expect(view.processed_by).to eql(application.user.name)
+    end
+  end
+
+  describe '#reference' do
+    it 'returns the application reference' do
+      expect(view.reference).to eql(application.reference)
+    end
+  end
 end
