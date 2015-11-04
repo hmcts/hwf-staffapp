@@ -15,10 +15,12 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
   describe 'GET #index' do
     let(:view1) { double }
     let(:view2) { double }
-    let(:query) { double(find: [application1, application2]) }
+    let(:scope) { double }
+    let(:query) { double(find: scope) }
 
     before do
       allow(Query::ProcessedApplications).to receive(:new).with(user).and_return(query)
+      allow(controller).to receive(:policy_scope).with(scope).and_return([application1, application2])
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
