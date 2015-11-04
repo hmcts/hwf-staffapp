@@ -326,4 +326,19 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
       it { is_expected.to be false }
     end
   end
+
+  context 'instantiates at now' do
+    Timecop.freeze(Time.zone.now - 1.day) do
+      describe 'after 24 hours' do
+        before do
+          Timecop.travel(Time.zone.now + 2.day)
+          detail.valid?
+        end
+        describe 'the detail should be valid' do
+          let(:detail) { build_stubbed(:complete_detail) }
+          it { is_expected.to be_valid  }
+        end
+      end
+    end
+  end
 end
