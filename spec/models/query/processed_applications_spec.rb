@@ -1,15 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Query::ProcessedApplications, type: :model do
-  describe '.find' do
-    subject { described_class.new.find }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
 
-    let!(:application1) { create :application }
-    let!(:application2) { create :application }
-    let!(:application3) { create :application }
-    let!(:application4) { create :application }
-    let!(:application5) { create :application }
-    let!(:application6) { create :application }
+  subject(:query) { described_class.new(user) }
+
+  describe '#find' do
+    subject { query.find }
+
+    let!(:application1) { create :application, office: office }
+    let!(:application2) { create :application, office: office }
+    let!(:application3) { create :application, office: office }
+    let!(:other_office_application) { create :application }
+    let!(:application4) { create :application, office: office }
+    let!(:application6) { create :application, office: office }
+    let!(:application5) { create :application, office: office }
 
     before do
       create :evidence_check, application: application1
@@ -22,8 +28,8 @@ RSpec.describe Query::ProcessedApplications, type: :model do
       create :payment, :completed, application: application5
     end
 
-    it 'contains applications completely processed' do
-      is_expected.to match_array([application2, application4, application5, application6])
+    it 'contains applications completely processed from user\'s office in order of creation' do
+      is_expected.to eq([application2, application4, application6, application5])
     end
   end
 end

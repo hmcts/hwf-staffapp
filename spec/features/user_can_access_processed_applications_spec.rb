@@ -11,8 +11,9 @@ RSpec.feature 'User can access processed applications,', type: :feature do
   end
 
   context 'when the processed application feature is enabled' do
-    let!(:application1) { create :application_full_remission }
-    let!(:application2) { create :application_part_remission }
+    let!(:application1) { create :application_full_remission, office: user.office }
+    let!(:application2) { create :application_part_remission, office: user.office }
+    let!(:application3) { create :application_part_remission }
 
     enable_processed_applications
 

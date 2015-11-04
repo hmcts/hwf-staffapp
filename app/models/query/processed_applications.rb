@@ -1,10 +1,15 @@
 module Query
   class ProcessedApplications
+    def initialize(user)
+      @user = user
+    end
+
     def find
-      Application.
+      @user.office.applications.
         includes(:evidence_check, :payment).
         references(:evidence_check, :payment).
-        where(where_condition)
+        where(where_condition).
+        order(id: :asc)
     end
 
     def where_condition

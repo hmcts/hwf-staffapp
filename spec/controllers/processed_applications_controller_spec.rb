@@ -18,7 +18,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     let(:query) { double(find: [application1, application2]) }
 
     before do
-      allow(Query::ProcessedApplications).to receive(:new).and_return(query)
+      allow(Query::ProcessedApplications).to receive(:new).with(user).and_return(query)
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 

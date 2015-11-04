@@ -2,7 +2,7 @@ class ProcessedApplicationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @applications = Query::ProcessedApplications.new.find.map do |application|
+    @applications = Query::ProcessedApplications.new(current_user).find.map do |application|
       Views::ApplicationList.new(application)
     end
   end
