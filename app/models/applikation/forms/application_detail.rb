@@ -29,26 +29,38 @@ module Applikation
       validate :emergency_reason_size
 
       validates :date_received, date: {
-        after: proc { Time.zone.today - 3.months },
-        before: proc { Time.zone.today + 1.day }
+        after: :min_date,
+        before: :tomorrow
       }
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
         validates :date_of_death, date: {
-          after: proc { Time.zone.today - TIME_LIMIT_FOR_PROBATE.years },
-          before: proc { Time.zone.today + 1.day }
+          after: :min_probate,
+          before: :tomorrow
         }
       end
 
       with_options if: :refund? do
         validates :date_fee_paid, date: {
-          after: proc { Time.zone.today - 3.months },
-          before: proc { Time.zone.today + 1.day }
+          after: :min_date,
+          before: :tomorrow
         }
       end
 
       private
+
+      def min_probate
+        TIME_LIMIT_FOR_PROBATE.years.ago
+      end
+
+      def min_date
+        3.months.ago
+      end
+
+      def tomorrow
+        Time.zone.tomorrow
+      end
 
       def reason
         errors.add(

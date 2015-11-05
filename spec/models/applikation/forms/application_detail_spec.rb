@@ -73,38 +73,48 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
       end
 
       describe 'range' do
-        it 'allows between today and 3 months ago' do
-          application_details.date_received = Time.zone.today
-          expect(application_details).to be_valid
-        end
+        context 'is enforced' do
+          before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
+          after { Timecop.return }
 
-        describe 'maximum' do
-          before do
-            application_details.date_received = Time.zone.today.-3.months.+1.day
-            application_details.valid?
+          it 'allows today' do
+            application_details.date_received = Date.new(2014, 10, 1)
+            expect(application_details).to be_valid
           end
 
-          it 'is 3 months' do
-            expect(application_details).to be_invalid
+          it 'allows 3 months ago' do
+            application_details.date_received = Date.new(2014, 7, 2)
+            expect(application_details).to be_valid
           end
 
-          it 'returns an error if exceeded' do
-            expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
-          end
-        end
+          describe 'maximum' do
+            before do
+              application_details.date_received = Date.new(2014, 6, 30)
+              application_details.valid?
+            end
 
-        describe 'minimum' do
-          before do
-            application_details.date_received = Time.zone.tomorrow
-            application_details.valid?
+            it 'is 3 months' do
+              expect(application_details).to be_invalid
+            end
+
+            it 'returns an error if exceeded' do
+              expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
+            end
           end
 
-          it 'is today' do
-            expect(application_details).to be_invalid
-          end
+          describe 'minimum' do
+            before do
+              application_details.date_received = Date.new(2014, 10, 2)
+              application_details.valid?
+            end
 
-          it 'returns an error if too low' do
-            expect(application_details.errors[:date_received]).to eq ['The application cannot be a future date']
+            it 'is today' do
+              expect(application_details).to be_invalid
+            end
+
+            it 'returns an error if too low' do
+              expect(application_details.errors[:date_received]).to eq ['The application cannot be a future date']
+            end
           end
         end
       end
@@ -324,21 +334,6 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
       let(:params) { { fee: '' } }
 
       it { is_expected.to be false }
-    end
-  end
-
-  context 'instantiates at now' do
-    Timecop.freeze(Time.zone.now - 1.day) do
-      describe 'after 24 hours' do
-        before do
-          Timecop.travel(Time.zone.now + 2.day)
-          detail.valid?
-        end
-        describe 'the detail should be valid' do
-          let(:detail) { build_stubbed(:complete_detail) }
-          it { is_expected.to be_valid  }
-        end
-      end
     end
   end
 end
