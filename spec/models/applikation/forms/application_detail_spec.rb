@@ -75,6 +75,7 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
       describe 'range' do
         context 'is enforced' do
           before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
+          after { Timecop.return }
 
           it 'allows today' do
             application_details.date_received = Date.new(2014, 10, 1)
