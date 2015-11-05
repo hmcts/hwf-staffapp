@@ -8,6 +8,13 @@ class ApplicationPolicy < BasePolicy
   end
 
   class Scope < BasePolicy::Scope
+    def resolve
+      if admin?
+        @scope.none
+      else
+        @scope.where(office: @user.office)
+      end
+    end
   end
 
   private

@@ -15,7 +15,13 @@ class BasePolicy
     end
 
     def resolve
-      scope.all
+      @scope.all
+    end
+
+    private
+
+    def admin?
+      @user.admin?
     end
   end
 
