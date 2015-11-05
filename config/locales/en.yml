@@ -292,6 +292,7 @@ en-GB:
         none: '✗ Failed'
         'true': '✓ Passed'
         'false': '✗ Failed'
+        passed_with_evidence: '✓ Passed (paper evidence checked)'
         savings_investments: Savings and investments
         benefits: Benefits
         income: Income

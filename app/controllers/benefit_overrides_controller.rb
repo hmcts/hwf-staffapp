@@ -1,19 +1,16 @@
 class BenefitOverridesController < ApplicationController
-  before_action :setup_application
+  before_action :setup_application, :form_object
 
   def paper_evidence
-    @form = BenefitOverride.new(application_id: @application.id)
   end
 
   def paper_evidence_save
-    evidence = allowed_params['correct']
-    @form = BenefitOverride.find_or_create_by(application_id: @application.id)
-    @form.correct = evidence
+    @form.update_attributes(allowed_params)
 
     if @form.save
       redirect_to application_build_path(application_id: @application.id, id: :summary)
     else
-      redirect_to paper_evidence_path(@application)
+      redirect_to application_benefit_override_paper_evidence_path(@application)
     end
   end
 
@@ -21,6 +18,14 @@ class BenefitOverridesController < ApplicationController
 
   def setup_application
     @application = Application.find(params[:application_id])
+  end
+
+  def benefit_override
+    BenefitOverride.find_or_create_by(application_id: @application.id)
+  end
+
+  def form_object
+    @form = Forms::BenefitsEvidence.new(benefit_override)
   end
 
   def allowed_params
