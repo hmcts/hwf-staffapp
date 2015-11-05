@@ -1,4 +1,12 @@
 en-GB:
+  processed_applications:
+    table_header:
+      applicant: Applicant
+      date_received: Date received
+      processed_by: Processed by
+      emergency: Emergency
+    detail:
+      title: Processed application
   emergency:
     status:
       :true: 'Yes'

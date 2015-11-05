@@ -8,10 +8,10 @@
       table.processed-applications
         thead
           tr
-            th Applicant
-            th Date received
-            th Processed by
-            th Emergency
+            th =t('processed_applications.table_header.applicant')
+            th =t('processed_applications.table_header.date_received')
+            th =t('processed_applications.table_header.processed_by')
+            th =t('processed_applications.table_header.emergency')
         tbody
           - @applications.each do |application|
             tr
