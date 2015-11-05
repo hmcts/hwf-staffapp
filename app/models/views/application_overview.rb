@@ -104,7 +104,7 @@ module Views
     end
 
     def benefit_override?
-      BenefitOverride.exists?(application_id: @application.id)
+      BenefitOverride.exists?(application_id: @application.id, correct: true)
     end
   end
 end
