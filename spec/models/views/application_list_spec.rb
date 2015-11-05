@@ -2,16 +2,20 @@ require 'rails_helper'
 
 RSpec.describe Views::ApplicationList do
   let(:applicant) { build(:applicant) }
-  let(:detail) { build(:detail) }
+  let(:detail) { build(:detail, date_received: '2015-10-01') }
   let(:application) { build(:application, applicant: applicant, detail: detail) }
 
   subject(:view) { described_class.new(application) }
 
-  it { is_expected.to delegate_method(:reference).to(:application) }
-
   describe '#applicant' do
     it 'returns the applicant\'s full name' do
       expect(view.applicant).to eql(applicant.full_name)
+    end
+  end
+
+  describe '#date_received' do
+    it 'returns formatted date of application received date' do
+      expect(view.date_received).to eql('1 October 2015')
     end
   end
 

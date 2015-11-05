@@ -1,7 +1,7 @@
 header
   .row
     .small-12.medium-12.large-12.columns
-      h2= @application.reference
+      h2 Processed application
 
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name emergency_reason processed_by reference]

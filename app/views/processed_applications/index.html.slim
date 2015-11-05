@@ -8,15 +8,15 @@
       table.processed-applications
         thead
           tr
-            th Reference
             th Applicant
+            th Date received
             th Processed by
             th Emergency
         tbody
           - @applications.each do |application|
             tr
-              td= link_to(application.reference, processed_application_path(application.application))
-              td= application.applicant
+              td= link_to(application.applicant, processed_application_path(application.application))
+              td= application.date_received
               td= application.processed_by
               td= application.emergency
 

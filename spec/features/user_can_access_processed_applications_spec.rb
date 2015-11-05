@@ -26,18 +26,19 @@ RSpec.feature 'User can access processed applications,', type: :feature do
     expect(page.current_path).to eql('/processed_applications')
 
     within 'table.processed-applications tbody' do
-      expect(page).to have_content(application1.reference)
-      expect(page).to have_content(application2.reference)
+      expect(page).to have_content(application1.applicant.full_name)
+      expect(page).to have_content(application2.applicant.full_name)
     end
   end
 
   scenario 'User displays detail of one processed application' do
     visit '/processed_applications'
 
-    click_link application1.reference
+    click_link application1.applicant.full_name
 
     expect(page.current_path).to eql("/processed_applications/#{application1.id}")
 
-    expect(page).to have_content(application1.reference)
+    expect(page).to have_content('Processed application')
+    expect(page).to have_content("Full name#{application1.applicant.full_name}")
   end
 end

@@ -2,14 +2,16 @@ module Views
   class ApplicationList
     attr_reader :application
 
-    delegate :reference, to: :application
-
     def initialize(application)
       @application = application
     end
 
     def applicant
       @application.applicant.full_name
+    end
+
+    def date_received
+      @application.detail.date_received.to_s(:gov_uk_long)
     end
 
     def processed_by
