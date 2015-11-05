@@ -1,29 +1,18 @@
-class ApplicationPolicy
-  attr_reader :user, :application
-
-  def initialize(user, application)
-    @user = user
-    @application = application
-  end
-
+class ApplicationPolicy < BasePolicy
   def index?
-    true
+    !admin?
   end
 
   def show?
-    true
+    !admin? && same_office?
   end
 
-  class Scope
-    attr_reader :user, :scope
+  class Scope < BasePolicy::Scope
+  end
 
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
+  private
 
-    def resolve
-      scope.all
-    end
+  def same_office?
+    @record.office == @user.office
   end
 end
