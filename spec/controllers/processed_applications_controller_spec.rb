@@ -5,8 +5,8 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   let(:user) { create(:user) }
 
-  let(:application1) { build_stubbed(:application) }
-  let(:application2) { build_stubbed(:application) }
+  let(:application1) { build_stubbed(:application, office: user.office) }
+  let(:application2) { build_stubbed(:application, office: user.office) }
 
   before do
     sign_in user
