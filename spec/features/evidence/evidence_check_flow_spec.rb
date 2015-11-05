@@ -30,7 +30,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'when clicked on "Next", goes to the next page' do
       click_link 'Next'
-      expect(page).to have_content 'Is the evidence correct?'
+      expect(page).to have_content 'Is the evidence ready to process?'
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       before { click_button 'Next' }
 
       it 're-renders the page' do
-        expect(page).to have_content 'Is the evidence correct?'
+        expect(page).to have_content 'Is the evidence ready to process?'
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     it 'displays the form label' do
-      expect(page).to have_content 'Is the evidence correct?'
+      expect(page).to have_content 'Is the evidence ready to process?'
     end
 
     scenario 'confirming the evidence is correct redirects to the income page' do
@@ -61,7 +61,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
-      expect(page).to have_content 'What is incorrect about the evidence?'
+      expect(page).to have_content 'Describe the problem with the evidence'
       click_button 'Next'
       expect(page).to have_content 'Check details'
     end
