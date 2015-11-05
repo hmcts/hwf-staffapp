@@ -14,6 +14,8 @@ module Query
 
     def where_condition
       <<WHERE
+(applications.application_outcome IS NOT NULL)
+AND
 (evidence_checks.id IS NULL OR evidence_checks.completed_at IS NOT NULL)
 AND
 (payments.id IS NULL OR payments.completed_at IS NOT NULL)

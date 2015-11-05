@@ -9,13 +9,14 @@ RSpec.describe Query::ProcessedApplications, type: :model do
   describe '#find' do
     subject { query.find }
 
-    let!(:application1) { create :application, office: office }
-    let!(:application2) { create :application, office: office }
-    let!(:application3) { create :application, office: office }
-    let!(:other_office_application) { create :application }
-    let!(:application4) { create :application, office: office }
-    let!(:application6) { create :application, office: office }
-    let!(:application5) { create :application, office: office }
+    let!(:application1) { create :application_full_remission, office: office }
+    let!(:application2) { create :application_full_remission, office: office }
+    let!(:application3) { create :application_full_remission, office: office }
+    let!(:other_office_application) { create :application_full_remission }
+    let!(:application4) { create :application_full_remission, office: office }
+    let!(:application6) { create :application_full_remission, office: office }
+    let!(:application5) { create :application_full_remission, office: office }
+    let!(:application7) { create :application, office: office, application_outcome: nil }
 
     before do
       create :evidence_check, application: application1
