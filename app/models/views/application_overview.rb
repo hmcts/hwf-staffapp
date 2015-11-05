@@ -1,3 +1,4 @@
+# coding: utf-8
 module Views
   class ApplicationOverview
     attr_reader :application
@@ -54,9 +55,8 @@ module Views
 
     def benefits
       if type.eql?('benefit')
-        if @application.last_benefit_check
-          format_locale(@application.last_benefit_check.dwp_result.eql?('Yes').to_s)
-        end
+        return format_locale('passed_with_evidence') if benefit_override?
+        format_locale(benefit_result) if @application.last_benefit_check
       end
     end
 
@@ -97,6 +97,14 @@ module Views
       if date
         date.to_s(:gov_uk_long)
       end
+    end
+
+    def benefit_result
+      @application.last_benefit_check.dwp_result.eql?('Yes').to_s
+    end
+
+    def benefit_override?
+      BenefitOverride.exists?(application_id: @application.id, correct: true)
     end
   end
 end
