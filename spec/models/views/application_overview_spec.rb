@@ -144,8 +144,30 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#reference' do
-    it 'returns the application reference' do
-      expect(view.reference).to eql(application.reference)
+    subject { view.reference }
+
+    context 'for an application which has been evidence checked' do
+      before do
+        build_stubbed :evidence_check, application: application
+      end
+
+      it 'returns the application reference' do
+        is_expected.to eql(application.reference)
+      end
+    end
+
+    context 'for a part payment application' do
+      before do
+        build_stubbed :payment, application: application
+      end
+
+      it 'returns the application reference' do
+        is_expected.to eql(application.reference)
+      end
+    end
+
+    context 'for an application without payment or evidence check' do
+      it { is_expected.to be nil }
     end
   end
 end
