@@ -101,6 +101,11 @@ module Applications
       @overview = Views::ApplicationOverview.new(application)
     end
 
+    def summary_save
+      ResolverService.new(application, current_user).process
+      redirect_to application_confirmation_path(application.id)
+    end
+
     def confirmation
       if application.evidence_check?
         redirect_to(evidence_check_path(application.evidence_check.id))
