@@ -1,6 +1,7 @@
 class Application < ActiveRecord::Base
 
   belongs_to :user, -> { with_deleted }
+  belongs_to :completed_by, -> { with_deleted }, class_name: 'User'
   belongs_to :office
   has_many :benefit_checks
   has_one :applicant
