@@ -12,7 +12,9 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   validates :reference, presence: true, uniqueness: true
 
   # Fixme remove this delegation methods when all tests are clean
-  APPLICANT_GETTERS = %i[title first_name last_name date_of_birth ni_number married married?]
+  APPLICANT_GETTERS = %i[
+    title first_name last_name full_name date_of_birth ni_number married married?
+  ]
   APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
   delegate(*APPLICANT_GETTERS, to: :applicant)
   delegate(*APPLICANT_SETTERS, to: :applicant)
@@ -108,10 +110,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     self.application_type = benefits? ? 'benefit' : 'income'
     self.dependents = nil if benefits?
     self.application_outcome = outcome_from_dwp_result if benefits? && last_benefit_check.present?
-  end
-
-  def full_name
-    [title, first_name, last_name].join(' ')
   end
 
   def applicant_over_61?

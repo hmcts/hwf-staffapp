@@ -86,6 +86,14 @@ module Views
       end
     end
 
+    def processed_by
+      @application.user.name
+    end
+
+    def reference
+      @application.reference if @application.evidence_check? || @application.payment?
+    end
+
     private
 
     def format_locale(suffix)

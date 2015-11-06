@@ -1,0 +1,25 @@
+.row
+  .small-12.medium-12.large-12.columns
+    h2 Processed applications
+
+.row
+  .small-12.medium-12.large-12.columns
+    - unless @applications.empty?
+      table.processed-applications
+        thead
+          tr
+            th =t('processed_applications.table_header.applicant')
+            th =t('processed_applications.table_header.date_received')
+            th =t('processed_applications.table_header.processed_by')
+            th =t('processed_applications.table_header.emergency')
+        tbody
+          - @applications.each do |application|
+            tr
+              td= link_to(application.applicant, processed_application_path(application.application))
+              td= application.date_received
+              td= application.processed_by
+              td= application.emergency
+
+
+    - else
+      p There are no processed applications for your office.

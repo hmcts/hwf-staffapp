@@ -28,6 +28,19 @@ RSpec.describe "home/index.html.slim", type: :view do
     it 'shows the start button' do
       expect(rendered).to have_link 'Start now'
     end
+
+    it 'has a table for awaited evidence' do
+      expect(rendered).to have_content 'Waiting for evidence'
+    end
+
+    it 'has a table for awaiting payments' do
+      expect(rendered).to have_content 'Waiting for payment'
+    end
+
+    it 'has a link to processed application' do
+      expect(rendered).to have_content 'Processed applications'
+      expect(rendered).to have_link 'View all', href: processed_applications_path
+    end
   end
 
   context 'manager access' do
@@ -51,6 +64,11 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     it 'has a table for awaiting payments' do
       expect(rendered).to have_content 'Waiting for payment'
+    end
+
+    it 'has a link to processed application' do
+      expect(rendered).to have_content 'Processed applications'
+      expect(rendered).to have_link 'View all', href: processed_applications_path
     end
   end
 

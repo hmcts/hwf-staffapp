@@ -1,4 +1,16 @@
 en-GB:
+  processed_applications:
+    table_header:
+      applicant: Applicant
+      date_received: Date received
+      processed_by: Processed by
+      emergency: Emergency
+    detail:
+      title: Processed application
+  emergency:
+    status:
+      :true: 'Yes'
+      :false: ''
   benefit_override:
     title: 'Do you have a letter confirming the applicant is receiving one of the benefits listed in question 9?'
     incorrect: 'No'
@@ -220,6 +232,8 @@ en-GB:
         income: Income
         number_of_children: Number of children
         total_monthly_income: Total monthly income
+        processed_by: Processed by
+        reference: Reference
       evidence/views/evidence:
         correct: Correct
         incorrect_reason: Reason

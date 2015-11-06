@@ -136,4 +136,38 @@ RSpec.describe Views::ApplicationOverview do
       it { is_expected.to eq 'none' }
     end
   end
+
+  describe '#processed_by' do
+    it 'returns the name of the user who created the application' do
+      expect(view.processed_by).to eql(application.user.name)
+    end
+  end
+
+  describe '#reference' do
+    subject { view.reference }
+
+    context 'for an application which has been evidence checked' do
+      before do
+        build_stubbed :evidence_check, application: application
+      end
+
+      it 'returns the application reference' do
+        is_expected.to eql(application.reference)
+      end
+    end
+
+    context 'for a part payment application' do
+      before do
+        build_stubbed :payment, application: application
+      end
+
+      it 'returns the application reference' do
+        is_expected.to eql(application.reference)
+      end
+    end
+
+    context 'for an application without payment or evidence check' do
+      it { is_expected.to be nil }
+    end
+  end
 end
