@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030164736) do
+ActiveRecord::Schema.define(version: 20151106120125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 20151030164736) do
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
     t.string   "reference"
+    t.datetime "completed_at"
+    t.integer  "completed_by_id"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
@@ -233,6 +235,7 @@ ActiveRecord::Schema.define(version: 20151030164736) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
+  add_foreign_key "benefit_overrides", "applications"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
