@@ -33,7 +33,7 @@ RSpec.feature 'Payments flow', type: :feature do
     before { visit accuracy_payment_path(id: payment.id) }
 
     it 'displays the title of the page' do
-      expect(page).to have_content 'Payment details'
+      expect(page).to have_content 'Part-payment details'
     end
 
     it 'displays the form label' do
