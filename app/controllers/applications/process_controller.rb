@@ -97,6 +97,7 @@ module Applications
     end
 
     def summary
+      @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
     end

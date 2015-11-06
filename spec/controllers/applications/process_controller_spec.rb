@@ -364,7 +364,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
-  describe 'GET #summary_save' do
+  describe 'POST #summary_save' do
     let(:current_time) { Time.zone.now }
     let(:user) { create :user }
     let(:application) { create :application_full_remission }
@@ -374,7 +374,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       Timecop.freeze(current_time) do
         sign_in user
-        get :summary_save, application_id: application.id
+        post :summary_save, application_id: application.id
       end
     end
 

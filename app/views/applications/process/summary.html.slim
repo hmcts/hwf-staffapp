@@ -17,4 +17,5 @@ header
     .row.collapse.medium-10.large-8
       =render(partial: 'shared/remission_type', locals: { source: @result })
 
-=link_to 'Complete processing', application_summary_save_path(@overview.application.id), class: 'button primary'
+= form_for @application, url: application_summary_save_path(@overview.application.id), method: :put do |f|
+  = f.submit 'Complete processing', :class => 'button primary'
