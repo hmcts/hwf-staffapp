@@ -1,9 +1,5 @@
 FactoryGirl.define do
   factory :applicant do
-    transient do
-      application nil
-    end
-
     factory :applicant_with_all_details do
       title { Faker::Name.prefix }
       first_name { Faker::Name.first_name }
@@ -25,9 +21,14 @@ FactoryGirl.define do
       date_of_birth Time.zone.today - 65.years
     end
 
-    after(:build, :stub) do |applicant, evaluator|
-      app = evaluator.application
-      applicant.application = app.present? ? app : build(:application, applicant: applicant)
+    after(:build) do |applicant|
+      applicant.application ||= build(:application, applicant: applicant)
+    end
+
+    after(:stub) do |applicant|
+      around_stub(applicant) do
+        applicant.application ||= build_stubbed(:application, applicant: applicant)
+      end
     end
   end
 end

@@ -2,11 +2,9 @@ FactoryGirl.define do
   factory :application do
     transient do
       ni_number nil
-      applicant nil
       applicant_factory :applicant
       applicant_traits []
 
-      detail nil
       detail_traits []
       detail_factory :complete_detail
       fee '310.00'
@@ -88,25 +86,13 @@ FactoryGirl.define do
       applicant_traits [:married, :over_61]
     end
 
-    after(:build, :stub) do |application, evaluator|
-      if evaluator.applicant
-        application.applicant = evaluator.applicant
-      else
-        application.applicant = build(evaluator.applicant_factory,
-          *evaluator.applicant_traits, application: application, ni_number: evaluator.ni_number)
-      end
+    after(:build) do |application, evaluator|
+      build_related_for_application(self, :build, application, evaluator)
+    end
 
-      if evaluator.detail
-        application.detail = evaluator.detail
-      else
-        overrides = { application: application }
-        %i[fee date_received refund date_fee_paid probate jurisdiction emergency_reason].each do |field|
-          value = evaluator.send(field)
-          overrides[field] = value if value.present?
-        end
-
-        application.detail = build(evaluator.detail_factory,
-          *evaluator.detail_traits, overrides)
+    after(:stub) do |application, evaluator|
+      around_stub(application) do
+        build_related_for_application(self, :build_stubbed, application, evaluator)
       end
     end
   end
