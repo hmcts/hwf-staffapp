@@ -10,7 +10,7 @@ RSpec.describe Views::ApplicationOverview do
     symbols = %i[date_of_birth full_name ni_number status
                  fee jurisdiction date_received form_name case_number
                  deceased_name date_of_death date_fee_paid emergency_reason
-                 number_of_children total_monthly_income income benefits]
+                 number_of_children income benefits]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
@@ -168,6 +168,26 @@ RSpec.describe Views::ApplicationOverview do
 
     context 'for an application without payment or evidence check' do
       it { is_expected.to be nil }
+    end
+  end
+
+  describe '#total_monthly_income' do
+    let(:application) { build_stubbed(:application, income: income) }
+
+    subject { view.total_monthly_income }
+
+    context 'when income is not set' do
+      let(:income) { nil }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when income is set' do
+      let(:income) { 208 }
+
+      it 'returns currency formated income' do
+        is_expected.to eql('£208')
+      end
     end
   end
 end

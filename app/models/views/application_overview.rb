@@ -50,7 +50,7 @@ module Views
     end
 
     def total_monthly_income
-      "£#{@application.income.round}"
+      "£#{@application.income.round}" if @application.income
     end
 
     def benefits
