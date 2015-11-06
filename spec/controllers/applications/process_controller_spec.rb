@@ -370,8 +370,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:application) { create :application_full_remission }
 
     before do
-      allow(Application).to receive(:find).with(application.id).and_return(application)
-
       Timecop.freeze(current_time) do
         sign_in user
         post :summary_save, application_id: application.id
@@ -387,8 +385,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
 
     it 'updates the payment completed_at and completed_by' do
-      application.reload
-
       expect(application.completed_at).to eql(current_time)
       expect(application.completed_by).to eql(user)
     end
