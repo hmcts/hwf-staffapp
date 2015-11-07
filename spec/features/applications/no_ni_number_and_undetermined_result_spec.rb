@@ -49,7 +49,7 @@ RSpec.feature 'No NI number provided', type: :feature do
   scenario 'correct content on the page' do
     warning_string = "The applicant's details could not be checked with the Department for Work and Pensions"
     expect(page).to have_content warning_string
-    expect(page).to have_button 'Next'
+    expect(page).to have_link 'Next'
     expect(page).to have_text paper_evidence
   end
 
@@ -93,7 +93,7 @@ RSpec.feature 'No NI number provided', type: :feature do
   end
 
   context 'when the user progresses to the summary page' do
-    before { click_button 'Next' }
+    before { click_link 'Next' }
 
     it do
       expect(page).to have_content no_remission

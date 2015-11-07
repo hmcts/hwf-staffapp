@@ -56,7 +56,7 @@ RSpec.feature 'Completing the application details', type: :feature do
         click_button 'Next'
         choose 'application_benefits_true'
         click_button 'Next'
-        click_button 'Next'
+        click_link 'Next'
       end
 
       scenario 'shows benefit result on summary page' do

@@ -16,9 +16,8 @@ header
 
       =link_to 'The applicant has provided paper evidence', application_benefit_override_paper_evidence_path(@application)
 
-    = form_for @application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
-      = f.hidden_field(:status)
-      = f.submit 'Next', class: 'button primary'
+    div
+      =link_to 'Next', application_summary_path(@application), class: 'button primary'
 
   .large-5.columns
     .guidance

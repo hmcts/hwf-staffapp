@@ -21,7 +21,9 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  PROCESS_CONTROLLER_ACTIONS = %i[personal_information application_details benefits summary]
+  PROCESS_CONTROLLER_ACTIONS = %i[
+    personal_information application_details benefits benefits_result summary
+  ]
   FORM_OBJECTS = %i[savings_investments income]
 
   def create

@@ -45,10 +45,7 @@ RSpec.feature 'Benefit Results', type: :feature do
         scenario 'the correct view is rendered' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
-        end
-
-        scenario 'the next button is rendered' do
-          expect(page).to have_xpath('//input[@type="submit"]')
+          expect(page).to have_link('Next', href: application_summary_path(application))
         end
 
         context 'the result is deceased' do
@@ -120,15 +117,12 @@ RSpec.feature 'Benefit Results', type: :feature do
             visit application_build_path(application_id: application.id, id: 'benefits_result')
           end
 
-          scenario 'the next button is not rendered' do
-            expect(page).to have_xpath('//input[@type="submit"]')
-          end
-
-          scenario 'a link to personal details is rendered' do
+          scenario 'the page content is correctly rendered' do
+            # the Next button is rendered
+            expect(page).to have_link('Next', href: application_summary_path(application))
+            # a link to personal details is rendered
             expect(page).to have_content "The applicant's details could not be checked with the Department for Work and Pensions"
-          end
-
-          scenario 'the view is rendered with the correct style' do
+            # the view is rendered with the correct style
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]')
           end
         end

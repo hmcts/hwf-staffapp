@@ -93,7 +93,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 end
 
                 context 'when benefits confirmed' do
-                  before { click_button 'Next' }
+                  before { click_link 'Next' }
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')
@@ -260,7 +260,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 end
 
                 context 'when benefits confirmed' do
-                  before { click_button 'Next' }
+                  before { click_link 'Next' }
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')

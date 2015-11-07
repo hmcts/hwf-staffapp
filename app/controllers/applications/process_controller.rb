@@ -48,9 +48,18 @@ module Applications
       @form.update_attributes(benefits_params)
 
       if @form.save
-        redirect_to(application_build_path(application_id: application.id, id: :benefits_result))
+        redirect_to(action: :benefits_result)
       else
         render :benefits
+      end
+    end
+
+    def benefits_result
+      if application.benefits
+        @application = application
+        render :benefits_result
+      else
+        redirect_to(application_build_path(application_id: application.id, id: :income))
       end
     end
 
@@ -85,7 +94,7 @@ module Applications
     end
 
     def application
-      Application.find(params[:application_id])
+      @appication ||= Application.find(params[:application_id])
     end
 
     def user_jurisdictions

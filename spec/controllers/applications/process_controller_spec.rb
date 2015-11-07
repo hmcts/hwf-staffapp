@@ -176,7 +176,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:form_save) { true }
 
       it 'redirects to the benefits result page' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :benefits_result))
+        expect(response).to redirect_to(application_benefits_result_path(application))
       end
     end
 
@@ -189,6 +189,38 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns the benefits form' do
         expect(assigns(:form)).to eql(benefit_form)
+      end
+    end
+  end
+
+  describe 'GET #benefits_result' do
+    let(:application) { build_stubbed(:application, benefits: benefits) }
+
+    before do
+      get :benefits_result, application_id: application.id
+    end
+
+    context 'when the applicant is on benefits' do
+      let(:benefits) { true }
+
+      it 'renders 200 response' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:benefits_result)
+      end
+
+      it 'assigns application' do
+        expect(assigns(:application)).to eql(application)
+      end
+    end
+
+    context 'when the applicant is not on benefits' do
+      let(:benefits) { false }
+
+      it 'redirects to the income page' do
+        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income))
       end
     end
   end
