@@ -36,4 +36,33 @@ RSpec.describe Applikation::Forms::Benefit do
       end
     end
   end
+
+  describe '#save' do
+    let(:application) { create :application, benefits: nil }
+    subject(:form) { described_class.new(application) }
+
+    subject do
+      form.update_attributes(attributes)
+      form.save
+    end
+
+    context 'when the attributes are correct' do
+      let(:attributes) { { benefits: false } }
+
+      it { is_expected.to be true }
+
+      it 'saves the attributes to the application' do
+        subject
+        application.reload
+
+        expect(application.benefits).to eql(false)
+      end
+    end
+
+    context 'when the attributes are incorrect' do
+      let(:attributes) { { benefits: nil } }
+
+      it { is_expected.to be false }
+    end
+  end
 end
