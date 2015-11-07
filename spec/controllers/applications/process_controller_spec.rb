@@ -168,12 +168,17 @@ RSpec.describe Applications::ProcessController, type: :controller do
     before do
       expect(benefit_form).to receive(:update_attributes).with(expected_params)
       expect(benefit_form).to receive(:save).and_return(form_save)
+      allow(application).to receive(:run_benefit_check)
 
       put :benefits_save, application_id: application.id, application: expected_params
     end
 
     context 'when the form can be saved' do
       let(:form_save) { true }
+
+      it 'runs the benefit check on the application' do
+        expect(application).to have_received(:run_benefit_check)
+      end
 
       it 'redirects to the benefits result page' do
         expect(response).to redirect_to(application_benefits_result_path(application))

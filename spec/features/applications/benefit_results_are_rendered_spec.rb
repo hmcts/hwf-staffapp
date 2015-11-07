@@ -14,6 +14,7 @@ RSpec.feature 'Benefit Results', type: :feature do
 
     before do
       dwp_api_response 'Yes'
+      application.run_benefit_check
       login_as user
     end
 

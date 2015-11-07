@@ -135,40 +135,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     !payment.nil?
   end
 
-  private
-
-  def income_required?
-    active_or_status_is?('income') & !benefits? && savings_investment_valid?
-  end
-
-  def income_children_required?
-    income_required? && dependents?
-  end
-
-  def benefits_required?
-    active_or_status_is?('benefits') && :savings_investment_valid?
-  end
-
-  def run_auto_checks
-    run_benefit_check
-    run_income_calculation
-  end
-
-  def children_numbers
-    errors.add(
-      :children,
-      I18n.t('activerecord.errors.models.application.attributes.children.not_a_number')
-    ) if dependents? && no_children?
-  end
-
-  def no_children?
-    children_present? && children == 0
-  end
-
-  def children_present?
-    children.present?
-  end
-
   def run_benefit_check # rubocop:disable MethodLength
     if can_check_benefits? && new_benefit_check_needed?
       BenefitCheckService.new(
@@ -186,6 +152,39 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         application_outcome: outcome_from_dwp_result
       )
     end
+  end
+
+  private
+
+  def income_required?
+    active_or_status_is?('income') & !benefits? && savings_investment_valid?
+  end
+
+  def income_children_required?
+    income_required? && dependents?
+  end
+
+  def benefits_required?
+    active_or_status_is?('benefits') && :savings_investment_valid?
+  end
+
+  def run_auto_checks
+    run_income_calculation
+  end
+
+  def children_numbers
+    errors.add(
+      :children,
+      I18n.t('activerecord.errors.models.application.attributes.children.not_a_number')
+    ) if dependents? && no_children?
+  end
+
+  def no_children?
+    children_present? && children == 0
+  end
+
+  def children_present?
+    children.present?
   end
 
   def run_income_calculation

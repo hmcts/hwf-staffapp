@@ -48,6 +48,7 @@ module Applications
       @form.update_attributes(benefits_params)
 
       if @form.save
+        application.run_benefit_check
         redirect_to(action: :benefits_result)
       else
         render :benefits
