@@ -31,12 +31,6 @@ ActiveRecord::Schema.define(version: 20151030164736) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
-    t.string   "title"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.date     "date_of_birth"
-    t.string   "ni_number"
-    t.boolean  "married"
     t.string   "status"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
