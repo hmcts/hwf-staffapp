@@ -24,6 +24,14 @@ FactoryGirl.define do
     threshold_exceeded false
     user
 
+    trait :benefit_type do
+      application_type 'benefit'
+    end
+
+    trait :income_type do
+      application_type 'income'
+    end
+
     trait :probate do
       detail_traits [:probate]
     end

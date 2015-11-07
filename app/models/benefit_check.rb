@@ -19,4 +19,13 @@ class BenefitCheck < ActiveRecord::Base
       group(:dwp_result).
       order('length(dwp_result)')
   }
+
+  def outcome
+    case dwp_result
+    when 'Yes'
+      'full'
+    when 'No'
+      'none'
+    end
+  end
 end

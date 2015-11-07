@@ -99,13 +99,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     result
   end
 
-  def benefits=(val)
-    super
-    self.application_type = benefits? ? 'benefit' : 'income'
-    self.dependents = nil if benefits?
-    self.application_outcome = outcome_from_dwp_result if benefits? && last_benefit_check.present?
-  end
-
   def applicant_over_61?
     applicant.age >= 61
   end
@@ -149,7 +142,7 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
       )
       update(
         application_type: 'benefit',
-        application_outcome: outcome_from_dwp_result
+        application_outcome: last_benefit_check.outcome
       )
     end
   end
@@ -162,10 +155,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def income_children_required?
     income_required? && dependents?
-  end
-
-  def benefits_required?
-    active_or_status_is?('benefits') && :savings_investment_valid?
   end
 
   def run_auto_checks
@@ -195,15 +184,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         application_outcome: income_calculation_result[:outcome],
         amount_to_pay: income_calculation_result[:amount]
       )
-    end
-  end
-
-  def outcome_from_dwp_result
-    case last_benefit_check.dwp_result
-    when 'Yes'
-      'full'
-    when 'No'
-      'none'
     end
   end
 

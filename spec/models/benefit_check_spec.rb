@@ -82,4 +82,26 @@ RSpec.describe BenefitCheck, type: :model do
       end
     end
   end
+
+  describe '#outcome' do
+    subject { check.outcome }
+
+    context 'when dwp_result is Yes' do
+      let(:check) { build :benefit_check, :yes_result }
+
+      it { is_expected.to eql 'full' }
+    end
+
+    context 'when dwp_result is No' do
+      let(:check) { build :benefit_check, :no_result }
+
+      it { is_expected.to eql 'none' }
+    end
+
+    context 'when dwp_result is nil' do
+      let(:check) { build :benefit_check }
+
+      it { is_expected.to be nil }
+    end
+  end
 end

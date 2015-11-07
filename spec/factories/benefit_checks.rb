@@ -9,5 +9,13 @@ FactoryGirl.define do
     factory :invalid_benefit_check do
       last_name nil
     end
+
+    trait :yes_result do
+      dwp_result 'Yes'
+    end
+
+    trait :no_result do
+      dwp_result 'No'
+    end
   end
 end
