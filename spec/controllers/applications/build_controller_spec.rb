@@ -37,6 +37,14 @@ RSpec.describe Applications::BuildController, type: :controller do
           expect(response).to have_http_status(400)
         end
       end
+
+      describe 'benefits' do
+        before { put :update, application_id: application.id, id: :benefits, application: { benefits: false } }
+
+        it 'renders 400 error' do
+          expect(response).to have_http_status(400)
+        end
+      end
     end
 
     describe 'GET ' do
@@ -68,30 +76,11 @@ RSpec.describe Applications::BuildController, type: :controller do
         end
       end
 
-      context 'benefits' do
-        context 'when savings_investment_valid? is false' do
-          before do
-            application.threshold_exceeded = true
-            application.partner_over_61 = false
-            application.save
-            get :show, application_id: application.id, id: :benefits
-          end
+      describe 'benefits' do
+        before { get :show, application_id: application.id, id: :benefits }
 
-          it 'redirects' do
-            expect(response).to have_http_status(:redirect)
-          end
-
-          it 'redirects to the summary page' do
-            expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :summary))
-          end
-        end
-
-        context 'when savings_investment_valid? is true' do
-          before { get :show, application_id: application.id, id: :benefits }
-
-          it 'displays the benefits view' do
-            expect(response).to render_template :benefits
-          end
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_benefits_path(application))
         end
       end
 

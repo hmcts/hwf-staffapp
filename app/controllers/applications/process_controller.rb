@@ -34,6 +34,26 @@ module Applications
       end
     end
 
+    def benefits
+      if application.savings_investment_valid?
+        @form = Applikation::Forms::Benefit.new(application)
+        render :benefits
+      else
+        redirect_to application_summary_path(application)
+      end
+    end
+
+    def benefits_save
+      @form = Applikation::Forms::Benefit.new(application)
+      @form.update_attributes(benefits_params)
+
+      if @form.save
+        redirect_to(application_build_path(application_id: application.id, id: :benefits_result))
+      else
+        render :benefits
+      end
+    end
+
     def summary
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
@@ -56,6 +76,11 @@ module Applications
 
     def application_defails_params
       permitted_attributes = *Applikation::Forms::ApplicationDetail.permitted_attributes.keys
+      params.require(:application).permit(permitted_attributes)
+    end
+
+    def benefits_params
+      permitted_attributes = *Applikation::Forms::Benefit.permitted_attributes.keys
       params.require(:application).permit(permitted_attributes)
     end
 
