@@ -44,15 +44,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
   # End step 3 validation
 
-  # Step 5 - Income
-  with_options if: proc { active_or_status_is? 'income' } do
-    validates :dependents, inclusion: { in: [true, false] }, if: :income_required?
-    validates :income, numericality: true, if: :income_required?
-    validates :children, numericality: true, if: :income_children_required?
-    validate :children_numbers, if: :income_required?
-  end
-  # End step 5 validation
-
   alias_attribute :outcome, :application_outcome
 
   def children=(val)
@@ -121,23 +112,8 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   private
 
-  def income_required?
-    active_or_status_is?('income') & !benefits? && savings_investment_valid?
-  end
-
-  def income_children_required?
-    income_required? && dependents?
-  end
-
   def run_auto_checks
     run_income_calculation
-  end
-
-  def children_numbers
-    errors.add(
-      :children,
-      I18n.t('activerecord.errors.models.application.attributes.children.not_a_number')
-    ) if dependents? && no_children?
   end
 
   def no_children?
