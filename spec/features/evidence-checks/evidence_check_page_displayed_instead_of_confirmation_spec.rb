@@ -16,8 +16,9 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
   scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
     create_list :application_full_remission, 9
 
-    visit application_build_path(application_id: application.id, id: 'income_result')
+    visit application_income_path(application)
 
+    click_button 'Next'
     click_button 'Next'
 
     expect(page).to have_content 'Evidence of income needs to be checked for this application'

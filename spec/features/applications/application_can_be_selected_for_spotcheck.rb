@@ -19,11 +19,12 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
     end
 
     scenario 'Every 10th application is selected for evidence check' do
-      visit application_build_path(application_id: application.id, id: 'income_result')
+      visit application_income_path(application)
 
       click_button 'Next'
+      click_button 'Next'
 
-      expect(page).to have_content('This application has been chosen for investigation.')
+      expect(page).to have_content('Evidence of income needs to be checked for this application')
     end
   end
 
@@ -35,11 +36,12 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
     end
 
     scenario 'Every 2nd application is selected for evidence check' do
-      visit application_build_path(application_id: application.id, id: 'income_result')
+      visit application_income_path(application)
 
       click_button 'Next'
+      click_button 'Next'
 
-      expect(page).to have_content('This application has been chosen for investigation.')
+      expect(page).to have_content('Evidence of income needs to be checked for this application')
     end
   end
 end

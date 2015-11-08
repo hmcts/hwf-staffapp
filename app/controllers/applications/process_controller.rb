@@ -1,4 +1,5 @@
 module Applications
+  # rubocop:disable ClassLength
   class ProcessController < ApplicationController
     before_action :authenticate_user!
 
@@ -78,6 +79,7 @@ module Applications
       @form.update_attributes(form_params(:income))
 
       if @form.save
+        evidence_check_and_payment
         redirect_to(application_build_path(application_id: application.id, id: :income_result))
       else
         render :income
@@ -118,6 +120,11 @@ module Applications
       #        from it, this should be as well
       application.update(status: application.status)
       redirect_to(application_build_path(application.id, :savings_investments))
+    end
+
+    def evidence_check_and_payment
+      EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
+      PaymentBuilder.new(application, Settings.payment.expires_in_days).decide!
     end
   end
 end

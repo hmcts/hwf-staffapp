@@ -50,8 +50,8 @@ class Applications::BuildController < ApplicationController
   end
 
   def update
-    evidence_check_selection
-    create_payment_if_needed
+    # evidence_check_selection
+    # create_payment_if_needed
 
     if FORM_OBJECTS.include?(step)
       handle_form_object(params, step)
