@@ -45,6 +45,14 @@ RSpec.describe Applications::BuildController, type: :controller do
           expect(response).to have_http_status(400)
         end
       end
+
+      describe 'income' do
+        before { put :update, application_id: application.id, id: :income, application: { dependents: false } }
+
+        it 'renders 400 error' do
+          expect(response).to have_http_status(400)
+        end
+      end
     end
 
     describe 'GET ' do
@@ -92,33 +100,11 @@ RSpec.describe Applications::BuildController, type: :controller do
         end
       end
 
-      context 'income' do
-        context 'user has selected "no" to benefits' do
-          before do
-            application = create(:application, :no_benefits, dependents: false)
-            get :show, application_id: application.id, id: :income
-          end
+      describe 'income' do
+        before { get :show, application_id: application.id, id: :income }
 
-          it 'displays the income view' do
-            expect(response).to render_template :income
-          end
-
-        end
-
-        context 'user has selected "yes" to benefits' do
-          before do
-            application.benefits = true
-            application.save
-            get :show, application_id: application.id, id: :income
-          end
-
-          it 'redirects' do
-            expect(response).to have_http_status(:redirect)
-          end
-
-          it 'redirects to the summary page' do
-            expect(response).to redirect_to(application_build_path(application_id: assigns(:application).id, id: :summary))
-          end
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_income_path(application))
         end
       end
     end

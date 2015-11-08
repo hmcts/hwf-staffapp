@@ -10,6 +10,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:application_details_form) { double }
   let(:benefit_form) { double }
   let(:benefit_check_runner) { double(run: nil) }
+  let(:income_form) { double }
 
   before do
     sign_in user
@@ -18,6 +19,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application.detail).and_return(application_details_form)
     allow(Applikation::Forms::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
+    allow(Applikation::Forms::Income).to receive(:new).with(application).and_return(income_form)
   end
 
   describe 'GET #personal_information' do
@@ -227,6 +229,69 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'redirects to the income page' do
         expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income))
+      end
+    end
+  end
+
+  describe 'GET #income' do
+    let(:application) { build_stubbed(:application, benefits: benefits) }
+
+    before do
+      get :income, application_id: application.id
+    end
+
+    context 'when application is on benefits' do
+      let(:benefits) { true }
+
+      it 'redirects to the summary' do
+        expect(response).to redirect_to(application_summary_path(application))
+      end
+    end
+
+    context 'when application is not on benefits' do
+      let(:benefits) { false }
+
+      it 'returns 200 response' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:income)
+      end
+
+      it 'assigns the income form' do
+        expect(assigns(:form)).to eql(income_form)
+      end
+    end
+  end
+
+  describe 'PUT #income_save' do
+    let(:expected_params) { { dependents: false } }
+
+    before do
+      expect(income_form).to receive(:update_attributes).with(expected_params)
+      expect(income_form).to receive(:save).and_return(form_save)
+
+      put :income_save, application_id: application.id, application: expected_params
+    end
+
+    context 'when the form can be saved' do
+      let(:form_save) { true }
+
+      it 'redirects to the income result page' do
+        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income_result))
+      end
+    end
+
+    context 'when the form can\'t be saved' do
+      let(:form_save) { false }
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:income)
+      end
+
+      it 'assigns the income form' do
+        expect(assigns(:form)).to eql(income_form)
       end
     end
   end

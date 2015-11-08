@@ -8,7 +8,7 @@ module Applications
 
     def personal_information_save
       @form = Applikation::Forms::PersonalInformation.new(application.applicant)
-      @form.update_attributes(personal_information_params)
+      @form.update_attributes(form_params(:personal_information))
 
       if @form.save
         redirect_to(action: :application_details)
@@ -24,7 +24,7 @@ module Applications
 
     def application_details_save
       @form = Applikation::Forms::ApplicationDetail.new(application.detail)
-      @form.update_attributes(application_defails_params)
+      @form.update_attributes(form_params(:application_details))
 
       if @form.save
         hack_and_redirect
@@ -45,7 +45,7 @@ module Applications
 
     def benefits_save
       @form = Applikation::Forms::Benefit.new(application)
-      @form.update_attributes(benefits_params)
+      @form.update_attributes(form_params(:benefits))
 
       if @form.save
         BenefitCheckRunner.new(application).run
@@ -64,6 +64,26 @@ module Applications
       end
     end
 
+    def income
+      if !application.benefits?
+        @form = Applikation::Forms::Income.new(application)
+        render :income
+      else
+        redirect_to application_summary_path(application)
+      end
+    end
+
+    def income_save
+      @form = Applikation::Forms::Income.new(application)
+      @form.update_attributes(form_params(:income))
+
+      if @form.save
+        redirect_to(application_build_path(application_id: application.id, id: :income_result))
+      else
+        render :income
+      end
+    end
+
     def summary
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
@@ -79,19 +99,9 @@ module Applications
 
     private
 
-    def personal_information_params
-      permitted_attributes = *Applikation::Forms::PersonalInformation.permitted_attributes.keys
-      params.require(:application).permit(permitted_attributes)
-    end
-
-    def application_defails_params
-      permitted_attributes = *Applikation::Forms::ApplicationDetail.permitted_attributes.keys
-      params.require(:application).permit(permitted_attributes)
-    end
-
-    def benefits_params
-      permitted_attributes = *Applikation::Forms::Benefit.permitted_attributes.keys
-      params.require(:application).permit(permitted_attributes)
+    def form_params(type)
+      class_name = "Applikation::Forms::#{type.to_s.classify}".constantize
+      params.require(:application).permit(*class_name.permitted_attributes.keys)
     end
 
     def application

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     get 'benefits', to: 'applications/process#benefits', as: :benefits
     put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
     get 'benefits_result', to: 'applications/process#benefits_result', as: :benefits_result
+    get 'income', to: 'applications/process#income', as: :income
+    put 'income', to: 'applications/process#income_save', as: :income_save
     get 'summary', to: 'applications/process#summary', as: :summary
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end

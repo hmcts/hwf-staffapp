@@ -22,9 +22,9 @@ class Applications::BuildController < ApplicationController
     :confirmation
 
   PROCESS_CONTROLLER_ACTIONS = %i[
-    personal_information application_details benefits benefits_result summary
+    personal_information application_details benefits benefits_result income summary
   ]
-  FORM_OBJECTS = %i[savings_investments income]
+  FORM_OBJECTS = %i[savings_investments]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)

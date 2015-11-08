@@ -27,6 +27,18 @@ module Applikation
       def children_declared_but_dependents_arent?
         !dependents && children.to_i > 0
       end
+
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        {
+          income: income,
+          dependents: dependents,
+          children: children
+        }
+      end
     end
   end
 end
