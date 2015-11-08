@@ -17,5 +17,9 @@ FactoryGirl.define do
     trait :no_result do
       dwp_result 'No'
     end
+
+    trait :error_result do
+      dwp_result 'Error'
+    end
   end
 end
