@@ -9,6 +9,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:personal_information_form) { double }
   let(:application_details_form) { double }
   let(:benefit_form) { double }
+  let(:benefit_check_runner) { double(run: nil) }
 
   before do
     sign_in user
@@ -16,6 +17,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Applikation::Forms::PersonalInformation).to receive(:new).with(application.applicant).and_return(personal_information_form)
     allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application.detail).and_return(application_details_form)
     allow(Applikation::Forms::Benefit).to receive(:new).with(application).and_return(benefit_form)
+    allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
   end
 
   describe 'GET #personal_information' do
@@ -168,7 +170,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     before do
       expect(benefit_form).to receive(:update_attributes).with(expected_params)
       expect(benefit_form).to receive(:save).and_return(form_save)
-      allow(application).to receive(:run_benefit_check)
 
       put :benefits_save, application_id: application.id, application: expected_params
     end
@@ -177,7 +178,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:form_save) { true }
 
       it 'runs the benefit check on the application' do
-        expect(application).to have_received(:run_benefit_check)
+        expect(benefit_check_runner).to have_received(:run)
       end
 
       it 'redirects to the benefits result page' do
