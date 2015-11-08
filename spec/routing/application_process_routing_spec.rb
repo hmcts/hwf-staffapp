@@ -37,5 +37,9 @@ RSpec.describe Applications::ProcessController, type: :routing do
     it 'routes to #income_save' do
       expect(put: '/applications/1/income').to route_to('applications/process#income_save', application_id: '1')
     end
+
+    it 'routes to #income_result' do
+      expect(get: '/applications/1/income_result').to route_to('applications/process#income_result', application_id: '1')
+    end
   end
 end

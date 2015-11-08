@@ -86,6 +86,15 @@ module Applications
       end
     end
 
+    def income_result
+      if application.application_type == 'income'
+        @application = application
+        render :income_result
+      else
+        redirect_to(application_summary_path(application))
+      end
+    end
+
     def summary
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)

@@ -22,7 +22,10 @@ class Applications::BuildController < ApplicationController
     :confirmation
 
   PROCESS_CONTROLLER_ACTIONS = %i[
-    personal_information application_details benefits benefits_result income summary
+    personal_information application_details
+    benefits benefits_result
+    income income_result
+    summary
   ]
   FORM_OBJECTS = %i[savings_investments]
 

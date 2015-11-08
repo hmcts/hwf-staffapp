@@ -107,6 +107,14 @@ RSpec.describe Applications::BuildController, type: :controller do
           expect(response).to redirect_to(application_income_path(application))
         end
       end
+
+      describe 'income_result' do
+        before { get :show, application_id: application.id, id: :income_result }
+
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_income_result_path(application))
+        end
+      end
     end
   end
 end

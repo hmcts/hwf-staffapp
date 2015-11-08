@@ -40,7 +40,7 @@ RSpec.feature 'Completing the application details', type: :feature do
       fill_in 'application_children', with: '3'
       fill_in 'application_income', with: '1900'
       click_button 'Next'
-      click_button 'Next'
+      click_link 'Next'
     end
 
     scenario 'shows the proper summary page' do
@@ -71,7 +71,7 @@ RSpec.feature 'Completing the application details', type: :feature do
       fill_in 'application_children', with: '3'
       fill_in 'application_income', with: '1900'
       click_button 'Next'
-      click_button 'Next'
+      click_link 'Next'
       click_link 'Change savings and investments'
       choose 'application_threshold_exceeded_true'
       click_button 'Next'

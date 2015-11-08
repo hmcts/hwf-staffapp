@@ -36,7 +36,8 @@ module Applikation
         {
           income: income,
           dependents: dependents,
-          children: children
+          children: children,
+          application_type: 'income'
         }
       end
     end

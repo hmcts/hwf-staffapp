@@ -310,6 +310,38 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
+  describe 'GET #income_result' do
+    let(:application) { build_stubbed(:application, application_type: type) }
+
+    before do
+      get :income_result, application_id: application.id
+    end
+
+    context 'when the application is income based' do
+      let(:type) { 'income' }
+
+      it 'renders 200 response' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:income_result)
+      end
+
+      it 'assigns application' do
+        expect(assigns(:application)).to eql(application)
+      end
+    end
+
+    context 'when the application is not income based' do
+      let(:type) { 'benefits' }
+
+      it 'redirects to the summary page' do
+        expect(response).to redirect_to(application_summary_path(application))
+      end
+    end
+  end
+
   describe 'GET #summary' do
     before do
       get :summary, application_id: application.id

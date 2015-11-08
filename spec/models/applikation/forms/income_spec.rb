@@ -97,6 +97,10 @@ RSpec.describe Applikation::Forms::Income do
           expect(application.send(key)).to eql(value)
         end
       end
+
+      it 'marks the application as income' do
+        expect(application.application_type).to eql('income')
+      end
     end
 
     context 'when attributes are incorrect' do
