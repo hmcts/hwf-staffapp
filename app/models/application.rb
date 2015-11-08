@@ -107,15 +107,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     partner_over_61? && !applicant_over_61?
   end
 
-  def can_check_benefits?
-    [
-      last_name.present?,
-      date_of_birth.present?,
-      ni_number.present?,
-      (date_received.present? || date_fee_paid.present?)
-    ].all?
-  end
-
   def last_benefit_check
     benefit_checks.order(:id).last
   end
@@ -126,25 +117,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   def payment?
     !payment.nil?
-  end
-
-  def run_benefit_check # rubocop:disable MethodLength
-    if can_check_benefits? && new_benefit_check_needed?
-      BenefitCheckService.new(
-        benefit_checks.create(
-          last_name: last_name,
-          date_of_birth: date_of_birth,
-          ni_number: ni_number,
-          date_to_check: benefit_check_date,
-          our_api_token: generate_api_token,
-          parameter_hash: build_hash
-        )
-      )
-      update(
-        application_type: 'benefit',
-        application_outcome: last_benefit_check.outcome
-      )
-    end
   end
 
   private
@@ -185,28 +157,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
         amount_to_pay: income_calculation_result[:amount]
       )
     end
-  end
-
-  def benefit_check_date
-    if date_fee_paid.present?
-      date_fee_paid
-    elsif date_received.present?
-      date_received
-    end
-  end
-
-  def new_benefit_check_needed?
-    last_benefit_check.nil? || last_benefit_check.parameter_hash != build_hash
-  end
-
-  def build_hash
-    Base64.encode64([last_name, date_of_birth, ni_number, benefit_check_date].to_s)
-  end
-
-  def generate_api_token
-    user = User.find(user_id)
-    short_name = user.name.gsub(' ', '').downcase.truncate(27)
-    "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{id}"
   end
 
   def active?

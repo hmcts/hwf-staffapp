@@ -14,7 +14,8 @@ RSpec.feature 'Benefit Results', type: :feature do
 
     before do
       dwp_api_response 'Yes'
-      application.run_benefit_check
+      # FIXME: Remove this and use factories instead
+      BenefitCheckRunner.new(application).run
       login_as user
     end
 

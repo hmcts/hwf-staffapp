@@ -82,6 +82,20 @@ RSpec.describe BenefitCheckRunner do
 
   subject(:service) { described_class.new(application) }
 
+  describe '#can_run?' do
+    subject { service.can_run? }
+
+    context 'when all required details are present' do
+      it { is_expected.to be true }
+    end
+
+    context 'when some details are missing' do
+      let(:applicant) { build(:applicant) }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '#run' do
     before do
       existing_benefit_check

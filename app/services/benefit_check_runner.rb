@@ -3,6 +3,13 @@ class BenefitCheckRunner
     @application = application
   end
 
+  def can_run?
+    applicant.last_name.present? &&
+      applicant.date_of_birth.present? &&
+      applicant.ni_number.present? &&
+      benefit_check_date.present?
+  end
+
   def run
     if can_run? && should_run?
       BenefitCheckService.new(benefit_check)
@@ -19,13 +26,6 @@ class BenefitCheckRunner
 
   def detail
     @application.detail
-  end
-
-  def can_run?
-    applicant.last_name.present? &&
-      applicant.date_of_birth.present? &&
-      applicant.ni_number.present? &&
-      benefit_check_date
   end
 
   def should_run?
