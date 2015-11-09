@@ -1,4 +1,4 @@
-class Application < ActiveRecord::Base # rubocop:disable ClassLength
+class Application < ActiveRecord::Base
 
   belongs_to :user, -> { with_deleted }
   belongs_to :office
@@ -34,8 +34,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   MAX_AGE = 120
   MIN_AGE = 16
 
-  after_save :run_auto_checks
-
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
     validates :threshold_exceeded, inclusion: { in: [true, false] }
@@ -43,21 +41,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :check_high_threshold?
   end
   # End step 3 validation
-
-  # Step 4 - Benefits
-  with_options if: proc { active_or_status_is? 'benefits' } do
-    validates :benefits, inclusion: { in: [true, false] }, if: :benefits_required?
-  end
-  # End step 4 validation
-
-  # Step 5 - Income
-  with_options if: proc { active_or_status_is? 'income' } do
-    validates :dependents, inclusion: { in: [true, false] }, if: :income_required?
-    validates :income, numericality: true, if: :income_required?
-    validates :children, numericality: true, if: :income_children_required?
-    validate :children_numbers, if: :income_required?
-  end
-  # End step 5 validation
 
   alias_attribute :outcome, :application_outcome
 
@@ -105,28 +88,12 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
     result
   end
 
-  def benefits=(val)
-    super
-    self.application_type = benefits? ? 'benefit' : 'income'
-    self.dependents = nil if benefits?
-    self.application_outcome = outcome_from_dwp_result if benefits? && last_benefit_check.present?
-  end
-
   def applicant_over_61?
     applicant.age >= 61
   end
 
   def check_high_threshold?
     partner_over_61? && !applicant_over_61?
-  end
-
-  def can_check_benefits?
-    [
-      last_name.present?,
-      date_of_birth.present?,
-      ni_number.present?,
-      (date_received.present? || date_fee_paid.present?)
-    ].all?
   end
 
   def last_benefit_check
@@ -142,99 +109,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   private
-
-  def income_required?
-    active_or_status_is?('income') & !benefits? && savings_investment_valid?
-  end
-
-  def income_children_required?
-    income_required? && dependents?
-  end
-
-  def benefits_required?
-    active_or_status_is?('benefits') && :savings_investment_valid?
-  end
-
-  def run_auto_checks
-    run_benefit_check
-    run_income_calculation
-  end
-
-  def children_numbers
-    errors.add(
-      :children,
-      I18n.t('activerecord.errors.models.application.attributes.children.not_a_number')
-    ) if dependents? && no_children?
-  end
-
-  def no_children?
-    children_present? && children == 0
-  end
-
-  def children_present?
-    children.present?
-  end
-
-  def run_benefit_check # rubocop:disable MethodLength
-    if can_check_benefits? && new_benefit_check_needed?
-      BenefitCheckService.new(
-        benefit_checks.create(
-          last_name: last_name,
-          date_of_birth: date_of_birth,
-          ni_number: ni_number,
-          date_to_check: benefit_check_date,
-          our_api_token: generate_api_token,
-          parameter_hash: build_hash
-        )
-      )
-      update(
-        application_type: 'benefit',
-        application_outcome: outcome_from_dwp_result
-      )
-    end
-  end
-
-  def run_income_calculation
-    income_calculation_result = IncomeCalculation.new(self).calculate
-    if income_calculation_result
-      update_columns(
-        application_type: 'income',
-        application_outcome: income_calculation_result[:outcome],
-        amount_to_pay: income_calculation_result[:amount]
-      )
-    end
-  end
-
-  def outcome_from_dwp_result
-    case last_benefit_check.dwp_result
-    when 'Yes'
-      'full'
-    when 'No'
-      'none'
-    end
-  end
-
-  def benefit_check_date
-    if date_fee_paid.present?
-      date_fee_paid
-    elsif date_received.present?
-      date_received
-    end
-  end
-
-  def new_benefit_check_needed?
-    last_benefit_check.nil? || last_benefit_check.parameter_hash != build_hash
-  end
-
-  def build_hash
-    Base64.encode64([last_name, date_of_birth, ni_number, benefit_check_date].to_s)
-  end
-
-  def generate_api_token
-    user = User.find(user_id)
-    short_name = user.name.gsub(' ', '').downcase.truncate(27)
-    "#{short_name}@#{created_at.strftime('%y%m%d%H%M%S')}.#{id}"
-  end
 
   def active?
     status == 'active'

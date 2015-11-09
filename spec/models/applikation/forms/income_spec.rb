@@ -72,4 +72,41 @@ RSpec.describe Applikation::Forms::Income do
       end
     end
   end
+
+  describe '#save' do
+    let(:application) { create :application }
+    subject(:form) { described_class.new(application) }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
+
+    context 'when attributes are correct' do
+      let(:params) { { income: 500, dependents: true, children: 2 } }
+
+      it { is_expected.to be true }
+
+      before do
+        subject
+        application.reload
+      end
+
+      it 'saves the parameters in the detail' do
+        params.each do |key, value|
+          expect(application.send(key)).to eql(value)
+        end
+      end
+
+      it 'marks the application as income' do
+        expect(application.application_type).to eql('income')
+      end
+    end
+
+    context 'when attributes are incorrect' do
+      let(:params) { { dependents: nil } }
+
+      it { is_expected.to be false }
+    end
+  end
 end

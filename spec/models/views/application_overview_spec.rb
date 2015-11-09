@@ -91,25 +91,33 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe 'benefits' do
-    let(:benefit_check) { build_stubbed(:benefit_check, application: application) }
-
     subject { view.benefits }
 
-    before do
-      allow(application).to receive(:last_benefit_check).and_return(benefit_check)
-      allow(benefit_check).to receive(:dwp_result).and_return(result)
+    context 'for benefit type application' do
+      let(:benefit_check) { build_stubbed(:benefit_check, application: application, dwp_result: result) }
+      let(:application) { build_stubbed(:application, :benefit_type) }
+
+      before do
+        allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+      end
+
+      context 'when the dwp_result is Yes' do
+        let(:result) { 'Yes' }
+
+        it { is_expected.to eq '✓ Passed' }
+      end
+
+      context 'when the dwp_result is No' do
+        let(:result) { 'No' }
+
+        it { is_expected.to eq '✗ Failed' }
+      end
     end
 
-    context 'when the dwp_result is Yes' do
-      let(:result) { 'Yes' }
+    context 'for an income type application' do
+      let(:application) { build_stubbed(:application, :income_type) }
 
-      it { is_expected.to eq '✓ Passed' }
-    end
-
-    context 'when the dwp_result is No' do
-      let(:result) { 'No' }
-
-      it { is_expected.to eq '✗ Failed' }
+      it { is_expected.to be nil }
     end
   end
 

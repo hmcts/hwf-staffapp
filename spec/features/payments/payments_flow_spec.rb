@@ -74,14 +74,12 @@ RSpec.feature 'Payments flow', type: :feature do
     end
 
     context 'for correct payment' do
-      let(:application) { create :application_part_remission, user: user }
+      let(:application) { create :application_part_remission, amount_to_pay: 25, user: user }
       let(:payment) { create :payment, application: application, correct: true }
 
       scenario 'result and success message are displayed' do
         expect(page).to have_content 'Part payment✓ Passed'
-        # It is 10, because it is calculated in the Application model on save
-        # Todo this should be changed when the model becomes much lighter
-        expect(page).to have_content 'The applicant has paid £10 towards the fee'
+        expect(page).to have_content 'The applicant has paid £25 towards the fee'
       end
     end
 

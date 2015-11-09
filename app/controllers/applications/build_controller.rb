@@ -21,8 +21,13 @@ class Applications::BuildController < ApplicationController
     :summary,
     :confirmation
 
-  PROCESS_CONTROLLER_ACTIONS = %i[personal_information application_details summary]
-  FORM_OBJECTS = %i[savings_investments benefits income]
+  PROCESS_CONTROLLER_ACTIONS = %i[
+    personal_information application_details
+    benefits benefits_result
+    income income_result
+    summary
+  ]
+  FORM_OBJECTS = %i[savings_investments]
 
   def create
     application_builder = ApplicationBuilder.new(current_user)
@@ -48,8 +53,8 @@ class Applications::BuildController < ApplicationController
   end
 
   def update
-    evidence_check_selection
-    create_payment_if_needed
+    # evidence_check_selection
+    # create_payment_if_needed
 
     if FORM_OBJECTS.include?(step)
       handle_form_object(params, step)

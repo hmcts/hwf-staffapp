@@ -15,6 +15,12 @@ Rails.application.routes.draw do
       to: 'applications/process#application_details', as: :application_details
     put 'application_details',
       to: 'applications/process#application_details_save', as: :application_details_save
+    get 'benefits', to: 'applications/process#benefits', as: :benefits
+    put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
+    get 'benefits_result', to: 'applications/process#benefits_result', as: :benefits_result
+    get 'income', to: 'applications/process#income', as: :income
+    put 'income', to: 'applications/process#income_save', as: :income_save
+    get 'income_result', to: 'applications/process#income_result', as: :income_result
     get 'summary', to: 'applications/process#summary', as: :summary
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
