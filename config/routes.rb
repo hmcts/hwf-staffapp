@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
   get '/applications/new' => 'applications/build#create'
-  resources :applications do
-    resources :build, controller: 'applications/build'
+  resources :applications, only: [] do
+
+    collection do
+      post 'create', to: 'applications/process#create', as: :create
+    end
 
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'

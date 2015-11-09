@@ -26,6 +26,24 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
   end
 
+  describe 'POST create' do
+    let(:builder) { double(create: application) }
+
+    before do
+      allow(ApplicationBuilder).to receive(:new).with(user).and_return(builder)
+
+      post :create
+    end
+
+    it 'creates a new application' do
+      expect(builder).to have_received(:create)
+    end
+
+    it 'redirects to the personal information page for that application' do
+      expect(response).to redirect_to(application_personal_information_path(application))
+    end
+  end
+
   describe 'GET #personal_information' do
     before do
       get :personal_information, application_id: application.id
@@ -116,8 +134,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'redirects to savings_investments in the old BuildController' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :savings_investments))
+      it 'redirects to savings_investments' do
+        expect(response).to redirect_to(application_savings_investments_path(application))
       end
     end
 
@@ -291,7 +309,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:benefits) { false }
 
       it 'redirects to the income page' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income))
+        expect(response).to redirect_to(application_income_path(application))
       end
     end
   end
@@ -360,7 +378,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       end
 
       it 'redirects to the income result page' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income_result))
+        expect(response).to redirect_to(application_income_result_path(application))
       end
     end
 
