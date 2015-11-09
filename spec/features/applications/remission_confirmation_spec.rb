@@ -25,9 +25,9 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
     context 'who has part remission' do
       let(:part_remission_copy) do
         ['Write to the applicant with details of how much they have to pay',
-         'Complete the remission register with the application details',
-         'Write the reference number on the top right corner of the paper form',
-         'Copy the reference number into the case management system']
+         'Store the application form in a secure location until you receive the part-payment',
+         "You don't need to complete the remission register until part-payment has been received",
+         'Write the reference number on the top right corner of the paper form']
       end
 
       context 'after user continues to confirmation page' do

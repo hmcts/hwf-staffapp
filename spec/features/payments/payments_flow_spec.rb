@@ -15,8 +15,8 @@ RSpec.feature 'Payments flow', type: :feature do
   context 'when on the payment flow initial page' do
     before { visit payment_path(id: payment.id) }
 
-    headings = ['Waiting for payment',
-                'Process payment',
+    headings = ['Waiting for part-payment',
+                'Process part-payment',
                 'Processing details',
                 'Personal details',
                 'Application details',
@@ -33,17 +33,17 @@ RSpec.feature 'Payments flow', type: :feature do
     before { visit accuracy_payment_path(id: payment.id) }
 
     it 'displays the title of the page' do
-      expect(page).to have_content 'Payment details'
+      expect(page).to have_content 'Part-payment details'
     end
 
     it 'displays the form label' do
-      expect(page).to have_content 'Is the payment correct?'
+      expect(page).to have_content 'Is the part-payment correct?'
     end
 
     scenario 'it re-renders the page when the page is submitted without anything filled in' do
       click_button 'Next'
 
-      expect(page).to have_content 'Is the payment correct?'
+      expect(page).to have_content 'Is the part-payment correct?'
     end
 
     scenario 'confirming the payment is correct redirects to the summary' do
@@ -54,7 +54,7 @@ RSpec.feature 'Payments flow', type: :feature do
 
     scenario 'rejecting the payment redirects to the summary page' do
       choose 'payment_correct_false'
-      expect(page).to have_content 'What is incorrect about the payment?'
+      expect(page).to have_content 'Describe the problem with the part-payment'
       click_button 'Next'
       expect(page).to have_content 'Check details'
     end
@@ -114,7 +114,7 @@ RSpec.feature 'Payments flow', type: :feature do
       let(:payment) { create :payment, correct: false }
 
       scenario 'a letter copy is presented' do
-        expect(page).to have_content 'We have received your payment however it was not correct'
+        expect(page).to have_content 'We have received your part-payment however it was not correct'
       end
     end
   end
