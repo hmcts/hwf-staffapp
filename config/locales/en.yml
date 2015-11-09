@@ -53,7 +53,7 @@ en-GB:
     incorrect: 'No'
     labels:
       correct: Is the part-payment correct?
-      incorrect_reason: Describe the problem with the part-payment 
+      incorrect_reason: Describe the problem with the part-payment
     dashboard:
       heading: Waiting for part-payment
       no_records: There are no applications waiting for part-payment
@@ -147,7 +147,7 @@ en-GB:
         - 'Write the reference number on the top right corner of the paper form'
         - 'Write to the applicant using the letter on this page to ask for evidence'
         - 'Store the application form in a secure location until you receive the evidence'
-        - 'You don't need to complete the remission register until evidence has been received'
+        - "You don't need to complete the remission register until evidence has been received"
     letter_html: |
         <p>Dear %{full_name}</p>
 

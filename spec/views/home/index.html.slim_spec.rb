@@ -34,7 +34,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     end
 
     it 'has a table for awaiting payments' do
-      expect(rendered).to have_content 'Waiting for payment'
+      expect(rendered).to have_content 'Waiting for part-payment'
     end
 
     it 'has a link to processed application' do
@@ -63,7 +63,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     end
 
     it 'has a table for awaiting payments' do
-      expect(rendered).to have_content 'Waiting for payment'
+      expect(rendered).to have_content 'Waiting for part-payment'
     end
 
     it 'has a link to processed application' do
