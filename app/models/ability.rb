@@ -31,9 +31,6 @@ class Ability
 
   def users_can
     can :read, Office
-    can :new, DwpCheck
-    can :lookup, DwpCheck
-    can :show, DwpCheck
     can :create, Feedback
   end
 
