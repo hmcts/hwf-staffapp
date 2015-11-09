@@ -71,8 +71,10 @@ class BenefitCheckRunner
   end
 
   def build_hash
-    parts = [applicant.last_name, applicant.date_of_birth, applicant.ni_number, benefit_check_date]
-    Base64.encode64(parts.to_s)
+    Base64.encode64 [applicant.last_name,
+                     applicant.date_of_birth,
+                     applicant.ni_number,
+                     benefit_check_date].to_s
   end
 
   def generate_api_token
