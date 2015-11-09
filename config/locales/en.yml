@@ -52,11 +52,11 @@ en-GB:
     correct: 'Yes'
     incorrect: 'No'
     labels:
-      correct: Is the payment correct?
-      incorrect_reason: What is incorrect about the payment?
+      correct: Is the part-payment correct?
+      incorrect_reason: Describe the problem with the part-payment 
     dashboard:
-      heading: Waiting for payment
-      no_records: There are no applications waiting for payment
+      heading: Waiting for part-payment
+      no_records: There are no applications waiting for part-payment
       table_header:
         reference: Reference
         applicant: Applicant
@@ -67,7 +67,7 @@ en-GB:
       'no': The applicant will need to make a new application
     failed_letter_html: |
       <p>Dear %{full_name}</p>
-      <p>We have received your payment however it was not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
+      <p>We have received your part-payment however it was not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
       <p>You will need to make a new application if you still require help.</p>
       <p>Yours sincerely,</p>
       <p>%{user}</p>
@@ -145,14 +145,15 @@ en-GB:
       title: Next steps
       steps:
         - 'Write the reference number on the top right corner of the paper form'
-        - 'Store and application and documents in a secure location'
-        - 'Write to the applicant asking them to send evidence in support of their application. You can copy and paste the letter below:'
+        - 'Write to the applicant using the letter on this page to ask for evidence'
+        - 'Store the application form in a secure location until you receive the evidence'
+        - 'You don't need to complete the remission register until evidence has been received'
     letter_html: |
         <p>Dear %{full_name}</p>
 
         <p><strong>Reference: %{reference}</strong></p>
 
-        <p>We have received your application for help with fees and need some more information from you.</p>
+        <p>We have received your application for help with fees and need some more information from you. If you're married or living with someone and sharing an income, then you partner will need to provide evidence of their income too.</p>
 
         <p>You need to send us a copy of last month’s bank statement for your main bank account.</p>
 

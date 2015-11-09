@@ -1,9 +1,9 @@
-h2 Waiting for payment
+h2 Waiting for part-payment
 
 .row
   .small-12.medium-6.columns
     .panel
-      h4 Process payment
+      h4 Process part-payment
       = link_to 'Start now', accuracy_payment_path(@payment), class: 'button success'
 
 =build_section 'Processing details', @processing_details, %w[reference processed_by expires]
