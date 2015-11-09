@@ -15,6 +15,10 @@ Rails.application.routes.draw do
       to: 'applications/process#application_details', as: :application_details
     put 'application_details',
       to: 'applications/process#application_details_save', as: :application_details_save
+    get 'savings_investments',
+      to: 'applications/process#savings_investments', as: :savings_investments
+    put 'savings_investments',
+      to: 'applications/process#savings_investments_save', as: :savings_investments_save
     get 'benefits', to: 'applications/process#benefits', as: :benefits
     put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
     get 'benefits_result', to: 'applications/process#benefits_result', as: :benefits_result

@@ -35,6 +35,23 @@ module Applications
       end
     end
 
+    def savings_investments
+      @application = application
+      @form = Applikation::Forms::SavingsInvestment.new(application)
+    end
+
+    def savings_investments_save
+      @form = Applikation::Forms::SavingsInvestment.new(application)
+      @form.update_attributes(form_params(:savings_investments))
+
+      if @form.save
+        redirect_to(action: :benefits)
+      else
+        @application = application
+        render :savings_investments
+      end
+    end
+
     def benefits
       if application.savings_investment_valid?
         @form = Applikation::Forms::Benefit.new(application)

@@ -38,6 +38,14 @@ RSpec.describe Applications::BuildController, type: :controller do
         end
       end
 
+      describe 'savings_investments' do
+        before { put :update, application_id: application.id, id: :savings_investments, application: {} }
+
+        it 'renders 400 error' do
+          expect(response).to have_http_status(400)
+        end
+      end
+
       describe 'benefits' do
         before { put :update, application_id: application.id, id: :benefits, application: { benefits: false } }
 
@@ -79,8 +87,8 @@ RSpec.describe Applications::BuildController, type: :controller do
       context 'savings_investments' do
         before { get :show, application_id: application.id, id: :savings_investments }
 
-        it 'displays the savings and investments view' do
-          expect(response).to render_template :savings_investments
+        it 'redirects to the new process controller' do
+          expect(response).to redirect_to(application_savings_investments_path(application))
         end
       end
 
