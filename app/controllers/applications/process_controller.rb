@@ -79,6 +79,7 @@ module Applications
       @form.update_attributes(form_params(:income))
 
       if @form.save
+        calculate_income
         evidence_check_and_payment
         redirect_to(application_build_path(application_id: application.id, id: :income_result))
       else
@@ -129,6 +130,10 @@ module Applications
       #        from it, this should be as well
       application.update(status: application.status)
       redirect_to(application_build_path(application.id, :savings_investments))
+    end
+
+    def calculate_income
+      IncomeCalculationRunner.new(application).run
     end
 
     def evidence_check_and_payment

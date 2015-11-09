@@ -59,6 +59,9 @@ FactoryGirl.define do
       income 2000
       dependents true
       children 3
+      application_outcome 'part'
+      application_type 'income'
+      amount_to_pay 100
     end
 
     factory :application_full_remission do
@@ -69,6 +72,8 @@ FactoryGirl.define do
       income 10
       dependents true
       children 1
+      application_outcome 'full'
+      application_type 'income'
     end
 
     factory :application_no_remission do
@@ -77,6 +82,8 @@ FactoryGirl.define do
       dependents false
       children 1
       income 3000
+      application_outcome 'none'
+      application_type 'income'
     end
 
     factory :applicant_under_61 do

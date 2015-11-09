@@ -11,6 +11,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:benefit_form) { double }
   let(:benefit_check_runner) { double(run: nil) }
   let(:income_form) { double }
+  let(:income_calculation_runner) { double(run: nil) }
 
   before do
     sign_in user
@@ -20,6 +21,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Applikation::Forms::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
     allow(Applikation::Forms::Income).to receive(:new).with(application).and_return(income_form)
+    allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
   end
 
   describe 'GET #personal_information' do
@@ -283,6 +285,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
     context 'when the form can be saved' do
       let(:form_save) { true }
+
+      it 'runs the income calculation on the application' do
+        expect(income_calculation_runner).to have_received(:run)
+      end
 
       it 'makes decision on evidence check' do
         expect(evidence_check_service).to have_received(:decide!)

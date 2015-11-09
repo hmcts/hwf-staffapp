@@ -1,4 +1,4 @@
-class Application < ActiveRecord::Base # rubocop:disable ClassLength
+class Application < ActiveRecord::Base
 
   belongs_to :user, -> { with_deleted }
   belongs_to :office
@@ -33,8 +33,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
 
   MAX_AGE = 120
   MIN_AGE = 16
-
-  after_save :run_auto_checks
 
   # Step 3 - Savings and investments validation
   with_options if: proc { active_or_status_is? 'savings_investments' } do
@@ -111,29 +109,6 @@ class Application < ActiveRecord::Base # rubocop:disable ClassLength
   end
 
   private
-
-  def run_auto_checks
-    run_income_calculation
-  end
-
-  def no_children?
-    children_present? && children == 0
-  end
-
-  def children_present?
-    children.present?
-  end
-
-  def run_income_calculation
-    income_calculation_result = IncomeCalculation.new(self).calculate
-    if income_calculation_result
-      update_columns(
-        application_type: 'income',
-        application_outcome: income_calculation_result[:outcome],
-        amount_to_pay: income_calculation_result[:amount]
-      )
-    end
-  end
 
   def active?
     status == 'active'
