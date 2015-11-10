@@ -23,7 +23,7 @@ RSpec.feature 'Completing the application details', type: :feature do
     context 'the applicant is single and under 61' do
       context 'after completing the personal details page' do
         before do
-          visit applications_new_path
+          start_new_application
 
           fill_in 'application_last_name', with: 'Smith'
           fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
