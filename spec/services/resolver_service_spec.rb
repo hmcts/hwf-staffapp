@@ -7,9 +7,8 @@ describe ResolverService do
 
   describe '#process' do
     Timecop.freeze(Time.zone.now) do
-      before do
-        resolver.process
-      end
+      before { resolver.process }
+
       context 'when created with an application' do
         let(:object) { create(:application_full_remission) }
 
