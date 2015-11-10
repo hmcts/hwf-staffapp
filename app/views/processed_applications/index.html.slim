@@ -10,6 +10,7 @@
           tr
             th =t('processed_applications.table_header.applicant')
             th =t('processed_applications.table_header.date_received')
+            th =t('processed_applications.table_header.processed_on')
             th =t('processed_applications.table_header.processed_by')
             th =t('processed_applications.table_header.emergency')
         tbody
@@ -17,6 +18,7 @@
             tr
               td= link_to(application.applicant, processed_application_path(application.application))
               td= application.date_received
+              td= application.processed_on
               td= application.processed_by
               td= application.emergency
 

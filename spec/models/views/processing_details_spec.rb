@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Views::ProcessingDetails do
-  let(:application) { build_stubbed(:application) }
+  let(:application) { build_stubbed(:application, completed_at: '2015-11-01') }
   let(:record) { double(application: application) }
 
   subject(:view) { described_class.new(record) }
@@ -27,8 +27,14 @@ RSpec.describe Views::ProcessingDetails do
   describe '#processed_by' do
     subject { view.processed_by }
 
-    it 'returns the name of the user who created the application' do
-      is_expected.to eql(application.user.name)
+    it 'returns the name of the user who completed the application' do
+      is_expected.to eql(application.completed_by.name)
+    end
+  end
+
+  describe '#processed_on' do
+    it 'returns the date the application was completed' do
+      expect(view.processed_on).to eql('1 November 2015')
     end
   end
 
