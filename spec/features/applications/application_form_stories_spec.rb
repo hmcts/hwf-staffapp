@@ -12,7 +12,6 @@ RSpec.feature 'Completing the application details', type: :feature do
 
   before do
     Capybara.current_driver = :webkit
-    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
