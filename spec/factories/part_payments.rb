@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :payment do
+  factory :part_payment do
     application
     expires_at { rand(3..7).days.from_now }
 

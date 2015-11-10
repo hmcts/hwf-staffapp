@@ -6,20 +6,20 @@ module Query
 
     def find
       @user.office.applications.
-        includes(:evidence_check, :payment).
-        references(:evidence_check, :payment).
+        includes(:evidence_check, :part_payment).
+        references(:evidence_check, :part_payment).
         where(where_condition).
         order(id: :asc)
     end
 
     def where_condition
-      <<WHERE
-(applications.application_outcome IS NOT NULL)
-AND
-(evidence_checks.id IS NULL OR evidence_checks.completed_at IS NOT NULL)
-AND
-(payments.id IS NULL OR payments.completed_at IS NOT NULL)
-WHERE
+      <<-WHERE.gsub(/^\s+\|/, '')
+        |(applications.application_outcome IS NOT NULL)
+        |AND
+        |(evidence_checks.id IS NULL OR evidence_checks.completed_at IS NOT NULL)
+        |AND
+        |(part_payments.id IS NULL OR part_payments.completed_at IS NOT NULL)
+      WHERE
     end
   end
 end

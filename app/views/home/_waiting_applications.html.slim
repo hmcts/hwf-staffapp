@@ -9,7 +9,7 @@ h3 =t("#{type}.dashboard.heading")
       th =t("#{type}.dashboard.table_header.expires")
     - list.each do |record|
       tr
-        td =link_to(record.reference, send(start_path, record.evidence_or_payment))
+        td =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
         td =record.applicant
         td =record.processed_by
         td =record.expires
