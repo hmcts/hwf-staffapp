@@ -8,7 +8,7 @@ class BenefitOverridesController < ApplicationController
     @form.update_attributes(allowed_params)
 
     if @form.save
-      redirect_to application_build_path(application_id: @application.id, id: :summary)
+      redirect_to application_summary_path(@application)
     else
       redirect_to application_benefit_override_paper_evidence_path(@application)
     end

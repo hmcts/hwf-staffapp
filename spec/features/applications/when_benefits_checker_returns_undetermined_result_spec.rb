@@ -45,7 +45,7 @@ RSpec.feature 'When benefits checker result is "Undetermined"', type: :feature d
     dwp_api_response 'Undetermined'
 
     login_as user
-    visit applications_new_path
+    start_new_application
 
     drive_to_the_benefits_page
   end

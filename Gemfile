@@ -52,8 +52,6 @@ gem 'logstasher', github: 'shadabahmed/logstasher', ref: '0b80e972753ba7ef36854b
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'wicked'
-
 # Date validation
 gem 'date_validator'
 gem 'will_paginate'

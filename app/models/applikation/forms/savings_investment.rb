@@ -6,11 +6,9 @@ module Applikation
 
       def self.permitted_attributes
         {
-          application_id: Integer,
           threshold_exceeded: Boolean,
           partner_over_61: Boolean,
-          high_threshold_exceeded: Boolean,
-          status: String
+          high_threshold_exceeded: Boolean
         }
       end
 
@@ -22,8 +20,20 @@ module Applikation
 
       private
 
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        {
+          threshold_exceeded: threshold_exceeded,
+          partner_over_61: partner_over_61,
+          high_threshold_exceeded: high_threshold_exceeded
+        }
+      end
+
       def check_partner_over_61
-        if PartnerAgeCheck.new(self).verify == false
+        if PartnerAgeCheck.new(self, @object).verify == false
           errors.add(:partner_over_61, I18n.t('partner_over_61.inclusion', scope: LOCALE))
         end
       end

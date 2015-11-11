@@ -12,7 +12,7 @@ RSpec.feature 'Emergency application', type: :feature do
 
   before do
     login_as user
-    visit applications_new_path
+    start_new_application
 
     fill_in 'application_last_name', with: 'Smith'
     fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
@@ -41,7 +41,7 @@ RSpec.feature 'Emergency application', type: :feature do
   context 'when on application summary page' do
     let(:application) { create :application_full_remission, emergency_reason: reason }
 
-    before { visit application_build_path(application_id: application.id, id: 'summary') }
+    before { visit application_summary_path(application) }
 
     scenario 'there will be the reason for emergency application' do
       ['Application details',

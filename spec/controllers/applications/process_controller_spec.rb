@@ -8,6 +8,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
   let(:personal_information_form) { double }
   let(:application_details_form) { double }
+  let(:savings_investments_form) { double }
   let(:benefit_form) { double }
   let(:benefit_check_runner) { double(run: nil) }
   let(:income_form) { double }
@@ -18,10 +19,29 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Applikation::Forms::PersonalInformation).to receive(:new).with(application.applicant).and_return(personal_information_form)
     allow(Applikation::Forms::ApplicationDetail).to receive(:new).with(application.detail).and_return(application_details_form)
+    allow(Applikation::Forms::SavingsInvestment).to receive(:new).with(application).and_return(savings_investments_form)
     allow(Applikation::Forms::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
     allow(Applikation::Forms::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
+  end
+
+  describe 'POST create' do
+    let(:builder) { double(create: application) }
+
+    before do
+      allow(ApplicationBuilder).to receive(:new).with(user).and_return(builder)
+
+      post :create
+    end
+
+    it 'creates a new application' do
+      expect(builder).to have_received(:create)
+    end
+
+    it 'redirects to the personal information page for that application' do
+      expect(response).to redirect_to(application_personal_information_path(application))
+    end
   end
 
   describe 'GET #personal_information' do
@@ -114,8 +134,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'redirects to savings_investments in the old BuildController' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :savings_investments))
+      it 'redirects to savings_investments' do
+        expect(response).to redirect_to(application_savings_investments_path(application))
       end
     end
 
@@ -132,6 +152,65 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns user\'s jurisdictions' do
         expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
+      end
+    end
+  end
+
+  describe 'GET #savings_investments' do
+    before do
+      get :savings_investments, application_id: application.id
+    end
+
+    context 'when the application does exist' do
+      it 'responds with 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:savings_investments)
+      end
+
+      it 'assigns the correct form' do
+        expect(assigns(:form)).to eql(savings_investments_form)
+      end
+
+      it 'assigns the application' do
+        expect(assigns(:application)).to eql(application)
+      end
+    end
+  end
+
+  describe 'PUT #savings_investments_save' do
+    let(:expected_params) { { threshold_exceeded: false } }
+
+    before do
+      allow(savings_investments_form).to receive(:update_attributes).with(expected_params)
+      allow(savings_investments_form).to receive(:save).and_return(form_save)
+
+      put :savings_investments_save, application_id: application.id, application: expected_params
+    end
+
+    context 'when the form can be saved' do
+      let(:form_save) { true }
+
+      it 'redirects to benefits' do
+        expect(response).to redirect_to(application_benefits_path(application))
+      end
+    end
+
+    context 'when the form can not be saved' do
+      let(:form_save) { false }
+
+      it 'renders the correct template' do
+        expect(response).to render_template(:savings_investments)
+      end
+
+      it 'assigns the correct form' do
+        expect(assigns(:form)).to eql(savings_investments_form)
+      end
+
+      it 'assigns the application' do
+        expect(assigns(:application)).to eql(application)
       end
     end
   end
@@ -230,7 +309,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:benefits) { false }
 
       it 'redirects to the income page' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income))
+        expect(response).to redirect_to(application_income_path(application))
       end
     end
   end
@@ -299,7 +378,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       end
 
       it 'redirects to the income result page' do
-        expect(response).to redirect_to(application_build_path(application_id: application.id, id: :income_result))
+        expect(response).to redirect_to(application_income_result_path(application))
       end
     end
 

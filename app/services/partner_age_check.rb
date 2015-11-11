@@ -1,8 +1,9 @@
+# TODO: Make a validator out of this service
 class PartnerAgeCheck
 
-  def initialize(record)
+  def initialize(record, application)
     @record = record
-    @application = Application.find(@record.application_id)
+    @application = application
   end
 
   def verify

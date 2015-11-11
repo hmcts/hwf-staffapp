@@ -98,6 +98,11 @@ RSpec.configure do |config|
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
   end
 
+  Capybara::Webkit.configure do |config|
+    config.allow_url('http://www.google.com/jsapi')
+    config.block_unknown_urls
+  end
+
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
