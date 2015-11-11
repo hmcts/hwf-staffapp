@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-describe PaymentBuilder do
+describe PartPaymentBuilder do
   let(:current_time) { Time.zone.now }
   let(:expires_in_days) { 2 }
-  subject(:payment_builder) { described_class.new(application, expires_in_days) }
+  subject(:part_payment_builder) { described_class.new(application, expires_in_days) }
 
   describe '#decide!' do
     subject do
       Timecop.freeze(current_time) do
-        payment_builder.decide!
+        part_payment_builder.decide!
       end
 
-      application.payment
+      application.part_payment
     end
 
     context 'when application is a part payment' do
       let(:application) { create :application_part_remission }
 
-      it { is_expected.to be_a(Payment) }
+      it { is_expected.to be_a(PartPayment) }
 
       it 'sets expiration on the payment' do
         expect(subject.expires_at).to eql(current_time + expires_in_days.days)
@@ -59,7 +59,7 @@ describe PaymentBuilder do
           context 'and completed' do
             before { allow(application.evidence_check).to receive(:completed_at).and_return(Time.zone.now - 1.days) }
 
-            it { is_expected.to be_a(Payment) }
+            it { is_expected.to be_a(PartPayment) }
           end
         end
       end

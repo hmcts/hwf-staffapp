@@ -49,7 +49,7 @@ en-GB:
         applicant: Applicant
         processed_by: Processed by
         expires: Expires
-  payment:
+  part_payment:
     correct: 'Yes'
     incorrect: 'No'
     labels:
@@ -160,46 +160,48 @@ en-GB:
 
         <p>Plus copies of all the following documents that apply to you:</p>
 
-        <p><strong>Wages</strong></p>
+        <div><strong>Wages</strong></div>
         <ul>
           <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
           <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.</li>
         </ul>
         <p>If you’re self-employed and don’t have either of these documents, you’ll need to provide bank statements that show income for the previous tax year.</p>
 
-        <p><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></p>
+        <div><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></div>
         <p>A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit.</p>
         <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
 
-        <p><strong>Child maintenance payments</strong></p>
+        <div><strong>Child maintenance payments</strong></div>
         <p>Document(s) showing the payment amounts and how often they are made.</p>
-        <p>This can be one of the following:</p>
+        <div>This can be one of the following:</div>
         <ul>
           <li>sealed court order</li>
           <li>Child Support Agency Assessment</li>
           <li>signed voluntary agreement or letter of agreement signed by both parties</li>
         </ul>
 
-        <p><strong>Contribution-based Jobseeker’s Allowance (JSA), Contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></p>
+        <div><strong>Contribution-based Jobseeker’s Allowance (JSA), Contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></div>
         <p>A letter from the Department for Work and Pensions (DWP) dated in the last 3 months.</p>
 
-        <p><strong>Pensions (state, work, private)</strong></p>
+        <div><strong>Pensions (state, work, private)</strong></div>
         <p>A letter or statement showing pension payments.</p>
 
-        <p><strong>Rent from anyone living with you</strong></p>
+        <div><strong>Rent from anyone living with you</strong></div>
         <p>A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.</p>
 
-        <p><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></p>
+        <div><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></div>
         <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (eg family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
 
-        <p><strong>Prisoner’s income</strong></p>
+        <div><strong>Prisoner’s income</strong></div>
         <p>Prisoner Income and Expenditure Statement (PIES) showing earnings, spending, private cash and savings.</p>
         <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
 
-        <p><strong>Any other monthly income</strong></p>
+        <div><strong>Any other monthly income</strong></div>
         <p>Documentation of any other income that you’re receiving. </p>
 
-        <p>Please send this to us by %{expiry_date} so that we can process your application. You also need to include this letter along with evidence of your income.</p>
+        <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
+       
+        <p>You also need to include this letter along with evidence of your income.</p>
 
         <p>Yours sincerely,</p>
 
@@ -243,7 +245,7 @@ en-GB:
       views/application_result:
         savings: Savings
         income: Income
-      views/payment/result:
+      views/part_payment/result:
         savings: Savings
         income: Income
         part_payment: Part payment

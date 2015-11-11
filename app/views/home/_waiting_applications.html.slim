@@ -2,17 +2,18 @@ h3 =t("#{type}.dashboard.heading")
 
 - if list.present?
   table *{class: "waiting-for-#{type}"}
-    tr
-      th =t("#{type}.dashboard.table_header.reference")
-      th =t("#{type}.dashboard.table_header.applicant")
-      th =t("#{type}.dashboard.table_header.processed_by")
-      th =t("#{type}.dashboard.table_header.expires")
-    - list.each do |record|
+    thead
       tr
-        td =link_to(record.reference, send(start_path, record.evidence_or_payment))
-        td =record.applicant
-        td =record.processed_by
-        td =record.expires
-
+        th =t("#{type}.dashboard.table_header.reference")
+        th =t("#{type}.dashboard.table_header.applicant")
+        th =t("#{type}.dashboard.table_header.processed_by")
+        th =t("#{type}.dashboard.table_header.expires")
+    tbody
+      - list.each do |record|
+        tr
+          td =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
+          td =record.applicant
+          td =record.processed_by
+          td =record.expires
 - else
   p =t("#{type}.dashboard.no_records")

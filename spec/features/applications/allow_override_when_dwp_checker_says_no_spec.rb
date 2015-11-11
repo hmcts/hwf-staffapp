@@ -38,7 +38,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
   before do
     dwp_api_response 'No'
     login_as user
-    visit applications_new_path
+    start_new_application
     personal_details_page
     application_details
     savings_and_investments

@@ -6,10 +6,10 @@ header
 - change_link = ['Change personal information', application_personal_information_path(@overview.application.id)]
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status], *change_link
 
-- change_link = ['Change application details', application_build_path(@overview.application.id, :application_details)]
+- change_link = ['Change application details', application_application_details_path(@overview.application.id)]
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason], *change_link
 
-- change_link = ['Change savings and investments', application_build_path(@overview.application.id, :savings_investments)]
+- change_link = ['Change savings and investments', application_savings_investments_path(@overview.application.id)]
 =build_section 'Savings and investments', @overview, @overview.savings_investment_params, *change_link
 
 .row

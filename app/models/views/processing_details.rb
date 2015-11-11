@@ -1,6 +1,6 @@
 module Views
   class ProcessingDetails
-    attr_reader :application, :evidence_or_payment
+    attr_reader :application, :evidence_or_part_payment
 
     delegate :reference, to: :application
 
@@ -8,13 +8,13 @@ module Views
       if calling_object.is_a?(Application)
         @application = calling_object
       else
-        @evidence_or_payment = calling_object
+        @evidence_or_part_payment = calling_object
         @application = calling_object.application
       end
     end
 
     def expires
-      @evidence_or_payment.expires_at.to_date unless @evidence_or_payment.nil?
+      @evidence_or_part_payment.expires_at.to_date unless @evidence_or_part_payment.nil?
     end
 
     def processed_by

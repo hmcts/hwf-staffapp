@@ -18,6 +18,14 @@ RSpec.describe Applications::ProcessController, type: :routing do
       expect(put: '/applications/1/application_details').to route_to('applications/process#application_details_save', application_id: '1')
     end
 
+    it 'routes to #savings_investments' do
+      expect(get: '/applications/1/savings_investments').to route_to('applications/process#savings_investments', application_id: '1')
+    end
+
+    it 'routes to #savings_investments_save' do
+      expect(put: '/applications/1/savings_investments').to route_to('applications/process#savings_investments_save', application_id: '1')
+    end
+
     it 'routes to #benefits' do
       expect(get: '/applications/1/benefits').to route_to('applications/process#benefits', application_id: '1')
     end

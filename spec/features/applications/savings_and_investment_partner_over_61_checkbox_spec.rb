@@ -11,7 +11,6 @@ RSpec.feature 'savings and investments partner over 61 checkbox', type: :feature
 
   before do
     Capybara.current_driver = :webkit
-    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
@@ -19,7 +18,7 @@ RSpec.feature 'savings and investments partner over 61 checkbox', type: :feature
   context 'as a signed in user with default jurisdiction', js: true do
     before do
       login_as user
-      visit applications_new_path
+      start_new_application
       fill_in 'application_last_name', with: 'Hirani'
       fill_in 'application_date_of_birth', with: '28/12/1959'
       fill_in 'application_ni_number', with: 'JL953007D'

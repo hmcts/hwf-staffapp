@@ -3,6 +3,12 @@ module Applications
   class ProcessController < ApplicationController
     before_action :authenticate_user!
 
+    def create
+      application_builder = ApplicationBuilder.new(current_user)
+      application = application_builder.create
+      redirect_to application_personal_information_path(application)
+    end
+
     def personal_information
       @form = Applikation::Forms::PersonalInformation.new(application.applicant)
     end
@@ -35,6 +41,23 @@ module Applications
       end
     end
 
+    def savings_investments
+      @application = application
+      @form = Applikation::Forms::SavingsInvestment.new(application)
+    end
+
+    def savings_investments_save
+      @form = Applikation::Forms::SavingsInvestment.new(application)
+      @form.update_attributes(form_params(:savings_investments))
+
+      if @form.save
+        redirect_to(action: :benefits)
+      else
+        @application = application
+        render :savings_investments
+      end
+    end
+
     def benefits
       if application.savings_investment_valid?
         @form = Applikation::Forms::Benefit.new(application)
@@ -61,7 +84,7 @@ module Applications
         @application = application
         render :benefits_result
       else
-        redirect_to(application_build_path(application_id: application.id, id: :income))
+        redirect_to(action: :income)
       end
     end
 
@@ -81,7 +104,7 @@ module Applications
       if @form.save
         calculate_income
         evidence_check_and_payment
-        redirect_to(application_build_path(application_id: application.id, id: :income_result))
+        redirect_to(action: :income_result)
       else
         render :income
       end
@@ -135,7 +158,7 @@ module Applications
       #        which has to run when the benefit checker and income calculators are removed
       #        from it, this should be as well
       application.update(status: application.status)
-      redirect_to(application_build_path(application.id, :savings_investments))
+      redirect_to(action: :savings_investments)
     end
 
     def calculate_income
@@ -144,7 +167,7 @@ module Applications
 
     def evidence_check_and_payment
       EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
-      PaymentBuilder.new(application, Settings.payment.expires_in_days).decide!
+      PartPaymentBuilder.new(application, Settings.part_payment.expires_in_days).decide!
     end
   end
 end

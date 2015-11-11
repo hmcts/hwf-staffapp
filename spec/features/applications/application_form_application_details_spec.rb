@@ -21,7 +21,7 @@ RSpec.feature 'Completing the application details page of an application form', 
   context 'as a signed in user with default jurisdiction', js: true do
     before do
       login_as user_jurisdiction
-      visit applications_new_path
+      start_new_application
       complete_page_as 'personal_information', persona, true
     end
 
@@ -90,7 +90,7 @@ RSpec.feature 'Completing the application details page of an application form', 
   context 'as a signed in user without default jurisdiction ', js: true do
     before do
       login_as user
-      visit applications_new_path
+      start_new_application
       complete_page_as 'personal_information', persona, true
     end
 

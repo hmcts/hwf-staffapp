@@ -25,7 +25,7 @@ RSpec.feature 'Benefit Results', type: :feature do
         let(:error_message) { "The applicant's details could not be checked with the Department for Work and Pensions" }
 
         scenario 'the page is rendered with message prompting to fill all details' do
-          visit application_build_path(application_id: application.id, id: 'benefits')
+          visit application_benefits_path(application)
 
           choose 'application_benefits_true'
           click_button 'Next'
@@ -41,7 +41,7 @@ RSpec.feature 'Benefit Results', type: :feature do
           dwp_api_response 'Yes'
 
           application.last_benefit_check.update_attributes(dwp_result: 'yes', error_message: nil)
-          visit application_build_path(application_id: application.id, id: 'benefits_result')
+          visit application_benefits_result_path(application)
         end
 
         scenario 'the correct view is rendered' do
@@ -56,12 +56,12 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "deceased")]/h3[@class="bold"]')
           end
 
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "deceased")]/h3[@class="bold"]', text: I18n.t('benefit_checks.deceased.heading'))
           end
         end
@@ -72,12 +72,12 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]')
           end
 
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant is not receiving benefits')
           end
         end
@@ -88,11 +88,11 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "server_unavailable")]/h3[@class="bold"]')
           end
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "server_unavailable")]/h3[@class="bold"]', text: I18n.t('benefit_checks.server_unavailable.heading'))
           end
         end
@@ -103,12 +103,12 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "superseded")]/h3[@class="bold"]')
           end
 
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "superseded")]/h3[@class="bold"]', text: I18n.t('benefit_checks.superseded.heading'))
           end
         end
@@ -116,7 +116,7 @@ RSpec.feature 'Benefit Results', type: :feature do
         context 'the result is undetermined' do
           before do
             application.last_benefit_check.update_attributes(dwp_result: 'Undetermined', error_message: nil)
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
           end
 
           scenario 'the page content is correctly rendered' do
@@ -135,11 +135,11 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "unspecified_error")]/h3[@class="bold"]')
           end
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "unspecified_error")]/h3[@class="bold"]', text: I18n.t('benefit_checks.unspecified_error.heading'))
           end
         end
@@ -150,11 +150,11 @@ RSpec.feature 'Benefit Results', type: :feature do
           end
 
           scenario 'the view is rendered with the correct style' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "yes")]/h3[@class="bold"]')
           end
           scenario 'the view is rendered with the correct information' do
-            visit application_build_path(application_id: application.id, id: 'benefits_result')
+            visit application_benefits_result_path(application)
             expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "yes")]/h3[@class="bold"]', text: '✓ The applicant is receiving the correct benefits')
           end
         end

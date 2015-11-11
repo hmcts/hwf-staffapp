@@ -25,7 +25,7 @@ class HomeController < ApplicationController
   def load_waiting_applications
     unless current_user.admin?
       assign_waiting_for_evidence
-      assign_waiting_for_payment
+      assign_waiting_for_part_payment
     end
   end
 
@@ -35,9 +35,9 @@ class HomeController < ApplicationController
     end
   end
 
-  def assign_waiting_for_payment
-    @waiting_for_payment = waiting_for_payment.map do |application|
-      Views::ProcessingDetails.new(application.payment)
+  def assign_waiting_for_part_payment
+    @waiting_for_part_payment = waiting_for_part_payment.map do |application|
+      Views::ProcessingDetails.new(application.part_payment)
     end
   end
 
@@ -45,8 +45,8 @@ class HomeController < ApplicationController
     Query::WaitingForEvidence.new(current_user).find
   end
 
-  def waiting_for_payment
-    Query::WaitingForPayment.new(current_user).find
+  def waiting_for_part_payment
+    Query::WaitingForPartPayment.new(current_user).find
   end
 
   def load_graph_data

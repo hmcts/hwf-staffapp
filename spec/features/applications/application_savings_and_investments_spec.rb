@@ -13,7 +13,6 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
     Capybara.current_driver = :webkit
-    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
@@ -24,7 +23,7 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
     context 'the applicant is single' do
       context 'after completing the personal details page' do
         before do
-          visit applications_new_path
+          start_new_application
 
           fill_in 'application_last_name', with: 'Hirani'
           fill_in 'application_date_of_birth', with: '28/12/1959'

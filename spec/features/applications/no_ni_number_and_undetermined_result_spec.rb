@@ -3,7 +3,7 @@ require 'rails_helper'
 
 def personal_details_without_ni_number
   login_as user
-  visit applications_new_path
+  start_new_application
 
   fill_in 'application_last_name', with: 'Smith'
   fill_in 'application_date_of_birth', with: Time.zone.today - 25.years

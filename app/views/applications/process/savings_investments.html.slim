@@ -1,4 +1,4 @@
-= form_for @form, as: :application, url: wizard_path, method: :put, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: application_savings_investments_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
   header
     .row
@@ -62,7 +62,6 @@
                               = f.radio_button :high_threshold_exceeded, 'true'
                               = t('activemodel.attributes.applikation/forms/savings_investment.more_than_high')
 
-      = f.hidden_field :status
       = f.submit 'Next', :class => 'button primary'
 
       details
