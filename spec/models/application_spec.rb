@@ -18,8 +18,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to have_one(:evidence_check) }
   it { is_expected.not_to validate_presence_of(:evidence_check) }
 
-  it { is_expected.to have_one(:payment) }
-  it { is_expected.not_to validate_presence_of(:payment) }
+  it { is_expected.to have_one(:part_payment) }
+  it { is_expected.not_to validate_presence_of(:part_payment) }
 
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }

@@ -5,7 +5,7 @@ h2 Check details
 =build_section 'Result', @result, %w[savings income part_payment reason]
 
 #result.callout class=@result.callout
-  h3.bold =t("payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
+  h3.bold =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
 
-= form_for @payment, url: :summary_save_payment, method: :post, html: { autocomplete: 'off' } do |f|
+= form_for @part_payment, url: :summary_save_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Complete processing', :class => 'button primary'

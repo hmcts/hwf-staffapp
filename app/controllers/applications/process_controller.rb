@@ -161,7 +161,7 @@ module Applications
 
     def evidence_check_and_payment
       EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
-      PaymentBuilder.new(application, Settings.payment.expires_in_days).decide!
+      PartPaymentBuilder.new(application, Settings.part_payment.expires_in_days).decide!
     end
   end
 end

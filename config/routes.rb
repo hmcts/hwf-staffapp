@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: :show
 
-  resources :payments, only: :show do
+  resources :part_payments, only: :show do
     member do
       get :accuracy
       post :accuracy_save
