@@ -6,7 +6,7 @@ class Application < ActiveRecord::Base
   has_one :applicant
   has_one :detail, inverse_of: :application
   has_one :evidence_check, required: false
-  has_one :payment, required: false
+  has_one :part_payment, required: false
   has_one :benefit_override, required: false
 
   validates :reference, presence: true, uniqueness: true
@@ -104,8 +104,8 @@ class Application < ActiveRecord::Base
     !evidence_check.nil?
   end
 
-  def payment?
-    !payment.nil?
+  def part_payment?
+    !part_payment.nil?
   end
 
   private

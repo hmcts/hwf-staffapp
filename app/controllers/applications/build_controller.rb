@@ -106,7 +106,7 @@ class Applications::BuildController < ApplicationController
 
   def create_payment_if_needed
     if next_step?(:summary)
-      PaymentBuilder.new(@application, Settings.payment.expires_in_days).decide!
+      PartPaymentBuilder.new(@application, Settings.part_payment.expires_in_days).decide!
     end
   end
 

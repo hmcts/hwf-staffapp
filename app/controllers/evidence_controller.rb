@@ -88,7 +88,7 @@ class EvidenceController < ApplicationController
       completed_by: current_user
     )
 
-    PaymentBuilder.new(@evidence, Settings.payment.expires_in_days).decide!
+    PartPaymentBuilder.new(@evidence, Settings.part_payment.expires_in_days).decide!
 
     redirect_to evidence_confirmation_path
   end
