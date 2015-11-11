@@ -166,7 +166,7 @@ RSpec.describe Views::ApplicationOverview do
 
     context 'for a part payment application' do
       before do
-        build_stubbed :payment, application: application
+        build_stubbed :part_payment, application: application
       end
 
       it 'returns the application reference' do

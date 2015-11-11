@@ -1,4 +1,4 @@
-class PaymentBuilder
+class PartPaymentBuilder
   def initialize(initiator, expires_in_days)
     @initiator = initiator
     @application = load_application
@@ -6,7 +6,7 @@ class PaymentBuilder
   end
 
   def decide!
-    @application.create_payment(expires_at: expires_at) if part_payment_needed?
+    @application.create_part_payment(expires_at: expires_at) if part_payment_needed?
   end
 
   private
@@ -21,11 +21,11 @@ class PaymentBuilder
   end
 
   def part_payment_needed?
-    part_remission_or_not_evidence_checked unless application_has_payment?
+    part_remission_or_not_evidence_checked unless application_has_part_payment?
   end
 
-  def application_has_payment?
-    @application.payment?
+  def application_has_part_payment?
+    @application.part_payment?
   end
 
   def part_remission_or_not_evidence_checked

@@ -9,5 +9,5 @@ calculator:
   couple_supp: 160
 evidence_check:
   expires_in_days: 14
-payment:
+part_payment:
   expires_in_days: 14
