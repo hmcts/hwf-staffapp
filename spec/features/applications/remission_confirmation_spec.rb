@@ -34,7 +34,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
         before { visit_confirmation_page }
 
         scenario 'they have part remission' do
-          expect(application.application_outcome).to eq 'part'
+          expect(application.outcome).to eq 'part'
         end
 
         scenario 'the part remission copy is show' do
@@ -56,7 +56,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
         before { visit_confirmation_page }
 
         scenario 'they have full remission' do
-          expect(application.application_outcome).to eq 'full'
+          expect(application.outcome).to eq 'full'
         end
 
         scenario 'the full remission copy is shown' do
@@ -78,7 +78,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
         before { visit_confirmation_page }
 
         scenario 'they have no remission' do
-          expect(application.application_outcome).to eq 'none'
+          expect(application.outcome).to eq 'none'
         end
 
         scenario 'the no remission copy is shown' do

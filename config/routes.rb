@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
   get '/applications/new' => 'applications/build#create'
-  resources :applications do
-    resources :build, controller: 'applications/build'
+  resources :applications, only: [] do
+
+    collection do
+      post 'create', to: 'applications/process#create', as: :create
+    end
 
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
@@ -15,6 +18,10 @@ Rails.application.routes.draw do
       to: 'applications/process#application_details', as: :application_details
     put 'application_details',
       to: 'applications/process#application_details_save', as: :application_details_save
+    get 'savings_investments',
+      to: 'applications/process#savings_investments', as: :savings_investments
+    put 'savings_investments',
+      to: 'applications/process#savings_investments_save', as: :savings_investments_save
     get 'benefits', to: 'applications/process#benefits', as: :benefits
     put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
     get 'benefits_result', to: 'applications/process#benefits_result', as: :benefits_result
@@ -22,6 +29,7 @@ Rails.application.routes.draw do
     put 'income', to: 'applications/process#income_save', as: :income_save
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get 'summary', to: 'applications/process#summary', as: :summary
+    put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
 
@@ -37,7 +45,7 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: :show
 
-  resources :payments, only: :show do
+  resources :part_payments, only: :show do
     member do
       get :accuracy
       post :accuracy_save

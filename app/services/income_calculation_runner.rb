@@ -8,7 +8,7 @@ class IncomeCalculationRunner
     if income_calculation_result
       @application.update(
         application_type: 'income',
-        application_outcome: income_calculation_result[:outcome],
+        outcome: income_calculation_result[:outcome],
         amount_to_pay: income_calculation_result[:amount]
       )
     end

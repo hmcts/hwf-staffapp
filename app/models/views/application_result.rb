@@ -1,3 +1,4 @@
+# coding: utf-8
 module Views
   class ApplicationResult
 
@@ -30,7 +31,7 @@ module Views
       when EvidenceCheck
         evidence_or_application.outcome
       when Application
-        evidence_or_application.application_outcome
+        evidence_or_application.outcome
       end
     end
 

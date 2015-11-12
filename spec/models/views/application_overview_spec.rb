@@ -49,7 +49,7 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#income' do
-    let(:application) { build_stubbed(:application, application_outcome: outcome) }
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     subject { view.income }
 
@@ -122,7 +122,7 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#result' do
-    let(:application) { build_stubbed(:application, application_outcome: outcome) }
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     subject { view.result }
 
@@ -166,7 +166,7 @@ RSpec.describe Views::ApplicationOverview do
 
     context 'for a part payment application' do
       before do
-        build_stubbed :payment, application: application
+        build_stubbed :part_payment, application: application
       end
 
       it 'returns the application reference' do

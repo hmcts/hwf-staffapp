@@ -12,7 +12,6 @@ RSpec.feature 'Completing the application details', type: :feature do
 
   before do
     Capybara.current_driver = :webkit
-    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
@@ -23,7 +22,7 @@ RSpec.feature 'Completing the application details', type: :feature do
     context 'the applicant is single and under 61' do
       context 'after completing the personal details page' do
         before do
-          visit applications_new_path
+          start_new_application
 
           fill_in 'application_last_name', with: 'Smith'
           fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
@@ -304,7 +303,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   end
 
                   context 'when the user clicks continue' do
-                    before { click_link 'Complete processing' }
+                    before { click_button 'Complete processing' }
 
                     scenario 'the confirmation is shown' do
                       expect(page).to have_xpath('//h2', text: 'Application processed')

@@ -16,7 +16,8 @@ RSpec.feature 'Starting an application form', type: :feature do
   context 'as a signed in user', js: true do
     before do
       login_as user
-      visit applications_new_path
+
+      start_new_application
     end
 
     it 'renders the page' do

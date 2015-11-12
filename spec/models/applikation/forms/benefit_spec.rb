@@ -39,7 +39,7 @@ RSpec.describe Applikation::Forms::Benefit do
 
   describe '#save' do
     let(:attributes) { { benefits: benefits } }
-    let(:application) { create :application, application_type: nil, dependents: false, benefits: nil, application_outcome: nil }
+    let(:application) { create :application, application_type: nil, dependents: false, benefits: nil, outcome: nil }
     subject(:form) { described_class.new(application) }
 
     subject do
@@ -80,13 +80,13 @@ RSpec.describe Applikation::Forms::Benefit do
             let(:benefit_check) { create :benefit_check, :yes_result, application: application }
 
             it 'updates outcome based on the result' do
-              expect(application.application_outcome).to eql 'full'
+              expect(application.outcome).to eql 'full'
             end
           end
 
           context 'when benefit check has not been done' do
-            it 'keeps application_outcome unchanged' do
-              expect(application.application_outcome).to be nil
+            it 'keeps outcome unchanged' do
+              expect(application.outcome).to be nil
             end
           end
         end

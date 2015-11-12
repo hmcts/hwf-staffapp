@@ -12,7 +12,6 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
     Capybara.current_driver = :webkit
-    Capybara.page.driver.allow_url('http://www.google.com/jsapi')
   end
 
   after { Capybara.use_default_driver }
@@ -21,7 +20,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
     before do
       login_as user
 
-      visit applications_new_path
+      start_new_application
 
       fill_in 'application_last_name', with: 'Smith'
       fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
@@ -39,7 +38,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
       click_button 'Next'
 
       expect(page).to have_xpath('//h2', text: 'Check details')
-      click_link 'Complete processing'
+      click_button 'Complete processing'
     end
 
     context 'when on application processed page' do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102104508) do
+ActiveRecord::Schema.define(version: 20151112110146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,10 +44,12 @@ ActiveRecord::Schema.define(version: 20151102104508) do
     t.integer  "income"
     t.boolean  "dependents"
     t.string   "application_type"
-    t.string   "application_outcome"
+    t.string   "outcome"
     t.integer  "amount_to_pay"
     t.boolean  "high_threshold_exceeded"
     t.string   "reference"
+    t.datetime "completed_at"
+    t.integer  "completed_by_id"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
@@ -155,7 +157,7 @@ ActiveRecord::Schema.define(version: 20151102104508) do
     t.string   "entity_code"
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "part_payments", force: :cascade do |t|
     t.integer  "application_id",   null: false
     t.datetime "expires_at",       null: false
     t.datetime "created_at",       null: false
@@ -166,7 +168,7 @@ ActiveRecord::Schema.define(version: 20151102104508) do
     t.integer  "completed_by_id"
   end
 
-  add_index "payments", ["application_id"], name: "index_payments_on_application_id", using: :btree
+  add_index "part_payments", ["application_id"], name: "index_part_payments_on_application_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -206,6 +208,7 @@ ActiveRecord::Schema.define(version: 20151102104508) do
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"
+  add_foreign_key "benefit_overrides", "applications"
   add_foreign_key "feedbacks", "offices"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"

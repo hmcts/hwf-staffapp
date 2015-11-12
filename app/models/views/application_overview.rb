@@ -73,7 +73,7 @@ module Views
     end
 
     def result
-      @application.application_outcome
+      @application.outcome
     end
 
     def savings_investment_params
@@ -91,10 +91,14 @@ module Views
     end
 
     def reference
-      @application.reference if @application.evidence_check? || @application.payment?
+      @application.reference if evidence_check_or_part_payment?
     end
 
     private
+
+    def evidence_check_or_part_payment?
+      @application.evidence_check? || @application.part_payment?
+    end
 
     def format_locale(suffix)
       prefix = 'activemodel.attributes.applikation/forms/summary'

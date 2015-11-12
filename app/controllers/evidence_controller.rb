@@ -45,7 +45,9 @@ class EvidenceController < ApplicationController
   end
 
   def summary_save
-    record_confirmation
+    ResolverService.new(evidence, current_user).process
+    PartPaymentBuilder.new(@evidence, Settings.part_payment.expires_in_days).decide!
+    redirect_to evidence_confirmation_path
   end
 
   def confirmation
@@ -80,17 +82,6 @@ class EvidenceController < ApplicationController
     else
       redirect_to evidence_summary_path
     end
-  end
-
-  def record_confirmation
-    evidence.update(
-      completed_at: Time.zone.now,
-      completed_by: current_user
-    )
-
-    PaymentBuilder.new(@evidence, Settings.payment.expires_in_days).decide!
-
-    redirect_to evidence_confirmation_path
   end
 
   def income_params

@@ -3,7 +3,7 @@ require 'rails_helper'
 
 def personal_details_without_ni_number
   login_as user
-  visit applications_new_path
+  start_new_application
 
   fill_in 'application_last_name', with: 'Smith'
   fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
@@ -70,7 +70,7 @@ RSpec.feature 'No NI number provided', type: :feature do
       end
 
       context 'when the user progresses to the confirmation page' do
-        before { click_link 'Complete processing' }
+        before { click_button 'Complete processing' }
 
         scenario 'shows the full remission message' do
           expect(page).to have_content full_remission
@@ -101,7 +101,7 @@ RSpec.feature 'No NI number provided', type: :feature do
     end
 
     context 'when the user completes the application' do
-      before { click_link 'Complete processing' }
+      before { click_button 'Complete processing' }
 
       it do
         expect(page).to have_content 'Application processed'
