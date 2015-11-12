@@ -8,7 +8,7 @@ before_script:
 addons:
   apt:
     packages:
-    - libqt4-dev
+    - libqt5-dev
     - xvfb
   postgresql: 9.3
   code_climate:
