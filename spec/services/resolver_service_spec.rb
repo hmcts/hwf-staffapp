@@ -40,6 +40,23 @@ describe ResolverService do
           it { is_expected.not_to be_nil }
         end
       end
+
+      context 'when created with an evidence_check' do
+        let(:object) { create(:evidence_check_full_outcome) }
+
+        describe 'updates the objects.completed_by value' do
+          subject { object.completed_by.name }
+
+          it { is_expected.to eql user.name }
+        end
+
+        describe 'sets the completed_at value' do
+          subject { object.completed_at }
+
+          it { is_expected.not_to be_nil }
+        end
+      end
+
     end
   end
 end
