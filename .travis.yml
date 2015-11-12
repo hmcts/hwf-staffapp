@@ -5,10 +5,14 @@ rvm:
 cache: bundler
 before_script:
 - psql -c 'create role fr login createdb;' -U postgres
+before_install:
+  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libqt5webkit5-dev qtdeclarative5-dev
+  - export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
 addons:
   apt:
     packages:
-    - libqt5core5a
     - xvfb
   postgresql: 9.3
   code_climate:
