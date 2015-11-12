@@ -27,11 +27,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def summary_save
-    part_payment.update(
-      completed_at: Time.zone.now,
-      completed_by: current_user
-    )
-
+    ResolverService.new(part_payment, current_user).process
     redirect_to(confirmation_part_payment_path(part_payment))
   end
 
