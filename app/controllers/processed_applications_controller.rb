@@ -9,6 +9,7 @@ class ProcessedApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
+    @processed = Views::ProcessingDetails.new(@application)
     @overview = Views::ApplicationOverview.new(@application)
     @result = Views::ApplicationResult.new(@application)
   end

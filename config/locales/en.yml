@@ -4,6 +4,7 @@ en-GB:
       applicant: Applicant
       date_received: Date received
       processed_by: Processed by
+      processed_on: Date processed
       emergency: Emergency
     detail:
       title: Processed application
@@ -212,6 +213,7 @@ en-GB:
       views/processing_details:
         reference: Reference
         processed_by: Processed by
+        processed_on: Date processed
         expires: Expires
       views/application_overview:
         full_name: Full name

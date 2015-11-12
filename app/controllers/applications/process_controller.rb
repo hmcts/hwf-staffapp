@@ -120,8 +120,14 @@ module Applications
     end
 
     def summary
+      @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
+    end
+
+    def summary_save
+      ResolverService.new(application, current_user).process
+      redirect_to application_confirmation_path(application.id)
     end
 
     def confirmation

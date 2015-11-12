@@ -303,7 +303,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   end
 
                   context 'when the user clicks continue' do
-                    before { click_link 'Complete processing' }
+                    before { click_button 'Complete processing' }
 
                     scenario 'the confirmation is shown' do
                       expect(page).to have_xpath('//h2', text: 'Application processed')

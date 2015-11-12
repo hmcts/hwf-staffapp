@@ -4,17 +4,25 @@ module Views
 
     delegate :reference, to: :application
 
-    def initialize(evidence_or_part_payment)
-      @evidence_or_part_payment = evidence_or_part_payment
-      @application = evidence_or_part_payment.application
+    def initialize(calling_object)
+      if calling_object.is_a?(Application)
+        @application = calling_object
+      else
+        @evidence_or_part_payment = calling_object
+        @application = calling_object.application
+      end
     end
 
     def expires
-      @evidence_or_part_payment.expires_at.to_date
+      @evidence_or_part_payment.expires_at.to_date unless @evidence_or_part_payment.nil?
     end
 
     def processed_by
-      @application.user.name
+      @application.completed_by.name
+    end
+
+    def processed_on
+      @application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
     end
 
     def applicant

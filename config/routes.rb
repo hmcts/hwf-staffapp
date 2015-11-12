@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     put 'income', to: 'applications/process#income_save', as: :income_save
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get 'summary', to: 'applications/process#summary', as: :summary
+    put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
 

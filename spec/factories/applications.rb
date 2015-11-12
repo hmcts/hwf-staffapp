@@ -23,6 +23,8 @@ FactoryGirl.define do
     income 500
     threshold_exceeded false
     user
+    association :completed_by, factory: :user
+    completed_at Time.zone.today
 
     trait :benefit_type do
       application_type 'benefit'
