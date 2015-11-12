@@ -21,7 +21,7 @@ module Applikation
         }.tap do |fields|
           fields[:application_type] = benefits? ? 'benefit' : 'income'
           fields[:dependents] = nil if benefits?
-          fields[:application_outcome] = benefit_check.present? ? benefit_check.outcome : nil
+          fields[:outcome] = benefit_check.present? ? benefit_check.outcome : nil
         end
       end
 

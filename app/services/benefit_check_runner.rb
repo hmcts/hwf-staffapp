@@ -14,7 +14,7 @@ class BenefitCheckRunner
     if can_run? && should_run?
       BenefitCheckService.new(benefit_check)
 
-      @application.update(application_type: 'benefit', application_outcome: benefit_check.outcome)
+      @application.update(application_type: 'benefit', outcome: benefit_check.outcome)
     end
   end
 

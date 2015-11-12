@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rails_helper'
 
 RSpec.describe Views::Applikation::Result do
@@ -30,8 +31,8 @@ RSpec.describe Views::Applikation::Result do
       end
     end
 
-    context 'when application_outcome is nil' do
-      before { application.application_outcome = nil }
+    context 'when outcome is nil' do
+      before { application.outcome = nil }
 
       it { is_expected.to eql 'none' }
     end

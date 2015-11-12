@@ -73,13 +73,13 @@ RSpec.describe Views::ApplicationResult do
 
     context 'when the application has evidence check' do
       let(:evidence) { build_stubbed :evidence_check, outcome: outcome }
-      let(:application) { build_stubbed :application, evidence_check: evidence, application_outcome: nil }
+      let(:application) { build_stubbed :application, evidence_check: evidence, outcome: nil }
 
       include_examples 'result examples', 'evidence'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, application_outcome: outcome }
+      let(:application) { build_stubbed :application, outcome: outcome }
 
       include_examples 'result examples', 'application'
     end
@@ -126,13 +126,13 @@ RSpec.describe Views::ApplicationResult do
 
     context 'when the application has evidence check' do
       let(:evidence) { build_stubbed :evidence_check, outcome: outcome }
-      let(:application) { build_stubbed :application, evidence_check: evidence, application_outcome: nil }
+      let(:application) { build_stubbed :application, evidence_check: evidence, outcome: nil }
 
       include_examples 'result examples', 'evidence'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, application_outcome: outcome }
+      let(:application) { build_stubbed :application, outcome: outcome }
 
       include_examples 'result examples', 'application'
     end

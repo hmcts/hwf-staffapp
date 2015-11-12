@@ -43,8 +43,6 @@ class Application < ActiveRecord::Base
   end
   # End step 3 validation
 
-  alias_attribute :outcome, :application_outcome
-
   def children=(val)
     self[:children] = dependents? ? val : 0
   end
@@ -63,7 +61,7 @@ class Application < ActiveRecord::Base
     self.partner_over_61 = nil unless threshold_exceeded?
     if threshold_exceeded? && (!partner_over_61 || applicant_over_61?)
       self.application_type = 'none'
-      self.application_outcome = 'none'
+      self.outcome = 'none'
       self.dependents = nil
     end
   end
@@ -72,11 +70,11 @@ class Application < ActiveRecord::Base
     super
     if high_threshold_exceeded?
       self.application_type = 'none'
-      self.application_outcome = 'none'
+      self.outcome = 'none'
       self.dependents = nil
     else
       self.application_type = nil
-      self.application_outcome = nil
+      self.outcome = nil
     end
   end
 

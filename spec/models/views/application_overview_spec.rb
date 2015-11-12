@@ -49,7 +49,7 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#income' do
-    let(:application) { build_stubbed(:application, application_outcome: outcome) }
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     subject { view.income }
 
@@ -122,7 +122,7 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#result' do
-    let(:application) { build_stubbed(:application, application_outcome: outcome) }
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     subject { view.result }
 

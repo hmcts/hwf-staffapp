@@ -7,7 +7,7 @@ module Views
           'callout'
         elsif !benefit_overridden? && benefit_overide_correct?
           'full'
-        elsif @application.application_outcome.nil?
+        elsif @application.outcome.nil?
           'none'
         else
           super

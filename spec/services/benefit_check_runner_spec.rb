@@ -69,7 +69,7 @@ RSpec.shared_examples 'runs benefit check record' do
     end
 
     it 'sets the applicaiton outcome based on the result' do
-      expect(application.application_outcome).to eql('full')
+      expect(application.outcome).to eql('full')
     end
   end
 end

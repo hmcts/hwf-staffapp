@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe IncomeCalculationRunner do
-  let(:application) { create :application, application_type: nil, application_outcome: nil }
+  let(:application) { create :application, application_type: nil, outcome: nil }
 
   subject(:runner) { described_class.new(application) }
 
@@ -24,7 +24,7 @@ RSpec.describe IncomeCalculationRunner do
       end
 
       it 'sets application outcome as per result' do
-        expect(application.application_outcome).to eql('part')
+        expect(application.outcome).to eql('part')
       end
 
       it 'sets amount_to_pay as per result' do
@@ -40,7 +40,7 @@ RSpec.describe IncomeCalculationRunner do
       end
 
       it 'does not set application outcome' do
-        expect(application.application_outcome).to be nil
+        expect(application.outcome).to be nil
       end
     end
 
