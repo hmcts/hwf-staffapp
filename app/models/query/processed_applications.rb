@@ -14,7 +14,7 @@ module Query
 
     def where_condition
       <<-WHERE.gsub(/^\s+\|/, '')
-        |(applications.application_outcome IS NOT NULL)
+        |(applications.outcome IS NOT NULL)
         |AND
         |(evidence_checks.id IS NULL OR evidence_checks.completed_at IS NOT NULL)
         |AND

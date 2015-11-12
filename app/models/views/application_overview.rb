@@ -73,7 +73,7 @@ module Views
     end
 
     def result
-      @application.application_outcome
+      @application.outcome
     end
 
     def savings_investment_params

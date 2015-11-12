@@ -49,7 +49,7 @@ FactoryGirl.define do
 
     trait :confirm do
       benefits false
-      application_outcome 'full'
+      outcome 'full'
       application_type 'income'
     end
 
@@ -61,7 +61,7 @@ FactoryGirl.define do
       income 2000
       dependents true
       children 3
-      application_outcome 'part'
+      outcome 'part'
       application_type 'income'
       amount_to_pay 100
     end
@@ -74,7 +74,7 @@ FactoryGirl.define do
       income 10
       dependents true
       children 1
-      application_outcome 'full'
+      outcome 'full'
       application_type 'income'
     end
 
@@ -84,7 +84,7 @@ FactoryGirl.define do
       dependents false
       children 1
       income 3000
-      application_outcome 'none'
+      outcome 'none'
       application_type 'income'
     end
 
