@@ -21,6 +21,11 @@ module Forms
 
     def persist!
       @object.update(fields_to_update)
+      @object.application.update(outcome: outcome)
+    end
+
+    def outcome
+      correct ? 'full' : 'none'
     end
   end
 end
