@@ -55,7 +55,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     end
 
     it 'has a link to their office' do
-      expect(rendered).to have_link 'Your Office'
+      expect(rendered).to have_link 'Your office'
     end
 
     it 'has a table for awaited evidence' do
