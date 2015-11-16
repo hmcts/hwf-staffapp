@@ -78,18 +78,18 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
           after { Timecop.return }
 
           it 'allows today' do
-            application_details.date_received = Date.new(2014, 10, 1)
+            application_details.date_received = Time.zone.local(2014, 10, 1)
             expect(application_details).to be_valid
           end
 
           it 'allows 3 months ago' do
-            application_details.date_received = Date.new(2014, 7, 2)
+            application_details.date_received = Time.zone.local(2014, 7, 1, 0, 30)
             expect(application_details).to be_valid
           end
 
           describe 'maximum' do
             before do
-              application_details.date_received = Date.new(2014, 6, 30)
+              application_details.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0)
               application_details.valid?
             end
 
@@ -121,136 +121,152 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
     end
 
     describe 'probate' do
+      let(:deceased_name) { 'Bob the builder' }
+      let(:probate_status) { true }
+      let(:date_of_death) { Time.zone.yesterday }
       let(:probate) do
         params = { jurisdiction_id: 1,
                    fee: 500,
                    date_received: Time.zone.yesterday,
-                   probate: true,
-                   deceased_name: 'Bob the builder',
-                   date_of_death: Time.zone.yesterday }
+                   probate: probate_status,
+                   deceased_name: deceased_name,
+                   date_of_death: date_of_death }
         described_class.new(params)
       end
 
-      it 'has a valid factory build' do
-        expect(probate).to be_valid
-      end
+      subject { probate }
 
-      it 'passes if probate unchecked' do
-        probate.probate = false
-        probate.deceased_name = nil
-        expect(probate).to be_valid
+      it { is_expected.to be_valid }
+
+      describe 'when probate unchecked' do
+        let(:deceased_name) { nil }
+        let(:probate_status) { false }
+
+        it { is_expected.to be_valid }
       end
 
       describe 'requires' do
         describe 'date of death' do
           describe 'presence' do
-            before do
-              probate.date_of_death = nil
-              probate.valid?
-            end
+            let(:date_of_death) { nil }
 
-            it 'must be entered' do
-              expect(probate).to be_invalid
-            end
+            before { probate.valid? }
 
-            it 'returns an error if missing' do
-              expect(probate.errors[:date_of_death]).to eq ['Enter the date in this format 01/01/2015']
+            it { is_expected.to be_invalid }
+
+            context 'it returns an error' do
+              subject { probate.errors[:date_of_death] }
+
+              it { is_expected.to eq ['Enter the date in this format 01/01/2015'] }
             end
           end
 
           describe 'range' do
-            it 'must be prior to today' do
-              probate.date_of_death = Time.zone.tomorrow
-              expect(probate).to be_invalid
-            end
+            let(:date_of_death) { Time.zone.tomorrow }
+
+            it { is_expected.to be_invalid }
           end
         end
 
         describe 'deceased name' do
-          before do
-            probate.deceased_name = nil
-            probate.valid?
-          end
+          context 'is nil' do
+            let(:deceased_name) { nil }
+            before { probate.valid? }
 
-          it 'must be entered' do
-            expect(probate).to be_invalid
-          end
+            it { is_expected.to be_invalid }
 
-          it 'returns an error if missing' do
-            expect(probate.errors[:deceased_name]).to eq ["The deceased's name should be entered"]
+            context 'it returns an error' do
+              subject { probate.errors[:deceased_name] }
+
+              it { is_expected.to eq ["The deceased's name should be entered"] }
+            end
           end
         end
       end
     end
 
     describe 'refund' do
+      let(:date_fee_paid) { Time.zone.yesterday }
+      let(:refund_status) { true }
       let(:refund) do
         params = { jurisdiction_id: 1,
                    fee: 500,
                    date_received: Time.zone.yesterday,
-                   refund: true,
-                   date_fee_paid: Time.zone.yesterday }
+                   refund: refund_status,
+                   date_fee_paid: date_fee_paid }
         described_class.new(params)
       end
 
-      it 'has a valid factory build' do
-        expect(refund).to be_valid
+      subject { refund }
+
+      it { is_expected.to be_valid }
+
+      describe 'when refund unchecked' do
+        let(:date_fee_paid) { nil }
+        let(:refund_status) { false }
+
+        it { is_expected.to be_valid }
       end
 
-      it 'passes if refund unchecked' do
-        refund.refund = false
-        refund.date_fee_paid = nil
-        expect(refund).to be_valid
-      end
       describe 'date fee paid' do
         describe 'range' do
-          it 'allows between today and 3 months ago' do
-            refund.date_fee_paid = Time.zone.today
-            expect(refund).to be_valid
-          end
+          context 'is enforced' do
+            before { Timecop.freeze(Time.zone.local(2014, 12, 1, 12, 30, 0)) }
+            after { Timecop.return }
 
-          describe 'maximum' do
-            before do
-              refund.date_fee_paid = Time.zone.today.-3.months.+1.day
-              refund.valid?
+            describe 'allows between today and 3 months ago' do
+              let(:date_fee_paid) { Time.zone.today }
+
+              it { is_expected.to be_valid }
             end
 
-            it 'is 3 months' do
-              expect(refund).to be_invalid
+            describe 'maximum boundary' do
+              describe 'just inside' do
+                let(:date_fee_paid) { Time.zone.local(2014, 9, 1, 0, 10, 0) }
+
+                it { is_expected.to be_valid }
+              end
+
+              describe 'just outside' do
+                let(:date_fee_paid) { Time.zone.local(2014, 8, 31, 13, 23, 55) }
+
+                describe 'returns an error if exceeded' do
+                  before { refund.valid? }
+
+                  subject { refund.errors[:date_fee_paid] }
+
+                  it { is_expected.to eq ['The application must have been made in the last 3 months'] }
+                end
+              end
             end
 
-            it 'returns an error if exceeded' do
-              expect(refund.errors[:date_fee_paid]).to eq ['The application must have been made in the last 3 months']
-            end
-          end
+            describe 'minimum' do
+              let(:date_fee_paid) { Time.zone.tomorrow }
 
-          describe 'minimum' do
-            before do
-              refund.date_fee_paid = Time.zone.tomorrow
-              refund.valid?
-            end
+              it { is_expected.to be_invalid }
 
-            it 'is today' do
-              expect(refund).to be_invalid
-            end
+              describe 'returns an error if exceeded' do
+                before { refund.valid? }
 
-            it 'returns an error if too low' do
-              expect(refund.errors[:date_fee_paid]).to eq ['The application cannot be a future date']
+                subject { refund.errors[:date_fee_paid] }
+
+                it { is_expected.to eq ['The application cannot be a future date'] }
+              end
             end
           end
         end
 
         describe 'presence' do
-          before do
-            refund.date_fee_paid = nil
-            refund.valid?
-          end
+          let(:date_fee_paid) { nil }
 
-          it 'is required' do
-            expect(refund).to be_invalid
-          end
-          it 'returns an error if missing' do
-            expect(refund.errors[:date_fee_paid]).to eq ['Enter the date in this format 01/01/2015']
+          it { is_expected.to be_invalid }
+
+          describe 'returns an error if not set' do
+            before { refund.valid? }
+
+            subject { refund.errors[:date_fee_paid] }
+
+            it { is_expected.to eq ['Enter the date in this format 01/01/2015'] }
           end
         end
       end

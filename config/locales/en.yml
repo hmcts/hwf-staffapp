@@ -343,7 +343,7 @@ en-GB:
               blank: Enter the date the application was received
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
-              after: The application must have been made in the last 3 months
+              after_or_equal_to: The application must have been made in the last 3 months
               before: The application cannot be a future date
             date_of_death:
               blank: The date of death should be entered
@@ -355,7 +355,7 @@ en-GB:
             date_fee_paid:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
-              after: The application must have been made in the last 3 months
+              after_or_equal_to: The application must have been made in the last 3 months
               before: The application cannot be a future date
               blank: The date fee paid should be entered
             date_of_death:

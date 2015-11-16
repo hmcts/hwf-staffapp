@@ -29,21 +29,21 @@ module Applikation
       validate :emergency_reason_size
 
       validates :date_received, date: {
-        after: :min_date,
+        after_or_equal_to: :min_date,
         before: :tomorrow
       }
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
         validates :date_of_death, date: {
-          after: :min_probate,
+          after_or_equal_to: :min_probate,
           before: :tomorrow
         }
       end
 
       with_options if: :refund? do
         validates :date_fee_paid, date: {
-          after: :min_date,
+          after_or_equal_to: :min_date,
           before: :tomorrow
         }
       end
@@ -55,7 +55,7 @@ module Applikation
       end
 
       def min_date
-        3.months.ago
+        3.months.ago.midnight
       end
 
       def tomorrow
