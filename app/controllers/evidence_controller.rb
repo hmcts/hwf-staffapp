@@ -56,6 +56,10 @@ class EvidenceController < ApplicationController
     evidence_confirmation
   end
 
+  def return_letter
+    application_overview
+  end
+
   private
 
   def evidence
