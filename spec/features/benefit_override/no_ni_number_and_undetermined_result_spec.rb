@@ -75,6 +75,14 @@ RSpec.feature 'No NI number provided', type: :feature do
         scenario 'shows the full remission message' do
           expect(page).to have_content full_remission
         end
+
+        context 'when the user visits processed application page' do
+          before { visit '/processed_applications' }
+
+          scenario "shows applicant's details" do
+            expect(page).to have_content 'Smith'
+          end
+        end
       end
     end
 

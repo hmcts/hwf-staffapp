@@ -69,6 +69,10 @@ RSpec.describe Forms::BenefitsEvidence do
         it 'updates the correct field on benefits_override' do
           expect(benefit_override.correct).to be true
         end
+
+        it 'updates the outcome of the application' do
+          expect(application.outcome).to eql 'full'
+        end
       end
 
       context 'when false' do
@@ -80,6 +84,10 @@ RSpec.describe Forms::BenefitsEvidence do
 
         it 'updates the correct field on benefit_override' do
           expect(benefit_override.correct).to be false
+        end
+
+        it 'updates the outcome of the application' do
+          expect(application.outcome).to eql 'none'
         end
       end
     end
