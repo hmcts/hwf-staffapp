@@ -317,4 +317,16 @@ RSpec.describe EvidenceController, type: :controller do
       end
     end
   end
+
+  describe 'GET #return_letter' do
+    before(:each) { get :return_letter, id: evidence }
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template('return_letter')
+    end
+  end
 end
