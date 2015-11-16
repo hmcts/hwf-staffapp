@@ -49,6 +49,15 @@ en-GB:
         applicant: Applicant
         processed_by: Processed by
         expires: Expires
+    return_letter: |
+      <p>Dear %{full_name}</p>
+      <p>We have received your documents however they are not correct,
+      therefore we’re unable to process your application. This may
+      have an impact on the original case or claim related to this
+      application.</p>
+      <p>You will need to make a new application if you still require help.</p>
+      <p>Yours sincerely,</p>
+      <p>%{current_user}</p>
   part_payment:
     correct: 'Yes'
     incorrect: 'No'
