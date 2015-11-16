@@ -284,8 +284,8 @@ en-GB:
         header: Savings and investments
         maximum_prompt: 'Maximum amount of savings and investments allowed:'
         explanation: This amount may be different to what’s on the form. It’s calculated on the applicant’s age and fee amount.
-        single: In question 7, the applicant has:
-        married: In question 7, the applicant and their partner have:
+        single: 'In question 7, the applicant has:'
+        married: 'In question 7, the applicant and their partner have:'
         partner_over_61: "In question 8, is the applicant's partner 61 or over?"
         less_than: Less than this amount
         more_than: More than this amount

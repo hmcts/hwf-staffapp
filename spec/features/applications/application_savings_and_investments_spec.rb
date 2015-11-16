@@ -68,7 +68,7 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
                   expect(page).to have_text 'In question 7, the applicant has'
                   choose 'application_threshold_exceeded_false'
                   click_button 'Next'
-                  expect(page).to have_text 'In question 9, do they receive any of the benefits listed?'
+                  expect(page).to have_text 'Is the applicant receiving one of the benefits listed in question 9?'
                   choose 'application_benefits_true'
                   click_button 'Next'
                   click_link 'Next'
