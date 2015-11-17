@@ -7,15 +7,13 @@ header
   .small-12.medium-6.columns
     .panel
       h4 Process evidence
-      #note You'll need the applicant's evidence of income
       = link_to 'Next', evidence_accuracy_path(@evidence), class: 'button'
       details
         summary
-          span.summary.primary What if the applicant hasn't provided evidence?
+          span.summary.primary If the evidence can’t be processed
         div
-          div If no evidence has been received by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong>, return all documents to the applicant with a letter.
+          div Evidence needs to arrive by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process evidence, choose ‘Return application’ to remove it from ‘Applications waiting for evidence' and return everything to the applicant. 
           = link_to 'Return application', evidence_return_letter_path(@evidence), class: 'button alternative'
-          div This will remove application from the list of applications waiting for evidence on the dashboard
 
 =build_section 'Processing details', @processing_details, %w[reference processed_by expires]
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
