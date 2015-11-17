@@ -20,7 +20,7 @@ RSpec.feature 'Benefit Results', type: :feature do
     end
 
     context 'after user selects yes to benefits' do
-      context 'when NI has not been provided', focus: true do
+      context 'when NI has not been provided' do
         let(:ni_number) { nil }
         let(:error_message) { "The applicant's details could not be checked with the Department for Work and Pensions" }
 
