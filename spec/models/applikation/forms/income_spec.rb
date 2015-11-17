@@ -14,8 +14,15 @@ RSpec.describe Applikation::Forms::Income do
   describe 'validation' do
     let(:income) { described_class.new(hash) }
 
+    describe 'income' do
+      let(:hash) { { income: 500, dependents: true, children: 1 } }
+
+      it { is_expected.to validate_presence_of(:income) }
+      it { is_expected.to validate_numericality_of(:income) }
+    end
+
     describe 'dependents' do
-      let(:hash) { { dependents: dependents, children: 1 } }
+      let(:hash) { { income: 500, dependents: dependents, children: 1 } }
 
       context 'when true' do
         let(:dependents) { true }
@@ -37,7 +44,7 @@ RSpec.describe Applikation::Forms::Income do
     end
 
     describe 'children' do
-      let(:hash) { { dependents: dependents, children: children } }
+      let(:hash) { { income: 500, dependents: dependents, children: children } }
 
       context 'when there are dependents' do
         let(:dependents) { true }
