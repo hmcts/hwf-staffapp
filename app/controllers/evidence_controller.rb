@@ -1,4 +1,6 @@
 class EvidenceController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     processing_details
     application_overview
