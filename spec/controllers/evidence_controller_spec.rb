@@ -4,7 +4,8 @@ RSpec.describe EvidenceController, type: :controller do
   include Devise::TestHelpers
 
   let(:user)     { create :user, office: create(:office) }
-  let(:evidence) { build_stubbed(:evidence_check) }
+  let(:application) { create :application }
+  let(:evidence) { create :evidence_check, application_id: application.id }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
@@ -336,6 +337,35 @@ RSpec.describe EvidenceController, type: :controller do
       it { expect(response).to have_http_status(200) }
 
       it { expect(response).to render_template('return_letter') }
+    end
+  end
+
+  describe 'POST #return_application' do
+    context 'as a signed out user' do
+      before(:each) { post :return_application, id: evidence }
+
+      it { expect(response).to have_http_status(:redirect) }
+
+      it { expect(response).to redirect_to(user_session_path) }
+    end
+
+    context 'as a signed in user' do
+      before(:each) do
+        sign_in user
+        post :return_application, id: evidence
+      end
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(:redirect)
+      end
+
+      it 'updates the application outcome' do
+        expect(evidence.application.outcome).to eq 'none'
+      end
+
+      it 'updates the application type' do
+        expect(evidence.application.application_type).to eq 'returned'
+      end
     end
   end
 end
