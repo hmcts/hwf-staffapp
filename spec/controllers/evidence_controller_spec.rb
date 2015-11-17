@@ -55,7 +55,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
   end
 
-  describe 'POST #accuracy_save', focus: true do
+  describe 'POST #accuracy_save' do
     let(:form) { double }
     let(:expected_form_params) { { correct: true, incorrect_reason: 'reason' } }
 
