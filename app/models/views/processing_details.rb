@@ -18,7 +18,7 @@ module Views
     end
 
     def processed_by
-      @application.completed_by.name
+      @application.completed_by.name if @application.completed_by.present?
     end
 
     def processed_on

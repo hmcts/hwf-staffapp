@@ -30,6 +30,12 @@ RSpec.describe Views::ProcessingDetails do
     it 'returns the name of the user who completed the application' do
       is_expected.to eql(application.completed_by.name)
     end
+
+    describe 'when completed_by is missing' do
+      before { application.completed_by = nil }
+
+      it { is_expected.to be_nil }
+    end
   end
 
   describe '#processed_on' do
