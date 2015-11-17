@@ -37,5 +37,9 @@ RSpec.describe EvidenceController, type: :routing do
     it 'route_to to #return_letter' do
       expect(get: '/evidence/1/return_letter').to route_to('evidence#return_letter', id: '1')
     end
+
+    it 'route_to to #return_application' do
+      expect(post: '/evidence/1/return_application').to route_to('evidence#return_application', id: '1')
+    end
   end
 end

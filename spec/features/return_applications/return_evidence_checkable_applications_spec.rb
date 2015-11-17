@@ -37,7 +37,9 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       click_link application1.reference
       click_link 'Return application'
       expect(page).to have_content 'Processing complete'
-      expect(page).to have_link 'Back to start'
+      expect(page).to have_link 'Finish'
+      click_link 'Finish'
+      expect(page).to have_content 'Start now'
     end
   end
 end

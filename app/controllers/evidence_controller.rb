@@ -60,6 +60,11 @@ class EvidenceController < ApplicationController
     application_overview
   end
 
+  def return_application
+    evidence.application.assign_attributes(application_type: 'returned', outcome: 'none')
+    redirect_to root_path if evidence.application.save
+  end
+
   private
 
   def evidence
