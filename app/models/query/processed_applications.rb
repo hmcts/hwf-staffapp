@@ -16,6 +16,8 @@ module Query
       <<-WHERE.gsub(/^\s+\|/, '')
         |(applications.outcome IS NOT NULL)
         |AND
+        |(applications.completed_at IS NOT NULL)
+        |AND
         |(evidence_checks.id IS NULL OR evidence_checks.completed_at IS NOT NULL)
         |AND
         |(part_payments.id IS NULL OR part_payments.completed_at IS NOT NULL)
