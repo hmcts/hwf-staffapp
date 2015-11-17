@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get 'evidence/:id/summary', to: 'evidence#summary', as: :evidence_summary
   post 'evidence/:id/summary', to: 'evidence#summary_save', as: :evidence_summary_save
   get 'evidence/:id/confirmation', to: 'evidence#confirmation', as: :evidence_confirmation
+  get 'evidence/:id/return_letter', to: 'evidence#return_letter', as: :evidence_return_letter
 
   resources :evidence_checks, only: :show
 
