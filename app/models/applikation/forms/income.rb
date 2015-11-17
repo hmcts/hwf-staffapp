@@ -11,6 +11,8 @@ module Applikation
 
       define_attributes
 
+      validates :income, presence: true
+      validates :income, numericality: { allow_blank: true }
       validates :dependents, inclusion: { in: [true, false] }
       validates :children, numericality: { greater_than: 0, only_integer: true }, if: :dependents?
       validate :number_of_children_when_no_dependents
