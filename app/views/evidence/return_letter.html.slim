@@ -10,4 +10,5 @@ header
          full_name: @overview.full_name,
          current_user: current_user.name).html_safe
 
-= link_to 'Finish', evidence_return_application_path, class: 'button'
+= form_for @evidence, url: :evidence_return_application, method: :post, html: { autocomplete: 'off' } do |f|
+  = f.submit 'Finish', class: 'button'
