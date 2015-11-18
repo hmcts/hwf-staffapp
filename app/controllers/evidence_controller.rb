@@ -61,8 +61,8 @@ class EvidenceController < ApplicationController
   end
 
   def return_application
-    evidence.application.assign_attributes(application_type: 'returned', outcome: 'none')
-    redirect_to root_path if evidence.application.save
+    assign_evidence_check_and_application_values
+    redirect_to root_path if evidence.save && evidence.application.save
   end
 
   private
@@ -105,5 +105,12 @@ class EvidenceController < ApplicationController
 
   def evidence_confirmation
     @confirmation = evidence
+  end
+
+  def assign_evidence_check_and_application_values
+    evidence.assign_attributes(outcome: 'returned',
+                               completed_at: Time.zone.now,
+                               completed_by_id: current_user.id)
+    evidence.application.assign_attributes(application_type: 'returned', outcome: 'none')
   end
 end
