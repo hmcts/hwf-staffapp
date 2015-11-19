@@ -61,8 +61,7 @@ class EvidenceController < ApplicationController
   end
 
   def return_application
-    assign_evidence_check_and_application_values
-    redirect_to root_path if evidence.save && evidence.application.save
+    redirect_to root_path if ResolverService.new(evidence, current_user).resolve('return')
   end
 
   private
@@ -105,12 +104,5 @@ class EvidenceController < ApplicationController
 
   def evidence_confirmation
     @confirmation = evidence
-  end
-
-  def assign_evidence_check_and_application_values
-    evidence.assign_attributes(outcome: 'returned',
-                               completed_at: Time.zone.now,
-                               completed_by_id: current_user.id)
-    evidence.application.assign_attributes(application_type: 'returned', outcome: 'none')
   end
 end

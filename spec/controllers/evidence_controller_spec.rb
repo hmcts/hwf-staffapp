@@ -358,26 +358,6 @@ RSpec.describe EvidenceController, type: :controller do
       it 'returns the correct status code' do
         expect(response).to have_http_status(:redirect)
       end
-
-      it 'updates the application outcome' do
-        expect(evidence.application.outcome).to eq 'none'
-      end
-
-      it 'updates the evidence outcome' do
-        expect(evidence.outcome).to eq 'returned'
-      end
-
-      it 'updates the evidence completed_at' do
-        expect(evidence.completed_at).not_to be_nil
-      end
-
-      it 'updates the evidence completed_by' do
-        expect(evidence.completed_by_id).not_to be_nil
-      end
-
-      it 'updates the application type' do
-        expect(evidence.application.application_type).to eq 'returned'
-      end
     end
   end
 end
