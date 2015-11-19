@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116125301) do
+ActiveRecord::Schema.define(version: 20151119112949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20151116125301) do
     t.string   "reference"
     t.datetime "completed_at"
     t.integer  "completed_by_id"
+    t.string   "decision"
+    t.string   "decision_type"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
