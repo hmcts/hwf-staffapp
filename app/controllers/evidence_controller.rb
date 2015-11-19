@@ -110,6 +110,5 @@ class EvidenceController < ApplicationController
   def assign_evidence_check_and_application_values
     evidence.assign_attributes(outcome: 'returned')
     ResolverService.new(evidence, current_user).process
-    evidence.application.assign_attributes(application_type: 'returned', outcome: 'none')
   end
 end
