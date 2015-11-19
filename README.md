@@ -21,7 +21,7 @@ brew install qt
 ```
 You will need to run the following to enable capybara-webkit in ubuntu environments:
 ```
-sudo apt-get install libqt4-dev
+sudo apt-get install qt5-default libqt5webkit5-dev
 sudo apt-get install xvfb
 ```
 
