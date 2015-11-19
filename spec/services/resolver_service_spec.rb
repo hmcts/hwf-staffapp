@@ -59,4 +59,25 @@ describe ResolverService do
 
     end
   end
+
+  describe '#resolve' do
+    before { Timecop.freeze }
+    after { Timecop.return }
+
+    context 'when created with an evidence_check' do
+      let(:object) { create(:evidence_check) }
+
+      describe 'updates the objects.completed_by value' do
+        before { resolver.resolve('return') }
+
+        subject { object }
+
+        it { expect(object.outcome).to eql 'return' }
+        it { expect(object.completed_by.name).to eql user.name }
+        it { expect(object.completed_at).to eql Time.zone.now }
+        it { expect(object.application.decision).to eql 'none' }
+        it { expect(object.application.decision_type).to eql 'evidence_check' }
+      end
+    end
+  end
 end
