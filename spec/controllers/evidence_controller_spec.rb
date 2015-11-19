@@ -4,7 +4,8 @@ RSpec.describe EvidenceController, type: :controller do
   include Devise::TestHelpers
 
   let(:user)     { create :user, office: create(:office) }
-  let(:evidence) { build_stubbed(:evidence_check) }
+  let(:application) { create :application }
+  let(:evidence) { create :evidence_check, application_id: application.id }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
@@ -314,6 +315,48 @@ RSpec.describe EvidenceController, type: :controller do
 
       it 'assigns the evidence check as confirmation' do
         expect(assigns(:confirmation)).to eql(evidence)
+      end
+    end
+  end
+
+  describe 'GET #return_letter' do
+    context 'as a signed out user' do
+      before(:each) { get :return_letter, id: evidence }
+
+      it { expect(response).to have_http_status(:redirect) }
+
+      it { expect(response).to redirect_to(user_session_path) }
+    end
+
+    context 'as a signed in user' do
+      before(:each) do
+        sign_in user
+        get :return_letter, id: evidence
+      end
+
+      it { expect(response).to have_http_status(200) }
+
+      it { expect(response).to render_template('return_letter') }
+    end
+  end
+
+  describe 'POST #return_application' do
+    context 'as a signed out user' do
+      before(:each) { post :return_application, id: evidence }
+
+      it { expect(response).to have_http_status(:redirect) }
+
+      it { expect(response).to redirect_to(user_session_path) }
+    end
+
+    context 'as a signed in user' do
+      before(:each) do
+        sign_in user
+        post :return_application, id: evidence
+      end
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(:redirect)
       end
     end
   end

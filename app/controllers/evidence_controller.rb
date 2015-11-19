@@ -56,6 +56,14 @@ class EvidenceController < ApplicationController
     evidence_confirmation
   end
 
+  def return_letter
+    application_overview
+  end
+
+  def return_application
+    redirect_to root_path if ResolverService.new(evidence, current_user).resolve('return')
+  end
+
   private
 
   def evidence
