@@ -28,12 +28,30 @@ class LogStuff
 
     if self.use_logstasher?
       return unless LogStasher.logger.send("#{severity}?")
+
+      msg = yield
+      event = build_event(*args, msg)
+      LogStasher.logger << event.to_json + "\n"
     else
       return unless Rails.logger.send("#{severity}?")
+      Rails.logger.send(severity, &block)
     end
+  end
 
+  def self.build_event(*args, msg)
+    local_fields, local_tags = compile_fields_and_tags(args)
+
+    LogStash::Event.new('@source' => LogStasher.source,
+                        '@severity' => severity,
+                        'message' => msg,
+                        '@tags' => get_thread_current(:current_tags).merge(local_tags),
+                        '@fields' => get_thread_current(:current_fields).merge(local_fields)
+    )
+  end
+
+  def self.compile_fields_and_tags(args)
     local_fields = {}
-    local_tags   = Set.new
+    local_tags = Set.new
     args.each do |arg|
       case arg
         when Hash
@@ -44,20 +62,7 @@ class LogStuff
           local_tags.merge(arg)
       end
     end
-
-    if self.use_logstasher?
-      msg = yield
-
-      event = LogStash::Event.new('@source' => LogStasher.source,
-                                  '@severity' => severity,
-                                  'message' => msg,
-                                  '@tags' => get_thread_current(:current_tags).merge(local_tags),
-                                  '@fields' => get_thread_current(:current_fields).merge(local_fields)
-      )
-      LogStasher.logger << event.to_json + "\n"
-    else
-      Rails.logger.send(severity, &block)
-    end
+    return local_fields, local_tags
   end
 
   %w( fatal error warn info debug ).each do |severity|
