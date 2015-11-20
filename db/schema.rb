@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119112949) do
+ActiveRecord::Schema.define(version: 20151120112749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20151119112949) do
     t.string   "incorrect_reason"
     t.datetime "completed_at"
     t.integer  "completed_by_id"
+    t.string   "outcome"
   end
 
   add_index "part_payments", ["application_id"], name: "index_part_payments_on_application_id", using: :btree
