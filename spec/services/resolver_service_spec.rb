@@ -115,12 +115,12 @@ describe ResolverService do
         let(:object) { create(:part_payment) }
 
         describe "when outcome is 'return'" do
-         let(:outcome) { 'return' }
+          let(:outcome) { 'return' }
 
-         it { expect(subject.outcome).to eql 'return' }
-         it { expect(subject.application.decision).to eql 'none' }
+          it { expect(subject.outcome).to eql 'return' }
+          it { expect(subject.application.decision).to eql 'none' }
 
-         it_behaves_like 'resolver service for user, timestamps and decision_type', 'part_payment'
+          it_behaves_like 'resolver service for user, timestamps and decision_type', 'part_payment'
         end
 
         describe "when outcome is 'none'" do
