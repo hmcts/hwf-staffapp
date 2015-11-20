@@ -61,32 +61,58 @@ describe ResolverService do
   end
 
   describe '#resolve' do
-    before { Timecop.freeze }
+    before do
+      Timecop.freeze
+      resolver.resolve(outcome)
+    end
+
     after { Timecop.return }
+
+    subject { object }
 
     context 'when created with an evidence_check' do
       let(:object) { create(:evidence_check) }
 
-      describe 'updates the objects.completed_by value' do
-        before { resolver.resolve('return') }
+      describe "when outcome is 'return'" do
+        let(:outcome) { 'return' }
 
-        subject { object }
+        it { expect(subject.outcome).to eql 'return' }
+        it { expect(subject.application.decision).to eql 'none' }
 
-        it { expect(object.outcome).to eql 'return' }
-        it { expect(object.completed_by.name).to eql user.name }
-        it { expect(object.completed_at).to eql Time.zone.now }
-        it { expect(object.application.decision).to eql 'none' }
-        it { expect(object.application.decision_type).to eql 'evidence_check' }
+        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
+      end
+
+      describe "when outcome is 'full'" do
+        let(:outcome) { 'full' }
+
+        it { expect(subject.outcome).to eql 'full' }
+        it { expect(subject.application.decision).to eql 'full' }
+
+        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
+      end
+
+      describe "when outcome is 'part'" do
+        let(:outcome) { 'part' }
+
+        it { expect(subject.outcome).to eql 'part' }
+        it { expect(subject.application.decision).to eql 'part' }
+
+        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
+      end
+
+      describe "when outcome is 'none'" do
+        let(:outcome) { 'none' }
+
+        it { expect(subject.outcome).to eql 'none' }
+        it { expect(subject.application.decision).to eql 'none' }
+
+        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
       end
     end
 
     context 'when created with a part-payment' do
       context 'check different outcomes' do
         let(:object) { create(:part_payment) }
-
-        before { resolver.resolve(outcome) }
-
-        subject { object }
 
         describe "when outcome is 'return'" do
          let(:outcome) { 'return' }
