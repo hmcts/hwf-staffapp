@@ -80,6 +80,7 @@ namespace :decisions do
     { 'full' => 'full',
       'part' => 'part',
       'none' => 'none',
-      'return' => 'none' }
+      'return' => 'none',
+      'undetermined' => 'none' }
   end
 end
