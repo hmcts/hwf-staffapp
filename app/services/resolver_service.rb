@@ -13,7 +13,7 @@ class ResolverService
   def resolve(outcome)
     record(outcome)
     record_decision_from(outcome)
-    @calling_object.save
+    persist!
   end
 
   private
@@ -27,6 +27,13 @@ class ResolverService
   def record_decision_from(outcome)
     @calling_object.application.assign_attributes(decision: lookup_decision(outcome),
                                                   decision_type: derive_object)
+  end
+
+  def persist!
+    ActiveRecord::Base.transaction do
+      @calling_object.save
+      @calling_object.application.save
+    end
   end
 
   def mark_complete
