@@ -7,7 +7,7 @@ describe BenefitCheckService do
     it 'fails' do
       expect {
         described_class.new(nil)
-      }.to raise_error
+      }.to raise_error(NoMethodError)
     end
   end
 
