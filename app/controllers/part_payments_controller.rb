@@ -36,6 +36,14 @@ class PartPaymentsController < ApplicationController
     @result = Views::PartPayment::Result.new(part_payment)
   end
 
+  def return_letter
+    application_overview
+  end
+
+  def return_application
+    redirect_to root_path if ResolverService.new(part_payment, current_user).resolve('return')
+  end
+
   private
 
   def part_payment
@@ -44,6 +52,10 @@ class PartPaymentsController < ApplicationController
 
   def application
     part_payment.application
+  end
+
+  def application_overview
+    @overview = Views::ApplicationOverview.new(part_payment.application)
   end
 
   def accuracy_params

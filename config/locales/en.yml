@@ -83,6 +83,15 @@ en-GB:
       <p> If you still want help with your fees, you will have to complete a new application. </p>  
       <p>Yours sincerely,</p>
       <p>%{user}</p>
+    return_letter: |
+      <p>Dear %{full_name}</p>
+      <p>We have received your documents however they are not correct,
+      therefore we’re unable to process your application. This may
+      have an impact on the original case or claim related to this
+      application.</p>
+      <p>You will need to make a new application if you still require help.</p>
+      <p>Yours sincerely,</p>
+      <p>%{current_user}</p>
   functions:
     feedback: 'Give feedback'
     staff_guide: See the guides
