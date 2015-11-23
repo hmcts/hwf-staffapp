@@ -43,24 +43,14 @@ class ResolverService
     )
   end
 
-  def evidence_check
-    { 'full' => 'full',
-      'part' => 'part',
-      'none' => 'none',
-      'return' => 'none' }
-  end
-
-  def part_payment
-    { 'return' => 'none',
-      'none' => 'none',
-      'part' => 'part' }
-  end
-
   def derive_object
     @calling_object.class.name.underscore
   end
 
   def lookup_decision(outcome)
-    send(derive_object)[outcome]
+    { 'full' => 'full',
+      'part' => 'part',
+      'none' => 'none',
+      'return' => 'none' }[outcome]
   end
 end
