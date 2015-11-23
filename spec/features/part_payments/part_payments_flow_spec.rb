@@ -114,7 +114,7 @@ RSpec.feature 'Part Payments flow', type: :feature do
       let(:part_payment) { create :part_payment, correct: false }
 
       scenario 'a letter copy is presented' do
-        expect(page).to have_content 'We have received your part-payment however it was not correct'
+        expect(page).to have_content 'We have received your part-payment however we are unable to accept it.'
       end
     end
   end
