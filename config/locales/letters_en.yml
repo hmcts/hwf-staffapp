@@ -1,0 +1,91 @@
+en-GB:
+  letters:
+    evidence_check:
+      requested_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your application for help with fees and need some more information from you. If you're married or living with someone and sharing an income, then you partner will need to provide evidence of their income too.</p>
+        <p>You need to send us a copy of last month’s bank statement for your main bank account.</p>
+        <p>Plus copies of all the following documents that apply to you:</p>
+        <div><strong>Wages</strong></div>
+        <ul>
+          <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
+          <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.</li>
+        </ul>
+        <p>If you’re self-employed and don’t have either of these documents, you’ll need to provide bank statements that show income for the previous tax year.</p>
+        <div><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></div>
+        <p>A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit.</p>
+        <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
+        <div><strong>Child maintenance payments</strong></div>
+        <p>Document(s) showing the payment amounts and how often they are made.</p>
+        <div>This can be one of the following:</div>
+        <ul>
+          <li>sealed court order</li>
+          <li>Child Support Agency Assessment</li>
+          <li>signed voluntary agreement or letter of agreement signed by both parties</li>
+        </ul>
+        <div><strong>Contribution-based Jobseeker’s Allowance (JSA), Contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></div>
+        <p>A letter from the Department for Work and Pensions (DWP) dated in the last 3 months.</p>
+        <div><strong>Pensions (state, work, private)</strong></div>
+        <p>A letter or statement showing pension payments.</p>
+        <div><strong>Rent from anyone living with you</strong></div>
+        <p>A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.</p>
+        <div><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></div>
+        <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (eg family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
+        <div><strong>Prisoner’s income</strong></div>
+        <p>Prisoner Income and Expenditure Statement (PIES) showing earnings, spending, private cash and savings.</p>
+        <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+        <div><strong>Any other monthly income</strong></div>
+        <p>Documentation of any other income that you’re receiving. </p>
+        <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
+        <p>You also need to include this letter along with evidence of your income.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>
+      processed:
+        part_remission_html: |
+          <p>Dear %{full_name}</p>
+          <p>We have received your application for help with fees.
+          <p>You are eligible to make a part-fee payment and must pay £%{fee} towards the fee.
+          <p><b>How to pay</b></p>
+          <p>- by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</p>
+          <p>- by debit card over the phone</p>
+          <p>- in person with a cheque, cash or debit card at the court counter</p>
+          <p>Please make sure you pay this amount by %{date}.</p>
+          <p>Yours sincerely,</p>
+          <p>%{current_user}</p>
+        no_remission_html: |
+          <p>Dear %{full_name}</p>
+          <p>We have received your documents however they are not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
+          <p>You will need to make a new application if you still require help.</p>
+          <p>Yours sincerely,</p>
+          <p>%{current_user}</p>
+      return:
+        not_received_html: |
+          <p>Dear %{full_name}</p>
+          <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
+          <p> DESCRIBE WHY THE EVIDENCE CANNOT BE ACCEPTED</p>
+          <p> Unfortunately we’re unable to process your application.</p>
+          <p>If you still want help with your fees, you will have to complete a new application.</p>
+          <p>Yours sincerely,</p>
+          <p>%{current_user}</p>
+    part-payment:
+      processed:
+        failed_html: |
+          <p>Dear %{full_name}</p>
+          <p> We have received your part-payment however we are unable to accept it.</p>
+          <p> This is because:
+          <p> INSERT REASON, eg the sum is not correct / the cheque is not made out correctly.</p>
+          <p> Unfortunately we’re unable to process your application.</p>
+          <p> If you still want help with your fees, you will have to complete a new application. </p>
+          <p>Yours sincerely,</p>
+          <p>%{user}</p>
+      return:
+        not_received_html: |
+          <p>Dear %{full_name}</p>
+          <p>We have received your documents however they are not correct,
+          therefore we’re unable to process your application. This may
+          have an impact on the original case or claim related to this
+          application.</p>
+          <p>You will need to make a new application if you still require help.</p>
+          <p>Yours sincerely,</p>
+          <p>%{current_user}</p>
