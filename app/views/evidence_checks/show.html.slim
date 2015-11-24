@@ -31,6 +31,11 @@ header
           .evidence-check-letter
             =t('evidence_check.letter_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
-      .row
-        .small-12.medium-12.large-12.columns
-          =link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'
+  .row
+    .small-12.medium-12.large-12.columns
+      .evidence-check-letter
+        =t('letters.evidence_check.requested_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+
+  .row
+    .small-12.medium-12.large-12.columns
+      =link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'
