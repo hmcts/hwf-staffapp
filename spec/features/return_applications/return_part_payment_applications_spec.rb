@@ -25,31 +25,21 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
       end
     end
 
-    context 'processing an application' do
+    context 'processing an application for return' do
       before { click_link application1.reference }
       scenario 'shows the application data' do
         expect(page).to have_content 'Process part-payment'
         expect(page).to have_content application1.applicant.full_name
-      end
-
-      scenario 'shows "Start now" button' do
         expect(page).to have_link 'Start now'
-      end
-
-      scenario 'shows "Return application" button' do
         expect(page).to have_link 'Return application'
-      end
-    end
-
-    scenario 'when returning application' do
-      click_link application1.reference
-      click_link 'Return application'
-      expect(page).to have_content 'Processing complete'
-      expect(page).to have_button 'Finish'
-      click_button 'Finish'
-      expect(page).to have_content 'Start now'
-      within '.waiting-for-part_payment' do
-        expect(page).not_to have_content(application1.reference)
+        click_link 'Return application'
+        expect(page).to have_content 'Processing complete'
+        expect(page).to have_button 'Finish'
+        click_button 'Finish'
+        expect(page).to have_content 'Start now'
+        within '.waiting-for-part_payment' do
+          expect(page).to have_no_content(application1.reference)
+        end
       end
     end
   end
