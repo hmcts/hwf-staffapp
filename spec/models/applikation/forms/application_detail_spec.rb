@@ -186,18 +186,22 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
     end
 
     describe 'refund' do
-      let(:date_fee_paid) { Time.zone.yesterday }
+      let(:current_time) { Time.zone.local(2014, 12, 1, 12, 30, 0) }
+      let(:date_received) { Time.zone.local(2014, 11, 15, 12, 30, 0) }
+      let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
       let(:refund_status) { true }
-      let(:refund) do
+
+      subject(:refund) do
         params = { jurisdiction_id: 1,
                    fee: 500,
-                   date_received: Time.zone.yesterday,
+                   date_received: date_received,
                    refund: refund_status,
                    date_fee_paid: date_fee_paid }
         described_class.new(params)
       end
 
-      subject { refund }
+      before { Timecop.freeze(current_time) }
+      after { Timecop.return }
 
       it { is_expected.to be_valid }
 
@@ -210,47 +214,42 @@ RSpec.describe Applikation::Forms::ApplicationDetail do
 
       describe 'date fee paid' do
         describe 'range' do
-          context 'is enforced' do
-            before { Timecop.freeze(Time.zone.local(2014, 12, 1, 12, 30, 0)) }
-            after { Timecop.return }
-
-            describe 'allows between today and 3 months ago' do
-              let(:date_fee_paid) { Time.zone.today }
+          describe 'maximum boundary is 3 months before date_received' do
+            describe 'just inside' do
+              let(:date_fee_paid) { Time.zone.local(2014, 8, 16, 0, 10, 0) }
 
               it { is_expected.to be_valid }
             end
 
-            describe 'maximum boundary' do
-              describe 'just inside' do
-                let(:date_fee_paid) { Time.zone.local(2014, 9, 1, 0, 10, 0) }
-
-                it { is_expected.to be_valid }
-              end
-
-              describe 'just outside' do
-                let(:date_fee_paid) { Time.zone.local(2014, 8, 31, 13, 23, 55) }
-
-                describe 'returns an error if exceeded' do
-                  before { refund.valid? }
-
-                  subject { refund.errors[:date_fee_paid] }
-
-                  it { is_expected.to eq ['The application must have been made in the last 3 months'] }
-                end
-              end
-            end
-
-            describe 'minimum' do
-              let(:date_fee_paid) { Time.zone.tomorrow }
-
-              it { is_expected.to be_invalid }
+            describe 'just outside' do
+              let(:date_fee_paid) { Time.zone.local(2014, 8, 15, 10, 23, 55) }
 
               describe 'returns an error if exceeded' do
                 before { refund.valid? }
 
                 subject { refund.errors[:date_fee_paid] }
 
-                it { is_expected.to eq ['The application cannot be a future date'] }
+                it { is_expected.to eq ['This date can’t be more than 3 months before the application was received'] }
+              end
+            end
+          end
+
+          describe 'minimum boundary is the date_received' do
+            describe 'just inside' do
+              let(:date_fee_paid) { Time.zone.local(2014, 11, 15, 8, 0, 0) }
+
+              it { is_expected.to be_valid }
+            end
+
+            describe 'just outside' do
+              let(:date_fee_paid) { Time.zone.local(2014, 11, 16, 13, 0, 0) }
+
+              it { is_expected.to be_invalid }
+
+              it 'returns an error' do
+                subject.valid?
+
+                expect(subject.errors[:date_fee_paid]).to eq ['This date can’t be after the application was received']
               end
             end
           end
