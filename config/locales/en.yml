@@ -109,6 +109,8 @@ en-GB:
       moved_offices: "%{user} moved to %{office}, you will need to contact %{contact} there if this was done in error"
     jurisdictions:
       none_in_office: 'Ask your manager to assign jurisdictions to your office.'
+    part_payment:
+      cannot_be_saved: 'This return could not be processed'
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
