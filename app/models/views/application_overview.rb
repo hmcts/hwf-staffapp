@@ -21,7 +21,7 @@ module Views
     end
 
     def status
-      locale_scope = 'activemodel.attributes.applikation/forms/personal_information'
+      locale_scope = 'activemodel.attributes.forms/application/applicant'
       I18n.t("married_#{@application.married?}", scope: locale_scope)
     end
 
@@ -101,7 +101,7 @@ module Views
     end
 
     def format_locale(suffix)
-      prefix = 'activemodel.attributes.applikation/forms/summary'
+      prefix = 'activemodel.attributes.forms/application/summary'
       I18n.t(suffix, scope: prefix)
     end
 

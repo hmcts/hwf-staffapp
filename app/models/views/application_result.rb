@@ -40,7 +40,7 @@ module Views
     end
 
     def format_locale(suffix)
-      prefix = 'activemodel.attributes.applikation/forms/summary'
+      prefix = 'activemodel.attributes.forms/application/summary'
       I18n.t(suffix, scope: prefix)
     end
   end
