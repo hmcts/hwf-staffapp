@@ -6,12 +6,14 @@ RSpec.describe FormObject do
     it { expect(described_class.permitted_attributes).to eq({}) }
   end
 
-  class Forms::FormTestClass < FormObject
-    def self.permitted_attributes
-      { id: Integer, fee: Integer }
-    end
+  module Forms
+    class FormTestClass < FormObject
+      def self.permitted_attributes
+        { id: Integer, fee: Integer }
+      end
 
-    define_attributes
+      define_attributes
+    end
   end
 
   params_list = Forms::FormTestClass.permitted_attributes.keys
