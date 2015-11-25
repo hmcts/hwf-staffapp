@@ -25,13 +25,13 @@ module Applications
     end
 
     def application_details
-      @form = Forms::Application::ApplicationDetail.new(application.detail)
+      @form = Forms::Application::Detail.new(application.detail)
       @jurisdictions = user_jurisdictions
     end
 
     def application_details_save
-      @form = Forms::Application::ApplicationDetail.new(application.detail)
-      @form.update_attributes(form_params(:application_details))
+      @form = Forms::Application::Detail.new(application.detail)
+      @form.update_attributes(form_params(:details))
 
       if @form.save
         hack_and_redirect

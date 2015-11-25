@@ -289,7 +289,7 @@ en-GB:
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form name or number
-      forms/application/application_detail:
+      forms/application/detail:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
@@ -354,7 +354,7 @@ en-GB:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             married:
               inclusion: Please select a marital status
-        forms/application/application_detail:
+        forms/application/detail:
           attributes:
             fee:
               blank: Enter the fee

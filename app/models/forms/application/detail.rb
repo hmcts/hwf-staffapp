@@ -1,6 +1,6 @@
 module Forms
   module Application
-    class ApplicationDetail < ::FormObject
+    class Detail < ::FormObject
 
       TIME_LIMIT_FOR_PROBATE = 20
 

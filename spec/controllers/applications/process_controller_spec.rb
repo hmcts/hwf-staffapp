@@ -18,7 +18,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Forms::Application::PersonalInformation).to receive(:new).with(application.applicant).and_return(personal_information_form)
-    allow(Forms::Application::ApplicationDetail).to receive(:new).with(application.detail).and_return(application_details_form)
+    allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
     allow(Forms::Application::SavingsInvestment).to receive(:new).with(application).and_return(savings_investments_form)
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
