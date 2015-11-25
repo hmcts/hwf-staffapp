@@ -265,7 +265,7 @@ en-GB:
         incorrect_reason: Reason
         income: Income
       views/application_result:
-        savings: Savings
+        savings: Savings and investments
         income: Income
       views/part_payment/result:
         savings: Savings
