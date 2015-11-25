@@ -55,6 +55,8 @@ Rails.application.routes.draw do
       get :summary
       post :summary_save
       get :confirmation
+      get :return_letter
+      post :return_application
     end
   end
 

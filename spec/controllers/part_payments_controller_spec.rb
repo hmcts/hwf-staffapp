@@ -153,4 +153,58 @@ RSpec.describe PartPaymentsController, type: :controller do
       expect(assigns(:overview)).to eql(application_overview)
     end
   end
+
+  describe 'GET #return_letter' do
+    before { get :return_letter, id: part_payment }
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template :return_letter
+    end
+
+    it 'assigns the view models' do
+      expect(assigns(:overview)).to eql(application_overview)
+    end
+  end
+
+  describe 'POST #return_application' do
+    let(:part_payment) { create(:part_payment) }
+
+    context 'when no error generated' do
+      before { post :return_application, id: part_payment }
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(302)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when ResolverService returns an error' do
+      let(:user) { create :user }
+      let(:resolver) { double(resolve: false) }
+      before do
+        sign_in user
+        allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
+        post :return_application, id: part_payment
+      end
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(302)
+      end
+
+      it 'renders the correct template' do
+        expect(response).to redirect_to(return_letter_part_payment_path)
+      end
+
+      it 'returns an appropriate error in the flash message' do
+        expect(flash[:alert]).to eql('This return could not be processed')
+      end
+    end
+  end
 end

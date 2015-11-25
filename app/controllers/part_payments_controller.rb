@@ -36,6 +36,19 @@ class PartPaymentsController < ApplicationController
     @result = Views::PartPayment::Result.new(part_payment)
   end
 
+  def return_letter
+    application_overview
+  end
+
+  def return_application
+    if ResolverService.new(part_payment, current_user).resolve('return')
+      redirect_to root_path
+    else
+      flash[:alert] = t('error_messages.part_payment.cannot_be_saved')
+      redirect_to return_letter_part_payment_path
+    end
+  end
+
   private
 
   def part_payment
@@ -44,6 +57,10 @@ class PartPaymentsController < ApplicationController
 
   def application
     part_payment.application
+  end
+
+  def application_overview
+    @overview = Views::ApplicationOverview.new(part_payment.application)
   end
 
   def accuracy_params
