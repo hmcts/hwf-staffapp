@@ -10,12 +10,12 @@ module Applications
     end
 
     def personal_information
-      @form = Forms::Application::PersonalInformation.new(application.applicant)
+      @form = Forms::Application::Applicant.new(application.applicant)
     end
 
     def personal_information_save
-      @form = Forms::Application::PersonalInformation.new(application.applicant)
-      @form.update_attributes(form_params(:personal_information))
+      @form = Forms::Application::Applicant.new(application.applicant)
+      @form.update_attributes(form_params(:applicant))
 
       if @form.save
         redirect_to(action: :application_details)

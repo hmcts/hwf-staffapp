@@ -1,6 +1,6 @@
 module Forms
   module Application
-    class PersonalInformation < ::FormObject
+    class Applicant < ::FormObject
 
       MINIMUM_AGE = 16
       MAXIMUM_AGE = 120

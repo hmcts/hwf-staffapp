@@ -275,7 +275,7 @@ en-GB:
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant
-      forms/application/personal_information:
+      forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
         first_name: First and middle names
@@ -339,7 +339,7 @@ en-GB:
         children: Number of children
     errors:
       models:
-        forms/application/personal_information:
+        forms/application/applicant:
           attributes:
             last_name:
               blank: Enter the applicant's last name
