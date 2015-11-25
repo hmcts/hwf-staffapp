@@ -377,8 +377,8 @@ en-GB:
             date_fee_paid:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
-              after_or_equal_to: The application must have been made in the last 3 months
-              before: The application cannot be a future date
+              after_or_equal_to: This date can’t be more than 3 months before the application was received
+              before: This date can’t be after the application was received
               blank: The date fee paid should be entered
             date_of_death:
               after: The date of death should be entered

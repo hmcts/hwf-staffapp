@@ -43,8 +43,9 @@ module Applikation
 
       with_options if: :refund? do
         validates :date_fee_paid, date: {
-          after_or_equal_to: :min_date,
-          before: :tomorrow
+          after_or_equal_to: :min_refund_date,
+          before: :max_refund_date,
+          allow_blank: false
         }
       end
 
@@ -56,6 +57,14 @@ module Applikation
 
       def min_date
         3.months.ago.midnight
+      end
+
+      def min_refund_date
+        date_received - 3.months unless date_received.blank?
+      end
+
+      def max_refund_date
+        date_received unless date_received.blank?
       end
 
       def tomorrow
