@@ -3,29 +3,29 @@
   header
     .row
       .small-12.medium-8.large-12.columns
-        h2 =t('activemodel.attributes.applikation/forms/savings_investment.header')
+        h2 =t('header', scope: @form.i18n_scope)
   .row
     .small-12.medium-8.large-5.columns  
       .form-group
-        label =t('activemodel.attributes.applikation/forms/savings_investment.maximum_prompt')
+        label =t('maximum_prompt', scope: @form.i18n_scope)
         #result.callout.received
           h3 =number_to_currency(@application.threshold.floor, precision: 0)
-        label =t('activemodel.attributes.applikation/forms/savings_investment.explanation')
+        label =t('explanation', scope: @form.i18n_scope)
   
       .form-group
         .row.collapse
           .columns.small-12
-            = f.label :threshold_exceeded, t("activemodel.attributes.applikation/forms/savings_investment.#{@application.married ? 'married' : 'single'}")
+            = f.label :threshold_exceeded, t(@application.married ? 'married' : 'single', scope: @form.i18n_scope)
             = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
             .options.radio
               .option
                 label for='application_threshold_exceeded_false'
                   = f.radio_button :threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'over-61', show: 'false' } }
-                  = t('activemodel.attributes.applikation/forms/savings_investment.less_than')
+                  = t('less_than', scope: @form.i18n_scope)
               .option
                 label for='application_threshold_exceeded_true'
                   = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
-                  = t('activemodel.attributes.applikation/forms/savings_investment.more_than')
+                  = t('more_than', scope: @form.i18n_scope)
 
       -if @application.applicant_over_61?
         =f.hidden_field :partner_over_61, value: 'true'
@@ -37,7 +37,7 @@
           .form-group.panel-indent
             .row.collapse
               .columns.small-12
-                = f.label :partner_over_61, t('activemodel.attributes.applikation/forms/savings_investment.partner_over_61')
+                = f.label :partner_over_61, t('partner_over_61', scope: @form.i18n_scope)
                 = f.label :partner_over_61, @form.errors[:partner_over_61].join(', '), class: 'error' if @form.errors[:partner_over_61].present?
                 .options.radio
                   .option
@@ -56,11 +56,11 @@
                           .option
                             label for="application_high_threshold_exceeded_false"
                               = f.radio_button :high_threshold_exceeded, 'false'
-                              = t('activemodel.attributes.applikation/forms/savings_investment.less_than_high')
+                              = t('less_than_high', scope: @form.i18n_scope)
                           .option
                             label for="application_high_threshold_exceeded_true"
                               = f.radio_button :high_threshold_exceeded, 'true'
-                              = t('activemodel.attributes.applikation/forms/savings_investment.more_than_high')
+                              = t('more_than_high', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
@@ -74,7 +74,7 @@
               .columns.small-8 #{@application.applicant_age} years old
             .row
               .columns.small-4.table-label Status
-              .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
+              .columns.small-8 =t("married_#{@application.married}", scope: @form.i18n_scope)
             .row
               .columns.small-4.table-label Fee
               .columns.small-8 £#{@application.fee.floor}

@@ -17,11 +17,11 @@
               .option
                 label for='application_benefits_false'
                   = f.radio_button :benefits, 'false'
-                  = t('activemodel.attributes.applikation/forms/benefit.benefits_false')
+                  = t('benefits_false', scope: @form.i18n_scope)
               .option
                 label for='application_benefits_true'
                   = f.radio_button :benefits, 'true'
-                  = t('activemodel.attributes.applikation/forms/benefit.benefits_true')
+                  = t('benefits_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 

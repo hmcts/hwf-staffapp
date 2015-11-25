@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Applikation::Forms::Benefit do
+RSpec.describe Forms::Application::Benefit do
   params_list = %i[benefits]
 
   let(:hash) { {} }

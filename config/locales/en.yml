@@ -275,7 +275,7 @@ en-GB:
       evidence/views/dashboard:
         form_name: Form
         full_name: Applicant
-      applikation/forms/personal_information:
+      forms/application/personal_information:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
         first_name: First and middle names
@@ -289,7 +289,7 @@ en-GB:
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form name or number
-      applikation/forms/application_detail:
+      forms/application/application_detail:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
@@ -302,7 +302,7 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
-      applikation/forms/savings_investment:
+      forms/application/savings_investment:
         header: Savings and investments
         maximum_prompt: 'Maximum amount of savings and investments allowed:'
         explanation: This amount may be different to what’s on the form. It’s calculated on the applicant’s age and fee amount.
@@ -314,11 +314,11 @@ en-GB:
         less_than_high: Less than £16,000
         more_than_high: More than £16,000
         high_threshold_exceeded: In question 8, the applicant and their partner have
-      applikation/forms/benefit:
+      forms/application/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
         benefits_false: 'No'
         benefits_true: 'Yes'
-      applikation/forms/income:
+      forms/application/income:
         dependents: In question 10, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
@@ -339,7 +339,7 @@ en-GB:
         children: Number of children
     errors:
       models:
-        applikation/forms/personal_information:
+        forms/application/personal_information:
           attributes:
             last_name:
               blank: Enter the applicant's last name
@@ -354,7 +354,7 @@ en-GB:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             married:
               inclusion: Please select a marital status
-        applikation/forms/application_detail:
+        forms/application/application_detail:
           attributes:
             fee:
               blank: Enter the fee
@@ -389,17 +389,17 @@ en-GB:
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
               too_long: "is too long, it needs to be less than 500 characters"
-        applikation/forms/savings_investment:
+        forms/application/savings_investment:
           attributes:
             threshold_exceeded:
               inclusion: You must answer the savings question
             partner_over_61:
               inclusion: Please confirm the ages
-        applikation/forms/benefit:
+        forms/application/benefit:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
-        applikation/forms/income:
+        forms/application/income:
           attributes:
             dependents:
               inclusion: 'You must answer the dependent children question'
