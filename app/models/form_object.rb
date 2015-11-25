@@ -31,6 +31,10 @@ class FormObject
     end
   end
 
+  def i18n_scope
+    "activemodel.attributes.#{self.class.name.underscore}".to_sym
+  end
+
   private
 
   def persist!
