@@ -10,13 +10,13 @@
       .form-group
         = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title
-          =t('activemodel.attributes.applikation/forms/personal_information.title')
+          =t('title', scope: @form.i18n_scope)
           span.hint =t('general.optional').html_safe
         = f.text_field :title, { class: 'form-control small-field' }
 
       .form-group
         = f.label :first_name
-          =t('activemodel.attributes.applikation/forms/personal_information.first_name')
+          =t('first_name', scope: @form.i18n_scope)
           span.hint =t('general.optional').html_safe
         = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'form-control' }
@@ -28,14 +28,14 @@
 
       .form-group
         = f.label :date_of_birth
-          = t('activemodel.attributes.applikation/forms/personal_information.date_of_birth')
-          span.hint.block = t('activemodel.attributes.applikation/forms/personal_information.date_of_birth_hint')
+          = t('date_of_birth', scope: @form.i18n_scope)
+          span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
         = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
         = f.text_field :date_of_birth, { class: 'form-control small-field' }
 
       .form-group
         = f.label :ni_number
-          =t('activemodel.attributes.applikation/forms/personal_information.ni_number')
+          =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
         = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
@@ -49,11 +49,11 @@
               .option
                 label for='application_married_false'
                   = f.radio_button :married, 'false'
-                  = t('activemodel.attributes.applikation/forms/personal_information.married_false')
+                  = t('married_false', scope: @form.i18n_scope)
               .option
                 label for='application_married_true'
                   = f.radio_button :married, 'true'
-                  = t('activemodel.attributes.applikation/forms/personal_information.married_true')
+                  = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
     

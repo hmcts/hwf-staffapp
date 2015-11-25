@@ -6,19 +6,21 @@ RSpec.describe FormObject do
     it { expect(described_class.permitted_attributes).to eq({}) }
   end
 
-  class FormTestClass < FormObject
-    def self.permitted_attributes
-      { id: Integer, fee: Integer }
-    end
+  module Forms
+    class FormTestClass < FormObject
+      def self.permitted_attributes
+        { id: Integer, fee: Integer }
+      end
 
-    define_attributes
+      define_attributes
+    end
   end
 
-  params_list = FormTestClass.permitted_attributes.keys
+  params_list = Forms::FormTestClass.permitted_attributes.keys
 
   let(:application) { create :detail }
   let(:object_or_hash) { application }
-  subject(:form) { FormTestClass.new(object_or_hash) }
+  subject(:form) { Forms::FormTestClass.new(object_or_hash) }
 
   describe '#initialize' do
     describe 'when an ActiveRecord object is passed in' do
@@ -82,6 +84,12 @@ RSpec.describe FormObject do
       end
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe '#i18n_scope' do
+    it 'returns scope for form field attributes' do
+      expect(form.i18n_scope).to eql(:'activemodel.attributes.forms/form_test_class')
     end
   end
 end

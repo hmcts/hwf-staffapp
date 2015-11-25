@@ -1,5 +1,5 @@
-module Applikation
-  module Forms
+module Forms
+  module Application
     class Income < ::FormObject
       def self.permitted_attributes
         {

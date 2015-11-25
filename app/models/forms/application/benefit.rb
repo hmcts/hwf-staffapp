@@ -1,5 +1,5 @@
-module Applikation
-  module Forms
+module Forms
+  module Application
     class Benefit < ::FormObject
       def self.permitted_attributes
         { benefits: Boolean }

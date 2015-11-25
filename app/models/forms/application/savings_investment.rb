@@ -1,5 +1,5 @@
-module Applikation
-  module Forms
+module Forms
+  module Application
     class SavingsInvestment < ::FormObject
 
       LOCALE = 'activemodel.errors.models.applikation/forms/savings_investment.attributes'

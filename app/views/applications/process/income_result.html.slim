@@ -23,10 +23,10 @@ header
             .columns.small-4.table-label Status
             .columns.small-8 =t("activemodel.attributes.applikation/forms/personal_information.married_#{@application.married}")
           .row
-            .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.children')
+            .columns.small-4.table-label =t('activemodel.attributes.forms/application/income.children')
             .columns.small-8 =@application.children
           .row
-            .columns.small-4.table-label =t('activemodel.attributes.applikation/forms/income.income')
+            .columns.small-4.table-label =t('activemodel.attributes.forms/application/income.income')
             .columns.small-8 =number_to_currency(@application.income.floor, precision: 0)
 
   .large-5.columns
