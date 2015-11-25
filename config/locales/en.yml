@@ -324,7 +324,7 @@ en-GB:
         income_true: 'Yes'
         children: Number of children
         income: Total monthly income
-      applikation/forms/summary:
+      forms/application/summary:
         passed: '✓ Passed'
         failed: '✗ Failed'
         full: '✓ Passed'
