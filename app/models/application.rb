@@ -35,14 +35,6 @@ class Application < ActiveRecord::Base
   MAX_AGE = 120
   MIN_AGE = 16
 
-  # Step 3 - Savings and investments validation
-  with_options if: proc { active_or_status_is? 'savings_investments' } do
-    validates :threshold_exceeded, inclusion: { in: [true, false] }
-    validates :partner_over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
-    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :check_high_threshold?
-  end
-  # End step 3 validation
-
   def children=(val)
     self[:children] = dependents? ? val : 0
   end
@@ -101,15 +93,5 @@ class Application < ActiveRecord::Base
 
   def part_payment?
     !part_payment.nil?
-  end
-
-  private
-
-  def active?
-    status == 'active'
-  end
-
-  def active_or_status_is?(status_name)
-    active? || status.to_s.include?(status_name)
   end
 end

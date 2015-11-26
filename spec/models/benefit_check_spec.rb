@@ -13,11 +13,6 @@ RSpec.describe BenefitCheck, type: :model do
     let(:digital) { create(:office, name: 'Digital') }
     let(:bristol) { create(:office, name: 'Bristol') }
 
-    before(:each) do
-      described_class.delete_all
-      application.status = 'benefits_result'
-    end
-
     describe 'non_digital' do
       let(:digital_application) { create(:application, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
