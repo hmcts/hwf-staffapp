@@ -110,6 +110,29 @@ RSpec.describe Forms::Application::Applicant do
         end
       end
     end
+    %w[title first_name last_name].each do |attribute|
+      describe "#{attribute}" do
+        context 'when valid' do
+          before { personal_information[attribute.to_sym] = 'Mr' }
+
+          it 'passes validation' do
+            expect(subject.valid?).to be true
+          end
+        end
+
+        context 'when white space is passed in' do
+          before do
+            personal_information[attribute.to_sym] = ' sm it '
+            subject.valid?
+          end
+
+          it 'strips it away' do
+            expect(subject.send(attribute)).to eql('sm it')
+          end
+        end
+      end
+    end
+
   end
 
   describe 'when Applicant object is passed in' do

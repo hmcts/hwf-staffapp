@@ -24,6 +24,7 @@ module Forms
       define_attributes
 
       before_validation :format_ni_number
+      before_validation :strip_whitespace!
 
       def format_ni_number
         unless ni_number.nil?
@@ -39,6 +40,12 @@ module Forms
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
 
       private
+
+      def strip_whitespace!
+        title.strip! if title
+        first_name.strip! if first_name
+        last_name.strip! if last_name
+      end
 
       def dob_age_valid?
         validate_dob
