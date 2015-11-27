@@ -10,7 +10,7 @@ header
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason], *change_link
 
 - change_link = ['Change savings and investments', application_savings_investments_path(@overview.application.id)]
-=build_section 'Savings and investments', @overview, @overview.savings_investment_params, *change_link
+=build_section 'Savings and investments', @savings, @savings.all_fields, *change_link
 
 .row
   .small-12.columns

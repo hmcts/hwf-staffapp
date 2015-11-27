@@ -123,6 +123,7 @@ module Applications
       @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
+      @savings = Views::Overview::SavingsAndInvestments.new(application)
     end
 
     def summary_save

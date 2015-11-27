@@ -1,4 +1,8 @@
 en-GB:
+  convert_boolean:
+    :true: 'Yes'
+    :false: 'No'
+    :nil: 'No'
   processed_applications:
     table_header:
       applicant: Applicant
@@ -232,6 +236,10 @@ en-GB:
     attributes:
       evidence/forms/income:
         income: Total monthly income from evidence
+      views/overview/savings_and_investments:
+        savings_valid?: Savings valid
+        partner_over_61?: Partner is over 61?
+        combined_savings_valid?: Combined savings valid
       views/processing_details:
         reference: Reference
         processed_by: Processed by
