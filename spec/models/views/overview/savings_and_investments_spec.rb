@@ -8,6 +8,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
 
   describe '#all_fields' do
     subject { view.all_fields }
+
     it { is_expected.to eql %w[savings_valid? partner_over_61? combined_savings_valid?] }
   end
 

@@ -1,6 +1,6 @@
 module Views
   module Overview
-    class SavingsAndInvestments
+    class SavingsAndInvestments < Views::Overview::Base
 
       def initialize(application)
         @application = application
@@ -26,12 +26,6 @@ module Views
 
       def threshold_exceeded?
         @application.threshold_exceeded?
-      end
-
-      private
-
-      def convert_to_boolean(input)
-        I18n.t("convert_boolean.#{input.present? ? input : 'false'}")
       end
     end
   end
