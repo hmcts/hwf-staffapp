@@ -33,6 +33,7 @@
 
       .form-group
         = f.label :date_received
+        span.hint.block = t('activemodel.attributes.applikation/forms/personal_information.date_of_birth_hint')
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control medium-field' }
 
@@ -66,6 +67,7 @@
 
           .form-group
             = f.label :date_of_death
+            span.hint.block = t('activemodel.attributes.applikation/forms/personal_information.date_of_birth_hint')
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
             = f.text_field :date_of_death, { class: 'form-control medium-field' }
           
@@ -79,6 +81,7 @@
       #refund-only.start-hidden
         .form-group.panel-indent
           = f.label :date_fee_paid
+          span.hint.block = t('activemodel.attributes.applikation/forms/personal_information.date_of_birth_hint')
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
