@@ -240,6 +240,14 @@ en-GB:
         savings_valid?: Savings valid
         partner_over_61?: Partner is over 61?
         combined_savings_valid?: Combined savings valid
+      views/overview/benefits:
+        on_benefits?: Applicant is on benefits
+        override?: Benefit manually overridden?
+        override_valid?: Evidence was correct
+      views/overview/income:
+        children?: Applicant has children
+        children: Number of children
+        income: Income
       views/processing_details:
         reference: Reference
         processed_by: Processed by
