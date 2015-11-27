@@ -156,7 +156,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'clicking the Next button' do
         before { click_link_or_button 'Complete processing' }
         it 'creates a payment record' do
-          expect(evidence.application.part_payment?).to be true
+          expect(evidence.application.part_payment).to be_a(PartPayment)
         end
       end
     end

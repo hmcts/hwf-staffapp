@@ -133,7 +133,7 @@ module Applications
     end
 
     def confirmation
-      if application.evidence_check?
+      if application.evidence_check.present?
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @application = application

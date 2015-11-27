@@ -46,7 +46,7 @@ describe PartPaymentBuilder do
         before { allow_message_expectations_on_nil }
 
         context 'and an evidence check has been created' do
-          before { allow(application).to receive(:evidence_check?).and_return(true) }
+          before { allow(application).to receive(:evidence_check).and_return(double(present?: true)) }
 
           context 'but not completed' do
             before { allow(application.evidence_check).to receive(:completed_at).and_return(nil) }

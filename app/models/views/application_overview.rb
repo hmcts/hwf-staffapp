@@ -97,7 +97,7 @@ module Views
     private
 
     def evidence_check_or_part_payment?
-      @application.evidence_check? || @application.part_payment?
+      @application.evidence_check.present? || @application.part_payment.present?
     end
 
     def format_locale(suffix)

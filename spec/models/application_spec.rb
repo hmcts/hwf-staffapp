@@ -59,22 +59,6 @@ RSpec.describe Application, type: :model do
     end
   end
 
-  describe '#evidence_check?' do
-    subject { application.evidence_check? }
-
-    context 'when the application has evidence_check model associated' do
-      before do
-        create :evidence_check, application: application
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context 'when the application does not have evidence_check model associated' do
-      it { is_expected.to be false }
-    end
-  end
-
   describe '#emergency_reason' do
     context 'when a blank string is provided' do
       let(:application) { create :application_full_remission }

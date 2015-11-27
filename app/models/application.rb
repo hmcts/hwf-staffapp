@@ -86,12 +86,4 @@ class Application < ActiveRecord::Base
   def last_benefit_check
     benefit_checks.order(:id).last
   end
-
-  def evidence_check?
-    !evidence_check.nil?
-  end
-
-  def part_payment?
-    !part_payment.nil?
-  end
 end

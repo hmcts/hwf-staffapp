@@ -33,7 +33,7 @@ module Views
       end
 
       def result
-        if @application.evidence_check?
+        if @application.evidence_check.present?
           'callout'
         elsif !benefit_overridden? && benefit_overide_correct?
           'full'
