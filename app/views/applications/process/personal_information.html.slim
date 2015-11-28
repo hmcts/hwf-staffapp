@@ -11,13 +11,11 @@
         = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title
           =t('title', scope: @form.i18n_scope)
-          span.hint =t('general.optional').html_safe
         = f.text_field :title, { class: 'form-control small-field' }
 
       .form-group
         = f.label :first_name
           =t('first_name', scope: @form.i18n_scope)
-          span.hint =t('general.optional').html_safe
         = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'form-control' }
 
