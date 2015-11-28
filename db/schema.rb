@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126123003) do
+ActiveRecord::Schema.define(version: 20151126142232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20151126123003) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "user_id"
     t.integer  "office_id"
     t.decimal  "threshold"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20151126123003) do
     t.integer  "completed_by_id"
     t.string   "decision"
     t.string   "decision_type"
+    t.integer  "state",                   default: 0, null: false
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree

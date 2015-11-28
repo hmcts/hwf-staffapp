@@ -24,6 +24,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
 
+  it { is_expected.to define_enum_for(:state).with([:created, :evidence_check, :part_payment, :decided]) }
+
   it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
 
   describe 'temporary methods delegation to sliced models' do
