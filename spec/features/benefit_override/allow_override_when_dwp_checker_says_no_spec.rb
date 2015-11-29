@@ -61,8 +61,8 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_content '✓ Passed (paper evidence checked)'
-          expect(page).to have_content '✓   The applicant doesn’t have to pay the fee'
+          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Benefit manually overridden?"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Evidence was correct"]/following-sibling::*[1][text()="Yes"]')
         end
       end
     end
@@ -76,8 +76,8 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_content '✗ Failed'
-          expect(page).to have_content '✗   The applicant must pay the full fee'
+          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Benefit manually overridden?"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Evidence was correct"]/following-sibling::*[1][text()="No"]')
         end
       end
     end

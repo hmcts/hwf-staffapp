@@ -1,7 +1,7 @@
 header
   .row
     .small-12.medium-12.large-12.columns
-      h2 Application processed
+      h2 Processing complete
 
 .row
   .small-12.medium-8.large-5.columns
@@ -10,7 +10,7 @@ header
       .small-12.columns
         .row.collapse.medium-10.large-8
           #result.callout class="callout-#{@confirm.result}"
-            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: @application.amount_to_pay).html_safe
+            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
     .row.collapse.medium-10.large-8
       = link_to 'Back to start', root_path, class: 'button primary'
 

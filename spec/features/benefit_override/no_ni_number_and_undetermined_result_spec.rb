@@ -66,7 +66,6 @@ RSpec.feature 'No NI number provided', type: :feature do
 
       scenario 'has the correct title and message' do
         expect(page).to have_content 'Check details'
-        expect(page).to have_content full_remission
       end
 
       context 'when the user progresses to the confirmation page' do
@@ -96,7 +95,11 @@ RSpec.feature 'No NI number provided', type: :feature do
         expect(page).to have_content 'Check details'
       end
 
-      it { expect(page).to have_content no_remission }
+      context 'when the user progresses to the confirmation page' do
+        before { click_button 'Complete processing' }
+
+        it { expect(page).to have_content no_remission }
+      end
     end
   end
 
@@ -104,7 +107,6 @@ RSpec.feature 'No NI number provided', type: :feature do
     before { click_link 'Next' }
 
     it do
-      expect(page).to have_content no_remission
       expect(page).to have_content 'Check details'
     end
 
@@ -112,7 +114,8 @@ RSpec.feature 'No NI number provided', type: :feature do
       before { click_button 'Complete processing' }
 
       it do
-        expect(page).to have_content 'Application processed'
+        expect(page).to have_content no_remission
+        expect(page).to have_content 'Processing complete'
         expect(page).to have_content no_remission
       end
     end

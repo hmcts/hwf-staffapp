@@ -1,24 +1,36 @@
-.evidence-check
+header
   .row
     .small-12.medium-12.large-12.columns
-      h2 =t('evidence_check.page_title')
+      h2 Processing complete
 
-  .row
-    .small-12.medium-12.large-12.columns
-      .evidence-check-reference =@application.reference
+.row
+  .small-12.medium-10.large-9.columns
+    = build_section 'Results', @confirm, @confirm.all_fields
+    .row
+      .small-12.columns
+        .row.collapse.medium-10.large-8
+          #result.callout class="callout-#{@confirm.result}"
+            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+    .evidence-check
+    .row
+      .small-12.columns
+        h4 Reference
+        .row.collapse.medium-10.large-8
+          #result.callout.evidence-check-reference
+            h3.bold =@application.reference
+    .row.guidance.collapse
+      .row
+        .small-12.medium-12.large-12.columns
+          h4 =t('evidence_check.next_steps.title')
+          ul
+            - t('evidence_check.next_steps.steps').each do |step|
+              li =step
 
-  .row
-    .small-12.medium-12.large-12.columns
-      h3 =t('evidence_check.next_steps.title')
-      ul
-        - t('evidence_check.next_steps.steps').each do |step|
-          li =step
+      .row
+        .small-12.medium-12.large-12.columns
+          .evidence-check-letter
+            =t('evidence_check.letter_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
-  .row
-    .small-12.medium-12.large-12.columns
-      .evidence-check-letter
-        =t('evidence_check.letter_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
-
-  .row
-    .small-12.medium-12.large-12.columns
-      =link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'
+      .row
+        .small-12.medium-12.large-12.columns
+          =link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'

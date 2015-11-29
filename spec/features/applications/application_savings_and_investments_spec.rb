@@ -58,10 +58,6 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
                 click_button 'Next'
               end
 
-              scenario 'the summary page is shown with the error' do
-                expect(page).to have_text '✗ The applicant must pay the full fee'
-              end
-
               context 'amend the details for savings and investments' do
                 scenario 'edit the savings and investment and benefits pages' do
                   click_link 'Change savings and investments'
@@ -72,6 +68,8 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
                   choose 'application_benefits_true'
                   click_button 'Next'
                   click_link 'Next'
+                  click_button 'Complete processing'
+
                   expect(page).to have_text '✓ The applicant doesn’t have to pay the fee'
                 end
               end

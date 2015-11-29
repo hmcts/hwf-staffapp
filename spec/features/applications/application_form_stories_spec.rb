@@ -58,15 +58,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
               scenario 'the summary page is shown with correct display' do
                 expect(page).to have_xpath('//h2', text: 'Check details')
-                expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                expect(page).to have_xpath('//div[contains(@class,"summary-result success")]', text: '✓ Passed', count: 0)
-                expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                expect(page).to have_no_xpath('//h4', text: 'Benefits')
+                expect(page).to have_no_xpath('//h4', text: 'Income')
               end
             end
 
@@ -96,15 +90,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')
-                    expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                    expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 1)
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                    expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                    expect(page).to have_xpath('//h4', text: 'Benefits')
+                    expect(page).to have_no_xpath('//h4', text: 'Income')
                   end
                 end
               end
@@ -146,15 +134,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                       scenario 'the summary page is shown with correct display' do
                         expect(page).to have_xpath('//h2', text: 'Check details')
-                        expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                        expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                        expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                        expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                        expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 2)
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 0)
-                        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £85 towards the fee')
+                        expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                        expect(page).to have_xpath('//h4', text: 'Benefits')
+                        expect(page).to have_xpath('//h4', text: 'Income')
                       end
 
                       context 'when the user returns to the savings threshold' do
@@ -172,15 +154,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                           scenario 'the summary page is shown with correct display' do
                             expect(page).to have_xpath('//h2', text: 'Check details')
-                            expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                            expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                            expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                            expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                            expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                            expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
-                            expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                            expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                            expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                            expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                            expect(page).to have_no_xpath('//h4', text: 'Benefits')
+                            expect(page).to have_no_xpath('//h4', text: 'Income')
                           end
                         end
                       end
@@ -225,15 +201,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
               scenario 'the summary page is shown with correct display' do
                 expect(page).to have_xpath('//h2', text: 'Check details')
-                expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
-                expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                expect(page).to have_no_xpath('//h4', text: 'Benefits')
+                expect(page).to have_no_xpath('//h4', text: 'Income')
               end
             end
 
@@ -263,15 +233,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')
-                    expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                    expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                    expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 2)
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                    expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 0)
-                    expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
+                    expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                    expect(page).to have_xpath('//h4', text: 'Benefits')
+                    expect(page).to have_no_xpath('//h4', text: 'Income')
                   end
 
                   context 'when the user returns to the savings threshold' do
@@ -289,15 +253,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                       scenario 'the summary page is shown with correct display' do
                         expect(page).to have_xpath('//h2', text: 'Check details')
-                        expect(page).to have_xpath('//div[contains(@class,"subheader")]', text: 'Savings and investments')
-                        expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Benefits')
-                        expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Income')
-                        expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Number of children')
-                        expect(page).to_not have_xpath('//div[contains(@class,"subheader")]', text: 'Total monthly income')
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result passed")]', text: '✓ Passed', count: 0)
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result partial")]', text: '✓ Passed', count: 0)
-                        expect(page).to have_xpath('//div[contains(@class,"summary-result fail")]', text: '✗ Failed', count: 1)
-                        expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+                        expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                        expect(page).to have_no_xpath('//h4', text: 'Benefits')
+                        expect(page).to have_no_xpath('//h4', text: 'Income')
                       end
                     end
                   end
@@ -306,7 +264,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                     before { click_button 'Complete processing' }
 
                     scenario 'the confirmation is shown' do
-                      expect(page).to have_xpath('//h2', text: 'Application processed')
+                      expect(page).to have_xpath('//h2', text: 'Processing complete')
                     end
 
                     context 'when the user clicks Back to Start' do
