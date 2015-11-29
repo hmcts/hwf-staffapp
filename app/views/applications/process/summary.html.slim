@@ -12,16 +12,17 @@ header
 - change_link = ['Change savings and investments', application_savings_investments_path(@overview.application.id)]
 =build_section 'Savings and investments', @savings, @savings.all_fields, *change_link
 
-- change_link = ['Change benefits', application_benefits_path(@overview.application.id)]
-=build_section 'Benefits', @benefits, @benefits.all_fields, *change_link
--if !@application.benefits
-  - change_link = ['Change income', application_income_path(@overview.application.id)]
-  =build_section 'Income', @income, @income.all_fields, *change_link
+-if @application.savings_investment_valid?
+  - change_link = ['Change benefits', application_benefits_path(@overview.application.id)]
+  =build_section 'Benefits', @benefits, @benefits.all_fields, *change_link
+  -if !@application.benefits
+    - change_link = ['Change income', application_income_path(@overview.application.id)]
+    =build_section 'Income', @income, @income.all_fields, *change_link
 
-.row
-  .small-12.columns
-    .row.collapse.medium-10.large-8
-      =render(partial: 'shared/remission_type', locals: { source: @result })
+/.row
+/  .small-12.columns
+/    .row.collapse.medium-10.large-8
+/      =render(partial: 'shared/remission_type', locals: { source: @result })
 
 = form_for @application, url: application_summary_save_path(@overview.application.id), method: :put do |f|
   = f.submit 'Complete processing', :class => 'button primary'

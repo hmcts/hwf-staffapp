@@ -247,7 +247,7 @@ en-GB:
       views/overview/income:
         children?: Applicant has children
         children: Number of children
-        income: Income
+        income: Total monthly income
       views/processing_details:
         reference: Reference
         processed_by: Processed by
