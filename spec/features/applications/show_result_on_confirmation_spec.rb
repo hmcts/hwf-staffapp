@@ -10,6 +10,8 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
   let!(:office)             { create(:office, jurisdictions: jurisdictions) }
   let!(:user)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
+  after { Capybara.use_default_driver }
+
   context 'when the application', js: true do
     before do
       Capybara.current_driver = :webkit
@@ -21,6 +23,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       fill_in 'application_last_name', with: 'Smith'
       fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
+      fill_in 'application_ni_number', with: 'AB123456A'
       choose 'application_married_false'
       click_button 'Next'
 
@@ -66,6 +69,21 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
           expect(page).to have_no_xpath('//div[contains(@class,"callout")]')
         end
+
+        context 'when the "Complete processing" button is pushed' do
+          before { click_button 'Complete processing' }
+
+          context 'the confirmation page' do
+            scenario 'shows the correct outcomes' do
+              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Benefits✓ Passed'
+            end
+
+            scenario 'shows the status banner' do
+              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
+            end
+          end
+        end
       end
 
       context 'is income based' do
@@ -74,7 +92,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
           click_button 'Next'
           choose 'application_dependents_true'
           fill_in 'application_children', with: '3'
-          fill_in 'application_income', with: '1900'
+          fill_in 'application_income', with: '1200'
           click_button 'Next'
           click_link 'Next'
         end
@@ -86,6 +104,21 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
           expect(page).to have_xpath('//h4', text: 'Income')
 
           expect(page).to have_no_xpath('//div[contains(@class,"callout")]')
+        end
+
+        context 'when the "Complete processing" button is pushed' do
+          before { click_button 'Complete processing' }
+
+          context 'the confirmation page' do
+            scenario 'shows the correct outcomes' do
+              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Income✓ Passed'
+            end
+
+            scenario 'shows the status banner' do
+              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee')
+            end
+          end
         end
       end
     end

@@ -138,6 +138,7 @@ module Applications
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @application = application
+        @confirm = Views::Confirmation::Result.new(application)
       end
     end
 

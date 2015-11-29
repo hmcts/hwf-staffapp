@@ -3,6 +3,13 @@ en-GB:
     :true: 'Yes'
     :false: 'No'
     :nil: 'No'
+  convert_pass_fail:
+    'true': '✓ Passed'
+    'false': '✗ Failed'
+    :true: '✓ Passed'
+    :false: '✗ Failed'
+    true: '✓ Passed'
+    false: '✗ Failed'
   processed_applications:
     table_header:
       applicant: Applicant
@@ -248,6 +255,10 @@ en-GB:
         children?: Applicant has children
         children: Number of children
         income: Total monthly income
+      views/confirmation/result:
+        savings_passed?: Savings
+        benefits_passed?: Benefits
+        income_passed?: Income
       views/processing_details:
         reference: Reference
         processed_by: Processed by

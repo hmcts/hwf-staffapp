@@ -5,22 +5,14 @@ header
 
 .row
   .small-12.medium-8.large-5.columns
+    = build_section 'Results', @confirm, @confirm.all_fields
+    .row
+      .small-12.columns
+        .row.collapse.medium-10.large-8
+          #result.callout class="callout-#{@confirm.result}"
+            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: @application.amount_to_pay).html_safe
     .row.collapse.medium-10.large-8
-    - if !@application.benefit_override.nil? && @application.benefit_override.correct.equal?(true)
-      #result.callout class='callout-full'
-        h3.bold =t('remissions.full').html_safe
-    - else
-      - if @application.outcome.nil?
-        = render 'applications/partials/full_fee'
-      - else
-        -case @application.application_type
-        -when 'none'
-          = render 'applications/partials/full_fee'
-        -else
-          #calculator.callout class="callout-#{@application.outcome ? @application.outcome : 'error'}"
-            h3.bold =t("remissions.#{@application.outcome ? @application.outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay? ? @application.amount_to_pay.floor : 0, precision: 0)).html_safe
-
-    = link_to 'Back to start', root_path, class: 'button primary'
+      = link_to 'Back to start', root_path, class: 'button primary'
 
   .large-5.columns
     .guidance
