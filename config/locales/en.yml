@@ -99,7 +99,7 @@ en-GB:
     offices:
       label_name: Name of office
   general:
-    optional_html: '&nbsp; (Optional)'
+    optional_html: '&nbsp; (optional)'
     required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
   error_messages:
     benefit_checker:
@@ -302,6 +302,7 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
+        date_hint: For example DD/MM/YYYY
       forms/application/savings_investment:
         header: Savings and investments
         maximum_prompt: 'Maximum amount of savings and investments allowed:'
