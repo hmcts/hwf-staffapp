@@ -4,11 +4,9 @@
       =t('letters.part-payment.send_part_payment_html',
          full_name: confirmation.application.full_name,
          reference: confirmation.application.reference,
-         user_name: current_user.name,
+         current_user: current_user.name,
          part_payment_amount: "£#{confirmation.amount_to_pay}",
          total_income: "£#{confirmation.income}",
          children: confirmation.application.children,
-         date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]),
-         name_delivery_manager: 'YOUR MANAGERS NAME',
-         court_tribunal_name: 'APPEAL COURT NAME',
-         date_for_appeal: 'INSERT DATE TO APPEAL')
+         date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+         )
