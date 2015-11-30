@@ -18,4 +18,4 @@ header
       =render(partial: 'shared/remission_type', locals: { source: @result })
 
 = form_for @application, url: application_summary_save_path(@overview.application.id), method: :put do |f|
-  = f.submit 'Complete processing', :class => 'button primary'
+  = f.submit 'Complete processing', :class => 'button primary large'

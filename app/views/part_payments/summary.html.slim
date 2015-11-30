@@ -8,4 +8,4 @@ h2 Check details
   h3.bold =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
 
 = form_for @part_payment, url: :summary_save_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Complete processing', :class => 'button primary'
+  = f.submit 'Complete processing', :class => 'button primary large'
