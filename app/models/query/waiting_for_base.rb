@@ -10,7 +10,7 @@ module Query
         references(attribute).
         where("#{db_field}.completed_at IS NULL").
         where("#{db_field}.id IS NOT NULL").
-        order("#{db_field}.expires_at ASC")
+        order('applications.completed_at ASC')
     end
   end
 end
