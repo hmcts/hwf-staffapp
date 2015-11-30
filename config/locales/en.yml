@@ -51,10 +51,10 @@ en-GB:
         expires: Expires
     return_letter: |
       <p>Dear %{full_name}</p>
-      <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>  
-      <p> DESCRIBE WHY THE EVIDENCE CANNOT BE ACCEPTED</p> 
-      <p> Unfortunately we’re unable to process your application.</p>  
-      <p>If you still want help with your fees, you will have to complete a new application.</p> 
+      <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
+      <p> DESCRIBE WHY THE EVIDENCE CANNOT BE ACCEPTED</p>
+      <p> Unfortunately we’re unable to process your application.</p>
+      <p>If you still want help with your fees, you will have to complete a new application.</p>
       <p>Yours sincerely,</p>
       <p>%{current_user}</p>
   part_payment:
@@ -76,11 +76,11 @@ en-GB:
       'no': The applicant will need to make a new application
     failed_letter_html: |
       <p>Dear %{full_name}</p>
-      <p> We have received your part-payment however we are unable to accept it.</p> 
+      <p> We have received your part-payment however we are unable to accept it.</p>
       <p> This is because:
       <p> INSERT REASON, eg the sum is not correct / the cheque is not made out correctly.</p>
-      <p> Unfortunately we’re unable to process your application.</p>  
-      <p> If you still want help with your fees, you will have to complete a new application. </p>  
+      <p> Unfortunately we’re unable to process your application.</p>
+      <p> If you still want help with your fees, you will have to complete a new application. </p>
       <p>Yours sincerely,</p>
       <p>%{user}</p>
     return_letter: |
@@ -99,7 +99,7 @@ en-GB:
     offices:
       label_name: Name of office
   general:
-    optional: '&nbsp; (optional)'
+    optional_html: '&nbsp; (optional)'
     required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
   error_messages:
     benefit_checker:
@@ -222,7 +222,7 @@ en-GB:
         <p>Documentation of any other income that you’re receiving. </p>
 
         <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
-       
+
         <p>You also need to include this letter along with evidence of your income.</p>
 
         <p>Yours sincerely,</p>
@@ -285,7 +285,7 @@ en-GB:
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
         married: Status
-        date_of_birth_hint: For example 01/11/1980
+        date_of_birth_hint: For example DD/MM/YYYY
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form name or number
@@ -302,6 +302,7 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
+        date_hint: For example DD/MM/YYYY
       forms/application/savings_investment:
         header: Savings and investments
         maximum_prompt: 'Maximum amount of savings and investments allowed:'

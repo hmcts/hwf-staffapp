@@ -33,20 +33,19 @@
 
       .form-group
         = f.label :date_received
+        span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control medium-field' }
 
       .form-group
         = f.label :form_name
           =t('form_name', scope: @form.i18n_scope)
-          span.hint =t('general.optional').html_safe
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
       .form-group
         = f.label :case_number
           =t('case_number', scope: @form.i18n_scope)
-          span.hint =t('general.optional').html_safe
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
@@ -66,6 +65,7 @@
 
           .form-group
             = f.label :date_of_death
+            span.hint.block = t('date_hint', scope: @form.i18n_scope)
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
             = f.text_field :date_of_death, { class: 'form-control medium-field' }
           
@@ -79,6 +79,7 @@
       #refund-only.start-hidden
         .form-group.panel-indent
           = f.label :date_fee_paid
+          span.hint.block = t('date_hint', scope: @form.i18n_scope)
           = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
           = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
