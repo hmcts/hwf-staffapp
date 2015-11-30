@@ -48,7 +48,7 @@ en-GB:
         reference: Reference
         applicant: Applicant
         processed_by: Processed by
-        expires: Expires
+        processed_on: Date processed
     return_letter: |
       <p>Dear %{full_name}</p>
       <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
@@ -70,7 +70,7 @@ en-GB:
         reference: Reference
         applicant: Applicant
         processed_by: Processed by
-        expires: Expires
+        processed_on: Date processed
     result:
       'yes': The applicant has paid %{amount_to_pay} towards the fee
       'no': The applicant will need to make a new application
