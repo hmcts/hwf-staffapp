@@ -285,7 +285,7 @@ en-GB:
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
         married: Status
-        date_of_birth_hint: For example 01/11/1980
+        date_of_birth_hint: For example DD/MM/YYYY
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form name or number
