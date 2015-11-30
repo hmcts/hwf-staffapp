@@ -103,7 +103,6 @@ module Applications
 
       if @form.save
         calculate_income
-        evidence_check_and_payment
         redirect_to(action: :income_result)
       else
         render :income
@@ -167,11 +166,6 @@ module Applications
 
     def calculate_income
       IncomeCalculationRunner.new(application).run
-    end
-
-    def evidence_check_and_payment
-      EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
-      PartPaymentBuilder.new(application, Settings.part_payment.expires_in_days).decide!
     end
   end
 end

@@ -347,17 +347,11 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'PUT #income_save' do
-    let(:evidence_check_service) { double(decide!: true) }
-    let(:part_payment_builder) { double(decide!: true) }
-
     let(:expected_params) { { dependents: false } }
 
     before do
       expect(income_form).to receive(:update_attributes).with(expected_params)
       expect(income_form).to receive(:save).and_return(form_save)
-
-      allow(EvidenceCheckSelector).to receive(:new).with(application, Integer).and_return(evidence_check_service)
-      allow(PartPaymentBuilder).to receive(:new).with(application, Integer).and_return(part_payment_builder)
 
       put :income_save, application_id: application.id, application: expected_params
     end
@@ -367,14 +361,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'runs the income calculation on the application' do
         expect(income_calculation_runner).to have_received(:run)
-      end
-
-      it 'makes decision on evidence check' do
-        expect(evidence_check_service).to have_received(:decide!)
-      end
-
-      it 'builds part payment if needed' do
-        expect(part_payment_builder).to have_received(:decide!)
       end
 
       it 'redirects to the income result page' do
