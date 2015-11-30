@@ -47,10 +47,6 @@ class Application < ActiveRecord::Base
     self[:children] = dependents? ? val : 0
   end
 
-  def ni_number_display
-    ni_number.gsub(/(.{2})/, '\1 ') unless ni_number.nil?
-  end
-
   # FIXME: Remove the threshold field from db as it's read only now
   def threshold
     applicant_over_61? ? 16000 : FeeThreshold.new(fee).band
