@@ -1,11 +1,81 @@
+
 en-GB:
   letters:
-    evidence_check:
-      requested_html: |
+    reject:
+      reject_over_savings_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because you have more than the maximum amount of savings and investments allowed. 
+        We’ve calculated this as follows:</p>
+        <p>Fee to pay:%{fee_amount}</p>
+        <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
+        <p>Your savings and investments total: %{savings_total}</p> 
+        <p><strong>If you disagree with this decision</strong></p>  
+        <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>  
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p> 
+
+
+      reject_over_income_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because you have more than the maximum amount of income allowed. 
+        We’ve calculated this as follows:</p>
+        <p>Fee to pay:%{fee_amount}</p>
+        <p>Maximum amount of income allowed: %{income_threshold}</p>
+        <p>Your income total: %{income_total}</p> 
+        <p><strong>If you disagree with this decision</strong></p>  
+        <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>  
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>  
+
+
+      reject_no_benefits_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the Department for Work and Pensions did not confirm that you’re receiving one of these benefits:</p> 
+        <ul> 
+          <li>Income-based Jobseeker’s Allowance (JSA)</li> 
+          <li>Income-related Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (and you’re earning less than £6,000 a year)</li>
+          <li>State Pension (with Guarantee Credit)</li>
+          <li>Scottish Legal Aid</li>
+        </ul> 
+        <p><strong>If this result is unexpected</strong></p> 
+        <p>If you’ve started receiving benefits in the last 7 days: The Department for Work and Pensions may not have up to date information for you. 
+        If this is the case, return your application along with an official letter that confirms the benefits received.</p> 
+        <p>If you receive benefits with your partner: Return your application with a letter from the Department for Work and Pensions confirming the benefit received. 
+        If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
+        <p>Check the name of the benefit: There are some benefits that are similarly named to the 6 qualifying benefits:</p>  
+        <ul> 
+          <li>Contribution based Job Seekers Allowance</li>
+          <li>Contribution based Employment Support Allowance</li>
+          <li>Pension Credit Savings Credit</li>
+          <li>Universal Credit where the applicant earns over £6,000 a year (before tax and National insurance)</li> 
+          <li>Scottish Legal Aid Advice and Assistance</li> 
+          <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
+        </ul>
+        <p>If you’re receiving one of these benefits, you should re-apply giving details of your income.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>  
+
+
+      reject_dwp_deceased_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the National Insurance number that you provided appears to belong to someone who has died.</p> 
+        <p><strong>If this result is unexpected</strong></p>
+        <p>Check the National Insurance number: Make sure that you have provided the correct National Insurance number. If it’s correct then you will need to contact the Department for Work and Pensions to update the information they hold on record for you.</p>  
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>  
+
+
+    evidence: 
+      send_evidence_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees and need some more information from you. If you're married or living with someone and sharing an income, then you partner will need to provide evidence of their income too.</p>
-        <p>You need to send us a copy of last month’s bank statement for your main bank account.</p>
+        <p>We've received your application for help with fees and would like some more information about your income. We're not able to process your application until we receive it.
+        If you're married or living with someone and sharing an income, then you partner will need to provide evidence of their income too.</p>
+        <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
+        <p>You need to send us a copy of your most recent bank statement for your main bank account.</p> 
+        <p>If you're applying for a refund of a fee you've already paid, we need to see a bank statement from the month you paid the fee.</p>
         <p>Plus copies of all the following documents that apply to you:</p>
         <div><strong>Wages</strong></div>
         <ul>
@@ -37,55 +107,66 @@ en-GB:
         <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
         <div><strong>Any other monthly income</strong></div>
         <p>Documentation of any other income that you’re receiving. </p>
-        <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
-        <p>You also need to include this letter along with evidence of your income.</p>
+        <p>Please send this letter back with the information about your income so we can match it to your application.</p> 
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
-      processed:
-        part_remission_html: |
-          <p>Dear %{full_name}</p>
-          <p>We have received your application for help with fees.
-          <p>You are eligible to make a part-fee payment and must pay £%{fee} towards the fee.
-          <p><b>How to pay</b></p>
-          <p>- by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</p>
-          <p>- by debit card over the phone</p>
-          <p>- in person with a cheque, cash or debit card at the court counter</p>
-          <p>Please make sure you pay this amount by %{date}.</p>
-          <p>Yours sincerely,</p>
-          <p>%{current_user}</p>
-        no_remission_html: |
-          <p>Dear %{full_name}</p>
-          <p>We have received your documents however they are not correct, therefore we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
-          <p>You will need to make a new application if you still require help.</p>
-          <p>Yours sincerely,</p>
-          <p>%{current_user}</p>
-      return:
-        not_received_html: |
-          <p>Dear %{full_name}</p>
-          <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
-          <p> DESCRIBE WHY THE EVIDENCE CANNOT BE ACCEPTED</p>
-          <p> Unfortunately we’re unable to process your application.</p>
-          <p>If you still want help with your fees, you will have to complete a new application.</p>
-          <p>Yours sincerely,</p>
-          <p>%{current_user}</p>
+
+      no_evidence_received_html: |
+        <p>Dear %{full_name}</p>
+        <p>We wrote to you about your application for help with fees, asking to see evidence of your income by %{evidence_date}.</p>  
+        <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p> 
+        <p>You will need to make a new application if you still require help.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p> 
+
+      evidence_incorrect_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>  
+        <p>(PLEASE EXPLAIN WHY EVIDENCE CAN'T BE ACCEPTED, FOR EXAMPLE: BANK STATMENTS ARE OUT OF DATE</p>
+        <p> Unfortunately we’re unable to process your application.</p>
+        <p> If you still want help with your fees, you will have to complete a new application. </p>
+        <p>Yours sincerely,</p>
+        <p>%{user}</p> 
+
     part-payment:
-      processed:
-        failed_html: |
-          <p>Dear %{full_name}</p>
-          <p> We have received your part-payment however we are unable to accept it.</p>
-          <p> This is because:
-          <p> INSERT REASON, eg the sum is not correct / the cheque is not made out correctly.</p>
-          <p> Unfortunately we’re unable to process your application.</p>
-          <p> If you still want help with your fees, you will have to complete a new application. </p>
-          <p>Yours sincerely,</p>
-          <p>%{user}</p>
-      return:
-        not_received_html: |
-          <p>Dear %{full_name}</p>
-          <p>We have received your documents however they are not correct,
-          therefore we’re unable to process your application. This may
-          have an impact on the original case or claim related to this
-          application.</p>
-          <p>You will need to make a new application if you still require help.</p>
-          <p>Yours sincerely,</p>
-          <p>%{current_user}</p>
+      send_part_payment_html:   | 
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your application for help with fees. You are eligible to make a part-payment and must pay %{part_payment_amount} towards the fee.</p> 
+        <p>We’ve calculated this as follows:</p> 
+        <p>Your total monthly income: %{total_income}</p>
+        <p>Number of children: %{children}</p>
+        <p>Amount above maximum income limit: %{amount_over_threshold}</p>
+        <p>Amount to pay: %{part_payment_amount}</p>
+        <br>
+        <p><strong>How to pay</strong></p> 
+        <ul> 
+          <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</li>
+          <li>by debit card over the phone</li> 
+          <li>in person with a cheque, cash or debit card at the court counter</li>
+        <br> 
+        <p>Please make sure you pay this amount by %{date_for_[part_payment}</p> 
+        <br>
+        <p><strong>If you don’t agree with the amount you have to pay</strong></p>  
+        <p>If you disagree with our decision about the amount you have to pay, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>  
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p> 
+
+      no_part_payment_received_html: |
+        <p>Dear %{full_name}</p>
+        <p>We wrote to you about your application for help with fees, asking that you pay %{part_payment_amount} by %{date_for_[part_payment}.</p>
+        <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p> 
+        <p>You will need to make a new application if you still require help.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>   
+
+      part_payment_incorrect_html: |
+        <p>Dear %{full_name}</p>
+        <p>We have received your part-payment however we are unable to accept it.</p>
+        <p>This is because:</p>
+        <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT)</p>   
+        <p> Unfortunately we’re unable to process your application.</p>
+        <p> If you still want help with your fees, you will have to complete a new application. </p>
+        <p>Yours sincerely,</p>
+        <p>%{user}</p>
+
