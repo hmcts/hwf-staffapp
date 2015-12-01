@@ -9,45 +9,45 @@ RSpec.describe StatusMigration do
   end
 
   let!(:application2) do
-    create(:application).tap do |a|
+    create(:application_full_remission).tap do |a|
       create(:evidence_check, application: a)
     end
   end
 
   let!(:application3) do
-    create(:application).tap do |a|
+    create(:application_full_remission).tap do |a|
       create(:evidence_check, :completed, application: a)
     end
   end
 
   let!(:application4) do
-    create(:application).tap do |a|
+    create(:application_part_remission).tap do |a|
       create(:part_payment, application: a)
     end
   end
 
   let!(:application5) do
-    create(:application).tap do |a|
+    create(:application_part_remission).tap do |a|
       create(:part_payment, :completed, application: a)
     end
   end
 
   let!(:application6) do
-    create(:application).tap do |a|
+    create(:application_part_remission).tap do |a|
       create(:evidence_check, :completed, application: a)
       create(:part_payment, application: a)
     end
   end
 
   let!(:application7) do
-    create(:application).tap do |a|
+    create(:application_part_remission).tap do |a|
       create(:evidence_check, :completed, application: a)
       create(:part_payment, :completed, application: a)
     end
   end
 
   let!(:application8) do
-    create(:application)
+    create(:application_full_remission)
   end
 
   describe '#run!' do

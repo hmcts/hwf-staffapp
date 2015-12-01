@@ -14,7 +14,7 @@ SET state = #{Application.states[:evidence_check]}
 FROM evidence_checks
 WHERE
   applications.id = evidence_checks.application_id
-  AND applications.completed_at IS NOT NULL
+  AND applications.outcome IS NOT NULL
   AND evidence_checks.completed_at IS NULL
     SQL
   end
@@ -26,7 +26,7 @@ SET state = #{Application.states[:part_payment]}
 FROM part_payments
 WHERE
   applications.id = part_payments.application_id
-  AND applications.completed_at IS NOT NULL
+  AND applications.outcome IS NOT NULL
   AND part_payments.completed_at IS NULL
     SQL
   end
@@ -37,7 +37,7 @@ WHERE
 UPDATE applications
 SET state = #{Application.states[:decided]}
 WHERE
-  applications.completed_at IS NOT NULL
+  applications.outcome IS NOT NULL
   AND
   (
     NOT EXISTS(
