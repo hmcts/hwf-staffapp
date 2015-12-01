@@ -244,13 +244,13 @@ en-GB:
       evidence/forms/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:
-        savings_valid?: Savings valid
-        partner_over_61?: Partner is over 61?
-        combined_savings_valid?: Combined savings valid
+        savings_valid?: Less than maximum savings
+        partner_over_61?: Partner over 61
+        combined_savings_valid?: Less than £16,000 savings 
       views/overview/benefits:
-        on_benefits?: Applicant is on benefits
-        override?: Benefit manually overridden?
-        override_valid?: Evidence was correct
+        on_benefits?: Applicant receiving benefits
+        override?: Applicant provided paper evidence  
+        override_valid?: Benefits letter checked 
       views/overview/income:
         children?: Applicant has children
         children: Number of children
