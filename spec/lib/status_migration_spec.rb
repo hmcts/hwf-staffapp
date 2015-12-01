@@ -65,23 +65,23 @@ RSpec.describe StatusMigration do
       # processed application with uncompleted evidence check -> evidence_check
       expect(application2.reload.state).to eql('evidence_check')
 
-      # processed application with completed evidence check -> decided
-      expect(application3.reload.state).to eql('decided')
+      # processed application with completed evidence check -> processed
+      expect(application3.reload.state).to eql('processed')
 
       # processed application with uncompleted part payment -> part_payment
       expect(application4.reload.state).to eql('part_payment')
 
-      # processed application with completed part payment -> decided
-      expect(application5.reload.state).to eql('decided')
+      # processed application with completed part payment -> processed
+      expect(application5.reload.state).to eql('processed')
 
       # processed application with completed evidence check and uncompleted part payment -> part_payment
       expect(application6.reload.state).to eql('part_payment')
 
-      # processed application with completed evidence check and completed part payment -> decided
-      expect(application7.reload.state).to eql('decided')
+      # processed application with completed evidence check and completed part payment -> processed
+      expect(application7.reload.state).to eql('processed')
 
-      # processed application without evidence check or part payment -> decided
-      expect(application8.reload.state).to eql('decided')
+      # processed application without evidence check or part payment -> processed
+      expect(application8.reload.state).to eql('processed')
     end
   end
 end

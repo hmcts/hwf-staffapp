@@ -35,7 +35,7 @@ WHERE
   def decided_sql
     <<-SQL.gsub(/^\s+\|/, '')
 UPDATE applications
-SET state = #{Application.states[:decided]}
+SET state = #{Application.states[:processed]}
 WHERE
   applications.outcome IS NOT NULL
   AND
