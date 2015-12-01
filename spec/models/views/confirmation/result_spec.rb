@@ -78,19 +78,19 @@ RSpec.describe Views::Confirmation::Result do
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }
 
-      it { is_expected.to eq '✓ Passed' }
+      it { is_expected.to eq string_passed }
     end
 
     context 'when the application is a part remission' do
       let(:outcome) { 'part' }
 
-      it { is_expected.to eq '✓ Passed' }
+      it { is_expected.to eq string_passed }
     end
 
     context 'when the application is a non remission' do
       let(:outcome) { 'none' }
 
-      it { is_expected.to eq '✗ Failed' }
+      it { is_expected.to eq string_failed }
     end
   end
 

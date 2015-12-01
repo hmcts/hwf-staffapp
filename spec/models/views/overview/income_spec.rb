@@ -31,12 +31,9 @@ RSpec.describe Views::Overview::Income do
 
     context 'when the applicant has dependants' do
       let(:dependents) { true }
+      let(:children) { 2 }
 
-      context 'and children is above 0' do
-        let(:children) { 2 }
-
-        it { is_expected.to eq 2 }
-      end
+      it { is_expected.to eq 2 }
     end
 
     context 'when the applicant no dependants' do

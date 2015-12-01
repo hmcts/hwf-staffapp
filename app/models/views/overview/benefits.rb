@@ -1,6 +1,6 @@
 module Views
   module Overview
-    class Benefits < Views::Overview::Base
+    class Benefits < Base
 
       def all_fields
         %w[on_benefits? override? override_valid?]
@@ -19,8 +19,8 @@ module Views
       end
 
       def override_valid?
-        if @application.benefits?
-          convert_to_boolean(benefit_overridden? && @application.benefit_override.correct)
+        if @application.benefits? && benefit_overridden?
+          convert_to_boolean(@application.benefit_override.correct)
         end
       end
 

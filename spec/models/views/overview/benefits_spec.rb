@@ -60,7 +60,7 @@ RSpec.describe Views::Overview::Benefits do
     end
 
     context 'when no benefit_override exists' do
-      it { is_expected.to eq I18n.t('convert_boolean.false') }
+      it { is_expected.to eq nil }
     end
 
     context 'when user selected "no" to on benefits' do
