@@ -22,7 +22,9 @@ module Views
     end
 
     def processed_on
-      @application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+      if @application.completed_at.present?
+        @application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+      end
     end
 
     def applicant

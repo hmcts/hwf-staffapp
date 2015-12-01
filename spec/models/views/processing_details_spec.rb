@@ -2,7 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe Views::ProcessingDetails do
-  let(:application) { build_stubbed(:application, completed_at: '2015-11-01') }
+  let(:completed_at) { '2015-11-01' }
+  let(:application) { build_stubbed(:application, completed_at: completed_at) }
   let(:record) { double(application: application) }
 
   subject(:view) { described_class.new(record) }
@@ -39,8 +40,18 @@ RSpec.describe Views::ProcessingDetails do
   end
 
   describe '#processed_on' do
-    it 'returns the date the application was completed' do
-      expect(view.processed_on).to eql('1 November 2015')
+    subject { view.processed_on }
+
+    context 'when completed_at is missing' do
+      let(:completed_at) { nil }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when completed_at is set' do
+      it 'returns the date the application was completed' do
+        is_expected.to eql('1 November 2015')
+      end
     end
   end
 
