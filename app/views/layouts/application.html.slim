@@ -30,8 +30,13 @@ html[lang="en"]
                 li
                   - if user_signed_in?
                     .inline
-                      span Welcome #{current_user.name} #{link_to "View profile", user_path(current_user.id)}
-                      = link_to 'Sign out', destroy_user_session_path, :method => :delete
+                      span
+                        |Welcome #{current_user.name}
+                        = link_to "View profile", user_path(current_user.id)
+                        -if current_user.elevated?
+                          = link_to 'View office', current_user.office
+                          = link_to 'View staff', users_path
+                        = link_to 'Sign out', destroy_user_session_path, :method => :delete
       .row
         .large-12.columns
           /![if IE]><h1 class='ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
