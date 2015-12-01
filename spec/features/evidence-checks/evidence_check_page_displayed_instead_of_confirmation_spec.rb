@@ -20,10 +20,9 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
     click_button 'Next'
     click_link 'Next'
+    click_button 'Complete processing'
 
     expect(page).to have_content 'Evidence of income needs to be checked for this application'
-
-    click_button 'Complete processing'
 
     expect(evidence_check_rendered?).to be true
   end

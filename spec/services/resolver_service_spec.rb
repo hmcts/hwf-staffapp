@@ -10,7 +10,16 @@ describe ResolverService do
       before { resolver.process }
 
       context 'when created with an application' do
+        let(:evidence_check_service) { double(decide!: true) }
+        let(:part_payment_builder) { double(decide!: true) }
+
         let(:object) { create(:application_full_remission) }
+
+        before do
+          allow(EvidenceCheckSelector).to receive(:new).with(object, Integer).and_return(evidence_check_service)
+          allow(PartPaymentBuilder).to receive(:new).with(object, Integer).and_return(part_payment_builder)
+          resolver.process
+        end
 
         describe 'updates the objects.completed_by value' do
           subject { object.completed_by.name }
@@ -22,6 +31,14 @@ describe ResolverService do
           subject { object.completed_at }
 
           it { is_expected.not_to be_nil }
+        end
+
+        it 'makes decision on evidence check' do
+          expect(evidence_check_service).to have_received(:decide!)
+        end
+
+        it 'builds part payment if needed' do
+          expect(part_payment_builder).to have_received(:decide!)
         end
       end
 

@@ -103,7 +103,6 @@ module Applications
 
       if @form.save
         calculate_income
-        evidence_check_and_payment
         redirect_to(action: :income_result)
       else
         render :income
@@ -123,6 +122,9 @@ module Applications
       @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
+      @savings = Views::Overview::SavingsAndInvestments.new(application)
+      @benefits = Views::Overview::Benefits.new(application)
+      @income = Views::Overview::Income.new(application)
     end
 
     def summary_save
@@ -135,6 +137,7 @@ module Applications
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @application = application
+        @confirm = Views::Confirmation::Result.new(application)
       end
     end
 
@@ -163,11 +166,6 @@ module Applications
 
     def calculate_income
       IncomeCalculationRunner.new(application).run
-    end
-
-    def evidence_check_and_payment
-      EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
-      PartPaymentBuilder.new(application, Settings.part_payment.expires_in_days).decide!
     end
   end
 end

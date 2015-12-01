@@ -3,6 +3,7 @@ class EvidenceChecksController < ApplicationController
 
   def show
     @application = evidence_check.application
+    @confirm = Views::Confirmation::Result.new(@application)
   end
 
   private

@@ -6,6 +6,7 @@ class ResolverService
 
   def process
     mark_complete
+    evidence_check_and_payment if @calling_object.is_a?(Application)
     # TODO: implement evidence_check create for applications
     # TODO: implement payment creation for applications and evidence_checks
   end
@@ -52,5 +53,10 @@ class ResolverService
       'part' => 'part',
       'none' => 'none',
       'return' => 'none' }[outcome]
+  end
+
+  def evidence_check_and_payment
+    EvidenceCheckSelector.new(@calling_object, Settings.evidence_check.expires_in_days).decide!
+    PartPaymentBuilder.new(@calling_object, Settings.part_payment.expires_in_days).decide!
   end
 end
