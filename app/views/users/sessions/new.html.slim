@@ -14,7 +14,8 @@
             = f.password_field :password, autocomplete: "off"
       .actions
         = f.submit "Sign in", class: 'button'
-
+      .actions
+        = link_to "Forgot your password?", new_password_path(resource_name)
 
   .small-12.medium-8.large-5.columns
     .info-box
