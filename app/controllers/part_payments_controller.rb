@@ -6,11 +6,11 @@ class PartPaymentsController < ApplicationController
   end
 
   def accuracy
-    @form = Forms::Accuracy.new(part_payment)
+    @form = Forms::PartPayment::Accuracy.new(part_payment)
   end
 
   def accuracy_save
-    @form = Forms::Accuracy.new(part_payment)
+    @form = Forms::PartPayment::Accuracy.new(part_payment)
     @form.update_attributes(accuracy_params)
 
     if @form.save

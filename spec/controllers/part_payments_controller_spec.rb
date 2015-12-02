@@ -16,7 +16,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     allow(Views::ProcessingDetails).to receive(:new).with(part_payment).and_return(processing_details)
     allow(Views::ApplicationOverview).to receive(:new).with(part_payment.application).and_return(application_overview)
     allow(Views::ApplicationResult).to receive(:new).with(part_payment.application).and_return(application_result)
-    allow(Forms::Accuracy).to receive(:new).with(part_payment).and_return(accuracy_form)
+    allow(Forms::PartPayment::Accuracy).to receive(:new).with(part_payment).and_return(accuracy_form)
     allow(Views::PartPayment::Result).to receive(:new).with(part_payment).and_return(part_payment_result)
   end
 
