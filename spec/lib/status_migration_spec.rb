@@ -5,7 +5,7 @@ RSpec.describe StatusMigration do
   subject(:migration) { described_class.new }
 
   let!(:application1) do
-    create(:application, :uncompleted_application)
+    create(:application, :uncompleted)
   end
 
   let!(:application2) do

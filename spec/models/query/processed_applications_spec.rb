@@ -17,7 +17,7 @@ RSpec.describe Query::ProcessedApplications, type: :model do
     let!(:application6) { create :application_full_remission, office: office }
     let!(:application5) { create :application_full_remission, office: office }
     let!(:application7) { create :application, office: office, outcome: nil }
-    let!(:application8) { create :application_full_remission, :uncompleted_application, office: office }
+    let!(:application8) { create :application_full_remission, :uncompleted, office: office }
 
     before do
       create :evidence_check, application: application1
