@@ -62,9 +62,6 @@ class Application < ActiveRecord::Base
       self.application_type = 'none'
       self.outcome = 'none'
       self.dependents = nil
-    else
-      self.application_type = nil
-      self.outcome = nil
     end
   end
 
