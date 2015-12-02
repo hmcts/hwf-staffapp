@@ -41,7 +41,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def return_application
-    if ResolverService.new(part_payment, current_user).resolve('return')
+    if ResolverService.new(part_payment, current_user).return
       redirect_to root_path
     else
       flash[:alert] = t('error_messages.part_payment.cannot_be_saved')

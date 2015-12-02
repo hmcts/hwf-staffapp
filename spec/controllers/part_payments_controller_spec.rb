@@ -171,11 +171,19 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'POST #return_application' do
+    let(:resolver_result) { true }
+    let(:resolver) { double(return: resolver_result) }
+    let(:user) { create :user }
     let(:part_payment) { create(:part_payment) }
 
-    context 'when no error generated' do
-      before { post :return_application, id: part_payment }
+    before do
+      expect(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
 
+      sign_in user
+      post :return_application, id: part_payment
+    end
+
+    context 'when no error generated' do
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)
       end
@@ -186,13 +194,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     end
 
     context 'when ResolverService returns an error' do
-      let(:user) { create :user }
-      let(:resolver) { double(resolve: false) }
-      before do
-        sign_in user
-        allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
-        post :return_application, id: part_payment
-      end
+      let(:resolver_result) { false }
 
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)

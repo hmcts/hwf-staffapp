@@ -61,7 +61,7 @@ class EvidenceController < ApplicationController
   end
 
   def return_application
-    redirect_to root_path if ResolverService.new(evidence, current_user).resolve('return')
+    redirect_to root_path if ResolverService.new(evidence, current_user).return
   end
 
   private
