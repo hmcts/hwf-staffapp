@@ -11,6 +11,13 @@ class ResolverService
     send("complete_#{derive_object(@calling_object)}", @calling_object)
   end
 
+  def return
+    ActiveRecord::Base.transaction do
+      @calling_object.update({ outcome: 'return' }.merge(completed_attributes))
+      @calling_object.application.update(decided_attributes(@calling_object))
+    end
+  end
+
   def process
     mark_complete
     evidence_check_and_payment if @calling_object.is_a?(Application)
@@ -39,7 +46,7 @@ class ResolverService
 
   def decided_attributes(source)
     {
-      decision: source.outcome,
+      decision: lookup_decision(source.outcome),
       decision_type: derive_object(source),
       state: :processed
     }
