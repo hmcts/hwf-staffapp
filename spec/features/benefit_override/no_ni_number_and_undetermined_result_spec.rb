@@ -104,7 +104,9 @@ RSpec.feature 'No NI number provided', type: :feature do
   end
 
   context 'when the user progresses to the summary page' do
-    before { click_link 'Next' }
+    before do
+      click_link 'Next'
+    end
 
     it do
       expect(page).to have_content 'Check details'

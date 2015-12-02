@@ -260,6 +260,7 @@ RSpec.describe EvidenceController, type: :controller do
   end
 
   describe 'POST #summary_save' do
+    let(:resolver) { double(complete: nil) }
     let(:evidence) { create :evidence_check }
 
     context 'as a signed out user' do
@@ -272,6 +273,7 @@ RSpec.describe EvidenceController, type: :controller do
 
     context 'as a signed in user' do
       before(:each) do
+        expect(ResolverService).to receive(:new).with(evidence, user).and_return(resolver)
         sign_in user
         post :summary_save, id: evidence
       end
@@ -282,10 +284,6 @@ RSpec.describe EvidenceController, type: :controller do
 
       it 'returns the correct status code' do
         expect(response.status).to eq 302
-      end
-
-      it 'updates the completed by field' do
-        expect(evidence.completed_by).to eq user
       end
     end
   end

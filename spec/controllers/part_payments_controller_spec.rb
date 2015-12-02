@@ -108,17 +108,15 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'POST #summary_save' do
-    let(:current_time) { Time.zone.now }
+    let(:resolver) { double(complete: nil) }
     let(:user) { create :user }
     let(:part_payment) { create(:part_payment) }
 
     before do
-      allow(PartPayment).to receive(:find).with(part_payment.id).and_return(part_payment)
+      expect(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
 
-      Timecop.freeze(current_time) do
-        sign_in user
-        get :summary_save, id: part_payment
-      end
+      sign_in user
+      get :summary_save, id: part_payment
     end
 
     it 'returns the correct status code' do
@@ -127,13 +125,6 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     it 'redirects to the confirmation page' do
       expect(response).to redirect_to(confirmation_part_payment_path(part_payment))
-    end
-
-    it 'updates the part_payment completed_at and completed_by' do
-      part_payment.reload
-
-      expect(part_payment.completed_at).to eql(current_time)
-      expect(part_payment.completed_by).to eql(user)
     end
   end
 

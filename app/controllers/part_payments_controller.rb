@@ -27,7 +27,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def summary_save
-    ResolverService.new(part_payment, current_user).process
+    ResolverService.new(part_payment, current_user).complete
     redirect_to(confirmation_part_payment_path(part_payment))
   end
 

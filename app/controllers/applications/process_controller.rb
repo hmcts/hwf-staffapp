@@ -128,7 +128,7 @@ module Applications
     end
 
     def summary_save
-      ResolverService.new(application, current_user).process
+      ResolverService.new(application, current_user).complete
       redirect_to application_confirmation_path(application.id)
     end
 
