@@ -10,7 +10,13 @@ class Application < ActiveRecord::Base
   has_one :part_payment, required: false
   has_one :benefit_override, required: false
 
-  enum state: { created: 0, waiting_for_evidence: 1, waiting_for_part_payment: 2, processed: 3 }
+  enum state: {
+    created: 0,
+    waiting_for_evidence: 1,
+    waiting_for_part_payment: 2,
+    processed: 3,
+    removed: 4
+  }
 
   validates :reference, presence: true, uniqueness: true
 
