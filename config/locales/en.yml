@@ -364,6 +364,8 @@ en-GB:
         benefits: Benefits
         income: Income
         children: Number of children
+      forms/application/remove:
+        removed_reason: Describe why the application needs to be removed
     errors:
       models:
         forms/application/applicant:
