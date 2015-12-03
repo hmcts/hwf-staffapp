@@ -212,4 +212,39 @@ describe ResolverService do
       include_examples 'application, evidence check or part payment returned', 'part_payment'
     end
   end
+
+  describe '#remove' do
+    let(:object) { application }
+
+    subject(:remove) { resolver.remove }
+
+    context 'when the application state is :processed and it has :removed_reason set' do
+      subject(:removed_application) do
+        remove
+        application.reload
+      end
+
+      let(:application) { create :application, :processed_state, removed_reason: 'I do not like it' }
+
+      it 'moves the application to :removed state' do
+        expect(removed_application).to be_removed
+      end
+    end
+
+    context 'when the application is not in :processed state' do
+      let(:application) { create :application, :waiting_for_evidence_state }
+
+      it 'raises an error' do
+        expect { remove }.to raise_error(ResolverService::NotRemovable)
+      end
+    end
+
+    context 'when the :removed_reason is missing' do
+      let(:application) { create :application, :processed_state, removed_reason: nil }
+
+      it 'raises an error' do
+        expect { remove }.to raise_error(ResolverService::NotRemovable)
+      end
+    end
+  end
 end
