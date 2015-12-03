@@ -77,6 +77,12 @@ FactoryGirl.define do
       state :waiting_for_part_payment
     end
 
+    trait :removed_state do
+      decision { outcome }
+      decision_type 'application'
+      state :removed
+    end
+
     factory :application_part_remission do
       applicant_factory :applicant_with_all_details
       applicant_traits [:married]
