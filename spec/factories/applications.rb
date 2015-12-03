@@ -63,6 +63,12 @@ FactoryGirl.define do
       application_type 'income'
     end
 
+    trait :processed_state do
+      decision { outcome }
+      decision_type 'application'
+      state :processed
+    end
+
     factory :application_part_remission do
       applicant_factory :applicant_with_all_details
       applicant_traits [:married]
