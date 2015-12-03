@@ -1,5 +1,6 @@
 class ResolverService
   class UndefinedOutcome < StandardError; end
+  class NotRemovable < StandardError; end
 
   def initialize(object, user)
     @calling_object = object
@@ -16,6 +17,11 @@ class ResolverService
       @calling_object.update({ outcome: 'return' }.merge(completed_attributes))
       @calling_object.application.update(decided_attributes(@calling_object))
     end
+  end
+
+  def remove
+    raise NotRemovable unless @calling_object.processed? && @calling_object.removed_reason.present?
+    @calling_object.removed!
   end
 
   private
