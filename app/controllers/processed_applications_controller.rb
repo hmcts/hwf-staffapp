@@ -16,6 +16,7 @@ class ProcessedApplicationsController < ApplicationController
     @form = Forms::Application::Remove.new(application)
     @form.update_attributes(remove_params)
     if @form.save
+      ResolverService.new(application, current_user).remove
       flash[:notice] = 'The application has been removed'
       redirect_to(action: :index)
     else

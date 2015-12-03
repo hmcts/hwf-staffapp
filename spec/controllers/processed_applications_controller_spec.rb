@@ -83,16 +83,22 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   describe 'PUT #update' do
     let(:expected_params) { { removed_reason: 'REASON' } }
+    let(:resolver) { double(remove: true) }
 
     before do
       expect(remove_form).to receive(:update_attributes).with(expected_params)
       allow(remove_form).to receive(:save).and_return(form_save)
+      allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 
       put :update, id: application1.id, application: expected_params
     end
 
     context 'when the form can be saved' do
       let(:form_save) { true }
+
+      it 'removes the application using ResolverService' do
+        expect(resolver).to have_received(:remove)
+      end
 
       it 'sets a flash message' do
         expect(flash[:notice]).to eql('The application has been removed')
