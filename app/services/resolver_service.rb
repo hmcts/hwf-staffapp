@@ -18,13 +18,6 @@ class ResolverService
     end
   end
 
-  def process
-    mark_complete
-    evidence_check_and_payment if @calling_object.is_a?(Application)
-    # TODO: implement evidence_check create for applications
-    # TODO: implement payment creation for applications and evidence_checks
-  end
-
   private
 
   def check_outcome!
@@ -76,10 +69,6 @@ class ResolverService
   def complete_part_payment(part_payment)
     part_payment.update(completed_attributes)
     part_payment.application.update(decided_attributes(part_payment))
-  end
-
-  def mark_complete
-    @calling_object.update_attributes(completed_attributes)
   end
 
   def derive_object(object)
