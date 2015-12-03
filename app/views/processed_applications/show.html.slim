@@ -9,3 +9,18 @@ header
 =build_section 'Result', @overview, @overview.savings_investment_params
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
+
+
+/details
+/  summary
+/    span.summary.primary Remove application
+div
+  p You can remove an application if an error was made or proceedings never took place
+
+  = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off' } do |f|
+    .form-group
+      = f.label :removed_reason, t('removed_reason', scope: @form.i18n_scope)
+      = f.label :removed_reason, @form.errors[:removed_reason].join(','), class: 'error' if @form.errors[:removed_reason].present?
+      = f.text_field :removed_reason, class: 'form-control small-field'
+
+    = f.submit 'Remove application', :class => 'button primary'
