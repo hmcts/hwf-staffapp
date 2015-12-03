@@ -1,16 +1,16 @@
-class StatusMigration
+class StateMigration
   def run!
-    ActiveRecord::Base.connection.execute(evidence_check_sql)
-    ActiveRecord::Base.connection.execute(part_payment_sql)
+    ActiveRecord::Base.connection.execute(waiting_for_evidence_sql)
+    ActiveRecord::Base.connection.execute(waiting_for_part_payment_sql)
     ActiveRecord::Base.connection.execute(decided_sql)
   end
 
   private
 
-  def evidence_check_sql
+  def waiting_for_evidence_sql
     <<-SQL.gsub(/^\s+\|/, '')
 UPDATE applications
-SET state = #{Application.states[:evidence_check]}
+SET state = #{Application.states[:waiting_for_evidence]}
 FROM evidence_checks
 WHERE
   applications.id = evidence_checks.application_id
@@ -19,10 +19,10 @@ WHERE
     SQL
   end
 
-  def part_payment_sql
+  def waiting_for_part_payment_sql
     <<-SQL.gsub(/^\s+\|/, '')
 UPDATE applications
-SET state = #{Application.states[:part_payment]}
+SET state = #{Application.states[:waiting_for_part_payment]}
 FROM part_payments
 WHERE
   applications.id = part_payments.application_id

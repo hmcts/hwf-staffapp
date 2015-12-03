@@ -76,13 +76,13 @@ describe ResolverService do
       context 'when the application needs evidence check' do
         let(:evidence_check_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'application', 'evidence_check', false
+        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
       end
 
       context 'when the application needs part payment' do
         let(:part_payment_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'application', 'part_payment', false
+        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
       end
 
       context 'when the application has outcome and does not need evidence check or part payment' do
@@ -114,7 +114,7 @@ describe ResolverService do
         let(:evidence_check) { create :evidence_check_part_outcome, application: application }
         let(:part_payment_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'part_payment', false
+        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'waiting_for_part_payment', false
       end
 
       context 'when the evidence check has outcome and application does not require part payment' do

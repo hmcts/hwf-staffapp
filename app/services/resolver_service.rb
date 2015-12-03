@@ -42,9 +42,9 @@ class ResolverService
   def complete_application(application)
     attributes = completed_attributes.tap do |attrs|
       if decide_evidence_check(application)
-        attrs[:state] = :evidence_check
+        attrs[:state] = :waiting_for_evidence
       elsif decide_part_payment(application)
-        attrs[:state] = :part_payment
+        attrs[:state] = :waiting_for_part_payment
       else
         attrs.merge!(decided_attributes(application))
       end
@@ -58,7 +58,7 @@ class ResolverService
 
     application_attributes = {}.tap do |attrs|
       if decide_part_payment(evidence_check)
-        attrs[:state] = :part_payment
+        attrs[:state] = :waiting_for_part_payment
       else
         attrs.merge!(decided_attributes(evidence_check))
       end

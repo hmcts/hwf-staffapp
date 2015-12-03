@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StatusMigration do
+RSpec.describe StateMigration do
 
   subject(:migration) { described_class.new }
 
@@ -63,19 +63,19 @@ RSpec.describe StatusMigration do
       expect(application1.reload.state).to eql('created')
 
       # processed application with uncompleted evidence check -> evidence_check
-      expect(application2.reload.state).to eql('evidence_check')
+      expect(application2.reload.state).to eql('waiting_for_evidence')
 
       # processed application with completed evidence check -> processed
       expect(application3.reload.state).to eql('processed')
 
       # processed application with uncompleted part payment -> part_payment
-      expect(application4.reload.state).to eql('part_payment')
+      expect(application4.reload.state).to eql('waiting_for_part_payment')
 
       # processed application with completed part payment -> processed
       expect(application5.reload.state).to eql('processed')
 
       # processed application with completed evidence check and uncompleted part payment -> part_payment
-      expect(application6.reload.state).to eql('part_payment')
+      expect(application6.reload.state).to eql('waiting_for_part_payment')
 
       # processed application with completed evidence check and completed part payment -> processed
       expect(application7.reload.state).to eql('processed')
