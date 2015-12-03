@@ -69,6 +69,14 @@ FactoryGirl.define do
       state :processed
     end
 
+    trait :waiting_for_evidence_state do
+      state :waiting_for_evidence
+    end
+
+    trait :waiting_for_part_payment_state do
+      state :waiting_for_part_payment
+    end
+
     factory :application_part_remission do
       applicant_factory :applicant_with_all_details
       applicant_traits [:married]

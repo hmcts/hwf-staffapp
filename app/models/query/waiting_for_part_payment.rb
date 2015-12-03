@@ -1,7 +1,11 @@
 module Query
-  class WaitingForPartPayment < Query::WaitingForBase
+  class WaitingForPartPayment
+    def initialize(user)
+      @user = user
+    end
+
     def find
-      super(:part_payment)
+      @user.office.applications.waiting_for_part_payment.order(:completed_at)
     end
   end
 end
