@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ResolverService do
-  let(:current_time) { Time.zone.now }
+  let(:current_time) { Time.zone.now.change(usec: 0) }
   let(:user) { create(:user) }
   let(:application_outcome) { 'part' }
   let(:application) { create(:application, :uncompleted, :undecided, outcome: application_outcome) }
