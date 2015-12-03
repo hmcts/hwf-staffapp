@@ -61,15 +61,15 @@ class ResolverService
   end
 
   def complete_evidence_check(evidence_check)
+    evidence_check.update(completed_attributes)
+
     application_attributes = {}.tap do |attrs|
-      if decide_part_payment(evidence_check.application)
+      if decide_part_payment(evidence_check)
         attrs[:state] = :part_payment
       else
         attrs.merge!(decided_attributes(evidence_check))
       end
     end
-
-    evidence_check.update(completed_attributes)
     evidence_check.application.update(application_attributes)
   end
 

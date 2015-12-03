@@ -16,7 +16,6 @@ describe ResolverService do
 
     before do
       allow(EvidenceCheckSelector).to receive(:new).with(application, Fixnum).and_return(evidence_check_selector)
-      allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
     end
 
     subject(:complete) do
@@ -62,6 +61,10 @@ describe ResolverService do
     context 'for Application' do
       let(:object) { application }
 
+      before do
+        allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
+      end
+
       context 'when the application does not have an outcome' do
         let(:application_outcome) { nil }
 
@@ -94,6 +97,10 @@ describe ResolverService do
       end
 
       let(:object) { evidence_check }
+
+      before do
+        allow(PartPaymentBuilder).to receive(:new).with(evidence_check, Fixnum).and_return(part_payment_builder)
+      end
 
       context 'when the evidence check does not have an outcome' do
         let(:evidence_check) { create :evidence_check, application: application }
