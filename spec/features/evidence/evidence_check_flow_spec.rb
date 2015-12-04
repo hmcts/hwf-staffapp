@@ -204,7 +204,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'part' do
         let(:outcome) { 'part' }
 
-        it { expect(page).to have_content 'part-fee' }
+        it { expect(page).to have_content 'You are eligible to make a part-payment' }
 
         it { expect(page).to have_content(evidence.application.full_name) }
 
@@ -218,7 +218,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'rejected' do
         let(:outcome) { 'none' }
 
-        it { expect(page).to have_content 'not correct' }
+        it { expect(page).to have_content 'a problem with the documents you have sent' }
 
         it { expect(page).to have_content(evidence.application.full_name) }
 

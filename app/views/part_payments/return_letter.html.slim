@@ -6,9 +6,11 @@ header
 .row
   .small-12.medium-12.large-12.columns
     .evidence-confirmation-letter
-      =t('part_payment.return_letter',
+      =t('letters.part-payment.no_part_payment_received_html',
          full_name: @overview.full_name,
-         current_user: current_user.name).html_safe
+         user_name: current_user.name,
+         part_payment_amount: "£#{@overview.amount_to_pay}",
+         date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
 = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Finish', class: 'button'
