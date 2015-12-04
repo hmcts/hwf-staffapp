@@ -39,7 +39,7 @@ RSpec.feature 'Remove processed applications', type: :feature do
       expect(page).to have_content('Processed application')
       expect(page).to have_content("Full name#{application1.applicant.full_name}")
       within '.remove-form' do
-        expect(page).to have_content('can\'t be blank')
+        expect(page).to have_content('Enter the reason')
       end
     end
   end

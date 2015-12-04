@@ -341,6 +341,10 @@ en-GB:
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/application/remove:
+          attributes:
+            removed_reason:
+              blank: Enter the reason
   activerecord:
     errors:
       models:
