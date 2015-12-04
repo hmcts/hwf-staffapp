@@ -2,28 +2,19 @@ h2 Staff details
 
 #result_table
   .row
-    .columns.small-4.large-2
-      label Full name
-    .columns.small-6.large-10
-      =@user.name
+    .columns.small-4.large-2 Full name
+    .columns.small-6.large-10 =@user.name
   .row
-    .columns.small-4.large-2
-      label Email
-    .columns.small-6.large-10
-      =@user.email
+    .columns.small-4.large-2 Email
+    .columns.small-6.large-10 =@user.email
   .row
-    .columns.small-4.large-2
-      label Role
-    .columns.small-6.large-10
-      =@user.role.humanize
+    .columns.small-4.large-2 label Role
+    .columns.small-6.large-10 =@user.role.humanize
   .row
-    .columns.small-4.large-2
-      label Office
-    .columns.small-6.large-10
-      =@user.office.name
+    .columns.small-4.large-2 Office
+    .columns.small-6.large-10 =@user.office.name
   .row
-    .columns.small-4.large-2
-      label Main jurisdiction
+    .columns.small-4.large-2 Main jurisdiction
     .columns.small-6.large-10
       =@user.jurisdiction.name if @user.jurisdiction.present?
 .row.pad-top-thirty-px
