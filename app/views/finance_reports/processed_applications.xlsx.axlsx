@@ -1,0 +1,18 @@
+wb = wb = xlsx_package.workbook
+
+wb.styles do |s|
+  header_cell = s.add_style bg_color: "daeef3", fg_color: "00", alignment: { horizontal: :left }, b: true
+
+  wb.add_worksheet(name: "Jitens giant output") do |sheet|
+
+    sheet.add_row ['applicant', 'date_received', 'processed_on', 'processed_by', 'emergency'], style: header_cell
+    @applications.each do |application|
+      sheet.add_row [application.applicant,
+        application.date_received,
+        application.processed_on,
+        application.processed_by,
+        application.emergency
+      ]
+    end
+  end
+end

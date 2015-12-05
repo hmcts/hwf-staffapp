@@ -55,6 +55,13 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    axlsx (2.0.1)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.0.0)
+    axlsx_rails (0.4.0)
+      axlsx (>= 2.0.1)
+      rails (>= 3.1)
     bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -173,6 +180,7 @@ GEM
       guard (~> 2.2)
       teaspoon (>= 0.8.0)
     hitimes (1.2.2)
+    htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
@@ -310,6 +318,7 @@ GEM
       ruby-progressbar (~> 1.4)
     rubocop-rspec (1.2.2)
     ruby-progressbar (1.7.5)
+    rubyzip (1.0.0)
     safe_yaml (1.0.4)
     sass (3.4.13)
     sass-rails (5.0.3)
@@ -396,6 +405,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  axlsx
+  axlsx_rails
   better_errors
   binding_of_caller
   byebug

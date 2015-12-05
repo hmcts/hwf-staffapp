@@ -1,0 +1,18 @@
+header
+  .row
+    .small-12.medium-12.large-12.columns
+      h2 Finance reports
+
+.row
+  .columns.small-12
+    dl
+      dt Made up report #1
+      dd
+        #report_1_description
+          | This can describe a report and what the user could see when clicking on the link.
+          br =link_to 'Download as excel file',  finance_reports_output_to_excel_path(format: 'xlsx')
+      dt Export processed applications
+      dd
+        #report_2_description
+          | Export current offices processed applications... for Jiten!
+          br =link_to 'Download as excel file',  finance_reports_processed_applications_path(format: 'xlsx')

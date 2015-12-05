@@ -1,0 +1,18 @@
+wb = wb = xlsx_package.workbook
+
+wb.styles do |s|
+  header_merged_cell = s.add_style :bg_color => "daeef3", :fg_color => "00", :alignment => { :horizontal=> :center }, b: true
+  header_cell = s.add_style bg_color: "daeef3", fg_color: "00", alignment: { horizontal: :left }, b: true
+
+  wb.add_worksheet(name: "Sheet 1") do |sheet|
+    sheet.add_row ["Date range", "", "011115-011215"]
+    sheet.add_row ["","", "Column totals >", "=SUBTOTAL(109,D5:D1000", "=SUBTOTAL(109,E5:E1000"]
+    sheet.add_row ["","", "", "Successful", ""], style: [nil, nil, nil, header_merged_cell]
+    sheet.merge_cells("D3:E3")
+    sheet.add_row ["Office", "BEC", "Jurisdiction", "No.", "£"], style: header_cell
+    sheet.add_row ["Bristol", "", "Family", 5, 100]
+    sheet.add_row ["Bristol", "", "County", 10, 200]
+    sheet.add_row ["London", "", "Family", 50, 3000]
+    sheet.add_row ["London", "", "County", 100, 50000]
+  end
+end
