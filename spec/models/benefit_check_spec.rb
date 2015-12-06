@@ -93,10 +93,10 @@ RSpec.describe BenefitCheck, type: :model do
       it { is_expected.to eql 'none' }
     end
 
-    context 'when dwp_result is nil' do
+    context 'when dwp_result is nil or anything else' do
       let(:check) { build :benefit_check }
 
-      it { is_expected.to be nil }
+      it { is_expected.to eql 'none' }
     end
   end
 end
