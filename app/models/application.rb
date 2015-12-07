@@ -15,7 +15,7 @@ class Application < ActiveRecord::Base
     waiting_for_evidence: 1,
     waiting_for_part_payment: 2,
     processed: 3,
-    removed: 4
+    deleted: 4
   }
 
   validates :reference, presence: true, uniqueness: true

@@ -8,16 +8,16 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def show
-    @form = Forms::Application::Remove.new(application)
+    @form = Forms::Application::Delete.new(application)
     assign_views
   end
 
   def update
-    @form = Forms::Application::Remove.new(application)
-    @form.update_attributes(remove_params)
+    @form = Forms::Application::Delete.new(application)
+    @form.update_attributes(delete_params)
     if @form.save
-      ResolverService.new(application, current_user).remove
-      flash[:notice] = 'The application has been removed'
+      ResolverService.new(application, current_user).delete
+      flash[:notice] = 'The application has been deleted'
       redirect_to(action: :index)
     else
       assign_views
@@ -38,7 +38,7 @@ class ProcessedApplicationsController < ApplicationController
     @result = Views::ApplicationResult.new(application)
   end
 
-  def remove_params
-    params.require(:application).permit(*Forms::Application::Remove.permitted_attributes.keys)
+  def delete_params
+    params.require(:application).permit(*Forms::Application::Delete.permitted_attributes.keys)
   end
 end

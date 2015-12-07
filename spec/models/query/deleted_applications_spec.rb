@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Query::RemovedApplications, type: :model do
+RSpec.describe Query::DeletedApplications, type: :model do
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
 
@@ -10,11 +10,11 @@ RSpec.describe Query::RemovedApplications, type: :model do
     subject { query.find }
 
     let!(:application1) { create :application_full_remission, office: office }
-    let!(:application2) { create :application_full_remission, :removed_state, office: office }
+    let!(:application2) { create :application_full_remission, :deleted_state, office: office }
     let!(:other_office_application) { create :application_full_remission, :processed_state }
-    let!(:application3) { create :application_full_remission, :removed_state, office: office }
+    let!(:application3) { create :application_full_remission, :deleted_state, office: office }
 
-    it "contains applications completely removed from user's office in order of creation" do
+    it "contains applications completely deleted from user's office in order of creation" do
       is_expected.to eq([application2, application3])
     end
   end

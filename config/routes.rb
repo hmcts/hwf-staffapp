@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   end
 
   resources :processed_applications, only: [:index, :show, :update]
-  resources :removed_applications, only: [:index, :show]
+  resources :deleted_applications, only: [:index, :show]
 
   get 'guide' => 'guide#index'
   get 'guide/process_application' => 'guide#process_application'

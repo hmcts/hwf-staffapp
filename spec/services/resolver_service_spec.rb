@@ -213,21 +213,21 @@ describe ResolverService do
     end
   end
 
-  describe '#remove' do
+  describe '#delete' do
     let(:object) { application }
 
-    subject(:remove) { resolver.remove }
+    subject(:delete) { resolver.delete }
 
-    context 'when the application state is :processed and it has :removed_reason set' do
-      subject(:removed_application) do
-        remove
+    context 'when the application state is :processed and it has :deleted_reason set' do
+      subject(:deleted_application) do
+        delete
         application.reload
       end
 
-      let(:application) { create :application, :processed_state, removed_reason: 'I do not like it' }
+      let(:application) { create :application, :processed_state, deleted_reason: 'I do not like it' }
 
-      it 'moves the application to :removed state' do
-        expect(removed_application).to be_removed
+      it 'moves the application to :deleted state' do
+        expect(deleted_application).to be_deleted
       end
     end
 
@@ -235,15 +235,15 @@ describe ResolverService do
       let(:application) { create :application, :waiting_for_evidence_state }
 
       it 'raises an error' do
-        expect { remove }.to raise_error(ResolverService::NotRemovable)
+        expect { delete }.to raise_error(ResolverService::NotDeletable)
       end
     end
 
-    context 'when the :removed_reason is missing' do
-      let(:application) { create :application, :processed_state, removed_reason: nil }
+    context 'when the :deleted_reason is missing' do
+      let(:application) { create :application, :processed_state, deleted_reason: nil }
 
       it 'raises an error' do
-        expect { remove }.to raise_error(ResolverService::NotRemovable)
+        expect { delete }.to raise_error(ResolverService::NotDeletable)
       end
     end
   end

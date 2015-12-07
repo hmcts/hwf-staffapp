@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20151201111908) do
     t.string   "decision"
     t.string   "decision_type"
     t.integer  "state",                   default: 0, null: false
-    t.string   "removed_reason"
+    t.string   "deleted_reason"
   end
 
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree

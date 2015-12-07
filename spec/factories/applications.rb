@@ -77,10 +77,10 @@ FactoryGirl.define do
       state :waiting_for_part_payment
     end
 
-    trait :removed_state do
+    trait :deleted_state do
       decision { outcome }
       decision_type 'application'
-      state :removed
+      state :deleted
     end
 
     factory :application_part_remission do

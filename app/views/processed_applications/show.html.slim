@@ -1,18 +1,18 @@
-=render('shared/processed_and_removed/show', state: :processed)
+=render('shared/processed_and_deleted/show', state: :processed)
 
 - details_attributes = @form.errors.empty? ? {} : { open: 'open' }
 
 .panel
   details *details_attributes
     summary
-      span.summary.primary Remove application
+      span.summary.primary Delete application
     div
-      p You can remove an application if an error was made or proceedings never took place
+      p You can delete an application if an error was made or proceedings never took place
 
-      = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off', class: 'remove-form' } do |f|
+      = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off', class: 'delete-form' } do |f|
         .form-group
-          = f.label :removed_reason, t('removed_reason', scope: @form.i18n_scope)
-          = f.label :removed_reason, @form.errors[:removed_reason].join(','), class: 'error' if @form.errors[:removed_reason].present?
-          = f.text_field :removed_reason, class: 'form-control small-field'
+          = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope)
+          = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
+          = f.text_field :deleted_reason, class: 'form-control small-field'
 
-        = f.submit 'Remove application', :class => 'button alert'
+        = f.submit 'Delete application', :class => 'button alert'

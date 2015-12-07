@@ -24,7 +24,7 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
 
-  it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :removed]) }
+  it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
 
   it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RemovedApplicationsController, type: :controller do
+RSpec.describe DeletedApplicationsController, type: :controller do
   include Devise::TestHelpers
 
   let(:user) { create(:user) }
@@ -25,7 +25,7 @@ RSpec.describe RemovedApplicationsController, type: :controller do
     let(:query) { double(find: [application1, application2]) }
 
     before do
-      allow(Query::RemovedApplications).to receive(:new).with(user).and_return(query)
+      allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 

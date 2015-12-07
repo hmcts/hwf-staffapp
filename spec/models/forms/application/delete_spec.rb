@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Forms::Application::Remove do
-  params_list = %i[removed_reason]
+RSpec.describe Forms::Application::Delete do
+  params_list = %i[deleted_reason]
 
   let(:application) { create :application }
 
@@ -14,12 +14,12 @@ RSpec.describe Forms::Application::Remove do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:removed_reason) }
+    it { is_expected.to validate_presence_of(:deleted_reason) }
   end
 
   describe '#save' do
-    let(:attributes) { { removed_reason: reason } }
-    let(:application) { create :application, removed_reason: nil }
+    let(:attributes) { { deleted_reason: reason } }
+    let(:application) { create :application, deleted_reason: nil }
 
     subject do
       form.update_attributes(attributes)
@@ -31,11 +31,11 @@ RSpec.describe Forms::Application::Remove do
 
       it { is_expected.to be true }
 
-      it 'updates the removed_reason field on the application' do
+      it 'updates the deleted_reason field on the application' do
         subject
         application.reload
 
-        expect(application.removed_reason).to eql(reason)
+        expect(application.deleted_reason).to eql(reason)
       end
     end
 

@@ -10,7 +10,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   let(:overview) { double }
   let(:result) { double }
-  let(:remove_form) { double }
+  let(:delete_form) { double }
 
   before do
     sign_in user
@@ -18,7 +18,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
     allow(Views::ApplicationOverview).to receive(:new).with(application1).and_return(overview)
     allow(Views::ApplicationResult).to receive(:new).with(application1).and_return(result)
-    allow(Forms::Application::Remove).to receive(:new).with(application1).and_return(remove_form)
+    allow(Forms::Application::Delete).to receive(:new).with(application1).and_return(delete_form)
   end
 
   describe 'GET #index' do
@@ -68,8 +68,8 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       expect(assigns(:result)).to eql(result)
     end
 
-    it 'assigns the Remove form' do
-      expect(assigns(:form)).to eql(remove_form)
+    it 'assigns the Delete form' do
+      expect(assigns(:form)).to eql(delete_form)
     end
   end
 
@@ -82,12 +82,12 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    let(:expected_params) { { removed_reason: 'REASON' } }
-    let(:resolver) { double(remove: true) }
+    let(:expected_params) { { deleted_reason: 'REASON' } }
+    let(:resolver) { double(delete: true) }
 
     before do
-      expect(remove_form).to receive(:update_attributes).with(expected_params)
-      allow(remove_form).to receive(:save).and_return(form_save)
+      expect(delete_form).to receive(:update_attributes).with(expected_params)
+      allow(delete_form).to receive(:save).and_return(form_save)
       allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 
       put :update, id: application1.id, application: expected_params
@@ -96,12 +96,12 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'removes the application using ResolverService' do
-        expect(resolver).to have_received(:remove)
+      it 'deletes the application using ResolverService' do
+        expect(resolver).to have_received(:delete)
       end
 
       it 'sets a flash message' do
-        expect(flash[:notice]).to eql('The application has been removed')
+        expect(flash[:notice]).to eql('The application has been deleted')
       end
 
       it 'redirects to the list of processed applications' do

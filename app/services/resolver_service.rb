@@ -1,6 +1,6 @@
 class ResolverService
   class UndefinedOutcome < StandardError; end
-  class NotRemovable < StandardError; end
+  class NotDeletable < StandardError; end
 
   def initialize(object, user)
     @calling_object = object
@@ -19,9 +19,9 @@ class ResolverService
     end
   end
 
-  def remove
-    raise NotRemovable unless @calling_object.processed? && @calling_object.removed_reason.present?
-    @calling_object.removed!
+  def delete
+    raise NotDeletable unless @calling_object.processed? && @calling_object.deleted_reason.present?
+    @calling_object.deleted!
   end
 
   private
