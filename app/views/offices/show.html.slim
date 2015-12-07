@@ -2,17 +2,13 @@ h2 Office details
 
 #result_table
   .row
-    .columns.small-4.large-2
-      label Name of office
-    .columns.small-8.large-10
-      =@office.name
-    .columns.small-4.large-2
-      label Entity code
-    .columns.small-8.large-10
-      =@office.entity_code
+    .columns.small-4.large-2 Name of office
+    .columns.small-8.large-10 =@office.name
   .row
-    .columns.small-4.large-2
-      label Jurisdictions
+    .columns.small-4.large-2  Entity code
+    .columns.small-8.large-10 =@office.entity_code
+  .row
+    .columns.small-4.large-2 Jurisdictions
     .columns.small-8.large-10
       - @office.jurisdictions.each do |j|
         div =j.display
