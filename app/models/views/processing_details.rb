@@ -30,5 +30,9 @@ module Views
     def applicant
       @application.full_name
     end
+
+    def deleted_reason
+      @application.deleted_reason if @application.deleted?
+    end
   end
 end

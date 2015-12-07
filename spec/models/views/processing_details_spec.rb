@@ -62,4 +62,22 @@ RSpec.describe Views::ProcessingDetails do
       is_expected.to eql(application.full_name)
     end
   end
+
+  describe '#deleted_reason' do
+    subject { view.deleted_reason }
+
+    context 'when application is deleted' do
+      let(:application) { build_stubbed(:application, :deleted_state) }
+
+      it 'returns the deleted_reason' do
+        is_expected.to eql(application.deleted_reason)
+      end
+    end
+
+    context 'when application is not deleted' do
+      let(:application) { build_stubbed(:application, :processed_state) }
+
+      it { is_expected.to be nil }
+    end
+  end
 end

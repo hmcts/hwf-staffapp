@@ -40,5 +40,6 @@ RSpec.feature 'List deleted applications', type: :feature do
 
     expect(page).to have_content('Deleted application')
     expect(page).to have_content("Full name#{application1.applicant.full_name}")
+    expect(page).to have_content("Deleted reason#{application1.deleted_reason}")
   end
 end

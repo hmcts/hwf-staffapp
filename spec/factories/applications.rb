@@ -81,6 +81,7 @@ FactoryGirl.define do
       decision { outcome }
       decision_type 'application'
       state :deleted
+      deleted_reason 'I did not like it'
     end
 
     factory :application_part_remission do

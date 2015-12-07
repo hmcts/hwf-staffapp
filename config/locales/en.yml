@@ -170,6 +170,7 @@ en-GB:
         processed_by: Processed by
         processed_on: Date processed
         expires: Expires
+        deleted_reason: Deleted reason
       views/application_overview:
         full_name: Full name
         date_of_birth: Date of birth
