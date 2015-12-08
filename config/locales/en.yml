@@ -16,8 +16,17 @@ en-GB:
       processed_by: Processed by
       processed_on: Date processed
       emergency: Emergency
+    index:
+      title: Processed applications
+      no_applications: There are no processed applications for your office.
     detail:
       title: Processed application
+  removed_applications:
+    index:
+      title: Removed applications
+      no_applications: There are no removed applications for your office.
+    detail:
+      title: Removed application
   emergency:
     status:
       :true: 'Yes'
@@ -262,6 +271,8 @@ en-GB:
         benefits: Benefits
         income: Income
         children: Number of children
+      forms/application/remove:
+        removed_reason: Describe why the application needs to be removed
     errors:
       models:
         forms/application/applicant:
