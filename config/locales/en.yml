@@ -292,11 +292,6 @@ en-GB:
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after_or_equal_to: The application must have been made in the last 3 months
               before: The application cannot be a future date
-            date_of_death:
-              blank: The date of death should be entered
-              not_a_date: Enter the date in this format 01/01/2015
-              invalid: Enter the date in this format day month, year DD/MM/YYYY
-              before: The date of death cannot be a future date
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
@@ -311,6 +306,7 @@ en-GB:
               not_a_date: Enter the date in this format 01/01/2015
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               before: The date of death cannot be a future date
+              after_or_equal_to: The date of death must have been in the last 20 years
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
               too_long: "is too long, it needs to be less than 500 characters"
