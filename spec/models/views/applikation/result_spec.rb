@@ -16,7 +16,7 @@ RSpec.describe Views::Applikation::Result do
     subject { view.result }
 
     context 'when an application has an evidence_check' do
-      before { allow(application).to receive(:evidence_check?).and_return(true) }
+      before { allow(application).to receive(:evidence_check).and_return(double(present?: true)) }
 
       it { is_expected.to eql 'callout' }
     end

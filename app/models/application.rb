@@ -10,6 +10,8 @@ class Application < ActiveRecord::Base
   has_one :part_payment, required: false
   has_one :benefit_override, required: false
 
+  enum state: { created: 0, waiting_for_evidence: 1, waiting_for_part_payment: 2, processed: 3 }
+
   validates :reference, presence: true, uniqueness: true
 
   # Fixme remove this delegation methods when all tests are clean
@@ -34,14 +36,6 @@ class Application < ActiveRecord::Base
 
   MAX_AGE = 120
   MIN_AGE = 16
-
-  # Step 3 - Savings and investments validation
-  with_options if: proc { active_or_status_is? 'savings_investments' } do
-    validates :threshold_exceeded, inclusion: { in: [true, false] }
-    validates :partner_over_61, inclusion: { in: [true, false] }, if: :threshold_exceeded
-    validates :high_threshold_exceeded, inclusion: { in: [true, false] }, if: :check_high_threshold?
-  end
-  # End step 3 validation
 
   def children=(val)
     self[:children] = dependents? ? val : 0
@@ -68,9 +62,6 @@ class Application < ActiveRecord::Base
       self.application_type = 'none'
       self.outcome = 'none'
       self.dependents = nil
-    else
-      self.application_type = nil
-      self.outcome = nil
     end
   end
 
@@ -93,23 +84,5 @@ class Application < ActiveRecord::Base
 
   def last_benefit_check
     benefit_checks.order(:id).last
-  end
-
-  def evidence_check?
-    !evidence_check.nil?
-  end
-
-  def part_payment?
-    !part_payment.nil?
-  end
-
-  private
-
-  def active?
-    status == 'active'
-  end
-
-  def active_or_status_is?(status_name)
-    active? || status.to_s.include?(status_name)
   end
 end

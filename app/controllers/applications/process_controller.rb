@@ -34,7 +34,7 @@ module Applications
       @form.update_attributes(form_params(:details))
 
       if @form.save
-        hack_and_redirect
+        redirect_to(action: :savings_investments)
       else
         @jurisdictions = user_jurisdictions
         render :application_details
@@ -128,12 +128,12 @@ module Applications
     end
 
     def summary_save
-      ResolverService.new(application, current_user).process
+      ResolverService.new(application, current_user).complete
       redirect_to application_confirmation_path(application.id)
     end
 
     def confirmation
-      if application.evidence_check?
+      if application.evidence_check.present?
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @application = application
@@ -154,14 +154,6 @@ module Applications
 
     def user_jurisdictions
       current_user.office.jurisdictions
-    end
-
-    def hack_and_redirect
-      # FIXME: this is a temporary hack to trigger the after_save callback on the Application,
-      #        which has to run when the benefit checker and income calculators are removed
-      #        from it, this should be as well
-      application.update(status: application.status)
-      redirect_to(action: :savings_investments)
     end
 
     def calculate_income

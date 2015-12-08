@@ -26,9 +26,14 @@ FactoryGirl.define do
     association :completed_by, factory: :user
     completed_at Time.zone.today
 
-    trait :uncompleted_application do
+    trait :uncompleted do
       completed_by_id nil
       completed_at nil
+    end
+
+    trait :undecided do
+      decision nil
+      decision_type nil
     end
 
     trait :benefit_type do
@@ -56,6 +61,20 @@ FactoryGirl.define do
       benefits false
       outcome 'full'
       application_type 'income'
+    end
+
+    trait :processed_state do
+      decision { outcome }
+      decision_type 'application'
+      state :processed
+    end
+
+    trait :waiting_for_evidence_state do
+      state :waiting_for_evidence
+    end
+
+    trait :waiting_for_part_payment_state do
+      state :waiting_for_part_payment
     end
 
     factory :application_part_remission do

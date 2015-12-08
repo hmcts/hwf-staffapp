@@ -6,11 +6,11 @@ class PartPaymentsController < ApplicationController
   end
 
   def accuracy
-    @form = Forms::Accuracy.new(part_payment)
+    @form = Forms::PartPayment::Accuracy.new(part_payment)
   end
 
   def accuracy_save
-    @form = Forms::Accuracy.new(part_payment)
+    @form = Forms::PartPayment::Accuracy.new(part_payment)
     @form.update_attributes(accuracy_params)
 
     if @form.save
@@ -27,7 +27,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def summary_save
-    ResolverService.new(part_payment, current_user).process
+    ResolverService.new(part_payment, current_user).complete
     redirect_to(confirmation_part_payment_path(part_payment))
   end
 
@@ -41,7 +41,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def return_application
-    if ResolverService.new(part_payment, current_user).resolve('return')
+    if ResolverService.new(part_payment, current_user).return
       redirect_to root_path
     else
       flash[:alert] = t('error_messages.part_payment.cannot_be_saved')

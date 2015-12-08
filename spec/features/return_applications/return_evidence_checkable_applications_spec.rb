@@ -7,9 +7,9 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
   let(:office) { create :office }
   let(:user) { create :user, office: office }
 
-  let(:application1) { create :application_full_remission, office: office }
+  let(:application1) { create :application_full_remission, :waiting_for_evidence_state, office: office }
   let!(:evidence1) { create :evidence_check, application: application1 }
-  let(:application2) { create :application_full_remission, office: office }
+  let(:application2) { create :application_full_remission, :waiting_for_evidence_state, office: office }
   let!(:evidence2) { create :evidence_check, application: application2 }
 
   before { login_as user }
@@ -40,7 +40,7 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       expect(page).to have_button 'Finish'
       click_button 'Finish'
       expect(page).to have_content 'Start now'
-      expect(page).not_to have_content application1.reference
+      expect(page).to have_no_content application1.reference
     end
   end
 end

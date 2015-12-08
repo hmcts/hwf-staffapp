@@ -15,11 +15,11 @@ module Views
     end
 
     def processed_by
-      @application.completed_by.name
+      @application.completed_by.try(:name)
     end
 
     def processed_on
-      @application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+      @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
     end
 
     def emergency

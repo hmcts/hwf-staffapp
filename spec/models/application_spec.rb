@@ -24,6 +24,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_presence_of(:reference) }
   it { is_expected.to validate_uniqueness_of(:reference) }
 
+  it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed]) }
+
   it { is_expected.to delegate_method(:applicant_age).to(:applicant).as(:age) }
 
   describe 'temporary methods delegation to sliced models' do
@@ -56,22 +58,6 @@ RSpec.describe Application, type: :model do
           application.send(setter, param)
         end
       end
-    end
-  end
-
-  describe '#evidence_check?' do
-    subject { application.evidence_check? }
-
-    context 'when the application has evidence_check model associated' do
-      before do
-        create :evidence_check, application: application
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context 'when the application does not have evidence_check model associated' do
-      it { is_expected.to be false }
     end
   end
 

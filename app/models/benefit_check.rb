@@ -21,11 +21,6 @@ class BenefitCheck < ActiveRecord::Base
   }
 
   def outcome
-    case dwp_result
-    when 'Yes'
-      'full'
-    when 'No'
-      'none'
-    end
+    dwp_result == 'Yes' ? 'full' : 'none'
   end
 end

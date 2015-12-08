@@ -116,7 +116,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="bold"]', text: '✓ The applicant doesn’t have to pay the fee') }
 
-      it 'clicking the Next button redirects to the summary page' do
+      it 'clicking the Complete processing button redirects to the summary page' do
         click_link_or_button 'Next'
         expect(page).to have_content('Check details')
       end
@@ -138,6 +138,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
       it 'renders correct outcome' do
         page_expectation('The applicant must pay the full fee', expected_fields)
       end
+
+      it 'clicking the Complete processing button redirects to the confirmation page' do
+        click_link_or_button 'Complete processing'
+        expect(page).to have_content('Processing complete')
+      end
     end
 
     context 'for a part remission outcome' do
@@ -153,10 +158,15 @@ RSpec.feature 'Evidence check flow', type: :feature do
         page_expectation("The applicant must pay £#{evidence.amount_to_pay} towards the fee", expected_fields)
       end
 
-      context 'clicking the Next button' do
+      context 'clicking the Complete processing button' do
         before { click_link_or_button 'Complete processing' }
+
         it 'creates a payment record' do
-          expect(evidence.application.part_payment?).to be true
+          expect(evidence.application.part_payment).to be_a(PartPayment)
+        end
+
+        it 'redirects to the confirmation page' do
+          expect(page).to have_content('Processing complete')
         end
       end
     end
@@ -173,11 +183,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
       it 'renders correct outcome' do
         page_expectation('The applicant doesn’t have to pay the fee', expected_fields)
       end
-    end
 
-    it 'clicking the Next button redirects to the confirmation page' do
-      click_link_or_button 'Complete processing'
-      expect(page).to have_content('Processing complete')
+      it 'clicking the Next button redirects to the confirmation page' do
+        click_link_or_button 'Complete processing'
+        expect(page).to have_content('Processing complete')
+      end
     end
 
     def page_expectation(outcome, fields = {})

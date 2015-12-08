@@ -10,8 +10,8 @@ RSpec.feature 'User can access processed applications,', type: :feature do
     login_as(user)
   end
 
-  let!(:application1) { create :application_full_remission, office: user.office }
-  let!(:application2) { create :application_part_remission, office: user.office }
+  let!(:application1) { create :application_full_remission, :processed_state, office: user.office }
+  let!(:application2) { create :application_part_remission, :processed_state, office: user.office }
   let!(:application3) { create :application_part_remission }
 
   scenario 'User lists all processed applications' do

@@ -15,6 +15,8 @@ class BenefitCheckRunner
       BenefitCheckService.new(benefit_check)
 
       @application.update(application_type: 'benefit', outcome: benefit_check.outcome)
+    elsif @application.outcome.blank?
+      @application.update(outcome: 'none')
     end
   end
 

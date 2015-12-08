@@ -1,163 +1,215 @@
 require 'rails_helper'
 
 describe ResolverService do
-  let(:user) { build_stubbed(:user) }
+  let(:current_time) { Time.zone.now.change(usec: 0) }
+  let(:user) { create(:user) }
+  let(:application_outcome) { 'part' }
+  let(:application) { create(:application, :uncompleted, :undecided, outcome: application_outcome) }
 
   subject(:resolver) { described_class.new(object, user) }
 
-  describe '#process' do
-    Timecop.freeze(Time.zone.now) do
-      before { resolver.process }
+  describe '#complete' do
+    let(:evidence_check_decision) { false }
+    let(:evidence_check_selector) { double(decide!: evidence_check_decision) }
+    let(:part_payment_decision) { false }
+    let(:part_payment_builder) { double(decide!: part_payment_decision) }
 
-      context 'when created with an application' do
-        let(:evidence_check_service) { double(decide!: true) }
-        let(:part_payment_builder) { double(decide!: true) }
+    before do
+      allow(EvidenceCheckSelector).to receive(:new).with(application, Fixnum).and_return(evidence_check_selector)
+    end
 
-        let(:object) { create(:application_full_remission) }
+    subject(:complete) do
+      Timecop.freeze(current_time) do
+        resolver.complete
+      end
+    end
 
-        before do
-          allow(EvidenceCheckSelector).to receive(:new).with(object, Integer).and_return(evidence_check_service)
-          allow(PartPaymentBuilder).to receive(:new).with(object, Integer).and_return(part_payment_builder)
-          resolver.process
+    subject(:updated_application) do
+      complete
+      application.reload
+    end
+
+    shared_examples 'application, evidence check or part payment completed' do |type, state, decided|
+      it 'sets completed_at for current time' do
+        expect(send("updated_#{type}").completed_at).to eql(current_time)
+      end
+
+      it 'sets completed_by to be the user' do
+        expect(send("updated_#{type}").completed_by).to eql(user)
+      end
+
+      it "sets state to be :#{state}" do
+        expect(updated_application.state).to eql(state)
+      end
+
+      if decided
+        it "sets decision from the #{type} outcome" do
+          expect(updated_application.decision).to eql(send(type).outcome)
         end
 
-        describe 'updates the objects.completed_by value' do
-          subject { object.completed_by.name }
-
-          it { is_expected.to eql user.name }
+        it 'sets decision_type to be application' do
+          expect(updated_application.decision_type).to eql(type)
         end
-
-        describe 'sets the completed_at value' do
-          subject { object.completed_at }
-
-          it { is_expected.not_to be_nil }
+      else
+        it 'keeps the application undecided' do
+          expect(updated_application.decision).to be nil
+          expect(updated_application.decision_type).to be nil
         end
+      end
+    end
 
-        it 'makes decision on evidence check' do
-          expect(evidence_check_service).to have_received(:decide!)
-        end
+    context 'for Application' do
+      let(:object) { application }
 
-        it 'builds part payment if needed' do
-          expect(part_payment_builder).to have_received(:decide!)
+      before do
+        allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
+      end
+
+      context 'when the application does not have an outcome' do
+        let(:application_outcome) { nil }
+
+        it 'raises an error' do
+          expect { complete }.to raise_error(ResolverService::UndefinedOutcome)
         end
       end
 
-      context 'when created with a part-payment' do
-        let(:object) { create(:part_payment) }
+      context 'when the application needs evidence check' do
+        let(:evidence_check_decision) { true }
 
-        describe 'updates the objects.completed_by value' do
-          subject { object.completed_by.name }
+        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
+      end
 
-          it { is_expected.to eql user.name }
-        end
+      context 'when the application needs part payment' do
+        let(:part_payment_decision) { true }
 
-        describe 'sets the completed_at value' do
-          subject { object.completed_at }
+        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
+      end
 
-          it { is_expected.not_to be_nil }
+      context 'when the application has outcome and does not need evidence check or part payment' do
+        include_examples 'application, evidence check or part payment completed', 'application', 'processed', true
+      end
+    end
+
+    context 'for EvidenceCheck' do
+      subject(:updated_evidence_check) do
+        complete
+        evidence_check.reload
+      end
+
+      let(:object) { evidence_check }
+
+      before do
+        allow(PartPaymentBuilder).to receive(:new).with(evidence_check, Fixnum).and_return(part_payment_builder)
+      end
+
+      context 'when the evidence check does not have an outcome' do
+        let(:evidence_check) { create :evidence_check, application: application }
+
+        it 'raises an error' do
+          expect { complete }.to raise_error(ResolverService::UndefinedOutcome)
         end
       end
 
-      context 'when created with an evidence_check' do
-        let(:object) { create(:evidence_check_full_outcome) }
+      context 'when the application requires part payment' do
+        let(:evidence_check) { create :evidence_check_part_outcome, application: application }
+        let(:part_payment_decision) { true }
 
-        describe 'updates the objects.completed_by value' do
-          subject { object.completed_by.name }
+        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'waiting_for_part_payment', false
+      end
 
-          it { is_expected.to eql user.name }
-        end
+      context 'when the evidence check has outcome and application does not require part payment' do
+        let(:evidence_check) { create :evidence_check_full_outcome, application: application }
 
-        describe 'sets the completed_at value' do
-          subject { object.completed_at }
+        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true
+      end
+    end
 
-          it { is_expected.not_to be_nil }
+    context 'for PartPayment' do
+      subject(:updated_part_payment) do
+        complete
+        part_payment.reload
+      end
+
+      let(:object) { part_payment }
+
+      context 'when the part_payment does not have an outcome' do
+        let(:part_payment) { create :part_payment, application: application }
+
+        it 'raises an error' do
+          expect { complete }.to raise_error(ResolverService::UndefinedOutcome)
         end
       end
 
+      context 'when the evidence check has outcome' do
+        let(:part_payment) { create :part_payment_part_outcome, application: application }
+
+        include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true
+      end
     end
   end
 
-  describe '#resolve' do
-    before do
-      Timecop.freeze
-      resolver.resolve(outcome)
-    end
-
-    after { Timecop.return }
-
-    subject { object }
-
-    context 'when created with an evidence_check' do
-      let(:object) { create(:evidence_check) }
-
-      describe "when outcome is 'return'" do
-        let(:outcome) { 'return' }
-
-        it { expect(subject.outcome).to eql 'return' }
-        it { expect(subject.application.decision).to eql 'none' }
-
-        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
-      end
-
-      describe "when outcome is 'full'" do
-        let(:outcome) { 'full' }
-
-        it { expect(subject.outcome).to eql 'full' }
-        it { expect(subject.application.decision).to eql 'full' }
-
-        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
-      end
-
-      describe "when outcome is 'part'" do
-        let(:outcome) { 'part' }
-
-        it { expect(subject.outcome).to eql 'part' }
-        it { expect(subject.application.decision).to eql 'part' }
-
-        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
-      end
-
-      describe "when outcome is 'none'" do
-        let(:outcome) { 'none' }
-
-        it { expect(subject.outcome).to eql 'none' }
-        it { expect(subject.application.decision).to eql 'none' }
-
-        it_behaves_like 'resolver service for user, timestamps and decision_type', 'evidence_check'
+  describe '#return' do
+    subject(:return_method) do
+      Timecop.freeze(current_time) do
+        resolver.return
       end
     end
 
-    context 'when created with a part-payment' do
-      context 'check different outcomes' do
-        let(:object) { create(:part_payment) }
+    subject(:updated_application) do
+      return_method
+      application.reload
+    end
 
-        describe "when outcome is 'return'" do
-          let(:outcome) { 'return' }
+    subject(:updated_evidence_check) do
+      return_method
+      evidence_check.reload
+    end
 
-          it { expect(subject.outcome).to eql 'return' }
-          it { expect(subject.application.decision).to eql 'none' }
+    subject(:updated_part_payment) do
+      return_method
+      part_payment.reload
+    end
 
-          it_behaves_like 'resolver service for user, timestamps and decision_type', 'part_payment'
-        end
-
-        describe "when outcome is 'none'" do
-          let(:outcome) { 'none' }
-
-          it { expect(subject.outcome).to eql 'none' }
-          it { expect(subject.application.decision).to eql 'none' }
-
-          it_behaves_like 'resolver service for user, timestamps and decision_type', 'part_payment'
-        end
-
-        describe "when outcome is 'part'" do
-          let(:outcome) { 'part' }
-
-          it { expect(subject.outcome).to eql 'part' }
-          it { expect(subject.application.decision).to eql 'part' }
-
-          it_behaves_like 'resolver service for user, timestamps and decision_type', 'part_payment'
-        end
+    shared_examples 'application, evidence check or part payment returned' do |type|
+      it 'sets completed_at for current time' do
+        expect(send("updated_#{type}").completed_at).to eql(current_time)
       end
+
+      it 'sets completed_by to be the user' do
+        expect(send("updated_#{type}").completed_by).to eql(user)
+      end
+
+      it 'sets the outcome to be return' do
+        expect(send("updated_#{type}").outcome).to eql('return')
+      end
+
+      it 'sets state to be :processed' do
+        expect(updated_application.state).to eql('processed')
+      end
+
+      it 'sets decision to be none' do
+        expect(updated_application.decision).to eql('none')
+      end
+
+      it "sets decision_type to be #{type}" do
+        expect(updated_application.decision_type).to eql(type)
+      end
+    end
+
+    context 'for EvidenceCheck' do
+      let(:evidence_check) { create :evidence_check, application: application }
+
+      let(:object) { evidence_check }
+
+      include_examples 'application, evidence check or part payment returned', 'evidence_check'
+    end
+
+    context 'for PartPayment' do
+      let(:part_payment) { create :part_payment, application: application }
+
+      let(:object) { part_payment }
+
+      include_examples 'application, evidence check or part payment returned', 'part_payment'
     end
   end
 end

@@ -5,19 +5,13 @@ RSpec.describe Query::WaitingForPartPayment, type: :model do
 
     let(:user) { create :user }
 
-    let(:application1) { create :application, user_id: user.id, office_id: user.office_id, completed_at: 1.day.ago }
-    let(:application2) { create :application, user_id: user.id, office_id: user.office_id, completed_at: 5.days.ago }
-    let(:application3) { create :application, user_id: user.id, office_id: user.office_id, completed_at: 2.days.ago }
-
-    before do
-      create :part_payment, application: application1, expires_at: 1.days.from_now
-      create :part_payment, application: application2, expires_at: 2.days.from_now
-      create :part_payment, application: application3, expires_at: 1.days.from_now, completed_at: 2.days.ago
-    end
+    let(:application1) { create :application, :waiting_for_part_payment_state, office_id: user.office_id, completed_at: 1.day.ago }
+    let(:application2) { create :application, :waiting_for_part_payment_state, office_id: user.office_id, completed_at: 5.days.ago }
+    let(:application3) { create :application, :waiting_for_part_payment_state, office_id: user.office_id, completed_at: 2.days.ago }
 
     subject { described_class.new(user).find }
 
-    it 'returns only applications which have uncompleted PartPayment reference in order of expiry' do
+    it 'returns only applications which are in waiting_for_evidence state in order of completion' do
       is_expected.to eq([application2, application1])
     end
   end

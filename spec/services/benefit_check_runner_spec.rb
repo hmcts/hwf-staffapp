@@ -78,7 +78,8 @@ RSpec.describe BenefitCheckRunner do
   let(:existing_benefit_check) { nil }
   let(:applicant) { build(:applicant_with_all_details) }
   let(:detail) { build(:complete_detail) }
-  let(:application) { create(:application, applicant: applicant, detail: detail, income: nil) }
+  let(:outcome) { nil }
+  let(:application) { create(:application, applicant: applicant, detail: detail, income: nil, outcome: outcome) }
 
   subject(:service) { described_class.new(application) }
 
@@ -161,6 +162,22 @@ RSpec.describe BenefitCheckRunner do
 
       it 'does not run benefit check' do
         expect { subject }.not_to change { application.benefit_checks.count }
+      end
+
+      context 'when outcome already existed' do
+        let(:outcome) { 'part' }
+
+        it 'does not change the outcome' do
+          subject
+          expect(application.reload.outcome).to eql('part')
+        end
+      end
+
+      context 'when outcome was nil' do
+        it 'sets outcome to none' do
+          subject
+          expect(application.reload.outcome).to eql('none')
+        end
       end
     end
   end

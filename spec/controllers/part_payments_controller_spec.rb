@@ -16,7 +16,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     allow(Views::ProcessingDetails).to receive(:new).with(part_payment).and_return(processing_details)
     allow(Views::ApplicationOverview).to receive(:new).with(part_payment.application).and_return(application_overview)
     allow(Views::ApplicationResult).to receive(:new).with(part_payment.application).and_return(application_result)
-    allow(Forms::Accuracy).to receive(:new).with(part_payment).and_return(accuracy_form)
+    allow(Forms::PartPayment::Accuracy).to receive(:new).with(part_payment).and_return(accuracy_form)
     allow(Views::PartPayment::Result).to receive(:new).with(part_payment).and_return(part_payment_result)
   end
 
@@ -108,17 +108,15 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'POST #summary_save' do
-    let(:current_time) { Time.zone.now }
+    let(:resolver) { double(complete: nil) }
     let(:user) { create :user }
     let(:part_payment) { create(:part_payment) }
 
     before do
-      allow(PartPayment).to receive(:find).with(part_payment.id).and_return(part_payment)
+      expect(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
 
-      Timecop.freeze(current_time) do
-        sign_in user
-        get :summary_save, id: part_payment
-      end
+      sign_in user
+      get :summary_save, id: part_payment
     end
 
     it 'returns the correct status code' do
@@ -127,13 +125,6 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     it 'redirects to the confirmation page' do
       expect(response).to redirect_to(confirmation_part_payment_path(part_payment))
-    end
-
-    it 'updates the part_payment completed_at and completed_by' do
-      part_payment.reload
-
-      expect(part_payment.completed_at).to eql(current_time)
-      expect(part_payment.completed_by).to eql(user)
     end
   end
 
@@ -171,11 +162,19 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'POST #return_application' do
+    let(:resolver_result) { true }
+    let(:resolver) { double(return: resolver_result) }
+    let(:user) { create :user }
     let(:part_payment) { create(:part_payment) }
 
-    context 'when no error generated' do
-      before { post :return_application, id: part_payment }
+    before do
+      expect(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
 
+      sign_in user
+      post :return_application, id: part_payment
+    end
+
+    context 'when no error generated' do
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)
       end
@@ -186,13 +185,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     end
 
     context 'when ResolverService returns an error' do
-      let(:user) { create :user }
-      let(:resolver) { double(resolve: false) }
-      before do
-        sign_in user
-        allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
-        post :return_application, id: part_payment
-      end
+      let(:resolver_result) { false }
 
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)

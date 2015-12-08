@@ -98,7 +98,7 @@ RSpec.describe Views::Confirmation::Result do
     subject { view.result }
 
     context 'when an application has an evidence_check' do
-      before { allow(application).to receive(:evidence_check?).and_return(true) }
+      let!(:evidence_check) { build_stubbed(:evidence_check, application: application) }
 
       it { is_expected.to eql 'callout' }
     end

@@ -47,8 +47,7 @@ class EvidenceController < ApplicationController
   end
 
   def summary_save
-    ResolverService.new(evidence, current_user).process
-    PartPaymentBuilder.new(@evidence, Settings.part_payment.expires_in_days).decide!
+    ResolverService.new(evidence, current_user).complete
     redirect_to evidence_confirmation_path
   end
 
@@ -61,7 +60,7 @@ class EvidenceController < ApplicationController
   end
 
   def return_application
-    redirect_to root_path if ResolverService.new(evidence, current_user).resolve('return')
+    redirect_to root_path if ResolverService.new(evidence, current_user).return
   end
 
   private
