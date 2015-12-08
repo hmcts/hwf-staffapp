@@ -68,7 +68,7 @@ RSpec.describe Forms::Application::Detail do
         end
 
         it 'returns an error message, if omitted' do
-          expect(application_details.errors[:date_received]).to eq ['Enter the date in this format 01/01/2015']
+          expect(application_details.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY']
         end
       end
 
@@ -157,7 +157,7 @@ RSpec.describe Forms::Application::Detail do
             context 'it returns an error' do
               subject { probate.errors[:date_of_death] }
 
-              it { is_expected.to eq ['Enter the date in this format 01/01/2015'] }
+              it { is_expected.to eq ['Enter the date in this format DD/MM/YYYY'] }
             end
           end
 
@@ -265,7 +265,7 @@ RSpec.describe Forms::Application::Detail do
 
             subject { refund.errors[:date_fee_paid] }
 
-            it { is_expected.to eq ['Enter the date in this format 01/01/2015'] }
+            it { is_expected.to eq ['Enter the date in this format DD/MM/YYYY'] }
           end
         end
       end
