@@ -56,6 +56,10 @@ gem 'logstasher', github: 'shadabahmed/logstasher', ref: '0b80e972753ba7ef36854b
 gem 'date_validator'
 gem 'will_paginate'
 
+# Spreadsheet output
+gem 'axlsx'
+gem 'axlsx_rails'
+
 # Soft deletion
 gem "paranoia", "~> 2.0"
 
