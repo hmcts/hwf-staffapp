@@ -44,7 +44,7 @@ RSpec.describe Forms::Application::Applicant do
 
         it 'returns an error message, if omitted' do
           subject.valid?
-          expect(subject.errors[:date_of_birth]).to eq ['Enter the date in this format 01/11/1980']
+          expect(subject.errors[:date_of_birth]).to eq ['Enter the date in this format DD/MM/YYYY']
         end
       end
     end
