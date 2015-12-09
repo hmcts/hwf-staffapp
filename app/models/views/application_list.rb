@@ -6,6 +6,10 @@ module Views
       @application = application
     end
 
+    def id
+      @application.id
+    end
+
     def reference
       @application.reference
     end
