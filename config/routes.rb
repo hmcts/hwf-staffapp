@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'outputs' => 'outputs#index'
+  get 'outputs/finance_report' => 'outputs#finance_report'
 
   get '/applications/new' => 'applications/build#create'
   resources :applications, only: [] do
