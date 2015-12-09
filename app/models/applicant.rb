@@ -31,6 +31,6 @@ class Applicant < ActiveRecord::Base
   end
 
   def format_ni_number
-    ni_number.gsub!(' ', '') && ni_number.upcase! unless ni_number.nil?
+    ni_number.delete!(' ') && ni_number.upcase! unless ni_number.nil?
   end
 end
