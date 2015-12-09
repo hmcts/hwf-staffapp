@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209222512) do
+ActiveRecord::Schema.define(version: 20151210152605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,21 @@ ActiveRecord::Schema.define(version: 20151209222512) do
   end
 
   add_index "benefit_overrides", ["application_id"], name: "index_benefit_overrides_on_application_id", using: :btree
+
+  create_table "business_entities", force: :cascade do |t|
+    t.integer  "office_id",       null: false
+    t.integer  "jurisdiction_id", null: false
+    t.string   "code",            null: false
+    t.string   "name",            null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "business_entities", ["code"], name: "index_business_entities_on_code", using: :btree
+  add_index "business_entities", ["jurisdiction_id"], name: "index_business_entities_on_jurisdiction_id", using: :btree
+  add_index "business_entities", ["name"], name: "index_business_entities_on_name", using: :btree
+  add_index "business_entities", ["office_id", "jurisdiction_id"], name: "unique_office_jurisdiction", unique: true, using: :btree
+  add_index "business_entities", ["office_id"], name: "index_business_entities_on_office_id", using: :btree
 
   create_table "details", force: :cascade do |t|
     t.integer  "application_id",   null: false
