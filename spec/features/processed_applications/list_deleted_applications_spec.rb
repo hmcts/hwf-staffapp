@@ -4,13 +4,18 @@ RSpec.feature 'List deleted applications', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
+  let(:who_deleted) { create :user, name: 'Bob' }
+  let(:when_deleted) { Time.zone.parse('2015-10-01 10:10:01') }
   let(:user) { create :user }
 
   before do
     login_as(user)
   end
 
-  let!(:application1) { create :application_full_remission, :deleted_state, office: user.office }
+  let!(:application1) do
+    create :application_full_remission, :deleted_state,
+      office: user.office, deleted_at: when_deleted, deleted_by: who_deleted
+  end
   let!(:application2) { create :application_part_remission, :deleted_state, office: user.office }
   let!(:application3) { create :application_part_remission, :processed_state, office: user.office }
 
@@ -40,6 +45,8 @@ RSpec.feature 'List deleted applications', type: :feature do
 
     expect(page).to have_content('Deleted application')
     expect(page).to have_content("Full name#{application1.applicant.full_name}")
+    expect(page).to have_content('Date deleted1 October 2015')
+    expect(page).to have_content('Deleted byBob')
     expect(page).to have_content("Deleted reason#{application1.deleted_reason}")
   end
 end

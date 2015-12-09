@@ -171,6 +171,8 @@ en-GB:
         processed_on: Date processed
         expires: Expires
         deleted_reason: Deleted reason
+        deleted_by: Deleted by
+        deleted_on: Date deleted
       views/application_overview:
         full_name: Full name
         date_of_birth: Date of birth

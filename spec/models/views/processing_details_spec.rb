@@ -80,4 +80,40 @@ RSpec.describe Views::ProcessingDetails do
       it { is_expected.to be nil }
     end
   end
+
+  describe '#deleted_on' do
+    subject { view.deleted_on }
+
+    context 'when application is deleted' do
+      let(:application) { build_stubbed(:application, :deleted_state, deleted_at: '2015-11-01') }
+
+      it 'returns the formatted deleted_at' do
+        is_expected.to eql('1 November 2015')
+      end
+    end
+
+    context 'when application is not deleted' do
+      let(:application) { build_stubbed(:application, :processed_state) }
+
+      it { is_expected.to be nil }
+    end
+  end
+
+  describe '#deleted_by' do
+    subject { view.deleted_by }
+
+    context 'when application is deleted' do
+      let(:application) { build_stubbed(:application, :deleted_state) }
+
+      it 'returns the name of use who deleted it' do
+        is_expected.to eql(application.deleted_by.name)
+      end
+    end
+
+    context 'when application is not deleted' do
+      let(:application) { build_stubbed(:application, :processed_state) }
+
+      it { is_expected.to be nil }
+    end
+  end
 end

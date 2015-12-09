@@ -82,6 +82,8 @@ FactoryGirl.define do
       decision_type 'application'
       state :deleted
       deleted_reason 'I did not like it'
+      deleted_at { Time.zone.now }
+      association :deleted_by, factory: :user
     end
 
     factory :application_part_remission do

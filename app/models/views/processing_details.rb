@@ -34,5 +34,17 @@ module Views
     def deleted_reason
       @application.deleted_reason if @application.deleted?
     end
+
+    def deleted_on
+      if @application.deleted?
+        @application.deleted_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+      end
+    end
+
+    def deleted_by
+      if @application.deleted?
+        @application.deleted_by.name
+      end
+    end
   end
 end
