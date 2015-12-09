@@ -21,7 +21,7 @@ class ResolverService
 
   def delete
     raise NotDeletable unless @calling_object.processed? && @calling_object.deleted_reason.present?
-    @calling_object.deleted!
+    @calling_object.update(deleted_attributes)
   end
 
   private
@@ -42,6 +42,14 @@ class ResolverService
       decision: lookup_decision(source.outcome),
       decision_type: derive_object(source),
       state: :processed
+    }
+  end
+
+  def deleted_attributes
+    {
+      deleted_at: Time.zone.now,
+      deleted_by: @user,
+      state: :deleted
     }
   end
 

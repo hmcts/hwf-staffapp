@@ -216,7 +216,11 @@ describe ResolverService do
   describe '#delete' do
     let(:object) { application }
 
-    subject(:delete) { resolver.delete }
+    subject(:delete) do
+      Timecop.freeze(current_time) do
+        resolver.delete
+      end
+    end
 
     context 'when the application state is :processed and it has :deleted_reason set' do
       subject(:deleted_application) do
@@ -228,6 +232,14 @@ describe ResolverService do
 
       it 'moves the application to :deleted state' do
         expect(deleted_application).to be_deleted
+      end
+
+      it 'sets deleted_at for current time' do
+        expect(deleted_application.deleted_at).to eql(current_time)
+      end
+
+      it 'sets deleted_by to be the user' do
+        expect(deleted_application.deleted_by).to eql(user)
       end
     end
 
