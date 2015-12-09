@@ -4,4 +4,9 @@ class OutputsController < ApplicationController
   def index
     authorize! :access, :outputs
   end
+
+  def finance_report
+    authorize! :access, :outputs
+    @form = Forms::FinanceReport.new
+  end
 end

@@ -5,47 +5,41 @@ RSpec.describe OutputsController, type: :controller do
   include Devise::TestHelpers
 
   let(:admin)     { create :admin_user }
-  let(:manager)   { create :manager }
-  let(:user)      { create :user }
 
-  describe 'GET #index' do
-    context 'when user is invalid because' do
-      subject { -> { get :index } }
+  it_behaves_like 'cancan denies access to', :index
+  it_behaves_like 'cancan denies access to', :finance_report
 
-      context 'they are not signed in' do
-        before { get :index }
+  context 'as an admin' do
+    before { sign_in admin }
 
-        subject { response }
-
-        it { is_expected.to have_http_status(:redirect) }
-
-        it { is_expected.to redirect_to(user_session_path) }
-      end
-
-      context 'as a user' do
-        before { sign_in user }
-
-        it { is_expected.to raise_error(CanCan::AccessDenied, 'You are not authorized to access this page.') }
-      end
-
-      context 'as a manager' do
-        before { sign_in manager }
-
-        it { is_expected.to raise_error(CanCan::AccessDenied, 'You are not authorized to access this page.') }
-      end
-    end
-
-    context 'as an admin' do
-      before do
-        sign_in admin
-        get :index
-      end
+    describe 'GET #index' do
+      before { get :index }
 
       subject { response }
 
       it { is_expected.to have_http_status(:success) }
 
       it { is_expected.to render_template :index }
+    end
+
+    describe 'GET #finance_report' do
+      before { get :finance_report }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :finance_report }
+
+      describe 'assigns form object' do
+        subject { assigns(:form) }
+
+        it { is_expected.to be_a_kind_of Forms::FinanceReport }
+      end
+    end
+
+    describe 'POST #finance_report' do
+      # before { post :finance_report, }
     end
   end
 end
