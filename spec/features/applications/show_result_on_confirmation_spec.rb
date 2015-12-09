@@ -6,9 +6,9 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:jurisdictions)      { create_list :jurisdiction, 3 }
-  let!(:office)             { create(:office, jurisdictions: jurisdictions) }
-  let!(:user)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
+  let!(:jurisdictions) { create_list :jurisdiction, 3 }
+  let!(:office) { create(:office, jurisdictions: jurisdictions) }
+  let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   after { Capybara.use_default_driver }
 

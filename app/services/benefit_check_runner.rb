@@ -80,7 +80,7 @@ class BenefitCheckRunner
   end
 
   def generate_api_token
-    short_name = @application.user.name.gsub(' ', '').downcase.truncate(27)
+    short_name = @application.user.name.delete(' ').downcase.truncate(27)
     "#{short_name}@#{@application.created_at.strftime('%y%m%d%H%M%S')}.#{@application.id}"
   end
 end

@@ -29,7 +29,7 @@ module Forms
       def format_ni_number
         unless ni_number.nil?
           ni_number.upcase!
-          ni_number.gsub!(' ', '')
+          ni_number.delete!(' ')
         end
       end
 

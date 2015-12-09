@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Office, type: :model do
 
-  let(:office)      { build :office }
+  let(:office) { build :office }
 
   it { is_expected.to have_many(:users) }
   it { is_expected.to have_many(:applications) }

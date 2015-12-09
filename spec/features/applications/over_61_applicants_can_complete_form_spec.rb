@@ -6,9 +6,9 @@ RSpec.feature 'Completing the application details', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:jurisdictions)      { create_list :jurisdiction, 3 }
-  let!(:office)             { create(:office, jurisdictions: jurisdictions) }
-  let!(:user)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
+  let!(:jurisdictions) { create_list :jurisdiction, 3 }
+  let!(:office) { create(:office, jurisdictions: jurisdictions) }
+  let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   before do
     Capybara.current_driver = :webkit

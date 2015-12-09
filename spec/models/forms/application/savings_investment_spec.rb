@@ -22,19 +22,19 @@ RSpec.describe Forms::Application::SavingsInvestment do
       describe 'when false' do
         let(:hash) { { threshold_exceeded: false } }
 
-        it { is_expected.to be_valid  }
+        it { is_expected.to be_valid }
       end
 
       describe 'when true' do
         let(:hash) { { threshold_exceeded: true, partner_over_61: false } }
 
-        it { is_expected.to be_valid  }
+        it { is_expected.to be_valid }
       end
 
       describe 'when something other than true of false' do
         let(:hash) { { threshold_exceeded: 'blah' } }
 
-        it { is_expected.not_to be_valid  }
+        it { is_expected.not_to be_valid }
       end
     end
 
