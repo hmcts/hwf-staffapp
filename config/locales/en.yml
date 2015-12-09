@@ -273,7 +273,7 @@ en-GB:
               too_young: "The applicant can't be under %{minimum_age} years old"
               too_old: "The applicant can't be over %{maximum_age} years old"
               non_date: "You must provide a valid date of birth"
-              not_a_date: Enter the date in this format 01/11/1980
+              not_a_date: Enter the date in this format DD/MM/YYYY
             ni_number:
               blank: 'Enter the applicant’s National Insurance number'
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
@@ -288,14 +288,14 @@ en-GB:
               blank: You must select a jurisdiction
             date_received:
               blank: Enter the date the application was received
-              not_a_date: Enter the date in this format 01/01/2015
+              not_a_date: Enter the date in this format DD/MM/YYYY
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after_or_equal_to: The application must have been made in the last 3 months
               before: The application cannot be a future date
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
-              not_a_date: Enter the date in this format 01/01/2015
+              not_a_date: Enter the date in this format DD/MM/YYYY
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               after_or_equal_to: This date can’t be more than 3 months before the application was received
               before: This date can’t be after the application was received
@@ -303,12 +303,12 @@ en-GB:
             date_of_death:
               after: The date of death should be entered
               blank: The date of death should be entered
-              not_a_date: Enter the date in this format 01/01/2015
+              not_a_date: Enter the date in this format DD/MM/YYYY
               invalid: Enter the date in this format day month, year DD/MM/YYYY
               before: The date of death cannot be a future date
               after_or_equal_to: The date of death must have been in the last 20 years
             emergency_reason:
-              cant_have_emergency_reason_without_emergency: "Can't have emergency reason without emergency"
+              cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: "is too long, it needs to be less than 500 characters"
         forms/application/savings_investment:
           attributes:
