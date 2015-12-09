@@ -6,9 +6,9 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:jurisdictions)      { create_list :jurisdiction, 3 }
-  let!(:office)             { create(:office, jurisdictions: jurisdictions) }
-  let!(:user)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
+  let!(:jurisdictions) { create_list :jurisdiction, 3 }
+  let!(:office) { create(:office, jurisdictions: jurisdictions) }
+  let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])

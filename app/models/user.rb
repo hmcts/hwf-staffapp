@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     :invitable,
     :registerable
 
-  scope :sorted_by_email, -> {  all.order(:email) }
+  scope :sorted_by_email, -> { all.order(:email) }
 
   scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
 

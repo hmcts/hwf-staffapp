@@ -3,7 +3,7 @@ require 'support/calculator_test_data'
 
 RSpec.describe Application, type: :model do
 
-  let(:user)  { create :user }
+  let(:user) { create :user }
   let(:attributes) { attributes_for :application }
   let(:applicant) { create(:applicant) }
   let(:detail) { create(:detail) }

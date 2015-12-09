@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EvidenceController, type: :controller do
   include Devise::TestHelpers
 
-  let(:user)     { create :user, office: create(:office) }
+  let(:user) { create :user, office: create(:office) }
   let(:application) { create :application }
   let(:evidence) { create :evidence_check, application_id: application.id }
 

@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:test_user)   { create :user }
+  let(:test_user) { create :user }
 
   context 'logged out user' do
     describe 'GET #index' do

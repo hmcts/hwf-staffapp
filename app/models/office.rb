@@ -4,7 +4,7 @@ class Office < ActiveRecord::Base
   has_many :office_jurisdictions
   has_many :jurisdictions, through: :office_jurisdictions
 
-  scope :sorted, -> {  all.order(:name) }
+  scope :sorted, -> { all.order(:name) }
   scope :non_digital, -> { where.not(name: 'Digital') }
 
   validates :name, presence: true, uniqueness: true

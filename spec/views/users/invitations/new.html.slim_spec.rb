@@ -5,7 +5,7 @@ RSpec.describe 'users/invitations/new', type: :view do
   include Devise::TestHelpers
 
   context 'as an admin' do
-    let(:admin)          { FactoryGirl.create :admin_user }
+    let(:admin) { FactoryGirl.create :admin_user }
     before(:each) do
       assign(:user, User.new)
       assign(:roles, User::ROLES)
@@ -26,7 +26,7 @@ RSpec.describe 'users/invitations/new', type: :view do
   end
 
   context 'as a manager' do
-    let(:manager)          { FactoryGirl.create :manager }
+    let(:manager) { FactoryGirl.create :manager }
 
     before(:each) do
       assign(:user, User.new)
