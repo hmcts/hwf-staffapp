@@ -5,7 +5,7 @@ FactoryGirl.define do
     end
 
     sequence(:name) { |n| "#{Faker::Company.name} #{n}" }
-    sequence(:entity_code) { |n| "#{Faker::Commerce.color.split('').sample(2).join.upcase}#{n.to_s.ljust(3, '0')}" }
+    sequence(:entity_code) { |n| "#{Faker::Commerce.color.split('').sample(2).join.upcase}#{n.to_s.rjust(3, '0')}" }
 
     jurisdictions { build_list :jurisdiction, jurisdictions_count }
 
