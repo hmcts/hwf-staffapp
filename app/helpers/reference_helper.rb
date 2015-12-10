@@ -1,4 +1,4 @@
-module ReferenceTableHelper
+module ReferenceHelper
 
   def table_header
     applicant = t('processed_applications.table_header.applicant')

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReferenceTableHelper, type: :helper do
+RSpec.describe ReferenceHelper, type: :helper do
 
   describe '#table_header' do
     describe 'date handling' do

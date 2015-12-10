@@ -2,7 +2,7 @@ class ProcessedApplicationsController < ApplicationController
   before_action :authenticate_user!
 
   include ProcessedViewsHelper
-  helper ReferenceTableHelper
+  helper ReferenceHelper
 
   def index
     @applications = Query::ProcessedApplications.new(current_user).find.map do |application|
