@@ -2,6 +2,24 @@ require 'rails_helper'
 
 RSpec.describe ReferenceHelper, type: :helper do
 
+  describe '#after_desired_date?' do
+    context 'when the date is before 1st January 2016' do
+      it 'returns false' do
+        Timecop.freeze(Date.new(2015, 12, 31)) do
+          expect(helper.after_desired_date?).to eq(false)
+        end
+      end
+    end
+
+    context 'when the date is on or after 1st January 2016' do
+      it 'returns false' do
+        Timecop.freeze(Date.new(2016, 1, 1)) do
+          expect(helper.after_desired_date?).to eq(true)
+        end
+      end
+    end
+  end
+
   describe '#table_header' do
     describe 'date handling' do
       context 'when the date is before 1st January 2016' do

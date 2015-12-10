@@ -1,5 +1,9 @@
 module ReferenceHelper
 
+  def after_desired_date?
+    Time.zone.today > Date.parse('2015-12-31')
+  end
+
   def table_header
     applicant = t('processed_applications.table_header.applicant')
 
