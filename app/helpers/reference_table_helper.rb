@@ -19,4 +19,12 @@ module ReferenceTableHelper
       "#{prefix}#{application.applicant}</a> </td>".html_safe
     end
   end
+
+  def processing_details_options
+    if Time.zone.today > Date.parse('2015-12-31')
+      %w[processed_on processed_by reference]
+    else
+      %w[processed_on processed_by]
+    end
+  end
 end

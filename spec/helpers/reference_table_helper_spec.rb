@@ -49,4 +49,21 @@ RSpec.describe ReferenceTableHelper, type: :helper do
       end
     end
   end
+
+  describe '#processing_details_options' do
+    let(:original_options) { %w[processed_on processed_by] }
+    let(:new_options) { %w[processed_on processed_by reference] }
+
+    it 'returns the correct array' do
+      Timecop.freeze(Date.new(2015, 12, 31)) do
+        expect(helper.processing_details_options).to eq(original_options)
+      end
+    end
+
+    it 'returns the correct array' do
+      Timecop.freeze(Date.new(2016, 1, 1)) do
+        expect(helper.processing_details_options).to eq(new_options)
+      end
+    end
+  end
 end
