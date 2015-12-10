@@ -6,7 +6,7 @@ RSpec.describe ReferenceHelper, type: :helper do
     context 'when the date is before 1st January 2016' do
       it 'returns false' do
         Timecop.freeze(Date.new(2015, 12, 31)) do
-          expect(helper.after_desired_date?).to eq(false)
+          expect(helper.after_desired_date?).to be(false)
         end
       end
     end
