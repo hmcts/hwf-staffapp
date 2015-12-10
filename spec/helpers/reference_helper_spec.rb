@@ -48,8 +48,8 @@ RSpec.describe ReferenceHelper, type: :helper do
     let(:app) { Views::ApplicationList.new(application) }
     let(:full_name) { app.applicant }
     let(:reference) { app.reference }
-    let(:single_column) { "<td> <a href=\"/processed_applications/#{application.id}\">#{full_name}</a> </td>" }
-    let(:double_column) { "<td> <a href=\"/processed_applications/#{application.id}\">#{reference}</a> </td>\n<td> #{full_name} </td>" }
+    let(:single_column) { "<td> <a href=\"/test/#{application.id}\">#{full_name}</a> </td>" }
+    let(:double_column) { "<td> <a href=\"/test/#{application.id}\">#{reference}</a> </td>\n<td> #{full_name} </td>" }
 
     context 'when the date is before 1st January 2016' do
       it 'returns the correct html' do

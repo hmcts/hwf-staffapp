@@ -16,7 +16,7 @@ module ReferenceHelper
   end
 
   def table_column(application)
-    prefix = "<td> <a href=\"/processed_applications/#{application.id}\">"
+    prefix = "<td> <a href=\"/#{controller.controller_name}/#{application.id}\">"
     if after_desired_date?
       "#{prefix}#{application.reference}</a> </td>\n<td> #{application.applicant} </td>".html_safe
     else
