@@ -16,7 +16,7 @@
         tbody
           - @applications.each do |application|
             tr
-              td= link_to(application.applicant, send("#{state}_application_path", application.application))
+              = table_column(application)
               td= application.date_received
               td= application.processed_on
               td= application.processed_by
