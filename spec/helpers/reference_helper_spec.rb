@@ -84,4 +84,26 @@ RSpec.describe ReferenceHelper, type: :helper do
       end
     end
   end
+
+  describe '#display_reference' do
+    let(:office) { create :office }
+    let(:application) { create :application_full_remission, office: office }
+    let(:this_helper) { helper.display_reference(application) }
+
+    context 'when the date is before 1st January 2016' do
+      it 'returns the reference' do
+        Timecop.freeze(Date.new(2015, 12, 31)) do
+          expect(this_helper).to eq('')
+        end
+      end
+    end
+
+    context 'when the date is after 1st January 2016' do
+      it 'returns the correct array' do
+        Timecop.freeze(Date.new(2016, 1, 1)) do
+          expect(this_helper).to eq(application.reference)
+        end
+      end
+    end
+  end
 end

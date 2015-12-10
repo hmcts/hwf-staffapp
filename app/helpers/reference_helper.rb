@@ -31,4 +31,8 @@ module ReferenceHelper
       %w[processed_on processed_by]
     end
   end
+
+  def display_reference(application)
+    after_desired_date? ? application.reference : ''
+  end
 end
