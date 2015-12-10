@@ -212,4 +212,51 @@ describe ResolverService do
       include_examples 'application, evidence check or part payment returned', 'part_payment'
     end
   end
+
+  describe '#delete' do
+    let(:object) { application }
+
+    subject(:delete) do
+      Timecop.freeze(current_time) do
+        resolver.delete
+      end
+    end
+
+    context 'when the application state is :processed and it has :deleted_reason set' do
+      subject(:deleted_application) do
+        delete
+        application.reload
+      end
+
+      let(:application) { create :application, :processed_state, deleted_reason: 'I do not like it' }
+
+      it 'moves the application to :deleted state' do
+        expect(deleted_application).to be_deleted
+      end
+
+      it 'sets deleted_at for current time' do
+        expect(deleted_application.deleted_at).to eql(current_time)
+      end
+
+      it 'sets deleted_by to be the user' do
+        expect(deleted_application.deleted_by).to eql(user)
+      end
+    end
+
+    context 'when the application is not in :processed state' do
+      let(:application) { create :application, :waiting_for_evidence_state }
+
+      it 'raises an error' do
+        expect { delete }.to raise_error(ResolverService::NotDeletable)
+      end
+    end
+
+    context 'when the :deleted_reason is missing' do
+      let(:application) { create :application, :processed_state, deleted_reason: nil }
+
+      it 'raises an error' do
+        expect { delete }.to raise_error(ResolverService::NotDeletable)
+      end
+    end
+  end
 end

@@ -1,11 +1,18 @@
-header
-  .row
-    .small-12.medium-12.large-12.columns
-      h2 =t('processed_applications.detail.title')
+=render('shared/processed_and_deleted/show', state: :processed)
 
-=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
-=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason reference]
-=build_section 'Processing details', @processed, %w[processed_on processed_by]
-=build_section 'Result', @overview, @overview.savings_investment_params
+- details_attributes = @form.errors.empty? ? {} : { open: 'open' }
 
-=render(partial: 'shared/remission_type', locals: { source: @result })
+.panel
+  details *details_attributes
+    summary
+      span.summary.primary Delete application
+    div
+      p You can delete an application if an error was made or proceedings never took place
+
+      = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off', class: 'delete-form' } do |f|
+        .form-group
+          = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope)
+          = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
+          = f.text_field :deleted_reason, class: 'form-control small-field'
+
+        = f.submit 'Delete application', :class => 'button alert'

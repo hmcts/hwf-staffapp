@@ -77,6 +77,15 @@ FactoryGirl.define do
       state :waiting_for_part_payment
     end
 
+    trait :deleted_state do
+      decision { outcome }
+      decision_type 'application'
+      state :deleted
+      deleted_reason 'I did not like it'
+      deleted_at { Time.zone.now }
+      association :deleted_by, factory: :user
+    end
+
     factory :application_part_remission do
       applicant_factory :applicant_with_all_details
       applicant_traits [:married]

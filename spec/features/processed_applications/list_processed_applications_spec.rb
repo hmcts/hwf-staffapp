@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User can access processed applications,', type: :feature do
+RSpec.feature 'List processed applications', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
