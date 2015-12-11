@@ -1,7 +1,7 @@
 module ReferenceHelper
 
   def after_desired_date?
-    Time.zone.today > Date.parse('2015-12-31')
+    Time.zone.today > Settings.reference.date
   end
 
   def table_header
