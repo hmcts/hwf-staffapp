@@ -19,7 +19,7 @@ class Application < ActiveRecord::Base
     deleted: 4
   }
 
-  validates :reference, presence: true, uniqueness: true
+  validates :reference, uniqueness: true, allow_blank: true
 
   # Fixme remove this delegation methods when all tests are clean
   APPLICANT_GETTERS = %i[
