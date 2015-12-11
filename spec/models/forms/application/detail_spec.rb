@@ -232,6 +232,12 @@ RSpec.describe Forms::Application::Detail do
                 it { is_expected.to eq ['This date can’t be more than 3 months before the application was received'] }
               end
             end
+
+            describe 'on the same day' do
+              let(:date_fee_paid) { Time.zone.local(2014, 11, 15, 12, 30, 0) }
+
+              it { is_expected.to be_valid }
+            end
           end
 
           describe 'minimum boundary is the date_received' do
