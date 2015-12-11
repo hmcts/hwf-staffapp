@@ -44,7 +44,7 @@ module Forms
       with_options if: :refund? do
         validates :date_fee_paid, date: {
           after_or_equal_to: :min_refund_date,
-          before: :max_refund_date,
+          before_or_equal_to: :max_refund_date,
           allow_blank: false
         }
       end
