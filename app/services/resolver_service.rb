@@ -38,7 +38,8 @@ class ResolverService
   end
 
   def completed_application_attributes
-    completed_attributes.merge(reference: ReferenceGenerator.generate)
+    generator = ReferenceGenerator.new(@calling_object)
+    completed_attributes.merge(generator.attributes)
   end
 
   def decided_attributes(source)
