@@ -5,21 +5,21 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:jurisdiction) { create :jurisdiction }
+  let(:office) { create :office, jurisdictions: [jurisdiction] }
+  let(:user) { create :user, office: office }
 
   before do
     login_as user
   end
 
-  let(:application) { create :application_full_remission, reference: Random.srand }
+  let(:application) { create :application_full_remission, office: office, jurisdiction: jurisdiction }
 
   scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
     create_list :application_full_remission, 9
 
-    visit application_income_path(application)
+    visit application_summary_path(application)
 
-    click_button 'Next'
-    click_link 'Next'
     click_button 'Complete processing'
 
     expect(page).to have_content 'Evidence of income needs to be checked for this application'

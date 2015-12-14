@@ -12,5 +12,11 @@ FactoryGirl.define do
     factory :invalid_office do
       name nil
     end
+
+    after(:create) do |office, _|
+      office.jurisdictions.each do |jurisdiction|
+        create(:business_entity, office: office, jurisdiction: jurisdiction)
+      end
+    end
   end
 end

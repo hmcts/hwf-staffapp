@@ -455,8 +455,11 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:current_time) { Time.zone.now }
     let(:user) { create :user }
     let(:application) { create :application_full_remission }
+    let(:resolver) { double(complete: nil) }
 
     before do
+      expect(ResolverService).to receive(:new).with(application, user).and_return(resolver)
+
       Timecop.freeze(current_time) do
         sign_in user
         post :summary_save, application_id: application.id
@@ -471,9 +474,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
       expect(response).to redirect_to(application_confirmation_path(application.id))
     end
 
-    it 'updates the payment completed_at and completed_by' do
-      expect(application.completed_at).to eql(current_time)
-      expect(application.completed_by).to eql(user)
+    it 'completes the application using the ResolverService' do
+      expect(resolver).to have_received(:complete)
     end
   end
 
