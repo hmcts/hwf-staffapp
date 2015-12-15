@@ -4,6 +4,7 @@ class Application < ActiveRecord::Base
   belongs_to :completed_by, -> { with_deleted }, class_name: 'User'
   belongs_to :deleted_by, -> { with_deleted }, class_name: 'User'
   belongs_to :office
+  belongs_to :business_entity
   has_many :benefit_checks
   has_one :applicant
   has_one :detail, inverse_of: :application
@@ -19,7 +20,7 @@ class Application < ActiveRecord::Base
     deleted: 4
   }
 
-  validates :reference, presence: true, uniqueness: true
+  validates :reference, uniqueness: true, allow_blank: true
 
   # Fixme remove this delegation methods when all tests are clean
   APPLICANT_GETTERS = %i[

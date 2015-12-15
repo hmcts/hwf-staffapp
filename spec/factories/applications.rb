@@ -1,4 +1,6 @@
 FactoryGirl.define do
+  sequence(:reference_number) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
+
   factory :application do
     transient do
       ni_number nil
@@ -16,7 +18,6 @@ FactoryGirl.define do
       emergency_reason nil
     end
 
-    sequence(:reference) { |n| "AB001-#{Time.zone.now.strftime('%y')}-#{n}" }
     benefits true
     dependents true
     children 1
@@ -64,20 +65,24 @@ FactoryGirl.define do
     end
 
     trait :processed_state do
+      reference { generate(:reference_number) }
       decision { outcome }
       decision_type 'application'
       state :processed
     end
 
     trait :waiting_for_evidence_state do
+      reference { generate(:reference_number) }
       state :waiting_for_evidence
     end
 
     trait :waiting_for_part_payment_state do
+      reference { generate(:reference_number) }
       state :waiting_for_part_payment
     end
 
     trait :deleted_state do
+      reference { generate(:reference_number) }
       decision { outcome }
       decision_type 'application'
       state :deleted

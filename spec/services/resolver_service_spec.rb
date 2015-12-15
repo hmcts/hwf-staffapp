@@ -59,9 +59,14 @@ describe ResolverService do
     end
 
     context 'for Application' do
+      let(:reference) { 'ABC' }
+      let(:business_entity) { create(:business_entity) }
+      let(:generator) { double(attributes: { reference: reference, business_entity: business_entity }) }
+
       let(:object) { application }
 
       before do
+        allow(ReferenceGenerator).to receive(:new).and_return(generator)
         allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
       end
 
@@ -77,16 +82,40 @@ describe ResolverService do
         let(:evidence_check_decision) { true }
 
         include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
+
+        it 'generates and stores the reference' do
+          expect(updated_application.reference).to eql(reference)
+        end
+
+        it 'stores the business entity used to generate the reference' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
       end
 
       context 'when the application needs part payment' do
         let(:part_payment_decision) { true }
 
         include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
+
+        it 'generates and stores the reference' do
+          expect(updated_application.reference).to eql(reference)
+        end
+
+        it 'stores the business entity used to generate the reference' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
       end
 
       context 'when the application has outcome and does not need evidence check or part payment' do
         include_examples 'application, evidence check or part payment completed', 'application', 'processed', true
+
+        it 'generates and stores the reference' do
+          expect(updated_application.reference).to eql(reference)
+        end
+
+        it 'stores the business entity used to generate the reference' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
       end
     end
 

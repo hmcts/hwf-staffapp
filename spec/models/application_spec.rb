@@ -13,6 +13,7 @@ RSpec.describe Application, type: :model do
   it { is_expected.to belong_to(:completed_by).class_name('User') }
   it { is_expected.to belong_to(:deleted_by).class_name('User') }
   it { is_expected.to belong_to(:office) }
+  it { is_expected.to belong_to(:business_entity) }
 
   it { is_expected.to have_one(:applicant) }
   it { is_expected.to have_one(:detail) }
@@ -23,8 +24,7 @@ RSpec.describe Application, type: :model do
   it { is_expected.to have_one(:part_payment) }
   it { is_expected.not_to validate_presence_of(:part_payment) }
 
-  it { is_expected.to validate_presence_of(:reference) }
-  it { is_expected.to validate_uniqueness_of(:reference) }
+  it { is_expected.to validate_uniqueness_of(:reference).allow_blank }
 
   it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
 

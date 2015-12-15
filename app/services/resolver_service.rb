@@ -37,6 +37,11 @@ class ResolverService
     }
   end
 
+  def completed_application_attributes
+    generator = ReferenceGenerator.new(@calling_object)
+    completed_attributes.merge(generator.attributes)
+  end
+
   def decided_attributes(source)
     {
       decision: lookup_decision(source.outcome),
@@ -54,7 +59,7 @@ class ResolverService
   end
 
   def complete_application(application)
-    attributes = completed_attributes.tap do |attrs|
+    attributes = completed_application_attributes.tap do |attrs|
       if decide_evidence_check(application)
         attrs[:state] = :waiting_for_evidence
       elsif decide_part_payment(application)
