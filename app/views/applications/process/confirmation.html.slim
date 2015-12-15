@@ -3,6 +3,8 @@ header
     .small-12.medium-12.large-12.columns
       h2 Processing complete
 
+= display_reference(@application)
+
 .row
   .small-12.medium-8.large-5.columns
     = build_section 'Results', @confirm, @confirm.all_fields

@@ -12,6 +12,18 @@ RSpec.describe Views::ApplicationList do
 
   subject(:view) { described_class.new(application) }
 
+  describe '#id' do
+    it 'returns the application id' do
+      expect(view.id).to eql(application.id)
+    end
+  end
+
+  describe '#reference' do
+    it 'returns the application reference' do
+      expect(view.reference).to eql(application.reference)
+    end
+  end
+
   describe '#applicant' do
     it 'returns the applicant\'s full name' do
       expect(view.applicant).to eql(applicant.full_name)
