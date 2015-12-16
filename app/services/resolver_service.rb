@@ -48,7 +48,7 @@ class ResolverService
       decision: lookup_decision(source.outcome),
       decision_type: derive_object(source),
       decision_date: @time,
-      decision_cost: calculate_cost(source),
+      decision_cost: ResolverCostCalculator.new(source).cost,
       state: :processed
     }
   end
@@ -115,33 +115,5 @@ class ResolverService
 
   def decide_evidence_check(application)
     EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
-  end
-
-  def calculate_cost(source)
-    source.outcome == 'none' ? 0 : incurred_cost(source)
-  end
-
-  def incurred_cost(source)
-    if source.is_a?(PartPayment)
-      if source.application.evidence_check.present?
-        fee(source) - amount_to_pay(source.application.evidence_check)
-      else
-        fee(source) - amount_to_pay(source.application)
-      end
-    else
-      fee(source)
-    end
-  end
-
-  def fee(source)
-    if source.is_a?(Application)
-      source.detail.fee
-    else
-      source.application.detail.fee
-    end
-  end
-
-  def amount_to_pay(source)
-    source.try(:amount_to_pay) || 0
   end
 end
