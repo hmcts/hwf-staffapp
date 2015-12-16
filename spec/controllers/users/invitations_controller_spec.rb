@@ -23,7 +23,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
   let(:invited_user) { User.where(email: user.email).first }
 
-  before { @request.env["devise.mapping"] = Devise.mappings[:user] }
+  before { request.env["devise.mapping"] = Devise.mappings[:user] }
 
   context 'Manager user' do
     describe 'POST #create' do
