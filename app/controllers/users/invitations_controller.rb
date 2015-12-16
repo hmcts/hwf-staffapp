@@ -38,6 +38,6 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def user_not_admin_and_role_is_admin?
-    current_inviter.role.eql?('manager') && invite_params['role'].eql?('admin')
+    !current_inviter.role.eql?('admin') && invite_params['role'].eql?('admin')
   end
 end

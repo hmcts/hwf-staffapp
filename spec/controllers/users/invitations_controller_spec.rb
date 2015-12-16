@@ -5,38 +5,33 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:manager_user) { create :manager }
+  let(:office) { create :office }
+  let(:admin_user) { create :admin_user, office: office }
+  let(:manager_user) { create :manager, office: office }
   let(:user) { build :user }
+
+  let(:invitation) do
+    {
+      name: user.name,
+      email: user.email,
+      office_id: office.id
+    }
+  end
+
+  let(:manager_invitation) { invitation.merge!(role: 'manager') }
+  let(:admin_invitation) { invitation.merge(role: 'admin') }
+
+  let(:invited_user) { User.where(email: user.email).first }
+
+  before { @request.env["devise.mapping"] = Devise.mappings[:user] }
 
   context 'Manager user' do
     describe 'POST #create' do
-      before do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
-        sign_in manager_user
-      end
 
-      let(:invitation) do
-        {
-          name: user.name,
-          email: user.email,
-          role: 'manager',
-          office_id: '1'
-        }
-      end
-
-      let(:admin_invitation) do
-        {
-          name: user.name,
-          email: user.email,
-          role: 'admin',
-          office_id: '1'
-        }
-      end
-
-      let(:invited_user) { User.where(email: user.email).first }
+      before { sign_in manager_user }
 
       it 'does allow you to invite managers as a manager' do
-        post :create, user: invitation
+        post :create, user: manager_invitation
 
         expect(invited_user['email']).to eq user.email
         expect(invited_user['invited_by_id']).to eq manager_user.id
@@ -47,7 +42,27 @@ RSpec.describe Users::InvitationsController, type: :controller do
           post :create, user: admin_invitation
         }.to raise_error
       end
+    end
 
+    context 'Admin user' do
+      describe 'POST #create' do
+
+        before { sign_in admin_user }
+
+        it 'does allow you to invite managers as an admin' do
+          post :create, user: manager_invitation
+
+          expect(invited_user['email']).to eq user.email
+          expect(invited_user['invited_by_id']).to eq admin_user.id
+        end
+
+        it 'does allow admins to invite admins' do
+          post :create, user: admin_invitation
+
+          expect(invited_user['email']).to eq user.email
+          expect(invited_user['invited_by_id']).to eq admin_user.id
+        end
+      end
     end
   end
 end
