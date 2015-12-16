@@ -40,7 +40,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
       it 'does not allow you to invite admins as a manager' do
         expect {
           post :create, user: admin_invitation
-        }.to raise_error 'Unpriviledged invitation error: Non-admin user is inviting an admin.'
+        }.to raise_error 'Unprivileged invitation error: Non-admin user is inviting an admin.'
       end
     end
 

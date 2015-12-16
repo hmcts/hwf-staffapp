@@ -12,7 +12,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def create
     if user_not_admin_and_role_is_admin?
-      raise 'Unpriviledged invitation error: Non-admin user is inviting an admin.'
+      raise 'Unprivileged invitation error: Non-admin user is inviting an admin.'
     else
       self.resource = invite_resource
       respond_with resource, location: after_invite_path_for(resource)
