@@ -18,7 +18,7 @@ class ReferenceGenerator
   end
 
   def reference_prefix
-    "#{business_entity.code}-#{Time.zone.now.strftime('%y')}-"
+    "#{business_entity.code.strip}-#{Time.zone.now.strftime('%y')}-"
   end
 
   def reference
