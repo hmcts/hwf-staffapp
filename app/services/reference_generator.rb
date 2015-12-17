@@ -22,13 +22,15 @@ class ReferenceGenerator
   end
 
   def reference
-    last_application = Application.where('reference LIKE ?', "#{reference_prefix}%").order(:id).last
-    last_sequence = if last_application
-                      last_application.reference.gsub(reference_prefix, '').to_i
-                    else
-                      0
-                    end
+    last_sequence = last_reference.try(:sequence) || 0
 
     "#{reference_prefix}#{last_sequence + 1}"
+  end
+
+  def last_reference
+    Application.
+      select("max(cast(replace(reference,'#{reference_prefix}','') as integer)) AS sequence").
+      where('reference LIKE ?', "#{reference_prefix}%").
+      take
   end
 end

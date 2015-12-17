@@ -28,7 +28,14 @@ RSpec.describe ReferenceGenerator, type: :service do
     end
 
     context 'when there is an existing reference number for the same entity code' do
-      let!(:existing_application) { create :application, :processed_state, reference: 'AB987-16-19' }
+      let(:existing_application1) { create :application, :processed_state, reference: 'AB987-16-18' }
+      let(:existing_application2) { create :application, :processed_state, reference: 'AB987-16-19' }
+
+      before do
+        existing_application2
+        existing_application1
+        application
+      end
 
       it 'returns hash with the relevant business entity' do
         expect(subject[:business_entity]).to eql(business_entity)
