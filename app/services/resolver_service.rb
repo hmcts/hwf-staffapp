@@ -9,7 +9,9 @@ class ResolverService
 
   def complete
     check_outcome!
-    send("complete_#{derive_object(@calling_object)}", @calling_object)
+    ActiveRecord::Base.transaction do
+      send("complete_#{derive_object(@calling_object)}", @calling_object)
+    end
   end
 
   def return
@@ -21,7 +23,9 @@ class ResolverService
 
   def delete
     raise NotDeletable unless @calling_object.processed? && @calling_object.deleted_reason.present?
-    @calling_object.update(deleted_attributes)
+    ActiveRecord::Base.transaction do
+      @calling_object.update(deleted_attributes)
+    end
   end
 
   private
