@@ -12,7 +12,8 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def create
     if user_not_admin_and_role_is_admin?
-      raise 'Unprivileged invitation error: Non-admin user is inviting an admin.'
+      flash[:alert] = "You cannot create an admin account"
+      redirect_to new_user_invitation_path
     else
       self.resource = invite_resource
       respond_with resource, location: after_invite_path_for(resource)
