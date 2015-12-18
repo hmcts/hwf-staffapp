@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe Users::InvitationsController, type: :controller do
 
+  render_views
+
   include Devise::TestHelpers
 
   let(:office) { create :office }
@@ -38,9 +40,10 @@ RSpec.describe Users::InvitationsController, type: :controller do
       end
 
       it 'does not allow you to invite admins as a manager' do
-        expect {
-          post :create, user: admin_invitation
-        }.to raise_error 'Unprivileged invitation error: Non-admin user is inviting an admin.'
+        post :create, user: admin_invitation
+        expect(response).to redirect_to(new_user_invitation_path)
+        get :new
+        expect(response.body).to include 'You cannot create an admin account'
       end
     end
 

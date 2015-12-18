@@ -77,6 +77,7 @@ en-GB:
     optional_html: '&nbsp; (optional)'
     required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
   error_messages:
+    manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
       undetermined: 'The details you’ve entered are incorrect, check and try again'
