@@ -42,6 +42,8 @@ RSpec.describe Users::InvitationsController, type: :controller do
       it 'does not allow you to invite admins as a manager' do
         post :create, user: admin_invitation
         expect(response).to redirect_to(new_user_invitation_path)
+        get :new
+        expect(response.body).to include 'You cannot create an admin account'
       end
     end
 

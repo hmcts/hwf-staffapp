@@ -12,7 +12,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def create
     if user_not_admin_and_role_is_admin?
-      flash[:alert] = "You cannot create an admin account"
+      flash[:alert] = t('error_messages.manager_cant_invite_admin')
       redirect_to new_user_invitation_path
     else
       self.resource = invite_resource
