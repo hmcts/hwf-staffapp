@@ -38,8 +38,14 @@ RSpec.describe OutputsController, type: :controller do
       end
     end
 
-    describe 'POST #finance_report' do
-      # before { post :finance_report, }
+    describe 'PUT #finance_report' do
+      before { put :finance_report }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :finance_report }
     end
   end
 end
