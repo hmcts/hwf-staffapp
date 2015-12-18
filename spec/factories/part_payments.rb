@@ -7,6 +7,10 @@ FactoryGirl.define do
       outcome 'part'
     end
 
+    factory :part_payment_none_outcome do
+      outcome 'none'
+    end
+
     trait :completed do
       completed_at Time.zone.yesterday
       association :completed_by, factory: :user

@@ -5,6 +5,7 @@ class ResolverService
   def initialize(object, user)
     @calling_object = object
     @user = user
+    @time = Time.zone.now
   end
 
   def complete
@@ -36,7 +37,7 @@ class ResolverService
 
   def completed_attributes
     {
-      completed_at: Time.zone.now,
+      completed_at: @time,
       completed_by: @user
     }
   end
@@ -50,6 +51,8 @@ class ResolverService
     {
       decision: lookup_decision(source.outcome),
       decision_type: derive_object(source),
+      decision_date: @time,
+      decision_cost: ResolverCostCalculator.new(source).cost,
       state: :processed
     }
   end
