@@ -15,6 +15,18 @@ Jurisdiction.create([{ name: 'County', abbr: nil },
 Office.create(name: 'Digital', entity_code: 'MA105', jurisdiction_ids: [1])
 Office.create(name: 'Bristol', entity_code: 'DB402', jurisdiction_ids: [1])
 
+Office.all.each do |o|
+  Jurisdiction.all.each do |j|
+    BusinessEntity.create(
+      office: o,
+      jurisdiction: j,
+      code: o.entity_code,
+      name: "#{o.name} - #{j.name}"
+    )
+  end
+end
+
+
 unless ENV=='production'
   User.create([{
                 name: 'Admin',
