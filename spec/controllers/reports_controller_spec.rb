@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OutputsController, type: :controller do
+RSpec.describe ReportsController, type: :controller do
 
   include Devise::TestHelpers
 
