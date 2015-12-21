@@ -11,16 +11,13 @@ RSpec.describe Forms::FinanceReport do
       report.date_to = Time.zone.today
     end
 
-    it { is_expected.to validate_presence_of(:office) }
-    it { is_expected.to validate_presence_of(:jurisdiction) }
-
     describe 'date_from' do
       it { is_expected.to validate_presence_of(:date_from) }
 
       context 'when the date_from is less than date_to' do
         before { report.date_from = Time.zone.tomorrow }
 
-        it { expect(subject.valid?).not_to be true }
+        it { is_expected.not_to be_valid }
       end
     end
 
@@ -30,7 +27,7 @@ RSpec.describe Forms::FinanceReport do
       context 'when date_to is before date_from' do
         before { report.date_to = Time.zone.today.-1.year }
 
-        it { expect(subject.valid?).not_to be true }
+        it { is_expected.not_to be_valid }
       end
     end
 
