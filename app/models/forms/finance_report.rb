@@ -1,16 +1,15 @@
 module Forms
   class FinanceReport
+    include Virtus.model(nullify_blank: true)
     include ActiveModel::Model
 
-    attr_accessor :date_from
-    attr_accessor :date_to
-    attr_accessor :office
-    attr_accessor :jurisdiction
+    attribute :date_from, Date
+    attribute :date_to, Date
 
-    validates :date_to, :date_from, :office, :jurisdiction, presence: true
+    validates :date_to, :date_from, presence: true
 
-    validates :date_from, date: {
-      before: :date_to
+    validates :date_to, date: {
+      after: :date_from, allow_blank: true
     }
 
     def i18n_scope
