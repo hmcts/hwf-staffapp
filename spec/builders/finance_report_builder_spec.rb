@@ -12,12 +12,6 @@ RSpec.describe FinanceReportBuilder do
   let(:end_date) { Time.zone.today.+1.month }
   subject(:frb) { described_class.new(start_date, end_date) }
 
-  describe '#generate' do
-    subject { frb.generate }
-
-    it { is_expected.to include(Views::Reports::FinanceReportDataRow) }
-  end
-
   describe '#to_csv' do
     subject { frb.to_csv }
 

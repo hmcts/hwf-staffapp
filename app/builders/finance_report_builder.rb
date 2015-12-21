@@ -27,6 +27,8 @@ class FinanceReportBuilder
     end
   end
 
+  private
+
   def generate
     data = []
     distinct_offices_jurisdictions.each do |business_entity|
@@ -34,8 +36,6 @@ class FinanceReportBuilder
     end
     data
   end
-
-  private
 
   def distinct_offices_jurisdictions
     BusinessEntity.
