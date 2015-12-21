@@ -6,6 +6,7 @@ class Ability
 
     if user.admin?
       can :manage, :all
+      can :access, :outputs if user.admin?
     elsif user.manager?
       can [:manage], User do |staff_member|
         can_manage_user?(user, staff_member)
