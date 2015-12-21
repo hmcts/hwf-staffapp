@@ -11,6 +11,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
   describe 'attributes' do
     it { is_expected.to respond_to :office }
     it { is_expected.to respond_to :jurisdiction }
+    it { is_expected.to respond_to :be_code }
     it { is_expected.to respond_to :total_count }
     it { is_expected.to respond_to :total_sum }
     it { is_expected.to respond_to :full_count }
@@ -34,6 +35,12 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       subject { data.office }
 
       it { is_expected.to eq business_entity.office.name }
+    end
+
+    describe 'sets the business entity code' do
+      subject { data.be_code }
+
+      it { is_expected.to eq business_entity.code }
     end
 
     describe 'sets total_count' do
