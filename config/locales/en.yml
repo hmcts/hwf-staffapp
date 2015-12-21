@@ -286,6 +286,12 @@ en-GB:
       models:
         forms/finance_report:
           date_hint: Enter the date in this format DD/MM/YYYY
+          attributes:
+            date_from:
+              blank: 'Please enter a start date'
+            date_to:
+              blank: 'Please enter an end date'
+              after: 'Date must be after the start date'
         forms/application/applicant:
           attributes:
             last_name:
