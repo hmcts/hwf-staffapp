@@ -4,7 +4,9 @@ describe ResolverService do
   let(:current_time) { Time.zone.now.change(usec: 0) }
   let(:user) { create(:user) }
   let(:application_outcome) { 'part' }
-  let(:application) { create(:application, :uncompleted, :undecided, outcome: application_outcome) }
+  let(:fee) { 350 }
+  let(:amount_to_pay) { nil }
+  let(:application) { create(:application, :uncompleted, :undecided, fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome) }
 
   subject(:resolver) { described_class.new(object, user) }
 
@@ -29,7 +31,7 @@ describe ResolverService do
       application.reload
     end
 
-    shared_examples 'application, evidence check or part payment completed' do |type, state, decided|
+    shared_examples 'application, evidence check or part payment completed' do |type, state, decided, cost|
       it 'sets completed_at for current time' do
         expect(send("updated_#{type}").completed_at).to eql(current_time)
       end
@@ -50,10 +52,20 @@ describe ResolverService do
         it 'sets decision_type to be application' do
           expect(updated_application.decision_type).to eql(type)
         end
+
+        it 'sets decision_date to current time' do
+          expect(updated_application.decision_date).to eql(current_time)
+        end
+
+        it 'sets decision_cost' do
+          expect(updated_application.decision_cost).to eql(cost)
+        end
       else
         it 'keeps the application undecided' do
           expect(updated_application.decision).to be nil
           expect(updated_application.decision_type).to be nil
+          expect(updated_application.decision_date).to be nil
+          expect(updated_application.decision_cost).to be nil
         end
       end
     end
@@ -107,7 +119,17 @@ describe ResolverService do
       end
 
       context 'when the application has outcome and does not need evidence check or part payment' do
-        include_examples 'application, evidence check or part payment completed', 'application', 'processed', true
+        context 'for a full outcome' do
+          let(:application_outcome) { 'full' }
+
+          include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 350
+        end
+
+        context 'for a none outcome' do
+          let(:application_outcome) { 'none' }
+
+          include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 0
+        end
 
         it 'generates and stores the reference' do
           expect(updated_application.reference).to eql(reference)
@@ -147,9 +169,18 @@ describe ResolverService do
       end
 
       context 'when the evidence check has outcome and application does not require part payment' do
-        let(:evidence_check) { create :evidence_check_full_outcome, application: application }
+        context 'for full outcome' do
+          let(:evidence_check) { create :evidence_check_full_outcome, application: application }
 
-        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true
+          include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 350
+        end
+
+        context 'for none outcome' do
+          let(:evidence_check) { create :evidence_check_incorrect, application: application }
+
+          include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 0
+        end
+
       end
     end
 
@@ -169,10 +200,30 @@ describe ResolverService do
         end
       end
 
-      context 'when the evidence check has outcome' do
-        let(:part_payment) { create :part_payment_part_outcome, application: application }
+      context 'when the part payment has outcome' do
+        context 'for a part outcome' do
+          let(:part_payment) { create :part_payment_part_outcome, application: application }
 
-        include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true
+          context 'when the application also was evidence checked' do
+            before do
+              create(:evidence_check_part_outcome, :completed, application: application, amount_to_pay: 150)
+            end
+
+            include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 200
+          end
+
+          context 'when the application was not evidence checked' do
+            let(:amount_to_pay) { 50 }
+
+            include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 300
+          end
+        end
+
+        context 'for a none outcome' do
+          let(:part_payment) { create :part_payment_none_outcome, application: application }
+
+          include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 0
+        end
       end
     end
   end

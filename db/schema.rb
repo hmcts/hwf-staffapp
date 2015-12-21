@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214170243) do
+ActiveRecord::Schema.define(version: 20151215154501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20151214170243) do
     t.datetime "deleted_at"
     t.integer  "deleted_by_id"
     t.integer  "business_entity_id"
+    t.datetime "decision_date"
+    t.decimal  "decision_cost"
   end
 
   add_index "applications", ["business_entity_id"], name: "index_applications_on_business_entity_id", using: :btree
