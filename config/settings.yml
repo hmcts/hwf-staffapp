@@ -12,4 +12,4 @@ evidence_check:
 part_payment:
   expires_in_days: 14
 reference:
-  date: <%= ENV["REFERENCE_DATE"] || '2015-12-31' %>
+  date: <%= ENV["REFERENCE_DATE"] || '2016-05-31' %>
