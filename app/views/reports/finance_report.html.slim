@@ -1,0 +1,21 @@
+= form_for @form, url: reports_finance_report_path, method: :put, html: { autocomplete: 'off' } do |f|
+  header
+    .row
+      .small-12.medium-8.large-12.columns
+        h2 Finance report
+
+  .row
+    .small-12.medium-8.large-5.columns
+      .form-group
+        = f.label :date_from
+        span.hint.block = t('date_hint', scope: @form.i18n_scope)
+        = f.label :date_from, @form.errors[:date_from].join(', '), class: 'error' if @form.errors[:date_from].present?
+        = f.text_field :date_from, { class: 'form-control small-field' }
+
+      .form-group
+        = f.label :date_to
+        span.hint.block = t('date_hint', scope: @form.i18n_scope)
+        = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error' if @form.errors[:date_to].present?
+        = f.text_field :date_to, { class: 'form-control small-field' }
+
+      = f.submit 'Get data as CSV', class: 'button primary'
