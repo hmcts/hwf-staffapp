@@ -46,8 +46,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
     context 'who has full remission' do
       let(:application) { create(:application_full_remission) }
       let(:full_remission_copy) do
-        ['Complete the remission register with the application details',
-         'Write the reference number on the top right corner of the paper form',
+        ['Write the reference number on the top right corner of the paper form',
          'Copy the reference number into the case management system',
          'The applicant’s process can now be issued']
       end
@@ -68,8 +67,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
     context 'who has no remission' do
       let(:application) { create(:application_no_remission) }
       let(:no_remission_copy) do
-        ['Complete the remission register with the application details',
-         'Write the reference number on the top right corner of the paper form',
+        ['Write the reference number on the top right corner of the paper form',
          'Copy the reference number into the case management system',
          'Write to the applicant and send back all the documents']
       end
