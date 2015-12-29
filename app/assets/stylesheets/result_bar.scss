@@ -17,13 +17,13 @@
     color: $page-colour;
     margin: 0;
   }
-  &.not-received, &.no, &.callout-none {
+  &.not-received, &.no, &.callout-none, &.callout-error {
     background-color: $error-colour;
   }
   &.received, &.yes, &.callout-full {
     background-color: $turquoise;
   }
-  &.callout-part {
+  &.callout-part, &.callout-evidence-check {
     background: $orange;
   }
   &.evidence-check-reference {
