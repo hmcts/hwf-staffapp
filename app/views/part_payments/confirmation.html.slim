@@ -14,10 +14,12 @@ header
       h4 Next steps      
       ul
         -if @result.callout == 'yes'
-          li complete the remission register with the application details
+          - unless after_desired_date?
+            li complete the remission register with the application details
           li copy reference into the case management system
         - else
-          li complete the remission register with the application details
+          - unless after_desired_date?
+            li complete the remission register with the application details
           li write to applicant using the template provided
           li add the reference to the letter
           li post the letter and all the documents back to the applicant

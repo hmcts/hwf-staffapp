@@ -3,16 +3,23 @@ header
     .small-12.medium-12.large-12.columns
       h2 Processing complete
 
-= display_reference(@application)
-
 .row
   .small-12.medium-8.large-5.columns
+    - if after_desired_date?
+      .row
+        .small-12.columns
+          h4 Reference
+          .row.collapse.medium-10.large-8
+            #result.callout.evidence-check-reference
+              h3.bold = display_reference(@application)
+
     = build_section 'Results', @confirm, @confirm.all_fields
     .row
       .small-12.columns
         .row.collapse.medium-10.large-8
           #result.callout class="callout-#{@confirm.result}"
             h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+
     .row.collapse.medium-10.large-8
       = link_to 'Back to start', root_path, class: 'button primary'
 
@@ -21,7 +28,8 @@ header
       h4 Next steps
       ul
         -if @application.outcome.eql?('full')
-          li Complete the remission register with the application details
+          -unless after_desired_date?
+            li Complete the remission register with the application details
           li Write the reference number on the top right corner of the paper form
           li Copy the reference number into the case management system
           li The applicant’s process can now be issued
