@@ -7,6 +7,10 @@ class ApplicationPolicy < BasePolicy
     !admin? && same_office?
   end
 
+  def update?
+    !admin? && same_office?
+  end
+
   class Scope < BasePolicy::Scope
     def resolve
       if admin?

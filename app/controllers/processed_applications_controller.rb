@@ -21,16 +21,12 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def update
+    # TODO: The authorisation should be done after the attributes have been updated
+    authorize application
+
     @form = Forms::Application::Delete.new(application)
     @form.update_attributes(delete_params)
-    if @form.save
-      ResolverService.new(application, current_user).delete
-      flash[:notice] = 'The application has been deleted'
-      redirect_to(action: :index)
-    else
-      assign_views
-      render :show
-    end
+    save_and_respond_on_update
   end
 
   private
@@ -45,5 +41,16 @@ class ProcessedApplicationsController < ApplicationController
 
   def delete_params
     params.require(:application).permit(*Forms::Application::Delete.permitted_attributes.keys)
+  end
+
+  def save_and_respond_on_update
+    if @form.save
+      ResolverService.new(application, current_user).delete
+      flash[:notice] = 'The application has been deleted'
+      redirect_to(action: :index)
+    else
+      assign_views
+      render :show
+    end
   end
 end
