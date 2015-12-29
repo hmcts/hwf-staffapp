@@ -34,14 +34,3 @@
     margin:0;
   }
 }
-
-@media only screen and (min-width: upper-bound($medium-range)) {
-  #dwp_data {
-    .row {
-      line-height: 3em;
-      .table-label {
-        color: #666666;
-      }
-    }
-  }
-}
