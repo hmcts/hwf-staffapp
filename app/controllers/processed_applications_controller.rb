@@ -1,16 +1,21 @@
 class ProcessedApplicationsController < ApplicationController
+  include Pundit
   before_action :authenticate_user!
 
   include ProcessedViewsHelper
   helper ReferenceHelper
 
   def index
-    @applications = Query::ProcessedApplications.new(current_user).find.map do |application|
+    authorize :application
+
+    @applications = applications.map do |application|
       Views::ApplicationList.new(application)
     end
   end
 
   def show
+    authorize application
+
     @form = Forms::Application::Delete.new(application)
     assign_views
   end
@@ -32,6 +37,10 @@ class ProcessedApplicationsController < ApplicationController
 
   def application
     @application ||= Application.find(params[:id])
+  end
+
+  def applications
+    @applications ||= policy_scope(Query::ProcessedApplications.new(current_user).find)
   end
 
   def delete_params
