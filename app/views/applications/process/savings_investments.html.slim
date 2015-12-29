@@ -17,6 +17,7 @@
           .columns.small-12
             = f.label :threshold_exceeded, t(@application.married ? 'married' : 'single', scope: @form.i18n_scope)
             = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
+            = f.hidden_field :threshold_exceeded, value: nil
             .options.radio
               .option
                 label for='application_threshold_exceeded_false'
