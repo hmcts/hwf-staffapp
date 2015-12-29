@@ -78,5 +78,28 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
         end
       end
     end
+
+    context 'the applicant is married', js: true do
+      before do
+        start_new_application
+
+        fill_in 'application_last_name', with: 'Smith'
+        fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
+        choose 'application_married_true'
+        click_button 'Next'
+        fill_in 'application_fee', with: '300'
+        find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
+        fill_in 'application_date_received', with: Time.zone.today - 3.days
+        click_button 'Next'
+      end
+
+      context 'when the savings investment Next button is clicked' do
+        before { click_button 'Next' }
+
+        scenario 'the error message is displayed' do
+          expect(page).to have_content 'You must answer the savings question'
+        end
+      end
+    end
   end
 end
