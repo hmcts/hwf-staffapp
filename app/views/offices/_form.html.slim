@@ -9,8 +9,11 @@
         .columns.small-12.medium-8.large-5
           = f.label :name, t('functions.offices.label_name')
           = f.text_field :name, { class: 'form-control' }
-          = f.label :entity_code
-          = f.text_field :entity_code, { class: 'form-control' }
+      -if current_user.admin?
+        .row
+          .columns.small-12.medium-8.large-5
+            = f.label :entity_code
+            = f.text_field :entity_code, { class: 'form-control' }
 
   .row
     .small-12.large-6.columns.form-group

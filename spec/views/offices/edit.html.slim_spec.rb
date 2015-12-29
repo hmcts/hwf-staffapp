@@ -32,6 +32,14 @@ RSpec.describe 'offices/edit', type: :view do
     it 'does not render a link to the list' do
       expect(rendered).not_to have_xpath("//a[@href='#{offices_path}']")
     end
+
+    it 'does not show the business entity code input for the office' do
+      expect(rendered).not_to have_xpath('//input[@name="office[entity_code]"]')
+    end
+
+    it 'does not show the business entity code label for the office' do
+      expect(rendered).not_to have_content('Entity code')
+    end
   end
 
   context 'as an admin' do
@@ -46,6 +54,14 @@ RSpec.describe 'offices/edit', type: :view do
 
     it 'renders a link to the list' do
       expect(rendered).to have_xpath("//a[@href='#{offices_path}']")
+    end
+
+    it 'renders the business entity code input for the office' do
+      expect(rendered).to have_xpath('//input[@name="office[entity_code]"]')
+    end
+
+    it 'renders the business entity code label for the office' do
+      expect(rendered).to have_content('Entity code')
     end
   end
 end

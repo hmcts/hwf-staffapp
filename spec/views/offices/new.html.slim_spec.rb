@@ -2,11 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'offices/new', type: :view do
 
+  include Devise::TestHelpers
+
   before(:each) { assign(:office, Office.new) }
   let(:jurisdictions) { assign(:jurisdictions, create_list(:jurisdiction, 4)) }
+  let(:manager)       { create(:manager) }
 
   it 'renders new office form' do
-
+    sign_in manager
     jurisdictions
     render
 
