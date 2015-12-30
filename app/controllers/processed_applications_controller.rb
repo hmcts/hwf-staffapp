@@ -1,5 +1,4 @@
 class ProcessedApplicationsController < ApplicationController
-  include Pundit
   before_action :authenticate_user!
 
   include ProcessedViewsHelper

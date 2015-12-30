@@ -6,9 +6,10 @@ RSpec.feature 'Benefit Results', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: create(:office) }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
   let(:applicant) { create :applicant_with_all_details, ni_number: ni_number }
-  let(:application) { create :application, user_id: user.id, applicant: applicant, benefits: true }
+  let(:application) { create :application, office: office, user_id: user.id, applicant: applicant, benefits: true }
 
   context 'as a signed in user' do
 

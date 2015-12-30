@@ -39,7 +39,7 @@ RSpec.feature 'Emergency application', type: :feature do
   end
 
   context 'when on application summary page' do
-    let(:application) { create :application_full_remission, emergency_reason: reason }
+    let(:application) { create :application_full_remission, office: office, emergency_reason: reason }
 
     before { visit application_summary_path(application) }
 

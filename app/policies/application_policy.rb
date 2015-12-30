@@ -1,4 +1,8 @@
 class ApplicationPolicy < BasePolicy
+  def create?
+    !admin? && same_office?
+  end
+
   def index?
     !admin?
   end

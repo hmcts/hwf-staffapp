@@ -6,8 +6,9 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: create(:office) }
-  let(:application) { create(:application_part_remission) }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
+  let(:application) { create(:application_part_remission, office: office) }
 
   def visit_confirmation_page
     visit application_confirmation_path(application_id: application.id)
@@ -44,7 +45,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
     end
 
     context 'who has full remission' do
-      let(:application) { create(:application_full_remission) }
+      let(:application) { create(:application_full_remission, office: office) }
       let(:full_remission_copy) do
         ['Write the reference number on the top right corner of the paper form',
          'Copy the reference number into the case management system',
@@ -65,7 +66,7 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
     end
 
     context 'who has no remission' do
-      let(:application) { create(:application_no_remission) }
+      let(:application) { create(:application_no_remission, office: office) }
       let(:no_remission_copy) do
         ['Write the reference number on the top right corner of the paper form',
          'Copy the reference number into the case management system',

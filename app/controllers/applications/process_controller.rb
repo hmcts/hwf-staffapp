@@ -3,9 +3,13 @@ module Applications
   class ProcessController < ApplicationController
     before_action :authenticate_user!
 
+    before_action :authorise_application_update, except: :create
+
     def create
-      application_builder = ApplicationBuilder.new(current_user)
-      application = application_builder.create
+      application = ApplicationBuilder.new(current_user).build
+      authorize application
+
+      application.save
       redirect_to application_personal_information_path(application)
     end
 
@@ -139,6 +143,12 @@ module Applications
         @application = application
         @confirm = Views::Confirmation::Result.new(application)
       end
+    end
+
+    private
+
+    def authorise_application_update
+      authorize application, :update?
     end
 
     private

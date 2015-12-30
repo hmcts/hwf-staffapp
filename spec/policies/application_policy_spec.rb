@@ -14,11 +14,13 @@ RSpec.describe ApplicationPolicy, type: :policy do
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:user, office: office) }
 
+      it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:update) }
     end
 
     context 'when the application does not belong to their office' do
+      it { is_expected.not_to permit_action(:create) }
       it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:update) }
     end
@@ -32,11 +34,13 @@ RSpec.describe ApplicationPolicy, type: :policy do
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:manager, office: office) }
 
+      it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:update) }
     end
 
     context 'when the application does not belong to their office' do
+      it { is_expected.not_to permit_action(:create) }
       it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:update) }
     end
@@ -45,6 +49,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
   context 'for an admin' do
     let(:user) { build_stubbed(:admin_user) }
 
+    it { is_expected.not_to permit_action(:create) }
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }

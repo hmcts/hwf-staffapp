@@ -11,16 +11,16 @@ RSpec.describe ApplicationBuilder do
     Reference.where("reference like ?", "#{entity_code}-#{current_year}-%").count + 1
   end
 
-  describe '#create' do
-    subject(:create_result) do
+  describe '#build' do
+    subject(:build_result) do
       Timecop.freeze(current_time) do
-        application_builder.create
+        application_builder.build
       end
     end
 
-    it 'creates and returns Application' do
+    it 'builds and returns non persisted Application' do
       is_expected.to be_a(Application)
-      is_expected.to be_persisted
+      is_expected.not_to be_persisted
     end
 
     describe 'the application' do
@@ -32,14 +32,14 @@ RSpec.describe ApplicationBuilder do
         expect(subject.office).to eql(user.office)
       end
 
-      it 'has applicant record created' do
+      it 'has applicant record built' do
         expect(subject.applicant).to be_a(Applicant)
-        expect(subject.applicant).to be_persisted
+        expect(subject.applicant).not_to be_persisted
       end
 
-      it 'has detail record created' do
+      it 'has detail record built' do
         expect(subject.detail).to be_a(Detail)
-        expect(subject.detail).to be_persisted
+        expect(subject.detail).not_to be_persisted
       end
 
       it 'has jurisdiction assigned to the detail from the user' do

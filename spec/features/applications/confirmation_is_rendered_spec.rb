@@ -5,8 +5,9 @@ RSpec.feature 'Confirmation page', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: create(:office) }
-  let(:application) { create(:application, :confirm) }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
+  let(:application) { create(:application, :confirm, office: office) }
 
   context 'as a signed in user', js: true do
     before do
