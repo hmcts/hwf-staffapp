@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe DeletedApplicationsController, type: :controller do
   include Devise::TestHelpers
 
-  let(:user) { create(:user) }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
 
-  let(:application1) { build_stubbed(:application) }
-  let(:application2) { build_stubbed(:application) }
+  let(:application1) { build_stubbed(:application, office: office) }
+  let(:application2) { build_stubbed(:application, office: office) }
 
   let(:overview) { double }
   let(:result) { double }
@@ -22,10 +23,12 @@ RSpec.describe DeletedApplicationsController, type: :controller do
   describe 'GET #index' do
     let(:view1) { double }
     let(:view2) { double }
-    let(:query) { double(find: [application1, application2]) }
+    let(:scope) { double }
+    let(:query) { double(find: scope) }
 
     before do
       allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)
+      allow(controller).to receive(:policy_scope).with(scope).and_return([application1, application2])
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
