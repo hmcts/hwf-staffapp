@@ -131,6 +131,20 @@ describe User, type: :model do
     end
   end
 
+  describe '#staff?' do
+    it 'respond false for staff' do
+      expect(user.staff?).to be true
+    end
+
+    it 'respond false for manager' do
+      expect(manager.staff?).to be false
+    end
+
+    it 'respond false for admin' do
+      expect(admin_user.staff?).to be false
+    end
+  end
+
   describe '@manager?' do
     it 'respond true if manager user' do
       expect(manager.manager?).to be true

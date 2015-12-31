@@ -1,12 +1,12 @@
 FactoryGirl.define do
-  factory :user do
+  factory :user, aliases: [:staff] do
     role 'user'
     sequence(:email) { |n| "user_#{n}@digital.justice.gov.uk" }
     password 'password'
     name 'user'
     association :office
     association :jurisdiction
-    factory :admin_user do
+    factory :admin_user, aliases: [:admin] do
       role 'admin'
     end
     factory :manager do

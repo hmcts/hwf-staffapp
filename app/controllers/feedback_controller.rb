@@ -4,23 +4,25 @@ class FeedbackController < ApplicationController
   respond_to :html
 
   def index
-    authorize! :read, Feedback
+    authorize :feedback
+
     @feedback = Feedback.order(created_at: :desc)
   end
 
   def new
-    authorize! :create, Feedback
-
     @feedback = Feedback.new
+    authorize @feedback
+
     respond_with(@feedback)
   end
 
   def create
-    authorize! :create, Feedback
-
     @feedback = Feedback.new(feedback_params)
     @feedback.user = current_user
     @feedback.office = current_user.office
+
+    authorize @feedback
+
     if @feedback.save
       flash[:notice] = 'Your feedback has been recorded'
       redirect_to root_path
