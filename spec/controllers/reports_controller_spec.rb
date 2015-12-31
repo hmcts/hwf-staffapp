@@ -39,7 +39,7 @@ RSpec.describe ReportsController, type: :controller do
     end
 
     describe 'PUT #finance_report' do
-      before { put :finance_report_generator, forms_finance_report: { date_from: Date.new(2015,1,1), date_to: Date.new(2015,12,31) } }
+      before { put :finance_report_generator, forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }
 
       subject { response }
 
