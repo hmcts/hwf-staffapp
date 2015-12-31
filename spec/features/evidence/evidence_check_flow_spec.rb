@@ -5,8 +5,9 @@ RSpec.feature 'Evidence check flow', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
-  let(:application) { create :application_full_remission, user: user }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
+  let(:application) { create :application_full_remission, user: user, office: office }
   let(:outcome) { nil }
   let(:amount) { nil }
   let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount }
@@ -127,7 +128,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     before { visit evidence_summary_path(id: evidence.id) }
 
     context 'for an unsuccessful outcome' do
-      let(:evidence) { create :evidence_check_incorrect }
+      let(:evidence) { create :evidence_check_incorrect, application: application }
       let(:expected_fields) do
         {
           'Correct' => 'No',
@@ -146,7 +147,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a part remission outcome' do
-      let(:evidence) { create :evidence_check_part_outcome }
+      let(:evidence) { create :evidence_check_part_outcome, application: application }
       let(:expected_fields) do
         {
           'Correct' => 'Yes',
@@ -172,7 +173,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a full remission outcome' do
-      let(:evidence) { create :evidence_check_full_outcome }
+      let(:evidence) { create :evidence_check_full_outcome, application: application }
       let(:expected_fields) do
         {
           'Correct' => 'Yes',
