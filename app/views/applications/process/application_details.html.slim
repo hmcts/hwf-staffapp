@@ -25,15 +25,17 @@
             - if @jurisdictions.present?
               .options.radio
                 =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-                  = b.label do
-                    = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
-                    = b.text
+                  .option
+                    = b.label do
+                      = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
+                      = b.text
             - else
               = t('error_messages.jurisdictions.none_in_office')
 
       .form-group
         = f.label :date_received
-        span.hint.block = t('date_hint', scope: @form.i18n_scope)
+          =t('date_recieved', scope: @form.i18n_scope)
+          span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control medium-field' }
 
