@@ -14,8 +14,10 @@ class ReportsController < ApplicationController
     authorize! :access, :outputs
     @form = form
     if @form.valid?
-      @data = FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to])
-      send_data @data.to_csv, filename: "finance-report-#{@form.start_date}-#{@form.end_date}.csv"
+      send_data FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to]).to_csv,
+        filename: "finance-report-#{@form.start_date}-#{@form.end_date}.csv",
+        type: 'text/csv',
+        disposition: 'attachment'
     else
       render :finance_report
     end

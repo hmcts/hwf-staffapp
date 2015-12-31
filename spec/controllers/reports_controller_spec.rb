@@ -39,13 +39,18 @@ RSpec.describe ReportsController, type: :controller do
     end
 
     describe 'PUT #finance_report' do
-      before { put :finance_report }
+      before { put :finance_report_generator, forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }
 
       subject { response }
 
       it { is_expected.to have_http_status(:success) }
 
-      it { is_expected.to render_template :finance_report }
+      it 'sets the filename' do
+        expect(response.headers['Content-Disposition']).to include('finance-report-')
+      end
+      it 'sets the filename' do
+        expect(response.headers['Content-Type']).to include('text/csv')
+      end
     end
   end
 end
