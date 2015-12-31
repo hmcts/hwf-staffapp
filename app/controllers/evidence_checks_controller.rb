@@ -2,6 +2,8 @@ class EvidenceChecksController < ApplicationController
   before_action :authenticate_user!
 
   def show
+    authorize evidence_check
+
     @application = evidence_check.application
     @confirm = Views::Confirmation::Result.new(@application)
   end

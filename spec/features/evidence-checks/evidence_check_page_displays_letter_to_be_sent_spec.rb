@@ -5,13 +5,14 @@ RSpec.feature 'Evidence check page displays letter to be sent', type: :feature d
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:office) { create :office }
+  let(:user) { create :user, office: office }
 
   before do
     login_as user
   end
 
-  let(:application) { create :application_full_remission }
+  let(:application) { create :application_full_remission, office: office }
   let(:evidence_check) { create :evidence_check, application: application }
 
   scenario 'User navigates to the evidence check page, which has all required details' do
