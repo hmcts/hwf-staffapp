@@ -36,7 +36,6 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   context 'standard user' do
-
     before(:each) { sign_in user }
 
     describe 'GET #index' do
@@ -54,44 +53,43 @@ RSpec.describe OfficesController, type: :controller do
     end
 
     describe 'GET #new' do
-      it 'returns a cancan error' do
+      it 'raises Pundit error' do
         expect {
           get :new
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
     end
 
     describe 'GET #edit' do
-      it 'returns a cancan error' do
+      it 'raises Pundit error' do
         expect {
           get :edit, id: office.to_param
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
     end
 
     describe 'POST #create' do
       context 'with valid params' do
-        it 'returns a cancan error' do
+        it 'raises Pundit error' do
           expect {
             post :create, office: valid_params
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end
 
     describe 'PUT #update' do
       context 'with valid params' do
-        it 'is unauthorised' do
+        it 'raises Pundit error' do
           expect {
             put :update, id: office.to_param, office: valid_params
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end
   end
 
   context 'as a manager' do
-
     before(:each) { sign_in manager }
 
     describe 'GET #index' do
@@ -109,10 +107,10 @@ RSpec.describe OfficesController, type: :controller do
     end
 
     describe 'GET #new' do
-      it 'returns a cancan error' do
+      it 'raises Pundit error' do
         expect {
           get :new
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
     end
 
@@ -125,20 +123,20 @@ RSpec.describe OfficesController, type: :controller do
       end
 
       context 'for a different office' do
-        it 'returns a cancan error' do
+        it 'raises Pundit error' do
           expect {
             get :edit, id: create(:office).to_param
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end
 
     describe 'POST #create' do
       context 'with valid params' do
-        it 'returns a cancan error' do
+        it 'raises Pundit error' do
           expect {
             post :create, office: valid_params
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end
