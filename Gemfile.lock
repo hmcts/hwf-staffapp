@@ -206,7 +206,7 @@ GEM
     multipart-post (2.0.0)
     nenv (0.2.0)
     netrc (0.11.0)
-    nokogiri (1.6.7)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
       nenv (~> 0.1)
@@ -422,7 +422,7 @@ DEPENDENCIES
   jquery-turbolinks
   launchy
   logstasher!
-  nokogiri (~> 1.6.7.rc4)
+  nokogiri (~> 1.6.7.1)
   paranoia (~> 2.0)
   pg
   pry-rails
