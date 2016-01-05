@@ -6,8 +6,8 @@ RSpec.describe ReportsController, type: :controller do
 
   let(:admin)     { create :admin_user }
 
-  it_behaves_like 'cancan denies access to', :index
-  it_behaves_like 'cancan denies access to', :finance_report
+  it_behaves_like 'Pundit denies access to', :index
+  it_behaves_like 'Pundit denies access to', :finance_report
 
   context 'as an admin' do
     before { sign_in admin }

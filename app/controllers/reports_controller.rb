@@ -2,16 +2,16 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    authorize! :access, :outputs
+    authorize :report
   end
 
   def finance_report
-    authorize! :access, :outputs
+    authorize :report, :show?
     @form = Forms::FinanceReport.new
   end
 
   def finance_report_generator
-    authorize! :access, :outputs
+    authorize :report, :show?
     @form = form
     if @form.valid?
       @data = FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to])
