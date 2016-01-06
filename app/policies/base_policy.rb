@@ -18,10 +18,10 @@ class BasePolicy
       @scope.all
     end
 
-    private
-
-    def admin?
-      @user.admin?
+    %i[staff manager admin].each do |role|
+      define_method("#{role}?") do
+        @user.send("#{role}?")
+      end
     end
   end
 
