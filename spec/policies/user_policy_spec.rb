@@ -73,7 +73,6 @@ RSpec.describe UserPolicy, type: :policy do
       let(:subject_user) { build_stubbed(:user, office: office) }
 
       it { is_expected.to permit_action(:show) }
-      it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:edit) }
 
       context 'when the subject_user is the manager themselves' do
@@ -93,15 +92,17 @@ RSpec.describe UserPolicy, type: :policy do
       context 'when the subject_user is not the manager themselves' do
         it { is_expected.to permit_action(:destroy) }
 
-        context 'when trying to set a role to manager' do
+        context 'when role set to manager' do
           let(:subject_user) { build_stubbed(:user, office: office, role: 'manager') }
 
+          it { is_expected.to permit_action(:create) }
           it { is_expected.to permit_action(:update) }
         end
 
-        context 'when trying to set a role to admin' do
+        context 'when role set to admin' do
           let(:subject_user) { build_stubbed(:user, office: office, role: 'admin') }
 
+          it { is_expected.not_to permit_action(:create) }
           it { is_expected.not_to permit_action(:update) }
         end
       end

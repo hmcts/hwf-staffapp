@@ -20,7 +20,7 @@ class UserPolicy < BasePolicy
   end
 
   def create?
-    (manager? && same_office?) || admin?
+    (manager? && same_office? && !setting_to_admin_role?) || admin?
   end
 
   def edit?
@@ -67,7 +67,7 @@ class UserPolicy < BasePolicy
     @record.role != 'user'
   end
 
-  def upgrade_to_admin_role?
+  def setting_to_admin_role?
     @record.role == 'admin'
   end
 
@@ -77,6 +77,6 @@ class UserPolicy < BasePolicy
 
   def manager_update?
     manager? &&
-      ((same_office? && !upgrade_to_admin_role?) || (!same_office? && !upgrade_from_user_role?))
+      ((same_office? && !setting_to_admin_role?) || (!same_office? && !upgrade_from_user_role?))
   end
 end
