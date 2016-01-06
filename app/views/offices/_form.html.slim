@@ -27,6 +27,6 @@
             .columns.small-12.end
               = b.label do
                 = b.check_box
-                = b.text
+                = "#{b.text} (#{@becs[b.value]})"
 
   .actions = f.submit class: 'button'
