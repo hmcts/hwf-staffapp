@@ -1,6 +1,4 @@
 class DeletedApplicationsController < ApplicationController
-  before_action :authenticate_user!
-
   include ProcessedViewsHelper
 
   def index

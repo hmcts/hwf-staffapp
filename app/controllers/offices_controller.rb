@@ -1,5 +1,4 @@
 class OfficesController < ApplicationController
-  before_action :authenticate_user!
   before_action :list_jurisdictions, only: [:new, :edit, :update]
 
   respond_to :html

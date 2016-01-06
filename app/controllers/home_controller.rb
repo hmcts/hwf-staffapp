@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
-
   def index
     manager_setup_progress
     load_graphs_for_admin

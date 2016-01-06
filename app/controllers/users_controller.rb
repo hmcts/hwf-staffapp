@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   respond_to :html
-  before_action :authenticate_user!
   before_action :populate_lookups, only: [:edit, :update]
 
   include FlashMessageHelper

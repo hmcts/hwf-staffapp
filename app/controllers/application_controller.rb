@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   include Pundit
+  before_action :authenticate_user!
 
   def after_invite_path_for(*)
     users_path

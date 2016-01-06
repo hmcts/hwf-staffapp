@@ -1,8 +1,6 @@
 module Applications
   # rubocop:disable ClassLength
   class ProcessController < ApplicationController
-    before_action :authenticate_user!
-
     before_action :authorise_application_update, except: :create
 
     def create

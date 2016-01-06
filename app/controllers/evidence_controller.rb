@@ -1,6 +1,4 @@
 class EvidenceController < ApplicationController
-  before_action :authenticate_user!
-
   before_action :authorise_evidence_check_update, except: :show
 
   def show

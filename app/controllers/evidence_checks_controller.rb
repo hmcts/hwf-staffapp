@@ -1,6 +1,4 @@
 class EvidenceChecksController < ApplicationController
-  before_action :authenticate_user!
-
   def show
     authorize evidence_check
 

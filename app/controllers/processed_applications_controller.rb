@@ -1,6 +1,4 @@
 class ProcessedApplicationsController < ApplicationController
-  before_action :authenticate_user!
-
   include ProcessedViewsHelper
   helper ReferenceHelper
 

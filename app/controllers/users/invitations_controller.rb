@@ -1,6 +1,5 @@
 class Users::InvitationsController < Devise::InvitationsController
   respond_to :html
-  before_action :authenticate_user!
   before_action :build_role_list, only: [:new, :create]
 
   load_and_authorize_resource User, except: [:edit, :update]

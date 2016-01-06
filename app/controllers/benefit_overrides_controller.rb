@@ -1,6 +1,4 @@
 class BenefitOverridesController < ApplicationController
-  before_action :authenticate_user!
-
   before_action :authorise_benefit_override_create
 
   def paper_evidence

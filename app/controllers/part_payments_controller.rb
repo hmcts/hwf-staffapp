@@ -1,6 +1,4 @@
 class PartPaymentsController < ApplicationController
-  before_action :authenticate_user!
-
   before_action :authorise_part_payment_update, except: :show
 
   def show
