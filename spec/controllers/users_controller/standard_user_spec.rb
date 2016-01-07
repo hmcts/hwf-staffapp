@@ -18,6 +18,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #index' do
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :index
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -27,6 +28,7 @@ RSpec.describe UsersController, type: :controller do
       context "when viewing somebody elses's profile" do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             get :show, id: test_user.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -44,6 +46,7 @@ RSpec.describe UsersController, type: :controller do
       context "when trying to edit somebody else's profile" do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             get :edit, id: test_user.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -105,6 +108,7 @@ RSpec.describe UsersController, type: :controller do
       context 'when trying to escalate their own role' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             post :update, id: user.id, user: { role: 'admin' }
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -113,6 +117,7 @@ RSpec.describe UsersController, type: :controller do
       context "when trying to edit somebody else's profile" do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             post :update, id: test_user.id, user: { name: 'random value' }
           }.to raise_error Pundit::NotAuthorizedError
         end

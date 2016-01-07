@@ -54,12 +54,14 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
+            bypass_rescue
             get :show, id: user_not_my_team.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
 
         it 'renders the index view' do
           expect {
+            bypass_rescue
             get :show, id: user_not_my_team.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -81,12 +83,14 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
+            bypass_rescue
             get :edit, id: User.last.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
 
         it 'renders the index view' do
           expect {
+            bypass_rescue
             get :edit, id: User.last.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -103,6 +107,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #deleted' do
       it 'raises a CanCan error' do
         expect {
+          bypass_rescue
           get :deleted
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -114,6 +119,7 @@ RSpec.describe UsersController, type: :controller do
         context 'when trying to escalate their own role' do
           it 'raises Pundit error' do
             expect {
+              bypass_rescue
               post :update, id: manager.id, user: { role: 'admin' }
             }.to raise_error Pundit::NotAuthorizedError
           end
@@ -134,6 +140,7 @@ RSpec.describe UsersController, type: :controller do
           context 'to admin' do
             it 'raises Pundit error' do
               expect {
+                bypass_rescue
                 post :update, id: user_on_my_team.id, user: { role: 'admin' }
               }.to raise_error Pundit::NotAuthorizedError
             end
@@ -143,6 +150,7 @@ RSpec.describe UsersController, type: :controller do
         context 'when trying to escalates a role of a user that is not their own' do
           it 'raises Pundit error' do
             expect {
+              bypass_rescue
               post :update, id: user_not_my_team.id, user: { role: 'manager' }
             }.to raise_error Pundit::NotAuthorizedError
           end

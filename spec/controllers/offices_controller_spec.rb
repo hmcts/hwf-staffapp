@@ -54,7 +54,9 @@ RSpec.describe OfficesController, type: :controller do
 
     describe 'GET #new' do
       it 'raises Pundit error' do
+        bypass_rescue
         expect {
+          bypass_rescue
           get :new
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -63,6 +65,7 @@ RSpec.describe OfficesController, type: :controller do
     describe 'GET #edit' do
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :edit, id: office.to_param
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -72,6 +75,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             post :create, office: valid_params
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -82,6 +86,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             put :update, id: office.to_param, office: valid_params
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -109,6 +114,7 @@ RSpec.describe OfficesController, type: :controller do
     describe 'GET #new' do
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :new
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -125,6 +131,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'for a different office' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             get :edit, id: create(:office).to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
@@ -135,6 +142,7 @@ RSpec.describe OfficesController, type: :controller do
       context 'with valid params' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             post :create, office: valid_params
           }.to raise_error Pundit::NotAuthorizedError
         end

@@ -4,7 +4,12 @@ shared_examples_for 'Pundit denies access to' do |view|
 
   describe "GET ##{view}" do
 
-    subject { -> { get view } }
+    subject do
+      lambda {
+        bypass_rescue
+        get view
+      }
+    end
 
     context 'they are not signed in' do
       before { get view }

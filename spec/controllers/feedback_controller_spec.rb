@@ -38,6 +38,7 @@ RSpec.describe FeedbackController, type: :controller do
     describe 'GET #index' do
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :index
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -97,6 +98,7 @@ RSpec.describe FeedbackController, type: :controller do
     describe 'GET #new' do
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :new
         }.to raise_error Pundit::NotAuthorizedError
       end
@@ -108,6 +110,7 @@ RSpec.describe FeedbackController, type: :controller do
 
       it 'raises Pundit error' do
         expect {
+          bypass_rescue
           post :create, feedback: feedback_attributes
         }.to raise_error Pundit::NotAuthorizedError
       end

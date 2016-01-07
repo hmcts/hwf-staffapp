@@ -42,6 +42,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
       context 'when manager tries to invite an admin' do
         it 'raises Pundit error' do
           expect {
+            bypass_rescue
             post :create, user: admin_invitation
           }.to raise_error Pundit::NotAuthorizedError
         end
