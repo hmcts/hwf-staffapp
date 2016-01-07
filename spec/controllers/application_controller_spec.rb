@@ -31,7 +31,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'sets flash error message' do
-        expect(flash[:alert]).to eql('You are not authorised to perform this action.')
+        expect(flash[:alert]).to eql('You don’t have permission to do this')
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'sets flash error message' do
-        expect(flash[:alert]).to eql('You are not authorised to perform this action.')
+        expect(flash[:alert]).to eql('You don’t have permission to do this')
       end
     end
   end
