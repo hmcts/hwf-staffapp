@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_after_action :verify_authorized
+
   def index
     manager_setup_progress
     load_graphs_for_admin

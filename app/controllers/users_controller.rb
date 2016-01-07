@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_after_action :verify_authorized, only: :destroy
+
   respond_to :html
   before_action :populate_lookups, only: [:edit, :update]
 

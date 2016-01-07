@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   before_action :authenticate_user!
+  after_action :verify_authorized
 
   def after_invite_path_for(*)
     users_path

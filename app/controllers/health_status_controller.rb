@@ -1,5 +1,6 @@
 class HealthStatusController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_after_action :verify_authorized
 
   def ping
     render json: Deployment.info
