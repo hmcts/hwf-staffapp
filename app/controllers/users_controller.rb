@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  skip_after_action :verify_authorized, only: :destroy
-
   respond_to :html
   before_action :populate_lookups, only: [:edit, :update]
 
@@ -38,15 +36,10 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if current_user == user
-      flash[:alert] = 'You cannot delete your own account'
-      redirect_to user_path(@user)
-    else
-      authorize user
+    authorize user
 
-      user.destroy
-      redirect_to(action: :index)
-    end
+    user.destroy
+    redirect_to(action: :index)
   end
 
   def restore
