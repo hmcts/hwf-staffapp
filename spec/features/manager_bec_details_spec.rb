@@ -17,10 +17,8 @@ RSpec.feature 'Show BEC in the jurisdiction radio buttons', type: :feature do
 
     click_link 'Change details'
 
-    manager.office.jurisdictions.each do |jurisdiction|
-      jurisdiction.business_entities.pluck(:code) do |code|
-        expect(page).to have_text("#{jurisdiction.name} (#{code})")
-      end
+    manager.office.business_entities.each do |be|
+      expect(page).to have_text("#{be.jurisdiction.display_full} (#{be.code})")
     end
   end
 end
