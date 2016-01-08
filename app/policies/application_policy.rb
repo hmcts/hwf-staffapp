@@ -28,10 +28,4 @@ class ApplicationPolicy < BasePolicy
       end
     end
   end
-
-  private
-
-  def same_office?
-    @record.office == @user.office
-  end
 end

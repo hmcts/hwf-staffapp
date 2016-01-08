@@ -16,8 +16,4 @@ class FeedbackPolicy < BasePolicy
   def same_user?
     @record.user == @user
   end
-
-  def same_office?
-    @record.office == @user.office
-  end
 end

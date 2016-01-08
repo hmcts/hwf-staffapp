@@ -71,10 +71,6 @@ class UserPolicy < BasePolicy
     @record.role == 'admin'
   end
 
-  def same_office?
-    @record.office == @user.office
-  end
-
   def manager_update?
     manager? &&
       ((same_office? && !setting_to_admin_role?) || (!same_office? && !upgrade_from_user_role?))

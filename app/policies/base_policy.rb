@@ -6,6 +6,14 @@ class BasePolicy
     @record = record
   end
 
+  module RoleMethods
+    %i[staff manager admin].each do |role|
+      define_method("#{role}?") do
+        @user.send("#{role}?")
+      end
+    end
+  end
+
   class Scope
     attr_reader :user, :scope
 
@@ -18,16 +26,16 @@ class BasePolicy
       @scope.all
     end
 
-    %i[staff manager admin].each do |role|
-      define_method("#{role}?") do
-        @user.send("#{role}?")
-      end
-    end
+    include RoleMethods
   end
 
-  %i[staff manager admin].each do |role|
-    define_method("#{role}?") do
-      @user.send("#{role}?")
-    end
+  include RoleMethods
+
+  def same_office?
+    @record.office == @user.office
+  end
+
+  def same_application_office?
+    @record.application.office == @user.office
   end
 end
