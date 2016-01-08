@@ -13,8 +13,7 @@ gem 'config'
 # authentication
 gem 'devise'
 gem 'devise_invitable'
-# roles
-gem 'cancancan', '~> 1.10'
+# authorisation
 gem 'pundit', '~> 1.0'
 
 # Use SCSS for stylesheets
