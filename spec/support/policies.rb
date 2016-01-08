@@ -11,3 +11,14 @@ RSpec::Matchers.define :permit_action do |action|
     "#{policy.class} does not forbid #{action} on #{policy.record} for #{policy.user.inspect}."
   end
 end
+
+module PolicyViewSpecHelper
+  def policy(*args)
+  end
+end
+
+RSpec.configure do |c|
+  c.before(:each, type: :view) do
+    view.extend(PolicyViewSpecHelper)
+  end
+end

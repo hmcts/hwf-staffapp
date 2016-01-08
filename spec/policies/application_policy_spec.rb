@@ -10,6 +10,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     let(:user) { build_stubbed(:user) }
 
     it { is_expected.to permit_action(:index) }
+    it { is_expected.to permit_action(:new) }
 
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:user, office: office) }
@@ -30,6 +31,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     let(:user) { build_stubbed(:manager) }
 
     it { is_expected.to permit_action(:index) }
+    it { is_expected.to permit_action(:new) }
 
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:manager, office: office) }
@@ -49,6 +51,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
   context 'for an admin' do
     let(:user) { build_stubbed(:admin_user) }
 
+    it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
