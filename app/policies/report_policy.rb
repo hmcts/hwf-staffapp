@@ -6,4 +6,8 @@ class ReportPolicy < BasePolicy
   def show?
     index?
   end
+
+  def graphs?
+    admin?
+  end
 end
