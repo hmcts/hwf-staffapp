@@ -6,8 +6,9 @@ RSpec.describe 'offices/edit', type: :view do
 
   let(:manager)       { create(:manager) }
   let(:admin)         { create(:admin_user) }
-  let(:office)        { assign(:office, create(:office)) }
-  let(:jurisdictions) { assign(:jurisdictions, create_list(:jurisdiction, 4)) }
+  let!(:office)        { assign(:office, create(:office)) }
+  let!(:jurisdictions) { assign(:jurisdictions, office.jurisdictions) }
+  let!(:becs) { assign(:becs, office.business_entities) }
 
   shared_examples 'an elevated user' do
     it 'renders form and jurisdiction list' do
@@ -22,8 +23,6 @@ RSpec.describe 'offices/edit', type: :view do
   context 'as a manager' do
     before(:each) do
       sign_in manager
-      jurisdictions
-      office
       render
     end
 
@@ -45,8 +44,6 @@ RSpec.describe 'offices/edit', type: :view do
   context 'as an admin' do
     before(:each) do
       sign_in admin
-      jurisdictions
-      office
       render
     end
 

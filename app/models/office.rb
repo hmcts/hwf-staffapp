@@ -3,6 +3,7 @@ class Office < ActiveRecord::Base
   has_many :applications
   has_many :office_jurisdictions
   has_many :jurisdictions, through: :office_jurisdictions
+  has_many :business_entities
 
   scope :sorted, -> { all.order(:name) }
   scope :non_digital, -> { where.not(name: 'Digital') }
