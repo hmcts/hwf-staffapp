@@ -12,9 +12,10 @@ table
       tr
         td = link_to office.name, office
         td.center = office.jurisdictions.count
-        - if can? :update, :office
+        - if policy(office).edit?
           td = link_to 'Change details', edit_office_path(office)
 
 br
 
-= link_to 'New Office', new_office_path if can? :create, :office
+- if policy(:office).new?
+  = link_to 'New Office', new_office_path
