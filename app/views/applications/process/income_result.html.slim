@@ -5,7 +5,7 @@ header
 
 .row
   .small-12.medium-8.large-5.columns
-    #calculator.callout class="callout-#{@application.outcome ? @application.outcome : 'error'}"
+    #result.callout class="callout-#{@application.outcome ? @application.outcome : 'error'}"
       h3.bold =t("remissions.#{@application.outcome ? @application.outcome : 'error'}", amount_to_pay: number_to_currency(@application.amount_to_pay.floor, precision: 0)).html_safe
 
     div

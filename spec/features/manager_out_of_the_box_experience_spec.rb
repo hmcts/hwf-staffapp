@@ -5,6 +5,9 @@ require 'rails_helper'
 
 RSpec.feature 'Manager has to setup their office and preferences', type: :feature do
 
+  let(:jurisdictions) { create_list :jurisdiction, 3 }
+  let(:office) { create(:office, jurisdictions: jurisdictions) }
+
   scenario 'Signing in for second time or later and is redirected to dashboard' do
     manager_has_signed_in_before
     when_they_sign_in
@@ -33,11 +36,11 @@ RSpec.feature 'Manager has to setup their office and preferences', type: :featur
   end
 
   def manager_has_signed_in_before
-    @manager = create :manager, sign_in_count: 2
+    @manager = create :manager, sign_in_count: 2, jurisdiction_id: jurisdictions[1].id, office: office
   end
 
   def manager_has_not_signed_in_before
-    @manager = create :manager, sign_in_count: 0
+    @manager = create :manager, sign_in_count: 0, jurisdiction_id: jurisdictions[1].id, office: office
   end
 
   def when_they_sign_in
@@ -49,7 +52,8 @@ RSpec.feature 'Manager has to setup their office and preferences', type: :featur
   alias_method :and_they_sign_in, :when_they_sign_in
 
   def when_they_setup_the_office
-    check Jurisdiction.first.name
+    jurisdiction = Jurisdiction.first
+    check "#{jurisdiction.display_full} (#{BusinessEntity.where(jurisdiction_id: jurisdiction.id).first.code})"
     click_button 'Update Office'
   end
 

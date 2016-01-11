@@ -17,13 +17,13 @@
     color: $page-colour;
     margin: 0;
   }
-  &.not-received, &.no, &.callout-none {
+  &.not-received, &.no, &.callout-none, &.callout-error {
     background-color: $error-colour;
   }
   &.received, &.yes, &.callout-full {
     background-color: $turquoise;
   }
-  &.callout-part {
+  &.callout-part, &.callout-evidence-check {
     background: $orange;
   }
   &.evidence-check-reference {
@@ -32,16 +32,5 @@
   p
   {
     margin:0;
-  }
-}
-
-@media only screen and (min-width: upper-bound($medium-range)) {
-  #dwp_data {
-    .row {
-      line-height: 3em;
-      .table-label {
-        color: #666666;
-      }
-    }
   }
 }

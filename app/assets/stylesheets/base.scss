@@ -167,7 +167,6 @@ header {
   img{
     width: auto;
     padding: 0;
-    float: right;
   }
 }
 
@@ -200,14 +199,6 @@ header {
 a.button.alternative{
   background-color: $light-blue;
 }
-
-.accordion-navigation > a:after {
-  content: "⬇︎";
-  padding-left: 5px;
-  float: right;
-  font-size: 20px; }
-.accordion-navigation.active > a:after {
-  content: "⬆︎"; }
 
 .guidance{
   border-top: 5px solid $govuk-blue;

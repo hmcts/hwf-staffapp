@@ -12,9 +12,8 @@
  *
  *= require foundation_and_overrides
  *= require navigation
- *= require dwp_checks
+ *= require result_bar
  *= require users
- *= require r2_calculator
  *= require result_tables
  *= require summary
  *= require feedback
@@ -22,8 +21,8 @@
  *= require buttons
  *= require application_form
  *= require base
- *= require evidence_check.scss
- *= require evidence.scss
+ *= require evidence_check
+ *= require evidence
  *= require form_elements
  *= require details
  *= require phase_banner
