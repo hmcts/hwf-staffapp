@@ -64,7 +64,6 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.1)
-    cancancan (1.13.1)
     capybara (2.5.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -224,6 +223,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-livereload (0.3.16)
       rack
@@ -396,7 +397,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
-  cancancan (~> 1.10)
   capybara
   capybara-webkit
   chartkick
@@ -426,6 +426,7 @@ DEPENDENCIES
   paranoia (~> 2.0)
   pg
   pry-rails
+  pundit (~> 1.0)
   rack-livereload
   rails (= 4.2.5)
   rails-i18n (~> 4.0.0)

@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe EvidenceController, type: :controller do
   include Devise::TestHelpers
 
-  let(:user) { create :user, office: create(:office) }
-  let(:application) { create :application }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
+  let(:application) { create :application, office: office }
   let(:evidence) { create :evidence_check, application_id: application.id }
 
   before do
@@ -261,7 +262,6 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'POST #summary_save' do
     let(:resolver) { double(complete: nil) }
-    let(:evidence) { create :evidence_check }
 
     context 'as a signed out user' do
       before(:each) { post :summary_save, id: evidence }

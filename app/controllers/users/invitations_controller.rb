@@ -1,44 +1,37 @@
-class Users::InvitationsController < Devise::InvitationsController
-  respond_to :html
-  before_action :authenticate_user!
-  before_action :build_role_list, only: [:new, :create]
+module Users
+  class InvitationsController < Devise::InvitationsController
+    respond_to :html
+    before_action :build_role_list, only: [:new, :create]
 
-  load_and_authorize_resource User, except: [:edit, :update]
+    skip_before_action :authenticate_user!, only: [:edit, :update, :destroy]
+    skip_after_action :verify_authorized, only: [:edit, :update, :destroy]
 
-  def new
-    @user = User.new
-    render :new
-  end
+    def new
+      @user = User.new
+      authorize @user
 
-  def create
-    if user_not_admin_and_role_is_admin?
-      flash[:alert] = t('error_messages.manager_cant_invite_admin')
-      redirect_to new_user_invitation_path
-    else
-      self.resource = invite_resource
-      respond_with resource, location: after_invite_path_for(resource)
+      render :new
     end
-  end
 
-  private
+    def create
+      user_for_authorisation = User.new(invite_params)
+      authorize user_for_authorisation
 
-  def build_role_list
-    if current_user.admin?
-      @roles = User::ROLES
-    else
-      @roles = User::ROLES - %w[admin]
+      super
     end
-  end
 
-  def invite_resource
-    resource_class.invite!(invite_params, current_inviter)
-  end
+    private
 
-  def invite_params
-    params.require(:user).permit(:email, :role, :name, :office_id)
-  end
+    def build_role_list
+      if current_user.admin?
+        @roles = User::ROLES
+      else
+        @roles = User::ROLES - %w[admin]
+      end
+    end
 
-  def user_not_admin_and_role_is_admin?
-    !current_inviter.role.eql?('admin') && invite_params['role'].eql?('admin')
+    def invite_params
+      params.require(:user).permit(:email, :role, :name, :office_id)
+    end
   end
 end

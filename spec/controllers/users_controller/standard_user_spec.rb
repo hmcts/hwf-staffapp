@@ -16,18 +16,21 @@ RSpec.describe UsersController, type: :controller do
     it_behaves_like 'a user regardless of role'
 
     describe 'GET #index' do
-      it 'generates access denied error' do
+      it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :index
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
     end
 
     describe 'GET #show' do
       context "when viewing somebody elses's profile" do
-        it 'redirects to the home page' do
-          get :show, id: test_user.to_param
-          expect(response).to redirect_to(root_path)
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            get :show, id: test_user.to_param
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
@@ -41,9 +44,11 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #edit' do
       context "when trying to edit somebody else's profile" do
-        it 'redirects to the home page' do
-          get :edit, id: test_user.to_param
-          expect(response).to redirect_to(root_path)
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            get :edit, id: test_user.to_param
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
@@ -101,21 +106,20 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'when trying to escalate their own role' do
-
-        before do
-          post :update, id: user.id, user: { role: 'admin' }
-          user.reload
-        end
-
-        it "doesn't escalates their role" do
-          expect(user.role).not_to eq 'admin'
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            post :update, id: user.id, user: { role: 'admin' }
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
       context "when trying to edit somebody else's profile" do
-        it "doesn't allow editing of the user details" do
-          post :update, id: test_user.id, user: { name: 'random value' }
-          expect redirect_to user_path(user.id)
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            post :update, id: test_user.id, user: { name: 'random value' }
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end

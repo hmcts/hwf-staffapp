@@ -3,8 +3,14 @@ require 'rails_helper'
 RSpec.describe BenefitOverridesController, type: :controller do
   include Devise::TestHelpers
 
-  let(:application) { create :application }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
+  let(:application) { create :application, office: office }
   let(:benefit_override) { build_stubbed(:benefit_override) }
+
+  before do
+    sign_in(user)
+  end
 
   describe 'GET #paper_evidence' do
     before { get :paper_evidence, application_id: application.id }

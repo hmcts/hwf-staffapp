@@ -4,7 +4,7 @@ FactoryGirl.define do
     ideas nil
     rating nil
     help nil
-    user_id 1
-    office_id 1
+    user
+    office
   end
 end

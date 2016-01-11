@@ -1,7 +1,9 @@
 class EvidenceController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authorise_evidence_check_update, except: :show
 
   def show
+    authorize evidence
+
     processing_details
     application_overview
   end
@@ -64,6 +66,10 @@ class EvidenceController < ApplicationController
   end
 
   private
+
+  def authorise_evidence_check_update
+    authorize evidence, :update?
+  end
 
   def evidence
     @evidence ||= EvidenceCheck.find(params[:id])

@@ -1,49 +1,58 @@
 class OfficesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_office, only: [:show, :edit, :update, :destroy]
   before_action :list_jurisdictions, only: [:new, :edit, :update]
-
-  load_and_authorize_resource
 
   respond_to :html
 
   def index
+    authorize :office
+
     @offices = Office.sorted
     respond_with(@offices)
   end
 
   def show
-    respond_with(@office)
+    authorize office
+
+    respond_with(office)
   end
 
   def new
     @office = Office.new
+    authorize @office
+
     respond_with(@office)
   end
 
   def edit
+    authorize office
+
     @becs = Hash[@office.business_entities.map { |be| [be.jurisdiction_id, be.code] }]
   end
 
   def create
     @office = Office.new(office_params)
+    authorize @office
+
     @office.save
     respond_with(@office)
     flash[:notice] = 'Office was successfully created'
   end
 
   def update
-    if @office.update(office_params) && manager_setup.in_progress?
+    office.assign_attributes(office_params)
+    authorize office
+
+    if office.save && manager_setup.in_progress?
       redirect_to out_of_the_box_redirect
     else
-      respond_with(@office)
+      respond_with(office)
     end
   end
 
   private
 
-  def set_office
-    @office = Office.find(params[:id])
+  def office
+    @office ||= Office.find(params[:id])
   end
 
   def office_params

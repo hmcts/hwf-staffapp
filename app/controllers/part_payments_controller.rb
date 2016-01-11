@@ -1,5 +1,9 @@
 class PartPaymentsController < ApplicationController
+  before_action :authorise_part_payment_update, except: :show
+
   def show
+    authorize part_payment
+
     @processing_details = Views::ProcessingDetails.new(part_payment)
     @overview = Views::ApplicationOverview.new(application)
     @result = Views::ApplicationResult.new(application)
@@ -57,6 +61,10 @@ class PartPaymentsController < ApplicationController
 
   def application
     part_payment.application
+  end
+
+  def authorise_part_payment_update
+    authorize part_payment, :update?
   end
 
   def application_overview

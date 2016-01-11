@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     admin? || manager?
   end
 
+  def staff?
+    role == 'user'
+  end
+
   def admin?
     role == 'admin'
   end

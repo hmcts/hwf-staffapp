@@ -4,7 +4,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   include Devise::TestHelpers
 
   let(:user)          { create :user }
-  let(:application) { build_stubbed(:application) }
+  let(:application) { build_stubbed(:application, office: user.office) }
 
   let(:personal_information_form) { double }
   let(:application_details_form) { double }
@@ -27,16 +27,17 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:builder) { double(create: application) }
+    let(:builder) { double(build: application) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(builder)
+      allow(application).to receive(:save)
 
       post :create
     end
 
     it 'creates a new application' do
-      expect(builder).to have_received(:create)
+      expect(application).to have_received(:save)
     end
 
     it 'redirects to the personal information page for that application' do
@@ -281,7 +282,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'GET #benefits_result' do
-    let(:application) { build_stubbed(:application, benefits: benefits) }
+    let(:application) { build_stubbed(:application, office: user.office, benefits: benefits) }
 
     before do
       get :benefits_result, application_id: application.id
@@ -313,7 +314,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'GET #income' do
-    let(:application) { build_stubbed(:application, benefits: benefits) }
+    let(:application) { build_stubbed(:application, office: user.office, benefits: benefits) }
 
     before do
       get :income, application_id: application.id
@@ -380,7 +381,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'GET #income_result' do
-    let(:application) { build_stubbed(:application, application_type: type) }
+    let(:application) { build_stubbed(:application, office: user.office, application_type: type) }
 
     before do
       get :income_result, application_id: application.id
@@ -454,7 +455,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   describe 'POST #summary_save' do
     let(:current_time) { Time.zone.now }
     let(:user) { create :user }
-    let(:application) { create :application_full_remission }
+    let(:application) { create :application_full_remission, office: user.office }
     let(:resolver) { double(complete: nil) }
 
     before do

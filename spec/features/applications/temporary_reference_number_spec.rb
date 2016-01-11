@@ -5,8 +5,9 @@ RSpec.feature 'Reference number is displayed', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: create(:office) }
-  let(:application) { create(:application, :confirm, reference: 'AB123-14-0001') }
+  let(:office) { create(:office) }
+  let(:user) { create :user, office: office }
+  let(:application) { create(:application, :confirm, office: office, reference: 'AB123-14-0001') }
 
   context 'before the set reference_date is reached' do
     context 'as a signed in user', js: true do

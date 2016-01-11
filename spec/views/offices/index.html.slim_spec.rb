@@ -1,44 +1,49 @@
 require 'rails_helper'
 
 RSpec.describe "offices/index", type: :view do
-  include Devise::TestHelpers
 
-  let(:user)          { create :user }
-  let(:admin_user)    { create :admin_user }
+  let(:offices) { create_list(:office, 2) }
 
-  before(:each) do
-    assign(:offices, create_list(:office, 2))
+  let(:office_new?) { false }
+
+  before do
+    assign(:offices, offices)
+    allow(view).to receive(:policy).with(:office).and_return(double(new?: office_new?))
+    allow(view).to receive(:policy).with(offices[0]).and_return(double(edit?: true))
+    allow(view).to receive(:policy).with(offices[1]).and_return(double(edit?: false))
+
+    render
   end
 
-  context 'logged in user' do
+  subject { rendered }
 
-    before(:each) do
-      sign_in user
-      render
+  describe 'Link to change office details' do
+    context 'when user has permission to change the office\'s details' do
+      it 'is rendered' do
+        is_expected.to have_xpath('//tbody/tr[1]/td[3]/a')
+      end
     end
 
-    it 'not see the New Office link' do
-      expect(rendered).to_not have_link('New Office', href: new_office_path)
-    end
-
-    it 'not see the edit or destroy links' do
-      expect(rendered).to_not have_css('a', text: 'Edit')
+    context 'when user does not have permission to chang the office\'s details' do
+      it 'is not rendered' do
+        is_expected.not_to have_xpath('//tbody/tr[2]/td[3]/a')
+      end
     end
   end
 
-  context 'logged in as admin' do
+  describe 'The link to create office' do
+    context 'when user has permission to create new office' do
+      let(:office_new?) { true }
 
-    before(:each) do
-      sign_in admin_user
-      render
+      it 'is rendered' do
+        expect(rendered).to have_link('New Office')
+      end
     end
 
-    it 'see the New office link' do
-      expect(rendered).to have_link('New Office', href: new_office_path)
-    end
-
-    it 'see the edit and destroy links' do
-      expect(rendered).to have_css('a', text: 'Change details', count: 2)
+    context 'when user does not have permission to create new office' do
+      it 'is not rendered' do
+        expect(rendered).not_to have_link('New Office')
+      end
     end
   end
 end

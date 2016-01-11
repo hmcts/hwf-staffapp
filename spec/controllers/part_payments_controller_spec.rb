@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe PartPaymentsController, type: :controller do
   include Devise::TestHelpers
 
-  let(:part_payment) { build_stubbed(:part_payment) }
+  let(:office) { create :office }
+  let(:user) { create :staff, office: office }
+  let(:application) { create(:application, office: office) }
+  let(:part_payment) { create(:part_payment, application: application) }
 
   let(:processing_details) { double }
   let(:application_overview) { double }
@@ -12,6 +15,8 @@ RSpec.describe PartPaymentsController, type: :controller do
   let(:part_payment_result) { double }
 
   before do
+    sign_in user
+
     allow(PartPayment).to receive(:find).with(part_payment.id.to_s).and_return(part_payment)
     allow(Views::ProcessingDetails).to receive(:new).with(part_payment).and_return(processing_details)
     allow(Views::ApplicationOverview).to receive(:new).with(part_payment.application).and_return(application_overview)
@@ -109,14 +114,11 @@ RSpec.describe PartPaymentsController, type: :controller do
 
   describe 'POST #summary_save' do
     let(:resolver) { double(complete: nil) }
-    let(:user) { create :user }
-    let(:part_payment) { create(:part_payment) }
 
     before do
       expect(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
 
-      sign_in user
-      get :summary_save, id: part_payment
+      post :summary_save, id: part_payment
     end
 
     it 'returns the correct status code' do
@@ -164,13 +166,10 @@ RSpec.describe PartPaymentsController, type: :controller do
   describe 'POST #return_application' do
     let(:resolver_result) { true }
     let(:resolver) { double(return: resolver_result) }
-    let(:user) { create :user }
-    let(:part_payment) { create(:part_payment) }
 
     before do
       expect(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
 
-      sign_in user
       post :return_application, id: part_payment
     end
 

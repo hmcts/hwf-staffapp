@@ -4,8 +4,9 @@ RSpec.describe FeedbackController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:user)          { create :user, office: create(:office) }
-  let(:admin)         { create :admin_user, office: create(:office) }
+  let(:office) { create(:office) }
+  let(:user)          { create :user, office: office }
+  let(:admin)         { create :admin_user, office: office }
 
   context 'as a signed out user' do
     describe 'GET #new' do
@@ -32,20 +33,14 @@ RSpec.describe FeedbackController, type: :controller do
   end
 
   context 'as a signed in user' do
-
     before(:each) { sign_in user }
 
     describe 'GET #index' do
-      it 'returns http redirect' do
+      it 'raises Pundit error' do
         expect {
+          bypass_rescue
           get :index
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
-      end
-
-      it 'redirects to the sign in page' do
-        expect {
-          get :index
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
     end
 
@@ -61,21 +56,22 @@ RSpec.describe FeedbackController, type: :controller do
     end
 
     describe 'POST #create' do
+      let(:feedback_attributes) { attributes_for(:feedback, user: user, office: office) }
+
       it 'returns http success' do
-        post :create, feedback: attributes_for(:feedback)
+        post :create, feedback: feedback_attributes
         expect(response).to redirect_to(root_path)
       end
 
       it 'creates a new feedback entry' do
         expect {
-          post :create, feedback: attributes_for(:feedback)
+          post :create, feedback: feedback_attributes
         }.to change(Feedback, :count).by(1)
       end
     end
   end
 
   context 'as a signed in admin' do
-
     before(:each) { sign_in admin }
     let(:feedback) { build(:feedback, ideas: 'None') }
 
@@ -100,27 +96,25 @@ RSpec.describe FeedbackController, type: :controller do
     end
 
     describe 'GET #new' do
-      before(:each) { get :new }
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
+      it 'raises Pundit error' do
+        expect {
+          bypass_rescue
+          get :new
+        }.to raise_error Pundit::NotAuthorizedError
       end
 
-      it 'renders the correct template' do
-        expect(response).to render_template(:new)
-      end
     end
 
     describe 'POST #create' do
-      it 'returns http success' do
-        post :create, feedback: attributes_for(:feedback)
-        expect(response).to redirect_to(root_path)
+      let(:feedback_attributes) { attributes_for(:feedback, user: admin, office: office) }
+
+      it 'raises Pundit error' do
+        expect {
+          bypass_rescue
+          post :create, feedback: feedback_attributes
+        }.to raise_error Pundit::NotAuthorizedError
       end
 
-      it 'creates a new feedback entry' do
-        expect {
-          post :create, feedback: attributes_for(:feedback)
-        }.to change(Feedback, :count).by(1)
-      end
     end
   end
 end

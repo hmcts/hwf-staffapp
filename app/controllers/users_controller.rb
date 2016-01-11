@@ -1,36 +1,32 @@
 class UsersController < ApplicationController
   respond_to :html
-  before_action :authenticate_user!
-  before_action :find_user, only: [:edit, :show, :update, :destroy]
-  before_action :find_deleted_user, only: [:restore]
   before_action :populate_lookups, only: [:edit, :update]
-  load_and_authorize_resource
 
   include FlashMessageHelper
 
   def index
-    if current_user.admin?
-      @users = User.sorted_by_email
-    elsif current_user.manager?
-      @users = User.by_office(current_user.office_id).where.not(role: 'admin').sorted_by_email
-    end
+    authorize :user
+
+    @users = policy_scope(User).sorted_by_email
   end
 
   def deleted
-    authorize! :list_deleted, User
-    @users = User.only_deleted.sorted_by_email
+    authorize :user, :list_deleted?
+    @users = policy_scope(User).only_deleted.sorted_by_email
   end
 
   def edit
-    user_or_redirect
+    authorize user
   end
 
   def show
-    user_or_redirect
+    authorize user
   end
 
   def update
-    update_successful = @user.update_attributes(user_params)
+    authorise_and_assign_update
+
+    update_successful = user.save
     if update_successful && manager_setup.in_progress?
       redirect_to root_path
     else
@@ -40,21 +36,27 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if UserManagement.new(current_user, @user).user_themselves?
-      flash[:alert] = 'You cannot delete your own account'
-      redirect_to user_path(@user)
-    else
-      @user.destroy
-      redirect_to users_path
-    end
+    authorize user
+
+    user.destroy
+    redirect_to(action: :index)
   end
 
   def restore
-    @user.restore
+    authorize deleted_user
+    deleted_user.restore
     redirect_to redirect_after_restore
   end
 
   protected
+
+  def user
+    @user ||= User.find(params[:id])
+  end
+
+  def deleted_user
+    @user ||= User.only_deleted.find(params[:id])
+  end
 
   def flash_notices_for_update(update_successful)
     flash[:notice] = 'User updated' if update_successful
@@ -62,14 +64,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    all_params   = [:name, :office_id, :jurisdiction_id, :role]
-    all_but_role = [:name, :office_id, :jurisdiction_id]
-
-    if UserManagement.new(current_user, @user).manager_cant_escalate_to_admin?(params[:user][:role])
-      params.require(:user).permit(all_params)
-    else
-      params.require(:user).permit(all_but_role)
-    end
+    params.require(:user).permit([:name, :office_id, :jurisdiction_id, :role])
   end
 
   def user_transfer_notice
@@ -80,14 +75,6 @@ class UsersController < ApplicationController
       contact: format_managers_contacts(office.managers))
   end
 
-  def find_user
-    @user = User.find(params[:id])
-  end
-
-  def find_deleted_user
-    @user = User.only_deleted.find(params[:id])
-  end
-
   def populate_lookups
     if current_user.admin?
       @roles = User::ROLES
@@ -95,7 +82,7 @@ class UsersController < ApplicationController
       @roles = User::ROLES - %w[admin]
     end
     @offices = Office.all
-    @jurisdictions = @user.office.jurisdictions
+    @jurisdictions = user.office.jurisdictions
   end
 
   def user_or_redirect
@@ -114,5 +101,14 @@ class UsersController < ApplicationController
 
   def manager_setup
     @manager_setup ||= ManagerSetup.new(current_user, session)
+  end
+
+  def authorise_and_assign_update
+    # this double authorisation is unusual, but I didn't find a better solution for making sure
+    # that managers can't edit users from other offices, because they can transfer users to
+    # other offices by this update
+    authorize user, :edit?
+    user.assign_attributes(user_params)
+    authorize user, :update?
   end
 end

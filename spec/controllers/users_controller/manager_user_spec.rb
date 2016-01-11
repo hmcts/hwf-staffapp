@@ -54,14 +54,16 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
+            bypass_rescue
             get :show, id: user_not_my_team.to_param
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
 
         it 'renders the index view' do
           expect {
+            bypass_rescue
             get :show, id: user_not_my_team.to_param
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
     end
@@ -81,14 +83,16 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user not in their office' do
         it 'returns a redirect code' do
           expect {
+            bypass_rescue
             get :edit, id: User.last.to_param
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
 
         it 'renders the index view' do
           expect {
+            bypass_rescue
             get :edit, id: User.last.to_param
-          }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+          }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
@@ -103,8 +107,9 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #deleted' do
       it 'raises a CanCan error' do
         expect {
+          bypass_rescue
           get :deleted
-        }.to raise_error CanCan::AccessDenied, 'You are not authorized to access this page.'
+        }.to raise_error Pundit::NotAuthorizedError
       end
 
     end
@@ -112,45 +117,42 @@ RSpec.describe UsersController, type: :controller do
 
       context 'role escalation' do
         context 'when trying to escalate their own role' do
-          before do
-            post :update, id: manager.id, user: { role: 'admin' }
-            manager.reload
-          end
-
-          it "doesn't escalates their role" do
-            expect(manager.role).not_to eq 'admin'
+          it 'raises Pundit error' do
+            expect {
+              bypass_rescue
+              post :update, id: manager.id, user: { role: 'admin' }
+            }.to raise_error Pundit::NotAuthorizedError
           end
         end
 
-        context "when trying to escalate their user's role" do
+        context "when trying to escalate their office's user role" do
           context 'to manager' do
             before do
               post :update, id: user_on_my_team.id, user: { role: 'manager' }
               user_on_my_team.reload
             end
 
-            it 'does escalates their role' do
+            it 'does escalate their role' do
               expect(user_on_my_team.role).to eq 'manager'
             end
           end
 
           context 'to admin' do
-            before do
-              post :update, id: user_on_my_team.id, user: { role: 'admin' }
-              user_on_my_team.reload
-            end
-
-            it "doesn't escalates their role" do
-              expect(user_on_my_team.role).to eq 'user'
+            it 'raises Pundit error' do
+              expect {
+                bypass_rescue
+                post :update, id: user_on_my_team.id, user: { role: 'admin' }
+              }.to raise_error Pundit::NotAuthorizedError
             end
           end
         end
 
         context 'when trying to escalates a role of a user that is not their own' do
-          it "doesn't escalates their role" do
+          it 'raises Pundit error' do
             expect {
+              bypass_rescue
               post :update, id: user_not_my_team.id, user: { role: 'manager' }
-            }.to raise_error CanCan::AccessDenied, 'You are not authorized to manage this user.'
+            }.to raise_error Pundit::NotAuthorizedError
           end
         end
       end

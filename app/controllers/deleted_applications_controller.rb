@@ -1,15 +1,17 @@
 class DeletedApplicationsController < ApplicationController
-  before_action :authenticate_user!
-
   include ProcessedViewsHelper
 
   def index
-    @applications = Query::DeletedApplications.new(current_user).find.map do |application|
+    authorize :application
+
+    @applications = applications.map do |application|
       Views::ApplicationList.new(application)
     end
   end
 
   def show
+    authorize application
+
     assign_views
   end
 
@@ -17,5 +19,9 @@ class DeletedApplicationsController < ApplicationController
 
   def application
     @application ||= Application.find(params[:id])
+  end
+
+  def applications
+    @applications ||= policy_scope(Query::DeletedApplications.new(current_user).find)
   end
 end

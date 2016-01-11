@@ -182,17 +182,13 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'DELETE #destroy' do
-      context 'when viewing themselves' do
-        before(:each) { get :destroy, id: admin_user.to_param }
-
-        it 'displays a flash message' do
-          expect(flash[:alert]).to be_present
+      context 'when deleting themselves' do
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            delete :destroy, id: admin_user.to_param
+          }.to raise_error Pundit::NotAuthorizedError
         end
-
-        it 'displays the error description in the flash message' do
-          expect(flash[:alert]).to eql('You cannot delete your own account')
-        end
-
       end
 
       context 'deleting another user' do

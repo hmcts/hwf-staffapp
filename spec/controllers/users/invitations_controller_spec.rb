@@ -39,11 +39,13 @@ RSpec.describe Users::InvitationsController, type: :controller do
         expect(invited_user['invited_by_id']).to eq manager_user.id
       end
 
-      it 'does not allow you to invite admins as a manager' do
-        post :create, user: admin_invitation
-        expect(response).to redirect_to(new_user_invitation_path)
-        get :new
-        expect(response.body).to include 'You cannot create an admin account'
+      context 'when manager tries to invite an admin' do
+        it 'raises Pundit error' do
+          expect {
+            bypass_rescue
+            post :create, user: admin_invitation
+          }.to raise_error Pundit::NotAuthorizedError
+        end
       end
     end
 

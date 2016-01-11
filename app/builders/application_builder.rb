@@ -6,8 +6,8 @@ class ApplicationBuilder
     @user = current_user
   end
 
-  def create
-    Application.create(
+  def build
+    Application.new(
       office_id: @user.office_id,
       user_id: @user.id,
       applicant: build_applicant,

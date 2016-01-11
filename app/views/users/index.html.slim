@@ -1,32 +1,36 @@
 h2 Staff
 
 table
-  tr
-    th Full name
-    th Email
-    th Role
-    th Office
-    th Main jurisdiction
-    th &nbsp;
-
-  -@users.each do |user|
+  thead
     tr
-      td
-        = link_to user_path(user) do
-          =user.name
-      td
-        = mail_to user.email
-      td
-        =user.role.humanize
-      td =user.office.name if user.office.present?
-      td =user.jurisdiction.display if user.jurisdiction.present?
-      td =link_to 'Change details', edit_user_path(user)
+      th Full name
+      th Email
+      th Role
+      th Office
+      th Main jurisdiction
+      th &nbsp;
+  tbody
+    -@users.each do |user|
+      tr
+        td
+          = link_to user_path(user) do
+            =user.name
+        td
+          = mail_to user.email
+        td
+          =user.role.humanize
+        td =user.office.name if user.office.present?
+        td =user.jurisdiction.display if user.jurisdiction.present?
+        td
+          - if policy(user).edit?
+            =link_to 'Change details', edit_user_path(user)
 
-.row.pad-top-fifteen-px
-  .columns.small-12
-    =link_to 'Add staff', new_user_invitation_path
+- if policy(:user).new?
+  .row.pad-top-fifteen-px
+    .columns.small-12
+      =link_to 'Add staff', new_user_invitation_path
 
--if current_user.admin?
+- if policy(:user).list_deleted?
   .row.pad-top-fifteen-px
     .columns.small-12
       =link_to 'List deleted users', deleted_users_path
