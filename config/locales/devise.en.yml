@@ -25,6 +25,7 @@ en-GB:
         someone_requested_reset: "We received a request to change your password."
         guide: "To do this, copy and paste the link below into a Firefox browser window: "
         link_text: "change your password."
+        warning: "You need to change your password within the next 6 hours, otherwise you'll have to make a new request."
         ignore_this: "If you didn't request this change, please ignore this email."
       unlock_instructions:
         subject: "Unlock instructions"
