@@ -13,4 +13,10 @@ class Office < ActiveRecord::Base
   def managers
     users.where(office_id: id, role: 'manager')
   end
+
+  def business_entities
+    BusinessEntity.where(office_id: id).
+      where('valid_to IS NULL').
+      order(:jurisdiction_id)
+  end
 end

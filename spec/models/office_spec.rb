@@ -37,4 +37,20 @@ RSpec.describe Office, type: :model do
       expect(office.managers.count).to eql 1
     end
   end
+
+  describe 'business_entities' do
+    let(:office) { create :office }
+    subject { office.business_entities.count }
+
+    context 'before editing' do
+      it { is_expected.to eq 2 }
+    end
+
+    context 'after "deleting" one' do
+      let(:business_entities) { BusinessEntity.where(office_id: office.id) }
+      before { business_entities.first.update_attribute(:valid_to, Time.zone.now) }
+
+      it { is_expected.to eq 1 }
+    end
+  end
 end
