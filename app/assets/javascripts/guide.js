@@ -1,4 +1,4 @@
-var FR = {};
+var FR = FR || {};
 
 FR.equalHeightBoxes = function(wrapper, panel) {
   var panels = $(wrapper).find(panel);

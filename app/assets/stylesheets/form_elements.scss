@@ -5,3 +5,8 @@ input[type=text]{
     background-color: $grey-3;
   }
 }
+
+input.decoy {
+  // used to prevent browser autofill
+  display: none;
+}
