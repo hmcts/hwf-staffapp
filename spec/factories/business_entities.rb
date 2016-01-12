@@ -4,5 +4,6 @@ FactoryGirl.define do
     jurisdiction
     code { 'SD123' }
     name { 'Special division' }
+    valid_from Time.zone.today
   end
 end
