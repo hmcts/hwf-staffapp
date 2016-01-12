@@ -105,18 +105,9 @@ module Applications
 
       if @form.save
         calculate_income
-        redirect_to(action: :income_result)
+        redirect_to(action: :summary)
       else
         render :income
-      end
-    end
-
-    def income_result
-      if application.application_type == 'income'
-        @application = application
-        render :income_result
-      else
-        redirect_to(application_summary_path(application))
       end
     end
 

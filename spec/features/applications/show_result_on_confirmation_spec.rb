@@ -94,7 +94,6 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
           fill_in 'application_children', with: '3'
           fill_in 'application_income', with: '1200'
           click_button 'Next'
-          click_link 'Next'
         end
 
         scenario 'the summary page shows the income data' do

@@ -124,14 +124,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                       click_button 'Next'
                     end
 
-                    scenario 'income result is shown with partial message' do
-                      expect(page).to have_xpath('//h2', text: 'Income')
-                      expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £85 towards the fee')
-                    end
-
-                    context 'after confirming income result' do
-                      before { click_link 'Next' }
-
+                    context 'on summary page' do
                       scenario 'the summary page is shown with correct display' do
                         expect(page).to have_xpath('//h2', text: 'Check details')
                         expect(page).to have_xpath('//h4', text: 'Savings and investments')
