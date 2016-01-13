@@ -12,6 +12,7 @@
 }
 
 .waiting-for-evidence, .waiting-for-part_payment,
-table.processed-applications, table.deleted-applications {
+table.completed-applications, table.processed-applications,
+table.deleted-applications {
   width: 100%;
 }

@@ -61,19 +61,17 @@ RSpec.describe "home/index.html.slim", type: :view do
       let(:application_index?) { true }
 
       it 'are rendered' do
-        is_expected.to have_content 'Processed applications'
-        is_expected.to have_link 'View all', href: processed_applications_path
-        is_expected.to have_content 'Deleted applications'
-        is_expected.to have_link 'View all', href: deleted_applications_path
+        is_expected.to have_content 'Completed'
+        is_expected.to have_link 'Processed applications', href: processed_applications_path
+        is_expected.to have_link 'Deleted applications', href: deleted_applications_path
       end
     end
 
     context 'when user does not have permissions to list applications' do
       it 'are not rendered' do
-        is_expected.not_to have_content 'Processed applications'
-        is_expected.not_to have_link 'View all', href: processed_applications_path
-        is_expected.not_to have_content 'Deleted applications'
-        is_expected.not_to have_link 'View all', href: deleted_applications_path
+        is_expected.not_to have_content 'Completed'
+        is_expected.not_to have_link 'Processed applications', href: processed_applications_path
+        is_expected.not_to have_link 'Deleted applications', href: deleted_applications_path
       end
     end
   end

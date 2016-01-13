@@ -1,11 +1,12 @@
 .row
-  .small-12.medium-6.large-6.columns
-    .processed-applications.panel
-      h3.bold Processed applications
-      p
-        = link_to('View all', processed_applications_path)
-  .small-12.medium-6.large-6.columns
-    .deleted-applications.panel
-      h3.bold Deleted applications
-      p
-        = link_to('View all', deleted_applications_path)
+  .small-12.columns
+    h3.bold
+      = t('completed_applications.title')
+    table.completed-applications
+      tbody
+        tr
+          td
+            = link_to(t('processed_applications.index.title'), processed_applications_path)
+        tr
+          td
+            = link_to(t('deleted_applications.index.title'), deleted_applications_path)
