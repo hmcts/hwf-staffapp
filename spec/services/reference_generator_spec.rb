@@ -45,5 +45,15 @@ RSpec.describe ReferenceGenerator, type: :service do
         expect(subject[:reference]).to eql('AB987-16-20')
       end
     end
+
+    context 'when there are two business entities for the same jurisdiction' do
+      let!(:business_entity2) { create :business_entity, office: office, jurisdiction: jurisdiction, code: 'CB975' }
+      before { business_entity.update_attribute(:valid_to, Time.zone.now) }
+
+      it 'uses the active one' do
+        expect(subject[:reference]).to eql('CB975-16-1')
+      end
+    end
+
   end
 end
