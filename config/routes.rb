@@ -83,7 +83,9 @@ Rails.application.routes.draw do
 
   post 'feedback/create' => 'feedback#create'
 
-  resources :offices
+  resources :offices do
+    resources :business_entities
+  end
 
   root to: 'home#index'
 
