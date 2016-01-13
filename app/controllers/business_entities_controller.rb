@@ -6,6 +6,11 @@ class BusinessEntitiesController < ApplicationController
     list_jurisdictions
   end
 
+  def new
+    @business_entity = BusinessEntity.new
+    authorize @business_entity
+  end
+
   def edit
     authorize business_entity
     business_entity
@@ -76,7 +81,7 @@ class BusinessEntitiesController < ApplicationController
       'business_entities.code',
       'business_entities.name',
       "CASE WHEN office_jurisdictions.office_id IS NOT NULL THEN NULL
-       ELSE CASE WHEN business_entities.code IS NOT NULL THEN 'edit' END
+       ELSE CASE WHEN business_entities.code IS NOT NULL THEN 'edit' ELSE 'new' END
        END AS state"
     ].join(',')
   end

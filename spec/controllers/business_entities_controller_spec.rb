@@ -22,6 +22,22 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
   end
 
+  describe 'GET #new' do
+    let(:business_entity) { office.business_entities.first }
+    subject { response }
+    before do
+      sign_in admin
+      get :new, office_id: office.id
+    end
+
+    it { is_expected.to have_http_status(:success) }
+
+    it { is_expected.to render_template(:new) }
+
+    it 'assigns the @business_entity variable' do
+      expect(assigns(:business_entity)).to be_a_new BusinessEntity
+    end
+  end
   describe 'GET #edit' do
     let(:business_entity) { office.business_entities.first }
     subject { response }
@@ -34,7 +50,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     it { is_expected.to render_template(:edit) }
 
-    it 'assigns the @jurisdictions variable' do
+    it 'assigns the @business_entity variable' do
       expect(assigns(:business_entity)).to be_a_kind_of BusinessEntity
     end
   end
