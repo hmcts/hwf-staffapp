@@ -9,6 +9,8 @@ en-GB:
     :false: '✗ Failed'
     true: '✓ Passed'
     false: '✗ Failed'
+  completed_applications:
+    title: Completed
   processed_applications:
     table_header:
       reference: Reference
@@ -155,11 +157,11 @@ en-GB:
       views/overview/savings_and_investments:
         savings_valid?: Less than maximum savings
         partner_over_61?: Partner over 61
-        combined_savings_valid?: Less than £16,000 savings 
+        combined_savings_valid?: Less than £16,000 savings
       views/overview/benefits:
         on_benefits?: Applicant receiving benefits
-        override?: Applicant provided paper evidence  
-        override_valid?: Benefits letter checked 
+        override?: Applicant provided paper evidence
+        override_valid?: Benefits letter checked
       views/overview/income:
         children?: Applicant has children
         children: Number of children

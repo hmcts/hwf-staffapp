@@ -19,8 +19,8 @@ RSpec.feature 'List processed applications', type: :feature do
 
     expect(page).to have_content('Processed applications')
 
-    within '.processed-applications' do
-      click_link 'View all'
+    within '.completed-applications' do
+      click_link 'Processed applications'
     end
 
     expect(page.current_path).to eql('/processed_applications')

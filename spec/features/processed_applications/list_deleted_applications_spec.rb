@@ -24,8 +24,8 @@ RSpec.feature 'List deleted applications', type: :feature do
 
     expect(page).to have_content('Deleted applications')
 
-    within '.deleted-applications' do
-      click_link 'View all'
+    within '.completed-applications' do
+      click_link 'Deleted applications'
     end
 
     expect(page.current_path).to eql('/deleted_applications')
