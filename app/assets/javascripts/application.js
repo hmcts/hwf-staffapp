@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require jquery.turbolinks
 //= require radio_buttons_module
 //= require checkbox_module
 //= require details.polyfill
