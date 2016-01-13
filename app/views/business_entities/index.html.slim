@@ -1,0 +1,15 @@
+h2 Business Entities for #{@office.name}
+
+-@jurisdictions.each do |j|
+  .row
+    .columns.small-3
+      =j[1]
+    .columns.small-1
+      =j[3]
+    .columns.small-3
+      =j[4]
+    .columns.small-5
+      -if j[5].present?
+        =link_to 'Update', edit_office_business_entity_path(office_id: j[0], id: j[2])
+
+=link_to 'Return to Office', edit_office_path(@office.id)
