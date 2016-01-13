@@ -3,6 +3,10 @@ class BusinessEntityPolicy < BasePolicy
     admin?
   end
 
+  def new?
+    admin?
+  end
+
   def edit?
     admin?
   end
