@@ -25,8 +25,8 @@ RSpec.describe BecImport do
       {
         office_id: office.id,
         jurisdiction_id: jurisdiction4,
-        code: 'BE004',
-        description: 'desc BE 004'
+        code: '',
+        description: ''
       }
     ]
   end
@@ -55,5 +55,35 @@ RSpec.describe BecImport do
     end
   end
 
-  describe '#update_existing'
+  describe '#update_existing' do
+    subject { import.update_existing }
+
+    before do
+      subject
+    end
+
+    it 'updates code and description when both present' do
+      reloaded1 = business_entity1.reload
+
+      expect(reloaded1.code).to eql('BE001')
+      expect(reloaded1.name).to eql('desc BE 001')
+    end
+
+    it 'does not update business entity when code and description are not present' do
+      reloaded4 = business_entity4.reload
+
+      expect(reloaded4.code).to eql(business_entity4.code)
+      expect(reloaded4.name).to eql(business_entity4.name)
+    end
+
+    it 'ignores other existing business entities' do
+      reloaded2 = business_entity2.reload
+      reloaded3 = business_entity3.reload
+
+      expect(reloaded2.code).to eql(business_entity2.code)
+      expect(reloaded2.name).to eql(business_entity2.name)
+      expect(reloaded3.code).to eql(business_entity3.code)
+      expect(reloaded3.name).to eql(business_entity3.name)
+    end
+  end
 end
