@@ -12,6 +12,7 @@ RSpec.describe BusinessEntityPolicy, type: :policy do
     it { is_expected.not_to permit_action(:edit) }
     it { is_expected.not_to permit_action(:update) }
     it { is_expected.not_to permit_action(:new) }
+    it { is_expected.not_to permit_action(:create) }
   end
 
   context 'for manager' do
@@ -21,6 +22,7 @@ RSpec.describe BusinessEntityPolicy, type: :policy do
     it { is_expected.not_to permit_action(:edit) }
     it { is_expected.not_to permit_action(:update) }
     it { is_expected.not_to permit_action(:new) }
+    it { is_expected.not_to permit_action(:create) }
   end
 
   context 'for admin' do
@@ -30,5 +32,6 @@ RSpec.describe BusinessEntityPolicy, type: :policy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:update) }
     it { is_expected.to permit_action(:new) }
+    it { is_expected.to permit_action(:create) }
   end
 end
