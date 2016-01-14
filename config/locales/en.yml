@@ -89,6 +89,7 @@ en-GB:
       copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
       link: See the guides
   error_messages:
+    create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
