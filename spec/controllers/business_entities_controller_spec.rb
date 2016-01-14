@@ -25,19 +25,57 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'GET #new' do
     let(:business_entity) { office.business_entities.first }
     subject { response }
-    before do
-      sign_in admin
-      get :new, office_id: office.id
+    before { sign_in admin }
+
+    describe 'when a jursidiction parameter is provided' do
+      before { get :new, office_id: office.id, jurisdiction_id: business_entity.jurisdiction_id }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template(:new) }
+
+      it 'assigns the @business_entity variable' do
+        expect(assigns(:business_entity)).to be_a_new BusinessEntity
+      end
     end
 
-    it { is_expected.to have_http_status(:success) }
+    describe 'when a jursidiction parameter is not provided' do
+      before { get :new, office_id: office.id }
 
-    it { is_expected.to render_template(:new) }
+      it { is_expected.to have_http_status(:redirect) }
 
-    it 'assigns the @business_entity variable' do
-      expect(assigns(:business_entity)).to be_a_new BusinessEntity
+      it { is_expected.to redirect_to(office_business_entities_path) }
     end
   end
+
+  describe 'POST #create' do
+    let(:jurisdiction) { create :jurisdiction }
+    let(:params) { { office_id: office.id, jurisdiction_id: jurisdiction.id, business_entity: { name: 'test - jurisdiction', code: code } } }
+
+    subject { response }
+
+    before do
+      sign_in admin
+      post :create, params
+    end
+
+    describe 'with the correct parameters' do
+      let(:code) { 'CB975' }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(office_business_entities_path) }
+    end
+
+    describe 'with the incorrect parameters' do
+      let(:code) { '' }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template(:new) }
+    end
+  end
+
   describe 'GET #edit' do
     let(:business_entity) { office.business_entities.first }
     subject { response }
