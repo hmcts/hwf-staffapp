@@ -51,7 +51,7 @@ class BecImport
 
   def line_with_be?(be)
     @lines.any? do |line|
-      line[:office_id] == be.office_id && line[:jurisdiction_id] == be.jurisdiction_id
+      (line[:office_id].to_i == be.office_id) && (line[:jurisdiction_id].to_i == be.jurisdiction_id)
     end
   end
 end

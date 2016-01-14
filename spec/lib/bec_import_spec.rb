@@ -17,14 +17,14 @@ RSpec.describe BecImport do
   let(:lines) do
     [
       {
-        office_id: office.id,
-        jurisdiction_id: jurisdiction1,
+        office_id: office.id.to_s,
+        jurisdiction_id: jurisdiction1.id.to_s,
         code: 'BE001',
         description: 'desc BE 001'
       },
       {
         office_id: office.id,
-        jurisdiction_id: jurisdiction4,
+        jurisdiction_id: jurisdiction4.id,
         code: '',
         description: ''
       }
