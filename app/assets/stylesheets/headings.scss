@@ -1,0 +1,17 @@
+.icon {
+  min-height: 37px;
+  padding-left: 45px;
+  padding-top: 3px;
+  background-image: asset_url('icons-header-sprite.png');
+  background-repeat: no-repeat;
+}
+
+.icon-evidence {
+  background-position: 0 0;
+}
+.icon-part_payment {
+  background-position: 0 -200px;
+}
+.icon-completed {
+  background-position: 0 -400px;
+}
