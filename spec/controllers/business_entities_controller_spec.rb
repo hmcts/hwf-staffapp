@@ -24,11 +24,13 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
   describe 'GET #new' do
     let(:business_entity) { office.business_entities.first }
+    let(:jurisdiction) { create :jurisdiction }
+
     subject { response }
     before { sign_in admin }
 
-    describe 'when a jursidiction parameter is provided' do
-      before { get :new, office_id: office.id, jurisdiction_id: business_entity.jurisdiction_id }
+    describe 'when an unused jurisdiction parameter is provided' do
+      before { get :new, office_id: office.id, jurisdiction_id: jurisdiction.id }
 
       it { is_expected.to have_http_status(:success) }
 
@@ -37,6 +39,15 @@ RSpec.describe BusinessEntitiesController, type: :controller do
       it 'assigns the @business_entity variable' do
         expect(assigns(:business_entity)).to be_a_new BusinessEntity
       end
+    end
+
+    describe 'when an used jurisdiction parameter is provided' do
+      before { get :new, office_id: office.id, jurisdiction_id: business_entity.jurisdiction.id }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(office_business_entities_path) }
+
     end
 
     describe 'when a jursidiction parameter is not provided' do
@@ -109,13 +120,6 @@ RSpec.describe BusinessEntitiesController, type: :controller do
       it { is_expected.to have_http_status(:redirect) }
 
       it { is_expected.to redirect_to(office_business_entities_path) }
-
-      it 'increments the business_entity count' do
-        result = BusinessEntity.where(office_id: business_entity.office_id, jurisdiction_id: business_entity.jurisdiction_id)
-        expect(result.count).to eq 2
-        expect(result.where(valid_to: nil).count).to eq 1
-        expect(result.where('valid_to IS NOT NULL').count).to eq 1
-      end
     end
 
     describe 'with the incorrect parameters' do

@@ -1,43 +1,35 @@
-# rubocop:disable ClassLength
 class BusinessEntitiesController < ApplicationController
   def index
     authorize :business_entity
-    office
     list_jurisdictions
   end
 
   def new
-    redirect_to office_business_entities_path unless jurisdiction
-    office
+    redirect_to office_business_entities_path if valid_business_entity || !jurisdiction
     @business_entity = BusinessEntity.new
     authorize @business_entity
   end
 
   def create
-    @business_entity = BusinessEntity.new(add_valid_from_param(Time.zone.now).merge(create_params))
+    @business_entity = business_entity_service.build(business_entity_params)
     authorize @business_entity
     if @business_entity.save
       redirect_to office_business_entities_path
     else
-      office
-      jurisdiction
       render :new
     end
   end
 
-  def create_params
-    { office_id: params[:office_id], jurisdiction_id: params[:jurisdiction_id] }
-  end
-
   def edit
     authorize business_entity
-    business_entity
-    office
   end
 
   def update
-    authorize business_entity
-    if business_entity_update
+    bes = business_entity_service
+    new_be = bes.check_update(business_entity_params)
+    authorize new_be
+
+    if bes.persist_update!(new_be)
       redirect_to office_business_entities_path
     else
       render :edit
@@ -46,47 +38,41 @@ class BusinessEntitiesController < ApplicationController
 
   private
 
-  def office
+  helper_method def office
     @office ||= Office.find(params[:office_id])
   end
 
-  def business_entity
+  helper_method def business_entity
     @business_entity ||= BusinessEntity.find(params[:id])
   end
 
-  def jurisdiction
-    if params[:jurisdiction_id].nil?
-      flash[:alert] = 'Please select a jurisdiction to add'
-      false
-    else
-      @jurisdiction ||= Jurisdiction.find(params[:jurisdiction_id])
-      true
-    end
+  def valid_business_entity
+    be = BusinessEntity.find_by(office_id: params[:office_id],
+                                jurisdiction_id: params[:jurisdiction_id],
+                                valid_to: nil)
+    flash[:alert] = t('error_messages.create_be_exists', jurisdiction: be.jurisdiction.name,
+                                                         office: be.office.name) if be
+    be
   end
 
-  def business_entity_update
-    change_time = Time.zone.now
-    new_be = BusinessEntity.new(build_new_params(change_time))
-    business_entity.assign_attributes(valid_to: change_time)
-    if new_be.valid?
-      ActiveRecord::Base.transaction do
-        business_entity.save
-        new_be.save
-        true
-      end
-    end
+  helper_method def jurisdiction
+    j_id = find_jurisdiction_id
+    return false unless j_id
+    @jurisdiction ||= Jurisdiction.find(j_id)
   end
 
-  def build_new_params(change_time)
-    business_entity.attributes.merge(add_valid_from_param(change_time))
+  def find_jurisdiction_id
+    return params[:jurisdiction_id] if params[:jurisdiction_id].present?
+    return business_entity.jurisdiction_id if params[:id].present?
   end
 
-  def add_valid_from_param(change_time)
-    business_entity_params.merge(id: nil, valid_from: change_time)
+  def business_entity_service
+    jurisdiction
+    BusinessEntityService.new(office, @jurisdiction)
   end
 
   def list_jurisdictions
-    @jurisdictions = Jurisdiction.joins(join(@office.id)).order(order_sequence).pluck(return_fields)
+    @jurisdictions = Jurisdiction.joins(join(office.id)).order(order_sequence).pluck(return_fields)
   end
 
   def order_sequence
