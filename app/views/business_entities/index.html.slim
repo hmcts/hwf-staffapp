@@ -1,4 +1,4 @@
-h2 Business Entities for #{@office.name}
+h2 Business Entities for #{office.name}
 
 #result_table
   .row
@@ -16,12 +16,12 @@ h2 Business Entities for #{@office.name}
       .columns.small-3.text-right
         -case j[5]
           -when 'delete'
-            =link_to 'Update', edit_office_business_entity_path(@office, id: j[2])
+            =link_to 'Update', edit_office_business_entity_path(office, id: j[2])
           -when 'edit'
-            =link_to 'Update', edit_office_business_entity_path(@office, id: j[2])
+            =link_to 'Update', edit_office_business_entity_path(office, id: j[2])
           -when 'new'
-            =link_to 'Add', new_office_business_entity_path(@office, jurisdiction_id: j[0])
+            =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j[0])
 
 .row.pad-top-thirty-px
   .columns.small-12
-    =link_to 'Return to Office', edit_office_path(@office.id)
+    =link_to 'Return to Office', edit_office_path(office.id)
