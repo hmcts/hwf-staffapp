@@ -31,6 +31,24 @@ RSpec.describe BecImport do
     ]
   end
 
+  describe '#initialize' do
+    context 'for valid input lines' do
+      it 'returns BecImport instance' do
+        is_expected.to be_a(described_class)
+      end
+    end
+
+    context 'when any line is missing any of the required fields' do
+      before do
+        lines[1].delete(:code)
+      end
+
+      it 'raises an error' do
+        expect { subject }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe '#delete_unused' do
     subject { import.delete_unused }
 

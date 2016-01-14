@@ -1,6 +1,7 @@
 class BecImport
   def initialize(lines)
     @lines = lines
+    validate!
   end
 
   def delete_unused
@@ -23,6 +24,14 @@ class BecImport
   end
 
   private
+
+  def validate!
+    raise ArgumentError unless @lines.all? do |line|
+      %i[office_id jurisdiction_id code description].all? do |field|
+        line.key?(field)
+      end
+    end
+  end
 
   def be_from_line(line)
     BusinessEntity.where(office_id: line[:office_id], jurisdiction_id: line[:jurisdiction_id]).first
