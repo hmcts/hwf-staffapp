@@ -6,7 +6,7 @@ footer.page-footer
       hr
       h5
         = t('footer.contact_us.email_us')
-      p: a[href='mailto:helpwithfees.support@digital.justice.gov.uk'] helpwithfees.support@digital.justice.gov.uk
+      p: a[href='mailto:#{Settings.mail.tech_support}'] #{Settings.mail.tech_support}
       h5
         = t('footer.contact_us.give_feedback')
       p = link_to t('footer.contact_us.tell_us_what_you_think'), current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
