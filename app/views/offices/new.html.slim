@@ -1,5 +1,7 @@
 h2 New office
 
-== render 'form'
+= render 'form', with_jurisdictions: false
 
-= link_to 'Back', offices_path
+.row.pad-top-thirty-px
+  .columns.small-12
+    = link_to 'Back', offices_path

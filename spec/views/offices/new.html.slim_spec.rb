@@ -13,7 +13,6 @@ RSpec.describe 'offices/new', type: :view do
     sign_in manager
     render
 
-    expect(rendered).to have_xpath('//input[@name="office[jurisdiction_ids][]"]', count: jurisdictions.count + 1)
     assert_select 'form[action=?][method=?]', offices_path, 'post' do
       assert_select 'input#office_name[name=?]', 'office[name]'
     end
