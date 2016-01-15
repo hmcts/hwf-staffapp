@@ -43,7 +43,7 @@ RSpec.feature 'User profile', type: :feature do
 
       scenario 'prevent users to edit somebody elses password' do
         visit edit_user_registration_path another_user.id
-        expect(page).to have_text 'Pundit::AuthorizationNotPerformedError'
+        expect(page).to have_text "You don’t have permission to do this"
       end
     end
 
