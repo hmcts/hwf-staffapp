@@ -1,4 +1,5 @@
-h3 =t("#{type}.dashboard.heading")
+h3.icon *{class: "icon-#{type}"}
+  =t("#{type}.dashboard.heading")
 
 - if list.present?
   table *{class: "waiting-for-#{type}"}
