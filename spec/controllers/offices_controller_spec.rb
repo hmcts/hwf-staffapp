@@ -210,32 +210,36 @@ RSpec.describe OfficesController, type: :controller do
 
     describe 'POST #create' do
       context 'with valid params' do
+        let(:created_office) { Office.find_by(name: valid_params[:name]) }
+
+        before do
+          post :create, office: valid_params
+        end
+
         it 'creates a new Office' do
-          expect {
-            post :create, office: valid_params
-          }.to change(Office, :count).by(1)
+          expect(created_office).not_to be nil
         end
 
-        it 'assigns a newly created office as @office' do
-          post :create, office: valid_params
-          expect(assigns(:office)).to be_a(Office)
-          expect(assigns(:office)).to be_persisted
+        it 'assigns a success flash message' do
+          expect(assigns)
+          expect(flash[:notice]).to eql('Office was successfully created')
         end
 
-        it 'redirects to the created office' do
-          post :create, office: valid_params
-          expect(response).to redirect_to(Office.last)
+        it 'redirects to the created office show page' do
+          expect(response).to redirect_to(office_path(created_office))
         end
       end
 
       context 'with invalid params' do
-        it 'assigns a newly created but unsaved office as @office' do
+        before do
           post :create, office: attributes_for(:invalid_office)
+        end
+
+        it 'assigns a newly created but unsaved office as @office' do
           expect(assigns(:office)).to be_a_new(Office)
         end
 
         it 're-renders the "new" template' do
-          post :create, office: attributes_for(:invalid_office)
           expect(response).to render_template('new')
         end
       end
