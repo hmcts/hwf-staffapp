@@ -14,8 +14,13 @@
         ul
           li the help with fees application form (EX160)
           li the court or tribunal form related to the application
-        .actions
-          =link_to 'Start now', create_applications_path, method: :post, class: 'button success'
+
+        - if current_user.office.jurisdictions.empty?
+          p Please ask your manager to assign jurisdictions to your office.
+        - else
+          .actions
+            =link_to 'Start now', create_applications_path, method: :post, class: 'button success'
+
   .small-12.medium-8.large-6.columns.end
     .panel
       h3.bold Staff guides

@@ -4,7 +4,8 @@ RSpec.describe "home/index.html.slim", type: :view do
 
   include Devise::TestHelpers
 
-  let(:user) { create :user }
+  let(:office) { create :office }
+  let(:user) { create :user, office: office }
 
   let(:application_new?) { false }
   let(:application_index?) { false }
@@ -25,9 +26,22 @@ RSpec.describe "home/index.html.slim", type: :view do
     context 'when user has permissions to process application' do
       let(:application_new?) { true }
 
-      it 'is rendered' do
+      it 'renders title' do
         is_expected.to have_text 'Process application'
-        is_expected.to have_link 'Start now'
+      end
+
+      context 'when the office has some jurisdictions assigned' do
+        it 'renders the Start now button' do
+          is_expected.to have_text 'Start now'
+        end
+      end
+
+      context 'when the office has no jurisdictions assigned' do
+        let(:office) { create :office, jurisdictions: [] }
+
+        it 'renders the message that manager has to first assign jurisdictions' do
+          is_expected.to have_text 'Please ask your manager to assign jurisdictions to your office.'
+        end
       end
     end
 
