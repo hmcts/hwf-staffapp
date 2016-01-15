@@ -102,7 +102,7 @@ Rails.application.routes.draw do
   }
   resources :users
   as :user do
-    get 'users/:id/change_password' => 'devise/registrations#edit', as: 'edit_user_registration'
+    get 'users/:id/change_password' => 'users/registrations#edit', as: 'edit_user_registration'
     patch 'users/:id/change_password' => 'users/registrations#update', as: 'user_registration'
   end
 end

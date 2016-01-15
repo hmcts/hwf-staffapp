@@ -27,6 +27,8 @@ RSpec.describe UserPolicy, type: :policy do
 
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:edit) }
+      it { is_expected.to permit_action(:edit_password) }
+      it { is_expected.to permit_action(:update_password) }
 
       context 'when the role is staff' do
         before do
@@ -57,6 +59,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:edit) }
       it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:edit_password) }
+      it { is_expected.not_to permit_action(:update_password) }
     end
   end
 
@@ -79,6 +83,8 @@ RSpec.describe UserPolicy, type: :policy do
         let(:subject_user) { dup_user(user) }
 
         it { is_expected.not_to permit_action(:destroy) }
+        it { is_expected.to permit_action(:edit_password) }
+        it { is_expected.to permit_action(:update_password) }
 
         context 'when trying to set a role to admin' do
           before do
@@ -91,6 +97,8 @@ RSpec.describe UserPolicy, type: :policy do
 
       context 'when the subject_user is not the manager themselves' do
         it { is_expected.to permit_action(:destroy) }
+        it { is_expected.not_to permit_action(:edit_password) }
+        it { is_expected.not_to permit_action(:update_password) }
 
         context 'when role set to manager' do
           let(:subject_user) { build_stubbed(:user, office: office, role: 'manager') }
@@ -148,10 +156,14 @@ RSpec.describe UserPolicy, type: :policy do
       let(:subject_user) { dup_user(user) }
 
       it { is_expected.not_to permit_action(:destroy) }
+      it { is_expected.to permit_action(:edit_password) }
+      it { is_expected.to permit_action(:update_password) }
     end
 
     context 'when the subject_user is not the admin themselves' do
       it { is_expected.to permit_action(:destroy) }
+      it { is_expected.not_to permit_action(:edit_password) }
+      it { is_expected.not_to permit_action(:update_password) }
     end
   end
 

@@ -34,6 +34,19 @@ RSpec.feature 'User profile', type: :feature do
       end
     end
 
+    context 'password edit' do
+      scenario 'allow users to change their password' do
+        visit edit_user_registration_path user.id
+        expect(page).to have_text 'Current password'
+        expect(page).not_to have_text 'Pundit::AuthorizationNotPerformedError'
+      end
+
+      scenario 'prevent users to edit somebody elses password' do
+        visit edit_user_registration_path another_user.id
+        expect(page).to have_text "You don’t have permission to do this"
+      end
+    end
+
     context 'edit' do
       before(:each) { visit edit_user_path user.id }
 

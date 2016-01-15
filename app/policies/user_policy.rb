@@ -37,6 +37,12 @@ class UserPolicy < BasePolicy
     !user_themselves? && ((manager? && same_office?) || admin?)
   end
 
+  def edit_password?
+    user_themselves?
+  end
+
+  alias_method :update_password?, :edit_password?
+
   class Scope < BasePolicy::Scope
     def resolve
       if admin?
