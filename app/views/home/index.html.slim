@@ -5,22 +5,17 @@
     h1 Help with fees
     p Use this service to process applications for <strong> help with fees </strong> (EX160)
 
-.row.equal-heightboxes
-  - if policy(:application).new?
-    .small-12.medium-8.large-6.columns
+- if policy(:application).new?
+  .row
+    .small-12.columns
       .panel
-        h3.bold Process application
-        p You'll need:
+        h3 Process application
+        p.util_mb-0 You'll need:
         ul
           li the help with fees application form (EX160)
           li the court or tribunal form related to the application
-        .actions
-          =link_to 'Start now', create_applications_path, method: :post, class: 'button success'
-  .small-12.medium-8.large-6.columns.end
-    .panel
-      h3.bold Staff guides
-      p How to process an application, deal with evidence checks, part-payments, appeals, and fraud.
-      p =link_to 'See the guides', guide_path
+        .actions.util_mt-0
+          =link_to 'Start now', create_applications_path, method: :post, class: 'button success util_mb-0'
 
 - if policy(:application).index?
   .row
