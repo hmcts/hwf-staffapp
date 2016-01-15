@@ -33,9 +33,9 @@ class OfficesController < ApplicationController
     @office = Office.new(office_params)
     authorize @office
 
-    @office.save
+    flash[:notice] = 'Office was successfully created' if @office.save
+
     respond_with(@office)
-    flash[:notice] = 'Office was successfully created'
   end
 
   def update
