@@ -4,7 +4,7 @@ RSpec.describe OfficesController, type: :controller do
 
   include Devise::TestHelpers
 
-  let(:office)      { create(:office) }
+  let(:office)      { create(:office, jurisdictions: []) }
   let(:user)        { create :user, office: office }
 
   let(:jurisdiction) { create :jurisdiction }
@@ -106,7 +106,9 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #edit' do
+    let(:assigned_jurisdiction) { create :jurisdiction }
     before do
+      create :business_entity, office: office, jurisdiction: assigned_jurisdiction
       mock_authorise(office, authorised)
     end
 
@@ -123,6 +125,10 @@ RSpec.describe OfficesController, type: :controller do
 
       it 'assigns the office' do
         expect(assigns(:office)).to eql(office)
+      end
+
+      it 'assigns only available jurisdictions' do
+        expect(assigns(:jurisdictions)).to eq([assigned_jurisdiction])
       end
     end
 
