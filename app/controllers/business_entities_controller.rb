@@ -12,12 +12,7 @@ class BusinessEntitiesController < ApplicationController
 
   def create
     @business_entity = business_entity_service.build(business_entity_params)
-    authorize @business_entity
-    if @business_entity.save
-      redirect_to office_business_entities_path
-    else
-      render :new
-    end
+    authorize_save_and_redirect(:new)
   end
 
   def edit
@@ -36,7 +31,25 @@ class BusinessEntitiesController < ApplicationController
     end
   end
 
+  def confirm
+    authorize business_entity
+  end
+
+  def deactivate
+    @business_entity = business_entity_service.deactivate
+    authorize_save_and_redirect(:confirm)
+  end
+
   private
+
+  def authorize_save_and_redirect(fail_route)
+    authorize @business_entity
+    if @business_entity.save
+      redirect_to office_business_entities_path
+    else
+      render fail_route
+    end
+  end
 
   helper_method def office
     @office ||= Office.find(params[:office_id])
