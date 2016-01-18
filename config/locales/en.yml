@@ -78,6 +78,16 @@ en-GB:
   general:
     optional_html: '&nbsp; (optional)'
     required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
+  footer:
+    contact_us:
+      heading: Contact us
+      email_us: Email us
+      give_feedback: Give feedback
+      tell_us_what_you_think: Tell us what you think
+    staff_guides:
+      heading: Staff guides
+      copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
+      link: See the guides
   error_messages:
     manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:
