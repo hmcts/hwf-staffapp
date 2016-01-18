@@ -10,14 +10,15 @@ footer.page-footer
       h5
         = t('footer.contact_us.give_feedback')
       p = link_to t('footer.contact_us.tell_us_what_you_think'), current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
-    .small-12.medium-6.large-6.columns
-      h4
-        = t('footer.staff_guides.heading')
-      hr
-      .row
-        .small-7.columns
-          p
-            = t('footer.staff_guides.copy')
-          p = link_to t('footer.staff_guides.link'), guide_path
-        .small-5.columns
-          = image_tag("footer-guides.png")
+    - if user_signed_in?
+      .small-12.medium-6.large-6.columns
+        h4
+          = t('footer.staff_guides.heading')
+        hr
+        .row
+          .small-7.columns
+            p
+              = t('footer.staff_guides.copy')
+            p = link_to t('footer.staff_guides.link'), guide_path
+          .small-5.columns
+            = image_tag("footer-guides.png")
