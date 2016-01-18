@@ -1,10 +1,10 @@
 h2 Business Entities for #{office.name}
 
+.row
+  .columns.small-3.bold Jurisdiction
+  .columns.small-2.bold BEC
+  .columns.small-4.bold.end BEC Description
 #result_table
-  .row
-    .columns.small-3.bold Jurisdiction
-    .columns.small-2.bold BEC
-    .columns.small-4.bold.end BEC Description
   -@jurisdictions.each do |j|
     .row
       .columns.small-3
@@ -16,11 +16,16 @@ h2 Business Entities for #{office.name}
       .columns.small-3.text-right
         -case j.status
           -when 'delete'
+            =link_to 'Delete', office_confirm_deactivate_business_entity_path(office, id: j.business_entity_id)
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
           -when 'edit'
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
           -when 'add'
             =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
+      - if j.status.eql?('edit')
+        .columns.small-12 id="remove-#{j.jurisdiction_id}"
+          .important-notice
+            p = t('business_entities.remove_warning_html', managers: format_managers_contacts(office.managers).html_safe, office: office.name)
 
 .row.pad-top-thirty-px
   .columns.small-12

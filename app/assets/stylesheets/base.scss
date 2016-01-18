@@ -228,3 +228,12 @@ input.medium-field{
   margin-bottom: 0;
   margin-top: 1em;
 }
+
+a.cannot-delete {
+  color: #999999;
+  margin-left: 1em;
+
+  &:hover {
+    color: #aaaaaa;
+  }
+}
