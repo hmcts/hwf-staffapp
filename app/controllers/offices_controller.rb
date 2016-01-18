@@ -42,8 +42,10 @@ class OfficesController < ApplicationController
     office.assign_attributes(office_params)
     authorize office
 
-    if office.save && manager_setup.in_progress?
-      redirect_to out_of_the_box_redirect
+    if office.save
+      flash[:notice] = 'Office was successfully updated'
+
+      redirect_to update_redirect_path
     else
       respond_with(office)
     end
@@ -65,6 +67,10 @@ class OfficesController < ApplicationController
 
   def manager_setup
     @manager_setup ||= ManagerSetup.new(current_user, session)
+  end
+
+  def update_redirect_path
+    manager_setup.in_progress? ? out_of_the_box_redirect : { action: :show }
   end
 
   def out_of_the_box_redirect
