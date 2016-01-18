@@ -10,22 +10,27 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require foundation_and_overrides
- *= require navigation
- *= require result_bar
- *= require users
- *= require result_tables
- *= require summary
- *= require feedback
- *= require errors
- *= require buttons
- *= require application_form
- *= require base
- *= require evidence_check
- *= require evidence
- *= require form_elements
- *= require details
- *= require phase_banner
- *= require headings
- *= require utilities
  */
+
+
+// Replacing asset pipeline =require syntax here with CSS @import means no
+// need to import things all over the place elsewhere
+
+@import 'foundation_and_overrides';
+@import 'navigation';
+@import 'result_bar';
+@import 'users';
+@import 'result_tables';
+@import 'summary';
+@import 'feedback';
+@import 'errors';
+@import 'buttons';
+@import 'application_form';
+@import 'base';
+@import 'evidence_check';
+@import 'evidence';
+@import 'form_elements';
+@import 'details';
+@import 'phase_banner';
+@import 'headings';
+@import 'utilities';

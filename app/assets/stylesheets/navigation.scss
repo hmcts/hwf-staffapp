@@ -1,5 +1,4 @@
 @import 'colours';
-@import 'foundation_and_overrides';
 @import 'sizes';
 
 
@@ -39,24 +38,30 @@ dl.sub-nav {
   }
 
   .top-bar-section {
-    li:not(.has-form) a:not(.button) {
-      background: #000000;
-      color: #fff;
-    }
-    li div.inline {
-      background: #000000;
-      color: #fff;
-      span {
-        color:#fff;
-      }
+    li {
       @media screen and (max-width: upper-bound($small-range)) {
         padding-left:15px;
+      }
+      background-color: transparent;
+
+      span {
+        padding: 0 $topbar-link-padding;
+        background-color: $topbar-bg-color;
+        color: $topbar-link-color;
+        line-height: $topbar-height;
       }
 
       a {
         text-decoration: underline;
+        transition: color 300ms ease-out 0s;
         @media screen and (max-width: upper-bound($small-range)) {
           padding-left:15px;
+        }
+      }
+
+      &:last-child {
+        a, span {
+          padding-right: 0;
         }
       }
     }
