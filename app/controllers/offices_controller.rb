@@ -1,5 +1,5 @@
 class OfficesController < ApplicationController
-  before_action :list_jurisdictions, only: [:new, :edit, :update]
+  before_action :list_jurisdictions, only: [:edit, :update]
 
   respond_to :html
 
@@ -62,7 +62,7 @@ class OfficesController < ApplicationController
   end
 
   def list_jurisdictions
-    @jurisdictions = Jurisdiction.all
+    @jurisdictions = Jurisdiction.available_for_office(office)
   end
 
   def manager_setup
