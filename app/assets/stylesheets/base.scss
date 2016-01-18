@@ -218,4 +218,13 @@ input.small-field{
 input.medium-field{
     width:70%;
 }
+.important-notice {
+  background: asset_url('icon-important.png') no-repeat scroll left center;
+}
 
+.important-notice > p {
+
+  padding: 0 1em 0 2.5em;
+  margin-bottom: 0;
+  margin-top: 1em;
+}
