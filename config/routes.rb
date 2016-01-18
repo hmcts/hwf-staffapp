@@ -85,6 +85,8 @@ Rails.application.routes.draw do
 
   resources :offices do
     resources :business_entities
+    get '/business_entities/:id/confirm' => 'business_entities#confirm', as: 'confirm_deactivate_business_entity'
+    post '/business_entities/:id/deactivate' => 'business_entities#deactivate', as: 'deactivate_business_entity'
   end
 
   root to: 'home#index'
