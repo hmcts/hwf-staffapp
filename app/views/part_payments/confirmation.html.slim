@@ -1,17 +1,15 @@
 header
-  .row
-    .small-12.medium-12.large-12.columns
-      h2 Processing complete
+  h2 Processing complete
 
 .row
   .small-12.medium-8.large-5.columns
     - if @result.callout == 'no'
       = render('failed_letter', locals: { confirmation: @confirmation })
     = link_to 'Back to start', root_path, class: 'button success'
-  
+
   .large-5.columns
     .guidance
-      h4 Next steps      
+      h4 Next steps
       ul
         -if @result.callout == 'yes'
           - unless after_desired_date?

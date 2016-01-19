@@ -1,9 +1,8 @@
 = form_for @form, as: :application, url: :application_personal_information_save, method: :put, html: { autocomplete: 'off' } do |f|
-  
+
   header
-    .row
-      .small-12.medium-8.large-12.columns
-        h2 Personal details
+    h2 Personal details
+
   .row
     .small-12.medium-8.large-5.columns
 
@@ -54,7 +53,7 @@
                   = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
-    
+
     .large-5.columns
       .guidance
         h4 Before you start

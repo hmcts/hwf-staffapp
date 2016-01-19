@@ -1,5 +1,5 @@
-h2
-  = t "devise.invitations.new.header"
+header
+  h2= t "devise.invitations.new.header"
 
 = form_for @user, url: user_invitation_path, html: {:method => :post} do |f|
   - User.invite_key_fields.each do |field|

@@ -1,4 +1,6 @@
-h2 =t('devise.registrations.heading')
+header
+  h2 =t('devise.registrations.heading')
+
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
   .row
