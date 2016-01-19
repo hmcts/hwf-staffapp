@@ -102,6 +102,24 @@ describe BusinessEntityService do
     end
   end
 
+  describe '#deactivate' do
+    subject { service.build_deactivate }
+
+    it { is_expected.to be_a_kind_of BusinessEntity }
+
+    it 'returns a persisted object' do
+      expect(subject.persisted?).to be true
+    end
+
+    it 'returns a valid object' do
+      expect(subject.valid?).to be true
+    end
+
+    it 'has no ID' do
+      expect(subject.valid_to).not_to be nil
+    end
+  end
+
   describe '#persist!' do
     let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
@@ -134,6 +152,22 @@ describe BusinessEntityService do
         it 'creates a new business_entity' do
           expect { service.persist! }.to_not change { BusinessEntity.count }
         end
+      end
+    end
+
+    context 'when persisting a deactivation' do
+      before do
+        service.build_deactivate
+        service.persist!
+        business_entity.reload
+      end
+
+      it 'sets the valid_to date of the existing business_entity' do
+        expect(business_entity.valid_to).not_to eq nil
+      end
+
+      it 'sets the current office and jurisdiction business_entity to nil' do
+        expect(BusinessEntity.current_for(office, jurisdiction)).to be nil
       end
     end
   end
