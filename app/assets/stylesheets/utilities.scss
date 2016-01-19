@@ -1,7 +1,10 @@
+// margin utility classes
+.util_mt-medium {
+  margin-top: 2rem;
+}
+
 // utility classes used as overrides, therefore valid use of !important
 // https://css-tricks.com/when-using-important-is-the-right-choice/
-
-// margin utility classes
 .util_mt-0 {
   margin-top: 0 !important;
 }

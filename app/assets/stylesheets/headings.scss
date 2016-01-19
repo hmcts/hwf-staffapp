@@ -1,3 +1,16 @@
+p + h3,
+ul + h3,
+table + h3,
+.panel + h3 {
+  margin-top: 2rem;
+}
+
+h3 + h5,
+ul + h5,
+p + h5 {
+  margin-top: 1rem;
+}
+
 .icon {
   min-height: 37px;
   padding-left: 45px;
