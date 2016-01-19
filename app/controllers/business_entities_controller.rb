@@ -72,7 +72,16 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def list_jurisdictions
-    @jurisdictions = Jurisdiction.joins(join(office.id)).order(order_sequence).pluck(return_fields)
+    @jurisdictions = Jurisdiction.joins(join(office.id)).order(order_sequence).
+                     pluck_h(list_fields).each { |j| j[:state] = state(j) }
+  end
+
+  def state(j)
+    if j['office_jurisdictions.office_id'].present?
+      'edit'
+    else
+      j['business_entities.code'].present? ? 'delete' : 'new'
+    end
   end
 
   def order_sequence
@@ -81,10 +90,8 @@ class BusinessEntitiesController < ApplicationController
 
   def join(office_id)
     <<-JOIN
-      LEFT OUTER JOIN business_entities
-        ON business_entities.jurisdiction_id = jurisdictions.id
-        AND business_entities.office_id = #{office_id}
-        AND business_entities.valid_to IS NULL
+      LEFT OUTER JOIN business_entities ON business_entities.jurisdiction_id = jurisdictions.id
+        AND business_entities.office_id = #{office_id} AND business_entities.valid_to IS NULL
       LEFT OUTER JOIN office_jurisdictions
         ON business_entities.jurisdiction_id = office_jurisdictions.jurisdiction_id
           AND business_entities.office_id = office_jurisdictions.office_id
@@ -92,17 +99,9 @@ class BusinessEntitiesController < ApplicationController
     JOIN
   end
 
-  def return_fields
-    [
-      'jurisdictions.id',
-      'jurisdictions.name',
-      'business_entities.id',
-      'business_entities.code',
-      'business_entities.name',
-      "CASE WHEN office_jurisdictions.office_id IS NULL THEN 'delete'
-       ELSE CASE WHEN business_entities.code IS NOT NULL THEN 'edit' ELSE 'new' END
-       END AS state"
-    ].join(',')
+  def list_fields
+    ['jurisdictions.id', 'jurisdictions.name', 'business_entities.id',
+     'business_entities.code', 'business_entities.name', 'office_jurisdictions.office_id']
   end
 
   def business_entity_params
