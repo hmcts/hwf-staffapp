@@ -28,6 +28,11 @@ class BusinessEntityService
     end
   end
 
+  def deactivate
+    @business_entity.assign_attributes(valid_to: @timestamp)
+    @business_entity
+  end
+
   private
 
   def build_business_entity(params)
