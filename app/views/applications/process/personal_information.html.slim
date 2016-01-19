@@ -58,20 +58,19 @@
       .guidance
         h4 Before you start
         p Check the statement of truth has been signed.
-        span
-          strong Check the applicant is not:
+        strong Check the applicant is not:
         ul
           li receiving legal aid
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        p: strong Check the fee:
+        strong Check the fee:
         ul
           li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
         h4 National Insurance number
-        p: strong If NI number isn't provided:
+        strong If NI number isn't provided:
         ul
           li Check answer to question 9
           li If 'No', continue to process without NI number
