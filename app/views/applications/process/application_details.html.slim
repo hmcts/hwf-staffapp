@@ -1,9 +1,8 @@
 = form_for @form, as: :application, url: application_application_details_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
   header
-    .row
-      .small-12.medium-8.large-12.columns
-        h2 Application details
+    h2 Application details
+
   .row
     .small-12.medium-8.large-5.columns
       .form-group
@@ -70,7 +69,7 @@
             span.hint.block = t('date_hint', scope: @form.i18n_scope)
             = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
             = f.text_field :date_of_death, { class: 'form-control medium-field' }
-          
+
       .form-group
         .options.radio
           .option
@@ -99,18 +98,18 @@
           = f.text_area :emergency_reason, { class: 'form-control' }
 
       = f.submit 'Next', class: 'button primary'
-    
+
     .large-5.columns
       .guidance
-        h4 Refunds 
-        p: strong Check the refund:
+        h4 Refunds
+        strong Check the refund:
         ul
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
         p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
         h4 Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
-        p: strong Example of emergency cases:
+        strong Example of emergency cases:
         ul
         	li suspending an eviction
         	li debtor insolvency petition

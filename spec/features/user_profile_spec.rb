@@ -16,7 +16,7 @@ RSpec.feature 'User profile', type: :feature do
     end
 
     scenario 'link to their profile' do
-      top_right_corner = '//section/ul/li/div/span'
+      top_right_corner = '//section[@class="top-bar-section"]/ul/li/span'
       expect(page).to have_xpath("#{top_right_corner}[contains(., '#{user.name}')]")
     end
 

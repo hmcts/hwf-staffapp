@@ -1,7 +1,5 @@
 header
-  .row
-    .small-12.medium-12.large-12.columns
-      h2 Processing complete
+  h2 Processing complete
 
 .row
   .small-12.medium-8.large-5.columns
@@ -23,13 +21,13 @@ header
         -elsif @confirmation.outcome == 'part'
           li Write to the applicant with details of how much they have to pay
           li Store the application form in a secure location until you receive the part-payment
-          li You don't need to complete the remission register until part-payment has been received 
+          li You don't need to complete the remission register until part-payment has been received
           li Write the reference number on the top right corner of the paper form
         -else
-          - unless after_desired_date? 
+          - unless after_desired_date?
             li Complete the remission register with the application details
           li Write the reference number on the top right corner of the paper form
           li Copy the reference number into the case management system
           li Write to the applicant and send back all the documents
-                
+
       p: strong = link_to 'See the guides', guide_path, target: 'blank'

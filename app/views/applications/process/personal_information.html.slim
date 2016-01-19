@@ -1,9 +1,8 @@
 = form_for @form, as: :application, url: :application_personal_information_save, method: :put, html: { autocomplete: 'off' } do |f|
-  
+
   header
-    .row
-      .small-12.medium-8.large-12.columns
-        h2 Personal details
+    h2 Personal details
+
   .row
     .small-12.medium-8.large-5.columns
 
@@ -54,25 +53,24 @@
                   = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
-    
+
     .large-5.columns
       .guidance
         h4 Before you start
         p Check the statement of truth has been signed.
-        span
-          strong Check the applicant is not:
+        strong Check the applicant is not:
         ul
           li receiving legal aid
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        p: strong Check the fee:
+        strong Check the fee:
         ul
           li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
         h4 National Insurance number
-        p: strong If NI number isn't provided:
+        strong If NI number isn't provided:
         ul
           li Check answer to question 9
           li If 'No', continue to process without NI number
