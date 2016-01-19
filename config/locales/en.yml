@@ -397,8 +397,8 @@ en-GB:
               confirmation: Your password must match the one you entered above
         office:
           attributes:
-            jurisdictions:
-              blank: Please select at least one jurisdiction
+            name:
+              blank: Enter the office name
     attributes:
       user:
         current_password: Current password

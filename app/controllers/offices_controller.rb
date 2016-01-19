@@ -1,5 +1,5 @@
 class OfficesController < ApplicationController
-  before_action :list_jurisdictions, only: [:new, :edit, :update]
+  before_action :list_jurisdictions, only: [:edit, :update]
 
   respond_to :html
 
@@ -33,17 +33,19 @@ class OfficesController < ApplicationController
     @office = Office.new(office_params)
     authorize @office
 
-    @office.save
+    flash[:notice] = 'Office was successfully created' if @office.save
+
     respond_with(@office)
-    flash[:notice] = 'Office was successfully created'
   end
 
   def update
     office.assign_attributes(office_params)
     authorize office
 
-    if office.save && manager_setup.in_progress?
-      redirect_to out_of_the_box_redirect
+    if office.save
+      flash[:notice] = 'Office was successfully updated'
+
+      redirect_to update_redirect_path
     else
       respond_with(office)
     end
@@ -60,11 +62,15 @@ class OfficesController < ApplicationController
   end
 
   def list_jurisdictions
-    @jurisdictions = Jurisdiction.all
+    @jurisdictions = Jurisdiction.available_for_office(office)
   end
 
   def manager_setup
     @manager_setup ||= ManagerSetup.new(current_user, session)
+  end
+
+  def update_redirect_path
+    manager_setup.in_progress? ? out_of_the_box_redirect : { action: :show }
   end
 
   def out_of_the_box_redirect

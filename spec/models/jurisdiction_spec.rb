@@ -4,8 +4,19 @@ RSpec.describe Jurisdiction, type: :model do
 
   let(:jurisdiction) { create(:jurisdiction) }
 
-  it 'passes factory build' do
-    expect(jurisdiction).to be_valid
+  it { is_expected.to have_many(:business_entities) }
+
+  describe '.available_for_office' do
+    # The office factory creates BusinessEntity automatically, so we don't have to create it manually.
+    let!(:office) { create :office, jurisdictions: [jurisdiction2] }
+    let!(:jurisdiction1) { create :jurisdiction }
+    let!(:jurisdiction2) { create :jurisdiction }
+
+    subject { described_class.available_for_office(office) }
+
+    it 'includes jurisdictions which have business entity present' do
+      is_expected.to eq([jurisdiction2])
+    end
   end
 
   describe 'validation' do

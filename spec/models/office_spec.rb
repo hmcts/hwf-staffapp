@@ -14,23 +14,16 @@ RSpec.describe Office, type: :model do
   end
 
   context 'validations' do
-    it { is_expected.to validate_presence_of(:jurisdictions) }
-
     it 'is invalid with no name' do
       office = build(:invalid_office)
       expect(office).to_not be_valid
-      expect(office.errors[:name]).to eq ["can't be blank"]
+      expect(office.errors[:name]).to eq ['Enter the office name']
     end
 
     it 'must have a unique name' do
       original = create(:office)
       duplicate = build(:office, name: original.name)
       expect(duplicate).to be_invalid
-    end
-
-    it 'must have entity_code' do
-      office.entity_code = ''
-      expect(office).to be_invalid
     end
   end
 

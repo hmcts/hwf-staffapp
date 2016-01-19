@@ -9,8 +9,6 @@ class Office < ActiveRecord::Base
   scope :non_digital, -> { where.not(name: 'Digital') }
 
   validates :name, presence: true, uniqueness: true
-  validates :entity_code, presence: true, uniqueness: true
-  validates :jurisdictions, presence: true
 
   def managers
     users.where(office_id: id, role: 'manager')
