@@ -21,9 +21,15 @@ class BusinessEntityService
       @existing_business_entity.assign_attributes(name: @new_business_entity.name)
       @existing_business_entity
     else
-      @existing_business_entity.assign_attributes(valid_to: @timestamp)
-      @new_business_entity
+      deactivate_existing
+      return @new_business_entity
     end
+  end
+
+  def build_deactivate
+    deactivate_existing
+    @persist_status = :delete
+    @existing_business_entity
   end
 
   def persist!
@@ -34,6 +40,8 @@ class BusinessEntityService
       save_existing
     when :update_duplicate
       save_both
+    when :delete
+      save_existing
     end
   end
 
@@ -68,5 +76,9 @@ class BusinessEntityService
 
   def codes_match?
     @new_business_entity.code == @existing_business_entity.code
+  end
+
+  def deactivate_existing
+    @existing_business_entity.assign_attributes(valid_to: @timestamp)
   end
 end
