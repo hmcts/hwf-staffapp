@@ -227,9 +227,9 @@ en-GB:
         form_name: Form
         full_name: Applicant
       forms/finance_report:
-        date_from: 'Start of date range'
-        date_to: 'End of date range'
-        date_hint: Enter the date in this format DD/MM/YYYY
+        date_from: 'Date from'
+        date_to: 'Date to'
+        date_hint: For example DD/MM/YYYY
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title

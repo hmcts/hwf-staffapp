@@ -1,6 +1,6 @@
 = form_for @form, url: reports_finance_report_path, method: :put, html: { autocomplete: 'off' } do |f|
   header
-    h2 Finance report
+    h2 Generate report
 
   .row
     .small-12.medium-8.large-5.columns
@@ -16,4 +16,4 @@
         = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error' if @form.errors[:date_to].present?
         = f.text_field :date_to, { class: 'form-control small-field' }
 
-      = f.submit 'Get data as CSV', class: 'button primary'
+      = f.submit 'Generate report', class: 'button primary'
