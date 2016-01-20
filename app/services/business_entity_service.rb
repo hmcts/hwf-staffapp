@@ -4,9 +4,7 @@ class BusinessEntityService
     @office = office
     @jurisdiction = jurisdiction
     @timestamp = Time.zone.now
-    @business_entity = BusinessEntity.find_by(office: office,
-                                              jurisdiction: jurisdiction,
-                                              valid_to: nil)
+    @existing_business_entity = BusinessEntity.current_for(office, jurisdiction)
   end
 
   def build(params)
@@ -18,13 +16,13 @@ class BusinessEntityService
   end
 
   def persist_update!(business_entity)
-    return false if business_entity.nil? || @business_entity.nil?
+    return false if business_entity.nil? || @existing_business_entity.nil?
     if duplicate_needed?(business_entity)
-      @business_entity.assign_attributes(valid_to: @timestamp)
+      @existing_business_entity.assign_attributes(valid_to: @timestamp)
       save_entities_in_transaction(business_entity)
     else
-      @business_entity.assign_attributes(name: business_entity.name)
-      @business_entity.save
+      @existing_business_entity.assign_attributes(name: business_entity.name)
+      @existing_business_entity.save
     end
   end
 
@@ -39,17 +37,28 @@ class BusinessEntityService
   end
 
   def duplicate_needed?(business_entity)
-    business_entity != @business_entity &&
-      (both_entities_present?(business_entity) && business_entity.code != @business_entity.code)
+    entities_match?(business_entity) && entities_present_and_codes_match?(business_entity)
+  end
+
+  def entities_match?(business_entity)
+    business_entity != @existing_business_entity
+  end
+
+  def entities_present_and_codes_match?(business_entity)
+    (both_entities_present?(business_entity) && codes_match?(business_entity))
   end
 
   def both_entities_present?(business_entity)
-    @business_entity.present? && business_entity.present?
+    @existing_business_entity.present? && business_entity.present?
+  end
+
+  def codes_match?(business_entity)
+    business_entity.code != @existing_business_entity.code
   end
 
   def save_entities_in_transaction(business_entity)
     ActiveRecord::Base.transaction do
-      @business_entity.save
+      @existing_business_entity.save
       business_entity.save
     end
   end
