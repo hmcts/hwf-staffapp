@@ -47,12 +47,11 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def valid_business_entity
-    be = BusinessEntity.find_by(office_id: params[:office_id],
-                                jurisdiction_id: params[:jurisdiction_id],
-                                valid_to: nil)
-    flash[:alert] = t('error_messages.create_be_exists', jurisdiction: be.jurisdiction.name,
-                                                         office: be.office.name) if be
-    be
+    BusinessEntity.current_for(office, jurisdiction).tap do |business_entity|
+      flash[:alert] = t('error_messages.create_be_exists',
+        jurisdiction: business_entity.jurisdiction.name,
+        office: business_entity.office.name) if business_entity
+    end
   end
 
   helper_method def jurisdiction
