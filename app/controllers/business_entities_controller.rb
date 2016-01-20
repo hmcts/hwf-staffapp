@@ -25,11 +25,10 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def update
-    bes = business_entity_service
-    new_be = bes.check_update(business_entity_params)
+    new_be = business_entity_service.check_update(business_entity_params)
     authorize new_be
 
-    if bes.persist_update!(new_be)
+    if @business_entity_service.persist_update!(new_be)
       redirect_to office_business_entities_path
     else
       render :edit
@@ -66,8 +65,7 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def business_entity_service
-    jurisdiction
-    BusinessEntityService.new(office, @jurisdiction)
+    @business_entity_service ||= BusinessEntityService.new(office, jurisdiction)
   end
 
   def business_entity_params
