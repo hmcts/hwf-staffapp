@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20160112092557) do
   add_index "business_entities", ["code"], name: "index_business_entities_on_code", using: :btree
   add_index "business_entities", ["jurisdiction_id"], name: "index_business_entities_on_jurisdiction_id", using: :btree
   add_index "business_entities", ["name"], name: "index_business_entities_on_name", using: :btree
-  add_index "business_entities", ["office_id", "jurisdiction_id", "valid_to"], name: "unique_active_office_jurisdiction", using: :btree
+  add_index "business_entities", ["office_id", "jurisdiction_id", "valid_to"], name: "unique_active_office_jurisdiction", unique: true, using: :btree
   add_index "business_entities", ["office_id"], name: "index_business_entities_on_office_id", using: :btree
 
   create_table "details", force: :cascade do |t|

@@ -28,4 +28,16 @@ RSpec.describe BusinessEntity, type: :model do
       end
     end
   end
+
+  describe '#current_for' do
+    let(:business_entity) { create :business_entity }
+    subject { described_class.current_for(office, jurisdiction) }
+
+    context 'when passed valid variables' do
+      let(:office) { business_entity.office }
+      let(:jurisdiction) { business_entity.jurisdiction }
+
+      it { is_expected.to eq business_entity }
+    end
+  end
 end
