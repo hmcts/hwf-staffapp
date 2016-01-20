@@ -20,8 +20,4 @@ class Jurisdiction < ActiveRecord::Base
     result.concat(" (#{abbr})") unless abbr.blank?
     result
   end
-
-  def self.pluck_h(keys)
-    pluck(*keys).map { |pa| Hash[keys.zip(pa)] }
-  end
 end
