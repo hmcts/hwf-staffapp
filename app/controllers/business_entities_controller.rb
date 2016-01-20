@@ -55,9 +55,9 @@ class BusinessEntitiesController < ApplicationController
   end
 
   helper_method def jurisdiction
-    j_id = find_jurisdiction_id
-    return false unless j_id
-    @jurisdiction ||= Jurisdiction.find(j_id)
+    jurisdiction_id = find_jurisdiction_id
+    return false unless jurisdiction_id
+    @jurisdiction ||= Jurisdiction.find(jurisdiction_id)
   end
 
   def find_jurisdiction_id
