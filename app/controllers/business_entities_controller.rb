@@ -1,7 +1,7 @@
 class BusinessEntitiesController < ApplicationController
   def index
     authorize :business_entity
-    list_jurisdictions
+    @jurisdictions = Query::BusinessEntityManagement.new(office).jurisdictions
   end
 
   def new
@@ -68,39 +68,6 @@ class BusinessEntitiesController < ApplicationController
   def business_entity_service
     jurisdiction
     BusinessEntityService.new(office, @jurisdiction)
-  end
-
-  def list_jurisdictions
-    @jurisdictions = Jurisdiction.joins(join(office.id)).order(order_sequence).
-                     pluck_h(list_fields).each { |j| j[:state] = state(j) }
-  end
-
-  def state(j)
-    if j['office_jurisdictions.office_id'].present?
-      'edit'
-    else
-      j['business_entities.code'].present? ? 'delete' : 'new'
-    end
-  end
-
-  def order_sequence
-    'business_entities.code IS NOT NULL DESC, jurisdictions.id'
-  end
-
-  def join(office_id)
-    <<-JOIN
-      LEFT OUTER JOIN business_entities ON business_entities.jurisdiction_id = jurisdictions.id
-        AND business_entities.office_id = #{office_id} AND business_entities.valid_to IS NULL
-      LEFT OUTER JOIN office_jurisdictions
-        ON business_entities.jurisdiction_id = office_jurisdictions.jurisdiction_id
-          AND business_entities.office_id = office_jurisdictions.office_id
-          AND business_entities.valid_to IS NULL
-    JOIN
-  end
-
-  def list_fields
-    ['jurisdictions.id', 'jurisdictions.name', 'business_entities.id',
-     'business_entities.code', 'business_entities.name', 'office_jurisdictions.office_id']
   end
 
   def business_entity_params
