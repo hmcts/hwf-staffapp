@@ -5,7 +5,7 @@ module FlashMessageHelper
     else
       managers.map do |m|
         "<a href=\"mailto:#{m.email}\">#{m.name}</a>"
-      end.join(', ')
+      end.to_sentence(two_words_connector: ' or ', last_word_connector: ' or ')
     end
   end
 end

@@ -129,4 +129,17 @@ describe BusinessEntityService do
       end
     end
   end
+
+  describe '#deactivate' do
+    subject { service.deactivate }
+
+    it 'sets the valid_to value' do
+      expect(subject.valid_to).to_not eq nil
+    end
+
+    it 'returns a valid object' do
+      expect(subject.valid?).to be true
+    end
+
+  end
 end

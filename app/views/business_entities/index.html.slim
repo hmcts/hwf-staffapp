@@ -1,14 +1,14 @@
 h2 Business Entities for #{office.name}
 
+.row
+  .columns.small-3.bold Jurisdiction
+  .columns.small-2.bold BEC
+  .columns.small-4.bold.end BEC Description
 #result_table
-  .row
-    .columns.small-3.bold Jurisdiction
-    .columns.small-2.bold BEC
-    .columns.small-4.bold.end BEC Description
   -@jurisdictions.each do |j|
     .row
       .columns.small-3
-        =j['jurisdictions.id']
+        =j['jurisdictions.name']
       .columns.small-2
         =j['business_entities.code']
       .columns.small-4
@@ -22,7 +22,7 @@ h2 Business Entities for #{office.name}
             =link_to 'Update', edit_office_business_entity_path(office, id: j['business_entities.id'])
           -when 'new'
             =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j['jurisdictions.id'])
-      -if j[5].present?
+      -if j[:state]=='edit'
         .columns.small-12 id="remove-#{j[0]}"
           .important-notice
             p = t('business_entities.remove_warning_html', managers: format_managers_contacts(office.managers).html_safe, office: office.name)
