@@ -16,6 +16,10 @@
 // Replacing asset pipeline =require syntax here with CSS @import means no
 // need to import things all over the place elsewhere
 
+@import 'colours';
+@import 'measurements';
+@import 'sizes';
+
 @import 'foundation_and_overrides';
 @import 'navigation';
 @import 'result_bar';
