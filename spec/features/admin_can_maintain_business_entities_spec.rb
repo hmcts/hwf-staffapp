@@ -7,9 +7,22 @@ RSpec.feature 'Business entity management:', type: :feature do
 
   let(:office) { create :office }
   let(:admin) { create :admin_user, office: office }
+  let(:manager) { create :manager, office: office }
   let(:business_entity) { office.business_entities.first }
 
-  context 'as an admin' do
+  context 'as a user who cannot access' do
+    before { login_as manager }
+
+    context 'when editing an office' do
+      before { visit edit_office_path(office) }
+
+      scenario 'is shown a link to edit business entities' do
+        expect(page).to have_no_content 'Edit the business entities'
+      end
+    end
+  end
+
+  context 'as a user with access' do
     before { login_as admin }
 
     context 'when editing an office' do
