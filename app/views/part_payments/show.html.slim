@@ -2,16 +2,16 @@ header
   h2 Waiting for part-payment
 
 .row
-  .small-12.medium-6.columns
+  .small-12.columns
     .panel
       h4 Process part-payment
-      = link_to 'Start now', accuracy_part_payment_path(@part_payment), class: 'button success'
+      = link_to 'Start now', accuracy_part_payment_path(@part_payment), class: 'button success util_mb-medium'
       details
         summary
           span.summary.primary If the part-payment can’t be processed
-        div
-          div Part-payment needs to arrive by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process the payment, choose ‘Return application’ to remove it from ‘Applications waiting for part-payment' and return everything to the applicant.
-          = link_to 'Return application', return_letter_part_payment_path(@part_payment), class: 'button alternative'
+        div.panel-indent.util_mb-0.util_mt-0
+          p Part-payment needs to arrive by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process the payment, choose ‘Return application’ to remove it from ‘Applications waiting for part-payment' and return everything to the applicant.
+          = link_to 'Return application', return_letter_part_payment_path(@part_payment), class: 'button alternative util_mb-0'
 
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
