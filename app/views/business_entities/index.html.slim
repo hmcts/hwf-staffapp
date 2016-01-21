@@ -19,7 +19,7 @@ h2 Business Entities for #{office.name}
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
           -when 'edit'
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
-          -when 'new'
+          -when 'add'
             =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
 
 .row.pad-top-thirty-px
