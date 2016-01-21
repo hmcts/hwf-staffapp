@@ -26,22 +26,46 @@ RSpec.describe Views::OfficeBusinessEntityState do
     it { is_expected.to eq jurisdiction.name }
   end
 
-  describe '#business_entity_id' do
-    subject { view.business_entity_id }
+  context 'when a business_entity exists' do
+    describe '#business_entity_id' do
+      subject { view.business_entity_id }
 
-    it { is_expected.to eq business_entity.id }
+      it { is_expected.to eq business_entity.id }
+    end
+
+    describe '#business_entity_code' do
+      subject { view.business_entity_code }
+
+      it { is_expected.to eq business_entity.code }
+    end
+
+    describe '#business_entity_name' do
+      subject { view.business_entity_name }
+
+      it { is_expected.to eq business_entity.name }
+    end
   end
 
-  describe '#business_entity_code' do
-    subject { view.business_entity_code }
+  context 'when a business_entity does not exist' do
+    before { business_entity.delete }
 
-    it { is_expected.to eq business_entity.code }
-  end
+    describe '#business_entity_id' do
+      subject { view.business_entity_id }
 
-  describe '#business_entity_name' do
-    subject { view.business_entity_name }
+      it { is_expected.to eq nil }
+    end
 
-    it { is_expected.to eq business_entity.name }
+    describe '#business_entity_code' do
+      subject { view.business_entity_code }
+
+      it { is_expected.to eq nil }
+    end
+
+    describe '#business_entity_name' do
+      subject { view.business_entity_name }
+
+      it { is_expected.to eq nil }
+    end
   end
 
   describe '#status' do
