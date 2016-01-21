@@ -1,27 +1,30 @@
 module Forms
   class BenefitsEvidence < ::FormObject
     def self.permitted_attributes
-      { correct: Boolean }
+      {
+        evidence: Boolean,
+        correct: Boolean,
+        incorrect_reason: String
+      }
     end
 
     define_attributes
 
-    validates :correct, inclusion: { in: [true, false] }
-    validate :isnt_blank
+    validates :evidence, inclusion: { in: [true, false] }
+    validates :correct, inclusion: { in: [true, false] }, if: :evidence?
+    validates :incorrect_reason, presence: true, if: '(evidence? == true) && (correct? == false)'
 
     private
 
-    def isnt_blank
-      !correct.blank?
-    end
-
     def fields_to_update
-      { correct: correct }
+      { correct: correct, incorrect_reason: incorrect_reason }
     end
 
     def persist!
-      @object.update(fields_to_update)
-      @object.application.update(outcome: outcome)
+      if evidence
+        @object.update(fields_to_update)
+        @object.application.update(outcome: outcome)
+      end
     end
 
     def outcome
