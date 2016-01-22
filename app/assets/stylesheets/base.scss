@@ -171,23 +171,23 @@ header {
 }
 
 .guide-cols {
-  width: 18%;
-  display: inline-block;
-  float: left;
-  margin:0 15px 0 0;
-  min-height:240px;
-  position: relative;
   a {
     text-decoration: none;
     display: block;
+    text-align: center;
   }
   img {
-    padding:0;
-    display: block;
-    padding:20px;
-    position: absolute;
-    top:20%;
-    left:0;
+    padding: 10px;
+    width: auto;
+    max-height: 150px;
+    margin: auto;
+  }
+
+  h5 {
+    span {
+      display: block;
+      min-height: 2.5rem;
+    }
   }
 }
 .icon-column img{
