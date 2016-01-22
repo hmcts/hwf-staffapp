@@ -36,7 +36,6 @@ RSpec.feature 'No NI number provided', type: :feature do
   let!(:jurisdictions) { create_list :jurisdiction, 3 }
   let!(:office)        { create(:office, jurisdictions: jurisdictions) }
   let!(:user)          { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
-  let(:paper_evidence) { 'The applicant has provided paper evidence' }
   let(:no_remission)   { 'The applicant must pay the full fee' }
 
   before do
@@ -46,15 +45,16 @@ RSpec.feature 'No NI number provided', type: :feature do
     benefits_page
   end
 
-  scenario 'correct content on the page' do
-    warning_string = "The applicant's details could not be checked with the Department for Work and Pensions"
+  xscenario 'correct content on the page' do
+    expect(page).to have_xpath('//h2', text: 'Benefits')
+    warning_string = 'There’s a problem with the applicant’s surname, date of birth or National Insurance number.'
     expect(page).to have_content warning_string
-    expect(page).to have_link 'Next'
-    expect(page).to have_text paper_evidence
   end
 
-  context 'when the user tries to process paper evidence' do
-    before { click_link paper_evidence }
+  context 'when the user processes paper evidence' do
+    before do
+      choose 'benefit_override_evidence_true'
+    end
 
     context 'when the evidence is valid' do
       let(:full_remission) { "The applicant doesn’t have to pay the fee" }
@@ -88,6 +88,7 @@ RSpec.feature 'No NI number provided', type: :feature do
     context 'when the evidence is invalid' do
       before do
         choose 'benefit_override_correct_false'
+        fill_in 'benefit_override_incorrect_reason', with: 'some reason'
         click_button 'Next'
       end
 
@@ -105,7 +106,8 @@ RSpec.feature 'No NI number provided', type: :feature do
 
   context 'when the user progresses to the summary page' do
     before do
-      click_link 'Next'
+      choose 'benefit_override_evidence_false'
+      click_button 'Next'
     end
 
     it do

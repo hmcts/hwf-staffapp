@@ -58,7 +58,6 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         before do
           choose 'application_benefits_true'
           click_button 'Next'
-          click_link 'Next'
         end
 
         scenario 'the summary page shows the benefit data' do

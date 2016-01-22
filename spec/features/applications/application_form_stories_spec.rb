@@ -80,13 +80,15 @@ RSpec.feature 'Completing the application details', type: :feature do
                   click_button 'Next'
                 end
 
-                scenario 'benefit results is shown with fail message' do
+                scenario 'benefit override page is shown with' do
                   expect(page).to have_xpath('//h2', text: 'Benefits')
-                  expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "no")]/h3[@class="bold"]', text: '✗ The applicant is not receiving benefits')
                 end
 
                 context 'when benefits confirmed' do
-                  before { click_link 'Next' }
+                  before do
+                    choose 'benefit_override_evidence_false'
+                    click_button 'Next'
+                  end
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')
@@ -216,56 +218,47 @@ RSpec.feature 'Completing the application details', type: :feature do
                   click_button 'Next'
                 end
 
-                scenario 'benefit results is shown with pass message' do
-                  expect(page).to have_xpath('//h2', text: 'Benefits')
-                  expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "yes")]/h3[@class="bold"]', text: '✓ The applicant is receiving the correct benefits')
+                scenario 'the summary page is shown with correct display' do
+                  expect(page).to have_xpath('//h2', text: 'Check details')
+                  expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                  expect(page).to have_xpath('//h4', text: 'Benefits')
+                  expect(page).to have_no_xpath('//h4', text: 'Income')
                 end
 
-                context 'when benefits confirmed' do
-                  before { click_link 'Next' }
+                context 'when the user returns to the savings threshold' do
+                  before { click_link 'Change savings and investments' }
 
-                  scenario 'the summary page is shown with correct display' do
-                    expect(page).to have_xpath('//h2', text: 'Check details')
-                    expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                    expect(page).to have_xpath('//h4', text: 'Benefits')
-                    expect(page).to have_no_xpath('//h4', text: 'Income')
+                  scenario 'savings and investments is shown' do
+                    expect(page).to have_xpath('//h2', text: 'Savings and investments')
                   end
 
-                  context 'when the user returns to the savings threshold' do
-                    before { click_link 'Change savings and investments' }
-
-                    scenario 'savings and investments is shown' do
-                      expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                  context 'and changes the threshold to exceeded' do
+                    before do
+                      choose 'application_threshold_exceeded_true'
+                      click_button 'Next'
                     end
 
-                    context 'and changes the threshold to exceeded' do
-                      before do
-                        choose 'application_threshold_exceeded_true'
-                        click_button 'Next'
-                      end
-
-                      scenario 'the summary page is shown with correct display' do
-                        expect(page).to have_xpath('//h2', text: 'Check details')
-                        expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                        expect(page).to have_no_xpath('//h4', text: 'Benefits')
-                        expect(page).to have_no_xpath('//h4', text: 'Income')
-                      end
+                    scenario 'the summary page is shown with correct display' do
+                      expect(page).to have_xpath('//h2', text: 'Check details')
+                      expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                      expect(page).to have_no_xpath('//h4', text: 'Benefits')
+                      expect(page).to have_no_xpath('//h4', text: 'Income')
                     end
                   end
+                end
 
-                  context 'when the user clicks continue' do
-                    before { click_button 'Complete processing' }
+                context 'when the user clicks continue' do
+                  before { click_button 'Complete processing' }
 
-                    scenario 'the confirmation is shown' do
-                      expect(page).to have_xpath('//h2', text: 'Processing complete')
-                    end
+                  scenario 'the confirmation is shown' do
+                    expect(page).to have_xpath('//h2', text: 'Processing complete')
+                  end
 
-                    context 'when the user clicks Back to Start' do
-                      before { click_link 'Back to start' }
+                  context 'when the user clicks Back to Start' do
+                    before { click_link 'Back to start' }
 
-                      scenario 'the home page is shown' do
-                        expect(page).to have_text 'Process application'
-                      end
+                    scenario 'the home page is shown' do
+                      expect(page).to have_text 'Process application'
                     end
                   end
                 end

@@ -67,7 +67,6 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
                   expect(page).to have_text 'Is the applicant receiving one of the benefits listed in question 9?'
                   choose 'application_benefits_true'
                   click_button 'Next'
-                  click_link 'Next'
                   click_button 'Complete processing'
 
                   expect(page).to have_text '✓ The applicant doesn’t have to pay the fee'
