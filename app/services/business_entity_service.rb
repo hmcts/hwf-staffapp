@@ -7,14 +7,18 @@ class BusinessEntityService
     @existing_business_entity = BusinessEntity.current_for(office, jurisdiction)
   end
 
-  def build(params)
-    build_business_entity(params)
-  end
-
+  # TODO: deprecate
   def check_update(params)
     build_business_entity(params)
   end
 
+  def build_new(params)
+    @new_params = params
+    @persist_status = :new
+    build_new_business_entity
+  end
+
+  # TODO: deprecate
   def persist_update!(business_entity)
     return false if business_entity.nil? || @existing_business_entity.nil?
     if duplicate_needed?(business_entity)
@@ -26,8 +30,28 @@ class BusinessEntityService
     end
   end
 
+  def persist!
+    case @persist_status
+    when :new
+      save_new
+    end
+  end
+
   private
 
+  def build_new_business_entity
+    @new_business_entity = BusinessEntity.new(office: @office,
+                                              jurisdiction: @jurisdiction,
+                                              name: @new_params[:name],
+                                              code: @new_params[:code],
+                                              valid_from: @timestamp)
+  end
+
+  def save_new
+    @new_business_entity.save
+  end
+
+  # TODO: deprecate
   def build_business_entity(params)
     BusinessEntity.new(office: @office,
                        jurisdiction: @jurisdiction,
