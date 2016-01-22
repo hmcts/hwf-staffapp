@@ -29,10 +29,10 @@ class BenefitOverridesController < ApplicationController
   end
 
   def benefit_override
-    @benefit_override ||= BenefitOverride.find_or_create_by(application_id: application.id)
+    @benefit_override ||= BenefitOverride.find_or_initialize_by(application: application)
   end
 
   def allowed_params
-    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes)
+    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
   end
 end
