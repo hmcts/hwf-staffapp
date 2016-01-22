@@ -21,7 +21,7 @@ class BenefitCheckRunner
   end
 
   def on_benefits?
-    benefit_check && benefit_check.dwp_result == 'Yes'
+    benefit_check && benefit_check.dwp_result.try(:downcase) == 'yes'
   end
 
   private

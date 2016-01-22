@@ -51,7 +51,7 @@ RSpec.feature 'When benefits checker result is "Undetermined"', type: :feature d
 
   xscenario 'shows the benefits override page' do
     expect(page).to have_xpath('//h2', text: 'Benefits')
-    warning_message = 'The applicant’s details could not be checked with the Department for Work and Pensions'
+    warning_message = 'There’s a problem with the applicant’s surname, date of birth or National Insurance number.'
     expect(page).to have_content warning_message
   end
 end
