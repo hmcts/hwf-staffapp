@@ -6,7 +6,7 @@ header
     - unless @confirmation.outcome == 'full'
       = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
 
-    = link_to 'Back to start', root_path, class: 'button success'
+    = link_to 'Back to start', root_path, class: 'button'
 
   .large-5.columns
     .guidance
