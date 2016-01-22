@@ -72,18 +72,9 @@ module Applications
       @form.update_attributes(form_params(:benefits))
 
       if @form.save
-        BenefitCheckRunner.new(application).run
-        redirect_to(action: :benefits_result)
+        benefit_check_and_redirect(@form.benefits)
       else
         render :benefits
-      end
-    end
-
-    def benefits_result
-      if application.benefits
-        render :benefits_result
-      else
-        redirect_to(action: :income)
       end
     end
 
@@ -148,6 +139,24 @@ module Applications
 
     def user_jurisdictions
       current_user.office.jurisdictions
+    end
+
+    def benefit_check_runner
+      @benefit_check_runner ||= BenefitCheckRunner.new(application)
+    end
+
+    def benefit_check_and_redirect(benefits)
+      if benefits
+        benefit_check_runner.run
+
+        if benefit_check_runner.on_benefits?
+          redirect_to(action: :summary)
+        else
+          redirect_to application_benefit_override_paper_evidence_path(application)
+        end
+      else
+        redirect_to(action: :income)
+      end
     end
 
     def calculate_income
