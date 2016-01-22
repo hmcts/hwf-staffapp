@@ -4,33 +4,40 @@ header
       h2 See the guides
       h4 style="font-weight:normal;" How to process an application, deal with evidence checks, part-payments, appeals, and fraud.
 
-.row.equal-heightboxes
-  .panel.guide-cols
-    h5
-      = link_to guide_process_application_path
-        | Process application
-        = image_tag("icon-process.png")
+.row
+  .small-12.columns
+    ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_process_application_path
+              span Process application
+              = image_tag("icon-process.png")
 
-  .panel.guide-cols
-    h5
-      = link_to guide_evidence_checks_path
-        | Evidence checks
-        = image_tag("icon-evidence.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_evidence_checks_path
+              span Evidence checks
+              = image_tag("icon-evidence.png")
 
-  .panel.guide-cols
-    h5
-      = link_to guide_part_payments_path
-        | Part-payments
-        = image_tag("icon-part-fee.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_part_payments_path
+              span Part-payments
+              = image_tag("icon-part-fee.png")
 
-  .panel.guide-cols
-    h5
-      = link_to guide_appeals_path
-        | Appeals
-        = image_tag("icon-appeals.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_appeals_path
+              span Appeals
+              = image_tag("icon-appeals.png")
 
-  .panel.guide-cols
-    h5
-      = link_to guide_suspected_fraud_path
-        | Suspected fraud
-        = image_tag("icon-fraud.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_suspected_fraud_path
+              span Suspected fraud
+              = image_tag("icon-fraud.png")

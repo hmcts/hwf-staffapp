@@ -432,30 +432,30 @@ header
 
 .row
   .small-12.columns
-    .row
-      .small-12.medium-6.large-3.columns
-        .panel
+    ul.small-block-grid-2.medium-block-grid-4
+      li
+        .panel.guide-cols
           h5
             = link_to guide_evidence_checks_path
-              | Evidence checks
+              span Evidence checks
               = image_tag("icon-evidence.png")
-      .small-12.medium-6.large-3.columns
-        .panel
+      li
+        .panel.guide-cols
           h5
             = link_to guide_part_payments_path
-              | Part payments
+              span Part payments
               = image_tag("icon-part-fee.png")
 
-      .small-12.medium-6.large-3.columns
-        .panel
+      li
+        .panel.guide-cols
           h5
             = link_to guide_appeals_path
-              | Appeals
+              span Appeals
               = image_tag("icon-appeals.png")
 
-      .small-12.medium-6.large-3.columns
-        .panel
+      li
+        .panel.guide-cols
           h5
             = link_to guide_suspected_fraud_path
-              | Suspected fraud
+              span Suspected fraud
               = image_tag("icon-fraud.png")
