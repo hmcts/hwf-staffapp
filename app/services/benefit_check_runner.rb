@@ -20,6 +20,10 @@ class BenefitCheckRunner
     end
   end
 
+  def on_benefits?
+    benefit_check && benefit_check.dwp_result == 'Yes'
+  end
+
   private
 
   def applicant

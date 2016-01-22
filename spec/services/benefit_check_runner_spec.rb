@@ -181,4 +181,32 @@ RSpec.describe BenefitCheckRunner do
       end
     end
   end
+
+  describe '#on_benefits?' do
+    before do
+      allow(BenefitCheck).to receive(:create).and_return(benefit_check)
+    end
+
+    subject { service.on_benefits? }
+
+    context 'when the runner did not run' do
+      let(:benefit_check) { nil }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when the runner ran' do
+      context 'when the result was "yes"' do
+        let(:benefit_check) { build_stubbed(:benefit_check, dwp_result: 'Yes') }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when the result is not "yes"' do
+        let(:benefit_check) { build_stubbed(:benefit_check, dwp_result: 'No') }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
