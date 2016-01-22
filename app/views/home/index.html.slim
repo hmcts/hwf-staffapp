@@ -7,7 +7,7 @@
         .panel
           h3 Generate reports
           p Export national finance reports related to Help with fees applications and download monthly summary data.
-          = link_to 'Generate reports', '/reports/finance_report', class: 'button success util_mb-0'
+          = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
       .small-12.medium-6.columns
         .panel
           h3 View offices
@@ -30,7 +30,7 @@
             p Please ask your manager to assign jurisdictions to your office.
           - else
             .actions.util_mt-0
-              =link_to 'Start now', create_applications_path, method: :post, class: 'button success util_mb-0'
+              =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
 
 - if policy(:application).index?
   .row
