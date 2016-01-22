@@ -44,7 +44,6 @@ module Applications
     end
 
     def savings_investments
-      @application = application
       @form = Forms::Application::SavingsInvestment.new(application)
     end
 
@@ -55,7 +54,6 @@ module Applications
       if @form.save
         redirect_to(action: :benefits)
       else
-        @application = application
         render :savings_investments
       end
     end
@@ -83,7 +81,6 @@ module Applications
 
     def benefits_result
       if application.benefits
-        @application = application
         render :benefits_result
       else
         redirect_to(action: :income)
@@ -112,7 +109,6 @@ module Applications
     end
 
     def summary
-      @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
       @savings = Views::Overview::SavingsAndInvestments.new(application)
@@ -129,7 +125,6 @@ module Applications
       if application.evidence_check.present?
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
-        @application = application
         @confirm = Views::Confirmation::Result.new(application)
       end
     end
@@ -148,7 +143,7 @@ module Applications
     end
 
     def application
-      @appication ||= Application.find(params[:application_id])
+      @application ||= Application.find(params[:application_id])
     end
 
     def user_jurisdictions
