@@ -12,9 +12,9 @@ describe BusinessEntityService do
     it { is_expected.to be_a_kind_of described_class }
   end
 
-  describe '#build' do
+  describe '#build_new' do
     let(:params) { { name: name, code: code } }
-    subject { service.build(params) }
+    subject { service.build_new(params) }
 
     describe 'when sent correct values' do
       let(:name) { 'test-jurisdiction' }
@@ -45,6 +45,19 @@ describe BusinessEntityService do
     end
   end
 
+  describe '#persist!' do
+    subject(:persist) { service.persist! }
+
+    context 'when persisting a new object' do
+      before { service.build_new(name: 'Test', code: 'XY123') }
+
+      it 'creates a new business_entity' do
+        expect { persist }.to change { BusinessEntity.count }.by 1
+      end
+    end
+  end
+
+  # TODO: deprecate
   describe '#check_update' do
     let(:params) { { name: name, code: code } }
     subject { service.check_update(params) }
@@ -78,6 +91,7 @@ describe BusinessEntityService do
     end
   end
 
+  # TODO: deprecate
   describe '#persist_update!' do
     let(:business_entity) { office.business_entities.first }
     subject { service.persist_update!(new_be) }

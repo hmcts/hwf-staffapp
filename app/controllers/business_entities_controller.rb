@@ -11,9 +11,8 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def create
-    @business_entity = business_entity_service.build(business_entity_params)
-    authorize @business_entity
-    if @business_entity.save
+    authorize business_entity_service.build_new(business_entity_params)
+    if business_entity_service.persist!
       redirect_to office_business_entities_path
     else
       render :new
