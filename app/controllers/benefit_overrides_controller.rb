@@ -12,7 +12,7 @@ class BenefitOverridesController < ApplicationController
     if @form.save
       redirect_to application_summary_path(application)
     else
-      redirect_to application_benefit_override_paper_evidence_path(application)
+      render :paper_evidence
     end
   end
 

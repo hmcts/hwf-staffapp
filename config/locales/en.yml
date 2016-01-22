@@ -300,6 +300,14 @@ en-GB:
         children: Number of children
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
+      forms/benefits_evidence:
+        evidence: 'Has the applicant provided paper evidence?'
+        evidence_false: 'No'
+        evidence_true: 'Yes, the applicant has provided paper evidence'
+        correct: 'Is the evidence for the correct applicant and dated in the last 3 months?'
+        correct_false: 'No'
+        correct_true: 'Yes, the evidence is correct'
+        incorrect_reason: 'Describe the problem with the evidence'
     errors:
       models:
         forms/finance_report:
@@ -380,6 +388,14 @@ en-GB:
           attributes:
             deleted_reason:
               blank: Enter the reason
+        forms/benefits_evidence:
+          attributes:
+            evidence:
+              inclusion: You must answer the evidence question
+            correct:
+              inclusion: Confirm if the evidence is correct
+            incorrect_reason:
+              blank: Describe the problem
   activerecord:
     errors:
       models:
