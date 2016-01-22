@@ -248,8 +248,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:expected_params) { { benefits: false } }
     let(:benefit_form) { double(benefits: user_says_on_benefits) }
     let(:user_says_on_benefits) { false }
-    let(:dwp_says_on_benefits) { false }
-    let(:benefit_check_runner) { double(run: nil, on_benefits?: dwp_says_on_benefits) }
+    let(:can_override) { false }
+    let(:benefit_check_runner) { double(run: nil, can_override?: can_override) }
 
     before do
       expect(benefit_form).to receive(:update_attributes).with(expected_params)
@@ -269,17 +269,17 @@ RSpec.describe Applications::ProcessController, type: :controller do
           expect(benefit_check_runner).to have_received(:run)
         end
 
-        context 'when the result is the applicant is on benefits' do
-          let(:dwp_says_on_benefits) { true }
+        context 'when the result can be overridden' do
+          let(:can_override) { true }
 
-          it 'redirects to the summary page' do
-            expect(response).to redirect_to(application_summary_path(application))
+          it 'redirects to the benefits override page' do
+            expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
           end
         end
 
-        context 'when the result is undetermined or the applicant is not on benefits' do
-          it 'redirects to the benefits override page' do
-            expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
+        context 'when the result can not be overridden' do
+          it 'redirects to the summary override page' do
+            expect(response).to redirect_to(application_summary_path(application))
           end
         end
       end

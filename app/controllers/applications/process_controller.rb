@@ -149,10 +149,10 @@ module Applications
       if benefits
         benefit_check_runner.run
 
-        if benefit_check_runner.on_benefits?
-          redirect_to(action: :summary)
-        else
+        if benefit_check_runner.can_override?
           redirect_to application_benefit_override_paper_evidence_path(application)
+        else
+          redirect_to(action: :summary)
         end
       else
         redirect_to(action: :income)
