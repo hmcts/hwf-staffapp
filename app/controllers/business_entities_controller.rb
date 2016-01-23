@@ -24,10 +24,9 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def update
-    new_be = business_entity_service.check_update(business_entity_params)
-    authorize new_be
+    authorize business_entity_service.build_update(business_entity_params)
 
-    if @business_entity_service.persist_update!(new_be)
+    if business_entity_service.persist!
       redirect_to office_business_entities_path
     else
       render :edit

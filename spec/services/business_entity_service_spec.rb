@@ -2,8 +2,8 @@
 require 'rails_helper'
 
 describe BusinessEntityService do
-  let(:office) { create :office }
-  let(:jurisdiction) { office.jurisdictions[0] }
+  let!(:office) { create :office }
+  let!(:jurisdiction) { office.jurisdictions[0] }
   let(:service) { described_class.new(office, jurisdiction) }
 
   subject { service }
@@ -45,35 +45,46 @@ describe BusinessEntityService do
     end
   end
 
-  describe '#persist!' do
-    subject(:persist) { service.persist! }
-
-    context 'when persisting a new object' do
-      before { service.build_new(name: 'Test', code: 'XY123') }
-
-      it 'creates a new business_entity' do
-        expect { persist }.to change { BusinessEntity.count }.by 1
-      end
-    end
-  end
-
-  # TODO: deprecate
-  describe '#check_update' do
+  describe '#build_update' do
     let(:params) { { name: name, code: code } }
-    subject { service.check_update(params) }
+    subject { service.build_update(params) }
+    let(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
-    describe 'when sent correct values' do
+    describe 'when sent both correct values' do
       let(:name) { 'test-jurisdiction' }
-      let(:code) { 'AB123' }
+      let(:code) { business_entity.code.reverse }
 
       it { is_expected.to be_a_kind_of BusinessEntity }
 
-      it 'does not persist the object' do
+      it 'returns a new, non-persisted object' do
         expect(subject.persisted?).to be false
       end
 
       it 'returns a valid object' do
         expect(subject.valid?).to be true
+      end
+
+      it 'has no ID' do
+        expect(subject.id).to be nil
+      end
+    end
+
+    describe 'when sent an updated name only' do
+      let(:name) { 'test-jurisdiction' }
+      let(:code) { business_entity.code }
+
+      it { is_expected.to be_a_kind_of BusinessEntity }
+
+      it 'returns the existing persisted object' do
+        expect(subject.persisted?).to be true
+      end
+
+      it 'returns a valid object' do
+        expect(subject.valid?).to be true
+      end
+
+      it 'has the ID of the existing business_entity' do
+        expect(subject.id).to eq business_entity.id
       end
     end
 
@@ -91,54 +102,37 @@ describe BusinessEntityService do
     end
   end
 
-  # TODO: deprecate
-  describe '#persist_update!' do
-    let(:business_entity) { office.business_entities.first }
-    subject { service.persist_update!(new_be) }
+  describe '#persist!' do
+    let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
-    describe 'when not sent a parameter' do
-      let(:new_be) { nil }
+    subject(:persist) { service.persist! }
 
-      it { is_expected.to eq false }
-    end
+    context 'when persisting a new object' do
+      before { service.build_new(name: 'Test', code: 'XY123') }
 
-    describe 'when sent valid business_entity code change' do
-      let(:new_be) { BusinessEntity.new(business_entity.attributes.merge(code: 'XY123', id: nil)) }
-
-      it { is_expected.to eq true }
-
-      describe 'persists the changes' do
-        before { service.persist_update!(new_be) }
-
-        it 'updates the existing business_entity' do
-          business_entity.reload
-          expect(business_entity.valid_to).not_to eq nil
-        end
-
-        it 'creates a new BusinessEntity' do
-          expect(new_be.persisted?).to be true
-        end
+      it 'creates a new business_entity' do
+        expect { persist }.to change { BusinessEntity.count }.by 1
       end
     end
 
-    describe 'when sent valid business_entity name change' do
-      let(:new_name) { 'New name for BEC' }
-      let(:new_be) { BusinessEntity.new(business_entity.attributes.merge(name: new_name)) }
+    context 'when persisting an update' do
+      context 'that changes the code' do
+        before { service.build_update(name: 'Test', code: 'XY123') }
 
-      it { is_expected.to eq true }
+        it 'creates a new business_entity' do
+          expect { persist }.to change { BusinessEntity.count }.by 1
+        end
 
-      describe 'persists the changes' do
-        before do
-          service.persist_update!(new_be)
+        it 'sets the valid_to date of the existing business_entity' do
+          service.persist!
           business_entity.reload
+          expect(business_entity.valid_to).not_to eq nil
         end
+      end
 
-        it 'but does not update the valid_to attribute' do
-          expect(business_entity.valid_to).to eq nil
-        end
-
-        it 'updates the existing business_entity name' do
-          expect(business_entity.name).to eq new_name
+      context 'that does not change the code' do
+        it 'creates a new business_entity' do
+          expect { service.persist! }.to_not change { BusinessEntity.count }
         end
       end
     end
