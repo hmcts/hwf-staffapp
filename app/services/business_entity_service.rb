@@ -7,26 +7,22 @@ class BusinessEntityService
     @existing_business_entity = BusinessEntity.current_for(office, jurisdiction)
   end
 
-  # TODO: deprecate
-  def check_update(params)
-    build_business_entity(params)
-  end
-
   def build_new(params)
     @new_params = params
     @persist_status = :new
     build_new_business_entity
   end
 
-  # TODO: deprecate
-  def persist_update!(business_entity)
-    return false if business_entity.nil? || @existing_business_entity.nil?
-    if duplicate_needed?(business_entity)
-      @existing_business_entity.assign_attributes(valid_to: @timestamp)
-      save_entities_in_transaction(business_entity)
+  def build_update(params)
+    @new_params = params
+    build_new_business_entity
+    @persist_status = set_update_type
+    if @persist_status.eql?(:update_existing)
+      @existing_business_entity.assign_attributes(name: @new_business_entity.name)
+      @existing_business_entity
     else
-      @existing_business_entity.assign_attributes(name: business_entity.name)
-      @existing_business_entity.save
+      @existing_business_entity.assign_attributes(valid_to: @timestamp)
+      @new_business_entity
     end
   end
 
@@ -34,6 +30,10 @@ class BusinessEntityService
     case @persist_status
     when :new
       save_new
+    when :update_existing
+      save_existing
+    when :update_duplicate
+      save_both
     end
   end
 
@@ -47,43 +47,26 @@ class BusinessEntityService
                                               valid_from: @timestamp)
   end
 
+  def save_both
+    ActiveRecord::Base.transaction do
+      save_existing
+      save_new
+    end
+  end
+
   def save_new
     @new_business_entity.save
   end
 
-  # TODO: deprecate
-  def build_business_entity(params)
-    BusinessEntity.new(office: @office,
-                       jurisdiction: @jurisdiction,
-                       name: params[:name],
-                       code: params[:code],
-                       valid_from: @timestamp)
+  def save_existing
+    @existing_business_entity.save
   end
 
-  def duplicate_needed?(business_entity)
-    entities_match?(business_entity) && entities_present_and_codes_match?(business_entity)
+  def set_update_type
+    codes_match? ? :update_existing : :update_duplicate
   end
 
-  def entities_match?(business_entity)
-    business_entity != @existing_business_entity
-  end
-
-  def entities_present_and_codes_match?(business_entity)
-    (both_entities_present?(business_entity) && codes_match?(business_entity))
-  end
-
-  def both_entities_present?(business_entity)
-    @existing_business_entity.present? && business_entity.present?
-  end
-
-  def codes_match?(business_entity)
-    business_entity.code != @existing_business_entity.code
-  end
-
-  def save_entities_in_transaction(business_entity)
-    ActiveRecord::Base.transaction do
-      @existing_business_entity.save
-      business_entity.save
-    end
+  def codes_match?
+    @new_business_entity.code == @existing_business_entity.code
   end
 end
