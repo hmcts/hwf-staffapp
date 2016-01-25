@@ -1,46 +1,61 @@
-- if error_message_partial
-  = render(error_message_partial)
-
 header
   h2 Benefits
 
-= form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :evidence
-            = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
-            .options.radio
-              .option
-                label for='benefit_override_evidence_false'
-                  = f.radio_button :evidence, 'false', { class: 'show-hide-section', data: { section: 'evidence', show: 'false' } }
-                  = t('evidence_false', scope: @form.i18n_scope)
-              .option
-                label for='benefit_override_evidence_true'
-                  = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
-                  = t('evidence_true', scope: @form.i18n_scope)
+.row
+  .small-12.medium-8.large-7.columns
+    - if error_message_partial
+     .page-error
+        = render(error_message_partial)
 
-      .row.collapse.panel-indent.start-hidden#evidence-only
-        .row.collapse.form-group
-          .columns.small-12
-            = f.label :correct
-            = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
-            .options.radio
-              .option
-                label for='benefit_override_correct_false'
-                  = f.radio_button :correct, 'false', { class: 'show-hide-section', data: { section: 'incorrect', show: 'true'} }
-                  = t('correct_false', scope: @form.i18n_scope)
-              .option
-                label for='benefit_override_correct_true'
-                  = f.radio_button :correct, 'true', { class: 'show-hide-section', data: { section: 'incorrect', show: 'false'} }
-                  = t('correct_true', scope: @form.i18n_scope)
+    = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
+      .row
+        .small-12.medium-8.large-7.columns
+          .form-group
+            .row.collapse
+              .columns.small-12
+                = f.label :evidence
+                = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
+                .options.radio
+                  .option
+                    label for='benefit_override_evidence_false'
+                      = f.radio_button :evidence, 'false', { class: 'show-hide-section', data: { section: 'evidence', show: 'false' } }
+                      = t('evidence_false', scope: @form.i18n_scope)
+                  .option
+                    label for='benefit_override_evidence_true'
+                      = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
+                      = t('evidence_true', scope: @form.i18n_scope)
 
-        .row.collapse.form-group.start-hidden#incorrect-only
-          .small-12
-            = f.label :incorrect_reason
-            = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
-            = f.text_area :incorrect_reason, rows: 3
+          .row.collapse.panel-indent.start-hidden#evidence-only
+            .row.collapse.form-group
+              .columns.small-12
+                = f.label :correct
+                = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
+                .options.radio
+                  .option
+                    label for='benefit_override_correct_false'
+                      = f.radio_button :correct, 'false', { class: 'show-hide-section', data: { section: 'incorrect', show: 'true'} }
+                      = t('correct_false', scope: @form.i18n_scope)
+                  .option
+                    label for='benefit_override_correct_true'
+                      = f.radio_button :correct, 'true', { class: 'show-hide-section', data: { section: 'incorrect', show: 'false'} }
+                      = t('correct_true', scope: @form.i18n_scope)
 
-  = f.submit 'Next', class: 'button primary'
+            .row.collapse.form-group.start-hidden#incorrect-only
+              .small-12
+                = f.label :incorrect_reason
+                = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
+                = f.text_area :incorrect_reason, rows: 3
+
+      = f.submit 'Next', class: 'button primary'
+
+  .large-5.columns
+    .guidance
+      h4 Paper evidence
+      p You may need to check paper evidence to confirm the applicant is receiving benefits. This is usually an official letter.
+      p: strong For example when:
+      ul
+        li the applicant hasn't provided their National Insurance number
+        li the applicant recently started receiving benefits but the Department for Work and Pensions is not up to date
+        li the applicant receives joint benefits and the benefit is in the applicant's partner's name
+      p If you’re processing applications at the counter, ask the applicant for paper evidence if any of the above situations applies to them.
+      p Otherwise you'll need to write to the applicant and ask them for paper evidence.
