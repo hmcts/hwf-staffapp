@@ -3,7 +3,7 @@ var FR = FR || {};
 FR.login = {
   init: function() {
     var self = this,
-        $form = $('form.new_user');
+        $form = $('form.new_user[action$="users/sign_in"]');
 
     if ($form.length) {
       self.checkLoginCookie();

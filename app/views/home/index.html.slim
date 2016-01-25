@@ -29,7 +29,7 @@
           - if current_user.office.jurisdictions.empty?
             p Please ask your manager to assign jurisdictions to your office.
           - else
-            .actions.util_mt-0
+            .util_mt-0
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
 
 - if policy(:application).index?

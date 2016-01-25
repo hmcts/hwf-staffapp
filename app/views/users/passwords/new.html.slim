@@ -9,7 +9,6 @@ header
         = f.label :email
         = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
         = f.text_field :email, { class: 'form-control' }
-  .actions
-    = f.submit t('devise.passwords.new.submit_button'), class: 'button'
+  = f.submit t('devise.passwords.new.submit_button'), class: 'button'
 hr
 = render "users/shared/links"

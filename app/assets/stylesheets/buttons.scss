@@ -18,6 +18,10 @@
     margin-top: 30px;
     margin-bottom: 50px;
   }
+
+  @media #{$small-only} {
+    width: 100%;
+  }
 }
 
 // Disabled buttons

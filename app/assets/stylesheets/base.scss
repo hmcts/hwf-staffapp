@@ -204,14 +204,13 @@ a.button.alternative{
   border-top: 5px solid $govuk-blue;
   padding:$gutter-half $gutter-half/2 0;
 }
-input.small-field{
-    width:50%;
-    @media screen and (max-width: upper-bound($small-range)) {
-      width:100%;
-      border:10px solid red;
+input.small-field {
+    width: 50%;
+    @media #{$small-only} {
+      width: 100%;
     }
 }
-input.medium-field{
-    width:70%;
+input.medium-field {
+    width: 70%;
 }
 

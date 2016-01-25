@@ -15,8 +15,7 @@
           .form-group
             = f.label :password
             = f.password_field :password, autocomplete: "off"
-      .actions
-        = f.submit "Sign in", class: 'button'
+      = f.submit "Sign in", class: 'button'
       .actions
         = link_to "Forgot your password?", new_password_path(resource_name)
 
