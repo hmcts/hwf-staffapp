@@ -1,30 +1,30 @@
 class ApplicationPolicy < BasePolicy
   def new?
-    !admin?
+    staff_or_manager?
   end
 
   def create?
-    !admin? && same_office?
+    staff_or_manager? && same_office?
   end
 
   def index?
-    !admin?
+    staff_or_manager?
   end
 
   def show?
-    !admin? && same_office?
+    staff_or_manager? && same_office?
   end
 
   def update?
-    !admin? && same_office?
+    staff_or_manager? && same_office?
   end
 
   class Scope < BasePolicy::Scope
     def resolve
-      if admin?
-        @scope.none
-      else
+      if staff_or_manager?
         @scope.where(office: @user.office)
+      else
+        @scope.none
       end
     end
   end

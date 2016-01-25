@@ -1,10 +1,10 @@
 class OfficePolicy < BasePolicy
   def index?
-    true
+    !mi?
   end
 
   def show?
-    true
+    !mi?
   end
 
   def new?

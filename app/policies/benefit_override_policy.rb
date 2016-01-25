@@ -1,5 +1,5 @@
 class BenefitOverridePolicy < BasePolicy
   def create?
-    !admin? && same_application_office?
+    staff_or_manager? && same_application_office?
   end
 end

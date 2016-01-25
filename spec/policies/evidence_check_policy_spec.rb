@@ -45,4 +45,11 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
   end
+
+  context 'for an mi' do
+    let(:user) { build_stubbed(:mi) }
+
+    it { is_expected.not_to permit_action(:show) }
+    it { is_expected.not_to permit_action(:update) }
+  end
 end

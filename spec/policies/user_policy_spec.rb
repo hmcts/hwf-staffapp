@@ -167,6 +167,22 @@ RSpec.describe UserPolicy, type: :policy do
     end
   end
 
+  context 'for an mi' do
+    let(:user) { build_stubbed(:mi) }
+
+    it { is_expected.not_to permit_action(:index) }
+    it { is_expected.not_to permit_action(:list_deleted) }
+    it { is_expected.not_to permit_action(:restore) }
+    it { is_expected.not_to permit_action(:show) }
+    it { is_expected.not_to permit_action(:new) }
+    it { is_expected.not_to permit_action(:create) }
+    it { is_expected.not_to permit_action(:edit) }
+    it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:destroy) }
+    it { is_expected.not_to permit_action(:edit_password) }
+    it { is_expected.not_to permit_action(:update_password) }
+  end
+
   describe described_class::Scope do
     describe '#resolve' do
       let(:office) { create :office }
@@ -201,6 +217,14 @@ RSpec.describe UserPolicy, type: :policy do
 
         it 'returns all users' do
           is_expected.to match_array([user, user1, user2, user3, user4, user5, user6])
+        end
+      end
+
+      context 'for an mi' do
+        let(:user) { create(:mi, office: office) }
+
+        it 'returns an empty collection' do
+          is_expected.to be_empty
         end
       end
     end

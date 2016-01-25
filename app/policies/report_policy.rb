@@ -1,10 +1,10 @@
 class ReportPolicy < BasePolicy
   def index?
-    admin?
+    admin? || mi?
   end
 
   def show?
-    index?
+    admin? || mi?
   end
 
   def graphs?

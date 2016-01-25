@@ -7,10 +7,14 @@ class BasePolicy
   end
 
   module RoleMethods
-    %i[staff manager admin].each do |role|
+    %i[staff manager admin mi].each do |role|
       define_method("#{role}?") do
         @user.send("#{role}?")
       end
+    end
+
+    def staff_or_manager?
+      staff? || manager?
     end
   end
 

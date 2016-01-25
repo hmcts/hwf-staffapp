@@ -28,4 +28,12 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:graphs) }
   end
+
+  context 'for an mi' do
+    let(:user) { build_stubbed(:mi) }
+
+    it { is_expected.to permit_action(:index) }
+    it { is_expected.to permit_action(:show) }
+    it { is_expected.not_to permit_action(:graphs) }
+  end
 end
