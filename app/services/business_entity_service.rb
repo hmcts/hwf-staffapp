@@ -17,13 +17,7 @@ class BusinessEntityService
     @new_params = params
     build_new_business_entity
     @persist_status = set_update_type
-    if @persist_status.eql?(:update_existing)
-      @existing_business_entity.assign_attributes(name: @new_business_entity.name)
-      @existing_business_entity
-    else
-      @existing_business_entity.assign_attributes(valid_to: @timestamp)
-      @new_business_entity
-    end
+    @persist_status.eql?(:update_existing) ? update_and_return_existing : update_existing_return_new
   end
 
   def persist!
@@ -45,6 +39,16 @@ class BusinessEntityService
                                               name: @new_params[:name],
                                               code: @new_params[:code],
                                               valid_from: @timestamp)
+  end
+
+  def update_and_return_existing
+    @existing_business_entity.assign_attributes(name: @new_business_entity.name)
+    @existing_business_entity
+  end
+
+  def update_existing_return_new
+    @existing_business_entity.assign_attributes(valid_to: @timestamp)
+    @new_business_entity
   end
 
   def save_both

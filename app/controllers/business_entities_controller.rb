@@ -53,13 +53,12 @@ class BusinessEntitiesController < ApplicationController
 
   helper_method def jurisdiction
     jurisdiction_id = find_jurisdiction_id
-    return false unless jurisdiction_id
-    @jurisdiction ||= Jurisdiction.find(jurisdiction_id)
+    Jurisdiction.find(jurisdiction_id) if jurisdiction_id
   end
 
   def find_jurisdiction_id
     return params[:jurisdiction_id] if params[:jurisdiction_id].present?
-    return business_entity.jurisdiction_id if params[:id].present?
+    business_entity.jurisdiction_id if params[:id].present?
   end
 
   def business_entity_service
