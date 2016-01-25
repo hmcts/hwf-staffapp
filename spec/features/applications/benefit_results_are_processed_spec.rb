@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'rails_helper'
 
-RSpec.feature 'Benefit Results', type: :feature do
+RSpec.feature 'Benefit results are processed', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -25,12 +25,12 @@ RSpec.feature 'Benefit Results', type: :feature do
       click_button 'Next'
     end
 
-    context 'when NI has not been provided' do
+    context 'the benefits override page is rendered with an error message' do
       let(:ni_number) { nil }
-      let(:error_message) { 'The applicant’s details could not be checked with the Department for Work and Pensions' }
 
-      xscenario 'the page is rendered with message prompting to fill all details' do
-        expect(page).to have_content error_message
+      scenario 'the page is rendered with message prompting to fill all details' do
+        expect(page).to have_xpath('//h2', text: 'Benefits')
+        expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.feature 'Benefit Results', type: :feature do
       context 'the result is deceased' do
         let(:dwp_result) { 'deceased' }
 
-        xscenario 'the summary page is rendered' do
+        scenario 'the summary page is rendered' do
           expect(page).to have_xpath('//h2', text: 'Check details')
         end
       end
@@ -62,10 +62,10 @@ RSpec.feature 'Benefit Results', type: :feature do
       end
 
       context 'the result is server unavailable' do
-        let(:dwp_result) { 'server_unavailable' }
+        let(:dwp_result) { 'server unavailable' }
         let(:dwp_status) { 500 }
 
-        xscenario 'the benefits override page is rendered with an error message' do
+        scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_content('Sorry, the Department for Work and Pensions checker is not available')
         end
@@ -74,7 +74,7 @@ RSpec.feature 'Benefit Results', type: :feature do
       context 'the result is superseded' do
         let(:dwp_result) { 'superseded' }
 
-        xscenario 'the summary page is rendered' do
+        scenario 'the summary page is rendered' do
           expect(page).to have_xpath('//h2', text: 'Check details')
         end
       end
@@ -82,16 +82,16 @@ RSpec.feature 'Benefit Results', type: :feature do
       context 'the result is undetermined' do
         let(:dwp_result) { 'undetermined' }
 
-        xscenario 'the benefits override page is rendered with an error message' do
+        scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
         end
       end
 
       context 'the result is unspecified error' do
-        let(:dwp_result) { 'unspecified_error' }
+        let(:dwp_result) { 'unspecified error' }
 
-        xscenario 'the benefits override page is rendered with an error message' do
+        scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_content('Sorry, the Department for Work and Pensions checker is not available')
         end
