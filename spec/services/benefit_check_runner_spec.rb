@@ -197,13 +197,14 @@ RSpec.describe BenefitCheckRunner do
 
     context 'when the runner ran' do
       [
+        { result: nil, overridable: true },
         { result: 'yes', overridable: false },
         { result: 'no', overridable: true },
         { result: 'deceased', overridable: false },
-        { result: 'server_unavailable', overridable: true },
+        { result: 'server unavailable', overridable: true },
         { result: 'superseded', overridable: false },
         { result: 'undetermined', overridable: true },
-        { result: 'unspecified_error', overridable: true }
+        { result: 'unspecified error', overridable: true }
       ].each do |definition|
         context "when result was #{definition[:result]}" do
           let(:benefit_check) { build_stubbed(:benefit_check, dwp_result: definition[:result]) }

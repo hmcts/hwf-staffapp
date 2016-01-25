@@ -21,7 +21,7 @@ class BenefitCheckRunner
   end
 
   def can_override?
-    benefit_check.blank? || overridable_result?
+    benefit_check.blank? || benefit_check.dwp_result.blank? || overridable_result?
   end
 
   private
@@ -89,7 +89,7 @@ class BenefitCheckRunner
   end
 
   def overridable_result?
-    result = benefit_check.dwp_result.try(:downcase)
-    %w[no server_unavailable undetermined unspecified_error].include?(result)
+    result = benefit_check.dwp_result.downcase
+    ['no', 'server unavailable', 'undetermined', 'unspecified error'].include?(result)
   end
 end
