@@ -1,7 +1,9 @@
 class BusinessEntitiesController < ApplicationController
   def index
     authorize :business_entity
-    @jurisdictions = Query::BusinessEntityManagement.new(office).jurisdictions
+    @jurisdictions = Jurisdiction.all.map do |jurisdiction|
+      Views::OfficeBusinessEntityState.new(office, jurisdiction)
+    end
   end
 
   def new
