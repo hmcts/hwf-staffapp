@@ -35,4 +35,13 @@ class BenefitOverridesController < ApplicationController
   def allowed_params
     params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
   end
+
+  helper_method def error_message_partial
+    @error_message_partial ||= case application.last_benefit_check.dwp_result.try(:downcase)
+                               when nil, 'undetermined'
+                                 'missing_details'
+                               when 'server unavailable', 'unspecified error'
+                                 'technical_error'
+                               end
+  end
 end
