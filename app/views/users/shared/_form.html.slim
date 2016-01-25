@@ -7,7 +7,7 @@
         = f.text_field :name, { class: 'form-control' }
   .row
     .small-12.columns
-      .form-group style="margin-bottom:16px;"
+      .form-group.util_mb-small
         .row
           .columns.small-12.medium-8.large-5
             = f.label :email
@@ -19,5 +19,5 @@
 
   = render(partial: 'users/shared/form_jurisdiction', locals: {f: f})
 
-  .actions = f.submit 'Save changes', class: 'button'
+  = f.submit 'Save changes', class: 'button'
 
