@@ -28,3 +28,36 @@ p + h5 {
 .icon-completed {
   background-position: 0 -400px;
 }
+
+h2.guide-headline {
+  padding-left: 80px;
+  background-repeat: no-repeat;
+  background-size: 55px;
+
+  &.guide-headline-appeals {
+    background-image: asset_url('icon-sml-appeals.png');
+  }
+  &.guide-headline-evidence {
+    background-image: asset_url('icon-sml-evidence.png');
+  }
+  &.guide-headline-fraud {
+    background-image: asset_url('icon-sml-fraud.png');
+  }
+  &.guide-headline-part-fee {
+    background-image: asset_url('icon-sml-part-fee.png');
+  }
+  &.guide-headline-process {
+    background-image: asset_url('icon-sml-process.png');
+  }
+
+  span {
+    display: block;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: $h4-font-size;
+  }
+}
+
+h4.guide-subheadline {
+  font-weight: normal;
+}
