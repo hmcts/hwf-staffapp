@@ -6,6 +6,7 @@ describe User, type: :model do
   let(:user)          { build :user }
   let(:manager)       { build :manager }
   let(:admin_user)    { build :admin_user }
+  let(:mi)            { build :mi }
 
   it 'pass factory build' do
     expect(user).to be_valid
@@ -136,6 +137,10 @@ describe User, type: :model do
       expect(user.staff?).to be true
     end
 
+    it 'respond false if mi' do
+      expect(mi.staff?).to be false
+    end
+
     it 'respond false for manager' do
       expect(manager.staff?).to be false
     end
@@ -148,6 +153,10 @@ describe User, type: :model do
   describe '@manager?' do
     it 'respond true if manager user' do
       expect(manager.manager?).to be true
+    end
+
+    it 'respond false if mi' do
+      expect(mi.manager?).to be false
     end
 
     it 'respond false if admin user' do
@@ -164,20 +173,43 @@ describe User, type: :model do
       expect(admin_user.admin?).to be true
     end
 
+    it 'respond false if mi' do
+      expect(mi.admin?).to be false
+    end
+
     it 'respond false if manager' do
       expect(manager.admin?).to be false
     end
+
+    it 'respond false if user' do
+      expect(user.admin?).to be false
+    end
+  end
+
+  describe '#mi?' do
+    it 'respond true if mi user' do
+      expect(mi.mi?).to be true
+    end
+
+    it 'respond false if admin' do
+      expect(admin_user.mi?).to be false
+    end
+
+    it 'respond false if manager' do
+      expect(manager.admin?).to be false
+    end
+
     it 'respond false if user' do
       expect(user.admin?).to be false
     end
   end
 
   describe 'soft deletion' do
-    before { [admin_user, manager, user].map(&:save) }
+    before { [admin_user, mi, manager, user].map(&:save) }
 
     context 'to start off' do
       it 'will have 3 users' do
-        expect(described_class.count).to eq 3
+        expect(described_class.count).to eq 4
       end
     end
 
@@ -185,7 +217,7 @@ describe User, type: :model do
       before { user.destroy }
 
       it 'removes the user from the default scope' do
-        expect(described_class.count).to eq 2
+        expect(described_class.count).to eq 3
       end
 
       it 'throws an error when using the default scope' do
