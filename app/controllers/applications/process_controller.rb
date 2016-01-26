@@ -92,7 +92,7 @@ module Applications
       @form.update_attributes(form_params(:income))
 
       if @form.save
-        calculate_income
+        IncomeCalculationRunner.new(application).run
         redirect_to(action: :summary)
       else
         render :income
@@ -126,8 +126,6 @@ module Applications
       authorize application, :update?
     end
 
-    private
-
     def form_params(type)
       class_name = "Forms::Application::#{type.to_s.classify}".constantize
       params.require(:application).permit(*class_name.permitted_attributes.keys)
@@ -148,19 +146,18 @@ module Applications
     def benefit_check_and_redirect(benefits)
       if benefits
         benefit_check_runner.run
-
-        if benefit_check_runner.can_override?
-          redirect_to application_benefit_override_paper_evidence_path(application)
-        else
-          redirect_to(action: :summary)
-        end
+        determine_override
       else
         redirect_to(action: :income)
       end
     end
 
-    def calculate_income
-      IncomeCalculationRunner.new(application).run
+    def determine_override
+      if benefit_check_runner.can_override?
+        redirect_to application_benefit_override_paper_evidence_path(application)
+      else
+        redirect_to(action: :summary)
+      end
     end
   end
 end
