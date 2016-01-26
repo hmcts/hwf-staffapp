@@ -32,7 +32,7 @@ RSpec.describe UserPolicy, type: :policy do
 
       context 'when the role is staff' do
         before do
-          subject_user.role  = 'user'
+          subject_user.role = 'user'
         end
 
         it { is_expected.to permit_action(:update) }
@@ -179,7 +179,7 @@ RSpec.describe UserPolicy, type: :policy do
 
       context 'when the role is mi' do
         before do
-          subject_user.role  = 'mi'
+          subject_user.role = 'mi'
         end
 
         it { is_expected.to permit_action(:update) }
@@ -204,7 +204,6 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:update_password) }
     end
   end
-
 
   describe described_class::Scope do
     describe '#resolve' do
