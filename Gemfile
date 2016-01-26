@@ -88,8 +88,6 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'guard-teaspoon'
-  gem 'teaspoon-jasmine'
 
   gem 'timecop'
   gem 'climate_control'
