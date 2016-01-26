@@ -102,7 +102,7 @@ describe BusinessEntityService do
     end
   end
 
-  describe '#deactivate' do
+  describe '#build_deactivate' do
     subject { service.build_deactivate }
 
     it { is_expected.to be_a_kind_of BusinessEntity }
@@ -115,7 +115,7 @@ describe BusinessEntityService do
       expect(subject.valid?).to be true
     end
 
-    it 'has no ID' do
+    it 'has no valid_to' do
       expect(subject.valid_to).not_to be nil
     end
   end

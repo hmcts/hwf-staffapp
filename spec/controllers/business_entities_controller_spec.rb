@@ -144,7 +144,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     it { is_expected.to render_template(:deactivate) }
 
     it 'assigns the @business_entity variable' do
-      expect(assigns(:business_entity)).to be_a_kind_of BusinessEntity
+      expect(assigns(:business_entity)).to eq business_entity
     end
   end
 
