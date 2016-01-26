@@ -5,10 +5,14 @@ RSpec.describe BenefitOverridesController, type: :controller do
 
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
-  let(:application) { create :application, office: office }
-  let(:benefit_override) { build_stubbed(:benefit_override) }
+  let(:application) { build_stubbed :application, office: office }
+  let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
+  let(:benefits_evidence_form) { double }
 
   before do
+    expect(Application).to receive(:find).with(application.id.to_s).and_return(application)
+    expect(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return(benefit_override)
+    expect(Forms::BenefitsEvidence).to receive(:new).with(benefit_override).and_return(benefits_evidence_form)
     sign_in(user)
   end
 
@@ -18,27 +22,39 @@ RSpec.describe BenefitOverridesController, type: :controller do
     it { expect(response).to have_http_status(200) }
 
     it { expect(response).to render_template(:paper_evidence) }
+
+    it 'assigns the form' do
+      expect(assigns(:form)).to eql(benefits_evidence_form)
+    end
   end
 
   describe 'POST #paper_evidence_save' do
-    context 'when the data provided is correct' do
-      let(:post_body) { { application_id: application.id, benefit_override: { correct: true } } }
-      before { post :paper_evidence_save, post_body }
+    let(:override_params) { { evidence: false } }
+    let(:params) { { application_id: application.id, benefit_override: override_params } }
+    subject { post :paper_evidence_save, params }
 
-      it { expect(response).to have_http_status(302) }
+    before do
+      expect(benefits_evidence_form).to receive(:update_attributes).with(override_params)
+      subject
     end
 
-    context 'when the data provided is not correct' do
-      it 'raises an exception when no parameters are passed in' do
-        expect{
-          post :paper_evidence_save, application_id: application.id
-        }.to raise_error ActionController::ParameterMissing
+    context 'when the form is valid' do
+      let(:benefits_evidence_form) { double(save: true) }
+
+      it 'redirects to the summary page' do
+        expect(response).to redirect_to(application_summary_path(application))
+      end
+    end
+
+    context 'when the form is not valid' do
+      let(:benefits_evidence_form) { double(save: false) }
+
+      it 'assigns the form' do
+        expect(assigns(:form)).to eql(benefits_evidence_form)
       end
 
-      it 'redirects to paper_evidence' do
-        expect(
-          post :paper_evidence_save, application_id: application.id, benefit_override: { correct: nil }
-        ).to redirect_to(action: :paper_evidence)
+      it 're-renders the correct template' do
+        expect(response).to render_template(:paper_evidence)
       end
     end
   end

@@ -35,9 +35,11 @@ en-GB:
       :true: 'Yes'
       :false: ''
   benefit_override:
-    title: 'Do you have a letter confirming the applicant is receiving one of the benefits listed in question 9?'
-    incorrect: 'No'
-    correct: Yes, the letter is for the correct applicant and dated in the last 3 months
+    errors:
+      missing_details_html: |
+        There’s a problem with the applicant’s surname, date of birth or National Insurance number.
+        <a href="%{personal_information_url}">Check all details were entered correctly</a>
+      technical_error: Sorry, the Department for Work and Pensions checker is not available
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
@@ -300,6 +302,14 @@ en-GB:
         children: Number of children
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
+      forms/benefits_evidence:
+        evidence: 'Has the applicant provided paper evidence?'
+        evidence_false: 'No'
+        evidence_true: 'Yes, the applicant has provided paper evidence'
+        correct: 'Is the evidence for the correct applicant and dated in the last 3 months?'
+        correct_false: 'No'
+        correct_true: 'Yes, the evidence is correct'
+        incorrect_reason: 'Describe the problem with the evidence'
     errors:
       models:
         forms/finance_report:
@@ -380,6 +390,14 @@ en-GB:
           attributes:
             deleted_reason:
               blank: Enter the reason
+        forms/benefits_evidence:
+          attributes:
+            evidence:
+              inclusion: You must answer the evidence question
+            correct:
+              inclusion: Confirm if the evidence is correct
+            incorrect_reason:
+              blank: Describe the problem
   activerecord:
     errors:
       models:

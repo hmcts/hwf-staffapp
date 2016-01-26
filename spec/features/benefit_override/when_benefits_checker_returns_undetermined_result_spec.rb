@@ -36,7 +36,6 @@ RSpec.feature 'When benefits checker result is "Undetermined"', type: :feature d
   let!(:jurisdictions)   { create_list :jurisdiction, 3 }
   let!(:office)          { create(:office, jurisdictions: jurisdictions) }
   let!(:user)            { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
-  let(:message)          { "The applicant's details could not be checked with the Department for Work and Pensions" }
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -50,7 +49,8 @@ RSpec.feature 'When benefits checker result is "Undetermined"', type: :feature d
     drive_to_the_benefits_page
   end
 
-  scenario 'shows the benefits override flow' do
-    expect(page).to have_content message
+  scenario 'shows the benefits override page' do
+    expect(page).to have_xpath('//h2', text: 'Benefits')
+    expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
   end
 end

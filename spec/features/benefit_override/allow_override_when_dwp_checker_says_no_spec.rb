@@ -45,12 +45,14 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
     benefits_page
   end
 
-  scenario 'there should be link for accept the proof for benefit claiming' do
-    expect(page).to have_content 'The applicant has provided paper evidence'
+  scenario 'they should be on the Benefit page straight away' do
+    expect(page).to have_xpath('//h2', text: 'Benefits')
   end
 
   context 'when the user provides paper evidence' do
-    before { click_link 'The applicant has provided paper evidence' }
+    before do
+      choose 'benefit_override_evidence_true'
+    end
 
     context 'and the evidence is correct' do
       describe 'when displaying the summary' do
@@ -71,6 +73,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
       describe 'when displaying the summary' do
         before do
           choose 'benefit_override_correct_false'
+          fill_in 'benefit_override_incorrect_reason', with: 'some reason'
           click_button 'Next'
         end
 

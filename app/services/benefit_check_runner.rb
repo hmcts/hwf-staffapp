@@ -20,6 +20,10 @@ class BenefitCheckRunner
     end
   end
 
+  def can_override?
+    benefit_check.blank? || benefit_check.dwp_result.blank? || overridable_result?
+  end
+
   private
 
   def applicant
@@ -82,5 +86,10 @@ class BenefitCheckRunner
   def generate_api_token
     short_name = @application.user.name.delete(' ').downcase.truncate(27)
     "#{short_name}@#{@application.created_at.strftime('%y%m%d%H%M%S')}.#{@application.id}"
+  end
+
+  def overridable_result?
+    result = benefit_check.dwp_result.downcase
+    ['no', 'server unavailable', 'undetermined', 'unspecified error'].include?(result)
   end
 end

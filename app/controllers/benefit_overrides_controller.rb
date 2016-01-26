@@ -12,7 +12,7 @@ class BenefitOverridesController < ApplicationController
     if @form.save
       redirect_to application_summary_path(application)
     else
-      redirect_to application_benefit_override_paper_evidence_path(application)
+      render :paper_evidence
     end
   end
 
@@ -29,10 +29,19 @@ class BenefitOverridesController < ApplicationController
   end
 
   def benefit_override
-    @benefit_override ||= BenefitOverride.find_or_create_by(application_id: application.id)
+    @benefit_override ||= BenefitOverride.find_or_initialize_by(application: application)
   end
 
   def allowed_params
-    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes)
+    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
+  end
+
+  helper_method def error_message_partial
+    @error_message_partial ||= case application.last_benefit_check.dwp_result.try(:downcase)
+                               when nil, 'undetermined'
+                                 'missing_details'
+                               when 'server unavailable', 'unspecified error'
+                                 'technical_error'
+                               end
   end
 end

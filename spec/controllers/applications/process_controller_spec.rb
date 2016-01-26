@@ -10,7 +10,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:application_details_form) { double }
   let(:savings_investments_form) { double }
   let(:benefit_form) { double }
-  let(:benefit_check_runner) { double(run: nil) }
   let(:income_form) { double }
   let(:income_calculation_runner) { double(run: nil) }
 
@@ -21,7 +20,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
     allow(Forms::Application::SavingsInvestment).to receive(:new).with(application).and_return(savings_investments_form)
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
-    allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
   end
@@ -248,10 +246,15 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
   describe 'PUT #benefits_save' do
     let(:expected_params) { { benefits: false } }
+    let(:benefit_form) { double(benefits: user_says_on_benefits) }
+    let(:user_says_on_benefits) { false }
+    let(:can_override) { false }
+    let(:benefit_check_runner) { double(run: nil, can_override?: can_override) }
 
     before do
       expect(benefit_form).to receive(:update_attributes).with(expected_params)
       expect(benefit_form).to receive(:save).and_return(form_save)
+      allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
 
       put :benefits_save, application_id: application.id, application: expected_params
     end
@@ -259,12 +262,38 @@ RSpec.describe Applications::ProcessController, type: :controller do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'runs the benefit check on the application' do
-        expect(benefit_check_runner).to have_received(:run)
+      context 'when the applicant says they are on benefits' do
+        let(:user_says_on_benefits) { true }
+
+        it 'runs the benefit check on the application' do
+          expect(benefit_check_runner).to have_received(:run)
+        end
+
+        context 'when the result can be overridden' do
+          let(:can_override) { true }
+
+          it 'redirects to the benefits override page' do
+            expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
+          end
+        end
+
+        context 'when the result can not be overridden' do
+          it 'redirects to the summary override page' do
+            expect(response).to redirect_to(application_summary_path(application))
+          end
+        end
       end
 
-      it 'redirects to the benefits result page' do
-        expect(response).to redirect_to(application_benefits_result_path(application))
+      context 'when the applicant says they are not on benefits' do
+        let(:user_says_on_benefits) { false }
+
+        it 'does not run benefit check on the application' do
+          expect(benefit_check_runner).not_to have_received(:run)
+        end
+
+        it 'redirects to the income page' do
+          expect(response).to redirect_to(application_income_path(application))
+        end
       end
     end
 
@@ -277,38 +306,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns the benefits form' do
         expect(assigns(:form)).to eql(benefit_form)
-      end
-    end
-  end
-
-  describe 'GET #benefits_result' do
-    let(:application) { build_stubbed(:application, office: user.office, benefits: benefits) }
-
-    before do
-      get :benefits_result, application_id: application.id
-    end
-
-    context 'when the applicant is on benefits' do
-      let(:benefits) { true }
-
-      it 'renders 200 response' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'renders the correct template' do
-        expect(response).to render_template(:benefits_result)
-      end
-
-      it 'assigns application' do
-        expect(assigns(:application)).to eql(application)
-      end
-    end
-
-    context 'when the applicant is not on benefits' do
-      let(:benefits) { false }
-
-      it 'redirects to the income page' do
-        expect(response).to redirect_to(application_income_path(application))
       end
     end
   end

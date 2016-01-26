@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112092557) do
+ActiveRecord::Schema.define(version: 20160121214923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160112092557) do
     t.integer  "completed_by_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "incorrect_reason"
   end
 
   add_index "benefit_overrides", ["application_id"], name: "index_benefit_overrides_on_application_id", using: :btree

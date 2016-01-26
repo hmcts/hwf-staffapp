@@ -181,4 +181,37 @@ RSpec.describe BenefitCheckRunner do
       end
     end
   end
+
+  describe '#can_override?' do
+    before do
+      allow(BenefitCheck).to receive(:create).and_return(benefit_check)
+    end
+
+    subject { service.can_override? }
+
+    context 'when the runner did not run' do
+      let(:benefit_check) { nil }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the runner ran' do
+      [
+        { result: nil, overridable: true },
+        { result: 'yes', overridable: false },
+        { result: 'no', overridable: true },
+        { result: 'deceased', overridable: false },
+        { result: 'server unavailable', overridable: true },
+        { result: 'superseded', overridable: false },
+        { result: 'undetermined', overridable: true },
+        { result: 'unspecified error', overridable: true }
+      ].each do |definition|
+        context "when result was #{definition[:result]}" do
+          let(:benefit_check) { build_stubbed(:benefit_check, dwp_result: definition[:result]) }
+
+          it { is_expected.to be definition[:overridable] }
+        end
+      end
+    end
+  end
 end

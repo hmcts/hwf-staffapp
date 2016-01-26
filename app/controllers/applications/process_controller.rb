@@ -44,7 +44,6 @@ module Applications
     end
 
     def savings_investments
-      @application = application
       @form = Forms::Application::SavingsInvestment.new(application)
     end
 
@@ -55,7 +54,6 @@ module Applications
       if @form.save
         redirect_to(action: :benefits)
       else
-        @application = application
         render :savings_investments
       end
     end
@@ -74,19 +72,9 @@ module Applications
       @form.update_attributes(form_params(:benefits))
 
       if @form.save
-        BenefitCheckRunner.new(application).run
-        redirect_to(action: :benefits_result)
+        benefit_check_and_redirect(@form.benefits)
       else
         render :benefits
-      end
-    end
-
-    def benefits_result
-      if application.benefits
-        @application = application
-        render :benefits_result
-      else
-        redirect_to(action: :income)
       end
     end
 
@@ -104,7 +92,7 @@ module Applications
       @form.update_attributes(form_params(:income))
 
       if @form.save
-        calculate_income
+        IncomeCalculationRunner.new(application).run
         redirect_to(action: :summary)
       else
         render :income
@@ -112,7 +100,6 @@ module Applications
     end
 
     def summary
-      @application = application
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
       @savings = Views::Overview::SavingsAndInvestments.new(application)
@@ -129,7 +116,6 @@ module Applications
       if application.evidence_check.present?
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
-        @application = application
         @confirm = Views::Confirmation::Result.new(application)
       end
     end
@@ -140,23 +126,38 @@ module Applications
       authorize application, :update?
     end
 
-    private
-
     def form_params(type)
       class_name = "Forms::Application::#{type.to_s.classify}".constantize
       params.require(:application).permit(*class_name.permitted_attributes.keys)
     end
 
     def application
-      @appication ||= Application.find(params[:application_id])
+      @application ||= Application.find(params[:application_id])
     end
 
     def user_jurisdictions
       current_user.office.jurisdictions
     end
 
-    def calculate_income
-      IncomeCalculationRunner.new(application).run
+    def benefit_check_runner
+      @benefit_check_runner ||= BenefitCheckRunner.new(application)
+    end
+
+    def benefit_check_and_redirect(benefits)
+      if benefits
+        benefit_check_runner.run
+        determine_override
+      else
+        redirect_to(action: :income)
+      end
+    end
+
+    def determine_override
+      if benefit_check_runner.can_override?
+        redirect_to application_benefit_override_paper_evidence_path(application)
+      else
+        redirect_to(action: :summary)
+      end
     end
   end
 end
