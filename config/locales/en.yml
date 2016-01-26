@@ -89,6 +89,7 @@ en-GB:
       copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
       link: See the guides
   error_messages:
+    create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
@@ -143,6 +144,8 @@ en-GB:
     error:
       explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
+  business_entities:
+    edit_warning: "Changing the code above will mean staff in %{office} will be issuing references with the new code and this may cause duplication in the financial reports."
   remissions:
     full: '✓ &nbsp; The applicant doesn’t have to pay the fee'
     part: The applicant must pay %{amount_to_pay} towards the fee
