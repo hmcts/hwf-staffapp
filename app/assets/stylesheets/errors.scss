@@ -58,5 +58,5 @@ div.form-group div.row.collapse div.field_with_errors label {
 .page-error {
   padding: $gutter $gutter-half;
   background-color: #ffcccc;
-  border: 1px solid red;
+  border: 1px solid $error-colour;
 }
