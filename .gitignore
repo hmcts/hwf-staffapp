@@ -21,3 +21,10 @@ coverage
 coverage/*
 
 /.vagrant/*
+
+# node
+node_modules
+
+#nightwatch
+/tests/nightwatch/reports/
+selenium-debug.log
