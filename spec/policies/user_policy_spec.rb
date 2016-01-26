@@ -38,20 +38,14 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:update) }
       end
 
-      context 'when trying to set a role to manager' do
-        before do
-          subject_user.role  = 'manager'
+      %w[manager admin mi].each do |role|
+        context "when trying to set a role to #{role}" do
+          before do
+            subject_user.role = role
+          end
+
+          it { is_expected.not_to permit_action(:update) }
         end
-
-        it { is_expected.not_to permit_action(:update) }
-      end
-
-      context 'when trying to set a role to admin' do
-        before do
-          subject_user.role  = 'admin'
-        end
-
-        it { is_expected.not_to permit_action(:update) }
       end
     end
 
@@ -100,18 +94,22 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.not_to permit_action(:edit_password) }
         it { is_expected.not_to permit_action(:update_password) }
 
-        context 'when role set to manager' do
-          let(:subject_user) { build_stubbed(:user, office: office, role: 'manager') }
+        %w[user manager].each do |role|
+          context "when role set to #{role}" do
+            let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 
-          it { is_expected.to permit_action(:create) }
-          it { is_expected.to permit_action(:update) }
+            it { is_expected.to permit_action(:create) }
+            it { is_expected.to permit_action(:update) }
+          end
         end
 
-        context 'when role set to admin' do
-          let(:subject_user) { build_stubbed(:user, office: office, role: 'admin') }
+        %w[admin mi].each do |role|
+          context "when role set to #{role}" do
+            let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 
-          it { is_expected.not_to permit_action(:create) }
-          it { is_expected.not_to permit_action(:update) }
+            it { is_expected.not_to permit_action(:create) }
+            it { is_expected.not_to permit_action(:update) }
+          end
         end
       end
     end
@@ -122,20 +120,14 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:edit) }
       it { is_expected.not_to permit_action(:destroy) }
 
-      context 'when the manager tries to increase permissions to admin' do
-        before do
-          subject_user.role = 'admin'
+      %w[admin mi].each do |role|
+        context "when trying to set a role to #{role}" do
+          before do
+            subject_user.role = role
+          end
+
+          it { is_expected.not_to permit_action(:update) }
         end
-
-        it { is_expected.not_to permit_action(:update) }
-      end
-
-      context 'when the manager tries to increase permissions to manager' do
-        before do
-          subject_user.role = 'manager'
-        end
-
-        it { is_expected.not_to permit_action(:update) }
       end
     end
   end
@@ -167,21 +159,52 @@ RSpec.describe UserPolicy, type: :policy do
     end
   end
 
-  context 'for an mi' do
+  context 'for mi' do
     let(:user) { build_stubbed(:mi) }
 
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:list_deleted) }
+    it { is_expected.not_to permit_action(:destroy) }
     it { is_expected.not_to permit_action(:restore) }
-    it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
-    it { is_expected.not_to permit_action(:edit) }
-    it { is_expected.not_to permit_action(:update) }
-    it { is_expected.not_to permit_action(:destroy) }
-    it { is_expected.not_to permit_action(:edit_password) }
-    it { is_expected.not_to permit_action(:update_password) }
+
+    context 'when the subject_user is the mi themselves' do
+      let(:subject_user) { dup_user(user) }
+
+      it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:edit) }
+      it { is_expected.to permit_action(:edit_password) }
+      it { is_expected.to permit_action(:update_password) }
+
+      context 'when the role is mi' do
+        before do
+          subject_user.role  = 'mi'
+        end
+
+        it { is_expected.to permit_action(:update) }
+      end
+
+      %w[user manager admin].each do |role|
+        context "when trying to set a role to #{role}" do
+          before do
+            subject_user.role = role
+          end
+
+          it { is_expected.not_to permit_action(:update) }
+        end
+      end
+    end
+
+    context 'when the subject_user is not the mi themselves' do
+      it { is_expected.not_to permit_action(:show) }
+      it { is_expected.not_to permit_action(:edit) }
+      it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:edit_password) }
+      it { is_expected.not_to permit_action(:update_password) }
+    end
   end
+
 
   describe described_class::Scope do
     describe '#resolve' do
