@@ -13,4 +13,6 @@
   .highlight {
     font-weight:bold;
   }
+
+  a:not([href^=mailto]) { margin-left: 1em; }
 }

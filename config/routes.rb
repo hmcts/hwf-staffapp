@@ -83,7 +83,14 @@ Rails.application.routes.draw do
 
   post 'feedback/create' => 'feedback#create'
 
-  resources :offices
+  resources :offices do
+    resources :business_entities do
+      member do
+        get 'deactivate'
+        post 'confirm_deactivate'
+      end
+    end
+  end
 
   root to: 'home#index'
 
