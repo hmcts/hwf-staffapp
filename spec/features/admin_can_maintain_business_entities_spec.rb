@@ -10,6 +10,8 @@ RSpec.feature 'Business entity management:', type: :feature do
   let(:manager) { create :manager, office: office }
   let(:business_entity) { office.business_entities.first }
 
+  before { OfficeJurisdiction.delete_all(jurisdiction_id: office.jurisdictions.last.id) }
+
   context 'as a user who cannot access' do
     before { login_as manager }
 
@@ -38,6 +40,10 @@ RSpec.feature 'Business entity management:', type: :feature do
 
       scenario 'it displays expected update links' do
         expect(page).to have_xpath('//a', text: 'Update', count: 2)
+      end
+
+      scenario 'it displays expected delete links' do
+        expect(page).to have_xpath('//a', text: 'Delete', count: 1)
       end
 
       scenario 'it displays expected addition link' do
@@ -86,6 +92,21 @@ RSpec.feature 'Business entity management:', type: :feature do
 
         scenario 'no more jurisdictions can be added' do
           expect(page).to have_no_xpath('//a', text: 'Add')
+        end
+      end
+
+      context 'by deleting' do
+        before do
+          click_link 'Delete'
+          click_button 'Deactivate'
+        end
+
+        scenario 'an additional jurisdictions can be added' do
+          expect(page).to have_xpath('//a', text: 'Add', count: 2)
+        end
+
+        scenario 'no more jurisdictions can be added' do
+          expect(page).to have_no_xpath('//a', text: 'delete')
         end
       end
     end

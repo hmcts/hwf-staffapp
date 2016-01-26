@@ -14,5 +14,5 @@
     font-weight:bold;
   }
 
-  a { margin-left: 1em; }
+  a:not([href^=mailto]) { margin-left: 1em; }
 }

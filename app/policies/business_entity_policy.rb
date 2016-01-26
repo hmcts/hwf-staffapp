@@ -18,4 +18,12 @@ class BusinessEntityPolicy < BasePolicy
   def update?
     admin?
   end
+
+  def deactivate?
+    admin?
+  end
+
+  def confirm_deactivate?
+    admin?
+  end
 end

@@ -20,6 +20,12 @@ class BusinessEntityService
     @persist_status.eql?(:update_existing) ? update_and_return_existing : update_existing_return_new
   end
 
+  def build_deactivate
+    deactivate_existing
+    @persist_status = :delete
+    @existing_business_entity
+  end
+
   def persist!
     case @persist_status
     when :new
@@ -28,6 +34,8 @@ class BusinessEntityService
       save_existing
     when :update_duplicate
       save_both
+    when :delete
+      save_existing
     end
   end
 
@@ -72,5 +80,9 @@ class BusinessEntityService
 
   def codes_match?
     @new_business_entity.code == @existing_business_entity.code
+  end
+
+  def deactivate_existing
+    @existing_business_entity.assign_attributes(valid_to: @timestamp)
   end
 end
