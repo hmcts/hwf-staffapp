@@ -131,29 +131,29 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
   end
 
-  describe 'GET #confirm' do
+  describe 'GET #deactivate' do
     let(:business_entity) { office.business_entities.first }
     subject { response }
     before do
       sign_in admin
-      get :confirm, office_id: office.id, id: business_entity.id
+      get :deactivate, office_id: office.id, id: business_entity.id
     end
 
     it { is_expected.to have_http_status(:success) }
 
-    it { is_expected.to render_template(:confirm) }
+    it { is_expected.to render_template(:deactivate) }
 
     it 'assigns the @business_entity variable' do
       expect(assigns(:business_entity)).to be_a_kind_of BusinessEntity
     end
   end
 
-  describe 'POST #deactivate' do
+  describe 'POST #confirm_deactivate' do
     let(:business_entity) { office.business_entities.first }
     subject { response }
     before do
       sign_in admin
-      post :deactivate, office_id: office.id, id: business_entity.id
+      post :confirm_deactivate, office_id: office.id, id: business_entity.id
     end
 
     it { is_expected.to have_http_status(:redirect) }

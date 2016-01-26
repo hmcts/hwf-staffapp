@@ -16,7 +16,7 @@ h2 Business Entities for #{office.name}
       .columns.small-3.text-right
         -case j.status
           -when 'delete'
-            =link_to 'Delete', office_confirm_deactivate_business_entity_path(office, id: j.business_entity_id)
+            =link_to 'Delete', deactivate_office_business_entity_path(office, id: j.business_entity_id)
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
           -when 'edit'
             =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)

@@ -84,9 +84,12 @@ Rails.application.routes.draw do
   post 'feedback/create' => 'feedback#create'
 
   resources :offices do
-    resources :business_entities
-    get '/business_entities/:id/confirm' => 'business_entities#confirm', as: 'confirm_deactivate_business_entity'
-    post '/business_entities/:id/deactivate' => 'business_entities#deactivate', as: 'deactivate_business_entity'
+    resources :business_entities do
+      member do
+        get 'deactivate'
+        post 'confirm_deactivate'
+      end
+    end
   end
 
   root to: 'home#index'

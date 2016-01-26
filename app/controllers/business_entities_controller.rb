@@ -26,13 +26,13 @@ class BusinessEntitiesController < ApplicationController
     persist_and_redirect(:edit)
   end
 
-  def confirm
+  def deactivate
     authorize business_entity
   end
 
-  def deactivate
+  def confirm_deactivate
     authorize business_entity_service.build_deactivate
-    persist_and_redirect(:confirm)
+    persist_and_redirect(:confirm_deactivate)
   end
 
   private
