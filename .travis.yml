@@ -15,3 +15,4 @@ script:
 - bundle exec rake rubocop
 - bundle exec rake db:create db:schema:load
 - DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec
+- bundle exec rake jasmine:ci
