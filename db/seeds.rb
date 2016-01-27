@@ -36,6 +36,13 @@ unless ENV=='production'
                 office: Office.find_by(name: 'Digital')
               },
               {
+                name: 'Mi',
+                email: 'digital.mi@digital.justice.gov.uk',
+                password: '123456789',
+                role: 'mi',
+                office: Office.find_by(name: 'Digital')
+              },
+              {
                 name: 'User',
                 email: 'bristol.user@hmcts.gsi.gov.uk',
                 password: '987654321',
