@@ -8,7 +8,7 @@ header
       = link_to 'Start now', accuracy_part_payment_path(@part_payment), class: 'button util_mb-medium'
       details
         summary
-          span.summary.primary If the part-payment can’t be processed
+          span.summary.primary What to do if the part-payment can’t be processed
         div.panel-indent.util_mb-0.util_mt-0
           p Part-payment needs to arrive by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process the payment, choose ‘Return application’ to remove it from ‘Applications waiting for part-payment' and return everything to the applicant.
           = link_to 'Return application', return_letter_part_payment_path(@part_payment), class: 'button alternative small util_mb-0'
