@@ -1,24 +1,9 @@
 =content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
--if current_user.admin?
-  header
-    .row.equal-heightboxes
-      .small-12.medium-6.columns
-        .panel
-          h3 Generate reports
-          p Export national finance reports related to Help with fees applications and download monthly summary data.
-          = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
-      .small-12.medium-6.columns
-        .panel
-          h3 View offices
-          p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
-          = link_to 'View offices', offices_path
-
-
 - if policy(:application).new?
   .row
     .small-12.columns
-      header.util_pb-0
+      .util_pt-medium
         .panel
           h3 Process application
           p.util_mb-0 You'll need:
@@ -39,5 +24,20 @@
       =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
 
       =render('home/processed_and_deleted_aplications')
+
+-if policy(:report).index? || policy(:office).index?
+  .row.equal-heightboxes
+    - if policy(:report).index?
+      .small-12.medium-6.columns
+        .panel
+          h3 Generate reports
+          p Export national finance reports related to Help with fees applications and download monthly summary data.
+          = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
+    - if policy(:office).index?
+      .small-12.medium-6.columns
+        .panel
+          h3 View offices
+          p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
+          = link_to 'View offices', offices_path
 
 =render 'home/graphs'

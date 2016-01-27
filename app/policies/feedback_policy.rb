@@ -4,11 +4,11 @@ class FeedbackPolicy < BasePolicy
   end
 
   def new?
-    staff? || manager?
+    staff_or_manager?
   end
 
   def create?
-    new? && same_user? && same_office?
+    staff_or_manager? && same_user? && same_office?
   end
 
   private

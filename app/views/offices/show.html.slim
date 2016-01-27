@@ -11,10 +11,17 @@ header
       - @office.jurisdictions.each do |j|
         div =j.display
 
-.row.pad-top-thirty-px
-  .columns.small-12
-    =link_to 'Change details', edit_office_path(@office)
--unless current_user.manager?
+- if policy(@office).edit?
+  .row.pad-top-thirty-px
+    .columns.small-12
+      =link_to 'Change details', edit_office_path(@office)
+
+- if policy(:business_entity).index?
+  .row.pad-top-fifteen-px
+    .columns.small-12
+      = link_to 'Edit the business entities', office_business_entities_path(office_id: @office.id)
+
+- if policy(:office).index?
   .row.pad-top-fifteen-px
     .columns.small-12
       =link_to 'Back to list of offices', offices_path

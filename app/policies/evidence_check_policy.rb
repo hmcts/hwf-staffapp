@@ -1,9 +1,9 @@
 class EvidenceCheckPolicy < BasePolicy
   def show?
-    !admin? && same_application_office?
+    staff_or_manager? && same_application_office?
   end
 
   def update?
-    !admin? && same_application_office?
+    staff_or_manager? && same_application_office?
   end
 end

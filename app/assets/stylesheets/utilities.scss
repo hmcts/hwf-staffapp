@@ -11,6 +11,11 @@
   margin-bottom: 1rem;
 }
 
+// padding utility classes
+.util_pt-medium {
+  padding-top: 2rem;
+}
+
 // utility classes used as overrides, therefore valid use of !important
 // https://css-tricks.com/when-using-important-is-the-right-choice/
 .util_mt-0 {

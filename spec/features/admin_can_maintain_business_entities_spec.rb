@@ -27,8 +27,8 @@ RSpec.feature 'Business entity management:', type: :feature do
   context 'as a user with access' do
     before { login_as admin }
 
-    context 'when editing an office' do
-      before { visit edit_office_path(office) }
+    context 'when viewing an office' do
+      before { visit office_path(office) }
 
       scenario 'is shown a link to edit business entities' do
         expect(page).to have_content 'Edit the business entities'

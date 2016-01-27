@@ -26,7 +26,7 @@ module Users
       if current_user.admin?
         @roles = User::ROLES
       else
-        @roles = User::ROLES - %w[admin]
+        @roles = %w[user manager]
       end
     end
 

@@ -10,10 +10,13 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:application_new?) { false }
   let(:application_index?) { false }
   let(:report_graphs?) { false }
+  let(:report_index?) { false }
+  let(:office_index?) { false }
 
   before do
     allow(view).to receive(:policy).with(:application).and_return(double(new?: application_new?, index?: application_index?))
-    allow(view).to receive(:policy).with(:report).and_return(double(graphs?: report_graphs?))
+    allow(view).to receive(:policy).with(:report).and_return(double(index?: report_index?, graphs?: report_graphs?))
+    allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
 
     sign_in user
 
@@ -21,6 +24,38 @@ RSpec.describe "home/index.html.slim", type: :view do
   end
 
   subject { rendered }
+
+  describe 'Generate reports box' do
+    context 'when user has permissions to generate reports' do
+      let(:report_index?) { true }
+
+      it 'is rendered' do
+        is_expected.to have_content 'Generate reports'
+      end
+    end
+
+    context 'when user does not have permissions to generate reports' do
+      it 'are not rendered' do
+        is_expected.not_to have_content 'Generate reports'
+      end
+    end
+  end
+
+  describe 'View offices box' do
+    context 'when user has permissions to list offices' do
+      let(:office_index?) { true }
+
+      it 'is rendered' do
+        is_expected.to have_content 'View offices'
+      end
+    end
+
+    context 'when user does not have permissions to list offices' do
+      it 'are not rendered' do
+        is_expected.not_to have_content 'View offices'
+      end
+    end
+  end
 
   describe 'Process application box' do
     context 'when user has permissions to process application' do

@@ -103,7 +103,7 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it 'shows them all options to change their role' do
-          expect(response.body).to have_xpath('//input[@name="user[role]"]', count: 3)
+          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="mi"]')
           expect(response.body).to have_xpath('//input[@name="user[role]" and @value="admin"]')
           expect(response.body).to have_xpath('//input[@name="user[role]" and @value="manager"]')
           expect(response.body).to have_xpath('//input[@name="user[role]" and @value="user"]')

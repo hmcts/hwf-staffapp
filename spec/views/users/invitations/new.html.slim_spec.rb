@@ -13,7 +13,7 @@ RSpec.describe 'users/invitations/new', type: :view do
       render
     end
     it 'renders new user invite form with three roles' do
-      expect(rendered).to have_xpath("//select[@name='user[role]']/option", count: 3)
+      expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'Mi')
       expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'Admin')
       expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'Manager')
       expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'User')
@@ -30,15 +30,15 @@ RSpec.describe 'users/invitations/new', type: :view do
 
     before(:each) do
       assign(:user, User.new)
-      assign(:roles, User::ROLES - %w[admin])
+      assign(:roles, %w[user manager])
       sign_in manager
       render
     end
     it 'renders new user invite form with three roles' do
-      expect(rendered).to have_xpath("//select[@name='user[role]']/option", count: 2)
       expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'Manager')
       expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'User')
       expect(rendered).to_not have_xpath("//select[@name='user[role]']/option", text: 'Admin')
+      expect(rendered).to_not have_xpath("//select[@name='user[role]']/option", text: 'Mi')
     end
     it 'does not render the office name' do
       expect(rendered).to_not include(manager.office.name)

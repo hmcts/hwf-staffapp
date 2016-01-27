@@ -10,10 +10,6 @@ RSpec.describe 'offices/edit', type: :view do
   let!(:jurisdictions) { assign(:jurisdictions, office.jurisdictions) }
   let!(:becs) { assign(:becs, office.business_entities) }
 
-  before do
-    allow(view).to receive(:policy).with(:business_entity).and_return(double(index?: true))
-  end
-
   shared_examples 'an elevated user' do
     it 'renders form and jurisdiction list' do
       expect(rendered).to have_xpath('//input[@name="office[jurisdiction_ids][]"]', count: jurisdictions.count + 1)

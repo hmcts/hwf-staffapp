@@ -20,7 +20,7 @@ class UserPolicy < BasePolicy
   end
 
   def create?
-    (manager? && same_office? && !setting_to_admin_role?) || admin?
+    (manager? && same_office? && allowed_role?) || admin?
   end
 
   def edit?
@@ -28,7 +28,7 @@ class UserPolicy < BasePolicy
   end
 
   def update?
-    (user_themselves? && !upgrade_own_role?) ||
+    (user_themselves? && allowed_role?) ||
       manager_update? ||
       admin?
   end
@@ -57,28 +57,29 @@ class UserPolicy < BasePolicy
 
   private
 
-  def roles_in_order
-    %w[user manager admin]
+  def allowed_role_changes
+    {
+      'user' => %w[user],
+      'manager' => %w[user manager],
+      'admin' => %w[user manager admin mi],
+      'mi' => %w[mi]
+    }
   end
 
   def user_themselves?
     @record == @user
   end
 
-  def upgrade_own_role?
-    roles_in_order.index(@record.role) > roles_in_order.index(@user.role)
+  def allowed_role?
+    allowed_role_changes[@user.role].include?(@record.role)
   end
 
   def upgrade_from_user_role?
     @record.role != 'user'
   end
 
-  def setting_to_admin_role?
-    @record.role == 'admin'
-  end
-
   def manager_update?
     manager? &&
-      ((same_office? && !setting_to_admin_role?) || (!same_office? && !upgrade_from_user_role?))
+      ((same_office? && allowed_role?) || (!same_office? && !upgrade_from_user_role?))
   end
 end

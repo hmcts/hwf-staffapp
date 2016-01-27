@@ -58,6 +58,16 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:update) }
   end
 
+  context 'for an mi' do
+    let(:user) { build_stubbed(:mi) }
+
+    it { is_expected.not_to permit_action(:new) }
+    it { is_expected.not_to permit_action(:create) }
+    it { is_expected.not_to permit_action(:index) }
+    it { is_expected.not_to permit_action(:show) }
+    it { is_expected.not_to permit_action(:update) }
+  end
+
   describe ApplicationPolicy::Scope do
     describe '#resolve' do
       let(:office) { create :office }
@@ -84,6 +94,12 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
       context 'for an admin' do
         let(:user) { create(:admin_user) }
+
+        it { is_expected.to be_empty }
+      end
+
+      context 'for an mi' do
+        let(:user) { create(:mi) }
 
         it { is_expected.to be_empty }
       end
