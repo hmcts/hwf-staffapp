@@ -1,29 +1,29 @@
 class BusinessEntityPolicy < BasePolicy
   def index?
-    admin?
+    admin_or_mi?
   end
 
   def new?
-    admin?
+    admin_or_mi?
   end
 
   def create?
-    admin?
+    admin_or_mi?
   end
 
   def edit?
-    admin?
+    admin_or_mi?
   end
 
   def update?
-    admin?
+    admin_or_mi?
   end
 
   def deactivate?
-    admin?
+    admin_or_mi?
   end
 
   def confirm_deactivate?
-    admin?
+    admin_or_mi?
   end
 end

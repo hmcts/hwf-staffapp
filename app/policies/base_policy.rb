@@ -16,6 +16,10 @@ class BasePolicy
     def staff_or_manager?
       staff? || manager?
     end
+
+    def admin_or_mi?
+      admin? || mi?
+    end
   end
 
   class Scope
