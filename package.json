@@ -15,6 +15,6 @@
     "nightwatch": "0.7.9",
     "phantomjs": "1.9.17",
     "require-dir": "^0.1.0",
-    "selenium-standalone": "~4.4"
+    "selenium-server-standalone-jar": "~2.48.2"
   }
 }

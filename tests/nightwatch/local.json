@@ -5,8 +5,11 @@
   "custom_commands_path" : "tests/nightwatch/commands",
 
   "selenium" : {
+    "cli_args" : {
+      "webdriver.firefox.profile" : "nightwatch"
+    },
     "start_process" : true,
-    "server_path" : "node_modules/selenium-standalone/.selenium/selenium-server/2.45.0-server.jar"
+    "server_path" : "node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-2.48.2.jar"
   },
 
   "test_settings" : {
