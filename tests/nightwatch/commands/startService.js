@@ -12,10 +12,9 @@ exports.command = function(callback) {
       .deleteCookies()
       .init()
       .maximizeWindow()
-      .waitForElementVisible('body', 1000,
-        '  - Page is ready')
-      .assert.visible('footer.page-footer',
-        '  - Page has footer')
+      .ensureCorrectPage('form[action="/users/sign_in"]', '/users/sign_in', {
+        'h2': 'Sign in'
+      })
       .pause(200)
     ;
   });

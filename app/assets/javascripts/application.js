@@ -10,12 +10,18 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+// libraries
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+
+// vendor plugins
+//= require details.polyfill
+
+// modules
 //= require radio_buttons_module
 //= require checkbox_module
-//= require details.polyfill
 //= require income
 //= require applicants_partner_over_61
 //= require evidence_confirmation
