@@ -8,13 +8,13 @@
   "engines": {
     "node": ">=0.12.x"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "engineStrict": true,
   "devDependencies": {
     "nightwatch": "0.7.9",
     "phantomjs": "1.9.17",
     "require-dir": "^0.1.0",
-    "selenium-server-standalone-jar": "~2.48.2"
+    "selenium-server-standalone-jar": "~2.48.2",
+    "moment": "^2.11.1"
   }
 }

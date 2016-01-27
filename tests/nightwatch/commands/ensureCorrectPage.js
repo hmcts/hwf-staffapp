@@ -1,11 +1,10 @@
 'use strict';
 
-var log = require('../modules/log');
-var util = require('util');
+var log = require('../modules/log'),
+    util = require('util');
 
 exports.command = function(waitForSelector, pageUrl, textToContain, callback) {
-  var client = this,
-      testUrl = client.launchUrl + pageUrl;
+  var client = this;
 
   this.perform(function() {
     log.command('Checking the page is correct...');
@@ -14,8 +13,8 @@ exports.command = function(waitForSelector, pageUrl, textToContain, callback) {
       .waitForElementVisible(waitForSelector, 5000,
         '  - Page is ready'
       )
-      .assert.urlContains(testUrl,
-        util.format('  - URL is %s', testUrl)
+      .assert.urlContains(pageUrl,
+        util.format('  - URL contains %s', pageUrl)
       );
 
     if(typeof textToContain === 'object' && Object.keys(textToContain).length) {
