@@ -42,8 +42,8 @@ RSpec.feature 'Business entity management:', type: :feature do
         expect(page).to have_xpath('//a', text: 'Update', count: 2)
       end
 
-      scenario 'it displays expected delete links' do
-        expect(page).to have_xpath('//a', text: 'Delete', count: 1)
+      scenario 'it displays expected deactivate links' do
+        expect(page).to have_xpath('//a', text: 'Deactivate', count: 1)
       end
 
       scenario 'it displays expected addition link' do
@@ -97,7 +97,7 @@ RSpec.feature 'Business entity management:', type: :feature do
 
       context 'by deleting' do
         before do
-          click_link 'Delete'
+          click_link 'Deactivate'
           click_button 'Deactivate'
         end
 
@@ -105,8 +105,8 @@ RSpec.feature 'Business entity management:', type: :feature do
           expect(page).to have_xpath('//a', text: 'Add', count: 2)
         end
 
-        scenario 'no more jurisdictions can be added' do
-          expect(page).to have_no_xpath('//a', text: 'delete')
+        scenario 'no more jurisdictions can be deactivated' do
+          expect(page).to have_no_xpath('//a', text: 'Deactivate')
         end
       end
     end
