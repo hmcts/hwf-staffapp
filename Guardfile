@@ -72,11 +72,6 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{.+\.rb$})
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end
-
-  guard :teaspoon, cmd: 'bundle exec teaspoon', all_on_start: true do
-    # Specs / Helpers
-    watch(%r{spec/javascripts/(.*)})
-  end
 end
 
 guard 'livereload' do
