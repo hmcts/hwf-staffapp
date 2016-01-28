@@ -29,7 +29,7 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       click_link application1.reference
       expect(page).to have_content 'Process evidence'
       expect(page).to have_content application1.applicant.full_name
-      expect(page).to have_content "If the evidence can’t be processed"
+      expect(page).to have_content "if the evidence can’t be processed"
       expect(page).to have_link 'Return application'
     end
 
