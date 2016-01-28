@@ -52,5 +52,19 @@ RSpec.describe ReportsController, type: :controller do
         expect(response.headers['Content-Type']).to include('text/csv')
       end
     end
+
+    describe 'GET #graphs' do
+      before { get :graphs }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :graphs }
+
+      it 'populates a list of report_data' do
+        expect(assigns(:report_data).count).to eql(1)
+      end
+    end
   end
 end

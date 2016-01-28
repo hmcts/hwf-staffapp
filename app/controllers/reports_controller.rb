@@ -21,6 +21,11 @@ class ReportsController < ApplicationController
     end
   end
 
+  def graphs
+    authorize :report, :graphs?
+    load_graph_data
+  end
+
   private
 
   def form
@@ -32,5 +37,15 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:forms_finance_report).permit(:date_from, :date_to)
+  end
+
+  def load_graph_data
+    @report_data = []
+    Office.non_digital.each do |office|
+      @report_data << {
+        name: office.name,
+        benefit_checks: BenefitCheck.by_office_grouped_by_type(office.id).checks_by_day
+      }
+    end
   end
 end

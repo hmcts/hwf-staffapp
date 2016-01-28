@@ -7,4 +7,7 @@ header
       dt =link_to 'Finance report', reports_finance_report_path
       dl
         div Date delimited report of financial expenditure
-        div Something, something, put content here
+      - if policy(:report).graphs?
+        dt =link_to 'Graphs', graphs_report_path
+        dl
+          div 5 day graphs for benefit checks by business unit

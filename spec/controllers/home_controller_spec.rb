@@ -36,9 +36,6 @@ RSpec.describe HomeController, type: :controller do
         it 'returns http success' do
           expect(response).to have_http_status(:success)
         end
-        it 'populates a list of report_data' do
-          expect(assigns(:report_data).count).to eql(2)
-        end
       end
     end
 
