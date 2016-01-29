@@ -28,20 +28,20 @@ RSpec.describe OfficePolicy, type: :policy do
   context 'for manager' do
     let(:user) { build_stubbed(:manager) }
 
-    it { is_expected.to permit_action(:index) }
-    it { is_expected.to permit_action(:show) }
-
+    it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
 
     context 'when the user belongs to the office' do
       let(:user) { build_stubbed(:manager, office: office) }
 
+      it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:edit) }
       it { is_expected.to permit_action(:update) }
     end
 
     context 'when the user does not belong to the office' do
+      it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:edit) }
       it { is_expected.not_to permit_action(:update) }
     end

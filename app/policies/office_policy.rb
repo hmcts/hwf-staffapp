@@ -1,10 +1,10 @@
 class OfficePolicy < BasePolicy
   def index?
-    not_staff?
+    admin_or_mi?
   end
 
   def show?
-    not_staff? || (staff? && same_office?)
+    admin_or_mi? || (staff_or_manager? && same_office?)
   end
 
   def new?
