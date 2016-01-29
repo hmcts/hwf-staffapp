@@ -4,7 +4,7 @@ class OfficePolicy < BasePolicy
   end
 
   def show?
-    not_staff? || (staff? && same_office?)
+    admin_or_mi? || (staff_or_manager? && same_office?)
   end
 
   def new?
