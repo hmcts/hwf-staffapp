@@ -28,9 +28,9 @@ RSpec.describe OfficePolicy, type: :policy do
   context 'for manager' do
     let(:user) { build_stubbed(:manager) }
 
-    it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
 
+    it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
 

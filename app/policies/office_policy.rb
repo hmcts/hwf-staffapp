@@ -1,6 +1,6 @@
 class OfficePolicy < BasePolicy
   def index?
-    not_staff?
+    admin_or_mi?
   end
 
   def show?
