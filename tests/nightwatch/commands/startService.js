@@ -15,6 +15,7 @@ exports.command = function(callback) {
       .ensureCorrectPage('form[action="/users/sign_in"]', '/users/sign_in', {
         'h2': 'Sign in'
       })
+      .clearValue('#user_email')
       .pause(200)
     ;
   });
