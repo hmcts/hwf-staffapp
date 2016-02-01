@@ -72,48 +72,63 @@ RSpec.describe Forms::Application::Detail do
         end
       end
 
-      describe 'range' do
-        context 'is enforced' do
-          before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
-          after { Timecop.return }
-
-          it 'allows today' do
-            application_details.date_received = Time.zone.local(2014, 10, 1)
-            expect(application_details).to be_valid
+      context 'when the format is invalid' do
+        before do
+          Timecop.freeze(Time.zone.local(2015, 12, 1, 10, 10, 10)) do
+            application_details.date_received = '32/09/2015'
+            application_details.valid?
           end
+        end
 
-          it 'allows 3 months ago' do
-            application_details.date_received = Time.zone.local(2014, 7, 1, 0, 30)
-            expect(application_details).to be_valid
-          end
+        it 'sets an error on date_received field' do
+          expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
+        end
+      end
 
-          describe 'maximum' do
-            before do
-              application_details.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0)
-              application_details.valid?
+      context 'when the format is valid' do
+        describe 'range' do
+          context 'is enforced' do
+            before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
+            after { Timecop.return }
+
+            it 'allows today' do
+              application_details.date_received = Time.zone.local(2014, 10, 1)
+              expect(application_details).to be_valid
             end
 
-            it 'is 3 months' do
-              expect(application_details).to be_invalid
+            it 'allows 3 months ago' do
+              application_details.date_received = Time.zone.local(2014, 7, 1, 0, 30)
+              expect(application_details).to be_valid
             end
 
-            it 'returns an error if exceeded' do
-              expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
-            end
-          end
+            describe 'maximum' do
+              before do
+                application_details.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0)
+                application_details.valid?
+              end
 
-          describe 'minimum' do
-            before do
-              application_details.date_received = Date.new(2014, 10, 2)
-              application_details.valid?
+              it 'is 3 months' do
+                expect(application_details).to be_invalid
+              end
+
+              it 'returns an error if exceeded' do
+                expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
+              end
             end
 
-            it 'is today' do
-              expect(application_details).to be_invalid
-            end
+            describe 'minimum' do
+              before do
+                application_details.date_received = Date.new(2014, 10, 2)
+                application_details.valid?
+              end
 
-            it 'returns an error if too low' do
-              expect(application_details.errors[:date_received]).to eq ['The application cannot be a future date']
+              it 'is today' do
+                expect(application_details).to be_invalid
+              end
+
+              it 'returns an error if too low' do
+                expect(application_details.errors[:date_received]).to eq ['The application cannot be a future date']
+              end
             end
           end
         end
@@ -264,14 +279,20 @@ RSpec.describe Forms::Application::Detail do
         describe 'presence' do
           let(:date_fee_paid) { nil }
 
-          it { is_expected.to be_invalid }
+          before { refund.valid? }
 
-          describe 'returns an error if not set' do
-            before { refund.valid? }
+          context 'when date_received is not set or invalid' do
+            let(:date_received) { '20/2900/' }
 
-            subject { refund.errors[:date_fee_paid] }
+            it 'does not set date_received error' do
+              expect(refund.errors).not_to include(:date_fee_paid)
+            end
+          end
 
-            it { is_expected.to eq ['Enter the date in this format DD/MM/YYYY'] }
+          context 'when date_received is set and is a valid date' do
+            it 'sets an error on date_received field' do
+              expect(refund.errors[:date_fee_paid]).to eq ['Enter the date in this format DD/MM/YYYY']
+            end
           end
         end
       end
