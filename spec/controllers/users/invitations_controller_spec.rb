@@ -58,7 +58,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
         end
 
         it 'renders a flash warning' do
-          expect(flash[:alert]).to eql('That user has previously been deleted, please contact support to restore them')
+          expect(flash[:alert]).to include('That user has previously been deleted')
         end
       end
     end

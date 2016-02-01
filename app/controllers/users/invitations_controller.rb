@@ -17,7 +17,7 @@ module Users
       user_for_authorisation
       authorize user_for_authorisation
       if user_for_authorisation.deleted?
-        flash[:alert] = t('devise.invitations.user_exists')
+        flash[:alert] = t('devise.invitations.user_exists', email: Settings.mail.tech_support)
         @user = user_for_authorisation
         render :new
       else

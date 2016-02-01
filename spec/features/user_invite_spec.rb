@@ -67,7 +67,7 @@ RSpec.feature 'User management,', type: :feature do
       end
 
       scenario 'the deleted user warning is shown' do
-        expect(page).to have_content('That user has previously been deleted, please contact support to restore them')
+        expect(page).to have_content('That user has previously been deleted')
       end
     end
   end

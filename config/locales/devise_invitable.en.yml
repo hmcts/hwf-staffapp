@@ -3,7 +3,7 @@ en-GB:
     failure:
       invited: 'You have a pending invitation, accept it to finish creating your account.'
     invitations:
-      user_exists: 'That user has previously been deleted, please contact support to restore them'
+      user_exists: "That user has previously been deleted, please  <a href='mailto:%{email}?subject=Restore%20user'>contact us</a> to restore them"
       send_instructions: 'An invitation email has been sent to %{email}.'
       invitation_token_invalid: 'The invitation token provided is not valid!'
       updated: 'Your password was set successfully. You are now signed in.'
