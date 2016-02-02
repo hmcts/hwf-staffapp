@@ -39,8 +39,8 @@ describe "EvidenceConfirmationModule", ->
     </div>
     """)
     $(document.body).append(element)
-    EvidenceConfirmationModule.setup()
-    window.RadioButtonsModule.setup()
+    window.moj.Modules.EvidenceConfirmationModule.init()
+    window.moj.Modules.RadioButtonsModule.init()
     @yes_button = $('#evidence_correct_true')
     @yes_label = @yes_button.parent('label')
     @no_button = $('#evidence_correct_false')

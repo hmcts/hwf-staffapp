@@ -19,17 +19,23 @@
 // vendor plugins
 //= require details.polyfill
 
+// module loader
+//= require module_loader
+
 // modules
 //= require radio_buttons_module
 //= require checkbox_module
 //= require income
 //= require applicants_partner_over_61
 //= require evidence_confirmation
-//= require guide
+//= require equal_height_boxes
 //= require cookies
 //= require login
 
 $(function(){
   Foundation.global.namespace = '';
   $(document).foundation();
+
+  // fire init method of moj module loader
+  window.moj.init();
 });

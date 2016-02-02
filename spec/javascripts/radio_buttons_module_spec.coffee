@@ -41,7 +41,7 @@ describe "RadioButtonsModule", ->
       </div>
     """)
     $(document.body).append(element)
-    window.RadioButtonsModule.setup()
+    window.moj.Modules.RadioButtonsModule.init()
     @true_button = $('#exceeded_true')
     @true_label = @true_button.parent('label')
     @false_button = $('#exceeded_false')
