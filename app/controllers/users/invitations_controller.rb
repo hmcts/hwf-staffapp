@@ -14,10 +14,13 @@ module Users
     end
 
     def create
-      user_for_authorisation = User.new(invite_params)
       authorize user_for_authorisation
-
-      super
+      if @user.deleted?
+        flash[:alert] = t('devise.invitations.user_exists', email: Settings.mail.tech_support)
+        render :new
+      else
+        super
+      end
     end
 
     private
@@ -32,6 +35,14 @@ module Users
 
     def invite_params
       params.require(:user).permit(:email, :role, :name, :office_id)
+    end
+
+    def user_for_authorisation
+      @user ||= deleted_user_exists? || User.new(invite_params)
+    end
+
+    def deleted_user_exists?
+      User.with_deleted.find_by(email: invite_params[:email])
     end
   end
 end

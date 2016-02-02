@@ -47,6 +47,20 @@ RSpec.describe Users::InvitationsController, type: :controller do
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
+
+      context 'when manager tries to invite a deleted user' do
+        let!(:deleted_user) { create :deleted_user, email: user.email, office: office }
+
+        before { post :create, user: manager_invitation }
+
+        it 'restores and invites the user' do
+          expect(response).to render_template(:new)
+        end
+
+        it 'renders a flash warning' do
+          expect(flash[:alert]).to include('That user has previously been deleted')
+        end
+      end
     end
 
     context 'Admin user' do
