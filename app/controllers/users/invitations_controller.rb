@@ -14,11 +14,9 @@ module Users
     end
 
     def create
-      user_for_authorisation
       authorize user_for_authorisation
-      if user_for_authorisation.deleted?
+      if @user.deleted?
         flash[:alert] = t('devise.invitations.user_exists', email: Settings.mail.tech_support)
-        @user = user_for_authorisation
         render :new
       else
         super
@@ -40,7 +38,7 @@ module Users
     end
 
     def user_for_authorisation
-      deleted_user_exists? || User.new(invite_params)
+      @user ||= deleted_user_exists? || User.new(invite_params)
     end
 
     def deleted_user_exists?
