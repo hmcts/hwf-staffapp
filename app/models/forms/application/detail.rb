@@ -41,7 +41,7 @@ module Forms
         }
       end
 
-      with_options if: :refund? do
+      with_options if: :validate_date_fee_paid? do
         validates :date_fee_paid, date: {
           after_or_equal_to: :min_refund_date,
           before_or_equal_to: :max_refund_date,
@@ -65,6 +65,10 @@ module Forms
 
       def max_refund_date
         date_received unless date_received.blank?
+      end
+
+      def validate_date_fee_paid?
+        refund? && (date_received.is_a?(Date) || date_received.is_a?(Time))
       end
 
       def tomorrow
