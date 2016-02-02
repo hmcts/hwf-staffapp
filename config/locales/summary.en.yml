@@ -1,60 +1,28 @@
-summary 
-	personal_details	
-		name: Full name 
-		date_of_birth: Date of birth 
-		national_insurance: NI number 
-		status: Status 
-
-	Application_details 
-		fee: Fee 
-		jurisdiction: Jursidiction 
-		date_application_received: Date application received 
-		form_name_number: Form name or number 
-	
-	Savings and investments 
-		savings_valid?: Savings total eligible 
-
-	Benefits 
-		on_benefits?: Receiving eligible benefits
-        override?: Paper evidence provided
-        override_valid?: Paper evidence correct 
-
-	Income 
-		children?: Number of children 
-		income_total: Total monthly income 
-
-	Evidence
-		evidence_processed: Evidence processed 
-		reason_evidence_not_processed: Reason evidence not processed
-		income_from_evidence: Total monthly income from evidence 
-
-	Part-payment 
-		payment_processed: Payment processed
-		reason_payment_not_processed: Reason payment not processed 
-
-
-	Processing details 
-		date_application_processed: Application processed 
-		processed by: Processed by 
-
-		evidence_processed: Evidence processed 
-		processed_by: Processed by
-		reason_evidence_not_processed: Reason evidence not processed
-
-		payment_processed: Payment processed
-		processed_by: Processed by
-		reason_payment_not_processed: Reason payment not processed
-
-
-		application_deleted: Application deleted 
-		deleted_by: Deleted by
-		reason_deleted: Reason deleted
-
-
-
-	
-
-
-
-
-
+en-GB:
+  summary:
+    personal_details:
+      name: Full name
+      date_of_birth: Date of birth
+      national_insurance: NI number
+      status: Status
+  application_details:
+    fee: Fee
+    jurisdiction: Jursidiction
+    date_application_received: Date application received
+    form_name_number: Form name or number
+  savings_and_investments:
+    savings_valid?: Savings total eligible
+  benefits:
+    on_benefits?: Applicant states eligible benefits received
+    override?: Paper evidence provided
+    override_valid?: Paper evidence correct
+  income:
+    children?: Number of children
+    income_total: Total monthly income
+  evidence:
+    evidence_processed: Evidence processed
+    reason_evidence_not_processed: Reason evidence not processed
+    income_from_evidence: Total monthly income from evidence
+  part-payment:
+    payment_processed: Payment processed
+    reason_payment_not_processed: Reason payment not processed
