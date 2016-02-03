@@ -1,6 +1,7 @@
 = form_for form, as: model, url: url, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .form-group
     = f.label :correct, t("#{model}.labels.correct")
+    = f.label :correct, form.errors[:correct].join(', '), class: 'error' if form.errors[:correct].present?
     .options.radio
       .option
         label for="#{model}_correct_true"
