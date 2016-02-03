@@ -402,6 +402,10 @@ en-GB:
           attributes:
             correct:
               inclusion: 'You need to say whether the evidence can be processed'
+        forms/part_payment/accuracy:
+          attributes:
+            correct:
+              inclusion: 'You need to say whether the part payment can be processed'
   activerecord:
     errors:
       models:
