@@ -398,6 +398,10 @@ en-GB:
               inclusion: Confirm if the evidence is correct
             incorrect_reason:
               blank: Describe the problem
+        forms/evidence/accuracy:
+          attributes:
+            correct:
+              inclusion: 'You need to say whether the evidence can be processed'
   activerecord:
     errors:
       models:
