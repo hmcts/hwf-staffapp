@@ -33,9 +33,19 @@ RSpec.describe Forms::Accuracy do
       end
 
       context 'when false' do
-        let(:params) { { correct: false } }
+        let(:params) { { correct: false, incorrect_reason: incorrect_reason } }
 
-        it { is_expected.to be true }
+        context 'when attribute "incorrect_reason" is set' do
+          let(:incorrect_reason) { 'SOME REASON' }
+
+          it { is_expected.to be true }
+        end
+
+        context 'when attribute "incorrect_reason" is not set' do
+          let(:incorrect_reason) { nil }
+
+          it { is_expected.to be false }
+        end
       end
 
       context 'when not a boolean value' do

@@ -10,6 +10,7 @@ module Forms
     define_attributes
 
     validates :correct, inclusion: { in: [true, false] }
+    validates :incorrect_reason, presence: true, if: 'correct? == false'
 
     private
 
