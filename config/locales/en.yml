@@ -148,7 +148,7 @@ en-GB:
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
   business_entities:
     edit_warning: "Changing the code above will mean staff in %{office} will be issuing references with the new code and this may cause duplication in the financial reports."
-    remove_warning_html: "This jurisdiction is currently in use at the court and cannot be removed.  You will need to contact %{managers} at %{office} to stop using it before you can delete the BEC"
+    remove_warning_html: "The following jurisdictions are currently in use at the court and cannot be removed.  You will need to contact %{managers} at %{office} to stop using them before you can deactivate any of them"
     deactivate_warning: "Deactivating this jurisdiction will remove it from the list of jurisdictions that %{office} can record new applications against.  All applications that have already been created will still be recorded on the relevant reports."
   remissions:
     full: '✓ &nbsp; The applicant doesn’t have to pay the fee'
