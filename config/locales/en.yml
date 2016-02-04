@@ -404,12 +404,14 @@ en-GB:
               inclusion: 'You need to say whether the evidence can be processed'
             incorrect_reason:
               blank: 'Enter the problem'
+              too_long: "is too long, it needs to be less than 500 characters"
         forms/part_payment/accuracy:
           attributes:
             correct:
               inclusion: 'You need to say whether the part payment can be processed'
             incorrect_reason:
               blank: 'Enter the problem'
+              too_long: "is too long, it needs to be less than 500 characters"
   activerecord:
     errors:
       models:

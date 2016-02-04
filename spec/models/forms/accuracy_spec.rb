@@ -36,9 +36,17 @@ RSpec.describe Forms::Accuracy do
         let(:params) { { correct: false, incorrect_reason: incorrect_reason } }
 
         context 'when attribute "incorrect_reason" is set' do
-          let(:incorrect_reason) { 'SOME REASON' }
+          context 'when it is over 500 characters' do
+            let(:incorrect_reason) { 'X' * 501 }
 
-          it { is_expected.to be true }
+            it { is_expected.to be false }
+          end
+
+          context 'when it is less than 500 characters' do
+            let(:incorrect_reason) { 'SOME REASON' }
+
+            it { is_expected.to be true }
+          end
         end
 
         context 'when attribute "incorrect_reason" is not set' do
