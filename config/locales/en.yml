@@ -402,10 +402,14 @@ en-GB:
           attributes:
             correct:
               inclusion: 'You need to say whether the evidence can be processed'
+            incorrect_reason:
+              blank: 'Enter the problem'
         forms/part_payment/accuracy:
           attributes:
             correct:
               inclusion: 'You need to say whether the part payment can be processed'
+            incorrect_reason:
+              blank: 'Enter the problem'
   activerecord:
     errors:
       models:
