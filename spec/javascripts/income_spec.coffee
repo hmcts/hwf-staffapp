@@ -48,8 +48,8 @@ describe "IncomeModule", ->
     </div>
     """)
     $(document.body).append(element)
-    IncomeModule.setup()
-    window.RadioButtonsModule.setup()
+    window.moj.Modules.IncomeModule.init()
+    window.moj.Modules.RadioButtonsModule.init()
 
   afterEach ->
     element.remove()
@@ -59,7 +59,7 @@ describe "IncomeModule", ->
     describe 'when children is checked', ->
       beforeEach ->
         $('#application_dependents_true').prop('checked', true)
-        window.RadioButtonsModule.setup()
+        window.moj.Modules.RadioButtonsModule.init()
 
       it 'shows children field', ->
         expect($('#application_children').is(':visible')).toBe(true)
@@ -68,7 +68,7 @@ describe "IncomeModule", ->
     beforeEach ->
       $('#application_dependents_false').prop('checked', false)
       $('#application_dependents_true').prop('checked', false)
-      window.RadioButtonsModule.setup()
+      window.moj.Modules.RadioButtonsModule.init()
 
     describe 'no choice is made', ->
       describe 'sets initial value', ->

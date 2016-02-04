@@ -1,12 +1,13 @@
-var FR = FR || {};
+'use strict';
 
-FR.Cookies = {
+window.moj.Modules.Cookies = {
   set: function (name, value, options){
+    var cookieString = name + '=' + value + '; path=/',
+        date;
+
     if (typeof options === 'undefined') {
       options = {};
     }
-    var cookieString = name + '=' + value + '; path=/',
-        date;
     if (options.days) {
       date = new Date();
       date.setTime(date.getTime() + (options.days * 24 * 60 * 60 * 1000));
@@ -22,7 +23,7 @@ FR.Cookies = {
     var nameEQ = name + '=',
         cookies = document.cookie.split(';'),
         i, len, cookie;
-    // moj.log(cookies);
+
     for (i = 0, len = cookies.length; i < len;) {
       cookie = cookies[i];
       while (cookie.charAt(0) === ' ') {
@@ -37,11 +38,12 @@ FR.Cookies = {
   },
 
   remove: function (name){
-    if (FR.Cookies.get(name) === undefined) {
+    var self = this;
+
+    if (self.get(name) === undefined) {
       return false;
     }
-
-    FR.Cookies.set(name, '', { days: -1 });
-    return !FR.Cookies.get(name);
+    self.set(name, '', { days: -1 });
+    return !self.get(name);
   }
 };

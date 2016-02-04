@@ -1,6 +1,9 @@
-var FR = FR || {};
+'use strict';
 
-FR.login = {
+window.moj.Modules.Login = {
+  userCookie: 'fr_username',
+  emailField: '#user_email',
+
   init: function() {
     var self = this,
         $form = $('form.new_user[action$="users/sign_in"]');
@@ -12,20 +15,19 @@ FR.login = {
   },
 
   checkLoginCookie: function() {
-    var u = FR.Cookies.get('fr_username');
+    var self = this,
+        storedUser = window.moj.Modules.Cookies.get(self.userCookie);
 
-    if (u) {
-      $('#user_email').val(u);
+    if (storedUser) {
+      $(self.emailField).val(storedUser);
     }
   },
 
   writeCookieOnSubmit: function($form) {
+    var self = this;
+
     $form.on('submit', function() {
-      FR.Cookies.set('fr_username', $form.find('#user_email').val(), {days: 30});
+      window.moj.Modules.Cookies.set(self.userCookie, $form.find(self.emailField).val(), {days: 30});
     });
   }
 };
-
-$(function() {
-  FR.login.init();
-});

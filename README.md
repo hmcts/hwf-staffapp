@@ -3,7 +3,7 @@
 
 ## Overview
 
-This app is used by staff in the courts and tribunals to enter data regarding fee remission applications, 
+This app is used by staff in the courts and tribunals to enter data regarding fee remission applications,
 record the decision, and collect statistics.
 
 ## Project Standards
@@ -12,12 +12,12 @@ record the decision, and collect statistics.
 - Rspec features, not cucumber
 - Slim templating language
 - Foundation view framework
-- Coffeescript in preference to Javascript
+- JavaScript in preference to Coffeescript
 
 ## Pre-requisites
 To run the headless tests you will need to install quicktime for capybara-webkit:
 ```
-brew install qt 
+brew install qt
 ```
 You will need to run the following to enable capybara-webkit in ubuntu environments:
 ```
