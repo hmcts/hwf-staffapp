@@ -2,7 +2,7 @@
 
 window.moj.Modules.ApplicantsPartnerOver61 = {
   init: function() {
-    this.bindEvents();
+    // this.bindEvents();
   },
 
   bindEvents: function() {
