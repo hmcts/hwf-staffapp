@@ -62,7 +62,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
-      expect(page).to have_content 'Describe the problem with the evidence'
+      fill_in 'evidence_incorrect_reason', with: 'SOME REASON'
       click_button 'Next'
       expect(page).to have_content 'Check details'
     end

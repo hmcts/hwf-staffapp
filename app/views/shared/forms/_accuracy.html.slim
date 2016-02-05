@@ -12,8 +12,9 @@
           = f.radio_button :correct, 'false'
           = t("#{model}.incorrect")
 
-    .panel-indent.form-group.row.collapse#reason-input
-      = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason")
-      = f.text_area :incorrect_reason, rows: 3
+  .panel-indent.form-group.row.collapse#reason-input
+    = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason")
+    = f.label :incorrect_reason, form.errors[:incorrect_reason].join(', '), class: 'error' if form.errors[:incorrect_reason].present?
+    = f.text_area :incorrect_reason, rows: 3
 
   = f.submit 'Next', :class => 'button primary'
