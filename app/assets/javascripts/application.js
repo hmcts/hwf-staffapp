@@ -26,7 +26,6 @@
 //= require radio_buttons_module
 //= require checkbox_module
 //= require income
-//= require applicants_partner_over_61
 //= require evidence_confirmation
 //= require equal_height_boxes
 //= require cookies

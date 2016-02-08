@@ -19,6 +19,14 @@ exports.command = function(options, callback) {
       .assert.visible('#over-61-only')
     ;
 
+    if(options.partnerOver61) {
+      client.radioSelect('application_partner_over_61', options.partnerOver61.toString());
+    }
+
+    if(options.highThresholdExceeded) {
+      client.radioSelect('application_high_threshold_exceeded', options.highThresholdExceeded.toString());
+    }
+
     if(submitForm.toString() === 'true') {
       client.submitForm('#new_application');
     }

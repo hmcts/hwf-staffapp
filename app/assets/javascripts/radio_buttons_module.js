@@ -8,7 +8,13 @@ window.moj.Modules.RadioButtonsModule = {
 
   bindEvents: function() {
     $('input.show-hide-section:radio').on('change', function() {
-      $('#' + $(this).data('section') + '-only').toggle($(this).data('show'));
+      var $section = $('#' + $(this).data('section') + '-only');
+      $section.toggle($(this).data('show'));
+      if(!$(this).data('show')) {
+        $section.find('input[type="radio"]').prop('checked', false);
+        $section.find('label.selected').removeClass('selected');
+        $section.find('div[id$="-only"]').hide();
+      }
     });
 
     $('input[type=radio]').on('change', function() {
