@@ -151,13 +151,12 @@ en-GB:
     remove_warning_html: "This jurisdiction is currently in use at the court and cannot be removed.  You will need to contact %{managers} at %{office} to stop using it before you can delete the BEC"
     deactivate_warning: "Deactivating this jurisdiction will remove it from the list of jurisdictions that %{office} can record new applications against.  All applications that have already been created will still be recorded on the relevant reports."
   remissions:
-    full: '✓ &nbsp; The applicant doesn’t have to pay the fee'
-    part: The applicant must pay %{amount_to_pay} towards the fee
-    none: '✗ &nbsp; The applicant must pay the full fee'
-    error: An error occured in the calculation
-    callout: Evidence of income needs to be checked for this application
+    full: '✓ &nbsp; Eligible for help with fees'
+    part: Must pay %{amount_to_pay} towards the fee
+    none: '✗ &nbsp; Not eligible for help with fees'
+    callout: Evidence of income needs to be checked
   evidence_check:
-    callout: Evidence of income needs to be checked for this application
+    callout: Evidence of income needs to be checked
     page_title: Application waiting for evidence
     back_to_start: Back to start
     next_steps:

@@ -43,7 +43,7 @@ RSpec.feature 'Completing the application details', type: :feature do
     end
 
     scenario 'shows the proper summary page' do
-      expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £40 towards the fee')
+      expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-part")]/h3[@class="bold"]', text: 'Must pay £40 towards the fee')
     end
   end
 
@@ -77,7 +77,7 @@ RSpec.feature 'Completing the application details', type: :feature do
     end
 
     scenario 'shows the proper summary page' do
-      expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ The applicant must pay the full fee')
+      expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "callout-none")]/h3[@class="bold"]', text: '✗ Not eligible for help with fees')
     end
   end
 end
