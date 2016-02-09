@@ -63,7 +63,7 @@ RSpec.feature 'Business entity management:', type: :feature do
           find("a[href='#{button_url}']").click
           fill_in 'business_entity_name', with: new_description
           fill_in 'business_entity_code', with: new_code
-          click_button 'Update Business entity'
+          click_button 'Update business entity'
           business_entity.reload
         end
 
@@ -82,7 +82,7 @@ RSpec.feature 'Business entity management:', type: :feature do
           click_link 'Add'
           fill_in 'business_entity_name', with: new_description
           fill_in 'business_entity_code', with: new_code
-          click_button 'Create Business entity'
+          click_button 'Create business entity'
         end
 
         scenario 'the index page reflects the update' do
