@@ -14,24 +14,20 @@ module I18n
           '%'
         else
           @last_match = Regexp.last_match
-          process_value(string, values)
+          check_value_valid(string, values)
         end
       end
     end
 
-    def process_value(string, values)
-      @key = build_key
+    def check_value_valid(string, values)
+      @key = (@last_match[1] || @last_match[2] || @last_match[4]).to_sym
       if values.key?(@key)
         value = values[@key]
         value = value.call(values) if value.respond_to?(:call)
         build_value(value)
       else
-        raise(MissingInterpolationArgument.new(values, string, ''))
+        raise(MissingInterpolationArgument.new(values, string, @key))
       end
-    end
-
-    def build_key
-      (@last_match[1] || @last_match[2] || @last_match[4]).to_sym
     end
 
     def build_value(value)
