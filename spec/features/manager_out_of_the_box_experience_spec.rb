@@ -54,7 +54,7 @@ RSpec.feature 'Manager has to setup their office and preferences', type: :featur
   def when_they_setup_the_office
     jurisdiction = Jurisdiction.first
     check "#{jurisdiction.display_full} (#{BusinessEntity.where(jurisdiction_id: jurisdiction.id).first.code})"
-    click_button 'Update Office'
+    click_button 'Update office'
   end
 
   def when_whey_setup_their_profile
