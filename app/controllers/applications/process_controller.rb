@@ -2,6 +2,7 @@ module Applications
   # rubocop:disable ClassLength
   class ProcessController < ApplicationController
     before_action :authorise_application_update, except: :create
+    before_action :check_completed_redirect, except: [:create, :confirmation]
 
     def create
       application = ApplicationBuilder.new(current_user).build
@@ -124,6 +125,10 @@ module Applications
 
     def authorise_application_update
       authorize application, :update?
+    end
+
+    def check_completed_redirect
+      redirect_to CompletedApplicationRedirect.new(application).path unless application.created?
     end
 
     def form_params(type)
