@@ -8,4 +8,14 @@ module FlashMessageHelper
       end.to_sentence(two_words_connector: ' or ', last_word_connector: ' or ')
     end
   end
+
+  def format_managers_combined_contacts(managers, start_sentence = false)
+    if managers.empty?
+      start_sentence ? 'A manager' : 'a manager'
+    else
+      link_text = 'managers'
+      link_text = link_text.capitalize! if start_sentence
+      "<a href='#{managers.map(&:email).join(';')}'>#{link_text}</a>"
+    end
+  end
 end

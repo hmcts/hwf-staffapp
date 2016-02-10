@@ -10,7 +10,7 @@ h2 Business entities for #{office.name}
       .row
         .columns.small-12
           .important-notice
-            p = t('business_entities.remove_warning_html', managers: format_managers_contacts(office.managers).html_safe, office: office.name)
+            p = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
     -group[1].each do |j|
       .row
         .columns.small-3
