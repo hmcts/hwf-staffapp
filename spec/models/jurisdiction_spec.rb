@@ -17,6 +17,14 @@ RSpec.describe Jurisdiction, type: :model do
     it 'includes jurisdictions which have business entity present' do
       is_expected.to eq([jurisdiction2])
     end
+
+    context 'if a business entity is removed' do
+      before { office.business_entities.first.update_attributes(valid_to: Time.zone.now) }
+
+      it 'no longer returns it as available' do
+        is_expected.to match_array []
+      end
+    end
   end
 
   describe 'validation' do
