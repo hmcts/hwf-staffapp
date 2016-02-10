@@ -8,7 +8,9 @@ class Jurisdiction < ActiveRecord::Base
   validates :abbr, uniqueness: { allow_nil: true }
 
   scope :available_for_office, lambda { |office|
-    joins(:business_entities).where(business_entities: { office: office })
+    joins(:business_entities).
+      where(business_entities: { office: office }).
+      where('valid_to IS NULL')
   }
 
   def display

@@ -4,5 +4,5 @@ h2 Deactivate #{business_entity.name} for #{office.name}
   .pad-top-fifteen-px.row
     .columns.small-12.medium-8
       .important-notice
-        p = t('business_entities.deactivate_warning', office: office.name)
+        p = t('business_entities.deactivate_warning', office: office.name, today_date: Date.today)
   .actions = f.submit 'Deactivate', class: 'button'

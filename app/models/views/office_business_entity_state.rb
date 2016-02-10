@@ -37,6 +37,10 @@ module Views
       end
     end
 
+    def sequence
+      lookup_state
+    end
+
     private
 
     def can_be_updated?
@@ -50,5 +54,12 @@ module Views
     def can_be_added?
       @business_entity.nil?
     end
+
+    def lookup_state
+      { 'delete' => 0,
+        'edit' => 1,
+        'add' => 2 }[status]
+    end
+
   end
 end

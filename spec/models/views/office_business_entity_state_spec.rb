@@ -94,4 +94,31 @@ RSpec.describe Views::OfficeBusinessEntityState do
       it { is_expected.to eq 'add' }
     end
   end
+
+  describe '#sequence' do
+    before do
+      office.business_entities.delete_all
+      OfficeJurisdiction.delete_all
+    end
+
+    subject { view.sequence }
+
+    context 'when a business_entity object exists' do
+      before { create :business_entity, office: office, jurisdiction: jurisdiction }
+
+      context 'it is currently in use by the office' do
+        before { create :office_jurisdiction, office: office, jurisdiction: jurisdiction }
+
+        it { is_expected.to eq 1 }
+      end
+
+      context 'it is not currently in use by the office' do
+        it { is_expected.to eq 0 }
+      end
+    end
+
+    context 'when a business_entity object does not exist' do
+      it { is_expected.to eq 2 }
+    end
+  end
 end

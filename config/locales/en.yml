@@ -151,9 +151,12 @@ en-GB:
       explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
   business_entities:
-    edit_warning: "Changing the code above will mean staff in %{office} will be issuing references with the new code and this may cause duplication in the financial reports."
-    remove_warning_html: "This jurisdiction is currently in use at the court and cannot be removed.  You will need to contact %{managers} at %{office} to stop using it before you can delete the BEC"
-    deactivate_warning: "Deactivating this jurisdiction will remove it from the list of jurisdictions that %{office} can record new applications against.  All applications that have already been created will still be recorded on the relevant reports."
+    not_set:
+      manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."
+      user_html: "Jursidictions and business entity codes need to be set up for your office. Contact your manager to do this."
+    edit_warning: "Creating a new code for %{office} means that more than 1 code may appear in financial reports."
+    remove_warning_html: "%{managers} at %{office} need to unselect these jurisdictions before you can deactivate them."
+    deactivate_warning: "Deactivating this jurisdiction will remove it from the list that %{office} can use. It will still be displayed for any applications processed before %{today_date}."
   remissions:
     full: '✓ &nbsp; Eligible for help with fees'
     part: Must pay %{amount_to_pay} towards the fee
