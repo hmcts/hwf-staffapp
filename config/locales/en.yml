@@ -150,6 +150,11 @@ en-GB:
     error:
       explain: There’s a technical fault with the Department for Work and Pensions checker. Complete processing and check again later.
       progress: <span class="bold">Emergency application?</span> You can also ask the applicant to provide evidence confirming that they’re receiving benefits.
+  application_redirect:
+    processed: 'This application has been processed. You can’t edit any details.'
+    waiting_for_part_payment: 'This application is waiting for part-payment. You can’t edit any details.'
+    waiting_for_evidence: 'This application is waiting for evidence. You can’t edit any details.'
+    deleted: 'This application has been deleted. You can’t edit any details.'
   business_entities:
     not_set:
       manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."

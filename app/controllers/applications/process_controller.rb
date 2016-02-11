@@ -128,7 +128,18 @@ module Applications
     end
 
     def check_completed_redirect
-      redirect_to CompletedApplicationRedirect.new(application).path unless application.created?
+      set_cache_headers
+      unless application.created?
+        redirect_data = CompletedApplicationRedirect.new(application)
+        flash[:alert] = redirect_data.flash_message
+        redirect_to redirect_data.path
+      end
+    end
+
+    def set_cache_headers
+      response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+      response.headers['Pragma'] = 'no-cache'
+      response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
     end
 
     def form_params(type)

@@ -472,6 +472,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it { is_expected.to have_http_status(:redirect) }
 
       it { is_expected.to redirect_to(processed_application_path(application)) }
+
+      it 'is expected to set the flash message' do
+        expect(flash[:alert]).to eql 'This application has been processed. You can’t edit any details.'
+      end
     end
   end
 
@@ -486,6 +490,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it { is_expected.to have_http_status(:redirect) }
 
       it { is_expected.to redirect_to(deleted_application_path(application)) }
+
+      it 'is expected to set the flash message' do
+        expect(flash[:alert]).to eql 'This application has been deleted. You can’t edit any details.'
+      end
     end
   end
 
@@ -501,6 +509,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it { is_expected.to have_http_status(:redirect) }
 
       it { is_expected.to redirect_to(evidence_show_path(evidence)) }
+
+      it 'is expected to set the flash message' do
+        expect(flash[:alert]).to eql 'This application is waiting for evidence. You can’t edit any details.'
+      end
     end
   end
 
@@ -516,6 +528,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it { is_expected.to have_http_status(:redirect) }
 
       it { is_expected.to redirect_to(part_payment_path(part_payment)) }
+
+      it 'is expected to set the flash message' do
+        expect(flash[:alert]).to eql 'This application is waiting for part-payment. You can’t edit any details.'
+      end
     end
   end
 end
