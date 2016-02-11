@@ -127,7 +127,7 @@ RSpec.describe Forms::Application::Detail do
               end
 
               it 'returns an error if too low' do
-                expect(application_details.errors[:date_received]).to eq ['The application cannot be a future date']
+                expect(application_details.errors[:date_received]).to eq ["This date can't be in the future"]
               end
             end
           end

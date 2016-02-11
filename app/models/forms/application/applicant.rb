@@ -33,8 +33,7 @@ module Forms
         end
       end
 
-      validates :last_name, presence: true, length: { minimum: 2 }
-      validates :date_of_birth, presence: true
+      validates :last_name, presence: true, length: { minimum: 2, allow_blank: true }
       validate :dob_age_valid?
       validates :married, inclusion: { in: [true, false] }
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
