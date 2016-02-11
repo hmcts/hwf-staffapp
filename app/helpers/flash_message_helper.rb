@@ -15,7 +15,7 @@ module FlashMessageHelper
     else
       link_text = 'managers'
       link_text = link_text.capitalize! if start_sentence
-      "<a href='#{managers.map(&:email).join(';')}'>#{link_text}</a>"
+      "<a href='mailto:#{managers.map(&:email).join(';')}'>#{link_text}</a>"
     end
   end
 end
