@@ -460,4 +460,62 @@ RSpec.describe Applications::ProcessController, type: :controller do
       expect(assigns(:confirm)).to be_a_kind_of(Views::Confirmation::Result)
     end
   end
+
+  context 'after an application is processed' do
+    let!(:application) { create :application, :processed_state, office: user.office }
+
+    describe 'when accessing the personal_details view' do
+      before { get :personal_information, application_id: application.id }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(processed_application_path(application)) }
+    end
+  end
+
+  context 'after an application is deleted' do
+    let!(:application) { create :application, :deleted_state, office: user.office }
+
+    describe 'when accessing the personal_details view' do
+      before { get :personal_information, application_id: application.id }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(deleted_application_path(application)) }
+    end
+  end
+
+  context 'when an application is awaiting evidence' do
+    let!(:application) { create :application, :waiting_for_evidence_state, office: user.office }
+    let!(:evidence) { create :evidence_check, application: application }
+
+    describe 'when accessing the personal_details view' do
+      before { get :personal_information, application_id: application.id }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(evidence_show_path(evidence)) }
+    end
+  end
+
+  context 'when an application is part_payment' do
+    let(:application) { create :application, :waiting_for_part_payment_state, office: user.office }
+    let!(:part_payment) { create(:part_payment, application: application) }
+
+    describe 'when accessing the personal_details view' do
+      before { get :personal_information, application_id: application.id }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(part_payment_path(part_payment)) }
+    end
+  end
 end
