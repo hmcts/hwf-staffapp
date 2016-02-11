@@ -17,4 +17,8 @@ class CompletedApplicationRedirect
       deleted_application_path(@application)
     end
   end
+
+  def flash_message
+    I18n.t(@application.state, scope: 'application_redirect')
+  end
 end

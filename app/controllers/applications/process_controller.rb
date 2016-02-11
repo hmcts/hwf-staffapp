@@ -129,7 +129,11 @@ module Applications
 
     def check_completed_redirect
       set_cache_headers
-      redirect_to CompletedApplicationRedirect.new(application).path unless application.created?
+      unless application.created?
+        redirect_data = CompletedApplicationRedirect.new(application)
+        flash[:alert] = redirect_data.flash_message
+        redirect_to redirect_data.path
+      end
     end
 
     def set_cache_headers
