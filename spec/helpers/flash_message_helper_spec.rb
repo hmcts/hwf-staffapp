@@ -11,7 +11,7 @@ RSpec.describe FlashMessageHelper, type: :helper do
       context 'when passed a collection of Users' do
         let(:managers) { create_list :manager, 2 }
         it 'returns a single html mailto link with all managers' do
-          is_expected.to eql("<a href='user_1@digital.justice.gov.uk;user_2@digital.justice.gov.uk'>managers</a>")
+          is_expected.to eql("<a href='mailto:user_1@digital.justice.gov.uk;user_2@digital.justice.gov.uk'>managers</a>")
         end
       end
 
@@ -29,7 +29,7 @@ RSpec.describe FlashMessageHelper, type: :helper do
       context 'when passed a collection of Users' do
         let(:managers) { create_list :manager, 2 }
         it 'returns a single html mailto link with all managers with capitalised text' do
-          is_expected.to eql("<a href='user_1@digital.justice.gov.uk;user_2@digital.justice.gov.uk'>Managers</a>")
+          is_expected.to eql("<a href='mailto:user_1@digital.justice.gov.uk;user_2@digital.justice.gov.uk'>Managers</a>")
         end
       end
 
