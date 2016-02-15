@@ -60,3 +60,9 @@ div.form-group div.row.collapse div.field_with_errors label {
   background-color: #ffcccc;
   border: 1px solid $error-colour;
 }
+
+.dwp-restored {
+  padding: $gutter $gutter-half;
+  background-color: $grass-green-25;
+  border: 1px solid $grass-green;
+}
