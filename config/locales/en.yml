@@ -95,6 +95,8 @@ en-GB:
       copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
       link: See the guides
   error_messages:
+    dwp_unavailable: "There’s a problem with the service. You can't check if applicants are receiving benefits, but you can accept benefits letters. For emergency applications, complete an undertaking. You can process income-based applications as usual."
+    dwp_restored: "The connection with the DWP is currently working.  Benefits based and income based applications can now be processed."
     create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:
