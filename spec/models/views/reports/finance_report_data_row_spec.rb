@@ -72,4 +72,15 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       end
     end
   end
+
+  describe 'data returned should ignore deleted applications' do
+    before do
+      create_list :application_full_remission, 9, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+    end
+
+    subject { data.total_count }
+
+    it { is_expected.to eq 9 }
+  end
 end

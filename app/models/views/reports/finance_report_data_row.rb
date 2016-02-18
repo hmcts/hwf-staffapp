@@ -72,7 +72,8 @@ module Views
           select(:decision).
           where("decision IN ('part', 'full')").
           where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
-          where(business_entity_id: @business_entity.id)
+          where(business_entity_id: @business_entity.id).
+          where(state: 3)
       end
     end
   end
