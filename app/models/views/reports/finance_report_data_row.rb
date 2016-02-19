@@ -73,7 +73,7 @@ module Views
           where("decision IN ('part', 'full')").
           where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
           where(business_entity_id: @business_entity.id).
-          where(state: 3)
+          where(state:  Application.states[:processed])
       end
     end
   end

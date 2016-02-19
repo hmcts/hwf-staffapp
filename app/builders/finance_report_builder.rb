@@ -13,8 +13,7 @@ class FinanceReportBuilder
 
   def initialize(start_date, end_date)
     @date_from = Date.parse(start_date.to_s).to_datetime
-    end_date = Date.parse(end_date.to_s)
-    @date_to = DateTime.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, 'GMT')
+    @date_to = Date.parse(end_date.to_s).end_of_day
   end
 
   def to_csv
