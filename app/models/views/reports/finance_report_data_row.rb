@@ -70,10 +70,10 @@ module Views
       def applications
         Application.
           select(:decision).
-          where("decision IN ('part', 'full')").
-          where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
+          where(decision: %w[ part, full]).
+          where(decision_date: @date_from..@date_to).
           where(business_entity_id: @business_entity.id).
-          where(state:  Application.states[:processed])
+          where(state: Application.states[:processed])
       end
     end
   end

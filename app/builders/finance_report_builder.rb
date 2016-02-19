@@ -12,8 +12,8 @@ class FinanceReportBuilder
                   benefit_count benefit_sum income_count income_sum]
 
   def initialize(start_date, end_date)
-    @date_from = Date.parse(start_date.to_s).to_datetime
-    @date_to = Date.parse(end_date.to_s).end_of_day
+    @date_from = DateTime.parse(start_date.to_s).utc
+    @date_to = DateTime.parse(end_date.to_s).utc.end_of_day
   end
 
   def to_csv

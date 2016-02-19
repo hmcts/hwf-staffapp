@@ -73,9 +73,15 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
     end
   end
 
-  describe 'data returned should ignore deleted applications' do
+  describe 'data returned should only include proccesed applications' do
+    let(:wrong_business_entity) { create :business_entity }
     before do
       create_list :application_full_remission, 9, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_no_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now - 2.months
+      create :application_full_remission, :processed_state, business_entity: wrong_business_entity, office: wrong_business_entity.office, decision_date: Time.zone.now - 2.months
+      create :application_full_remission, :waiting_for_evidence_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_full_remission, :waiting_for_part_payment_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
     end
 
