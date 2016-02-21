@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     load_graphs_for_admin
     load_waiting_applications
     @search_form = Forms::Search.new
+    @state = DwpMonitor.new.state
   end
 
   def search
@@ -16,6 +17,7 @@ class HomeController < ApplicationController
       redirect_to(edit_online_application_path(online_application))
     else
       load_waiting_applications
+      @state = DwpMonitor.new.state
       render :index
     end
   end
