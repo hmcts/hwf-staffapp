@@ -70,7 +70,7 @@ module Views
       def applications
         Application.
           select(:decision).
-          where(decision: %w[ part, full]).
+          where(decision: %w[part full]).
           where(decision_date: @date_from..@date_to).
           where(business_entity_id: @business_entity.id).
           where(state: Application.states[:processed])
