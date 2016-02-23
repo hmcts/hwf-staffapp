@@ -33,7 +33,7 @@
 
       .form-group
         = f.label :date_received
-          =t('date_recieved', scope: @form.i18n_scope)
+          =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control medium-field' }
