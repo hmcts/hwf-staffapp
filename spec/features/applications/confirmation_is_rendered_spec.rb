@@ -24,7 +24,6 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the correct view is rendered' do
-        expect(page).to have_xpath('//h2', text: 'Processing complete')
         expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
       end
 
