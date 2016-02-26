@@ -14,6 +14,17 @@
 #result.callout class="callout-#{@confirm.result}"
   h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
+-if @application.waiting_for_part_payment?
+  .evidence-check-letter
+    = t('letters.part-payment.send_part_payment_html',
+        reference: @application.reference,
+        full_name: @application.full_name,
+        user_name: current_user.name,
+        part_payment_amount: number_to_currency(@application.amount_to_pay, precision: 0),
+        total_income: number_to_currency(@application.income, precision: 0),
+        children: @application.children,
+        date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+
 .guidance
   h4 Next steps
   ul

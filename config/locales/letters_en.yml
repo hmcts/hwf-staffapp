@@ -126,17 +126,15 @@ en-GB:
         <p>Your total monthly income: %{total_income}</p>
         <p>Number of children: %{children}</p>
         <p>Amount to pay: %{part_payment_amount}</p>
-        <br>
-        <p><strong>How to pay</strong></p> 
+        <p><strong>How to pay</strong></p>
         <ul> 
           <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</li>
           <li>by debit card over the phone</li> 
           <li>in person with a cheque, cash or debit card at the court counter</li>
-        <br> 
+        </ul>
         <p>Please make sure you pay this amount by %{date_for_part_payment}</p>
-        <br>
-        <p><strong>If you don’t agree with the amount you have to pay</strong></p>  
-        <p>If you disagree with our decision about the amount you have to pay, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>  
+        <p><strong>If you don’t agree with the amount you have to pay</strong></p>
+        <p>If you disagree with our decision about the amount you have to pay, you can appeal to the court or tribunal's Delivery Manager within 14 days of receiving this letter.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p> 
       no_part_payment_received_html: |
