@@ -48,7 +48,8 @@ module SummaryHelper
      (
       {
         '✓' => ' summary-result passed',
-        '✗' => ' summary-result failed'
+        '✗' => ' summary-result failed',
+        'W' => ' summary-result part'
       }[value.to_s.first] || '')
     ].join
   end

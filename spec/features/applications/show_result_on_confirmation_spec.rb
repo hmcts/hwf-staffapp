@@ -74,7 +74,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
           context 'the confirmation page' do
             scenario 'shows the correct outcomes' do
-              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Savings and investments✓ Passed'
               expect(page).to have_content 'Benefits✓ Passed'
             end
 
@@ -109,7 +109,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
           context 'the confirmation page' do
             scenario 'shows the correct outcomes' do
-              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Savings and investments✓ Passed'
               expect(page).to have_content 'Income✓ Passed'
             end
 
