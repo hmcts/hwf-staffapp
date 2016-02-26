@@ -1,45 +1,50 @@
-header
-  h2 Processing complete
+- if after_desired_date? or @application.outcome.eql?('part')
+  h4.util_mt-medium Reference
+  #result.callout.evidence-check-reference
+    h3.bold
+      span.check
+        | ✓
+      | The reference number is
+      span.reference-number
+        = @application.reference
 
-.row
-  .small-12.medium-8.large-7.columns
-    - if after_desired_date?
-      .row
-        .small-12.columns
-          h4 Reference
-          .row.collapse.medium-10.large-8
-            #result.callout.evidence-check-reference
-              h3.bold = display_reference(@application)
+.util_mt-medium
+  = build_section 'Result', @confirm, @confirm.all_fields
 
-    = build_section 'Results', @confirm, @confirm.all_fields
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          #result.callout class="callout-#{@confirm.result}"
-            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+#result.callout class="callout-#{@confirm.result}"
+  h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
-    .row.collapse.medium-10.large-8
-      = link_to 'Back to start', root_path, class: 'button primary'
+-if @application.waiting_for_part_payment?
+  .confirmation-letter
+    = t('letters.part-payment.send_part_payment_html',
+        reference: @application.reference,
+        full_name: @application.full_name,
+        user_name: current_user.name,
+        part_payment_amount: number_to_currency(@application.amount_to_pay, precision: 0),
+        total_income: number_to_currency(@application.income, precision: 0),
+        children: @application.children,
+        date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
-  .large-5.columns
-    .guidance
-      h4 Next steps
-      ul
-        -if @application.outcome.eql?('full')
-          -unless after_desired_date?
-            li Complete the remission register with the application details
-          li Write the reference number on the top right corner of the paper form
-          li Copy the reference number into the case management system
-          li The applicant’s process can now be issued
-        -elsif @application.outcome.eql?('part')
-          li Write to the applicant with details of how much they have to pay
-          li Store the application form in a secure location until you receive the part-payment
-          li You don't need to complete the remission register until part-payment has been received
-          li Write the reference number on the top right corner of the paper form
-        -else
-          li Complete the remission register with the application details
-          li Write the reference number on the top right corner of the paper form
-          li Copy the reference number into the case management system
-          li Write to the applicant and send back all the documents
+.guidance
+  h4 Next steps
+  ul
+    -if @application.outcome.eql?('full')
+      -unless after_desired_date?
+        li Complete the remission register with the application details
+      li Write the reference number on the top right corner of the paper form
+      li Copy the reference number into the case management system
+      li The applicant’s process can now be issued
+    -elsif @application.outcome.eql?('part')
+      li Write to the applicant with details of how much they have to pay
+      li Store the application form in a secure location until you receive the part-payment
+      li You don't need to complete the remission register until part-payment has been received
+      li Write the reference number on the top right corner of the paper form
+    -else
+      li Complete the remission register with the application details
+      li Write the reference number on the top right corner of the paper form
+      li Copy the reference number into the case management system
+      li Write to the applicant and send back all the documents
 
-      p: strong = link_to 'See the guides', guide_path, target: 'blank'
+  p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+= link_to 'Back to start', root_path, class: 'button primary'

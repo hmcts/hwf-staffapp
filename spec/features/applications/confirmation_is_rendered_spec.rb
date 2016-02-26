@@ -7,7 +7,6 @@ RSpec.feature 'Confirmation page', type: :feature do
 
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:application) { create(:application, :confirm, office: office) }
 
   context 'as a signed in user', js: true do
     before do
@@ -19,17 +18,37 @@ RSpec.feature 'Confirmation page', type: :feature do
     after { Capybara.use_default_driver }
 
     context 'after user continues from summary' do
-      before do
-        visit application_confirmation_path(application_id: application.id)
-      end
+      let(:application) { create(:application, :confirm, office: office) }
+
+      before { visit application_confirmation_path(application) }
 
       scenario 'the correct view is rendered' do
-        expect(page).to have_xpath('//h2', text: 'Processing complete')
         expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
       end
 
       scenario 'the next button is rendered' do
         expect(page).to have_link('Back to start')
+      end
+    end
+
+    context 'when application ends with part payment' do
+      let!(:part_payment) { create(:part_payment, application: application) }
+      let!(:application) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
+
+      before { visit application_confirmation_path(application) }
+
+      scenario 'the income label displays correctly' do
+        expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for part-payment')
+      end
+    end
+
+    context 'when application requires evidence' do
+      let(:application) { create :application_part_remission, :waiting_for_evidence_state, office: office }
+
+      before { visit application_confirmation_path(application) }
+
+      scenario 'the income label displays correctly' do
+        expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for evidence')
       end
     end
   end

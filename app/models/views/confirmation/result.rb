@@ -27,9 +27,16 @@ module Views
       end
 
       def income_passed?
-        if application_type_is?('income')
-          convert_to_pass_fail(%w[full part].include?(@application.outcome).to_s)
-        end
+        return unless application_type_is?('income')
+        path = 'activemodel.attributes.views/confirmation/result'
+
+        income_evidence = I18n.t('income_evidence', scope: path)
+        return income_evidence if @application.waiting_for_evidence?
+
+        part_payment = I18n.t('income_part', scope: path)
+        return part_payment if @application.waiting_for_part_payment?
+
+        convert_to_pass_fail(%w[full part].include?(@application.outcome).to_s)
       end
 
       def result

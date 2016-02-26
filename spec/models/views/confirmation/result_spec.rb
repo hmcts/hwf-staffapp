@@ -5,6 +5,8 @@ RSpec.describe Views::Confirmation::Result do
   let(:application) { build_stubbed(:application) }
   let(:string_passed) { '✓ Passed' }
   let(:string_failed) { '✗ Failed' }
+  let(:string_waiting_evidence) { 'Waiting for evidence' }
+  let(:string_part_payment) { 'Waiting for part-payment' }
   let(:scope) { 'convert_pass_fail' }
   subject(:view) { described_class.new(application) }
 
@@ -71,23 +73,26 @@ RSpec.describe Views::Confirmation::Result do
   end
 
   describe '#income_passed?' do
-    let(:application) { build_stubbed(:application, :income_type, outcome: outcome) }
+    let(:application) { build_stubbed(:application, :income_type, state: state, outcome: outcome) }
 
     subject { view.income_passed? }
 
     context 'when the application is a full remission' do
+      let(:state) { 3 }
       let(:outcome) { 'full' }
 
       it { is_expected.to eq string_passed }
     end
 
     context 'when the application is a part remission' do
+      let(:state) { 2 }
       let(:outcome) { 'part' }
 
-      it { is_expected.to eq string_passed }
+      it { is_expected.to eq string_part_payment }
     end
 
     context 'when the application is a non remission' do
+      let(:state) { 3 }
       let(:outcome) { 'none' }
 
       it { is_expected.to eq string_failed }

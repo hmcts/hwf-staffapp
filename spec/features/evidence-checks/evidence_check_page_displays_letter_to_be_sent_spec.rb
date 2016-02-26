@@ -18,7 +18,7 @@ RSpec.feature 'Evidence check page displays letter to be sent', type: :feature d
   scenario 'User navigates to the evidence check page, which has all required details' do
     visit evidence_check_path(evidence_check)
 
-    within '.evidence-check-letter' do
+    within '.confirmation-letter' do
       expect(page).to have_content(application.reference)
       expect(page).to have_content(application.full_name)
       expect(page).to have_content(user.name)

@@ -1,34 +1,24 @@
-header
-  h2 Processing complete
+h4.util_mt-medium Reference
+#result.callout.evidence-check-reference
+  h3.bold
+    span.check
+      | ✓
+    | The reference number is
+    span.reference-number
+      = @application.reference
 
-.row
-  .small-12.medium-10.large-9.columns
-    = build_section 'Results', @confirm, @confirm.all_fields
-    .row
-      .small-12.columns
-        .row.collapse.medium-10.large-8
-          #result.callout class="callout-#{@confirm.result}"
-            h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
-    .evidence-check
-    .row
-      .small-12.columns
-        h4 Reference
-        .row.collapse.medium-10.large-8
-          #result.callout.evidence-check-reference
-            h3.bold =@application.reference
-    .row.guidance.collapse
-      .row
-        .small-12.medium-12.large-12.columns
-          h4 =t('evidence_check.next_steps.title')
-          ul
-            - t('evidence_check.next_steps.steps').each do |step|
-              li =step
+= build_section 'Result', @confirm, @confirm.all_fields
 
-    .row
-      .small-12.medium-12.large-12.columns
-        .evidence-check-letter
-          =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+#result.callout class="callout-#{@confirm.result}"
+  h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
-  .row
-    .small-12.medium-12.large-12.columns
-      =link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'
+.guidance
+  h4 =t('evidence_check.next_steps.title')
+  ul
+    - t('evidence_check.next_steps.steps').each do |step|
+      li =step
+
+.confirmation-letter
+  =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+
+=link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'

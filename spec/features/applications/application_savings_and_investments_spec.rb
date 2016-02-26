@@ -69,7 +69,7 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
                   click_button 'Next'
                   click_button 'Complete processing'
 
-                  expect(page).to have_text '✓ Eligible for help with fees'
+                  expect(page).to have_text 'Eligible for help with fees'
                 end
               end
             end

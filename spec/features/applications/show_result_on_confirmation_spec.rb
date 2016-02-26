@@ -74,12 +74,12 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
           context 'the confirmation page' do
             scenario 'shows the correct outcomes' do
-              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Savings and investments✓ Passed'
               expect(page).to have_content 'Benefits✓ Passed'
             end
 
             scenario 'shows the status banner' do
-              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: '✓ Eligible for help with fees')
+              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: 'Eligible for help with fees')
             end
           end
         end
@@ -109,12 +109,12 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
           context 'the confirmation page' do
             scenario 'shows the correct outcomes' do
-              expect(page).to have_content 'Savings✓ Passed'
+              expect(page).to have_content 'Savings and investments✓ Passed'
               expect(page).to have_content 'Income✓ Passed'
             end
 
             scenario 'shows the status banner' do
-              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: '✓ Eligible for help with fees')
+              expect(page).to have_xpath('//div[contains(@class,"callout")][contains(@class, "full")]/h3[@class="bold"]', text: 'Eligible for help with fees')
             end
           end
         end
