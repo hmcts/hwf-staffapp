@@ -15,7 +15,7 @@
   h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
 -if @application.waiting_for_part_payment?
-  .evidence-check-letter
+  .confirmation-letter
     = t('letters.part-payment.send_part_payment_html',
         reference: @application.reference,
         full_name: @application.full_name,
