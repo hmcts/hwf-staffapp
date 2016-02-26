@@ -9,7 +9,7 @@
         = @application.reference
 
 .util_mt-medium
-  = build_section 'Results', @confirm, @confirm.all_fields
+  = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
   h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
