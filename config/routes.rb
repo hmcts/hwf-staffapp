@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+      get 'online_applications/show'
+      post 'online_applications/create'
+    end
+  end
+
   get 'reports' => 'reports#index'
   get 'reports/finance_report' => 'reports#finance_report'
   get 'reports/graphs' => 'reports#graphs', as: :graphs_report
