@@ -13,5 +13,14 @@ part_payment:
   expires_in_days: 14
 reference:
   date: <%= ENV["REFERENCE_DATE"] || '2016-05-31' %>
+encryption:
+  public_app_id: <%= ENV['PUBLIC_APP_ID'] %>
+  staff_app_id: <%= ENV['STAFF_APP_ID'] %>
+  private_key: <%= ENV['STAFFAPP_PRIVATE_PEM'] %>
+  public_key: <%= ENV['PUBLICAPP_PUBLIC_PEM'] %>
+  hmac: <%= ENV['HMAC_KEY'] %>
+cipher:
+  key: <%= ENV['CIPHER_KEY'] %>
+  iv: <%= ENV['CIPHER_IV'] %>
 submission:
   token: <%= ENV['SUBMISSION_TOKEN'] %>
