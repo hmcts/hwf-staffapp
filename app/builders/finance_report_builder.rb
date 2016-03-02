@@ -1,11 +1,14 @@
 class FinanceReportBuilder
   require 'csv'
 
-  SUB_HEADERS = ['', '', '', 'successful remissions', '', 'full remissions', '',
-                 'part remissions', '', 'Benefit applications', '',
-                 'Income applications', '']
-
-  HEADERS = %w[office jurisdiction BEC count sum count sum count sum count sum count sum]
+  HEADERS = [
+    'office', 'jurisdiction', 'BEC',
+    'Total successful quantity', 'Total successful amount',
+    'full remission quantity', 'full remission amount',
+    'part remission quantity', 'part remission amount',
+    'benefit basis quantity', 'benefit basis amount',
+    'income basis quantity', 'income basis amount'
+  ]
 
   ATTRIBUTES = %w[office jurisdiction be_code total_count total_sum
                   full_count full_sum part_count part_sum
@@ -18,7 +21,6 @@ class FinanceReportBuilder
 
   def to_csv
     CSV.generate(headers: true) do |csv|
-      csv << SUB_HEADERS
       csv << HEADERS
 
       generate.each do |row|
