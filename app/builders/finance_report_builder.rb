@@ -21,6 +21,11 @@ class FinanceReportBuilder
 
   def to_csv
     CSV.generate(headers: true) do |csv|
+      meta_data.each do |meta|
+        csv << meta
+      end
+
+      csv << ['']
       csv << HEADERS
 
       generate.each do |row|
@@ -30,6 +35,17 @@ class FinanceReportBuilder
   end
 
   private
+
+  def meta_data
+    period_selected = "#{@date_from.to_date}-#{@date_to.to_date}"
+    run = Time.zone.now
+    [
+      ['Report Title:', 'Remissions Granted Report'],
+      ['Criteria:', 'Date status changed to "successful"'],
+      ['Period Selected:', period_selected],
+      ['Run:', run]
+    ]
+  end
 
   def generate
     data = []
