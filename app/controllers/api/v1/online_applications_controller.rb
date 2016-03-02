@@ -4,7 +4,7 @@ class Api::V1::OnlineApplicationsController < Api::V1::BaseController
 
   skip_before_action :authenticate_user!
   skip_after_action :verify_authorized
-  TOKEN = "secret"
+  TOKEN = Settings.submission.token
 
   before_action :authenticate
 
@@ -30,6 +30,9 @@ class Api::V1::OnlineApplicationsController < Api::V1::BaseController
     object = JSON.parse(decoded_token[0]['data'])
     # build thing
     # TODO: Build a thing, use object!
+    puts '*'*30
+    puts object.inspect
+    puts '*'*30
     # return message
     render(json: { result: 'success', message: 'HWF-16-1234' } )
   rescue => e
@@ -39,7 +42,7 @@ class Api::V1::OnlineApplicationsController < Api::V1::BaseController
   private
 
   def authenticate
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       token == TOKEN
     end
   end

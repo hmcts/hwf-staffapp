@@ -13,3 +13,5 @@ part_payment:
   expires_in_days: 14
 reference:
   date: <%= ENV["REFERENCE_DATE"] || '2016-05-31' %>
+submission:
+  token: <%= ENV['SUBMISSION_TOKEN'] %>
