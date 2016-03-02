@@ -13,30 +13,54 @@ class Api::V1::OnlineApplicationsController < Api::V1::BaseController
   end
 
   def create
-    # get thing
-    encrypted_token = params[:application]
-    # decrypt thing
-    dcipher = OpenSSL::Cipher.new('aes-256-cbc')
-    dcipher.decrypt
-    dcipher.key = '3�ď/O�����)&��V[��~��J��J'
-    dcipher.iv = 'msB���]��?�z'
-    decrypted_token = dcipher.update(encrypted_token.unpack('m')[0])
-    decrypted_token << dcipher.final
-    # decode thing
-    pub_key = File.read('/home/colinbruce/projects/api_test/fr-staff.public.pem')
-    ecdsa = OpenSSL::PKey::EC.new(pub_key)
-    decoded_token = JWT.decode decrypted_token, ecdsa, true, { :algorithm => 'ES512' }
-    # get data
-    object = JSON.parse(decoded_token[0]['data'])
-    # build thing
-    # TODO: Build a thing, use object!
-    puts '*'*30
-    puts object.inspect
-    puts '*'*30
-    # return message
-    render(json: { result: 'success', message: 'HWF-16-1234' } )
-  rescue => e
-    render(json: { result: 'error', message: e.inspect })
+    begin
+      # get thing
+      puts '1'
+      encrypted_token = params[:application]
+      # decrypt thing
+      puts '2'
+      dcipher = OpenSSL::Cipher.new('aes-256-cbc')
+      dcipher.decrypt
+      dcipher.key = Settings.cipher.key
+      dcipher.iv = Settings.cipher.iv
+      puts '3'
+      decrypted_token = dcipher.update(encrypted_token.unpack('m')[0])
+      decrypted_token << dcipher.final
+      puts '4'
+      # decode thing
+      # ecdsa = OpenSSL::PKey::EC.new(Settings.encryption.public_key)
+      ecdsa = OpenSSL::PKey.read(Settings.encryption.public_key.gsub("\\n", "\n"))
+      decoded_token = JWT.decode decrypted_token, ecdsa, true, { :algorithm => 'ES512' }
+      puts '5'
+      # get data
+      object = JSON.parse(decoded_token[0]['data'])
+      # build thing
+      # TODO: Build a thing, use object!
+      puts '*'*30
+      puts object.inspect
+      puts '*'*30
+      # return message
+      response = { result: 'success', message: 'HWF-16-1234' }
+    rescue => e
+      response = { result: 'error', message: e.inspect }
+    end
+    puts "encrypt response: #{response}"
+    issuer = Settings.encryption.staff_app_id
+    audience = Settings.encryption.public_app_id
+    pem = Settings.encryption.private_key
+    key = OpenSSL::PKey.read(pem.gsub("\\n", "\n"))
+
+    payload = { data: response.to_json, iss: issuer, aud: audience }
+    @jwt = JWT.encode(payload, key, 'ES512')
+    cipher = OpenSSL::Cipher.new('aes-256-cbc')
+    cipher.encrypt
+    cipher.key = Settings.cipher.key
+    cipher.iv = Settings.cipher.iv
+    encrypted_string = cipher.update @jwt
+    encrypted_string << cipher.final
+    final = [encrypted_string].pack('m')
+
+    render text: final, layout: false
   end
 
   private
