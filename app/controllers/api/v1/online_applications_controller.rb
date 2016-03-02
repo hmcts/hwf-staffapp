@@ -40,7 +40,7 @@ class Api::V1::OnlineApplicationsController < Api::V1::BaseController
       puts object.inspect
       puts '*'*30
       # return message
-      response = { result: 'success', message: 'HWF-16-1234' }
+      response = { result: 'success', message: "HWF-16-#{SecureRandom.hex(4).upcase.scan(/.{1,4}/).join('-')}" }
     rescue => e
       response = { result: 'error', message: e.inspect }
     end
