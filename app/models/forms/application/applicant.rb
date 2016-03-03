@@ -4,8 +4,7 @@ module Forms
 
       MINIMUM_AGE = 16
       MAXIMUM_AGE = 120
-      MIN_DOB = Time.zone.today - MINIMUM_AGE.years
-      MAX_DOB = Time.zone.today - MAXIMUM_AGE.years
+
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
 
       include ActiveModel::Validations::Callbacks
@@ -60,11 +59,19 @@ module Forms
       end
 
       def validate_dob_ranges
-        if date_of_birth > MIN_DOB
+        if date_of_birth > min_dob
           errors.add(:date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
-        elsif date_of_birth < MAX_DOB
+        elsif date_of_birth < max_dob
           errors.add(:date_of_birth, :too_old, maximum_age: MAXIMUM_AGE)
         end
+      end
+
+      def min_dob
+        Time.zone.today - MINIMUM_AGE.years
+      end
+
+      def max_dob
+        Time.zone.today - MAXIMUM_AGE.years
       end
 
       def persist!
