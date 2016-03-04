@@ -22,12 +22,26 @@ RSpec.describe Forms::Application::Applicant do
         before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
 
         it { expect(subject.valid?).not_to be true }
+
+        describe 'error message' do
+          before { subject.valid? }
+          let(:error) { ["The applicant can't be under #{described_class::MINIMUM_AGE} years old"] }
+
+          it { expect(subject.errors[:date_of_birth]).to eql error }
+        end
       end
 
       context 'when the date_of_birth exceeds maximum allowed age' do
         before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MAXIMUM_AGE + 1).years }
 
         it { expect(subject.valid?).not_to be true }
+
+        describe 'error message' do
+          before { subject.valid? }
+          let(:error) { ["The applicant can't be over #{described_class::MAXIMUM_AGE} years old"] }
+
+          it { expect(subject.errors[:date_of_birth]).to eql error }
+        end
       end
 
       context 'when the date_of_birth is a non date value' do
