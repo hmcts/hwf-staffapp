@@ -30,8 +30,8 @@ RSpec.describe 'users/show', type: :view do
         sign_in user
         render
         expect(rendered).to have_xpath("//a[@href='#{edit_user_path(user)}']")
-        expect(rendered).to_not have_xpath("//a[@href='#{user_path(user)}' and @data-method='delete']")
-        expect(rendered).to_not have_xpath("//a[@href='#{users_path}']")
+        expect(rendered).not_to have_xpath("//a[@href='#{user_path(user)}' and @data-method='delete']")
+        expect(rendered).not_to have_xpath("//a[@href='#{users_path}']")
       end
     end
   end

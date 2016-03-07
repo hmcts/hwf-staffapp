@@ -15,7 +15,7 @@ module SummaryHelper
   def build_header(summary_name, link_title, link_url)
     content_tag(:div, class: 'row') do
       content_tag(:div, class: 'small-12 medium-7 large-8 columns') do
-        content_tag(:h4, "#{summary_name}")
+        content_tag(:h4, summary_name.to_s)
       end + build_link(link_title, link_url)
     end
   end

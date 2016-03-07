@@ -73,7 +73,7 @@ RSpec.feature 'Business entity management:', type: :feature do
         end
 
         scenario 'original business_entity has been deactivated' do
-          expect(business_entity.valid_to).to_not eq nil
+          expect(business_entity.valid_to).not_to eq nil
         end
       end
 

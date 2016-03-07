@@ -9,7 +9,7 @@ class FeeThreshold
       { lower: 4001, upper: 5000, amount: 10000 },
       { lower: 5001, upper: 6000, amount: 12000 },
       { lower: 6001, upper: 7000, amount: 14000 }
-    ]
+    ].freeze
 
   def initialize(fee)
     return if fee.nil?

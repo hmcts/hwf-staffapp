@@ -225,7 +225,7 @@ describe User, type: :model do
       end
 
       it 'still keeps the user information around' do
-        expect(described_class.with_deleted.find user.id).to eq user
+        expect(described_class.with_deleted.find(user.id)).to eq user
       end
     end
   end

@@ -41,7 +41,7 @@ class UserPolicy < BasePolicy
     user_themselves?
   end
 
-  alias_method :update_password?, :edit_password?
+  alias update_password? edit_password?
 
   class Scope < BasePolicy::Scope
     def resolve

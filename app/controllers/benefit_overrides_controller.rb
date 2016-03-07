@@ -22,8 +22,6 @@ class BenefitOverridesController < ApplicationController
     authorize benefit_override, :create?
   end
 
-  private
-
   def application
     @application ||= Application.find(params[:application_id])
   end

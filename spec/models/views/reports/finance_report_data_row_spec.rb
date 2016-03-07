@@ -64,7 +64,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       :benefit_sum,
       :income_count,
       :income_sum
-    ].each do|attr|
+    ].each do |attr|
       describe "sets the #{attr}" do
         subject { data.send(attr) }
 

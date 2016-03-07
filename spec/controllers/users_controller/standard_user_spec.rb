@@ -61,7 +61,7 @@ RSpec.describe UsersController, type: :controller do
 
         context 'role' do
           it 'shows them their role' do
-            expect(response.body).to match "#{user.role}"
+            expect(response.body).to match user.role.to_s
           end
 
           it 'does not show them the options to change their role' do

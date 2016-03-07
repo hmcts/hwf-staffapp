@@ -31,14 +31,16 @@ RSpec.describe BenefitCheck, type: :model do
     end
 
     describe 'checks_by_day' do
+      let(:created_out_of_scope) { Time.zone.today.- 8.days }
+      let(:created_in_scope) { Time.zone.today.-5.days }
       let!(:old_check) do
         create(:benefit_check,
-          created_at: "#{Time.zone.today.-8.days}",
+          created_at: created_out_of_scope.to_s,
           application_id: application.id)
       end
       let!(:new_check) do
         create(:benefit_check,
-          created_at: "#{Time.zone.today.-5.days}",
+          created_at: created_in_scope.to_s,
           application_id: application.id)
       end
       it 'finds only checks for the past week' do

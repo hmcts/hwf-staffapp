@@ -70,7 +70,7 @@ RSpec.describe Jurisdiction, type: :model do
 
     it 'returns name only if abbreviation is empty' do
       jurisdiction.abbr = nil
-      expect(jurisdiction.display_full).to eql("#{jurisdiction.name}")
+      expect(jurisdiction.display_full).to eql(jurisdiction.name)
     end
   end
 
