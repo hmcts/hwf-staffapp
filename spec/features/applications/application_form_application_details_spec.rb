@@ -9,7 +9,7 @@ RSpec.feature 'Completing the application details page of an application form', 
   let!(:office)             { create(:office, jurisdictions: jurisdictions) }
   let!(:user)               { create(:user, jurisdiction_id: nil, office: office) }
   let!(:user_jurisdiction)  { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
-  let(:persona)             { single_under_61 }
+  let(:persona)             { create(:applicant_under_61) }
 
   before do
     dwp_api_response 'Yes'
