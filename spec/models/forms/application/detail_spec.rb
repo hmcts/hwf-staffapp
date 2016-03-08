@@ -345,7 +345,7 @@ RSpec.describe Forms::Application::Detail do
   end
 
   describe '#save' do
-    let(:jurisdiction) { build_stubbed(:jurisdiction) }
+    let(:jurisdiction) { create(:jurisdiction) }
     let(:detail) { create :detail }
     subject(:form) { described_class.new(detail) }
 
