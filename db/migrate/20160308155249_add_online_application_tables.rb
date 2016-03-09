@@ -13,11 +13,11 @@ class AddOnlineApplicationTables < ActiveRecord::Migration
       t.integer :income
 
       t.boolean :refund, null: false
-      t.string :date_fee_paid
+      t.date :date_fee_paid
 
       t.boolean :probate, null: false
       t.string :deceased_name
-      t.string :date_of_death
+      t.date :date_of_death
 
       t.string :case_number
       t.string :form_name
@@ -27,7 +27,7 @@ class AddOnlineApplicationTables < ActiveRecord::Migration
       t.string :title
       t.string :first_name, null: false
       t.string :last_name, null: false
-      t.string :address, null: false
+      t.text :address, null: false
       t.string :postcode, null: false
 
       t.boolean :email_contact, null: false

@@ -191,10 +191,10 @@ ActiveRecord::Schema.define(version: 20160308155249) do
     t.integer  "children",           null: false
     t.integer  "income"
     t.boolean  "refund",             null: false
-    t.string   "date_fee_paid"
+    t.date     "date_fee_paid"
     t.boolean  "probate",            null: false
     t.string   "deceased_name"
-    t.string   "date_of_death"
+    t.date     "date_of_death"
     t.string   "case_number"
     t.string   "form_name"
     t.string   "ni_number",          null: false
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 20160308155249) do
     t.string   "title"
     t.string   "first_name",         null: false
     t.string   "last_name",          null: false
-    t.string   "address",            null: false
+    t.text     "address",            null: false
     t.string   "postcode",           null: false
     t.boolean  "email_contact",      null: false
     t.string   "email_address"
