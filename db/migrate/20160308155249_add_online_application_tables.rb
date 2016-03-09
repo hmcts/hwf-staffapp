@@ -6,32 +6,43 @@ class AddOnlineApplicationTables < ActiveRecord::Migration
     end
 
     create_table :online_applications do |t|
-      t.boolean :applicant_married # marital_status_married
-      t.boolean :application_threshold_exceeded # savings_and_investment_less_than_limit
-      t.boolean :application_benefits # benefit_on_benefits
-      t.boolean :application_descendants # dependent_children
-      t.integer :application_children # dependent_children_number
-      t.integer :application_income # income_total
-      t.boolean :details_refund # fee_paid
-      t.string :details_date_fee_paid # fee_date_paid
-      t.boolean :details_probate # probate_kase
-      t.string :details_deceased_name # probate_deceased_name
-      t.string :details_date_of_death # probate_date_of_death
-      t.string :details_case_number # claim_number
-      t.string :details_form_name # form_name_identifier
-      t.string :applicant_ni_number # national_insurance_number
-      t.date :applicant_date_of_birth # dob_date_of_birth
-      t.string :applicant_title # personal_detail_title
-      t.string :applicant_first_name # personal_detail_first_name
-      t.string :applicant_last_name # personal_detail_last_name
-      t.string :applicant_address # applicant_address_address
-      t.string :applicant_postcode # applicant_address_postcode
-      t.boolean :applicant_email_contact # contact_email_option
-      t.string :applicant_email_address # contact_email
-      t.boolean :applicant_phone_contact # contact_phone_option
-      t.string :applicant_phone # contact_phone
-      t.string :applicant_post_contact # contact_post_option
+      t.boolean :married, null: false
+      t.boolean :threshold_exceeded, null: false
+      t.boolean :benefits, null: false
+      t.integer :children, null: false
+      t.integer :income
+
+      t.boolean :refund, null: false
+      t.string :date_fee_paid
+
+      t.boolean :probate, null: false
+      t.string :deceased_name
+      t.string :date_of_death
+
+      t.string :case_number
+      t.string :form_name
+
+      t.string :ni_number, null: false
+      t.date :date_of_birth, null: false
+      t.string :title
+      t.string :first_name, null: false
+      t.string :last_name, null: false
+      t.string :address, null: false
+      t.string :postcode, null: false
+
+      t.boolean :email_contact, null: false
+      t.string :email_address
+      t.boolean :phone_contact, null: false
+      t.string :phone
+      t.boolean :post_contact, null: false
+
+      t.string :reference
+
       t.timestamps null: false
     end
+
+    add_index :online_applications, :reference, unique: true
+
+
   end
 end

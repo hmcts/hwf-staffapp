@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121214923) do
+ActiveRecord::Schema.define(version: 20160308155249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,44 @@ ActiveRecord::Schema.define(version: 20160121214923) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "entity_code"
+  end
+
+  create_table "online_applications", force: :cascade do |t|
+    t.boolean  "married",            null: false
+    t.boolean  "threshold_exceeded", null: false
+    t.boolean  "benefits",           null: false
+    t.integer  "children",           null: false
+    t.integer  "income"
+    t.boolean  "refund",             null: false
+    t.string   "date_fee_paid"
+    t.boolean  "probate",            null: false
+    t.string   "deceased_name"
+    t.string   "date_of_death"
+    t.string   "case_number"
+    t.string   "form_name"
+    t.string   "ni_number",          null: false
+    t.date     "date_of_birth",      null: false
+    t.string   "title"
+    t.string   "first_name",         null: false
+    t.string   "last_name",          null: false
+    t.string   "address",            null: false
+    t.string   "postcode",           null: false
+    t.boolean  "email_contact",      null: false
+    t.string   "email_address"
+    t.boolean  "phone_contact",      null: false
+    t.string   "phone"
+    t.boolean  "post_contact",       null: false
+    t.string   "reference"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "online_applications", ["reference"], name: "index_online_applications_on_reference", unique: true, using: :btree
+
+  create_table "online_failures", force: :cascade do |t|
+    t.text     "received_data", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "part_payments", force: :cascade do |t|
