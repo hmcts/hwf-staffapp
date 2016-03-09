@@ -1,7 +1,7 @@
 class AddOnlineApplicationTables < ActiveRecord::Migration
   def change
     create_table :online_failures do |t|
-      t.text :data, null: false
+      t.text :received_data, null: false
       t.timestamps null: false
     end
 
@@ -9,9 +9,9 @@ class AddOnlineApplicationTables < ActiveRecord::Migration
       t.boolean :applicant_married # marital_status_married
       t.boolean :application_threshold_exceeded # savings_and_investment_less_than_limit
       t.boolean :application_benefits # benefit_on_benefits
-      t.boolean :application_descendants
-      t.integer :application_children
-      t.integer :application_income
+      t.boolean :application_descendants # dependent_children
+      t.integer :application_children # dependent_children_number
+      t.integer :application_income # income_total
       t.boolean :details_refund # fee_paid
       t.string :details_date_fee_paid # fee_date_paid
       t.boolean :details_probate # probate_kase
@@ -20,7 +20,7 @@ class AddOnlineApplicationTables < ActiveRecord::Migration
       t.string :details_case_number # claim_number
       t.string :details_form_name # form_name_identifier
       t.string :applicant_ni_number # national_insurance_number
-      t.date :applicant_date_of_birth
+      t.date :applicant_date_of_birth # dob_date_of_birth
       t.string :applicant_title # personal_detail_title
       t.string :applicant_first_name # personal_detail_first_name
       t.string :applicant_last_name # personal_detail_last_name
