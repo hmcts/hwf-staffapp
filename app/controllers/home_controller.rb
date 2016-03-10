@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
+    @search_form = Forms::Search.new
   end
 
   def search
@@ -61,6 +62,6 @@ class HomeController < ApplicationController
   end
 
   def search_params
-    params.permit(:reference)
+    params.require(:search).permit(:reference)
   end
 end
