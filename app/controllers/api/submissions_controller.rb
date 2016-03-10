@@ -8,14 +8,44 @@ module Api
     before_action :authenticate
 
     def create
-      result = { result: true, message: public_app_params['jwt'] }
-      render(json: result.to_json)
+      online_submission = OnlineApplicationBuilder.new(public_app_params).build
+      if online_submission.save
+        render(json: { result: true, message: online_submission.reference }.to_json)
+      else
+        render(json: { result: false, message: 'Could not save online_submission' }.to_json)
+      end
     end
 
     private
 
+    # rubocop:disable MethodLength
     def public_app_params
-      params.permit(:jwt)
+      params.require(:jwt).permit(
+        :married,
+        :threshold_exceeded,
+        :benefits,
+        :children,
+        :income,
+        :refund,
+        :date_fee_paid,
+        :probate,
+        :deceased_name,
+        :date_of_death,
+        :case_number,
+        :form_name,
+        :ni_number,
+        :date_of_birth,
+        :title,
+        :first_name,
+        :last_name,
+        :address,
+        :postcode,
+        :email_contact,
+        :email_address,
+        :phone_contact,
+        :phone,
+        :post_contact
+      )
     end
 
     def authenticate

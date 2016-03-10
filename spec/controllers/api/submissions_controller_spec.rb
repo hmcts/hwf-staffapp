@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Api::SubmissionsController, type: :controller do
   let(:auth_token) { 'my-big-secret' }
+  let(:submitted) { attributes_for :public_app_submission }
+
   before(:each) do
     allow(Settings.submission).to receive(:token).and_return('my-big-secret')
     controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(auth_token)
-    post :create, jwt: 'something'
+    post :create, 'jwt': submitted
   end
 
   describe 'POST #create' do
@@ -19,6 +21,13 @@ RSpec.describe Api::SubmissionsController, type: :controller do
 
         it { is_expected.to include 'message' }
         it { is_expected.to include 'result' }
+      end
+
+      describe 'when sent invalid data from the public' do
+        let(:submitted) { attributes_for :public_app_submission, postcode: nil }
+        subject(:result) { JSON.parse(returned.body)['result'] }
+
+        it { is_expected.to eql false }
       end
     end
 
