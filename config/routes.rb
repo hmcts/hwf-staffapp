@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  post 'api/submissions' => 'api/submissions#create'
   get 'reports' => 'reports#index'
   get 'reports/finance_report' => 'reports#finance_report'
   get 'reports/graphs' => 'reports#graphs', as: :graphs_report
