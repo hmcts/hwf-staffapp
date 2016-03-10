@@ -95,6 +95,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get 'home/index'
+  post 'home/search'
 
   %w[400 404 500 503].each do |error|
     get "static/#{error}" => "static##{error}"
