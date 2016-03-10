@@ -24,6 +24,10 @@ RSpec.describe HomeController, type: :controller do
         it 'renders the index view' do
           expect(response).to render_template :index
         end
+
+        it 'assigns the search form' do
+          expect(assigns(:search_form)).to be_a(Forms::Search)
+        end
       end
 
       context 'as an admin' do
@@ -53,6 +57,10 @@ RSpec.describe HomeController, type: :controller do
       it 'renders the index view' do
         expect(response).to render_template :index
       end
+
+      it 'assigns the search form' do
+        expect(assigns(:search_form)).to be_a(Forms::Search)
+      end
     end
 
     context 'when the user is not authenticated' do
@@ -71,14 +79,14 @@ RSpec.describe HomeController, type: :controller do
   describe 'POST #search' do
     before do
       sign_in(user)
-      post :search, search_params
+      post :search, search: search_params
     end
 
     context 'as a staff' do
       let(:user) { staff }
 
-      context 'when reference parameter is missing' do
-        let(:search_params) { {} }
+      context 'when reference parameter is empty' do
+        let(:search_params) { { reference: nil } }
 
         it 'renders the index template' do
           expect(response).to render_template(:index)
