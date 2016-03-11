@@ -104,4 +104,30 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    before do
+      get :show, id: id
+    end
+
+    context 'when no online application is found with the id' do
+      let(:id) { 'non-existent' }
+
+      it 'redirects to the homepage' do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when an online application is found with the id' do
+      let(:id) { online_application.id }
+
+      it 'renders the show template' do
+        expect(response).to render_template(:show)
+      end
+
+      it 'assigns the online application' do
+        expect(assigns(:online_application)).to eql(online_application)
+      end
+    end
+  end
 end

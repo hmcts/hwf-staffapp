@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
 
-  resources :online_applications, only: [:edit, :update]
+  resources :online_applications, only: [:edit, :update, :show]
 
   get 'evidence/:id', to: 'evidence#show', as: :evidence_show
   get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
