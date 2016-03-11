@@ -10,8 +10,9 @@ module Forms
 
     define_attributes
 
-    validates :fee, numericality: { allow_blank: false }
+    validates :fee, numericality: { allow_blank: true }, presence: true
     validates :jurisdiction_id, presence: true
     validates :emergency_reason, presence: true, if: :emergency?
+    validates :emergency_reason, length: { maximum: 500 }
   end
 end
