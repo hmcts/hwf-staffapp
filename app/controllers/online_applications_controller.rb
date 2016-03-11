@@ -17,6 +17,10 @@ class OnlineApplicationsController < ApplicationController
     render :edit
   end
 
+  def show
+    authorize online_application
+  end
+
   private
 
   def online_application
