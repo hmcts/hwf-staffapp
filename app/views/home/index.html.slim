@@ -8,12 +8,13 @@
   - if policy(:application).new?
     .small-6.columns
       .util_pt-medium
-        .panel
+        .panel.flexi
           h3 Process application
-          p.util_mb-0 You'll need:
-          ul
-            li the help with fees application form (EX160)
-            li the court or tribunal form related to the application
+          .panel-inner
+            p.util_mb-0 You'll need:
+            ul
+              li the help with fees application form (EX160)
+              li the court or tribunal form related to the application
 
           - if current_user.office.jurisdictions.empty?
             p Please ask your manager to assign jurisdictions to your office.
@@ -22,10 +23,10 @@
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
   .small-6.columns
     .util_pt-medium
-      .panel
-        h3 Process an online application
-        = form_for(@search_form, as: :search, url: home_search_path) do |f|
-          .form-group
+      = form_for(@search_form, as: :search, url: home_search_path) do |f|
+        .panel.flexi
+          h3 Process an online application
+          .form-group.panel-inner
             = f.label :reference
             = f.label :reference, @search_form.errors[:reference].join(', '), class: 'error' if @search_form.errors[:reference].present?
             = f.text_field :reference, { class: 'form-control small-field' }
