@@ -4,7 +4,7 @@
   .columns.small-12
     .dwp-restored =t('error_messages.dwp_restored')
 
-.row
+.row.equal-heightboxes
   - if policy(:application).new?
     .small-6.columns
       .util_pt-medium
@@ -29,8 +29,8 @@
             = f.label :reference
             = f.label :reference, @search_form.errors[:reference].join(', '), class: 'error' if @search_form.errors[:reference].present?
             = f.text_field :reference, { class: 'form-control small-field' }
-          .form-group
-            = f.submit 'Start now', class: 'button primary'
+          .util_mt-0
+            = f.submit 'Look up', class: 'button util_margin-0'
 
 
 
