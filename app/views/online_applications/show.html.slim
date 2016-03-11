@@ -1,0 +1,7 @@
+header
+  h2 Check details
+
+=build_section 'Personal details', @online_application, %w[last_name date_of_birth ni_number children income]
+
+/= form_for @application, url: application_summary_save_path(@overview.application.id), method: :put do |f|
+/  = f.submit 'Complete processing', :class => 'button primary large'
