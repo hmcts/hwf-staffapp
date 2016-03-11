@@ -13,8 +13,7 @@ class HomeController < ApplicationController
 
     online_application = search_and_return
     if online_application
-      flash[:notice] = "Online application with ID #{online_application.id} found"
-      redirect_to(home_index_path)
+      redirect_to(edit_online_application_path(online_application))
     else
       load_waiting_applications
       render :index
