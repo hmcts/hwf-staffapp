@@ -11,8 +11,9 @@ class HomeController < ApplicationController
   def search
     @search_form = Forms::Search.new(search_params)
 
-    if @search_form.valid? && @search_form.reference == 'exists'
-      flash[:notice] = 'Online submission found'
+    online_application = search_and_return
+    if online_application
+      flash[:notice] = "Online application with ID #{online_application.id} found"
       redirect_to(home_index_path)
     else
       load_waiting_applications
@@ -63,5 +64,16 @@ class HomeController < ApplicationController
 
   def search_params
     params.require(:search).permit(:reference)
+  end
+
+  def search_and_return
+    if @search_form.valid?
+      begin
+        OnlineApplication.find_by!(reference: @search_form.reference)
+      rescue ActiveRecord::RecordNotFound
+        @search_form.errors.add(:reference, :not_found)
+        nil
+      end
+    end
   end
 end

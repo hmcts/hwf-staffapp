@@ -421,6 +421,11 @@ en-GB:
             incorrect_reason:
               blank: 'This question must be answered'
               too_long: "Your description must be less than 500 characters"
+        forms/search:
+          attributes:
+            reference:
+              blank: 'Must not be blank'
+              not_found: 'Application not found'
   activerecord:
     errors:
       models:
