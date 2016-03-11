@@ -28,7 +28,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   scenario 'User provides a reference number for an existing online application' do
     given_user_is_on_the_homepage
     when_they_search_for_an_existing_online_application
-    then_they_get_the_success_message
+    then_they_are_redirected_to_the_application_details_page
   end
 
   def given_user_is_on_the_homepage
@@ -57,7 +57,8 @@ RSpec.feature 'Staff can search for online application', type: :feature do
     expect(page).to have_text('Application not found')
   end
 
-  def then_they_get_the_success_message
-    expect(page).to have_text("Online application with ID #{online_application.id} found")
+  def then_they_are_redirected_to_the_application_details_page
+    expect(page).to have_text('Application details')
+    expect(page).to have_text(online_application.last_name)
   end
 end
