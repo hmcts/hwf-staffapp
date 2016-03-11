@@ -10,6 +10,7 @@ class OnlineApplicationsController < ApplicationController
     authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
     @form.update_attributes(update_params)
+    @form.valid?
     render :edit
   end
 

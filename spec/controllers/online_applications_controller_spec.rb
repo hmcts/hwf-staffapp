@@ -48,11 +48,11 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
   describe 'PUT #update' do
     let(:params) { {} }
-    let(:form_save) { false }
+    let(:form_valid) { false }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
-      allow(form).to receive(:save).and_return(form_save)
+      allow(form).to receive(:valid?).and_return(form_valid)
 
       put :update, id: id, online_application: params
     end
@@ -70,7 +70,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       let(:id) { online_application.id }
 
       context 'when the form can be saved' do
-        let(:form_save) { true }
+        let(:form_valid) { true }
 
         it 'temporarily renders the edit template' do
           expect(response).to render_template(:edit)
