@@ -4,6 +4,7 @@ class OnlineApplicationsController < ApplicationController
   def edit
     authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
+    assign_jurisdictions
   end
 
   def update
@@ -11,6 +12,7 @@ class OnlineApplicationsController < ApplicationController
     @form = Forms::OnlineApplication.new(online_application)
     @form.update_attributes(update_params)
     @form.valid?
+    assign_jurisdictions
     render :edit
   end
 
@@ -26,5 +28,9 @@ class OnlineApplicationsController < ApplicationController
 
   def update_params
     params.require(:online_application).permit(*Forms::OnlineApplication.permitted_attributes.keys)
+  end
+
+  def assign_jurisdictions
+    @jurisdictions ||= current_user.office.jurisdictions
   end
 end

@@ -43,6 +43,10 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       it 'assigns the online_application' do
         expect(assigns(:online_application)).to eql(online_application)
       end
+
+      it 'assigns the user\'s office jurisdictions' do
+        expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
+      end
     end
   end
 
@@ -88,6 +92,10 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
         it 'assigns the online_application' do
           expect(assigns(:online_application)).to eql(online_application)
+        end
+
+        it 'assigns the user\'s office jurisdictions' do
+          expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
         end
       end
     end
