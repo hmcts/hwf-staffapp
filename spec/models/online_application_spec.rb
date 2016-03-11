@@ -21,4 +21,25 @@ RSpec.describe OnlineApplication, type: :model do
   it { is_expected.not_to allow_value(nil).for(:post_contact) }
 
   it { is_expected.to validate_uniqueness_of(:reference) }
+
+  describe '#full_name' do
+    let(:online_application) { build(:online_application, first_name: 'Mary', last_name: 'Smith', title: title) }
+    subject { online_application.full_name }
+
+    context 'when title is present' do
+      let(:title) { 'Mrs.' }
+
+      it 'returns title, first_name and last_name separated by spaced' do
+        is_expected.to eql('Mrs. Mary Smith')
+      end
+    end
+
+    context 'when title is not present' do
+      let(:title) { nil }
+
+      it 'returns first_name and last_name separated by spaced' do
+        is_expected.to eql('Mary Smith')
+      end
+    end
+  end
 end
