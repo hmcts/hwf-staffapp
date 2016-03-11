@@ -6,6 +6,13 @@ class OnlineApplicationsController < ApplicationController
     @form = Forms::OnlineApplication.new(online_application)
   end
 
+  def update
+    authorize online_application
+    @form = Forms::OnlineApplication.new(online_application)
+    @form.update_attributes(update_params)
+    render :edit
+  end
+
   private
 
   def online_application
@@ -14,5 +21,9 @@ class OnlineApplicationsController < ApplicationController
 
   def redirect_to_homepage
     redirect_to(root_path)
+  end
+
+  def update_params
+    params.require(:online_application).permit(*Forms::OnlineApplication.permitted_attributes.keys)
   end
 end
