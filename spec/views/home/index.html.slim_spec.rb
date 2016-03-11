@@ -20,6 +20,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     sign_in user
 
+    assign(:search_form, double(errors: {}, reference: nil))
     render
   end
 
@@ -85,6 +86,13 @@ RSpec.describe "home/index.html.slim", type: :view do
         is_expected.not_to have_text 'Process application'
         is_expected.not_to have_link 'Start now'
       end
+    end
+  end
+
+  describe 'Process an online application box' do
+    it 'is rendered' do
+      is_expected.to have_text 'Process an online application'
+      is_expected.to have_button 'Look up'
     end
   end
 
