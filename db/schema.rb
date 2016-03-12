@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308155249) do
+ActiveRecord::Schema.define(version: 20160312100207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,8 +212,12 @@ ActiveRecord::Schema.define(version: 20160308155249) do
     t.string   "reference"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.decimal  "fee"
+    t.integer  "jurisdiction_id"
+    t.text     "emergency_reason"
   end
 
+  add_index "online_applications", ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id", using: :btree
   add_index "online_applications", ["reference"], name: "index_online_applications_on_reference", unique: true, using: :btree
 
   create_table "online_failures", force: :cascade do |t|
@@ -280,6 +284,7 @@ ActiveRecord::Schema.define(version: 20160308155249) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "office_jurisdictions", "jurisdictions"
   add_foreign_key "office_jurisdictions", "offices"
+  add_foreign_key "online_applications", "jurisdictions", on_update: :cascade
   add_foreign_key "users", "jurisdictions"
   add_foreign_key "users", "offices"
 end
