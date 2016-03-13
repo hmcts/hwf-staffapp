@@ -18,7 +18,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   scenario 'User fills in all required fields and the application is saved' do
     given_user_is_editting_the_application
     when_they_fill_in_all_required_fields
-    then_the_application_is_saved
+    then_the_summary_page_is_displayed
   end
 
   scenario 'User does not fill in all the required fields and the application fails to save' do
@@ -40,8 +40,9 @@ RSpec.feature 'Staff can search for online application', type: :feature do
     click_button 'Next'
   end
 
-  def then_the_application_is_saved
-    expect(page).to have_content 'Application has been saved.'
+  def then_the_summary_page_is_displayed
+    expect(page).to have_content 'Check details'
+    expect(page).to have_content 'Fee£200'
   end
 
   def when_they_do_not_fill_in_all_required_fields

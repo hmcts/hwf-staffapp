@@ -76,12 +76,8 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       context 'when the form can be saved' do
         let(:form_save) { true }
 
-        it 'temporarily renders the edit template' do
-          expect(response).to render_template(:edit)
-        end
-
-        it 'renders a success flash message' do
-          expect(flash[:notice]).to eql('Application has been saved.')
+        it 'redirects to the summary page' do
+          expect(response).to redirect_to(online_application_path(online_application))
         end
       end
 
