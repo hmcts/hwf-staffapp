@@ -1,4 +1,6 @@
 class OnlineApplication < ActiveRecord::Base
+  belongs_to :jurisdiction
+
   validates :children, :ni_number, :date_of_birth, :first_name, :last_name, :address,
     :postcode, presence: true
   validates :married, :threshold_exceeded, :benefits, :refund, :probate, :email_contact,
