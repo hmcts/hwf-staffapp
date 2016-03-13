@@ -36,4 +36,46 @@ RSpec.describe Forms::OnlineApplication do
       end
     end
   end
+
+  describe '#save' do
+    let(:online_application) { create :online_application }
+    let(:jurisdiction) { create :jurisdiction }
+
+    subject do
+      form.update_attributes(params)
+      form.save
+    end
+
+    context 'when the params are correct' do
+      let(:params) do
+        {
+          fee: 100,
+          jurisdiction_id: jurisdiction.id,
+          form_name: 'E45',
+          emergency: true,
+          emergency_reason: 'SOME REASON'
+        }
+      end
+      let(:reloaded_application) do
+        subject
+        online_application.reload
+      end
+
+      describe 'the saved online application' do
+        [:fee, :jurisdiction_id, :form_name, :emergency_reason].each do |key|
+          it "has the correct :#{key}" do
+            expect(reloaded_application.send(key)).to eql(params[key])
+          end
+        end
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the params are not correct' do
+      let(:params) { {} }
+
+      it { is_expected.to be false }
+    end
+  end
 end
