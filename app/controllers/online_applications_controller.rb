@@ -19,6 +19,7 @@ class OnlineApplicationsController < ApplicationController
 
   def show
     authorize online_application
+    @overview = Views::ApplicationOverview.new(online_application)
   end
 
   private

@@ -106,7 +106,11 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   describe 'GET #show' do
+    let(:overview) { double }
+
     before do
+      allow(Views::ApplicationOverview).to receive(:new).with(online_application).and_return(overview)
+
       get :show, id: id
     end
 
@@ -125,8 +129,8 @@ RSpec.describe OnlineApplicationsController, type: :controller do
         expect(response).to render_template(:show)
       end
 
-      it 'assigns the online application' do
-        expect(assigns(:online_application)).to eql(online_application)
+      it 'assigns the overview view model' do
+        expect(assigns(:overview)).to eql(overview)
       end
     end
   end

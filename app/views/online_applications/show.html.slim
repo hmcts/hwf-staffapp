@@ -1,7 +1,8 @@
 header
   h2 Check details
 
-=build_section 'Personal details', @online_application, %w[last_name date_of_birth ni_number children income]
+=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
 
-/= form_for @application, url: application_summary_save_path(@overview.application.id), method: :put do |f|
-/  = f.submit 'Complete processing', :class => 'button primary large'
+- change_link = ['Change application details', edit_online_application_path(@overview.application.id)]
+=build_section 'Application details', @overview, %w[fee jurisdiction form_name emergency_reason], *change_link
+
