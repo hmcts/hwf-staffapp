@@ -11,10 +11,13 @@ class OnlineApplicationsController < ApplicationController
     authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
     @form.update_attributes(update_params)
-    flash[:notice] = 'Application has been saved.' if @form.save
 
-    assign_jurisdictions
-    render :edit
+    if @form.save
+      redirect_to(action: :show)
+    else
+      assign_jurisdictions
+      render :edit
+    end
   end
 
   def show
