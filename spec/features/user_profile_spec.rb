@@ -24,13 +24,13 @@ RSpec.feature 'User profile', type: :feature do
       scenario 'view their profile' do
         click_link 'View profile'
         ['Staff details',
-         "#{user.email}",
-         "#{user.role}"].each { |line| expect(page).to have_text line }
+         user.email,
+         user.role].each { |line| expect(page).to have_text line }
       end
 
       scenario 'only view their own profile' do
         visit user_path(another_user.id)
-        expect(page).not_to have_text "#{another_user.email}"
+        expect(page).not_to have_text another_user.email
       end
     end
 

@@ -170,7 +170,7 @@ RSpec.describe UsersController, type: :controller do
 
         it "doesn't update the user's email" do
           assigns(:user)
-          expect(user_on_my_team.email).to_not eq new_attributes[:email]
+          expect(user_on_my_team.email).not_to eq new_attributes[:email]
         end
 
         it 'assigns the requested user as @user' do

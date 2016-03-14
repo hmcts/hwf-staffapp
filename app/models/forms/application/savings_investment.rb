@@ -2,7 +2,7 @@ module Forms
   module Application
     class SavingsInvestment < ::FormObject
 
-      LOCALE = 'activemodel.errors.models.forms/application/savings_investment.attributes'
+      LOCALE = 'activemodel.errors.models.forms/application/savings_investment.attributes'.freeze
 
       def self.permitted_attributes
         {

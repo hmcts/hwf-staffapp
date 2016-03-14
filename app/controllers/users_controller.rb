@@ -76,11 +76,11 @@ class UsersController < ApplicationController
   end
 
   def populate_lookups
-    if current_user.admin?
-      @roles = User::ROLES
-    else
-      @roles = User::ROLES - %w[admin]
-    end
+    @roles = if current_user.admin?
+               User::ROLES
+             else
+               User::ROLES - %w[admin]
+             end
     @offices = Office.all
     @jurisdictions = user.office.jurisdictions
   end

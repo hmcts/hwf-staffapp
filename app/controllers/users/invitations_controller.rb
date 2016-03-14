@@ -26,11 +26,11 @@ module Users
     private
 
     def build_role_list
-      if current_user.admin?
-        @roles = User::ROLES
-      else
-        @roles = %w[user manager]
-      end
+      @roles = if current_user.admin?
+                 User::ROLES
+               else
+                 %w[user manager]
+               end
     end
 
     def invite_params

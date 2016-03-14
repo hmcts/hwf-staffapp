@@ -4,7 +4,7 @@ module Views
     attr_reader :application
 
     APPLICATION_ATTRS = %i[full_name form_name amount_to_pay case_number
-                           deceased_name emergency_reason]
+                           deceased_name emergency_reason].freeze
 
     delegate(*APPLICATION_ATTRS, to: :application)
 

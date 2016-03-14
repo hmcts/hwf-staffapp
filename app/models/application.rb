@@ -25,8 +25,8 @@ class Application < ActiveRecord::Base
   # Fixme remove this delegation methods when all tests are clean
   APPLICANT_GETTERS = %i[
     title first_name last_name full_name date_of_birth ni_number married married?
-  ]
-  APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=]
+  ].freeze
+  APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=].freeze
   delegate(*APPLICANT_GETTERS, to: :applicant)
   delegate(*APPLICANT_SETTERS, to: :applicant)
   delegate(:age, to: :applicant, prefix: true)
@@ -34,11 +34,11 @@ class Application < ActiveRecord::Base
   DETAIL_GETTERS = %i[
     fee jurisdiction date_received form_name case_number probate probate? deceased_name
     date_of_death refund refund? date_fee_paid emergency_reason
-  ]
+  ].freeze
   DETAIL_SETTERS = %i[
     fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
     date_of_death= refund= date_fee_paid= emergency_reason=
-  ]
+  ].freeze
   delegate(*DETAIL_GETTERS, to: :detail)
   delegate(*DETAIL_SETTERS, to: :detail)
 

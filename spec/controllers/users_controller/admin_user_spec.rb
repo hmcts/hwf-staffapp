@@ -99,7 +99,7 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it 'shows them their role' do
-          expect(response.body).to match "#{admin_user.role}"
+          expect(response.body).to match admin_user.role.to_s
         end
 
         it 'shows them all options to change their role' do

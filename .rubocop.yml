@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.2
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
   # generated code and copy-and-pasted snipets from READMEs.
@@ -16,7 +17,8 @@ AllCops:
     - 'script/cucumber'
     - 'lib/log_stuff.rb'
 
-  RunRailsCops: true
+Rails:
+  Enabled: true
 
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 80 characters.

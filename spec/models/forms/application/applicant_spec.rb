@@ -124,7 +124,7 @@ RSpec.describe Forms::Application::Applicant do
       end
     end
     %w[title first_name last_name].each do |attribute|
-      describe "#{attribute}" do
+      describe attribute.to_s do
         context 'when valid' do
           before { personal_information[attribute.to_sym] = 'Mr' }
 

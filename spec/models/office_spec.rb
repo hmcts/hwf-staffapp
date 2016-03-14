@@ -16,7 +16,7 @@ RSpec.describe Office, type: :model do
   context 'validations' do
     it 'is invalid with no name' do
       office = build(:invalid_office)
-      expect(office).to_not be_valid
+      expect(office).not_to be_valid
       expect(office.errors[:name]).to eq ['Enter the office name']
     end
 

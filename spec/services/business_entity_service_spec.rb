@@ -150,7 +150,7 @@ describe BusinessEntityService do
 
       context 'that does not change the code' do
         it 'creates a new business_entity' do
-          expect { service.persist! }.to_not change { BusinessEntity.count }
+          expect { service.persist! }.not_to change { BusinessEntity.count }
         end
       end
     end

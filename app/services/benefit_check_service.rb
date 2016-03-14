@@ -31,7 +31,7 @@ class BenefitCheckService
   end
 
   def query_proxy_api
-    @response = JSON.parse(RestClient.post "#{ENV['DWP_API_PROXY']}/api/benefit_checks", params)
+    @response = JSON.parse(RestClient.post("#{ENV['DWP_API_PROXY']}/api/benefit_checks", params))
     fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
     @result = true
   rescue Exceptions::UndeterminedDwpCheck
