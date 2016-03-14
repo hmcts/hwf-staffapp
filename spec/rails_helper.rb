@@ -88,7 +88,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include ApplicationFormMacros, type: :feature
-  config.include Personae, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
