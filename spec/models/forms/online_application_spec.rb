@@ -12,6 +12,26 @@ RSpec.describe Forms::OnlineApplication do
     end
   end
 
+  describe '#initialize' do
+    let(:online_application) { build_stubbed :online_application, emergency_reason: emergency_reason }
+
+    context 'when the online application has emergency reason' do
+      let(:emergency_reason) { 'REASON' }
+
+      it 'assigns true to the emergency field' do
+        expect(form.emergency).to be true
+      end
+    end
+
+    context 'when the online application does not have emergency reason' do
+      let(:emergency_reason) { nil }
+
+      it 'keeps the emergency field nil' do
+        expect(form.emergency).to be nil
+      end
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_numericality_of(:fee) }
@@ -70,6 +90,17 @@ RSpec.describe Forms::OnlineApplication do
       end
 
       it { is_expected.to be true }
+
+      describe 'when emergency is false but emergency_reason had been set' do
+        let(:online_application) { create :online_application, emergency_reason: 'SOME REASON' }
+        before do
+          params[:emergency] = false
+        end
+
+        it 'clears the emergency reason' do
+          expect(reloaded_application.emergency_reason).to be nil
+        end
+      end
     end
 
     context 'when the params are not correct' do
