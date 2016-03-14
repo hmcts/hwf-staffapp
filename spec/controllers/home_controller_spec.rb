@@ -104,7 +104,7 @@ RSpec.describe HomeController, type: :controller do
     context 'when reference parameter is present' do
       let(:search_params) { { reference: reference } }
 
-      context 'when no online submission is found with that reference' do
+      context 'when no online application is found with that reference' do
         let(:reference) { 'wrong' }
 
         it 'renders the index template' do
@@ -116,15 +116,11 @@ RSpec.describe HomeController, type: :controller do
         end
       end
 
-      context 'when an online submission is found with that reference' do
+      context 'when an online application is found with that reference' do
         let(:reference) { online_application.reference }
 
-        it 'redirects to the homepage action' do
-          expect(response).to redirect_to(home_index_path)
-        end
-
-        it 'sets success flash message' do
-          expect(flash[:notice]).to eql("Online application with ID #{online_application.id} found")
+        it 'redirects to the edit page for that online application' do
+          expect(response).to redirect_to(edit_online_application_path(online_application))
         end
       end
     end
