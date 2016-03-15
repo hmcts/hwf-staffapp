@@ -15,5 +15,9 @@ FactoryGirl.define do
     email_contact false
     phone_contact false
     post_contact false
+
+    trait :with_reference do
+      sequence(:reference) { |n| "HWF-#{n}" }
+    end
   end
 end

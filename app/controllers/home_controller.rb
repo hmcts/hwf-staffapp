@@ -5,6 +5,19 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
+    @search_form = Forms::Search.new
+  end
+
+  def search
+    @search_form = Forms::Search.new(search_params)
+
+    online_application = search_and_return
+    if online_application
+      redirect_to(edit_online_application_path(online_application))
+    else
+      load_waiting_applications
+      render :index
+    end
   end
 
   private
@@ -46,5 +59,20 @@ class HomeController < ApplicationController
 
   def waiting_for_part_payment
     Query::WaitingForPartPayment.new(current_user).find
+  end
+
+  def search_params
+    params.require(:search).permit(:reference)
+  end
+
+  def search_and_return
+    if @search_form.valid?
+      begin
+        OnlineApplication.find_by!(reference: @search_form.reference)
+      rescue ActiveRecord::RecordNotFound
+        @search_form.errors.add(:reference, :not_found)
+        nil
+      end
+    end
   end
 end

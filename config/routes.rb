@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
   end
 
+  resources :online_applications, only: [:edit, :update, :show]
+
   get 'evidence/:id', to: 'evidence#show', as: :evidence_show
   get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
   post 'evidence/:id/accuracy_save', to: 'evidence#accuracy_save', as: :evidence_accuracy_save
@@ -95,6 +97,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get 'home/index'
+  post 'home/search'
 
   %w[400 404 500 503].each do |error|
     get "static/#{error}" => "static##{error}"

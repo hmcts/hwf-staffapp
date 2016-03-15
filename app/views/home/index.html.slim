@@ -4,22 +4,36 @@
   .columns.small-12
     .dwp-restored =t('error_messages.dwp_restored')
 
-- if policy(:application).new?
-  .row
-    .small-12.columns
+.row.equal-heightboxes
+  - if policy(:application).new?
+    .small-6.columns
       .util_pt-medium
-        .panel
+        .panel.flexi
           h3 Process application
-          p.util_mb-0 You'll need:
-          ul
-            li the help with fees application form (EX160)
-            li the court or tribunal form related to the application
+          .panel-inner
+            p.util_mb-0 You'll need:
+            ul
+              li the help with fees application form (EX160)
+              li the court or tribunal form related to the application
 
           - if current_user.office.jurisdictions.empty?
             p Please ask your manager to assign jurisdictions to your office.
           - else
             .util_mt-0
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
+  .small-6.columns
+    .util_pt-medium
+      = form_for(@search_form, as: :search, url: home_search_path) do |f|
+        .panel.flexi
+          h3 Process an online application
+          .form-group.panel-inner
+            = f.label :reference
+            = f.label :reference, @search_form.errors[:reference].join(', '), class: 'error' if @search_form.errors[:reference].present?
+            = f.text_field :reference, { class: 'form-control small-field' }
+          .util_mt-0
+            = f.submit 'Look up', class: 'button util_margin-0'
+
+
 
 - if policy(:application).index?
   .row

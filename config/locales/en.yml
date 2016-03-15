@@ -421,6 +421,21 @@ en-GB:
             incorrect_reason:
               blank: 'This question must be answered'
               too_long: "Your description must be less than 500 characters"
+        forms/search:
+          attributes:
+            reference:
+              blank: 'Must not be blank'
+              not_found: 'Application not found'
+        forms/online_application:
+          attributes:
+            fee:
+              blank: Enter the fee
+              not_a_number: The fee should be numeric
+            jurisdiction_id:
+              blank: You must select a jurisdiction
+            emergency_reason:
+              cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
+              too_long: "is too long, it needs to be less than 500 characters"
   activerecord:
     errors:
       models:
