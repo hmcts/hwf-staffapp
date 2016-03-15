@@ -1,9 +1,5 @@
 =content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
-.row.pad-top-thirty-px
-  .columns.small-12
-    .dwp-restored =t('error_messages.dwp_restored')
-
 .row.equal-heightboxes
   - if policy(:application).new?
     .small-6.columns
