@@ -10,9 +10,9 @@ module Api
     def create
       online_submission = OnlineApplicationBuilder.new(public_app_params).build
       if online_submission.save
-        render(json: { result: true, message: online_submission.reference }.to_json)
+        render(json: { result: true, message: online_submission.reference })
       else
-        render(json: { result: false, message: 'Could not save online_submission' }.to_json)
+        render(json: { result: false, message: 'Could not save online_submission' })
       end
     end
 
@@ -20,7 +20,7 @@ module Api
 
     # rubocop:disable MethodLength
     def public_app_params
-      params.require(:jwt).permit(
+      params.require(:online_application).permit(
         :married,
         :threshold_exceeded,
         :benefits,
