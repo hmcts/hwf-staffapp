@@ -34,3 +34,12 @@
 .util_padding-0 {
   padding: 0 !important;
 }
+
+// js utilities
+.js-hidden {
+  display: block;
+
+  .js & { // .js added by Modernizr
+    display: none;
+  }
+}

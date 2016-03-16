@@ -29,6 +29,12 @@ div.form-group div.field_with_errors + input[type="hidden"] + div.options.radio 
   padding-left: 10px;
 }
 
+div.warning {
+  border-left: 2px solid $grey-1;
+  padding-left: 10px;
+  color: $grey-1;
+}
+
 div.options.radio label:first-child {
   margin-top: 0rem;
 }
