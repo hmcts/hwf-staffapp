@@ -13,5 +13,11 @@ describe OnlineApplicationBuilder do
       is_expected.to be_a(OnlineApplication)
       is_expected.not_to be_persisted
     end
+
+    describe 'it adds a reference number' do
+      subject(:reference) { build_submission.reference }
+
+      it { is_expected.not_to be_nil }
+    end
   end
 end

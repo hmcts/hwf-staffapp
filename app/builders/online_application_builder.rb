@@ -6,7 +6,7 @@ class OnlineApplicationBuilder
 
   def build
     generator = HwfReferenceGenerator.new
-    @source.merge(generator.attributes)
+    @source.merge!(generator.attributes)
     OnlineApplication.new(@source)
   end
 end
