@@ -30,6 +30,7 @@
 //= require equal_height_boxes
 //= require cookies
 //= require login
+//= require fee_field
 
 $(function(){
   Foundation.global.namespace = '';
