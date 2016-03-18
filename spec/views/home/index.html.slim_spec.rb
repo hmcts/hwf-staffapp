@@ -19,7 +19,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
 
     sign_in user
-
+    assign(:state, 'online')
     assign(:search_form, double(errors: {}, reference: nil))
     render
   end
