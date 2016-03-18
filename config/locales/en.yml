@@ -251,7 +251,7 @@ en-GB:
       forms/finance_report:
         date_from: 'Date from'
         date_to: 'Date to'
-        date_hint: For example DD/MM/YYYY
+        date_hint: Use this format DD/MM/YYYY
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
@@ -262,7 +262,7 @@ en-GB:
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
         married: Status
-        date_of_birth_hint: For example DD/MM/YYYY
+        date_of_birth_hint: Use this format DD/MM/YYYY
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form name or number
@@ -279,7 +279,7 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
-        date_hint: For example DD/MM/YYYY
+        date_hint: Use this format DD/MM/YYYY
       forms/application/savings_investment:
         header: Savings and investments
         maximum_prompt: 'Maximum amount of savings and investments allowed:'
