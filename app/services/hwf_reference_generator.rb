@@ -1,19 +1,20 @@
 class HwfReferenceGenerator
 
-  def initialize
-    generate_reference
-  end
-
   def attributes
-    { reference: @new_reference }
+    { reference: generate_reference }
   end
 
   private
 
   def generate_reference
-    loop do
-      @new_reference = "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
-      break if OnlineApplication.find_by(reference: @new_reference).nil?
-    end
+    begin
+      reference = reference_string
+    end until OnlineApplication.find_by(reference: reference).nil?
+
+    reference
+  end
+
+  def reference_string
+    "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
   end
 end
