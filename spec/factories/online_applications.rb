@@ -17,8 +17,30 @@ FactoryGirl.define do
     post_contact false
     feedback_opt_in true
 
+    factory :online_application_with_all_details do
+      children 2
+      refund true
+      date_fee_paid Time.zone.now - 2.months
+      probate true
+      deceased_name 'Some Deceased'
+      date_of_death Time.zone.now - 3.months
+      case_number '234567'
+      form_name 'FGDH122'
+      email_contact true
+      email_address 'peter.smith@example.com'
+      phone_contact true
+      phone '2345678'
+      post_contact true
+    end
+
     trait :with_reference do
       sequence(:reference) { |n| "HWF-#{n}" }
+    end
+
+    trait :completed do
+      fee 450
+      jurisdiction
+      emergency_reason 'EMERGENCY'
     end
   end
 end
