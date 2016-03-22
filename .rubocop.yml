@@ -130,6 +130,9 @@ IfUnlessModifier:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: false
 
+Lint/Loop:
+  Enabled: false
+
 # Just a preference to use %w[] over %w()
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
