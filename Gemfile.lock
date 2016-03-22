@@ -114,6 +114,10 @@ GEM
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.1.0)
+    dotenv-rails (2.1.0)
+      dotenv (= 2.1.0)
+      railties (>= 4.0, < 5.1)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -401,6 +405,7 @@ DEPENDENCIES
   date_validator
   devise
   devise_invitable
+  dotenv-rails
   factory_girl_rails
   faker
   foundation-rails
