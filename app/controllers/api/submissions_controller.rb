@@ -44,7 +44,8 @@ module Api
         :email_address,
         :phone_contact,
         :phone,
-        :post_contact
+        :post_contact,
+        :feedback_opt_in
       )
     end
 
