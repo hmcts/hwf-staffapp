@@ -25,6 +25,18 @@ class OnlineApplicationsController < ApplicationController
     @overview = Views::ApplicationOverview.new(online_application)
   end
 
+  def complete
+    authorize online_application
+
+    application = ApplicationBuilder.new(current_user).build_from(online_application)
+    application.save
+
+    ApplicationCalculation.new(application).run
+    ResolverService.new(application, current_user).complete
+
+    redirect_to application_confirmation_path(application)
+  end
+
   private
 
   def online_application

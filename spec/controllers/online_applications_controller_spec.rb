@@ -130,4 +130,49 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       end
     end
   end
+
+  describe 'POST #complete' do
+    let(:application) { build_stubbed(:application) }
+    let(:application_builder) { double(build_from: application) }
+    let(:application_calculation) { double(run: nil) }
+    let(:resolver_service) { double(complete: nil) }
+
+    before do
+      allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
+      allow(application).to receive(:save)
+      allow(ApplicationCalculation).to receive(:new).with(application).and_return(application_calculation)
+      allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
+
+      post :complete, id: id
+    end
+
+    context 'when no online application is found with the id' do
+      let(:id) { 'non-existent' }
+
+      it 'redirects to the homepage' do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when an online application is found with the id' do
+      let(:id) { online_application.id }
+
+      it 'builds the application' do
+        expect(application_builder).to have_received(:build_from)
+        expect(application).to have_received(:save)
+      end
+
+      it 'runs the benefit / income calculation' do
+        expect(application_calculation).to have_received(:run)
+      end
+
+      it 'runs the resolver service' do
+        expect(resolver_service).to have_received(:complete)
+      end
+
+      it 'redirects to the application confirmation page' do
+        expect(response).to redirect_to(application_confirmation_path(application))
+      end
+    end
+  end
 end
