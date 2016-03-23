@@ -42,5 +42,18 @@ FactoryGirl.define do
       jurisdiction
       emergency_reason 'EMERGENCY'
     end
+
+    trait :threshold_exceeded do
+      threshold_exceeded true
+    end
+
+    trait :benefits do
+      benefits true
+    end
+
+    trait :income do
+      benefits false
+      income 450
+    end
   end
 end
