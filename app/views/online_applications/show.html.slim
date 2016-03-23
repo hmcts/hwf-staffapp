@@ -6,3 +6,6 @@ header
 - change_link = ['Change application details', edit_online_application_path(@overview.application.id)]
 =build_section 'Application details', @overview, %w[fee jurisdiction form_name emergency_reason], *change_link
 
+= form_for @overview.application, url: complete_online_application_path(@overview.application.id), method: :post do |f|
+  = f.submit 'Complete processing', :class => 'button primary large'
+
