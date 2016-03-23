@@ -10,4 +10,8 @@ class OnlineApplicationPolicy < BasePolicy
   def show?
     staff_or_manager?
   end
+
+  def complete?
+    staff_or_manager?
+  end
 end
