@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322151510) do
+ActiveRecord::Schema.define(version: 20160324110832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,10 +58,12 @@ ActiveRecord::Schema.define(version: 20160322151510) do
     t.integer  "business_entity_id"
     t.datetime "decision_date"
     t.decimal  "decision_cost"
+    t.integer  "online_application_id"
   end
 
   add_index "applications", ["business_entity_id"], name: "index_applications_on_business_entity_id", using: :btree
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
+  add_index "applications", ["online_application_id"], name: "index_applications_on_online_application_id", using: :btree
   add_index "applications", ["reference"], name: "index_applications_on_reference", unique: true, using: :btree
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
@@ -277,6 +279,7 @@ ActiveRecord::Schema.define(version: 20160322151510) do
 
   add_foreign_key "applications", "business_entities"
   add_foreign_key "applications", "offices"
+  add_foreign_key "applications", "online_applications", on_update: :cascade
   add_foreign_key "applications", "users"
   add_foreign_key "benefit_checks", "applications"
   add_foreign_key "benefit_checks", "users"

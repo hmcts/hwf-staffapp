@@ -75,6 +75,10 @@ RSpec.describe ApplicationBuilder do
         expect(built_application.office).to eql(user.office)
       end
 
+      it 'references the online application' do
+        expect(built_application.online_application).to eql(online_application)
+      end
+
       %i[threshold_exceeded benefits income].each do |column|
         it "has #{column} assigned" do
           expect(built_application.public_send(column)).to eql(online_application.public_send(column))

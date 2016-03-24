@@ -19,6 +19,7 @@ class ApplicationBuilder
     attributes = {
       office_id: @user.office_id,
       user_id: @user.id,
+      online_application: online_application,
       applicant: Applicant.new(online_applicant_attributes(online_application)),
       detail: Detail.new(online_detail_attributes(online_application))
     }.merge(online_application_attributes(online_application))
