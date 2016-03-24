@@ -36,15 +36,16 @@ class ResolverService
   end
 
   def completed_attributes
-    {
-      completed_at: @time,
-      completed_by: @user
-    }
+    { completed_at: @time, completed_by: @user }
   end
 
   def completed_application_attributes
-    generator = ReferenceGenerator.new(@calling_object)
-    completed_attributes.merge(generator.attributes)
+    completed_attributes.tap do |attrs|
+      if @calling_object.reference.blank?
+        generator = ReferenceGenerator.new(@calling_object)
+        attrs.merge!(generator.attributes)
+      end
+    end
   end
 
   def decided_attributes(source)
@@ -58,11 +59,7 @@ class ResolverService
   end
 
   def deleted_attributes
-    {
-      deleted_at: Time.zone.now,
-      deleted_by: @user,
-      state: :deleted
-    }
+    { deleted_at: Time.zone.now, deleted_by: @user, state: :deleted }
   end
 
   def complete_application(application)
@@ -102,10 +99,7 @@ class ResolverService
   end
 
   def lookup_decision(outcome)
-    { 'full' => 'full',
-      'part' => 'part',
-      'none' => 'none',
-      'return' => 'none' }[outcome]
+    { 'full' => 'full', 'part' => 'part', 'none' => 'none', 'return' => 'none' }[outcome]
   end
 
   def evidence_check_and_payment
