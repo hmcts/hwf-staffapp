@@ -5,6 +5,7 @@ class Application < ActiveRecord::Base
   belongs_to :deleted_by, -> { with_deleted }, class_name: 'User'
   belongs_to :office
   belongs_to :business_entity
+  belongs_to :online_application
   has_many :benefit_checks
   has_one :applicant
   has_one :detail, inverse_of: :application

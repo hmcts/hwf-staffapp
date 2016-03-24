@@ -14,6 +14,7 @@ RSpec.describe Application, type: :model do
   it { is_expected.to belong_to(:deleted_by).class_name('User') }
   it { is_expected.to belong_to(:office) }
   it { is_expected.to belong_to(:business_entity) }
+  it { is_expected.to belong_to(:online_application) }
 
   it { is_expected.to have_one(:applicant) }
   it { is_expected.to have_one(:detail) }
