@@ -38,7 +38,7 @@ class ApplicationBuilder
   end
 
   def online_application_attributes(online_application)
-    fields = %i[threshold_exceeded benefits income children]
+    fields = %i[threshold_exceeded benefits income children reference]
     {
       dependents: (online_application.children > 0)
     }.merge(Hash[fields.map { |field| [field, online_application.send(field)] }])
