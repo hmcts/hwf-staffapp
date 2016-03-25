@@ -1,0 +1,18 @@
+<%= t('email.confirmation.greeting', name: @application.full_name) %>
+
+<%= t('email.confirmation.send_to') %>
+
+<%= t('email.confirmation.warning') %>
+
+<%= t('email.confirmation.non_paper') %>
+
+<%= t('email.confirmation.template') %>
+
+<%=  t('email.confirmation.reference', reference: @application.reference) %>
+<%=  t('email.confirmation.completion', today: Date.today) %>
+<%=  t('email.confirmation.close') %>
+<%= @application.full_name %>
+
+<%= t('email.confirmation.assessment') %>
+
+<%= t('email.confirmation.unsuccessful') %>

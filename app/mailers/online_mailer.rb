@@ -2,6 +2,7 @@ class OnlineMailer < ApplicationMailer
 
   def confirmation(application)
     attachments.inline['icon-important.png'] = File.read('app/assets/images/icon-important.png')
+    attachments.inline['crest.png'] = File.read('app/assets/images/crest.png')
     @application = application
     mail_with_subject @application.email_address, 'Help with Fees confirmation'
   end

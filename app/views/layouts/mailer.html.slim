@@ -1,0 +1,14 @@
+doctype html
+html[lang="en"]
+  head
+    meta[charset="utf-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      = content_for?(:title) ? yield(:title) : "Help with fees app"
+  body style="margin:0; font-family: arial"
+    div style="background: black; color: white; width: 100%; font-size:x-large; font-weight:700;line-height:35px;"
+      =image_tag attachments['crest.png'].url, style: 'margin-left:.25em;'
+      span style="margin-left:10px;" GOV.UK
+    h2 MOJ logo
+    div style="margin:0 .25em;"
+      = yield
