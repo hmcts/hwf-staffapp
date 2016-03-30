@@ -1,13 +1,12 @@
 header
-  h2 Management Information
+  h2.heading-xlarge Management Information
 
-.row
-  .small-12.medium-12.large-12.columns
+
+dl
+  dt =link_to 'Finance report', reports_finance_report_path
+  dl
+    div Date delimited report of financial expenditure
+  - if policy(:report).graphs?
+    dt =link_to 'Graphs', graphs_report_path
     dl
-      dt =link_to 'Finance report', reports_finance_report_path
-      dl
-        div Date delimited report of financial expenditure
-      - if policy(:report).graphs?
-        dt =link_to 'Graphs', graphs_report_path
-        dl
-          div 5 day graphs for benefit checks by business unit
+      div 5 day graphs for benefit checks by business unit

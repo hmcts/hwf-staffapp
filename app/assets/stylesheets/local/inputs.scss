@@ -1,0 +1,47 @@
+input[type=text]{
+  &:disabled{
+    background-color: $grey-3;
+  }
+}
+
+input.decoy {
+  // used to prevent browser autofill
+  display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-control-smaller {
+  width: 100%;
+
+  @media (min-width: 641px) {
+    width: 25%;
+  }
+}
+
+.error .form-control {
+  border: 1px solid #bfc1c3;
+}
+
+.error > .form-control {
+  border: 4px solid #b10e1e;
+}
+
+.form-checkbox {
+  display: table;
+
+  input, span {
+    display: table-cell;
+  }
+}
+
+select {
+  font-size: 19px;
+  border: 1px solid #bfc1c3;
+  padding: 4px;
+  display: block;
+}

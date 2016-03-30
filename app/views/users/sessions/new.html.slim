@@ -1,29 +1,29 @@
-.row
-  .small-12.medium-6.large-5.columns
+.grid-row
+  .column-two-thirds
+
     header
-      h2 Sign in
+      h2.heading-xlarge.util_mb-medium Sign in
 
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
-      .row
-        .small-12.columns
-          .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'form-control'
-      .row
-        .small-12.columns
-          .form-group
-            = f.label :password
-            = f.password_field :password, autocomplete: "off"
+      .form-group
+        = f.label :email, class: 'form-label'
+        = f.email_field :email, autofocus: true, class: 'form-control form-control-3-4'
+      .form-group
+        = f.label :password, class: 'form-label'
+        = f.password_field :password, autocomplete: "off", class: 'form-control form-control-3-4'
       = f.submit "Sign in", class: 'button'
       .actions
         = link_to "Forgot your password?", new_password_path(resource_name)
 
-  .small-12.medium-5.columns
-    .info-box
-      h3.bold Get help
-      div.bold Forgot your password
+  .column-one-third
+    .guidance
+      h3.heading-medium.util_mt-medium Get help
+      p.util_mb-0
+        strong Forgot your password
       p Follow these steps to #{ link_to "get a new password", new_password_path(resource_name)}
-      div.bold Don't have an account
-      div Contact your manager to set up your account.
-      div.bold.pad-top-fifteen-px Having technical issues
-      p Email: #{link_to Settings.mail.tech_support, "mailto:#{Settings.mail.tech_support}"}
+      p.util_mb-0
+        strong Don't have an account
+      p Contact your manager to set up your account.
+      p.util_mb-0
+        strong Having technical issues
+      p #{link_to 'Email support', "mailto:#{Settings.mail.tech_support}"}

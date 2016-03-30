@@ -1,6 +1,6 @@
-h4.util_mt-medium Reference
+h4.heading-medium.util_mt-medium Reference
 #result.callout.evidence-check-reference
-  h3.bold
+  h3.heading-large.text-center
     span.check
       | ✓
     | The reference number is
@@ -11,7 +11,7 @@ h4.util_mt-medium Reference
   = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
-  h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+  h3.heading-large = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
 -if @application.waiting_for_part_payment?
   .confirmation-letter
@@ -25,8 +25,8 @@ h4.util_mt-medium Reference
         date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
 .guidance
-  h4 Next steps
-  ul
+  h4.heading-medium Next steps
+  ul.list.list-bullet
     -if @application.outcome.eql?('full')
       li Write the reference number on the top right corner of the paper form
       li Copy the reference number into the case management system
@@ -44,4 +44,4 @@ h4.util_mt-medium Reference
 
   p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
-= link_to 'Back to start', root_path, class: 'button primary'
+= link_to 'Back to start', root_path, class: 'button util_mt-medium'

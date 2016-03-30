@@ -1,24 +1,25 @@
-h4.util_mt-medium Reference
+h4.heading-medium.util_mt-medium Reference
 #result.callout.evidence-check-reference
-  h3.bold
+  h3.heading-large.text-center
     span.check
       | ✓
     | The reference number is
     span.reference-number
       = @application.reference
 
-= build_section 'Result', @confirm, @confirm.all_fields
+.util_mt-medium
+  = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
-  h3.bold = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+  h3.heading-large = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
 .guidance
-  h4 =t('evidence_check.next_steps.title')
-  ul
+  h4.heading-medium =t('evidence_check.next_steps.title')
+  ul.list.list-bullet
     - t('evidence_check.next_steps.steps').each do |step|
       li =step
 
 .confirmation-letter
   =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
-=link_to t('evidence_check.back_to_start'), root_path, class: 'button primary'
+=link_to t('evidence_check.back_to_start'), root_path, class: 'button util_mt-medium'

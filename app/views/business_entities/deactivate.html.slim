@@ -1,8 +1,8 @@
-h2 Deactivate #{business_entity.name} for #{office.name}
+header
+  h2.heading-large Deactivate #{business_entity.name} for #{office.name}
 
 = form_for @business_entity, url: confirm_deactivate_office_business_entity_path, method: :post do |f|
-  .pad-top-fifteen-px.row
-    .columns.small-12.medium-8
-      .important-notice
-        p = t('business_entities.deactivate_warning', office: office.name, today_date: Date.today)
+
+  p.important-notice = t('business_entities.deactivate_warning', office: office.name, today_date: Date.today)
+
   .actions = f.submit 'Deactivate', class: 'button'

@@ -86,13 +86,13 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     it 'displays a result block' do
-      expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
+      expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="heading-large"]')
     end
 
     context 'when the evidence check returns none' do
       let(:outcome) { 'none' }
 
-      it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h3[@class="bold"]', text: '✗ Not eligible for help with fees') }
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h3[@class="heading-large"]', text: '✗ Not eligible for help with fees') }
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'
@@ -104,7 +104,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:outcome) { 'part' }
       let(:amount) { 45 }
 
-      it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h3[@class="bold"]', text: 'The applicant must pay £45 towards the fee') }
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h3[@class="heading-large"]', text: 'The applicant must pay £45 towards the fee') }
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'
@@ -115,7 +115,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'when the evidence check returns full' do
       let(:outcome) { 'full' }
 
-      it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="bold"]', text: 'Eligible for help with fees') }
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-full")]/h3[@class="heading-large"]', text: 'Eligible for help with fees') }
 
       it 'clicking the Complete processing button redirects to the summary page' do
         click_link_or_button 'Next'

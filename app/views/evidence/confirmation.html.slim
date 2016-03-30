@@ -1,17 +1,17 @@
-header
-  h2 Processing complete
+.grid-row
+  .column-two-thirds
+    header
+      h2.heading-xlarge Processing complete
 
-.row
-  .small-12.medium-8.large-5.columns
     - unless @confirmation.outcome == 'full'
       = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
 
     = link_to 'Back to start', root_path, class: 'button'
 
-  .large-5.columns
+  .column-one-third
     .guidance
-      h4 Next steps
-      ul
+      h4.heading-medium.util_mt-medium Next steps
+      ul.list.list-bullet
         -if @confirmation.outcome == 'full'
           li Write the reference number on the top right corner of the paper form
           li Copy the reference number into the case management system
