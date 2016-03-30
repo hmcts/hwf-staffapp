@@ -2,30 +2,30 @@ p + h3,
 ul + h3,
 table + h3,
 .panel + h3 {
-  margin-top: 2rem;
+  margin-top: 30px;
 }
 
 h3 + h5,
 ul + h5,
 p + h5 {
-  margin-top: 1rem;
+  margin-top: 15px;
 }
 
-.icon {
+.heading-icon {
   min-height: 37px;
   padding-left: 45px;
-  padding-top: 3px;
+  padding-top: 6px;
   background-image: asset_url('icons-header-sprite.png');
   background-repeat: no-repeat;
 }
 
-.icon-evidence {
+.heading-icon-evidence {
   background-position: 0 0;
 }
-.icon-part_payment {
+.heading-icon-part_payment {
   background-position: 0 -200px;
 }
-.icon-completed {
+.heading-icon-completed {
   background-position: 0 -400px;
 }
 
@@ -54,7 +54,7 @@ h2.guide-headline {
     display: block;
     margin-bottom: 0;
     font-weight: normal;
-    font-size: $h4-font-size;
+    font-size: rem-calc(23);
   }
 }
 

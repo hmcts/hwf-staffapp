@@ -1,0 +1,18 @@
+p,
+li,
+.button {
+  @include core-19;
+}
+
+.heading-with-lede {
+  margin-bottom: 0.625em;
+}
+
+.hint {
+  color: $grey-1;
+}
+
+// horrific override of moj-template
+#global-header .header-proposition a#proposition-name:hover {
+  text-decoration: none;
+}

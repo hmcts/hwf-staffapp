@@ -1,0 +1,29 @@
+table .right {
+  text-align: right;
+}
+
+tr.align-bottom,
+.align-bottom tr {
+  td {
+    vertical-align: bottom;
+  }
+}
+
+table.income {
+  tbody {
+    th {
+      font-weight: normal;
+    }
+    td {
+      white-space: nowrap;
+    }
+  }
+
+  tfoot {
+    th, td {
+      @include core-24;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  }
+}

@@ -29,7 +29,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # use GDS assets, styles etc...
-gem 'govuk_frontend_toolkit', '~> 4.2.1'
+gem 'govuk_frontend_toolkit', git: "https://github.com/alphagov/govuk_frontend_toolkit_gem.git", submodules: true
+gem 'govuk_elements_rails', git: 'https://github.com/ministryofjustice/govuk_elements_rails.git', submodules: true
+gem 'moj_template', '~> 0.23.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

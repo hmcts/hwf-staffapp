@@ -1,10 +1,6 @@
-@import 'colours';
-@import 'measurements';
-
 .field_with_errors input {
   border-color: $error-colour;
 }
-
 
 .form-group > .field_with_errors {
   border-left: 2px solid $error-colour;
@@ -55,10 +51,6 @@ div.row.collapse div.field_with_errors input {
 
 div.form-group div.row.collapse div.field_with_errors label {
   margin-top: 0rem;
-}
-.ie-warning{
-  color:$error-colour;
-  background: $error-background;
 }
 
 .page-error {
