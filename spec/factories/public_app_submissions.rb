@@ -23,6 +23,7 @@ FactoryGirl.define do
     phone_contact true
     phone '000 000 0000'
     post_contact 'true'
+    feedback_opt_in true
 
     trait :refund do
       refund true
