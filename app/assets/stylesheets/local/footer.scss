@@ -1,0 +1,39 @@
+.page-footer {
+  background-color: #dee0e2;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media (min-width: 641px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  img {
+    width: auto;
+    padding: 0;
+  }
+
+  hr {
+    border-color: #bfc1c3;
+    margin: 1em 0;
+  }
+}
+
+.footer-inner {
+  max-width: 960px;
+  margin: auto;
+}
+
+#footer .footer-meta {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+a[rel="license"] {
+  margin-left: 4px;
+  margin-right: 4px;
+  display: inline-block;
+}

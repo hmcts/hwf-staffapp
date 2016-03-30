@@ -1,12 +1,10 @@
-.row
-  .small-12.columns
-    h3.icon.icon-completed
-      = t('completed_applications.title')
-    table.completed-applications
-      tbody
-        tr
-          td
-            = link_to(t('processed_applications.index.title'), processed_applications_path)
-        tr
-          td
-            = link_to(t('deleted_applications.index.title'), deleted_applications_path)
+h3.heading-medium.heading-icon.heading-icon-completed.util_mt-medium.util_mb-0
+  = t('completed_applications.title')
+table.completed-applications
+  tbody
+    tr
+      td
+        = link_to(t('processed_applications.index.title'), processed_applications_path)
+    tr
+      td
+        = link_to(t('deleted_applications.index.title'), deleted_applications_path)

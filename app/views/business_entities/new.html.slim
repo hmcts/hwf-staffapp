@@ -1,16 +1,16 @@
-h2 New business entity for #{jurisdiction.name} in #{office.name}
+header
+  h2.heading-large New business entity for #{jurisdiction.name} in #{office.name}
 
 = form_for [office, business_entity], url: office_business_entities_url(jurisdiction_id: jurisdiction.id), method: :post do |f|
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.label :code
-        = f.label :code, business_entity.errors[:code].join(', '), class: 'error' if business_entity.errors[:code].present?
-        = f.text_field :code, { class: 'form-control' }
-      .form-group
-        = f.label :name
-        = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
-        = f.text_field :name, { class: 'form-control' }
-        = f.hidden_field :office_id, value: office.id
-        = f.hidden_field :jurisdiction_id, value: jurisdiction.id
+  .form-group
+    = f.label :code, class: 'form-label'
+    = f.label :code, business_entity.errors[:code].join(', '), class: 'error' if business_entity.errors[:code].present?
+    = f.text_field :code, { class: 'form-control' }
+  .form-group
+    = f.label :name, class: 'form-label'
+    = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
+    = f.text_field :name, { class: 'form-control' }
+    = f.hidden_field :office_id, value: office.id
+    = f.hidden_field :jurisdiction_id, value: jurisdiction.id
+
   .actions = f.submit class: 'button'

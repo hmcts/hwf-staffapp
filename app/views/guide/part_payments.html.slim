@@ -1,14 +1,14 @@
 header
-  h2.guide-headline.guide-headline-part-fee
+  h2.guide-headline.guide-headline-evidence.heading-xlarge
     span.hint.util_mb-0
       | Staff guide
     | Part-payments
-  h4.guide-subheadline
+  p.lede
     | What to do when the applicant must pay only part of the fee.
 
-.row
-  .small-12.medium-4.large-4.columns
-    h5 Contents
+.grid-row
+  .column-one-third
+    h5.heading-medium.util_mt-medium Contents
     p
       a href='#intro' Introduction
     p
@@ -19,9 +19,9 @@ header
       a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
-  .small-12.medium-8.large-8.columns
+  .column-two-thirds
 
-    h3 id="intro" Introduction
+    h3.heading-large id="intro" Introduction
 
     p Applicants may be eligible to pay only part of their fee, depending on their income, whether they have any dependent children or if they are part of a couple.
 
@@ -29,68 +29,63 @@ header
 
     p The applicant will have 14 calendar days to provide payment. You won't be able to finish processing the application until you've received the part-payment.
 
-    h3 id="before-start" Before you start
-    h5 Check the part-payment:
-    ul
+    h3.heading-large id="before-start" Before you start
+    h5.heading-medium Check the part-payment:
+    ul.list.list-bullet
       li is for the correct amount
       li is made out to 'HM Courts & Tribunals Service'
       li is dated within 14 days from the date the letter was sent requesting payment
 
     .panel.util_mt-medium
-      h3 id="what-to-do" What to do
+      h3.heading-large.util_mt-0 id="what-to-do" What to do
 
-      h5 When correct part-payment is received:
-      ul
+      h5.heading-medium When correct part-payment is received:
+      ul.list.list-bullet
         li select the application from the list ‘Waiting for part-payment'
         li log the part-payment as being received
 
-      h5 When incorrect part-payment is received:
-      ul
+      h5.heading-medium When incorrect part-payment is received:
+      ul.list.list-bullet
         li try to contact the applicant by phone to request the correct amount
         li if this is unsuccessful, write to the applicant requesting the correct amount
         li For over-payments, return the cheque
         li For under-payments, request a cheque for the additional amount
 
-      h5 When no part-payment is received after 14 calendar days:
-      ul 
-        li select the application from the list 'Waiting for part-payment' 
+      h5.heading-medium When no part-payment is received after 14 calendar days:
+      ul.list.list-bullet
+        li select the application from the list 'Waiting for part-payment'
         li click 'What to do if the part-payment can't be processed' and 'Return application'
-        li a letter to the applicant will be generated for you to copy and paste 
-        li send this letter and the application back to the applicant 
-        li the application will be removed from the list 'Waiting for part-payment' 
+        li a letter to the applicant will be generated for you to copy and paste
+        li send this letter and the application back to the applicant
+        li the application will be removed from the list 'Waiting for part-payment'
 
-.row
-  .small-12.columns
-    .panel.callout.blue
-      h4 style="color:white; font-weight:normal;" id="more-guides" More guides
+.panel.callout.blue.util_mt-large
+  h4.heading-medium.util_margin-0.text-left id="more-guides" More guides
 
-.row
-  .small-12.columns
-    ul.small-block-grid-2.medium-block-grid-4
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_process_application_path
-              span Process application
-              = image_tag("icon-process.png")
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_evidence_checks_path
-              span Evidence checks
-              = image_tag("icon-evidence.png")
+ul.block-grid.small-block-grid-2.medium-block-grid-4
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_process_application_path
+          span Process application
+          = image_tag("icon-process.png")
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_evidence_checks_path
+          span Evidence checks
+          = image_tag("icon-evidence.png")
 
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_appeals_path
-              span Appeals
-              = image_tag("icon-appeals.png")
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_appeals_path
+          span Appeals
+          = image_tag("icon-appeals.png")
 
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_suspected_fraud_path
-              span Suspected fraud
-              = image_tag("icon-fraud.png")
-
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_suspected_fraud_path
+          span Suspected fraud
+          = image_tag("icon-fraud.png")

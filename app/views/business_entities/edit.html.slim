@@ -1,21 +1,19 @@
-h2 Edit business entity
+header
+  h2.heading-large Edit business entity
 
 = form_for [office, business_entity], method: :put do |f|
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.label :code
-        = f.label :code, business_entity.errors[:code].join(', '), class: 'error' if business_entity.errors[:code].present?
-        = f.text_field :code, { class: 'form-control' }
-      .form-group
-        = f.label :name
-        = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
-        = f.text_field :name, { class: 'form-control' }
-  .pad-top-fifteen-px.row
-    .columns.small-12.medium-8.large-5
-      .important-notice
-        p =t('business_entities.edit_warning', office: office.name)
+  .form-group
+    = f.label :code, class: 'form-label'
+    = f.label :code, business_entity.errors[:code].join(', '), class: 'error' if business_entity.errors[:code].present?
+    = f.text_field :code, { class: 'form-control' }
+  .form-group
+    = f.label :name, class: 'form-label'
+    = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
+    = f.text_field :name, { class: 'form-control' }
+
+  p.important-notice.cb.util_mb-large =t('business_entities.edit_warning', office: office.name)
+
   .actions = f.submit class: 'button'
 
-.pad-top-thirty-px
+.util_mt-medium
   =link_to "Back to list of #{business_entity.office.name} business entities", office_business_entities_path(office_id: business_entity.office_id)

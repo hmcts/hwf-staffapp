@@ -1,12 +1,12 @@
-header
-  h2 Evidence
+.grid-row
+  .column-two-thirds
+    header
+      h2.heading-xlarge Evidence
 
-.row
-  .columns.small-12.medium-8.large-5
     = render 'shared/forms/accuracy', { form: @form, model: :evidence, url: :evidence_accuracy_save }
 
-  .large-5.columns
+  .column-one-third
     .guidance
-      h4 Evidence:
+      h4.heading-medium.util_mt-medium Evidence:
       p =link_to 'See more about problems with the evidence', guide_evidence_checks_path(anchor: 'problems-evidence'), target: 'blank'
       p: strong= link_to 'See the guides', guide_path, target: 'blank'

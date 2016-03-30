@@ -1,14 +1,10 @@
 -if policy(:report).graphs?
-  .row.collapse
-    .columns.small-12
-      h2 Total
-      = column_chart @total_type_count, { library: { title: 'All time responses by type', width: '200px' } }
-  .row.collapse
-    .columns.small-12
-      h2 Time of day
-      = column_chart @time_of_day_count, { library: { title: 'Checks by time of day', width: '200px' } }
 
-  .row.collapse
-    .columns.small-12
-      h2 5 day benefit check/court graphs
-      =link_to 'Court graphs', graphs_report_path
+  h2.heading-large Total
+  = column_chart @total_type_count, { library: { title: 'All time responses by type', width: '200px' } }
+
+  h2.heading-large Time of day
+  = column_chart @time_of_day_count, { library: { title: 'Checks by time of day', width: '200px' } }
+
+  h2.heading-large 5 day benefit check/court graphs
+  =link_to 'Court graphs', graphs_report_path

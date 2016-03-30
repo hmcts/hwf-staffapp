@@ -1,6 +1,6 @@
 = form_for @evidence, url: :evidence_summary_save, method: :post, html: { autocomplete: 'off' } do |f|
   header
-    h2 Check details
+    h2.heading-xlarge Check details
 
   - change_evidence_link = [ 'Change application evidence', evidence_accuracy_path(@evidence) ]
   =build_section 'Evidence', @evidence_view, %w[correct incorrect_reason income], *change_evidence_link

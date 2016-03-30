@@ -10,16 +10,20 @@ window.moj.Modules.equalHeightBoxes = {
   },
 
   equaliseBoxes: function(wrapper, panel) {
-    var panels = $(wrapper).find(panel),
-        max = 0;
+    var wrappers = $(wrapper);
 
-    panels.each(function(i, el) {
-      var height = $(el).height();
+    wrappers.each(function(i, wrapper) {
+      var panels = $(wrapper).find(panel),
+          max = 0;
 
-      if(height >= max) {
-        max = height;
-      }
+      panels.each(function(i, el) {
+        var height = $(el).height();
+
+        if(height >= max) {
+          max = height;
+        }
+      });
+      panels.height(max);
     });
-    return panels.height(max);
   }
 };

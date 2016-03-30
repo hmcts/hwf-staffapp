@@ -1,27 +1,22 @@
 header
-  h2 Office details
+  h2.heading-xlarge Office details
 
-#result_table
-  .row
-    .columns.small-4.large-2 Name of office
-    .columns.small-8.large-10 =@office.name
-  .row
-    .columns.small-4.large-2 Jurisdictions
-    .columns.small-8.large-10
+table.util_mb-large
+  tr
+    th Name of office
+    td =@office.name
+  tr
+    th Jurisdictions
+    td
       - @office.jurisdictions.each do |j|
         div =j.display
 
-- if policy(@office).edit?
-  .row.pad-top-thirty-px
-    .columns.small-12
-      =link_to 'Change details', edit_office_path(@office)
+ul.list
+  - if policy(@office).edit?
+    li= link_to 'Change details', edit_office_path(@office)
 
-- if policy(:business_entity).index?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      = link_to 'Edit the business entities', office_business_entities_path(office_id: @office.id)
+  - if policy(:business_entity).index?
+    li= link_to 'Edit the business entities', office_business_entities_path(office_id: @office.id)
 
-- if policy(:office).index?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      =link_to 'Back to list of offices', offices_path
+  - if policy(:office).index?
+    li= link_to 'Back to list of offices', offices_path
