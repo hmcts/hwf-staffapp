@@ -14,11 +14,15 @@
             | Tell us what you think and #{link_to 'help us improve', Rails.application.config.feedback_url}
     .container
       section#content.cf
+        /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
         - flash.each do |key, value|
           .alert class="alert-#{key}"
             | #{value}
 
         = yield
+
+- content_for :after_header
+  div MENU GOES HERE
 
 - content_for :javascripts
   = javascript_include_tag('application.js')
