@@ -13,8 +13,6 @@ header
       h4 Next steps
       ul
         -if @confirmation.outcome == 'full'
-          - unless after_desired_date?
-            li Complete the remission register with the application details
           li Write the reference number on the top right corner of the paper form
           li Copy the reference number into the case management system
           li The applicant’s process can now be issued
@@ -24,8 +22,6 @@ header
           li You don't need to complete the remission register until part-payment has been received
           li Write the reference number on the top right corner of the paper form
         -else
-          - unless after_desired_date?
-            li Complete the remission register with the application details
           li Write the reference number on the top right corner of the paper form
           li Copy the reference number into the case management system
           li Write to the applicant and send back all the documents

@@ -1,12 +1,11 @@
-- if after_desired_date? or @application.outcome.eql?('part')
-  h4.util_mt-medium Reference
-  #result.callout.evidence-check-reference
-    h3.bold
-      span.check
-        | ✓
-      | The reference number is
-      span.reference-number
-        = @application.reference
+h4.util_mt-medium Reference
+#result.callout.evidence-check-reference
+  h3.bold
+    span.check
+      | ✓
+    | The reference number is
+    span.reference-number
+      = @application.reference
 
 .util_mt-medium
   = build_section 'Result', @confirm, @confirm.all_fields
@@ -29,8 +28,6 @@
   h4 Next steps
   ul
     -if @application.outcome.eql?('full')
-      -unless after_desired_date?
-        li Complete the remission register with the application details
       li Write the reference number on the top right corner of the paper form
       li Copy the reference number into the case management system
       li The applicant’s process can now be issued

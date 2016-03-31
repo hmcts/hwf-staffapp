@@ -7,7 +7,8 @@ header
       table *{class: "#{state}-applications"}
         thead
           tr
-            = table_header
+            th =t('processed_applications.table_header.reference')
+            th =t('processed_applications.table_header.applicant')
             th =t('processed_applications.table_header.date_received')
             th =t('processed_applications.table_header.processed_on')
             th =t('processed_applications.table_header.processed_by')
@@ -15,7 +16,8 @@ header
         tbody
           - @applications.each do |application|
             tr
-              = table_column(application)
+              td= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
+              td= application.applicant
               td= application.date_received
               td= application.processed_on
               td= application.processed_by
