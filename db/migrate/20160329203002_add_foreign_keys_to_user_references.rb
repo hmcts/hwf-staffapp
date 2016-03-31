@@ -9,7 +9,8 @@ class AddForeignKeysToUserReferences < ActiveRecord::Migration
 
     add_user_foreign_key(:part_payments, :completed_by_id)
 
-    add_user_foreign_key(:users, :invited_by_id)
+    # This foreign key can't be setup now as it prevents the primary key to be incremented
+    # add_user_foreign_key(:users, :invited_by_id)
   end
 
   def add_user_foreign_key(from_table, column)

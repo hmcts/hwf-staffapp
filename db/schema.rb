@@ -303,5 +303,4 @@ ActiveRecord::Schema.define(version: 20160329203002) do
   add_foreign_key "part_payments", "users", column: "completed_by_id", on_update: :cascade
   add_foreign_key "users", "jurisdictions", on_update: :cascade
   add_foreign_key "users", "offices", on_update: :cascade
-  add_foreign_key "users", "users", column: "invited_by_id", on_update: :cascade
 end
