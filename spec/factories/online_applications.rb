@@ -34,7 +34,7 @@ FactoryGirl.define do
     end
 
     trait :with_reference do
-      sequence(:reference) { |n| "HWF-#{n}" }
+      reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
     end
 
     trait :completed do
