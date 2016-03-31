@@ -1,6 +1,5 @@
 class ProcessedApplicationsController < ApplicationController
   include ProcessedViewsHelper
-  helper ReferenceHelper
 
   def index
     authorize :application

@@ -97,29 +97,11 @@ RSpec.feature 'Part Payments flow', type: :feature do
       end
 
       context 'when on part_payment confirmation" page' do
-        context 'before the set reference_date is reached' do
-          before do
-            Timecop.freeze(Date.new(2016, 4, 1)) {
-              visit confirmation_part_payment_path(id: part_payment.id)
-            }
-          end
+        let(:outcome) { 'full' }
+        before { visit confirmation_part_payment_path(id: part_payment.id) }
 
-          scenario 'the remission register right hand guidance is shown' do
-            expect(page).to have_content 'remission register'
-          end
-        end
-
-        context 'when the reference_date is passed' do
-          let(:outcome) { 'full' }
-          before do
-            Timecop.freeze(Date.new(2016, 8, 1)) {
-              visit confirmation_part_payment_path(id: part_payment.id)
-            }
-          end
-
-          scenario 'the remission register right hand guidance is not shown' do
-            expect(page).to have_no_content 'remission register'
-          end
+        scenario 'the remission register right hand guidance is not shown' do
+          expect(page).to have_no_content 'remission register'
         end
       end
     end

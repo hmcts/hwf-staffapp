@@ -34,7 +34,7 @@ RSpec.feature 'List processed applications', type: :feature do
   scenario 'User displays detail of one processed application' do
     visit '/processed_applications'
 
-    click_link application1.applicant.full_name
+    click_link application1.reference
 
     expect(page.current_path).to eql("/processed_applications/#{application1.id}")
 
