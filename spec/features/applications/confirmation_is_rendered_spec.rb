@@ -17,6 +17,20 @@ RSpec.feature 'Confirmation page', type: :feature do
 
     after { Capybara.use_default_driver }
 
+    context 'by default' do
+      let(:application) { create(:application, :confirm, office: office) }
+
+      before { visit application_confirmation_path(application) }
+
+      scenario 'the reference number is always displayed' do
+        expect(page).to have_content application.reference
+      end
+
+      scenario 'the remission register right hand guidance is no longer shown' do
+        expect(page).to have_no_content 'remission register'
+      end
+    end
+
     context 'after user continues from summary' do
       let(:application) { create(:application, :confirm, office: office) }
 

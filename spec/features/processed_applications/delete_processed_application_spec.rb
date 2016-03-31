@@ -18,7 +18,7 @@ RSpec.feature 'Delete processed applications', type: :feature do
     before do
       visit '/processed_applications'
 
-      click_link application1.applicant.full_name
+      click_link application1.reference
     end
 
     scenario 'With reason provided the application is deleted and does not show in the list' do

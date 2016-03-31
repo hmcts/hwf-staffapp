@@ -205,19 +205,6 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     it { expect(page).to have_content 'Processing complete' }
 
-    context 'before the set reference_date is reached' do
-      let(:outcome) { 'full' }
-      before do
-        Timecop.freeze(Date.new(2016, 4, 1)) {
-          visit evidence_confirmation_path(id: evidence.id)
-        }
-      end
-
-      scenario 'the remission register right hand guidance is shown' do
-        expect(page).to have_content 'remission register'
-      end
-    end
-
     context 'when the reference_date is passed' do
       let(:outcome) { 'full' }
       before do
