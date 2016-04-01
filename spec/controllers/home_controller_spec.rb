@@ -28,6 +28,10 @@ RSpec.describe HomeController, type: :controller do
         it 'assigns the search form' do
           expect(assigns(:search_form)).to be_a(Forms::Search)
         end
+
+        it 'assigns the DwpMonitor state' do
+          expect(assigns(:state)).to be_a String
+        end
       end
 
       context 'as an admin' do
@@ -114,6 +118,10 @@ RSpec.describe HomeController, type: :controller do
         it 'assigns the search form' do
           expect(assigns(:search_form)).to be_a(Forms::Search)
         end
+
+        it 'assigns the DwpMonitor state' do
+          expect(assigns(:state)).to be_a String
+        end
       end
 
       context 'when an online application is found with that reference' do
@@ -121,6 +129,10 @@ RSpec.describe HomeController, type: :controller do
 
         it 'redirects to the edit page for that online application' do
           expect(response).to redirect_to(edit_online_application_path(online_application))
+        end
+
+        it 'does not assign the DwpMonitor state' do
+          expect(assigns(:state)).to be nil
         end
       end
     end
