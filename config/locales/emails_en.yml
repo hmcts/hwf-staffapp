@@ -10,7 +10,7 @@ en-GB:
       completion: 'I completed an online application for help with fees on %{today}.'
       close: 'Yours sincerely,'
       assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
-      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you"
+      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
     refund:
       greeting: 'Dear %{name}'
       send_to: 'You need to send the reference number for your application for help with fees to the court or tribunal dealing with your case or claim.'
@@ -21,4 +21,4 @@ en-GB:
       payment: 'I paid a fee on %{date_fee_paid}.'
       close: 'Yours sincerely,'
       assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
-      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you"
+      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
