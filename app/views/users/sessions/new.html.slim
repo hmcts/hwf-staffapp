@@ -4,7 +4,6 @@
       h2 Sign in
 
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
-      input.decoy type="password" tabindex="-1"
       .row
         .small-12.columns
           .form-group
