@@ -29,6 +29,22 @@ RSpec.describe Api::SubmissionsController, type: :controller do
 
         it { is_expected.to eql false }
       end
+
+      describe 'when email provided' do
+        let(:submitted) { attributes_for :public_app_submission, :email_contact }
+        subject(:addressed_to) { ActionMailer::Base.deliveries.first.to }
+
+        it { is_expected.to eq ['foo@bar.com'] }
+      end
+
+      describe 'when email not provided' do
+        let(:submitted) { attributes_for :public_app_submission }
+        subject(:action_mailer) { ActionMailer::Base.deliveries.count }
+
+        it 'does not create an email' do
+          expect(subject).to eq 0
+        end
+      end
     end
 
     describe 'when sent the incorrect authentication header' do

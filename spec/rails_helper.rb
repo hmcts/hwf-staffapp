@@ -103,6 +103,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    ActionMailer::Base.deliveries = []
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
   end

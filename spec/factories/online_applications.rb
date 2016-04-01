@@ -55,5 +55,9 @@ FactoryGirl.define do
       benefits false
       income 450
     end
+
+    trait :with_email do
+      email_address 'foo@bar.com'
+    end
   end
 end

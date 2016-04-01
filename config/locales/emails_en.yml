@@ -1,0 +1,24 @@
+en-GB:
+  email:
+    confirmation:
+      greeting: 'Dear %{name}'
+      send_to: 'You need to write the reference number for your application for help with fees on the claim form and send this to the court or tribunal dealing with your case or claim.'
+      warning: 'Your application for help with fees will not proceed until you send your reference number and claim form to the court or tribunal.'
+      non_paper: 'If you’re not using a paper claim form, you still need to send your reference number to the court or tribunal dealing with your case or claim.'
+      template: 'You can use the letter template below:'
+      reference: 'Reference: %{reference}'
+      completion: 'I completed an online application for help with fees on %{today}.'
+      close: 'Yours sincerely,'
+      assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
+      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you"
+    refund:
+      greeting: 'Dear %{name}'
+      send_to: 'You need to send the reference number for your application for help with fees to the court or tribunal dealing with your case or claim.'
+      warning: 'Your application for a refund will not proceed until you send your reference number to the court or tribunal.'
+      template: 'You can use the letter template below:'
+      reference: 'Reference: %{reference}'
+      completion: 'I have completed an online application for help with fees for a refund.'
+      payment: 'I paid a fee on %{date_fee_paid}.'
+      close: 'Yours sincerely,'
+      assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
+      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you"

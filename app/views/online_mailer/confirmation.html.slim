@@ -1,0 +1,24 @@
+.heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.confirmation.greeting', name: @application.full_name)
+
+p style="margin-bottom: 1.5em; margin-top: 1em;"
+  =t('email.confirmation.send_to')
+
+.important-notice
+  =image_tag attachments['icon-important.png'].url, style: 'float: left;'
+  p style="padding: 0 1em 0 2.5em; margin-bottom: 1.5em; margin-top: 1em;"
+   =t('email.confirmation.warning')
+
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.confirmation.non_paper')
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.confirmation.template')
+.panel style="border: 1px solid black; padding: 1em; margin-bottom: 1.5em; margin-top: 1em;"
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.confirmation.reference', reference: @application.reference)
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.confirmation.completion', today: Date.today)
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.confirmation.close')
+  div style="padding: 0 1em 0 1em; margin-bottom: 0;"
+    = @application.full_name
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.confirmation.assessment')
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.confirmation.unsuccessful')
+
