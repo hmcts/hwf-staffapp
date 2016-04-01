@@ -176,7 +176,7 @@ GEM
     ice_nine (0.11.1)
     jasmine (2.4.0)
       jasmine-core (~> 2.4)
-      phantomjs
+      phantomjs (= 1.9.8)
       rack (>= 1.2.1)
       rake
     jasmine-core (2.4.1)
@@ -219,7 +219,7 @@ GEM
     parser (2.3.0.6)
       ast (~> 2.2)
     pg (0.18.4)
-    phantomjs (2.1.1.0)
+    phantomjs (1.9.8)
     powerpack (0.1.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
