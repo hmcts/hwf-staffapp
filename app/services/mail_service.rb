@@ -6,7 +6,12 @@ class MailService
 
   def send_public_confirmation
     return false unless source_is_valid_for_public_confirmation
-    OnlineMailer.confirmation(@data_source).deliver_now
+    email = if @data_source.refund?
+              OnlineMailer.refund_confirmation(@data_source)
+            else
+              OnlineMailer.confirmation(@data_source)
+            end
+    email.deliver_now
   end
 
   private

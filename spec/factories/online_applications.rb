@@ -34,6 +34,7 @@ FactoryGirl.define do
     end
 
     trait :with_reference do
+      # sequence(:reference) { |n| "HWF-#{n}" }
       reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
     end
 
@@ -58,6 +59,11 @@ FactoryGirl.define do
 
     trait :with_email do
       email_address 'foo@bar.com'
+    end
+
+    trait :with_refund do
+      refund true
+      date_fee_paid Time.zone.now - 2.months
     end
   end
 end

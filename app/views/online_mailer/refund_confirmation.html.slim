@@ -1,0 +1,20 @@
+h2.heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.refund.greeting')
+
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.refund.template')
+.panel style="border: 1px solid black; padding: 1em; margin-bottom: 1.5em; margin-top: 1em;"
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.refund.reference', reference: @application.reference)
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.refund.completion', date_fee_paid: @application.date_fee_paid)
+  div style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+    =t('email.refund.close')
+  div style="padding: 0 1em 0 1em; margin-bottom: 0;"
+    = @application.full_name
+
+p style="margin-bottom: 1.5em; margin-top: 1em;" = t('email.refund.send_to')
+p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.refund.unsuccessful')
+
+.important-notice
+  = image_tag attachments['icon-important.png'].url, style: 'float: left;'
+  p style="padding: 0 1em 0 2.5em; margin-bottom: 1.5em; margin-top: 1em;"
+    = t('email.refund.warning')

@@ -1,6 +1,7 @@
 en-GB:
   email:
     confirmation:
+      subject: 'Your Help with Fees application'
       greeting: 'Dear %{name}'
       send_to: 'You need to write the reference number for your application for help with fees on the claim form and send this to the court or tribunal dealing with your case or claim.'
       warning: 'Your application for help with fees will not proceed until you send your reference number and claim form to the court or tribunal.'
@@ -12,13 +13,12 @@ en-GB:
       assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
       unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
     refund:
-      greeting: 'Dear %{name}'
-      send_to: 'You need to send the reference number for your application for help with fees to the court or tribunal dealing with your case or claim.'
-      warning: 'Your application for a refund will not proceed until you send your reference number to the court or tribunal.'
-      template: 'You can use the letter template below:'
+      subject: 'Application for help with fees refund'
+      greeting: 'Complete your application for help with fees refund'
+      template: '1. Send your application reference to the court. You can use this template:'
       reference: 'Reference: %{reference}'
-      completion: 'I have completed an online application for help with fees for a refund.'
-      payment: 'I paid a fee on %{date_fee_paid}.'
+      completion: 'I completed an online application for a court fee refund on %{date_fee_paid}.'
       close: 'Yours sincerely,'
-      assessment: 'When the court or tribunal receive your reference number, they’ll assess your application.'
-      unsuccessful: "You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
+      send_to: '2. Deliver this to the court or tribunal dealing with your case (by post or in person)'
+      unsuccessful: "3. You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
+      warning: 'Your refund will not be processed until you send your reference number to the court or tribunal. '

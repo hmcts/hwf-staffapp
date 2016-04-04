@@ -3,7 +3,13 @@ class OnlineMailer < ApplicationMailer
   def confirmation(application)
     standard_attachments
     @application = application
-    mail_with_subject @application.email_address, 'Help with Fees confirmation'
+    mail_with_subject @application.email_address, t('email.confirmation.subject')
+  end
+
+  def refund_confirmation(application)
+    standard_attachments
+    @application = application
+    mail_with_subject @application.email_address, t('email.refund.subject')
   end
 
   private
