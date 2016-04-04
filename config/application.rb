@@ -42,8 +42,8 @@ module FrStaffapp
     config.product_type = 'service'
 
     # The following values are required by the phase banner
-    config.phase = 'alpha'
-    config.feedback_url = '#'
+    config.phase = 'beta'
+    config.feedback_url = '/feedback'
   end
 
   WillPaginate.per_page = 20

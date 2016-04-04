@@ -21,10 +21,24 @@
 
         = yield
 
-- content_for :after_header
-  div MENU GOES HERE
+- content_for :proposition_header
+  .header-proposition
+    .content
+      a.js-header-toggle.menu href="#proposition-links"  Menu
+      nav#proposition-menu
+        a#proposition-name href="/" = Rails.application.config.app_title
+        - if user_signed_in?
+          ul#proposition-links
+            li
+              span Welcome #{current_user.name}
+            li= link_to "View profile", user_path(current_user.id)
+            -if current_user.elevated?
+              li= link_to 'View office', current_user.office
+              li= link_to 'View staff', users_path
+            li= link_to 'Sign out', destroy_user_session_path, :method => :delete
+
 
 - content_for :javascripts
   = javascript_include_tag('application.js')
 
-= render template: "layouts/moj_template"
+= render template: "layouts/local-template"

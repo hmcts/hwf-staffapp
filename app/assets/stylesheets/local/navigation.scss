@@ -1,0 +1,8 @@
+#global-header .header-proposition nav#proposition-menu {
+  margin-top: 0;
+
+  li span {
+    @include core-16;
+    color: $white;
+  }
+}
