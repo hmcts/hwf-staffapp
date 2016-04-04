@@ -81,7 +81,7 @@ RSpec.describe HomeController, type: :controller do
 
     before do
       allow(OnlineApplication).to receive(:find_by!).with(reference: online_application.reference).and_return(online_application)
-      allow(OnlineApplication).to receive(:find_by!).with(reference: 'wrong').and_raise(ActiveRecord::RecordNotFound)
+      allow(OnlineApplication).to receive(:find_by!).with(reference: 'WRONG').and_raise(ActiveRecord::RecordNotFound)
 
       sign_in(user)
       post :search, search: search_params
@@ -105,7 +105,7 @@ RSpec.describe HomeController, type: :controller do
       let(:search_params) { { reference: reference } }
 
       context 'when no online application is found with that reference' do
-        let(:reference) { 'wrong' }
+        let(:reference) { 'WRONG' }
 
         it 'renders the index template' do
           expect(response).to render_template(:index)

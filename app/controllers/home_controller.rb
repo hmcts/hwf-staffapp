@@ -68,7 +68,7 @@ class HomeController < ApplicationController
   def search_and_return
     if @search_form.valid?
       begin
-        OnlineApplication.find_by!(reference: @search_form.reference)
+        OnlineApplication.find_by!(reference: @search_form.reference.upcase)
       rescue ActiveRecord::RecordNotFound
         @search_form.errors.add(:reference, :not_found)
         nil
