@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :benefit_override do
     correct false
-    completed_by_id 1
+    association :completed_by, factory: :user
   end
 end

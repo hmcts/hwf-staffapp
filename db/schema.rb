@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324110832) do
+ActiveRecord::Schema.define(version: 20160329203002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,18 +277,30 @@ ActiveRecord::Schema.define(version: 20160324110832) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "applications", "business_entities"
-  add_foreign_key "applications", "offices"
+  add_foreign_key "applicants", "applications", on_update: :cascade
+  add_foreign_key "applications", "business_entities", on_update: :cascade
+  add_foreign_key "applications", "offices", on_update: :cascade
   add_foreign_key "applications", "online_applications", on_update: :cascade
-  add_foreign_key "applications", "users"
-  add_foreign_key "benefit_checks", "applications"
-  add_foreign_key "benefit_checks", "users"
-  add_foreign_key "benefit_overrides", "applications"
-  add_foreign_key "feedbacks", "offices"
-  add_foreign_key "feedbacks", "users"
-  add_foreign_key "office_jurisdictions", "jurisdictions"
-  add_foreign_key "office_jurisdictions", "offices"
+  add_foreign_key "applications", "users", column: "completed_by_id", on_update: :cascade
+  add_foreign_key "applications", "users", column: "deleted_by_id", on_update: :cascade
+  add_foreign_key "applications", "users", on_update: :cascade
+  add_foreign_key "benefit_checks", "applications", on_update: :cascade
+  add_foreign_key "benefit_checks", "users", on_update: :cascade
+  add_foreign_key "benefit_overrides", "applications", on_update: :cascade
+  add_foreign_key "benefit_overrides", "users", column: "completed_by_id", on_update: :cascade
+  add_foreign_key "business_entities", "jurisdictions", on_update: :cascade
+  add_foreign_key "business_entities", "offices", on_update: :cascade
+  add_foreign_key "details", "applications", on_update: :cascade
+  add_foreign_key "details", "jurisdictions", on_update: :cascade
+  add_foreign_key "evidence_checks", "applications", on_update: :cascade
+  add_foreign_key "evidence_checks", "users", column: "completed_by_id", on_update: :cascade
+  add_foreign_key "feedbacks", "offices", on_update: :cascade
+  add_foreign_key "feedbacks", "users", on_update: :cascade
+  add_foreign_key "office_jurisdictions", "jurisdictions", on_update: :cascade
+  add_foreign_key "office_jurisdictions", "offices", on_update: :cascade
   add_foreign_key "online_applications", "jurisdictions", on_update: :cascade
-  add_foreign_key "users", "jurisdictions"
-  add_foreign_key "users", "offices"
+  add_foreign_key "part_payments", "applications", on_update: :cascade
+  add_foreign_key "part_payments", "users", column: "completed_by_id", on_update: :cascade
+  add_foreign_key "users", "jurisdictions", on_update: :cascade
+  add_foreign_key "users", "offices", on_update: :cascade
 end
