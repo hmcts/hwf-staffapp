@@ -39,8 +39,7 @@ class HealthStatus
   end
 
   def self.api
-    response = JSON.parse RestClient.get "#{ENV['DWP_API_PROXY']}/api/healthcheck"
-    response[:ok]
+    DwpMonitor.new.state == 'online'
   rescue StandardError => error
     Rails.logger.error "The DWP API errored with: #{error}"
     false

@@ -96,6 +96,7 @@ en-GB:
       link: See the guides
   error_messages:
     dwp_unavailable: "There’s a problem with the service. You can't check if applicants are receiving benefits, but you can accept benefits letters. For emergency applications, complete an undertaking. You can process income-based applications as usual."
+    dwp_warning: "There may be a problem with the service. You may not be able to check if applicants are receiving benefits, this is being investigated."
     dwp_restored: "The connection with the DWP is currently working.  Benefits based and income based applications can now be processed."
     create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
