@@ -4,6 +4,9 @@
 - content_for :stylesheets
   = stylesheet_link_tag('application.css')
 
+- content_for :head
+  = csrf_meta_tags
+
 - content_for :content_override
   #wrapper.group
     .container
@@ -16,8 +19,9 @@
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
         - flash.each do |key, value|
-          .alert class="alert-#{key}"
-            | #{value}
+          .alert-box class="#{key}" data-alert=''
+            | #{value.html_safe}
+            = link_to '&times;'.html_safe, '#', class: 'close'
 
         = yield
 
