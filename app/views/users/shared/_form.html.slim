@@ -1,17 +1,13 @@
 = form_for @user do |f|
-  .row
-    .columns.small-12.medium-8.large-5
-      .form-group
-        = f.label :name
-        = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
-        = f.text_field :name, { class: 'form-control' }
-  .row
-    .small-12.columns
-      .form-group.util_mb-small
-        .row
-          .columns.small-12.medium-8.large-5
-            = f.label :email
-            .form-control #{@user.email}
+  .form-group
+    = f.label :name, class: 'form-label'
+    = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
+    = f.text_field :name, { class: 'form-control' }
+  .form-group
+    .row
+      .columns.small-12.medium-8.large-5
+        = f.label :email, class: 'form-label'
+        .form-control #{@user.email}
 
   = render(partial: 'users/shared/form_roles', locals: {f: f})
 

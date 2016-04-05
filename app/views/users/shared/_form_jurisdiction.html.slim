@@ -1,17 +1,15 @@
-.row
-  .columns.small-12.medium-8.large-5.columns
-    .form-group
-      label Main jurisdiction
-      = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
-      - if @jurisdictions.present?
-        .row.collapse
-          .options.radio
-            label for="user_jurisdiction_id"
-              input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true"
-                |No main jurisdiction
-            =collection_radio_buttons(:user, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
-              = b.label do
-                = b.radio_button(class: 'form-control')
-                = b.text
-      - else
-        = t('error_messages.jurisdictions.none_in_office')
+.form-group
+  label.form-label Main jurisdiction
+  = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
+  - if @jurisdictions.present?
+    .options.radio
+      label.block-label for="user_jurisdiction_id"
+        input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true"
+          | No main jurisdiction
+
+      =collection_radio_buttons(:user, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
+        = b.label class: 'block-label' do
+          = b.radio_button
+          = b.text
+  - else
+    = t('error_messages.jurisdictions.none_in_office')
