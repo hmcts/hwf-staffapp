@@ -37,6 +37,10 @@
   .panel-indent {
     margin-bottom: 0;
   }
+
+  .options + .start-hidden & {
+    margin-bottom: 30px;
+  }
 }
 
 .info-box {

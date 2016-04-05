@@ -1,54 +1,47 @@
 = form_for @form, as: :application, url: application_application_details_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Application details
+  .grid-row
+    .column-two-thirds
 
-  .row
-    .small-12.medium-8.large-5.columns
+      header
+        h2.heading-xlarge Application details
+
       .form-group
-        = f.label :fee
+        = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
-        .row.collapse.prefix-radius
-          .small-2.medium-2.large-2.columns
-            span.prefix
-              = f.label :fee, '£', class: 'inline'
-          .small-10.medium-10.large-10.columns
-            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field', type: 'number', step: '0.01' }
-        .row.collapse.js-hidden#large-fee-message
-          .small-12.columns
-            .warning Before you continue, check that the fee amount is correct.
+        span.currency £
+        = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field', type: 'number', step: '0.01' }
+        .js-hidden#large-fee-message
+          .warning Before you continue, check that the fee amount is correct.
 
       .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :jurisdiction_id
-            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
-            = f.hidden_field :jurisdiction_id, value: nil
-            - if @jurisdictions.present?
-              .options.radio
-                =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-                  .option
-                    = b.label do
-                      = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
-                      = b.text
-            - else
-              = t('error_messages.jurisdictions.none_in_office')
+        = f.label :jurisdiction_id, class: 'form-label'
+        = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+        = f.hidden_field :jurisdiction_id, value: nil
+        - if @jurisdictions.present?
+          .options.radio
+            =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+              = b.label class: 'block-label' do
+                = b.radio_button(data: @form.jurisdiction_id)
+                = b.text
+        - else
+          = t('error_messages.jurisdictions.none_in_office')
 
       .form-group
-        = f.label :date_received
+        = f.label :date_received, class: 'form-label'
           =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         = f.text_field :date_received, { class: 'form-control medium-field' }
 
       .form-group
-        = f.label :form_name
+        = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
       .form-group
-        = f.label :case_number
+        = f.label :case_number, class: 'form-label'
           =t('case_number', scope: @form.i18n_scope)
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
@@ -56,64 +49,66 @@
       .form-group
         .options.radio
           .option
-            = f.label :probate
+            = f.label :probate, class: 'block-label'
               = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
               = t('probate', scope: @form.i18n_scope)
 
-      #probate-only.start-hidden
-        .panel-indent
-          .form-group
-            = f.label :deceased_name
-            = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
-            = f.text_field :deceased_name, { class: 'form-control' }
+        #probate-only.start-hidden
+          .panel-indent
+            .form-group
+              = f.label :deceased_name, class: 'form-label'
+              = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
+              = f.text_field :deceased_name, { class: 'form-control' }
 
-          .form-group
-            = f.label :date_of_death
-            span.hint.block = t('date_hint', scope: @form.i18n_scope)
-            = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
-            = f.text_field :date_of_death, { class: 'form-control medium-field' }
+            .form-group
+              = f.label :date_of_death, class: 'form-label'
+                = t('date_of_death', scope: @form.i18n_scope)
+                span.hint.block = t('date_hint', scope: @form.i18n_scope)
+              = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
+              = f.text_field :date_of_death, { class: 'form-control medium-field' }
 
-      .form-group
         .options.radio
           .option
-            = f.label :refund
+            = f.label :refund, class: 'block-label'
               = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
               = t('refund', scope: @form.i18n_scope)
 
-      #refund-only.start-hidden
-        .form-group.panel-indent
-          = f.label :date_fee_paid
-          span.hint.block = t('date_hint', scope: @form.i18n_scope)
-          = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
-          = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
+        #refund-only.start-hidden
+          .panel-indent
+            .form-group
+              = f.label :date_fee_paid, class: 'form-label'
+                = t('date_fee_paid', scope: @form.i18n_scope)
+                span.hint.block = t('date_hint', scope: @form.i18n_scope)
+              = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
+              = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
-      .form-group
         .options.radio
           .option
-            = f.label :emergency
+            = f.label :emergency, class: 'block-label'
               = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
               = t('emergency', scope: @form.i18n_scope)
 
-      #emergency-only.start-hidden
-        .form-group.panel-indent
-          = f.label :emergency_reason
-          = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-          = f.text_area :emergency_reason, { class: 'form-control' }
+        #emergency-only.start-hidden
+          .panel-indent
+            .form-group
+              = f.label :emergency_reason, class: 'form-label'
+              = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+              = f.text_area :emergency_reason, class: 'form-control'
 
-      = f.submit 'Next', class: 'button primary'
+      = f.submit 'Next', class: 'button'
 
-    .large-5.columns
-      .guidance
-        h4 Refunds
+    .column-one-third
+      .info-box.guidance
+        h4.heading-medium Refunds
         strong Check the refund:
-        ul
+        ul.list.list-bullet
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
         p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
-        h4 Emergency cases
+        h4.heading-medium Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
         strong Example of emergency cases:
-        ul
+        ul.list.list-bullet
         	li suspending an eviction
         	li debtor insolvency petition
         	li children or vulnerable adults

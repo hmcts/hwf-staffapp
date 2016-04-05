@@ -1,82 +1,78 @@
 = form_for @form, as: :application, url: :application_personal_information_save, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Personal details
+  .grid-row
+    .column-two-thirds
 
-  .row
-    .small-12.medium-8.large-5.columns
+      header
+        h2.heading-xlarge Personal details
 
       .form-group
         = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
-        = f.label :title
+        = f.label :title, class: 'form-label'
           =t('title', scope: @form.i18n_scope)
         = f.text_field :title, { class: 'form-control small-field' }
 
       .form-group
-        = f.label :first_name
+        = f.label :first_name, class: 'form-label'
           =t('first_name', scope: @form.i18n_scope)
         = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'form-control' }
 
       .form-group
-        = f.label :last_name
+        = f.label :last_name, class: 'form-label'
         = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
         = f.text_field :last_name, { class: 'form-control' }
 
       .form-group
-        = f.label :date_of_birth
+        = f.label :date_of_birth, class: 'form-label'
           = t('date_of_birth', scope: @form.i18n_scope)
           span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
         = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
         = f.text_field :date_of_birth, { class: 'form-control small-field' }
 
       .form-group
-        = f.label :ni_number
+        = f.label :ni_number, class: 'form-label'
           =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
         = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
 
       .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :married
-            = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
-            .options.radio
-              .option
-                label for='application_married_false'
-                  = f.radio_button :married, 'false'
-                  = t('married_false', scope: @form.i18n_scope)
-              .option
-                label for='application_married_true'
-                  = f.radio_button :married, 'true'
-                  = t('married_true', scope: @form.i18n_scope)
+        = f.label :married, class: 'form-label'
+        = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
+        .options.radio
+            label.block-label for='application_married_false'
+              = f.radio_button :married, 'false'
+              = t('married_false', scope: @form.i18n_scope)
+            label.block-label for='application_married_true'
+              = f.radio_button :married, 'true'
+              = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
-    .large-5.columns
-      .guidance
-        h4 Before you start
+    .column-one-third
+      .info-box.guidance
+        h4.heading-medium Before you start
         p Check the statement of truth has been signed.
         strong Check the applicant is not:
-        ul
+        ul.list.list-bullet
           li receiving legal aid
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
         strong Check the fee:
-        ul
+        ul.list.list-bullet
           li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        h4 National Insurance number
+        h4.heading-medium National Insurance number
         strong If NI number isn't provided:
-        ul
+        ul.list.list-bullet
           li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
         p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
-        h4 Status
+        h4.heading-medium Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
         p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'

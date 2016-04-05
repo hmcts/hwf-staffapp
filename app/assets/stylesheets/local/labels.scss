@@ -8,3 +8,11 @@ label {
     display: block;
   }
 }
+
+.currency {
+  padding-right: 10px;
+}
+
+.block-label:last-child {
+  margin-bottom: 10px;
+}
