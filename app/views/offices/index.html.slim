@@ -1,5 +1,5 @@
 header
-  h2 Offices
+  h2.heading-xlarge Offices
 
 table
   thead
@@ -16,7 +16,6 @@ table
         - if policy(office).edit?
           td = link_to 'Change details', edit_office_path(office)
 
-br
-
 - if policy(:office).new?
-  = link_to 'New Office', new_office_path
+  ul.list
+    li= link_to 'New Office', new_office_path

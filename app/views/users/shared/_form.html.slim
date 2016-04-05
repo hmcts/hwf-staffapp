@@ -4,10 +4,8 @@
     = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
   .form-group
-    .row
-      .columns.small-12.medium-8.large-5
-        = f.label :email, class: 'form-label'
-        .form-control #{@user.email}
+    = f.label :email, class: 'form-label'
+    .form-control #{@user.email}
 
   = render(partial: 'users/shared/form_roles', locals: {f: f})
 

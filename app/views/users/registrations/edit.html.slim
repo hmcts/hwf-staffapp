@@ -1,21 +1,17 @@
 header
-  h2 =t('devise.registrations.heading')
+  h2.heading-xlarge =t('devise.registrations.heading')
 
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.label :current_password
-          = t('activerecord.attributes.user.current_password')
-        = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
-        = f.password_field :current_password, autofocus: true, class: 'form-control'
+  .form-group
+    = f.label :current_password, class: 'form-label'
+      = t('activerecord.attributes.user.current_password')
+    = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
+    = f.password_field :current_password, autofocus: true, class: 'form-control'
 
   =render( partial: '/users/shared/change_password', locals: { f: f } )
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        = f.submit 'Update password', class: 'button primary'
+  .form-group
+    = f.submit 'Update password', class: 'button'
 
 = link_to "Back", :back

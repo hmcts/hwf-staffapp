@@ -3,10 +3,7 @@ header
 
 = render 'form', with_jurisdictions: true
 
-.row.pad-top-thirty-px
-  .columns.small-12
-    =link_to 'Show this office', @office
+ul.list
+  li=link_to 'Show this office', @office
 -unless current_user.manager?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      =link_to 'Back to list of offices', offices_path
+  li=link_to 'Back to list of offices', offices_path
