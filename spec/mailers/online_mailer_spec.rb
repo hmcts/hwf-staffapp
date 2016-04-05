@@ -14,7 +14,7 @@ RSpec.describe OnlineMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to have_content 'Your application for help'
+      expect(mail.body.encoded).to have_content 'I completed an online application for help with fees'
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe OnlineMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to have_content 'Your application for a refund'
+      expect(mail.body.encoded).to have_content 'I completed an online application for a court fee refund'
     end
   end
 end
