@@ -12,6 +12,14 @@ li,
   color: $grey-1;
 }
 
+strong {
+  font-weight: 700;
+}
+
+p > small {
+  font-size: 16px;
+}
+
 // horrific override of moj-template
 #global-header .header-proposition a#proposition-name:hover {
   text-decoration: none;

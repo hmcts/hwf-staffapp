@@ -12,3 +12,27 @@
 .alert-info {
   background: $light-blue;
 }
+
+
+.alert-box {
+  display: block;
+  position: relative;
+  border: none;
+  color: #fff;
+
+  &.alert {
+    background: $error-colour;
+  }
+
+  > a.close {
+    text-decoration: none;
+
+
+    right: 15px;
+    color: #fff;
+    padding: 5px;
+    position: absolute;
+    top: 13px;
+
+  }
+}

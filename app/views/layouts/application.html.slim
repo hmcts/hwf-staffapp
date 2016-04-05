@@ -28,7 +28,8 @@
 - content_for :proposition_header
   .header-proposition
     .content
-      a.js-header-toggle.menu href="#proposition-links"  Menu
+      - if user_signed_in?
+        a.js-header-toggle.menu href="#proposition-links"  Menu
       nav#proposition-menu
         a#proposition-name href="/" = Rails.application.config.app_title
         - if user_signed_in?
