@@ -27,6 +27,16 @@ describe DwpMonitor do
         it { is_expected.to eql 'warning' }
       end
 
+      context 'checks for "Server broke connection" messages too' do
+        before do
+          create_list :benefit_check, 6, :yes_result
+          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
+          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
+        end
+
+        it { is_expected.to eql 'warning' }
+      end
+
       context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
         before do
           create_list :benefit_check, 8, :yes_result

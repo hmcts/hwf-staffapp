@@ -25,7 +25,8 @@ class DwpMonitor
     # When DWP is offline it returns 400 Bad Request
     # maybe extend to search for x00 as first 3 chars to check for 500 errors too
     total = @checks.count.to_f
-    bad = @checks.flatten.count('400 Bad Request').to_f
-    bad / total * 100.0
+    bad_request = @checks.flatten.count('400 Bad Request').to_f
+    server_broke = @checks.flatten.count('Server broke connection').to_f
+    (bad_request + server_broke) / total * 100.0
   end
 end
