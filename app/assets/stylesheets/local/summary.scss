@@ -1,0 +1,26 @@
+div.summary-section {
+  border-bottom: solid 1px $grey-2;
+  margin-bottom: 30px;
+  padding-bottom: .5em;
+
+  .summary-result {
+    font-weight: bold;
+    &.full, &.passed {
+      color: $turquoise;
+    }
+    &.part {
+      color: $orange;
+    }
+    &.none, &.failed {
+      color: $error-colour;
+    }
+  }
+
+  .grid-row {
+    padding-bottom: 10px;
+  }
+
+  .header-row {
+    padding-bottom: 0;
+  }
+}
