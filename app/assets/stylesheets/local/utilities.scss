@@ -36,12 +36,31 @@
   margin-top: 45px !important;
 }
 
+
+
 // case utilities
 .transform-upper {
   text-transform: uppercase !important;
 }
 
-// js utilities
+
+
+// text alignment utilities
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.right {
+  float: right !important;
+}
+
+
+
+// js utilities - no !important here, as they may be overridden by state changes
 .js-only {
   display: none;
 
@@ -52,12 +71,4 @@
 
 .start-hidden {
   display: none;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.right {
-  float: right;
 }

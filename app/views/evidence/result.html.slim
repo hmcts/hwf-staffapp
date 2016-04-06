@@ -1,14 +1,14 @@
-header
-  h2 Income
+.grid-row
+  .column-two-thirds
+    header
+      h2.heading-xlarge Income
 
-.row
-  .small-12.medium-8.large-5.columns
     =render(partial: 'shared/remission_type', locals: { source: @result })
 
     = link_to 'Next', evidence_summary_path(@evidence), class: 'button'
 
-  .large-5.columns
+  .column-one-third
     .guidance
-      h4 Total monthly income
+      h4.heading-medium.util_mt-medium Total monthly income
       p = link_to 'Read about the maximum amount of income allowed', guide_process_application_path(anchor: 'income'), target: 'blank'
       p: strong= link_to 'See the guides', guide_path, target: 'blank'
