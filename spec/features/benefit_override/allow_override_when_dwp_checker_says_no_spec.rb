@@ -63,8 +63,8 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
-          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Benefits letter checked"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Benefits letter checked"]/following-sibling::*[1][text()="Yes"]')
         end
       end
     end
@@ -79,8 +79,8 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
-          expect(page).to have_xpath('//div[contains(@class,"subheader")][text()="Benefits letter checked"]/following-sibling::*[1][text()="No"]')
+          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Benefits letter checked"]/following-sibling::*[1][text()="No"]')
         end
       end
     end
