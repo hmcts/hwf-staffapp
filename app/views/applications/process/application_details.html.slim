@@ -9,8 +9,9 @@
       .form-group
         = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
-        span.currency £
-        = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field', type: 'number', step: '0.01' }
+        .field-wrapper
+          span.currency £
+          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control', type: 'number', step: '0.01' }
         .js-hidden#large-fee-message
           .warning Before you continue, check that the fee amount is correct.
 
@@ -19,7 +20,7 @@
         = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
         = f.hidden_field :jurisdiction_id, value: nil
         - if @jurisdictions.present?
-          .options.radio
+          .options.radio.cf
             =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
               = b.label class: 'block-label' do
                 = b.radio_button(data: @form.jurisdiction_id)
@@ -47,11 +48,10 @@
         = f.text_field :case_number, { class: 'form-control' }
 
       .form-group
-        .options.radio
-          .option
-            = f.label :probate, class: 'block-label'
-              = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
-              = t('probate', scope: @form.i18n_scope)
+        .options.radio.cf
+          = f.label :probate, class: 'block-label'
+            = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
+            = t('probate', scope: @form.i18n_scope)
 
         #probate-only.start-hidden
           .panel-indent
@@ -67,11 +67,10 @@
               = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
               = f.text_field :date_of_death, { class: 'form-control medium-field' }
 
-        .options.radio
-          .option
-            = f.label :refund, class: 'block-label'
-              = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-              = t('refund', scope: @form.i18n_scope)
+        .options.radio.cf
+          = f.label :refund, class: 'block-label'
+            = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
+            = t('refund', scope: @form.i18n_scope)
 
         #refund-only.start-hidden
           .panel-indent
@@ -82,11 +81,10 @@
               = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
               = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
-        .options.radio
-          .option
-            = f.label :emergency, class: 'block-label'
-              = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
-              = t('emergency', scope: @form.i18n_scope)
+        .options.radio.cf
+          = f.label :emergency, class: 'block-label'
+            = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
+            = t('emergency', scope: @form.i18n_scope)
 
         #emergency-only.start-hidden
           .panel-indent
@@ -98,8 +96,8 @@
       = f.submit 'Next', class: 'button'
 
     .column-one-third
-      .info-box.guidance
-        h4.heading-medium Refunds
+      .guidance
+        h4.heading-medium.util_mt-medium Refunds
         strong Check the refund:
         ul.list.list-bullet
           li is for a fee paid less than 3 months ago

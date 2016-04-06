@@ -40,19 +40,19 @@
       .form-group
         = f.label :married, class: 'form-label'
         = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
-        .options.radio
-            label.block-label for='application_married_false'
-              = f.radio_button :married, 'false'
-              = t('married_false', scope: @form.i18n_scope)
-            label.block-label for='application_married_true'
-              = f.radio_button :married, 'true'
-              = t('married_true', scope: @form.i18n_scope)
+        .options.radio.cf
+          label.block-label for='application_married_false'
+            = f.radio_button :married, 'false'
+            = t('married_false', scope: @form.i18n_scope)
+          label.block-label for='application_married_true'
+            = f.radio_button :married, 'true'
+            = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
     .column-one-third
-      .info-box.guidance
-        h4.heading-medium Before you start
+      .guidance
+        h4.heading-medium.util_mt-medium Before you start
         p Check the statement of truth has been signed.
         strong Check the applicant is not:
         ul.list.list-bullet

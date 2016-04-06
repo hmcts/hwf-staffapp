@@ -20,9 +20,17 @@ div.form-group > .row.collapse div.field_with_errors label.error {
 
 div.form-group div.field_with_errors + div.row.collapse,
 div.form-group div.field_with_errors + div.options.radio,
-div.form-group div.field_with_errors + input[type="hidden"] + div.options.radio {
+div.form-group div.field_with_errors + input[type="hidden"] + div.options.radio,
+div.form-group div.field_with_errors + .field-wrapper {
   border-left: 2px solid $error-colour;
   padding-left: 10px;
+}
+
+.field-wrapper {
+  .field_with_errors {
+    display: inline-block;
+    width: 90%;
+  }
 }
 
 div.warning {

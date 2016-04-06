@@ -1,85 +1,82 @@
 = form_for @form, as: :application, url: application_savings_investments_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 =t('header', scope: @form.i18n_scope)
+  .grid-row
+    .column-two-thirds
+      header
+        h2.heading-xlarge =t('header', scope: @form.i18n_scope)
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .form-group
-        label =t('maximum_prompt', scope: @form.i18n_scope)
-        #result.callout.received
-          h3 =number_to_currency(@application.threshold.floor, precision: 0)
-        label =t('explanation', scope: @form.i18n_scope)
+      .text
+        p= t('maximum_prompt', scope: @form.i18n_scope)
+        .callout.received
+          h3.heading-large =number_to_currency(@application.threshold.floor, precision: 0)
+        p= t('explanation', scope: @form.i18n_scope)
 
-      .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :threshold_exceeded, t(@application.married ? 'married' : 'single', scope: @form.i18n_scope)
-            = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
-            = f.hidden_field :threshold_exceeded, value: nil
-            .options.radio
-              .option
-                label for='application_threshold_exceeded_false'
-                  = f.radio_button :threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'over-61', show: 'false' } }
-                  = t('less_than', scope: @form.i18n_scope)
-              .option
-                label for='application_threshold_exceeded_true'
-                  = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
-                  = t('more_than', scope: @form.i18n_scope)
+      .form-group.util_mt-medium
+        = f.label :threshold_exceeded, t(@application.married ? 'married' : 'single', scope: @form.i18n_scope), class: 'form-label'
+        = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
+        = f.hidden_field :threshold_exceeded, value: nil
+        .options.radio.cf
+          .option
+            label.block-label for='application_threshold_exceeded_false'
+              = f.radio_button :threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'over-61', show: 'false' } }
+              = t('less_than', scope: @form.i18n_scope)
+          .option
+            label.block-label for='application_threshold_exceeded_true'
+              = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
+              = t('more_than', scope: @form.i18n_scope)
 
-      -if @application.applicant_over_61?
-        =f.hidden_field :partner_over_61, value: 'true'
-        =f.hidden_field :high_threshold_exceeded, value: 'true'
-      -elsif !@application.married?
-        =f.hidden_field :partner_over_61, value: 'false'
-      -else
-        #over-61-only.start-hidden
-          .form-group.panel-indent
-            .row.collapse
-              .columns.small-12
-                = f.label :partner_over_61, t('partner_over_61', scope: @form.i18n_scope)
-                = f.label :partner_over_61, @form.errors[:partner_over_61].join(', '), class: 'error' if @form.errors[:partner_over_61].present?
-                .options.radio
-                  .option
-                    label for='application_partner_over_61_false'
-                      = f.radio_button :partner_over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
-                      = t('no')
-                  .option
-                    label for='application_partner_over_61_true'
-                      = f.radio_button :partner_over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
-                      = t('yes')
-                #high-threshold-only.start-hidden
-                      .panel-indent
-                        =f.label :high_threshold_exceeded
-                        = f.label :high_threshold_exceeded, @form.errors[:high_threshold_exceeded].join(', '), class: 'error' if @form.errors[:high_threshold_exceeded].present?
-                        .options.radio
-                          .option
-                            label for="application_high_threshold_exceeded_false"
-                              = f.radio_button :high_threshold_exceeded, 'false'
-                              = t('less_than_high', scope: @form.i18n_scope)
-                          .option
-                            label for="application_high_threshold_exceeded_true"
-                              = f.radio_button :high_threshold_exceeded, 'true'
-                              = t('more_than_high', scope: @form.i18n_scope)
+        -if @application.applicant_over_61?
+          =f.hidden_field :partner_over_61, value: 'true'
+          =f.hidden_field :high_threshold_exceeded, value: 'true'
+        -elsif !@application.married?
+          =f.hidden_field :partner_over_61, value: 'false'
+        -else
+          #over-61-only.start-hidden
+            .form-group.panel-indent.util-mt-0
+              = f.label :partner_over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
+              = f.label :partner_over_61, @form.errors[:partner_over_61].join(', '), class: 'error' if @form.errors[:partner_over_61].present?
+              .options.radio.cf
+                .option
+                  label.block-label for='application_partner_over_61_false'
+                    = f.radio_button :partner_over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
+                    = t('no')
+                .option
+                  label.block-label for='application_partner_over_61_true'
+                    = f.radio_button :partner_over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
+                    = t('yes')
+              #high-threshold-only.start-hidden
+                .panel-indent
+                  =f.label :high_threshold_exceeded, class: 'form-label'
+                  = f.label :high_threshold_exceeded, @form.errors[:high_threshold_exceeded].join(', '), class: 'error' if @form.errors[:high_threshold_exceeded].present?
+                  .options.radio.cf
+                    .option
+                      label.block-label for="application_high_threshold_exceeded_false"
+                        = f.radio_button :high_threshold_exceeded, 'false'
+                        = t('less_than_high', scope: @form.i18n_scope)
+                    .option
+                      label.block-label for="application_high_threshold_exceeded_true"
+                        = f.radio_button :high_threshold_exceeded, 'true'
+                        = t('more_than_high', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
-      details
+      details.util_mt-medium
         summary
           span.summary.primary Our calculation is based on this information
-        #result_table.row
-          .columns.small-12
-            .row
-              .columns.small-4.table-label Age
-              .columns.small-8 #{@application.applicant_age} years old
-            .row
-              .columns.small-4.table-label Status
-              .columns.small-8 =t("married_#{@application.married}", scope: @form.i18n_scope)
-            .row
-              .columns.small-4.table-label Fee
-              .columns.small-8 £#{@application.fee.floor}
-    .large-5.columns
+        #result_table.util_mt-small
+          table
+            tr
+              th Age
+              td #{@application.applicant_age} years old
+            tr
+              th Status
+              td =t("married_#{@application.married}", scope: @form.i18n_scope)
+            tr
+              th Fee
+              td £#{@application.fee.floor}
+
+    .column-one-third
       .guidance
-        h4 Savings and investments
+        h4.heading-medium.util_mt-medium Savings and investments
         p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'
