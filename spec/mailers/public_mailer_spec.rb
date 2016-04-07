@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe OnlineMailer, type: :mailer do
-  describe '#confirmation' do
+RSpec.describe PublicMailer, type: :mailer do
+  describe '#submission_confirmation' do
 
     let(:email) { 'foo@bar.com' }
     let(:mail_data) { create(:online_application, :with_reference, :with_email) }
-    let(:mail) { described_class.confirmation(mail_data) }
+    let(:mail) { described_class.submission_confirmation(mail_data) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq(I18n.t('email.confirmation.subject'))
@@ -22,7 +22,7 @@ RSpec.describe OnlineMailer, type: :mailer do
 
     let(:email) { 'foo@bar.com' }
     let(:mail_data) { create(:online_application, :with_reference, :with_email) }
-    let(:mail) { described_class.refund_confirmation(mail_data) }
+    let(:mail) { described_class.submission_confirmation_refund(mail_data) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq(I18n.t('email.refund.subject'))
