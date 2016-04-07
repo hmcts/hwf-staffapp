@@ -1,22 +1,13 @@
 table cellpadding="0" cellspacing="0" border="0" width="600"
   tr
     td colspan="2"
-      .heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.confirmation.greeting', name: @application.full_name)
-
-      p style="margin-bottom: 1.5em; margin-top: 1em;"
-        =t('email.confirmation.send_to')
-
-  tr valign="top"
-    td width="45"
-      =image_tag attachments['icon-important.png'].url, style: 'float: left;'
-    td width="555"
-      p style="padding: 0 1em 0 0; margin-bottom: 1.5em; margin-top: 0;"
-       =t('email.confirmation.warning')
+      h2.heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.confirmation.greeting')
 
   tr
     td colspan="2"
-      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.non_paper')
-      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.template')
+      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.write')
+      p  style="margin-bottom: 1.5em; margin-top: 0; font-weight:bold" = @application.reference
+      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.non-paper')
 
   tr
     td colspan="2"
@@ -34,6 +25,12 @@ table cellpadding="0" cellspacing="0" border="0" width="600"
 
   tr
     td colspan="2"
-      p style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.confirmation.assessment')
+      p style="margin-bottom: 1.5em; margin-top: 1em;" = t('email.confirmation.send_to')
       p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.confirmation.unsuccessful')
 
+  tr valign="top"
+    td width="45"
+      = image_tag attachments['icon-important.png'].url, style: 'float: left;'
+    td width="555"
+      p style="padding: 0 1em 0 0; margin-bottom: 1.5em; margin-top: 0;"
+        = t('email.confirmation.warning')
