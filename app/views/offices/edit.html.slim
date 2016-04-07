@@ -3,7 +3,7 @@ header
 
 = render 'form', with_jurisdictions: true
 
-ul.list
+ul
   li=link_to 'Show this office', @office
--unless current_user.manager?
-  li=link_to 'Back to list of offices', offices_path
+  -unless current_user.manager?
+    li=link_to 'Back to list of offices', offices_path

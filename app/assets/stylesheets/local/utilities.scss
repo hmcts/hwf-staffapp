@@ -60,6 +60,13 @@
 
 
 
+// clearing utilities
+.cb {
+  clear: both;
+}
+
+
+
 // js utilities - no !important here, as they may be overridden by state changes
 .js-only {
   display: none;

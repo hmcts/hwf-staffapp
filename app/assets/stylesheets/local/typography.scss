@@ -20,6 +20,12 @@ p > small {
   font-size: 16px;
 }
 
+.important-notice {
+  background: asset_url('icon-important.png') left center no-repeat;
+  padding: 1em 1em 1em 2.5em;
+  margin: 0;
+}
+
 // horrific override of moj-template
 #global-header .header-proposition a#proposition-name:hover {
   text-decoration: none;
