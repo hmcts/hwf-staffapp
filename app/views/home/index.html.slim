@@ -1,4 +1,4 @@
-=content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
+=content_for(:head_scripts) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
 /.page-error = t('error_messages.dwp_unavailable')
 .dwp-restored.util_mt-medium =t('error_messages.dwp_restored')
@@ -40,19 +40,18 @@
   =render('home/processed_and_deleted_aplications')
 
 -if policy(:report).index? || policy(:office).index?
-  .row.equal-heightboxes
-    .util_pt-medium
-      - if policy(:report).index?
-        .small-12.medium-6.columns
-          .panel
-            h3 Generate reports
-            p Export national finance reports related to Help with fees applications and download monthly summary data.
-            = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
-      - if policy(:office).index?
-        .small-12.medium-6.columns
-          .panel
-            h3 View offices
-            p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
-            = link_to 'View offices', offices_path
+  .grid-row.equal-heightboxes.util_mt-medium
+    - if policy(:report).index?
+      .column-one-half
+        .panel
+          h3.heading-medium.util_mt-0 Generate reports
+          p Export national finance reports related to Help with fees applications and download monthly summary data.
+          = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
+    - if policy(:office).index?
+      .column-one-half
+        .panel
+          h3.heading-medium.util_mt-0 View offices
+          p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
+          = link_to 'View offices', offices_path
 
 =render 'home/graphs'

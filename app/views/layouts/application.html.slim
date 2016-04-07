@@ -6,6 +6,7 @@
 
 - content_for :head
   = csrf_meta_tags
+  = yield :head_scripts
 
 - content_for :content_override
   #wrapper.group

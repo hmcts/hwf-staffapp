@@ -17,5 +17,5 @@ table
           td = link_to 'Change details', edit_office_path(office)
 
 - if policy(:office).new?
-  ul.list
-    li= link_to 'New Office', new_office_path
+
+  = link_to 'New Office', new_office_path, class: 'button util_mt-medium'
