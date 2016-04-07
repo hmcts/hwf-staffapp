@@ -5,7 +5,7 @@
     - if (@user.manager? && (@user == current_user))
       p.util_mb-0= current_user.role.humanize
     - else
-      .options.radio
+      .options.radio.cf
         =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
           = b.label class: 'block-label' do
             = b.radio_button

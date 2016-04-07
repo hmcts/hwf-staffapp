@@ -7,15 +7,16 @@
 
   - if with_jurisdictions
     -if @jurisdictions.count.eql?(0)
-      =t("#{@current_user.elevated? ? 'manager' : 'user'}_html", scope:'business_entities.not_set', email: Settings.mail.tech_support)
+      .util_mt-medium
+        p =t("#{@current_user.elevated? ? 'manager' : 'user'}_html", scope:'business_entities.not_set', email: Settings.mail.tech_support)
     -else
       .form-group
         = f.label :jurisdictions, class: 'form-label'
         = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
-        .options.radio
+        .options.radio.cf
           =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
             = b.label class: 'block-label' do
               = b.check_box
               = "#{b.text} (#{@becs[b.value]})"
 
-  = f.submit class: 'button'
+  = f.submit class: 'button util_mt-medium'

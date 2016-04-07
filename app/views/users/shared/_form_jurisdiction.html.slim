@@ -2,14 +2,16 @@
   label.form-label Main jurisdiction
   = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
   - if @jurisdictions.present?
-    .options.radio
-      label.block-label for="user_jurisdiction_id"
-        input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true"
-          | No main jurisdiction
+    .options.radio.cf
+      .option
+        label.block-label for="user_jurisdiction_id"
+          input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true"
+            | No main jurisdiction
 
       =collection_radio_buttons(:user, :jurisdiction_id, @jurisdictions, :id, :display_full ) do |b|
-        = b.label class: 'block-label' do
-          = b.radio_button
-          = b.text
+        .option
+          = b.label class: 'block-label' do
+            = b.radio_button
+            = b.text
   - else
     = t('error_messages.jurisdictions.none_in_office')
