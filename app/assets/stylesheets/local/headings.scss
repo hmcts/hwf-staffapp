@@ -51,10 +51,10 @@ h2.guide-headline {
   }
 
   span {
+    @include core-24;
     display: block;
     margin-bottom: 0;
     font-weight: normal;
-    font-size: rem-calc(23);
   }
 }
 

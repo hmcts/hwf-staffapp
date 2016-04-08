@@ -56,6 +56,11 @@
   color: #ffffff;
   background-color: $orange;
 
+  &.blue {
+    background-color: $govuk-blue;
+    color: $white;
+  }
+
   h3 {
     color: $page-colour;
     margin: 0;
