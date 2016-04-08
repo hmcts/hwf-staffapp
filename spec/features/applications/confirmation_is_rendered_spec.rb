@@ -37,7 +37,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(application) }
 
       scenario 'the correct view is rendered' do
-        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="bold"]')
+        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="heading-large"]')
       end
 
       scenario 'the next button is rendered' do
