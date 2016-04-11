@@ -44,7 +44,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # template language
 gem 'slim-rails'
-gem 'foundation-rails'
 gem 'redcarpet'
 
 # Use ActiveModel has_secure_password
