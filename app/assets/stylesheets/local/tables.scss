@@ -27,3 +27,14 @@ table.income {
     }
   }
 }
+
+.guide-table {
+  tr {
+    vertical-align: top;
+  }
+  th {
+    p {
+      font-weight: bold;
+    }
+  }
+}
