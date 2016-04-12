@@ -47,12 +47,14 @@ if ENV['ENV'] == 'trial'
     end
 
     desc 'Delete users with email domain'
-    task :delete_users_with_email_domain, [:domain] => :environment do |_, args|
-      domain = args[:domain]
+    task :delete_users, [:user_ids] => :environment do |_, args|
+      user_ids = args[:user_ids].split(' ')
       count = 0
 
       ActiveRecord::Base.transaction do
-        User.with_deleted.where('email LIKE ?', "%@#{domain}").each do |user|
+        user_ids.each do |user_id|
+          user = User.find(user_id)
+
           feedbacks = Feedback.where(user: user)
           feedbacks.delete_all unless feedbacks.empty?
 
@@ -126,6 +128,24 @@ if ENV['ENV'] == 'trial'
 
       user = User.find_by(email: from)
       user.update(email: to)
+    end
+
+    desc 'Change user name'
+    task :change_user_name, [:user_id, :name] => :environment do |_, args|
+      user_id = args[:user_id]
+      name = args[:name]
+
+      user = User.find(user_id)
+      user.update(name: name)
+    end
+
+    desc 'Change user office'
+    task :change_user_office, [:user_id, :office_id] => :environment do |_, args|
+      user_id = args[:user_id]
+      office_id = args[:office_id]
+
+      user = User.find(user_id)
+      user.update(office_id: office_id)
     end
   end
 end
