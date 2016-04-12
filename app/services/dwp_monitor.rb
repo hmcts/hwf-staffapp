@@ -17,7 +17,7 @@ class DwpMonitor
   private
 
   def dwp_results
-    @checks = BenefitCheck.pluck(:dwp_result, :error_message).last(20)
+    @checks = BenefitCheck.order(:id).pluck(:dwp_result, :error_message).last(20)
   end
 
   def percent
