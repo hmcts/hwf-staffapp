@@ -9,6 +9,7 @@ gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg'
 gem 'rails-i18n', '~> 4.0.0'
+gem 'rack-host-redirect'
 
 # configuration
 gem 'config'

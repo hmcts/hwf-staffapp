@@ -230,6 +230,8 @@ GEM
     pundit (1.0.1)
       activesupport (>= 3.0.0)
     rack (1.6.4)
+    rack-host-redirect (1.2.1)
+      rack
     rack-livereload (0.3.16)
       rack
     rack-test (0.6.3)
@@ -424,6 +426,7 @@ DEPENDENCIES
   pg
   pry-rails
   pundit (~> 1.0)
+  rack-host-redirect
   rack-livereload
   rails (~> 4.2.6)
   rails-i18n (~> 4.0.0)
