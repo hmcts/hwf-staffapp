@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', groups: [:development] # this has to be here because of load order
+gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~>4.2.6'
@@ -9,6 +9,7 @@ gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg'
 gem 'rails-i18n', '~> 4.0.0'
+gem 'rack-host-redirect'
 
 # configuration
 gem 'config'
