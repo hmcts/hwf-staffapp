@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', groups: [:development] # this has to be here because of load order
+gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~>4.2.6'
