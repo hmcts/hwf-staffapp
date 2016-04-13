@@ -1,13 +1,15 @@
 header
-  h2.heading-xlarge = t 'devise.passwords.new.header'
+  h2.heading-xlarge.util_mb-medium = t 'devise.passwords.new.header'
 
-#instructions = t 'devise.passwords.new.instructions'
+.text.util_mb-large
+  p = t 'devise.passwords.new.instructions'
+
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { autocomplete: 'off', method: :post }) do |f|
   .form-group
     = f.label :email, class: 'form-label'
     = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
     = f.text_field :email, { class: 'form-control' }
 
-  = f.submit t('devise.passwords.new.submit_button'), class: 'button'
+  = f.submit t('devise.passwords.new.submit_button'), class: 'button util_mb-medium'
 
 = render "users/shared/links"
