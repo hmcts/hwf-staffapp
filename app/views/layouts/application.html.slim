@@ -15,7 +15,7 @@
         p
           strong.phase-tag= Rails.application.config.phase.upcase
           span
-            | Tell us what you think and #{link_to 'help us improve', Rails.application.config.feedback_url}
+            | Tell us what you think and #{link_to 'help us improve', current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"}
     .container
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
