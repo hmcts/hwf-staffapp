@@ -1,8 +1,27 @@
-#global-header .header-proposition nav#proposition-menu {
-  margin-top: 0;
+#global-header {
+  .header-proposition {
+    nav#proposition-menu {
+      margin-top: 0;
 
-  li span {
-    @include core-16;
-    color: $white;
+      li {
+        span {
+          @include core-16;
+          color: $white;
+        }
+      }
+    }
+  }
+
+  #logo {
+    &, &:hover {
+      text-decoration: none;
+      border: none;
+      padding-bottom: 10px;
+    }
+
+    img {
+      width: 254px;
+      height: 36px;
+    }
   }
 }
