@@ -42,7 +42,7 @@ div.warning {
 div.options.radio label:first-child {
   margin-top: 0rem;
 }
-div.options.radio div.options label:last-child {
+div.options.radio div.options .option:last-child label {
   margin-bottom: 0rem;
 }
 

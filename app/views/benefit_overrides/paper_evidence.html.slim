@@ -1,10 +1,10 @@
-header
-  h2 Benefits
-
 .grid-row
   .column-two-thirds
+    header
+      h2.heading-xlarge Benefits
+
     - if error_message_partial
-     .page-error
+     .page-error.util_mb-medium
         = render(error_message_partial)
 
     = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
@@ -35,7 +35,7 @@ header
                   = f.radio_button :correct, 'true', { class: 'show-hide-section', data: { section: 'incorrect', show: 'false'} }
                   = t('correct_true', scope: @form.i18n_scope)
 
-            .start-hidden#incorrect-only
+            .panel-indent.start-hidden#incorrect-only
               = f.label :incorrect_reason, class: 'form-label'
               = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
               = f.text_area :incorrect_reason, rows: 3, class: 'form-control'
