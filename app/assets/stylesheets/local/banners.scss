@@ -30,3 +30,10 @@
   color: $error-colour;
   background: $error-background;
 }
+
+#global-cookie-message {
+  p {
+    max-width: 960px;
+    margin: auto;
+  }
+}
