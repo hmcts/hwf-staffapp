@@ -41,19 +41,21 @@ class ApplicationBuilder
     fields = %i[threshold_exceeded benefits income children reference]
     {
       dependents: (online_application.children > 0)
-    }.merge(Hash[fields.map { |field| [field, online_application.send(field)] }])
+    }.merge(prepare_attributes(fields, online_application))
   end
 
   def online_applicant_attributes(online_application)
     fields = %i[title first_name last_name date_of_birth ni_number married]
-    Hash[fields.map { |field| [field, online_application.send(field)] }]
+    prepare_attributes(fields, online_application)
   end
 
   def online_detail_attributes(online_application)
-    fields = %i[fee jurisdiction form_name case_number probate deceased_name
+    fields = %i[fee jurisdiction date_received form_name case_number probate deceased_name
                 date_of_death refund date_fee_paid emergency_reason]
-    {
-      date_received: online_application.created_at
-    }.merge(Hash[fields.map { |field| [field, online_application.send(field)] }])
+    prepare_attributes(fields, online_application)
+  end
+
+  def prepare_attributes(fields, online_application)
+    Hash[fields.map { |field| [field, online_application.send(field)] }]
   end
 end

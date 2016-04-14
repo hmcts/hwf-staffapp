@@ -136,11 +136,7 @@ RSpec.describe ApplicationBuilder do
       describe 'the detail' do
         subject(:built_detail) { built_application.detail }
 
-        it 'has date_received assigned from the creation date of the online_application' do
-          expect(built_detail.date_received).to eql(online_application.created_at.to_date)
-        end
-
-        %i[fee jurisdiction form_name case_number probate deceased_name date_of_death refund date_fee_paid emergency_reason].each do |column|
+        %i[fee jurisdiction date_received form_name case_number probate deceased_name date_of_death refund date_fee_paid emergency_reason].each do |column|
           it "has #{column} assigned" do
             expect(built_detail.public_send(column)).to eql(online_application.public_send(column))
           end
