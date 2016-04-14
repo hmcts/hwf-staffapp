@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329203001) do
+ActiveRecord::Schema.define(version: 20160414093931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 20160329203001) do
     t.integer  "jurisdiction_id"
     t.text     "emergency_reason"
     t.boolean  "feedback_opt_in",    null: false
+    t.date     "date_received"
   end
 
   add_index "online_applications", ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id", using: :btree
