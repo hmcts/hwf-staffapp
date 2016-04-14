@@ -36,8 +36,13 @@ RSpec.describe Forms::OnlineApplication do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_numericality_of(:fee) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
-    it { is_expected.to validate_presence_of(:date_received) }
     it { is_expected.to validate_length_of(:emergency_reason).is_at_most(500) }
+
+    describe 'date_received' do
+      let(:online_application) { build_stubbed :online_application, :completed }
+
+      include_examples 'date_received validation'
+    end
 
     describe 'emergency' do
       before do

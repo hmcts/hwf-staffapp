@@ -13,13 +13,27 @@ module Forms
 
     validates :fee, numericality: { allow_blank: true }, presence: true
     validates :jurisdiction_id, presence: true
-    validates :date_received, presence: true
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
+
+    validates :date_received, date: {
+      after_or_equal_to: :min_date,
+      before: :tomorrow
+    }
 
     def initialize(online_application)
       super(online_application)
       self.emergency = true if emergency_reason.present?
+    end
+
+    private
+
+    def min_date
+      3.months.ago.midnight
+    end
+
+    def tomorrow
+      Time.zone.tomorrow
     end
 
     def persist!
