@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Forms::OnlineApplication do
-  params_list = %i[fee jurisdiction_id form_name emergency emergency_reason]
+  params_list = %i[fee jurisdiction_id date_received form_name emergency emergency_reason]
 
   let(:online_application) { build_stubbed :online_application }
   subject(:form) { described_class.new(online_application) }
@@ -36,6 +36,7 @@ RSpec.describe Forms::OnlineApplication do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_numericality_of(:fee) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
+    it { is_expected.to validate_presence_of(:date_received) }
     it { is_expected.to validate_length_of(:emergency_reason).is_at_most(500) }
 
     describe 'emergency' do
@@ -71,6 +72,7 @@ RSpec.describe Forms::OnlineApplication do
         {
           fee: 100,
           jurisdiction_id: jurisdiction.id,
+          date_received: Time.zone.yesterday,
           form_name: 'E45',
           emergency: true,
           emergency_reason: 'SOME REASON'
@@ -82,7 +84,7 @@ RSpec.describe Forms::OnlineApplication do
       end
 
       describe 'the saved online application' do
-        [:fee, :jurisdiction_id, :form_name, :emergency_reason].each do |key|
+        [:fee, :jurisdiction_id, :date_received, :form_name, :emergency_reason].each do |key|
           it "has the correct :#{key}" do
             expect(reloaded_application.send(key)).to eql(params[key])
           end
