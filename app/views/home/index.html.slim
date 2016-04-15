@@ -1,16 +1,17 @@
-=content_for(:javascript) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
+=content_for(:head_scripts) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
-=render("shared/dwp/#{@state}")
+/.page-error = t('error_messages.dwp_unavailable')
+.dwp-restored.util_mt-medium =t('error_messages.dwp_restored')
 
-.row.equal-heightboxes
+.grid-row.equal-heightboxes.util_mt-medium
   - if policy(:application).new?
-    .small-6.columns
+    .column-one-half
       .util_pt-medium
         .panel.flexi
-          h3 Process application
+          h3.heading-medium.util_mt-0 Process application
           .panel-inner
             p.util_mb-0 You'll need:
-            ul
+            ul.list.list-bullet
               li the help with fees application form (EX160)
               li the court or tribunal form related to the application
 
@@ -19,13 +20,13 @@
           - else
             .util_mt-0
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
-  .small-6.columns
+  .column-one-half
     .util_pt-medium
       = form_for(@search_form, as: :search, url: home_search_path) do |f|
         .panel.flexi
-          h3 Process an online application
+          h3.heading-medium.util_mt-0 Process an online application
           .form-group.panel-inner
-            = f.label :reference
+            = f.label :reference, class: 'form-label'
             = f.label :reference, @search_form.errors[:reference].join(', '), class: 'error' if @search_form.errors[:reference].present?
             = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off' }
           .util_mt-0
@@ -34,27 +35,23 @@
 
 
 - if policy(:application).index?
-  .row
-    .small-12.medium-12.large-12.columns
-      =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_show_path)
-      =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
-
-      =render('home/processed_and_deleted_aplications')
+  =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_show_path)
+  =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
+  =render('home/processed_and_deleted_aplications')
 
 -if policy(:report).index? || policy(:office).index?
-  .row.equal-heightboxes
-    .util_pt-medium
-      - if policy(:report).index?
-        .small-12.medium-6.columns
-          .panel
-            h3 Generate reports
-            p Export national finance reports related to Help with fees applications and download monthly summary data.
-            = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
-      - if policy(:office).index?
-        .small-12.medium-6.columns
-          .panel
-            h3 View offices
-            p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
-            = link_to 'View offices', offices_path
+  .grid-row.equal-heightboxes.util_mt-medium
+    - if policy(:report).index?
+      .column-one-half
+        .panel
+          h3.heading-medium.util_mt-0 Generate reports
+          p Export national finance reports related to Help with fees applications and download monthly summary data.
+          = link_to 'Generate reports', '/reports/finance_report', class: 'button util_mb-0'
+    - if policy(:office).index?
+      .column-one-half
+        .panel
+          h3.heading-medium.util_mt-0 View offices
+          p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
+          = link_to 'View offices', offices_path
 
 =render 'home/graphs'

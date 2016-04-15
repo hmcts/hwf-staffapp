@@ -81,7 +81,7 @@ RSpec.describe Forms::Application::Detail do
         end
 
         it 'sets an error on date_received field' do
-          expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
+          expect(application_details.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY']
         end
       end
 

@@ -1,32 +1,30 @@
 = form_for @form, as: :application, url: application_benefits_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Benefits
+  .grid-row
+    .column-two-thirds
+      header
+          h2.heading-xlarge Benefits
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :benefits
-            = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
-            = f.hidden_field :benefits, value: nil
-            .options.radio
-              .option
-                label for='application_benefits_false'
-                  = f.radio_button :benefits, 'false'
-                  = t('benefits_false', scope: @form.i18n_scope)
-              .option
-                label for='application_benefits_true'
-                  = f.radio_button :benefits, 'true'
-                  = t('benefits_true', scope: @form.i18n_scope)
+        = f.label :benefits, class: 'form-label'
+        = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
+        = f.hidden_field :benefits, value: nil
+        .options.radio.cf
+          .option
+            label.block-label for='application_benefits_false'
+              = f.radio_button :benefits, 'false'
+              = t('benefits_false', scope: @form.i18n_scope)
+          .option
+            label.block-label for='application_benefits_true'
+              = f.radio_button :benefits, 'true'
+              = t('benefits_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
-    .large-5.columns
+    .column-one-third
       .guidance
-        h4 Benefits
-        ul
+        h4.heading-medium.util_mt-medium Benefits
+        ul.list.list-bullet
           li Income-based Jobseeker's Allowance <span class="hint">(JSA)</span>
           li Income-related Employment and Support Allowance <span class="hint">(ESA)</span>
           li Income Support

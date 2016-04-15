@@ -1,0 +1,39 @@
+.callout {
+  padding: 30px 15px;
+  margin-bottom: 30px;
+  text-align: center;
+
+  &.result {
+    background-color: $grey-1;
+    color: $white;
+  }
+
+  .check {
+    display: inline-block;
+    padding-right: 10px;
+  }
+
+  .reference-number {
+    @include core-36;
+    font-weight: bold;
+    display: block;
+  }
+}
+
+.dwp-restored {
+  padding: $gutter $gutter-half;
+  background-color: $grass-green-25;
+  border: 1px solid $grass-green;
+}
+
+.ie-warning {
+  color: $error-colour;
+  background: $error-background;
+}
+
+#global-cookie-message {
+  p {
+    max-width: 960px;
+    margin: auto;
+  }
+}

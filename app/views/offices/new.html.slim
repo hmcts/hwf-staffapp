@@ -1,8 +1,7 @@
 header
-  h2 New office
+  h2.heading-xlarge New office
 
 = render 'form', with_jurisdictions: false
 
-.row.pad-top-thirty-px
-  .columns.small-12
-    = link_to 'Back', offices_path
+ul.list
+  li= link_to 'Back', offices_path

@@ -13,18 +13,18 @@ module SummaryHelper
   private
 
   def build_header(summary_name, link_title, link_url)
-    content_tag(:div, class: 'row') do
-      content_tag(:div, class: 'small-12 medium-7 large-8 columns') do
-        content_tag(:h4, summary_name.to_s)
+    content_tag(:div, class: 'grid-row header-row') do
+      content_tag(:div, class: 'column-two-thirds') do
+        content_tag(:h4, summary_name.to_s, class: 'heading-medium util_mt-0')
       end + build_link(link_title, link_url)
     end
   end
 
   def build_link(link_title, link_url)
     if link_title.present? && link_url.present?
-      link_class = 'small-12 medium-5 large-4 columns medium-text-right large-text-right'
+      link_class = 'column-one-third'
       content_tag(:div, class: link_class) do
-        link_to(link_title, link_url)
+        link_to(link_title, link_url, class: 'right')
       end
     end
   end
@@ -34,17 +34,17 @@ module SummaryHelper
     value = object.send(field)
 
     unless value.blank?
-      rows = content_tag(:div, label, class: 'small-12 medium-5 large-4 columns subheader')
+      rows = content_tag(:div, label, class: 'column-one-third')
       rows << content_tag(:div, value, class: value_style(value))
 
-      content_tag(:div, class: 'row') do
+      content_tag(:div, class: 'grid-row') do
         rows
       end
     end
   end
 
   def value_style(value)
-    ['small-12 medium-7 large-8 columns',
+    ['column-two-thirds',
      (
       {
         '✓' => ' summary-result passed',

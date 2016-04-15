@@ -1,5 +1,5 @@
 header
-  h2 Check details
+  h2.heading-xlarge Check details
 
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
 
@@ -7,5 +7,5 @@ header
 =build_section 'Application details', @overview, %w[fee jurisdiction form_name emergency_reason], *change_link
 
 = form_for @overview.application, url: complete_online_application_path(@overview.application.id), method: :post do |f|
-  = f.submit 'Complete processing', :class => 'button primary large'
+  = f.submit 'Complete processing', :class => 'button'
 

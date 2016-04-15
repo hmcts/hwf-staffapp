@@ -1,0 +1,24 @@
+.next-steps {
+  padding-top: 0.75em;
+
+  li {
+    margin-bottom: 1.5em;
+
+    .inset {
+      display: table;
+      background-color: $grey-4;
+      border: 1px solid $grey-2;
+      padding: 1em;
+      margin-top: 0.75em;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  }
+}
+
+.list-pad {
+  li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

@@ -1,49 +1,42 @@
 = form_for @form, as: :application, url: application_income_save_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Income
+  .grid-row
+    .column-two-thirds
+      header
+        h2.heading-xlarge Income
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :dependents
-            = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
-            .options.radio
-              .option
-                label for='application_dependents_false'
-                  = f.radio_button :dependents, 'false', { class: 'show-hide-section', data: { section: 'children', show: 'false' } }
-                  = t('income_false', scope: @form.i18n_scope)
-              .option
-                label for='application_dependents_true'
-                  = f.radio_button :dependents, 'true', { class: 'show-hide-section', data: { section: 'children', show: 'true' } }
-                  = t('income_true', scope: @form.i18n_scope)
+        = f.label :dependents, class: 'form-label'
+        = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
+        .options.radio.cf
+          .option
+            label.block-label for='application_dependents_false'
+              = f.radio_button :dependents, 'false', { class: 'show-hide-section', data: { section: 'children', show: 'false' } }
+              = t('income_false', scope: @form.i18n_scope)
+          .option
+            label.block-label for='application_dependents_true'
+              = f.radio_button :dependents, 'true', { class: 'show-hide-section', data: { section: 'children', show: 'true' } }
+              = t('income_true', scope: @form.i18n_scope)
 
-      .row.collapse.panel-indent#children-only
-        .small-12.medium-6.large-6.columns.form-group
-          = f.label :children
-          = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
-          .row.collapse
-            .columns.small-4.medium-4.large-4
-              = f.text_field :children
-      .row.collapse.panel-indent#income-input
-        .small-12.medium-6.large-6.columns.form-group
-          = f.label :income
-          = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
-          .row.collapse.prefix-radius
-            .small-2.medium-4.large-3.columns
-              span.prefix
-                label.inline for='income' £
-            .small-10.medium-8.large-9.columns
+        .panel-indent.util_mt-tiny.util_mb-0#children-only
+          .form-group
+            = f.label :children, class: 'form-label'
+            = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
+            = f.text_field :children
+        .panel-indent.util_mt-tiny#income-input
+          .form-group
+            = f.label :income, class: 'form-label'
+            = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
+            .field-wrapper
+              span.currency £
               = f.text_field :income
 
       = f.submit 'Next', class: 'button primary'
 
-    .large-5.columns
+    .column-one-third
       .guidance
-        h4 Total monthly income
-        ul
+        h4.heading-medium.util_mt-medium Total monthly income
+        ul.lit.list-bullet
           li if the applicant is part of a couple they must have provided details of their partner’s income
           li add the 2 monthly income amounts and enter the result
           li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }

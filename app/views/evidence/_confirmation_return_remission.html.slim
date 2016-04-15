@@ -1,12 +1,10 @@
-.row
-  .small-12.medium-12.large-12.columns
-    .evidence-confirmation-letter
-      =t('letters.part-payment.send_part_payment_html',
-         full_name: confirmation.application.full_name,
-         reference: confirmation.application.reference,
-         current_user: current_user.name,
-         part_payment_amount: "£#{confirmation.amount_to_pay}",
-         total_income: "£#{confirmation.income}",
-         children: confirmation.application.children,
-         date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
-         )
+.evidence-confirmation-letter
+  =t('letters.part-payment.send_part_payment_html',
+     full_name: confirmation.application.full_name,
+     reference: confirmation.application.reference,
+     current_user: current_user.name,
+     part_payment_amount: "£#{confirmation.amount_to_pay}",
+     total_income: "£#{confirmation.income}",
+     children: confirmation.application.children,
+     date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
+     )
