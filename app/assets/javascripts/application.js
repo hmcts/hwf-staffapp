@@ -14,7 +14,6 @@
 // libraries
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 
 // vendor plugins
 //= require details.polyfill
@@ -33,9 +32,6 @@
 //= require fee_field
 
 $(function(){
-  Foundation.global.namespace = '';
-  $(document).foundation();
-
   // fire init method of moj module loader
   window.moj.init();
 });

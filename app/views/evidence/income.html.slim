@@ -1,30 +1,27 @@
 = form_for @form, as: :evidence, url: :evidence_income_save, method: :post, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Income
+  .grid-row
+    .column-two-thirds
+      header
+        h2.heading-xlarge Income
 
-  .row
-    .small-12.medium-8.large-5.columns
       .form-group
-        = f.label :income
+        = f.label :income, class: 'form-label'
         = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
-        .row.collapse.prefix-radius
-          .small-2.medium-4.large-3.columns
-            span.prefix
-              label.inline for='income' £
-          .small-10.medium-8.large-9.columns
-            = f.text_field :income
+        .field-wrapper
+          span.currency £
+          = f.text_field :income, class: 'form-control'
 
-          = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', :class => 'button primary'
 
-    .large-5.columns
+    .column-one-third
       .guidance
-        h4 Total monthly income
-        ul
-            li add up all the income from payslips and evidence (before tax and National Insurance)
-            li include their partner’s income (if they have one)
-            li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank'}
-            li check the total against the bank statements
+        h4.heading-medium.util_mt-medium Total monthly income
+        ul.list.list-bullet
+          li add up all the income from payslips and evidence (before tax and National Insurance)
+          li include their partner’s income (if they have one)
+          li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank'}
+          li check the total against the bank statements
 
         p = link_to 'Read more about how to calculate total monthly income from evidence', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'

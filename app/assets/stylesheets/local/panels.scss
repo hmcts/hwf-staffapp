@@ -1,0 +1,95 @@
+.panel {
+  border: solid 1px $grey-3;
+  margin-bottom: 1.25em;
+  padding: 1.25em;
+  background: $grey-4;
+
+  li, p, label {
+    font-size: 16px;
+  }
+
+  &.flexi {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .panel-inner {
+      flex-grow: 1;
+
+      > label,
+      > .field_with_errors >label {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.panel-indent {
+  clear: both;
+  border-left: 4px solid #bfc1c3;
+  padding: 10px 0 10px 15px;
+  margin: 30px 15px 45px 0;
+
+  ul {
+    margin-bottom: 0;
+  }
+
+  .panel-indent {
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+
+  .options + .start-hidden & {
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+}
+
+.guidance {
+  border-top: 5px solid $govuk-blue;
+  padding: 0 $gutter-half/2 0;
+  margin-top: 30px;
+}
+
+.callout {
+  padding: 30px 15px;
+  margin-bottom: 2em;
+  color: #ffffff;
+  background-color: $orange;
+
+  &.blue {
+    background-color: $govuk-blue;
+    color: $white;
+  }
+
+  h3 {
+    color: $page-colour;
+    margin: 0;
+    text-align: left;
+  }
+
+  &.not-received, &.no, &.callout-none, &.callout-error {
+    background-color: $error-colour;
+  }
+  &.received, &.yes, &.callout-full {
+    background-color: $turquoise;
+  }
+  &.callout-part, &.callout-evidence-check {
+    background: $orange;
+  }
+  &.evidence-check-reference {
+    background-color: $grey-1;
+    text-align: center;
+    padding: 30px;
+    .check {
+      display: inline-block;
+      padding-right: 15px;
+    }
+    .reference-number {
+      display: block;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}

@@ -11,5 +11,5 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w[ income_calculator.js ]
 
-# precompile the font assets for heroku deployment
+Rails.application.config.assets.precompile += %w[*.png *.ico]
 Rails.application.config.assets.precompile += %w[.svg .eot .woff .ttf]
