@@ -1,27 +1,25 @@
 header
-  h2 =t("#{state}_applications.index.title")
+  h2.heading-xlarge =t("#{state}_applications.index.title")
 
-.row
-  .small-12.medium-12.large-12.columns
-    - unless @applications.empty?
-      table *{class: "#{state}-applications"}
-        thead
-          tr
-            th =t('processed_applications.table_header.reference')
-            th =t('processed_applications.table_header.applicant')
-            th =t('processed_applications.table_header.date_received')
-            th =t('processed_applications.table_header.processed_on')
-            th =t('processed_applications.table_header.processed_by')
-            th =t('processed_applications.table_header.emergency')
-        tbody
-          - @applications.each do |application|
-            tr
-              td= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
-              td= application.applicant
-              td= application.date_received
-              td= application.processed_on
-              td= application.processed_by
-              td= application.emergency
+- unless @applications.empty?
+  table *{class: "#{state}-applications"}
+    thead
+      tr
+        th =t('processed_applications.table_header.reference')
+        th =t('processed_applications.table_header.applicant')
+        th =t('processed_applications.table_header.date_received')
+        th =t('processed_applications.table_header.processed_on')
+        th =t('processed_applications.table_header.processed_by')
+        th =t('processed_applications.table_header.emergency')
+    tbody
+      - @applications.each do |application|
+        tr
+          td= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
+          td= application.applicant
+          td= application.date_received
+          td= application.processed_on
+          td= application.processed_by
+          td= application.emergency
 
-    - else
-      p =t("#{state}_applications.index.no_applications")
+- else
+  p =t("#{state}_applications.index.no_applications")

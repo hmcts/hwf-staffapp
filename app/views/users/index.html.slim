@@ -1,7 +1,7 @@
 header
-  h2 Staff
+  h2.heading-xlarge Staff
 
-table
+table.util_mb-large
   thead
     tr
       th Full name
@@ -26,12 +26,9 @@ table
           - if policy(user).edit?
             =link_to 'Change details', edit_user_path(user)
 
-- if policy(:user).new?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      =link_to 'Add staff', new_user_invitation_path
+ul.list
+  - if policy(:user).new?
+    li= link_to 'Add staff', new_user_invitation_path
 
-- if policy(:user).list_deleted?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      =link_to 'List deleted users', deleted_users_path
+  - if policy(:user).list_deleted?
+    li= link_to 'List deleted users', deleted_users_path

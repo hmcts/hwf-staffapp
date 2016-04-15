@@ -15,7 +15,7 @@ RSpec.describe SummaryHelper, type: :helper do
       end
 
       it 'returns the correct html' do
-        expected = '<div class="summary-section"><div class="row"><div class="small-12 medium-7 large-8 columns"><h4>section name</h4></div></div><div class="row"><div class="small-12 medium-5 large-4 columns subheader">Fee</div><div class="small-12 medium-7 large-8 columns">£310</div></div></div>'
+        expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
         expect(helper.build_section('section name', view, %w[fee])).to eq(expected)
       end
 
@@ -24,7 +24,7 @@ RSpec.describe SummaryHelper, type: :helper do
         let(:url) { 'URL' }
 
         it 'returns the correct html' do
-          expected = "<div class=\"summary-section\"><div class=\"row\"><div class=\"small-12 medium-7 large-8 columns\"><h4>section name</h4></div><div class=\"small-12 medium-5 large-4 columns medium-text-right large-text-right\"><a href=\"#{url}\">#{title}</a></div></div><div class=\"row\"><div class=\"small-12 medium-5 large-4 columns subheader\">Fee</div><div class=\"small-12 medium-7 large-8 columns\">£310</div></div></div>"
+          expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
           expect(helper.build_section('section name', view, %w[fee], title, url)).to eq(expected)
         end
       end

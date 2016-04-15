@@ -83,7 +83,7 @@ en-GB:
       label_name: Name of office
   general:
     optional_html: '&nbsp; (optional)'
-    required_for_benefits: '&nbsp; (Must be completed for benefits based applications)'
+    required_for_benefits: 'Must be completed for benefits-based applications'
   footer:
     contact_us:
       heading: Contact us

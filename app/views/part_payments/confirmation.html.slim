@@ -1,16 +1,17 @@
-header
-  h2 Processing complete
+.grid-row
+  .column-two-thirds
+    header
+      h2.heading-xlarge Processing complete
 
-.row
-  .small-12.medium-8.large-5.columns
     - if @result.callout == 'no'
       = render('failed_letter', locals: { confirmation: @confirmation })
+
     = link_to 'Back to start', root_path, class: 'button'
 
-  .large-5.columns
+  .column-one-third
     .guidance
-      h4 Next steps
-      ul
+      h4.heading-medium.util_mt-medium Next steps
+      ul.list.list-bullet
         -if @result.callout == 'yes'
           li copy reference into the case management system
         - else

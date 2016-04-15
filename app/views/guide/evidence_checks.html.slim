@@ -1,14 +1,14 @@
 header
-  h2.guide-headline.guide-headline-evidence
+  h2.guide-headline.guide-headline-evidence.heading-xlarge
     span.hint.util_mb-0
       | Staff guide
     | Evidence checks
-  h4.guide-subheadline
+  p.lede
     | What to do when an application is marked for an evidence check.
 
-.row
-  .small-12.medium-4.large-4.columns
-    h5 Contents
+.grid-row
+  .column-one-third
+    h5.heading-medium.util_mt-medium Contents
     p
       a href='#intro' Introduction
     p
@@ -27,9 +27,9 @@ header
       a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
-  .small-12.medium-8.large-8.columns
+  .column-two-thirds
 
-    h3 id="intro" Introduction
+    h3.heading-large.util_mt-medium id="intro" Introduction
 
     p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
     p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
@@ -38,16 +38,16 @@ header
     p You won't be able to finish processing the application until you've received the evidence.
 
 
-    h3 id="before-start" Before you start
-    h5 When you receive the evidence:
-    ul
+    h3.heading-large id="before-start" Before you start
+    h5.heading-medium When you receive the evidence:
+    ul.list.list-bullet
       li check the name on the evidence matches the name on the application
       li check the evidence is dated within 3 months of receiving the application
       li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid)
 
-    h3 id="problems-evidence" Problems with the evidence
+    h3.heading-large id="problems-evidence" Problems with the evidence
     p You may not be able to process the evidence provided by an applicant. Common problems are:
-    ol
+    ol.list.list-number
       li the name on the evidence doesn't match the name of the applicant
       li the evidence is out of date
       li the applicant has not provided all evidence required
@@ -56,10 +56,10 @@ header
     p A letter will be generated for you to send to the applicant along with the evidence.
 
     .panel
-      h3 id="what-to-do" What to do
+      h3.heading-large.util_mt-0 id="what-to-do" What to do
 
-      h5 To process evidence:
-      ul
+      h5.heading-medium To process evidence:
+      ul.list.list-bullet
         li select the application from the list ‘Waiting for evidence’
         li select 'Process evidence'
         li calculate the applicant's total monthly income from the evidence received (not the application form)
@@ -67,27 +67,27 @@ header
         li get the result and follow the next steps to process the application
         li store the evidence securely, separate from the case file
 
-      h5 Returning evidence
+      h5.heading-medium Returning evidence
       p You should not return evidence to the applicant unless they ask for it and provide a stamped addressed envelope. Before returning evidence, make a photocopy and store it with the application.
 
-      h5 When no evidence is received after 14 calendar days:
-      ul
-        li select the application from the list 'Waiting for evidence' 
+      h5.heading-medium When no evidence is received after 14 calendar days:
+      ul.list.list-bullet
+        li select the application from the list 'Waiting for evidence'
         li click 'What to do if the evidence can't be processed' and 'Return application'
-        li a letter to the applicant will be generated for you to copy and paste 
-        li send this letter and the application back to the applicant 
-        li the application will be removed from the list 'Waiting for evidence' 
+        li a letter to the applicant will be generated for you to copy and paste
+        li send this letter and the application back to the applicant
+        li the application will be removed from the list 'Waiting for evidence'
 
-    h3 id="calculate" How to calculate total monthly income
-    h5 You need to:
-    ul
+    h3.heading-large id="calculate" How to calculate total monthly income
+    h5.heading-medium You need to:
+    ul.list.list-bullet
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
       li include their partner’s income (if they have one)
       li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income')}
       li check the total against the bank statements
 
-    h3 id="not-include" What not to include as income
-    ul
+    h3.heading-large id="not-include" What not to include as income
+    ul.list.list-bullet
       li
         | #{link_to '6 benefits', guide_process_application_path(anchor: 'benefits')} <br>
         | that qualify for benefits-based applications
@@ -98,9 +98,9 @@ header
         | such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit.
 
 
-    h3 id="sources" Sources of evidence
+    h3.heading-large id="sources" Sources of evidence
 
-    table
+    table.guide-table
       tbody
         tr
           th
@@ -180,43 +180,37 @@ header
             p Prisoners should provide a Prisoner Income and Expenditure Statement (PIES). This shows the amount of their earnings, spending, private cash and savings.
             p If the prisoner is in a private prison the format of their financial statement may be slightly different. You need to check details of earnings and private cash.
 
-    h3 id="non-english" Evidence in languages other than English
+    h3.heading-large id="non-english" Evidence in languages other than English
     p Evidence must be supplied in English. However, courts and tribunals in Wales can also accept evidence in Welsh.
     p If the original evidence is in another language, then it must be provided along with a certified translation.
 
-.row
-  .small-12.columns
-    .panel.callout.blue
-      h4 style="color:white; font-weight:normal;" id="more-guides" More guides
+.panel.callout.blue.util_mt-large
+  h4.heading-medium.util_margin-0.text-left id="more-guides" More guides
 
-.row
-  .small-12.columns
-    ul.small-block-grid-2.medium-block-grid-4
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_process_application_path
-              span Process application
-              = image_tag("icon-process.png")
+ul.block-grid.small-block-grid-2.medium-block-grid-4
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_process_application_path
+          span Process application
+          = image_tag("icon-process.png")
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_part_payments_path
+          span Part payments
+          = image_tag("icon-part-fee.png")
 
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_part_payments_path
-              span Part payments
-              = image_tag("icon-part-fee.png")
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_appeals_path
+          span Appeals
+          = image_tag("icon-appeals.png")
 
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_appeals_path
-              span Appeals
-              = image_tag("icon-appeals.png")
-
-      li
-        .panel.guide-cols
-          h5
-            = link_to guide_suspected_fraud_path
-              span Suspected fraud
-              = image_tag("icon-fraud.png")
-
+  li
+    .panel.guide-cols
+      h5
+        = link_to guide_suspected_fraud_path
+          span Suspected fraud
+          = image_tag("icon-fraud.png")

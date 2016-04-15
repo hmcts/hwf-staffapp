@@ -1,69 +1,63 @@
 = form_for @form, as: :online_application, url: online_application_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  header
-    h2 Application details
+  .grid-row
+    .column-two-thirds
+      header
+        h2.heading-xlarge Application details
 
-  .row
-    .small-12.medium-8.large-5.columns
-      .row.collapse.prefix-radius
-        h4 Full name
-        p= @online_application.full_name
+      p.util_mb-0 Full name
+      p: strong= @online_application.full_name
 
       .form-group
-        = f.label :fee
+        = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
-        .row.collapse.prefix-radius
-          .small-2.medium-2.large-2.columns
-            span.prefix
-              = f.label :fee, '£', class: 'inline'
-          .small-10.medium-10.large-10.columns
-            = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control small-field' }
+        .field-wrapper
+          span.currency £
+          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
 
       .form-group
-        .row.collapse
-          .columns.small-12
-            = f.label :jurisdiction_id
-            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
-            = f.hidden_field :jurisdiction_id, value: nil
-            - if @jurisdictions.present?
-              .options.radio
-                =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-                  .option
-                    = b.label do
-                      = b.radio_button(class: 'form-control', data: @form.jurisdiction_id)
-                      = b.text
-            - else
-              = t('error_messages.jurisdictions.none_in_office')
+        = f.label :jurisdiction_id, class: 'form-label'
+        = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+        = f.hidden_field :jurisdiction_id, value: nil
+        - if @jurisdictions.present?
+          .options.radio.cf
+            =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+              .option
+                = b.label class: 'block-label' do
+                  = b.radio_button(data: @form.jurisdiction_id)
+                  = b.text
+        - else
+          = t('error_messages.jurisdictions.none_in_office')
 
       .form-group
-        = f.label :form_name
+        = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
       .form-group
-        .options.radio
+        .options.radio.cf
           .option
-            = f.label :emergency
+            = f.label :emergency, class: 'block-label'
               = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
               = t('emergency', scope: @form.i18n_scope)
 
-      #emergency-only.start-hidden
-        .form-group.panel-indent
-          = f.label :emergency_reason
-          = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-          = f.text_area :emergency_reason, { class: 'form-control' }
+        #emergency-only.start-hidden
+          .form-group.panel-indent
+            = f.label :emergency_reason, class: 'form-label'
+            = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+            = f.text_area :emergency_reason, { class: 'form-control' }
 
       = f.submit 'Next', class: 'button primary'
 
-    .large-5.columns
+    .column-one-third
       .guidance
-        h4 Emergency cases
+        h4.heading-medium.util_mt-medium Emergency cases
 
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
 
-        h5 Example of emergency cases:
-        ul
+        h5.heading-small Example of emergency cases:
+        ul.list.list-bullet
           li suspending an eviction
           li debtor insolvency petition
           li children or vulnerable adults

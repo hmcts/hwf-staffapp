@@ -1,12 +1,9 @@
 header
-  h2 Change office details
+  h2.heading-xlarge Change office details
 
 = render 'form', with_jurisdictions: true
 
-.row.pad-top-thirty-px
-  .columns.small-12
-    =link_to 'Show this office', @office
--unless current_user.manager?
-  .row.pad-top-fifteen-px
-    .columns.small-12
-      =link_to 'Back to list of offices', offices_path
+ul
+  li=link_to 'Show this office', @office
+  -unless current_user.manager?
+    li=link_to 'Back to list of offices', offices_path

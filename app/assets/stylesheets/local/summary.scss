@@ -1,11 +1,9 @@
-@import 'colours';
-
 div.summary-section {
   border-bottom: solid 1px $grey-2;
-  margin-bottom: 1em;
+  margin-bottom: 30px;
   padding-bottom: .5em;
 
-  .summary-result{
+  .summary-result {
     font-weight: bold;
     &.full, &.passed {
       color: $turquoise;
@@ -16,5 +14,13 @@ div.summary-section {
     &.none, &.failed {
       color: $error-colour;
     }
+  }
+
+  .grid-row {
+    padding-bottom: 10px;
+  }
+
+  .header-row {
+    padding-bottom: 0;
   }
 }
