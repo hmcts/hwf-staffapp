@@ -57,81 +57,8 @@ RSpec.describe Forms::Application::Detail do
         described_class.new(params)
       end
 
-      describe 'presence' do
-        before do
-          application_details.date_received = nil
-          application_details.valid?
-        end
-
-        it 'is required' do
-          expect(application_details).to be_invalid
-        end
-
-        it 'returns an error message, if omitted' do
-          expect(application_details.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY']
-        end
-      end
-
-      context 'when the format is invalid' do
-        before do
-          Timecop.freeze(Time.zone.local(2015, 12, 1, 10, 10, 10)) do
-            application_details.date_received = '32/09/2015'
-            application_details.valid?
-          end
-        end
-
-        it 'sets an error on date_received field' do
-          expect(application_details.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY']
-        end
-      end
-
-      context 'when the format is valid' do
-        describe 'range' do
-          context 'is enforced' do
-            before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
-            after { Timecop.return }
-
-            it 'allows today' do
-              application_details.date_received = Time.zone.local(2014, 10, 1)
-              expect(application_details).to be_valid
-            end
-
-            it 'allows 3 months ago' do
-              application_details.date_received = Time.zone.local(2014, 7, 1, 0, 30)
-              expect(application_details).to be_valid
-            end
-
-            describe 'maximum' do
-              before do
-                application_details.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0)
-                application_details.valid?
-              end
-
-              it 'is 3 months' do
-                expect(application_details).to be_invalid
-              end
-
-              it 'returns an error if exceeded' do
-                expect(application_details.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
-              end
-            end
-
-            describe 'minimum' do
-              before do
-                application_details.date_received = Date.new(2014, 10, 2)
-                application_details.valid?
-              end
-
-              it 'is today' do
-                expect(application_details).to be_invalid
-              end
-
-              it 'returns an error if too low' do
-                expect(application_details.errors[:date_received]).to eq ["This date can't be in the future"]
-              end
-            end
-          end
-        end
+      include_examples 'date_received validation' do
+        let(:form) { application_details }
       end
     end
 

@@ -434,6 +434,11 @@ en-GB:
               not_a_number: The fee should be numeric
             jurisdiction_id:
               blank: You must select a jurisdiction
+            date_received:
+              blank: Enter the date
+              not_a_date: Enter the date in this format DD/MM/YYYY
+              after_or_equal_to: The application must have been made in the last 3 months
+              before: This date can't be in the future
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: "is too long, it needs to be less than 500 characters"

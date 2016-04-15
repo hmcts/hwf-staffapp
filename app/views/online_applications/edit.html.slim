@@ -30,6 +30,11 @@
           = t('error_messages.jurisdictions.none_in_office')
 
       .form-group
+        = f.label :date_received, class: 'form-label'
+        = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
+        = f.text_field :date_received, { class: 'form-control' }
+
+      .form-group
         = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?

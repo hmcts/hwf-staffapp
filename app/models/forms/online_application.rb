@@ -3,6 +3,7 @@ module Forms
     def self.permitted_attributes
       { fee: Integer,
         jurisdiction_id: Integer,
+        date_received: Date,
         form_name: String,
         emergency: Boolean,
         emergency_reason: String }
@@ -15,9 +16,24 @@ module Forms
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
 
+    validates :date_received, date: {
+      after_or_equal_to: :min_date,
+      before: :tomorrow
+    }
+
     def initialize(online_application)
       super(online_application)
       self.emergency = true if emergency_reason.present?
+    end
+
+    private
+
+    def min_date
+      3.months.ago.midnight
+    end
+
+    def tomorrow
+      Time.zone.tomorrow
     end
 
     def persist!
@@ -25,9 +41,18 @@ module Forms
     end
 
     def fields_to_update
-      { fee: fee, jurisdiction_id: jurisdiction_id, form_name: form_name }.tap do |fields|
+      fixed_fields.tap do |fields|
         fields[:emergency_reason] = (emergency ? emergency_reason : nil)
       end
+    end
+
+    def fixed_fields
+      {
+        fee: fee,
+        jurisdiction_id: jurisdiction_id,
+        date_received: date_received,
+        form_name: form_name
+      }
     end
   end
 end

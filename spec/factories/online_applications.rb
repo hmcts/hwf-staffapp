@@ -41,6 +41,7 @@ FactoryGirl.define do
     trait :completed do
       fee 450
       jurisdiction
+      date_received Time.zone.yesterday
       emergency_reason 'EMERGENCY'
     end
 
