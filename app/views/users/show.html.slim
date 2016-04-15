@@ -19,7 +19,7 @@ table.util_mb-large
     td
       =@user.jurisdiction.name if @user.jurisdiction.present?
 
-ul.list
+ul.list.list-pad
   li= link_to 'Change details', edit_user_path(@user)
   - if current_user == @user
     li= link_to "Change your password", edit_user_registration_path(@user)
