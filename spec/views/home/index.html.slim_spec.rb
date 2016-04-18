@@ -12,6 +12,7 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:report_graphs?) { false }
   let(:report_index?) { false }
   let(:office_index?) { false }
+  let(:dwp_state) { 'online' }
 
   before do
     allow(view).to receive(:policy).with(:application).and_return(double(new?: application_new?, index?: application_index?))
@@ -19,7 +20,7 @@ RSpec.describe "home/index.html.slim", type: :view do
     allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
 
     sign_in user
-    assign(:state, 'online')
+    assign(:state, dwp_state)
     assign(:search_form, double(errors: {}, reference: nil))
     render
   end
@@ -146,6 +147,24 @@ RSpec.describe "home/index.html.slim", type: :view do
       it 'are not rendered' do
         is_expected.not_to have_xpath('//h2', text: 'Total')
       end
+    end
+  end
+
+  describe 'DWP banner' do
+    context 'when the service is online' do
+      it { is_expected.to have_content I18n.t('error_messages.dwp_restored') }
+    end
+
+    context 'when the service is failing or restoring' do
+      let(:dwp_state) { 'warning' }
+
+      it { is_expected.to have_content I18n.t('error_messages.dwp_warning') }
+    end
+
+    context 'when the service is offline' do
+      let(:dwp_state) { 'offline' }
+
+      it { is_expected.to have_content I18n.t('error_messages.dwp_unavailable') }
     end
   end
 end

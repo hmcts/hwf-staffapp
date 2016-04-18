@@ -1,7 +1,6 @@
 =content_for(:head_scripts) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
-/.page-error = t('error_messages.dwp_unavailable')
-.dwp-restored.util_mt-medium =t('error_messages.dwp_restored')
+=render("shared/dwp/#{@state}")
 
 .grid-row.equal-heightboxes.util_mt-medium
   - if policy(:application).new?
