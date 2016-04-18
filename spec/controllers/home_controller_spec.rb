@@ -10,6 +10,49 @@ RSpec.describe HomeController, type: :controller do
 
   describe 'GET #index' do
     context 'when the user is authenticated' do
+      describe 'DWP status banner' do
+
+        before { sign_in staff }
+
+        subject { assigns(:state) }
+
+        context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
+          before do
+            build_with_bad_requests(8, 2)
+            get :index
+          end
+
+          it { is_expected.to eql 'online' }
+        end
+
+        context 'when more than 25% of the last dwp_results are "400 Bad Request"' do
+          before do
+            build_with_bad_requests(6, 4)
+            get :index
+          end
+
+          it { is_expected.to eql 'warning' }
+        end
+
+        context 'checks for "Server broke connection" messages too' do
+          before do
+            build_both_errors
+            get :index
+          end
+
+          it { is_expected.to eql 'warning' }
+        end
+
+        context 'when more than 50% of the last dwp_results are "400 Bad Request"' do
+          before do
+            build_with_bad_requests
+            get :index
+          end
+
+          it { is_expected.to eql 'offline' }
+        end
+      end
+
       context 'as a user' do
 
         before(:each) do

@@ -10,38 +10,25 @@ describe DwpMonitor do
       subject { service.state }
 
       context 'when more than 50% of the last dwp_results are "400 Bad Request"' do
-        before do
-          create_list :benefit_check, 5, :yes_result
-          create_list :benefit_check, 5, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
-        end
+        before { build_with_bad_requests }
 
         it { is_expected.to eql 'offline' }
       end
 
       context 'when more than 25% of the last dwp_results are "400 Bad Request"' do
-        before do
-          create_list :benefit_check, 6, :yes_result
-          create_list :benefit_check, 4, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
-        end
+        before { build_with_bad_requests(6, 4) }
 
         it { is_expected.to eql 'warning' }
       end
 
       context 'checks for "Server broke connection" messages too' do
-        before do
-          create_list :benefit_check, 6, :yes_result
-          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
-          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
-        end
+        before { build_both_errors }
 
         it { is_expected.to eql 'warning' }
       end
 
       context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
-        before do
-          create_list :benefit_check, 8, :yes_result
-          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
-        end
+        before { build_with_bad_requests(8, 2) }
 
         it { is_expected.to eql 'online' }
       end
