@@ -1,12 +1,12 @@
 module DwpSetup
 
-  def build_with_bad_requests(yes_response = 5, bad_requests = 5)
+  def build_dwp_checks_with_bad_requests(yes_response = 5, bad_requests = 5)
     teardown
     create_list :benefit_check, yes_response, :yes_result
     create_list :benefit_check, bad_requests, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
   end
 
-  def build_both_errors
+  def build_dwp_checks_with_both_errors
     teardown
     create_list :benefit_check, 6, :yes_result
     create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
