@@ -18,7 +18,7 @@ RSpec.describe HomeController, type: :controller do
 
         context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
           before do
-            build_with_bad_requests(8, 2)
+            build_dwp_checks_with_bad_requests(8, 2)
             get :index
           end
 
@@ -27,7 +27,7 @@ RSpec.describe HomeController, type: :controller do
 
         context 'when more than 25% of the last dwp_results are "400 Bad Request"' do
           before do
-            build_with_bad_requests(6, 4)
+            build_dwp_checks_with_bad_requests(6, 4)
             get :index
           end
 
@@ -36,7 +36,7 @@ RSpec.describe HomeController, type: :controller do
 
         context 'checks for "Server broke connection" messages too' do
           before do
-            build_both_errors
+            build_dwp_checks_with_both_errors
             get :index
           end
 
@@ -45,7 +45,7 @@ RSpec.describe HomeController, type: :controller do
 
         context 'when more than 50% of the last dwp_results are "400 Bad Request"' do
           before do
-            build_with_bad_requests
+            build_dwp_checks_with_bad_requests
             get :index
           end
 
