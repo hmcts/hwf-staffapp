@@ -19,8 +19,7 @@ class User < ActiveRecord::Base
 
   scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
 
-  email_regex =
-    /\A([^@\s]+)@(justice\.gsi|hmcourts-service\.gsi|hmcts\.gsi|digital\.justice)\.gov\.uk\z/i
+  email_regex = /\A([^@\s]+)@((justice|hmcourts-service|hmcts)\.gsi|digital\.justice)\.gov\.uk\z/i
   validates :role, :name, presence: true
   validates :email, format: {
     with: email_regex,
