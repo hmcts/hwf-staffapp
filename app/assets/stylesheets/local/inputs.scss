@@ -24,7 +24,7 @@ input::-webkit-inner-spin-button {
 }
 
 .error .form-control {
-  border: 1px solid #bfc1c3;
+  border: 1px solid $grey-2;
 }
 
 .error > .form-control {
@@ -41,7 +41,33 @@ input::-webkit-inner-spin-button {
 
 select {
   font-size: 19px;
-  border: 1px solid #bfc1c3;
+  border: 1px solid $grey-2;
   padding: 4px;
   display: block;
+}
+
+
+
+.field-wrapper {
+  border: 1px solid $grey-2;
+  width: auto;
+
+  display: inline-block;
+
+
+  .currency {
+    padding: 5px 10px;
+    background-color: $grey-3;
+    float: left;
+  }
+
+  input {
+    @include core-19;
+    line-height: 25px;
+    border: none;
+    width: auto;
+    background-color: $white;
+    float: left;
+    padding: 5px 4px 3px 9px;
+  }
 }
