@@ -22,6 +22,10 @@ class HomeController < ApplicationController
     end
   end
 
+  helper_method def dwp_maintenance?
+    Time.zone.now < Time.zone.parse('24/04/2016 20:00:00')
+  end
+
   private
 
   def manager_setup_progress

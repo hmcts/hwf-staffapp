@@ -4,9 +4,15 @@ RSpec.describe "home/index.html.slim", type: :view do
 
   include Devise::TestHelpers
 
+  module DwpMaintenanceHelper
+    def dwp_maintenance?
+    end
+  end
+
   let(:office) { create :office }
   let(:user) { create :user, office: office }
 
+  let(:dwp_maintenance) { false }
   let(:application_new?) { false }
   let(:application_index?) { false }
   let(:report_graphs?) { false }
@@ -18,6 +24,8 @@ RSpec.describe "home/index.html.slim", type: :view do
     allow(view).to receive(:policy).with(:application).and_return(double(new?: application_new?, index?: application_index?))
     allow(view).to receive(:policy).with(:report).and_return(double(index?: report_index?, graphs?: report_graphs?))
     allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
+    view.extend(DwpMaintenanceHelper)
+    allow(view).to receive(:dwp_maintenance?).and_return(dwp_maintenance)
 
     sign_in user
     assign(:state, dwp_state)
@@ -151,20 +159,28 @@ RSpec.describe "home/index.html.slim", type: :view do
   end
 
   describe 'DWP banner' do
-    context 'when the service is online' do
-      it { is_expected.to have_content I18n.t('error_messages.dwp_restored') }
+    context 'when the dwp maintenance is off' do
+      context 'when the service is online' do
+        it { is_expected.to have_content I18n.t('error_messages.dwp_restored') }
+      end
+
+      context 'when the service is failing or restoring' do
+        let(:dwp_state) { 'warning' }
+
+        it { is_expected.to have_content I18n.t('error_messages.dwp_warning') }
+      end
+
+      context 'when the service is offline' do
+        let(:dwp_state) { 'offline' }
+
+        it { is_expected.to have_content I18n.t('error_messages.dwp_unavailable') }
+      end
     end
 
-    context 'when the service is failing or restoring' do
-      let(:dwp_state) { 'warning' }
+    context 'when the dwp maintenance is on' do
+      let(:dwp_maintenance) { true }
 
-      it { is_expected.to have_content I18n.t('error_messages.dwp_warning') }
-    end
-
-    context 'when the service is offline' do
-      let(:dwp_state) { 'offline' }
-
-      it { is_expected.to have_content I18n.t('error_messages.dwp_unavailable') }
+      it { is_expected.to have_content I18n.t('error_messages.dwp_maintenance') }
     end
   end
 end

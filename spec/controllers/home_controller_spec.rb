@@ -180,4 +180,24 @@ RSpec.describe HomeController, type: :controller do
       end
     end
   end
+
+  describe '#dwp_maintenance?' do
+    subject do
+      Timecop.freeze(current_time) do
+        controller.dwp_maintenance?
+      end
+    end
+
+    context 'when the current time is before 7am 25th April 2016' do
+      let(:current_time) { Time.zone.parse('23/04/2016 13:00:00') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the current time is at or after 8pm 24th April 2016' do
+      let(:current_time) { Time.zone.parse('24/04/2016 20:00:00') }
+
+      it { is_expected.to be false }
+    end
+  end
 end

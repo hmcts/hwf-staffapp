@@ -1,6 +1,9 @@
 =content_for(:head_scripts) { javascript_include_tag '//www.google.com/jsapi', 'chartkick' }
 
-=render("shared/dwp/#{@state}")
+- if dwp_maintenance?
+  =render("shared/dwp/maintenance")
+- else
+  =render("shared/dwp/#{@state}")
 
 .grid-row.equal-heightboxes.util_mt-medium
   - if policy(:application).new?
