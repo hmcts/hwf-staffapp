@@ -11,7 +11,6 @@ class HomeController < ApplicationController
 
   def search
     @search_form = Forms::Search.new(search_params)
-
     online_application = search_and_return
     if online_application
       redirect_to(edit_online_application_path(online_application))
@@ -73,12 +72,18 @@ class HomeController < ApplicationController
 
   def search_and_return
     if @search_form.valid?
-      begin
-        OnlineApplication.find_by!(reference: @search_form.reference.upcase)
-      rescue ActiveRecord::RecordNotFound
-        @search_form.errors.add(:reference, :not_found)
-        nil
+      @search = ApplicationSearch.new(@search_form.reference.upcase, current_user)
+      @matched = @search.for_hwf
+      if @matched.is_a? OnlineApplication
+        return @matched
+      else
+        @search_form.errors.add(:reference, @search.error_message)
       end
+      return nil
     end
+  end
+
+  def can_show(application)
+    application.office == current_user.office
   end
 end
