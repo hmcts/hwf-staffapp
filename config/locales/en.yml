@@ -428,6 +428,8 @@ en-GB:
             reference:
               blank: 'Must not be blank'
               not_found: 'Application not found'
+              processed_html: 'Has been processed, <a href="%{application_path}">click to display</a>'
+              processed_by: 'Has been processed by %{office_name}'
         forms/online_application:
           attributes:
             fee:
