@@ -29,7 +29,7 @@
           h3.heading-medium.util_mt-0 Process an online application
           .form-group.panel-inner
             = f.label :reference, class: 'form-label'
-            = f.label :reference, @search_form.errors[:reference].join(', '), class: 'error' if @search_form.errors[:reference].present?
+            = f.label :reference, @search_form.errors[:reference].join('').html_safe, class: 'error' if @search_form.errors[:reference].present?
             = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off' }
           .util_mt-0
             = f.submit 'Look up', class: 'button util_margin-0'
