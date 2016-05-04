@@ -181,7 +181,6 @@ en-GB:
         - 'Write the reference number on the top right corner of the paper form'
         - 'Write to the applicant using the letter on this page to ask for evidence'
         - 'Store the application form in a secure location until you receive the evidence'
-        - "You don't need to complete the remission register until evidence has been received"
   activemodel:
     attributes:
       evidence/forms/income:

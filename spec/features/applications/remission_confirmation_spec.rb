@@ -27,7 +27,6 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
       let(:part_remission_copy) do
         ['Write to the applicant with details of how much they have to pay',
          'Store the application form in a secure location until you receive the part-payment',
-         "You don't need to complete the remission register until part-payment has been received",
          'Write the reference number on the top right corner of the paper form']
       end
 
