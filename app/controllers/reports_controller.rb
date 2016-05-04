@@ -28,6 +28,7 @@ class ReportsController < ApplicationController
 
   def public
     authorize :report, :public?
+    @data = Views::Reports::PublicSubmissionData.new
   end
 
   private
