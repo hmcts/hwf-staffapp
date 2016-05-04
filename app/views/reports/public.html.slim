@@ -1,3 +1,50 @@
 header
   h2.heading-xlarge Public application stats
 
+.grid-row.equal-heightboxes.util_mt-medium
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Public applications to date
+        .panel-inner
+          h4.heading-xlarge =@data.submission_all_time_total
+
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Public applications last 7 days
+        .panel-inner
+          h4.heading-xlarge =@data.submission_seven_day_total
+
+.grid-row.equal-heightboxes.util_mt-medium
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Court processed to date
+        .panel-inner
+          table
+            thead
+              tr
+                th Court
+                th Number
+            tbody
+              -@data.submission_all_time.each do |court|
+                tr
+                  td =court[0]
+                  td =court[1]
+
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Court processed last 7 days
+        .panel-inner
+          table
+            thead
+              tr
+                th Court
+                th Number
+            tbody
+              -@data.submission_seven_day.each do |court|
+                tr
+                  td =court[0]
+                  td =court[1]
