@@ -10,4 +10,8 @@ class ReportPolicy < BasePolicy
   def graphs?
     admin?
   end
+
+  def public?
+    admin?
+  end
 end

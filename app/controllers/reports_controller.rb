@@ -26,6 +26,10 @@ class ReportsController < ApplicationController
     load_graph_data
   end
 
+  def public
+    authorize :report, :public?
+  end
+
   private
 
   def form
