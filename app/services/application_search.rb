@@ -9,6 +9,7 @@ class ApplicationSearch
 
   def for_hwf
     return unless @reference.present?
+    @reference.upcase!
     return false if application_exists_and_user_can_access
     return false if application_exists_and_user_cannot_access
 
@@ -40,7 +41,7 @@ class ApplicationSearch
   end
 
   def user_can_access
-    @application.office == @current_user.office
+    ApplicationPolicy.new(@current_user, @application).show?
   end
 
   def online_application_exists
