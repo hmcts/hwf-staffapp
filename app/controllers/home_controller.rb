@@ -72,18 +72,14 @@ class HomeController < ApplicationController
 
   def search_and_return
     if @search_form.valid?
-      @search = ApplicationSearch.new(@search_form.reference.upcase, current_user)
-      @matched = @search.for_hwf
-      if @matched.is_a? OnlineApplication
-        return @matched
+      search = ApplicationSearch.new(@search_form.reference, current_user)
+      matched = search.for_hwf
+      if matched.is_a? OnlineApplication
+        return matched
       else
-        @search_form.errors.add(:reference, @search.error_message)
+        @search_form.errors.add(:reference, search.error_message)
       end
       return nil
     end
-  end
-
-  def can_show(application)
-    application.office == current_user.office
   end
 end
