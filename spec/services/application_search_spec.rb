@@ -40,7 +40,7 @@ RSpec.describe ApplicationSearch do
       it { is_expected.to eql false }
 
       it 'sets the correct error message' do
-        expect(service.error_message).to include('click to display')
+        expect(service.error_message).to include('view application')
       end
     end
 
