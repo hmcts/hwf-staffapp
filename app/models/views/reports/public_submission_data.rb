@@ -30,6 +30,27 @@ module Views
           order('count_all DESC').
           count
       end
+
+      def submission_total_time_taken
+        @applications.
+          joins(:online_application).
+          group('offices.name').
+          pluck(
+            :name,
+            'cast(AVG(applications.completed_at-online_applications.created_at) as text)'
+          )
+      end
+
+      def submission_seven_day_time_taken
+        @applications.
+          joins(:online_application).
+          where('applications.created_at > ?', (Time.zone.today.-6.days)).
+          group('offices.name').
+          pluck(
+            :name,
+            'cast(AVG(applications.completed_at-online_applications.created_at) as text)'
+          )
+      end
     end
   end
 end

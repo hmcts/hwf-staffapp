@@ -28,4 +28,16 @@ RSpec.describe Views::Reports::PublicSubmissionData do
 
     it { is_expected.to be_a Hash }
   end
+
+  describe '#submission_total_time_taken' do
+    subject { data.submission_total_time_taken }
+
+    it { is_expected.to be_a Array }
+  end
+
+  describe '#submission_seven_day_time_taken' do
+    subject { data.submission_seven_day_time_taken }
+
+    it { is_expected.to be_a Array }
+  end
 end

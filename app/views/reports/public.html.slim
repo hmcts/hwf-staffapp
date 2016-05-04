@@ -7,20 +7,20 @@ header
       .panel.flexi
         h3.heading-medium.util_mt-0 Public applications to date
         .panel-inner
-          h4.heading-xlarge =@data.submission_all_time_total
+          h4.heading-xlarge.util_mt-0.util_mb-small =@data.submission_all_time_total
 
   .column-one-half
     .util_pt-medium
       .panel.flexi
         h3.heading-medium.util_mt-0 Public applications last 7 days
         .panel-inner
-          h4.heading-xlarge =@data.submission_seven_day_total
+          h4.heading-xlarge.util_mt-0.util_mb-small =@data.submission_seven_day_total
 
 .grid-row.equal-heightboxes.util_mt-medium
   .column-one-half
     .util_pt-medium
       .panel.flexi
-        h3.heading-medium.util_mt-0 Court processed to date
+        h3.heading-medium.util_mt-0 Processed to date
         .panel-inner
           table
             thead
@@ -36,7 +36,7 @@ header
   .column-one-half
     .util_pt-medium
       .panel.flexi
-        h3.heading-medium.util_mt-0 Court processed last 7 days
+        h3.heading-medium.util_mt-0 Processed last 7 days
         .panel-inner
           table
             thead
@@ -48,3 +48,36 @@ header
                 tr
                   td =court[0]
                   td =court[1]
+
+.grid-row.equal-heightboxes.util_mt-medium
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Average processing time to date
+        .panel-inner
+          table
+            thead
+              tr
+                th Court
+                th Time (hh:mm:ss)
+            tbody
+              -@data.submission_total_time_taken.each do |court|
+                tr
+                  td =court[0]
+                  td =court[1][0...-7]
+
+  .column-one-half
+    .util_pt-medium
+      .panel.flexi
+        h3.heading-medium.util_mt-0 Average processing time last 7 days
+        .panel-inner
+          table
+            thead
+              tr
+                th Court
+                th Time (hh:mm:ss)
+            tbody
+              -@data.submission_seven_day_time_taken.each do |court|
+                tr
+                  td =court[0]
+                  td =court[1][0...-7]
