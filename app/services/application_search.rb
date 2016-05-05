@@ -41,7 +41,7 @@ class ApplicationSearch
   end
 
   def user_can_access
-    ApplicationPolicy.new(@current_user, @application).show?
+    Pundit.policy(@current_user, @application).show?
   end
 
   def online_application_exists
