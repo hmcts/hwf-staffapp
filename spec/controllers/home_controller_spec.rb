@@ -125,10 +125,12 @@ RSpec.describe HomeController, type: :controller do
 
   describe 'POST #search' do
     let(:online_application) { build_stubbed(:online_application, :with_reference) }
+    let(:application) { nil }
 
     before do
-      allow(OnlineApplication).to receive(:find_by!).with(reference: online_application.reference).and_return(online_application)
-      allow(OnlineApplication).to receive(:find_by!).with(reference: 'WRONG').and_raise(ActiveRecord::RecordNotFound)
+      allow(OnlineApplication).to receive(:find_by).with(reference: online_application.reference).and_return(online_application)
+      allow(OnlineApplication).to receive(:find_by).with(reference: 'WRONG').and_return(nil)
+      allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application) unless application.nil?
 
       sign_in(user)
       post :search, search: search_params
@@ -176,6 +178,15 @@ RSpec.describe HomeController, type: :controller do
 
         it 'does not assign the DwpMonitor state' do
           expect(assigns(:state)).to be nil
+        end
+      end
+
+      context 'when an application exists with the reference' do
+        let(:reference) { online_application.reference }
+        let(:application) { build_stubbed(:application, reference: online_application.reference, office: user.office) }
+
+        it 'renders the index template' do
+          expect(response).to render_template(:index)
         end
       end
     end
