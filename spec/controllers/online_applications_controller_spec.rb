@@ -19,7 +19,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   describe 'GET #edit' do
     let(:params) { { jurisdiction_id: user.jurisdiction_id } }
     before do
-      allow(form).to receive(:update_attributes).with(params)
+      allow(form).to receive(:enable_default_jurisdiction).with(user)
       allow(form).to receive(:jurisdiction_id).and_return(user.jurisdiction_id)
       get :edit, id: id
     end
