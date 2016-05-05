@@ -17,7 +17,10 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    let(:params) { { jurisdiction_id: user.jurisdiction_id } }
     before do
+      allow(form).to receive(:enable_default_jurisdiction).with(user)
+      allow(form).to receive(:jurisdiction_id).and_return(user.jurisdiction_id)
       get :edit, id: id
     end
 
@@ -46,6 +49,18 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'assigns the user\'s office jurisdictions' do
         expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
+      end
+
+      it 'sets the jurisdiction of the new object' do
+        expect(assigns(:form).jurisdiction_id).to eq user.jurisdiction_id
+      end
+
+      context 'when the user does not have a default jurisdiction' do
+        let(:user) { create :user, jurisdiction_id: nil }
+
+        it 'sets the jurisdiction of the new object' do
+          expect(assigns(:form).jurisdiction_id).to be_nil
+        end
       end
     end
   end

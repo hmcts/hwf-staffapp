@@ -26,6 +26,10 @@ module Forms
       self.emergency = true if emergency_reason.present?
     end
 
+    def enable_default_jurisdiction(user)
+      self.jurisdiction_id = user.jurisdiction_id
+    end
+
     private
 
     def min_date

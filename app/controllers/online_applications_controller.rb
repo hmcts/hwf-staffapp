@@ -4,6 +4,7 @@ class OnlineApplicationsController < ApplicationController
   def edit
     authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
+    @form.enable_default_jurisdiction(current_user)
     assign_jurisdictions
   end
 
