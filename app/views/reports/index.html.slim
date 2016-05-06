@@ -4,9 +4,10 @@ header
 
 dl
   dt =link_to 'Finance report', reports_finance_report_path
-  dl
-    div Date delimited report of financial expenditure
+  dd Date delimited report of financial expenditure
   - if policy(:report).graphs?
     dt =link_to 'Graphs', graphs_report_path
-    dl
-      div 5 day graphs for benefit checks by business unit
+    dd 5 day graphs for benefit checks by business unit
+  - if policy(:report).public?
+    dt =link_to 'Public submissions', reports_public_path
+    dd Track public submission data

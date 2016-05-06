@@ -27,6 +27,10 @@ FactoryGirl.define do
     association :completed_by, factory: :user
     completed_at Time.zone.today
 
+    trait :with_office do
+      association :office
+    end
+
     trait :uncompleted do
       completed_by_id nil
       completed_at nil

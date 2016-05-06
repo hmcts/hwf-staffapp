@@ -11,6 +11,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:graphs) }
+    it { is_expected.not_to permit_action(:public) }
   end
 
   context 'for manager' do
@@ -19,6 +20,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:graphs) }
+    it { is_expected.not_to permit_action(:public) }
   end
 
   context 'for admin' do
@@ -27,6 +29,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:graphs) }
+    it { is_expected.to permit_action(:public) }
   end
 
   context 'for an mi' do
@@ -34,6 +37,7 @@ RSpec.describe ReportPolicy, type: :policy do
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
+    it { is_expected.not_to permit_action(:graphs) }
     it { is_expected.not_to permit_action(:graphs) }
   end
 end

@@ -26,6 +26,11 @@ class ReportsController < ApplicationController
     load_graph_data
   end
 
+  def public
+    authorize :report, :public?
+    @data = Views::Reports::PublicSubmissionData.new
+  end
+
   private
 
   def form

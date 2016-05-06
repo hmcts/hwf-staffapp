@@ -1,5 +1,10 @@
 FactoryGirl.define do
   factory :online_application do
+
+    transient do
+      convert_to_application false
+    end
+
     married false
     threshold_exceeded false
     benefits true
@@ -34,8 +39,8 @@ FactoryGirl.define do
     end
 
     trait :with_reference do
-      # sequence(:reference) { |n| "HWF-#{n}" }
-      reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
+      sequence(:reference) { |n| "HWF-#{n.to_s.rjust(3, '0')}-#{SecureRandom.hex(3).upcase.chars.first(3).join}" }
+      # reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
     end
 
     trait :completed do
@@ -65,6 +70,16 @@ FactoryGirl.define do
     trait :with_refund do
       refund true
       date_fee_paid Time.zone.now - 2.months
+    end
+
+    after(:create) do |online_application, evaluator|
+      if evaluator.convert_to_application
+        create(:application,
+          :processed_state,
+          :with_office,
+          online_application: online_application,
+          reference: online_application.reference)
+      end
     end
   end
 end

@@ -66,5 +66,15 @@ RSpec.describe ReportsController, type: :controller do
         expect(assigns(:report_data).count).to eql(1)
       end
     end
+
+    describe 'GET #public' do
+      before { get :public }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :public }
+    end
   end
 end
