@@ -113,6 +113,18 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
+      context 'when the online application does not specify children' do
+        let(:online_application) { build_stubbed(:online_application_with_all_details, children: nil) }
+
+        it 'has the dependents flag not to be set' do
+          expect(built_application.dependents).to be nil
+        end
+
+        it 'has the children number set as nil' do
+          expect(built_application.children).to be nil
+        end
+      end
+
       it 'has applicant record built' do
         expect(built_application.applicant).to be_a(Applicant)
         expect(built_application.applicant).not_to be_persisted

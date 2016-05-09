@@ -38,10 +38,17 @@ class ApplicationBuilder
   end
 
   def online_application_attributes(online_application)
-    fields = %i[threshold_exceeded benefits income children reference]
-    {
-      dependents: (online_application.children > 0)
-    }.merge(prepare_attributes(fields, online_application))
+    fields = %i[threshold_exceeded benefits income reference]
+    prepare_attributes(fields, online_application).merge(dependent_attributes(online_application))
+  end
+
+  def dependent_attributes(online_application)
+    {}.tap do |attributes|
+      if online_application.children.present?
+        attributes[:dependents] = online_application.children > 0
+        attributes[:children] = online_application.children
+      end
+    end
   end
 
   def online_applicant_attributes(online_application)
