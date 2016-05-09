@@ -5,7 +5,6 @@ RSpec.describe OnlineApplication, type: :model do
 
   it { is_expected.to belong_to(:jurisdiction) }
 
-  it { is_expected.to validate_presence_of(:children) }
   it { is_expected.to validate_presence_of(:ni_number) }
   it { is_expected.to validate_presence_of(:date_of_birth) }
   it { is_expected.to validate_presence_of(:first_name) }
