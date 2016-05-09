@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414093931) do
+ActiveRecord::Schema.define(version: 20160509081902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20160414093931) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "user_id"
     t.integer  "office_id"
     t.decimal  "threshold"
@@ -88,11 +88,11 @@ ActiveRecord::Schema.define(version: 20160414093931) do
   add_index "benefit_checks", ["user_id"], name: "index_benefit_checks_on_user_id", using: :btree
 
   create_table "benefit_overrides", force: :cascade do |t|
-    t.integer  "application_id",  null: false
+    t.integer  "application_id",   null: false
     t.boolean  "correct"
     t.integer  "completed_by_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "incorrect_reason"
   end
 
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20160414093931) do
     t.boolean  "married",            null: false
     t.boolean  "threshold_exceeded", null: false
     t.boolean  "benefits",           null: false
-    t.integer  "children",           null: false
+    t.integer  "children"
     t.integer  "income"
     t.boolean  "refund",             null: false
     t.date     "date_fee_paid"
