@@ -31,7 +31,7 @@ esac
 ROLE="${1:-app}"
 case ${ROLE} in
 worker)
-    echo "running worker"
+    echo "running delayed_job worker"
     bundle exec rake jobs:work
     ;;
 *)
