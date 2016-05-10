@@ -11,7 +11,7 @@ class MailService
             else
               PublicMailer.submission_confirmation(@data_source)
             end
-    email.deliver_now
+    email.deliver_later
   end
 
   private
