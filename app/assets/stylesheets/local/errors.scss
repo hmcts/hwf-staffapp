@@ -26,10 +26,27 @@ div.form-group div.field_with_errors + .field-wrapper {
   padding-left: 10px;
 }
 
+div.form-group div.field_with_errors + .field-wrapper {
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 0;
+
+  .currency {
+    border: 1px solid $grey-2;
+    border-right: none;
+    padding-bottom: 4px;
+  }
+}
+
 .field-wrapper {
   .field_with_errors {
     display: inline-block;
-    width: 90%;
+    width: 85%;
+
+    input {
+      border: 1px solid $grey-2;
+      border-left: none;
+    }
   }
 }
 
