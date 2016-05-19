@@ -12,7 +12,7 @@
         = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
-          span.currency £
+          span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
 
       .form-group
