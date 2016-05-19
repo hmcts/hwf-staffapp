@@ -9,7 +9,7 @@ class ApplicationSearch
 
   def for_hwf
     return unless @reference.present?
-    @reference.upcase!
+    prepare_reference!
     return false if application_exists_and_user_can_access
     return false if application_exists_and_user_cannot_access
 
@@ -22,6 +22,13 @@ class ApplicationSearch
   end
 
   private
+
+  def prepare_reference!
+    reference = @reference.upcase
+    reference.gsub!('HWF', '')
+    reference.gsub!(/[- ]/, '')
+    @reference = "HWF-#{reference.scan(/.{1,3}/).join('-')}"
+  end
 
   def application_exists_and_user_can_access
     if application_exists && user_can_access

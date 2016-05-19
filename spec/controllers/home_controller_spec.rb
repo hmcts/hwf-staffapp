@@ -129,7 +129,7 @@ RSpec.describe HomeController, type: :controller do
 
     before do
       allow(OnlineApplication).to receive(:find_by).with(reference: online_application.reference).and_return(online_application)
-      allow(OnlineApplication).to receive(:find_by).with(reference: 'WRONG').and_return(nil)
+      allow(OnlineApplication).to receive(:find_by).with(reference: 'HWF-WRO-NG').and_return(nil)
       allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application) unless application.nil?
 
       sign_in(user)
