@@ -106,7 +106,4 @@ Rails.application.configure do
       enable_starttls_auto: true
     }
   end
-
-  # ActiveJob
-  config.active_job.queue_adapter = :delayed_job
 end
