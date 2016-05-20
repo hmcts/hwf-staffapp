@@ -27,4 +27,15 @@ setup)
     bundle exec rake db:setup
     ;;
 esac
-bundle exec unicorn -p 3000 -c ./config/unicorn.rb
+
+ROLE="${1:-app}"
+case ${ROLE} in
+worker)
+    echo "running worker"
+    bundle exec rake jobs:work
+    ;;
+*)
+    echo "running app"
+    bundle exec unicorn -c config/unicorn.rb -p $UNICORN_PORT
+    ;;
+esac
