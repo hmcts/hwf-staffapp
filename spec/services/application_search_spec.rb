@@ -9,13 +9,15 @@ RSpec.describe ApplicationSearch do
   it { is_expected.to respond_to :error_message }
 
   describe '#for_hwf' do
-    let(:online_application) { build_stubbed(:online_application, :with_reference) }
+    let(:existing_reference) { 'HWF-123-ABC' }
+    let(:wrong_reference) { 'HWF-WRO-NG' }
+    let(:online_application) { build_stubbed(:online_application, reference: existing_reference) }
 
     subject { service.for_hwf }
 
     before do
-      allow(OnlineApplication).to receive(:find_by).with(reference: online_application.reference).and_return(online_application)
-      allow(OnlineApplication).to receive(:find_by).with(reference: online_application.reference.reverse).and_return(nil)
+      allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(online_application)
+      allow(OnlineApplication).to receive(:find_by).with(reference: wrong_reference).and_return(nil)
     end
 
     context 'when reference is nil' do
@@ -23,13 +25,28 @@ RSpec.describe ApplicationSearch do
     end
 
     context 'when an online_application exists' do
-      let(:reference) { online_application.reference }
+      describe 'can be found using various input formats of the reference number' do
+        [
+          'HWF-123-ABC',
+          'HWF 123 ABC',
+          'HWF123ABC',
+          '123-ABC',
+          '123 ABC',
+          'hwf-123-abc',
+          '123-abc',
+          '123 abc'
+        ].each do |format|
+          context "for '#{format}' format" do
+            let(:reference) { format }
 
-      it { is_expected.to eql online_application }
+            it { is_expected.to eql online_application }
+          end
+        end
+      end
     end
 
     context 'when an application has been processed in my office' do
-      let(:reference) { online_application.reference }
+      let(:reference) { existing_reference }
       let(:application) { build_stubbed(:application, reference: online_application.reference, office: user.office) }
 
       before do
@@ -46,7 +63,7 @@ RSpec.describe ApplicationSearch do
 
     context 'when an application has been processed by a different office' do
       let(:office) { create :office }
-      let(:reference) { online_application.reference }
+      let(:reference) { existing_reference }
       let(:application) { build_stubbed(:application, reference: online_application.reference, office: office) }
 
       before do
@@ -62,7 +79,7 @@ RSpec.describe ApplicationSearch do
     end
 
     context 'when the reference is not there' do
-      let(:reference) { online_application.reference.reverse }
+      let(:reference) { wrong_reference }
 
       before { service.for_hwf }
 

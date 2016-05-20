@@ -28,7 +28,7 @@
             = f.label :income, class: 'form-label'
             = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
             .field-wrapper
-              span.currency £
+              span.prefix £
               = f.text_field :income
 
       = f.submit 'Next', class: 'button primary'
