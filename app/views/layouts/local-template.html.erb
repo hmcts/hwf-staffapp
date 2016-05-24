@@ -61,6 +61,7 @@
   </head>
 
   <body class="<%= content_for?(:body_classes) ? raw("#{yield(:body_classes)}") : "#{config_item(:phase).to_s.downcase} #{config_item(:product_type).to_s.downcase}" %>">
+    <%= render 'shared/tag_manager' %>
     <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
     <%= yield :body_start %>
@@ -131,7 +132,7 @@
         <% end %>
 
 
-    <%= render :partial => 'shared/footer' %>
+    <%= render 'shared/footer' %>
 
     <!--end footer-->
 
