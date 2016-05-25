@@ -110,6 +110,16 @@ en-GB:
       none_in_office: 'Ask your manager to assign jurisdictions to your office.'
     part_payment:
       cannot_be_saved: 'This return could not be processed'
+  index:
+    process:
+      paper:
+        dwp-down:
+          heading: "You can only process:"
+          options:
+            - "income-based applications"
+            - "benefits-based applications if the applicant has provided paper evidence"
+      digital:
+        dwp-down: "Please wait until the DWP checker is available to process online applications"
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
