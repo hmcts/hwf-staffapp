@@ -67,7 +67,7 @@ RSpec.feature 'Benefit results are processed', type: :feature do
 
         scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
-          expect(page).to have_content('Sorry, the Department for Work and Pensions checker is not available')
+          expect(page).to have_content('You will only be able to process this application if you have paper evidence that the applicant is receiving benefits')
         end
       end
 
@@ -93,7 +93,7 @@ RSpec.feature 'Benefit results are processed', type: :feature do
 
         scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h2', text: 'Benefits')
-          expect(page).to have_content('Sorry, the Department for Work and Pensions checker is not available')
+          expect(page).to have_content('You will only be able to process this application if you have paper evidence that the applicant is receiving benefits')
         end
       end
     end

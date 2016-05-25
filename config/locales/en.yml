@@ -43,7 +43,7 @@ en-GB:
       missing_details_html: |
         There’s a problem with the applicant’s surname, date of birth or National Insurance number.
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
-      technical_error: Sorry, the Department for Work and Pensions checker is not available
+      technical_error: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
