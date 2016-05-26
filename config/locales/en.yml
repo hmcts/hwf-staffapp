@@ -95,6 +95,8 @@ en-GB:
       copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
       link: See the guides
   error_messages:
+    benefit_check:
+      dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
     dwp_unavailable: "The DWP checker is currently unavailable, you won't be able to check if applicants are receiving benefits"
     dwp_warning: "There may be a problem with the service. You may not be able to check if applicants are receiving benefits, this is being investigated."

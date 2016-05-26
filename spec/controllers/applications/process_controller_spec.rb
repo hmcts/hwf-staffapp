@@ -12,6 +12,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:benefit_form) { double }
   let(:income_form) { double }
   let(:income_calculation_runner) { double(run: nil) }
+  let(:dwp_monitor) { double }
+  let(:dwp_state) { 'online' }
 
   before do
     sign_in user
@@ -22,6 +24,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
+    allow(dwp_monitor).to receive(:state).and_return(dwp_state)
+    allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
   end
 
   describe 'POST create' do
@@ -240,6 +244,20 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns the benefits form' do
         expect(assigns(:form)).to eql(benefit_form)
+      end
+
+      describe '@status' do
+        subject { assigns(:state) }
+
+        context 'when the dwp is up' do
+          it { is_expected.to eql(dwp_state) }
+        end
+
+        context 'when the dwp is down' do
+          let(:dwp_state) { 'offline' }
+
+          it { is_expected.to eql(dwp_state) }
+        end
       end
     end
   end

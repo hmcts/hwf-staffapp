@@ -3,7 +3,11 @@
   .grid-row
     .column-two-thirds
       header
-          h2.heading-xlarge Benefits
+          h2.heading-xlarge.util_mb-small Benefits
+
+      -if @state=='offline'
+        .util_mt-tiny.util_mb-small
+          .page-error = t('error_messages.benefit_check.dwp_unavailable')
 
       .form-group
         = f.label :benefits, class: 'form-label'
