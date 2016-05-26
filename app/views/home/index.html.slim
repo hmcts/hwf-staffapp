@@ -21,12 +21,6 @@
   - if policy(:application).new?
     .column-one-half
       .util_pt-medium
-        /- if @state == 'offline'
-        .dwp-down
-          p =t('index.process.paper.dwp-down.heading')
-          ul.list.list-bullet
-            -t('index.process.paper.dwp-down.options').each do |option|
-              li =option
         .panel.flexi
           h3.heading-medium.util_mt-0 Process application
           .panel-inner
@@ -42,9 +36,6 @@
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
   .column-one-half
     .util_pt-medium
-      /- if @state == 'offline'
-      .dwp-down
-        p =t('index.process.digital.dwp-down')
       = form_for(@search_form, as: :search, url: home_search_path) do |f|
         .panel.flexi
           h3.heading-medium.util_mt-0 Process an online application
