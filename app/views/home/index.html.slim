@@ -7,12 +7,13 @@
 
 - if @state == 'offline'
   .grid-row.equal-heightboxes.util_mt-medium.dwp-down
-    .column-one-half
-      .panel
-        p =t('index.process.paper.dwp-down.heading')
-        ul.list.list-bullet
-          -t('index.process.paper.dwp-down.options').each do |option|
-            li =option
+    - if policy(:application).new?
+      .column-one-half
+        .panel
+          p =t('index.process.paper.dwp-down.heading')
+          ul.list.list-bullet
+            -t('index.process.paper.dwp-down.options').each do |option|
+              li =option
     .column-one-half
       .panel
         p =t('index.process.digital.dwp-down')
