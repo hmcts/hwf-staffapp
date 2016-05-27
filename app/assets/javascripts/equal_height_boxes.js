@@ -4,26 +4,43 @@ window.moj.Modules.equalHeightBoxes = {
   init: function() {
     var self = this;
 
-    if($('.equal-heightboxes').length) {
-      self.equaliseBoxes('.equal-heightboxes', '.panel');
+    if($('[data-equalheight="true"]').length) {
+      self.getBoxGroups();
     }
   },
 
-  equaliseBoxes: function(wrapper, panel) {
-    var wrappers = $(wrapper);
+  getBoxGroups: function() {
+    var self = this,
+        groups = [];
 
-    wrappers.each(function(i, wrapper) {
-      var panels = $(wrapper).find(panel),
+    $('[data-equalheight="true"]').each(function(n, el) {
+      var $el = $(el);
+
+      if(groups.indexOf($el.data('heightgroup')) === -1) {
+        groups[groups.length] = $el.data('heightgroup');
+      }
+    });
+
+    if(groups.length) {
+      self.equaliseBoxes(groups);
+    }
+  },
+
+  equaliseBoxes: function(groups) {
+    for(var x in groups) {
+      var group = groups[x],
+          $boxes = $('[data-heightgroup="' + group + '"]'),
           max = 0;
 
-      panels.each(function(i, el) {
-        var height = $(el).height();
+      $boxes.each(function(n, box) {
+        var height = $(box).height();
 
         if(height >= max) {
           max = height;
         }
       });
-      panels.height(max);
-    });
+
+      $boxes.height(max);
+    }
   }
 };
