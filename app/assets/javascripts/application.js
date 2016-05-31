@@ -30,8 +30,3 @@
 //= require cookies
 //= require login
 //= require fee_field
-
-$(function(){
-  // fire init method of moj module loader
-  window.moj.init();
-});
