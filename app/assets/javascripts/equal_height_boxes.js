@@ -27,10 +27,9 @@ window.moj.Modules.equalHeightBoxes = {
   },
 
   equaliseBoxes: function(groups) {
-    for(var x in groups) {
-      var group = groups[x],
-          $boxes = $('[data-heightgroup="' + group + '"]'),
-          max = 0;
+    groups.forEach(function(group) {
+      var $boxes = $('[data-heightgroup="' + group + '"]'),
+           max = 0;
 
       $boxes.each(function(n, box) {
         var height = $(box).height();
@@ -41,6 +40,6 @@ window.moj.Modules.equalHeightBoxes = {
       });
 
       $boxes.height(max);
-    }
+    });
   }
 };
