@@ -60,6 +60,7 @@ module Applications
     end
 
     def benefits
+      @state = DwpMonitor.new.state
       if application.savings_investment_valid?
         @form = Forms::Application::Benefit.new(application)
         render :benefits

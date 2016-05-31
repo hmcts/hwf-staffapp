@@ -160,20 +160,48 @@ RSpec.describe "home/index.html.slim", type: :view do
 
   describe 'DWP banner' do
     context 'when the dwp maintenance is off' do
-      context 'when the service is online' do
-        it { is_expected.to have_content I18n.t('error_messages.dwp_restored') }
-      end
+      context 'and user can process paper application' do
+        let(:application_new?) { true }
 
-      context 'when the service is failing or restoring' do
-        let(:dwp_state) { 'warning' }
+        context 'when the service is online' do
+          it { is_expected.to have_content I18n.t('error_messages.dwp_restored') }
 
-        it { is_expected.to have_content I18n.t('error_messages.dwp_warning') }
-      end
+          it { is_expected.not_to have_content 'You can only process:' }
 
-      context 'when the service is offline' do
-        let(:dwp_state) { 'offline' }
+          it { is_expected.not_to have_content 'Please wait until the DWP checker is available to process online applications' }
 
-        it { is_expected.to have_content I18n.t('error_messages.dwp_unavailable') }
+          it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"][not(@disabled)]') }
+
+          it { is_expected.to have_xpath('//input[@id="search_reference"][not(@disabled)]') }
+        end
+
+        context 'when the service is failing or restoring' do
+          let(:dwp_state) { 'warning' }
+
+          it { is_expected.to have_content I18n.t('error_messages.dwp_warning') }
+
+          it { is_expected.not_to have_content 'You can only process:' }
+
+          it { is_expected.not_to have_content 'Please wait until the DWP checker is available to process online applications' }
+
+          it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"][not(@disabled)]') }
+
+          it { is_expected.to have_xpath('//input[@id="search_reference"][not(@disabled)]') }
+        end
+
+        context 'when the service is offline' do
+          let(:dwp_state) { 'offline' }
+
+          it { is_expected.to have_content I18n.t('error_messages.dwp_unavailable') }
+
+          it { is_expected.to have_content 'You can only process:' }
+
+          it { is_expected.to have_content 'Please wait until the DWP checker is available to process online applications' }
+
+          it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit" and @disabled]') }
+
+          it { is_expected.to have_xpath('//input[@id="search_reference" and @disabled]') }
+        end
       end
     end
 

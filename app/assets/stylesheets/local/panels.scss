@@ -17,7 +17,7 @@
       flex-grow: 1;
 
       > label,
-      > .field_with_errors >label {
+      > .field_with_errors > label {
         margin-top: 0;
       }
     }
@@ -93,3 +93,34 @@
     margin: 0;
   }
 }
+
+.grid-row.staff-panels {
+  margin-top: 30px;
+}
+
+.dwp-down {
+  background-color: #fef6ea;
+  border: 1px solid #f3a536;
+  margin-bottom: 0;
+  padding: 10px 20px;
+
+  * {
+    font-size: 14px;
+  }
+
+  ul, p {
+    margin-bottom: 0;
+  }
+
+  & + .panel {
+    border-top: none;
+  }
+}
+
+// & + .grid-row {
+//   margin-top: 0;
+
+//   .panel {
+//     border-top: none;
+//   }
+// }
