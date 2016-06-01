@@ -94,6 +94,10 @@ module Views
       @application.reference if evidence_check_or_part_payment?
     end
 
+    def decision_type
+      @application.decision_type.humanize.downcase if @application.decision_type
+    end
+
     private
 
     def evidence_check_or_part_payment?

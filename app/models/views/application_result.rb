@@ -7,7 +7,7 @@ module Views
     end
 
     def result
-      %w[full part none].include?(outcome) ? outcome : 'error'
+      %w[full part none return].include?(outcome) ? outcome : 'error'
     end
 
     def amount_to_pay
@@ -22,6 +22,10 @@ module Views
 
     def income
       format_locale(%w[full part].include?(result).to_s)
+    end
+
+    def decision_type
+      @application.decision_type.humanize.downcase if @application.decision_type
     end
 
     private

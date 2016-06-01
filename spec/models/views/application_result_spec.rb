@@ -56,7 +56,7 @@ RSpec.describe Views::ApplicationResult do
     subject { view.result }
 
     shared_examples 'result examples' do |type|
-      %w[full part none].each do |result|
+      %w[full part none return].each do |result|
         context "when the #{type} is a #{result} remission" do
           let(:outcome) { result }
 
@@ -135,6 +135,36 @@ RSpec.describe Views::ApplicationResult do
       let(:application) { build_stubbed :application, outcome: outcome }
 
       include_examples 'result examples', 'application'
+    end
+  end
+
+  describe '#decision_type' do
+    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
+
+    subject { view.decision_type }
+
+    context 'when the application has no decision_type' do
+      let(:decision_type) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when the application was decided by application' do
+      let(:decision_type) { 'application' }
+
+      it { is_expected.to eql('application') }
+    end
+
+    context 'when the application was decided by evidence check' do
+      let(:decision_type) { 'evidence_check' }
+
+      it { is_expected.to eql('evidence check') }
+    end
+
+    context 'when the application was decided by part_payment' do
+      let(:decision_type) { 'part_payment' }
+
+      it { is_expected.to eql('part payment') }
     end
   end
 end
