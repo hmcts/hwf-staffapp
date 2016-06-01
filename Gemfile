@@ -55,7 +55,8 @@ gem 'redcarpet'
 
 # Use Unicorn as the app server
 gem 'unicorn'
-gem 'logstasher', github: 'shadabahmed/logstasher', ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
+gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
+                  ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
