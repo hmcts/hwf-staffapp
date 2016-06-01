@@ -3,7 +3,6 @@ header
 
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason reference]
-=build_section 'Processing details', @processed, %w[processed_on processed_by deleted_on deleted_by deleted_reason]
 =build_section 'Result', @overview, @overview.savings_investment_params
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
