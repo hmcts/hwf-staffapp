@@ -4,5 +4,6 @@ module ProcessedViewsHelper
     @processed = Views::ProcessingDetails.new(application)
     @overview = Views::ApplicationOverview.new(application)
     @result = Views::ApplicationResult.new(application)
+    @summary = Views::ProcessedData.new(application)
   end
 end

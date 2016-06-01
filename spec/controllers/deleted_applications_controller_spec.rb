@@ -11,6 +11,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
 
   let(:overview) { double }
   let(:result) { double }
+  let(:summary) { double }
 
   before do
     sign_in user
@@ -18,6 +19,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
     allow(Views::ApplicationOverview).to receive(:new).with(application1).and_return(overview)
     allow(Views::ApplicationResult).to receive(:new).with(application1).and_return(result)
+    allow(Views::ProcessedData).to receive(:new).with(application1).and_return(summary)
   end
 
   describe 'GET #index' do
@@ -71,6 +73,10 @@ RSpec.describe DeletedApplicationsController, type: :controller do
 
     it 'assigns the ApplicationResult view model' do
       expect(assigns(:result)).to eql(result)
+    end
+
+    it 'assigns the ProcessedData view model' do
+      expect(assigns(:summary)).to eql(summary)
     end
   end
 end

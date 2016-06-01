@@ -11,6 +11,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
   let(:overview) { double }
   let(:result) { double }
   let(:delete_form) { double }
+  let(:summary) { double }
 
   before do
     sign_in user
@@ -19,6 +20,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     allow(Views::ApplicationOverview).to receive(:new).with(application1).and_return(overview)
     allow(Views::ApplicationResult).to receive(:new).with(application1).and_return(result)
     allow(Forms::Application::Delete).to receive(:new).with(application1).and_return(delete_form)
+    allow(Views::ProcessedData).to receive(:new).with(application1).and_return(summary)
   end
 
   describe 'GET #index' do
@@ -68,6 +70,10 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
     it 'assigns the ApplicationResult view model' do
       expect(assigns(:result)).to eql(result)
+    end
+
+    it 'assigns the ProcessedData view model' do
+      expect(assigns(:summary)).to eql(summary)
     end
 
     it 'assigns the Delete form' do
