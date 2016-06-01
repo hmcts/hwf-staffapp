@@ -7,3 +7,30 @@ header
 =build_section 'Result', @overview, @overview.savings_investment_params
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
+
+h4.heading-medium.util_mt-0 Processing summary
+table.processed_summary.util_mb-large
+  tbody
+    tr
+      th Application processed
+      td =@summary.application_processed[:on]
+      td =@summary.application_processed[:by]
+      td =@summary.application_processed[:text]
+    -if @summary.application_deleted
+      tr
+        th Application deleted
+        td =@summary.application_deleted[:on]
+        td =@summary.application_deleted[:by]
+        td =@summary.application_deleted[:text]
+    -if @summary.evidence_check_processed
+      tr
+        th Evidence processed
+        td =@summary.evidence_check_processed[:on]
+        td =@summary.evidence_check_processed[:by]
+        td =@summary.evidence_check_processed[:text]
+    -if @summary.part_payment_processed
+      tr
+        th Part-payment processed
+        td =@summary.part_payment_processed[:on]
+        td =@summary.part_payment_processed[:by]
+        td =@summary.part_payment_processed[:text]
