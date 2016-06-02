@@ -26,7 +26,7 @@
 # This group allows to skip running all groups when a previous group has failed.
 group :red_green_refactor, halt_on_fail: true do
 
-  guard :rspec, cmd: "bundle exec rspec", all_on_start: true do
+  guard :rspec, cmd: "bundle exec rspec", all_on_start: false, notifications: true do
     require "guard/rspec/dsl"
     dsl = Guard::RSpec::Dsl.new(self)
 

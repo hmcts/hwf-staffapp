@@ -71,6 +71,7 @@ gem "paranoia", "~> 2.0"
 group :development do
   # speed up local development via livereload
   gem 'guard-livereload'
+  gem 'terminal-notifier-guard'
   gem 'rack-livereload'
   gem 'web-console', '~> 2.1'
 end
