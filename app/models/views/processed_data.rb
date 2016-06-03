@@ -12,11 +12,7 @@ module Views
 
     def application_deleted
       if application_deleted?
-        {
-          on: prepare_date(@application.deleted_at),
-          by: @application.deleted_by.name,
-          text: "Reason for deletion: \"#{@application.deleted_reason}\""
-        }
+        build_delete_hash
       end
     end
 
@@ -55,6 +51,14 @@ module Views
         on: prepare_date(object.completed_at),
         by: prepare_name(object.completed_by),
         text: prepare_reason(object)
+      }
+    end
+
+    def build_delete_hash
+      {
+        on: prepare_date(@application.deleted_at),
+        by: prepare_name(@application.deleted_by),
+        text: "Reason for deletion: \"#{@application.deleted_reason}\""
       }
     end
 
