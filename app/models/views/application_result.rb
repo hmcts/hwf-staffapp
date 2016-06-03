@@ -25,7 +25,10 @@ module Views
     end
 
     def decision_type
-      @application.decision_type.humanize.downcase if @application.decision_type
+      {
+        'evidence_check' => 'evidence',
+        'part_payment' => 'payment'
+      }[@application.decision_type] || nil
     end
 
     private

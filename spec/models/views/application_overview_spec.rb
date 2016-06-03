@@ -213,19 +213,19 @@ RSpec.describe Views::ApplicationOverview do
     context 'when the application was decided by application' do
       let(:decision_type) { 'application' }
 
-      it { is_expected.to eql('application') }
+      it { is_expected.to be_nil }
     end
 
     context 'when the application was decided by evidence check' do
       let(:decision_type) { 'evidence_check' }
 
-      it { is_expected.to eql('evidence check') }
+      it { is_expected.to eql('evidence') }
     end
 
     context 'when the application was decided by part_payment' do
       let(:decision_type) { 'part_payment' }
 
-      it { is_expected.to eql('part payment') }
+      it { is_expected.to eql('payment') }
     end
   end
 end

@@ -183,7 +183,7 @@ en-GB:
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '✗ &nbsp; Not eligible for help with fees'
     callout: Evidence of income needs to be checked
-    return: '✗ &nbsp; Not eligible because %{decision_type} returned'
+    return: '✗ &nbsp; Not eligible because %{decision_type} not provided'
   evidence_check:
     callout: Evidence of income needs to be checked
     page_title: Application waiting for evidence
