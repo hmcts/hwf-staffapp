@@ -199,10 +199,10 @@ RSpec.describe Views::ApplicationOverview do
     end
   end
 
-  describe '#decision_type' do
+  describe '#return_type' do
     let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
 
-    subject { view.decision_type }
+    subject { view.return_type }
 
     context 'when the application has no decision_type' do
       let(:decision_type) { nil }

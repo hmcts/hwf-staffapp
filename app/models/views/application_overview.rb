@@ -94,7 +94,7 @@ module Views
       @application.reference if evidence_check_or_part_payment?
     end
 
-    def decision_type
+    def return_type
       {
         'evidence_check' => 'evidence',
         'part_payment' => 'payment'

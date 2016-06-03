@@ -5,7 +5,7 @@ header
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason reference]
 =build_section 'Result', @overview, @overview.savings_investment_params
 
-=render(partial: 'shared/remission_type', locals: { source: @result, decision_type: @application.decision_type.humanize.downcase })
+=render(partial: 'shared/remission_type', locals: { source: @result })
 
 h4.heading-medium.util_mt-0 Processing summary
 table.processed_summary.util_mb-large
