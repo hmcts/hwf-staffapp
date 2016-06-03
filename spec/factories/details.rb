@@ -19,6 +19,11 @@ FactoryGirl.define do
       date_fee_paid Time.zone.yesterday
     end
 
+    trait :out_of_time_refund do
+      refund true
+      date_fee_paid Time.zone.now - 3.months
+    end
+
     trait :emergency do
       emergency_reason 'It can not wait'
     end
