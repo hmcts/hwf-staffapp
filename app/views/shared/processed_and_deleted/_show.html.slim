@@ -3,7 +3,33 @@ header
 
 =build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
 =build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason reference]
-=build_section 'Processing details', @processed, %w[processed_on processed_by deleted_on deleted_by deleted_reason]
 =build_section 'Result', @overview, @overview.savings_investment_params
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
+
+h4.heading-medium.util_mt-0 Processing summary
+table.processed_summary.util_mb-large
+  tbody
+    tr
+      th Application processed
+      td =@summary.application_processed[:on]
+      td =@summary.application_processed[:by]
+      td =@summary.application_processed[:text]
+    -if @summary.application_deleted
+      tr
+        th Application deleted
+        td =@summary.application_deleted[:on]
+        td =@summary.application_deleted[:by]
+        td =@summary.application_deleted[:text]
+    -if @summary.evidence_check_processed
+      tr
+        th Evidence processed
+        td =@summary.evidence_check_processed[:on]
+        td =@summary.evidence_check_processed[:by]
+        td =@summary.evidence_check_processed[:text]
+    -if @summary.part_payment_processed
+      tr
+        th Part-payment processed
+        td =@summary.part_payment_processed[:on]
+        td =@summary.part_payment_processed[:by]
+        td =@summary.part_payment_processed[:text]

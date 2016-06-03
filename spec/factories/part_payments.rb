@@ -11,6 +11,12 @@ FactoryGirl.define do
       outcome 'none'
     end
 
+    factory :part_payment_incorrect do
+      correct false
+      incorrect_reason 'SOME REASON'
+      outcome 'none'
+    end
+
     trait :completed do
       completed_at Time.zone.yesterday
       association :completed_by, factory: :user

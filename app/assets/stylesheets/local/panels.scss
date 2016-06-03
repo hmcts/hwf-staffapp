@@ -68,7 +68,7 @@
     text-align: left;
   }
 
-  &.not-received, &.no, &.callout-none, &.callout-error {
+  &.not-received, &.no, &.callout-none, &.callout-error, &.callout-return {
     background-color: $error-colour;
   }
   &.received, &.yes, &.callout-full {

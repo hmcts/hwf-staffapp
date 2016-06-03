@@ -198,4 +198,34 @@ RSpec.describe Views::ApplicationOverview do
       end
     end
   end
+
+  describe '#return_type' do
+    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
+
+    subject { view.return_type }
+
+    context 'when the application has no decision_type' do
+      let(:decision_type) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when the application was decided by application' do
+      let(:decision_type) { 'application' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when the application was decided by evidence check' do
+      let(:decision_type) { 'evidence_check' }
+
+      it { is_expected.to eql('evidence') }
+    end
+
+    context 'when the application was decided by part_payment' do
+      let(:decision_type) { 'part_payment' }
+
+      it { is_expected.to eql('payment') }
+    end
+  end
 end
