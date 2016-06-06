@@ -25,6 +25,6 @@ RSpec.feature 'Out of time refunds are correctly handled', type: :feature do
   end
 
   scenario 'they should be shown the correct warning' do
-    expect(page).to have_content('Because this refund was paid more then three months ago')
+    expect(page).to have_content('Fees paid more than 3 months ago can’t be checked with the DWP')
   end
 end
