@@ -30,7 +30,7 @@ RSpec.shared_examples 'runs benefit check record' do
 
     describe 'has date_to_check set' do
       context 'when date_fee_paid is set on detail' do
-        let(:detail) { create :detail, date_fee_paid: '10/10/2015' }
+        let(:detail) { create :detail, date_fee_paid: Time.zone.now - 1.month }
 
         it 'equals the date_fee_paid' do
           expect(benefit_check.date_to_check).to eql(detail.date_fee_paid)
@@ -38,7 +38,7 @@ RSpec.shared_examples 'runs benefit check record' do
       end
 
       context 'when date_fee_paid is not set but date_received is set on detail' do
-        let(:detail) { create :detail, date_received: '10/10/2015' }
+        let(:detail) { create :detail, date_received: Time.zone.now - 1.month }
 
         it 'equals the date_received' do
           expect(benefit_check.date_to_check).to eql(detail.date_received)
@@ -109,6 +109,14 @@ RSpec.describe BenefitCheckRunner do
     context 'when all required fields are present on the application' do
       context 'when benefit check has not yet run' do
         include_examples 'runs benefit check record'
+      end
+
+      context 'when date_fee_paid is older then three months from today (for refund)' do
+        let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months) }
+
+        it 'does not create a BenefitCheck record' do
+          expect { subject }.not_to change { application.benefit_checks.count }
+        end
       end
 
       context 'when benefit check has run before' do
@@ -212,6 +220,22 @@ RSpec.describe BenefitCheckRunner do
           it { is_expected.to be definition[:overridable] }
         end
       end
+    end
+  end
+
+  describe '#benefit_check_date_valid?' do
+
+    subject { service.benefit_check_date_valid? }
+    context 'when date_fee_paid is older then three months from today (for refund)' do
+      let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when date_fee_paid is less then three months old (for refund)' do
+      let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 1.month) }
+
+      it { is_expected.to be true }
     end
   end
 end

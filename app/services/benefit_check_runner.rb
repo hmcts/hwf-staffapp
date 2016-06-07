@@ -24,6 +24,10 @@ class BenefitCheckRunner
     benefit_check.blank? || benefit_check.dwp_result.blank? || overridable_result?
   end
 
+  def benefit_check_date_valid?
+    benefit_check_date > Time.zone.now - 3.months
+  end
+
   private
 
   def applicant
@@ -35,7 +39,7 @@ class BenefitCheckRunner
   end
 
   def should_run?
-    previous_check.nil? || !same_as_before? || was_error?
+    benefit_check_date_valid? && (previous_check.nil? || !same_as_before? || was_error?)
   end
 
   def was_error?

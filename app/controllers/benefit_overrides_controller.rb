@@ -35,11 +35,19 @@ class BenefitOverridesController < ApplicationController
   end
 
   helper_method def error_message_partial
-    @error_message_partial ||= case application.last_benefit_check.dwp_result.try(:downcase)
-                               when nil, 'undetermined'
-                                 'missing_details'
-                               when 'server unavailable', 'unspecified error'
-                                 'technical_error'
-                               end
+    @error_message_partial ||= benefit_check_error_message
+  end
+
+  def benefit_check_error_message
+    if !BenefitCheckRunner.new(application).benefit_check_date_valid?
+      'out_of_time'
+    else
+      case application.last_benefit_check.dwp_result.try(:downcase)
+      when nil, 'undetermined'
+        'missing_details'
+      when 'server unavailable', 'unspecified error'
+        'technical_error'
+      end
+    end
   end
 end
