@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509152138) do
+ActiveRecord::Schema.define(version: 20160608075642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,6 +260,22 @@ ActiveRecord::Schema.define(version: 20160509152138) do
 
   add_index "part_payments", ["application_id"], name: "index_part_payments_on_application_id", using: :btree
 
+  create_table "savings", force: :cascade do |t|
+    t.integer  "application_id",         null: false
+    t.decimal  "min_threshold"
+    t.boolean  "min_threshold_exceeded"
+    t.decimal  "max_threshold"
+    t.boolean  "max_threshold_exceeded"
+    t.decimal  "amount"
+    t.boolean  "passed"
+    t.decimal  "fee_threshold"
+    t.boolean  "over_61"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "savings", ["application_id"], name: "index_savings_on_application_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
@@ -318,6 +334,7 @@ ActiveRecord::Schema.define(version: 20160509152138) do
   add_foreign_key "online_applications", "jurisdictions", on_update: :cascade
   add_foreign_key "part_payments", "applications", on_update: :cascade
   add_foreign_key "part_payments", "users", column: "completed_by_id", on_update: :cascade
+  add_foreign_key "savings", "applications"
   add_foreign_key "users", "jurisdictions", on_update: :cascade
   add_foreign_key "users", "offices", on_update: :cascade
 end
