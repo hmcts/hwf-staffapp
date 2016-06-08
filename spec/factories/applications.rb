@@ -145,6 +145,10 @@ FactoryGirl.define do
       applicant_traits [:married, :over_61]
     end
 
+    trait :partner_over_61 do
+      partner_over_61 true
+    end
+
     after(:build) do |application, evaluator|
       build_related_for_application(self, :build, application, evaluator)
     end
