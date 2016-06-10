@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PartnerAgeCheck do
 
   let(:savings_investment) { Forms::Application::SavingsInvestment.new(hash) }
-  let(:hash) { { threshold_exceeded: true, partner_over_61: partner_over_61, application_id: application.id } }
+  let(:hash) { { min_threshold_exceeded: true, over_61: partner_over_61, application_id: application.id } }
 
   subject(:service) { described_class.new(savings_investment, application) }
 
