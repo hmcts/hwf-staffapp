@@ -22,5 +22,9 @@ FactoryGirl.define do
       min_threshold_exceeded false
       amount nil
     end
+
+    after(:build) do |saving|
+      saving.application ||= build(:application, saving: saving)
+    end
   end
 end
