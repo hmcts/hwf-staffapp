@@ -396,6 +396,8 @@ en-GB:
               inclusion: You must answer the savings question
             partner_over_61:
               inclusion: Please confirm the ages
+            amount:
+              blank: Please enter a savings amount
         forms/application/benefit:
           attributes:
             benefits:
