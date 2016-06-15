@@ -130,12 +130,17 @@ FactoryGirl.define do
       application_type 'income'
     end
 
-    factory :applicant_under_61 do
+    factory :single_applicant_under_61 do
       applicant_factory :applicant_with_all_details
-      applicant_traits [:married, :under_61]
+      applicant_traits [:under_61]
     end
 
-    factory :married_applicant_under_61 do
+    factory :single_applicant_over_61 do
+      applicant_factory :applicant_with_all_details
+      applicant_traits [:over_61]
+    end
+
+    factory :applicant_under_61, aliases: [:married_applicant_under_61] do
       applicant_factory :applicant_with_all_details
       applicant_traits [:married, :under_61]
     end

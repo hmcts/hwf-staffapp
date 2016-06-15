@@ -12,7 +12,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let!(:application) { create :applicant_under_61 }
+    let!(:application) { create :single_applicant_under_61 }
 
     before do
       subject.update_attributes(hash)
@@ -72,7 +72,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
         describe 'is missing' do
           let(:amount) { nil }
 
-          it { is_expected.to_not be_valid }
+          it { is_expected.not_to be_valid }
         end
       end
     end
