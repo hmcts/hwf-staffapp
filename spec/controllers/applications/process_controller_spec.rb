@@ -12,6 +12,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:benefit_form) { double }
   let(:income_form) { double }
   let(:income_calculation_runner) { double(run: nil) }
+  let(:savings_pass_fail_service) { double }
   let(:dwp_monitor) { double }
   let(:dwp_state) { 'online' }
 
@@ -20,10 +21,11 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Forms::Application::Applicant).to receive(:new).with(application.applicant).and_return(personal_information_form)
     allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
-    allow(Forms::Application::SavingsInvestment).to receive(:new).with(application).and_return(savings_investments_form)
+    allow(Forms::Application::SavingsInvestment).to receive(:new).with(application.saving).and_return(savings_investments_form)
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
+    allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(savings_pass_fail_service)
     allow(dwp_monitor).to receive(:state).and_return(dwp_state)
     allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
   end
@@ -182,12 +184,12 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'PUT #savings_investments_save' do
-    let(:expected_params) { { threshold_exceeded: false } }
+    let(:expected_params) { { min_threshold_exceeded: false } }
 
     before do
       allow(savings_investments_form).to receive(:update_attributes).with(expected_params)
       allow(savings_investments_form).to receive(:save).and_return(form_save)
-
+      allow(savings_pass_fail_service).to receive(:calculate!).and_return(form_save)
       put :savings_investments_save, application_id: application.id, application: expected_params
     end
 
@@ -217,8 +219,11 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'GET #benefits' do
+    let(:saving) { double }
+
     before do
-      allow(application).to receive(:savings_investment_valid?).and_return(savings_valid)
+      allow(application).to receive(:saving).and_return(saving)
+      allow(saving).to receive(:passed?).and_return(savings_valid)
 
       get :benefits, application_id: application.id
     end
