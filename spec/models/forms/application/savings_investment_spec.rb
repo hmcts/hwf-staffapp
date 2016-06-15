@@ -12,7 +12,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let!(:application) { create :applicant_under_61 }
+    let!(:application) { create :single_applicant_under_61 }
 
     before do
       subject.update_attributes(hash)
@@ -50,6 +50,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
             it { is_expected.not_to be_valid }
           end
+
           describe 'when true' do
             let(:min_exceeded) { true }
 
@@ -72,7 +73,31 @@ RSpec.describe Forms::Application::SavingsInvestment do
         describe 'is missing' do
           let(:amount) { nil }
 
-          it { is_expected.to_not be_valid }
+          it { is_expected.not_to be_valid }
+        end
+      end
+    end
+
+    describe 'when min_threshold_exceeded and partner over 61' do
+      let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_threshold } }
+
+      describe 'max_threshold' do
+        describe 'is true' do
+          let(:max_threshold) { true }
+
+          it { is_expected.to be_valid }
+        end
+
+        describe 'is true' do
+          let(:max_threshold) { false }
+
+          it { is_expected.to be_valid }
+        end
+
+        describe 'is missing' do
+          let(:max_threshold) { nil }
+
+          it { is_expected.not_to be_valid }
         end
       end
     end
