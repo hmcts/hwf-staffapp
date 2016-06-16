@@ -200,9 +200,9 @@ en-GB:
       evidence/forms/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:
-        savings_valid?: Less than maximum savings
-        partner_over_61?: Partner over 61
-        combined_savings_valid?: Less than £16,000 savings
+        min_threshold_exceeded: "Less than £3,000"
+        max_threshold_exceeded: "More than £16,000"
+        amount: 'Amount of income'
       views/overview/benefits:
         on_benefits?: Applicant receiving benefits
         override?: Applicant provided paper evidence
