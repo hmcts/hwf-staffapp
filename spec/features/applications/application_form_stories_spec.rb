@@ -52,7 +52,8 @@ RSpec.feature 'Completing the application details', type: :feature do
 
             context 'when the applicant exceeds the savings threshold' do
               before do
-                choose 'application_threshold_exceeded_true'
+                choose 'application_min_threshold_exceeded_true'
+                fill_in :application_amount, with: 3500
                 click_button 'Next'
               end
 
@@ -66,7 +67,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
             context 'when the applicant passes the savings threshold' do
               before do
-                choose 'application_threshold_exceeded_false'
+                choose 'application_min_threshold_exceeded_false'
                 click_button 'Next'
               end
 
@@ -143,7 +144,8 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                         context 'and changes the threshold to exceeded' do
                           before do
-                            choose 'application_threshold_exceeded_true'
+                            choose :application_min_threshold_exceeded_true
+                            fill_in :application_amount, with: 3500
                             click_button 'Next'
                           end
 
@@ -190,7 +192,8 @@ RSpec.feature 'Completing the application details', type: :feature do
 
             context 'when the applicant exceeds the savings threshold' do
               before do
-                choose 'application_threshold_exceeded_true'
+                choose :application_min_threshold_exceeded_true
+                fill_in :application_amount, with: 3500
                 click_button 'Next'
               end
 
@@ -204,7 +207,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
             context 'when the applicant passes the savings threshold' do
               before do
-                choose 'application_threshold_exceeded_false'
+                choose 'application_min_threshold_exceeded_false'
                 click_button 'Next'
               end
 
@@ -234,7 +237,8 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                   context 'and changes the threshold to exceeded' do
                     before do
-                      choose 'application_threshold_exceeded_true'
+                      choose :application_min_threshold_exceeded_true
+                      fill_in :application_amount, with: 3500
                       click_button 'Next'
                     end
 

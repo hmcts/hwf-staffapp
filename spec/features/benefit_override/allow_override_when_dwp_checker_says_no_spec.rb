@@ -17,7 +17,7 @@ def application_details
 end
 
 def savings_and_investments
-  choose 'application_threshold_exceeded_false'
+  choose 'application_min_threshold_exceeded_false'
   click_button 'Next'
 end
 
