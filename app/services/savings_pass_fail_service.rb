@@ -7,6 +7,12 @@ class SavingsPassFailService
   def calculate!
     @saving.fee_threshold = FeeThreshold.new(@saving.application.fee).band
     @saving.passed = calculate_pass_fail
+    unless @saving.passed
+      @saving.application.application_type = 'none'
+      @saving.application.outcome = 'none'
+      @saving.application.save
+      # TODO: Write tests for this - moved out of application model
+    end
     @saving.save
   end
 
