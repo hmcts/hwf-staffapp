@@ -2,30 +2,24 @@ module Views
   module Overview
     class SavingsAndInvestments < Views::Overview::Base
 
-      def initialize(application)
-        @application = application
+      def initialize(saving)
+        @saving = saving
       end
 
       def all_fields
-        %w[savings_valid? partner_over_61? combined_savings_valid?]
+        %w[min_threshold_exceeded max_threshold_exceeded amount]
       end
 
-      def savings_valid?
-        convert_to_boolean(!threshold_exceeded?)
+      def min_threshold_exceeded
+        convert_to_boolean(!@saving.min_threshold_exceeded?)
       end
 
-      def partner_over_61?
-        convert_to_boolean(@application.partner_over_61?) if threshold_exceeded?
+      def max_threshold_exceeded
+        convert_to_boolean(@saving.max_threshold_exceeded?)
       end
 
-      def combined_savings_valid?
-        convert_to_boolean(!@application.high_threshold_exceeded?) if threshold_exceeded?
-      end
-
-      private
-
-      def threshold_exceeded?
-        @application.threshold_exceeded?
+      def amount
+        "£#{@saving.amount.round}" if @saving.amount
       end
     end
   end

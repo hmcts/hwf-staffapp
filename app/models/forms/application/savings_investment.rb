@@ -6,17 +6,19 @@ module Forms
 
       def self.permitted_attributes
         {
-          threshold_exceeded: Boolean,
-          partner_over_61: Boolean,
-          high_threshold_exceeded: Boolean
+          min_threshold_exceeded: Boolean,
+          over_61: Boolean,
+          max_threshold_exceeded: Boolean,
+          amount: Decimal
         }
       end
 
       define_attributes
 
-      validates :threshold_exceeded, inclusion: { in: [true, false] }
-      validate :check_partner_over_61
+      validates :min_threshold_exceeded, inclusion: { in: [true, false] }
+      validates :min_threshold_exceeded, inclusion: { in: [true, false, nil] }
       validate :maximum_threshold_exceeded
+      validate :amount_set_correctly?
 
       private
 
@@ -26,27 +28,25 @@ module Forms
 
       def fields_to_update
         {
-          threshold_exceeded: threshold_exceeded,
-          partner_over_61: partner_over_61,
-          high_threshold_exceeded: high_threshold_exceeded
+          min_threshold_exceeded: min_threshold_exceeded,
+          over_61: over_61,
+          max_threshold_exceeded: max_threshold_exceeded,
+          amount: amount
         }
       end
 
-      def check_partner_over_61
-        if PartnerAgeCheck.new(self, @object).verify == false
-          errors.add(:partner_over_61, I18n.t('partner_over_61.inclusion', scope: LOCALE))
-        end
-      end
-
       def maximum_threshold_exceeded
-        if partner_over_61? && high_threshold_not_boolean?
+        if !min_threshold_exceeded? && max_threshold_exceeded
           error_message = I18n.t('threshold_exceeded.inclusion', scope: LOCALE)
-          errors.add(:high_threshold_exceeded, error_message)
+          errors.add(:max_threshold_exceeded, error_message)
         end
       end
 
-      def high_threshold_not_boolean?
-        ![true, false].include?(high_threshold_exceeded)
+      def amount_set_correctly?
+        if amount.nil? && (min_threshold_exceeded? && over_61 == false)
+          error_message = I18n.t('amount.blank', scope: LOCALE)
+          errors.add(:amount, error_message)
+        end
       end
     end
   end

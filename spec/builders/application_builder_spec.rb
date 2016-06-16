@@ -42,6 +42,11 @@ RSpec.describe ApplicationBuilder do
         expect(subject.detail).not_to be_persisted
       end
 
+      it 'has saving record built' do
+        expect(subject.saving).to be_a(Saving)
+        expect(subject.saving).not_to be_persisted
+      end
+
       it 'has jurisdiction assigned to the detail from the user' do
         expect(subject.detail.jurisdiction).to eql(user.jurisdiction)
       end

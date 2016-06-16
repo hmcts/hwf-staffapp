@@ -34,9 +34,9 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
       click_button 'Next'
 
       expect(page).to have_xpath('//h2', text: 'Savings and investments')
-      choose 'application_threshold_exceeded_true'
+      choose :application_min_threshold_exceeded_true
+      fill_in :application_amount, with: 3500
       click_button 'Next'
-
       expect(page).to have_xpath('//h2', text: 'Check details')
       click_button 'Complete processing'
     end

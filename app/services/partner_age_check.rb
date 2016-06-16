@@ -13,7 +13,7 @@ class PartnerAgeCheck
   private
 
   def threshold_exceeded?
-    @record.threshold_exceeded?
+    @record.min_threshold_exceeded?
   end
 
   def process_marital_status_and_age
@@ -29,6 +29,6 @@ class PartnerAgeCheck
   end
 
   def only_boolean_values_present?
-    [true, false].include?(@record.partner_over_61)
+    [true, false].include?(@record.over_61)
   end
 end

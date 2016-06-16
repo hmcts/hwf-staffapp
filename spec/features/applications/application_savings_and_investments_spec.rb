@@ -54,15 +54,17 @@ RSpec.feature 'Application for savings and investments bug', type: :feature do
 
             context 'with the applicant does not exceeds the savings threshold' do
               before do
-                choose 'application_threshold_exceeded_true'
+                choose :application_min_threshold_exceeded_true
+                fill_in :application_amount, with: 3500
+
                 click_button 'Next'
               end
 
               context 'amend the details for savings and investments' do
                 scenario 'edit the savings and investment and benefits pages' do
                   click_link 'Change savings and investments'
-                  expect(page).to have_text 'In question 7, the applicant has'
-                  choose 'application_threshold_exceeded_false'
+                  expect(page).to have_text 'In question 7, how much do'
+                  choose 'application_min_threshold_exceeded_false'
                   click_button 'Next'
                   expect(page).to have_text 'Is the applicant receiving one of the benefits listed in question 9?'
                   choose 'application_benefits_true'

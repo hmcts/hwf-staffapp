@@ -36,7 +36,8 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
     context 'exceeds the savings threshold' do
       before do
-        choose 'application_threshold_exceeded_true'
+        choose :application_min_threshold_exceeded_true
+        fill_in :application_amount, with: 3500
         click_button 'Next'
       end
 
@@ -50,7 +51,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
     context 'does not exceed the savings threshold' do
       before do
-        choose 'application_threshold_exceeded_false'
+        choose 'application_min_threshold_exceeded_false'
         click_button 'Next'
       end
 

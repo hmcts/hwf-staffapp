@@ -11,7 +11,7 @@ module Views
       end
 
       def savings_passed?
-        convert_to_pass_fail(@application.savings_investment_valid?)
+        convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
       def benefits_passed?

@@ -11,7 +11,8 @@ class ApplicationBuilder
       office_id: @user.office_id,
       user_id: @user.id,
       applicant: build_applicant,
-      detail: build_details
+      detail: build_details,
+      saving: build_saving
     )
   end
 
@@ -35,6 +36,10 @@ class ApplicationBuilder
 
   def build_details
     Detail.new(jurisdiction_id: @user.jurisdiction_id)
+  end
+
+  def build_saving
+    Saving.new
   end
 
   def online_application_attributes(online_application)

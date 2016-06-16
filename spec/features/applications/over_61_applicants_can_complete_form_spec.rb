@@ -31,7 +31,7 @@ RSpec.feature 'Completing the application details', type: :feature do
       fill_in 'application_fee', with: 410
       fill_in 'application_date_received', with: Time.zone.yesterday
       click_button 'Next'
-      choose 'application_threshold_exceeded_false'
+      choose 'application_min_threshold_exceeded_false'
       click_button 'Next'
       choose 'application_benefits_false'
       click_button 'Next'
@@ -62,7 +62,7 @@ RSpec.feature 'Completing the application details', type: :feature do
       fill_in 'application_fee', with: 410
       fill_in 'application_date_received', with: Time.zone.yesterday
       click_button 'Next'
-      choose 'application_threshold_exceeded_false'
+      choose 'application_min_threshold_exceeded_false'
       click_button 'Next'
       choose 'application_benefits_false'
       click_button 'Next'
@@ -71,7 +71,8 @@ RSpec.feature 'Completing the application details', type: :feature do
       fill_in 'application_income', with: '1900'
       click_button 'Next'
       click_link 'Change savings and investments'
-      choose 'application_threshold_exceeded_true'
+      choose :application_min_threshold_exceeded_true
+      choose :application_max_threshold_exceeded_true
       click_button 'Next'
       click_button 'Complete processing'
     end

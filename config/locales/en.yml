@@ -200,9 +200,9 @@ en-GB:
       evidence/forms/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:
-        savings_valid?: Less than maximum savings
-        partner_over_61?: Partner over 61
-        combined_savings_valid?: Less than £16,000 savings
+        min_threshold_exceeded: "Less than £3,000"
+        max_threshold_exceeded: "More than £16,000"
+        amount: 'Amount of income'
       views/overview/benefits:
         on_benefits?: Applicant receiving benefits
         override?: Applicant provided paper evidence
@@ -297,16 +297,17 @@ en-GB:
         date_hint: Use this format DD/MM/YYYY
       forms/application/savings_investment:
         header: Savings and investments
-        maximum_prompt: 'Maximum amount of savings and investments allowed:'
-        explanation: This amount may be different to what’s on the form. It’s calculated on the applicant’s age and fee amount.
-        single: 'In question 7, the applicant has:'
-        married: 'In question 7, the applicant and their partner have:'
+        explanation: In question 7, how much do they have in savings and investments?
+        amount:
+          single_under_61: How much do they have in savings and investments?
+        less_than: Less than £3,000
+        more_than: More than £3,000
+        less_than_max: Less than £16,000
+        more_than_max: More than £16,000
+        max_threshold_exceeded: In question 8, how much do they have?
         partner_over_61: "In question 8, is the applicant's partner 61 or over?"
-        less_than: Less than this amount
-        more_than: More than this amount
-        less_than_high: Less than £16,000
-        more_than_high: More than £16,000
-        high_threshold_exceeded: In question 8, the applicant and their partner have
+        over_61_false: 'No'
+        over_61_true: 'Yes'
       forms/application/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
         benefits_false: 'No'
@@ -392,10 +393,12 @@ en-GB:
               too_long: "is too long, it needs to be less than 500 characters"
         forms/application/savings_investment:
           attributes:
-            threshold_exceeded:
+            min_threshold_exceeded:
               inclusion: You must answer the savings question
             partner_over_61:
               inclusion: Please confirm the ages
+            amount:
+              blank: Please enter a savings amount
         forms/application/benefit:
           attributes:
             benefits:

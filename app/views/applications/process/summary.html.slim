@@ -10,7 +10,7 @@ header
 - change_link = ['Change savings and investments', application_savings_investments_path(@overview.application.id)]
 =build_section 'Savings and investments', @savings, @savings.all_fields, *change_link
 
--if @application.savings_investment_valid?
+-if @application.saving.passed?
   - change_link = ['Change benefits', application_benefits_path(@overview.application.id)]
   =build_section 'Benefits', @benefits, @benefits.all_fields, *change_link
   -if !@application.benefits
