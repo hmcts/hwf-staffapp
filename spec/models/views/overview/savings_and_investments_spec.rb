@@ -3,62 +3,62 @@ require 'rails_helper'
 
 RSpec.describe Views::Overview::SavingsAndInvestments do
 
-  let(:application) { build_stubbed(:application) }
-  subject(:view) { described_class.new(application) }
+  let(:saving) { build_stubbed(:saving) }
+  subject(:view) { described_class.new(saving) }
 
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql %w[savings_valid? partner_over_61? combined_savings_valid?] }
+    it { is_expected.to eql %w[min_threshold_exceeded max_threshold_exceeded amount] }
   end
 
-  describe '#savings_valid?' do
-    let(:application) { build_stubbed :application, threshold_exceeded: threshold_exceeded }
-    subject { view.savings_valid? }
+  describe '#min_threshold_exceeded' do
+    let(:saving) { build_stubbed :saving, min_threshold_exceeded: threshold_exceeded }
+    subject { view.min_threshold_exceeded }
 
     [true, false].each do |value|
-      context "when threshold_exceeded is #{value}" do
+      context "when min_threshold_exceeded is #{value}" do
         let(:threshold_exceeded) { value }
         it { is_expected.to eq I18n.t("convert_boolean.#{!value}") }
       end
     end
   end
 
-  describe '#partner_over_61?' do
-    let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: true, partner_over_61: partner_over_61 }
-    subject { view.partner_over_61? }
+  describe '#max_threshold_exceeded' do
+    let(:saving) { build_stubbed :saving, min_threshold_exceeded: true, max_threshold_exceeded: threshold_exceeded }
+    subject { view.max_threshold_exceeded }
 
-    [true, false].each do |state|
-      context "when partner_over_61 is #{state}" do
-        let(:partner_over_61) { state }
-
-        it { is_expected.to eq I18n.t("convert_boolean.#{state}") }
+    [true, false].each do |value|
+      context "when max_threshold_exceeded is #{value}" do
+        let(:threshold_exceeded) { value }
+        it { is_expected.to eq I18n.t("convert_boolean.#{value}") }
       end
-    end
-
-    context 'when user selected "no" to threshold_exceeded' do
-      let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: false }
-
-      it { is_expected.to eq nil }
     end
   end
 
-  describe '#combined_savings_valid?' do
-    let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: true, high_threshold_exceeded: high_threshold_exceeded }
-    subject { view.combined_savings_valid? }
+  describe '#amount' do
+    let(:saving) { build_stubbed :saving, amount: 3500 }
+    subject { view.amount }
 
-    [true, false].each do |state|
-      context "when high_threshold_exceeded is #{state}" do
-        let(:high_threshold_exceeded) { state }
-
-        it { is_expected.to eq I18n.t("convert_boolean.#{!state}") }
-      end
-    end
-
-    context 'when user selected "no" to threshold_exceeded' do
-      let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: false }
-
-      it { is_expected.to eq nil }
-    end
+    it { is_expected.to eql '£3500' }
   end
+  #
+  # describe '#combined_savings_valid?' do
+  #   let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: true, high_threshold_exceeded: high_threshold_exceeded }
+  #   subject { view.combined_savings_valid? }
+  #
+  #   [true, false].each do |state|
+  #     context "when high_threshold_exceeded is #{state}" do
+  #       let(:high_threshold_exceeded) { state }
+  #
+  #       it { is_expected.to eq I18n.t("convert_boolean.#{!state}") }
+  #     end
+  #   end
+  #
+  #   context 'when user selected "no" to threshold_exceeded' do
+  #     let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: false }
+  #
+  #     it { is_expected.to eq nil }
+  #   end
+  # end
 end
