@@ -5,7 +5,7 @@
   .options.radio.cf
     .option
       label.block-label for='application_max_threshold_exceeded_false'
-        = f.radio_button :max_threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'max-threshold-exceeded', show: 'false' } }
+        = f.radio_button :max_threshold_exceeded, 'false', { class: 'show-hide-section' }
         = t('less_than_max', scope: @form.i18n_scope)
     .option
       label.block-label for='application_max_threshold_exceeded_true'

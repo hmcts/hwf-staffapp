@@ -18,7 +18,7 @@ describe "RadioButtonsModule", ->
                 <div class="options radio">
                   <div class="option">
                     <label for="exceeded_false">
-                      <input class="show-hide-section" data-section="over-61" type="radio" name="exceeded" id="exceeded_false" data-show="false" value="false">
+                      <input class="show-hide-section" type="radio" name="exceeded" id="exceeded_false" value="false">
                       Less than this amount
                     </label>
                   </div>

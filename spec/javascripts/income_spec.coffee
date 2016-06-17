@@ -10,7 +10,7 @@ describe "IncomeModule", ->
         <div class="options radio">
           <div class="option">
             <label for="application_dependents_false">
-              <input class="show-hide-section" data-section="children" data-show="false" type="radio" value="false" name="application[dependents]" id="application_dependents_false">
+              <input class="show-hide-section" type="radio" value="false" name="application[dependents]" id="application_dependents_false">
               No
             </label>
           </div>

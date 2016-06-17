@@ -12,7 +12,7 @@
         .options.radio.cf
           .option
             label.block-label for='application_min_threshold_exceeded_false'
-              = f.radio_button :min_threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'threshold-exceeded', show: 'false' } }
+              = f.radio_button :min_threshold_exceeded, 'false', { class: 'show-hide-section' }
               = t('less_than', scope: @form.i18n_scope)
           .option
             label.block-label for='application_min_threshold_exceeded_true'
