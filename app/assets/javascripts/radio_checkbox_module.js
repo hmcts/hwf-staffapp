@@ -1,6 +1,6 @@
 'use strict';
 
-window.moj.Modules.RadioButtonsModule = {
+window.moj.Modules.RadioAndCheckboxModule = {
   init: function() {
     this.bindEvents();
     this.checkStateOnLoad();
@@ -26,14 +26,20 @@ window.moj.Modules.RadioButtonsModule = {
       $("[name='" + $el.attr('name') + "']").parents('label').removeClass("selected");
       $el.closest('label').addClass('selected');
     });
+
+    $('input:checkbox').on('change', function(e) {
+      self.setBoxState($(e.target));
+    });
   },
 
   checkStateOnLoad: function() {
+    var self = this;
+
     $('input.show-hide-section:radio').each(function(e) {
       var $el = $(e.target);
 
       if ($el.is(':checked')) {
-        $('#' + $el.data('section') + '-only').toggle($el.data('show'));
+        $('#' + $el.data('section') + '-only').show();
       }
     });
 
@@ -42,6 +48,17 @@ window.moj.Modules.RadioButtonsModule = {
 
       $el.closest('label').toggleClass('selected', $el.is(':checked'));
     });
+
+    $('input:checkbox').each(function(n, checkbox) {
+      self.setBoxState($(checkbox));
+    });
+  },
+
+  setBoxState: function($el) {
+    $el.closest('label').toggleClass('selected', $el.is(':checked'));
+    if($el.hasClass('show-hide-checkbox')) {
+      $('#' + $el.data('section') + '-only').toggle($el.is(':checked'));
+    }
   },
 
   radioHide: function($el) {
