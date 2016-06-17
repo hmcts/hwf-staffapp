@@ -1,6 +1,6 @@
-#= require radio_buttons_module
+#= require radio_checkbox_module
 
-describe "RadioButtonsModule", ->
+describe "RadioCheckboxModule", ->
   element=null
   beforeEach ->
     element= $("""
@@ -41,7 +41,7 @@ describe "RadioButtonsModule", ->
       </div>
     """)
     $(document.body).append(element)
-    window.moj.Modules.RadioButtonsModule.init()
+    window.moj.Modules.RadioAndCheckboxModule.init()
     @true_button = $('#exceeded_true')
     @true_label = @true_button.parent('label')
     @false_button = $('#exceeded_false')

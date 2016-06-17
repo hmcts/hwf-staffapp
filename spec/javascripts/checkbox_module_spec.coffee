@@ -1,6 +1,6 @@
-#= require checkbox_module
+#= require radio_checkbox_module
 
-describe "CheckboxModule", ->
+describe "RadioAndCheckboxModule", ->
   element=null
   beforeEach ->
     element= $("""
@@ -29,7 +29,7 @@ describe "CheckboxModule", ->
       </div>
     """)
     $(document.body).append(element)
-    window.moj.Modules.CheckboxModule.init()
+    window.moj.Modules.RadioAndCheckboxModule.init()
     @checkbox = $('#application_refund')
     @label = @checkbox.parent('label')
     @sub_section = $('#refund-only')
@@ -52,7 +52,7 @@ describe "CheckboxModule", ->
     describe 'when the value is true', ->
       beforeEach ->
         @checkbox.prop('checked', true)
-        window.moj.Modules.CheckboxModule.init()
+        window.moj.Modules.RadioAndCheckboxModule.init()
 
       it 'checkbox label should be selected', ->
         expect(@label.hasClass('selected')).toBe true
