@@ -9,6 +9,17 @@ FactoryGirl.define do
     fee_threshold 4000
     over_61 false
 
+    factory :saving_blank do
+      min_threshold nil
+      min_threshold_exceeded nil
+      max_threshold nil
+      max_threshold_exceeded nil
+      amount nil
+      passed nil
+      fee_threshold nil
+      over_61 nil
+    end
+
     factory :saving_with_amount do
       amount 3500
     end
