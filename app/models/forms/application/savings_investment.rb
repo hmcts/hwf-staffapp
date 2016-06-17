@@ -27,8 +27,10 @@ module Forms
 
       def fields_to_update
         {
+          min_threshold: Settings.savings_threshold.minimum,
           min_threshold_exceeded: min_threshold_exceeded,
           over_61: over_61,
+          max_threshold: Settings.savings_threshold.maximum,
           max_threshold_exceeded: max_threshold_exceeded,
           amount: amount
         }

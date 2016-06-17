@@ -129,6 +129,11 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
     end
 
+    context 'sets the thresholds from the settings file' do
+      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum }
+      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum }
+    end
+
     context 'when attributes are incorrect' do
       let(:params) { { min_threshold_exceeded: nil } }
 

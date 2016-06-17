@@ -20,3 +20,6 @@ active_job:
 analytics:
   id: <%= ENV['GA_ID'] || 'UA-37377084-54' %>
   domain: <%= ENV['GA_DOMAIN'] || 'auto' %>
+savings_threshold:
+  minimum: 3000
+  maximum: 16000
