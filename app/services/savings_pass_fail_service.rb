@@ -7,11 +7,7 @@ class SavingsPassFailService
   def calculate!
     @saving.fee_threshold = FeeThreshold.new(@saving.application.fee).band
     @saving.passed = calculate_pass_fail
-    unless @saving.passed
-      @saving.application.application_type = 'none'
-      @saving.application.outcome = 'none'
-      @saving.application.save
-    end
+    set_application_outcome_to_none unless @saving.passed
     @saving.save
   end
 
@@ -23,6 +19,12 @@ class SavingsPassFailService
     else
       false
     end
+  end
+
+  def set_application_outcome_to_none
+    @saving.application.application_type = 'none'
+    @saving.application.outcome = 'none'
+    @saving.application.save
   end
 
   def below_minimum_threshold?

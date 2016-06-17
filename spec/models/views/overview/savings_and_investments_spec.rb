@@ -42,23 +42,4 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
 
     it { is_expected.to eql '£3500' }
   end
-  #
-  # describe '#combined_savings_valid?' do
-  #   let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: true, high_threshold_exceeded: high_threshold_exceeded }
-  #   subject { view.combined_savings_valid? }
-  #
-  #   [true, false].each do |state|
-  #     context "when high_threshold_exceeded is #{state}" do
-  #       let(:high_threshold_exceeded) { state }
-  #
-  #       it { is_expected.to eq I18n.t("convert_boolean.#{!state}") }
-  #     end
-  #   end
-  #
-  #   context 'when user selected "no" to threshold_exceeded' do
-  #     let(:application) { build_stubbed :married_applicant_under_61, threshold_exceeded: false }
-  #
-  #     it { is_expected.to eq nil }
-  #   end
-  # end
 end
