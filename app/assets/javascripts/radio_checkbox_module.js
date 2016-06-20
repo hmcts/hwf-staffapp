@@ -35,16 +35,16 @@ window.moj.Modules.RadioAndCheckboxModule = {
   checkStateOnLoad: function() {
     var self = this;
 
-    $('input.show-hide-section:radio').each(function(e) {
-      var $el = $(e.target);
+    $('input.show-hide-section:radio').each(function(n, el) {
+      var $el = $(el);
 
       if ($el.is(':checked')) {
         $('#' + $el.data('section') + '-only').show();
       }
     });
 
-    $('input[type=radio]').each(function(e) {
-      var $el = $(e.target);
+    $('input[type="radio"]').each(function(n, el) {
+      var $el = $(el);
 
       $el.closest('label').toggleClass('selected', $el.is(':checked'));
     });
