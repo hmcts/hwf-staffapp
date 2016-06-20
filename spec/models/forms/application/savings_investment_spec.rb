@@ -26,7 +26,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       describe 'when true' do
-        let(:hash) { { min_threshold_exceeded: true, amount: 123 } }
+        let(:hash) { { min_threshold_exceeded: true, amount: 123, over_61: false } }
 
         it { is_expected.to be_valid }
       end
@@ -39,7 +39,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     end
 
     describe 'max_threshold_exceeded' do
-      let(:hash) { { min_threshold_exceeded: min_exceeded, max_threshold_exceeded: max_exceeded } }
+      let(:hash) { { min_threshold_exceeded: min_exceeded, over_61: true, max_threshold_exceeded: max_exceeded } }
 
       describe 'is true' do
         let(:max_exceeded) { true }
@@ -58,6 +58,12 @@ RSpec.describe Forms::Application::SavingsInvestment do
           end
         end
       end
+    end
+
+    describe 'when min_threshold_exceeded and over_61 not set' do
+      let(:hash) { { min_threshold_exceeded: true } }
+
+      it { is_expected.not_to be_valid }
     end
 
     describe 'when min_threshold_exceeded and neither party over 61' do

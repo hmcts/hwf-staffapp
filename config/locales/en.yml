@@ -395,8 +395,8 @@ en-GB:
           attributes:
             min_threshold_exceeded:
               inclusion: You must answer the savings question
-            partner_over_61:
-              inclusion: Please confirm the ages
+            over_61:
+              inclusion: Please confirm the partners age
             amount:
               blank: Please enter a savings amount
             max_threshold_exceeded:
