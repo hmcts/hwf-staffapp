@@ -150,13 +150,15 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:application_builder) { double(build_from: application) }
     let(:application_calculation) { double(run: nil) }
     let(:resolver_service) { double(complete: nil) }
+    let(:pass_fail_service) { double(calculate!: nil) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
       allow(application).to receive(:save)
       allow(ApplicationCalculation).to receive(:new).with(application).and_return(application_calculation)
       allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
-      allow(application.saving).to receive(:save)
+      allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(pass_fail_service)
+
       post :complete, id: id
     end
 
@@ -173,7 +175,6 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'builds the application' do
         expect(application_builder).to have_received(:build_from)
-        expect(application).to have_received(:save)
       end
 
       it 'runs the benefit / income calculation' do
@@ -182,6 +183,10 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'runs the resolver service' do
         expect(resolver_service).to have_received(:complete)
+      end
+
+      it 'runs the pass fail service' do
+        expect(pass_fail_service).to have_received(:calculate!)
       end
 
       it 'redirects to the application confirmation page' do
