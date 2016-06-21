@@ -202,7 +202,7 @@ en-GB:
       views/overview/savings_and_investments:
         min_threshold_exceeded: "Less than £3,000"
         max_threshold_exceeded: "More than £16,000"
-        amount: 'Amount of income'
+        amount: 'Savings amount'
       views/overview/benefits:
         on_benefits?: Applicant receiving benefits
         override?: Applicant provided paper evidence
