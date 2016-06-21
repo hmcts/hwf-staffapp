@@ -14,8 +14,9 @@ RSpec.describe ApplicationCalculation do
       service.run
     end
 
-    context 'when the online application has threshold_exceeded' do
-      let(:application) { build_stubbed(:application, threshold_exceeded: true) }
+    context 'when the online application has not passed savings' do
+      let(:saving) { build_stubbed(:saving, passed: false) }
+      let(:application) { build_stubbed(:application, saving: saving) }
 
       it 'does not run benefit check' do
         expect(benefit_check_runner).not_to have_received(:run)
@@ -26,16 +27,18 @@ RSpec.describe ApplicationCalculation do
       end
     end
 
-    context 'when the online application does not have threshold_exceeded' do
+    context 'when the online application has passed savings' do
+      let(:saving) { build_stubbed(:saving, passed: true) }
+
       context 'when the user claims they are on benefits' do
-        let(:application) { build_stubbed(:application, benefits: true) }
+        let(:application) { build_stubbed(:application, saving: saving, benefits: true) }
         it 'runs benefit check' do
           expect(benefit_check_runner).to have_received(:run)
         end
       end
 
       context 'when the user claims they are not on benefits' do
-        let(:application) { build_stubbed(:application, benefits: false, income: 500) }
+        let(:application) { build_stubbed(:application, saving: saving, benefits: false, income: 500) }
 
         it 'runs income calculation' do
           expect(income_calculation_runner).to have_received(:run)

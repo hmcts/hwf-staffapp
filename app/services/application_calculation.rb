@@ -4,7 +4,7 @@ class ApplicationCalculation
   end
 
   def run
-    unless @application.outcome == 'none'
+    if @application.saving.passed?
       if @application.benefits
         BenefitCheckRunner.new(@application).run
       else
