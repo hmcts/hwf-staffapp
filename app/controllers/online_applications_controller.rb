@@ -30,15 +30,18 @@ class OnlineApplicationsController < ApplicationController
     authorize online_application
 
     application = ApplicationBuilder.new(current_user).build_from(online_application)
-    application.save
-
-    ApplicationCalculation.new(application).run
-    ResolverService.new(application, current_user).complete
+    process_application(application)
 
     redirect_to application_confirmation_path(application)
   end
 
   private
+
+  def process_application(application)
+    SavingsPassFailService.new(application.saving).calculate!
+    ApplicationCalculation.new(application).run
+    ResolverService.new(application, current_user).complete
+  end
 
   def online_application
     @online_application ||= OnlineApplication.find(params[:id])

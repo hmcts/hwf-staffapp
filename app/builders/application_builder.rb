@@ -22,7 +22,8 @@ class ApplicationBuilder
       user_id: @user.id,
       online_application: online_application,
       applicant: Applicant.new(online_applicant_attributes(online_application)),
-      detail: Detail.new(online_detail_attributes(online_application))
+      detail: Detail.new(online_detail_attributes(online_application)),
+      saving: Saving.new(online_saving_attributes(online_application))
     }.merge(online_application_attributes(online_application))
 
     Application.new(attributes)
@@ -43,7 +44,7 @@ class ApplicationBuilder
   end
 
   def online_application_attributes(online_application)
-    fields = %i[threshold_exceeded benefits income reference]
+    fields = %i[benefits income reference]
     prepare_attributes(fields, online_application).merge(dependent_attributes(online_application))
   end
 
@@ -64,6 +65,11 @@ class ApplicationBuilder
   def online_detail_attributes(online_application)
     fields = %i[fee jurisdiction date_received form_name case_number probate deceased_name
                 date_of_death refund date_fee_paid emergency_reason]
+    prepare_attributes(fields, online_application)
+  end
+
+  def online_saving_attributes(online_application)
+    fields = %i[min_threshold_exceeded max_threshold_exceeded over_61 amount]
     prepare_attributes(fields, online_application)
   end
 

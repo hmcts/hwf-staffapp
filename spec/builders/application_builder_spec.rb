@@ -88,7 +88,7 @@ RSpec.describe ApplicationBuilder do
         expect(built_application.reference).to eql(online_application.reference)
       end
 
-      %i[threshold_exceeded benefits income].each do |column|
+      %i[benefits income].each do |column|
         it "has #{column} assigned" do
           expect(built_application.public_send(column)).to eql(online_application.public_send(column))
         end
@@ -156,6 +156,21 @@ RSpec.describe ApplicationBuilder do
         %i[fee jurisdiction date_received form_name case_number probate deceased_name date_of_death refund date_fee_paid emergency_reason].each do |column|
           it "has #{column} assigned" do
             expect(built_detail.public_send(column)).to eql(online_application.public_send(column))
+          end
+        end
+      end
+
+      it 'has savings record built' do
+        expect(built_application.saving).to be_a(Saving)
+        expect(built_application.saving).not_to be_persisted
+      end
+
+      describe 'the saving' do
+        subject(:built_saving) { built_application.saving }
+
+        %i[min_threshold_exceeded max_threshold_exceeded amount over_61].each do |column|
+          it "has #{column} assigned" do
+            expect(built_saving.public_send(column)).to eql(online_application.public_send(column))
           end
         end
       end

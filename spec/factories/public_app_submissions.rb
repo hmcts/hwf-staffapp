@@ -4,7 +4,10 @@ FactoryGirl.define do
     to_create { |instance| instance.as_json['table'] }
 
     married true
-    threshold_exceeded true
+    min_threshold_exceeded true
+    max_threshold_exceeded false
+    over_61 false
+    amount 3500
     benefits true
     children 0
     income 100

@@ -6,7 +6,10 @@ FactoryGirl.define do
     end
 
     married false
-    threshold_exceeded false
+    min_threshold_exceeded false
+    max_threshold_exceeded nil
+    over_61 false
+    amount nil
     benefits true
     children 0
     refund false
@@ -51,7 +54,8 @@ FactoryGirl.define do
     end
 
     trait :threshold_exceeded do
-      threshold_exceeded true
+      min_threshold_exceeded true
+      amount 3500
     end
 
     trait :benefits do

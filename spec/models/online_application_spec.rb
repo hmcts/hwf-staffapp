@@ -13,7 +13,7 @@ RSpec.describe OnlineApplication, type: :model do
   it { is_expected.to validate_presence_of(:postcode) }
 
   it { is_expected.not_to allow_value(nil).for(:married) }
-  it { is_expected.not_to allow_value(nil).for(:threshold_exceeded) }
+  it { is_expected.not_to allow_value(nil).for(:min_threshold_exceeded) }
   it { is_expected.not_to allow_value(nil).for(:benefits) }
   it { is_expected.not_to allow_value(nil).for(:refund) }
   it { is_expected.not_to allow_value(nil).for(:probate) }
