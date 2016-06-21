@@ -12,7 +12,6 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     allow(OnlineApplication).to receive(:find).with(online_application.id.to_s).and_return(online_application)
     allow(OnlineApplication).to receive(:find).with('non-existent').and_raise(ActiveRecord::RecordNotFound)
     allow(Forms::OnlineApplication).to receive(:new).with(online_application).and_return(form)
-
     sign_in user
   end
 
@@ -157,7 +156,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(application).to receive(:save)
       allow(ApplicationCalculation).to receive(:new).with(application).and_return(application_calculation)
       allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
-
+      allow(application.saving).to receive(:save)
       post :complete, id: id
     end
 
