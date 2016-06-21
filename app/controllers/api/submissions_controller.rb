@@ -23,7 +23,10 @@ module Api
     def public_app_params
       params.require(:online_application).permit(
         :married,
-        :threshold_exceeded,
+        :min_threshold_exceeded,
+        :max_threshold_exceeded,
+        :over_61,
+        :amount,
         :benefits,
         :children,
         :income,
