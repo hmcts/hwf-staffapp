@@ -10,6 +10,7 @@ class AddNewSavingFieldsToOnlineApplication < ActiveRecord::Migration
         migrate_sql = <<~SQL
           UPDATE online_applications
           SET max_threshold_exceeded = min_threshold_exceeded
+          WHERE min_threshold_exceeded = true
         SQL
         execute(migrate_sql)
       end
