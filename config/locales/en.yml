@@ -394,13 +394,13 @@ en-GB:
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
-              inclusion: You must answer the savings question
+              inclusion: Please answer the savings question
             over_61:
-              inclusion: Please confirm the partners age
+              inclusion: Please confirm if the partner is 61 or over
             amount:
-              blank: Please enter a savings amount
+              blank: Please enter the amount of savings and investments
             max_threshold_exceeded:
-              inclusion: You must answer the savings question
+              inclusion: Please answer the savings question
         forms/application/benefit:
           attributes:
             benefits:
