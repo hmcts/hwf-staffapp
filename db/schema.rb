@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608075642) do
+ActiveRecord::Schema.define(version: 20160620085231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,38 +203,41 @@ ActiveRecord::Schema.define(version: 20160608075642) do
   end
 
   create_table "online_applications", force: :cascade do |t|
-    t.boolean  "married",            null: false
-    t.boolean  "threshold_exceeded", null: false
-    t.boolean  "benefits",           null: false
+    t.boolean  "married",                null: false
+    t.boolean  "min_threshold_exceeded", null: false
+    t.boolean  "benefits",               null: false
     t.integer  "children"
     t.integer  "income"
-    t.boolean  "refund",             null: false
+    t.boolean  "refund",                 null: false
     t.date     "date_fee_paid"
-    t.boolean  "probate",            null: false
+    t.boolean  "probate",                null: false
     t.string   "deceased_name"
     t.date     "date_of_death"
     t.string   "case_number"
     t.string   "form_name"
-    t.string   "ni_number",          null: false
-    t.date     "date_of_birth",      null: false
+    t.string   "ni_number",              null: false
+    t.date     "date_of_birth",          null: false
     t.string   "title"
-    t.string   "first_name",         null: false
-    t.string   "last_name",          null: false
-    t.text     "address",            null: false
-    t.string   "postcode",           null: false
-    t.boolean  "email_contact",      null: false
+    t.string   "first_name",             null: false
+    t.string   "last_name",              null: false
+    t.text     "address",                null: false
+    t.string   "postcode",               null: false
+    t.boolean  "email_contact",          null: false
     t.string   "email_address"
-    t.boolean  "phone_contact",      null: false
+    t.boolean  "phone_contact",          null: false
     t.string   "phone"
-    t.boolean  "post_contact",       null: false
+    t.boolean  "post_contact",           null: false
     t.string   "reference"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.decimal  "fee"
     t.integer  "jurisdiction_id"
     t.text     "emergency_reason"
-    t.boolean  "feedback_opt_in",    null: false
+    t.boolean  "feedback_opt_in",        null: false
     t.date     "date_received"
+    t.boolean  "max_threshold_exceeded"
+    t.boolean  "over_61"
+    t.integer  "amount"
   end
 
   add_index "online_applications", ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id", using: :btree
