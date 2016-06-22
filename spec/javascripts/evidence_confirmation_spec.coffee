@@ -1,4 +1,4 @@
-#= require radio_buttons_module
+#= require radio_checkbox_module
 #= require evidence_confirmation
 
 describe "EvidenceConfirmationModule", ->
@@ -40,7 +40,7 @@ describe "EvidenceConfirmationModule", ->
     """)
     $(document.body).append(element)
     window.moj.Modules.EvidenceConfirmationModule.init()
-    window.moj.Modules.RadioButtonsModule.init()
+    window.moj.Modules.RadioAndCheckboxModule.init()
     @yes_button = $('#evidence_correct_true')
     @yes_label = @yes_button.parent('label')
     @no_button = $('#evidence_correct_false')

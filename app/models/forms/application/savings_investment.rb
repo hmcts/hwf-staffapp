@@ -6,17 +6,19 @@ module Forms
 
       def self.permitted_attributes
         {
-          threshold_exceeded: Boolean,
-          partner_over_61: Boolean,
-          high_threshold_exceeded: Boolean
+          min_threshold_exceeded: Boolean,
+          over_61: Boolean,
+          max_threshold_exceeded: Boolean,
+          amount: Decimal
         }
       end
 
       define_attributes
 
-      validates :threshold_exceeded, inclusion: { in: [true, false] }
-      validate :check_partner_over_61
+      validates :min_threshold_exceeded, inclusion: { in: [true, false] }
+      validate :over_61_valid?
       validate :maximum_threshold_exceeded
+      validate :amount_set_correctly?
 
       private
 
@@ -26,27 +28,43 @@ module Forms
 
       def fields_to_update
         {
-          threshold_exceeded: threshold_exceeded,
-          partner_over_61: partner_over_61,
-          high_threshold_exceeded: high_threshold_exceeded
+          min_threshold: Settings.savings_threshold.minimum,
+          min_threshold_exceeded: min_threshold_exceeded,
+          over_61: over_61,
+          max_threshold: Settings.savings_threshold.maximum,
+          max_threshold_exceeded: max_threshold_exceeded,
+          amount: amount
         }
       end
 
-      def check_partner_over_61
-        if PartnerAgeCheck.new(self, @object).verify == false
-          errors.add(:partner_over_61, I18n.t('partner_over_61.inclusion', scope: LOCALE))
+      def over_61_valid?
+        if min_threshold_exceeded && over_61.nil?
+          error_message = I18n.t('over_61.inclusion', scope: LOCALE)
+          errors.add(:over_61, error_message)
         end
       end
 
       def maximum_threshold_exceeded
-        if partner_over_61? && high_threshold_not_boolean?
-          error_message = I18n.t('threshold_exceeded.inclusion', scope: LOCALE)
-          errors.add(:high_threshold_exceeded, error_message)
+        if (!min_threshold_exceeded? && max_threshold_exceeded) || maximum_threshold_invalid?
+          error_message = I18n.t('max_threshold_exceeded.inclusion', scope: LOCALE)
+          errors.add(:max_threshold_exceeded, error_message)
         end
       end
 
-      def high_threshold_not_boolean?
-        ![true, false].include?(high_threshold_exceeded)
+      def maximum_threshold_invalid?
+        valid_array = maximum_threshold_required? ? [true, false] : [true, false, nil]
+        !valid_array.include?(max_threshold_exceeded)
+      end
+
+      def maximum_threshold_required?
+        min_threshold_exceeded? && over_61 == true
+      end
+
+      def amount_set_correctly?
+        if amount.nil? && (min_threshold_exceeded? && over_61 == false)
+          error_message = I18n.t('amount.blank', scope: LOCALE)
+          errors.add(:amount, error_message)
+        end
       end
     end
   end

@@ -22,8 +22,7 @@
 //= require module_loader
 
 // modules
-//= require radio_buttons_module
-//= require checkbox_module
+//= require radio_checkbox_module
 //= require income
 //= require evidence_confirmation
 //= require equal_height_boxes

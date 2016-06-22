@@ -9,6 +9,7 @@ class Application < ActiveRecord::Base
   has_many :benefit_checks
   has_one :applicant
   has_one :detail, inverse_of: :application
+  has_one :saving, inverse_of: :application
   has_one :evidence_check, required: false
   has_one :part_payment, required: false
   has_one :benefit_override, required: false
@@ -48,39 +49,6 @@ class Application < ActiveRecord::Base
 
   def children=(val)
     self[:children] = dependents? ? val : 0
-  end
-
-  # FIXME: Remove the threshold field from db as it's read only now
-  def threshold
-    applicant_over_61? ? 16000 : FeeThreshold.new(fee).band
-  end
-
-  def threshold_exceeded=(val)
-    super
-    self.partner_over_61 = nil unless threshold_exceeded?
-    if threshold_exceeded? && (!partner_over_61 || applicant_over_61?)
-      self.application_type = 'none'
-      self.outcome = 'none'
-      self.dependents = nil
-    end
-  end
-
-  def high_threshold_exceeded=(val)
-    super
-    if high_threshold_exceeded?
-      self.application_type = 'none'
-      self.outcome = 'none'
-      self.dependents = nil
-    end
-  end
-
-  def savings_investment_valid?
-    result = false
-    if threshold_exceeded == false ||
-       (threshold_exceeded && (partner_over_61 && high_threshold_exceeded == false))
-      result = true
-    end
-    result
   end
 
   def applicant_over_61?

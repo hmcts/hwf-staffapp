@@ -5,58 +5,46 @@
       header
         h2.heading-xlarge =t('header', scope: @form.i18n_scope)
 
-      .text
-        p= t('maximum_prompt', scope: @form.i18n_scope)
-        .callout.received
-          h3.heading-large =number_to_currency(@application.threshold.floor, precision: 0)
-        p= t('explanation', scope: @form.i18n_scope)
-
-      .form-group.util_mt-medium
-        = f.label :threshold_exceeded, t(@application.married ? 'married' : 'single', scope: @form.i18n_scope), class: 'form-label'
-        = f.label :threshold_exceeded, @form.errors[:threshold_exceeded].join(', '), class: 'error' if @form.errors[:threshold_exceeded].present?
-        = f.hidden_field :threshold_exceeded, value: nil
+      .form-group
+        = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
+        = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
+        = f.hidden_field :min_threshold_exceeded, value: nil
         .options.radio.cf
           .option
-            label.block-label for='application_threshold_exceeded_false'
-              = f.radio_button :threshold_exceeded, 'false', { class: 'show-hide-section', data: { section: 'over-61', show: 'false' } }
+            label.block-label for='application_min_threshold_exceeded_false'
+              = f.radio_button :min_threshold_exceeded, 'false', { class: 'show-hide-section' }
               = t('less_than', scope: @form.i18n_scope)
           .option
-            label.block-label for='application_threshold_exceeded_true'
-              = f.radio_button :threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'over-61', show: 'true' } }
+            label.block-label for='application_min_threshold_exceeded_true'
+              = f.radio_button :min_threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
               = t('more_than', scope: @form.i18n_scope)
 
-        -if @application.applicant_over_61?
-          =f.hidden_field :partner_over_61, value: 'true'
-          =f.hidden_field :high_threshold_exceeded, value: 'true'
-        -elsif !@application.married?
-          =f.hidden_field :partner_over_61, value: 'false'
-        -else
-          #over-61-only.start-hidden
-            .form-group.panel-indent.util-mt-0
-              = f.label :partner_over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
-              = f.label :partner_over_61, @form.errors[:partner_over_61].join(', '), class: 'error' if @form.errors[:partner_over_61].present?
-              .options.radio.cf
-                .option
-                  label.block-label for='application_partner_over_61_false'
-                    = f.radio_button :partner_over_61, 'false', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'false' } }
-                    = t('no')
-                .option
-                  label.block-label for='application_partner_over_61_true'
-                    = f.radio_button :partner_over_61, 'true', { class: 'show-hide-section', data: { section: 'high-threshold', show: 'true' } }
-                    = t('yes')
-              #high-threshold-only.start-hidden
-                .panel-indent
-                  =f.label :high_threshold_exceeded, class: 'form-label'
-                  = f.label :high_threshold_exceeded, @form.errors[:high_threshold_exceeded].join(', '), class: 'error' if @form.errors[:high_threshold_exceeded].present?
-                  .options.radio.cf
-                    .option
-                      label.block-label for="application_high_threshold_exceeded_false"
-                        = f.radio_button :high_threshold_exceeded, 'false'
-                        = t('less_than_high', scope: @form.i18n_scope)
-                    .option
-                      label.block-label for="application_high_threshold_exceeded_true"
-                        = f.radio_button :high_threshold_exceeded, 'true'
-                        = t('more_than_high', scope: @form.i18n_scope)
+        #threshold-exceeded-only.start-hidden
+          - if @application.applicant_over_61?
+            = f.hidden_field :over_61, value: 'true'
+            =render('shared/savings/max_threshold_exceeded', f: f)
+          -else
+            -if !@application.married?
+              =f.hidden_field :over_61, value: 'false'
+              =render('shared/savings/amount', f: f)
+            -elsif @application.married?
+              .form-group.panel-indent.util-mt-0
+                = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
+                = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                = f.hidden_field :over_61, value: nil
+                .options.radio.cf
+                  .option
+                    label.block-label for='application_over_61_false'
+                      = f.radio_button :over_61, 'false', { class: 'show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
+                      = t('over_61_false', scope: @form.i18n_scope)
+                  #partner-under-61-only.start-hidden
+                    =render('shared/savings/amount', f: f)
+                  .option
+                    label.block-label for='application_over_61_true'
+                      = f.radio_button :over_61, 'true', { class: 'show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
+                      = t('over_61_true', scope: @form.i18n_scope)
+                  #partner-over-61-only.start-hidden
+                    = render('shared/savings/max_threshold_exceeded', f: f)
 
       = f.submit 'Next', :class => 'button primary'
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::SavingsInvestment do
-  params_list = %i[threshold_exceeded partner_over_61 high_threshold_exceeded]
+  params_list = %i[min_threshold_exceeded over_61 max_threshold_exceeded amount]
 
   subject { described_class.new(application) }
 
@@ -12,85 +12,106 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let!(:application) { create :applicant_under_61 }
+    let!(:application) { create :single_applicant_under_61 }
 
     before do
       subject.update_attributes(hash)
     end
 
-    describe 'threshold_exceeded' do
+    describe 'min_threshold_exceeded' do
       describe 'when false' do
-        let(:hash) { { threshold_exceeded: false } }
+        let(:hash) { { min_threshold_exceeded: false } }
 
         it { is_expected.to be_valid }
       end
 
       describe 'when true' do
-        let(:hash) { { threshold_exceeded: true, partner_over_61: false } }
+        let(:hash) { { min_threshold_exceeded: true, amount: 123, over_61: false } }
 
         it { is_expected.to be_valid }
       end
 
       describe 'when something other than true of false' do
-        let(:hash) { { threshold_exceeded: 'blah' } }
+        let(:hash) { { min_threshold_exceeded: 'blah' } }
 
         it { is_expected.not_to be_valid }
       end
     end
 
-    describe "applicant's partner is over 61" do
-      context 'if threshold is exceeded' do
-        let(:hash) { { threshold_exceeded: true, partner_over_61: partner_partner_over_61, high_threshold_exceeded: true } }
+    describe 'max_threshold_exceeded' do
+      let(:hash) { { min_threshold_exceeded: min_exceeded, over_61: true, max_threshold_exceeded: max_exceeded } }
 
-        context 'when true' do
-          let(:partner_partner_over_61) { true }
+      describe 'is true' do
+        let(:max_exceeded) { true }
+
+        describe 'min_threshold_exceeded' do
+          describe 'when false' do
+            let(:min_exceeded) { false }
+
+            it { is_expected.not_to be_valid }
+          end
+
+          describe 'when true' do
+            let(:min_exceeded) { true }
+
+            it { is_expected.to be_valid }
+          end
+        end
+      end
+    end
+
+    describe 'when min_threshold_exceeded and over_61 not set' do
+      let(:hash) { { min_threshold_exceeded: true } }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    describe 'when min_threshold_exceeded and neither party over 61' do
+      let(:hash) { { min_threshold_exceeded: true, over_61: false, amount: amount } }
+
+      describe 'amount' do
+        describe 'is set' do
+          let(:amount) { 345 }
 
           it { is_expected.to be_valid }
         end
 
-        context 'when false' do
-          let(:partner_partner_over_61) { false }
-
-          it { is_expected.to be_valid }
-        end
-
-        context 'when something other than true or false' do
-          let(:partner_partner_over_61) { 'invalid' }
-
-          before { subject.valid? }
+        describe 'is missing' do
+          let(:amount) { nil }
 
           it { is_expected.not_to be_valid }
         end
       end
     end
 
-    describe 'high threshold' do
-      let(:hash) { { threshold_exceeded: true, partner_over_61: true, high_threshold_exceeded: high_threshold } }
+    describe 'when min_threshold_exceeded and partner over 61' do
+      let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_threshold } }
 
-      context 'is exceeded' do
-        let(:high_threshold) { true }
+      describe 'max_threshold' do
+        describe 'is true' do
+          let(:max_threshold) { true }
 
-        it { is_expected.to be_valid }
-      end
+          it { is_expected.to be_valid }
+        end
 
-      context 'is not exceeded' do
-        let(:high_threshold) { false }
+        describe 'is true' do
+          let(:max_threshold) { false }
 
-        it { is_expected.to be_valid }
-      end
+          it { is_expected.to be_valid }
+        end
 
-      context 'is not true or false' do
-        let(:high_threshold) { 'invalid' }
+        describe 'is missing' do
+          let(:max_threshold) { nil }
 
-        it { is_expected.not_to be_valid }
+          it { is_expected.not_to be_valid }
+        end
       end
     end
   end
 
   describe '#save' do
-    let(:applicant) { build :applicant_with_all_details }
-    let(:application) { create :application, applicant: applicant }
-    subject(:form) { described_class.new(application) }
+    let(:saving) { create :saving }
+    subject(:form) { described_class.new(saving) }
 
     subject do
       form.update_attributes(params)
@@ -98,24 +119,29 @@ RSpec.describe Forms::Application::SavingsInvestment do
     end
 
     context 'when attributes are correct' do
-      let(:params) { { threshold_exceeded: true, partner_over_61: true, high_threshold_exceeded: false } }
+      let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 3456 } }
 
       it { is_expected.to be true }
 
       before do
         subject
-        application.reload
+        saving.reload
       end
 
       it 'saves the parameters in the detail' do
         params.each do |key, value|
-          expect(application.send(key)).to eql(value)
+          expect(saving.send(key)).to eql(value)
         end
       end
     end
 
+    context 'sets the thresholds from the settings file' do
+      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum }
+      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum }
+    end
+
     context 'when attributes are incorrect' do
-      let(:params) { { threshold_exceeded: nil } }
+      let(:params) { { min_threshold_exceeded: nil } }
 
       it { is_expected.to be false }
     end

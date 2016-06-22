@@ -65,7 +65,7 @@ module Views
     end
 
     def savings
-      format_locale(@application.savings_investment_valid?.to_s)
+      format_locale(@application.saving.passed?.to_s)
     end
 
     def type

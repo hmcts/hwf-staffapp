@@ -8,6 +8,7 @@ RSpec.describe Views::Confirmation::Result do
   let(:string_waiting_evidence) { 'Waiting for evidence' }
   let(:string_part_payment) { 'Waiting for part-payment' }
   let(:scope) { 'convert_pass_fail' }
+  let(:saving) { double }
   subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
@@ -20,9 +21,12 @@ RSpec.describe Views::Confirmation::Result do
     subject { view.savings_passed? }
     [true, false].each do |value|
       context "when threshold_exceeded is #{value}" do
-        let(:application) { build_stubbed(:application, threshold_exceeded: value) }
+        before do
+          allow(application).to receive(:saving).and_return(saving)
+          allow(saving).to receive(:passed?).and_return(!value)
+        end
 
-        it { is_expected.to eq I18n.t(!value, scope: scope) }
+        it { is_expected.to eq I18n.t((!value).to_s, scope: scope) }
       end
     end
   end

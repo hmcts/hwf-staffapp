@@ -45,14 +45,15 @@ module Applications
     end
 
     def savings_investments
-      @form = Forms::Application::SavingsInvestment.new(application)
+      @form = Forms::Application::SavingsInvestment.new(application.saving)
     end
 
     def savings_investments_save
-      @form = Forms::Application::SavingsInvestment.new(application)
+      @form = Forms::Application::SavingsInvestment.new(application.saving)
       @form.update_attributes(form_params(:savings_investments))
 
       if @form.save
+        SavingsPassFailService.new(application.saving).calculate!
         redirect_to(action: :benefits)
       else
         render :savings_investments
@@ -61,7 +62,7 @@ module Applications
 
     def benefits
       @state = DwpMonitor.new.state
-      if application.savings_investment_valid?
+      if application.saving.passed?
         @form = Forms::Application::Benefit.new(application)
         render :benefits
       else
@@ -104,7 +105,7 @@ module Applications
     def summary
       @result = Views::Applikation::Result.new(application)
       @overview = Views::ApplicationOverview.new(application)
-      @savings = Views::Overview::SavingsAndInvestments.new(application)
+      @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
       @benefits = Views::Overview::Benefits.new(application)
       @income = Views::Overview::Income.new(application)
     end

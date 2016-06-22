@@ -15,7 +15,7 @@
         .options.radio.cf
           .option
             label.block-label for='benefit_override_evidence_false'
-              = f.radio_button :evidence, 'false', { class: 'show-hide-section', data: { section: 'evidence', show: 'false' } }
+              = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
               = t('evidence_false', scope: @form.i18n_scope)
           .option
             label.block-label for='benefit_override_evidence_true'
@@ -32,7 +32,7 @@
                   = t('correct_false', scope: @form.i18n_scope)
               .option
                 label.block-label for='benefit_override_correct_true'
-                  = f.radio_button :correct, 'true', { class: 'show-hide-section', data: { section: 'incorrect', show: 'false'} }
+                  = f.radio_button :correct, 'true', { class: 'show-hide-section' }
                   = t('correct_true', scope: @form.i18n_scope)
 
             .panel-indent.start-hidden#incorrect-only

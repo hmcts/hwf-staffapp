@@ -74,29 +74,4 @@ RSpec.describe Application, type: :model do
       end
     end
   end
-
-  describe '#threshold' do
-    subject { application.threshold }
-
-    context 'when applicant is over 61' do
-      let(:applicant) { create(:applicant, :over_61) }
-
-      it 'returns 16000' do
-        is_expected.to eq(16000)
-      end
-    end
-
-    context 'when applicant is under 61' do
-      let(:applicant) { create(:applicant, :under_61) }
-      let(:fee_threshold) { double(band: 845) }
-
-      before do
-        allow(FeeThreshold).to receive(:new).with(application.fee).and_return(fee_threshold)
-      end
-
-      it 'calculates the threshold from the fee' do
-        is_expected.to eq(845)
-      end
-    end
-  end
 end

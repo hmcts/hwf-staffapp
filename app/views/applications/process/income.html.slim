@@ -11,7 +11,7 @@
         .options.radio.cf
           .option
             label.block-label for='application_dependents_false'
-              = f.radio_button :dependents, 'false', { class: 'show-hide-section', data: { section: 'children', show: 'false' } }
+              = f.radio_button :dependents, 'false', { class: 'show-hide-section' }
               = t('income_false', scope: @form.i18n_scope)
           .option
             label.block-label for='application_dependents_true'

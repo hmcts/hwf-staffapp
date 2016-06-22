@@ -89,7 +89,7 @@ RSpec.describe Views::ApplicationResult do
     subject { view.savings }
 
     before do
-      allow(application).to receive(:savings_investment_valid?).and_return(savings_valid)
+      allow(application.saving).to receive(:passed?).and_return(savings_valid)
     end
 
     context 'when savings and investment is valid' do
