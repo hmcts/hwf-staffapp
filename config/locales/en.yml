@@ -298,8 +298,7 @@ en-GB:
       forms/application/savings_investment:
         header: Savings and investments
         explanation: In question 7, how much do they have in savings and investments?
-        amount:
-          single_under_61: How much do they have in savings and investments?
+        amount: How much do they have in savings and investments?
         less_than: Less than £3,000
         more_than: More than £3,000
         less_than_max: Less than £16,000
