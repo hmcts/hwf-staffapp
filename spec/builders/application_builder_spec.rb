@@ -88,6 +88,14 @@ RSpec.describe ApplicationBuilder do
         expect(built_application.reference).to eql(online_application.reference)
       end
 
+      it 'sets the current min_thresholds' do
+        expect(built_application.saving.min_threshold).to eql(Settings.savings_threshold.minimum)
+      end
+
+      it 'sets the current max_thresholds' do
+        expect(built_application.saving.max_threshold).to eql(Settings.savings_threshold.maximum)
+      end
+
       %i[benefits income].each do |column|
         it "has #{column} assigned" do
           expect(built_application.public_send(column)).to eql(online_application.public_send(column))

@@ -26,7 +26,7 @@ RSpec.describe Views::Confirmation::Result do
           allow(saving).to receive(:passed?).and_return(!value)
         end
 
-        it { is_expected.to eq I18n.t(!value, scope: scope) }
+        it { is_expected.to eq I18n.t((!value).to_s, scope: scope) }
       end
     end
   end

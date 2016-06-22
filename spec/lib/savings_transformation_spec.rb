@@ -18,6 +18,11 @@ RSpec.describe SavingsTransformation do
   describe '#up!' do
     before do
       transform.up!
+      application1.reload
+      application2.reload
+      application3.reload
+      application4.reload
+      application5.reload
     end
 
     it 'creates a saving for each application' do
@@ -25,34 +30,31 @@ RSpec.describe SavingsTransformation do
     end
 
     it 'creates the saving model' do
-      application1.reload
       expect(application1.saving.present?).to eql(true)
     end
 
     it 'sets `passed` to false when maximum threshold exceeded' do
-      application2.reload
       expect(application2.saving.passed).to eql(false)
     end
 
     it 'sets `over_61` to true when the applicant is over_61' do
-      application3.reload
       expect(application3.saving.over_61).to eql(true)
     end
 
     it 'sets `over_61` to match partner_over_61' do
-      application4.reload
       expect(application4.saving.over_61).to eql(true)
     end
 
     it 'sets the fee_threshold to minimum when the fee is nil' do
-      application5.reload
       expect(application5.saving.fee_threshold).to eql(3000)
     end
 
     it 'sets passed to equal savings_and_investments_valid? on the application' do
-      Saving.all.each do |saving|
-        expect(saving.passed).to eql(saving.application.savings_investment_valid?)
-      end
+      expect(application1.saving.passed).to be true
+      expect(application2.saving.passed).to be false
+      expect(application3.saving.passed).to be false
+      expect(application4.saving.passed).to be true
+      expect(application5.saving.passed).to be true
     end
   end
 end

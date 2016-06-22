@@ -73,7 +73,7 @@ RSpec.describe Views::ApplicationOverview do
   end
 
   describe '#savings' do
-    before { allow(application).to receive(:savings_investment_valid?).and_return(result) }
+    before { allow(application.saving).to receive(:passed?).and_return(result) }
 
     subject { view.savings }
 

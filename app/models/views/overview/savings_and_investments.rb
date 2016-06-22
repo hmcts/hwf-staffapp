@@ -15,7 +15,9 @@ module Views
       end
 
       def max_threshold_exceeded
-        convert_to_boolean(@saving.max_threshold_exceeded?)
+        unless @saving.max_threshold_exceeded.nil?
+          convert_to_boolean(@saving.max_threshold_exceeded?)
+        end
       end
 
       def amount

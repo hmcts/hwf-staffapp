@@ -54,7 +54,7 @@ module Views
       private
 
       def convert_to_pass_fail(input)
-        I18n.t(input, scope: 'convert_pass_fail')
+        I18n.t(input.to_s, scope: 'convert_pass_fail')
       end
 
       def applicant_is_on_benefits
