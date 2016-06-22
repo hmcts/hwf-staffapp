@@ -41,14 +41,10 @@ class SavingsTransformation
   end
 
   def savings_investment_valid?(application)
-    result = false
-    if application.threshold_exceeded == false ||
-       (
-         application.threshold_exceeded &&
-         (application.partner_over_61 && application.high_threshold_exceeded == false)
-       )
-      result = true
-    end
-    result
+    application.threshold_exceeded == false ||
+      (
+        application.threshold_exceeded &&
+        (application.partner_over_61? && application.high_threshold_exceeded == false)
+      )
   end
 end
