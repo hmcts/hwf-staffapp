@@ -32,36 +32,36 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       describe 'when something other than true of false' do
-        let(:hash) { { min_threshold_exceeded: 'blah' } }
+        let(:hash) { { min_threshold_exceeded: 'blah', over_61: false } }
 
         it { is_expected.not_to be_valid }
       end
     end
 
     describe 'max_threshold_exceeded' do
-      let(:hash) { { min_threshold_exceeded: min_exceeded, over_61: true, max_threshold_exceeded: max_exceeded } }
+      let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_exceeded } }
 
       describe 'is true' do
         let(:max_exceeded) { true }
 
-        describe 'min_threshold_exceeded' do
-          describe 'when false' do
-            let(:min_exceeded) { false }
+        it { is_expected.to be_valid }
+      end
 
-            it { is_expected.not_to be_valid }
-          end
+      describe 'is false' do
+        let(:max_exceeded) { false }
 
-          describe 'when true' do
-            let(:min_exceeded) { true }
+        it { is_expected.to be_valid }
+      end
 
-            it { is_expected.to be_valid }
-          end
-        end
+      describe 'is nil' do
+        let(:max_exceeded) { nil }
+
+        it { is_expected.not_to be_valid }
       end
     end
 
     describe 'when min_threshold_exceeded and over_61 not set' do
-      let(:hash) { { min_threshold_exceeded: true } }
+      let(:hash) { { min_threshold_exceeded: true, over_61: nil, amount: 100 } }
 
       it { is_expected.not_to be_valid }
     end
@@ -85,7 +85,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
         describe 'is non-numeric' do
           let(:amount) { 'foo' }
 
-          xit { is_expected.not_to be_valid }
+          it { is_expected.not_to be_valid }
         end
       end
     end
