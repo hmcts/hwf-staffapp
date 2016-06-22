@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+def savings_investment_valid?(application)
+  result = false
+  if application.threshold_exceeded == false ||
+     (
+        application.threshold_exceeded &&
+        (application.partner_over_61 && application.high_threshold_exceeded == false)
+     )
+    result = true
+  end
+  result
+end
+
 RSpec.describe SavingsTransformation do
 
   subject(:transform) { described_class.new }
@@ -51,7 +63,8 @@ RSpec.describe SavingsTransformation do
 
     it 'sets passed to equal savings_and_investments_valid? on the application' do
       Saving.all.each do |saving|
-        expect(saving.passed).to eql(saving.application.savings_investment_valid?)
+
+        expect(saving.passed).to eql(savings_investment_valid?(saving.application))
       end
     end
   end

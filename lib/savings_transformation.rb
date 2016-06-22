@@ -16,7 +16,7 @@ class SavingsTransformation
       min_threshold_exceeded: threshold_exceeded?(application.threshold_exceeded),
       max_threshold_exceeded: threshold_exceeded?(application.high_threshold_exceeded),
       amount: nil,
-      passed: application.savings_investment_valid?,
+      passed: savings_investment_valid?(application),
       fee_threshold: generate_fee_threshold(application),
       over_61: someone_over_61?(application)
     )
@@ -38,5 +38,17 @@ class SavingsTransformation
 
   def applicant_age_or_zero(application)
     application.applicant.date_of_birth.present? ? application.applicant.age : 0
+  end
+
+  def savings_investment_valid?(application)
+    result = false
+    if application.threshold_exceeded == false ||
+       (
+         application.threshold_exceeded &&
+         (application.partner_over_61 && application.high_threshold_exceeded == false)
+       )
+      result = true
+    end
+    result
   end
 end
