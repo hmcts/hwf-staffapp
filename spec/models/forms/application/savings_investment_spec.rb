@@ -81,6 +81,12 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
           it { is_expected.not_to be_valid }
         end
+
+        describe 'is non-numeric' do
+          let(:amount) { 'foo' }
+
+          xit { is_expected.not_to be_valid }
+        end
       end
     end
 
