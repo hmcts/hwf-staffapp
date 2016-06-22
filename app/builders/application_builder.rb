@@ -70,7 +70,10 @@ class ApplicationBuilder
 
   def online_saving_attributes(online_application)
     fields = %i[min_threshold_exceeded max_threshold_exceeded over_61 amount]
-    prepare_attributes(fields, online_application)
+    {
+      min_threshold: Settings.savings_threshold.minimum,
+      max_threshold: Settings.savings_threshold.maximum
+    }.merge(prepare_attributes(fields, online_application))
   end
 
   def prepare_attributes(fields, online_application)
