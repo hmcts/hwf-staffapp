@@ -51,15 +51,6 @@ class Application < ActiveRecord::Base
     self[:children] = dependents? ? val : 0
   end
 
-  def savings_investment_valid?
-    result = false
-    if threshold_exceeded == false ||
-       (threshold_exceeded && (partner_over_61 && high_threshold_exceeded == false))
-      result = true
-    end
-    result
-  end
-
   def applicant_over_61?
     applicant.age >= 61
   end
