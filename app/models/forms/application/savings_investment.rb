@@ -16,9 +16,9 @@ module Forms
       define_attributes
 
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
-      validate :over_61_valid?
-      validate :maximum_threshold_exceeded
-      validate :amount_set_correctly?
+      validates :over_61, inclusion: { in: [true, false] }, if: :min_threshold_exceeded?
+      validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
+      validates :amount, presence: true, numericality: true, if: :amount_required?
 
       private
 
@@ -37,34 +37,16 @@ module Forms
         }
       end
 
-      def over_61_valid?
-        if min_threshold_exceeded && over_61.nil?
-          error_message = I18n.t('over_61.inclusion', scope: LOCALE)
-          errors.add(:over_61, error_message)
-        end
+      def maximum_threshold_array
+        maximum_threshold_required? ? [true, false] : [true, false, nil]
       end
 
-      def maximum_threshold_exceeded
-        if (!min_threshold_exceeded? && max_threshold_exceeded) || maximum_threshold_invalid?
-          error_message = I18n.t('max_threshold_exceeded.inclusion', scope: LOCALE)
-          errors.add(:max_threshold_exceeded, error_message)
-        end
-      end
-
-      def maximum_threshold_invalid?
-        valid_array = maximum_threshold_required? ? [true, false] : [true, false, nil]
-        !valid_array.include?(max_threshold_exceeded)
+      def amount_required?
+        min_threshold_exceeded? && !over_61?
       end
 
       def maximum_threshold_required?
-        min_threshold_exceeded? && over_61 == true
-      end
-
-      def amount_set_correctly?
-        if amount.nil? && (min_threshold_exceeded? && over_61 == false)
-          error_message = I18n.t('amount.blank', scope: LOCALE)
-          errors.add(:amount, error_message)
-        end
+        min_threshold_exceeded? && over_61?
       end
     end
   end
