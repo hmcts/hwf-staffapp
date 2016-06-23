@@ -4,8 +4,13 @@ RSpec.describe FinanceReportBuilder do
 
   let(:user) { create :user }
   let(:business_entity) { create :business_entity }
+  let(:excluded_office) { create :office, name: 'Digital' }
+  let(:excluded_business_entity) { create :business_entity, office: excluded_office }
   let!(:application1) do
     create(:application_full_remission, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity)
+  end
+  let!(:application2) do
+    create(:application_full_remission, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: excluded_business_entity)
   end
 
   let(:current_time) { Time.zone.parse('2016-02-02 15:50:10') }
@@ -21,6 +26,10 @@ RSpec.describe FinanceReportBuilder do
     end
 
     it { is_expected.to be_a String }
+
+    it 'does not include digital' do
+      is_expected.not_to include('Digital')
+    end
 
     it 'contains static meta data' do
       is_expected.to include('Report Title:,Remissions Granted Report')
