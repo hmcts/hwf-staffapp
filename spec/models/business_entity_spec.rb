@@ -29,6 +29,20 @@ RSpec.describe BusinessEntity, type: :model do
     end
   end
 
+  context 'scopes' do
+    let!(:hmcts)   { create(:office, name: 'HMCTS HQ Team ') }
+    let!(:digital) { create(:office, name: 'Digital') }
+    let!(:bristol) { create(:office, name: 'Bristol') }
+
+    describe 'non_digital' do
+      it 'excludes HQ business entities' do
+        # each office gets 2 business_entities by default
+        expect(described_class.count).to eql(6)
+        expect(described_class.exclude_hq_teams.count).to eql(2)
+      end
+    end
+  end
+
   describe '#current_for' do
     let(:business_entity) { create :business_entity }
     subject { described_class.current_for(office, jurisdiction) }

@@ -2,6 +2,10 @@ class BusinessEntity < ActiveRecord::Base
   belongs_to :office
   belongs_to :jurisdiction
 
+  scope :exclude_hq_teams, lambda {
+    joins(:office).where.not("offices.name IN ('Digital', 'HMCTS HQ Team ')")
+  }
+
   validates :office, :jurisdiction, :code, :name, :valid_from, presence: true
 
   validates :valid_to, date: {
