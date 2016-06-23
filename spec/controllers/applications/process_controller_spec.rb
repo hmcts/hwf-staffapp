@@ -419,7 +419,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       end
 
       it 'assigns result' do
-        expect(assigns(:result)).to be_a_kind_of(Views::Applikation::Result)
+        expect(assigns(:result)).to be_a_kind_of(Views::ProcessedApplicationResult)
       end
 
       it 'assigns overview' do
