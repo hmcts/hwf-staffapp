@@ -76,7 +76,7 @@ group :development do
   gem 'web-console', '~> 2.1'
 end
 
-gem 'nokogiri', '~> 1.6.7.1'
+gem 'nokogiri', '~> 1.6.8'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
