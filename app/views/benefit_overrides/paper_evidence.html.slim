@@ -22,7 +22,7 @@
               = f.radio_button :evidence, :yes, { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
               = t('evidence_true', scope: @form.i18n_scope)
 
-          .panel-indent.start-hidden#evidence-only
+          .panel-indent.util_mb-small.start-hidden#evidence-only
             = f.label :correct, class: 'form-label'
             = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
             .options.radio.cf
@@ -39,6 +39,27 @@
               = f.label :incorrect_reason, class: 'form-label'
               = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
               = f.text_area :incorrect_reason, rows: 3, class: 'form-control'
+
+          .option
+            label.block-label for='benefit_override_evidence_discretion'
+              = f.radio_button :evidence, :discretion, { class: 'show-hide-section', data: { section: 'discretion', show: 'true' } }
+              = t('evidence_discretion', scope: @form.i18n_scope)
+
+            .panel-indent.util_mb-small.start-hidden#discretion-only
+              = f.label :discretion_value, class: 'form-label'
+              = f.label :discretion_value, @form.errors[:discretion_value].join(', '), class: 'error' if @form.errors[:discretion_value].present?
+              - t('discretion_options', scope: @form.i18n_scope).each do |option|
+                label.block-label for="benefit_override_discretion_value_#{option.keys.first}"
+                  = f.radio_button :discretion_value, option.keys.first, { class: 'show-hide-section' }
+                  =option.values.first
+
+              label.block-label for="benefit_override_discretion_value_other"
+                = f.radio_button :discretion_value, :other, { class: 'show-hide-section', data: { section: 'discretion-reason', show: 'false' } }
+                = t('evidence_discretion_value_other', scope: @form.i18n_scope)
+              .panel-indent.start-hidden#discretion-reason-only
+                = f.label :discretion_reason, class: 'form-label'
+                = f.label :discretion_reason, @form.errors[:discretion_reason].join(', '), class: 'error' if @form.errors[:discretion_reason].present?
+                = f.text_area :discretion_reason, rows: 3, class: 'form-control'
 
       = f.submit 'Next', class: 'button primary'
 
