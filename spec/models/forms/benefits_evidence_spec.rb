@@ -26,15 +26,15 @@ RSpec.describe Forms::BenefitsEvidence do
         it { is_expected.to be false }
       end
 
-      context 'for false' do
-        let(:evidence) { false }
+      context 'for :no' do
+        let(:evidence) { :no }
 
         it { is_expected.to be true }
       end
 
-      context 'for true' do
+      context 'for :yes' do
         context 'with attribute "correct"' do
-          let(:params) { { evidence: true, correct: correct } }
+          let(:params) { { evidence: :yes, correct: correct } }
 
           context 'when not set' do
             let(:correct) { nil }
@@ -50,7 +50,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
           context 'when false' do
             context 'with attribute incorrect_reason' do
-              let(:params) { { evidence: true, correct: false, incorrect_reason: reason } }
+              let(:params) { { evidence: :yes, correct: false, incorrect_reason: reason } }
 
               context 'not set' do
                 let(:reason) { nil }
@@ -88,7 +88,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
     context 'for a valid form' do
       context 'when evidence is not provided' do
-        let(:params) { { evidence: false } }
+        let(:params) { { evidence: :no } }
 
         it { is_expected.to be true }
 
@@ -103,7 +103,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
       context 'when evidence is provided' do
         context 'when evidence is correct' do
-          let(:params) { { evidence: true, correct: true } }
+          let(:params) { { evidence: :yes, correct: true } }
 
           it { is_expected.to be true }
 
@@ -118,7 +118,7 @@ RSpec.describe Forms::BenefitsEvidence do
         end
 
         context 'when evidence is not correct' do
-          let(:params) { { evidence: true, correct: false, incorrect_reason: 'REASON' } }
+          let(:params) { { evidence: :yes, correct: false, incorrect_reason: 'REASON' } }
 
           it { is_expected.to be true }
 
