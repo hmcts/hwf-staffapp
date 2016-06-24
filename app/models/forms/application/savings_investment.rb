@@ -9,7 +9,7 @@ module Forms
           min_threshold_exceeded: Boolean,
           over_61: Boolean,
           max_threshold_exceeded: Boolean,
-          amount: Decimal
+          amount: Integer
         }
       end
 
