@@ -52,7 +52,7 @@ RSpec.feature 'No NI number provided', type: :feature do
 
   context 'when the user processes paper evidence' do
     before do
-      choose 'benefit_override_evidence_true'
+      choose 'benefit_override_evidence_yes'
     end
 
     context 'when the evidence is valid' do
@@ -105,7 +105,7 @@ RSpec.feature 'No NI number provided', type: :feature do
 
   context 'when the user progresses to the summary page' do
     before do
-      choose 'benefit_override_evidence_false'
+      choose 'benefit_override_evidence_no'
       click_button 'Next'
     end
 

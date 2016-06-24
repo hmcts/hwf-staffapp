@@ -51,7 +51,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
 
   context 'when the user provides paper evidence' do
     before do
-      choose 'benefit_override_evidence_true'
+      choose 'benefit_override_evidence_yes'
     end
 
     context 'and the evidence is correct' do

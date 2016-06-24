@@ -90,7 +90,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                 context 'when benefits confirmed' do
                   before do
-                    choose 'benefit_override_evidence_false'
+                    choose 'benefit_override_evidence_no'
                     click_button 'Next'
                   end
 

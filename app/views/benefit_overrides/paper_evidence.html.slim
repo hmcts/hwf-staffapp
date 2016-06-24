@@ -14,12 +14,12 @@
         = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
         .options.radio.cf
           .option
-            label.block-label for='benefit_override_evidence_false'
-              = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
+            label.block-label for='benefit_override_evidence_no'
+              = f.radio_button :evidence, :no, { class: 'show-hide-section' }
               = t('evidence_false', scope: @form.i18n_scope)
           .option
-            label.block-label for='benefit_override_evidence_true'
-              = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
+            label.block-label for='benefit_override_evidence_yes'
+              = f.radio_button :evidence, :yes, { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
               = t('evidence_true', scope: @form.i18n_scope)
 
           .panel-indent.start-hidden#evidence-only
