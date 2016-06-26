@@ -24,10 +24,10 @@
             = f.hidden_field :over_61, value: 'true'
             =render('shared/savings/max_threshold_exceeded', f: f)
           -else
-            -if !@application.married?
+            -if !@application.applicant.married?
               =f.hidden_field :over_61, value: 'false'
               =render('shared/savings/amount', f: f)
-            -elsif @application.married?
+            -elsif @application.applicant.married?
               .form-group.panel-indent.util-mt-0
                 = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
                 = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
@@ -55,13 +55,13 @@
           table
             tr
               th Age
-              td #{@application.applicant_age} years old
+              td #{@application.applicant.age} years old
             tr
               th Status
-              td =t("married_#{@application.married}", scope: @form.i18n_scope)
+              td =t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
             tr
               th Fee
-              td £#{@application.fee.floor}
+              td £#{@application.detail.fee.floor}
 
     .column-one-third
       .guidance

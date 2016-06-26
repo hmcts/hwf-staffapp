@@ -3,34 +3,33 @@ module Views
   class ApplicationOverview
     attr_reader :application
 
-    APPLICATION_ATTRS = %i[full_name form_name amount_to_pay case_number
-                           deceased_name emergency_reason].freeze
-
-    delegate(*APPLICATION_ATTRS, to: :application)
+    delegate(:amount_to_pay, to: :application)
+    delegate(:full_name, to: :applicant)
+    delegate(:form_name, :case_number, :deceased_name, :emergency_reason, to: :detail)
 
     def initialize(application)
       @application = application
     end
 
-    def date_of_birth
-      format_date @application.date_of_birth
-    end
-
     def ni_number
-      @application.ni_number.gsub(/(.{2})/, '\1 ') unless @application.ni_number.nil?
+      applicant.ni_number.gsub(/(.{2})/, '\1 ') unless applicant.ni_number.nil?
     end
 
     def status
       locale_scope = 'activemodel.attributes.forms/application/applicant'
-      I18n.t("married_#{@application.married?}", scope: locale_scope)
+      I18n.t("married_#{applicant.married?}", scope: locale_scope)
     end
 
     def jurisdiction
-      @application.jurisdiction.name
+      detail.jurisdiction.name
     end
 
     def fee
-      "£#{@application.fee.round}"
+      "£#{detail.fee.round}"
+    end
+
+    def date_of_birth
+      format_date applicant.date_of_birth
     end
 
     def date_received
@@ -38,11 +37,11 @@ module Views
     end
 
     def date_of_death
-      format_date @application.date_of_death
+      format_date detail.date_of_death
     end
 
     def date_fee_paid
-      format_date @application.date_fee_paid
+      format_date detail.date_fee_paid
     end
 
     def number_of_children
@@ -103,19 +102,24 @@ module Views
 
     private
 
+    def applicant
+      @application.applicant
+    end
+
+    def detail
+      @application.detail
+    end
+
     def evidence_check_or_part_payment?
       @application.evidence_check.present? || @application.part_payment.present?
     end
 
     def format_locale(suffix)
-      prefix = 'activemodel.attributes.forms/application/summary'
-      I18n.t(suffix, scope: prefix)
+      I18n.t(suffix, scope: 'activemodel.attributes.forms/application/summary')
     end
 
     def format_date(date)
-      if date
-        date.to_s(:gov_uk_long)
-      end
+      date.to_s(:gov_uk_long) if date
     end
 
     def benefit_result

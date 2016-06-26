@@ -6,15 +6,35 @@ RSpec.describe Views::ApplicationOverview do
   let(:application) { build_stubbed(:application) }
   subject(:view) { described_class.new(application) }
 
+  # TODO: Write tests for these methods as this doesn't test they work
   context 'required methods' do
-    symbols = %i[date_of_birth full_name ni_number status
-                 fee jurisdiction date_received form_name case_number
-                 deceased_name date_of_death date_fee_paid emergency_reason
-                 number_of_children income benefits]
+    symbols = %i[date_of_birth ni_number status
+                 date_received date_of_death date_fee_paid
+                 number_of_children]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
         expect(view.methods).to include(symbol)
+      end
+    end
+  end
+
+  describe 'delegated methods' do
+    describe '-> Application' do
+      %i[amount_to_pay].each do |getter|
+        it { expect(subject.public_send(getter)).to eql(application.public_send(getter)) }
+      end
+    end
+
+    describe '-> Applicant' do
+      %i[full_name].each do |getter|
+        it { expect(subject.public_send(getter)).to eql(application.applicant.public_send(getter)) }
+      end
+    end
+
+    describe '-> Detail' do
+      %i[form_name case_number deceased_name emergency_reason].each do |getter|
+        it { expect(subject.public_send(getter)).to eql(application.detail.public_send(getter)) }
       end
     end
   end

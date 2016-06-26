@@ -20,6 +20,6 @@ h4.heading-medium.util_mt-medium Reference
       li =step
 
 .confirmation-letter
-  =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+  =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
 =link_to t('evidence_check.back_to_start'), root_path, class: 'button util_mt-medium'

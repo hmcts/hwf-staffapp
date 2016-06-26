@@ -28,7 +28,7 @@ module Views
     end
 
     def applicant
-      @application.full_name
+      @application.applicant.full_name
     end
 
     def deleted_reason

@@ -17,7 +17,7 @@ h4.heading-medium.util_mt-medium Reference
   .confirmation-letter
     = t('letters.part-payment.send_part_payment_html',
         reference: @application.reference,
-        full_name: @application.full_name,
+        full_name: @application.applicant.full_name,
         user_name: current_user.name,
         part_payment_amount: number_to_currency(@application.amount_to_pay, precision: 0),
         total_income: number_to_currency(@application.income, precision: 0),

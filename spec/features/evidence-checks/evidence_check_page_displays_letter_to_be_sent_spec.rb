@@ -20,7 +20,7 @@ RSpec.feature 'Evidence check page displays letter to be sent', type: :feature d
 
     within '.confirmation-letter' do
       expect(page).to have_content(application.reference)
-      expect(page).to have_content(application.full_name)
+      expect(page).to have_content(application.applicant.full_name)
       expect(page).to have_content(user.name)
       expect(page).to have_content(evidence_check.expires_at.to_date)
     end
