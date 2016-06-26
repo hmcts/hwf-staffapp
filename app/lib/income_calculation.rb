@@ -49,7 +49,7 @@ class IncomeCalculation
 
   def remission_type
     return 'full' if applicants_maximum_contribution == 0
-    return 'none' if minimum_payable_to_applicant == @application.fee
+    return 'none' if minimum_payable_to_applicant == @application.detail.fee
     return 'part' if applicants_contribution_is_partial
     # TODO: 'error'
   end

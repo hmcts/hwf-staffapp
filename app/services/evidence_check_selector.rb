@@ -12,7 +12,7 @@ class EvidenceCheckSelector
 
   def evidence_check?
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
-      @application.refund? ? check_every_other_refund : check_every_tenth_non_refund
+      @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
   end
 

@@ -47,31 +47,20 @@ RSpec.describe Application, type: :model do
     #   end
     # end
 
-    describe '-> Detail' do
-      described_class::DETAIL_GETTERS.each do |getter|
-        it { is_expected.to delegate_method(getter).to(:detail) }
-      end
-
-      described_class::DETAIL_SETTERS.each do |setter|
-        it "should delegate #{setter} to #detail object" do
-          # this is a hack to make sure the bellow expectation is not tested when the factories are being created
-          application
-
-          expect(detail).to receive(setter).with(param)
-          application.send(setter, param)
-        end
-      end
-    end
-  end
-
-  describe '#emergency_reason' do
-    context 'when a blank string is provided' do
-      let(:application) { create :application_full_remission }
-
-      it "doesn't save it as a string" do
-        application.reload
-        expect(application.emergency_reason).to be nil
-      end
-    end
+    # describe '-> Detail' do
+    #   described_class::DETAIL_GETTERS.each do |getter|
+    #     it { is_expected.to delegate_method(getter).to(:detail) }
+    #   end
+    #
+    #   described_class::DETAIL_SETTERS.each do |setter|
+    #     it "should delegate #{setter} to #detail object" do
+    #       # this is a hack to make sure the bellow expectation is not tested when the factories are being created
+    #       application
+    #
+    #       expect(detail).to receive(setter).with(param)
+    #       application.send(setter, param)
+    #     end
+    #   end
+    # end
   end
 end

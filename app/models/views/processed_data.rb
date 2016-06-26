@@ -72,7 +72,7 @@ module Views
 
     def prepare_reason(object)
       if object.is_a?(Application)
-        text = object.emergency_reason
+        text = object.detail.emergency_reason
         prefix = 'Reason for emergency'
       else
         text = object.incorrect_reason

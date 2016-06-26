@@ -24,17 +24,6 @@ class Application < ActiveRecord::Base
 
   validates :reference, uniqueness: true, allow_blank: true
 
-  DETAIL_GETTERS = %i[
-    fee jurisdiction date_received form_name case_number probate probate? deceased_name
-    date_of_death refund refund? date_fee_paid emergency_reason
-  ].freeze
-  DETAIL_SETTERS = %i[
-    fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
-    date_of_death= refund= date_fee_paid= emergency_reason=
-  ].freeze
-  delegate(*DETAIL_GETTERS, to: :detail)
-  delegate(*DETAIL_SETTERS, to: :detail)
-
   MAX_AGE = 120
   MIN_AGE = 16
 

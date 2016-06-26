@@ -33,7 +33,7 @@ module Views
     end
 
     def date_received
-      format_date @application.date_received
+      format_date detail.date_received
     end
 
     def date_of_death

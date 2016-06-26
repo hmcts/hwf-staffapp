@@ -36,7 +36,7 @@ RSpec.describe IncomeCalculation do
       end
 
       context 'when data for calculation is missing' do
-        before { application.fee = nil }
+        before { application.detail.fee = nil }
 
         it { is_expected.to be nil }
       end
@@ -58,7 +58,7 @@ RSpec.describe IncomeCalculation do
 
       context 'when data for calculation is missing' do
         let(:income) { nil }
-        before { application.fee = nil }
+        before { application.detail.fee = nil }
 
         it { is_expected.to be nil }
       end
