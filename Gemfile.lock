@@ -220,7 +220,7 @@ GEM
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (2.99.1)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.8.4)
     moj_template (0.23.2)
       rails (>= 3.1)
@@ -228,8 +228,9 @@ GEM
     multipart-post (2.0.0)
     nenv (0.3.0)
     netrc (0.11.0)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -240,6 +241,7 @@ GEM
       ast (~> 2.2)
     pg (0.18.4)
     phantomjs (1.9.8)
+    pkg-config (1.1.7)
     powerpack (0.1.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -444,7 +446,7 @@ DEPENDENCIES
   launchy
   logstasher!
   moj_template (~> 0.23.2)
-  nokogiri (~> 1.6.7.1)
+  nokogiri (~> 1.6.8)
   paranoia (~> 2.0)
   pg
   pry-rails
@@ -476,4 +478,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
