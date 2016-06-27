@@ -24,10 +24,6 @@ class Application < ActiveRecord::Base
 
   validates :reference, uniqueness: true, allow_blank: true
 
-  def children=(val)
-    self[:children] = dependents? ? val : 0
-  end
-
   def last_benefit_check
     benefit_checks.order(:id).last
   end
