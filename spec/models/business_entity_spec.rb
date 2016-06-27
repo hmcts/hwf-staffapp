@@ -40,6 +40,11 @@ RSpec.describe BusinessEntity, type: :model do
         expect(described_class.count).to eql(6)
         expect(described_class.exclude_hq_teams.count).to eql(2)
       end
+
+      it 'has the two bristol business entities' do
+        all_codes = described_class.exclude_hq_teams.all.map(&:code)
+        expect(all_codes).to eql bristol.business_entities.map(&:code)
+      end
     end
   end
 
