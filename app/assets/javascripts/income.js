@@ -13,10 +13,6 @@ window.moj.Modules.IncomeModule = {
   },
 
   checkStateOnLoad: function() {
-    if ($('input[id*="application_dependents"]').is(':checked')) {
-      $('#income-input').show();
-    } else {
-      $('#income-input').hide();
-    }
+    $('#income-input').toggle($('input[id*="application_dependents"]').is(':checked'));
   }
 };
