@@ -20,7 +20,7 @@
               = t('more_than', scope: @form.i18n_scope)
 
         #threshold-exceeded-only.start-hidden
-          - if @application.applicant_over_61?
+          - if @application.applicant.over_61?
             = f.hidden_field :over_61, value: 'true'
             =render('shared/savings/max_threshold_exceeded', f: f)
           -else

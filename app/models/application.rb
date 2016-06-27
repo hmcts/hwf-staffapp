@@ -24,19 +24,8 @@ class Application < ActiveRecord::Base
 
   validates :reference, uniqueness: true, allow_blank: true
 
-  MAX_AGE = 120
-  MIN_AGE = 16
-
   def children=(val)
     self[:children] = dependents? ? val : 0
-  end
-
-  def applicant_over_61?
-    applicant.age >= 61
-  end
-
-  def check_high_threshold?
-    partner_over_61? && !applicant_over_61?
   end
 
   def last_benefit_check
