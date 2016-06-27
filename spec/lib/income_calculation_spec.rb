@@ -22,12 +22,12 @@ RSpec.describe IncomeCalculation do
         describe 'for known scenarios' do
           CalculatorTestData.seed_data.each do |src|
             it "scenario \##{src[:id]} passes" do
-              application.assign_attributes(
-                fee: src[:fee],
-                married: src[:married_status],
-                children: src[:children],
-                income: src[:income]
-              )
+              application.tap do |a|
+                a.detail.fee = src[:fee]
+                a.applicant.married = src[:married_status]
+                a.children = src[:children]
+                a.income = src[:income]
+              end
 
               is_expected.to eql(outcome: src[:type], amount: src[:they_pay].to_i)
             end
@@ -36,7 +36,7 @@ RSpec.describe IncomeCalculation do
       end
 
       context 'when data for calculation is missing' do
-        before { application.fee = nil }
+        before { application.detail.fee = nil }
 
         it { is_expected.to be nil }
       end
@@ -58,7 +58,7 @@ RSpec.describe IncomeCalculation do
 
       context 'when data for calculation is missing' do
         let(:income) { nil }
-        before { application.fee = nil }
+        before { application.detail.fee = nil }
 
         it { is_expected.to be nil }
       end

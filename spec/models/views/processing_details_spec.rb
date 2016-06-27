@@ -59,7 +59,7 @@ RSpec.describe Views::ProcessingDetails do
     subject { view.applicant }
 
     it 'returns the full name of the applicant' do
-      is_expected.to eql(application.full_name)
+      is_expected.to eql(application.applicant.full_name)
     end
   end
 

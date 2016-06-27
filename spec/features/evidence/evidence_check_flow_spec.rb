@@ -230,7 +230,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content 'You are eligible to make a part-payment' }
 
-        it { expect(page).to have_content(evidence.application.full_name) }
+        it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
         it { expect(page).to have_content(user.name) }
 
@@ -244,7 +244,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content 'a problem with the documents you have sent' }
 
-        it { expect(page).to have_content(evidence.application.full_name) }
+        it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
         it { expect(page).to have_content(user.name) }
       end

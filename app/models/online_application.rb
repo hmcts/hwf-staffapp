@@ -10,4 +10,14 @@ class OnlineApplication < ActiveRecord::Base
   def full_name
     [title, first_name, last_name].compact.join(' ')
   end
+
+  # FIXME: This is here temporarily until we can refactor view models
+  def applicant
+    self
+  end
+
+  # FIXME: This is here temporarily until we can refactor view models
+  def detail
+    self
+  end
 end

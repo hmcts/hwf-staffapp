@@ -5,7 +5,7 @@ class SavingsPassFailService
   end
 
   def calculate!
-    @saving.fee_threshold = FeeThreshold.new(@saving.application.fee).band
+    @saving.fee_threshold = FeeThreshold.new(@saving.application.detail.fee).band
     @saving.passed = calculate_pass_fail
     set_application_outcome_to_none unless @saving.passed
     @saving.save

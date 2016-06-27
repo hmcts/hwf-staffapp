@@ -24,41 +24,6 @@ class Application < ActiveRecord::Base
 
   validates :reference, uniqueness: true, allow_blank: true
 
-  # Fixme remove this delegation methods when all tests are clean
-  APPLICANT_GETTERS = %i[
-    title first_name last_name full_name date_of_birth ni_number married married?
-  ].freeze
-  APPLICANT_SETTERS = %i[title= first_name= last_name= date_of_birth= ni_number= married=].freeze
-  delegate(*APPLICANT_GETTERS, to: :applicant)
-  delegate(*APPLICANT_SETTERS, to: :applicant)
-  delegate(:age, to: :applicant, prefix: true)
-
-  DETAIL_GETTERS = %i[
-    fee jurisdiction date_received form_name case_number probate probate? deceased_name
-    date_of_death refund refund? date_fee_paid emergency_reason
-  ].freeze
-  DETAIL_SETTERS = %i[
-    fee= jurisdiction= date_received= form_name= case_number= probate= deceased_name=
-    date_of_death= refund= date_fee_paid= emergency_reason=
-  ].freeze
-  delegate(*DETAIL_GETTERS, to: :detail)
-  delegate(*DETAIL_SETTERS, to: :detail)
-
-  MAX_AGE = 120
-  MIN_AGE = 16
-
-  def children=(val)
-    self[:children] = dependents? ? val : 0
-  end
-
-  def applicant_over_61?
-    applicant.age >= 61
-  end
-
-  def check_high_threshold?
-    partner_over_61? && !applicant_over_61?
-  end
-
   def last_benefit_check
     benefit_checks.order(:id).last
   end

@@ -1,6 +1,6 @@
 .evidence-confirmation-letter
   =t('letters.part-payment.send_part_payment_html',
-     full_name: confirmation.application.full_name,
+     full_name: confirmation.application.applicant.full_name,
      reference: confirmation.application.reference,
      current_user: current_user.name,
      part_payment_amount: "£#{confirmation.amount_to_pay}",

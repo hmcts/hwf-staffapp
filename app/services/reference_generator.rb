@@ -13,7 +13,8 @@ class ReferenceGenerator
   private
 
   def business_entity
-    @business_entity ||= BusinessEntity.current_for(@application.office, @application.jurisdiction)
+    @business_entity ||=
+      BusinessEntity.current_for(@application.office, @application.detail.jurisdiction)
   end
 
   def reference_prefix

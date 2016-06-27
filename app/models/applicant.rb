@@ -16,6 +16,10 @@ class Applicant < ActiveRecord::Base
     [title, first_name, last_name].select(&:present?).join(' ')
   end
 
+  def over_61?
+    age >= 61
+  end
+
   private
 
   def compare_months

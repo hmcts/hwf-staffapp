@@ -13,8 +13,8 @@ class IncomeCalculation
   def calculation_inputs_present?
     [
       @application.children,
-      @application.fee,
-      !@application.married.nil?,
+      @application.detail.fee,
+      !@application.applicant.married.nil?,
       income,
       !@application.dependents.nil?
     ].all?
@@ -44,21 +44,21 @@ class IncomeCalculation
   end
 
   def married_supplement
-    @application.married? ? Settings.calculator.couple_supp : 0
+    @application.applicant.married? ? Settings.calculator.couple_supp : 0
   end
 
   def remission_type
     return 'full' if applicants_maximum_contribution == 0
-    return 'none' if minimum_payable_to_applicant == @application.fee
+    return 'none' if minimum_payable_to_applicant == @application.detail.fee
     return 'part' if applicants_contribution_is_partial
     # TODO: 'error'
   end
 
   def applicants_contribution_is_partial
-    applicants_maximum_contribution > 0 && applicants_maximum_contribution < @application.fee
+    applicants_maximum_contribution > 0 && applicants_maximum_contribution < @application.detail.fee
   end
 
   def minimum_payable_to_applicant
-    [applicants_maximum_contribution, @application.fee].min
+    [applicants_maximum_contribution, @application.detail.fee].min
   end
 end

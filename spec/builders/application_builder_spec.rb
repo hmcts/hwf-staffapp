@@ -148,7 +148,7 @@ RSpec.describe ApplicationBuilder do
 
         %i[title first_name last_name date_of_birth ni_number married].each do |column|
           it "has #{column} assigned" do
-            expect(built_application.public_send(column)).to eql(online_application.public_send(column))
+            expect(built_applicant.public_send(column)).to eql(online_application.public_send(column))
           end
         end
       end

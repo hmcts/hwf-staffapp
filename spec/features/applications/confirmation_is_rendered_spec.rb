@@ -47,7 +47,7 @@ RSpec.feature 'Confirmation page', type: :feature do
 
     context 'when application ends with part payment' do
       let!(:part_payment) { create(:part_payment, application: application) }
-      let!(:application) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
+      let!(:application) { create :application_part_remission, :waiting_for_part_payment_state, office: office }
 
       before { visit application_confirmation_path(application) }
 

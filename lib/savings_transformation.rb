@@ -23,7 +23,7 @@ class SavingsTransformation
   end
 
   def generate_fee_threshold(application)
-    FeeThreshold.new(application.fee ||= 10).band
+    FeeThreshold.new(application.detail.fee ||= 10).band
   end
 
   def threshold_exceeded?(threshold)
