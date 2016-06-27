@@ -14,12 +14,8 @@ window.moj.Modules.IncomeModule = {
 
   checkStateOnLoad: function() {
     if ($('input[id*="application_dependents"]').is(':checked')) {
-      if ($('#application_dependents_true').is(':checked')) {
-        $('#children-only').show();
-      }
       $('#income-input').show();
     } else {
-      $('#children-only').hide();
       $('#income-input').hide();
     }
   }
