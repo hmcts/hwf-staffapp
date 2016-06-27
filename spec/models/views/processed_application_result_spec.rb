@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'rails_helper'
 
-RSpec.describe Views::Applikation::Result do
+RSpec.describe Views::ProcessedApplicationResult do
   let(:application) { build_stubbed(:application) }
   subject(:view) { described_class.new(application) }
 

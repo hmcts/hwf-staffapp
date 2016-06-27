@@ -103,7 +103,7 @@ module Applications
     end
 
     def summary
-      @result = Views::Applikation::Result.new(application)
+      @result = Views::ProcessedApplicationResult.new(application)
       @overview = Views::ApplicationOverview.new(application)
       @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
       @benefits = Views::Overview::Benefits.new(application)
