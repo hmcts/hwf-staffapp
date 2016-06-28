@@ -17,10 +17,6 @@ window.moj.Modules.EvidenceConfirmationModule = {
   },
 
   checkStateOnLoad: function() {
-    if ($('#accuracy-form input[id*="correct_false"]').is(':checked')) {
-      $('#reason-input').show();
-    } else {
-      $('#reason-input').hide();
-    }
+    $('#reason-input').toggle($('#accuracy-form input[id*="correct_false"]').is(':checked'));
   }
 };

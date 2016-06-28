@@ -40,6 +40,8 @@ window.moj.Modules.RadioAndCheckboxModule = {
 
       if ($el.is(':checked')) {
         $('#' + $el.data('section') + '-only').show();
+      } else {
+        $('#' + $el.data('section') + '-only').hide();
       }
     });
 
