@@ -10,6 +10,10 @@ module Views
       build_return_hash @application
     end
 
+    def application_override
+      build_override_hash @application.decision_override if application_overridden?
+    end
+
     def application_deleted
       if application_deleted?
         build_delete_hash
@@ -25,6 +29,10 @@ module Views
     end
 
     private
+
+    def application_overridden?
+      @application.decision_override.present?
+    end
 
     def application_deleted?
       @application.deleted_by.present?
@@ -44,6 +52,14 @@ module Views
 
     def part_payment
       @application.part_payment
+    end
+
+    def build_override_hash(object)
+      {
+        on: prepare_date(object.created_at),
+        by: prepare_name(object.user),
+        text: prepare_override_reason(object)
+      }
     end
 
     def build_return_hash(object)
@@ -70,6 +86,12 @@ module Views
       date.strftime(Date::DATE_FORMATS[:gov_uk_long]) if date
     end
 
+    def prepare_override_reason(object)
+      text = object.reason
+      prefix = 'Reason granted'
+      build_text prefix, text
+    end
+
     def prepare_reason(object)
       if object.is_a?(Application)
         text = object.detail.emergency_reason
@@ -78,6 +100,10 @@ module Views
         text = object.incorrect_reason
         prefix = 'Reason not processed'
       end
+      build_text prefix, text
+    end
+
+    def build_text(prefix, text)
       "#{prefix}: \"#{text}\"" if text
     end
   end
