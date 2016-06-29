@@ -29,6 +29,10 @@ RSpec.feature 'Confirmation page', type: :feature do
       scenario 'the remission register right hand guidance is no longer shown' do
         expect(page).to have_no_content 'remission register'
       end
+
+      scenario 'the grant help with fees form is rendered' do
+        expect(page).to have_content 'Grant help with fees'
+      end
     end
 
     context 'after user continues from summary' do
@@ -63,6 +67,16 @@ RSpec.feature 'Confirmation page', type: :feature do
 
       scenario 'the income label displays correctly' do
         expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for evidence')
+      end
+    end
+
+    context 'when an application has been overridden' do
+      let(:decision_override) { create :decision_override }
+
+      before { visit application_confirmation_path(decision_override.application) }
+
+      scenario 'the grant help with fees form is not rendered' do
+        expect(page).not_to have_content 'Grant help with fees'
       end
     end
   end
