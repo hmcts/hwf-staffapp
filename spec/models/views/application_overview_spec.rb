@@ -132,6 +132,14 @@ RSpec.describe Views::ApplicationOverview do
 
         it { is_expected.to eq '✗ Failed' }
       end
+
+      context 'when a decision_overide exists' do
+        let(:result) { 'no' }
+        let!(:application) { create(:application, :benefit_type) }
+        let!(:override) { create :decision_override, application: application }
+
+        it { is_expected.to eql "✓ Passed (by manager's decision)" }
+      end
     end
 
     context 'for an income type application' do

@@ -54,6 +54,7 @@ module Views
 
     def benefits
       if type.eql?('benefit')
+        return format_locale('passed_by_override') if @application.decision_override.present?
         return format_locale('passed_with_evidence') if benefit_override?
         format_locale(benefit_result) if @application.last_benefit_check
       end
