@@ -15,14 +15,12 @@ module Views
       end
 
       def benefits_passed?
-        if application_type_is?('benefit') && benefit_overridden?
+        if @application.decision_override.present?
+          I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        elsif benefits_have_been_overridden?
           convert_to_pass_fail(applicant_is_on_benefits)
         elsif !benefit_overridden?
-          if benefit_overide_correct?
-            I18n.t('activemodel.attributes.forms/application/summary.passed_with_evidence')
-          else
-            convert_to_pass_fail('false')
-          end
+          paper_or_standard?
         end
       end
 
@@ -40,21 +38,21 @@ module Views
       end
 
       def result
-        if @application.evidence_check.present?
-          'callout'
-        elsif !benefit_overridden? && benefit_overide_correct?
-          'full'
-        elsif @application.outcome.nil?
-          'none'
-        else
-          %w[full part none].include?(@application.outcome) ? @application.outcome : 'error'
-        end
+        return 'granted' if @application.decision_override.present?
+        return 'callout' if @application.evidence_check.present?
+        return 'full' if return_full?
+        return 'none' if @application.outcome.nil?
+        %w[full part none].include?(@application.outcome) ? @application.outcome : 'error'
       end
 
       private
 
       def convert_to_pass_fail(input)
         I18n.t(input.to_s, scope: 'convert_pass_fail')
+      end
+
+      def return_full?
+        !benefit_overridden? && benefit_overide_correct?
       end
 
       def applicant_is_on_benefits
@@ -75,6 +73,18 @@ module Views
 
       def application_type_is?(input)
         @application.application_type.eql?(input)
+      end
+
+      def paper_or_standard?
+        if benefit_overide_correct?
+          I18n.t('activemodel.attributes.forms/application/summary.passed_with_evidence')
+        else
+          convert_to_pass_fail('false')
+        end
+      end
+
+      def benefits_have_been_overridden?
+        application_type_is?('benefit') && benefit_overridden?
       end
     end
   end
