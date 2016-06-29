@@ -2,7 +2,7 @@ module Applications
   # rubocop:disable ClassLength
   class ProcessController < ApplicationController
     before_action :authorise_application_update, except: :create
-    before_action :check_completed_redirect, except: [:create, :confirmation]
+    before_action :check_completed_redirect, except: [:create, :confirmation, :override]
 
     def create
       application = ApplicationBuilder.new(current_user).build
@@ -120,10 +120,27 @@ module Applications
         redirect_to(evidence_check_path(application.evidence_check.id))
       else
         @confirm = Views::Confirmation::Result.new(application)
+        @form = Forms::Application::DecisionOverride.new(application)
+      end
+    end
+
+    def override
+      @form = Forms::Application::DecisionOverride.new(decision_override)
+      @form.update_attributes(build_override_params)
+
+      if @form.valid? && OverrideDecisionService.new(application, @form).set!
+        redirect_to(application_confirmation_path(application))
+      else
+        @confirm = Views::Confirmation::Result.new(application)
+        render :confirmation
       end
     end
 
     private
+
+    def build_override_params
+      form_params(:decision_override).merge(created_by_id: current_user.id)
+    end
 
     def authorise_application_update
       authorize application, :update?
@@ -151,6 +168,10 @@ module Applications
 
     def application
       @application ||= Application.find(params[:application_id])
+    end
+
+    def decision_override
+      @decision_override ||= DecisionOverride.find_or_initialize_by(application: application)
     end
 
     def user_jurisdictions
