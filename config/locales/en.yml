@@ -340,6 +340,15 @@ en-GB:
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
         incorrect_reason: 'Describe the problem with the evidence'
+      forms/application/decision_override:
+        explain: 'You can update details for this application if:'
+        value: 'Select a reason'
+        options:
+          - 1: "You've received paper evidence that the applicant is receiving benefits"
+          - 2: "You want to check if the applicant is receiving benefits using the DWP checker (and it was unavailable when the application was first processed)"
+          - 3: "You are exercising discretion with this application"
+        option_other: 'Other'
+        reason: 'Other reason'
     errors:
       models:
         forms/finance_report:
@@ -418,6 +427,12 @@ en-GB:
           attributes:
             deleted_reason:
               blank: Enter the reason
+        forms/application/decision_override:
+          attributes:
+            value:
+              blank: Please select an authorisation reason
+            reason:
+              blank: Please enter an authorisation reason
         forms/benefits_evidence:
           attributes:
             evidence:
