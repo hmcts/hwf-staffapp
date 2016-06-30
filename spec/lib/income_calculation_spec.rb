@@ -35,6 +35,12 @@ RSpec.describe IncomeCalculation do
         end
       end
 
+      context 'when children attribute value is nil' do
+        before { application.children = nil }
+
+        it { is_expected.not_to be nil }
+      end
+
       context 'when data for calculation is missing' do
         before { application.detail.fee = nil }
 
