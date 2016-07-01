@@ -12,12 +12,15 @@ class IncomeCalculation
 
   def calculation_inputs_present?
     [
-      @application.children,
+      children,
       @application.detail.fee,
       !@application.applicant.married.nil?,
-      income,
-      !@application.dependents.nil?
+      income
     ].all?
+  end
+
+  def children
+    @application.children || 0
   end
 
   def return_outcome_and_amount
@@ -40,7 +43,7 @@ class IncomeCalculation
   end
 
   def child_uplift
-    @application.children * Settings.calculator.uplift_per_child
+    children * Settings.calculator.uplift_per_child
   end
 
   def married_supplement
