@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Forms::BenefitsEvidence do
-  params_list = %i[evidence correct incorrect_reason]
+  params_list = %i[evidence correct incorrect_reason discretion_value discretion_reason]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -26,15 +26,15 @@ RSpec.describe Forms::BenefitsEvidence do
         it { is_expected.to be false }
       end
 
-      context 'for false' do
-        let(:evidence) { false }
+      context 'for :no' do
+        let(:evidence) { :no }
 
         it { is_expected.to be true }
       end
 
-      context 'for true' do
+      context 'for :yes' do
         context 'with attribute "correct"' do
-          let(:params) { { evidence: true, correct: correct } }
+          let(:params) { { evidence: :yes, correct: correct } }
 
           context 'when not set' do
             let(:correct) { nil }
@@ -50,7 +50,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
           context 'when false' do
             context 'with attribute incorrect_reason' do
-              let(:params) { { evidence: true, correct: false, incorrect_reason: reason } }
+              let(:params) { { evidence: :yes, correct: false, incorrect_reason: reason } }
 
               context 'not set' do
                 let(:reason) { nil }
@@ -67,6 +67,77 @@ RSpec.describe Forms::BenefitsEvidence do
           end
         end
       end
+
+      context 'for :discretion' do
+        context 'with attribute "discretion value"' do
+          let(:params) { { evidence: :discretion, discretion_value: option } }
+
+          context 'not set' do
+            let(:option) { nil }
+
+            it { is_expected.to be false }
+          end
+
+          context 'set with a checkbox value' do
+            let(:option) { 1 }
+
+            it { is_expected.to be true }
+          end
+
+          context 'set with the "other" value' do
+            let(:option) { 'other' }
+
+            it { is_expected.to be false }
+
+            context 'with attribute "discretion_reason"' do
+              let(:params) { { evidence: :discretion, discretion_value: option, discretion_reason: reason } }
+
+              context 'not set' do
+                let(:reason) { nil }
+
+                it { is_expected.to be false }
+              end
+
+              context 'set' do
+                let(:reason) { 'Some reason' }
+
+                it { is_expected.to be true }
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe '#discretion_text' do
+
+    before do
+      form.update_attributes(params)
+      form.valid?
+    end
+
+    let(:params) { { evidence: :discretion, discretion_value: option, discretion_reason: reason } }
+
+    subject { form.discretion_text }
+
+    context 'with both attributes set' do
+      let(:reason) { 'a reason' }
+      let(:option) { 2 }
+
+      it { is_expected.to eql 'a reason' }
+    end
+
+    context 'with attribute "discretion_value" set' do
+      before { allow(I18n).to receive(:t).with('discretion_options', scope: i18n_scope).and_return(1 => option_text) }
+
+      let(:i18n_scope) { :'activemodel.attributes.forms/benefits_evidence' }
+      let(:option_text) { 'Applicant proved eligibility at the time of application' }
+
+      let(:option) { 1 }
+      let(:reason) { nil }
+
+      it { is_expected.to eql option_text }
     end
   end
 
@@ -88,7 +159,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
     context 'for a valid form' do
       context 'when evidence is not provided' do
-        let(:params) { { evidence: false } }
+        let(:params) { { evidence: :no } }
 
         it { is_expected.to be true }
 
@@ -103,7 +174,7 @@ RSpec.describe Forms::BenefitsEvidence do
 
       context 'when evidence is provided' do
         context 'when evidence is correct' do
-          let(:params) { { evidence: true, correct: true } }
+          let(:params) { { evidence: :yes, correct: true } }
 
           it { is_expected.to be true }
 
@@ -118,7 +189,7 @@ RSpec.describe Forms::BenefitsEvidence do
         end
 
         context 'when evidence is not correct' do
-          let(:params) { { evidence: true, correct: false, incorrect_reason: 'REASON' } }
+          let(:params) { { evidence: :yes, correct: false, incorrect_reason: 'REASON' } }
 
           it { is_expected.to be true }
 

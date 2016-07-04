@@ -336,10 +336,16 @@ en-GB:
         evidence: 'Has the applicant provided paper evidence?'
         evidence_false: 'No'
         evidence_true: 'Yes, the applicant has provided paper evidence'
+        evidence_discretion: "No, but I'm authorised to process the application"
         correct: 'Is the evidence for the correct applicant and dated in the last 3 months?'
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
         incorrect_reason: 'Describe the problem with the evidence'
+        discretion_value: 'Select a reason'
+        discretion_options:
+          - 1: 'Applicant proved eligibility at the time of application'
+        evidence_discretion_value_other: 'Other'
+        discretion_reason: 'Other reason'
     errors:
       models:
         forms/finance_report:
@@ -426,6 +432,10 @@ en-GB:
               inclusion: Confirm if the evidence is correct
             incorrect_reason:
               blank: Describe the problem
+            discretion_value:
+              blank: Please select an authorisation reason
+            discretion_reason:
+              blank: Please enter an authorisation reason
         forms/evidence/accuracy:
           attributes:
             correct:
