@@ -70,6 +70,37 @@ RSpec.describe Forms::Application::DecisionOverride do
     end
   end
 
+  describe '#application_overridable?' do
+
+    subject { form.application_overridable?(application) }
+
+    context 'when the form was instantiated with an application' do
+      let(:outcome) { 'none' }
+      let(:application) { create :application_no_remission, :processed_state, application_type: type, outcome: outcome }
+      let(:form) { described_class.new(application) }
+
+      context 'that was income based' do
+        let(:type) { 'income' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'that was benefits based' do
+        let(:type) { 'benefit' }
+
+        context 'with no remission granted' do
+          it { is_expected.to be true }
+        end
+
+        context 'with full remission granted' do
+          let(:outcome) { 'full' }
+
+          it { is_expected.to be false }
+        end
+      end
+    end
+  end
+
   describe '#save' do
     let(:override) { create :decision_override }
 

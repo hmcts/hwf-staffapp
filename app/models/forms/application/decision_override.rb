@@ -15,7 +15,17 @@ module Forms
       validates :value, presence: true
       validates :reason, presence: true, length: { maximum: 500 }, if: :reason_required?
 
+      def application_overridable?(application)
+        failed_benefit_application?(application)
+      end
+
       private
+
+      def failed_benefit_application?(application)
+        application.application_type.eql?('benefit') &&
+          application.outcome.eql?('none') &&
+          (application.decision_override.nil? || !application.decision_override.persisted?)
+      end
 
       def reason_required?
         value == 'other'
@@ -33,7 +43,7 @@ module Forms
         if self[:reason].present?
           self[:reason]
         elsif can_load_text_from_locale?
-          array_value = self[:value] - 1
+          array_value = self[:value].to_i - 1
           I18n.t("options", scope: self[:i18n_scope])[array_value].values.first
         end
       end

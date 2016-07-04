@@ -1,4 +1,4 @@
--unless @application.decision_override || ((@application.processed? && @application.application_type == 'benefits' && @application.decision == 'none') == false)
+-if @form.application_overridable?(@application)
   - show_override = @form.errors.empty? ? {} : { open: 'open' }
 
   .panel#override_panel
