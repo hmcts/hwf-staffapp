@@ -16,7 +16,7 @@ submission:
 redirection:
   domains: <%= ENV['REDIRECTION_DOMAINS'] || '' %>
 active_job:
-  enabled: <%= ENV['ACTIVE_JOB_ENABLED'].present? && ['1', 'true'].include?(ENV['ACTIVE_JOB_ENABLED'].downcase) %>
+  ENV['ACTIVE_JOB_ENABLED'].present? && ['1', 'true'].include?(ENV['ACTIVE_JOB_ENABLED'].downcase) && ENV['APP_BUILD_TAG'].present? && !ENV['APP_BUILD_TAG'].downcase.starts_with?('jenkins-fr-staff-branch-builder')
 analytics:
   id: <%= ENV['GA_ID'] || 'UA-37377084-54' %>
   domain: <%= ENV['GA_DOMAIN'] || 'auto' %>
