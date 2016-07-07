@@ -56,7 +56,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the grant help with fees form is not rendered' do
-        expect(page).not_to have_content 'Grant help with fees'
+        expect(page).to have_no_content 'Grant help with fees'
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the grant help with fees form is not rendered' do
-        expect(page).not_to have_content 'Grant help with fees'
+        expect(page).to have_no_content 'Grant help with fees'
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the grant help with fees form is not rendered' do
-        expect(page).not_to have_content 'Grant help with fees'
+        expect(page).to have_no_content 'Grant help with fees'
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(decision_override.application) }
 
       scenario 'the grant help with fees form is not rendered' do
-        expect(page).not_to have_content 'Grant help with fees'
+        expect(page).to have_no_content 'Grant help with fees'
         expect(page).to have_content 'Granted help with fees'
       end
     end
