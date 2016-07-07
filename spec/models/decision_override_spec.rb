@@ -13,8 +13,6 @@ RSpec.describe DecisionOverride, type: :model do
     describe 'reason' do
       subject(:override) { build_stubbed :decision_override, reason: reason }
 
-      before { override.valid? }
-
       context 'when nil' do
         let(:reason) { nil }
 
