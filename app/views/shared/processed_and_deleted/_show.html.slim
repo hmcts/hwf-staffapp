@@ -15,6 +15,12 @@ table.processed_summary.util_mb-large
       td =@summary.application_processed[:on]
       td =@summary.application_processed[:by]
       td =@summary.application_processed[:text]
+    -if @summary.application_override
+      tr
+        th Application granted
+        td =@summary.application_override[:on]
+        td =@summary.application_override[:by]
+        td =@summary.application_override[:text]
     -if @summary.application_deleted
       tr
         th Application deleted

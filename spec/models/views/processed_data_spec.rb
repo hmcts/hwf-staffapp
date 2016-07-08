@@ -30,6 +30,16 @@ RSpec.describe Views::ProcessedData do
     end
   end
 
+  describe '#application_override' do
+    let(:application) { create(:application, :confirm, :processed_state) }
+    let!(:decision_override) { create :decision_override, application: application }
+    subject { view.application_override }
+
+    it 'returns the override data' do
+      expect(subject).to eql(on: application.decision_override.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.decision_override.user.name, text: 'Reason granted: "My reasons"')
+    end
+  end
+
   describe '#application_deleted' do
     let(:application) { build_stubbed(:application_full_remission, :processed_state, :deleted_state) }
 

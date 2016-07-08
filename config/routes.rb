@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get 'summary', to: 'applications/process#summary', as: :summary
     put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
+    put 'override', to: 'applications/process#override', as: :override
   end
 
   resources :online_applications, only: [:edit, :update, :show] do

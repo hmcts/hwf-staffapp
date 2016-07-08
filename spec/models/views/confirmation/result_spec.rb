@@ -74,6 +74,12 @@ RSpec.describe Views::Confirmation::Result do
         it { is_expected.to eq string_failed }
       end
     end
+
+    context 'when a decision override exists' do
+      let!(:decision_override) { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+
+      it { is_expected.to eq "✓ Passed (by manager's decision)" }
+    end
   end
 
   describe '#income_passed?' do
@@ -127,5 +133,12 @@ RSpec.describe Views::Confirmation::Result do
 
       it { is_expected.to eql 'none' }
     end
+
+    context 'when a decision override exists' do
+      let!(:decision_override) { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+
+      it { is_expected.to eql 'granted' }
+    end
+
   end
 end

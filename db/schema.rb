@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620085231) do
+ActiveRecord::Schema.define(version: 20160627135552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,17 @@ ActiveRecord::Schema.define(version: 20160620085231) do
   add_index "business_entities", ["name"], name: "index_business_entities_on_name", using: :btree
   add_index "business_entities", ["office_id", "jurisdiction_id", "valid_to"], name: "unique_active_office_jurisdiction", unique: true, using: :btree
   add_index "business_entities", ["office_id"], name: "index_business_entities_on_office_id", using: :btree
+
+  create_table "decision_overrides", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "application_id"
+    t.string   "reason"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "decision_overrides", ["application_id"], name: "index_decision_overrides_on_application_id", using: :btree
+  add_index "decision_overrides", ["user_id"], name: "index_decision_overrides_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -326,6 +337,8 @@ ActiveRecord::Schema.define(version: 20160620085231) do
   add_foreign_key "benefit_overrides", "users", column: "completed_by_id", on_update: :cascade
   add_foreign_key "business_entities", "jurisdictions", on_update: :cascade
   add_foreign_key "business_entities", "offices", on_update: :cascade
+  add_foreign_key "decision_overrides", "applications"
+  add_foreign_key "decision_overrides", "users"
   add_foreign_key "details", "applications", on_update: :cascade
   add_foreign_key "details", "jurisdictions", on_update: :cascade
   add_foreign_key "evidence_checks", "applications", on_update: :cascade

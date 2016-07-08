@@ -56,7 +56,7 @@ RSpec.describe Views::ApplicationResult do
     subject { view.result }
 
     shared_examples 'result examples' do |type|
-      %w[full part none return].each do |result|
+      %w[granted full part none return].each do |result|
         context "when the #{type} is a #{result} remission" do
           let(:outcome) { result }
 

@@ -180,11 +180,12 @@ en-GB:
     remove_warning_html: "%{managers} at %{office} need to unselect these jurisdictions before you can deactivate them."
     deactivate_warning: "Deactivating this jurisdiction will remove it from the list that %{office} can use. It will still be displayed for any applications processed before %{today_date}."
   remissions:
-    full: 'Eligible for help with fees'
+    full: '✓ Eligible for help with fees'
     part: The applicant must pay %{amount_to_pay} towards the fee
     none: '✗ &nbsp; Not eligible for help with fees'
     callout: Evidence of income needs to be checked
     return: '✗ &nbsp; Not eligible because %{return_type} not provided'
+    granted: '✓ Granted help with fees'
   evidence_check:
     callout: Evidence of income needs to be checked
     page_title: Application waiting for evidence
@@ -326,6 +327,7 @@ en-GB:
         'true': '✓ Passed'
         'false': '✗ Failed'
         passed_with_evidence: '✓ Passed (paper evidence checked)'
+        passed_by_override: "✓ Passed (by manager's decision)"
         savings_investments: Savings and investments
         benefits: Benefits
         income: Income
@@ -340,6 +342,14 @@ en-GB:
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
         incorrect_reason: 'Describe the problem with the evidence'
+      forms/application/decision_override:
+        value: 'You can update details for this application if:'
+        options:
+          - 1: "You've received paper evidence that the applicant is receiving benefits"
+          - 2: "You want to check if the applicant is receiving benefits using the DWP checker (and it was unavailable when the application was first processed)"
+          - 3: "You are exercising discretion with this application"
+        option_other: 'Other'
+        reason: 'Other reason'
     errors:
       models:
         forms/finance_report:
@@ -418,6 +428,12 @@ en-GB:
           attributes:
             deleted_reason:
               blank: Enter the reason
+        forms/application/decision_override:
+          attributes:
+            value:
+              blank: Please select a reason for granting help with fees
+            reason:
+              blank: Please enter a reason for granting help with fees
         forms/benefits_evidence:
           attributes:
             evidence:

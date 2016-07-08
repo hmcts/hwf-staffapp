@@ -13,6 +13,8 @@ h4.heading-medium.util_mt-medium Reference
 #result.callout class="callout-#{@confirm.result}"
   h3.heading-large = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
 
+=render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+
 -if @application.waiting_for_part_payment?
   .confirmation-letter
     = t('letters.part-payment.send_part_payment_html',

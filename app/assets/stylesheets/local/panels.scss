@@ -71,7 +71,7 @@
   &.not-received, &.no, &.callout-none, &.callout-error, &.callout-return {
     background-color: $error-colour;
   }
-  &.received, &.yes, &.callout-full {
+  &.received, &.yes, &.callout-full, &.callout-granted {
     background-color: $turquoise;
   }
   &.callout-part, &.callout-evidence-check {

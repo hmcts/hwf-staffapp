@@ -13,6 +13,7 @@ class Application < ActiveRecord::Base
   has_one :evidence_check, required: false
   has_one :part_payment, required: false
   has_one :benefit_override, required: false
+  has_one :decision_override, required: false
 
   enum state: {
     created: 0,

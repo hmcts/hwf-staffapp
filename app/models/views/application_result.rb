@@ -7,7 +7,7 @@ module Views
     end
 
     def result
-      %w[full part none return].include?(outcome) ? outcome : 'error'
+      %w[granted full part none return].include?(outcome) ? outcome : 'error'
     end
 
     def amount_to_pay
@@ -38,7 +38,11 @@ module Views
       when EvidenceCheck
         evidence_or_application.outcome
       when Application
-        evidence_or_application.outcome
+        if evidence_or_application.decision_override.present?
+          'granted'
+        else
+          evidence_or_application.outcome
+        end
       end
     end
 
