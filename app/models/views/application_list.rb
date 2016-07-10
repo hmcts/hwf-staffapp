@@ -1,5 +1,7 @@
 module Views
   class ApplicationList
+    include ActionView::Helpers::NumberHelper
+
     attr_reader :application
 
     def initialize(application)
@@ -28,6 +30,14 @@ module Views
 
     def processed_on
       @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+    end
+
+    def form_name
+      @application.detail.form_name
+    end
+
+    def fee
+      number_to_currency(@application.detail.fee, unit: '£', precision: 0)
     end
 
     def emergency

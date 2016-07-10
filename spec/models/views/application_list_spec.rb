@@ -72,6 +72,26 @@ RSpec.describe Views::ApplicationList do
     end
   end
 
+  describe '#form_name' do
+    let(:detail) { build(:detail, form_name: 'NAME') }
+
+    subject { view.form_name }
+
+    it 'returns the form name from the detail' do
+      is_expected.to eql('NAME')
+    end
+  end
+
+  describe '#fee' do
+    let(:detail) { build(:detail, fee: 3913) }
+
+    subject { view.fee }
+
+    it 'returns the fee formatted as a currency' do
+      is_expected.to eql('£3,913')
+    end
+  end
+
   describe '#emergency' do
     let(:detail) { build(:detail, emergency_reason: emergency_reason) }
 
