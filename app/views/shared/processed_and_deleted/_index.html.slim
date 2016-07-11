@@ -10,6 +10,8 @@ header
         th =t('processed_applications.table_header.date_received')
         th =t('processed_applications.table_header.processed_on')
         th =t('processed_applications.table_header.processed_by')
+        th =t('processed_applications.table_header.form_name')
+        th =t('processed_applications.table_header.fee')
         th =t('processed_applications.table_header.emergency')
     tbody
       - @applications.each do |application|
@@ -19,6 +21,8 @@ header
           td= application.date_received
           td= application.processed_on
           td= application.processed_by
+          td= application.form_name
+          td= application.fee
           td= application.emergency
 
 - else

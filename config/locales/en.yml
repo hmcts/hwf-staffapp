@@ -22,6 +22,8 @@ en-GB:
       date_received: Date received
       processed_by: Processed by
       processed_on: Date processed
+      form_name: Form
+      fee: Fee
       emergency: Emergency
     index:
       title: Processed applications
