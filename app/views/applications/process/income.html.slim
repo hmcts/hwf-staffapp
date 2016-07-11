@@ -8,35 +8,37 @@
       .form-group
         = f.label :dependents, class: 'form-label'
         = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
-        .options.radio.cf
-          .option
-            label.block-label for='application_dependents_false'
-              = f.radio_button :dependents, 'false', { class: 'show-hide-section' }
-              = t('income_false', scope: @form.i18n_scope)
-          .option
-            label.block-label for='application_dependents_true'
-              = f.radio_button :dependents, 'true', { class: 'show-hide-section', data: { section: 'children', show: 'true' } }
-              = t('income_true', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Children and income
+          .options.radio.cf
+            .option
+              label.block-label for='application_dependents_false'
+                = f.radio_button :dependents, 'false', { class: 'show-hide-section' }
+                = t('income_false', scope: @form.i18n_scope)
+            .option
+              label.block-label for='application_dependents_true'
+                = f.radio_button :dependents, 'true', { class: 'show-hide-section', data: { section: 'children', show: 'true' } }
+                = t('income_true', scope: @form.i18n_scope)
 
-        .panel-indent.util_mt-tiny.util_mb-0#children-only
-          .form-group
-            = f.label :children, class: 'form-label'
-            = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
-            = f.text_field :children
-        .panel-indent.util_mt-tiny#income-input
-          .form-group
-            = f.label :income, class: 'form-label'
-            = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
-            .field-wrapper
-              span.prefix £
-              = f.text_field :income
+          .panel-indent.util_mt-0.util_mb-0#children-only
+            .form-group
+              = f.label :children, class: 'form-label'
+              = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
+              = f.text_field :children
+          .panel-indent.util_mt-0#income-input
+            .form-group
+              = f.label :income, class: 'form-label'
+              = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
+              .field-wrapper
+                span.prefix £
+                = f.text_field :income
 
       = f.submit 'Next', class: 'button primary'
 
     .column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Total monthly income
-        ul.lit.list-bullet
+        ul.list.list-bullet
           li if the applicant is part of a couple they must have provided details of their partner’s income
           li add the 2 monthly income amounts and enter the result
           li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }

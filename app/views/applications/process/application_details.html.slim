@@ -20,11 +20,13 @@
         = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
         = f.hidden_field :jurisdiction_id, value: nil
         - if @jurisdictions.present?
-          .options.radio.cf
-            =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-              = b.label class: 'block-label' do
-                = b.radio_button(data: @form.jurisdiction_id)
-                = b.text
+          fieldset
+            legend.visuallyhidden Select jurisdiction
+            .options.radio.cf
+              =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+                = b.label class: 'block-label' do
+                  = b.radio_button(data: @form.jurisdiction_id)
+                  = b.text
         - else
           = t('error_messages.jurisdictions.none_in_office')
 
@@ -48,50 +50,56 @@
         = f.text_field :case_number, { class: 'form-control' }
 
       .form-group
-        .options.radio.cf
-          = f.label :probate, class: 'block-label'
-            = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
-            = t('probate', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Probate case details
+          .options.radio.cf
+            = f.label :probate, class: 'block-label'
+              = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
+              = t('probate', scope: @form.i18n_scope)
 
-        #probate-only.start-hidden
-          .panel-indent
-            .form-group
-              = f.label :deceased_name, class: 'form-label'
-              = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
-              = f.text_field :deceased_name, { class: 'form-control' }
+          #probate-only.start-hidden
+            .panel-indent
+              .form-group
+                = f.label :deceased_name, class: 'form-label'
+                = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
+                = f.text_field :deceased_name, { class: 'form-control' }
 
-            .form-group
-              = f.label :date_of_death, class: 'form-label'
-                = t('date_of_death', scope: @form.i18n_scope)
-                span.hint.block = t('date_hint', scope: @form.i18n_scope)
-              = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
-              = f.text_field :date_of_death, { class: 'form-control medium-field' }
+              .form-group
+                = f.label :date_of_death, class: 'form-label'
+                  = t('date_of_death', scope: @form.i18n_scope)
+                  span.hint.block = t('date_hint', scope: @form.i18n_scope)
+                = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
+                = f.text_field :date_of_death, { class: 'form-control medium-field' }
 
-        .options.radio.cf
-          = f.label :refund, class: 'block-label'
-            = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-            = t('refund', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Refund case details
+          .options.radio.cf
+            = f.label :refund, class: 'block-label'
+              = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
+              = t('refund', scope: @form.i18n_scope)
 
-        #refund-only.start-hidden
-          .panel-indent
-            .form-group
-              = f.label :date_fee_paid, class: 'form-label'
-                = t('date_fee_paid', scope: @form.i18n_scope)
-                span.hint.block = t('date_hint', scope: @form.i18n_scope)
-              = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
-              = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
+          #refund-only.start-hidden
+            .panel-indent
+              .form-group
+                = f.label :date_fee_paid, class: 'form-label'
+                  = t('date_fee_paid', scope: @form.i18n_scope)
+                  span.hint.block = t('date_hint', scope: @form.i18n_scope)
+                = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
+                = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
 
-        .options.radio.cf
-          = f.label :emergency, class: 'block-label'
-            = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
-            = t('emergency', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Emergency case details
+          .options.radio.cf
+            = f.label :emergency, class: 'block-label'
+              = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
+              = t('emergency', scope: @form.i18n_scope)
 
-        #emergency-only.start-hidden
-          .panel-indent
-            .form-group
-              = f.label :emergency_reason, class: 'form-label'
-              = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-              = f.text_area :emergency_reason, class: 'form-control'
+          #emergency-only.start-hidden
+            .panel-indent
+              .form-group
+                = f.label :emergency_reason, class: 'form-label'
+                = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+                = f.text_area :emergency_reason, class: 'form-control'
 
       = f.submit 'Next', class: 'button'
 

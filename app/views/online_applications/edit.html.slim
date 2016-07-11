@@ -20,12 +20,14 @@
         = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
         = f.hidden_field :jurisdiction_id, value: nil
         - if @jurisdictions.present?
-          .options.radio.cf
-            =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-              .option
-                = b.label class: 'block-label' do
-                  = b.radio_button(data: @form.jurisdiction_id)
-                  = b.text
+          fieldset
+            legend.visuallyhidden Jurisdictions
+            .options.radio.cf
+              =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+                .option
+                  = b.label class: 'block-label' do
+                    = b.radio_button(data: @form.jurisdiction_id)
+                    = b.text
         - else
           = t('error_messages.jurisdictions.none_in_office')
 
@@ -42,16 +44,18 @@
 
       .form-group
         .options.radio.cf
-          .option
-            = f.label :emergency, class: 'block-label'
-              = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
-              = t('emergency', scope: @form.i18n_scope)
+          fieldset
+            legend.visuallyhidden Emergency case details
+            .option
+              = f.label :emergency, class: 'block-label'
+                = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
+                = t('emergency', scope: @form.i18n_scope)
 
-        #emergency-only.start-hidden
-          .form-group.panel-indent
-            = f.label :emergency_reason, class: 'form-label'
-            = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-            = f.text_area :emergency_reason, { class: 'form-control' }
+            #emergency-only.start-hidden
+              .form-group.panel-indent.util_mt-0
+                = f.label :emergency_reason, class: 'form-label'
+                = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+                = f.text_area :emergency_reason, { class: 'form-control' }
 
       = f.submit 'Next', class: 'button primary'
 

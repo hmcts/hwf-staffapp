@@ -39,9 +39,14 @@
     margin-top: 10px;
   }
 
-  .options + .start-hidden & {
+  .options + .start-hidden > &,
+  fieldset + .start-hidden > & {
     margin-top: 0;
     margin-bottom: 30px;
+  }
+
+  .form-group:last-child {
+    margin-bottom: 10px;
   }
 }
 

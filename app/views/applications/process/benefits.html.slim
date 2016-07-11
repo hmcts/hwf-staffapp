@@ -13,15 +13,17 @@
         = f.label :benefits, class: 'form-label'
         = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
         = f.hidden_field :benefits, value: nil
-        .options.radio.cf
-          .option
-            label.block-label for='application_benefits_false'
-              = f.radio_button :benefits, 'false'
-              = t('benefits_false', scope: @form.i18n_scope)
-          .option
-            label.block-label for='application_benefits_true'
-              = f.radio_button :benefits, 'true'
-              = t('benefits_true', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Does the applicant receive benefits?
+          .options.radio.cf
+            .option
+              label.block-label for='application_benefits_false'
+                = f.radio_button :benefits, 'false'
+                = t('benefits_false', scope: @form.i18n_scope)
+            .option
+              label.block-label for='application_benefits_true'
+                = f.radio_button :benefits, 'true'
+                = t('benefits_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 

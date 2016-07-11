@@ -3,6 +3,7 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
 
 - if list.present?
   table *{class: "waiting-for-#{type}"}
+    caption.visuallyhidden =t("#{type}.dashboard.caption")
     thead
       tr
         th =t("#{type}.dashboard.table_header.reference")

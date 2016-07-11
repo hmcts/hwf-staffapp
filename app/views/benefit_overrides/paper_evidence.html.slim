@@ -12,33 +12,37 @@
       .form-group
         = f.label :evidence, class: 'form-label'
         = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
-        .options.radio.cf
-          .option
-            label.block-label for='benefit_override_evidence_false'
-              = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
-              = t('evidence_false', scope: @form.i18n_scope)
-          .option
-            label.block-label for='benefit_override_evidence_true'
-              = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
-              = t('evidence_true', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Paper evidence
+          .options.radio.cf
+            .option
+              label.block-label for='benefit_override_evidence_false'
+                = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
+                = t('evidence_false', scope: @form.i18n_scope)
+            .option
+              label.block-label for='benefit_override_evidence_true'
+                = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
+                = t('evidence_true', scope: @form.i18n_scope)
 
-          .panel-indent.start-hidden#evidence-only
-            = f.label :correct, class: 'form-label'
-            = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
-            .options.radio.cf
-              .option
-                label.block-label for='benefit_override_correct_false'
-                  = f.radio_button :correct, 'false', { class: 'show-hide-section', data: { section: 'incorrect', show: 'true'} }
-                  = t('correct_false', scope: @form.i18n_scope)
-              .option
-                label.block-label for='benefit_override_correct_true'
-                  = f.radio_button :correct, 'true', { class: 'show-hide-section' }
-                  = t('correct_true', scope: @form.i18n_scope)
+            .panel-indent.start-hidden#evidence-only
+              = f.label :correct, class: 'form-label'
+              = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
+              fieldset
+                legend.visuallyhidden Is the evidence correct?
+                .options.radio.cf
+                  .option
+                    label.block-label for='benefit_override_correct_false'
+                      = f.radio_button :correct, 'false', { class: 'show-hide-section', data: { section: 'incorrect', show: 'true'} }
+                      = t('correct_false', scope: @form.i18n_scope)
+                  .option
+                    label.block-label for='benefit_override_correct_true'
+                      = f.radio_button :correct, 'true', { class: 'show-hide-section' }
+                      = t('correct_true', scope: @form.i18n_scope)
 
-            .panel-indent.start-hidden#incorrect-only
-              = f.label :incorrect_reason, class: 'form-label'
-              = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
-              = f.text_area :incorrect_reason, rows: 3, class: 'form-control'
+              .panel-indent.start-hidden#incorrect-only
+                = f.label :incorrect_reason, class: 'form-label'
+                = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error' if @form.errors[:incorrect_reason].present?
+                = f.text_area :incorrect_reason, rows: 3, class: 'form-control'
 
       = f.submit 'Next', class: 'button primary'
 

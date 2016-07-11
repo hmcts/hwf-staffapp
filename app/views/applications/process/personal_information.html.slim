@@ -40,13 +40,15 @@
       .form-group
         = f.label :married, class: 'form-label'
         = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
-        .options.radio.cf
-          label.block-label for='application_married_false'
-            = f.radio_button :married, 'false'
-            = t('married_false', scope: @form.i18n_scope)
-          label.block-label for='application_married_true'
-            = f.radio_button :married, 'true'
-            = t('married_true', scope: @form.i18n_scope)
+        fieldset
+          legend.visuallyhidden Select the applicant's marital status
+          .options.radio.cf
+            label.block-label for='application_married_false'
+              = f.radio_button :married, 'false'
+              = t('married_false', scope: @form.i18n_scope)
+            label.block-label for='application_married_true'
+              = f.radio_button :married, 'true'
+              = t('married_true', scope: @form.i18n_scope)
 
       = f.submit 'Next', :class => 'button primary'
 
