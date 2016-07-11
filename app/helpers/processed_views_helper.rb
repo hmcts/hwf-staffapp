@@ -6,6 +6,10 @@ module ProcessedViewsHelper
     @summary = Views::ProcessedData.new(application)
   end
 
+  def paginate(query)
+    query.paginate(page: params[:page], per_page: Settings.processed_deleted.per_page)
+  end
+
   def previous_page
     page - 1 if page > 1
   end
