@@ -13,8 +13,10 @@ RSpec.feature 'List processed applications', type: :feature do
   let!(:application1) { create :application_full_remission, :processed_state, office: user.office }
   let!(:application2) { create :application_part_remission, :processed_state, office: user.office }
   let!(:application3) { create :application_part_remission }
+  let!(:application4) { create :application_full_remission, :processed_state, office: user.office }
+  let!(:application5) { create :application_part_remission, :processed_state, office: user.office }
 
-  scenario 'User lists all processed applications' do
+  scenario 'User lists all processed applications with pagination' do
     visit '/'
 
     expect(page).to have_content('Processed applications')
@@ -24,6 +26,20 @@ RSpec.feature 'List processed applications', type: :feature do
     end
 
     expect(page.current_path).to eql('/processed_applications')
+
+    within 'table.processed-applications tbody' do
+      expect(page).to have_content(application1.applicant.full_name)
+      expect(page).to have_content(application2.applicant.full_name)
+    end
+
+    click_link 'Next page'
+
+    within 'table.processed-applications tbody' do
+      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_content(application5.applicant.full_name)
+    end
+
+    click_link 'Previous page'
 
     within 'table.processed-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)

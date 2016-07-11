@@ -18,8 +18,10 @@ RSpec.feature 'List deleted applications', type: :feature do
   end
   let!(:application2) { create :application_part_remission, :deleted_state, office: user.office }
   let!(:application3) { create :application_part_remission, :processed_state, office: user.office }
+  let!(:application4) { create :application_part_remission, :deleted_state, office: user.office }
+  let!(:application5) { create :application_part_remission, :deleted_state, office: user.office }
 
-  scenario 'User lists all deleted applications' do
+  scenario 'User lists all deleted applications with pagination' do
     visit '/'
 
     expect(page).to have_content('Deleted applications')
@@ -29,6 +31,20 @@ RSpec.feature 'List deleted applications', type: :feature do
     end
 
     expect(page.current_path).to eql('/deleted_applications')
+
+    within 'table.deleted-applications tbody' do
+      expect(page).to have_content(application1.applicant.full_name)
+      expect(page).to have_content(application2.applicant.full_name)
+    end
+
+    click_link 'Next page'
+
+    within 'table.deleted-applications tbody' do
+      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_content(application5.applicant.full_name)
+    end
+
+    click_link 'Previous page'
 
     within 'table.deleted-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)
