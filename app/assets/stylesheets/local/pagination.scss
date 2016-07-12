@@ -1,0 +1,56 @@
+@mixin pseuds($dir) {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  background-image: asset_url('chevrons.png');
+  background-position: unquote($dir) center;
+  background-repeat: no-repeat;
+  background-size: 100px 40px;
+  position: relative;
+  top: 13px;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    background-image: asset_url('chevrons-2x.png');
+  }
+}
+
+.pagination {
+  display: table;
+  width: 100%;
+  margin-top: 30px;
+  @include core-19;
+
+  div {
+    display: table-cell;
+    width: 33%;
+  }
+
+  .paginate {
+    a {
+      display: inline-block;
+      line-height: 40px;
+      text-decoration: none;
+    }
+  }
+  .previous {
+    a {
+      &::before {
+        @include pseuds('left');
+      }
+    }
+  }
+  .next {
+    text-align: right;
+
+    a {
+      &::after {
+        @include pseuds('right');
+      }
+    }
+  }
+
+  .pages {
+    text-align: center;
+  }
+}
