@@ -7,7 +7,7 @@ module ProcessedViewsHelper
   end
 
   def paginate(query)
-    query.paginate(page: params[:page], per_page: Settings.processed_deleted.per_page)
+    query.paginate(page: page, per_page: Settings.processed_deleted.per_page)
   end
 
   def previous_page
