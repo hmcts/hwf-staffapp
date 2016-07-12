@@ -5,7 +5,7 @@ module Query
     end
 
     def find
-      @user.office.applications.processed.order(:id)
+      @user.office.applications.processed.order(decision_date: :desc)
     end
   end
 end
