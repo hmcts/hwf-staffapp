@@ -4,7 +4,7 @@ class ProcessedApplicationsController < ApplicationController
   def index
     authorize :application
 
-    @applications = applications.map do |application|
+    @applications = paginated_applications.map do |application|
       Views::ApplicationList.new(application)
     end
   end
@@ -31,8 +31,8 @@ class ProcessedApplicationsController < ApplicationController
     @application ||= Application.find(params[:id])
   end
 
-  def applications
-    @applications ||= policy_scope(Query::ProcessedApplications.new(current_user).find)
+  def paginated_applications
+    @paginate ||= paginate(policy_scope(Query::ProcessedApplications.new(current_user).find))
   end
 
   def delete_params

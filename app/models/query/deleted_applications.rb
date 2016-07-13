@@ -5,7 +5,7 @@ module Query
     end
 
     def find
-      @user.office.applications.deleted.order(:id)
+      @user.office.applications.deleted.order(deleted_at: :desc)
     end
   end
 end

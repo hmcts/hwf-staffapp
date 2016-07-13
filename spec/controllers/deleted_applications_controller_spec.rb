@@ -26,15 +26,23 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     let(:view1) { double }
     let(:view2) { double }
     let(:scope) { double }
+    let(:relation) { MockRelation.new([application1, application2]) }
     let(:query) { double(find: scope) }
+    let(:page) { nil }
+
+    class MockRelation < Array
+      def paginate(_options)
+      end
+    end
 
     before do
       allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)
-      allow(controller).to receive(:policy_scope).with(scope).and_return([application1, application2])
+      allow(controller).to receive(:policy_scope).with(scope).and_return(relation)
+      allow(relation).to receive(:paginate).and_return(relation)
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index
+      get :index, page: page
     end
 
     it 'returns the correct status code' do
@@ -47,6 +55,20 @@ RSpec.describe DeletedApplicationsController, type: :controller do
 
     it 'assigns the list of processed applications' do
       expect(assigns(:applications)).to eq([view1, view2])
+    end
+
+    context 'when page parameter is set' do
+      let(:page) { 4 }
+
+      it 'calls pagination with the page number and defined number per page (settings)' do
+        expect(relation).to have_received(:paginate).with(page: 4, per_page: 2)
+      end
+    end
+
+    context 'when page parameter is not set' do
+      it 'calls pagination with page as nil and defined number per page (settings)' do
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
+      end
     end
   end
 

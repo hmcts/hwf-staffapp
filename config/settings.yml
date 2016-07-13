@@ -23,3 +23,5 @@ analytics:
 savings_threshold:
   minimum: 3000
   maximum: 16000
+processed_deleted:
+  per_page: <%= ENV['PROCESSED_DELETED_PER_PAGE'] || 50 %>
