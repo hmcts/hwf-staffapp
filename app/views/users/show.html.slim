@@ -2,20 +2,21 @@ header
   h2.heading-xlarge Staff details
 
 table.util_mb-large
+  caption.visuallyhidden Staff details
   tr
-    th Full name
+    th scope="row" Full name
     td =@user.name
   tr
-    th Email
+    th scope="row" Email
     td =@user.email
   tr
-    th Role
+    th scope="row" Role
     td =@user.role.humanize
   tr
-    th Office
+    th scope="row" Office
     td =@user.office.name
   tr
-    th Main jurisdiction
+    th scope="row" Main jurisdiction
     td
       =@user.jurisdiction.name if @user.jurisdiction.present?
 

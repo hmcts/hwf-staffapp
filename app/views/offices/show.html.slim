@@ -2,11 +2,12 @@ header
   h2.heading-xlarge Office details
 
 table.util_mb-large
+  caption Office details
   tr
-    th Name of office
+    th scope="row" Name of office
     td =@office.name
   tr
-    th Jurisdictions
+    th scope="row" Jurisdictions
     td
       - @office.jurisdictions.each do |j|
         div =j.display

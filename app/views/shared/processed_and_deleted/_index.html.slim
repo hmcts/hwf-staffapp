@@ -3,6 +3,7 @@ header
 
 - unless @applications.empty?
   table *{class: "#{state}-applications"}
+    caption.visuallyhidden =t("#{state}_applications.index.title")
     thead
       tr
         th =t('processed_applications.table_header.reference')
