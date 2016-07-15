@@ -9,33 +9,34 @@ header
 
 h4.heading-medium.util_mt-0 Processing summary
 table.processed_summary.util_mb-large
+  caption.visuallyhidden Application processing summary
   tbody
     tr
-      th Application processed
+      th scope="row" Application processed
       td =@summary.application_processed[:on]
       td =@summary.application_processed[:by]
       td =@summary.application_processed[:text]
     -if @summary.application_override
       tr
-        th Application granted
+        th scope="row" Application granted
         td =@summary.application_override[:on]
         td =@summary.application_override[:by]
         td =@summary.application_override[:text]
     -if @summary.application_deleted
       tr
-        th Application deleted
+        th scope="row" Application deleted
         td =@summary.application_deleted[:on]
         td =@summary.application_deleted[:by]
         td =@summary.application_deleted[:text]
     -if @summary.evidence_check_processed
       tr
-        th Evidence processed
+        th scope="row" Evidence processed
         td =@summary.evidence_check_processed[:on]
         td =@summary.evidence_check_processed[:by]
         td =@summary.evidence_check_processed[:text]
     -if @summary.part_payment_processed
       tr
-        th Part-payment processed
+        th scope="row" Part-payment processed
         td =@summary.part_payment_processed[:on]
         td =@summary.part_payment_processed[:by]
         td =@summary.part_payment_processed[:text]

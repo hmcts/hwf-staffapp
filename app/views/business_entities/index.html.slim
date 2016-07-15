@@ -2,6 +2,7 @@ header
   h2.heading-large Business entities for #{office.name}
 
 table
+  caption.visuallyhidden Table of business entities for #{office.name}
   thead
     tr
       th Jurisdiction
@@ -9,28 +10,29 @@ table
       th =t('activerecord.attributes.business_entity.name')
       th
 
-  -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
-    -if group[0]==1
-      tr
-        td colspan="4"
-          p.important-notice = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
-    -group[1].each do |j|
-      tr
-        td
-          =j.jurisdiction_name
-        td
-          =j.business_entity_code
-        td
-          = j.business_entity_name
-        td align="right"
-          -case j.status
-            -when 'delete'
-              =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
-              =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
-            -when 'edit'
-              =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
-            -when 'add'
-              =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
+  tbody
+    -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
+      -if group[0]==1
+        tr
+          td colspan="4"
+            p.important-notice = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
+      -group[1].each do |j|
+        tr
+          td
+            =j.jurisdiction_name
+          td
+            =j.business_entity_code
+          td
+            = j.business_entity_name
+          td align="right"
+            -case j.status
+              -when 'delete'
+                =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
+                =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
+              -when 'edit'
+                =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
+              -when 'add'
+                =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
 
 .util_mt-medium
   =link_to 'Return to Office', office_path(office)
