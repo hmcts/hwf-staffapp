@@ -6,11 +6,11 @@
         h2.heading-xlarge =t('header', scope: @form.i18n_scope)
 
       .form-group
-        = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
-        = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
-        = f.hidden_field :min_threshold_exceeded, value: nil
         fieldset
           legend.visuallyhidden Amount of savings
+          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
+          = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
+          = f.hidden_field :min_threshold_exceeded, value: nil
           .options.radio.cf
             .option
               label.block-label for='application_min_threshold_exceeded_false'
@@ -31,11 +31,11 @@
               =render('shared/savings/amount', f: f)
             -elsif @application.applicant.married?
               .form-group.panel-indent.util-mt-0
-                = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
-                = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
-                = f.hidden_field :over_61, value: nil
                 fieldset
                   legend.visuallyhidden Applicant's partner's age
+                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
+                  = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                  = f.hidden_field :over_61, value: nil
                   .options.radio.cf
                     .option
                       label.block-label for='application_over_61_false'

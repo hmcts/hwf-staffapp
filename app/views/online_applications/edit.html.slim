@@ -16,20 +16,20 @@
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
 
       .form-group
-        = f.label :jurisdiction_id, class: 'form-label'
-        = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
-        = f.hidden_field :jurisdiction_id, value: nil
-        - if @jurisdictions.present?
-          fieldset
-            legend.visuallyhidden Jurisdictions
+        fieldset
+          legend.visuallyhidden Jurisdictions
+          = f.label :jurisdiction_id, class: 'form-label'
+          = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+          = f.hidden_field :jurisdiction_id, value: nil
+          - if @jurisdictions.present?
             .options.radio.cf
               =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
                 .option
                   = b.label class: 'block-label' do
                     = b.radio_button(data: @form.jurisdiction_id)
                     = b.text
-        - else
-          = t('error_messages.jurisdictions.none_in_office')
+          - else
+            = t('error_messages.jurisdictions.none_in_office')
 
       .form-group
         = f.label :date_received, class: 'form-label'

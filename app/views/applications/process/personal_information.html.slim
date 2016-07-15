@@ -38,10 +38,10 @@
         = f.text_field :ni_number, { class: 'form-control transform-upper' }
 
       .form-group
-        = f.label :married, class: 'form-label'
-        = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
         fieldset
           legend.visuallyhidden Select the applicant's marital status
+          = f.label :married, class: 'form-label'
+          = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
           .options.radio.cf
             label.block-label for='application_married_false'
               = f.radio_button :married, 'false'

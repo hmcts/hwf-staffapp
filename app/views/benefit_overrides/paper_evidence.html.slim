@@ -10,10 +10,10 @@
     = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
 
       .form-group
-        = f.label :evidence, class: 'form-label'
-        = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
         fieldset
           legend.visuallyhidden Paper evidence
+          = f.label :evidence, class: 'form-label'
+          = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
           .options.radio.cf
             .option
               label.block-label for='benefit_override_evidence_false'
@@ -25,10 +25,10 @@
                 = t('evidence_true', scope: @form.i18n_scope)
 
             .panel-indent.start-hidden#evidence-only
-              = f.label :correct, class: 'form-label'
-              = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
               fieldset
                 legend.visuallyhidden Is the evidence correct?
+                = f.label :correct, class: 'form-label'
+                = f.label :correct, @form.errors[:correct].join(', '), class: 'error' if @form.errors[:correct].present?
                 .options.radio.cf
                   .option
                     label.block-label for='benefit_override_correct_false'

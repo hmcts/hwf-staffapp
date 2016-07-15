@@ -10,11 +10,11 @@
           .page-error = t('error_messages.benefit_check.dwp_unavailable')
 
       .form-group
-        = f.label :benefits, class: 'form-label'
-        = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
-        = f.hidden_field :benefits, value: nil
         fieldset
           legend.visuallyhidden Does the applicant receive benefits?
+          = f.label :benefits, class: 'form-label'
+          = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
+          = f.hidden_field :benefits, value: nil
           .options.radio.cf
             .option
               label.block-label for='application_benefits_false'

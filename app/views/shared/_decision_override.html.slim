@@ -8,25 +8,25 @@
       div.util_mt-small
         = form_for @form, as: :application, url: path, method: :put, html: { autocomplete: 'off', class: 'override-form' } do |f|
           .form-group
-            = f.label :value, class: 'form-label'
-            = f.label :value, @form.errors[:value].join(', '), class: 'error' if @form.errors[:value].present?
-            = f.hidden_field :value, value: nil
-            .options.radio.cf
-              fieldset
-                legend.visuallyhidden Reasons for granting help with fees
-                - t('options', scope: @form.i18n_scope).each do |option|
-                  .option
-                    label.block-label for="application_value_#{option.keys.first}"
-                      = f.radio_button :value, option.keys.first, { class: 'show-hide-section' }
-                      =option.values.first
+            fieldset
+              legend.visuallyhidden Reasons for granting help with fees
+              = f.label :value, class: 'form-label'
+              = f.label :value, @form.errors[:value].join(', '), class: 'error' if @form.errors[:value].present?
+              = f.hidden_field :value, value: nil
+              .options.radio.cf
+                  - t('options', scope: @form.i18n_scope).each do |option|
+                    .option
+                      label.block-label for="application_value_#{option.keys.first}"
+                        = f.radio_button :value, option.keys.first, { class: 'show-hide-section' }
+                        =option.values.first
 
-                .option
-                  label.block-label for="application_value_other"
-                    = f.radio_button :value, :other, { class: 'show-hide-section', data: { section: 'discretion-reason', show: 'false' } }
-                    = t('option_other', scope: @form.i18n_scope)
-                .form-group.panel-indent.start-hidden#discretion-reason-only
-                  = f.label :reason, class: 'form-label'
-                  = f.label :reason, @form.errors[:reason].join(', '), class: 'error' if @form.errors[:reason].present?
-                  = f.text_area :reason, rows: 3, class: 'form-control'
+                  .option
+                    label.block-label for="application_value_other"
+                      = f.radio_button :value, :other, { class: 'show-hide-section', data: { section: 'discretion-reason', show: 'false' } }
+                      = t('option_other', scope: @form.i18n_scope)
+                  .form-group.panel-indent.start-hidden#discretion-reason-only
+                    = f.label :reason, class: 'form-label'
+                    = f.label :reason, @form.errors[:reason].join(', '), class: 'error' if @form.errors[:reason].present?
+                    = f.text_area :reason, rows: 3, class: 'form-control'
 
           = f.submit 'Update application', :class => 'button'

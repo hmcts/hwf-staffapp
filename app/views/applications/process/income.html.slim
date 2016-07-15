@@ -6,10 +6,10 @@
         h2.heading-xlarge Income
 
       .form-group
-        = f.label :dependents, class: 'form-label'
-        = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
         fieldset
           legend.visuallyhidden Children and income
+          = f.label :dependents, class: 'form-label'
+          = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error' if @form.errors[:dependents].present?
           .options.radio.cf
             .option
               label.block-label for='application_dependents_false'
