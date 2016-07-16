@@ -15,8 +15,12 @@ class IncomeCalculation
       children,
       @application.detail.fee,
       !@application.applicant.married.nil?,
-      income
+      income || thresholds_used?
     ].all?
+  end
+
+  def thresholds_used?
+    !min_threshold_exceeded.nil? || !max_threshold_exceeded.nil?
   end
 
   def children
@@ -26,12 +30,20 @@ class IncomeCalculation
   def return_outcome_and_amount
     {
       outcome: remission_type,
-      amount: minimum_payable_to_applicant.to_i
+      amount: amount
     }
   end
 
   def income
     @income ||= @application.income
+  end
+
+  def min_threshold_exceeded
+    @application.income_min_threshold_exceeded
+  end
+
+  def max_threshold_exceeded
+    @application.income_max_threshold_exceeded
   end
 
   def applicants_maximum_contribution
@@ -51,6 +63,9 @@ class IncomeCalculation
   end
 
   def remission_type
+    return 'full' if min_threshold_exceeded == false
+    return 'none' if max_threshold_exceeded
+
     return 'full' if applicants_maximum_contribution == 0
     return 'none' if minimum_payable_to_applicant == @application.detail.fee
     return 'part' if applicants_contribution_is_partial
@@ -59,6 +74,16 @@ class IncomeCalculation
 
   def applicants_contribution_is_partial
     applicants_maximum_contribution > 0 && applicants_maximum_contribution < @application.detail.fee
+  end
+
+  def amount
+    if min_threshold_exceeded == false
+      0
+    elsif max_threshold_exceeded
+      @application.detail.fee
+    else
+      minimum_payable_to_applicant.to_i
+    end
   end
 
   def minimum_payable_to_applicant
