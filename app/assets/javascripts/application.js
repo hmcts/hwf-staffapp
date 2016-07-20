@@ -29,3 +29,4 @@
 //= require cookies
 //= require login
 //= require fee_field
+//= require close_alerts
