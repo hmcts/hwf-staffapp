@@ -102,6 +102,24 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
+      context 'when the online application has income thresholds instead of income' do
+        context 'when the minimum threshold has not been exceeded' do
+          let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, income: nil, income_min_threshold_exceeded: false) }
+
+          it 'has income_min_threshold_exceeded assigned' do
+            expect(built_application.income_min_threshold_exceeded).to eql(false)
+          end
+        end
+
+        context 'when the maximum threshold has been exceeded' do
+          let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, income: nil, income_max_threshold_exceeded: true) }
+
+          it 'has income_max_threshold_exceeded assigned' do
+            expect(built_application.income_max_threshold_exceeded).to eql(true)
+          end
+        end
+      end
+
       context 'when the online application has children' do
         let(:online_application) { build_stubbed(:online_application_with_all_details, children: 2) }
 

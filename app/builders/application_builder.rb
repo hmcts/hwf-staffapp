@@ -44,7 +44,8 @@ class ApplicationBuilder
   end
 
   def online_application_attributes(online_application)
-    fields = %i[benefits income reference]
+    fields = %i[benefits reference
+                income income_min_threshold_exceeded income_max_threshold_exceeded]
     prepare_attributes(fields, online_application).merge(dependent_attributes(online_application))
   end
 
