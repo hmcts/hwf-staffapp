@@ -29,6 +29,8 @@ module Api
         :amount,
         :benefits,
         :children,
+        :income_min_threshold_exceeded,
+        :income_max_threshold_exceeded,
         :income,
         :refund,
         :date_fee_paid,
