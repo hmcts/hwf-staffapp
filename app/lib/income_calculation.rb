@@ -51,15 +51,7 @@ class IncomeCalculation
   end
 
   def total_supplements
-    (Settings.calculator.min_val + child_uplift + married_supplement)
-  end
-
-  def child_uplift
-    children * Settings.calculator.uplift_per_child
-  end
-
-  def married_supplement
-    @application.applicant.married? ? Settings.calculator.couple_supp : 0
+    IncomeThresholds.new(@application.applicant.married?, children).min_threshold
   end
 
   def remission_type
