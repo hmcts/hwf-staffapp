@@ -2,10 +2,19 @@ class IncomeCalculation
   def initialize(application, income = nil)
     @application = application
     @income = income
+    set_outcome(nil, nil)
   end
 
   def calculate
-    return_outcome_and_amount if calculation_inputs_present?
+    if calculation_inputs_present?
+      if income
+        calculate_using_amount
+      elsif thresholds_used?
+        calculate_using_thresholds
+      end
+
+      return_outcome_and_amount
+    end
   end
 
   private
@@ -19,6 +28,29 @@ class IncomeCalculation
     ].all?
   end
 
+  def calculate_using_amount
+    if applicants_maximum_contribution == 0
+      set_outcome('full', 0)
+    elsif applicants_contribution_is_partial
+      set_outcome('part', minimum_payable_to_applicant.to_i)
+    elsif minimum_payable_to_applicant == @application.detail.fee
+      set_outcome('none', @application.detail.fee)
+    end
+  end
+
+  def calculate_using_thresholds
+    if max_threshold_exceeded
+      set_outcome('none', @application.detail.fee)
+    elsif min_threshold_exceeded == false
+      set_outcome('full', 0)
+    end
+  end
+
+  def set_outcome(outcome, amount)
+    @outcome = outcome
+    @amount = amount
+  end
+
   def thresholds_used?
     !min_threshold_exceeded.nil? || !max_threshold_exceeded.nil?
   end
@@ -29,8 +61,8 @@ class IncomeCalculation
 
   def return_outcome_and_amount
     {
-      outcome: remission_type,
-      amount: amount
+      outcome: @outcome,
+      amount: @amount
     }
   end
 
@@ -54,28 +86,8 @@ class IncomeCalculation
     IncomeThresholds.new(@application.applicant.married?, children).min_threshold
   end
 
-  def remission_type
-    return 'full' if min_threshold_exceeded == false
-    return 'none' if max_threshold_exceeded
-
-    return 'full' if applicants_maximum_contribution == 0
-    return 'none' if minimum_payable_to_applicant == @application.detail.fee
-    return 'part' if applicants_contribution_is_partial
-    # TODO: 'error'
-  end
-
   def applicants_contribution_is_partial
     applicants_maximum_contribution > 0 && applicants_maximum_contribution < @application.detail.fee
-  end
-
-  def amount
-    if min_threshold_exceeded == false
-      0
-    elsif max_threshold_exceeded
-      @application.detail.fee
-    else
-      minimum_payable_to_applicant.to_i
-    end
   end
 
   def minimum_payable_to_applicant
