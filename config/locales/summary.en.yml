@@ -19,6 +19,8 @@ en-GB:
   income:
     children?: Number of children
     income_total: Total monthly income
+    below_threshold: Less than %{threshold}
+    above_threshold: More than %{threshold}
   evidence:
     evidence_processed: Evidence processed
     reason_evidence_not_processed: Reason evidence not processed

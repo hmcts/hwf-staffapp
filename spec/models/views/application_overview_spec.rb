@@ -212,17 +212,44 @@ RSpec.describe Views::ApplicationOverview do
 
     subject { view.total_monthly_income }
 
-    context 'when income is not set' do
+    context 'when income or thresholds are not set' do
       let(:income) { nil }
 
       it { is_expected.to be nil }
     end
 
     context 'when income is set' do
-      let(:income) { 208 }
+      let(:income) { 2082 }
 
-      it 'returns currency formated income' do
-        is_expected.to eql('£208')
+      it 'returns currency formatted income' do
+        is_expected.to eql('£2,082')
+      end
+    end
+
+    context 'when thresholds are used' do
+      let(:applicant) { build_stubbed(:applicant, married: true) }
+      let(:application) do
+        build_stubbed(:application, applicant: applicant,
+                                    income: nil, children: 2,
+                                    income_min_threshold_exceeded: min_exceeded, income_max_threshold_exceeded: max_exceeded)
+      end
+
+      context 'for income below thresholds' do
+        let(:min_exceeded) { false }
+        let(:max_exceeded) { nil }
+
+        it 'returns correct below threshold text' do
+          is_expected.to eql('Less than £1,735')
+        end
+      end
+
+      context 'for income above thresholds' do
+        let(:min_exceeded) { true }
+        let(:max_exceeded) { true }
+
+        it 'returns correct above threshold text' do
+          is_expected.to eql('More than £5,735')
+        end
       end
     end
   end

@@ -1,6 +1,8 @@
 # coding: utf-8
 module Views
   class ApplicationOverview
+    include ActionView::Helpers::NumberHelper
+
     attr_reader :application
 
     delegate(:amount_to_pay, to: :application)
@@ -49,7 +51,13 @@ module Views
     end
 
     def total_monthly_income
-      "£#{@application.income.round}" if @application.income
+      if @application.income
+        format_currency(@application.income.round)
+      elsif @application.income_min_threshold_exceeded == false
+        I18n.t('below_threshold', scope: 'income', threshold: format_currency(income_thresholds.min_threshold))
+      elsif @application.income_max_threshold_exceeded
+        I18n.t('above_threshold', scope: 'income', threshold: format_currency(income_thresholds.max_threshold))
+      end
     end
 
     def benefits
@@ -123,12 +131,20 @@ module Views
       date.to_s(:gov_uk_long) if date
     end
 
+    def format_currency(amount)
+      number_to_currency(amount, precision: 0, unit: '£')
+    end
+
     def benefit_result
       @application.last_benefit_check.dwp_result.eql?('Yes').to_s
     end
 
     def benefit_override?
       BenefitOverride.exists?(application_id: @application.id, correct: true)
+    end
+
+    def income_thresholds
+      IncomeThresholds.new(@application.applicant.married, @application.children)
     end
   end
 end
