@@ -25,3 +25,8 @@ savings_threshold:
   maximum: 16000
 processed_deleted:
   per_page: <%= ENV['PROCESSED_DELETED_PER_PAGE'] || 50 %>
+income:
+  min_threshold_base: 1085
+  max_threshold_base: 5085
+  per_child_increment: 245
+  married_supplement: 160
