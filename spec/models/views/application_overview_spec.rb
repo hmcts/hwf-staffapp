@@ -8,14 +8,48 @@ RSpec.describe Views::ApplicationOverview do
 
   # TODO: Write tests for these methods as this doesn't test they work
   context 'required methods' do
-    symbols = %i[date_of_birth ni_number status
-                 date_received date_of_death date_fee_paid
-                 number_of_children]
+    symbols = %i[ni_number status number_of_children]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
         expect(view.methods).to include(symbol)
       end
+    end
+  end
+
+  describe '#date_of_birth' do
+    let(:applicant) { build_stubbed(:applicant, date_of_birth: Time.zone.parse('1990-11-20')) }
+    let(:application) { build_stubbed(:application, applicant: applicant) }
+
+    it 'formats the date correctly' do
+      expect(view.date_of_birth).to eql('20 November 1990')
+    end
+  end
+
+  describe '#date_received' do
+    let(:detail) { build_stubbed(:detail, date_received: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_received).to eql('20 November 2015')
+    end
+  end
+
+  describe '#date_of_death' do
+    let(:detail) { build_stubbed(:detail, date_of_death: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_of_death).to eql('20 November 2015')
+    end
+  end
+
+  describe '#date_fee_paid' do
+    let(:detail) { build_stubbed(:detail, date_fee_paid: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_fee_paid).to eql('20 November 2015')
     end
   end
 
@@ -52,10 +86,10 @@ RSpec.describe Views::ApplicationOverview do
     subject { view.fee }
 
     context 'rounds down' do
-      let(:fee_amount) { 100.49 }
+      let(:fee_amount) { 1005.49 }
 
       it 'formats the fee amount correctly' do
-        is_expected.to eq '£100'
+        is_expected.to eq '£1,005'
       end
     end
 
