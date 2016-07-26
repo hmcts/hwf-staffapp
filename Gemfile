@@ -55,6 +55,7 @@ gem 'redcarpet'
 
 # Use Unicorn as the app server
 gem 'unicorn'
+gem 'unicorn-worker-killer'
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 
