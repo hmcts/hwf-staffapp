@@ -1,6 +1,9 @@
 # coding: utf-8
 module Views
+  # rubocop:disable ClassLength
   class ApplicationOverview
+    include ActionView::Helpers::NumberHelper
+
     attr_reader :application
 
     delegate(:amount_to_pay, to: :application)
@@ -25,23 +28,17 @@ module Views
     end
 
     def fee
-      "£#{detail.fee.round}"
+      format_currency(detail.fee.round)
     end
 
     def date_of_birth
       format_date applicant.date_of_birth
     end
 
-    def date_received
-      format_date detail.date_received
-    end
-
-    def date_of_death
-      format_date detail.date_of_death
-    end
-
-    def date_fee_paid
-      format_date detail.date_fee_paid
+    %i[date_received date_of_death date_fee_paid].each do |method|
+      define_method(method) do
+        format_date(detail.public_send(method))
+      end
     end
 
     def number_of_children
@@ -49,7 +46,7 @@ module Views
     end
 
     def total_monthly_income
-      "£#{@application.income.round}" if @application.income
+      @application.income ? format_currency(@application.income.round) : format_threshold_income
     end
 
     def benefits
@@ -115,6 +112,26 @@ module Views
       @application.evidence_check.present? || @application.part_payment.present?
     end
 
+    def benefit_result
+      @application.last_benefit_check.dwp_result.eql?('Yes').to_s
+    end
+
+    def benefit_override?
+      BenefitOverride.exists?(application_id: @application.id, correct: true)
+    end
+
+    def format_threshold_income
+      if @application.income_min_threshold_exceeded == false
+        I18n.t('income.below_threshold', threshold: format_currency(thresholds.min_threshold))
+      elsif @application.income_max_threshold_exceeded
+        I18n.t('income.above_threshold', threshold: format_currency(thresholds.max_threshold))
+      end
+    end
+
+    def thresholds
+      IncomeThresholds.new(@application.applicant.married, @application.children)
+    end
+
     def format_locale(suffix)
       I18n.t(suffix, scope: 'activemodel.attributes.forms/application/summary')
     end
@@ -123,12 +140,8 @@ module Views
       date.to_s(:gov_uk_long) if date
     end
 
-    def benefit_result
-      @application.last_benefit_check.dwp_result.eql?('Yes').to_s
-    end
-
-    def benefit_override?
-      BenefitOverride.exists?(application_id: @application.id, correct: true)
+    def format_currency(amount)
+      number_to_currency(amount, precision: 0, unit: '£')
     end
   end
 end

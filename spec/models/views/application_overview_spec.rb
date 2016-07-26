@@ -8,14 +8,48 @@ RSpec.describe Views::ApplicationOverview do
 
   # TODO: Write tests for these methods as this doesn't test they work
   context 'required methods' do
-    symbols = %i[date_of_birth ni_number status
-                 date_received date_of_death date_fee_paid
-                 number_of_children]
+    symbols = %i[ni_number status number_of_children]
 
     symbols.each do |symbol|
       it 'has the method #{symbol}' do
         expect(view.methods).to include(symbol)
       end
+    end
+  end
+
+  describe '#date_of_birth' do
+    let(:applicant) { build_stubbed(:applicant, date_of_birth: Time.zone.parse('1990-11-20')) }
+    let(:application) { build_stubbed(:application, applicant: applicant) }
+
+    it 'formats the date correctly' do
+      expect(view.date_of_birth).to eql('20 November 1990')
+    end
+  end
+
+  describe '#date_received' do
+    let(:detail) { build_stubbed(:detail, date_received: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_received).to eql('20 November 2015')
+    end
+  end
+
+  describe '#date_of_death' do
+    let(:detail) { build_stubbed(:detail, date_of_death: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_of_death).to eql('20 November 2015')
+    end
+  end
+
+  describe '#date_fee_paid' do
+    let(:detail) { build_stubbed(:detail, date_fee_paid: Time.zone.parse('2015-11-20')) }
+    let(:application) { build_stubbed(:application, detail: detail) }
+
+    it 'formats the date correctly' do
+      expect(view.date_fee_paid).to eql('20 November 2015')
     end
   end
 
@@ -52,10 +86,10 @@ RSpec.describe Views::ApplicationOverview do
     subject { view.fee }
 
     context 'rounds down' do
-      let(:fee_amount) { 100.49 }
+      let(:fee_amount) { 1005.49 }
 
       it 'formats the fee amount correctly' do
-        is_expected.to eq '£100'
+        is_expected.to eq '£1,005'
       end
     end
 
@@ -212,17 +246,44 @@ RSpec.describe Views::ApplicationOverview do
 
     subject { view.total_monthly_income }
 
-    context 'when income is not set' do
+    context 'when income or thresholds are not set' do
       let(:income) { nil }
 
       it { is_expected.to be nil }
     end
 
     context 'when income is set' do
-      let(:income) { 208 }
+      let(:income) { 2082 }
 
-      it 'returns currency formated income' do
-        is_expected.to eql('£208')
+      it 'returns currency formatted income' do
+        is_expected.to eql('£2,082')
+      end
+    end
+
+    context 'when thresholds are used' do
+      let(:applicant) { build_stubbed(:applicant, married: true) }
+      let(:application) do
+        build_stubbed(:application, applicant: applicant,
+                                    income: nil, children: 2,
+                                    income_min_threshold_exceeded: min_exceeded, income_max_threshold_exceeded: max_exceeded)
+      end
+
+      context 'for income below thresholds' do
+        let(:min_exceeded) { false }
+        let(:max_exceeded) { nil }
+
+        it 'returns correct below threshold text' do
+          is_expected.to eql('Less than £1,735')
+        end
+      end
+
+      context 'for income above thresholds' do
+        let(:min_exceeded) { true }
+        let(:max_exceeded) { true }
+
+        it 'returns correct above threshold text' do
+          is_expected.to eql('More than £5,735')
+        end
       end
     end
   end
