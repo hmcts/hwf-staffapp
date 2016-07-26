@@ -28,6 +28,15 @@ RSpec.describe SummaryHelper, type: :helper do
           expect(helper.build_section('section name', view, %w[fee], title, url)).to eq(expected)
         end
       end
+
+      context 'when passed a value starting with `W`' do
+        let(:view) { double(fee: 'WA123456A') }
+
+        it 'returns the correct html' do
+          expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">WA123456A</div></div></div>'
+          expect(helper.build_section('section name', view, %w[fee])).to eq(expected)
+        end
+      end
     end
   end
 end
