@@ -44,13 +44,15 @@ module SummaryHelper
   end
 
   def value_style(value)
-    ['column-two-thirds',
-     (
-      {
-        '✓' => ' summary-result passed',
-        '✗' => ' summary-result failed',
-        'W' => ' summary-result part'
-      }[value.to_s.first] || '')
-    ].join
+    ['column-two-thirds'].tap do |styles|
+      case value
+      when /^✓/
+        styles << 'summary-result passed'
+      when /^x/
+        styles << 'summary-result failed'
+      when /^Waiting for/
+        styles << 'summary-result part'
+      end
+    end.join(' ')
   end
 end
