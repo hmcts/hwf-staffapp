@@ -1,9 +1,8 @@
-div.util_mt-small
-  ul
-    li Display
-    - %w[50 100 500 All].each do |new_per_page|
-      li
-        -if params[:per_page].eql?(new_per_page)
-          =new_per_page
-        -else
-          =link_to(new_per_page, "/#{controller.controller_name}?per_page=#{new_per_page}")
+ul.pagination.inline-list.util_mt-medium.util_mb-small
+  li Display:
+  - %w[50 100 500 All].each do |new_per_page|
+    li.per-page
+      -if params[:per_page].eql?(new_per_page)
+        strong= new_per_page
+      -else
+        =link_to(new_per_page, "/#{controller.controller_name}?per_page=#{new_per_page}")

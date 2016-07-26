@@ -22,3 +22,20 @@
     margin-bottom: 10px;
   }
 }
+
+.inline-list {
+  li {
+    display: inline-block;
+    @include core-16;
+    margin-right: 5px;
+  }
+}
+
+.pagination {
+  li:nth-child(n+3) {
+    &::before {
+      content: '|';
+      margin-right: 5px;
+    }
+  }
+}
