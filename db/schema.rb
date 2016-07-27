@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720072635) do
+ActiveRecord::Schema.define(version: 20160727091449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20160720072635) do
     t.integer  "online_application_id"
     t.boolean  "income_min_threshold_exceeded"
     t.boolean  "income_max_threshold_exceeded"
+    t.decimal  "income_min_threshold"
+    t.decimal  "income_max_threshold"
   end
 
   add_index "applications", ["business_entity_id"], name: "index_applications_on_business_entity_id", using: :btree
