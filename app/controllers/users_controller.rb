@@ -81,7 +81,7 @@ class UsersController < ApplicationController
              else
                User::ROLES - %w[admin]
              end
-    @offices = Office.all
+    @offices = Office.all.order(:name)
     @jurisdictions = user.office.jurisdictions
   end
 
