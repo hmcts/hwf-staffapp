@@ -23,7 +23,12 @@ module Evidence
       end
 
       def fields_to_update
-        { income: formatted_income }.merge(income_calculation)
+        result = income_calculation
+        {
+          income: formatted_income,
+          outcome: result[:outcome],
+          amount_to_pay: result[:amount_to_pay]
+        }
       end
 
       def income_calculation
