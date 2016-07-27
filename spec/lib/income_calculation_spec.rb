@@ -18,7 +18,7 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :application_part_remission, income: nil, income_min_threshold_exceeded: false }
 
           it 'results in full remission' do
-            is_expected.to eql(outcome: 'full', amount: 0)
+            is_expected.to eql(outcome: 'full', amount_to_pay: 0)
           end
         end
 
@@ -26,7 +26,7 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :application_part_remission, fee: 333, income: nil, income_max_threshold_exceeded: true }
 
           it 'results in no remission' do
-            is_expected.to eql(outcome: 'none', amount: 333)
+            is_expected.to eql(outcome: 'none', amount_to_pay: 333)
           end
         end
       end
@@ -48,7 +48,7 @@ RSpec.describe IncomeCalculation do
                   a.income = src[:income]
                 end
 
-                is_expected.to eql(outcome: src[:type], amount: src[:they_pay].to_i)
+                is_expected.to eql(outcome: src[:type], amount_to_pay: src[:they_pay].to_i)
               end
             end
           end
@@ -78,7 +78,7 @@ RSpec.describe IncomeCalculation do
 
       context 'when data for calculation is present' do
         it 'returns hash with outcome and amount' do
-          is_expected.to include(:outcome, :amount)
+          is_expected.to include(:outcome, :amount_to_pay)
         end
       end
 

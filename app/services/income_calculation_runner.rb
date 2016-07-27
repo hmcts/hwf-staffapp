@@ -6,11 +6,7 @@ class IncomeCalculationRunner
   def run
     income_calculation_result = IncomeCalculation.new(@application).calculate
     if income_calculation_result
-      @application.update(
-        application_type: 'income',
-        outcome: income_calculation_result[:outcome],
-        amount_to_pay: income_calculation_result[:amount]
-      )
+      @application.update({ application_type: 'income' }.merge(income_calculation_result))
     end
   end
 end

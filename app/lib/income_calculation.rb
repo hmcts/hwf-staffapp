@@ -62,7 +62,7 @@ class IncomeCalculation
   def return_outcome_and_amount
     {
       outcome: @outcome,
-      amount: @amount
+      amount_to_pay: @amount
     }
   end
 

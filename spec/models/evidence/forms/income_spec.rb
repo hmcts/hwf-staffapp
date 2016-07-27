@@ -56,7 +56,7 @@ RSpec.describe Evidence::Forms::Income do
   describe '#save' do
     let(:evidence) { create :evidence_check }
     let(:params) { { income: '500.5' } }
-    let(:income_calculation_result) { { outcome: 'part', amount: 100 } }
+    let(:income_calculation_result) { { outcome: 'part', amount_to_pay: 100 } }
     let(:income_calculator) { double(calculate: income_calculation_result) }
 
     before do
@@ -76,7 +76,7 @@ RSpec.describe Evidence::Forms::Income do
       subject && evidence.reload
 
       expect(evidence.outcome).to eql(income_calculation_result[:outcome])
-      expect(evidence.amount_to_pay).to eql(income_calculation_result[:amount])
+      expect(evidence.amount_to_pay).to eql(income_calculation_result[:amount_to_pay])
     end
   end
 end

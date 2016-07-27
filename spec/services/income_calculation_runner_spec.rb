@@ -17,7 +17,7 @@ RSpec.describe IncomeCalculationRunner do
     end
 
     context 'when result is not nil' do
-      let(:result) { { outcome: 'part', amount: 100 } }
+      let(:result) { { outcome: 'part', amount_to_pay: 100 } }
 
       it 'sets application type to income' do
         expect(application.application_type).to eql('income')
