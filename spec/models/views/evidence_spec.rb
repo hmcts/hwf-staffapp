@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Views::Evidence do
+RSpec.describe Views::Evidence do
 
   subject(:evidence) { described_class.new(evidence_check) }
 

@@ -148,7 +148,7 @@ RSpec.describe EvidenceController, type: :controller do
       let(:form) { double }
 
       before do
-        allow(Evidence::Forms::Income).to receive(:new).with(evidence).and_return(form)
+        allow(Forms::Evidence::Income).to receive(:new).with(evidence).and_return(form)
         sign_in user
         get :income, id: evidence.id
       end
@@ -182,7 +182,7 @@ RSpec.describe EvidenceController, type: :controller do
       let(:form) { double }
 
       before do
-        allow(Evidence::Forms::Income).to receive(:new).with(evidence).and_return(form)
+        allow(Forms::Evidence::Income).to receive(:new).with(evidence).and_return(form)
         allow(form).to receive(:update_attributes).with(expected_form_params)
         allow(form).to receive(:save).and_return(form_save)
         sign_in user

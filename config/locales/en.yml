@@ -203,7 +203,7 @@ en-GB:
         - 'Store the application form in a secure location until you receive the evidence'
   activemodel:
     attributes:
-      evidence/forms/income:
+      forms/evidence/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:
         min_threshold_exceeded: "Less than £3,000"
@@ -254,7 +254,7 @@ en-GB:
         total_monthly_income: Total monthly income
         processed_by: Processed by
         reference: Reference
-      evidence/views/evidence:
+      views/evidence:
         correct: Correct
         incorrect_reason: Reason
         income: Income

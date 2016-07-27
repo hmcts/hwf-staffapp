@@ -1,5 +1,5 @@
-module Evidence
-  module Forms
+module Forms
+  module Evidence
     class Income < ::FormObject
 
       def self.permitted_attributes
@@ -24,7 +24,11 @@ module Evidence
 
       def fields_to_update
         result = income_calculation
-        { income: formatted_income, outcome: result[:outcome], amount_to_pay: result[:amount] }
+        {
+          income: formatted_income,
+          outcome: result[:outcome],
+          amount_to_pay: result[:amount_to_pay]
+        }
       end
 
       def income_calculation

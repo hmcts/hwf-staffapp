@@ -13,7 +13,7 @@ class IncomeCalculation
         calculate_using_thresholds
       end
 
-      return_outcome_and_amount
+      return_outcome_and_amount_and_thresholds
     end
   end
 
@@ -59,10 +59,12 @@ class IncomeCalculation
     @application.children || 0
   end
 
-  def return_outcome_and_amount
+  def return_outcome_and_amount_and_thresholds
     {
       outcome: @outcome,
-      amount: @amount
+      amount_to_pay: @amount,
+      min_threshold: thresholds.min_threshold,
+      max_threshold: thresholds.max_threshold
     }
   end
 
@@ -79,11 +81,11 @@ class IncomeCalculation
   end
 
   def applicants_maximum_contribution
-    [((income - total_supplements) / 10) * 10 * 0.5, 0].max
+    [((income - thresholds.min_threshold) / 10) * 10 * 0.5, 0].max
   end
 
-  def total_supplements
-    IncomeThresholds.new(@application.applicant.married?, children).min_threshold
+  def thresholds
+    @thresholds ||= IncomeThresholds.new(@application.applicant.married?, children)
   end
 
   def applicants_contribution_is_partial
