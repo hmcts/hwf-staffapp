@@ -84,7 +84,7 @@ class EvidenceController < ApplicationController
   end
 
   def evidence_view
-    @evidence_view = Evidence::Views::Evidence.new(evidence)
+    @evidence_view = Views::Evidence.new(evidence)
   end
 
   def accuracy_params
