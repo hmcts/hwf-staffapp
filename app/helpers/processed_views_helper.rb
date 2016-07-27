@@ -7,8 +7,11 @@ module ProcessedViewsHelper
   end
 
   def paginate(query)
-    per_page_count = per_page_is_all? ? 1000000000 : per_page
-    query.paginate(page: page, per_page: per_page_count)
+    if per_page_is_all?
+      query
+    else
+      query.paginate(page: page, per_page: per_page)
+    end
   end
 
   def previous_page

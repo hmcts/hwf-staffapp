@@ -76,7 +76,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       let(:per_page) { 'All' }
 
       it 'calls pagination with the page number and params number per page' do
-        expect(relation).to have_received(:paginate).with(page: 1, per_page: 1000000000)
+        expect(relation).not_to have_received(:paginate)
       end
     end
     context 'when the per_page parameter is set numerically' do
