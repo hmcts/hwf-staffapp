@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Forms::Income do
+RSpec.describe Forms::Evidence::Income do
   params_list = %i[income]
 
   let(:evidence) { build_stubbed :evidence_check }

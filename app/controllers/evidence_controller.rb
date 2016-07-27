@@ -24,11 +24,11 @@ class EvidenceController < ApplicationController
   end
 
   def income
-    @form = Evidence::Forms::Income.new(evidence)
+    @form = Forms::Evidence::Income.new(evidence)
   end
 
   def income_save
-    @form = Evidence::Forms::Income.new(evidence)
+    @form = Forms::Evidence::Income.new(evidence)
     @form.update_attributes(income_params)
 
     if @form.save
@@ -100,7 +100,7 @@ class EvidenceController < ApplicationController
   end
 
   def income_params
-    params.require(:evidence).permit(*Evidence::Forms::Income.permitted_attributes)
+    params.require(:evidence).permit(*Forms::Evidence::Income.permitted_attributes)
   end
 
   def application_result
