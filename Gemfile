@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~>4.2.6'
-gem 'sprockets-rails', '~>3.0'
+gem 'rails', '~> 4.2.7'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -24,7 +23,7 @@ gem 'pundit', '~> 1.0'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '>= 5.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 2.7.2'
 # Use CoffeeScript for .coffee assets and views
