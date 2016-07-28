@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160727091449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "tablefunc"
 
   create_table "applicants", force: :cascade do |t|
     t.integer  "application_id", null: false
@@ -31,8 +32,8 @@ ActiveRecord::Schema.define(version: 20160727091449) do
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
 
   create_table "applications", force: :cascade do |t|
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "user_id"
     t.integer  "office_id"
     t.decimal  "threshold"
@@ -51,7 +52,7 @@ ActiveRecord::Schema.define(version: 20160727091449) do
     t.integer  "completed_by_id"
     t.string   "decision"
     t.string   "decision_type"
-    t.integer  "state",                   default: 0, null: false
+    t.integer  "state",                         default: 0, null: false
     t.string   "deleted_reason"
     t.datetime "deleted_at"
     t.integer  "deleted_by_id"
