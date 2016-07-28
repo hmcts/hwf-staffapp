@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe EvidenceController, type: :controller do
-  include Devise::TestHelpers
-
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
   let(:application) { create :application, office: office }

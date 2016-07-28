@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'offices/edit', type: :view do
-
-  include Devise::TestHelpers
-
   let(:manager)       { create(:manager) }
   let(:admin)         { create(:admin_user) }
   let!(:office)        { assign(:office, create(:office)) }

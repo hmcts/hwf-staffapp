@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ReportsController, type: :controller do
-
-  include Devise::TestHelpers
-
   let(:admin)     { create :admin_user }
 
   it_behaves_like 'Pundit denies access to', :index

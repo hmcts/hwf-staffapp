@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   render_views
 
-  include Devise::TestHelpers
-
   let(:jurisdictions) { create_list :jurisdiction, 3 }
   let(:user)          { create :user, jurisdiction: jurisdictions[0], office: create(:office, jurisdictions: jurisdictions) }
   let(:test_user)     { create :user }

@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-
-  include Devise::TestHelpers
-
   let(:test_user) { create :user }
 
   context 'logged out user' do

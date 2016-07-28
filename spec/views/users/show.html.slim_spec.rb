@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'users/show', type: :view do
-
-  include Devise::TestHelpers
-
   let(:user) { create :user }
 
   describe 'when viewed' do

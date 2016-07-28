@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   render_views
 
-  include Devise::TestHelpers
-
   let(:admin_user)              { create :admin_user }
   let(:user_on_admins_team)     { create :user, name: 'Bob', office: admin_user.office }
   let(:user_not_on_admins_team) { create :user }

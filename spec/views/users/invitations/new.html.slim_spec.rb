@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'users/invitations/new', type: :view do
-
-  include Devise::TestHelpers
-
   context 'as an admin' do
     let(:admin) { FactoryGirl.create :admin_user }
     before(:each) do

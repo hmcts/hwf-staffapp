@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe BusinessEntitiesController, type: :controller do
-  include Devise::TestHelpers
-
   let!(:office) { create :office }
   let(:admin) { create :admin, office: office }
 

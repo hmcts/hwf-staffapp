@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'feedback/new.html.slim', type: :view do
-  include Devise::TestHelpers
-
   let(:user)          { create :user }
   let(:feedback)      { build :feedback }
 

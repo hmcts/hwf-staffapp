@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe BenefitOverridesController, type: :controller do
-  include Devise::TestHelpers
-
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
   let(:application) { build_stubbed :application, office: office }

@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe GuideController, type: :controller do
-
-  include Devise::TestHelpers
-
   describe 'as a signed out user' do
 
     before(:each) { get :index }
