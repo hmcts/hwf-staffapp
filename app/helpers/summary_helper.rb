@@ -48,7 +48,7 @@ module SummaryHelper
       case value
       when /^✓/
         styles << 'summary-result passed'
-      when /^x/
+      when /^✗/
         styles << 'summary-result failed'
       when /^Waiting for/
         styles << 'summary-result part'
