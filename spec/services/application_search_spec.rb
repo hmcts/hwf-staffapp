@@ -56,7 +56,7 @@ RSpec.describe ApplicationSearch do
         service.online
       end
 
-      it { is_expected.to eql false }
+      it { is_expected.to eql nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include('view application')
@@ -73,7 +73,7 @@ RSpec.describe ApplicationSearch do
         service.online
       end
 
-      it { is_expected.to eql false }
+      it { is_expected.to eql nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include(office.name)
@@ -85,7 +85,7 @@ RSpec.describe ApplicationSearch do
 
       before { service.online }
 
-      it { is_expected.to be false }
+      it { is_expected.to be nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to eq 'Application not found'

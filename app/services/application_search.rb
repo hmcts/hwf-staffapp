@@ -8,26 +8,25 @@ class ApplicationSearch
   end
 
   def online
-    return unless @reference.present?
-    prepare_reference!
-    return false if application_exists_and_user_can_access
-    return false if application_exists_and_user_cannot_access
+    return if !prepare_reference! || application_exists_and_user_can_access || application_exists_and_user_cannot_access
 
     if online_application_exists
       edit_online_application_path(@online_application)
     else
       @error_message = I18n.t(:not_found, scope: scope)
-      false
+      nil
     end
   end
 
   private
 
   def prepare_reference!
-    reference = @reference.upcase
-    reference.gsub!('HWF', '')
-    reference.gsub!(/[- ]/, '')
-    @reference = "HWF-#{reference.scan(/.{1,3}/).join('-')}"
+    if @reference.present?
+      reference = @reference.upcase
+      reference.gsub!('HWF', '')
+      reference.gsub!(/[- ]/, '')
+      @reference = "HWF-#{reference.scan(/.{1,3}/).join('-')}"
+    end
   end
 
   def application_exists_and_user_can_access
