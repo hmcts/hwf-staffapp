@@ -2,10 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Users::InvitationsController, type: :controller do
-
   render_views
-
-  include Devise::TestHelpers
 
   let(:office) { create :office }
   let(:admin_user) { create :admin_user, office: office }

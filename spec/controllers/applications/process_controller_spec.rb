@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Applications::ProcessController, type: :controller do
-  include Devise::TestHelpers
-
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
 

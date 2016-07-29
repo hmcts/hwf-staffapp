@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "offices/show", type: :view do
-  include Devise::TestHelpers
-
   let(:office_name) { 'My office' }
   let(:jurisdictions) { build_stubbed_list(:jurisdiction, 2) }
   let!(:office) { assign(:office, build_stubbed(:office, name: office_name, jurisdictions: jurisdictions)) }

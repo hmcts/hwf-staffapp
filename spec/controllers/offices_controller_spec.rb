@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OfficesController, type: :controller do
-
-  include Devise::TestHelpers
-
   let(:office)      { create(:office, jurisdictions: []) }
   let(:user)        { create :user, office: office }
 

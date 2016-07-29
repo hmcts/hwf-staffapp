@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
-
-  include Devise::TestHelpers
-
   let(:staff)   { create :staff }
   let(:manager) { create :manager }
   let(:admin)   { create :admin_user }

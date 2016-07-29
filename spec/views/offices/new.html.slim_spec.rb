@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'offices/new', type: :view do
-
-  include Devise::TestHelpers
-
   let(:manager) { create(:manager) }
   let!(:office) { assign(:office, Office.new) }
   let!(:jurisdictions) { assign(:jurisdictions, office.jurisdictions) }

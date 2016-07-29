@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~>4.2.6'
-gem 'sprockets-rails', '~>3.0'
+gem 'rails', '~> 4.2.7'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -24,7 +23,7 @@ gem 'pundit', '~> 1.0'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '>= 5.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 2.7.2'
 # Use CoffeeScript for .coffee assets and views
@@ -33,10 +32,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # use GDS assets, styles etc...
-gem 'govuk_frontend_toolkit',
-  git: "https://github.com/alphagov/govuk_frontend_toolkit_gem.git", submodules: true
-gem 'govuk_elements_rails',
-  git: 'https://github.com/ministryofjustice/govuk_elements_rails.git', submodules: true
+gem 'govuk_frontend_toolkit', '4.7.0'
+gem 'govuk_elements_rails', '0.3.0'
 gem 'moj_template', '~> 0.23.2'
 
 # Use jquery as the JavaScript library

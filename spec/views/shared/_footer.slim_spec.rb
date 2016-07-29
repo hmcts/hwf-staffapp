@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'shared/_footer', type: :view do
-  include Devise::TestHelpers
-
   let(:user) { create :user }
 
   context 'a signed out user' do

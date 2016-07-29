@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe FeedbackController, type: :controller do
-
-  include Devise::TestHelpers
-
   let(:office) { create(:office) }
   let(:user)          { create :user, office: office }
   let(:admin)         { create :admin_user, office: office }

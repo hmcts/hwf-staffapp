@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OnlineApplicationsController, type: :controller do
-  include Devise::TestHelpers
-
   let(:user) { create :user }
   let(:online_application) { build_stubbed(:online_application) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }

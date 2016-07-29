@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'feedback/index', type: :view do
-  include Devise::TestHelpers
-
   let(:admin) { create :admin_user }
 
   before do

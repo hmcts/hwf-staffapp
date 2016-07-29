@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'users/deleted', type: :view do
-
-  include Devise::TestHelpers
-
   let!(:user) { create :user, deleted_at: Time.zone.now }
 
   describe 'when viewed' do

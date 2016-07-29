@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'offices/edit', type: :view do
-
-  include Devise::TestHelpers
-
   let(:manager)       { create(:manager) }
   let(:admin)         { create(:admin_user) }
   let!(:office)        { assign(:office, create(:office)) }
@@ -12,7 +9,7 @@ RSpec.describe 'offices/edit', type: :view do
 
   shared_examples 'an elevated user' do
     it 'renders form and jurisdiction list' do
-      expect(rendered).to have_xpath('//input[@name="office[jurisdiction_ids][]"]', count: jurisdictions.count + 1)
+      expect(rendered).to have_xpath('//input[@name="office[jurisdiction_ids][]"]', count: jurisdictions.count + 1, visible: false)
 
       assert_select 'form[action=?][method=?]', office_path(office), 'post' do
         assert_select 'input#office_name[name=?]', 'office[name]'
