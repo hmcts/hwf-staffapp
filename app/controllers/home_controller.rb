@@ -10,10 +10,9 @@ class HomeController < ApplicationController
   end
 
   def search
-    @search_form = Forms::Search.new(search_params)
-    online_application = search_and_return
-    if online_application
-      redirect_to(edit_online_application_path(online_application))
+    result = search_and_return
+    if result
+      redirect_to(result)
     else
       load_waiting_applications
       @state = DwpMonitor.new.state
@@ -71,15 +70,10 @@ class HomeController < ApplicationController
   end
 
   def search_and_return
+    @search_form = Forms::Search.new(search_params)
     if @search_form.valid?
       search = ApplicationSearch.new(@search_form.reference, current_user)
-      matched = search.for_hwf
-      if matched.is_a? OnlineApplication
-        return matched
-      else
-        @search_form.errors.add(:reference, search.error_message)
-      end
-      return nil
+      search.online || (@search_form.errors.add(:reference, search.error_message) && nil)
     end
   end
 end

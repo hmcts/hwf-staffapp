@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationSearch do
+  include Rails.application.routes.url_helpers
   let(:reference) { nil }
   let(:user) { create :staff }
 
@@ -8,12 +9,13 @@ RSpec.describe ApplicationSearch do
 
   it { is_expected.to respond_to :error_message }
 
-  describe '#for_hwf' do
+  describe '#online' do
     let(:existing_reference) { 'HWF-123-ABC' }
     let(:wrong_reference) { 'HWF-WRO-NG' }
     let(:online_application) { build_stubbed(:online_application, reference: existing_reference) }
+    let(:online_application_url) { edit_online_application_path(online_application) }
 
-    subject { service.for_hwf }
+    subject { service.online }
 
     before do
       allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(online_application)
@@ -39,7 +41,7 @@ RSpec.describe ApplicationSearch do
           context "for '#{format}' format" do
             let(:reference) { format }
 
-            it { is_expected.to eql online_application }
+            it { is_expected.to eql online_application_url }
           end
         end
       end
@@ -51,7 +53,7 @@ RSpec.describe ApplicationSearch do
 
       before do
         allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application)
-        service.for_hwf
+        service.online
       end
 
       it { is_expected.to eql false }
@@ -68,7 +70,7 @@ RSpec.describe ApplicationSearch do
 
       before do
         allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application)
-        service.for_hwf
+        service.online
       end
 
       it { is_expected.to eql false }
@@ -81,7 +83,7 @@ RSpec.describe ApplicationSearch do
     context 'when the reference is not there' do
       let(:reference) { wrong_reference }
 
-      before { service.for_hwf }
+      before { service.online }
 
       it { is_expected.to be false }
 

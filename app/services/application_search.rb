@@ -1,5 +1,5 @@
 class ApplicationSearch
-
+  include Rails.application.routes.url_helpers
   attr_reader :error_message
 
   def initialize(reference, current_user)
@@ -7,14 +7,14 @@ class ApplicationSearch
     @current_user = current_user
   end
 
-  def for_hwf
+  def online
     return unless @reference.present?
     prepare_reference!
     return false if application_exists_and_user_can_access
     return false if application_exists_and_user_cannot_access
 
     if online_application_exists
-      @online_application
+      edit_online_application_path(@online_application)
     else
       @error_message = I18n.t(:not_found, scope: scope)
       false
