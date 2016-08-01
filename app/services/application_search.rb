@@ -8,13 +8,25 @@ class ApplicationSearch
   end
 
   def online
-    return if !prepare_reference! || application_exists_and_user_can_access || application_exists_and_user_cannot_access
+    return if !prepare_reference! || application_exists_and_user_can_access ||
+              application_exists_and_user_cannot_access
 
     if online_application_exists
       edit_online_application_path(@online_application)
     else
-      @error_message = I18n.t(:not_found, scope: scope)
-      nil
+      set_error_and_return_nil(:not_found)
+    end
+  end
+
+  def completed
+    if application_exists && application_completed
+      if user_can_access
+        CompletedApplicationRedirect.new(@application).path
+      else
+        set_error_and_return_nil(:processed_by, office_name: application_office)
+      end
+    else
+      set_error_and_return_nil(:not_found)
     end
   end
 
@@ -46,6 +58,10 @@ class ApplicationSearch
     @application ||= Application.find_by(reference: @reference.upcase)
   end
 
+  def application_completed
+    !@application.created?
+  end
+
   def user_can_access
     Pundit.policy(@current_user, @application).show?
   end
@@ -60,5 +76,10 @@ class ApplicationSearch
 
   def application_office
     @application.office.name
+  end
+
+  def set_error_and_return_nil(i18n_key, i18n_params = {})
+    @error_message = I18n.t(i18n_key, { scope: scope }.merge(i18n_params))
+    nil
   end
 end

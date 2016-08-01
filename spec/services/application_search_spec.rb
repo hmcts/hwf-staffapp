@@ -92,4 +92,91 @@ RSpec.describe ApplicationSearch do
       end
     end
   end
+
+  describe '#completed' do
+    subject { service.completed }
+
+    let(:existing_reference) { 'XYZ-123-ABC' }
+    let(:wrong_reference) { 'XYZ-WRO-NG' }
+    let(:application) { build_stubbed(:application) }
+
+    before do
+      allow(Application).to receive(:find_by).with(reference: existing_reference).and_return(application)
+      allow(Application).to receive(:find_by).with(reference: wrong_reference).and_return(nil)
+    end
+
+    context 'when there is an application with the given reference' do
+      let(:reference) { existing_reference }
+
+      context 'when the application has been processed in the same office' do
+        context 'when waiting for evidence' do
+          let(:evidence_check) { build_stubbed(:evidence_check) }
+          let(:application) { build_stubbed(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
+
+          it 'returns the evidence check url' do
+            is_expected.to eql(evidence_show_path(evidence_check))
+          end
+        end
+
+        context 'when waiting for part payment' do
+          let(:part_payment) { build_stubbed(:part_payment) }
+          let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, reference: reference, office: user.office, part_payment: part_payment) }
+
+          it 'returns the part payment url' do
+            is_expected.to eql(part_payment_path(part_payment))
+          end
+        end
+
+        context 'when processed' do
+          let(:application) { build_stubbed(:application, :processed_state, reference: reference, office: user.office) }
+
+          it 'returns the processed application url' do
+            is_expected.to eql(processed_application_path(application))
+          end
+        end
+
+        context 'when deleted' do
+          let(:application) { build_stubbed(:application, :deleted_state, reference: reference, office: user.office) }
+
+          it 'returns the deleted application url' do
+            is_expected.to eql(deleted_application_path(application))
+          end
+        end
+      end
+
+      context 'when the application has not been processed in the same office' do
+        let(:office) { build_stubbed :office }
+        let(:application) { build_stubbed(:application, :processed_state, reference: reference, office: office) }
+
+        it { is_expected.to be nil }
+
+        it 'sets the correct error message' do
+          subject
+          expect(service.error_message).to include(office.name)
+        end
+      end
+
+      context 'when the application has not yet been completed' do
+        let(:application) { build_stubbed(:application, reference: reference) }
+
+        it { is_expected.to be nil }
+
+        it 'sets the correct error message' do
+          subject
+          expect(service.error_message).to eq 'Application not found'
+        end
+      end
+    end
+
+    context 'when there is no application with the given reference' do
+      let(:reference) { wrong_reference }
+
+      it { is_expected.to be nil }
+
+      it 'sets the correct error message' do
+        subject
+        expect(service.error_message).to eq 'Application not found'
+      end
+    end
+  end
 end
