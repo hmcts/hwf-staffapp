@@ -6,7 +6,20 @@ class HomeController < ApplicationController
     load_graphs_for_admin
     load_waiting_applications
     @online_search_form = Forms::Search.new
+    @completed_search_form = Forms::Search.new
     @state = DwpMonitor.new.state
+  end
+
+  def completed_search
+    result = search_and_return(:completed)
+    if result
+      redirect_to(result)
+    else
+      load_waiting_applications
+      @state = DwpMonitor.new.state
+      @online_search_form = Forms::Search.new
+      render :index
+    end
   end
 
   def online_search
@@ -16,6 +29,7 @@ class HomeController < ApplicationController
     else
       load_waiting_applications
       @state = DwpMonitor.new.state
+      @completed_search_form = Forms::Search.new
       render :index
     end
   end
@@ -73,7 +87,7 @@ class HomeController < ApplicationController
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
     if form.valid?
       search = ApplicationSearch.new(form.reference, current_user)
-      search.online || (form.errors.add(:reference, search.error_message) && nil)
+      search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
     end
   end
 end

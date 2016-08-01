@@ -7,6 +7,18 @@ h1.visuallyhidden Help with fees - Staff application
 - else
   =render("shared/dwp/#{@state}")
 
+.grid-row
+  .util_pt-medium
+    = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path) do |f|
+      .panel.flexi data-equalheight="true" data-heightgroup="2"
+        h3.heading-medium.util_mt-0 Process an online application
+        .form-group.panel-inner
+          = f.label :reference, class: 'form-label'
+          = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
+          = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off' }
+        .util_mt-0
+          = f.submit 'Search', class: 'button util_margin-0'
+
 
 .grid-row.staff-panels
   - if policy(:application).new?

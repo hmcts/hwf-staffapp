@@ -40,12 +40,12 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   end
 
   def when_they_search_for_not_existent_online_application
-    fill_in :search_reference, with: 'something'
+    fill_in :online_search_reference, with: 'something'
     click_button 'Look up'
   end
 
   def when_they_search_for_an_existing_online_application
-    fill_in :search_reference, with: online_application.reference
+    fill_in :online_search_reference, with: online_application.reference
     click_button 'Look up'
   end
 

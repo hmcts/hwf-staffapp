@@ -120,6 +120,71 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
+  describe 'POST #completed_search' do
+    let(:application) { build_stubbed(:application) }
+    let(:search) { nil }
+
+    before do
+      allow(Application).to receive(:find_by).with(reference: application.reference).and_return(application)
+      allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
+
+      sign_in(user)
+      post :completed_search, completed_search: { reference: reference }
+    end
+
+    let(:user) { staff }
+
+    context 'when reference parameter is empty' do
+      let(:reference) { nil }
+
+      it 'renders the index template' do
+        expect(response).to render_template(:index)
+      end
+
+      it 'assigns the search forms' do
+        expect(assigns(:completed_search_form)).to be_a(Forms::Search)
+        expect(assigns(:online_search_form)).to be_a(Forms::Search)
+      end
+    end
+
+    context 'when reference parameter is present' do
+      let(:reference) { 'whatever' }
+
+      let(:search) { double(completed: completed_result, error_message: completed_error) }
+
+      context 'when the search returns nil and an error' do
+        let(:completed_result) { nil }
+        let(:completed_error) { 'Some error' }
+
+        it 'renders the index template' do
+          expect(response).to render_template(:index)
+        end
+
+        it 'assigns the search form' do
+          expect(assigns(:completed_search_form)).to be_a(Forms::Search)
+          expect(assigns(:online_search_form)).to be_a(Forms::Search)
+        end
+
+        it 'assigns the DwpMonitor state' do
+          expect(assigns(:state)).to be_a String
+        end
+      end
+
+      context 'when the search returns a url' do
+        let(:completed_result) { processed_application_path(application) }
+        let(:completed_error) { nil }
+
+        it 'redirects to the edit page for that application' do
+          expect(response).to redirect_to(completed_result)
+        end
+
+        it 'does not assign the DwpMonitor state' do
+          expect(assigns(:state)).to be nil
+        end
+      end
+    end
+  end
+
   describe 'POST #online_search' do
     let(:online_application) { build_stubbed(:online_application, :with_reference) }
     let(:application) { nil }
@@ -142,8 +207,9 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to render_template(:index)
       end
 
-      it 'assigns the search form' do
+      it 'assigns the search forms' do
         expect(assigns(:online_search_form)).to be_a(Forms::Search)
+        expect(assigns(:completed_search_form)).to be_a(Forms::Search)
       end
     end
 
@@ -157,8 +223,9 @@ RSpec.describe HomeController, type: :controller do
           expect(response).to render_template(:index)
         end
 
-        it 'assigns the search form' do
+        it 'assigns the search forms' do
           expect(assigns(:online_search_form)).to be_a(Forms::Search)
+          expect(assigns(:completed_search_form)).to be_a(Forms::Search)
         end
 
         it 'assigns the DwpMonitor state' do
