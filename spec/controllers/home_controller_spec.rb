@@ -66,7 +66,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'assigns the search form' do
-          expect(assigns(:search_form)).to be_a(Forms::Search)
+          expect(assigns(:online_search_form)).to be_a(Forms::Search)
         end
 
         it 'assigns the DwpMonitor state' do
@@ -103,7 +103,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       it 'assigns the search form' do
-        expect(assigns(:search_form)).to be_a(Forms::Search)
+        expect(assigns(:online_search_form)).to be_a(Forms::Search)
       end
     end
 
@@ -120,7 +120,7 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe 'POST #search' do
+  describe 'POST #online_search' do
     let(:online_application) { build_stubbed(:online_application, :with_reference) }
     let(:application) { nil }
 
@@ -130,7 +130,7 @@ RSpec.describe HomeController, type: :controller do
       allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application) unless application.nil?
 
       sign_in(user)
-      post :search, search: search_params
+      post :online_search, online_search: search_params
     end
 
     let(:user) { staff }
@@ -143,7 +143,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       it 'assigns the search form' do
-        expect(assigns(:search_form)).to be_a(Forms::Search)
+        expect(assigns(:online_search_form)).to be_a(Forms::Search)
       end
     end
 
@@ -158,7 +158,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'assigns the search form' do
-          expect(assigns(:search_form)).to be_a(Forms::Search)
+          expect(assigns(:online_search_form)).to be_a(Forms::Search)
         end
 
         it 'assigns the DwpMonitor state' do

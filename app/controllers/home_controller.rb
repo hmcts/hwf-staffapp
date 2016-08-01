@@ -5,12 +5,12 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
-    @search_form = Forms::Search.new
+    @online_search_form = Forms::Search.new
     @state = DwpMonitor.new.state
   end
 
-  def search
-    result = search_and_return
+  def online_search
+    result = search_and_return(:online)
     if result
       redirect_to(result)
     else
@@ -65,15 +65,15 @@ class HomeController < ApplicationController
     Query::WaitingForPartPayment.new(current_user).find
   end
 
-  def search_params
-    params.require(:search).permit(:reference)
+  def search_params(type)
+    params.require(:"#{type}_search").permit(:reference)
   end
 
-  def search_and_return
-    @search_form = Forms::Search.new(search_params)
-    if @search_form.valid?
-      search = ApplicationSearch.new(@search_form.reference, current_user)
-      search.online || (@search_form.errors.add(:reference, search.error_message) && nil)
+  def search_and_return(type)
+    form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
+    if form.valid?
+      search = ApplicationSearch.new(form.reference, current_user)
+      search.online || (form.errors.add(:reference, search.error_message) && nil)
     end
   end
 end
