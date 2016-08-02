@@ -5,7 +5,7 @@ class EvidenceCheckSelector
   end
 
   def decide!
-    @application.create_evidence_check(expires_at: expires_at) if evidence_check?
+    @application.create_evidence_check(expires_at: expires_at) if evidence_check? || flagged?
   end
 
   private
@@ -14,6 +14,10 @@ class EvidenceCheckSelector
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
       @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
+  end
+
+  def flagged?
+    EvidenceCheckFlag.exists?(ni_number: @application.applicant.ni_number, active: true)
   end
 
   def check_every_other_refund
