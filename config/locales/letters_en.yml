@@ -46,7 +46,7 @@ en-GB:
         <p>If you receive benefits with your partner: return your application with a letter from the Department for Work and Pensions confirming the benefit received.
         If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
-        <p>Check the name of the benefit: There are some benefits that are similarly named to the 6 qualifying benefits:</p>
+        <p>Check the name of the benefit: there are some benefits that are similarly named to the 6 qualifying benefits:</p>
         <ul class="list list-bullet">
           <li>contribution-based Job Seekers Allowance</li>
           <li>contribution-based Employment and Support Allowance</li>
@@ -55,7 +55,7 @@ en-GB:
           <li>Scottish Legal Aid Advice and Assistance</li>
           <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
         </ul>
-        <p>If you’re receiving one of these benefits and need help with fees, you should complete a new application.</p>
+        <p>If you’re receiving one of these benefits, you may still be eligible if you're on a low income. You'll need to complete and submit a new application to get help with your fee.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       reject_dwp_deceased_html: |
