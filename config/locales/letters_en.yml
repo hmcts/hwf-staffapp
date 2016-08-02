@@ -11,7 +11,7 @@ en-GB:
         <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this by %{date_for_appeal}.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
@@ -24,7 +24,7 @@ en-GB:
         <p>Maximum amount of income allowed: %{income_threshold}</p>
         <p>Your income total: %{income_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this by %{date_for_appeal}.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
@@ -142,7 +142,7 @@ en-GB:
         </ul>
         <p>Please make sure you pay <strong>%{part_payment_amount}</strong> by <strong>%{date_for_part_payment}</strong>.</p>
         <p><strong>If you don’t agree with the amount you have to pay</strong></p>
-        <p>If you disagree with our decision about the amount you have to pay, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this within 14 days of receiving this letter.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this within 14 days of receiving this letter.</p>
         <p>You must write your reference number <strong>%{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
