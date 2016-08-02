@@ -31,6 +31,10 @@ class ReportsController < ApplicationController
     @data = Views::Reports::PublicSubmissionData.new
   end
 
+  def letters
+    authorize :report, :letter?
+  end
+
   private
 
   def form

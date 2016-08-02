@@ -8,6 +8,7 @@ RSpec.describe ReportsController, type: :controller do
 
   it_behaves_like 'Pundit denies access to', :index
   it_behaves_like 'Pundit denies access to', :finance_report
+  it_behaves_like 'Pundit denies access to', :letters
 
   context 'as an admin' do
     before { sign_in admin }
@@ -75,6 +76,16 @@ RSpec.describe ReportsController, type: :controller do
       it { is_expected.to have_http_status(:success) }
 
       it { is_expected.to render_template :public }
+    end
+
+    describe 'GET #letters' do
+      before { get :letters }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :letters }
     end
   end
 end

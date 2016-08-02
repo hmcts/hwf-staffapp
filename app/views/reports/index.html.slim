@@ -11,3 +11,6 @@ dl
   - if policy(:report).public?
     dt =link_to 'Public submissions', reports_public_path
     dd Track public submission data
+  - if policy(:report).letter?
+    dt =link_to 'Letters', letter_templates_path
+    dd Display raw letters
