@@ -9,9 +9,7 @@ h4.heading-medium Processed application results in part payment
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       total_income: '£{AUTO: APPLICANTS INCOME}',
       children: '{AUTO: APPLICANTS CHILDREN}',
-      date_for_part_payment: '{AUTO: DATE FOR PAYMENT}',
-      name_delivery_manager: 'user:{delivery manager name}',
-      court_tribunal_name: 'user{court_tribunal_name}')
+      date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
 h4.heading-medium Evidence check - received, but not correct
 .confirmation-letter
@@ -67,9 +65,7 @@ h4.heading-medium Application rejected because savings threshold exceeded
       savings_total: '{AUTO: SAVINGS TOTAL}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
-      date_for_appeal: 'user: {DATE FOR APPEAL}',
-      name_delivery_manager: 'user:{DELIVERY MANAGER NAME}',
-      court_tribunal_name: 'user{COURT TRIBUNAL NAME}')
+      date_for_appeal: '{USER: DATE FOR APPEAL}')
 
 h4.heading-medium Application rejected because income threshold exceeded
 .confirmation-letter
@@ -80,9 +76,7 @@ h4.heading-medium Application rejected because income threshold exceeded
       income_total: '{AUTO: INCOME TOTAL}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
-      date_for_appeal: 'user: {DATE FOR APPEAL}',
-      name_delivery_manager: 'user:{DELIVERY MANAGER NAME}',
-      court_tribunal_name: 'user{COURT TRIBUNAL NAME}')
+      date_for_appeal: '{USER: DATE FOR APPEAL}')
 
 h4.heading-medium Application rejected because benefits not received
 .confirmation-letter
