@@ -88,7 +88,7 @@ RSpec.describe ApplicationSearch do
       it { is_expected.to be nil }
 
       it 'sets the correct error message' do
-        expect(service.error_message).to eq 'Application not found'
+        expect(service.error_message).to eq 'Reference number is not recognised'
       end
     end
   end
@@ -163,7 +163,7 @@ RSpec.describe ApplicationSearch do
 
         it 'sets the correct error message' do
           subject
-          expect(service.error_message).to eq 'Application not found'
+          expect(service.error_message).to eq 'Reference number is not recognised'
         end
       end
     end
@@ -175,7 +175,7 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         subject
-        expect(service.error_message).to eq 'Application not found'
+        expect(service.error_message).to eq 'Reference number is not recognised'
       end
     end
   end

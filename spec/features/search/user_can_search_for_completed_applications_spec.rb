@@ -96,11 +96,11 @@ RSpec.feature 'User can search for online application', type: :feature do
   end
 
   def then_they_get_a_blank_error
-    expect(page).to have_text('Must not be blank')
+    expect(page).to have_text('Please enter a reference number')
   end
 
   def then_they_get_a_not_found_error
-    expect(page).to have_text('Application not found')
+    expect(page).to have_text('Reference number is not recognised')
   end
 
   def then_they_are_redirected_to_the_processed_application_page
