@@ -8,7 +8,6 @@ RSpec.describe ReportsController, type: :controller do
 
   it_behaves_like 'Pundit denies access to', :index
   it_behaves_like 'Pundit denies access to', :finance_report
-  it_behaves_like 'Pundit denies access to', :letters
 
   context 'as an admin' do
     before { sign_in admin }
