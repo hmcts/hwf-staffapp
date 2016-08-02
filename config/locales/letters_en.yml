@@ -38,14 +38,14 @@ en-GB:
           <li>Income Support</li>
           <li>Universal Credit (and you earn less than £6,000 a year)</li>
           <li>Pension Credit (guarantee credit)</li>
-<li>Scottish Civil Legal Aid</li>
+          <li>Scottish Civil Legal Aid</li>
         </ul>
         <p><strong>If this result is unexpected</strong></p>
         <p>If you’ve started receiving benefits in the last 7 days: the Department for Work and Pensions may not have up to date information for you.
         If this is the case, return your application along with an official letter that confirms the benefits received.</p>
         <p>If you receive benefits with your partner: return your application with a letter from the Department for Work and Pensions confirming the benefit received.
         If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
-<p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
+        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Check the name of the benefit: There are some benefits that are similarly named to the 6 qualifying benefits:</p>
         <ul class="list list-bullet">
           <li>contribution-based Job Seekers Allowance</li>
@@ -73,7 +73,7 @@ en-GB:
         <p>Please send us copies of your documents by<strong> %{expiry_date}</strong>.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on all documents that you send.</p>
         <p>If you're married or living with someone and sharing an income, then your partner must send copies of documents showing their income too.</p>
-<div><strong>Bank statements</strong></div> 
+        <div><strong>Bank statements</strong></div>
         <p>Send a copy of your most recent bank statement for your main bank account.</p>
         <p>If you're applying for a refund of a fee you've already paid, send a bank statement from the month you paid the fee.</p>
         <p>Plus, you’ll need to send copies of all the following documents that apply to you. Remember to write the reference number %{reference} on everything you send.</p>
@@ -87,7 +87,7 @@ en-GB:
         <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
         <div><strong>Child maintenance payments</strong></div>
         <p>Document(s) showing the payment amounts and how often they are made. This can be one of the following:</p>
-<ul class="list list-bullet">
+        <ul class="list list-bullet">
           <li>sealed court order</li>
           <li>Child Support Agency Assessment</li>
           <li>signed voluntary agreement or letter of agreement signed by both parties</li>
