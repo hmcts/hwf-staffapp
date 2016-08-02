@@ -3,9 +3,10 @@ header
 
 .evidence-confirmation-letter
   =t('letters.evidence.no_evidence_received_html',
+     reference: @overview.reference,
      full_name: @overview.full_name,
      user_name: current_user.name,
-     evidence_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
+     expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
 = form_for @evidence, url: :evidence_return_application, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Finish', class: 'button'

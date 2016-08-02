@@ -3,6 +3,7 @@ header
 
 .evidence-confirmation-letter
   =t('letters.part-payment.no_part_payment_received_html',
+     reference: @overview.reference,
      full_name: @overview.full_name,
      user_name: current_user.name,
      part_payment_amount: "£#{@overview.amount_to_pay}",
