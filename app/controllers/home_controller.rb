@@ -11,26 +11,14 @@ class HomeController < ApplicationController
   end
 
   def completed_search
-    result = search_and_return(:completed)
-    if result
-      redirect_to(result)
-    else
-      load_waiting_applications
-      @state = DwpMonitor.new.state
+    search_or_render(:completed) do
       @online_search_form = Forms::Search.new
-      render :index
     end
   end
 
   def online_search
-    result = search_and_return(:online)
-    if result
-      redirect_to(result)
-    else
-      load_waiting_applications
-      @state = DwpMonitor.new.state
+    search_or_render(:online) do
       @completed_search_form = Forms::Search.new
-      render :index
     end
   end
 
@@ -88,6 +76,19 @@ class HomeController < ApplicationController
     if form.valid?
       search = ApplicationSearch.new(form.reference, current_user)
       search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
+    end
+  end
+
+  def search_or_render(type)
+    result = search_and_return(type)
+    if result
+      redirect_to(result)
+    else
+      yield if block_given?
+
+      load_waiting_applications
+      @state = DwpMonitor.new.state
+      render :index
     end
   end
 end
