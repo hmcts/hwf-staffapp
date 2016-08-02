@@ -4,6 +4,7 @@ en-GB:
     reject:
       reject_over_savings_html: |
         <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because you have more than the maximum amount of savings and investments allowed.
         We’ve calculated this as follows:</p>
         <p>Fee to pay:%{fee_amount}</p>
@@ -11,10 +12,12 @@ en-GB:
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
         <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>
+        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       reject_over_income_html: |
         <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because you have more than the maximum amount of income allowed.
         We’ve calculated this as follows:</p>
         <p>Fee to pay:%{fee_amount}</p>
@@ -22,34 +25,37 @@ en-GB:
         <p>Your income total: %{income_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
         <p>If you disagree with our decision, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this by %{date_for_appeal}.</p>
+        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
         <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the Department for Work and Pensions did not confirm that you’re receiving one of these benefits:</p>
         <ul class="list list-bullet">
-          <li>Income-based Jobseeker’s Allowance (JSA)</li>
-          <li>Income-related Employment and Support Allowance (ESA)</li>
+          <li>income-based Jobseeker’s Allowance (JSA)</li>
+          <li>income-related Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
-          <li>Universal Credit (and you’re earning less than £6,000 a year)</li>
+          <li>Universal Credit (and you earn less than £6,000 a year)</li>
           <li>Pension Credit (guarantee credit)</li>
-          <li>Scottish Legal Aid</li>
+<li>Scottish Civil Legal Aid</li>
         </ul>
         <p><strong>If this result is unexpected</strong></p>
-        <p>If you’ve started receiving benefits in the last 7 days: The Department for Work and Pensions may not have up to date information for you.
+        <p>If you’ve started receiving benefits in the last 7 days: the Department for Work and Pensions may not have up to date information for you.
         If this is the case, return your application along with an official letter that confirms the benefits received.</p>
-        <p>If you receive benefits with your partner: Return your application with a letter from the Department for Work and Pensions confirming the benefit received.
+        <p>If you receive benefits with your partner: return your application with a letter from the Department for Work and Pensions confirming the benefit received.
         If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
+<p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Check the name of the benefit: There are some benefits that are similarly named to the 6 qualifying benefits:</p>
         <ul class="list list-bullet">
-          <li>Contribution based Job Seekers Allowance</li>
-          <li>Contribution based Employment Support Allowance</li>
+          <li>contribution-based Job Seekers Allowance</li>
+          <li>contribution-based Employment and Support Allowance</li>
           <li>Pension Credit (savings credit)</li>
-          <li>Universal Credit where the applicant earns over £6,000 a year (before tax and National insurance)</li>
+          <li>Universal Credit and you earn over £6,000 a year (before tax and National Insurance)</li>
           <li>Scottish Legal Aid Advice and Assistance</li>
           <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
         </ul>
-        <p>If you’re receiving one of these benefits, you should re-apply giving details of your income.</p>
+        <p>If you’re receiving one of these benefits and need help with fees, you should complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       reject_dwp_deceased_html: |
@@ -63,37 +69,37 @@ en-GB:
       send_evidence_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We've received your application for help with fees and would like some more information about your income. We're not able to process your application until we receive it.
-        If you're married or living with someone and sharing an income, then you partner will need to provide evidence of their income too.</p>
-        <p>Please send this to us by<strong> %{expiry_date}</strong> so that we can process your application.</p>
-        <p>You need to send us a copy of your most recent bank statement for your main bank account.</p>
-        <p>If you're applying for a refund of a fee you've already paid, we need to see a bank statement from the month you paid the fee.</p>
-        <p>Plus copies of all the following documents that apply to you:</p>
+        <p>We've received your application for help with fees. We need more information from you before we can process your application.</p>
+        <p>Please send us copies of your documents by<strong> %{expiry_date}</strong>.</p>
+        <p>You must write your reference number<strong> %{reference}</strong> on all documents that you send.</p>
+        <p>If you're married or living with someone and sharing an income, then your partner must send copies of documents showing their income too.</p>
+<div><strong>Bank statements</strong></div> 
+        <p>Send a copy of your most recent bank statement for your main bank account.</p>
+        <p>If you're applying for a refund of a fee you've already paid, send a bank statement from the month you paid the fee.</p>
+        <p>Plus, you’ll need to send copies of all the following documents that apply to you. Remember to write the reference number %{reference} on everything you send.</p>
         <div><strong>Wages</strong></div>
         <ul class="list list-bullet">
           <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
-          <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.</li>
+          <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation. If you don’t have either of these, you’ll need to send bank statements that show income for the previous tax year.</li>
         </ul>
-        <p>If you’re self-employed and don’t have either of these documents, you’ll need to provide bank statements that show income for the previous tax year.</p>
         <div><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></div>
         <p>A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit.</p>
         <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
         <div><strong>Child maintenance payments</strong></div>
-        <p>Document(s) showing the payment amounts and how often they are made.</p>
-        <div>This can be one of the following:</div>
-        <ul class="list list-bullet">
+        <p>Document(s) showing the payment amounts and how often they are made. This can be one of the following:</p>
+<ul class="list list-bullet">
           <li>sealed court order</li>
           <li>Child Support Agency Assessment</li>
           <li>signed voluntary agreement or letter of agreement signed by both parties</li>
         </ul>
-        <div><strong>Contribution-based Jobseeker’s Allowance (JSA), Contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></div>
+        <div><strong>Contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></div>
         <p>A letter from the Department for Work and Pensions (DWP) dated in the last 3 months.</p>
         <div><strong>Pensions (state, work, private)</strong></div>
         <p>A letter or statement showing pension payments.</p>
-        <div><strong>Rent from anyone living with you</strong></div>
+        <div><strong>Rent from anyone living with you or other properties you own</strong></div>
         <p>A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.</p>
         <div><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></div>
-        <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (eg family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
+        <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (e.g. family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
         <div><strong>Prisoner’s income</strong></div>
         <p>Prisoner Income and Expenditure Statement (PIES) showing earnings, spending, private cash and savings.</p>
         <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
@@ -104,52 +110,56 @@ en-GB:
         <p>%{user_name}</p>
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
-        <p>We wrote to you about your application for help with fees, asking to see evidence of your income by %{evidence_date}.</p>
-        <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
-        <p>You will need to make a new application if you still require help.</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
+        <p>As we haven’t received any information, we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p> If you still want help with your fees, you will have to complete a new application. </p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       evidence_incorrect_html: |
         <p>Dear %{full_name}</p>
-        <p>We have received the additional information requested for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
-        <p>(PLEASE EXPLAIN WHY EVIDENCE CAN'T BE ACCEPTED, FOR EXAMPLE: BANK STATMENTS ARE OUT OF DATE</p>
-        <p> Unfortunately we’re unable to process your application.</p>
-        <p> If you still want help with your fees, you will have to complete a new application. </p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received the additional information for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
+        <p>(PLEASE EXPLAIN WHY EVIDENCE CAN'T BE ACCEPTED, FOR EXAMPLE: BANK STATEMENTS ARE OUT OF DATE</p>
+        <p>Unfortunately we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
     part-payment:
       send_part_payment_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees. You are eligible to make a part-payment and must pay %{part_payment_amount} towards the fee.</p>
+        <p>We have received your application for help with fees. You are eligible for some money off and must make a part-payment of %{part_payment_amount} towards the fee.</p>
         <p>We’ve calculated this as follows:</p>
         <p>Your total monthly income: %{total_income}</p>
         <p>Number of children: %{children}</p>
         <p>Amount to pay: %{part_payment_amount}</p>
         <p><strong>How to pay</strong></p>
         <ul class="list list-bullet">
-          <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for the amount</li>
+          <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for %{part_payment_amount}</li>
           <li>by debit card over the phone</li>
           <li>in person with a cheque, cash or debit card at the court counter</li>
         </ul>
-        <p>Please make sure you pay this amount by %{date_for_part_payment}</p>
+        <p>Please make sure you pay <strong>%{part_payment_amount}</strong> by <strong>%{date_for_part_payment}</strong>.</p>
         <p><strong>If you don’t agree with the amount you have to pay</strong></p>
-        <p>If you disagree with our decision about the amount you have to pay, you can appeal to the court or tribunal's Delivery Manager within 14 days of receiving this letter.</p>
+        <p>If you disagree with our decision about the amount you have to pay, you can appeal to %{name_delivery_manager}, Delivery Manager at %{court_tribunal_name}. You need to do this within 14 days of receiving this letter.</p>
+        <p>You must write your reference number <strong>%{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
         <p>Dear %{full_name}</p>
-        <p>We wrote to you about your application for help with fees, asking that you pay %{part_payment_amount} by %{date_for_part_payment}.</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We wrote to you about your application for help with fees, asking that you make a part-payment of %{part_payment_amount} towards your fee by %{date_for_part_payment}.</p>
         <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
-        <p>You will need to make a new application if you still require help.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       part_payment_incorrect_html: |
         <p>Dear %{full_name}</p>
-        <p>We have received your part-payment however we are unable to accept it.</p>
-        <p>This is because:</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your part-payment towards your fee. However we are unable to accept it because:</p>
         <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT)</p>
-        <p> Unfortunately we’re unable to process your application.</p>
-        <p> If you still want help with your fees, you will have to complete a new application. </p>
+        <p>Unfortunately we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
