@@ -14,4 +14,8 @@ class ReportPolicy < BasePolicy
   def public?
     admin?
   end
+
+  def letter?
+    staff_or_manager? || admin_or_mi?
+  end
 end

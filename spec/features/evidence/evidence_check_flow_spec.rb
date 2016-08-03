@@ -228,7 +228,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'part' do
         let(:outcome) { 'part' }
 
-        it { expect(page).to have_content 'You are eligible to make a part-payment' }
+        it { expect(page).to have_content 'You are eligible for some money off' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 

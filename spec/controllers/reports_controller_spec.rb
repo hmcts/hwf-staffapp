@@ -73,5 +73,15 @@ RSpec.describe ReportsController, type: :controller do
 
       it { is_expected.to render_template :public }
     end
+
+    describe 'GET #letters' do
+      before { get :letters }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :letters }
+    end
   end
 end
