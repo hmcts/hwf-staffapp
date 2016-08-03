@@ -2,10 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::PublicSubmissionData do
+  let!(:online_application) { Timecop.freeze(8.days.ago) { create :online_application, :completed, :with_reference } }
 
   before do
     Timecop.freeze(8.days.ago) do
       create_list :online_application, 8, :completed, :with_reference, convert_to_application: true
+      create :application, :uncompleted, :with_office, state: :created, online_application: online_application, reference: online_application.reference
     end
     Timecop.freeze(2.days.ago) do
       create_list :online_application, 2, :completed, :with_reference, convert_to_application: true
@@ -15,7 +17,7 @@ RSpec.describe Views::Reports::PublicSubmissionData do
   subject(:data) { described_class.new }
 
   it 'returns the expected data' do
-    # #submission_all_time_total returns the expected count of processed online submissions'
+    # #submission_all_time_total returns the expected count of processed online submissions, ignoring uncompleted conversions'
     expect(data.submission_all_time_total).to eq 10
 
     # #submission_all_time returns a collection of courts and a total count of the applications processed
