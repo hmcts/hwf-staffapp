@@ -71,3 +71,29 @@ select {
     padding: 5px 4px 3px 9px;
   }
 }
+
+.new_completed_search {
+  position: relative;
+
+  input[type="text"] {
+    width: 600px;
+    max-width: 92% !important;
+    height: 40px;
+  }
+
+  .submit-button {
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+    border: 1px solid $grey-1;
+    overflow: hidden;
+    text-indent: -999em;
+    background: $grey-1 asset_url('icon_search-local.png') 50% 50% no-repeat;
+  }
+
+  .field_with_errors {
+    display: inline;
+  }
+}

@@ -5,19 +5,20 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
-    @search_form = Forms::Search.new
+    @online_search_form = Forms::Search.new
+    @completed_search_form = Forms::Search.new
     @state = DwpMonitor.new.state
   end
 
-  def search
-    @search_form = Forms::Search.new(search_params)
-    online_application = search_and_return
-    if online_application
-      redirect_to(edit_online_application_path(online_application))
-    else
-      load_waiting_applications
-      @state = DwpMonitor.new.state
-      render :index
+  def completed_search
+    search_or_render(:completed) do
+      @online_search_form = Forms::Search.new
+    end
+  end
+
+  def online_search
+    search_or_render(:online) do
+      @completed_search_form = Forms::Search.new
     end
   end
 
@@ -66,20 +67,28 @@ class HomeController < ApplicationController
     Query::WaitingForPartPayment.new(current_user).find
   end
 
-  def search_params
-    params.require(:search).permit(:reference)
+  def search_params(type)
+    params.require(:"#{type}_search").permit(:reference)
   end
 
-  def search_and_return
-    if @search_form.valid?
-      search = ApplicationSearch.new(@search_form.reference, current_user)
-      matched = search.for_hwf
-      if matched.is_a? OnlineApplication
-        return matched
-      else
-        @search_form.errors.add(:reference, search.error_message)
-      end
-      return nil
+  def search_and_return(type)
+    form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
+    if form.valid?
+      search = ApplicationSearch.new(form.reference, current_user)
+      search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
+    end
+  end
+
+  def search_or_render(type)
+    result = search_and_return(type)
+    if result
+      redirect_to(result)
+    else
+      yield if block_given?
+
+      load_waiting_applications
+      @state = DwpMonitor.new.state
+      render :index
     end
   end
 end

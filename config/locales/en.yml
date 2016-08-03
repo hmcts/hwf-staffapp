@@ -464,8 +464,8 @@ en-GB:
         forms/search:
           attributes:
             reference:
-              blank: 'Must not be blank'
-              not_found: 'Application not found'
+              blank: 'Please enter a reference number'
+              not_found: 'Reference number is not recognised'
               processed_html: 'This application has been processed, <a href="%{application_path}">view application</a>'
               processed_by: 'This application has been processed by %{office_name}'
         forms/online_application:

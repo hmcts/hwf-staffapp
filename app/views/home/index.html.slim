@@ -7,6 +7,18 @@ h1.visuallyhidden Help with fees - Staff application
 - else
   =render("shared/dwp/#{@state}")
 
+.grid-row
+  .column-one-half
+    | &nbsp;
+  .column-one-half
+    .util_pt-medium.util_mt-medium
+      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path) do |f|
+        = f.label :reference, class: 'form-label visuallyhidden'
+          | Search applications by reference
+        = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
+        = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
+        = f.submit 'Search', class: 'submit-button util_margin-0'
+
 
 .grid-row.staff-panels
   - if policy(:application).new?
@@ -19,7 +31,7 @@ h1.visuallyhidden Help with fees - Staff application
               -t('index.process.paper.dwp-down.options').each do |option|
                 li =option
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h3.heading-medium.util_mt-0 Process application
+          h2.heading-medium.util_mt-0 Process application
           .panel-inner
             p.util_mb-0 You'll need:
             ul.list.list-bullet
@@ -34,15 +46,15 @@ h1.visuallyhidden Help with fees - Staff application
 
   .column-one-half
     .util_pt-medium
-      = form_for(@search_form, as: :search, url: home_search_path) do |f|
+      = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
         - if @state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.digital.dwp-down')
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h3.heading-medium.util_mt-0 Process an online application
+          h2.heading-medium.util_mt-0 Process an online application
           .form-group.panel-inner
             = f.label :reference, class: 'form-label'
-            = f.label :reference, @search_form.errors[:reference].join('').html_safe, class: 'error' if @search_form.errors[:reference].present?
+            = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
             .field-wrapper
               span.prefix HWF
               = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off', disabled: @state=='offline' }

@@ -26,7 +26,8 @@ RSpec.describe "home/index.html.slim", type: :view do
 
     sign_in user
     assign(:state, dwp_state)
-    assign(:search_form, double(errors: {}, reference: nil))
+    assign(:online_search_form, double(errors: {}, reference: nil))
+    assign(:completed_search_form, double(errors: {}, reference: nil))
     render
   end
 
@@ -169,7 +170,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
           it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"][not(@disabled)]') }
 
-          it { is_expected.to have_xpath('//input[@id="search_reference"][not(@disabled)]') }
+          it { is_expected.to have_xpath('//input[@id="online_search_reference"][not(@disabled)]') }
         end
 
         context 'when the service is failing or restoring' do
@@ -183,7 +184,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
           it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"][not(@disabled)]') }
 
-          it { is_expected.to have_xpath('//input[@id="search_reference"][not(@disabled)]') }
+          it { is_expected.to have_xpath('//input[@id="online_search_reference"][not(@disabled)]') }
         end
 
         context 'when the service is offline' do
@@ -197,7 +198,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
           it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit" and @disabled]') }
 
-          it { is_expected.to have_xpath('//input[@id="search_reference" and @disabled]') }
+          it { is_expected.to have_xpath('//input[@id="online_search_reference" and @disabled]') }
         end
       end
     end

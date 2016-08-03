@@ -40,21 +40,21 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   end
 
   def when_they_search_for_not_existent_online_application
-    fill_in :search_reference, with: 'something'
+    fill_in :online_search_reference, with: 'something'
     click_button 'Look up'
   end
 
   def when_they_search_for_an_existing_online_application
-    fill_in :search_reference, with: online_application.reference
+    fill_in :online_search_reference, with: online_application.reference
     click_button 'Look up'
   end
 
   def then_they_get_a_blank_error
-    expect(page).to have_text('Must not be blank')
+    expect(page).to have_text('Please enter a reference number')
   end
 
   def then_they_get_a_not_found_error
-    expect(page).to have_text('Application not found')
+    expect(page).to have_text('Reference number is not recognised')
   end
 
   def then_they_are_redirected_to_the_application_details_page
