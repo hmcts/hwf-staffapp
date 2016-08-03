@@ -52,6 +52,8 @@ describe EvidenceCheckSelector do
             is_expected.to be_a(EvidenceCheck)
           end
 
+          it { expect(subject.check_type).to eql 'random' }
+
           it 'sets expiration on the evidence_check' do
             expect(subject.expires_at).to eql(current_time + expires_in_days.days)
           end
@@ -105,6 +107,10 @@ describe EvidenceCheckSelector do
         let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
 
         it { is_expected.to be_a(EvidenceCheck) }
+
+        it 'sets the type to "flag"' do
+          expect(subject.check_type).to eql 'flag'
+        end
       end
     end
   end

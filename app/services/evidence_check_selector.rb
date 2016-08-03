@@ -5,10 +5,19 @@ class EvidenceCheckSelector
   end
 
   def decide!
-    @application.create_evidence_check(expires_at: expires_at) if evidence_check? || flagged?
+    type = evidence_check_type
+    @application.create_evidence_check(expires_at: expires_at, check_type: type) if type
   end
 
   private
+
+  def evidence_check_type
+    if evidence_check?
+      'random'
+    elsif flagged?
+      'flag'
+    end
+  end
 
   def evidence_check?
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
