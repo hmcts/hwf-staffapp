@@ -352,7 +352,7 @@ en-GB:
         options:
           - 1: "You've received paper evidence that the applicant is receiving benefits"
           - 2: "You want to check if the applicant is receiving benefits using the DWP checker (and it was unavailable when the application was first processed)"
-          - 3: "You are exercising discretion with this application"
+          - 3: "Your delivery manager has allowed discretion with this application"
         option_other: 'Other'
         reason: 'Other reason'
     errors:
