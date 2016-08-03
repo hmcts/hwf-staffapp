@@ -11,7 +11,7 @@ en-GB:
         <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this by %{date_for_appeal}.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
@@ -24,7 +24,7 @@ en-GB:
         <p>Maximum amount of income allowed: %{income_threshold}</p>
         <p>Your income total: %{income_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this by %{date_for_appeal}.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
@@ -41,6 +41,7 @@ en-GB:
           <li>Scottish Civil Legal Aid</li>
         </ul>
         <p><strong>If this result is unexpected</strong></p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
         <p>If you’ve started receiving benefits in the last 7 days: the Department for Work and Pensions may not have up to date information for you.
         If this is the case, return your application along with an official letter that confirms the benefits received.</p>
         <p>If you receive benefits with your partner: return your application with a letter from the Department for Work and Pensions confirming the benefit received.
@@ -62,6 +63,7 @@ en-GB:
         <p>Dear %{full_name}</p>
         <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the National Insurance number that you provided appears to belong to someone who has died.</p>
         <p><strong>If this result is unexpected</strong></p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
         <p>Check the National Insurance number: Make sure that you have provided the correct National Insurance number. If it’s correct then you will need to contact the Department for Work and Pensions to update the information they hold on record for you.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
@@ -142,7 +144,7 @@ en-GB:
         </ul>
         <p>Please make sure you pay <strong>%{part_payment_amount}</strong> by <strong>%{date_for_part_payment}</strong>.</p>
         <p><strong>If you don’t agree with the amount you have to pay</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal where your case is being heard. You need to do this within 14 days of receiving this letter.</p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
         <p>You must write your reference number <strong>%{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
