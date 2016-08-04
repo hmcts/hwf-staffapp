@@ -343,7 +343,7 @@ en-GB:
         evidence: 'Has the applicant provided paper evidence?'
         evidence_false: 'No'
         evidence_true: 'Yes, the applicant has provided paper evidence'
-        correct: 'Is the evidence for the correct applicant and relates to the date the fee was paid?'
+        correct: 'Is evidence for the correct applicant and dated within 3 months of the fee being paid?'
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
         incorrect_reason: 'Describe the problem with the evidence'
