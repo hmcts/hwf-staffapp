@@ -3,11 +3,16 @@ require 'rails_helper'
 RSpec.describe EvidenceController, type: :controller do
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:application) { create :application, office: office }
+  let(:applicant) { create :applicant_with_all_details }
+  let(:application) { create :application, office: office, applicant: applicant }
   let(:evidence) { create :evidence_check, application_id: application.id }
+  let(:evidence_check_flagging_service) { double }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
+    allow(EvidenceCheckFlaggingService).to receive(:new).with(evidence).and_return(evidence_check_flagging_service)
+    allow(evidence_check_flagging_service).to receive(:can_be_flagged?).and_return(true)
+    allow(evidence_check_flagging_service).to receive(:process_flag)
   end
 
   describe 'GET #show' do
@@ -283,6 +288,8 @@ RSpec.describe EvidenceController, type: :controller do
       it 'returns the correct status code' do
         expect(response.status).to eq 302
       end
+
+      it { expect(evidence_check_flagging_service).to have_received(:process_flag) }
     end
   end
 
@@ -353,6 +360,10 @@ RSpec.describe EvidenceController, type: :controller do
 
       it 'returns the correct status code' do
         expect(response).to have_http_status(:redirect)
+      end
+
+      it 'calls the evidence_check_flag' do
+        expect(evidence_check_flagging_service).to have_received(:process_flag)
       end
     end
   end
