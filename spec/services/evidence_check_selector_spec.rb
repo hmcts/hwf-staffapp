@@ -52,6 +52,8 @@ describe EvidenceCheckSelector do
             is_expected.to be_a(EvidenceCheck)
           end
 
+          it { expect(subject.check_type).to eql 'random' }
+
           it 'sets expiration on the evidence_check' do
             expect(subject.expires_at).to eql(current_time + expires_in_days.days)
           end
@@ -96,6 +98,18 @@ describe EvidenceCheckSelector do
           it 'does not create evidence_check record for the application' do
             is_expected.to be nil
           end
+        end
+      end
+
+      context 'when the application is flagged for failed evidence check' do
+        let(:applicant) { create :applicant_with_all_details }
+        let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
+        let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
+
+        it { is_expected.to be_a(EvidenceCheck) }
+
+        it 'sets the type to "flag"' do
+          expect(subject.check_type).to eql 'flag'
         end
       end
     end

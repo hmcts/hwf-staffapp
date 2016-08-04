@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727091449) do
+ActiveRecord::Schema.define(version: 20160803121730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,16 @@ ActiveRecord::Schema.define(version: 20160727091449) do
 
   add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree
 
+  create_table "evidence_check_flags", force: :cascade do |t|
+    t.string   "ni_number"
+    t.boolean  "active",     default: true
+    t.integer  "count"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "evidence_check_flags", ["ni_number", "active"], name: "evidence_check_flags_active_unique", unique: true, where: "(active = true)", using: :btree
+
   create_table "evidence_checks", force: :cascade do |t|
     t.integer  "application_id",   null: false
     t.datetime "created_at"
@@ -178,6 +188,7 @@ ActiveRecord::Schema.define(version: 20160727091449) do
     t.datetime "completed_at"
     t.integer  "completed_by_id"
     t.string   "incorrect_reason"
+    t.string   "check_type"
   end
 
   add_index "evidence_checks", ["application_id"], name: "index_evidence_checks_on_application_id", using: :btree

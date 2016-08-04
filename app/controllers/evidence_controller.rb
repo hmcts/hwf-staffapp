@@ -50,6 +50,7 @@ class EvidenceController < ApplicationController
 
   def summary_save
     ResolverService.new(evidence, current_user).complete
+    process_evidence_check_flag
     redirect_to evidence_confirmation_path
   end
 
@@ -62,7 +63,15 @@ class EvidenceController < ApplicationController
   end
 
   def return_application
-    redirect_to root_path if ResolverService.new(evidence, current_user).return
+    if ResolverService.new(evidence, current_user).return
+      process_evidence_check_flag
+      redirect_to root_path
+    end
+  end
+
+  def process_evidence_check_flag
+    evidence_check = EvidenceCheckFlaggingService.new(evidence)
+    evidence_check.process_flag if evidence_check.can_be_flagged?
   end
 
   private
