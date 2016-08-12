@@ -67,6 +67,13 @@ FactoryGirl.define do
       income 450
     end
 
+    trait :invalid_income do
+      benefits false
+      income nil
+      income_min_threshold_exceeded nil
+      income_max_threshold_exceeded nil
+    end
+
     trait :with_email do
       email_address 'foo@bar.com'
     end

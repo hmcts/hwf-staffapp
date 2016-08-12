@@ -91,6 +91,22 @@ RSpec.describe ApplicationSearch do
         expect(service.error_message).to eq 'Reference number is not recognised'
       end
     end
+
+    context 'when the application has been submitted with invalid data' do
+      let(:reference) { existing_reference }
+      let(:invalid_online_application) { build_stubbed(:online_application, :invalid_income, reference: existing_reference) }
+
+      before do
+        allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(invalid_online_application)
+        service.online
+      end
+
+      it { is_expected.to be nil }
+
+      it 'sets the correct error message' do
+        expect(service.error_message).to eq(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))
+      end
+    end
   end
 
   describe '#completed' do

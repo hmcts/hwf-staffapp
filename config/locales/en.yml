@@ -468,6 +468,7 @@ en-GB:
               not_found: 'Reference number is not recognised'
               processed_html: 'This application has been processed, <a href="%{application_path}">view application</a>'
               processed_by: 'This application has been processed by %{office_name}'
+              income_error: 'This application cannot be processed, please ask the applicant to re-submit a new form'
         forms/online_application:
           attributes:
             fee:
