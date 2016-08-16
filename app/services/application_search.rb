@@ -9,7 +9,7 @@ class ApplicationSearch
 
   def online
     return if !prepare_reference! || application_exists_and_user_can_access ||
-              application_exists_and_user_cannot_access
+              application_exists_and_user_cannot_access || online_application_income_invalid?
 
     if online_application_exists
       edit_online_application_path(@online_application)
@@ -68,6 +68,28 @@ class ApplicationSearch
 
   def online_application_exists
     @online_application ||= OnlineApplication.find_by(reference: @reference.upcase)
+  end
+
+  def online_application_income_invalid?
+    if online_application_exists && income_required_but_missing
+      @error_message = I18n.t(:income_error, scope: scope)
+    end
+  end
+
+  def income_required_but_missing
+    online_application_income_required? && online_application_income_missing?
+  end
+
+  def online_application_income_required?
+    @online_application.benefits.eql?(false)
+  end
+
+  def online_application_income_missing?
+    [
+      @online_application.income,
+      @online_application.income_min_threshold_exceeded,
+      @online_application.income_max_threshold_exceeded
+    ].all?(&:nil?)
   end
 
   def scope
