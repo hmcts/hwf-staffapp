@@ -36,17 +36,28 @@ RSpec.describe ReportsController, type: :controller do
     end
 
     describe 'PUT #finance_report' do
-      before { put :finance_report_generator, forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }
 
       subject { response }
 
-      it { is_expected.to have_http_status(:success) }
+      context 'with valid data' do
+        before { put :finance_report_generator, forms_finance_report: { date_from: nil, date_to: '2015-12-31' } }
 
-      it 'sets the filename' do
-        expect(response.headers['Content-Disposition']).to include('finance-report-')
+        it { is_expected.to have_http_status(:success) }
+
+        it { is_expected.to render_template :finance_report }
       end
-      it 'sets the filename' do
-        expect(response.headers['Content-Type']).to include('text/csv')
+
+      context 'with valid data' do
+        before { put :finance_report_generator, forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }
+
+        it { is_expected.to have_http_status(:success) }
+
+        it 'sets the filename' do
+          expect(response.headers['Content-Disposition']).to include('finance-report-')
+        end
+        it 'sets the filename' do
+          expect(response.headers['Content-Type']).to include('text/csv')
+        end
       end
     end
 
@@ -82,6 +93,47 @@ RSpec.describe ReportsController, type: :controller do
       it { is_expected.to have_http_status(:success) }
 
       it { is_expected.to render_template :letters }
+    end
+
+    describe 'GET #raw_data' do
+      before { get :raw_data }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :raw_data }
+
+      describe 'assigns form object' do
+        subject { assigns(:form) }
+
+        it { is_expected.to be_a_kind_of Forms::FinanceReport }
+      end
+    end
+
+    describe 'PUT #raw_data' do
+      subject { response }
+
+      context 'with invalid data' do
+        before { put :raw_data_export, forms_finance_report: { date_from: nil, date_to: '2015-12-31' } }
+
+        it { is_expected.to have_http_status(:success) }
+
+        it { is_expected.to render_template :raw_data }
+      end
+
+      context 'with valid data' do
+        before { put :raw_data_export, forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }
+
+        it { is_expected.to have_http_status(:success) }
+
+        it 'sets the filename' do
+          expect(response.headers['Content-Disposition']).to include('help-with-fees-extract-')
+        end
+        it 'sets the filename' do
+          expect(response.headers['Content-Type']).to include('text/csv')
+        end
+      end
     end
   end
 end
