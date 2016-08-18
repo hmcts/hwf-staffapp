@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::RawDataExport do
+  let(:office) { create :office }
+  let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: Time.zone.now } }
   let(:business_entity) { create :business_entity }
   let(:start_date) { Time.zone.today.-1.month }
   let(:end_date) { Time.zone.today.+1.month }
@@ -13,14 +15,14 @@ RSpec.describe Views::Reports::RawDataExport do
   end
 
   describe '#to_csv' do
+    before { create_list :application_full_remission, 7, :processed_state, shared_parameters }
+
     subject { data.to_csv }
 
     it { is_expected.to be_a String }
   end
 
   describe 'data returned should only include proccessed applications' do
-    let(:office) { create :office }
-    let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: Time.zone.now } }
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: Time.zone.now } }
     let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: Time.zone.now } }
     before do

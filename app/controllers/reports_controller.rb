@@ -12,10 +12,10 @@ class ReportsController < ApplicationController
     authorize :report, :show?
     @form = form
     if @form.valid?
-      send_data FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to]).to_csv,
-        filename: "finance-report-#{@form.start_date}-#{@form.end_date}.csv",
-        type: 'text/csv',
-        disposition: 'attachment'
+      build_and_return_data(
+        FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to]).to_csv,
+        'finance-report'
+      )
     else
       render :finance_report
     end
@@ -44,10 +44,7 @@ class ReportsController < ApplicationController
     authorize :report, :show?
     @form = form
     if @form.valid?
-      send_data extract_raw_data,
-        filename: "help-with-fees-extract-#{@form.start_date}-#{@form.end_date}.csv",
-        type: 'text/csv',
-        disposition: 'attachment'
+      build_and_return_data(extract_raw_data, 'help-with-fees-extract')
     else
       render :raw_data
     end
@@ -74,6 +71,13 @@ class ReportsController < ApplicationController
         benefit_checks: BenefitCheck.by_office_grouped_by_type(office.id).checks_by_day
       }
     end
+  end
+
+  def build_and_return_data(data_set, prefix)
+    send_data data_set,
+      filename: "#{prefix}-#{@form.start_date}-#{@form.end_date}.csv",
+      type: 'text/csv',
+      disposition: 'attachment'
   end
 
   def extract_raw_data
