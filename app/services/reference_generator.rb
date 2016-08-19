@@ -4,10 +4,7 @@ class ReferenceGenerator
   end
 
   def attributes
-    {
-      business_entity: business_entity,
-      reference: reference
-    }
+    { reference: reference }
   end
 
   private
