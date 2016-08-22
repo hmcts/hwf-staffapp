@@ -254,6 +254,11 @@ en-GB:
         total_monthly_income: Total monthly income
         processed_by: Processed by
         reference: Reference
+      views/overview/applicant:
+        full_name: Full name
+        date_of_birth: Date of birth
+        ni_number: National Insurance number
+        status: Status
       views/overview/details:
         fee: Fee
         jurisdiction: Jurisdiction
