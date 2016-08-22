@@ -21,7 +21,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
                 'Processing details',
                 'Personal details',
                 'Application details',
-                'Assessment']
+                'Result']
 
     headings.each do |heading_title|
       it "has a heading titled #{heading_title}" do
@@ -29,8 +29,8 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
     end
 
-    scenario 'when clicked on "Next", goes to the next page' do
-      click_link 'Next'
+    scenario 'when clicked on "Start now", goes to the next page' do
+      click_link 'Start now'
       expect(page).to have_content 'Is the evidence ready to process?'
     end
   end
