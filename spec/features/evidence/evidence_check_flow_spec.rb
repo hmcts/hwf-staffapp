@@ -18,7 +18,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     before { visit evidence_show_path(id: evidence.id) }
     headings = ['Waiting for evidence',
                 'Process evidence',
-                'Processing details',
+                'Processing summary',
                 'Personal details',
                 'Application details',
                 'Result']

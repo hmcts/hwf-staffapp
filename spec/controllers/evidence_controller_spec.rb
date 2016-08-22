@@ -38,8 +38,8 @@ RSpec.describe EvidenceController, type: :controller do
         expect(response).to render_template('show')
       end
 
-      it 'assigns the overview model' do
-        expect(assigns(:overview)).to be_a(Views::ApplicationOverview)
+      it 'assigns the details model' do
+        expect(assigns(:details)).to be_a(Views::Overview::Details)
       end
     end
   end

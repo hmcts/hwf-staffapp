@@ -3,8 +3,8 @@ header
 
 .evidence-confirmation-letter
   =t('letters.evidence.no_evidence_received_html',
-     reference: @overview.reference,
-     full_name: @overview.full_name,
+     reference: @application_view.reference,
+     full_name: @applicant.full_name,
      user_name: current_user.name,
      expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 

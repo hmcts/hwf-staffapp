@@ -5,7 +5,7 @@ class EvidenceController < ApplicationController
     authorize evidence
 
     processing_details
-    application_overview
+    build_sections
   end
 
   def accuracy
@@ -44,7 +44,7 @@ class EvidenceController < ApplicationController
 
   def summary
     evidence_view
-    application_overview
+    build_sections
     application_result
   end
 
@@ -59,7 +59,7 @@ class EvidenceController < ApplicationController
   end
 
   def return_letter
-    application_overview
+    build_sections
   end
 
   def return_application
@@ -85,11 +85,13 @@ class EvidenceController < ApplicationController
   end
 
   def processing_details
-    @processing_details = Views::ProcessingDetails.new(evidence)
+    @processing_details = Views::ProcessedData.new(evidence.application)
   end
 
-  def application_overview
-    @overview = Views::ApplicationOverview.new(evidence.application)
+  def build_sections
+    @applicant = Views::Overview::Applicant.new(evidence.application)
+    @application_view = Views::Overview::Application.new(evidence.application)
+    @details = Views::Overview::Details.new(evidence.application)
   end
 
   def evidence_view
