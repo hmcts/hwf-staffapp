@@ -254,6 +254,13 @@ en-GB:
         total_monthly_income: Total monthly income
         processed_by: Processed by
         reference: Reference
+      views/overview/application:
+        savings: Savings and investments
+        benefits: Receiving eligible benefits
+        income_result: Income
+        savings_result: Savings
+        number_of_children: Number of children
+        total_monthly_income: Total monthly income
       views/overview/applicant:
         full_name: Full name
         date_of_birth: Date of birth
