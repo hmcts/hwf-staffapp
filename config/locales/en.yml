@@ -254,6 +254,18 @@ en-GB:
         total_monthly_income: Total monthly income
         processed_by: Processed by
         reference: Reference
+      views/overview/details:
+        fee: Fee
+        jurisdiction: Jurisdiction
+        date_received: Date received
+        form_name: Form name or number
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
+        emergency_reason: Reason for emergency
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
