@@ -5,7 +5,7 @@ class ResolverCostCalculator
   end
 
   def cost
-    @source.outcome == 'none' ? 0 : incurred_cost
+    %w[return none].include?(@source.outcome) ? 0 : incurred_cost
   end
 
   private

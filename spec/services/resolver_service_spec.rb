@@ -288,6 +288,10 @@ describe ResolverService do
       it "sets decision_type to be #{type}" do
         expect(updated_application.decision_type).to eql(type)
       end
+
+      it 'sets the decision_cost to 0' do
+        expect(updated_application.decision_cost).to eql(0)
+      end
     end
 
     context 'for EvidenceCheck' do
