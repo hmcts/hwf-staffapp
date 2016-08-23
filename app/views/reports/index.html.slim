@@ -14,3 +14,6 @@ dl
   - if policy(:report).letter?
     dt =link_to 'Letters', letter_templates_path
     dd Display raw letters
+  - if policy(:report).raw_data?
+    dt =link_to 'Raw data extract', reports_raw_data_path
+    dd Extract raw data by date for Analytical Services
