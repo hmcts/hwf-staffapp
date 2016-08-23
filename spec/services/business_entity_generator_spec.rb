@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReferenceGenerator, type: :service do
+RSpec.describe BusinessEntityGenerator, type: :service do
   let(:current_time) { Time.zone.parse('2016-03-01 10:20:30') }
   let!(:office) { create :office }
   let!(:jurisdiction) { create :jurisdiction }
@@ -18,23 +18,8 @@ RSpec.describe ReferenceGenerator, type: :service do
     end
 
     context 'when there is no existing reference number for the same entity code' do
-      it 'returns hash with the new reference' do
-        expect(subject[:reference]).to eql('AB987-16-1')
-      end
-    end
-
-    context 'when there is an existing reference number for the same entity code' do
-      let(:existing_application1) { create :application, :processed_state, reference: 'AB987-16-18' }
-      let(:existing_application2) { create :application, :processed_state, reference: 'AB987-16-19' }
-
-      before do
-        existing_application2
-        existing_application1
-        application
-      end
-
-      it 'returns hash with the reference next in sequence' do
-        expect(subject[:reference]).to eql('AB987-16-20')
+      it 'returns hash with the relevant business entity' do
+        expect(subject[:business_entity]).to eql(business_entity)
       end
     end
 
@@ -43,7 +28,7 @@ RSpec.describe ReferenceGenerator, type: :service do
       before { business_entity.update_attribute(:valid_to, Time.zone.now) }
 
       it 'uses the active one' do
-        expect(subject[:reference]).to eql('CB975-16-1')
+        expect(subject[:business_entity]).to eql(business_entity2)
       end
     end
   end

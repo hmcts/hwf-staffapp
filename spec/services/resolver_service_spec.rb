@@ -74,12 +74,16 @@ describe ResolverService do
       end
     end
 
-    shared_examples 'application reference' do
+    shared_examples 'application reference and business_entity' do
       context 'when the application has reference number already' do
         let(:existing_reference) { 'SOME_REFERENCE' }
 
         it 'does not generate a new reference' do
           expect(updated_application.reference).to eql(existing_reference)
+        end
+
+        it 'stores the business entity' do
+          expect(updated_application.business_entity).to eql(business_entity)
         end
       end
 
@@ -87,17 +91,23 @@ describe ResolverService do
         it 'generates and stores the reference' do
           expect(updated_application.reference).to eql(reference)
         end
+
+        it 'stores the business entity' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
       end
     end
 
     context 'for Application' do
       let(:reference) { 'ABC' }
       let(:business_entity) { create(:business_entity) }
-      let(:generator) { double(attributes: { reference: reference, business_entity: business_entity }) }
+      let(:be_generator) { double(attributes: { business_entity: business_entity }) }
+      let(:generator) { double(attributes: { reference: reference }) }
 
       let(:object) { application }
 
       before do
+        allow(BusinessEntityGenerator).to receive(:new).and_return(be_generator)
         allow(ReferenceGenerator).to receive(:new).and_return(generator)
         allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
       end
@@ -115,7 +125,7 @@ describe ResolverService do
 
         include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
 
-        include_examples 'application reference'
+        include_examples 'application reference and business_entity'
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
@@ -127,7 +137,7 @@ describe ResolverService do
 
         include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
 
-        include_examples 'application reference'
+        include_examples 'application reference and business_entity'
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
@@ -147,11 +157,7 @@ describe ResolverService do
           include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 0
         end
 
-        include_examples 'application reference'
-
-        it 'stores the business entity used to generate the reference' do
-          expect(updated_application.business_entity).to eql(business_entity)
-        end
+        include_examples 'application reference and business_entity'
       end
     end
 

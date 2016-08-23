@@ -41,6 +41,7 @@ class ResolverService
 
   def completed_application_attributes
     completed_attributes.tap do |attrs|
+      attrs.merge! BusinessEntityGenerator.new(@calling_object).attributes
       if @calling_object.reference.blank?
         generator = ReferenceGenerator.new(@calling_object)
         attrs.merge!(generator.attributes)
