@@ -4,9 +4,8 @@ class PartPaymentsController < ApplicationController
   def show
     authorize part_payment
 
-    @processing_details = Views::ProcessingDetails.new(part_payment)
-    @overview = Views::ApplicationOverview.new(application)
-    @result = Views::ApplicationResult.new(application)
+    processing_details
+    build_sections
   end
 
   def accuracy
@@ -26,7 +25,7 @@ class PartPaymentsController < ApplicationController
 
   def summary
     @part_payment = part_payment
-    @overview = Views::ApplicationOverview.new(application)
+    build_sections
     @result = Views::PartPayment::Result.new(part_payment)
   end
 
@@ -36,12 +35,12 @@ class PartPaymentsController < ApplicationController
   end
 
   def confirmation
-    @overview = Views::ApplicationOverview.new(application)
+    build_sections
     @result = Views::PartPayment::Result.new(part_payment)
   end
 
   def return_letter
-    application_overview
+    build_sections
   end
 
   def return_application
@@ -67,8 +66,14 @@ class PartPaymentsController < ApplicationController
     authorize part_payment, :update?
   end
 
-  def application_overview
-    @overview = Views::ApplicationOverview.new(part_payment.application)
+  def processing_details
+    @processing_details = Views::ProcessedData.new(part_payment.application)
+  end
+
+  def build_sections
+    @applicant = Views::Overview::Applicant.new(part_payment.application)
+    @application_view = Views::Overview::Application.new(part_payment.application)
+    @details = Views::Overview::Details.new(part_payment.application)
   end
 
   def accuracy_params

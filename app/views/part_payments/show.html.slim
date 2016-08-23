@@ -2,18 +2,21 @@ header
   h2.heading-xlarge Waiting for part-payment
 
 .panel
-  h4.heading-medium.util_mt-0 Process part-payment
+  h4.heading-medium.util_mt-0 Process part-payment for #{@part_payment.application.reference}
   = link_to 'Start now', accuracy_part_payment_path(@part_payment), class: 'button util_mb-medium'
   details
     summary
       span.summary.primary What to do if the part-payment can’t be processed
     div.panel-indent.util_mb-0.util_mt-0
-      p Part-payment needs to arrive by <strong>#{@processing_details.expires.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process the payment, choose ‘Return application’ to remove it from ‘Applications waiting for part-payment' and return everything to the applicant.
+      p Part-payment needs to arrive by <strong>#{@part_payment.expires_at.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process the payment, choose ‘Return application’ to remove it from ‘Applications waiting for part-payment' and return everything to the applicant.
       = link_to 'Return application', return_letter_part_payment_path(@part_payment), class: 'button alternative small util_mb-0'
 
-=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
-=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
-=build_section 'Processing details', @processing_details, %w[reference processed_by expires]
-=build_section 'Result', @result, %w[savings income]
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Benefits', @application_view, %w[benefits]
+=build_section 'Income', @application_view, %w[number_of_children total_monthly_income]
+=build_section 'Result', @application_view, %w[benefits_result savings_result income_result]
 
-=render(partial: 'shared/remission_type', locals: { source: @result })
+=render(partial: 'shared/remission_type', locals: { source: @application_view })
+
+=render(partial: 'shared/processed_summary', locals: { source: @processing_details })

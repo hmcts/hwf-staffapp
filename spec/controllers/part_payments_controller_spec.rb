@@ -6,8 +6,11 @@ RSpec.describe PartPaymentsController, type: :controller do
   let(:application) { create(:application, office: office) }
   let(:part_payment) { create(:part_payment, application: application) }
 
+  let(:details) { double }
   let(:processing_details) { double }
   let(:application_overview) { double }
+  let(:application_view) { double }
+  let(:applicant_view) { double }
   let(:application_result) { double }
   let(:accuracy_form) { double }
   let(:part_payment_result) { double }
@@ -16,8 +19,10 @@ RSpec.describe PartPaymentsController, type: :controller do
     sign_in user
 
     allow(PartPayment).to receive(:find).with(part_payment.id.to_s).and_return(part_payment)
-    allow(Views::ProcessingDetails).to receive(:new).with(part_payment).and_return(processing_details)
-    allow(Views::ApplicationOverview).to receive(:new).with(part_payment.application).and_return(application_overview)
+    allow(Views::ProcessedData).to receive(:new).with(part_payment.application).and_return(processing_details)
+    allow(Views::Overview::Application).to receive(:new).with(part_payment.application).and_return(application_view)
+    allow(Views::Overview::Applicant).to receive(:new).with(part_payment.application).and_return(applicant_view)
+    allow(Views::Overview::Details).to receive(:new).with(part_payment.application).and_return(details)
     allow(Views::ApplicationResult).to receive(:new).with(part_payment.application).and_return(application_result)
     allow(Forms::PartPayment::Accuracy).to receive(:new).with(part_payment).and_return(accuracy_form)
     allow(Views::PartPayment::Result).to receive(:new).with(part_payment).and_return(part_payment_result)
@@ -38,8 +43,10 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     it 'assigns the view models' do
       expect(assigns(:processing_details)).to eql(processing_details)
-      expect(assigns(:overview)).to eql(application_overview)
-      expect(assigns(:result)).to eql(application_result)
+      expect(assigns(:application_view)).to eql(application_view)
+      expect(assigns(:details)).to eql(details)
+      expect(assigns(:applicant)).to eql(applicant_view)
+
     end
   end
 
@@ -105,7 +112,7 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     it 'assigns the view models' do
       expect(assigns(:part_payment)).to eql(part_payment)
-      expect(assigns(:overview)).to eql(application_overview)
+      expect(assigns(:application_view)).to eql(application_view)
       expect(assigns(:result)).to eql(part_payment_result)
     end
   end
@@ -141,7 +148,6 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     it 'assigns the view models' do
       expect(assigns(:result)).to eql(part_payment_result)
-      expect(assigns(:overview)).to eql(application_overview)
     end
   end
 
@@ -157,7 +163,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     end
 
     it 'assigns the view models' do
-      expect(assigns(:overview)).to eql(application_overview)
+      expect(assigns(:application_view)).to eql(application_view)
     end
   end
 

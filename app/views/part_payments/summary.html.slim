@@ -1,9 +1,11 @@
 header
   h2.heading-xlarge Check details
 
-=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
-=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
-=build_section 'Result', @result, %w[savings income part_payment reason]
+- change_link = ['Change part-payment', accuracy_part_payment_path(@part_payment)]
+=build_section 'Part-payment', @result, %w[part_payment reason], *change_link
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Result', @application_view, %w[savings_result income_result]
 
 #result.callout class=@result.callout
   h3.heading-large =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
