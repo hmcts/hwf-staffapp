@@ -7,17 +7,21 @@ RSpec.describe DeletedApplicationsController, type: :controller do
   let(:application1) { build_stubbed(:application, office: office) }
   let(:application2) { build_stubbed(:application, office: office) }
 
-  let(:overview) { double }
+  let(:applicant) { double }
+  let(:details) { double }
+  let(:application_view) { double }
   let(:result) { double }
-  let(:summary) { double }
+  let(:processing_details) { double }
 
   before do
     sign_in user
 
     allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
-    allow(Views::ApplicationOverview).to receive(:new).with(application1).and_return(overview)
+    allow(Views::Overview::Applicant).to receive(:new).with(application1).and_return(applicant)
+    allow(Views::Overview::Details).to receive(:new).with(application1).and_return(details)
+    allow(Views::Overview::Application).to receive(:new).with(application1).and_return(application_view)
     allow(Views::ApplicationResult).to receive(:new).with(application1).and_return(result)
-    allow(Views::ProcessedData).to receive(:new).with(application1).and_return(summary)
+    allow(Views::ProcessedData).to receive(:new).with(application1).and_return(processing_details)
   end
 
   describe 'GET #index' do
@@ -109,8 +113,16 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       expect(assigns(:application)).to eql(application1)
     end
 
-    it 'assigns the ApplicationOverview view model' do
-      expect(assigns(:overview)).to eql(overview)
+    it 'assigns the Applicant view model' do
+      expect(assigns(:applicant)).to eql(applicant)
+    end
+
+    it 'assigns the Details view model' do
+      expect(assigns(:details)).to eql(details)
+    end
+
+    it 'assigns the Application view model' do
+      expect(assigns(:application_view)).to eql(application_view)
     end
 
     it 'assigns the ApplicationResult view model' do
@@ -118,7 +130,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     end
 
     it 'assigns the ProcessedData view model' do
-      expect(assigns(:summary)).to eql(summary)
+      expect(assigns(:processing_details)).to eql(processing_details)
     end
   end
 end

@@ -1,9 +1,11 @@
 module ProcessedViewsHelper
   def assign_views
     @application = application
-    @overview = Views::ApplicationOverview.new(application)
+    @applicant = Views::Overview::Applicant.new(application)
+    @details = Views::Overview::Details.new(application)
+    @application_view = Views::Overview::Application.new(application)
     @result = Views::ApplicationResult.new(application)
-    @summary = Views::ProcessedData.new(application)
+    @processing_details = Views::ProcessedData.new(application)
   end
 
   def paginate(query)
