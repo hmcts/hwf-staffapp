@@ -416,12 +416,12 @@ RSpec.describe Applications::ProcessController, type: :controller do
         expect(assigns(:application)).to eql(application)
       end
 
-      it 'assigns result' do
-        expect(assigns(:result)).to be_a_kind_of(Views::ProcessedApplicationResult)
+      it 'assigns applicant' do
+        expect(assigns(:applicant)).to be_a_kind_of(Views::Overview::Applicant)
       end
 
-      it 'assigns overview' do
-        expect(assigns(:overview)).to be_a_kind_of(Views::ApplicationOverview)
+      it 'assigns details' do
+        expect(assigns(:details)).to be_a_kind_of(Views::Overview::Details)
       end
 
       it 'assigns savings' do
