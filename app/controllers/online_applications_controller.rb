@@ -23,7 +23,7 @@ class OnlineApplicationsController < ApplicationController
 
   def show
     authorize online_application
-    @overview = Views::ApplicationOverview.new(online_application)
+    build_sections
   end
 
   def complete
@@ -45,6 +45,12 @@ class OnlineApplicationsController < ApplicationController
 
   def online_application
     @online_application ||= OnlineApplication.find(params[:id])
+  end
+
+  def build_sections
+    @applicant = Views::Overview::Applicant.new(online_application)
+    @application_view = Views::Overview::Application.new(online_application)
+    @details = Views::Overview::Details.new(online_application)
   end
 
   def redirect_to_homepage
