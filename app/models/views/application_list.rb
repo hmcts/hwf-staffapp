@@ -2,10 +2,15 @@ module Views
   class ApplicationList
     include ActionView::Helpers::NumberHelper
 
-    attr_reader :application
+    attr_reader :application, :evidence_or_part_payment
 
-    def initialize(application)
-      @application = application
+    def initialize(calling_object)
+      if calling_object.is_a?(Application)
+        @application = calling_object
+      else
+        @evidence_or_part_payment = calling_object
+        @application = calling_object.application
+      end
     end
 
     def id
