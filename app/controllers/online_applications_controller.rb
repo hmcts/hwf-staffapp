@@ -1,6 +1,8 @@
 class OnlineApplicationsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_homepage
 
+  include SectionViewsHelper
+
   def edit
     authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
@@ -45,12 +47,6 @@ class OnlineApplicationsController < ApplicationController
 
   def online_application
     @online_application ||= OnlineApplication.find(params[:id])
-  end
-
-  def build_sections
-    @applicant = Views::Overview::Applicant.new(online_application)
-    @application_view = Views::Overview::Application.new(online_application)
-    @details = Views::Overview::Details.new(online_application)
   end
 
   def redirect_to_homepage

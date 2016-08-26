@@ -1,6 +1,8 @@
 class PartPaymentsController < ApplicationController
   before_action :authorise_part_payment_update, except: :show
 
+  include SectionViewsHelper
+
   def show
     authorize part_payment
 
@@ -68,12 +70,6 @@ class PartPaymentsController < ApplicationController
 
   def processing_details
     @processing_details = Views::ProcessedData.new(part_payment.application)
-  end
-
-  def build_sections
-    @applicant = Views::Overview::Applicant.new(part_payment.application)
-    @application_view = Views::Overview::Application.new(part_payment.application)
-    @details = Views::Overview::Details.new(part_payment.application)
   end
 
   def accuracy_params

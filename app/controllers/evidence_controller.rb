@@ -1,6 +1,8 @@
 class EvidenceController < ApplicationController
   before_action :authorise_evidence_check_update, except: :show
 
+  include SectionViewsHelper
+
   def show
     authorize evidence
 
@@ -84,14 +86,12 @@ class EvidenceController < ApplicationController
     @evidence ||= EvidenceCheck.find(params[:id])
   end
 
-  def processing_details
-    @processing_details = Views::ProcessedData.new(evidence.application)
+  def application
+    evidence.application
   end
 
-  def build_sections
-    @applicant = Views::Overview::Applicant.new(evidence.application)
-    @application_view = Views::Overview::Application.new(evidence.application)
-    @details = Views::Overview::Details.new(evidence.application)
+  def processing_details
+    @processing_details = Views::ProcessedData.new(evidence.application)
   end
 
   def evidence_view
