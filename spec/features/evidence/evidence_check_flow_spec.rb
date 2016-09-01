@@ -15,7 +15,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   before { login_as user }
 
   context 'when on "Evidence show" page' do
-    before { visit evidence_show_path(id: evidence.id) }
+    before { visit evidence_path(id: evidence.id) }
     headings = ['Waiting for evidence',
                 'Process evidence',
                 'Processing details',
@@ -36,7 +36,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Evidence accuracy" page' do
-    before { visit evidence_accuracy_path(id: evidence.id) }
+    before { visit accuracy_evidence_path(id: evidence.id) }
 
     context 'when the page is submitted without anything filled in' do
       before { click_button 'Next' }
@@ -69,7 +69,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Income" page' do
-    before { visit evidence_income_path(id: evidence.id) }
+    before { visit income_evidence_path(id: evidence.id) }
 
     it 'fill in the income form takes me to the next page' do
       expect(page).to have_content 'Total monthly income from evidence'
@@ -79,7 +79,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Income result" page' do
-    before { visit evidence_result_path(id: evidence.id) }
+    before { visit result_evidence_path(id: evidence.id) }
 
     it 'displays the title of the page' do
       expect(page).to have_content('Income')
@@ -125,7 +125,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "summary" page' do
-    before { visit evidence_summary_path(id: evidence.id) }
+    before { visit summary_evidence_path(id: evidence.id) }
 
     context 'for an unsuccessful outcome' do
       let(:evidence) { create :evidence_check_incorrect, application: application }
@@ -196,12 +196,12 @@ RSpec.feature 'Evidence check flow', type: :feature do
       fields.each do |title, value|
         expect(page).to have_content("#{title}#{value}")
       end
-      expect(page).to have_link('Change application evidence', href: evidence_accuracy_path(evidence))
+      expect(page).to have_link('Change application evidence', href: accuracy_evidence_path(evidence))
     end
   end
 
   context 'when on "Evidence confirmation" page' do
-    before { visit evidence_confirmation_path(id: evidence.id) }
+    before { visit confirmation_evidence_path(id: evidence.id) }
 
     it { expect(page).to have_content 'Processing complete' }
 
@@ -209,7 +209,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       let(:outcome) { 'full' }
       before do
         Timecop.freeze(Date.new(2016, 8, 1)) {
-          visit evidence_confirmation_path(id: evidence.id)
+          visit confirmation_evidence_path(id: evidence.id)
         }
       end
 

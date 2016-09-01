@@ -574,7 +574,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(evidence_show_path(evidence)) }
+      it { is_expected.to redirect_to(evidence_path(evidence)) }
 
       it 'is expected to set the flash message' do
         expect(flash[:alert]).to eql 'This application is waiting for evidence. You can’t edit any details.'

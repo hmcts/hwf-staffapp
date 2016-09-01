@@ -130,7 +130,7 @@ RSpec.describe ApplicationSearch do
           let(:application) { build_stubbed(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
 
           it 'returns the evidence check url' do
-            is_expected.to eql(evidence_show_path(evidence_check))
+            is_expected.to eql(evidence_path(evidence_check))
           end
         end
 
