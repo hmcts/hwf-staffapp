@@ -1,12 +1,1 @@
-= form_for @evidence, url: :summary_save_evidence, method: :post, html: { autocomplete: 'off' } do |f|
-  header
-    h2.heading-xlarge Check details
-
-  - change_evidence_link = [ 'Change application evidence', accuracy_evidence_path(@evidence) ]
-  =build_section 'Evidence', @evidence_view, %w[correct incorrect_reason income], *change_evidence_link
-  =build_section_with_defaults 'Personal details', @applicant
-  =build_section_with_defaults 'Application details', @details
-  =build_section 'Result', @application_view, %w[savings_result income_result]
-
-  =render(partial: 'shared/remission_type', locals: { source: @result })
-  = f.submit 'Complete processing', :class => 'button primary large'
+=render(partial: 'shared/part_payment_evidence/evidence_summary', layout: 'shared/part_payment_evidence/summary', locals: { source: @evidence, type: 'evidence' })

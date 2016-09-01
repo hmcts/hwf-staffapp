@@ -1,0 +1,11 @@
+header
+  h2.heading-xlarge Check details
+
+=content_for(:edit)
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Result', @application_view, %w[savings_result income_result]
+= content_for :result
+
+= form_for source, url: "summary_save_#{type}".to_sym, method: :post, html: { autocomplete: 'off' } do |f|
+  = f.submit 'Complete processing', :class => 'button primary large'

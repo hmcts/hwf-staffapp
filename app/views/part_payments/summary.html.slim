@@ -1,14 +1,1 @@
-header
-  h2.heading-xlarge Check details
-
-- change_link = ['Change part-payment', accuracy_part_payment_path(@part_payment)]
-=build_section 'Part-payment', @result, %w[part_payment reason], *change_link
-=build_section_with_defaults 'Personal details', @applicant
-=build_section_with_defaults 'Application details', @details
-=build_section 'Result', @application_view, %w[savings_result income_result]
-
-#result.callout class=@result.callout
-  h3.heading-large =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
-
-= form_for @part_payment, url: :summary_save_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Complete processing', :class => 'button primary large'
+= render(partial: 'shared/part_payment_evidence/part_payment_summary', layout: 'shared/part_payment_evidence/summary', locals: { source: @part_payment, type: 'part_payment' })

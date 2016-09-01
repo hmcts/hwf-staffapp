@@ -1,0 +1,7 @@
+-content_for :edit
+  - change_link = ['Change part-payment', accuracy_part_payment_path(@part_payment)]
+  =build_section 'Part-payment', @result, %w[part_payment reason], *change_link
+
+-content_for :result
+  #result.callout class=@result.callout
+    h3.heading-large =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
