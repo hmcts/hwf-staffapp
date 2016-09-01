@@ -3,12 +3,12 @@ header
 
 .panel
   h4.heading-medium.util_mt-0 Process evidence for #{@evidence.application.reference}
-  = link_to 'Start now', evidence_accuracy_path(@evidence), class: 'button util_mb-medium'
+  = link_to 'Start now', accuracy_evidence_path(@evidence), class: 'button util_mb-medium'
   details
     summary
       span.summary.primary What to do if the evidence can’t be processed
     div.panel-indent.util_mb-0.util_mt-0
       p Evidence needs to arrive by <strong>#{@evidence.expires_at.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process evidence, choose ‘Return application’ to remove it from ‘Waiting for evidence' and return everything to the applicant.
-      = link_to 'Return application', evidence_return_letter_path(@evidence), class: 'button alternative small util_mb-0'
+      = link_to 'Return application', return_letter_evidence_path(@evidence), class: 'button alternative small util_mb-0'
 
 =render(partial: 'shared/part_payment_evidence/display')

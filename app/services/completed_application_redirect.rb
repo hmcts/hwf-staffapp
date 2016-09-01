@@ -12,7 +12,7 @@ class CompletedApplicationRedirect
     when 'waiting_for_part_payment'
       part_payment_path(@application.part_payment)
     when 'waiting_for_evidence'
-      evidence_show_path(@application.evidence_check)
+      evidence_path(@application.evidence_check)
     when 'deleted'
       deleted_application_path(@application)
     end
