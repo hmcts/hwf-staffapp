@@ -1,5 +1,8 @@
 header
-  h2.heading-xlarge =t("#{state}_applications.detail.title")
+  h2.heading-xlarge
+    =@application.reference
+    |&nbsp;-&nbsp;
+    =t("#{state}_applications.detail.title")
 
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details

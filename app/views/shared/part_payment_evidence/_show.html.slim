@@ -1,8 +1,8 @@
 header
-  h2.heading-xlarge Waiting for #{type}
+  h2.heading-xlarge #{source.application.reference} - Waiting for #{type}
 
 .panel
-  h4.heading-medium.util_mt-0 Process #{type} for #{source.application.reference}
+  h4.heading-medium.util_mt-0 Process #{type}
   = link_to 'Start now', send("accuracy_#{type.underscore}_path", source), class: 'button util_mb-medium'
   details
     summary
