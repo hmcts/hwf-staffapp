@@ -416,12 +416,12 @@ RSpec.describe Applications::ProcessController, type: :controller do
         expect(assigns(:application)).to eql(application)
       end
 
-      it 'assigns result' do
-        expect(assigns(:result)).to be_a_kind_of(Views::ProcessedApplicationResult)
+      it 'assigns applicant' do
+        expect(assigns(:applicant)).to be_a_kind_of(Views::Overview::Applicant)
       end
 
-      it 'assigns overview' do
-        expect(assigns(:overview)).to be_a_kind_of(Views::ApplicationOverview)
+      it 'assigns details' do
+        expect(assigns(:details)).to be_a_kind_of(Views::Overview::Details)
       end
 
       it 'assigns savings' do
@@ -574,7 +574,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(evidence_show_path(evidence)) }
+      it { is_expected.to redirect_to(evidence_path(evidence)) }
 
       it 'is expected to set the flash message' do
         expect(flash[:alert]).to eql 'This application is waiting for evidence. You can’t edit any details.'

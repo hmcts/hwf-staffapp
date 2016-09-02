@@ -49,18 +49,20 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'evidence/:id', to: 'evidence#show', as: :evidence_show
-  get 'evidence/:id/accuracy', to: 'evidence#accuracy', as: :evidence_accuracy
-  post 'evidence/:id/accuracy_save', to: 'evidence#accuracy_save', as: :evidence_accuracy_save
-  get 'evidence/:id/income', to: 'evidence#income', as: :evidence_income
-  post 'evidence/:id/income_save', to: 'evidence#income_save', as: :evidence_income_save
-  get 'evidence/:id/result', to: 'evidence#result', as: :evidence_result
-  get 'evidence/:id/summary', to: 'evidence#summary', as: :evidence_summary
-  post 'evidence/:id/summary', to: 'evidence#summary_save', as: :evidence_summary_save
-  get 'evidence/:id/confirmation', to: 'evidence#confirmation', as: :evidence_confirmation
-  get 'evidence/:id/return_letter', to: 'evidence#return_letter', as: :evidence_return_letter
-  # rubocop:disable Metrics/LineLength
-  post 'evidence/:id/return_application', to: 'evidence#return_application', as: :evidence_return_application
+  resources :evidence, only: :show do
+    member do
+      get :accuracy
+      post :accuracy_save
+      get :income
+      post :income_save
+      get :result
+      get :summary
+      post :summary_save
+      get :confirmation
+      get :return_letter
+      post :return_application
+    end
+  end
 
   resources :evidence_checks, only: :show
 

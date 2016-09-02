@@ -49,13 +49,13 @@ class HomeController < ApplicationController
 
   def assign_waiting_for_evidence
     @waiting_for_evidence = waiting_for_evidence.map do |application|
-      Views::ProcessingDetails.new(application.evidence_check)
+      Views::ApplicationList.new(application.evidence_check)
     end
   end
 
   def assign_waiting_for_part_payment
     @waiting_for_part_payment = waiting_for_part_payment.map do |application|
-      Views::ProcessingDetails.new(application.part_payment)
+      Views::ApplicationList.new(application.part_payment)
     end
   end
 

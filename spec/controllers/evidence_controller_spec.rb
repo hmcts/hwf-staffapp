@@ -38,8 +38,8 @@ RSpec.describe EvidenceController, type: :controller do
         expect(response).to render_template('show')
       end
 
-      it 'assigns the overview model' do
-        expect(assigns(:overview)).to be_a(Views::ApplicationOverview)
+      it 'assigns the details model' do
+        expect(assigns(:details)).to be_a(Views::Overview::Details)
       end
     end
   end
@@ -112,14 +112,14 @@ RSpec.describe EvidenceController, type: :controller do
           let(:form) { double(correct: true) }
 
           it 'redirects to the income page' do
-            expect(response).to redirect_to(evidence_income_path(evidence))
+            expect(response).to redirect_to(income_evidence_path(evidence))
           end
         end
         context 'when the form evidence is not correct' do
           let(:form) { double(correct: false) }
 
           it 'redirects to the income page' do
-            expect(response).to redirect_to(evidence_summary_path(evidence))
+            expect(response).to redirect_to(summary_evidence_path(evidence))
           end
         end
       end
@@ -195,7 +195,7 @@ RSpec.describe EvidenceController, type: :controller do
       context 'when the form is filled in correctly' do
         let(:form_save) { true }
         it 'returns redirects to the result page' do
-          expect(response).to redirect_to(evidence_result_path)
+          expect(response).to redirect_to(result_evidence_path)
         end
 
         it 'returns the correct status code' do
@@ -282,7 +282,7 @@ RSpec.describe EvidenceController, type: :controller do
       end
 
       it 'redirects to the correct page' do
-        expect(response).to redirect_to(evidence_confirmation_path)
+        expect(response).to redirect_to(confirmation_evidence_path)
       end
 
       it 'returns the correct status code' do

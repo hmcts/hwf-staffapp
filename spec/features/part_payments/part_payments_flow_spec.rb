@@ -18,7 +18,7 @@ RSpec.feature 'Part Payments flow', type: :feature do
 
     headings = ['Waiting for part-payment',
                 'Process part-payment',
-                'Processing details',
+                'Processing summary',
                 'Personal details',
                 'Application details',
                 'Result']

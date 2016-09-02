@@ -26,7 +26,7 @@ describe CompletedApplicationRedirect do
       let(:application) { create :application, :waiting_for_evidence_state, office: user.office }
       let!(:evidence) { create :evidence_check, application: application }
 
-      it { is_expected.to eql evidence_show_path(evidence) }
+      it { is_expected.to eql evidence_path(evidence) }
     end
 
     describe 'when initialised with a deleted application' do

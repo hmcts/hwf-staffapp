@@ -1,11 +1,13 @@
 class EvidenceController < ApplicationController
   before_action :authorise_evidence_check_update, except: :show
 
+  include SectionViewsHelper
+
   def show
     authorize evidence
 
     processing_details
-    application_overview
+    build_sections
   end
 
   def accuracy
@@ -32,7 +34,7 @@ class EvidenceController < ApplicationController
     @form.update_attributes(income_params)
 
     if @form.save
-      redirect_to evidence_result_path
+      redirect_to result_evidence_path
     else
       render :income
     end
@@ -44,14 +46,14 @@ class EvidenceController < ApplicationController
 
   def summary
     evidence_view
-    application_overview
+    build_sections
     application_result
   end
 
   def summary_save
     ResolverService.new(evidence, current_user).complete
     process_evidence_check_flag
-    redirect_to evidence_confirmation_path
+    redirect_to confirmation_evidence_path
   end
 
   def confirmation
@@ -59,7 +61,7 @@ class EvidenceController < ApplicationController
   end
 
   def return_letter
-    application_overview
+    build_sections
   end
 
   def return_application
@@ -84,12 +86,12 @@ class EvidenceController < ApplicationController
     @evidence ||= EvidenceCheck.find(params[:id])
   end
 
-  def processing_details
-    @processing_details = Views::ProcessingDetails.new(evidence)
+  def application
+    evidence.application
   end
 
-  def application_overview
-    @overview = Views::ApplicationOverview.new(evidence.application)
+  def processing_details
+    @processing_details = Views::ProcessedData.new(evidence.application)
   end
 
   def evidence_view
@@ -102,9 +104,9 @@ class EvidenceController < ApplicationController
 
   def redirect_after_accuracy_save
     if @form.correct
-      redirect_to evidence_income_path
+      redirect_to income_evidence_path
     else
-      redirect_to evidence_summary_path
+      redirect_to summary_evidence_path
     end
   end
 

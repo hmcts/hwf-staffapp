@@ -1,0 +1,9 @@
+h4.heading-medium.util_mt-0 Processing summary
+table.processed_summary.util_mb-large
+  caption.visuallyhidden Application processing summary
+  tbody
+    =render(partial: 'shared/processed_summary_row', locals: { title: 'Application processed', source: source.application_processed })
+    =render(partial: 'shared/processed_summary_row', locals: { title: 'Application granted', source: source.application_override })
+    =render(partial: 'shared/processed_summary_row', locals: { title: 'Application deleted', source: source.application_deleted })
+    =render(partial: 'shared/processed_summary_row', locals: { title: 'Evidence processed', source: source.evidence_check_processed })
+    =render(partial: 'shared/processed_summary_row', locals: { title: 'Part-payment processed', source: source.part_payment_processed })

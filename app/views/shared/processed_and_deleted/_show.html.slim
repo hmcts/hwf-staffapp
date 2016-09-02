@@ -1,42 +1,15 @@
 header
-  h2.heading-xlarge =t("#{state}_applications.detail.title")
+  h2.heading-xlarge
+    =@application.reference
+    |&nbsp;-&nbsp;
+    =t("#{state}_applications.detail.title")
 
-=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status number_of_children total_monthly_income]
-=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason reference]
-=build_section 'Result', @overview, @overview.savings_investment_params
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Benefits', @application_view, %w[benefits]
+=build_section 'Income', @application_view, %w[number_of_children total_monthly_income]
+=build_section 'Result', @application_view, %w[benefits_result savings_result income_result]
 
 =render(partial: 'shared/remission_type', locals: { source: @result })
 
-h4.heading-medium.util_mt-0 Processing summary
-table.processed_summary.util_mb-large
-  caption.visuallyhidden Application processing summary
-  tbody
-    tr
-      th scope="row" Application processed
-      td =@summary.application_processed[:on]
-      td =@summary.application_processed[:by]
-      td =@summary.application_processed[:text]
-    -if @summary.application_override
-      tr
-        th scope="row" Application granted
-        td =@summary.application_override[:on]
-        td =@summary.application_override[:by]
-        td =@summary.application_override[:text]
-    -if @summary.application_deleted
-      tr
-        th scope="row" Application deleted
-        td =@summary.application_deleted[:on]
-        td =@summary.application_deleted[:by]
-        td =@summary.application_deleted[:text]
-    -if @summary.evidence_check_processed
-      tr
-        th scope="row" Evidence processed
-        td =@summary.evidence_check_processed[:on]
-        td =@summary.evidence_check_processed[:by]
-        td =@summary.evidence_check_processed[:text]
-    -if @summary.part_payment_processed
-      tr
-        th scope="row" Part-payment processed
-        td =@summary.part_payment_processed[:on]
-        td =@summary.part_payment_processed[:by]
-        td =@summary.part_payment_processed[:text]
+=render(partial: 'shared/processed_summary', locals: { source: @processing_details })

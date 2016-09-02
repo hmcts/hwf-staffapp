@@ -223,19 +223,19 @@ en-GB:
         income_passed?: Income
         income_part: 'Waiting for part-payment'
         income_evidence: 'Waiting for evidence'
-      views/processing_details:
-        reference: Reference
-        processed_by: Processed by
-        processed_on: Date processed
-        expires: Expires
-        deleted_reason: Deleted reason
-        deleted_by: Deleted by
-        deleted_on: Date deleted
-      views/application_overview:
+      views/overview/application:
+        savings: Savings and investments
+        benefits: Receiving eligible benefits
+        income_result: Income
+        savings_result: Savings
+        number_of_children: Number of children
+        total_monthly_income: Total monthly income
+      views/overview/applicant:
         full_name: Full name
         date_of_birth: Date of birth
         ni_number: National Insurance number
         status: Status
+      views/overview/details:
         fee: Fee
         jurisdiction: Jurisdiction
         date_received: Date received
@@ -247,13 +247,6 @@ en-GB:
         refund: This is a refund case
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
-        savings: Savings and investments
-        benefits: Benefits
-        income: Income
-        number_of_children: Number of children
-        total_monthly_income: Total monthly income
-        processed_by: Processed by
-        reference: Reference
       views/evidence:
         correct: Correct
         incorrect_reason: Reason

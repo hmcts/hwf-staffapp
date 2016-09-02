@@ -1,12 +1,1 @@
-header
-  h2.heading-xlarge Check details
-
-=build_section 'Personal details', @overview, %w[full_name date_of_birth ni_number status]
-=build_section 'Application details', @overview, %w[fee jurisdiction date_received form_name]
-=build_section 'Result', @result, %w[savings income part_payment reason]
-
-#result.callout class=@result.callout
-  h3.heading-large =t("part_payment.result.#{@result.callout}", amount_to_pay: @result.amount_to_pay)
-
-= form_for @part_payment, url: :summary_save_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Complete processing', :class => 'button primary large'
+= render(partial: 'shared/part_payment_evidence/part_payment_summary', layout: 'shared/part_payment_evidence/summary', locals: { source: @part_payment, type: 'part_payment' })
