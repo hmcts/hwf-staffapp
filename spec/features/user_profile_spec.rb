@@ -35,10 +35,20 @@ RSpec.feature 'User profile', type: :feature do
     end
 
     context 'password edit' do
-      scenario 'allow users to change their password' do
-        visit edit_user_registration_path user.id
-        expect(page).to have_text 'Current password'
-        expect(page).not_to have_text 'Pundit::AuthorizationNotPerformedError'
+      context 'after viewing the password change page' do
+        before do
+          visit edit_user_registration_path user.id
+          fill_in :user_current_password, with: 'password'
+          fill_in :user_password, with: 'password1'
+          fill_in :user_password_confirmation, with: 'password1'
+        end
+
+        scenario 'allow users to change their password' do
+          expect(page).to have_text 'Current password'
+          expect(page).not_to have_text 'Pundit::AuthorizationNotPerformedError'
+          click_button 'Update password'
+          expect(page).to have_text 'Your password was updated successfully'
+        end
       end
 
       scenario 'prevent users to edit somebody elses password' do
@@ -59,6 +69,19 @@ RSpec.feature 'User profile', type: :feature do
 
       scenario 'their role should not be editable' do
         expect(page).not_to have_select('user[role]', options: ['User', 'Manager'])
+      end
+    end
+
+    context 'update their profile' do
+      let(:new_name) { 'New user name' }
+      before(:each) do
+        visit edit_user_path user.id
+        fill_in 'user_name', with: new_name
+        click_button 'Save changes'
+      end
+
+      scenario 'their name has updated' do
+        expect(page).to have_text new_name
       end
     end
   end
