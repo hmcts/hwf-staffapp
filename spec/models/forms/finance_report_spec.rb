@@ -31,6 +31,12 @@ RSpec.describe Forms::FinanceReport do
       end
     end
 
+    describe '#i18n_scope' do
+      subject { report.i18n_scope }
+
+      it { is_expected.to eq :'activemodel.attributes.forms/finance_report' }
+    end
+
     describe '#start_date' do
       subject { report.start_date }
 
