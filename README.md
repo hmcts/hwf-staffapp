@@ -1,5 +1,5 @@
 # Fee Remissions - Staff App
-[![Code Climate](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp) [![Test Coverage](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp) [![Build Status](https://travis-ci.org/ministryofjustice/fr-staffapp.svg?branch=master)](https://travis-ci.org/ministryofjustice/fr-staffapp) [![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/fr-staffapp.svg)](https://gemnasium.com/github.com/ministryofjustice/fr-staffapp)
+[![Code Climate](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp) [![Test Coverage](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp/coverage?sort=covered_percent&sort_direction=asc) [![Build Status](https://travis-ci.org/ministryofjustice/fr-staffapp.svg?branch=master)](https://travis-ci.org/ministryofjustice/fr-staffapp) [![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/fr-staffapp.svg)](https://gemnasium.com/github.com/ministryofjustice/fr-staffapp)
 
 ## Overview
 

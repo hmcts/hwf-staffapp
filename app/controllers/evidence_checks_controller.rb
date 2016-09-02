@@ -11,8 +11,4 @@ class EvidenceChecksController < ApplicationController
   def evidence_check
     @evidence_check ||= EvidenceCheck.find(params[:id])
   end
-
-  def render_not_found
-    render nothing: true, status: 404
-  end
 end
