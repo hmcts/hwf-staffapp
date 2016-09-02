@@ -61,5 +61,18 @@ RSpec.feature 'User profile', type: :feature do
         expect(page).not_to have_select('user[role]', options: ['User', 'Manager'])
       end
     end
+
+    context 'update their profile' do
+      let(:new_name) { 'New user name' }
+      before(:each) do
+        visit edit_user_path user.id
+        fill_in 'user_name', with: new_name
+        click_button 'Save changes'
+      end
+
+      scenario 'their name has updated' do
+        expect(page).to have_text new_name
+      end
+    end
   end
 end
