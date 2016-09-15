@@ -46,18 +46,21 @@ module Views
     end
 
     def emergency
-      scope = 'emergency.status'
-      status = @application.detail.emergency_reason.present?.to_s
-
-      I18n.t(status, scope: scope)
+      convert_tick_nil(@application.detail.emergency_reason.present?.to_s)
     end
 
     def part_payment?
-      @application.part_payment.present?
+      convert_tick_nil(@application.part_payment.present?)
     end
 
     def evidence_check?
-      @application.evidence_check.present?
+      convert_tick_nil(@application.evidence_check.present?)
+    end
+
+    private
+
+    def convert_tick_nil(value)
+      I18n.t(value.to_s, scope: 'convert_tick_nil')
     end
   end
 end

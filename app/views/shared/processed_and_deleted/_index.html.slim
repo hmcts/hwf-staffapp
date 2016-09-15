@@ -25,8 +25,8 @@ header
           td= application.processed_on
           td= application.form_name
           td= application.fee
-          td =t(application.evidence_check?.to_s, scope: 'convert_tick_nil')
-          td =t(application.part_payment?.to_s, scope: 'convert_tick_nil')
+          td=application.evidence_check?
+          td=application.part_payment?
           td= application.emergency
   = render('shared/processed_and_deleted/per_page_display')
 

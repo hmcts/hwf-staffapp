@@ -111,7 +111,7 @@ RSpec.describe Views::ApplicationList do
         let(:emergency_reason) { 'some reason' }
 
         it 'returns Yes' do
-          is_expected.to eql 'Yes'
+          is_expected.to eql '✓'
         end
       end
     end
@@ -125,13 +125,13 @@ RSpec.describe Views::ApplicationList do
     describe '#part_payment?' do
       subject { view.part_payment? }
 
-      it { is_expected.to eq false }
+      it { is_expected.to eq '' }
     end
 
     describe '#evidence_check?' do
       subject { view.evidence_check? }
 
-      it { is_expected.to eq false }
+      it { is_expected.to eq '' }
     end
   end
 
@@ -144,7 +144,7 @@ RSpec.describe Views::ApplicationList do
     describe '#evidence_check?' do
       subject { view.evidence_check? }
 
-      it { is_expected.to eq true }
+      it { is_expected.to eq '✓' }
     end
   end
 
@@ -250,8 +250,8 @@ RSpec.describe Views::ApplicationList do
       context 'when emergency reason is set' do
         let(:emergency_reason) { 'some reason' }
 
-        it 'returns Yes' do
-          is_expected.to eql 'Yes'
+        it 'returns ✓' do
+          is_expected.to eql '✓'
         end
       end
     end
@@ -265,7 +265,7 @@ RSpec.describe Views::ApplicationList do
     describe '#part_payment' do
       subject { view.part_payment? }
 
-      it { is_expected.to eq true }
+      it { is_expected.to eq '✓' }
     end
   end
 end
