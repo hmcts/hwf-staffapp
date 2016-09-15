@@ -28,6 +28,7 @@ en-GB:
       processed_on: Date processed
       form_name: Form
       fee: Fee
+      part_payment: Part- payment
       emergency: Emergency
     index:
       title: Processed applications
