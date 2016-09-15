@@ -57,6 +57,10 @@ module Views
       convert_tick_nil(@application.evidence_check.present?)
     end
 
+    def paper_application?
+      convert_tick_nil(@application.online_application.nil?)
+    end
+
     private
 
     def convert_tick_nil(value)

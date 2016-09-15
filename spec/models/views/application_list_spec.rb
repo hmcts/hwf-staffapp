@@ -133,6 +133,25 @@ RSpec.describe Views::ApplicationList do
 
       it { is_expected.to eq '' }
     end
+
+    describe '#paper_application?' do
+      subject { view.paper_application? }
+
+      it { is_expected.to eq '✓' }
+    end
+  end
+
+  context 'when initialized with an application that was converted from an online_application' do
+    let!(:online_application) { create :online_application, :completed, :with_reference }
+    let(:application) { build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at, online_application: online_application) }
+
+    subject(:view) { described_class.new(application) }
+
+    describe '#paper_application?' do
+      subject { view.paper_application? }
+
+      it { is_expected.to eq '' }
+    end
   end
 
   context 'when initialized with an evidence_check' do
