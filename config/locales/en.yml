@@ -44,6 +44,7 @@ en-GB:
     status:
       :true: 'Yes'
       :false: ''
+
   benefit_override:
     errors:
       missing_details_html: |
