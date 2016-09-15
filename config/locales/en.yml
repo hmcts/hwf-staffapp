@@ -6,6 +6,9 @@ en-GB:
   convert_boolean:
     :true: 'Yes'
     :false: 'No'
+  convert_tick_nil:
+    :true: '✓'
+    :false: ''
   convert_pass_fail:
     'true': '✓ Passed'
     'false': '✗ Failed'
