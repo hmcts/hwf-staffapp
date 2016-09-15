@@ -121,6 +121,31 @@ RSpec.describe Views::ApplicationList do
 
       it { is_expected.to be nil }
     end
+
+    describe '#part_payment?' do
+      subject { view.part_payment? }
+
+      it { is_expected.to eq false }
+    end
+
+    describe '#evidence_check?' do
+      subject { view.evidence_check? }
+
+      it { is_expected.to eq false }
+    end
+  end
+
+  context 'when initialized with an evidence_check' do
+    let(:application) { build :application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at }
+    let(:evidence_check) { build :evidence_check, application: application }
+
+    subject(:view) { described_class.new(evidence_check) }
+
+    describe '#evidence_check?' do
+      subject { view.evidence_check? }
+
+      it { is_expected.to eq true }
+    end
   end
 
   context 'when initialized with a part-payment' do
@@ -235,6 +260,12 @@ RSpec.describe Views::ApplicationList do
       subject { view.evidence_or_part_payment }
 
       it { is_expected.to eq part_payment }
+    end
+
+    describe '#part_payment' do
+      subject { view.part_payment? }
+
+      it { is_expected.to eq true }
     end
   end
 end

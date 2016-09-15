@@ -51,5 +51,13 @@ module Views
 
       I18n.t(status, scope: scope)
     end
+
+    def part_payment?
+      @application.part_payment.present?
+    end
+
+    def evidence_check?
+      @application.evidence_check.present?
+    end
   end
 end
