@@ -187,6 +187,7 @@ en-GB:
   remissions:
     full: '✓ Eligible for help with fees'
     part: The applicant must pay %{amount_to_pay} towards the fee
+    paid: The applicant has paid %{amount_to_pay} towards the fee
     none: '✗ &nbsp; Not eligible for help with fees'
     callout: Evidence of income needs to be checked
     return: '✗ &nbsp; Not eligible because %{return_type} not provided'
