@@ -7,12 +7,12 @@ module Views
     end
 
     def result
-      %w[granted full part none return].include?(outcome) ? outcome : 'error'
+      %w[granted full part paid none return].include?(outcome) ? outcome : 'error'
     end
 
     def amount_to_pay
-      if evidence_or_application.amount_to_pay.present?
-        "£#{evidence_or_application.amount_to_pay.round}"
+      if outcome_from.amount_to_pay.present?
+        "£#{outcome_from.amount_to_pay.round}"
       end
     end
 
@@ -34,19 +34,29 @@ module Views
     private
 
     def outcome
-      case evidence_or_application
+      case outcome_from
       when EvidenceCheck
-        evidence_or_application.outcome
+        outcome_from.outcome
       when Application
-        if evidence_or_application.decision_override.present?
-          'granted'
-        else
-          evidence_or_application.outcome
-        end
+        outcome_from_application
       end
     end
 
-    def evidence_or_application
+    def outcome_from_application
+      if @application.decision_override.present?
+        'granted'
+      elsif part_payment_successful
+        'paid'
+      else
+        @application.outcome
+      end
+    end
+
+    def part_payment_successful
+      @application.part_payment && @application.part_payment.correct?
+    end
+
+    def outcome_from
       @application.evidence_check || @application
     end
 
