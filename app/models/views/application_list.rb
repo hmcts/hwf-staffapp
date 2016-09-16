@@ -61,6 +61,14 @@ module Views
       convert_tick_nil(@application.online_application.nil?)
     end
 
+    def other
+      result = []
+      result << 'Emergency' if @application.detail.emergency_reason.present?
+      result << 'Granted' if @application.decision_override.present?
+      result << 'Refund' if @application.detail.refund
+      result.join('<br />')
+    end
+
     private
 
     def convert_tick_nil(value)

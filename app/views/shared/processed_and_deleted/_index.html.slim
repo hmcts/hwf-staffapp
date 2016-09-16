@@ -16,7 +16,7 @@ header
         th =t('processed_applications.table_header.evidence')
         th =t('processed_applications.table_header.part_payment')
         th =t('processed_applications.table_header.paper_application')
-        th =t('processed_applications.table_header.emergency')
+        th =t('processed_applications.table_header.other')
     tbody
       - @applications.each do |application|
         tr
@@ -29,7 +29,7 @@ header
           td= application.evidence_check?
           td= application.part_payment?
           td= application.paper_application?
-          td= application.emergency
+          td= simple_format application.other
   = render('shared/processed_and_deleted/per_page_display')
 
 - else

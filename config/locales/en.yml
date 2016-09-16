@@ -30,6 +30,7 @@ en-GB:
       fee: Fee
       part_payment: Part- payment
       emergency: Emergency
+      other: Other
     index:
       title: Processed applications
       no_applications: There are no processed applications for your office.

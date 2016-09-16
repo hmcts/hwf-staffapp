@@ -4,12 +4,13 @@ RSpec.describe Views::ApplicationList do
   let(:user) { build :user }
   let(:applicant) { build(:applicant) }
   let(:detail) { build(:detail, date_received: '2015-10-01') }
+  let(:override) { nil }
   let(:completed_by) { user }
   let(:completed_at) { Date.new(2015, 10, 02) }
 
   context 'when initialized with an application' do
     let(:application) do
-      build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at)
+      build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at, decision_override: override)
     end
 
     subject(:view) { described_class.new(application) }
@@ -114,6 +115,14 @@ RSpec.describe Views::ApplicationList do
           is_expected.to eql '✓'
         end
       end
+
+      context 'when emergency reason is set' do
+        let(:emergency_reason) { 'some reason' }
+
+        it 'returns Yes' do
+          is_expected.to eql '✓'
+        end
+      end
     end
 
     describe '#@evidence_or_part_payment' do
@@ -138,6 +147,55 @@ RSpec.describe Views::ApplicationList do
       subject { view.paper_application? }
 
       it { is_expected.to eq '✓' }
+    end
+
+    describe '#other' do
+      let(:detail) { build(:detail, emergency_reason: emergency_reason, refund: refund) }
+      let(:emergency_reason) { nil }
+      let(:refund) { nil }
+      let(:granted) { nil }
+
+      subject { view.other }
+
+      context 'when all are empty' do
+        it 'returns empty string' do
+          is_expected.to eql ''
+        end
+      end
+
+      context 'when emergency reason is set' do
+        let(:emergency_reason) { 'some reason' }
+
+        it 'returns Emergency' do
+          is_expected.to eql 'Emergency'
+        end
+      end
+
+      context 'when refund is set' do
+        let(:refund) { true }
+
+        it 'returns Refund' do
+          is_expected.to eql 'Refund'
+        end
+      end
+
+      context 'when the decision was overridden' do
+        let(:override)  { build :decision_override }
+
+        it 'returns Granted' do
+          is_expected.to eql 'Granted'
+        end
+      end
+
+      context 'when multiples are set' do
+        let(:emergency_reason) { 'some reason' }
+        let(:refund) { true }
+
+        it 'returns merges multiple lines' do
+          is_expected.to eql 'Emergency<br />Refund'
+        end
+      end
+
     end
   end
 
