@@ -83,6 +83,13 @@ RSpec.describe Views::ApplicationResult do
 
       include_examples 'result examples', 'application'
     end
+
+    context 'when the application has a completed part-payment' do
+      let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
+      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part' }
+
+      it { is_expected.to eq 'paid' }
+    end
   end
 
   describe '#savings' do
