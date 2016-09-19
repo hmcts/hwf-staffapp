@@ -26,7 +26,7 @@ module Views
     end
 
     def date_received
-      @application.detail.date_received.to_s(:gov_uk_long)
+      @application.detail.date_received.to_s(:gov_uk_short)
     end
 
     def processed_by
@@ -34,7 +34,7 @@ module Views
     end
 
     def processed_on
-      @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+      @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_short])
     end
 
     def form_name
