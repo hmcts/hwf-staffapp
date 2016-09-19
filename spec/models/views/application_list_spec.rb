@@ -35,7 +35,7 @@ RSpec.describe Views::ApplicationList do
 
     describe '#date_received' do
       it 'returns formatted date of application received date' do
-        expect(view.date_received).to eql('1 October 2015')
+        expect(view.date_received).to eql('1 Oct 2015')
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe Views::ApplicationList do
 
       context 'when processed_on is set' do
         it 'returns the date the application was completed' do
-          is_expected.to eql('2 October 2015')
+          is_expected.to eql('2 Oct 2015')
         end
       end
 
@@ -251,7 +251,7 @@ RSpec.describe Views::ApplicationList do
 
     describe '#date_received' do
       it 'returns formatted date of application received date' do
-        expect(view.date_received).to eql('1 October 2015')
+        expect(view.date_received).to eql('1 Oct 2015')
       end
     end
 
@@ -278,7 +278,7 @@ RSpec.describe Views::ApplicationList do
 
       context 'when processed_on is set' do
         it 'returns the date the application was completed' do
-          is_expected.to eql('2 October 2015')
+          is_expected.to eql('2 Oct 2015')
         end
       end
 
