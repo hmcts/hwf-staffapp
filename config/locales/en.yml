@@ -226,6 +226,7 @@ en-GB:
       views/overview/application:
         savings: Savings and investments
         benefits: Receiving eligible benefits
+        benefits_result: Benefits
         income_result: Income
         savings_result: Savings
         number_of_children: Number of children
