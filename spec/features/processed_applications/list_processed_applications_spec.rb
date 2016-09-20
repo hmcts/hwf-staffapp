@@ -15,6 +15,7 @@ RSpec.feature 'List processed applications', type: :feature do
   let!(:application3) { create :application_part_remission }
   let!(:application4) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-07') }
   let!(:application5) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-06') }
+  let!(:part_payment) { create :part_payment, outcome: 'part', correct: true, application: application5 }
 
   scenario 'User lists all processed applications with pagination and in correct order' do
     visit '/'
@@ -56,5 +57,14 @@ RSpec.feature 'List processed applications', type: :feature do
 
     expect(page).to have_content('Processed application')
     expect(page).to have_content("Full name#{application1.applicant.full_name}")
+  end
+
+  scenario 'User displays detail of one processed part-payment application' do
+    visit '/processed_applications'
+    click_link 'Next page'
+    click_link application5.reference
+
+    expect(page).to have_content('Processed application')
+    expect(page).to have_content('The applicant has paid £100 towards the fee')
   end
 end
