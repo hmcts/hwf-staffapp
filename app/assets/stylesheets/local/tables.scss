@@ -4,8 +4,25 @@ table .right {
 
 tr.align-bottom,
 .align-bottom tr {
-  td {
+  th, td {
     vertical-align: bottom;
+  }
+}
+
+tr.align-top,
+.align-top tr {
+  th, td {
+    vertical-align: top;
+  }
+}
+
+td.no-wrap {
+  white-space: nowrap;
+}
+
+table.tight {
+  th, td {
+    padding-right: 10px;
   }
 }
 

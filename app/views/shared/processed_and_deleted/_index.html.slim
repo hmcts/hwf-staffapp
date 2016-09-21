@@ -3,10 +3,10 @@ header
 
 - unless @applications.empty?
   =render('shared/processed_and_deleted/per_page_display')
-  table *{class: "#{state}-applications"}
+  table.tight *{class: "#{state}-applications"}
     caption.visuallyhidden =t("#{state}_applications.index.title")
     thead
-      tr
+      tr.align-top
         th =t('processed_applications.table_header.reference')
         th =t('processed_applications.table_header.applicant')
         th =t('processed_applications.table_header.date_received')
@@ -19,11 +19,11 @@ header
         th =t('processed_applications.table_header.other')
     tbody
       - @applications.each do |application|
-        tr
-          td= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
+        tr.align-top
+          td.no-wrap= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
           td= application.applicant
-          td= application.date_received
-          td= application.processed_on
+          td.no-wrap= application.date_received
+          td.no-wrap= application.processed_on
           td= application.form_name
           td= application.fee
           td= application.paper_application?
