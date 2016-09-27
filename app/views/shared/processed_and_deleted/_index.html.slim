@@ -26,9 +26,9 @@ header
           td.no-wrap= application.processed_on
           td= application.form_name
           td= application.fee
-          td= application.paper_application?
-          td= application.evidence_check?
-          td= application.part_payment?
+          td.text-center= application.paper_application?
+          td.text-center= application.evidence_check?
+          td.text-center= application.part_payment?
           td= application.other.html_safe
   = render('shared/processed_and_deleted/per_page_display')
 
