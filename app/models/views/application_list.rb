@@ -26,7 +26,7 @@ module Views
     end
 
     def date_received
-      @application.detail.date_received.to_s(:gov_uk_long)
+      @application.detail.date_received.to_s(:gov_uk_short)
     end
 
     def processed_by
@@ -34,7 +34,7 @@ module Views
     end
 
     def processed_on
-      @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+      @application.completed_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_short])
     end
 
     def form_name
@@ -46,10 +46,33 @@ module Views
     end
 
     def emergency
-      scope = 'emergency.status'
-      status = @application.detail.emergency_reason.present?.to_s
+      convert_tick_nil(@application.detail.emergency_reason.present?.to_s)
+    end
 
-      I18n.t(status, scope: scope)
+    def part_payment?
+      convert_tick_nil(@application.part_payment.present?)
+    end
+
+    def evidence_check?
+      convert_tick_nil(@application.evidence_check.present?)
+    end
+
+    def paper_application?
+      convert_tick_nil(@application.online_application.nil?)
+    end
+
+    def other
+      result = []
+      result << 'Emergency' if @application.detail.emergency_reason.present?
+      result << 'Granted' if @application.decision_override.present?
+      result << 'Refund' if @application.detail.refund
+      result.join('<br />')
+    end
+
+    private
+
+    def convert_tick_nil(value)
+      I18n.t(value.to_s, scope: 'convert_tick_nil')
     end
   end
 end

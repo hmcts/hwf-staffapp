@@ -3,29 +3,33 @@ header
 
 - unless @applications.empty?
   =render('shared/processed_and_deleted/per_page_display')
-  table *{class: "#{state}-applications"}
+  table.tight *{class: "#{state}-applications"}
     caption.visuallyhidden =t("#{state}_applications.index.title")
     thead
-      tr
+      tr.align-top
         th =t('processed_applications.table_header.reference')
         th =t('processed_applications.table_header.applicant')
         th =t('processed_applications.table_header.date_received')
         th =t('processed_applications.table_header.processed_on')
-        th =t('processed_applications.table_header.processed_by')
         th =t('processed_applications.table_header.form_name')
         th =t('processed_applications.table_header.fee')
-        th =t('processed_applications.table_header.emergency')
+        th =t('processed_applications.table_header.paper_application')
+        th =t('processed_applications.table_header.evidence')
+        th =t('processed_applications.table_header.part_payment')
+        th =t('processed_applications.table_header.other')
     tbody
       - @applications.each do |application|
-        tr
-          td= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
+        tr.align-top
+          td.no-wrap= link_to application.reference, "/#{controller.controller_name}/#{application.id}"
           td= application.applicant
-          td= application.date_received
-          td= application.processed_on
-          td= application.processed_by
+          td.no-wrap= application.date_received
+          td.no-wrap= application.processed_on
           td= application.form_name
           td= application.fee
-          td= application.emergency
+          td.text-center= application.paper_application?
+          td.text-center= application.evidence_check?
+          td.text-center= application.part_payment?
+          td= application.other.html_safe
   = render('shared/processed_and_deleted/per_page_display')
 
 - else

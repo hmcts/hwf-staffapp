@@ -6,6 +6,9 @@ en-GB:
   convert_boolean:
     :true: 'Yes'
     :false: 'No'
+  convert_tick_nil:
+    :true: '✓'
+    :false: ''
   convert_pass_fail:
     'true': '✓ Passed'
     'false': '✗ Failed'
@@ -25,7 +28,9 @@ en-GB:
       processed_on: Date processed
       form_name: Form
       fee: Fee
+      part_payment: Part-payment
       emergency: Emergency
+      other: Other
     index:
       title: Processed applications
       no_applications: There are no processed applications for your office.
@@ -41,6 +46,7 @@ en-GB:
     status:
       :true: 'Yes'
       :false: ''
+
   benefit_override:
     errors:
       missing_details_html: |
