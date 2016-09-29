@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'users/invitations/new', type: :view do
+
+  before do
+    create_list :office, 2
+    assign(:offices, Office.all)
+  end
   context 'as an admin' do
     let(:admin) { FactoryGirl.create :admin_user }
     before(:each) do

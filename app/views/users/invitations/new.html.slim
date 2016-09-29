@@ -21,7 +21,7 @@ header
   -if current_user.admin?
     .form-group
       = f.label(:office_id, 'Office', class: 'form-label')
-      = f.collection_select :office_id, Office.all, :id, :name
+      = f.collection_select :office_id, @offices, :id, :name
   -elsif current_user.manager?
     = f.hidden_field :office_id, value: current_user.office.id
 
