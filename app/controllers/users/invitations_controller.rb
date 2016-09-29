@@ -1,7 +1,7 @@
 module Users
   class InvitationsController < Devise::InvitationsController
     respond_to :html
-    before_action :build_data_lists, only: [:new, :create]
+    before_action :build_invite_lookup_lists, only: [:new, :create]
 
     skip_before_action :authenticate_user!, only: [:edit, :update, :destroy]
     skip_after_action :verify_authorized, only: [:edit, :update, :destroy]
@@ -25,7 +25,7 @@ module Users
 
     private
 
-    def build_data_lists
+    def build_invite_lookup_lists
       @roles = if current_user.admin?
                  User::ROLES
                else
