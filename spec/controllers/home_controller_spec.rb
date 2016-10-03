@@ -33,7 +33,7 @@ RSpec.describe HomeController, type: :controller do
 
         context 'checks for "Server broke connection" messages too' do
           before do
-            build_dwp_checks_with_both_errors
+            build_dwp_checks_with_all_errors
             get :index
           end
 
