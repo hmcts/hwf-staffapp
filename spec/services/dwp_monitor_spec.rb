@@ -21,8 +21,8 @@ describe DwpMonitor do
         it { is_expected.to eql 'warning' }
       end
 
-      context 'checks for "Server broke connection" messages too' do
-        before { build_dwp_checks_with_both_errors }
+      context 'checks for all error messages' do
+        before { build_dwp_checks_with_all_errors }
 
         it { is_expected.to eql 'warning' }
       end

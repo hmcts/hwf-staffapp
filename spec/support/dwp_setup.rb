@@ -6,11 +6,12 @@ module DwpSetup
     create_list :benefit_check, bad_requests, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
   end
 
-  def build_dwp_checks_with_both_errors
+  def build_dwp_checks_with_all_errors
     teardown
-    create_list :benefit_check, 6, :yes_result
-    create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
+    create_list :benefit_check, 12, :yes_result
+    create_list :benefit_check, 4, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
     create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
+    create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
   end
 
   private
