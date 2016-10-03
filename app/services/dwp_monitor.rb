@@ -25,7 +25,7 @@ class DwpMonitor
     # When DWP is offline it returns 400 Bad Request
     # maybe extend to search for x00 as first 3 chars to check for 500 errors too
     total = @checks.count.to_f
-    error_total / total * 100.0
+    (error_total / total) * 100.0
   end
 
   def error_total
