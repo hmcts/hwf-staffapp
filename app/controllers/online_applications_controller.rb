@@ -1,5 +1,6 @@
 class OnlineApplicationsController < ApplicationController
   before_action :authorise_online_application, except: :create
+  before_action :check_completed_redirect
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_homepage
 
   include SectionViewsHelper
@@ -43,6 +44,20 @@ class OnlineApplicationsController < ApplicationController
 
   def authorise_online_application
     authorize online_application
+  end
+
+  def check_completed_redirect
+    set_cache_headers
+    if online_application.processed?
+      flash[:alert] = I18n.t('application_redirect.processed')
+      redirect_to application_confirmation_path(online_application.linked_application)
+    end
+  end
+
+  def set_cache_headers
+    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
   end
 
   def online_application
