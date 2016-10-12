@@ -3,6 +3,7 @@ module Applications
   class ProcessController < ApplicationController
     before_action :authorise_application_update, except: :create
     before_action :check_completed_redirect, except: [:create, :confirmation, :override]
+    before_action :set_cache_headers, only: [:confirmation]
 
     def create
       application = ApplicationBuilder.new(current_user).build
