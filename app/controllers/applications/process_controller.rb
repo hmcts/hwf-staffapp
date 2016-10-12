@@ -156,12 +156,6 @@ module Applications
       end
     end
 
-    def set_cache_headers
-      response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-      response.headers['Pragma'] = 'no-cache'
-      response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
-    end
-
     def form_params(type)
       class_name = "Forms::Application::#{type.to_s.classify}".constantize
       params.require(:application).permit(*class_name.permitted_attributes.keys)
