@@ -44,4 +44,38 @@ RSpec.describe OnlineApplication, type: :model do
       end
     end
   end
+
+  describe '#processed?' do
+
+    subject { online_application.processed? }
+
+    context 'when an application exists that is linked to this online_application' do
+      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+
+      it { is_expected.to eql true }
+    end
+
+    context 'when no application exists that is linked to this online_application' do
+      let(:online_application) { create :online_application, :completed, :with_reference }
+
+      it { is_expected.to eql false }
+    end
+  end
+
+  describe '#linked_application' do
+
+    subject { online_application.linked_application }
+
+    context 'when an application exists that is linked to this online_application' do
+      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+
+      it { is_expected.to eql Application.find_by(reference: online_application.reference) }
+    end
+
+    context 'when no application exists that is linked to this online_application' do
+      let(:online_application) { create :online_application, :completed, :with_reference }
+
+      it { is_expected.to eql nil }
+    end
+  end
 end
