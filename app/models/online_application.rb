@@ -20,4 +20,12 @@ class OnlineApplication < ActiveRecord::Base
   def detail
     self
   end
+
+  def processed?
+    linked_application.present?
+  end
+
+  def linked_application
+    Application.find_by(online_application: self)
+  end
 end

@@ -1,17 +1,17 @@
 class OnlineApplicationsController < ApplicationController
+  before_action :authorise_online_application, except: :create
+  before_action :check_completed_redirect
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_homepage
 
   include SectionViewsHelper
 
   def edit
-    authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
     @form.enable_default_jurisdiction(current_user)
     assign_jurisdictions
   end
 
   def update
-    authorize online_application
     @form = Forms::OnlineApplication.new(online_application)
     @form.update_attributes(update_params)
 
@@ -24,13 +24,10 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def show
-    authorize online_application
     build_sections
   end
 
   def complete
-    authorize online_application
-
     application = ApplicationBuilder.new(current_user).build_from(online_application)
     process_application(application)
 
@@ -43,6 +40,18 @@ class OnlineApplicationsController < ApplicationController
     SavingsPassFailService.new(application.saving).calculate!
     ApplicationCalculation.new(application).run
     ResolverService.new(application, current_user).complete
+  end
+
+  def authorise_online_application
+    authorize online_application
+  end
+
+  def check_completed_redirect
+    set_cache_headers
+    if online_application.processed?
+      flash[:alert] = I18n.t('application_redirect.processed')
+      redirect_to application_confirmation_path(online_application.linked_application)
+    end
   end
 
   def online_application

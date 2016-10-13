@@ -196,4 +196,22 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       end
     end
   end
+
+  context 'after an application is completed' do
+    let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+
+    describe 'when accessing the personal_details view' do
+      before { get :edit, id: online_application.id }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:redirect) }
+
+      it { is_expected.to redirect_to(application_confirmation_path(online_application.linked_application)) }
+
+      it 'is expected to set the flash message' do
+        expect(flash[:alert]).to eql 'This application has been processed. You can’t edit any details.'
+      end
+    end
+  end
 end

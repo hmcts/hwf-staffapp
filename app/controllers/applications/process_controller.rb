@@ -3,6 +3,7 @@ module Applications
   class ProcessController < ApplicationController
     before_action :authorise_application_update, except: :create
     before_action :check_completed_redirect, except: [:create, :confirmation, :override]
+    before_action :set_cache_headers, only: [:confirmation]
 
     def create
       application = ApplicationBuilder.new(current_user).build
@@ -153,12 +154,6 @@ module Applications
         flash[:alert] = redirect_data.flash_message
         redirect_to redirect_data.path
       end
-    end
-
-    def set_cache_headers
-      response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-      response.headers['Pragma'] = 'no-cache'
-      response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
     end
 
     def form_params(type)
