@@ -191,13 +191,13 @@ en-GB:
     remove_warning_html: "%{managers} at %{office} need to unselect these jurisdictions before you can deactivate them."
     deactivate_warning: "Deactivating this jurisdiction will remove it from the list that %{office} can use. It will still be displayed for any applications processed before %{today_date}."
   remissions:
-    full: '✓ Eligible for help with fees'
-    part: The applicant must pay %{amount_to_pay} towards the fee
-    paid: The applicant has paid %{amount_to_pay} towards the fee
-    none: '✗ &nbsp; Not eligible for help with fees'
-    callout: Evidence of income needs to be checked
-    return: '✗ &nbsp; Not eligible because %{return_type} not provided'
-    granted: '✓ Granted help with fees'
+    full_html: '✓ Eligible for help with fees'
+    part_html: 'The applicant must pay %{amount_to_pay} towards the fee'
+    paid_html: 'The applicant has paid %{amount_to_pay} towards the fee'
+    none_html: '✗ &nbsp; Not eligible for help with fees'
+    callout_html: 'Evidence of income needs to be checked'
+    return_html: '✗ &nbsp; Not eligible because %{return_type} not provided'
+    granted_html: '✓ Granted help with fees'
   evidence_check:
     callout: Evidence of income needs to be checked
     page_title: Application waiting for evidence

@@ -11,7 +11,7 @@ h4.heading-medium.util_mt-medium Reference
   = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
-  h3.heading-large = t("remissions.#{@confirm.result}", amount_to_pay: "£#{@application.amount_to_pay}").html_safe
+  h3.heading-large = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 .guidance
   h4.heading-medium =t('evidence_check.next_steps.title')
