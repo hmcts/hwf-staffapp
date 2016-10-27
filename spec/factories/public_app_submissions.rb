@@ -28,6 +28,11 @@ FactoryGirl.define do
     post_contact 'true'
     feedback_opt_in true
 
+    trait :et do
+      form_name 'ET1'
+      case_number 'ET16/12345'
+    end
+
     trait :refund do
       refund true
       date_fee_paid '2016-01-01'

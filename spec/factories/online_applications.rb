@@ -67,6 +67,11 @@ FactoryGirl.define do
       income 450
     end
 
+    trait :et do
+      form_name 'ET1'
+      case_number 'ET16/12345'
+    end
+
     trait :invalid_income do
       benefits false
       income nil
