@@ -21,3 +21,49 @@ en-GB:
       send_to: '2. Deliver this to the court or tribunal dealing with your case (by post or in person)'
       unsuccessful: "3. You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
       warning: 'Your refund will not be processed until you send your reference number to the court or tribunal. '
+    et:
+      subject: 'Application for help with employment tribunal fees'
+      greeting: 'Complete your application for help with fees'
+      steps:
+        one_html: 1. You must email or post this help with fees reference number <strong>%{reference}</strong> along with your employment tribunal claim number to the employment tribunal.
+        one: 1. You must email or post this help with fees reference number %{reference} along with your employment tribunal claim number to the employment tribunal.
+        two: 2. You can copy the details below into an email or print this page.
+        three: 3. Email or send your letter to the tribunal where your case is being heard.
+      letter:
+        one_html: 'Reference: <strong>%{reference}</strong>'
+        one: 'Reference: %{reference}'
+        two: 'I have completed an online application for help with employment tribunal fees.'
+        three_html: 'My employment tribunal claim number is: <strong>%{case_number}</strong>.'
+        three: 'My employment tribunal claim number is: %{case_number}.'
+        four: Yours sincerely,
+        five: '%{full_name}'
+      address:
+        england:
+          heading: 'England & Wales'
+          address:
+            one: 'Employment Tribunal Central Office (England & Wales)'
+            two: PO Box 10218
+            three: Leicester
+            four: LE1 8EG
+        scotland:
+          heading: Scotland
+          address:
+            one: Employment Tribunal Central Office (Scotland)
+            two: Eagle Building
+            three: 215 Bothwell Street
+            four: Glasgow
+            five: G2 7TS
+        email:
+          heading: 'Email your letter to:'
+          note: '(click for preformatted email)'
+          subject: 'Help with Fees'
+        post:
+          heading: 'Post your letter to:'
+
+      next:
+        heading: What happens next?
+        steps:
+          one: 1. Your application for help with fees will be assessed by tribunal staff. This usually takes no longer than 5 working days.
+          two: 2. You'll hear from the tribunal if your application for help with fees is unsuccessful or if they need more information from you.
+          three: 3. If your application for help with fees is successful, you'll hear directly from the tribunal dealing with your case.
+      warning: 'Your case will not proceed until you send your help with fees reference number and employment tribunal claim number to the tribunal.'
