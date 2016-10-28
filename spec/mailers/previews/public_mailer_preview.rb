@@ -11,4 +11,9 @@ class PublicMailerPreview < ActionMailer::Preview
     application = FactoryGirl.build(:online_application, :with_reference, :with_email, :with_refund)
     PublicMailer.submission_confirmation_refund application
   end
+
+  def et_confirmation
+    application = FactoryGirl.build(:online_application, :with_reference, :et, :with_email, :with_refund)
+    PublicMailer.submission_confirmation_et application
+  end
 end
