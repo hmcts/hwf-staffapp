@@ -44,6 +44,13 @@ RSpec.describe Api::SubmissionsController, type: :controller do
         it { is_expected.to eq I18n.t('email.refund.subject') }
       end
 
+      describe 'when email provided and it is an ET application' do
+        let(:submitted) { attributes_for :public_app_submission, :email_contact, :et }
+        subject(:addressed_to) { ActionMailer::Base.deliveries.first.subject }
+
+        it { is_expected.to eq I18n.t('email.et.subject') }
+      end
+
       describe 'when email not provided' do
         let(:submitted) { attributes_for :public_app_submission }
         subject(:action_mailer) { ActionMailer::Base.deliveries.count }

@@ -7,10 +7,12 @@ RSpec.describe MailService do
   describe '#build_public_confirmation' do
     let(:refund_email) { double(deliver_later: nil) }
     let(:non_refund_email) { double(deliver_later: nil) }
+    let(:et_email) { double(deliver_later: nil) }
 
     before do
       allow(PublicMailer).to receive(:submission_confirmation_refund).with(source_data).and_return(refund_email)
       allow(PublicMailer).to receive(:submission_confirmation).with(source_data).and_return(non_refund_email)
+      allow(PublicMailer).to receive(:submission_confirmation_et).with(source_data).and_return(et_email)
     end
 
     subject(:email) { service.send_public_confirmation }
@@ -55,6 +57,13 @@ RSpec.describe MailService do
         end
       end
 
+      context 'for et application' do
+        let(:source_data) { build :online_application, :with_email, :et }
+
+        it 'delivers the e-mail later' do
+          expect(et_email).to have_received(:deliver_later)
+        end
+      end
     end
   end
 end

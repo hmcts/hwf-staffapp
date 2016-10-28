@@ -6,11 +6,7 @@ class MailService
 
   def send_public_confirmation
     return false unless source_is_valid_for_public_confirmation
-    email = if @data_source.refund?
-              PublicMailer.submission_confirmation_refund(@data_source)
-            else
-              PublicMailer.submission_confirmation(@data_source)
-            end
+    email = email_template
     email.deliver_later
   end
 
@@ -22,5 +18,19 @@ class MailService
 
   def source_is_valid
     @data_source.present?
+  end
+
+  def email_template
+    if data_source_et?
+      PublicMailer.submission_confirmation_et(@data_source)
+    elsif @data_source.refund?
+      PublicMailer.submission_confirmation_refund(@data_source)
+    else
+      PublicMailer.submission_confirmation(@data_source)
+    end
+  end
+
+  def data_source_et?
+    @data_source.form_name.present? && !(@data_source.form_name =~ /^ET/).nil?
   end
 end
