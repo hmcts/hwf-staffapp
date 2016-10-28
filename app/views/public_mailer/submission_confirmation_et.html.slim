@@ -1,0 +1,84 @@
+table cellpadding="0" cellspacing="0" border="0" width="600"
+  tr
+    td colspan="2"
+      h2.heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.et.greeting')
+
+  tr
+    td colspan="2"
+      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.et.steps.one_html', reference: @application.reference)
+      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.et.steps.two')
+
+  tr
+    td colspan="2"
+      table cellpadding="0" cellspacing="0" border="1" bordercolor="#000" width="598"
+        tr
+          td
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.letter.one_html', reference: @application.reference)
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.letter.two')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.letter.three_html', case_number: @application.case_number)
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.letter.four')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.letter.five', full_name: @application.full_name)
+
+  tr
+    td colspan="2"
+      p style="margin-bottom: 1.5em; margin-top: 1em;" = t('email.et.steps.three')
+
+  tr
+    td colspan="2"
+      table cellpadding="1.5em" cellspacing="0" border="1" bordercolor="#000" width="598"
+        tr valign='top'
+          td width='50%'
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.address.england.heading')
+            p style="padding: 0 1em 0 1em; margin-bottom: 0em;"
+              = t('email.et.address.email.heading')
+            p style="padding: 0 1.5em; margin: 0;"
+              = Settings.mail.et.england_wales
+            p style="padding: 0 1em; margin-bottom: 0;"
+              = t('email.et.address.post.heading')
+            p style="padding: 0 1.5em; margin: 0;"
+              = t('email.et.address.england.address.one')
+              br
+              = t('email.et.address.england.address.two')
+              br
+              = t('email.et.address.england.address.three')
+              br
+              = t('email.et.address.england.address.four')
+          td width='50%'
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.et.address.scotland.heading')
+            p style="padding: 0 1em 0 1em; margin-bottom: 0em;"
+              = t('email.et.address.email.heading')
+            p style="padding: 0 1.5em; margin: 0;"
+              = Settings.mail.et.scotland
+            p style="padding: 0 1em; margin-bottom: 0;"
+              = t('email.et.address.post.heading')
+            p style="padding: 0 1.5em; margin: 0;"
+              = t('email.et.address.scotland.address.one')
+              br
+              = t('email.et.address.scotland.address.two')
+              br
+              = t('email.et.address.scotland.address.three')
+              br
+              = t('email.et.address.scotland.address.four')
+              br
+              = t('email.et.address.scotland.address.five')
+
+  tr
+    td colspan="2"
+      p style="margin-bottom: 1.5em; margin-top: 1em; font-weight:bold" = t('email.et.next.heading')
+      p style="margin-bottom: 1.5em; margin-top: 0;" = t('email.et.next.steps.one')
+      p style="margin-bottom: 1.5em; margin-top: 0;" = t('email.et.next.steps.two')
+      p style="margin-bottom: 1.5em; margin-top: 0;" = t('email.et.next.steps.three')
+
+  tr valign="top"
+    td width="45"
+      = image_tag attachments['icon-important.png'].url, style: 'float: left;'
+    td width="555"
+      p style="padding: 0 1em 0 0; margin-bottom: 1.5em; margin-top: 0;"
+        = t('email.et.warning')

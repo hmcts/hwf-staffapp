@@ -12,6 +12,12 @@ class PublicMailer < ApplicationMailer
     mail_with_subject @application.email_address, t('email.refund.subject')
   end
 
+  def submission_confirmation_et(application)
+    standard_attachments
+    @application = application
+    mail_with_subject @application.email_address, t('email.et.subject')
+  end
+
   private
 
   def standard_attachments

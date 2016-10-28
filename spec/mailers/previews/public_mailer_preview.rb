@@ -1,14 +1,19 @@
 # Preview all emails at http://localhost:3000/rails/mailers/online_mailer
-class OnlineMailerPreview < ActionMailer::Preview
+class PublicMailerPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:3000/rails/mailers/online_mailer/confirmation
   def confirmation
     application = FactoryGirl.build(:online_application, :with_reference, :with_email)
-    OnlineMailer.confirmation application
+    PublicMailer.submission_confirmation application
   end
 
   def refund_confirmation
     application = FactoryGirl.build(:online_application, :with_reference, :with_email, :with_refund)
-    OnlineMailer.refund_confirmation application
+    PublicMailer.submission_confirmation_refund application
+  end
+
+  def et_confirmation
+    application = FactoryGirl.build(:online_application, :with_reference, :et, :with_email, :with_refund)
+    PublicMailer.submission_confirmation_et application
   end
 end
