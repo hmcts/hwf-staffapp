@@ -83,8 +83,8 @@ RSpec.feature 'Confirmation page', type: :feature do
         expect(page).to have_content '✗ Not eligible for help with fees'
       end
 
-      scenario 'the grant help with fees form is not rendered' do
-        expect(page).to have_no_content 'Grant help with fees'
+      scenario 'the grant help with fees form is rendered' do
+        expect(page).to have_content 'Grant help with fees'
       end
     end
 
