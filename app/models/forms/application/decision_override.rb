@@ -16,14 +16,13 @@ module Forms
       validates :reason, presence: true, length: { maximum: 500 }, if: :reason_required?
 
       def application_overridable?(application)
-        failed_benefit_application?(application)
+        failed_application?(application)
       end
 
       private
 
-      def failed_benefit_application?(application)
-        application.application_type.eql?('benefit') &&
-          application.outcome.eql?('none') &&
+      def failed_application?(application)
+        application.outcome.eql?('none') &&
           (application.decision_override.nil? || !application.decision_override.persisted?)
       end
 

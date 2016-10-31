@@ -82,7 +82,15 @@ RSpec.describe Forms::Application::DecisionOverride do
       context 'that was income based' do
         let(:type) { 'income' }
 
-        it { is_expected.to be false }
+        context 'with no remission granted' do
+          it { is_expected.to be true }
+        end
+
+        context 'with full remission granted' do
+          let(:outcome) { 'full' }
+
+          it { is_expected.to be false }
+        end
       end
 
       context 'that was benefits based' do
