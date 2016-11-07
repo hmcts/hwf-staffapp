@@ -19,7 +19,10 @@ module Views
         married: 'married',
         decision: 'decision',
         amount_to_pay: 'applicant pays',
-        decision_cost: 'departmental cost'
+        decision_cost: 'departmental cost',
+        source: 'source',
+        granted: 'granted?',
+        evidence_checked: 'evidence checked?'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -52,15 +55,33 @@ module Views
 
       def build_data
         Application.
-          select(:id, 'offices.name', :fee, :form_name, :probate, :refund, :application_type,
+          select(:id, :fee, :form_name, :probate, :refund, :application_type,
             :income, :children, :decision, :amount_to_pay, :decision_cost, :married).
-          select('details.emergency_reason IS NOT NULL AS emergency').
-          select('jurisdictions.name AS jurisdiction').
-          select('business_entities.code AS bec_code').
-          joins('LEFT OUTER JOIN offices ON offices.id = applications.office_id').
+          select(named_columns).
+          joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
           where("offices.name NOT IN ('Digital')").
           where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+      end
+
+      def named_columns
+        <<-COLUMNS
+          offices.name AS name,
+          details.emergency_reason IS NOT NULL AS emergency,
+          jurisdictions.name AS jurisdiction,
+          business_entities.code AS bec_code,
+          CASE WHEN reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
+          CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
+          CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked
+        COLUMNS
+      end
+
+      def joins
+        <<-JOINS
+          LEFT OUTER JOIN offices ON offices.id = applications.office_id
+          LEFT OUTER JOIN decision_overrides de ON de.application_id = applications.id
+          LEFT OUTER JOIN evidence_checks ec ON ec.application_id = applications.id
+        JOINS
       end
     end
   end
