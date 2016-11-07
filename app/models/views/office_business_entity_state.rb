@@ -16,15 +16,15 @@ module Views
     end
 
     def business_entity_id
-      @business_entity.id if @business_entity
+      @business_entity&.id
     end
 
     def business_entity_code
-      @business_entity.code if @business_entity
+      @business_entity&.code
     end
 
     def business_entity_name
-      @business_entity.name if @business_entity
+      @business_entity&.name
     end
 
     def status

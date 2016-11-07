@@ -39,9 +39,9 @@ module Forms
       private
 
       def strip_whitespace!
-        title.strip! if title
-        first_name.strip! if first_name
-        last_name.strip! if last_name
+        title&.strip!
+        first_name&.strip!
+        last_name&.strip!
       end
 
       def dob_age_valid?
