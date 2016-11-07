@@ -89,7 +89,8 @@ class IncomeCalculation
   end
 
   def applicants_contribution_is_partial
-    applicants_maximum_contribution > 0 && applicants_maximum_contribution < @application.detail.fee
+    applicants_maximum_contribution.positive? &&
+      applicants_maximum_contribution < @application.detail.fee
   end
 
   def minimum_payable_to_applicant

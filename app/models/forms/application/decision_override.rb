@@ -48,7 +48,7 @@ module Forms
       end
 
       def can_load_text_from_locale?
-        self[:value].present? && self[:value].to_i > 0
+        self[:value].present? && self[:value].to_i.positive?
       end
     end
   end

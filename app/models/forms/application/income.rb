@@ -27,7 +27,7 @@ module Forms
       end
 
       def children_declared_but_dependents_arent?
-        !dependents && children.to_i > 0
+        !dependents && children.to_i.positive?
       end
 
       def persist!

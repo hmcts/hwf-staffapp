@@ -96,7 +96,7 @@ class UsersController < ApplicationController
   end
 
   def redirect_after_restore
-    User.only_deleted.count > 0 ? deleted_users_path : users_path
+    User.only_deleted.count.positive? ? deleted_users_path : users_path
   end
 
   def manager_setup
