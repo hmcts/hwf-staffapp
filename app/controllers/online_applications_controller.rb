@@ -1,5 +1,5 @@
 class OnlineApplicationsController < ApplicationController
-  before_action :authorise_online_application, except: :create
+  before_action :authorize_online_application, except: :create
   before_action :check_completed_redirect
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_homepage
 
@@ -42,7 +42,7 @@ class OnlineApplicationsController < ApplicationController
     ResolverService.new(application, current_user).complete
   end
 
-  def authorise_online_application
+  def authorize_online_application
     authorize online_application
   end
 

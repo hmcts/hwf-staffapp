@@ -17,7 +17,7 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def update
-    # TODO: The authorisation should be done after the attributes have been updated
+    # TODO: The authorization should be done after the attributes have been updated
     authorize application
 
     @form = Forms::Application::Delete.new(application)

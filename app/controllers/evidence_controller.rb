@@ -1,5 +1,5 @@
 class EvidenceController < ApplicationController
-  before_action :authorise_evidence_check_update, except: :show
+  before_action :authorize_evidence_check_update, except: :show
 
   include SectionViewsHelper
 
@@ -78,7 +78,7 @@ class EvidenceController < ApplicationController
 
   private
 
-  def authorise_evidence_check_update
+  def authorize_evidence_check_update
     authorize evidence, :update?
   end
 
