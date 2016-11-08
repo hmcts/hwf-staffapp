@@ -78,9 +78,9 @@ module Views
 
       def joins
         <<-JOINS
-          LEFT OUTER JOIN offices ON offices.id = applications.office_id
-          LEFT OUTER JOIN decision_overrides de ON de.application_id = applications.id
-          LEFT OUTER JOIN evidence_checks ec ON ec.application_id = applications.id
+          LEFT JOIN offices ON offices.id = applications.office_id
+          LEFT JOIN decision_overrides de ON de.application_id = applications.id
+          LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         JOINS
       end
     end
