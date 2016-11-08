@@ -31,6 +31,12 @@ esac
 ROLE="${1:-app}"
 case ${ROLE} in
 worker)
+    echo "exporting env_vars"
+    env >> /etc/environment
+    echo "starting cron"
+    service cron start
+    echo "Creating crontab"
+    bundle exec whenever --update-crontab
     echo "running worker"
     bundle exec rake jobs:work
     ;;
