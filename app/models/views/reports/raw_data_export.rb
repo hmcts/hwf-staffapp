@@ -65,7 +65,7 @@ module Views
       end
 
       def named_columns
-        <<-COLUMNS
+        <<~COLUMNS
           offices.name AS name,
           details.emergency_reason IS NOT NULL AS emergency,
           jurisdictions.name AS jurisdiction,
@@ -77,10 +77,10 @@ module Views
       end
 
       def joins
-        <<-JOINS
-          LEFT OUTER JOIN offices ON offices.id = applications.office_id
-          LEFT OUTER JOIN decision_overrides de ON de.application_id = applications.id
-          LEFT OUTER JOIN evidence_checks ec ON ec.application_id = applications.id
+        <<~JOINS
+          LEFT JOIN offices ON offices.id = applications.office_id
+          LEFT JOIN decision_overrides de ON de.application_id = applications.id
+          LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         JOINS
       end
     end

@@ -52,7 +52,7 @@ class ApplicationBuilder
   def dependent_attributes(online_application)
     {}.tap do |attributes|
       if online_application.children.present?
-        attributes[:dependents] = online_application.children > 0
+        attributes[:dependents] = online_application.children.positive?
         attributes[:children] = online_application.children
       end
     end

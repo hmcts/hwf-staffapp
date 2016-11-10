@@ -58,7 +58,7 @@ class FinanceReportBuilder
   def distinct_offices_jurisdictions
     BusinessEntity.
       exclude_hq_teams.
-      joins('LEFT OUTER JOIN applications ON business_entity_id = business_entities.id').
+      joins('LEFT JOIN applications ON business_entity_id = business_entities.id').
       where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
       where('applications.state = 3').uniq { |s| s.values_at(:office, :jurisdiction) }
   end

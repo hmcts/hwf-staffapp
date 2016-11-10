@@ -1,7 +1,7 @@
 module Applications
   # rubocop:disable ClassLength
   class ProcessController < ApplicationController
-    before_action :authorise_application_update, except: :create
+    before_action :authorize_application_update, except: :create
     before_action :check_completed_redirect, except: [:create, :confirmation, :override]
     before_action :set_cache_headers, only: [:confirmation]
 
@@ -143,7 +143,7 @@ module Applications
       form_params(:decision_override).merge(created_by_id: current_user.id)
     end
 
-    def authorise_application_update
+    def authorize_application_update
       authorize application, :update?
     end
 

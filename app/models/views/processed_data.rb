@@ -79,11 +79,11 @@ module Views
     end
 
     def prepare_name(user)
-      user.name if user
+      user&.name
     end
 
     def prepare_date(date)
-      date.strftime(Date::DATE_FORMATS[:gov_uk_long]) if date
+      date&.strftime(Date::DATE_FORMATS[:gov_uk_long])
     end
 
     def prepare_override_reason(object)

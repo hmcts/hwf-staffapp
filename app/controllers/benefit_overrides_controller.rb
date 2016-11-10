@@ -1,5 +1,5 @@
 class BenefitOverridesController < ApplicationController
-  before_action :authorise_benefit_override_create
+  before_action :authorize_benefit_override_create
 
   def paper_evidence
     @form = Forms::BenefitsEvidence.new(benefit_override)
@@ -18,7 +18,7 @@ class BenefitOverridesController < ApplicationController
 
   private
 
-  def authorise_benefit_override_create
+  def authorize_benefit_override_create
     authorize benefit_override, :create?
   end
 

@@ -27,7 +27,7 @@ namespace :jurisdictions do
     end
 
     jurisdiction = Jurisdiction.where(name: 'Court of Protection').first
-    jurisdiction.destroy unless jurisdiction.nil?
+    jurisdiction&.destroy
   end
 
   desc 'revert back the old jurisdiction names'

@@ -13,7 +13,7 @@ module Views
       end
 
       def ni_number
-        applicant.ni_number.gsub(/(.{2})/, '\1 ') unless applicant.ni_number.nil?
+        applicant.ni_number&.gsub(/(.{2})/, '\1 ')
       end
 
       def status
@@ -32,7 +32,7 @@ module Views
       end
 
       def format_date(date)
-        date.to_s(:gov_uk_long) if date
+        date&.to_s(:gov_uk_long)
       end
     end
   end

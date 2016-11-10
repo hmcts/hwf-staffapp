@@ -7,7 +7,7 @@ RSpec.describe ApplicationController, type: :controller do
     sign_in user
   end
 
-  describe 'when action is not authorised' do
+  describe 'when action is not authorized' do
     controller do
       def index
         raise Pundit::NotAuthorizedError

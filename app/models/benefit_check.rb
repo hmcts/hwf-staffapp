@@ -9,7 +9,7 @@ class BenefitCheck < ActiveRecord::Base
   }
 
   scope :non_digital, lambda {
-    joins(:application).joins('LEFT OUTER JOIN offices ON applications.office_id = offices.id').
+    joins(:application).joins('LEFT JOIN offices ON applications.office_id = offices.id').
       where('offices.name != ?', 'Digital')
   }
 

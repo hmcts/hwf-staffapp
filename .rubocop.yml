@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
   # generated code and copy-and-pasted snipets from READMEs.
@@ -93,6 +93,9 @@ Style/EmptyLinesAroundBlockBody:
 
 # We have a mixture at the moment, so don't enforce anything.
 Style/FormatString:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
 
 # It's not really clearer to replace every if with a return if.

@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    authorise_and_assign_update
+    authorize_and_assign_update
 
     update_successful = user.save
     if update_successful && manager_setup.in_progress?
@@ -96,15 +96,15 @@ class UsersController < ApplicationController
   end
 
   def redirect_after_restore
-    User.only_deleted.count > 0 ? deleted_users_path : users_path
+    User.only_deleted.count.positive? ? deleted_users_path : users_path
   end
 
   def manager_setup
     @manager_setup ||= ManagerSetup.new(current_user, session)
   end
 
-  def authorise_and_assign_update
-    # this double authorisation is unusual, but I didn't find a better solution for making sure
+  def authorize_and_assign_update
+    # this double authorization is unusual, but I didn't find a better solution for making sure
     # that managers can't edit users from other offices, because they can transfer users to
     # other offices by this update
     authorize user, :edit?

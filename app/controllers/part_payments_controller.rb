@@ -1,5 +1,5 @@
 class PartPaymentsController < ApplicationController
-  before_action :authorise_part_payment_update, except: :show
+  before_action :authorize_part_payment_update, except: :show
 
   include SectionViewsHelper
 
@@ -64,7 +64,7 @@ class PartPaymentsController < ApplicationController
     part_payment.application
   end
 
-  def authorise_part_payment_update
+  def authorize_part_payment_update
     authorize part_payment, :update?
   end
 

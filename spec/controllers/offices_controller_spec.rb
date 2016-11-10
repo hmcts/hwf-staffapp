@@ -12,17 +12,17 @@ RSpec.describe OfficesController, type: :controller do
     sign_in(user)
   end
 
-  def mock_authorise(record, authorised)
+  def mock_authorize(record, authorized)
     expectation = receive(:authorize).with(record)
-    expectation.and_raise(Pundit::NotAuthorizedError) unless authorised
+    expectation.and_raise(Pundit::NotAuthorizedError) unless authorized
 
     expect(controller).to expectation
-    expect(controller).to receive(:verify_authorized) if authorised
+    expect(controller).to receive(:verify_authorized) if authorized
   end
 
-  shared_examples 'when not authorised' do
-    context 'when not authorised' do
-      let(:authorised) { false }
+  shared_examples 'when not authorized' do
+    context 'when not authorized' do
+      let(:authorized) { false }
 
       it 'raises Pundit error' do
         expect { subject }.to raise_error(Pundit::NotAuthorizedError)
@@ -32,13 +32,13 @@ RSpec.describe OfficesController, type: :controller do
 
   describe 'GET #index' do
     before do
-      mock_authorise(:office, authorised)
+      mock_authorize(:office, authorized)
     end
 
     subject { get :index }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
 
       before { subject }
 
@@ -51,18 +51,18 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 
   describe 'GET #show' do
     before do
-      mock_authorise(office, authorised)
+      mock_authorize(office, authorized)
     end
 
     subject { get :show, id: office.id }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
 
       before { subject }
 
@@ -75,18 +75,18 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 
   describe 'GET #new' do
     before do
-      mock_authorise(Office, authorised)
+      mock_authorize(Office, authorized)
     end
 
     subject { get :new }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
 
       before { subject }
 
@@ -99,20 +99,20 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 
   describe 'GET #edit' do
     let(:assigned_jurisdiction) { create :jurisdiction }
     before do
       create :business_entity, office: office, jurisdiction: assigned_jurisdiction
-      mock_authorise(office, authorised)
+      mock_authorize(office, authorized)
     end
 
     subject { get :edit, id: office.id }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
 
       before { subject }
 
@@ -129,7 +129,7 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 
   describe 'POST #create' do
@@ -138,13 +138,13 @@ RSpec.describe OfficesController, type: :controller do
 
     before do
       allow(Office).to receive(:new).and_return(new_office)
-      mock_authorise(new_office, authorised)
+      mock_authorize(new_office, authorized)
     end
 
     subject { post :create, office: params }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
 
       before do
         allow(new_office).to receive(:errors).and_return(saved ? [] : [double, double])
@@ -182,7 +182,7 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 
   describe 'PUT #update' do
@@ -191,13 +191,13 @@ RSpec.describe OfficesController, type: :controller do
 
     before do
       allow(Office).to receive(:find).with(existing_office.to_param.to_s).and_return(existing_office)
-      mock_authorise(existing_office, authorised)
+      mock_authorize(existing_office, authorized)
     end
 
     subject { put :update, id: existing_office.id, office: params }
 
-    context 'when authorised' do
-      let(:authorised) { true }
+    context 'when authorized' do
+      let(:authorized) { true }
       let(:manager_setup) { double(setup_profile?: false, in_progress?: false) }
 
       before do
@@ -251,6 +251,6 @@ RSpec.describe OfficesController, type: :controller do
       end
     end
 
-    include_examples 'when not authorised'
+    include_examples 'when not authorized'
   end
 end
