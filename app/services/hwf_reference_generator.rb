@@ -12,9 +12,13 @@ class HwfReferenceGenerator
   def generate_reference
     begin
       reference = reference_string
-    end until OnlineApplication.find_by(reference: reference).nil?
+    end until hwf_reference_available(reference)
 
     reference
+  end
+
+  def hwf_reference_available(reference)
+    [OnlineApplication, Application].all? { |x| x.find_by(reference: reference).nil? }
   end
 
   def reference_string

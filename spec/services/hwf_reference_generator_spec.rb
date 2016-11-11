@@ -22,8 +22,20 @@ RSpec.describe HwfReferenceGenerator, type: :service do
 
     context 'when the generated reference number already exists', focus: true do
       before do
-        create(:online_application, reference: 'collision')
+        create(:online_application, reference: 'collision', convert_to_application: true)
         expect(generator).to receive(:reference_string).and_return('collision', 'no-collision')
+      end
+
+      it 'keeps generating until there is no collision' do
+        expect(attributes[:reference]).to eql('no-collision')
+      end
+    end
+
+    context 'when the reference is used in the applications table' do
+      before do
+        create(:online_application, reference: 'unconverted')
+        create(:application, reference: 'converted')
+        expect(generator).to receive(:reference_string).and_return('unconverted', 'converted', 'no-collision')
       end
 
       it 'keeps generating until there is no collision' do
