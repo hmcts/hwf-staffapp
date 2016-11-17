@@ -35,7 +35,7 @@ worker)
     env | grep -v LC_ALL >> /etc/environment
     env | grep LC_ALL >> /etc/default/locale
     echo "starting cron"
-    service cron start
+    service cron restart
     echo "Creating crontab"
     bundle exec whenever --update-crontab
     echo "running worker"
