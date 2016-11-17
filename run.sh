@@ -32,7 +32,8 @@ ROLE="${1:-app}"
 case ${ROLE} in
 worker)
     echo "exporting env_vars"
-    env >> /etc/environment
+    env | grep -v LC_ALL >> /etc/environment
+    env | grep LC_ALL >> /etc/default/locale
     echo "starting cron"
     service cron start
     echo "Creating crontab"
