@@ -11,6 +11,7 @@ en-GB:
       send_to: '3. Deliver your claim form to the court or tribunal dealing with your case (by post or in person)'
       unsuccessful: "4. You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
       warning: 'Your case will not proceed until you send your reference number and claim form to the court or tribunal.'
+      expiry: 'Your help with fees reference number is valid for a single use, and expires after 3 months. Please apply again if you need further help with fees.'
     refund:
       subject: 'Application for help with fees refund'
       greeting: 'Complete your application for help with fees refund'
@@ -21,6 +22,7 @@ en-GB:
       send_to: '2. Deliver this to the court or tribunal dealing with your case (by post or in person)'
       unsuccessful: "3. You'll hear from the court or tribunal if your application is unsuccessful or if they need more information from you."
       warning: 'Your refund will not be processed until you send your reference number to the court or tribunal. '
+      expiry: 'Your help with fees reference number is valid for a single use, and expires after 3 months. Please apply again if you need further help with fees.'
     et:
       subject: 'Application for help with employment tribunal fees'
       greeting: 'Complete your application for help with fees'
@@ -67,3 +69,4 @@ en-GB:
           two: 2. You'll hear from the tribunal if your application for help with fees is unsuccessful or if they need more information from you.
           three: 3. If your application for help with fees is successful, you'll hear directly from the tribunal dealing with your case.
       warning: 'Your case will not proceed until you send your help with fees reference number and employment tribunal claim number to the tribunal.'
+      expiry: 'Your help with fees reference number is valid for a single use, and expires after 3 months. Please apply again if you need further help with fees.'
