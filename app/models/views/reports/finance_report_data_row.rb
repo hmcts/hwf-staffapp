@@ -15,6 +15,8 @@ module Views
       attr_accessor :benefit_sum
       attr_accessor :income_count
       attr_accessor :income_sum
+      attr_accessor :none_count
+      attr_accessor :none_sum
 
       def initialize(business_entity, date_from, date_to)
         @business_entity = business_entity
