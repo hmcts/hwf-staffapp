@@ -7,12 +7,17 @@ class FinanceReportBuilder
     'full remission quantity', 'full remission amount',
     'part remission quantity', 'part remission amount',
     'benefit basis quantity', 'benefit basis amount',
-    'income basis quantity', 'income basis amount'
+    'income basis quantity', 'income basis amount',
+    'granted basis quantity', 'granted basis amount'
   ].freeze
 
-  ATTRIBUTES = %w[office jurisdiction be_code total_count total_sum
-                  full_count full_sum part_count part_sum
-                  benefit_count benefit_sum income_count income_sum].freeze
+  ATTRIBUTES = %w[office jurisdiction be_code
+                  total_count total_sum
+                  full_count full_sum
+                  part_count part_sum
+                  benefit_count benefit_sum
+                  income_count income_sum
+                  none_count none_sum].freeze
 
   def initialize(start_date, end_date)
     @date_from = DateTime.parse(start_date.to_s).utc
