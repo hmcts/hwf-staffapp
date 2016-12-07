@@ -1,18 +1,23 @@
 class FinanceReportBuilder
   require 'csv'
 
-  HEADERS = [
-    'office', 'jurisdiction', 'BEC',
-    'Total successful quantity', 'Total successful amount',
-    'full remission quantity', 'full remission amount',
-    'part remission quantity', 'part remission amount',
-    'benefit basis quantity', 'benefit basis amount',
-    'income basis quantity', 'income basis amount'
-  ].freeze
-
-  ATTRIBUTES = %w[office jurisdiction be_code total_count total_sum
-                  full_count full_sum part_count part_sum
-                  benefit_count benefit_sum income_count income_sum].freeze
+  FIELDS = {
+    office: 'office',
+    jurisdiction: 'jurisdiction',
+    be_code: 'BEC',
+    total_count: 'Total successful quantity',
+    total_sum: 'Total successful amount',
+    full_count: 'full remission quantity',
+    full_sum: 'full remission amount',
+    part_count: 'part remission quantity',
+    part_sum: 'part remission amount',
+    benefit_count: 'benefit basis quantity',
+    benefit_sum: 'benefit basis amount',
+    income_count: 'income basis quantity',
+    income_sum: 'income basis amount',
+    none_count: 'granted basis quantity',
+    none_sum: 'granted basis amount'
+  }.freeze
 
   def initialize(start_date, end_date)
     @date_from = DateTime.parse(start_date.to_s).utc
@@ -26,10 +31,10 @@ class FinanceReportBuilder
       end
 
       csv << ['']
-      csv << HEADERS
+      csv << FIELDS.values
 
       generate.each do |row|
-        csv << ATTRIBUTES.map { |attr| row.send(attr) }
+        csv << FIELDS.keys.map { |attr| row.send(attr) }
       end
     end
   end
