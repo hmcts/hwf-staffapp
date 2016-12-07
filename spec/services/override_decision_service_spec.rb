@@ -29,6 +29,7 @@ RSpec.describe OverrideDecisionService, type: :service do
 
       it { expect(subject.decision).to eql 'full' }
       it { expect(subject.decision_type).to eql('override') }
+      it { expect(subject.decision_cost).to eql(application.detail.fee) }
 
       it 'adds a decision_override to the application' do
         expect(application.decision_override.present?).to be true
