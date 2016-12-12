@@ -4,7 +4,7 @@ RSpec.describe ReferenceGenerator, type: :service do
   let(:current_time) { Time.zone.parse('2016-03-01 10:20:30') }
   let!(:office) { create :office }
   let!(:jurisdiction) { create :jurisdiction }
-  let!(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction, code: 'AB987' }
+  let!(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction, be_code: 'AB987', sop_code: '987654321' }
 
   subject(:generator) { described_class.new(application) }
 
@@ -39,7 +39,7 @@ RSpec.describe ReferenceGenerator, type: :service do
     end
 
     context 'when there are two business entities for the same jurisdiction' do
-      let!(:business_entity2) { create :business_entity, office: office, jurisdiction: jurisdiction, code: 'CB975' }
+      let!(:business_entity2) { create :business_entity, office: office, jurisdiction: jurisdiction, be_code: 'CB975', sop_code: '123456789' }
       before { business_entity.update_attribute(:valid_to, Time.zone.now) }
 
       it 'uses the active one' do

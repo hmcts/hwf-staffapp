@@ -69,7 +69,7 @@ module Views
           offices.name AS name,
           details.emergency_reason IS NOT NULL AS emergency,
           jurisdictions.name AS jurisdiction,
-          business_entities.code AS bec_code,
+          business_entities.be_code AS bec_code,
           CASE WHEN reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked
