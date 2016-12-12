@@ -6,7 +6,8 @@ RSpec.describe BusinessEntity, type: :model do
 
   it { is_expected.to validate_presence_of(:office) }
   it { is_expected.to validate_presence_of(:jurisdiction) }
-  it { is_expected.to validate_presence_of(:code) }
+  it { is_expected.to validate_presence_of(:be_code) }
+  it { is_expected.to validate_presence_of(:sop_code) }
   it { is_expected.to validate_presence_of(:name) }
 
   it { is_expected.to respond_to(:valid_from) }
