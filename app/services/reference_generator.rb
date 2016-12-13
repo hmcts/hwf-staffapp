@@ -1,4 +1,5 @@
 class ReferenceGenerator
+
   def initialize(application)
     @application = application
   end
@@ -39,6 +40,6 @@ class ReferenceGenerator
   end
 
   def use_new_reference_type
-    @use_new_reference_type ||= Time.zone.now >= Time.zone.parse(Settings.reference.date)
+    @use_new_reference_type ||= BecSopReferenceSwitch.use_new_reference_type
   end
 end
