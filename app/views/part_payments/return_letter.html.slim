@@ -6,7 +6,7 @@ header
      reference: @application_view.reference,
      full_name: @applicant.full_name,
      user_name: current_user.name,
-     part_payment_amount: "£#{@application_view.amount_to_pay}",
+     part_payment_amount: @application_view.amount_to_pay,
      date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
 = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
