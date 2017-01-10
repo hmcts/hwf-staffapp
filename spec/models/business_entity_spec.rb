@@ -43,7 +43,7 @@ RSpec.describe BusinessEntity, type: :model do
 
       it 'has the two bristol business entities' do
         all_codes = described_class.exclude_hq_teams.all.map(&:code)
-        expect(all_codes).to eql bristol.business_entities.map(&:code)
+        expect(all_codes).to match_array bristol.business_entities.map(&:code)
       end
     end
   end
