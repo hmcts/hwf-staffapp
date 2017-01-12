@@ -6,7 +6,6 @@ RSpec.describe BusinessEntity, type: :model do
 
   it { is_expected.to validate_presence_of(:office) }
   it { is_expected.to validate_presence_of(:jurisdiction) }
-  it { is_expected.to validate_presence_of(:be_code) }
   it { is_expected.to validate_presence_of(:sop_code) }
   it { is_expected.to validate_presence_of(:name) }
 
@@ -26,6 +25,28 @@ RSpec.describe BusinessEntity, type: :model do
       context 'when valid_to is before valid_from' do
         before { business_entity.valid_to = Time.zone.yesterday }
         it { is_expected.to be_invalid }
+      end
+    end
+
+    describe 'sop_code' do
+      subject { build :business_entity }
+      it { is_expected.to validate_uniqueness_of(:sop_code).ignoring_case_sensitivity.scoped_to(:be_code) }
+    end
+
+    describe 'be_code' do
+      before { Timecop.freeze(current_time) }
+      after { Timecop.return }
+
+      context 'before the BEC-SOP switchover date' do
+        let(:current_time) { reference_change_date - 1.day }
+
+        it { is_expected.to validate_presence_of(:be_code) }
+      end
+
+      context 'after the BEC-SOP switchover date' do
+        let(:current_time) { reference_change_date }
+
+        it { is_expected.not_to validate_presence_of(:be_code) }
       end
     end
   end
@@ -58,6 +79,28 @@ RSpec.describe BusinessEntity, type: :model do
       let(:jurisdiction) { business_entity.jurisdiction }
 
       it { is_expected.to eq business_entity }
+    end
+  end
+
+  describe '#code' do
+    let(:business_entity) { build_stubbed :business_entity }
+
+    subject do
+      Timecop.freeze(current_time) do
+        business_entity.code
+      end
+    end
+
+    context 'when called after the set date' do
+      let(:current_time) { reference_change_date }
+
+      it { is_expected.to eql business_entity.sop_code }
+    end
+
+    context 'when called before the set date' do
+      let(:current_time) { reference_change_date - 1.day }
+
+      it { is_expected.to eql business_entity.be_code }
     end
   end
 end

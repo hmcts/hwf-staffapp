@@ -6,7 +6,9 @@ class BusinessEntity < ActiveRecord::Base
     joins(:office).where.not("offices.name IN ('Digital', 'HMCTS HQ Team ')")
   }
 
-  validates :office, :jurisdiction, :be_code, :sop_code, :name, :valid_from, presence: true
+  validates :office, :jurisdiction, :sop_code, :name, :valid_from, presence: true
+  validates :be_code, presence: true, unless: :use_new_reference_type?
+  validates :sop_code, uniqueness: { scope: :be_code }
 
   validates :valid_to, date: {
     after: :valid_from, allow_blank: true
@@ -17,6 +19,12 @@ class BusinessEntity < ActiveRecord::Base
   end
 
   def code
-    be_code
+    use_new_reference_type? ? sop_code : be_code
+  end
+
+  private
+
+  def use_new_reference_type?
+    BecSopReferenceSwitch.use_new_reference_type
   end
 end
