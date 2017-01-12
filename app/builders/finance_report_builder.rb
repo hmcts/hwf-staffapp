@@ -5,6 +5,7 @@ class FinanceReportBuilder
     office: 'office',
     jurisdiction: 'jurisdiction',
     be_code: 'BEC',
+    sop_code: 'SOP code',
     total_count: 'Total successful quantity',
     total_sum: 'Total successful amount',
     full_count: 'full remission quantity',

@@ -5,6 +5,7 @@ module Views
       attr_accessor :office
       attr_accessor :jurisdiction
       attr_accessor :be_code
+      attr_accessor :sop_code
       attr_accessor :total_count
       attr_accessor :total_sum
       attr_accessor :full_count
