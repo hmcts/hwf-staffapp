@@ -2,10 +2,17 @@ header
   h2.heading-large Edit business entity
 
 = form_for [office, business_entity], method: :put do |f|
+  -if BecSopReferenceSwitch.use_new_reference_type
+    = f.hidden_field :be_code
+  -else
+    .form-group
+      = f.label :be_code, class: 'form-label'
+      = f.label :be_code, business_entity.errors[:be_code].join(', '), class: 'error' if business_entity.errors[:be_code].present?
+      = f.text_field :be_code, { class: 'form-control' }
   .form-group
-    = f.label :code, class: 'form-label'
-    = f.label :code, business_entity.errors[:code].join(', '), class: 'error' if business_entity.errors[:code].present?
-    = f.text_field :code, { class: 'form-control' }
+    = f.label :sop_code, class: 'form-label'
+    = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
+    = f.text_field :sop_code, { class: 'form-control' }
   .form-group
     = f.label :name, class: 'form-label'
     = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?

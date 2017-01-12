@@ -518,8 +518,9 @@ en-GB:
         new_password_hint: Use at least 8 numbers or letters for your password.
         password_confirmation: Confirm new password
       business_entity:
-        name: BEC description
-        code: BEC
+        name: BE Description
+        be_code: BE Code
+        sop_code: SOP code
       feedback:
         experience: 'What is your experience of using the service so far?'
         ideas: 'Do you have any ideas for how this service could be improved?'

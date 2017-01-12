@@ -6,7 +6,8 @@ table
   thead
     tr
       th Jurisdiction
-      th =t('activerecord.attributes.business_entity.code')
+      th =t('activerecord.attributes.business_entity.be_code')
+      th =t('activerecord.attributes.business_entity.sop_code')
       th =t('activerecord.attributes.business_entity.name')
       th
 
@@ -22,6 +23,8 @@ table
             =j.jurisdiction_name
           td
             =j.business_entity_code
+          td
+            =j.business_entity_sop_code
           td
             = j.business_entity_name
           td align="right"
