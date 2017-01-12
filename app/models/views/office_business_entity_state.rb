@@ -20,7 +20,11 @@ module Views
     end
 
     def business_entity_code
-      @business_entity&.code
+      @business_entity&.be_code
+    end
+
+    def business_entity_sop_code
+      @business_entity&.sop_code
     end
 
     def business_entity_name
