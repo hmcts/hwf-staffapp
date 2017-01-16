@@ -91,8 +91,8 @@ group :development, :test do
 
   gem 'factory_girl_rails'
 
-  gem 'rubocop', '~>0.37.2', require: false
-  gem 'rubocop-rspec', '~>1.4.0', require: false
+  gem 'rubocop', '~>0.38', require: false
+  gem 'rubocop-rspec', '~>1.10', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
