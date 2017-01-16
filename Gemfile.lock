@@ -88,9 +88,9 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.2)
-    config (1.2.1)
+    config (1.4.0)
       activesupport (>= 3.0)
-      deep_merge (~> 1.0, >= 1.0.1)
+      deep_merge (~> 1.1.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
@@ -98,7 +98,7 @@ GEM
       activemodel
       activesupport
     debug_inspector (0.0.2)
-    deep_merge (1.0.1)
+    deep_merge (1.1.1)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
     delayed_job_active_record (4.1.1)
