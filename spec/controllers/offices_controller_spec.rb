@@ -172,7 +172,6 @@ RSpec.describe OfficesController, type: :controller do
         end
 
         it 'renders the new template' do
-          # binding.pry
           expect(response).to render_template(:new)
         end
 

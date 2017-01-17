@@ -209,8 +209,6 @@ RSpec.feature 'Business entity management:', type: :feature do
           end
 
           scenario 'the index page reflects the update' do
-            # binding.pry
-
             expect(page).to have_content new_description
             expect(page).to have_content new_sop_code
           end
