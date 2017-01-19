@@ -29,3 +29,5 @@ income:
   max_threshold_base: 5085
   per_child_increment: 245
   married_supplement: 160
+reference:
+  date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>

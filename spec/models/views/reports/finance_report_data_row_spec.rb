@@ -12,6 +12,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
     it { is_expected.to respond_to :office }
     it { is_expected.to respond_to :jurisdiction }
     it { is_expected.to respond_to :be_code }
+    it { is_expected.to respond_to :sop_code }
     it { is_expected.to respond_to :total_count }
     it { is_expected.to respond_to :total_sum }
     it { is_expected.to respond_to :full_count }

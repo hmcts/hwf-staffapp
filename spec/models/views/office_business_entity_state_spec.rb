@@ -12,6 +12,7 @@ RSpec.describe Views::OfficeBusinessEntityState do
   it { is_expected.to respond_to(:jurisdiction_name) }
   it { is_expected.to respond_to(:business_entity_id) }
   it { is_expected.to respond_to(:business_entity_code) }
+  it { is_expected.to respond_to(:business_entity_sop_code) }
   it { is_expected.to respond_to(:business_entity_name) }
 
   describe '#jurisdiction_id' do
@@ -36,7 +37,7 @@ RSpec.describe Views::OfficeBusinessEntityState do
     describe '#business_entity_code' do
       subject { view.business_entity_code }
 
-      it { is_expected.to eq business_entity.code }
+      it { is_expected.to eq business_entity.be_code }
     end
 
     describe '#business_entity_name' do
