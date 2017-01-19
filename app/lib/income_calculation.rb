@@ -29,7 +29,7 @@ class IncomeCalculation
   end
 
   def calculate_using_amount
-    if applicants_maximum_contribution == 0
+    if applicants_maximum_contribution.zero?
       set_outcome('full', 0)
     elsif applicants_contribution_is_partial
       set_outcome('part', minimum_payable_to_applicant.to_i)

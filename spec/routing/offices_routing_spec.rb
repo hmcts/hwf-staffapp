@@ -16,7 +16,7 @@ RSpec.describe OfficesController, type: :routing do
     end
 
     it 'routes to #edit' do
-      expect(get: '/offices/1/edit').to route_to('offices#edit', id:  '1')
+      expect(get: '/offices/1/edit').to route_to('offices#edit', id: '1')
     end
 
     it 'routes to #create' do
@@ -24,11 +24,11 @@ RSpec.describe OfficesController, type: :routing do
     end
 
     it 'routes to #update' do
-      expect(put: '/offices/1').to route_to('offices#update', id:  '1')
+      expect(put: '/offices/1').to route_to('offices#update', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/offices/1').to route_to('offices#destroy', id:  '1')
+      expect(delete: '/offices/1').to route_to('offices#destroy', id: '1')
     end
 
   end

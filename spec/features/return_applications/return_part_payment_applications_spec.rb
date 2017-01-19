@@ -8,11 +8,12 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
   let(:user) { create :user, office: office }
 
   let(:application1) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
-  let!(:part_payment1) { create :part_payment, application: application1 }
   let(:application2) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
-  let!(:part_payment2) { create :part_payment, application: application2 }
-
-  before { login_as user }
+  before do
+    create :part_payment, application: application1
+    create :part_payment, application: application2
+    login_as user
+  end
 
   context 'when on home page' do
 

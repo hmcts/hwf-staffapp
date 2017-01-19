@@ -29,11 +29,11 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
       before { sign_in manager_user }
 
-      it 'does allow you to invite managers as a manager' do
-        post :create, user: manager_invitation
+      describe 'does allow you to invite managers as a manager' do
+        before { post :create, user: manager_invitation }
 
-        expect(invited_user['email']).to eq user.email
-        expect(invited_user['invited_by_id']).to eq manager_user.id
+        it { expect(invited_user['email']).to eq user.email }
+        it { expect(invited_user['invited_by_id']).to eq manager_user.id }
       end
 
       context 'when manager tries to invite an admin' do
@@ -46,9 +46,10 @@ RSpec.describe Users::InvitationsController, type: :controller do
       end
 
       context 'when manager tries to invite a deleted user' do
-        let!(:deleted_user) { create :deleted_user, email: user.email, office: office }
-
-        before { post :create, user: manager_invitation }
+        before do
+          create :deleted_user, email: user.email, office: office
+          post :create, user: manager_invitation
+        end
 
         it 'restores and invites the user' do
           expect(response).to render_template(:new)
@@ -65,18 +66,18 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
         before { sign_in admin_user }
 
-        it 'does allow you to invite managers as an admin' do
-          post :create, user: manager_invitation
+        describe 'does allow you to invite managers as an admin' do
+          before { post :create, user: manager_invitation }
 
-          expect(invited_user['email']).to eq user.email
-          expect(invited_user['invited_by_id']).to eq admin_user.id
+          it { expect(invited_user['email']).to eq user.email }
+          it { expect(invited_user['invited_by_id']).to eq admin_user.id }
         end
 
-        it 'does allow admins to invite admins' do
-          post :create, user: admin_invitation
+        describe 'does allow admins to invite admins' do
+          before { post :create, user: admin_invitation }
 
-          expect(invited_user['email']).to eq user.email
-          expect(invited_user['invited_by_id']).to eq admin_user.id
+          it { expect(invited_user['email']).to eq user.email }
+          it { expect(invited_user['invited_by_id']).to eq admin_user.id }
         end
       end
     end

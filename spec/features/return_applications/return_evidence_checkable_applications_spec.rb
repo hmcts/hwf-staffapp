@@ -8,11 +8,12 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
   let(:user) { create :user, office: office }
 
   let(:application1) { create :application_full_remission, :waiting_for_evidence_state, office: office }
-  let!(:evidence1) { create :evidence_check, application: application1 }
   let(:application2) { create :application_full_remission, :waiting_for_evidence_state, office: office }
-  let!(:evidence2) { create :evidence_check, application: application2 }
-
-  before { login_as user }
+  before do
+    create :evidence_check, application: application1
+    create :evidence_check, application: application2
+    login_as user
+  end
 
   context 'when on home page' do
 

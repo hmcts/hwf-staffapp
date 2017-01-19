@@ -41,12 +41,11 @@ RSpec.describe PartPaymentsController, type: :controller do
       expect(response).to render_template(:show)
     end
 
-    it 'assigns the view models' do
-      expect(assigns(:processing_details)).to eql(processing_details)
-      expect(assigns(:application_view)).to eql(application_view)
-      expect(assigns(:details)).to eql(details)
-      expect(assigns(:applicant)).to eql(applicant_view)
-
+    describe 'assigns the view models' do
+      it { expect(assigns(:processing_details)).to eql(processing_details) }
+      it { expect(assigns(:application_view)).to eql(application_view) }
+      it { expect(assigns(:details)).to eql(details) }
+      it { expect(assigns(:applicant)).to eql(applicant_view) }
     end
   end
 
@@ -110,18 +109,18 @@ RSpec.describe PartPaymentsController, type: :controller do
       expect(response).to render_template :summary
     end
 
-    it 'assigns the view models' do
-      expect(assigns(:part_payment)).to eql(part_payment)
-      expect(assigns(:application_view)).to eql(application_view)
-      expect(assigns(:result)).to eql(part_payment_result)
+    describe 'assigns the view models' do
+      it { expect(assigns(:part_payment)).to eql(part_payment) }
+      it { expect(assigns(:application_view)).to eql(application_view) }
+      it { expect(assigns(:result)).to eql(part_payment_result) }
     end
   end
 
   describe 'POST #summary_save' do
-    let(:resolver) { double(complete: nil) }
+    let(:resolver) { instance_double(ResolverService, complete: nil) }
 
     before do
-      expect(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
+      allow(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
 
       post :summary_save, id: part_payment
     end
@@ -169,10 +168,10 @@ RSpec.describe PartPaymentsController, type: :controller do
 
   describe 'POST #return_application' do
     let(:resolver_result) { true }
-    let(:resolver) { double(return: resolver_result) }
+    let(:resolver) { instance_double(ResolverService, return: resolver_result) }
 
     before do
-      expect(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
+      allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
 
       post :return_application, id: part_payment
     end

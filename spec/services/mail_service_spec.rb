@@ -5,17 +5,17 @@ RSpec.describe MailService do
   subject(:service) { described_class.new(source_data) }
 
   describe '#build_public_confirmation' do
-    let(:refund_email) { double(deliver_later: nil) }
-    let(:non_refund_email) { double(deliver_later: nil) }
-    let(:et_email) { double(deliver_later: nil) }
+    subject(:email) { service.send_public_confirmation }
+
+    let(:refund_email) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
+    let(:non_refund_email) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
+    let(:et_email) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
 
     before do
       allow(PublicMailer).to receive(:submission_confirmation_refund).with(source_data).and_return(refund_email)
       allow(PublicMailer).to receive(:submission_confirmation).with(source_data).and_return(non_refund_email)
       allow(PublicMailer).to receive(:submission_confirmation_et).with(source_data).and_return(et_email)
     end
-
-    subject(:email) { service.send_public_confirmation }
 
     describe 'when initialised with nil' do
       let(:source_data) { nil }
@@ -38,7 +38,7 @@ RSpec.describe MailService do
 
     describe 'when initialised with a OnlineApplication with a users email' do
       before do
-        subject
+        email
       end
 
       context 'for refund application' do

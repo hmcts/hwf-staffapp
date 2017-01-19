@@ -14,23 +14,22 @@ RSpec.describe UsersController, type: :controller do
       Jurisdiction.delete_all
       create_list :user, 3, office: admin_user.office
       create_list :user, 3
+      sign_in admin_user
     end
-
-    before(:each) { sign_in admin_user }
 
     it_behaves_like 'a user regardless of role'
 
     describe 'GET #index' do
 
-      before(:each) { get :index }
+      before { get :index }
 
       it 'shows user list' do
-        expect(assigns(:users).count).to eql(7)
+        expect(assigns(:users).count).to eq 7
       end
 
       context 'when one user is deleted' do
+        before { user_on_admins_team.destroy }
         it "doesn't show that user" do
-          user_on_admins_team.destroy
           expect(response.body).not_to match user_on_admins_team.name
         end
       end
@@ -39,7 +38,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #show' do
       context 'for a user in their office' do
 
-        before(:each) do
+        before do
           get :show, id: user_on_admins_team.to_param
         end
 
@@ -65,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'for a user not in their office' do
 
-        before(:each) { get :show, id: user_not_on_admins_team.to_param }
+        before { get :show, id: user_not_on_admins_team.to_param }
 
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
@@ -91,7 +90,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'role' do
-        before(:each) do
+        before do
           sign_in admin_user
           get :edit, id: admin_user.to_param
         end
@@ -100,11 +99,11 @@ RSpec.describe UsersController, type: :controller do
           expect(response.body).to match admin_user.role.to_s
         end
 
-        it 'shows them all options to change their role' do
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="mi"]')
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="admin"]')
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="manager"]')
-          expect(response.body).to have_xpath('//input[@name="user[role]" and @value="user"]')
+        describe 'shows them all options to change their role' do
+          it { expect(response.body).to have_xpath('//input[@name="user[role]" and @value="mi"]') }
+          it { expect(response.body).to have_xpath('//input[@name="user[role]" and @value="admin"]') }
+          it { expect(response.body).to have_xpath('//input[@name="user[role]" and @value="manager"]') }
+          it { expect(response.body).to have_xpath('//input[@name="user[role]" and @value="user"]') }
         end
       end
     end
@@ -121,7 +120,7 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before(:each) { put :update, id: user_not_on_admins_team.to_param, user: new_attributes }
+        before { put :update, id: user_not_on_admins_team.to_param, user: new_attributes }
 
         it 'updates the requested user' do
           user_not_on_admins_team.reload
@@ -144,7 +143,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
 
-        before(:each) { put :update, id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) }
+        before { put :update, id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) }
 
         it 'assigns the user as @user' do
           expect(assigns(:user)).to eq(user_not_on_admins_team)
@@ -157,7 +156,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET #deleted' do
-      before(:each) { get :deleted }
+      before { get :deleted }
 
       it 'returns a success code' do
         expect(response).to have_http_status(:success)
@@ -169,7 +168,8 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'PATCH #restore' do
-      let!(:deleted_user) { create :user, deleted_at: Time.zone.now }
+      let(:deleted_user) { create :user, deleted_at: Time.zone.now }
+
       before do
         patch :restore, id: deleted_user.to_param
       end
@@ -190,7 +190,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'deleting another user' do
-        before(:each) { get :destroy, id: user_on_admins_team.to_param }
+        before { get :destroy, id: user_on_admins_team.to_param }
         it 'redirects to the user index' do
           expect(response).to redirect_to(users_path)
         end

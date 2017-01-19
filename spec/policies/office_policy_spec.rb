@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OfficePolicy, type: :policy do
-  let(:office) { build_stubbed(:office) }
-
   subject(:policy) { described_class.new(user, office) }
+
+  let(:office) { build_stubbed(:office) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:staff) }

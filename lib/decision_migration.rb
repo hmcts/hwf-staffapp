@@ -1,4 +1,3 @@
-# rubocop:disable MethodLength
 class DecisionMigration
   def run!
     # these queries have to run in this exact order

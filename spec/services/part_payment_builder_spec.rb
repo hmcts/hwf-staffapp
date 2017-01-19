@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 describe PartPaymentBuilder do
-  let(:current_time) { Time.zone.now }
-  let(:expires_in_days) { 2 }
   subject(:part_payment_builder) { described_class.new(application, expires_in_days) }
 
+  let(:current_time) { Time.zone.now }
+  let(:expires_in_days) { 2 }
+
   describe '#decide!' do
-    subject do
+    subject(:decide) do
       Timecop.freeze(current_time) do
         part_payment_builder.decide!
       end
@@ -20,7 +21,7 @@ describe PartPaymentBuilder do
       it { is_expected.to be_a(PartPayment) }
 
       it 'sets expiration on the payment' do
-        expect(subject.expires_at).to eql(current_time + expires_in_days.days)
+        expect(decide.expires_at).to eql(current_time + expires_in_days.days)
       end
     end
 
@@ -46,7 +47,7 @@ describe PartPaymentBuilder do
         before { allow_message_expectations_on_nil }
 
         context 'and an evidence check has been created' do
-          before { allow(application).to receive(:evidence_check).and_return(double(present?: true)) }
+          before { allow(application).to receive(:evidence_check).and_return(instance_double(EvidenceCheck, present?: true)) }
 
           context 'but not completed' do
             before { allow(application.evidence_check).to receive(:completed_at).and_return(nil) }

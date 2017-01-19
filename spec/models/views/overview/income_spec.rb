@@ -2,9 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Income do
+  subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -13,8 +13,9 @@ RSpec.describe Views::Overview::Income do
   end
 
   describe '#children??' do
-    let(:application) { build_stubbed :application, dependents: dependents }
     subject { view.children? }
+
+    let(:application) { build_stubbed :application, dependents: dependents }
 
     [true, false].each do |value|
       context "when dependents is #{value}" do
@@ -26,8 +27,9 @@ RSpec.describe Views::Overview::Income do
   end
 
   describe '#children' do
-    let(:application) { build_stubbed :application, dependents: dependents, children: children }
     subject { view.children }
+
+    let(:application) { build_stubbed :application, dependents: dependents, children: children }
 
     context 'when the applicant has dependants' do
       let(:dependents) { true }
@@ -54,8 +56,9 @@ RSpec.describe Views::Overview::Income do
   end
 
   describe '#income' do
-    let(:application) { build_stubbed :application, income: 300 }
     subject { view.income }
+
+    let(:application) { build_stubbed :application, income: 300 }
 
     it { is_expected.to eq '£300' }
   end

@@ -14,16 +14,18 @@ describe User, type: :model do
 
   describe 'scopes' do
     describe 'by_office' do
-      before { described_class.delete_all }
-      it 'filters users by office' do
-        office1 = FactoryGirl.create(:office)
-        office2 = FactoryGirl.create(:office)
-        FactoryGirl.create(:user, office: office1)
-        FactoryGirl.create_list :user, 3, office: office2
+      let(:office1) { create(:office) }
+      let(:office2) { create(:office) }
 
-        expect(described_class.by_office(office1).count).to eql(1)
-        expect(described_class.by_office(office2).count).to eql(3)
+      before do
+        described_class.delete_all
+        create(:user, office: office1)
+        create_list :user, 3, office: office2
+      end
 
+      describe 'filters users by office' do
+        it { expect(described_class.by_office(office1).count).to eq 1 }
+        it { expect(described_class.by_office(office2).count).to eq 3 }
       end
     end
   end
@@ -72,7 +74,7 @@ describe User, type: :model do
 
         context 'non white listed emails' do
           let(:invalid_email) { 'email.that.rocks@gmail.com' }
-          before(:each) { user.email = invalid_email }
+          before { user.email = invalid_email }
           error_message = I18n.t('activerecord.errors.models.user.attributes.email.invalid_email', email: Settings.mail.tech_support)
 
           it 'will not accept non white listed emails' do
@@ -97,23 +99,35 @@ describe User, type: :model do
       expect(user).to be_invalid
     end
 
-    it 'require a non-nil role' do
-      user.role = nil
-      expect(user).to be_invalid
-      expect(user.errors[:role]).to eq ["can't be blank"]
+    describe 'require a non-nil role' do
+      before do
+        user.role = nil
+        user.valid?
+      end
+
+      it { expect(user).to be_invalid }
+      it { expect(user.errors[:role]).to eq ["can't be blank"] }
     end
 
-    it 'require a valid role' do
-      user.role = 'student'
-      expect(user).to be_invalid
-      expect(user.errors[:role]).to eq ["student is not a valid role"]
+    describe 'require a valid role' do
+      before do
+        user.role = 'student'
+        user.valid?
+      end
+
+      it { expect(user).to be_invalid }
+      it { expect(user.errors[:role]).to eq ["student is not a valid role"] }
     end
 
     describe 'jurisdiction' do
-      it 'must be valid' do
-        user.jurisdiction_id = -999
-        expect(user).to be_invalid
-        expect(user.errors[:jurisdiction]).to eq ["Jurisdiction must exist"]
+      describe 'must be valid' do
+        before do
+          user.jurisdiction_id = -999
+          user.valid?
+        end
+
+        it { expect(user).to be_invalid }
+        it { expect(user.errors[:jurisdiction]).to eq ["Jurisdiction must exist"] }
       end
 
       it 'may be nil' do

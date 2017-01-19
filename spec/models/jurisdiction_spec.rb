@@ -7,12 +7,12 @@ RSpec.describe Jurisdiction, type: :model do
   it { is_expected.to have_many(:business_entities) }
 
   describe '.available_for_office' do
+    subject { described_class.available_for_office(office) }
+
     # The office factory creates BusinessEntity automatically, so we don't have to create it manually.
     let!(:office) { create :office, jurisdictions: [jurisdiction2] }
-    let!(:jurisdiction1) { create :jurisdiction }
+    let(:jurisdiction1) { create :jurisdiction }
     let!(:jurisdiction2) { create :jurisdiction }
-
-    subject { described_class.available_for_office(office) }
 
     it 'includes jurisdictions which have business entity present' do
       is_expected.to eq([jurisdiction2])
@@ -43,11 +43,12 @@ RSpec.describe Jurisdiction, type: :model do
       expect(new).to be_invalid
     end
 
-    it 'allows multiple empty abbreviations' do
-      create(:jurisdiction, name: 'High Court', abbr: nil)
-      new = create(:jurisdiction, name: 'County Court', abbr: nil)
-      expect(jurisdiction).to be_valid
-      expect(new).to be_valid
+    describe 'allows multiple empty abbreviations' do
+      let(:jurisdiction) { create(:jurisdiction, name: 'High Court', abbr: nil) }
+      let(:new) { create(:jurisdiction, name: 'County Court', abbr: nil) }
+
+      it { expect(jurisdiction).to be_valid }
+      it { expect(new).to be_valid }
     end
   end
 
@@ -75,10 +76,10 @@ RSpec.describe Jurisdiction, type: :model do
   end
 
   describe 'office' do
-    it 'can be nil' do
-      jurisdiction.offices.clear
-      expect(jurisdiction.offices.count).to eq 0
-      expect(jurisdiction).to be_valid
+    describe 'can be nil' do
+      before { jurisdiction.offices.clear }
+      it { expect(jurisdiction.offices.count).to eq 0 }
+      it { expect(jurisdiction).to be_valid }
     end
 
     it 'can be added' do

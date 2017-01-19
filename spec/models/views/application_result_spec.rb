@@ -2,10 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::ApplicationResult do
-
-  let(:application) { build_stubbed(:application) }
   subject(:view) { described_class.new(application) }
 
+  let(:application) { build_stubbed(:application) }
   let(:string_passed) { '✓ Passed' }
   let(:string_failed) { '✗ Failed' }
 
@@ -146,9 +145,9 @@ RSpec.describe Views::ApplicationResult do
   end
 
   describe '#return_type' do
-    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
-
     subject { view.return_type }
+
+    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
 
     context 'when the application has no decision_type' do
       let(:decision_type) { nil }

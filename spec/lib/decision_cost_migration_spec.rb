@@ -25,13 +25,13 @@ RSpec.describe DecisionCostMigration do
     end
 
     it 'leaves no records to be updated' do
-      expect(migration.affected_records.count).to eql 0
+      expect(migration.affected_records.count).to eq 0
     end
   end
 
   describe '.affected_records' do
     subject { migration.affected_records.count }
 
-    it { is_expected.to eql 1 }
+    it { is_expected.to eq 1 }
   end
 end

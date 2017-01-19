@@ -52,7 +52,7 @@ RSpec.describe HomeController, type: :controller do
 
       context 'as a user' do
 
-        before(:each) do
+        before do
           sign_in staff
           get :index
         end
@@ -75,7 +75,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       context 'as an admin' do
-        before(:each) do
+        before do
           Office.delete_all
           create_list :benefit_check, 2, user_id: manager.id
           sign_in admin
@@ -88,7 +88,7 @@ RSpec.describe HomeController, type: :controller do
     end
 
     context 'as a manager' do
-      before(:each) do
+      before do
         create_list :benefit_check, 2, user_id: manager.id
         sign_in manager
         get :index
@@ -109,7 +109,7 @@ RSpec.describe HomeController, type: :controller do
 
     context 'when the user is not authenticated' do
 
-      before(:each) do
+      before do
         sign_out staff
         get :index
       end
@@ -141,16 +141,16 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to render_template(:index)
       end
 
-      it 'assigns the search forms' do
-        expect(assigns(:completed_search_form)).to be_a(Forms::Search)
-        expect(assigns(:online_search_form)).to be_a(Forms::Search)
+      describe 'assigns the search forms' do
+        it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
+        it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
       end
     end
 
     context 'when reference parameter is present' do
       let(:reference) { 'whatever' }
 
-      let(:search) { double(completed: completed_result, error_message: completed_error) }
+      let(:search) { instance_double(ApplicationSearch, completed: completed_result, error_message: completed_error) }
 
       context 'when the search returns nil and an error' do
         let(:completed_result) { nil }
@@ -160,9 +160,9 @@ RSpec.describe HomeController, type: :controller do
           expect(response).to render_template(:index)
         end
 
-        it 'assigns the search form' do
-          expect(assigns(:completed_search_form)).to be_a(Forms::Search)
-          expect(assigns(:online_search_form)).to be_a(Forms::Search)
+        describe 'assigns the search form' do
+          it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
+          it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
         end
 
         it 'assigns the DwpMonitor state' do
@@ -207,9 +207,9 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to render_template(:index)
       end
 
-      it 'assigns the search forms' do
-        expect(assigns(:online_search_form)).to be_a(Forms::Search)
-        expect(assigns(:completed_search_form)).to be_a(Forms::Search)
+      describe 'assigns the search forms' do
+        it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
+        it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
       end
     end
 
@@ -223,9 +223,9 @@ RSpec.describe HomeController, type: :controller do
           expect(response).to render_template(:index)
         end
 
-        it 'assigns the search forms' do
-          expect(assigns(:online_search_form)).to be_a(Forms::Search)
-          expect(assigns(:completed_search_form)).to be_a(Forms::Search)
+        describe 'assigns the search forms' do
+          it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
+          it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
         end
 
         it 'assigns the DwpMonitor state' do

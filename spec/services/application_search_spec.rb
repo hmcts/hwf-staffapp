@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationSearch do
+  subject(:service) { described_class.new(reference, user) }
+
   include Rails.application.routes.url_helpers
   let(:reference) { nil }
   let(:user) { create :staff }
 
-  subject(:service) { described_class.new(reference, user) }
-
   it { is_expected.to respond_to :error_message }
 
   describe '#online' do
+    subject { service.online }
+
     let(:existing_reference) { 'HWF-123-ABC' }
     let(:wrong_reference) { 'HWF-WRO-NG' }
     let(:online_application) { build_stubbed(:online_application, reference: existing_reference) }
     let(:online_application_url) { edit_online_application_path(online_application) }
-
-    subject { service.online }
 
     before do
       allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(online_application)
@@ -56,7 +56,7 @@ RSpec.describe ApplicationSearch do
         service.online
       end
 
-      it { is_expected.to eql nil }
+      it { is_expected.to be nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include('view application')
@@ -73,7 +73,7 @@ RSpec.describe ApplicationSearch do
         service.online
       end
 
-      it { is_expected.to eql nil }
+      it { is_expected.to be nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include(office.name)
@@ -110,7 +110,7 @@ RSpec.describe ApplicationSearch do
   end
 
   describe '#completed' do
-    subject { service.completed }
+    subject(:service_completed) { service.completed }
 
     let(:existing_reference) { 'XYZ-123-ABC' }
     let(:wrong_reference) { 'XYZ-WRO-NG' }
@@ -167,7 +167,7 @@ RSpec.describe ApplicationSearch do
         it { is_expected.to be nil }
 
         it 'sets the correct error message' do
-          subject
+          service_completed
           expect(service.error_message).to include(office.name)
         end
       end
@@ -178,7 +178,7 @@ RSpec.describe ApplicationSearch do
         it { is_expected.to be nil }
 
         it 'sets the correct error message' do
-          subject
+          service_completed
           expect(service.error_message).to eq 'Reference number is not recognised'
         end
       end
@@ -190,7 +190,7 @@ RSpec.describe ApplicationSearch do
       it { is_expected.to be nil }
 
       it 'sets the correct error message' do
-        subject
+        service_completed
         expect(service.error_message).to eq 'Reference number is not recognised'
       end
     end

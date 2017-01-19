@@ -9,7 +9,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:savings_investments_form) { double }
   let(:benefit_form) { double }
   let(:income_form) { double }
-  let(:income_calculation_runner) { double(run: nil) }
+  let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
   let(:savings_pass_fail_service) { double }
   let(:dwp_monitor) { double }
   let(:dwp_state) { 'online' }
@@ -29,7 +29,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:builder) { double(build: application) }
+    let(:builder) { instance_double(ApplicationBuilder, build: application) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(builder)
@@ -267,14 +267,14 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
   describe 'PUT #benefits_save' do
     let(:expected_params) { { benefits: false } }
-    let(:benefit_form) { double(benefits: user_says_on_benefits) }
+    let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
     let(:user_says_on_benefits) { false }
     let(:can_override) { false }
-    let(:benefit_check_runner) { double(run: nil, can_override?: can_override) }
+    let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil, can_override?: can_override) }
 
     before do
-      expect(benefit_form).to receive(:update_attributes).with(expected_params)
-      expect(benefit_form).to receive(:save).and_return(form_save)
+      allow(benefit_form).to receive(:update_attributes).with(expected_params)
+      allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
 
       put :benefits_save, application_id: application.id, application: expected_params
@@ -367,8 +367,8 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:expected_params) { { dependents: false } }
 
     before do
-      expect(income_form).to receive(:update_attributes).with(expected_params)
-      expect(income_form).to receive(:save).and_return(form_save)
+      allow(income_form).to receive(:update_attributes).with(expected_params)
+      allow(income_form).to receive(:save).and_return(form_save)
 
       put :income_save, application_id: application.id, application: expected_params
     end
@@ -442,10 +442,10 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:current_time) { Time.zone.now }
     let(:user) { create :user }
     let(:application) { create :application_full_remission, office: user.office }
-    let(:resolver) { double(complete: nil) }
+    let(:resolver) { instance_double(ResolverService, complete: nil) }
 
     before do
-      expect(ResolverService).to receive(:new).with(application, user).and_return(resolver)
+      allow(ResolverService).to receive(:new).with(application, user).and_return(resolver)
 
       Timecop.freeze(current_time) do
         sign_in user

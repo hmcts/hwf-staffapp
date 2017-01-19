@@ -16,11 +16,11 @@ RSpec.describe BusinessEntity, type: :model do
     it { is_expected.to validate_presence_of(:valid_from) }
 
     describe 'valid_to' do
+      subject { business_entity }
+
       let(:business_entity) { build_stubbed :business_entity }
 
       before { business_entity.valid_from = Time.zone.today }
-
-      subject { business_entity }
 
       context 'when valid_to is before valid_from' do
         before { business_entity.valid_to = Time.zone.yesterday }
@@ -52,15 +52,18 @@ RSpec.describe BusinessEntity, type: :model do
   end
 
   context 'scopes' do
-    let!(:hmcts)   { create(:office, name: 'HMCTS HQ Team ') }
-    let!(:digital) { create(:office, name: 'Digital') }
+    before do
+      create(:office, name: 'HMCTS HQ Team ')
+      create(:office, name: 'Digital')
+    end
+
     let!(:bristol) { create(:office, name: 'Bristol') }
 
     describe 'non_digital' do
-      it 'excludes HQ business entities' do
+      describe 'excludes HQ business entities' do
         # each office gets 2 business_entities by default
-        expect(described_class.count).to eql(6)
-        expect(described_class.exclude_hq_teams.count).to eql(2)
+        it { expect(described_class.count).to eq 6 }
+        it { expect(described_class.exclude_hq_teams.count).to eq 2 }
       end
 
       it 'has the two bristol business entities' do
@@ -71,8 +74,9 @@ RSpec.describe BusinessEntity, type: :model do
   end
 
   describe '#current_for' do
-    let(:business_entity) { create :business_entity }
     subject { described_class.current_for(office, jurisdiction) }
+
+    let(:business_entity) { create :business_entity }
 
     context 'when passed valid variables' do
       let(:office) { business_entity.office }

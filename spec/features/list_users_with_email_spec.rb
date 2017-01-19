@@ -6,13 +6,14 @@ RSpec.feature 'User list shows emails', type: :feature do
   Warden.test_mode!
 
   let(:admin) { create :admin_user }
-  let!(:emails) do
-    (1..5).each { create :user, office: create(:office) }
+  let(:emails) do
+    5.times { create :user, office: create(:office) }
     User.pluck(:email) - [admin.email]
   end
 
   context 'as an admin' do
-    before(:each) do
+    before do
+      emails
       login_as admin
       visit '/users'
     end

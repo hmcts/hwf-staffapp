@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe IncomeCalculationRunner do
-  let(:application) { create :application, application_type: nil, outcome: nil }
-
   subject(:runner) { described_class.new(application) }
 
+  let(:application) { create :application, application_type: nil, outcome: nil }
+
   describe '#run' do
-    let(:calculation) { double(calculate: result) }
+    let(:calculation) { instance_double(IncomeCalculation, calculate: result) }
 
     before do
       allow(IncomeCalculation).to receive(:new).with(application).and_return(calculation)

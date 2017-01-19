@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Forms::BenefitsEvidence do
+  subject(:form) { described_class.new(benefit_override) }
+
   params_list = %i[evidence correct incorrect_reason]
 
   describe '.permitted_attributes' do
@@ -11,11 +13,10 @@ RSpec.describe Forms::BenefitsEvidence do
 
   let(:benefit_override) { build_stubbed :benefit_override }
 
-  subject(:form) { described_class.new(benefit_override) }
-
   describe 'validations' do
-    before { form.update_attributes(params) }
     subject { form.valid? }
+
+    before { form.update_attributes(params) }
 
     context 'for attribute "evidence"' do
       let(:params) { { evidence: evidence } }
@@ -71,14 +72,14 @@ RSpec.describe Forms::BenefitsEvidence do
   end
 
   describe '#save' do
+    subject { form.save }
+
     let(:application) { create :application }
     let(:benefit_override) { build :benefit_override, application: application }
-
-    before { form.update_attributes(params) }
-
-    subject { form.save }
     let(:updated_application) { subject && application.reload }
     let(:updated_benefit_override) { subject && benefit_override.reload }
+
+    before { form.update_attributes(params) }
 
     context 'for an invalid form' do
       let(:params) { { correct: nil } }
@@ -111,9 +112,9 @@ RSpec.describe Forms::BenefitsEvidence do
             expect(updated_application.outcome).to eql('full')
           end
 
-          it 'does persists the benefit_override with correct values' do
-            expect(updated_benefit_override).to be_persisted
-            expect(updated_benefit_override.correct).to be true
+          describe 'does persists the benefit_override with correct values' do
+            it { expect(updated_benefit_override).to be_persisted }
+            it { expect(updated_benefit_override.correct).to be true }
           end
         end
 
@@ -126,10 +127,10 @@ RSpec.describe Forms::BenefitsEvidence do
             expect(updated_application.outcome).to eql('none')
           end
 
-          it 'does persists the benefit_override with correct values' do
-            expect(updated_benefit_override).to be_persisted
-            expect(updated_benefit_override.correct).to be false
-            expect(updated_benefit_override.incorrect_reason).to eql('REASON')
+          describe 'does persists the benefit_override with correct values' do
+            it { expect(updated_benefit_override).to be_persisted }
+            it { expect(updated_benefit_override.correct).to be false }
+            it { expect(updated_benefit_override.incorrect_reason).to eql('REASON') }
           end
         end
       end

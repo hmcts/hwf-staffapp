@@ -14,10 +14,13 @@ RSpec.describe Office, type: :model do
   end
 
   context 'validations' do
-    it 'is invalid with no name' do
-      office = build(:invalid_office)
-      expect(office).not_to be_valid
-      expect(office.errors[:name]).to eq ['Enter the office name']
+    let(:office) { build(:invalid_office) }
+
+    before { office.valid? }
+
+    describe 'is invalid with no name' do
+      it { expect(office).not_to be_valid }
+      it { expect(office.errors[:name]).to eq ['Enter the office name'] }
     end
 
     it 'must have a unique name' do
@@ -34,13 +37,14 @@ RSpec.describe Office, type: :model do
       User.delete_all
       FactoryGirl.create_list :user, 3, office: office
       FactoryGirl.create :manager, office: office
-      expect(office.managers.count).to eql 1
+      expect(office.managers.count).to eq 1
     end
   end
 
   describe 'business_entities' do
-    let(:office) { create :office }
     subject { office.business_entities.count }
+
+    let(:office) { create :office }
 
     context 'before editing' do
       it { is_expected.to eq 2 }
@@ -48,7 +52,7 @@ RSpec.describe Office, type: :model do
 
     context 'after "deleting" one' do
       let(:business_entities) { BusinessEntity.where(office_id: office.id) }
-      before { business_entities.first.update_attribute(:valid_to, Time.zone.now) }
+      before { business_entities.first.update_attributes(valid_to: Time.zone.now) }
 
       it { is_expected.to eq 1 }
     end

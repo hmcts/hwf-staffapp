@@ -18,7 +18,7 @@ RSpec.describe EvidenceController, type: :routing do
       expect(get: '/evidence/1/income').to route_to('evidence#income', id: '1')
     end
 
-    it 'routes to #evidence_accuracy_save' do
+    it 'routes to #evidence_income_save' do
       expect(post: '/evidence/1/income_save').to route_to('evidence#income_save', id: '1')
     end
 

@@ -9,7 +9,7 @@ RSpec.describe UsersController, type: :controller do
 
   context 'manager' do
 
-    before(:each) do
+    before do
       User.delete_all
       Office.delete_all
       Jurisdiction.delete_all
@@ -21,24 +21,28 @@ RSpec.describe UsersController, type: :controller do
     it_behaves_like 'a user regardless of role'
 
     describe 'GET #index' do
-      it 'only shows users from the current_users office' do
-        get :index
-        expect(assigns(:users).count).to eql(3)
-        expect(User.count).to eql(5)
+      describe 'only shows users from the current_users office' do
+        before { get :index }
+
+        it { expect(assigns(:users).count).to eq 3 }
+        it { expect(User.count).to eq 5 }
       end
 
-      it 'does not show admins assigned to their office' do
-        create :admin_user, office: manager.office
-        get :index
-        expect(User.count).to eql(6)
-        expect(assigns(:users).count).to eql(3)
+      describe 'does not show admins assigned to their office' do
+        before do
+          create :admin_user, office: manager.office
+          get :index
+        end
+
+        it { expect(User.count).to eq 6 }
+        it { expect(assigns(:users).count).to eq 3 }
       end
     end
 
     describe 'GET #show' do
       context 'for a user in their office' do
 
-        before(:each) { get :show, id: user_on_my_team.to_param }
+        before { get :show, id: user_on_my_team.to_param }
 
         it 'renders the view' do
           expect(response).to render_template :show
@@ -50,14 +54,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'for a user not in their office' do
-        it 'returns a redirect code' do
-          expect {
-            bypass_rescue
-            get :show, id: user_not_my_team.to_param
-          }.to raise_error Pundit::NotAuthorizedError
-        end
-
-        it 'renders the index view' do
+        it 'returns a pundit error' do
           expect {
             bypass_rescue
             get :show, id: user_not_my_team.to_param
@@ -68,7 +65,7 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #edit' do
       context 'role' do
-        before(:each) do
+        before do
           sign_in manager
           get :edit, id: manager.to_param
         end
@@ -79,14 +76,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'for a user not in their office' do
-        it 'returns a redirect code' do
-          expect {
-            bypass_rescue
-            get :edit, id: User.last.to_param
-          }.to raise_error Pundit::NotAuthorizedError
-        end
-
-        it 'renders the index view' do
+        it 'returns a pundit error' do
           expect {
             bypass_rescue
             get :edit, id: User.last.to_param
@@ -164,7 +154,7 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before(:each) { put :update, id: user_on_my_team.to_param, user: new_attributes }
+        before { put :update, id: user_on_my_team.to_param, user: new_attributes }
 
         it "doesn't update the user's email" do
           assigns(:user)
@@ -184,14 +174,15 @@ RSpec.describe UsersController, type: :controller do
           let(:new_office) { create(:office) }
           let(:role) { 'user' }
 
-          before(:each) do
+          before do
             put :update, id: user_on_my_team.to_param, user: { office_id: new_office.id, role: role }
           end
 
-          it 'updates the user' do
-            user_on_my_team.reload
-            expect(user_on_my_team.office_id).to eq new_office.id
-            expect(user_on_my_team.role).to eq role
+          describe 'updates the user' do
+            before { user_on_my_team.reload }
+
+            it { expect(user_on_my_team.office_id).to eq new_office.id }
+            it { expect(user_on_my_team.role).to eq role }
           end
 
           it 'returns a redirect status' do

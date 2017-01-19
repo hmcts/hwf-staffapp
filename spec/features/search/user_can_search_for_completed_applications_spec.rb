@@ -12,12 +12,12 @@ RSpec.feature 'User can search for online application', type: :feature do
   let(:application_deleted) { create(:application_full_remission, :deleted_state, office: office) }
 
   let(:application_evidence_check) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
-  let!(:evidence_check) { create(:evidence_check, application: application_evidence_check) }
 
   let(:application_part_payment) { create(:application_part_remission, :waiting_for_part_payment_state, office: office) }
-  let!(:part_payment) { create(:part_payment, application: application_part_payment) }
 
   before do
+    create(:evidence_check, application: application_evidence_check)
+    create(:part_payment, application: application_part_payment)
     login_as user
   end
 

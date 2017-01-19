@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FormObject do
+  subject(:form) { Forms::FormTestClass.new(object_or_hash) }
 
   describe '.permitted_attributes' do
     it { expect(described_class.permitted_attributes).to eq({}) }
@@ -20,7 +21,6 @@ RSpec.describe FormObject do
 
   let(:application) { create :detail }
   let(:object_or_hash) { application }
-  subject(:form) { Forms::FormTestClass.new(object_or_hash) }
 
   describe '#initialize' do
     describe 'when an ActiveRecord object is passed in' do
@@ -60,13 +60,13 @@ RSpec.describe FormObject do
       allow(form).to receive(:persist!)
     end
 
-    subject { form.save }
+    subject(:form_save) { form.save }
 
     context 'when the form is valid' do
       let(:valid) { true }
 
       it 'method #persist! is called' do
-        subject
+        form_save
 
         expect(form).to have_received(:persist!)
       end
@@ -78,7 +78,7 @@ RSpec.describe FormObject do
       let(:valid) { false }
 
       it 'does not call #persist!' do
-        subject
+        form_save
 
         expect(form).not_to have_received(:persist!)
       end
@@ -89,7 +89,7 @@ RSpec.describe FormObject do
 
   describe '#i18n_scope' do
     it 'returns scope for form field attributes' do
-      expect(form.i18n_scope).to eql(:'activemodel.attributes.forms/form_test_class')
+      expect(form.i18n_scope).to be :'activemodel.attributes.forms/form_test_class'
     end
   end
 end

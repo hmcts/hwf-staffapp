@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe IncomeCalculation do
-  let(:application) { build :application_part_remission }
   subject(:calculation) { described_class.new(application, income) }
 
+  let(:application) { build :application_part_remission }
+
   describe '.calculate' do
-    subject { calculation.calculate }
+    subject(:calculated) { calculation.calculate }
     before do
       allow(application).to receive(:income).and_call_original
     end
@@ -33,26 +34,26 @@ RSpec.describe IncomeCalculation do
 
       context 'when the application has income set' do
         it 'uses the income from the application' do
-          subject
+          calculated
           expect(application).to have_received(:income).at_least(1).times
         end
 
         context 'when data for calculation is present' do
           describe 'for known scenarios' do
             CalculatorTestData.seed_data.each do |src|
-              it "scenario \##{src[:id]} passes" do
-                application.tap do |a|
-                  a.detail.fee = src[:fee]
-                  a.applicant.married = src[:married_status]
-                  a.children = src[:children]
-                  a.income = src[:income]
+              describe "scenario \##{src[:id]} passes" do
+                before do
+                  application.tap do |a|
+                    a.detail.fee = src[:fee]
+                    a.applicant.married = src[:married_status]
+                    a.children = src[:children]
+                    a.income = src[:income]
+                  end
                 end
-
-                result = subject
-                expect(result[:outcome]).to eql(src[:type])
-                expect(result[:amount_to_pay]).to eql(src[:they_pay].to_i)
-                expect(result[:min_threshold]).not_to be nil
-                expect(result[:max_threshold]).not_to be nil
+                it { expect(calculated[:outcome]).to eql(src[:type]) }
+                it { expect(calculated[:amount_to_pay]).to eql(src[:they_pay].to_i) }
+                it { expect(calculated[:min_threshold]).not_to be nil }
+                it { expect(calculated[:max_threshold]).not_to be nil }
               end
             end
           end
@@ -76,7 +77,7 @@ RSpec.describe IncomeCalculation do
       let(:income) { 1000 }
 
       it 'uses the explicit income for the calculation' do
-        subject
+        calculated
         expect(application).not_to have_received(:income)
       end
 

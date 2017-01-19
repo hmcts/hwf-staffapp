@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'users/index', type: :view do
+  subject { rendered }
 
   let(:users) { create_list(:user, 2) }
 
@@ -9,14 +10,12 @@ RSpec.describe 'users/index', type: :view do
 
   before do
     assign(:users, users)
-    allow(view).to receive(:policy).with(:user).and_return(double(new?: user_new?, list_deleted?: user_list_deleted?))
-    allow(view).to receive(:policy).with(users[0]).and_return(double(edit?: true))
-    allow(view).to receive(:policy).with(users[1]).and_return(double(edit?: false))
+    allow(view).to receive(:policy).with(:user).and_return(instance_double(UserPolicy, new?: user_new?, list_deleted?: user_list_deleted?))
+    allow(view).to receive(:policy).with(users[0]).and_return(instance_double(UserPolicy, edit?: true))
+    allow(view).to receive(:policy).with(users[1]).and_return(instance_double(UserPolicy, edit?: false))
 
     render
   end
-
-  subject { rendered }
 
   describe 'Link to change user details' do
     context 'when user has permission to change the other user\'s details' do

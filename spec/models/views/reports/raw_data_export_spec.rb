@@ -2,13 +2,13 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::RawDataExport do
+  subject(:data) { described_class.new(start_date, end_date) }
+
   let(:office) { create :office }
   let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: Time.zone.now } }
   let(:business_entity) { create :business_entity }
   let(:start_date) { Time.zone.today.-1.month }
   let(:end_date) { Time.zone.today.+1.month }
-
-  subject(:data) { described_class.new(start_date, end_date) }
 
   describe 'when initialised with valid data' do
     it { is_expected.to be_a described_class }
@@ -23,6 +23,8 @@ RSpec.describe Views::Reports::RawDataExport do
   end
 
   describe 'data returned should only include proccessed applications' do
+    subject { data.total_count }
+
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: Time.zone.now } }
     let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: Time.zone.now } }
     before do
@@ -38,8 +40,6 @@ RSpec.describe Views::Reports::RawDataExport do
       create :application_full_remission, :waiting_for_part_payment_state, shared_parameters
       create :application_full_remission, :deleted_state, shared_parameters
     end
-
-    subject { data.total_count }
 
     it { is_expected.to eq 10 }
   end

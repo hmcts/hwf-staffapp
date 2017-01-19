@@ -6,14 +6,14 @@ RSpec.describe Views::ApplicationList do
   let(:detail) { build(:detail, date_received: '2015-10-01') }
   let(:override) { nil }
   let(:completed_by) { user }
-  let(:completed_at) { Date.new(2015, 10, 02) }
+  let(:completed_at) { Date.new(2015, 10, 2) }
 
   context 'when initialized with an application' do
+    subject(:view) { described_class.new(application) }
+
     let(:application) do
       build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at, decision_override: override)
     end
-
-    subject(:view) { described_class.new(application) }
 
     describe '#id' do
       it 'returns the application id' do
@@ -76,9 +76,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#form_name' do
-      let(:detail) { build(:detail, form_name: 'NAME') }
-
       subject { view.form_name }
+
+      let(:detail) { build(:detail, form_name: 'NAME') }
 
       it 'returns the form name from the detail' do
         is_expected.to eql('NAME')
@@ -86,9 +86,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#fee' do
-      let(:detail) { build(:detail, fee: 3913) }
-
       subject { view.fee }
+
+      let(:detail) { build(:detail, fee: 3913) }
 
       it 'returns the fee formatted as a currency' do
         is_expected.to eql('£3,913')
@@ -96,9 +96,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#emergency' do
-      let(:detail) { build(:detail, emergency_reason: emergency_reason) }
-
       subject { view.emergency }
+
+      let(:detail) { build(:detail, emergency_reason: emergency_reason) }
 
       context 'when emergency reason is empty' do
         let(:emergency_reason) { nil }
@@ -150,12 +150,12 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#other' do
+      subject { view.other }
+
       let(:detail) { build(:detail, emergency_reason: emergency_reason, refund: refund) }
       let(:emergency_reason) { nil }
       let(:refund) { nil }
       let(:granted) { nil }
-
-      subject { view.other }
 
       context 'when all are empty' do
         it 'returns empty string' do
@@ -200,10 +200,10 @@ RSpec.describe Views::ApplicationList do
   end
 
   context 'when initialized with an application that was converted from an online_application' do
+    subject(:view) { described_class.new(application) }
+
     let!(:online_application) { create :online_application, :completed, :with_reference }
     let(:application) { build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at, online_application: online_application) }
-
-    subject(:view) { described_class.new(application) }
 
     describe '#paper_application?' do
       subject { view.paper_application? }
@@ -213,10 +213,10 @@ RSpec.describe Views::ApplicationList do
   end
 
   context 'when initialized with an evidence_check' do
+    subject(:view) { described_class.new(evidence_check) }
+
     let(:application) { build :application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at }
     let(:evidence_check) { build :evidence_check, application: application }
-
-    subject(:view) { described_class.new(evidence_check) }
 
     describe '#evidence_check?' do
       subject { view.evidence_check? }
@@ -226,10 +226,10 @@ RSpec.describe Views::ApplicationList do
   end
 
   context 'when initialized with a part-payment' do
+    subject(:view) { described_class.new(part_payment) }
+
     let(:application) { build :application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at }
     let(:part_payment) { build :part_payment, application: application }
-
-    subject(:view) { described_class.new(part_payment) }
 
     describe '#id' do
       it 'returns the application id' do
@@ -292,9 +292,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#form_name' do
-      let(:detail) { build(:detail, form_name: 'NAME') }
-
       subject { view.form_name }
+
+      let(:detail) { build(:detail, form_name: 'NAME') }
 
       it 'returns the form name from the detail' do
         is_expected.to eql('NAME')
@@ -302,9 +302,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#fee' do
-      let(:detail) { build(:detail, fee: 3913) }
-
       subject { view.fee }
+
+      let(:detail) { build(:detail, fee: 3913) }
 
       it 'returns the fee formatted as a currency' do
         is_expected.to eql('£3,913')
@@ -312,9 +312,9 @@ RSpec.describe Views::ApplicationList do
     end
 
     describe '#emergency' do
-      let(:detail) { build(:detail, emergency_reason: emergency_reason) }
-
       subject { view.emergency }
+
+      let(:detail) { build(:detail, emergency_reason: emergency_reason) }
 
       context 'when emergency reason is empty' do
         let(:emergency_reason) { nil }

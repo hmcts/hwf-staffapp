@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Forms::OnlineApplication do
+  subject(:form) { described_class.new(online_application) }
+
   params_list = %i[fee jurisdiction_id date_received form_name emergency emergency_reason]
 
   let(:online_application) { build_stubbed :online_application }
-  subject(:form) { described_class.new(online_application) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -33,9 +34,9 @@ RSpec.describe Forms::OnlineApplication do
   end
 
   describe '#enable_default_jurisdiction' do
-    let(:user) { create :staff, jurisdiction: jurisdiction }
-
     subject { form.jurisdiction_id }
+
+    let(:user) { create :staff, jurisdiction: jurisdiction }
 
     before { form.enable_default_jurisdiction(user) }
 
@@ -84,13 +85,13 @@ RSpec.describe Forms::OnlineApplication do
   end
 
   describe '#save' do
-    let(:online_application) { create :online_application }
-    let(:jurisdiction) { create :jurisdiction }
-
     subject do
       form.update_attributes(params)
       form.save
     end
+
+    let(:online_application) { create :online_application }
+    let(:jurisdiction) { create :jurisdiction }
 
     context 'when the params are correct' do
       let(:params) do

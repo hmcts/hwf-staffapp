@@ -35,31 +35,56 @@ RSpec.describe DecisionDateAndCostMigration do
       migration.run!
     end
 
-    it 'sets the correct decision_date and decision_cost' do
-      # for processed application without evidence check or part payment
-      application1.reload
-      expect(application1.decision_date).to eql(application1.completed_at)
-      expect(application1.decision_cost).to eq(500)
+    describe 'sets the correct decision_date and decision_cost' do
+      describe 'application1' do
+        # for processed application without evidence check or part payment
+        subject(:application) { application1 }
 
-      # for processed application without evidence check but with part payment
-      application2.reload
-      expect(application2.decision_date).to eql(application2.part_payment.completed_at)
-      expect(application2.decision_cost).to eql(400)
+        before { application.reload }
 
-      # for processed application with evidence check but with part payment
-      application3.reload
-      expect(application3.decision_date).to eql(application3.part_payment.completed_at)
-      expect(application3.decision_cost).to eql(350)
+        it { expect(application.decision_date).to eql(application1.completed_at) }
+        it { expect(application.decision_cost).to eq 500 }
+      end
 
-      # for processed application with evidence check but without part payment
-      application4.reload
-      expect(application4.decision_date).to eql(application4.evidence_check.completed_at)
-      expect(application4.decision_cost).to eql(500)
+      describe 'application2' do
+        # for processed application without evidence check but with part payment
+        subject(:application) { application2 }
 
-      # for no remission application
-      application5.reload
-      expect(application5.decision_date).to eql(application5.completed_at)
-      expect(application5.decision_cost).to eql(0)
+        before { application.reload }
+
+        it { expect(application.decision_date).to eql(application2.part_payment.completed_at) }
+        it { expect(application.decision_cost).to eq 400 }
+      end
+
+      describe 'application3' do
+        # for processed application with evidence check but with part payment
+        subject(:application) { application3 }
+
+        before { application.reload }
+
+        it { expect(application.decision_date).to eql(application3.part_payment.completed_at) }
+        it { expect(application.decision_cost).to eq 350 }
+      end
+
+      describe 'application4' do
+        # for processed application with evidence check but without part payment
+        subject(:application) { application4 }
+
+        before { application.reload }
+
+        it { expect(application.decision_date).to eql(application4.evidence_check.completed_at) }
+        it { expect(application.decision_cost).to eq 500 }
+      end
+
+      describe 'application5' do
+        # for no remission application
+        subject(:application) { application5 }
+
+        before { application.reload }
+
+        it { expect(application.decision_date).to eql(application5.completed_at) }
+        it { expect(application.decision_cost).to eq 0 }
+      end
     end
   end
 end

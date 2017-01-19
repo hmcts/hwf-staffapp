@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Views::Evidence do
-
   subject(:evidence) { described_class.new(evidence_check) }
 
   describe 'correct' do
-    let(:evidence_check) { build_stubbed(:evidence_check, correct: correct) }
-
     subject { evidence.correct }
+
+    let(:evidence_check) { build_stubbed(:evidence_check, correct: correct) }
 
     context 'when evidence is correct' do
       let(:correct) { true }
@@ -23,9 +22,9 @@ RSpec.describe Views::Evidence do
   end
 
   describe 'incorrect_reason' do
-    let(:evidence_check) { build_stubbed(:evidence_check_incorrect) }
-
     subject { evidence.incorrect_reason }
+
+    let(:evidence_check) { build_stubbed(:evidence_check_incorrect) }
 
     it 'returns the incorrect reason from the evidence check' do
       is_expected.to eql(evidence_check.incorrect_reason)
@@ -33,9 +32,9 @@ RSpec.describe Views::Evidence do
   end
 
   describe 'income' do
-    let(:evidence_check) { build_stubbed(:evidence_check, income: income) }
-
     subject { evidence.income }
+
+    let(:evidence_check) { build_stubbed(:evidence_check, income: income) }
 
     context 'when income is set' do
       let(:income) { 200 }
@@ -47,5 +46,6 @@ RSpec.describe Views::Evidence do
       let(:income) { nil }
 
       it { is_expected.to be nil }
-    end  end
+    end
+  end
 end

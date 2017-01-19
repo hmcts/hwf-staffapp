@@ -49,41 +49,67 @@ RSpec.describe DecisionMigration do
       migration.run!
     end
 
-    it 'sets decision and decision_type for processed applications when missing' do
-      # application with a completed evidence check takes its outcome as decision
-      application1.reload
-      expect(application1.decision).to eql('part')
-      expect(application1.decision_type).to eql('evidence_check')
+    describe 'application with a completed evidence check takes its outcome as decision' do
+      subject(:application) { application1 }
 
-      # application with a completed evidence check as return marks decision as none
-      application2.reload
-      expect(application2.decision).to eql('none')
-      expect(application2.decision_type).to eql('evidence_check')
+      before { application.reload }
 
-      # application with a uncompleted evidence check does not set decision
-      application3.reload
-      expect(application3.decision).to be nil
-      expect(application3.decision_type).to be nil
+      it { expect(application.decision).to eq 'part' }
+      it { expect(application.decision_type).to eq 'evidence_check' }
+    end
 
-      # application with a completed part payment takes its outcome as decision
-      application4.reload
-      expect(application4.decision).to eql('part')
-      expect(application4.decision_type).to eql('part_payment')
+    describe 'application with a completed evidence check as return marks decision as none' do
+      subject(:application) { application2 }
 
-      # application with a completed part payment as return marks decision as none
-      application5.reload
-      expect(application5.decision).to eql('none')
-      expect(application5.decision_type).to eql('part_payment')
+      before { application.reload }
 
-      # application with a uncompleted part payment does not set decision
-      application6.reload
-      expect(application6.decision).to be nil
-      expect(application6.decision_type).to be nil
+      it { expect(application.decision).to eq 'none' }
+      it { expect(application.decision_type).to eql 'evidence_check' }
+    end
 
-      # completed application
-      application7.reload
-      expect(application7.decision).to eql('full')
-      expect(application7.decision_type).to eql('application')
+    describe 'application with a uncompleted evidence check does not set decision' do
+      subject(:application) { application3 }
+
+      before { application.reload }
+
+      it { expect(application.decision).to be nil }
+      it { expect(application.decision_type).to be nil }
+    end
+
+    describe 'application with a completed part payment takes its outcome as decision' do
+      subject(:application) { application4 }
+
+      before { application.reload }
+
+      it { expect(application.decision).to eq 'part' }
+      it { expect(application.decision_type).to eq 'part_payment' }
+    end
+
+    describe 'application with a completed part payment as return marks decision as none' do
+      subject(:application) { application5 }
+
+      before { application.reload }
+
+      it { expect(application.decision).to eq 'none' }
+      it { expect(application.decision_type).to eq 'part_payment' }
+    end
+
+    describe 'application with a uncompleted part payment does not set decision' do
+      subject(:application) { application6 }
+
+      before { application.reload }
+
+      it { expect(application.decision).to be nil }
+      it { expect(application.decision_type).to be nil }
+    end
+
+    describe 'completed application' do
+      subject(:application) { application7 }
+
+      before { application.reload }
+
+      it { expect(application.decision).to eq 'full' }
+      it { expect(application.decision_type).to eq 'application' }
     end
   end
 end

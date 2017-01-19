@@ -31,7 +31,6 @@ class StateMigration
     SQL
   end
 
-  # rubocop:disable MethodLength
   def decided_sql
     <<-SQL.gsub(/^\s+\|/, '')
       |UPDATE applications

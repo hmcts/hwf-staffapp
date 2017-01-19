@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::SavingsInvestment do
-  params_list = %i[min_threshold_exceeded over_61 max_threshold_exceeded amount]
+  subject(:savings_investment_form) { described_class.new(application) }
 
-  subject { described_class.new(application) }
+  params_list = %i[min_threshold_exceeded over_61 max_threshold_exceeded amount]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -12,10 +12,10 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let!(:application) { create :single_applicant_under_61 }
+    let(:application) { create :single_applicant_under_61 }
 
     before do
-      subject.update_attributes(hash)
+      savings_investment_form.update_attributes(hash)
     end
 
     describe 'min_threshold_exceeded' do
@@ -116,13 +116,14 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe '#save' do
-    let(:saving) { create :saving }
     subject(:form) { described_class.new(saving) }
 
-    subject do
+    subject(:update_form) do
       form.update_attributes(params)
       form.save
     end
+
+    let(:saving) { create :saving }
 
     context 'when attributes are correct' do
       let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 3456 } }
@@ -130,7 +131,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
       it { is_expected.to be true }
 
       before do
-        subject
+        update_form
         saving.reload
       end
 

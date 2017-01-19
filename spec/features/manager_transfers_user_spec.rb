@@ -12,8 +12,10 @@ RSpec.feature 'Manager transfers user', type: :feature do
     let(:manager) { create :manager, office: office }
     let(:user) { create :user, office: office }
 
-    let!(:another_office) { create :office }
-    let!(:another_manager) { create :manager, office: another_office }
+    let(:another_office) { create :office }
+    let(:another_manager) { create :manager, office: another_office }
+
+    before { another_manager }
 
     scenario 'transfers user from his office to another' do
       login_as(manager)

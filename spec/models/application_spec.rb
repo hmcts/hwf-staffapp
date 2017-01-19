@@ -2,12 +2,12 @@ require 'rails_helper'
 require 'support/calculator_test_data'
 
 RSpec.describe Application, type: :model do
+  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant, detail: detail) }
 
   let(:user) { create :user }
   let(:attributes) { attributes_for :application }
   let(:applicant) { create(:applicant) }
   let(:detail) { create(:detail) }
-  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant, detail: detail) }
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:completed_by).class_name('User') }

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Income do
-  params_list = %i[income dependents children]
-
   subject { described_class.new(hash) }
+
+  params_list = %i[income dependents children]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -81,13 +81,14 @@ RSpec.describe Forms::Application::Income do
   end
 
   describe '#save' do
-    let(:application) { create :application }
     subject(:form) { described_class.new(application) }
 
-    subject do
+    subject(:update_form) do
       form.update_attributes(params)
       form.save
     end
+
+    let(:application) { create :application }
 
     context 'when attributes are correct' do
       let(:params) { { income: 500, dependents: true, children: 2 } }
@@ -95,7 +96,7 @@ RSpec.describe Forms::Application::Income do
       it { is_expected.to be true }
 
       before do
-        subject
+        update_form
         application.reload
       end
 

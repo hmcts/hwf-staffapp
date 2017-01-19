@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OverrideDecisionService, type: :service do
+  subject(:service) { described_class.new(application, form) }
 
   let(:application) { create :application, :processed_state, outcome: 'full' }
   let(:decision_override) { DecisionOverride.new(application: application) }
@@ -17,27 +18,25 @@ RSpec.describe OverrideDecisionService, type: :service do
   let(:reason) { 'foo reason bar' }
   let(:user) { create :staff }
 
-  subject(:service) { described_class.new(application, form) }
-
   it { is_expected.to be_a(described_class) }
 
   describe '#set!' do
     before { service.set! }
 
     context 'updates the application' do
-      subject { application }
+      subject(:updated_application) { application }
 
-      it { expect(subject.decision).to eql 'full' }
-      it { expect(subject.decision_type).to eql('override') }
-      it { expect(subject.decision_cost).to eql(application.detail.fee) }
+      it { expect(updated_application.decision).to eql 'full' }
+      it { expect(updated_application.decision_type).to eql('override') }
+      it { expect(updated_application.decision_cost).to eql(application.detail.fee) }
 
       it 'adds a decision_override to the application' do
-        expect(application.decision_override.present?).to be true
+        expect(updated_application.decision_override.present?).to be true
       end
 
-      it 'saves the application' do
-        expect(subject.changed?).to be false
-        expect(subject.decision_override.changed?).to be false
+      describe 'saves the application' do
+        it { expect(updated_application.changed?).to be false }
+        it { expect(updated_application.decision_override.changed?).to be false }
       end
     end
   end

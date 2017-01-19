@@ -17,7 +17,7 @@ describe BenefitCheckService do
 
     context 'passing a benefit_check object' do
 
-      before(:each) do
+      before do
         dwp_api_response 'Yes'
         described_class.new(check)
       end
@@ -33,15 +33,7 @@ describe BenefitCheckService do
       end
 
       it 'sets the benefits valid' do
-        expect(check.benefits_valid).to eql(true)
-      end
-
-      it 'sets the dwp_api_token' do
-        expect(check.dwp_api_token).to eql('T1426267181940')
-      end
-
-      it 'sets the benefits valid' do
-        expect(check.benefits_valid).to eql(true)
+        expect(check.benefits_valid).to be true
       end
 
       it 'sets the dwp_api_token' do
@@ -50,7 +42,7 @@ describe BenefitCheckService do
 
       context 'simulating a 500 error' do
 
-        before(:each) do
+        before do
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
             to_return(status: 500, body: '', headers: {})
           described_class.new(check)
@@ -61,16 +53,17 @@ describe BenefitCheckService do
         end
 
         it 'returns fail' do
-          expect(check.benefits_valid).to eql(false)
+          expect(check.benefits_valid).to be false
         end
       end
     end
+
   end
 
   context 'called with invalid params' do
     context 'when api_proxy returns undetermined' do
       let(:invalid_check) { create(:invalid_benefit_check) }
-      before(:each) do
+      before do
         dwp_api_response 'Undetermined'
         described_class.new(invalid_check)
       end
@@ -80,7 +73,7 @@ describe BenefitCheckService do
       end
 
       it 'returns fail' do
-        expect(invalid_check.benefits_valid).to eql(false)
+        expect(invalid_check.benefits_valid).to be false
       end
     end
   end

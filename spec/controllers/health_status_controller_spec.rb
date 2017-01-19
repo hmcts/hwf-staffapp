@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe HealthStatusController, type: :controller do
 
   describe 'GET #ping' do
-    before(:each) { get :ping }
+    before { get :ping }
 
     it 'returns success code' do
       expect(response).to have_http_status(:success)
@@ -38,7 +38,7 @@ RSpec.describe HealthStatusController, type: :controller do
 
   describe 'GET #healthcheck' do
     context 'when all the components are operational' do
-      before(:each) do
+      before do
         hash = {
           ok: true,
           database: {
@@ -50,7 +50,7 @@ RSpec.describe HealthStatusController, type: :controller do
             ok: true
           }
         }
-        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        allow(HealthStatus).to receive(:current_status).and_return(hash)
         get :healthcheck
       end
 
@@ -64,7 +64,7 @@ RSpec.describe HealthStatusController, type: :controller do
     end
 
     context 'when database is down' do
-      before(:each) do
+      before do
         hash = {
           ok: false,
           database: {
@@ -72,7 +72,7 @@ RSpec.describe HealthStatusController, type: :controller do
             ok: false
           }
         }
-        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        allow(HealthStatus).to receive(:current_status).and_return(hash)
         get :healthcheck
       end
 
@@ -81,12 +81,12 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eql 500
+        expect(response.status).to eq 500
       end
     end
 
     context 'when SMTP server is down' do
-      before(:each) do
+      before do
         hash = {
           ok: false,
           database: {
@@ -98,7 +98,7 @@ RSpec.describe HealthStatusController, type: :controller do
             ok: false
           }
         }
-        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        allow(HealthStatus).to receive(:current_status).and_return(hash)
         get :healthcheck
       end
 
@@ -107,13 +107,13 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eql 500
+        expect(response.status).to eq 500
       end
     end
 
     context 'when DWP proxy API is up' do
 
-      before(:each) {
+      before {
         hash = {
           ok: true,
           database: {
@@ -129,17 +129,17 @@ RSpec.describe HealthStatusController, type: :controller do
             ok: true
           }
         }
-        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        allow(HealthStatus).to receive(:current_status).and_return(hash)
         get :healthcheck
       }
 
       it 'completes successfully' do
-        expect(response.status).to eql 200
+        expect(response.status).to eq 200
       end
     end
 
     context 'when DWP proxy API is down' do
-      before(:each) do
+      before do
         hash = {
           ok: false,
           database: {
@@ -155,12 +155,12 @@ RSpec.describe HealthStatusController, type: :controller do
             ok: false
           }
         }
-        expect(HealthStatus).to receive(:current_status).and_return(hash)
+        allow(HealthStatus).to receive(:current_status).and_return(hash)
         get :healthcheck
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eql 500
+        expect(response.status).to eq 500
       end
     end
   end

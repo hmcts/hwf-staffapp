@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Forms::FinanceReport do
+  subject { report }
 
   let(:report) { described_class.new }
-  subject { report }
 
   describe 'validations' do
     before do

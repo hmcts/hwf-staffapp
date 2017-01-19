@@ -17,31 +17,25 @@ RSpec.describe BenefitCheck, type: :model do
       let(:digital_application) { create(:application, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
 
-      before(:each) do
+      before do
         digital_application.benefit_checks.new
         bristol_application.benefit_checks.new
         digital_application.save
         bristol_application.save
       end
 
-      it 'excludes dwp checks by digital staff' do
-        expect(described_class.count).to eql(2)
-        expect(described_class.non_digital.count).to eql(1)
+      describe 'excludes dwp checks by digital staff' do
+        it { expect(described_class.count).to eq 2 }
+        it { expect(described_class.non_digital.count).to eq 1 }
       end
     end
 
     describe 'checks_by_day' do
       let(:created_out_of_scope) { Time.zone.today.- 8.days }
       let(:created_in_scope) { Time.zone.today.-5.days }
-      let!(:old_check) do
-        create(:benefit_check,
-          created_at: created_out_of_scope.to_s,
-          application_id: application.id)
-      end
-      let!(:new_check) do
-        create(:benefit_check,
-          created_at: created_in_scope.to_s,
-          application_id: application.id)
+      before do
+        create(:benefit_check, created_at: created_out_of_scope.to_s, application_id: application.id)
+        create(:benefit_check, created_at: created_in_scope.to_s, application_id: application.id)
       end
       it 'finds only checks for the past week' do
         expect(described_class.checks_by_day.count).to eq 1
@@ -52,16 +46,16 @@ RSpec.describe BenefitCheck, type: :model do
       let(:digital_application) { create(:application, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
 
-      before(:each) do
+      before do
         digital_application.benefit_checks.new
         bristol_application.benefit_checks.new
         digital_application.save
         bristol_application.save
       end
 
-      it 'lists all the checks from the same office' do
-        expect(described_class.by_office(bristol.id).count).to eq 1
-        expect(described_class.by_office(digital.id).count).to eq 1
+      describe 'lists all the checks from the same office' do
+        it { expect(described_class.by_office(bristol.id).count).to eq 1 }
+        it { expect(described_class.by_office(digital.id).count).to eq 1 }
       end
     end
 
@@ -73,9 +67,9 @@ RSpec.describe BenefitCheck, type: :model do
         digital_application.save
       end
 
-      it 'lists checks by length of dwp_result' do
-        expect(described_class.by_office_grouped_by_type(digital.id).count.keys[0]).to eql('No')
-        expect(described_class.by_office_grouped_by_type(digital.id).count.keys[1]).to eql('Deceased')
+      describe 'lists checks by length of dwp_result' do
+        it { expect(described_class.by_office_grouped_by_type(digital.id).count.keys[0]).to eql('No') }
+        it { expect(described_class.by_office_grouped_by_type(digital.id).count.keys[1]).to eql('Deceased') }
       end
     end
   end

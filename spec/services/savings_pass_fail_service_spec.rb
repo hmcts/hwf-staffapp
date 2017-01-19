@@ -30,19 +30,19 @@ RSpec.describe SavingsPassFailService do
       subject { saving.fee_threshold }
 
       context 'when the fee is < £1000>' do
-        it { is_expected.to eql 3000 }
+        it { is_expected.to eq 3000 }
       end
 
       context 'when the fee is £1100' do
         let(:fee) { 1100 }
 
-        it { is_expected.to eql 4000 }
+        it { is_expected.to eq 4000 }
       end
 
       context 'when the fee is > £7000' do
         let(:fee) { 7001 }
 
-        it { is_expected.to eql 16000 }
+        it { is_expected.to eq 16000 }
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe SavingsPassFailService do
       subject { saving.passed }
 
       context 'when the savings have not exceeded the minimum threshold' do
-        it { is_expected.to eql true }
+        it { is_expected.to be true }
       end
 
       context 'when the savings have exceeded the minimum threshold' do
@@ -59,24 +59,24 @@ RSpec.describe SavingsPassFailService do
         context 'when the savings have not exceeded the maximum threshold' do
           let(:max_threshold_exceeded) { true }
 
-          it { is_expected.to eql false }
+          it { is_expected.to be false }
         end
 
         context 'when the savings have not exceeded the maximum threshold' do
-          it { is_expected.to eql false }
+          it { is_expected.to be false }
 
           context 'amount is < fee_threshold' do
             let(:fee) { 1100 }
             let(:amount) { 3900 }
 
-            it { is_expected.to eql true }
+            it { is_expected.to be true }
           end
 
           context 'amount is > fee_threshold' do
             let(:fee) { 1100 }
             let(:amount) { 4100 }
 
-            it { is_expected.to eql false }
+            it { is_expected.to be false }
           end
 
           context 'over_61 is true' do
@@ -85,7 +85,7 @@ RSpec.describe SavingsPassFailService do
             context 'maximum threshold is not true' do
               let(:max_threshold_exceeded) { false }
 
-              it { is_expected.to eql true }
+              it { is_expected.to be true }
             end
           end
         end
@@ -107,7 +107,7 @@ RSpec.describe SavingsPassFailService do
         it { is_expected.to eql 'none' }
 
         it 'persists the change' do
-          expect(saving.application.changed?).to eql false
+          expect(saving.application.changed?).to be false
         end
       end
     end

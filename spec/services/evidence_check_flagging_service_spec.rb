@@ -23,7 +23,7 @@ describe EvidenceCheckFlaggingService do
   end
 
   describe '#process_flag' do
-    subject { described_class.new(evidence_check).process_flag }
+    subject(:process_flag) { described_class.new(evidence_check).process_flag }
 
     let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
     let(:applicant) { create :applicant_with_all_details }
@@ -35,13 +35,13 @@ describe EvidenceCheckFlaggingService do
         let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
 
         it 'deactivates the flag' do
-          expect { subject && flag.reload }.to change { flag.active }.to false
+          expect { process_flag && flag.reload }.to change { flag.active }.to false
         end
       end
 
       context 'when there is no flag' do
         it 'does not create a flag' do
-          expect { subject }.not_to change { EvidenceCheckFlag.count }
+          expect { process_flag }.not_to change { EvidenceCheckFlag.count }
         end
       end
     end
@@ -51,7 +51,7 @@ describe EvidenceCheckFlaggingService do
 
       context 'when no flag exists' do
         it 'creates a new flag' do
-          expect { subject }.to change { EvidenceCheckFlag.count }.by(1)
+          expect { process_flag }.to change { EvidenceCheckFlag.count }.by(1)
         end
       end
 
@@ -59,7 +59,7 @@ describe EvidenceCheckFlaggingService do
         let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
 
         it 'increments the count on the existing flag' do
-          expect { subject && flag.reload }.to change { flag.count }.by(1)
+          expect { process_flag && flag.reload }.to change { flag.count }.by(1)
         end
       end
     end

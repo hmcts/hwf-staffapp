@@ -139,20 +139,20 @@ RSpec.describe OnlineApplicationsController, type: :controller do
         expect(response).to render_template(:show)
       end
 
-      it 'assigns the view models' do
-        expect(assigns(:applicant)).to eql(overview)
-        expect(assigns(:application_view)).to eql(overview)
-        expect(assigns(:details)).to eql(overview)
+      describe 'assigns the view models' do
+        it { expect(assigns(:applicant)).to eql(overview) }
+        it { expect(assigns(:application_view)).to eql(overview) }
+        it { expect(assigns(:details)).to eql(overview) }
       end
     end
   end
 
   describe 'POST #complete' do
     let(:application) { build_stubbed(:application) }
-    let(:application_builder) { double(build_from: application) }
-    let(:application_calculation) { double(run: nil) }
-    let(:resolver_service) { double(complete: nil) }
-    let(:pass_fail_service) { double(calculate!: nil) }
+    let(:application_builder) { instance_double(ApplicationBuilder, build_from: application) }
+    let(:application_calculation) { instance_double(ApplicationCalculation, run: nil) }
+    let(:resolver_service) { instance_double(ResolverService, complete: nil) }
+    let(:pass_fail_service) { instance_double(SavingsPassFailService, calculate!: nil) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)

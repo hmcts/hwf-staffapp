@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Delete do
+  subject(:form) { described_class.new(application) }
+
   params_list = %i[deleted_reason]
 
   let(:application) { create :application }
-
-  subject(:form) { described_class.new(application) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -18,13 +18,13 @@ RSpec.describe Forms::Application::Delete do
   end
 
   describe '#save' do
-    let(:attributes) { { deleted_reason: reason } }
-    let(:application) { create :application, deleted_reason: nil }
-
-    subject do
+    subject(:form_save) do
       form.update_attributes(attributes)
       form.save
     end
+
+    let(:attributes) { { deleted_reason: reason } }
+    let(:application) { create :application, deleted_reason: nil }
 
     context 'when the attributes are correct' do
       let(:reason) { 'SOME REASON' }
@@ -32,7 +32,7 @@ RSpec.describe Forms::Application::Delete do
       it { is_expected.to be true }
 
       it 'updates the deleted_reason field on the application' do
-        subject
+        form_save
         application.reload
 
         expect(application.deleted_reason).to eql(reason)

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "offices/show", type: :view do
+  subject { rendered }
+
   let(:office_name) { 'My office' }
   let(:jurisdictions) { build_stubbed_list(:jurisdiction, 2) }
   let!(:office) { assign(:office, build_stubbed(:office, name: office_name, jurisdictions: jurisdictions)) }
@@ -11,15 +13,13 @@ RSpec.describe "offices/show", type: :view do
   let(:business_entity_index?) { false }
 
   before do
-    allow(view).to receive(:policy).with(office).and_return(double(edit?: office_edit?))
-    allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
-    allow(view).to receive(:policy).with(:business_entity).and_return(double(index?: business_entity_index?))
+    allow(view).to receive(:policy).with(office).and_return(instance_double(OfficePolicy, edit?: office_edit?))
+    allow(view).to receive(:policy).with(:office).and_return(instance_double(OfficePolicy, index?: office_index?))
+    allow(view).to receive(:policy).with(:business_entity).and_return(instance_double(OfficePolicy, index?: business_entity_index?))
 
     sign_in user
     render
   end
-
-  subject { rendered }
 
   it 'renders the office name' do
     is_expected.to have_text("Name of office#{office_name}")

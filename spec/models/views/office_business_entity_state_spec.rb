@@ -2,11 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe Views::OfficeBusinessEntityState do
+  subject(:view) { described_class.new(office, jurisdiction) }
+
   let(:office) { create :office }
   let(:jurisdiction) { create :jurisdiction }
   let!(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
-
-  subject(:view) { described_class.new(office, jurisdiction) }
 
   it { is_expected.to respond_to(:jurisdiction_id) }
   it { is_expected.to respond_to(:jurisdiction_name) }
@@ -70,12 +70,12 @@ RSpec.describe Views::OfficeBusinessEntityState do
   end
 
   describe '#status' do
+    subject { view.status }
+
     before do
       office.business_entities.delete_all
       OfficeJurisdiction.delete_all
     end
-
-    subject { view.status }
 
     context 'when a business_entity object exists' do
       before { create :business_entity, office: office, jurisdiction: jurisdiction }
@@ -97,12 +97,12 @@ RSpec.describe Views::OfficeBusinessEntityState do
   end
 
   describe '#sequence' do
+    subject { view.sequence }
+
     before do
       office.business_entities.delete_all
       OfficeJurisdiction.delete_all
     end
-
-    subject { view.sequence }
 
     context 'when a business_entity object exists' do
       before { create :business_entity, office: office, jurisdiction: jurisdiction }

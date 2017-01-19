@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe ResolverService do
+  subject(:resolver) { described_class.new(object, user) }
+
   let(:current_time) { Time.zone.now.change(usec: 0) }
   let(:user) { create(:user) }
   let(:application_outcome) { 'part' }
@@ -12,18 +14,7 @@ describe ResolverService do
       fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference)
   end
 
-  subject(:resolver) { described_class.new(object, user) }
-
   describe '#complete' do
-    let(:evidence_check_decision) { false }
-    let(:evidence_check_selector) { double(decide!: evidence_check_decision) }
-    let(:part_payment_decision) { false }
-    let(:part_payment_builder) { double(decide!: part_payment_decision) }
-
-    before do
-      allow(EvidenceCheckSelector).to receive(:new).with(application, Fixnum).and_return(evidence_check_selector)
-    end
-
     subject(:complete) do
       Timecop.freeze(current_time) do
         resolver.complete
@@ -33,6 +24,15 @@ describe ResolverService do
     subject(:updated_application) do
       complete
       application.reload
+    end
+
+    let(:evidence_check_decision) { false }
+    let(:evidence_check_selector) { instance_double(EvidenceCheckSelector, decide!: evidence_check_decision) }
+    let(:part_payment_decision) { false }
+    let(:part_payment_builder) { instance_double(PartPaymentBuilder, decide!: part_payment_decision) }
+
+    before do
+      allow(EvidenceCheckSelector).to receive(:new).with(application, Integer).and_return(evidence_check_selector)
     end
 
     shared_examples 'application, evidence check or part payment completed' do |type, state, decided, cost|
@@ -65,11 +65,11 @@ describe ResolverService do
           expect(updated_application.decision_cost).to eql(cost)
         end
       else
-        it 'keeps the application undecided' do
-          expect(updated_application.decision).to be nil
-          expect(updated_application.decision_type).to be nil
-          expect(updated_application.decision_date).to be nil
-          expect(updated_application.decision_cost).to be nil
+        describe 'keeps the application undecided' do
+          it { expect(updated_application.decision).to be nil }
+          it { expect(updated_application.decision_type).to be nil }
+          it { expect(updated_application.decision_date).to be nil }
+          it { expect(updated_application.decision_cost).to be nil }
         end
       end
     end
@@ -101,15 +101,15 @@ describe ResolverService do
     context 'for Application' do
       let(:reference) { 'ABC' }
       let(:business_entity) { create(:business_entity) }
-      let(:be_generator) { double(attributes: { business_entity: business_entity }) }
-      let(:generator) { double(attributes: { reference: reference }) }
+      let(:be_generator) { instance_double(BusinessEntityGenerator, attributes: { business_entity: business_entity }) }
+      let(:generator) { instance_double(ReferenceGenerator, attributes: { reference: reference }) }
 
       let(:object) { application }
 
       before do
         allow(BusinessEntityGenerator).to receive(:new).and_return(be_generator)
         allow(ReferenceGenerator).to receive(:new).and_return(generator)
-        allow(PartPaymentBuilder).to receive(:new).with(application, Fixnum).and_return(part_payment_builder)
+        allow(PartPaymentBuilder).to receive(:new).with(application, Integer).and_return(part_payment_builder)
       end
 
       context 'when the application does not have an outcome' do
@@ -170,7 +170,7 @@ describe ResolverService do
       let(:object) { evidence_check }
 
       before do
-        allow(PartPaymentBuilder).to receive(:new).with(evidence_check, Fixnum).and_return(part_payment_builder)
+        allow(PartPaymentBuilder).to receive(:new).with(evidence_check, Integer).and_return(part_payment_builder)
       end
 
       context 'when the evidence check does not have an outcome' do
@@ -296,7 +296,7 @@ describe ResolverService do
       end
 
       it 'sets the decision_cost to 0' do
-        expect(updated_application.decision_cost).to eql(0)
+        expect(updated_application.decision_cost).to eq 0
       end
     end
 
@@ -318,13 +318,13 @@ describe ResolverService do
   end
 
   describe '#delete' do
-    let(:object) { application }
-
     subject(:delete) do
       Timecop.freeze(current_time) do
         resolver.delete
       end
     end
+
+    let(:object) { application }
 
     context 'when the application state is :processed and it has :deleted_reason set' do
       subject(:deleted_application) do

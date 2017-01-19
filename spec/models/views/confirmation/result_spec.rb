@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe Views::Confirmation::Result do
+  subject(:view) { described_class.new(application) }
+
   let(:application) { build_stubbed(:application) }
   let(:string_passed) { '✓ Passed' }
   let(:string_failed) { '✗ Failed' }
@@ -9,7 +11,6 @@ RSpec.describe Views::Confirmation::Result do
   let(:string_part_payment) { 'Waiting for part-payment' }
   let(:scope) { 'convert_pass_fail' }
   let(:saving) { double }
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -60,7 +61,7 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a benefit_override exists' do
-      let!(:benefit_override) { build_stubbed(:benefit_override, application: application, correct: value) }
+      before { build_stubbed(:benefit_override, application: application, correct: value) }
 
       context 'and the evidence is correct' do
         let(:value) { true }
@@ -76,16 +77,16 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a decision override exists' do
-      let!(:decision_override) { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+      before { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
 
       it { is_expected.to eq "✓ Passed (by manager's decision)" }
     end
   end
 
   describe '#income_passed?' do
-    let(:application) { build_stubbed(:application, :income_type, state: state, outcome: outcome) }
-
     subject { view.income_passed? }
+
+    let(:application) { build_stubbed(:application, :income_type, state: state, outcome: outcome) }
 
     context 'when the application is a full remission' do
       let(:state) { 3 }
@@ -113,13 +114,13 @@ RSpec.describe Views::Confirmation::Result do
     subject { view.result }
 
     context 'when an application has an evidence_check' do
-      let!(:evidence_check) { build_stubbed(:evidence_check, application: application) }
+      before { build_stubbed(:evidence_check, application: application) }
 
       it { is_expected.to eql 'callout' }
     end
 
     context 'when an application has had benefits overridden' do
-      let!(:benefit_override) { build_stubbed :benefit_override, application: application, correct: evidence_correct }
+      before { build_stubbed :benefit_override, application: application, correct: evidence_correct }
 
       context 'and the correct evidence was provided' do
         let(:evidence_correct) { true }
@@ -135,7 +136,7 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a decision override exists' do
-      let!(:decision_override) { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+      before { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
 
       it { is_expected.to eql 'granted' }
     end

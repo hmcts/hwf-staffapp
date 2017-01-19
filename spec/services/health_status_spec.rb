@@ -23,12 +23,16 @@ describe HealthStatus do
           }
         end
 
-        it 'returns false' do
-          expect(described_class).to receive(:smtp).and_return(false)
-          expect(described_class).to receive(:database).and_return(false)
-          expect(described_class).to receive(:api).and_return(false)
-          expect(described_class.current_status).to eq failure
+        before do
+          allow(described_class).to receive(:smtp).and_return(false)
+          allow(described_class).to receive(:database).and_return(false)
+          allow(described_class).to receive(:api).and_return(false)
         end
+
+        it { expect(described_class.current_status).to eq failure }
+        it { expect(described_class.smtp).to be false }
+        it { expect(described_class.database).to be false }
+        it { expect(described_class.api).to be false }
       end
 
       context "when it's working" do
@@ -50,12 +54,16 @@ describe HealthStatus do
           }
         end
 
-        it 'returns true' do
-          expect(described_class).to receive(:smtp).and_return(true)
-          expect(described_class).to receive(:database).and_return(true)
-          expect(described_class).to receive(:api).and_return(true)
-          expect(described_class.current_status).to eq success
+        before do
+          allow(described_class).to receive(:smtp).and_return(true)
+          allow(described_class).to receive(:database).and_return(true)
+          allow(described_class).to receive(:api).and_return(true)
         end
+
+        it { expect(described_class.current_status).to eq success }
+        it { expect(described_class.smtp).to be true }
+        it { expect(described_class.database).to be true }
+        it { expect(described_class.api).to be true }
       end
     end
   end

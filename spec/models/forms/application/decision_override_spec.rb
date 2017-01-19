@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::DecisionOverride do
+  subject(:form) { described_class.new(override) }
+
   params_list = %i[value reason created_by_id]
 
   let(:override) { build_stubbed :decision_override }
   let(:user) { create :staff }
-
-  subject(:form) { described_class.new(override) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -15,8 +15,9 @@ RSpec.describe Forms::Application::DecisionOverride do
   end
 
   context 'validation' do
-    before { form.update_attributes(params) }
     subject { form.valid? }
+
+    before { form.update_attributes(params) }
 
     context 'user_id' do
       let(:user_id) { nil }
@@ -110,13 +111,13 @@ RSpec.describe Forms::Application::DecisionOverride do
   end
 
   describe '#save' do
+    subject(:save_form) { form.save }
+
     let(:override) { create :decision_override }
 
     before do
       form.update_attributes(params)
     end
-
-    subject { form.save }
 
     context 'for an invalid form' do
       let(:params) { { value: nil, reason: nil, created_by_id: user.id } }
@@ -128,7 +129,7 @@ RSpec.describe Forms::Application::DecisionOverride do
 
       it { is_expected.to be true }
 
-      before { subject && override.reload }
+      before { save_form && override.reload }
 
       it 'updates the reason from the option label' do
         expect(override.reason).to eql "You've received paper evidence that the applicant is receiving benefits"
@@ -140,7 +141,7 @@ RSpec.describe Forms::Application::DecisionOverride do
 
       it { is_expected.to be true }
 
-      before { subject && override.reload }
+      before { save_form && override.reload }
 
       it 'updates the correct field on evidence check and creates reason record with explanation' do
         expect(override.reason).to eql 'foo reason bar'

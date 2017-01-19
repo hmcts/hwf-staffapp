@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GuideController, type: :controller do
   describe 'as a signed out user' do
 
-    before(:each) { get :index }
+    before { get :index }
 
     it 'returns a direct status' do
       expect(response).to have_http_status(302)
@@ -16,7 +16,7 @@ RSpec.describe GuideController, type: :controller do
 
   describe 'as a signed in user' do
 
-    before(:each) do
+    before do
       sign_in create :user
       get :index
     end

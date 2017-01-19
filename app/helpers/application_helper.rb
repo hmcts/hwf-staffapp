@@ -6,6 +6,6 @@ module ApplicationHelper
   def markdown(source)
     renderer = ::Redcarpet::Render::HTML.new(hard_wrap: true, filter_html: true)
     options = Rails.application.config.redcarpet_markdown_options
-    ::Redcarpet::Markdown.new(renderer, options).render(source).html_safe
+    ::Redcarpet::Markdown.new(renderer, options).render(source)
   end
 end

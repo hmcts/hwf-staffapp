@@ -6,14 +6,14 @@ RSpec.shared_examples 'runs benefit check record' do
   end
 
   it 'creates a BenefitCheck record' do
-    expect { subject }.to change { application.benefit_checks.count }.by(1)
+    expect { run }.to change { application.benefit_checks.count }.by(1)
   end
 
   describe 'creates BenefitCheck record which' do
     let(:benefit_check) { application.last_benefit_check }
 
     before do
-      subject
+      run
     end
 
     it 'has the applicant\'s name' do
@@ -56,11 +56,11 @@ RSpec.shared_examples 'runs benefit check record' do
   end
 
   describe 'with the created benefit check' do
-    let(:benefit_check) { double(BenefitCheck, outcome: 'full') }
+    let(:benefit_check) { instance_double(BenefitCheck, outcome: 'full') }
 
     before do
       allow(BenefitCheck).to receive(:create).and_return(benefit_check)
-      subject
+      run
       application.reload
     end
 
@@ -75,13 +75,13 @@ RSpec.shared_examples 'runs benefit check record' do
 end
 
 RSpec.describe BenefitCheckRunner do
+  subject(:service) { described_class.new(application) }
+
   let(:existing_benefit_check) { nil }
   let(:applicant) { build(:applicant_with_all_details) }
   let(:detail) { build(:complete_detail) }
   let(:outcome) { nil }
   let(:application) { create(:application, applicant: applicant, detail: detail, income: nil, outcome: outcome) }
-
-  subject(:service) { described_class.new(application) }
 
   describe '#can_run?' do
     subject { service.can_run? }
@@ -102,7 +102,7 @@ RSpec.describe BenefitCheckRunner do
       existing_benefit_check
     end
 
-    subject do
+    subject(:run) do
       service.run
     end
 
@@ -115,7 +115,7 @@ RSpec.describe BenefitCheckRunner do
         let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months) }
 
         it 'does not create a BenefitCheck record' do
-          expect { subject }.not_to change { application.benefit_checks.count }
+          expect { run }.not_to change { application.benefit_checks.count }
         end
       end
 
@@ -132,7 +132,7 @@ RSpec.describe BenefitCheckRunner do
           end
 
           it 'does not create a BenefitCheck record' do
-            expect { subject }.not_to change { application.benefit_checks.count }
+            expect { run }.not_to change { application.benefit_checks.count }
           end
         end
 
@@ -169,21 +169,21 @@ RSpec.describe BenefitCheckRunner do
       let(:applicant) { build(:applicant) }
 
       it 'does not run benefit check' do
-        expect { subject }.not_to change { application.benefit_checks.count }
+        expect { run }.not_to change { application.benefit_checks.count }
       end
 
       context 'when outcome already existed' do
         let(:outcome) { 'part' }
 
         it 'does not change the outcome' do
-          subject
+          run
           expect(application.reload.outcome).to eql('part')
         end
       end
 
       context 'when outcome was nil' do
         it 'sets outcome to none' do
-          subject
+          run
           expect(application.reload.outcome).to eql('none')
         end
       end

@@ -30,31 +30,31 @@ RSpec.describe SavingsTransformation do
     end
 
     it 'creates the saving model' do
-      expect(application1.saving.present?).to eql(true)
+      expect(application1.saving.present?).to be true
     end
 
     it 'sets `passed` to false when maximum threshold exceeded' do
-      expect(application2.saving.passed).to eql(false)
+      expect(application2.saving.passed).to be false
     end
 
     it 'sets `over_61` to true when the applicant is over_61' do
-      expect(application3.saving.over_61).to eql(true)
+      expect(application3.saving.over_61).to be true
     end
 
     it 'sets `over_61` to match partner_over_61' do
-      expect(application4.saving.over_61).to eql(true)
+      expect(application4.saving.over_61).to be true
     end
 
     it 'sets the fee_threshold to minimum when the fee is nil' do
-      expect(application5.saving.fee_threshold).to eql(3000)
+      expect(application5.saving.fee_threshold).to eq 3000
     end
 
-    it 'sets passed to equal savings_and_investments_valid? on the application' do
-      expect(application1.saving.passed).to be true
-      expect(application2.saving.passed).to be false
-      expect(application3.saving.passed).to be false
-      expect(application4.saving.passed).to be true
-      expect(application5.saving.passed).to be true
+    describe 'sets passed to equal savings_and_investments_valid? on the application' do
+      it { expect(application1.saving.passed).to be true }
+      it { expect(application2.saving.passed).to be false }
+      it { expect(application3.saving.passed).to be false }
+      it { expect(application4.saving.passed).to be true }
+      it { expect(application5.saving.passed).to be true }
     end
   end
 end

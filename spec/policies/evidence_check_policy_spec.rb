@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe EvidenceCheckPolicy, type: :policy do
+  subject(:policy) { described_class.new(user, evidence_check) }
+
   let(:office) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
   let(:evidence_check) { build_stubbed(:evidence_check, application: application) }
-
-  subject(:policy) { described_class.new(user, evidence_check) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:user) }
