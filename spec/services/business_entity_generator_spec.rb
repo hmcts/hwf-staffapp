@@ -25,8 +25,8 @@ RSpec.describe BusinessEntityGenerator, type: :service do
 
     context 'when there are two business entities for the same jurisdiction' do
       let!(:business_entity2) { create :business_entity, office: office, jurisdiction: jurisdiction, be_code: 'CB975', sop_code: '987654321' }
-      before { business_entity.update_attribute(:valid_to, Time.zone.now) }
-      
+      before { business_entity.update_attributes(valid_to: Time.zone.now) }
+
       it 'uses the active one' do
         expect(attributes[:business_entity]).to eql(business_entity2)
       end

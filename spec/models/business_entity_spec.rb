@@ -87,13 +87,13 @@ RSpec.describe BusinessEntity, type: :model do
   end
 
   describe '#code' do
-    let(:business_entity) { build_stubbed :business_entity }
-
     subject do
       Timecop.freeze(current_time) do
         business_entity.code
       end
     end
+
+    let(:business_entity) { build_stubbed :business_entity }
 
     context 'when called after the set date' do
       let(:current_time) { reference_change_date }

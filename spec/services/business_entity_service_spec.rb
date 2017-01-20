@@ -2,19 +2,20 @@
 require 'rails_helper'
 
 describe BusinessEntityService do
+  subject { service }
+
   let!(:office) { create :office }
   let!(:jurisdiction) { office.jurisdictions[0] }
   let(:service) { described_class.new(office, jurisdiction) }
-
-  subject { service }
 
   describe 'when initialized with the correct variables' do
     it { is_expected.to be_a_kind_of described_class }
   end
 
   describe '#build_new' do
+    subject(:built_new) { service.build_new(params) }
+
     let(:params) { { name: name, be_code: be_code, sop_code: sop_code } }
-    subject { service.build_new(params) }
 
     before { Timecop.freeze(current_time) }
     after { Timecop.return }
@@ -30,11 +31,11 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(built_new.persisted?).to be false
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(built_new.valid?).to be true
         end
       end
 
@@ -44,11 +45,11 @@ describe BusinessEntityService do
         let(:sop_code) { '123456789' }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(built_new.persisted?).to be false
         end
 
         it 'returns an invalid object' do
-          expect(subject.valid?).to be false
+          expect(built_new.valid?).to be false
         end
       end
     end
@@ -64,11 +65,11 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(built_new.persisted?).to be false
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(built_new.valid?).to be true
         end
       end
 
@@ -78,19 +79,20 @@ describe BusinessEntityService do
         let(:sop_code) { nil }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(built_new.persisted?).to be false
         end
 
         it 'returns an invalid object' do
-          expect(subject.valid?).to be false
+          expect(built_new.valid?).to be false
         end
       end
     end
   end
 
   describe '#build_update' do
+    subject(:build_update) { service.build_update(params) }
+
     let(:params) { { name: name, be_code: be_code, sop_code: sop_code } }
-    subject { service.build_update(params) }
     let(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
     before { Timecop.freeze(current_time) }
@@ -107,15 +109,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns a new, non-persisted object' do
-          expect(subject.persisted?).to be false
+          expect(build_update.persisted?).to be false
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has no ID' do
-          expect(subject.id).to be nil
+          expect(build_update.id).to be nil
         end
       end
 
@@ -127,15 +129,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns a new, non-persisted object' do
-          expect(subject.persisted?).to be true
+          expect(build_update.persisted?).to be true
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has the ID of the existing business_entity' do
-          expect(subject.id).to eq business_entity.id
+          expect(build_update.id).to eq business_entity.id
         end
       end
 
@@ -147,15 +149,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns the existing persisted object' do
-          expect(subject.persisted?).to be true
+          expect(build_update.persisted?).to be true
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has the ID of the existing business_entity' do
-          expect(subject.id).to eq business_entity.id
+          expect(build_update.id).to eq business_entity.id
         end
       end
 
@@ -165,11 +167,11 @@ describe BusinessEntityService do
         let(:sop_code) { '123456789' }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(build_update.persisted?).to be false
         end
 
         it 'returns an invalid object' do
-          expect(subject.valid?).to be false
+          expect(build_update.valid?).to be false
         end
       end
     end
@@ -184,15 +186,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns a new, non-persisted object' do
-          expect(subject.persisted?).to be true
+          expect(build_update.persisted?).to be true
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has the ID of the existing business_entity' do
-          expect(subject.id).to eq business_entity.id
+          expect(build_update.id).to eq business_entity.id
         end
       end
 
@@ -204,15 +206,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns a new, non-persisted object' do
-          expect(subject.persisted?).to be false
+          expect(build_update.persisted?).to be false
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has no ID' do
-          expect(subject.id).to be nil
+          expect(build_update.id).to be nil
         end
       end
 
@@ -224,15 +226,15 @@ describe BusinessEntityService do
         it { is_expected.to be_a_kind_of BusinessEntity }
 
         it 'returns the existing persisted object' do
-          expect(subject.persisted?).to be true
+          expect(build_update.persisted?).to be true
         end
 
         it 'returns a valid object' do
-          expect(subject.valid?).to be true
+          expect(build_update.valid?).to be true
         end
 
         it 'has the ID of the existing business_entity' do
-          expect(subject.id).to eq business_entity.id
+          expect(build_update.id).to eq business_entity.id
         end
       end
 
@@ -242,18 +244,18 @@ describe BusinessEntityService do
         let(:sop_code) { nil }
 
         it 'does not persist the object' do
-          expect(subject.persisted?).to be false
+          expect(build_update.persisted?).to be false
         end
 
         it 'returns an invalid object' do
-          expect(subject.valid?).to be false
+          expect(build_update.valid?).to be false
         end
       end
     end
   end
 
   describe '#build_deactivate' do
-    subject { service.build_deactivate }
+    subject(:build_deactivate) { service.build_deactivate }
 
     before do
       Timecop.freeze(current_time)
@@ -272,15 +274,15 @@ describe BusinessEntityService do
       it { is_expected.to be_a_kind_of BusinessEntity }
 
       it 'returns a persisted object' do
-        expect(subject.persisted?).to be true
+        expect(build_deactivate.persisted?).to be true
       end
 
       it 'returns a valid object' do
-        expect(subject.valid?).to be true
+        expect(build_deactivate.valid?).to be true
       end
 
       it 'has no valid_to' do
-        expect(subject.valid_to).not_to be nil
+        expect(build_deactivate.valid_to).not_to be nil
       end
     end
 
@@ -291,23 +293,23 @@ describe BusinessEntityService do
       it { is_expected.to be_a_kind_of BusinessEntity }
 
       it 'returns a persisted object' do
-        expect(subject.persisted?).to be true
+        expect(build_deactivate.persisted?).to be true
       end
 
       it 'returns a valid object' do
-        expect(subject.valid?).to be true
+        expect(build_deactivate.valid?).to be true
       end
 
       it 'has no valid_to' do
-        expect(subject.valid_to).not_to be nil
+        expect(build_deactivate.valid_to).not_to be nil
       end
     end
   end
 
   describe '#persist!' do
-    let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
-
     subject(:persist) { service.persist! }
+
+    let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
     context 'when persisting a new object' do
       before { service.build_new(name: 'Test', be_code: 'XY123', sop_code: '123456789') }

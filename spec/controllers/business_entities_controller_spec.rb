@@ -28,15 +28,16 @@ RSpec.describe BusinessEntitiesController, type: :controller do
       it { is_expected.to render_template(:index) }
 
       it 'assigns the @jurisdictions variable' do
-        expect(assigns(:jurisdictions).count).to eql 3
+        expect(assigns(:jurisdictions).count).to be 3
       end
     end
 
     describe 'GET #new' do
+      subject { response }
+
       let(:business_entity) { office.business_entities.first }
       let(:jurisdiction) { create :jurisdiction }
 
-      subject { response }
       before { sign_in admin }
 
       describe 'when an unused jurisdiction parameter is provided' do
@@ -70,9 +71,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'POST #create' do
+      subject { response }
+
       let(:jurisdiction) { create :jurisdiction }
       let(:params) { { office_id: office.id, jurisdiction_id: jurisdiction.id, business_entity: { name: 'test - jurisdiction', be_code: code, sop_code: '12345678' } } }
-      subject { response }
 
       before do
         sign_in admin
@@ -97,8 +99,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'GET #edit' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         get :edit, office_id: office.id, id: business_entity.id
@@ -114,10 +118,11 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'PUT #update' do
+      subject { response }
+
       let(:business_entity) { office.business_entities.first }
       let(:params) { { name: 'Digital - Family', be_code: code, sop_code: '123456789' } }
 
-      subject { response }
       before do
         sign_in admin
         put :update, office_id: office.id, id: business_entity.id, business_entity: params
@@ -141,8 +146,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'GET #deactivate' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         get :deactivate, office_id: office.id, id: business_entity.id
@@ -158,8 +165,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'POST #confirm_deactivate' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         post :confirm_deactivate, office_id: office.id, id: business_entity.id
@@ -187,15 +196,16 @@ RSpec.describe BusinessEntitiesController, type: :controller do
       it { is_expected.to render_template(:index) }
 
       it 'assigns the @jurisdictions variable' do
-        expect(assigns(:jurisdictions).count).to eql 3
+        expect(assigns(:jurisdictions).count).to be 3
       end
     end
 
     describe 'GET #new' do
+      subject { response }
+
       let(:business_entity) { office.business_entities.first }
       let(:jurisdiction) { create :jurisdiction }
 
-      subject { response }
       before { sign_in admin }
 
       describe 'when an unused jurisdiction parameter is provided' do
@@ -229,9 +239,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'POST #create' do
+      subject { response }
+
       let(:jurisdiction) { create :jurisdiction }
       let(:params) { { office_id: office.id, jurisdiction_id: jurisdiction.id, business_entity: { name: 'test - jurisdiction', be_code: 'code', sop_code: code } } }
-      subject { response }
 
       before do
         sign_in admin
@@ -256,8 +267,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'GET #edit' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         get :edit, office_id: office.id, id: business_entity.id
@@ -273,10 +286,11 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'PUT #update' do
+      subject { response }
+
       let(:business_entity) { office.business_entities.first }
       let(:params) { { name: 'Digital - Family', be_code: 'code', sop_code: code } }
 
-      subject { response }
       before do
         sign_in admin
         put :update, office_id: office.id, id: business_entity.id, business_entity: params
@@ -300,8 +314,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'GET #deactivate' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         get :deactivate, office_id: office.id, id: business_entity.id
@@ -317,8 +333,10 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'POST #confirm_deactivate' do
-      let(:business_entity) { office.business_entities.first }
       subject { response }
+
+      let(:business_entity) { office.business_entities.first }
+
       before do
         sign_in admin
         post :confirm_deactivate, office_id: office.id, id: business_entity.id
