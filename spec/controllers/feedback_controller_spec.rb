@@ -7,7 +7,7 @@ RSpec.describe FeedbackController, type: :controller do
 
   context 'as a signed out user' do
     describe 'GET #new' do
-      before(:each) { get :new }
+      before { get :new }
       it 'returns http redirect' do
         expect(response).to have_http_status(:redirect)
       end
@@ -18,7 +18,7 @@ RSpec.describe FeedbackController, type: :controller do
     end
 
     describe 'GET #index' do
-      before(:each) { get :index }
+      before { get :index }
       it 'returns http redirect' do
         expect(response).to have_http_status(:redirect)
       end
@@ -30,7 +30,7 @@ RSpec.describe FeedbackController, type: :controller do
   end
 
   context 'as a signed in user' do
-    before(:each) { sign_in user }
+    before { sign_in user }
 
     describe 'GET #index' do
       it 'raises Pundit error' do
@@ -42,7 +42,7 @@ RSpec.describe FeedbackController, type: :controller do
     end
 
     describe 'GET #new' do
-      before(:each) { get :new }
+      before { get :new }
       it 'returns http success' do
         expect(response).to have_http_status(:success)
       end
@@ -69,11 +69,11 @@ RSpec.describe FeedbackController, type: :controller do
   end
 
   context 'as a signed in admin' do
-    before(:each) { sign_in admin }
+    before { sign_in admin }
     let(:feedback) { build(:feedback, ideas: 'None') }
 
     describe 'GET #index' do
-      before(:each) { get :index }
+      before { get :index }
       it 'returns http success' do
         expect(response).to have_http_status(:success)
       end

@@ -2,10 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Benefits do
+  subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -14,8 +13,9 @@ RSpec.describe Views::Overview::Benefits do
   end
 
   describe '#on_benefits?' do
-    let(:application) { build_stubbed :application, benefits: benefits }
     subject { view.on_benefits? }
+
+    let(:application) { build_stubbed :application, benefits: benefits }
 
     [true, false].each do |value|
       context "when benefits is #{value}" do
@@ -30,7 +30,7 @@ RSpec.describe Views::Overview::Benefits do
     subject { view.override? }
 
     context 'when a benefit_override exists' do
-      let!(:benefit_override) { build_stubbed(:benefit_override, application: application) }
+      before { build_stubbed(:benefit_override, application: application) }
 
       it { is_expected.to eq I18n.t('convert_boolean.true') }
     end
@@ -52,7 +52,7 @@ RSpec.describe Views::Overview::Benefits do
     context 'when a benefit_override exists' do
       [true, false].each do |value|
         context "and the evidence is #{value ? 'correct' : 'incorrect'}" do
-          let!(:benefit_override) { build_stubbed(:benefit_override, application: application, correct: value) }
+          before { build_stubbed(:benefit_override, application: application, correct: value) }
 
           it { is_expected.to eq I18n.t("convert_boolean.#{value}") }
         end

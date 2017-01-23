@@ -1,3 +1,6 @@
+inherit_from:
+  - .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.3
   # Exclude anything that isn't really part of our code.
@@ -47,7 +50,7 @@ RSpec/DescribeClass:
     - spec/support/**/*
     - spec/views/**/*
 
-RSpec/FilePath:
+Rails/FilePath:
   Exclude:
     - spec/routing/**/*
 
@@ -145,6 +148,34 @@ Style/PercentLiteralDelimiters:
 
 # %w doesn't always make for clearer test data
 Style/WordArray:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/NestedGroups:
+  Max: 10
+
+RSpec/ExpectActual:
+  Exclude:
+    - 'spec/routing/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
+    - 'lib/tasks/**/*'
+
+# ---------------
+# HttpPositionalArguments is rails 5 only
+# https://github.com/bbatsov/rubocop/issues/3629
+# ---------------
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*'
 

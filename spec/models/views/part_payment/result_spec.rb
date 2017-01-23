@@ -2,10 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe Views::PartPayment::Result do
-  let(:application) { build_stubbed(:application) }
-  let(:part_payment) { build_stubbed(:part_payment, application: application) }
   subject(:view) { described_class.new(part_payment) }
 
+  let(:application) { build_stubbed(:application) }
+  let(:part_payment) { build_stubbed(:part_payment, application: application) }
   let(:string_passed) { '✓ Passed' }
   let(:string_failed) { '✗ Failed' }
 
@@ -30,9 +30,9 @@ RSpec.describe Views::PartPayment::Result do
   end
 
   describe '#reason' do
-    let(:part_payment) { build_stubbed :part_payment, application: application, incorrect_reason: reason }
-
     subject { view.reason }
+
+    let(:part_payment) { build_stubbed :part_payment, application: application, incorrect_reason: reason }
 
     context 'when the part_payment has an incorrect_reason' do
       let(:reason) { 'REASON' }

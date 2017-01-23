@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 describe EvidenceCheckSelector do
-  let(:current_time) { Time.zone.now }
-  let(:expires_in_days) { 2 }
   subject(:evidence_check_selector) { described_class.new(application, expires_in_days) }
 
+  let(:current_time) { Time.zone.now }
+  let(:expires_in_days) { 2 }
+
   describe '#decide!' do
-    subject do
+    subject(:decision) do
       Timecop.freeze(current_time) do
         evidence_check_selector.decide!
       end
@@ -52,10 +53,10 @@ describe EvidenceCheckSelector do
             is_expected.to be_a(EvidenceCheck)
           end
 
-          it { expect(subject.check_type).to eql 'random' }
+          it { expect(decision.check_type).to eql 'random' }
 
           it 'sets expiration on the evidence_check' do
-            expect(subject.expires_at).to eql(current_time + expires_in_days.days)
+            expect(decision.expires_at).to eql(current_time + expires_in_days.days)
           end
         end
 
@@ -85,7 +86,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'sets expiration on the evidence_check' do
-            expect(subject.expires_at).to eql(current_time + expires_in_days.days)
+            expect(decision.expires_at).to eql(current_time + expires_in_days.days)
           end
         end
 
@@ -104,12 +105,12 @@ describe EvidenceCheckSelector do
       context 'when the application is flagged for failed evidence check' do
         let(:applicant) { create :applicant_with_all_details }
         let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-        let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
+        before { create :evidence_check_flag, ni_number: applicant.ni_number }
 
         it { is_expected.to be_a(EvidenceCheck) }
 
         it 'sets the type to "flag"' do
-          expect(subject.check_type).to eql 'flag'
+          expect(decision.check_type).to eql 'flag'
         end
       end
     end

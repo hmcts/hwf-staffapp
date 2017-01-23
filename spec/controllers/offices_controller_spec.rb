@@ -17,7 +17,7 @@ RSpec.describe OfficesController, type: :controller do
     expectation.and_raise(Pundit::NotAuthorizedError) unless authorized
 
     expect(controller).to expectation
-    expect(controller).to receive(:verify_authorized) if authorized
+    allow(controller).to receive(:verify_authorized) if authorized
   end
 
   shared_examples 'when not authorized' do
@@ -25,22 +25,22 @@ RSpec.describe OfficesController, type: :controller do
       let(:authorized) { false }
 
       it 'raises Pundit error' do
-        expect { subject }.to raise_error(Pundit::NotAuthorizedError)
+        expect { make_request }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
   end
 
   describe 'GET #index' do
+    subject(:make_request) { get :index }
+
     before do
       mock_authorize(:office, authorized)
     end
 
-    subject { get :index }
-
     context 'when authorized' do
       let(:authorized) { true }
 
-      before { subject }
+      before { make_request }
 
       it 'renders the correct template' do
         expect(response).to render_template(:index)
@@ -55,16 +55,16 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #show' do
+    subject(:make_request) { get :show, id: office.id }
+
     before do
       mock_authorize(office, authorized)
     end
 
-    subject { get :show, id: office.id }
-
     context 'when authorized' do
       let(:authorized) { true }
 
-      before { subject }
+      before { make_request }
 
       it 'renders the correct template' do
         expect(response).to render_template(:show)
@@ -79,16 +79,16 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #new' do
+    subject(:make_request) { get :new }
+
     before do
       mock_authorize(Office, authorized)
     end
 
-    subject { get :new }
-
     context 'when authorized' do
       let(:authorized) { true }
 
-      before { subject }
+      before { make_request }
 
       it 'renders the correct template' do
         expect(response).to render_template(:new)
@@ -103,18 +103,19 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #edit' do
+    subject(:make_request) { get :edit, id: office.id }
+
     let(:assigned_jurisdiction) { create :jurisdiction }
+
     before do
       create :business_entity, office: office, jurisdiction: assigned_jurisdiction
       mock_authorize(office, authorized)
     end
 
-    subject { get :edit, id: office.id }
-
     context 'when authorized' do
       let(:authorized) { true }
 
-      before { subject }
+      before { make_request }
 
       it 'renders the correct template' do
         expect(response).to render_template(:edit)
@@ -133,6 +134,8 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'POST #create' do
+    subject(:make_request) { post :create, office: params }
+
     let(:new_office) { build_stubbed(:office) }
     let(:params) { valid_params }
 
@@ -141,15 +144,13 @@ RSpec.describe OfficesController, type: :controller do
       mock_authorize(new_office, authorized)
     end
 
-    subject { post :create, office: params }
-
     context 'when authorized' do
       let(:authorized) { true }
 
       before do
         allow(new_office).to receive(:errors).and_return(saved ? [] : [double, double])
-        expect(new_office).to receive(:save).and_return(saved)
-        subject
+        allow(new_office).to receive(:save).and_return(saved)
+        make_request
       end
 
       context 'when the office can be saved' do
@@ -185,6 +186,8 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'PUT #update' do
+    subject(:make_request) { put :update, id: existing_office.id, office: params }
+
     let(:existing_office) { office }
     let(:params) { valid_params }
 
@@ -193,18 +196,16 @@ RSpec.describe OfficesController, type: :controller do
       mock_authorize(existing_office, authorized)
     end
 
-    subject { put :update, id: existing_office.id, office: params }
-
     context 'when authorized' do
       let(:authorized) { true }
-      let(:manager_setup) { double(setup_profile?: false, in_progress?: false) }
+      let(:manager_setup) { instance_double(ManagerSetup, setup_profile?: false, in_progress?: false) }
 
       before do
         allow(ManagerSetup).to receive(:new).and_return(manager_setup)
         allow(ManagerSetup).to receive(:new).and_return(manager_setup)
         allow(existing_office).to receive(:errors).and_return(saved ? [] : [double, double])
-        expect(existing_office).to receive(:save).and_return(saved)
-        subject
+        allow(existing_office).to receive(:save).and_return(saved)
+        make_request
       end
 
       context 'when the office can be saved' do
@@ -216,14 +217,14 @@ RSpec.describe OfficesController, type: :controller do
 
         context 'when the user is a manager setting up a new office' do
           context 'when the manager needs to setup their profile' do
-            let(:manager_setup) { double(setup_profile?: true, in_progress?: true) }
+            let(:manager_setup) { instance_double(ManagerSetup, setup_profile?: true, in_progress?: true) }
 
             it 'redirects to the user edit profile page' do
               expect(response).to redirect_to(edit_user_path(user))
             end
           end
           context 'when the manager does not need to setup their profile' do
-            let(:manager_setup) { double(setup_profile?: false, in_progress?: true) }
+            let(:manager_setup) { instance_double(ManagerSetup, setup_profile?: false, in_progress?: true) }
             it 'redirects to the home page' do
               expect(response).to redirect_to(root_path)
             end

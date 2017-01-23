@@ -8,9 +8,9 @@ RSpec.describe BenefitOverridesController, type: :controller do
   let(:benefits_evidence_form) { double }
 
   before do
-    expect(Application).to receive(:find).with(application.id.to_s).and_return(application)
-    expect(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return(benefit_override)
-    expect(Forms::BenefitsEvidence).to receive(:new).with(benefit_override).and_return(benefits_evidence_form)
+    allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
+    allow(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return(benefit_override)
+    allow(Forms::BenefitsEvidence).to receive(:new).with(benefit_override).and_return(benefits_evidence_form)
     sign_in(user)
   end
 
@@ -27,17 +27,18 @@ RSpec.describe BenefitOverridesController, type: :controller do
   end
 
   describe 'POST #paper_evidence_save' do
+    subject(:post_save) { post :paper_evidence_save, params }
+
     let(:override_params) { { evidence: false } }
     let(:params) { { application_id: application.id, benefit_override: override_params } }
-    subject { post :paper_evidence_save, params }
 
     before do
-      expect(benefits_evidence_form).to receive(:update_attributes).with(override_params)
-      subject
+      allow(benefits_evidence_form).to receive(:update_attributes).with(override_params)
+      post_save
     end
 
     context 'when the form is valid' do
-      let(:benefits_evidence_form) { double(save: true) }
+      let(:benefits_evidence_form) { instance_double(Forms::BenefitsEvidence, save: true) }
 
       it 'redirects to the summary page' do
         expect(response).to redirect_to(application_summary_path(application))
@@ -45,7 +46,7 @@ RSpec.describe BenefitOverridesController, type: :controller do
     end
 
     context 'when the form is not valid' do
-      let(:benefits_evidence_form) { double(save: false) }
+      let(:benefits_evidence_form) { instance_double(Forms::BenefitsEvidence, save: false) }
 
       it 'assigns the form' do
         expect(assigns(:form)).to eql(benefits_evidence_form)

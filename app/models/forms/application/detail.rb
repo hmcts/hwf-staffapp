@@ -71,10 +71,13 @@ module Forms
       end
 
       def reason
-        errors.add(
-          :emergency_reason,
-          :cant_have_emergency_reason_without_emergency
-        ) if emergency_without_reason?
+        if emergency_without_reason?
+          errors.add(
+            :emergency_reason,
+            :cant_have_emergency_reason_without_emergency
+          )
+        end
+
         format_reason
       end
 
@@ -87,10 +90,12 @@ module Forms
       end
 
       def emergency_reason_size
-        errors.add(
-          :emergency_reason,
-          :too_long
-        ) if emergency_reason_present_and_too_long?
+        if emergency_reason_present_and_too_long?
+          errors.add(
+            :emergency_reason,
+            :too_long
+          )
+        end
       end
 
       def format_reason

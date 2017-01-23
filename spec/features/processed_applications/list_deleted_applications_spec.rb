@@ -17,7 +17,7 @@ RSpec.feature 'List deleted applications', type: :feature do
       office: user.office, deleted_at: when_deleted, deleted_by: who_deleted
   end
   let!(:application2) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-01') }
-  let!(:application3) { create :application_part_remission, :processed_state, office: user.office }
+  let(:application3) { create :application_part_remission, :processed_state, office: user.office }
   let!(:application4) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-02') }
   let!(:application5) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-03-11') }
 

@@ -3,6 +3,5 @@ class GuideController < ApplicationController
 
   respond_to :md
 
-  def index
-  end
+  def index; end
 end

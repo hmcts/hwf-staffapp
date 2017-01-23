@@ -39,14 +39,15 @@ class EvidenceCheckSelector
 
   def get_evidence_check(frequency, refund)
     position = application_position(refund)
-    (position > 1) && ((position % frequency) == 0)
+    (position > 1) && (position % frequency).zero?
   end
 
   def application_position(refund)
     Query::EvidenceCheckable.new.find_all.where(
       'applications.id <= ? AND details.refund = ?',
       @application.id,
-      refund).count
+      refund
+    ).count
   end
 
   def expires_at

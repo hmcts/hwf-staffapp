@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ReportPolicy, type: :policy do
-  let(:report) { double }
-
   subject(:policy) { described_class.new(user, report) }
+
+  let(:report) { double }
 
   context 'for staff' do
     let(:user) { build_stubbed(:staff) }
@@ -43,7 +43,6 @@ RSpec.describe ReportPolicy, type: :policy do
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
-    it { is_expected.not_to permit_action(:graphs) }
     it { is_expected.not_to permit_action(:graphs) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }

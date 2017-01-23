@@ -12,7 +12,7 @@ RSpec.feature 'Delete processed applications', type: :feature do
 
   let!(:application1) { create :application_full_remission, :processed_state, office: user.office }
   let!(:application2) { create :application_part_remission, :processed_state, office: user.office }
-  let!(:application3) { create :application_part_remission }
+  let(:application3) { create :application_part_remission }
 
   describe 'User deletes application' do
     before do

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Details do
+  subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -12,9 +12,9 @@ RSpec.describe Views::Overview::Details do
   end
 
   describe '#fee' do
-    let(:application) { build_stubbed(:application, fee: fee_amount) }
-
     subject { view.fee }
+
+    let(:application) { build_stubbed(:application, fee: fee_amount) }
 
     context 'rounds down' do
       let(:fee_amount) { 1005.49 }
@@ -61,10 +61,10 @@ RSpec.describe Views::Overview::Details do
   end
 
   describe '#jurisdiction' do
+    subject { view.jurisdiction }
+
     let(:jurisdiction) { build_stubbed(:jurisdiction) }
     let(:application) { build_stubbed(:application, jurisdiction: jurisdiction) }
-
-    subject { view.jurisdiction }
 
     it { is_expected.to eq jurisdiction.name }
   end
@@ -72,7 +72,7 @@ RSpec.describe Views::Overview::Details do
   describe 'delegated methods' do
     describe '-> Detail' do
       %i[form_name case_number deceased_name emergency_reason].each do |getter|
-        it { expect(subject.public_send(getter)).to eql(application.detail.public_send(getter)) }
+        it { expect(view.public_send(getter)).to eql(application.detail.public_send(getter)) }
       end
     end
   end

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Benefit do
+  subject { described_class.new(hash) }
+
   params_list = %i[benefits]
 
   let(:hash) { {} }
-
-  subject { described_class.new(hash) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -38,14 +38,15 @@ RSpec.describe Forms::Application::Benefit do
   end
 
   describe '#save' do
-    let(:attributes) { { benefits: benefits } }
-    let(:application) { create :application, application_type: nil, dependents: false, benefits: nil, outcome: nil }
     subject(:form) { described_class.new(application) }
 
-    subject do
+    subject(:form_update) do
       form.update_attributes(attributes)
       form.save
     end
+
+    let(:attributes) { { benefits: benefits } }
+    let(:application) { create :application, application_type: nil, dependents: false, benefits: nil, outcome: nil }
 
     context 'when the attributes are correct' do
       let(:benefits) { false }
@@ -57,7 +58,7 @@ RSpec.describe Forms::Application::Benefit do
 
         before do
           benefit_check
-          subject
+          form_update
           application.reload
         end
 

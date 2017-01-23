@@ -16,14 +16,14 @@ RSpec.describe HwfReferenceGenerator, type: :service do
       it { is_expected.to start_with 'HWF-' }
 
       it 'is 11 characters long' do
-        expect(subject.length).to eql 11
+        expect(reference.length).to eq 11
       end
     end
 
-    context 'when the generated reference number already exists', focus: true do
+    context 'when the generated reference number already exists' do
       before do
         create(:online_application, reference: 'collision')
-        expect(generator).to receive(:reference_string).and_return('collision', 'no-collision')
+        allow(generator).to receive(:reference_string).and_return('collision', 'no-collision')
       end
 
       it 'keeps generating until there is no collision' do

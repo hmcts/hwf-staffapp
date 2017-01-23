@@ -2,22 +2,22 @@
 require 'rails_helper'
 
 RSpec.describe Views::ProcessedData do
-  let(:application) { build_stubbed(:application_full_remission, :processed_state) }
-
   subject(:view) { described_class.new(application) }
 
+  let(:application) { build_stubbed(:application_full_remission, :processed_state) }
+
   describe '#application_processed' do
-    subject { view.application_processed }
+    subject(:application_processed) { view.application_processed }
 
     it 'returns the processed by data' do
-      expect(subject).to eql(on: application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.completed_by.name, text: nil)
+      expect(application_processed).to eql(on: application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.completed_by.name, text: nil)
     end
 
     context 'when an emergency reason was given' do
       let(:application) { build_stubbed(:application_full_remission, :processed_state, emergency_reason: 'foo bar') }
 
       it 'is returned' do
-        expect(subject).to eql(on: application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.completed_by.name, text: 'Reason for emergency: "foo bar"')
+        expect(application_processed).to eql(on: application.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.completed_by.name, text: 'Reason for emergency: "foo bar"')
       end
     end
 
@@ -25,34 +25,34 @@ RSpec.describe Views::ProcessedData do
       let(:application) { build_stubbed(:application_full_remission, :processed_state, completed_by: nil, completed_at: nil, emergency_reason: 'foo bar') }
 
       it 'returns nil for the missing fields' do
-        expect(subject).to eql(on: nil, by: nil, text: 'Reason for emergency: "foo bar"')
+        expect(application_processed).to eql(on: nil, by: nil, text: 'Reason for emergency: "foo bar"')
       end
     end
   end
 
   describe '#application_override' do
+    subject(:application_override) { view.application_override }
+
     let(:application) { create(:application, :confirm, :processed_state) }
-    let!(:decision_override) { create :decision_override, application: application }
-    subject { view.application_override }
+    before { create :decision_override, application: application }
 
     it 'returns the override data' do
-      expect(subject).to eql(on: application.decision_override.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.decision_override.user.name, text: 'Reason granted: "My reasons"')
+      expect(application_override).to eql(on: application.decision_override.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.decision_override.user.name, text: 'Reason granted: "My reasons"')
     end
   end
 
   describe '#application_deleted' do
+    subject(:application_deleted) { view.application_deleted }
+
     let(:application) { build_stubbed(:application_full_remission, :processed_state, :deleted_state) }
 
-    subject { view.application_deleted }
-
     it 'returns the processed by data' do
-      expect(subject).to eql(on: application.deleted_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.deleted_by.name, text: 'Reason for deletion: "I did not like it"')
+      expect(application_deleted).to eql(on: application.deleted_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.deleted_by.name, text: 'Reason for deletion: "I did not like it"')
     end
 
   end
 
   describe '#evidence_check_processed' do
-
     subject { view.evidence_check_processed }
 
     context 'when the application was completed in a single pass' do
@@ -84,7 +84,6 @@ RSpec.describe Views::ProcessedData do
   end
 
   describe '#part_payment_processed' do
-
     subject { view.part_payment_processed }
 
     context 'when the application was completed in a single pass' do

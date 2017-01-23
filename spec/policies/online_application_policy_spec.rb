@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OnlineApplicationPolicy, type: :policy do
-  let(:online_application) { build_stubbed(:online_application) }
-
   subject(:policy) { described_class.new(user, online_application) }
+
+  let(:online_application) { build_stubbed(:online_application) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:staff) }

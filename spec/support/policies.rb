@@ -13,8 +13,7 @@ RSpec::Matchers.define :permit_action do |action|
 end
 
 module PolicyViewSpecHelper
-  def policy(*args)
-  end
+  def policy(*args); end
 end
 
 RSpec.configure do |c|

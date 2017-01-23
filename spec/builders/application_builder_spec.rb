@@ -18,57 +18,57 @@ RSpec.describe ApplicationBuilder do
       end
     end
 
-    it 'builds and returns non persisted Application' do
-      is_expected.to be_a(Application)
-      is_expected.not_to be_persisted
+    describe 'builds and returns non persisted Application' do
+      it { is_expected.to be_a(Application) }
+      it { is_expected.not_to be_persisted }
     end
 
     describe 'the application' do
       it 'has the user stored' do
-        expect(subject.user).to eql(user)
+        expect(build_result.user).to eql(user)
       end
 
       it 'has office assigned from the user' do
-        expect(subject.office).to eql(user.office)
+        expect(build_result.office).to eql(user.office)
       end
 
-      it 'has applicant record built' do
-        expect(subject.applicant).to be_a(Applicant)
-        expect(subject.applicant).not_to be_persisted
+      describe 'has applicant record built' do
+        it { expect(build_result.applicant).to be_a(Applicant) }
+        it { expect(build_result.applicant).not_to be_persisted }
       end
 
-      it 'has detail record built' do
-        expect(subject.detail).to be_a(Detail)
-        expect(subject.detail).not_to be_persisted
+      describe 'has detail record built' do
+        it { expect(build_result.detail).to be_a(Detail) }
+        it { expect(build_result.detail).not_to be_persisted }
       end
 
-      it 'has saving record built' do
-        expect(subject.saving).to be_a(Saving)
-        expect(subject.saving).not_to be_persisted
+      describe 'has saving record built' do
+        it { expect(build_result.saving).to be_a(Saving) }
+        it { expect(build_result.saving).not_to be_persisted }
       end
 
       it 'has jurisdiction assigned to the detail from the user' do
-        expect(subject.detail.jurisdiction).to eql(user.jurisdiction)
+        expect(build_result.detail.jurisdiction).to eql(user.jurisdiction)
       end
 
       it 'does not have reference set' do
-        expect(subject.reference).to be nil
+        expect(build_result.reference).to be nil
       end
     end
   end
 
   describe '#build_from' do
-    let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed) }
-
     subject(:built_application) do
       Timecop.freeze(current_time) do
         application_builder.build_from(online_application)
       end
     end
 
-    it 'builds and returns non persisted Application' do
-      is_expected.to be_a(Application)
-      is_expected.not_to be_persisted
+    let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed) }
+
+    describe 'builds and returns non persisted Application' do
+      it { is_expected.to be_a(Application) }
+      it { is_expected.not_to be_persisted }
     end
 
     describe 'the application' do
@@ -107,7 +107,7 @@ RSpec.describe ApplicationBuilder do
           let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, income: nil, income_min_threshold_exceeded: false) }
 
           it 'has income_min_threshold_exceeded assigned' do
-            expect(built_application.income_min_threshold_exceeded).to eql(false)
+            expect(built_application.income_min_threshold_exceeded).to be false
           end
         end
 
@@ -115,7 +115,7 @@ RSpec.describe ApplicationBuilder do
           let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, income: nil, income_max_threshold_exceeded: true) }
 
           it 'has income_max_threshold_exceeded assigned' do
-            expect(built_application.income_max_threshold_exceeded).to eql(true)
+            expect(built_application.income_max_threshold_exceeded).to be true
           end
         end
       end
@@ -128,7 +128,7 @@ RSpec.describe ApplicationBuilder do
         end
 
         it 'has the children number set' do
-          expect(built_application.children).to eql(2)
+          expect(built_application.children).to eq 2
         end
       end
 
@@ -140,7 +140,7 @@ RSpec.describe ApplicationBuilder do
         end
 
         it 'has the children number set as 0' do
-          expect(built_application.children).to eql(0)
+          expect(built_application.children).to eq 0
         end
       end
 
@@ -156,9 +156,9 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
-      it 'has applicant record built' do
-        expect(built_application.applicant).to be_a(Applicant)
-        expect(built_application.applicant).not_to be_persisted
+      describe 'has applicant record built' do
+        it { expect(built_application.applicant).to be_a(Applicant) }
+        it { expect(built_application.applicant).not_to be_persisted }
       end
 
       describe 'the applicant' do
@@ -171,9 +171,9 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
-      it 'has detail record built' do
-        expect(built_application.detail).to be_a(Detail)
-        expect(built_application.detail).not_to be_persisted
+      describe 'has detail record built' do
+        it { expect(built_application.detail).to be_a(Detail) }
+        it { expect(built_application.detail).not_to be_persisted }
       end
 
       describe 'the detail' do
@@ -186,9 +186,9 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
-      it 'has savings record built' do
-        expect(built_application.saving).to be_a(Saving)
-        expect(built_application.saving).not_to be_persisted
+      describe 'has savings record built' do
+        it { expect(built_application.saving).to be_a(Saving) }
+        it { expect(built_application.saving).not_to be_persisted }
       end
 
       describe 'the saving' do

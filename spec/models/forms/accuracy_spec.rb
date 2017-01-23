@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Accuracy do
+  subject(:form) { described_class.new(evidence) }
+
   params_list = %i[correct incorrect_reason]
 
   let(:evidence) { build_stubbed :evidence_check }
-  subject(:form) { described_class.new(evidence) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -65,13 +66,13 @@ RSpec.describe Forms::Accuracy do
   end
 
   describe '#save' do
+    subject(:form_save) { form.save }
+
     let(:evidence) { create :evidence_check }
 
     before do
       form.update_attributes(params)
     end
-
-    subject { form.save }
 
     context 'for an invalid form' do
       let(:params) { { correct: nil } }
@@ -84,7 +85,7 @@ RSpec.describe Forms::Accuracy do
 
       it { is_expected.to be true }
 
-      before { subject && evidence.reload }
+      before { form_save && evidence.reload }
 
       it 'updates the correct field on evidence check' do
         expect(evidence.correct).to be true
@@ -101,11 +102,11 @@ RSpec.describe Forms::Accuracy do
 
       it { is_expected.to be true }
 
-      before { subject && evidence.reload }
+      before { form_save && evidence.reload }
 
-      it 'updates the correct field on evidence check and creates reason record with explanation' do
-        expect(evidence.correct).to be false
-        expect(evidence.incorrect_reason).to eql(incorrect_reason)
+      describe 'updates the correct field on evidence check and creates reason record with explanation' do
+        it { expect(evidence.correct).to be false }
+        it { expect(evidence.incorrect_reason).to eql(incorrect_reason) }
       end
     end
   end

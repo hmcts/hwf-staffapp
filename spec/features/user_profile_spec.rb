@@ -10,7 +10,7 @@ RSpec.feature 'User profile', type: :feature do
 
   context 'as a user' do
 
-    before(:each) do
+    before do
       login_as user
       visit '/'
     end
@@ -61,7 +61,7 @@ RSpec.feature 'User profile', type: :feature do
     end
 
     context 'edit' do
-      before(:each) { visit edit_user_path user.id }
+      before { visit edit_user_path user.id }
 
       scenario 'their profile' do
         ['Change details',
@@ -77,7 +77,7 @@ RSpec.feature 'User profile', type: :feature do
 
     context 'update their profile' do
       let(:new_name) { 'New user name' }
-      before(:each) do
+      before do
         visit edit_user_path user.id
         fill_in 'user_name', with: new_name
         click_button 'Save changes'

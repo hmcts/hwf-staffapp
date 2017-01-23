@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationPolicy, type: :policy do
+  subject(:policy) { described_class.new(user, application) }
+
   let(:office) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
-
-  subject(:policy) { described_class.new(user, application) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:user) }
@@ -70,11 +70,11 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
   describe ApplicationPolicy::Scope do
     describe '#resolve' do
-      let(:office) { create :office }
-      let!(:application1) { create :application }
-      let!(:application2) { create :application, office: office }
-
       subject { described_class.new(user, Application).resolve }
+
+      let(:office) { create :office }
+      let(:application1) { create :application }
+      let!(:application2) { create :application, office: office }
 
       context 'for a regular user' do
         let(:user) { create(:user, office: office) }

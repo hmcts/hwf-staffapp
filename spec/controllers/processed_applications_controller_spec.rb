@@ -30,13 +30,12 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     let(:view2) { double }
     let(:scope) { double }
     let(:relation) { MockRelation.new([application1, application2]) }
-    let(:query) { double(find: scope) }
+    let(:query) { instance_double(Query::ProcessedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
 
     class MockRelation < Array
-      def paginate(_options)
-      end
+      def paginate(_options); end
     end
 
     before do
@@ -145,10 +144,10 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   describe 'PUT #update' do
     let(:expected_params) { { deleted_reason: 'REASON' } }
-    let(:resolver) { double(delete: true) }
+    let(:resolver) { instance_double(ResolverService, delete: true) }
 
     before do
-      expect(delete_form).to receive(:update_attributes).with(expected_params)
+      allow(delete_form).to receive(:update_attributes).with(expected_params)
       allow(delete_form).to receive(:save).and_return(form_save)
       allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 

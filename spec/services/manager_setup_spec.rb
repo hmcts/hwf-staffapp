@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ManagerSetup, type: :service do
-  let(:session_key) { described_class::SESSION_KEY }
+  subject(:manager_setup) { described_class.new(user, session) }
 
+  let(:session_key) { described_class::SESSION_KEY }
   let(:user) { double }
   let(:session) { {} }
-  subject(:manager_setup) { described_class.new(user, session) }
 
   describe '#setup_office?' do
     subject { manager_setup.setup_office? }

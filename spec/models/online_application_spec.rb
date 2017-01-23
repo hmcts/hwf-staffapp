@@ -25,8 +25,9 @@ RSpec.describe OnlineApplication, type: :model do
   it { is_expected.to validate_uniqueness_of(:reference) }
 
   describe '#full_name' do
-    let(:online_application) { build(:online_application, first_name: 'Mary', last_name: 'Smith', title: title) }
     subject { online_application.full_name }
+
+    let(:online_application) { build(:online_application, first_name: 'Mary', last_name: 'Smith', title: title) }
 
     context 'when title is present' do
       let(:title) { 'Mrs.' }
@@ -52,13 +53,13 @@ RSpec.describe OnlineApplication, type: :model do
     context 'when an application exists that is linked to this online_application' do
       let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
 
-      it { is_expected.to eql true }
+      it { is_expected.to be true }
     end
 
     context 'when no application exists that is linked to this online_application' do
       let(:online_application) { create :online_application, :completed, :with_reference }
 
-      it { is_expected.to eql false }
+      it { is_expected.to be false }
     end
   end
 
@@ -75,7 +76,7 @@ RSpec.describe OnlineApplication, type: :model do
     context 'when no application exists that is linked to this online_application' do
       let(:online_application) { create :online_application, :completed, :with_reference }
 
-      it { is_expected.to eql nil }
+      it { is_expected.to be nil }
     end
   end
 end

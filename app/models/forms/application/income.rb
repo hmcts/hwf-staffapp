@@ -20,10 +20,12 @@ module Forms
       private
 
       def number_of_children_when_no_dependents
-        errors.add(
-          :children,
-          :cant_have_children_assigned
-        ) if children_declared_but_dependents_arent?
+        if children_declared_but_dependents_arent?
+          errors.add(
+            :children,
+            :cant_have_children_assigned
+          )
+        end
       end
 
       def children_declared_but_dependents_arent?

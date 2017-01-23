@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Applicant do
+  subject(:created_applicant) { described_class.new(personal_information) }
+
   params_list = %i[last_name date_of_birth married title first_name ni_number]
 
   let(:personal_information) { attributes_for :personal_information }
-  subject { described_class.new(personal_information) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -21,43 +22,43 @@ RSpec.describe Forms::Application::Applicant do
       context 'when the date_of_birth is less than minimum age allowed' do
         before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
 
-        it { expect(subject.valid?).not_to be true }
+        it { expect(created_applicant.valid?).not_to be true }
 
         describe 'error message' do
-          before { subject.valid? }
+          before { created_applicant.valid? }
           let(:error) { ["The applicant can't be under #{described_class::MINIMUM_AGE} years old"] }
 
-          it { expect(subject.errors[:date_of_birth]).to eql error }
+          it { expect(created_applicant.errors[:date_of_birth]).to eql error }
         end
       end
 
       context 'when the date_of_birth exceeds maximum allowed age' do
         before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MAXIMUM_AGE + 1).years }
 
-        it { expect(subject.valid?).not_to be true }
+        it { expect(created_applicant.valid?).not_to be true }
 
         describe 'error message' do
-          before { subject.valid? }
+          before { created_applicant.valid? }
           let(:error) { ["The applicant can't be over #{described_class::MAXIMUM_AGE} years old"] }
 
-          it { expect(subject.errors[:date_of_birth]).to eql error }
+          it { expect(created_applicant.errors[:date_of_birth]).to eql error }
         end
       end
 
       context 'when the date_of_birth is a non date value' do
         before { personal_information[:date_of_birth] = 'some string' }
 
-        it { expect(subject.valid?).not_to be true }
+        it { expect(created_applicant.valid?).not_to be true }
       end
 
       context 'when the the date_of_birth is passed a two digit year' do
         before { personal_information[:date_of_birth] = '1/11/80' }
 
-        it { expect(subject.valid?).not_to be true }
+        it { expect(created_applicant.valid?).not_to be true }
 
         it 'returns an error message, if omitted' do
-          subject.valid?
-          expect(subject.errors[:date_of_birth]).to eq ['Enter a valid date of birth']
+          created_applicant.valid?
+          expect(created_applicant.errors[:date_of_birth]).to eq ['Enter a valid date of birth']
         end
       end
     end
@@ -66,19 +67,19 @@ RSpec.describe Forms::Application::Applicant do
       context 'when true' do
         before { personal_information[:married] = true }
 
-        it { expect(subject.valid?).to be true }
+        it { expect(created_applicant.valid?).to be true }
       end
 
       context 'when false' do
         before { personal_information[:married] = false }
 
-        it { expect(subject.valid?).to be true }
+        it { expect(created_applicant.valid?).to be true }
       end
 
       context 'when not a boolean value' do
         before { personal_information[:married] = 'string' }
 
-        it { expect(subject.valid?).to be false }
+        it { expect(created_applicant.valid?).to be false }
       end
     end
 
@@ -87,39 +88,39 @@ RSpec.describe Forms::Application::Applicant do
         before { personal_information[:ni_number] = 'AB112233A' }
 
         it 'passes validation' do
-          expect(subject.valid?).to be true
+          expect(created_applicant.valid?).to be true
         end
       end
 
       context 'when blank' do
-        before { subject.ni_number = '' }
+        before { created_applicant.ni_number = '' }
 
         it 'passes validation' do
-          expect(subject.valid?).to be true
+          expect(created_applicant.valid?).to be true
         end
       end
 
       context 'when invalid' do
-        before { subject.ni_number = 'FOOBAR' }
+        before { created_applicant.ni_number = 'FOOBAR' }
 
         it 'passes validation' do
-          expect(subject.valid?).to be false
+          expect(created_applicant.valid?).to be false
         end
       end
 
       context 'when passed in as lower case' do
-        before { subject.ni_number = 'ab112233a' }
+        before { created_applicant.ni_number = 'ab112233a' }
 
         it 'up-cases it to pass the validation' do
-          expect(subject.valid?).to be true
+          expect(created_applicant.valid?).to be true
         end
       end
 
       context 'when white space is passed in' do
-        before { subject.ni_number = ' AB112233A' }
+        before { created_applicant.ni_number = ' AB112233A' }
 
         it 'strips it away to pass the validation' do
-          expect(subject.valid?).to be true
+          expect(created_applicant.valid?).to be true
         end
       end
     end
@@ -129,18 +130,18 @@ RSpec.describe Forms::Application::Applicant do
           before { personal_information[attribute.to_sym] = 'Mr' }
 
           it 'passes validation' do
-            expect(subject.valid?).to be true
+            expect(created_applicant.valid?).to be true
           end
         end
 
         context 'when white space is passed in' do
           before do
             personal_information[attribute.to_sym] = ' sm it '
-            subject.valid?
+            created_applicant.valid?
           end
 
           it 'strips it away' do
-            expect(subject.send(attribute)).to eql('sm it')
+            expect(created_applicant.send(attribute)).to eql('sm it')
           end
         end
       end
@@ -176,13 +177,14 @@ RSpec.describe Forms::Application::Applicant do
   end
 
   describe '#save' do
-    let(:applicant) { create :applicant }
     subject(:form) { described_class.new(applicant) }
 
-    subject do
+    subject(:form_save) do
       form.update_attributes(params)
       form.save
     end
+
+    let(:applicant) { create :applicant }
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }
@@ -202,7 +204,7 @@ RSpec.describe Forms::Application::Applicant do
       it { is_expected.to be true }
 
       before do
-        subject
+        form_save
         applicant.reload
       end
 

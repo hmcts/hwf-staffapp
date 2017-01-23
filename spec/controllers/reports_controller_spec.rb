@@ -55,7 +55,8 @@ RSpec.describe ReportsController, type: :controller do
         it 'sets the filename' do
           expect(response.headers['Content-Disposition']).to include('finance-report-')
         end
-        it 'sets the filename' do
+
+        it 'sets the file type' do
           expect(response.headers['Content-Type']).to include('text/csv')
         end
       end
@@ -71,7 +72,7 @@ RSpec.describe ReportsController, type: :controller do
       it { is_expected.to render_template :graphs }
 
       it 'populates a list of report_data' do
-        expect(assigns(:report_data).count).to eql(1)
+        expect(assigns(:report_data).count).to eq 1
       end
     end
 
@@ -130,7 +131,8 @@ RSpec.describe ReportsController, type: :controller do
         it 'sets the filename' do
           expect(response.headers['Content-Disposition']).to include('help-with-fees-extract-')
         end
-        it 'sets the filename' do
+
+        it 'sets the file type' do
           expect(response.headers['Content-Type']).to include('text/csv')
         end
       end

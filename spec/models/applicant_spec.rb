@@ -9,14 +9,14 @@ RSpec.describe Applicant, type: :model do
 
   describe 'before validation' do
     describe 'format ni_number' do
+      subject { applicant.ni_number }
+
       let(:expected_ni_number) { 'JN010203A' }
       let(:applicant) { build :applicant, application: application, ni_number: ni_number }
 
       before do
         applicant.valid?
       end
-
-      subject { applicant.ni_number }
 
       context 'with lower case letters' do
         let(:ni_number) { 'jn 01 02 03 a' }
@@ -51,10 +51,10 @@ RSpec.describe Applicant, type: :model do
   end
 
   describe 'validation' do
+    subject { applicant.valid? }
+
     let(:expected_ni_number) { 'JN010203A' }
     let(:applicant) { build :applicant, application: application, ni_number: ni_number }
-
-    subject { applicant.valid? }
 
     describe 'of ni_number' do
       context 'when nil' do
@@ -136,16 +136,16 @@ RSpec.describe Applicant, type: :model do
   end
 
   describe '#over_61?' do
-    let(:current_time) { Time.zone.parse('2016-03-04') }
-    let(:dob_over) { Time.zone.parse('1955-03-01') }
-    let(:dob_under) { Time.zone.parse('1965-03-01') }
-    let(:applicant) { build :applicant, application: application, date_of_birth: date_of_birth }
-
     subject do
       Timecop.freeze(current_time) do
         applicant.over_61?
       end
     end
+
+    let(:current_time) { Time.zone.parse('2016-03-04') }
+    let(:dob_over) { Time.zone.parse('1955-03-01') }
+    let(:dob_under) { Time.zone.parse('1965-03-01') }
+    let(:applicant) { build :applicant, application: application, date_of_birth: date_of_birth }
 
     context 'when the applicant is over 61 years old' do
       let(:date_of_birth) { dob_over }

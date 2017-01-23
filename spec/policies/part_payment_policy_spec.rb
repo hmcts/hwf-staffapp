@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PartPaymentPolicy, type: :policy do
+  subject(:policy) { described_class.new(user, part_payment) }
+
   let(:office) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
   let(:part_payment) { build_stubbed(:part_payment, application: application) }
-
-  subject(:policy) { described_class.new(user, part_payment) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:staff) }

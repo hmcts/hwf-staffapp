@@ -5,17 +5,15 @@ RSpec.feature 'List processed applications', type: :feature do
   Warden.test_mode!
 
   let(:user) { create :user }
-
-  before do
-    login_as(user)
-  end
-
   let!(:application1) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-10') }
   let!(:application2) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-03') }
-  let!(:application3) { create :application_part_remission }
   let!(:application4) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-07') }
   let!(:application5) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-06') }
-  let!(:part_payment) { create :part_payment, outcome: 'part', correct: true, application: application5 }
+  before do
+    create :application_part_remission
+    create :part_payment, outcome: 'part', correct: true, application: application5
+    login_as(user)
+  end
 
   scenario 'User lists all processed applications with pagination and in correct order' do
     visit '/'

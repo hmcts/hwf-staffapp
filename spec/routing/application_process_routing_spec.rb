@@ -6,7 +6,7 @@ RSpec.describe Applications::ProcessController, type: :routing do
       expect(get: '/applications/1/personal_information').to route_to('applications/process#personal_information', application_id: '1')
     end
 
-    it 'routes to #personal_information' do
+    it 'routes to #personal_information_save' do
       expect(put: '/applications/1/personal_information').to route_to('applications/process#personal_information_save', application_id: '1')
     end
 
@@ -14,7 +14,7 @@ RSpec.describe Applications::ProcessController, type: :routing do
       expect(get: '/applications/1/application_details').to route_to('applications/process#application_details', application_id: '1')
     end
 
-    it 'routes to #application_details' do
+    it 'routes to #application_details_save' do
       expect(put: '/applications/1/application_details').to route_to('applications/process#application_details_save', application_id: '1')
     end
 

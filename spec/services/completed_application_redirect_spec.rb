@@ -47,14 +47,14 @@ describe CompletedApplicationRedirect do
 
     describe 'when initialised with an application awaiting part_payment' do
       let(:application) { create :application, :waiting_for_part_payment_state, office: user.office }
-      let!(:part_payment) { create(:part_payment, application: application) }
+      before { create(:part_payment, application: application) }
 
       it { is_expected.to eql 'This application is waiting for part-payment. You can’t edit any details.' }
     end
 
     describe 'when initialised with an application awaiting evidence' do
       let(:application) { create :application, :waiting_for_evidence_state, office: user.office }
-      let!(:evidence) { create :evidence_check, application: application }
+      before { create :evidence_check, application: application }
 
       it { is_expected.to eql 'This application is waiting for evidence. You can’t edit any details.' }
     end

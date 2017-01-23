@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "offices/index", type: :view do
+  subject { rendered }
 
   let(:offices) { create_list(:office, 2) }
 
@@ -8,14 +9,12 @@ RSpec.describe "offices/index", type: :view do
 
   before do
     assign(:offices, offices)
-    allow(view).to receive(:policy).with(:office).and_return(double(new?: office_new?))
-    allow(view).to receive(:policy).with(offices[0]).and_return(double(edit?: true))
-    allow(view).to receive(:policy).with(offices[1]).and_return(double(edit?: false))
+    allow(view).to receive(:policy).with(:office).and_return(instance_double(OfficePolicy, new?: office_new?))
+    allow(view).to receive(:policy).with(offices[0]).and_return(instance_double(OfficePolicy, edit?: true))
+    allow(view).to receive(:policy).with(offices[1]).and_return(instance_double(OfficePolicy, edit?: false))
 
     render
   end
-
-  subject { rendered }
 
   describe 'Link to change office details' do
     context 'when user has permission to change the office\'s details' do

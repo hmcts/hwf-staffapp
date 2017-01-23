@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe FeedbackPolicy, type: :policy do
+  subject(:policy) { described_class.new(user, feedback) }
+
   let(:office) { build_stubbed(:office) }
   let(:feedback) { build_stubbed(:feedback) }
-
-  subject(:policy) { described_class.new(user, feedback) }
 
   %i[staff manager].each do |user_type|
     context "for #{user_type}" do

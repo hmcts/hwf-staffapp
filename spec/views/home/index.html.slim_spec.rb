@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "home/index.html.slim", type: :view do
   module DwpMaintenanceHelper
-    def dwp_maintenance?
-    end
+    def dwp_maintenance?; end
   end
+
+  subject { rendered }
 
   let(:office) { create :office }
   let(:user) { create :user, office: office }
@@ -18,20 +19,18 @@ RSpec.describe "home/index.html.slim", type: :view do
   let(:dwp_state) { 'online' }
 
   before do
-    allow(view).to receive(:policy).with(:application).and_return(double(new?: application_new?, index?: application_index?))
-    allow(view).to receive(:policy).with(:report).and_return(double(index?: report_index?, graphs?: report_graphs?))
-    allow(view).to receive(:policy).with(:office).and_return(double(index?: office_index?))
+    allow(view).to receive(:policy).with(:application).and_return(instance_double(ApplicationPolicy, new?: application_new?, index?: application_index?))
+    allow(view).to receive(:policy).with(:report).and_return(instance_double(ReportPolicy, index?: report_index?, graphs?: report_graphs?))
+    allow(view).to receive(:policy).with(:office).and_return(instance_double(OfficePolicy, index?: office_index?))
     view.extend(DwpMaintenanceHelper)
     allow(view).to receive(:dwp_maintenance?).and_return(dwp_maintenance)
 
     sign_in user
     assign(:state, dwp_state)
-    assign(:online_search_form, double(errors: {}, reference: nil))
-    assign(:completed_search_form, double(errors: {}, reference: nil))
+    assign(:online_search_form, instance_double(Forms::Search, errors: {}, reference: nil))
+    assign(:completed_search_form, instance_double(Forms::Search, errors: {}, reference: nil))
     render
   end
-
-  subject { rendered }
 
   describe 'Generate reports box' do
     context 'when user has permissions to generate reports' do

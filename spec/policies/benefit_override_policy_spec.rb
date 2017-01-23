@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe BenefitOverridePolicy, type: :policy do
+  subject(:policy) { described_class.new(user, benefit_override) }
+
   let(:office) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
   let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
-
-  subject(:policy) { described_class.new(user, benefit_override) }
 
   context 'for staff' do
     let(:user) { build_stubbed(:user) }

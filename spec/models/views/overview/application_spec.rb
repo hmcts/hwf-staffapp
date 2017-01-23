@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Application do
+  subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -12,9 +12,9 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#income_result' do
-    let(:application) { build_stubbed(:application, outcome: outcome) }
-
     subject { view.income_result }
+
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }
@@ -36,9 +36,9 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#savings_result' do
-    before { allow(application.saving).to receive(:passed?).and_return(result) }
-
     subject { view.savings_result }
+
+    before { allow(application.saving).to receive(:passed?).and_return(result) }
 
     context 'when the application has valid savings and investments' do
       let(:result) { true }
@@ -79,7 +79,8 @@ RSpec.describe Views::Overview::Application do
       context 'when a decision_overide exists' do
         let(:result) { 'no' }
         let!(:application) { create(:application, :benefit_type) }
-        let!(:override) { create :decision_override, application: application }
+
+        before { create :decision_override, application: application }
 
         it { is_expected.to eql "✓ Passed (by manager's decision)" }
       end
@@ -93,9 +94,9 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#total_monthly_income' do
-    let(:application) { build_stubbed(:application, income: income) }
-
     subject { view.total_monthly_income }
+
+    let(:application) { build_stubbed(:application, income: income) }
 
     context 'when income or thresholds are not set' do
       let(:income) { nil }
@@ -140,9 +141,9 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#number_of_children' do
-    let(:application) { build_stubbed(:application, children: children) }
-
     subject { view.number_of_children }
+
+    let(:application) { build_stubbed(:application, children: children) }
 
     context 'when the number of children is set' do
       let(:children) { 5 }
@@ -153,15 +154,15 @@ RSpec.describe Views::Overview::Application do
     context 'when the number of children is not set' do
       let(:children) { nil }
 
-      it { is_expected.to eql nil }
+      it { is_expected.to be nil }
     end
 
   end
 
   describe '#return_type' do
-    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
-
     subject { view.return_type }
+
+    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
 
     context 'when the application has no decision_type' do
       let(:decision_type) { nil }
@@ -189,9 +190,9 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#result' do
-    let(:application) { build_stubbed(:application, outcome: outcome) }
-
     subject { view.result }
+
+    let(:application) { build_stubbed(:application, outcome: outcome) }
 
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }

@@ -29,13 +29,12 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     let(:view2) { double }
     let(:scope) { double }
     let(:relation) { MockRelation.new([application1, application2]) }
-    let(:query) { double(find: scope) }
+    let(:query) { instance_double(Query::DeletedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
 
     class MockRelation < Array
-      def paginate(_options)
-      end
+      def paginate(_options); end
     end
 
     before do

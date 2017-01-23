@@ -46,10 +46,12 @@ RSpec.feature 'Confirmation page', type: :feature do
     end
 
     context 'when application ends with part payment' do
-      let!(:part_payment) { create(:part_payment, application: application) }
       let!(:application) { create :application_part_remission, :waiting_for_part_payment_state, office: office }
 
-      before { visit application_confirmation_path(application) }
+      before do
+        create(:part_payment, application: application)
+        visit application_confirmation_path(application)
+      end
 
       scenario 'the income label displays correctly' do
         expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for part-payment')

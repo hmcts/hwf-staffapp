@@ -4,10 +4,10 @@ RSpec.describe ResolverCostCalculator, type: :service do
   subject(:calculator) { described_class.new(source) }
 
   describe '#cost' do
+    subject { calculator.cost }
+
     let(:detail) { build_stubbed(:detail, fee: 950) }
     let(:application) { build_stubbed(:application_full_remission, detail: detail) }
-
-    subject { calculator.cost }
 
     context 'for Application' do
       let(:source) { application }
@@ -15,12 +15,12 @@ RSpec.describe ResolverCostCalculator, type: :service do
       context 'for none outcome' do
         let(:application) { build_stubbed(:application_no_remission) }
 
-        it { is_expected.to eql(0) }
+        it { is_expected.to eq 0 }
       end
 
       context 'for full outcome' do
         it 'equals the full fee' do
-          is_expected.to eql(950)
+          is_expected.to eq 950
         end
       end
     end
@@ -31,14 +31,14 @@ RSpec.describe ResolverCostCalculator, type: :service do
       context 'for none outcome' do
         let(:evidence_check) { build_stubbed(:evidence_check_incorrect) }
 
-        it { is_expected.to eql(0) }
+        it { is_expected.to eq 0 }
       end
 
       context 'for full outcome' do
         let(:evidence_check) { build_stubbed(:evidence_check_full_outcome, application: application) }
 
         it 'equals the full fee' do
-          is_expected.to eql(950)
+          is_expected.to eq 950
         end
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe ResolverCostCalculator, type: :service do
       context 'for none outcome' do
         let(:part_payment) { build_stubbed(:part_payment_none_outcome, application: application) }
 
-        it { is_expected.to eql(0) }
+        it { is_expected.to eq 0 }
       end
 
       context 'for part outcome' do
@@ -62,13 +62,13 @@ RSpec.describe ResolverCostCalculator, type: :service do
           end
 
           it 'equals fee minus the amount the applicant has to pay' do
-            is_expected.to eql(650)
+            is_expected.to eq 650
           end
         end
 
         context 'when the application was not evidence checked' do
           it 'equals fee minus the amount the applicant has to pay' do
-            is_expected.to eql(850)
+            is_expected.to eq 850
           end
         end
       end

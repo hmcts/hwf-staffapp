@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Detail do
+  subject(:form) { described_class.new(detail) }
+
   params_list = %i[fee jurisdiction_id date_received probate date_of_death
                    deceased_name refund date_fee_paid form_name case_number
                    emergency emergency_reason]
 
   let(:detail) { attributes_for :detail }
-
-  subject(:form) { described_class.new(detail) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -63,6 +63,8 @@ RSpec.describe Forms::Application::Detail do
     end
 
     describe 'probate' do
+      subject { probate }
+
       let(:deceased_name) { 'Bob the builder' }
       let(:probate_status) { true }
       let(:date_of_death) { Time.zone.yesterday }
@@ -75,8 +77,6 @@ RSpec.describe Forms::Application::Detail do
                    date_of_death: date_of_death }
         described_class.new(params)
       end
-
-      subject { probate }
 
       it { is_expected.to be_valid }
 
@@ -128,11 +128,6 @@ RSpec.describe Forms::Application::Detail do
     end
 
     describe 'refund' do
-      let(:current_time) { Time.zone.local(2014, 12, 1, 12, 30, 0) }
-      let(:date_received) { Time.zone.local(2014, 11, 15, 12, 30, 0) }
-      let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
-      let(:refund_status) { true }
-
       subject(:refund) do
         params = { jurisdiction_id: 1,
                    fee: 500,
@@ -141,6 +136,11 @@ RSpec.describe Forms::Application::Detail do
                    date_fee_paid: date_fee_paid }
         described_class.new(params)
       end
+
+      let(:current_time) { Time.zone.local(2014, 12, 1, 12, 30, 0) }
+      let(:date_received) { Time.zone.local(2014, 11, 15, 12, 30, 0) }
+      let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
+      let(:refund_status) { true }
 
       before { Timecop.freeze(current_time) }
       after { Timecop.return }
@@ -183,9 +183,9 @@ RSpec.describe Forms::Application::Detail do
               it { is_expected.to be_invalid }
 
               it 'returns an error' do
-                subject.valid?
+                refund.valid?
 
-                expect(subject.errors[:date_fee_paid]).to eq ['This date can’t be after the application was received']
+                expect(refund.errors[:date_fee_paid]).to eq ['This date can’t be after the application was received']
               end
             end
           end
@@ -260,14 +260,15 @@ RSpec.describe Forms::Application::Detail do
   end
 
   describe '#save' do
-    let(:jurisdiction) { create(:jurisdiction) }
-    let(:detail) { create :detail }
     subject(:form) { described_class.new(detail) }
 
-    subject do
+    subject(:update_form) do
       form.update_attributes(params)
       form.save
     end
+
+    let(:jurisdiction) { create(:jurisdiction) }
+    let(:detail) { create :detail }
 
     context 'when attributes are correct' do
       let(:attributes) { attributes_for(:complete_detail, :probate, :refund, :emergency) }
@@ -276,7 +277,7 @@ RSpec.describe Forms::Application::Detail do
       it { is_expected.to be true }
 
       before do
-        subject
+        update_form
         detail.reload
       end
 

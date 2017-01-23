@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationCalculation do
-  let(:benefit_check_runner) { double(run: nil) }
-  let(:income_calculation_runner) { double(run: nil) }
-
   subject(:service) { described_class.new(application) }
+
+  let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil) }
+  let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
 
   describe '#run' do
     before do

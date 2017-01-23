@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Applicant do
+  subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-  subject(:view) { described_class.new(application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
@@ -43,7 +43,7 @@ RSpec.describe Views::Overview::Applicant do
   describe 'delegated methods' do
     describe '-> Applicant' do
       %i[full_name].each do |getter|
-        it { expect(subject.public_send(getter)).to eql(application.applicant.public_send(getter)) }
+        it { expect(view.public_send(getter)).to eql(application.applicant.public_send(getter)) }
       end
     end
   end

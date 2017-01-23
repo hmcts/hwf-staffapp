@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy, type: :policy do
-  let(:subject_user) { build_stubbed(:user) }
-
   subject(:policy) { described_class.new(user, subject_user) }
+
+  let(:subject_user) { build_stubbed(:user) }
 
   def dup_user(user)
     # HACK: how to achieve the same stubbed object in 2 different instances
@@ -207,18 +207,17 @@ RSpec.describe UserPolicy, type: :policy do
 
   describe described_class::Scope do
     describe '#resolve' do
+      subject(:resolve) { described_class.new(user, User).resolve }
+
       let(:office) { create :office }
       let(:other_office) { create :office }
 
       let!(:user1) { create :user, office: office }
       let!(:user2) { create :manager, office: office }
       let!(:user3) { create :admin, office: office }
-
       let!(:user4) { create :user, office: other_office }
       let!(:user5) { create :manager, office: other_office }
       let!(:user6) { create :admin, office: other_office }
-
-      subject(:resolve) { described_class.new(user, User).resolve }
 
       context 'for staff' do
         let(:user) { create(:staff, office: office) }

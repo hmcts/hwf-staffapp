@@ -7,10 +7,10 @@ RSpec.describe PublicMailer, type: :mailer do
     let(:mail_data) { create(:online_application, :with_reference, :with_email) }
     let(:mail) { described_class.submission_confirmation(mail_data) }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq(I18n.t('email.confirmation.subject'))
-      expect(mail.to).to eq([email])
-      expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk'])
+    describe 'renders the headers' do
+      it { expect(mail.subject).to eq(I18n.t('email.confirmation.subject')) }
+      it { expect(mail.to).to eq([email]) }
+      it { expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk']) }
     end
 
     it 'renders the body' do
@@ -24,10 +24,10 @@ RSpec.describe PublicMailer, type: :mailer do
     let(:mail_data) { create(:online_application, :with_reference, :with_email) }
     let(:mail) { described_class.submission_confirmation_refund(mail_data) }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq(I18n.t('email.refund.subject'))
-      expect(mail.to).to eq([email])
-      expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk'])
+    describe 'renders the headers' do
+      it { expect(mail.subject).to eq(I18n.t('email.refund.subject')) }
+      it { expect(mail.to).to eq([email]) }
+      it { expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk']) }
     end
 
     it 'renders the body' do
@@ -41,10 +41,10 @@ RSpec.describe PublicMailer, type: :mailer do
     let(:mail_data) { create(:online_application, :et, :with_reference, :with_email) }
     let(:mail) { described_class.submission_confirmation_et(mail_data) }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq(I18n.t('email.et.subject'))
-      expect(mail.to).to eq([email])
-      expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk'])
+    describe 'renders the headers' do
+      it { expect(mail.subject).to eq(I18n.t('email.et.subject')) }
+      it { expect(mail.to).to eq([email]) }
+      it { expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk']) }
     end
 
     it 'renders the body' do

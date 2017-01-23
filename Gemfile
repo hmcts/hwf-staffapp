@@ -7,8 +7,8 @@ gem 'rails', '~> 4.2.7'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg'
-gem 'rails-i18n', '~> 4.0.0'
 gem 'rack-host-redirect'
+gem 'rails-i18n', '~> 4.0.0'
 
 # configuration
 gem 'config'
@@ -32,8 +32,8 @@ gem 'coffee-rails', '~> 4.2.1'
 # gem 'therubyracer', platforms: :ruby
 
 # use GDS assets, styles etc...
-gem 'govuk_frontend_toolkit', '4.7.0'
 gem 'govuk_elements_rails', '0.3.0'
+gem 'govuk_frontend_toolkit', '4.7.0'
 gem 'moj_template', '~> 0.23.2'
 
 # Use jquery as the JavaScript library
@@ -44,17 +44,17 @@ gem 'jbuilder', '~> 2.2'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # template language
-gem 'slim-rails'
 gem 'redcarpet'
+gem 'slim-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-gem 'unicorn'
-gem 'unicorn-worker-killer'
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
+gem 'unicorn'
+gem 'unicorn-worker-killer'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -69,8 +69,8 @@ gem "paranoia", "~> 2.0"
 group :development do
   # speed up local development via livereload
   gem 'guard-livereload'
-  gem 'terminal-notifier-guard'
   gem 'rack-livereload'
+  gem 'terminal-notifier-guard'
   gem 'web-console', '~> 2.1'
 end
 
@@ -80,42 +80,37 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
   gem 'rspec-rails', '~> 3.4'
+  gem 'spring'
   # in browser debugging
   gem 'better_errors'
   gem 'binding_of_caller'
-
+  gem 'climate_control'
   gem 'factory_girl_rails'
-
-  gem 'rubocop', '~>0.37.2', require: false
-  gem 'rubocop-rspec', '~>1.4.0', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
-
+  gem 'rubocop', '~>0.38', require: false
+  gem 'rubocop-rspec', '~>1.10', require: false
   gem 'timecop'
-  gem 'climate_control'
 end
 
 group :test do
-  gem "codeclimate-test-reporter", require: nil
-  gem 'webmock'
   gem 'capybara'
-  gem 'database_cleaner'
-  gem 'launchy'
   gem 'capybara-webkit'
+  gem "codeclimate-test-reporter", require: nil
+  gem 'database_cleaner'
   gem 'faker'
+  gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'webmock'
 end
 
 # heroku deployment
 gem 'rails_12factor', group: :production
 
-gem 'rest-client'
 gem 'chartkick'
 gem 'groupdate'
+gem 'rest-client'
 gem 'virtus'

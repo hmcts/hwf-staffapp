@@ -13,13 +13,13 @@ RSpec.describe BecSopReferenceSwitch do
     context 'when called after the set date' do
       let(:current_time) { reference_change_date }
 
-      it { is_expected.to eql true }
+      it { is_expected.to be true }
     end
 
     context 'when called before the set date' do
       let(:current_time) { reference_change_date - 1.day }
 
-      it { is_expected.to eql false }
+      it { is_expected.to be false }
     end
   end
 end

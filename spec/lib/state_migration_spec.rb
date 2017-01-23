@@ -58,28 +58,42 @@ RSpec.describe StateMigration do
     # I'm purposely using only 1 it block with lots assertions to make sure that
     # the states are set correctly on the whole database table, which would not
     # be easy to prove in isolation
-    it 'sets correct states for each application type' do
+    it 'sets correct states for application1' do
       # unprocessed application -> created
       expect(application1.reload.state).to eql('created')
+    end
 
+    it 'sets correct states for application2' do
       # processed application with uncompleted evidence check -> evidence_check
       expect(application2.reload.state).to eql('waiting_for_evidence')
+    end
 
+    it 'sets correct states for application3' do
       # processed application with completed evidence check -> processed
       expect(application3.reload.state).to eql('processed')
+    end
 
+    it 'sets correct states for application4' do
       # processed application with uncompleted part payment -> part_payment
       expect(application4.reload.state).to eql('waiting_for_part_payment')
+    end
 
+    it 'sets correct states for application5' do
       # processed application with completed part payment -> processed
       expect(application5.reload.state).to eql('processed')
+    end
 
+    it 'sets correct states for application6' do
       # processed application with completed evidence check and uncompleted part payment -> part_payment
       expect(application6.reload.state).to eql('waiting_for_part_payment')
+    end
 
+    it 'sets correct states for application7' do
       # processed application with completed evidence check and completed part payment -> processed
       expect(application7.reload.state).to eql('processed')
+    end
 
+    it 'sets correct states for application8' do
       # processed application without evidence check or part payment -> processed
       expect(application8.reload.state).to eql('processed')
     end

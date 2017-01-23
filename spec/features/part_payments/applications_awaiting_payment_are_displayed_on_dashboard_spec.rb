@@ -9,15 +9,16 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: 
   let(:deleted_user) { create :deleted_user, office: office }
 
   let(:application1) { create :application_part_remission, :waiting_for_part_payment_state, office: office }
-  let!(:payment1) { create :part_payment, application: application1 }
   let(:application2) { create :application_part_remission, :waiting_for_part_payment_state, office: office }
-  let!(:payment2) { create :part_payment, application: application2 }
   let(:other_application) { create :application_part_remission, :waiting_for_part_payment_state }
-  let!(:other_payment) { create :part_payment, application: other_application }
   let(:application4) { create :application_part_remission, :waiting_for_part_payment_state, office: office, user: deleted_user }
-  let!(:payment4) { create :part_payment, application: application4 }
 
   before do
+    create :part_payment, application: application1
+    create :part_payment, application: application2
+    create :part_payment, application: other_application
+    create :part_payment, application: application4
+
     login_as user
   end
 
