@@ -51,8 +51,7 @@ RSpec.describe Office, type: :model do
     end
 
     context 'after "deleting" one' do
-      let(:business_entities) { BusinessEntity.where(office_id: office.id) }
-      before { business_entities.first.update_attributes(valid_to: Time.zone.now) }
+      before { office.business_entities.first.update_attributes(valid_to: Time.zone.now + 1.day) }
 
       it { is_expected.to eq 1 }
     end

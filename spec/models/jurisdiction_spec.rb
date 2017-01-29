@@ -19,7 +19,7 @@ RSpec.describe Jurisdiction, type: :model do
     end
 
     context 'if a business entity is removed' do
-      before { office.business_entities.first.update_attributes(valid_to: Time.zone.now) }
+      before { office.business_entities.first.update_attributes(valid_to: Time.zone.now + 1.day) }
 
       it 'no longer returns it as available' do
         is_expected.to match_array []
