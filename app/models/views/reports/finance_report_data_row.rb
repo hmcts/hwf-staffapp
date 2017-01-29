@@ -21,7 +21,8 @@ module Views
 
       def initialize(business_entity, date_from, date_to)
         @business_entity = business_entity
-        @be_code = business_entity.code
+        @be_code = business_entity.be_code
+        @sop_code = business_entity.sop_code
         @office = business_entity.office.name
         @jurisdiction = business_entity.jurisdiction.name
         @date_from = date_from

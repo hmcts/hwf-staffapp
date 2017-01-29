@@ -43,7 +43,13 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
     describe 'sets the business entity code' do
       subject { data.be_code }
 
-      it { is_expected.to eq business_entity.code }
+      it { is_expected.to eq business_entity.be_code }
+    end
+
+    describe 'sets the SOP code' do
+      subject { data.sop_code }
+
+      it { is_expected.to eq business_entity.sop_code }
     end
 
     describe 'sets total_count' do
