@@ -32,23 +32,6 @@ RSpec.describe BusinessEntity, type: :model do
       subject { build :business_entity }
       it { is_expected.to validate_uniqueness_of(:sop_code).ignoring_case_sensitivity.scoped_to(:be_code) }
     end
-
-    describe 'be_code' do
-      before { Timecop.freeze(current_time) }
-      after { Timecop.return }
-
-      context 'before the BEC-SOP switchover date' do
-        let(:current_time) { reference_change_date - 1.day }
-
-        it { is_expected.to validate_presence_of(:be_code) }
-      end
-
-      context 'after the BEC-SOP switchover date' do
-        let(:current_time) { reference_change_date }
-
-        it { is_expected.not_to validate_presence_of(:be_code) }
-      end
-    end
   end
 
   context 'scopes' do
@@ -88,23 +71,13 @@ RSpec.describe BusinessEntity, type: :model do
 
   describe '#code' do
     subject do
-      Timecop.freeze(current_time) do
-        business_entity.code
-      end
+      business_entity.code
     end
 
     let(:business_entity) { build_stubbed :business_entity }
 
     context 'when called after the set date' do
-      let(:current_time) { reference_change_date }
-
       it { is_expected.to eql business_entity.sop_code }
-    end
-
-    context 'when called before the set date' do
-      let(:current_time) { reference_change_date - 1.day }
-
-      it { is_expected.to eql business_entity.be_code }
     end
   end
 end

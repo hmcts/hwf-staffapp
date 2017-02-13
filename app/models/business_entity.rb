@@ -7,7 +7,6 @@ class BusinessEntity < ActiveRecord::Base
   }
 
   validates :office, :jurisdiction, :sop_code, :name, :valid_from, presence: true
-  validates :be_code, presence: true, unless: :use_new_reference_type?
   validates :sop_code, uniqueness: { scope: :be_code }
 
   validates :valid_to, date: {
@@ -19,12 +18,7 @@ class BusinessEntity < ActiveRecord::Base
   end
 
   def code
-    use_new_reference_type? ? sop_code : be_code
+    sop_code
   end
 
-  private
-
-  def use_new_reference_type?
-    BecSopReferenceSwitch.use_new_reference_type
-  end
 end

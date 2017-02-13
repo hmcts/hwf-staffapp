@@ -45,7 +45,6 @@ class BusinessEntityService
     @new_business_entity = BusinessEntity.new(office: @office,
                                               jurisdiction: @jurisdiction,
                                               name: @new_params[:name],
-                                              be_code: @new_params[:be_code],
                                               sop_code: @new_params[:sop_code],
                                               valid_from: @timestamp)
   end
