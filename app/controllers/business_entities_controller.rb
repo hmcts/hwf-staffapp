@@ -78,6 +78,6 @@ class BusinessEntitiesController < ApplicationController
   end
 
   def business_entity_params
-    params.require(:business_entity).permit(:name, :be_code, :sop_code)
+    params.require(:business_entity).permit(:name, :sop_code)
   end
 end
