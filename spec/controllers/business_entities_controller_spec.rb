@@ -1,21 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe BusinessEntitiesController, type: :controller do
-  let(:office) { Timecop.freeze(create_at) { create :office } }
+  let!(:office) { create :office }
   let(:admin) { create :admin, office: office }
 
-  before do
-    Timecop.freeze(current_time)
-    # for the records around the switchover date, these values have
-    # to be constructed manually to avoid complicating the factories
-    # while still providing dates that will pass validation
-    office.business_entities.each { |x| x.update_attributes(created_at: create_at, updated_at: create_at, valid_from: create_at) }
-  end
-
   context 'after the BEC-SOP switchover date' do
-    let(:current_time) { reference_change_date + 2.days }
-    let(:create_at) { reference_change_date + 1.day }
-
     describe 'GET #index' do
       subject { response }
       before do
@@ -121,7 +110,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
       subject { response }
 
       let(:business_entity) { office.business_entities.first }
-      let(:params) { { name: 'Digital - Family', sop_code: code } }
+      let(:params) { { name: 'Digital - Family', be_code: 'code', sop_code: code } }
 
       before do
         sign_in admin

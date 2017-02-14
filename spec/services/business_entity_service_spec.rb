@@ -146,38 +146,7 @@ describe BusinessEntityService do
   describe '#build_deactivate' do
     subject(:build_deactivate) { service.build_deactivate }
 
-    before do
-      Timecop.freeze(current_time)
-      # for the records around the switchover date, these values have
-      # to be constructed manually to avoid complicating the factories
-      # while still providing dates that will pass validation
-      office.business_entities.each { |x| x.update_attributes(created_at: create_at, updated_at: create_at, valid_from: create_at) }
-    end
-
-    after { Timecop.return }
-
-    context 'before the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date - 1.day }
-      let(:create_at) { reference_change_date - 2.days }
-
-      it { is_expected.to be_a_kind_of BusinessEntity }
-
-      it 'returns a persisted object' do
-        expect(build_deactivate.persisted?).to be true
-      end
-
-      it 'returns a valid object' do
-        expect(build_deactivate.valid?).to be true
-      end
-
-      it 'has no valid_to' do
-        expect(build_deactivate.valid_to).not_to be nil
-      end
-    end
-
     context 'after the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date + 2.days }
-      let(:create_at) { reference_change_date + 1.day }
 
       it { is_expected.to be_a_kind_of BusinessEntity }
 
@@ -201,7 +170,7 @@ describe BusinessEntityService do
     let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
     context 'when persisting a new object' do
-      before { service.build_new(name: 'Test', be_code: 'XY123', sop_code: '123456789') }
+      before { service.build_new(name: 'Test', sop_code: '123456789') }
 
       it 'creates a new business_entity' do
         expect { persist }.to change { BusinessEntity.count }.by 1
@@ -210,7 +179,7 @@ describe BusinessEntityService do
 
     context 'when persisting an update' do
       context 'that changes the code' do
-        before { service.build_update(name: 'Test', be_code: 'XY123', sop_code: '987654321') }
+        before { service.build_update(name: 'Test', sop_code: '987654321') }
 
         it 'creates a new business_entity' do
           expect { persist }.to change { BusinessEntity.count }.by 1

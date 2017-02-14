@@ -5,26 +5,16 @@ RSpec.feature 'Business entity management:', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { Timecop.freeze(create_at) { create :office } }
+  let!(:office) { create :office }
   let(:admin) { create :admin_user, office: office }
   let(:manager) { create :manager, office: office }
   let(:business_entity) { office.business_entities.first }
 
   before do
     OfficeJurisdiction.delete_all(jurisdiction_id: office.jurisdictions.last.id)
-    Timecop.freeze(current_time)
-    # for the records around the switchover date, these values have
-    # to be constructed manually to avoid complicating the factories
-    # while still providing dates that will pass validation
-    office.business_entities.each { |x| x.update_attributes(created_at: create_at, updated_at: create_at, valid_from: create_at) }
   end
 
-  after { Timecop.return }
-
   context 'after the BEC-SOP switchover date' do
-    let(:current_time) { reference_change_date + 2.days }
-    let(:create_at) { reference_change_date + 1.day }
-
     before { login_as admin }
 
     context 'as a user who cannot access' do
