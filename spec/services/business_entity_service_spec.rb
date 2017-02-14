@@ -17,74 +17,33 @@ describe BusinessEntityService do
 
     let(:params) { { name: name, be_code: be_code, sop_code: sop_code } }
 
-    before { Timecop.freeze(current_time) }
-    after { Timecop.return }
+    describe 'when sent correct values' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { nil }
+      let(:sop_code) { '123456789' }
 
-    context 'before the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date - 1.day }
+      it { is_expected.to be_a_kind_of BusinessEntity }
 
-      describe 'when sent correct values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { 'AB123' }
-        let(:sop_code) { '123456789' }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'does not persist the object' do
-          expect(built_new.persisted?).to be false
-        end
-
-        it 'returns a valid object' do
-          expect(built_new.valid?).to be true
-        end
+      it 'does not persist the object' do
+        expect(built_new.persisted?).to be false
       end
 
-      describe 'when sent incorrect values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { nil }
-        let(:sop_code) { '123456789' }
-
-        it 'does not persist the object' do
-          expect(built_new.persisted?).to be false
-        end
-
-        it 'returns an invalid object' do
-          expect(built_new.valid?).to be false
-        end
+      it 'returns a valid object' do
+        expect(built_new.valid?).to be true
       end
     end
 
-    context 'after the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date }
+    describe 'when sent incorrect values' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { nil }
+      let(:sop_code) { nil }
 
-      describe 'when sent correct values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { nil }
-        let(:sop_code) { '123456789' }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'does not persist the object' do
-          expect(built_new.persisted?).to be false
-        end
-
-        it 'returns a valid object' do
-          expect(built_new.valid?).to be true
-        end
+      it 'does not persist the object' do
+        expect(built_new.persisted?).to be false
       end
 
-      describe 'when sent incorrect values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { nil }
-        let(:sop_code) { nil }
-
-        it 'does not persist the object' do
-          expect(built_new.persisted?).to be false
-        end
-
-        it 'returns an invalid object' do
-          expect(built_new.valid?).to be false
-        end
+      it 'returns an invalid object' do
+        expect(built_new.valid?).to be false
       end
     end
   end
@@ -95,161 +54,77 @@ describe BusinessEntityService do
     let(:params) { { name: name, be_code: be_code, sop_code: sop_code } }
     let(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
-    before { Timecop.freeze(current_time) }
-    after { Timecop.return }
+    describe 'when sent new be_code' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { business_entity.be_code.reverse }
+      let(:sop_code) { business_entity.sop_code }
 
-    context 'before the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date - 1.day }
+      it { is_expected.to be_a_kind_of BusinessEntity }
 
-      describe 'when sent new be_code' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code.reverse }
-        let(:sop_code) { business_entity.sop_code }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'returns a new, non-persisted object' do
-          expect(build_update.persisted?).to be false
-        end
-
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has no ID' do
-          expect(build_update.id).to be nil
-        end
+      it 'returns a new, non-persisted object' do
+        expect(build_update.persisted?).to be true
       end
 
-      describe 'when sent new sop_code' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code }
-        let(:sop_code) { business_entity.sop_code.reverse }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'returns a new, non-persisted object' do
-          expect(build_update.persisted?).to be true
-        end
-
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has the ID of the existing business_entity' do
-          expect(build_update.id).to eq business_entity.id
-        end
+      it 'returns a valid object' do
+        expect(build_update.valid?).to be true
       end
 
-      describe 'when sent an updated name only' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code }
-        let(:sop_code) { business_entity.sop_code }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'returns the existing persisted object' do
-          expect(build_update.persisted?).to be true
-        end
-
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has the ID of the existing business_entity' do
-          expect(build_update.id).to eq business_entity.id
-        end
-      end
-
-      describe 'when sent incorrect values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { nil }
-        let(:sop_code) { '123456789' }
-
-        it 'does not persist the object' do
-          expect(build_update.persisted?).to be false
-        end
-
-        it 'returns an invalid object' do
-          expect(build_update.valid?).to be false
-        end
+      it 'has the ID of the existing business_entity' do
+        expect(build_update.id).to eq business_entity.id
       end
     end
-    context 'after the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date }
 
-      describe 'when sent new be_code' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code.reverse }
-        let(:sop_code) { business_entity.sop_code }
+    describe 'when sent new sop_code' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { business_entity.be_code }
+      let(:sop_code) { business_entity.sop_code.reverse }
 
-        it { is_expected.to be_a_kind_of BusinessEntity }
+      it { is_expected.to be_a_kind_of BusinessEntity }
 
-        it 'returns a new, non-persisted object' do
-          expect(build_update.persisted?).to be true
-        end
-
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has the ID of the existing business_entity' do
-          expect(build_update.id).to eq business_entity.id
-        end
+      it 'returns a new, non-persisted object' do
+        expect(build_update.persisted?).to be false
       end
 
-      describe 'when sent new sop_code' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code }
-        let(:sop_code) { business_entity.sop_code.reverse }
-
-        it { is_expected.to be_a_kind_of BusinessEntity }
-
-        it 'returns a new, non-persisted object' do
-          expect(build_update.persisted?).to be false
-        end
-
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has no ID' do
-          expect(build_update.id).to be nil
-        end
+      it 'returns a valid object' do
+        expect(build_update.valid?).to be true
       end
 
-      describe 'when sent an updated name only' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { business_entity.be_code }
-        let(:sop_code) { business_entity.sop_code }
+      it 'has no ID' do
+        expect(build_update.id).to be nil
+      end
+    end
 
-        it { is_expected.to be_a_kind_of BusinessEntity }
+    describe 'when sent an updated name only' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { business_entity.be_code }
+      let(:sop_code) { business_entity.sop_code }
 
-        it 'returns the existing persisted object' do
-          expect(build_update.persisted?).to be true
-        end
+      it { is_expected.to be_a_kind_of BusinessEntity }
 
-        it 'returns a valid object' do
-          expect(build_update.valid?).to be true
-        end
-
-        it 'has the ID of the existing business_entity' do
-          expect(build_update.id).to eq business_entity.id
-        end
+      it 'returns the existing persisted object' do
+        expect(build_update.persisted?).to be true
       end
 
-      describe 'when sent incorrect values' do
-        let(:name) { 'test-jurisdiction' }
-        let(:be_code) { nil }
-        let(:sop_code) { nil }
+      it 'returns a valid object' do
+        expect(build_update.valid?).to be true
+      end
 
-        it 'does not persist the object' do
-          expect(build_update.persisted?).to be false
-        end
+      it 'has the ID of the existing business_entity' do
+        expect(build_update.id).to eq business_entity.id
+      end
+    end
 
-        it 'returns an invalid object' do
-          expect(build_update.valid?).to be false
-        end
+    describe 'when sent incorrect values' do
+      let(:name) { 'test-jurisdiction' }
+      let(:be_code) { nil }
+      let(:sop_code) { nil }
+
+      it 'does not persist the object' do
+        expect(build_update.persisted?).to be false
+      end
+
+      it 'returns an invalid object' do
+        expect(build_update.valid?).to be false
       end
     end
   end
@@ -257,52 +132,18 @@ describe BusinessEntityService do
   describe '#build_deactivate' do
     subject(:build_deactivate) { service.build_deactivate }
 
-    before do
-      Timecop.freeze(current_time)
-      # for the records around the switchover date, these values have
-      # to be constructed manually to avoid complicating the factories
-      # while still providing dates that will pass validation
-      office.business_entities.each { |x| x.update_attributes(created_at: create_at, updated_at: create_at, valid_from: create_at) }
+    it { is_expected.to be_a_kind_of BusinessEntity }
+
+    it 'returns a persisted object' do
+      expect(build_deactivate.persisted?).to be true
     end
 
-    after { Timecop.return }
-
-    context 'before the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date - 1.day }
-      let(:create_at) { reference_change_date - 2.days }
-
-      it { is_expected.to be_a_kind_of BusinessEntity }
-
-      it 'returns a persisted object' do
-        expect(build_deactivate.persisted?).to be true
-      end
-
-      it 'returns a valid object' do
-        expect(build_deactivate.valid?).to be true
-      end
-
-      it 'has no valid_to' do
-        expect(build_deactivate.valid_to).not_to be nil
-      end
+    it 'returns a valid object' do
+      expect(build_deactivate.valid?).to be true
     end
 
-    context 'after the BEC-SOP switchover date' do
-      let(:current_time) { reference_change_date + 2.days }
-      let(:create_at) { reference_change_date + 1.day }
-
-      it { is_expected.to be_a_kind_of BusinessEntity }
-
-      it 'returns a persisted object' do
-        expect(build_deactivate.persisted?).to be true
-      end
-
-      it 'returns a valid object' do
-        expect(build_deactivate.valid?).to be true
-      end
-
-      it 'has no valid_to' do
-        expect(build_deactivate.valid_to).not_to be nil
-      end
+    it 'has no valid_to' do
+      expect(build_deactivate.valid_to).not_to be nil
     end
   end
 
@@ -312,7 +153,7 @@ describe BusinessEntityService do
     let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
     context 'when persisting a new object' do
-      before { service.build_new(name: 'Test', be_code: 'XY123', sop_code: '123456789') }
+      before { service.build_new(name: 'Test', sop_code: '123456789') }
 
       it 'creates a new business_entity' do
         expect { persist }.to change { BusinessEntity.count }.by 1
@@ -321,7 +162,7 @@ describe BusinessEntityService do
 
     context 'when persisting an update' do
       context 'that changes the code' do
-        before { service.build_update(name: 'Test', be_code: 'XY123', sop_code: '987654321') }
+        before { service.build_update(name: 'Test', sop_code: '987654321') }
 
         it 'creates a new business_entity' do
           expect { persist }.to change { BusinessEntity.count }.by 1

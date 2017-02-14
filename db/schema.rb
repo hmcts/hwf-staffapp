@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208123710) do
+ActiveRecord::Schema.define(version: 20170213153644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20161208123710) do
   create_table "business_entities", force: :cascade do |t|
     t.integer  "office_id",       null: false
     t.integer  "jurisdiction_id", null: false
-    t.string   "be_code",         null: false
+    t.string   "be_code"
     t.string   "name",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -115,7 +115,6 @@ ActiveRecord::Schema.define(version: 20161208123710) do
     t.string   "sop_code"
   end
 
-  add_index "business_entities", ["be_code"], name: "index_business_entities_on_be_code", using: :btree
   add_index "business_entities", ["jurisdiction_id"], name: "index_business_entities_on_jurisdiction_id", using: :btree
   add_index "business_entities", ["name"], name: "index_business_entities_on_name", using: :btree
   add_index "business_entities", ["office_id", "jurisdiction_id", "valid_to"], name: "unique_active_office_jurisdiction", unique: true, using: :btree
