@@ -159,6 +159,17 @@ describe ResolverService do
 
         include_examples 'application reference and business_entity'
       end
+
+      context 'duplicated reference' do
+        let(:application_outcome) { 'full' }
+        let(:reference) { 'ABC' }
+        let!(:application_old) { create(:application, reference: reference) }
+
+        it "raise an error" do
+          expect{ complete }.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
+
     end
 
     context 'for EvidenceCheck' do
