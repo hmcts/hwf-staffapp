@@ -43,7 +43,7 @@ RSpec.describe ReferenceGenerator, type: :service do
 
         context 'no sql caching for this' do
           before {
-            # TODO turn caching on.
+            # TODO turn SQL caching on if you find out how.
           }
 
           it 'returns hash with the reference next in sequence' do

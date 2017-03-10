@@ -124,6 +124,8 @@ en-GB:
       none_in_office: 'Ask your manager to assign jurisdictions to your office.'
     part_payment:
       cannot_be_saved: 'This return could not be processed'
+    summary:
+      validation: 'There was an issue creating the new record. Please click "Complete processing" again to retry. If the problem still occurs please email helpwithfees.support@digital.justice.gov.uk'
   index:
     process:
       paper:

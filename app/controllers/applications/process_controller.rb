@@ -114,6 +114,11 @@ module Applications
     def summary_save
       ResolverService.new(application, current_user).complete
       redirect_to application_confirmation_path(application.id)
+    rescue ActiveRecord::RecordInvalid => ex
+      flash[:alert] = I18n.t('error_messages.summary.validation')
+      Raven.capture_exception(ex, application_id: application.id)
+
+      redirect_to :back
     end
 
     def confirmation
