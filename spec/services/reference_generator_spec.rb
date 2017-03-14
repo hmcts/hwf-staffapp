@@ -42,10 +42,6 @@ RSpec.describe ReferenceGenerator, type: :service do
         end
 
         context 'no sql caching for this' do
-          before {
-            # TODO: turn SQL caching on if you find out how.
-          }
-
           it 'returns hash with the reference next in sequence' do
             Timecop.freeze(current_time) do
               if generator.attributes[:reference] == 'PA16-000020'
