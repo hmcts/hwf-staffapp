@@ -444,7 +444,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:application) { create :application_full_remission, office: user.office }
     let(:resolver) { instance_double(ResolverService, complete: nil) }
 
-    context 'sucess' do
+    context 'success' do
       before do
         allow(ResolverService).to receive(:new).with(application, user).and_return(resolver)
 
@@ -471,7 +471,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:exception) { ActiveRecord::RecordInvalid.new(application) }
 
       before do
-        request.env["HTTP_REFERER"] = root_url
         allow(ResolverService).to receive(:new).and_raise(exception)
       end
 
@@ -485,7 +484,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it 'catch exception and return error' do
         post_summary_save
         expect(flash[:alert]).to include('There was an issue creating the new record')
-        expect(response).to redirect_to(root_url)
+        expect(response).to redirect_to(application_summary_path(application))
       end
 
       it 'catch exception and notify sentry' do

@@ -118,7 +118,7 @@ module Applications
       flash[:alert] = I18n.t('error_messages.summary.validation')
       Raven.capture_exception(ex, application_id: application.id)
 
-      redirect_to :back
+      redirect_to application_summary_path(application)
     end
 
     def confirmation
