@@ -25,9 +25,11 @@ class ReferenceGenerator
   end
 
   def last_reference
-    Application.
-      select("max(cast(replace(reference,'#{reference_prefix}','') as integer)) AS sequence").
-      where('reference LIKE ?', "#{reference_prefix}%").
-      take
+    Application.uncached do
+      Application.
+        select("max(cast(replace(reference,'#{reference_prefix}','') as integer)) AS sequence").
+        where('reference LIKE ?', "#{reference_prefix}%").
+        take
+    end
   end
 end

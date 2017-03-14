@@ -40,6 +40,17 @@ RSpec.describe ReferenceGenerator, type: :service do
         it 'returns hash with the reference next in sequence' do
           expect(attributes[:reference]).to eql('PA16-000020')
         end
+
+        context 'no sql caching for this' do
+          it 'returns hash with the reference next in sequence' do
+            Timecop.freeze(current_time) do
+              if generator.attributes[:reference] == 'PA16-000020'
+                existing_application2.update(reference: 'PA16-000020')
+              end
+              expect(generator.attributes[:reference]).to eql('PA16-000021')
+            end
+          end
+        end
       end
 
       context 'when there are two business entities for the same jurisdiction' do

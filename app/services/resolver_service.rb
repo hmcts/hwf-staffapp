@@ -74,7 +74,7 @@ class ResolverService
       end
     end
 
-    application.update(attributes)
+    application.update!(attributes)
   end
 
   def complete_evidence_check(evidence_check)

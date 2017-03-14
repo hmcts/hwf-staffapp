@@ -444,25 +444,57 @@ RSpec.describe Applications::ProcessController, type: :controller do
     let(:application) { create :application_full_remission, office: user.office }
     let(:resolver) { instance_double(ResolverService, complete: nil) }
 
-    before do
-      allow(ResolverService).to receive(:new).with(application, user).and_return(resolver)
+    context 'success' do
+      before do
+        allow(ResolverService).to receive(:new).with(application, user).and_return(resolver)
 
-      Timecop.freeze(current_time) do
-        sign_in user
-        post :summary_save, application_id: application.id
+        Timecop.freeze(current_time) do
+          sign_in user
+          post :summary_save, application_id: application.id
+        end
+      end
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(302)
+      end
+
+      it 'redirects to the confirmation page' do
+        expect(response).to redirect_to(application_confirmation_path(application.id))
+      end
+
+      it 'completes the application using the ResolverService' do
+        expect(resolver).to have_received(:complete)
       end
     end
 
-    it 'returns the correct status code' do
-      expect(response).to have_http_status(302)
-    end
+    context 'exception' do
+      let(:exception) { ActiveRecord::RecordInvalid.new(application) }
 
-    it 'redirects to the confirmation page' do
-      expect(response).to redirect_to(application_confirmation_path(application.id))
-    end
+      before do
+        allow(ResolverService).to receive(:new).and_raise(exception)
+      end
 
-    it 'completes the application using the ResolverService' do
-      expect(resolver).to have_received(:complete)
+      def post_summary_save
+        Timecop.freeze(current_time) do
+          sign_in user
+          post :summary_save, application_id: application.id
+        end
+      end
+
+      it 'catch exception and return error' do
+        post_summary_save
+        expect(flash[:alert]).to include('There was an issue creating the new record')
+      end
+
+      it 'redirect to previous page' do
+        post_summary_save
+        expect(response).to redirect_to(application_summary_path(application))
+      end
+
+      it 'catch exception and notify sentry' do
+        allow(Raven).to receive(:capture_exception).with(exception, application_id: application.id)
+        post_summary_save
+      end
     end
   end
 
