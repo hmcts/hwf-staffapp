@@ -492,7 +492,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       end
 
       it 'catch exception and notify sentry' do
-        expect(Raven).to have_received(:capture_exception).with(exception, application_id: application.id)
+        allow(Raven).to receive(:capture_exception).with(exception, application_id: application.id)
         post_summary_save
       end
     end
