@@ -163,10 +163,10 @@ describe ResolverService do
       context 'duplicated reference' do
         let(:application_outcome) { 'full' }
         let(:reference) { 'ABC' }
-        let!(:application_old) { create(:application, reference: reference) }
+        before { create(:application, reference: reference) }
 
         it "raise an error" do
-          expect{ complete }.to raise_error(ActiveRecord::RecordInvalid)
+          expect { complete }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
 

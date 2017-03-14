@@ -484,11 +484,15 @@ RSpec.describe Applications::ProcessController, type: :controller do
       it 'catch exception and return error' do
         post_summary_save
         expect(flash[:alert]).to include('There was an issue creating the new record')
+      end
+
+      it 'redirect to previous page' do
+        post_summary_save
         expect(response).to redirect_to(application_summary_path(application))
       end
 
       it 'catch exception and notify sentry' do
-        expect(Raven).to receive(:capture_exception).with(exception, application_id: application.id)
+        expect(Raven).to have_received(:capture_exception).with(exception, application_id: application.id)
         post_summary_save
       end
     end
