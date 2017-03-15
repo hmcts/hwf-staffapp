@@ -25,10 +25,10 @@ en-GB:
       subject: 'Application for help with employment tribunal fees'
       greeting: 'Complete your application for help with fees'
       steps:
-        one_html: 1. You must email or post this help with fees reference number <strong>%{reference}</strong> along with your employment tribunal claim number to the employment tribunal.
-        one: 1. You must email or post this help with fees reference number %{reference} along with your employment tribunal claim number to the employment tribunal.
+        one_html: 1. You must email or post this help with fees reference number <strong>%{reference}</strong> along with your employment tribunal claim number to the relevant Employment Tribunal Central Office.
+        one: 1. You must email or post this help with fees reference number %{reference} along with your employment tribunal claim number to the relevant Employment Tribunal Central Office.
         two: 2. You can copy the details below into an email or print this page.
-        three: 3. Email or send your letter to the tribunal where your case is being heard.
+        three: 3. Email or send your letter to the relevant Employment Tribunal Central Office detailed below.
       letter:
         one_html: 'Reference: <strong>%{reference}</strong>'
         one: 'Reference: %{reference}'
@@ -63,7 +63,6 @@ en-GB:
       next:
         heading: What happens next?
         steps:
-          one: 1. Your application for help with fees will be assessed by tribunal staff. This usually takes no longer than 5 working days.
-          two: 2. You'll hear from the tribunal if your application for help with fees is unsuccessful or if they need more information from you.
-          three: 3. If your application for help with fees is successful, you'll hear directly from the tribunal dealing with your case.
+          one: 1. Your help with fees application will be assessed by staff at our Central Office.
+          two: 2. The Central Office will let you know the outcome of your help with fees application, or if they need more information from you. This usually takes no longer than 5 working days.
       warning: 'Your case will not proceed until you send your help with fees reference number and employment tribunal claim number to the tribunal.'
