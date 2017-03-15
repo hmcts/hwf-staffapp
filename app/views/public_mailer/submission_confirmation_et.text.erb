@@ -1,6 +1,6 @@
 <%= t('email.et.greeting') %>
 
-<%= t('email.et.steps.one_html') %>
+<%= t('email.et.steps.one', reference: @application.reference) %>
 <%= t('email.et.steps.two') %>
 
 <%= t('email.et.letter.one', reference: @application.reference) %>
@@ -33,6 +33,5 @@
 <%= t('email.et.next.heading') %>
 <%= t('email.et.next.steps.one') %>
 <%= t('email.et.next.steps.two') %>
-<%= t('email.et.next.steps.three') %>
 
 <%= t('email.et.warning') %>
