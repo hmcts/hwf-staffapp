@@ -1,4 +1,8 @@
 header
+  - if devise_reset_token_error?
+    .alert-box class="alert" data-alert=''
+      | #{I18n.t('activerecord.attributes.user.reset_password_token')}
+
   h2.heading-xlarge =t('devise.invitations.edit.header')
 
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { autocomplete: 'off', method: :put }) do |f|
