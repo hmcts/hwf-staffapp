@@ -18,4 +18,8 @@ module FlashMessageHelper
       "<a href='mailto:#{managers.map(&:email).join(';')}'>#{link_text}</a>"
     end
   end
+
+  def devise_reset_token_error?
+    resource && resource.errors.messages.key?(:reset_password_token)
+  end
 end
