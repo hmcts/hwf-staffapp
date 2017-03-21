@@ -38,3 +38,5 @@ class Applicant < ActiveRecord::Base
     ni_number.delete!(' ') && ni_number.upcase! unless ni_number.nil?
   end
 end
+
+
