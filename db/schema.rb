@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20181114150745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "tablefunc"
 
   create_table "applicants", force: :cascade do |t|
     t.integer  "application_id", null: false
@@ -254,7 +253,7 @@ ActiveRecord::Schema.define(version: 20181114150745) do
     t.integer  "income"
     t.boolean  "refund",                        null: false
     t.date     "date_fee_paid"
-    t.boolean  "probate",                       null: false
+    t.boolean  "probate"
     t.string   "deceased_name"
     t.date     "date_of_death"
     t.string   "case_number"
