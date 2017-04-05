@@ -30,7 +30,7 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def paginated_applications
-    @paginate ||= paginate(policy_scope(Query::ProcessedApplications.new(current_user).find))
+    @paginate ||= paginate(policy_scope(Query::ProcessedApplications.new(current_user, sort_order).find))
   end
 
   def delete_params
@@ -45,6 +45,24 @@ class ProcessedApplicationsController < ApplicationController
     else
       assign_views
       render :show
+    end
+  end
+
+  def sort_order
+    return nil if params['sort'].blank?
+    case params['sort']
+    when 'received_asc'
+      return 'details.date_received asc'
+    when 'received_desc'
+      return 'details.date_received desc'
+    when 'processed_asc'
+      return 'completed_at asc'
+    when 'processed_desc'
+      return 'completed_at desc'
+    when 'fee_asc'
+      return 'details.fee asc'
+    when 'fee_desc'
+      return 'details.fee desc'
     end
   end
 end
