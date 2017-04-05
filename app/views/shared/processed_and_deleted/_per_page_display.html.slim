@@ -6,3 +6,20 @@ ul.pagination.inline-list.util_mt-medium.util_mb-small
         strong= new_per_page
       -else
         =link_to(new_per_page, "/#{controller.controller_name}?per_page=#{new_per_page}")
+ul.pagination.inline-list.util_mt-medium.util_mb-small
+  li Sort:
+  li.per-page
+    bdi Received &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=received_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=received_desc")
+  li
+    span Processed &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=processed_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=processed_desc")
+  li
+    span Fee &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=fee_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=fee_desc")
