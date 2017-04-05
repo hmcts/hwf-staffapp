@@ -1,8 +1,30 @@
 ul.pagination.inline-list.util_mt-medium.util_mb-small
   li Display:
-  - %w[50 100 500 All].each do |new_per_page|
+  - %w[15 30 50 All].each do |new_per_page|
     li.per-page
       -if params[:per_page].eql?(new_per_page)
         strong= new_per_page
       -else
         =link_to(new_per_page, "/#{controller.controller_name}?per_page=#{new_per_page}")
+
+  -if footer
+    li.anchor
+      = link_to('Top of page', "#head")
+
+ul.pagination.inline-list.util_mt-medium.util_mb-small
+  li Sort:
+  li.per-page
+    bdi Received &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=received_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=received_desc")
+  li
+    span Processed &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=processed_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=processed_desc")
+  li
+    span Fee &nbsp;
+    =link_to('ASC', "/#{controller.controller_name}?sort=fee_asc")
+  li
+    =link_to('DESC', "/#{controller.controller_name}?sort=fee_desc")

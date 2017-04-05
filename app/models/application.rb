@@ -28,4 +28,19 @@ class Application < ActiveRecord::Base
   def last_benefit_check
     benefit_checks.order(:id).last
   end
+
+  def self.sort_received(sort_string)
+    return 'details.date_received asc' if 'received_asc' == sort_string
+    'details.date_received desc'
+  end
+
+  def self.sort_processed(sort_string)
+    return 'completed_at asc' if 'processed_asc' == sort_string
+    'completed_at desc'
+  end
+
+  def self.sort_fee(sort_string)
+    return 'details.fee asc' if 'fee_asc' == sort_string
+    'details.fee desc'
+  end
 end

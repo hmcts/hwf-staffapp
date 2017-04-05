@@ -1,8 +1,8 @@
-header
+header#head
   h2.heading-xlarge =t("#{state}_applications.index.title")
 
 - unless @applications.empty?
-  =render('shared/processed_and_deleted/per_page_display')
+  =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
   table.tight *{class: "#{state}-applications"}
     caption.visuallyhidden =t("#{state}_applications.index.title")
     thead
@@ -30,7 +30,7 @@ header
           td.text-center= application.evidence_check?
           td.text-center= application.part_payment?
           td= application.other.html_safe
-  = render('shared/processed_and_deleted/per_page_display')
+  = render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: true })
 
 - else
   p =t("#{state}_applications.index.no_applications")
