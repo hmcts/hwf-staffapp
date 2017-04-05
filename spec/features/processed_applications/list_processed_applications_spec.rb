@@ -44,6 +44,7 @@ RSpec.feature 'List processed applications', type: :feature do
       expect(page).to have_content(application1.applicant.full_name)
       expect(page).to have_content(application4.applicant.full_name)
     end
+    expect(page).to have_link('Top of page')
   end
 
   scenario 'User displays detail of one processed application' do
