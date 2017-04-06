@@ -7,11 +7,9 @@ ul.pagination.inline-list.util_mt-medium.util_mb-small
       -else
         =link_to(new_per_page, "/#{controller.controller_name}?per_page=#{new_per_page}")
 
--if footer
-
+- if footer
     = link_to('Top of page', "#head", class:'anchor')
-
-- unless footer
+- else
   ul.sort.inline-list.util_mt-medium.util_mb-small
     li Sort:
     li.per-page
