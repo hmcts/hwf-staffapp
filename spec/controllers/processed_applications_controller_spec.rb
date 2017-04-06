@@ -234,4 +234,20 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       include_examples 'renders correctly and assigns required variables'
     end
   end
+
+  describe '#search' do
+    let(:application1) { create(:application, :processed_state, office: user.office) }
+    let(:reference) { application1.reference }
+
+    before do
+      get :index, reference: reference
+    end
+
+    it { expect(response).to be_success }
+
+    it 'return correct application' do
+      expect(assigns(:applications).first.application).to eql(application1)
+    end
+  end
+
 end

@@ -8,5 +8,10 @@ module Query
     def find
       @user.office.applications.processed.joins(:detail).order(@sort)
     end
+
+    def search(reference)
+      @user.office.applications.processed.
+        joins(:detail).where(reference: reference)
+    end
   end
 end
