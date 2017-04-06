@@ -17,9 +17,10 @@
 
 .pagination {
   display: table;
-  width: 100%;
+  float: left;
   margin-top: 30px;
   @include core-19;
+  clear: both;
 
   div {
     display: table-cell;
@@ -54,11 +55,5 @@
     text-align: center;
   }
 
-  .anchor {
-    float: right;
-    &::before {
-      content: '' !important;
-      margin-right: 5px;
-    }
-  }
+
 }
