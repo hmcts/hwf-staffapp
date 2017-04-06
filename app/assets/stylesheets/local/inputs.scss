@@ -97,3 +97,20 @@ select {
     display: inline;
   }
 }
+
+.processed_search {
+  position: relative;
+
+  input[type="text"] {
+    width: 250px;
+    max-width: 92% !important;
+    height: 40px;
+  }
+
+  .submit-button {
+    position: absolute;
+    width: 140px;
+    height: 40px;
+    margin-left: 10px;
+  }
+}

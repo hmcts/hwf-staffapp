@@ -31,9 +31,7 @@ class ProcessedApplicationsController < ApplicationController
 
   def paginated_applications
     @paginate ||= paginate(
-      policy_scope(
-        Query::ProcessedApplications.new(current_user, sort_order).find
-      )
+      policy_scope(query_object)
     )
   end
 
@@ -62,6 +60,14 @@ class ProcessedApplicationsController < ApplicationController
       Application.sort_processed(params['sort'])
     when 'fee_asc', 'fee_desc'
       Application.sort_fee(params['sort'])
+    end
+  end
+
+  def query_object
+    if params['reference']
+      Query::ProcessedApplications.new(current_user, sort_order).search(params['reference'])
+    else
+      Query::ProcessedApplications.new(current_user, sort_order).find
     end
   end
 end

@@ -39,3 +39,13 @@
     }
   }
 }
+
+.sort {
+  float: right;
+  li:nth-child(n+3) {
+    &::before {
+      content: '|';
+      margin-right: 5px;
+    }
+  }
+}

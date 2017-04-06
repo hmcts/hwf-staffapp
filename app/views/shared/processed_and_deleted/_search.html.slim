@@ -1,0 +1,6 @@
+= form_tag '', method: :get do
+  .processed_search
+    = label_tag :reference, 'Search by reference', class: 'prefix'
+    = text_field_tag :reference, 'asd', class: 'form-control', placeholder: 'reference number'
+
+    = submit_tag 'Search', name: nil, class: 'button submit-button'
