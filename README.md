@@ -8,6 +8,8 @@ record the decision, and collect statistics.
 
 ## Project Standards
 
+
+
 - Authentications via Devise / CanCanCan
 - Rspec features, not cucumber
 - Slim templating language
