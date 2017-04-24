@@ -16,12 +16,11 @@ RSpec.describe OnlineApplication, type: :model do
   it { is_expected.not_to allow_value(nil).for(:min_threshold_exceeded) }
   it { is_expected.not_to allow_value(nil).for(:benefits) }
   it { is_expected.not_to allow_value(nil).for(:refund) }
+  it { is_expected.not_to allow_value(nil).for(:probate) }
   it { is_expected.not_to allow_value(nil).for(:email_contact) }
   it { is_expected.not_to allow_value(nil).for(:phone_contact) }
   it { is_expected.not_to allow_value(nil).for(:post_contact) }
   it { is_expected.not_to allow_value(nil).for(:feedback_opt_in) }
-
-  it { is_expected.to allow_value(nil).for(:probate) }
 
   it { is_expected.to validate_uniqueness_of(:reference) }
 
