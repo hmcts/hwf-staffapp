@@ -1,10 +1,10 @@
-def fill_personal_details
+def fill_personal_details(ni_number = 'SN123456C')
   expect(page).to have_text 'Personal details'
   fill_in 'Title', with: 'Mr.'
   fill_in 'First and middle names', with: 'Johny'
   fill_in 'Last name', with: 'Mnemonick'
   fill_in 'Date of birth', with: '01/01/2000'
-  fill_in 'National Insurance number', with: 'SN123456C'
+  fill_in 'National Insurance number', with: ni_number
   choose 'Single'
   click_button 'Next'
 end
@@ -24,6 +24,16 @@ def fill_application_refund_details
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is a refund case'
   fill_in 'Date fee paid', with: 2.days.ago.to_date.to_s
+  click_button 'Next'
+end
+
+def fill_application_emergency_details
+  expect(page).to have_text 'Application details'
+  fill_in 'Fee', with: '1000'
+  choose Jurisdiction.first.display_full.to_s
+  fill_in 'Date application received', with: Date.yesterday.to_s
+  check 'This is an emergency case'
+  fill_in 'Reason for emergency', with: "I'm in hurry"
   click_button 'Next'
 end
 

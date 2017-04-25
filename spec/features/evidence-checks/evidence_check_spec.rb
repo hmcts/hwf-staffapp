@@ -27,7 +27,7 @@ RSpec.feature 'Evidence check', type: :feature do
     fill_application_details
     fill_saving_and_investment
     fill_benefits(true)
-    fill_benefit_evidence({paper_provided: true, paper_correct: true })
+    fill_benefit_evidence({ paper_provided: true, paper_correct: true })
 
     expect(page).to have_text 'Check details'
     click_button 'Complete processing'
@@ -91,6 +91,59 @@ RSpec.feature 'Evidence check', type: :feature do
 
       fill_personal_details
       fill_application_refund_details
+      fill_saving_and_investment
+
+      fill_benefits(false)
+      fill_income(false)
+
+      expect(page).to have_text 'Check details'
+      click_button 'Complete processing'
+      expect(has_evidence_check?).to be_truthy
+    end
+  end
+
+  context 'Processing emergency application' do
+    scenario 'no evidence check' do
+      visit  home_index_url
+
+      within "#process-application" do
+        expect(page).to have_text('Process application')
+        click_link "Start now"
+      end
+
+      fill_personal_details
+      fill_application_emergency_details
+      fill_saving_and_investment
+
+      fill_benefits(false)
+      fill_income(false)
+
+      expect(page).to have_text 'Check details'
+      click_button 'Complete processing'
+      expect(has_evidence_check?).to be_falsey
+    end
+  end
+
+  context 'Processing application with same NI number' do
+    let(:evidence_check) { create(:evidence_check, application: application) }
+    let(:application) { create(:application_part_remission) }
+
+    before {
+      evidence_check
+      application.applicant.update(ni_number: 'SN123456D')
+    }
+
+    scenario 'no evidence check' do
+      expect(application.evidence_check.present?).to be_truthy
+      visit  home_index_url
+
+      within "#process-application" do
+        expect(page).to have_text('Process application')
+        click_link "Start now"
+      end
+
+      fill_personal_details('SN123456D')
+      fill_application_details
       fill_saving_and_investment
 
       fill_benefits(false)
