@@ -21,8 +21,13 @@ def fill_application_refund_details
   expect(page).to have_text 'Application details'
   fill_in 'Fee', with: '1000'
   choose Jurisdiction.first.display_full.to_s
+  fill_application_dates
+end
+
+def fill_application_dates
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is a refund case'
+
   fill_in 'Date fee paid', with: 2.days.ago.to_date.to_s
   click_button 'Next'
 end
@@ -45,7 +50,7 @@ end
 
 def fill_benefits(benefits)
   expect(page).to have_text 'Benefits'
-  choose (benefits) ? 'Yes' : 'No'
+  choose benefits ? 'Yes' : 'No'
 
   click_button 'Next'
 end
@@ -69,8 +74,8 @@ end
 def fill_income(supporting_children)
   expect(page).to have_text 'Income'
   if supporting_children
-   choose 'Yes'
-   fill_in 'Number of children', with: '2'
+    choose 'Yes'
+    fill_in 'Number of children', with: '2'
   else
     choose 'No'
   end
