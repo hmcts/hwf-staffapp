@@ -49,9 +49,9 @@ RSpec.describe Application, type: :model do
         expect(list).to eq([])
       end
 
-      it "missing evidence_check record" do
-        list = Application.with_evidence_check_for_ni_number(ni_number)
-        expect(list).to eq([])
+      context 'missing evidence_check record' do
+        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        it { expect(list).to eq([]) }
       end
     end
 
@@ -61,19 +61,14 @@ RSpec.describe Application, type: :model do
       let(:ni_number) { 'SN123456C' }
       before { evidence_check }
 
-      it "matching NI number" do
-        list = Application.with_evidence_check_for_ni_number(ni_number)
-        expect(list).to eq([])
+      context 'matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        it { expect(list).to eq([]) }
       end
 
-      it "not matching NI number" do
-        list = Application.with_evidence_check_for_ni_number('SN123456D')
-        expect(list).to eq([])
-      end
-
-      it "missing evidence_check record" do
-        list = Application.with_evidence_check_for_ni_number(ni_number)
-        expect(list).to eq([])
+      context 'not matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ni_number('SN123456D') }
+        it { expect(list).to eq([]) }
       end
     end
   end

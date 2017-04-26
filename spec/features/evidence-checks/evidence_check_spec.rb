@@ -144,7 +144,7 @@ RSpec.feature 'Evidence check', type: :feature do
       click_button 'Complete processing'
       expect(has_evidence_check?).to be_truthy
 
-      #creating another application that should pick up the evidence check
+      # Creating another application that should pick up the evidence check
       visit  home_index_url
 
       within "#process-application" do
