@@ -41,7 +41,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     end
 
     before do
-      allow(Query::ProcessedApplications).to receive(:new).with(user, sort_hash).and_return(query)
+      allow(Query::ProcessedApplications).to receive(:new).with(user).and_return(query)
       allow(controller).to receive(:policy_scope).with(scope).and_return(relation)
       allow(relation).to receive(:paginate).and_return(relation)
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
@@ -94,62 +94,6 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     context 'when the per_page parameter is not set' do
       it 'calls pagination with the page number and defined number per page (settings)' do
         expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
-      end
-    end
-
-    describe 'sort' do
-      context 'date_received asc' do
-        let(:sort_hash) { 'details.date_received asc' }
-        let(:sort) { 'received_asc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'date_received desc' do
-        let(:sort_hash) { 'details.date_received desc' }
-        let(:sort) { 'received_desc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'processed asc' do
-        let(:sort_hash) { 'completed_at asc' }
-        let(:sort) { 'processed_asc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'processed desc' do
-        let(:sort_hash) { 'completed_at desc' }
-        let(:sort) { 'processed_desc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'fee asc' do
-        let(:sort_hash) { 'details.fee asc' }
-        let(:sort) { 'fee_asc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'fee desc' do
-        let(:sort_hash) { 'details.fee desc' }
-        let(:sort) { 'fee_desc' }
-
-        it 'renders the correct template' do
-          expect(response).to render_template(:index)
-        end
       end
     end
   end
@@ -234,20 +178,4 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       include_examples 'renders correctly and assigns required variables'
     end
   end
-
-  describe '#search' do
-    let(:application1) { create(:application, :processed_state, office: user.office) }
-    let(:reference) { application1.reference }
-
-    before do
-      get :index, reference: reference
-    end
-
-    it { expect(response).to be_success }
-
-    it 'return correct application' do
-      expect(assigns(:applications).first.application).to eql(application1)
-    end
-  end
-
 end
