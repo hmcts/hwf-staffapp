@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331153241) do
+ActiveRecord::Schema.define(version: 20170213153644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "tablefunc"
 
   create_table "applicants", force: :cascade do |t|
     t.integer  "application_id", null: false
@@ -236,7 +237,7 @@ ActiveRecord::Schema.define(version: 20170331153241) do
     t.integer  "income"
     t.boolean  "refund",                        null: false
     t.date     "date_fee_paid"
-    t.boolean  "probate"
+    t.boolean  "probate",                       null: false
     t.string   "deceased_name"
     t.date     "date_of_death"
     t.string   "case_number"
