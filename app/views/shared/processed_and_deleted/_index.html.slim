@@ -1,7 +1,6 @@
 header#head
   h2.heading-xlarge =t("#{state}_applications.index.title")
 
-= render(partial: 'shared/processed_and_deleted/search')
 - unless @applications.empty?
   =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
   table.tight *{class: "#{state}-applications"}

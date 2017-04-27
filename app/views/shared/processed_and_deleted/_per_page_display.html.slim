@@ -9,21 +9,3 @@ ul.pagination.inline-list.util_mt-medium.util_mb-small
 
 - if footer
     = link_to('Top of page', "#head", class:'anchor')
-- else
-  ul.sort.inline-list.util_mt-medium.util_mb-small
-    li Sort:
-    li.per-page
-      span Received &nbsp;
-      =link_to('ASC', "/#{controller.controller_name}?sort=received_asc")
-    li
-      =link_to('DESC', "/#{controller.controller_name}?sort=received_desc")
-    li
-      span Processed &nbsp;
-      =link_to('ASC', "/#{controller.controller_name}?sort=processed_asc")
-    li
-      =link_to('DESC', "/#{controller.controller_name}?sort=processed_desc")
-    li
-      span Fee &nbsp;
-      =link_to('ASC', "/#{controller.controller_name}?sort=fee_asc")
-    li
-      =link_to('DESC', "/#{controller.controller_name}?sort=fee_desc")

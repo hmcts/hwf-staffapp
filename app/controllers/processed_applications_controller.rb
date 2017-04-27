@@ -50,24 +50,7 @@ class ProcessedApplicationsController < ApplicationController
     end
   end
 
-  def sort_order
-    return nil if params['sort'].blank?
-
-    case params['sort']
-    when 'received_asc', 'received_desc'
-      Application.sort_received(params['sort'])
-    when 'processed_asc', 'processed_desc'
-      Application.sort_processed(params['sort'])
-    when 'fee_asc', 'fee_desc'
-      Application.sort_fee(params['sort'])
-    end
-  end
-
   def query_object
-    if params['reference']
-      Query::ProcessedApplications.new(current_user, sort_order).search(params['reference'])
-    else
-      Query::ProcessedApplications.new(current_user, sort_order).find
-    end
+    Query::ProcessedApplications.new(current_user).find
   end
 end
