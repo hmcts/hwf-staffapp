@@ -28,4 +28,48 @@ RSpec.describe Application, type: :model do
   it { is_expected.to validate_uniqueness_of(:reference).allow_blank }
 
   it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
+
+  describe 'with_evidence_check_for_ni_number' do
+    let(:evidence_check) { create(:evidence_check, application: application) }
+
+    context 'pending evidence check' do
+      let(:application) { create(:application, :waiting_for_evidence_state, applicant: applicant) }
+      let(:applicant) { create(:applicant, ni_number: ni_number) }
+      let(:ni_number) { 'SN123456C' }
+
+      it "matching NI number" do
+        evidence_check
+        list = Application.with_evidence_check_for_ni_number(ni_number)
+        expect(list).to eq([application])
+      end
+
+      it "not matching NI number" do
+        evidence_check
+        list = Application.with_evidence_check_for_ni_number('SN123456D')
+        expect(list).to eq([])
+      end
+
+      context 'missing evidence_check record' do
+        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        it { expect(list).to eq([]) }
+      end
+    end
+
+    context 'different state' do
+      let(:application) { create(:application, applicant: applicant) }
+      let(:applicant) { create(:applicant, ni_number: ni_number) }
+      let(:ni_number) { 'SN123456C' }
+      before { evidence_check }
+
+      context 'matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        it { expect(list).to eq([]) }
+      end
+
+      context 'not matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ni_number('SN123456D') }
+        it { expect(list).to eq([]) }
+      end
+    end
+  end
 end

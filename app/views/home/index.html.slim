@@ -22,7 +22,7 @@ h1.visuallyhidden Help with fees - Staff application
 
 .grid-row.staff-panels
   - if policy(:application).new?
-    .column-one-half
+    .column-one-half#process-application
       .util_pt-medium
         - if @state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
@@ -44,7 +44,7 @@ h1.visuallyhidden Help with fees - Staff application
             .util_mt-0
               =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
 
-  .column-one-half
+  .column-one-half#process-online-application
     .util_pt-medium
       = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
         - if @state == 'offline'

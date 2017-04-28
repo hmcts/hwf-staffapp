@@ -15,6 +15,12 @@ class Application < ActiveRecord::Base
   has_one :benefit_override, required: false
   has_one :decision_override, required: false
 
+  scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
+    Application.where(state: states[:waiting_for_evidence]).
+      joins(:evidence_check).
+      joins(:applicant).where('applicants.ni_number = ?', ni_number)
+  end)
+
   enum state: {
     created: 0,
     waiting_for_evidence: 1,

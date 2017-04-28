@@ -113,6 +113,27 @@ describe EvidenceCheckSelector do
           expect(decision.check_type).to eql 'flag'
         end
       end
+
+      context 'for a application with existing check and same ni_number' do
+        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:application_old) do
+          create(:application, :income_type,
+            state: 1,
+            applicant: applicant_old)
+        end
+        let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
+
+        let(:application) { create(:application, :income_type, applicant: applicant) }
+        let(:applicant) { create(:applicant, ni_number: 'SN123456D') }
+
+        before do
+          evidence_check
+        end
+
+        it 'never selects the application for evidence_check' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
     end
   end
 end

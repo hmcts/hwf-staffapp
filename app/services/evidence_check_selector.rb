@@ -16,6 +16,8 @@ class EvidenceCheckSelector
       'random'
     elsif flagged?
       'flag'
+    elsif pending_evidence_check_for_with_user?
+      'ni_exist'
     end
   end
 
@@ -52,5 +54,12 @@ class EvidenceCheckSelector
 
   def expires_at
     @expires_in_days.days.from_now
+  end
+
+  def pending_evidence_check_for_with_user?
+    applicant = @application.applicant
+    applications = Application.with_evidence_check_for_ni_number(applicant.ni_number).
+                   where.not(id: @application.id)
+    applications.present?
   end
 end
