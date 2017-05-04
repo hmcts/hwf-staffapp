@@ -37,7 +37,7 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
         expect(page).to have_content 'Processing complete'
         expect(page).to have_button 'Finish'
         click_button 'Finish'
-        expect(page).to have_content 'Start now'
+        expect(page).to have_button 'Start now'
         within '.waiting-for-part_payment' do
           expect(page).to have_no_content(application1.reference)
         end
