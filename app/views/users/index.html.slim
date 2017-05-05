@@ -1,6 +1,12 @@
 header
   h2.heading-xlarge Staff
 
+ul.sort.inline-list
+  li Filter users:
+  li =link_to 'All', users_path()
+  li =link_to 'Active', users_path(status_filter: :active)
+  li =link_to 'Inactive', users_path(status_filter: :inactive)
+
 table.util_mb-large
   caption.visuallyhidden Staff
   thead
@@ -10,6 +16,8 @@ table.util_mb-large
       th Role
       th Office
       th Main jurisdiction
+      th Activity flag
+      th Last logged in
       th &nbsp;
   tbody
     -@users.each do |user|
@@ -23,6 +31,8 @@ table.util_mb-large
           =user.role.humanize
         td =user.office.name if user.office.present?
         td =user.jurisdiction.display if user.jurisdiction.present?
+        td =user.activity_flag.capitalize
+        td =user.current_sign_in_at
         td
           - if policy(user).edit?
             =link_to 'Change details', edit_user_path(user)

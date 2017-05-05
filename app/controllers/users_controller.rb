@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     authorize :user
 
     @users = policy_scope(User).sorted_by_email
+    filter_users
   end
 
   def deleted
@@ -56,6 +57,17 @@ class UsersController < ApplicationController
 
   def deleted_user
     @user ||= User.only_deleted.find(params[:id])
+  end
+
+  def filter_users
+    return unless params['status_filter']
+
+    @users =
+      if params['status_filter'] == 'active'
+        @users.active
+      elsif params['status_filter'] == 'inactive'
+        @users.inactive
+      end
   end
 
   def flash_notices_for_update(update_successful)
