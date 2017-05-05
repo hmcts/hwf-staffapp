@@ -1,7 +1,7 @@
 module FeatureHelpers
   def start_new_application
     visit '/'
-    click_link 'Start now'
+    click_button 'Start now'
   end
 end
 

@@ -42,7 +42,8 @@ h1.visuallyhidden Help with fees - Staff application
             p Please ask your manager to assign jurisdictions to your office.
           - else
             .util_mt-0
-              =link_to 'Start now', create_applications_path, method: :post, class: 'button util_mb-0'
+              = form_tag(create_applications_path) do
+                = submit_tag 'Start now', class: 'button util_margin-0'
 
   .column-one-half#process-online-application
     .util_pt-medium

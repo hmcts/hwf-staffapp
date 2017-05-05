@@ -74,7 +74,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
       context 'when the office has some jurisdictions assigned' do
         it 'renders the Start now button' do
-          is_expected.to have_text 'Start now'
+          is_expected.to have_button 'Start now'
         end
       end
 
