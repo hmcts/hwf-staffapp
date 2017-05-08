@@ -25,7 +25,7 @@ class PartPaymentBuilder
   end
 
   def part_remission_or_not_evidence_checked
-    @initiator.outcome.eql?('part') && evidence_check_payment_validation? && is_not_refund?
+    @initiator.outcome.eql?('part') && evidence_check_payment_validation? && not_refund?
   end
 
   def evidence_check_payment_validation?
@@ -36,7 +36,7 @@ class PartPaymentBuilder
     @expires_in_days.days.from_now
   end
 
-  def is_not_refund?
+  def not_refund?
     !@application.detail.refund?
   end
 end
