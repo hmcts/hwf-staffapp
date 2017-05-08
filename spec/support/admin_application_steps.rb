@@ -9,17 +9,17 @@ def fill_personal_details(ni_number = 'SN123456C')
   click_button 'Next'
 end
 
-def fill_application_details
+def fill_application_details(fee = 1000)
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: fee
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   click_button 'Next'
 end
 
-def fill_application_refund_details
+def fill_application_refund_details(fee = 1000)
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: fee
   choose Jurisdiction.first.display_full.to_s
   fill_application_dates
 end
@@ -32,9 +32,9 @@ def fill_application_dates
   click_button 'Next'
 end
 
-def fill_application_emergency_details
+def fill_application_emergency_details(fee = 1000)
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: fee
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is an emergency case'
@@ -71,15 +71,15 @@ def fill_benefit_evidence(benefits_options)
   click_button 'Next'
 end
 
-def fill_income(supporting_children)
+def fill_income(supporting_children, income = 1000, children = 2)
   expect(page).to have_text 'Income'
   if supporting_children
     choose 'Yes'
-    fill_in 'Number of children', with: '2'
+    fill_in 'Number of children', with: children
   else
     choose 'No'
   end
-  fill_in 'Total monthly income', with: '1000'
+  fill_in 'Total monthly income', with: income
 
   click_button 'Next'
 end
