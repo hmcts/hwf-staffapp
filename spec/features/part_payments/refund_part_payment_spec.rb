@@ -39,6 +39,29 @@ RSpec.feature 'Part Payment refund flow', type: :feature do
     end
   end
 
+  describe 'digital part payment application refund' do
+    let(:online_application) { create :online_application, :application_part_remission, :with_refund, :with_reference }
+
+    scenario 'is marked as processed and not waiting for payment' do
+      visit home_index_url
+      fill_in 'online_search_reference', with: online_application.reference
+      click_button 'Look up'
+
+      fill_application_details(410)
+
+      click_button 'Complete processing'
+      expect(page).to have_text 'The applicant must pay £90 towards the fee'
+      click_link 'Back to start'
+      expect(page).to have_text 'There are no applications waiting for evidence'
+
+      click_link "Processed applications"
+
+      within(:xpath, './/table[contains(@class, "processed-applications")]') do
+        expect(page).to have_content(reference)
+      end
+    end
+  end
+
   def reference
     Application.last.reference
   end
