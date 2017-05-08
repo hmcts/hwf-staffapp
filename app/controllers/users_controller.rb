@@ -60,12 +60,23 @@ class UsersController < ApplicationController
   end
 
   def filter_users
-    return unless params['status_filter']
+    apply_activity_filter
+    apply_office_filter
+  end
+
+  def apply_office_filter
+    return unless params['office_id'].present?
+
+    @users = @users.where('office_id = ?', params['office_id'])
+  end
+
+  def apply_activity_filter
+    return unless params['activity'].present?
 
     @users =
-      if params['status_filter'] == 'active'
+      if params['activity'] == 'Active'
         @users.active
-      elsif params['status_filter'] == 'inactive'
+      elsif params['activity'] == 'Inactive'
         @users.inactive
       end
   end

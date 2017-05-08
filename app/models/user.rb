@@ -69,9 +69,9 @@ class User < ActiveRecord::Base
   end
 
   def activity_flag
-    return '' unless current_sign_in_at
+    return :active if current_sign_in_at && current_sign_in_at >= INACTIVE_DATE
 
-    current_sign_in_at < INACTIVE_DATE ? :inactive : :active
+    :inactive
   end
 
   private
