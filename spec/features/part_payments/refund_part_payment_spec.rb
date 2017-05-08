@@ -17,7 +17,7 @@ RSpec.feature 'Part Payment refund flow', type: :feature do
 
       within "#process-application" do
         expect(page).to have_text('Process application')
-        click_link "Start now"
+        click_button 'Start now'
       end
 
       fill_personal_details
