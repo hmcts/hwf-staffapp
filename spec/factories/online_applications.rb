@@ -88,6 +88,14 @@ FactoryGirl.define do
       date_fee_paid Time.zone.now - 2.months
     end
 
+    trait :application_part_remission do
+      married false
+      children 3
+      fee 410
+      benefits false
+      income 2000
+    end
+
     after(:create) do |online_application, evaluator|
       if evaluator.convert_to_application
         create(:application,

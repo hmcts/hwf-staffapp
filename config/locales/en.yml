@@ -358,6 +358,20 @@ en-GB:
           - 3: "Your delivery manager has allowed discretion with this application"
         option_other: 'Other'
         reason: 'Other reason'
+      forms/online_application:
+        fee: Fee
+        jurisdiction_id: Jurisdiction
+        date_received: Date application received
+        form_name: Form name
+        case_number: Case number
+        probate: This is a probate case
+        deceased_name: Name of the deceased
+        date_of_death: Date of their death
+        refund: This is a refund case
+        date_fee_paid: Date fee paid
+        emergency: This is an emergency case
+        emergency_reason: Reason for emergency
+        date_hint: Use this format DD/MM/YYYY
     errors:
       models:
         forms/finance_report:

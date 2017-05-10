@@ -23,6 +23,13 @@ describe PartPaymentBuilder do
       it 'sets expiration on the payment' do
         expect(decide.expires_at).to eql(current_time + expires_in_days.days)
       end
+
+      context 'refund' do
+        let(:application) { create :application_part_remission, refund: true }
+        it 'does not create part payment' do
+          expect(decide).to be_nil
+        end
+      end
     end
 
     context 'for non-applicable application types' do
