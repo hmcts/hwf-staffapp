@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   belongs_to :office
   belongs_to :jurisdiction
 
+  INACTIVE_DATE = 3.months.ago
   ROLES = %w[user manager admin mi].freeze
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable
   devise :database_authenticatable,
@@ -14,6 +16,11 @@ class User < ActiveRecord::Base
     :validatable,
     :invitable,
     :registerable
+
+  scope :active, -> { where('current_sign_in_at >= ?', INACTIVE_DATE) }
+  scope :inactive, (lambda do
+    where('current_sign_in_at < ? OR current_sign_in_at IS NULL', INACTIVE_DATE)
+  end)
 
   scope :sorted_by_email, -> { all.order(:email) }
 
@@ -59,6 +66,12 @@ class User < ActiveRecord::Base
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def activity_flag
+    return :active if current_sign_in_at && current_sign_in_at >= INACTIVE_DATE
+
+    :inactive
   end
 
   private
