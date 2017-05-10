@@ -248,4 +248,19 @@ describe User, type: :model do
       end
     end
   end
+
+  describe '#activity_flag' do
+    it 'returns :active for users logged in within last 3 months' do
+      user.current_sign_in_at = 10.days.ago
+      expect(user.activity_flag).to eq :active
+    end
+    it 'returns :inactive for users not logged in within last 3 months' do
+      user.current_sign_in_at = 4.months.ago
+      expect(user.activity_flag).to eq :inactive
+    end
+    it 'returns :inactive for users not logged in to the system at all' do
+      user.current_sign_in_at = nil
+      expect(user.activity_flag).to eq :inactive
+    end
+  end
 end
