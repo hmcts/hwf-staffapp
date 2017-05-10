@@ -12,6 +12,8 @@ div.panel
       =select_tag :activity, options_for_select([:active, :inactive]), prompt: 'Please select'
     div
       = submit_tag("Filter", class: 'button')
+    div
+      | ** These filters enable you to see when users last logged in
 
 table.util_mb-large
   caption.visuallyhidden Staff
