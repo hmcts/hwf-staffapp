@@ -23,12 +23,7 @@ class UserFilters
   end
 
   def activity(value)
-    @users =
-      if value == 'active'
-        @users.active
-      elsif value == 'inactive'
-        @users.inactive
-      end
+    @users = @users.public_send(value)
   end
 
 end
