@@ -22,5 +22,11 @@ FactoryGirl.define do
     factory :deleted_user do
       deleted_at Time.zone.yesterday
     end
+    factory :inactive_user do
+      current_sign_in_at 4.months.ago
+    end
+    factory :active_user do
+      current_sign_in_at 1.month.ago
+    end
   end
 end
