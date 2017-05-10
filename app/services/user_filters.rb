@@ -1,4 +1,4 @@
-class FilterUsers
+class UserFilters
   FILTER_LIST = [
     :activity,
     :office

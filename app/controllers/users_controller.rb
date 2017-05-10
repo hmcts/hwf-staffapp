@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     authorize :user
 
     @users = policy_scope(User).sorted_by_email
-    @users = FilterUsers.new(@users, filter_params).apply if filter_params.present?
+    @users = UserFilters.new(@users, filter_params).apply if filter_params.present?
   end
 
   def deleted
