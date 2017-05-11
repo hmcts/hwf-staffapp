@@ -4,8 +4,14 @@ header
 
 .row
   .small-12.columns
-    / ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5
     ul.block-grid.small-block-grid-2.medium-block-grid-4.large-block-grid-5
+      li
+        .panel.guide-cols
+          h5
+            = link_to staff_guidance_url
+              span Staff guidance
+              = image_tag("icon-guidance.png")
+
       li
         .panel.guide-cols
           h5
