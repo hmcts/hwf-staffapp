@@ -25,7 +25,6 @@ table.util_mb-large
       th Office
       th Main jurisdiction
       th Activity flag
-      th Last logged in
       th &nbsp;
   tbody
     -@users.each do |user|
@@ -40,7 +39,6 @@ table.util_mb-large
         td =user.office.name if user.office.present?
         td =user.jurisdiction.display if user.jurisdiction.present?
         td =user.activity_flag.capitalize
-        td =user.current_sign_in_at
         td
           - if policy(user).edit?
             =link_to 'Change details', edit_user_path(user)
