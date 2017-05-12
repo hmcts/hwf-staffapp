@@ -20,7 +20,7 @@ RSpec.describe 'users/index', type: :view do
   describe 'Link to change user details' do
     context 'when user has permission to change the other user\'s details' do
       it 'is rendered' do
-        is_expected.to have_xpath('//tbody/tr[1]/td[8]/a')
+        is_expected.to have_xpath('//tbody/tr[1]/td[7]/a')
       end
     end
 

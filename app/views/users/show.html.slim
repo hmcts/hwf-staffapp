@@ -19,6 +19,9 @@ table.util_mb-large
     th scope="row" Main jurisdiction
     td
       =@user.jurisdiction.name if @user.jurisdiction.present?
+  tr
+    th scope="row" Last logged in
+    td =@user.current_sign_in_at
 
 ul.list.list-pad
   li= link_to 'Change details', edit_user_path(@user)
