@@ -55,6 +55,39 @@ RSpec.feature 'Evidence check', type: :feature do
       expect(has_evidence_check?).to be_truthy
     end
 
+    scenario 'evidence check is flaged' do
+      visit  home_index_url
+
+      within "#process-application" do
+        expect(page).to have_text('Process application')
+        click_button "Start now"
+      end
+
+      fill_personal_details('SN123456D')
+      fill_application_details
+      fill_saving_and_investment
+
+      fill_benefits(false)
+      fill_income(false)
+
+      expect(page).to have_text 'Check details'
+      click_button 'Complete processing'
+
+      visit  home_index_url
+      create_flag_check('SN123456D')
+
+      click_button "Start now"
+      fill_personal_details('SN123456D')
+      fill_application_details
+      fill_saving_and_investment
+
+      fill_benefits(true)
+      fill_benefit_evidence(paper_provided: true, paper_correct: true)
+      click_button 'Complete processing'
+
+      expect(has_evidence_check_flagged?).to be_truthy
+    end
+
     scenario 'no evidence check for 11th application' do
       create :application_part_remission
 

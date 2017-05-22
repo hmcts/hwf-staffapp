@@ -85,7 +85,20 @@ def fill_income(supporting_children, income = 1000, children = 2)
 end
 
 def has_evidence_check?
+  evidene_check.present?
+end
+
+def has_evidence_check_flagged?
+  ev_check = evidene_check
+  ev_check && ev_check.check_type == 'flag'
+end
+
+def evidene_check
   reference_number = find(:xpath, './/span[@class="reference-number"]').text
   application = Application.where(reference: reference_number).last
-  application.try(:evidence_check).present?
+  application.try(:evidence_check)
+end
+
+def create_flag_check(ni_number)
+  EvidenceCheckFlag.create(ni_number: ni_number, active: true, count: 1)
 end
