@@ -73,7 +73,7 @@ RSpec.feature 'Evidence check', type: :feature do
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
 
-      visit  home_index_url
+      visit home_index_url
       create_flag_check('SN123456D')
 
       click_button "Start now"
@@ -91,7 +91,7 @@ RSpec.feature 'Evidence check', type: :feature do
     scenario 'no evidence check for 11th application' do
       create :application_part_remission
 
-      visit  home_index_url
+      visit home_index_url
 
       within "#process-application" do
         expect(page).to have_text('Process application')
