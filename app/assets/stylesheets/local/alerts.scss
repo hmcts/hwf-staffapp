@@ -24,6 +24,11 @@
     background: $error-colour;
   }
 
+  &.notice {
+    @extend .alert;
+    background: $light-blue;
+  }
+
   > a.close {
     text-decoration: none;
 
