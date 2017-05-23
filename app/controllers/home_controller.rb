@@ -8,6 +8,7 @@ class HomeController < ApplicationController
     @online_search_form = Forms::Search.new
     @completed_search_form = Forms::Search.new
     @state = DwpMonitor.new.state
+    @notification = Notification.first
   end
 
   def completed_search

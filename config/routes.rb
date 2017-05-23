@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resource :notifications, only: [:edit, :update]
+
   post 'api/submissions' => 'api/submissions#create'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
