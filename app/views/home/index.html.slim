@@ -7,6 +7,9 @@ h1.visuallyhidden Help with fees - Staff application
 - else
   =render("shared/dwp/#{@state}")
 
+-if @notification.present? && @notification.show
+  =render('shared/notifications')
+
 .grid-row
   .column-one-half
     | &nbsp;

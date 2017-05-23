@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213153644) do
+ActiveRecord::Schema.define(version: 20170518145329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,13 @@ ActiveRecord::Schema.define(version: 20170213153644) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.text     "message"
+    t.boolean  "show",       default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
   create_table "office_jurisdictions", id: false, force: :cascade do |t|
     t.integer "office_id",       null: false
     t.integer "jurisdiction_id", null: false
@@ -237,7 +244,7 @@ ActiveRecord::Schema.define(version: 20170213153644) do
     t.integer  "income"
     t.boolean  "refund",                        null: false
     t.date     "date_fee_paid"
-    t.boolean  "probate",                       null: false
+    t.boolean  "probate"
     t.string   "deceased_name"
     t.date     "date_of_death"
     t.string   "case_number"
