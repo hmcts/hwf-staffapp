@@ -10,7 +10,7 @@ RSpec.describe 'users/index', type: :view do
 
   before do
     assign(:users, users)
-    allow(view).to receive(:current_user).and_return(double('User', admin?: true))
+    allow(view).to receive(:current_user).and_return(instance_double(User, admin?: true))
     allow(view).to receive(:policy).with(:user).and_return(instance_double(UserPolicy, new?: user_new?, list_deleted?: user_list_deleted?))
     allow(view).to receive(:policy).with(users[0]).and_return(instance_double(UserPolicy, edit?: true))
     allow(view).to receive(:policy).with(users[1]).and_return(instance_double(UserPolicy, edit?: false))
