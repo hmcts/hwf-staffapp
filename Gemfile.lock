@@ -74,6 +74,8 @@ GEM
       capybara (>= 2.3.0, < 2.13.0)
       json
     chartkick (2.2.2)
+    ckeditor_rails (4.6.2)
+      railties (>= 3.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     codeclimate-test-reporter (0.6.0)
@@ -415,6 +417,7 @@ DEPENDENCIES
   capybara
   capybara-webkit
   chartkick
+  ckeditor_rails (~> 4.6)
   climate_control
   codeclimate-test-reporter
   coffee-rails (~> 4.2.1)

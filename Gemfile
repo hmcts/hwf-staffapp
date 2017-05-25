@@ -111,6 +111,7 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'chartkick'
+gem 'ckeditor_rails', '~> 4.6'
 gem 'groupdate'
 gem 'rest-client'
 gem 'virtus'

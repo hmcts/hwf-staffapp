@@ -14,6 +14,7 @@
 // libraries
 //= require jquery
 //= require jquery_ujs
+//= require ckeditor-jquery
 
 // vendor plugins
 //= require details.polyfill

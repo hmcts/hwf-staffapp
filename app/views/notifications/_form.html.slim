@@ -1,7 +1,7 @@
 = form_for(@notification, url: notifications_path, action: :patch) do |f|
   .form-group
     = f.label :message, class: 'form-label'
-    = f.text_area :message, cols: '70', rows: '7'
+    = f.text_area :message, cols: '70', rows: '7', :class => 'ckeditor'
 
   .form-group
     fieldset
