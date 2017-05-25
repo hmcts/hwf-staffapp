@@ -5,7 +5,7 @@ div#staff-filters.panel
       = form_tag users_path, method: :get do
         div.util_mb-tiny
           | Office:
-          = select_tag :office, options_for_select(Office.all.collect { |o| [o.name, o.id]}, params[:office]), prompt: 'Please select'
+          = select_tag :office, options_for_select(Office.sorted.collect { |o| [o.name, o.id]}, params[:office]), prompt: 'Please select'
         div.util_mb-tiny
           | Activity:
           = select_tag :activity, options_for_select([:active, :inactive], params[:activity]), prompt: 'Please select'
