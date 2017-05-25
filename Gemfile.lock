@@ -417,7 +417,7 @@ DEPENDENCIES
   capybara
   capybara-webkit
   chartkick
-  ckeditor_rails
+  ckeditor_rails (~> 4.6)
   climate_control
   codeclimate-test-reporter
   coffee-rails (~> 4.2.1)
