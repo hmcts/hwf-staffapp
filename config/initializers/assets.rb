@@ -13,3 +13,4 @@ Rails.application.config.assets.precompile += %w[income_calculator.js]
 
 Rails.application.config.assets.precompile += %w[*.png *.ico]
 Rails.application.config.assets.precompile += %w[.svg .eot .woff .ttf]
+Rails.application.config.assets.precompile += %w[ckeditor/*]
