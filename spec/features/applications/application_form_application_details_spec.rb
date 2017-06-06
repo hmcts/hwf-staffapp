@@ -66,6 +66,10 @@ RSpec.feature 'Completing the application details page of an application form', 
           expect(page).to have_xpath('//input[@id="application_date_fee_paid"]')
         end
 
+        it 'shows the 3 months old warning message' do
+          expect(page).to have_xpath('//p[@id="old-application-warning"]')
+        end
+
         context 'submitting empty' do
           before { click_button 'Next' }
 

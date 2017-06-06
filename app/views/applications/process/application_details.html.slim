@@ -79,6 +79,12 @@
               = t('refund', scope: @form.i18n_scope)
 
           #refund-only.start-hidden
+            p#old-application-warning.notice
+              i.icon.icon-important
+                span.visually-hidden
+                  Warning
+              strong.bold-small
+                = 'The application must have been made in the last 3 months'
             .panel-indent
               .form-group
                 = f.label :date_fee_paid, class: 'form-label'
