@@ -134,6 +134,20 @@ describe EvidenceCheckSelector do
           is_expected.to be_a(EvidenceCheck)
         end
       end
+
+      context "when applicant's ni number is empty" do
+        it 'skips the ni_exist evidence check' do
+          applicant = create(:applicant, ni_number: '')
+          application = applicant.application
+
+          application_old = create(:application, :income_type, :waiting_for_evidence_state, applicant: applicant)
+          create(:evidence_check, application: application_old)
+
+          decision = described_class.new(application, expires_in_days).decide!
+
+          expect(decision).not_to be_a(EvidenceCheck)
+        end
+      end
     end
   end
 end
