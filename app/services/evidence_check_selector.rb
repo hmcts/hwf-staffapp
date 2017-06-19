@@ -58,6 +58,8 @@ class EvidenceCheckSelector
 
   def pending_evidence_check_for_with_user?
     applicant = @application.applicant
+    return false unless applicant.ni_number.present?
+
     applications = Application.with_evidence_check_for_ni_number(applicant.ni_number).
                    where.not(id: @application.id)
     applications.present?
