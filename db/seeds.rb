@@ -19,7 +19,7 @@ OfficeJurisdiction.all.each do |oj|
   BusinessEntity.create(
       office: oj.office,
       jurisdiction: oj.jurisdiction,
-      code: oj.office.entity_code,
+      be_code: oj.office.entity_code,
       name: "#{oj.office.name} - #{oj.jurisdiction.name}",
       valid_from: Time.zone.now
   )
