@@ -46,11 +46,17 @@ FactoryGirl.define do
       # reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
     end
 
-    trait :completed do
+    trait :emergency_completed do
       fee 450
       jurisdiction
       date_received Time.zone.yesterday
       emergency_reason 'EMERGENCY'
+    end
+
+    trait :completed do
+      fee 450
+      jurisdiction
+      date_received Time.zone.yesterday
     end
 
     trait :threshold_exceeded do
