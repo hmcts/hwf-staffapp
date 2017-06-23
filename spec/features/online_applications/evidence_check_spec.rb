@@ -8,25 +8,27 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
   let(:jurisdiction) { create :jurisdiction }
   let(:office) { create :office, jurisdictions: [jurisdiction] }
   let(:user) { create :user, office: office }
-  let(:online_application_1) { create :online_application, :completed, :with_reference,
-    married: false,
-    children: 3,
-    benefits: false,
-    fee: 155,
-    form_name: 'D11',
-    income_min_threshold_exceeded: false
-  }
-  let(:online_application_2) { create :online_application, :completed, :with_reference,
-    married: false,
-    children: 0,
-    benefits: true,
-    fee: 155,
-    form_name: 'D11',
-    emergency_reason: 'freezing order',
-    ni_number: online_application_1.ni_number
-  }
-  let(:old_application) { create :old_application, reference: online_application_1.reference}
+  let(:online_application_1) do
+    create(:online_application, :completed, :with_reference,
+      married: false,
+      children: 3,
+      benefits: false,
+      fee: 155,
+      form_name: 'D11',
+      income_min_threshold_exceeded: false)
+  end
 
+  let(:online_application_2) do
+    create(:online_application, :completed, :with_reference,
+      married: false,
+      children: 0,
+      benefits: true,
+      fee: 155,
+      form_name: 'D11',
+      emergency_reason: 'freezing order',
+      ni_number: online_application_1.ni_number)
+  end
+  let(:old_application) { create :old_application, reference: online_application_1.reference }
 
   before do
     login_as user
