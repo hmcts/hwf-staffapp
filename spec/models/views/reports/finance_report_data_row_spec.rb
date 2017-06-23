@@ -106,5 +106,10 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
     end
 
     it { is_expected.to eq 9 }
+
+    context 'missing application_type' do
+      before { create :application_full_remission, :processed_state, application_type: nil, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now }
+      it { is_expected.to eq 10 }
+    end
   end
 end
