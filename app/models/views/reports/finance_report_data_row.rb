@@ -54,12 +54,12 @@ module Views
       def build_sum_and_count(collection)
         count_data = collection.count
         count_data.each do |type|
-          send("#{type[0]}_count=", type[1])
+          try("#{type[0]}_count=", type[1])
         end
 
         sum_data = collection.sum(:decision_cost)
         sum_data.each do |type|
-          send("#{type[0]}_sum=", type[1].to_s('F'))
+          try("#{type[0]}_sum=", type[1].to_s('F'))
         end
       end
 
