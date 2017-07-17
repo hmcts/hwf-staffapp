@@ -7,7 +7,7 @@ RSpec.describe 'layouts/application', type: :view do
         before { render }
 
         it 'is hidden' do
-          expect(rendered).to_not have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
+          expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
         end
       end
 
@@ -29,7 +29,7 @@ RSpec.describe 'layouts/application', type: :view do
           let(:user) { create :user }
 
           it 'is hidden' do
-            expect(rendered).to_not have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
+            expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
           end
         end
 
@@ -37,7 +37,7 @@ RSpec.describe 'layouts/application', type: :view do
           let(:user) { create :manager }
 
           it 'is hidden' do
-            expect(rendered).to_not have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
+            expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
           end
         end
 
@@ -45,7 +45,7 @@ RSpec.describe 'layouts/application', type: :view do
           let(:user) { create :mi }
 
           it 'is hidden' do
-            expect(rendered).to_not have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
+            expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
           end
         end
       end
