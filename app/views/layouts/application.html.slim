@@ -41,6 +41,8 @@
             -if current_user.elevated?
               li= link_to 'View office', current_user.office
               li= link_to 'View staff', users_path
+            -if current_user.admin?
+              li= link_to 'Edit banner', edit_notifications_path
             li= link_to 'Sign out', destroy_user_session_path, :method => :delete
 
 
