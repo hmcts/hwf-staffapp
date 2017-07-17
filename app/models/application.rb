@@ -32,7 +32,7 @@ class Application < ActiveRecord::Base
   validates :reference, uniqueness: true, allow_blank: true
 
   def last_benefit_check
-    benefit_checks.order(:id).last
+    benefit_checks.where.not(benefits_valid: nil, dwp_result: nil).order(:id).last
   end
 
   def self.sort_received(sort_string)
