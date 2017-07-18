@@ -10,7 +10,7 @@ RSpec.shared_examples 'runs benefit check record' do
   end
 
   describe 'creates BenefitCheck record which' do
-    let(:benefit_check) { application.last_benefit_check }
+    let(:benefit_check) { application.benefit_checks.order(:id).last }
 
     before do
       run
