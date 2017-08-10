@@ -72,4 +72,27 @@ RSpec.describe Application, type: :model do
       end
     end
   end
+
+  describe 'benefit checks' do
+    let(:be_check1) { create :benefit_check, application: application, benefits_valid: true, dwp_result: 'Yes' }
+    let(:be_check2) { create :benefit_check, application: application, benefits_valid: false, dwp_result: 'No' }
+
+    before do
+      be_check1
+      be_check2
+    end
+
+    it "last_benefit_check ordered by id" do
+      expect(application.last_benefit_check).to eq(be_check2)
+    end
+
+    context 'empty check' do
+      let(:be_check3) { create :benefit_check, application: application, benefits_valid: nil, dwp_result: nil }
+      before { be_check3 }
+
+      it "last_benefit_check without empty checks" do
+        expect(application.last_benefit_check).to eq(be_check2)
+      end
+    end
+  end
 end

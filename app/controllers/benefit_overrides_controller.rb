@@ -42,12 +42,16 @@ class BenefitOverridesController < ApplicationController
     if !BenefitCheckRunner.new(application).benefit_check_date_valid?
       'out_of_time'
     else
-      case application.last_benefit_check.dwp_result.try(:downcase)
+      case last_benefit_check_result
       when nil, 'undetermined'
         'missing_details'
       when 'server unavailable', 'unspecified error'
         'technical_error'
       end
     end
+  end
+
+  def last_benefit_check_result
+    application.last_benefit_check.try(:dwp_result).try(:downcase)
   end
 end
