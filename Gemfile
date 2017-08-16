@@ -3,10 +3,10 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.7'
+gem 'rails', '~> 4.2.9'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '0.20'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
 
@@ -45,7 +45,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # template language
 gem 'redcarpet'
-gem 'slim-rails'
+gem 'slim-rails', '3.1.1'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -91,15 +91,15 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
-  gem 'rubocop', '~>0.38', require: false
-  gem 'rubocop-rspec', '~>1.10', require: false
+  gem 'rubocop', '0.47.0', require: false
+  gem 'rubocop-rspec', '1.10', require: false
   gem 'timecop'
 end
 
 group :test do
   gem 'capybara'
   gem 'capybara-webkit'
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', '0.6.0', require: nil
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
