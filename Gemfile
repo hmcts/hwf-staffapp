@@ -91,8 +91,8 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
-  gem 'rubocop', '~>0.38', require: false
-  gem 'rubocop-rspec', '~>1.10', require: false
+  gem 'rubocop', '0.47.0', require: false
+  gem 'rubocop-rspec', '1.10', require: false
   gem 'timecop'
 end
 
