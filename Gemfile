@@ -99,7 +99,7 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-webkit'
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', '0.6.0', require: nil
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
