@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   belongs_to :office
   belongs_to :jurisdiction
 
-  INACTIVE_DATE = 3.months.ago
   ROLES = %w[user manager admin mi].freeze
 
   # Include default devise modules. Others available are:
@@ -17,9 +16,9 @@ class User < ActiveRecord::Base
     :invitable,
     :registerable
 
-  scope :active, -> { where('current_sign_in_at >= ?', INACTIVE_DATE) }
+  scope :active, -> { where('current_sign_in_at >= ?', inactivate_date) }
   scope :inactive, (lambda do
-    where('current_sign_in_at < ? OR current_sign_in_at IS NULL', INACTIVE_DATE)
+    where('current_sign_in_at < ? OR current_sign_in_at IS NULL', inactivate_date)
   end)
 
   scope :sorted_by_email, -> { all.order(:email) }
@@ -69,9 +68,13 @@ class User < ActiveRecord::Base
   end
 
   def activity_flag
-    return :active if current_sign_in_at && current_sign_in_at >= INACTIVE_DATE
+    return :active if current_sign_in_at && current_sign_in_at >= self.class.inactivate_date
 
     :inactive
+  end
+
+  def self.inactivate_date
+    3.months.ago
   end
 
   private
