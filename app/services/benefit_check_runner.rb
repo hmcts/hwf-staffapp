@@ -51,7 +51,7 @@ class BenefitCheckRunner
   end
 
   def applicant_same?
-    %i[last_name date_of_birth ni_number].all? do |field|
+    [:last_name, :date_of_birth, :ni_number].all? do |field|
       previous_check.send(field) == applicant.send(field)
     end
   end

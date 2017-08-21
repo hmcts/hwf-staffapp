@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Benefit do
   subject { described_class.new(hash) }
 
-  params_list = %i[benefits]
+  params_list = [:benefits]
 
   let(:hash) { {} }
 

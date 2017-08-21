@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::SavingsInvestment do
   subject(:savings_investment_form) { described_class.new(application) }
 
-  params_list = %i[min_threshold_exceeded over_61 max_threshold_exceeded amount]
+  params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do

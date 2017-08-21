@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Evidence::Income do
   subject(:form) { described_class.new(evidence) }
 
-  params_list = %i[income]
+  params_list = [:income]
 
   let(:evidence) { build_stubbed :evidence_check }
   let(:income) { '500' }

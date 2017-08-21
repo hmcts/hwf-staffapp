@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::DecisionOverride do
   subject(:form) { described_class.new(override) }
 
-  params_list = %i[value reason created_by_id]
+  params_list = [:value, :reason, :created_by_id]
 
   let(:override) { build_stubbed :decision_override }
   let(:user) { create :staff }

@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Detail do
   subject(:form) { described_class.new(detail) }
 
-  params_list = %i[fee jurisdiction_id date_received probate date_of_death
-                   deceased_name refund date_fee_paid form_name case_number
-                   emergency emergency_reason]
+  params_list = [:fee, :jurisdiction_id, :date_received, :probate, :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name, :case_number, :emergency, :emergency_reason]
 
   let(:detail) { attributes_for :detail }
 

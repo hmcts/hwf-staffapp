@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Applicant do
   subject(:created_applicant) { described_class.new(personal_information) }
 
-  params_list = %i[last_name date_of_birth married title first_name ni_number]
+  params_list = [:last_name, :date_of_birth, :married, :title, :first_name, :ni_number]
 
   let(:personal_information) { attributes_for :personal_information }
 

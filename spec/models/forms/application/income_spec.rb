@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Income do
   subject { described_class.new(hash) }
 
-  params_list = %i[income dependents children]
+  params_list = [:income, :dependents, :children]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do

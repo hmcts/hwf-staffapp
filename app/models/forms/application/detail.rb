@@ -59,7 +59,7 @@ module Forms
       end
 
       def max_refund_date
-        date_received unless date_received.blank?
+        date_received if date_received.present?
       end
 
       def validate_date_fee_paid?
@@ -86,7 +86,7 @@ module Forms
       end
 
       def emergency_reason_present_and_too_long?
-        !emergency_reason.blank? && emergency_reason.size > 500
+        emergency_reason.present? && emergency_reason.size > 500
       end
 
       def emergency_reason_size

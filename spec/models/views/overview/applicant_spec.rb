@@ -42,7 +42,7 @@ RSpec.describe Views::Overview::Applicant do
 
   describe 'delegated methods' do
     describe '-> Applicant' do
-      %i[full_name].each do |getter|
+      [:full_name].each do |getter|
         it { expect(view.public_send(getter)).to eql(application.applicant.public_send(getter)) }
       end
     end

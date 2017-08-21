@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Delete do
   subject(:form) { described_class.new(application) }
 
-  params_list = %i[deleted_reason]
+  params_list = [:deleted_reason]
 
   let(:application) { create :application }
 

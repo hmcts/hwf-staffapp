@@ -32,7 +32,7 @@ class ResolverService
   private
 
   def check_outcome!
-    raise UndefinedOutcome unless @calling_object.outcome.present?
+    raise UndefinedOutcome if @calling_object.outcome.blank?
   end
 
   def completed_attributes

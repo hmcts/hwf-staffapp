@@ -22,7 +22,7 @@ module Views
         detail.jurisdiction.name
       end
 
-      %i[date_received date_of_death date_fee_paid].each do |method|
+      [:date_received, :date_of_death, :date_fee_paid].each do |method|
         define_method(method) do
           format_date(detail.public_send(method))
         end

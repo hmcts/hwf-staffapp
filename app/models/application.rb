@@ -36,17 +36,17 @@ class Application < ActiveRecord::Base
   end
 
   def self.sort_received(sort_string)
-    return 'details.date_received asc' if 'received_asc' == sort_string
+    return 'details.date_received asc' if sort_string == 'received_asc'
     'details.date_received desc'
   end
 
   def self.sort_processed(sort_string)
-    return 'completed_at asc' if 'processed_asc' == sort_string
+    return 'completed_at asc' if sort_string == 'processed_asc'
     'completed_at desc'
   end
 
   def self.sort_fee(sort_string)
-    return 'details.fee asc' if 'fee_asc' == sort_string
+    return 'details.fee asc' if sort_string == 'fee_asc'
     'details.fee desc'
   end
 end

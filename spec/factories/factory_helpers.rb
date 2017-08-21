@@ -12,7 +12,7 @@ def build_related_for_application(scope, method, application, evaluator)
 
   application.detail ||= begin
     overrides = { application: application }
-    %i[fee date_received refund date_fee_paid probate jurisdiction emergency_reason].each do |field|
+    [:fee, :date_received, :refund, :date_fee_paid, :probate, :jurisdiction, :emergency_reason].each do |field|
       value = evaluator.send(field)
       overrides[field] = value if value.present?
     end

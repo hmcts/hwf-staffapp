@@ -71,7 +71,7 @@ RSpec.describe Views::Overview::Details do
 
   describe 'delegated methods' do
     describe '-> Detail' do
-      %i[form_name case_number deceased_name emergency_reason].each do |getter|
+      [:form_name, :case_number, :deceased_name, :emergency_reason].each do |getter|
         it { expect(view.public_send(getter)).to eql(application.detail.public_send(getter)) }
       end
     end
