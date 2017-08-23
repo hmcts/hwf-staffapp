@@ -9,7 +9,7 @@ module Views
       end
 
       def all_fields
-        %w[full_name date_of_birth ni_number status]
+        ['full_name', 'date_of_birth', 'ni_number', 'status']
       end
 
       def ni_number

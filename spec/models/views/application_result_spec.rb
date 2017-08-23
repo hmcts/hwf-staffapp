@@ -56,7 +56,7 @@ RSpec.describe Views::ApplicationResult do
     subject { view.result }
 
     shared_examples 'result examples' do |type|
-      %w[granted full part none return].each do |result|
+      ['granted', 'full', 'part', 'none', 'return'].each do |result|
         context "when the #{type} is a #{result} remission" do
           let(:outcome) { result }
 
@@ -116,7 +116,7 @@ RSpec.describe Views::ApplicationResult do
     subject { view.income }
 
     shared_examples 'result examples' do |type|
-      %w[full part].each do |outcome|
+      ['full', 'part'].each do |outcome|
         context "when #{type} result is #{outcome}" do
           let(:outcome) { outcome }
 

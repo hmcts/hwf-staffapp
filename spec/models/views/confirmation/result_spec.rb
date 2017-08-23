@@ -16,7 +16,7 @@ RSpec.describe Views::Confirmation::Result do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql %w[savings_passed? benefits_passed? income_passed?] }
+    it { is_expected.to eql ['savings_passed?', 'benefits_passed?', 'income_passed?'] }
   end
 
   describe '#savings_passed?' do
@@ -50,7 +50,7 @@ RSpec.describe Views::Confirmation::Result do
         it { is_expected.to eq string_passed }
       end
 
-      %w[No Undetermined].each do |result|
+      ['No', 'Undetermined'].each do |result|
         context "benefit_check returned #{result}" do
           let(:benefit_check) { build_stubbed(:benefit_check, application: application, dwp_result: result) }
           let(:application) { build_stubbed(:application, :benefit_type) }

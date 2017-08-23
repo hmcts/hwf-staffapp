@@ -1,4 +1,4 @@
-if %w[development test].include? Rails.env
+if ['development', 'test'].include? Rails.env
   unless ENV['DOCKER_STATE'] == 'vagrant'
     require 'rubocop/rake_task'
     RuboCop::RakeTask.new

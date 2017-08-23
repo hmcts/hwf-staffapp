@@ -8,7 +8,7 @@ RSpec.describe Views::Overview::Details do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql(%w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason]) }
+    it { is_expected.to eql(['fee', 'jurisdiction', 'date_received', 'form_name', 'case_number', 'deceased_name', 'date_of_death', 'date_fee_paid', 'emergency_reason']) }
   end
 
   describe '#fee' do

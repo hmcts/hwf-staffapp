@@ -7,7 +7,7 @@ module Views
       end
 
       def all_fields
-        %w[min_threshold_exceeded max_threshold_exceeded amount]
+        ['min_threshold_exceeded', 'max_threshold_exceeded', 'amount']
       end
 
       def min_threshold_exceeded

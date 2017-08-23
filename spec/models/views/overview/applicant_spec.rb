@@ -8,7 +8,7 @@ RSpec.describe Views::Overview::Applicant do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql(%w[full_name date_of_birth ni_number status]) }
+    it { is_expected.to eql(['full_name', 'date_of_birth', 'ni_number', 'status']) }
   end
 
   describe '#ni_number' do

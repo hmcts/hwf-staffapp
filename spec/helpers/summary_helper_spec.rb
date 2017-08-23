@@ -17,7 +17,7 @@ RSpec.describe SummaryHelper, type: :helper do
   it { expect(helper).to be_a described_class }
 
   describe 'build_section_with_defaults' do
-    let(:view) { instance_double(Views::Overview::Details, fee: '£310', all_fields: %w[fee]) }
+    let(:view) { instance_double(Views::Overview::Details, fee: '£310', all_fields: ['fee']) }
 
     context 'when called with minimal data' do
       it 'returns the correct html' do
@@ -34,14 +34,14 @@ RSpec.describe SummaryHelper, type: :helper do
 
       context 'when requested fields all contain nil data' do
         it 'returns nothing' do
-          expect(helper.build_section('section name', view, %w[form_name date_received])).to be nil
+          expect(helper.build_section('section name', view, ['form_name', 'date_received'])).to be nil
         end
       end
 
       context 'when requested fields contain some data' do
         it 'returns only the populated field' do
           expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
-          expect(helper.build_section('section name', view, %w[fee form_name date_received])).to eq(expected)
+          expect(helper.build_section('section name', view, ['fee', 'form_name', 'date_received'])).to eq(expected)
         end
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
       it 'returns the correct html' do
         expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
-        expect(helper.build_section('section name', view, %w[fee])).to eq(expected)
+        expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
       end
 
       context 'when link title and url is also passed' do
@@ -60,7 +60,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
         it 'returns the correct html' do
           expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
-          expect(helper.build_section('section name', view, %w[fee], title, url)).to eq(expected)
+          expect(helper.build_section('section name', view, ['fee'], title, url)).to eq(expected)
         end
       end
 
@@ -69,7 +69,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
         it 'returns the correct html' do
           expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">WA123456A</div></div></div>'
-          expect(helper.build_section('section name', view, %w[fee])).to eq(expected)
+          expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
         end
       end
     end

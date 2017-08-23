@@ -8,7 +8,7 @@ RSpec.describe Views::Overview::Application do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql(%w[benefits dependants number_of_children total_monthly_income savings]) }
+    it { is_expected.to eql(['benefits', 'dependants', 'number_of_children', 'total_monthly_income', 'savings']) }
   end
 
   describe '#income_result' do

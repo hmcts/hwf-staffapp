@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :office
   belongs_to :jurisdiction
 
-  ROLES = %w[user manager admin mi].freeze
+  ROLES = ['user', 'manager', 'admin', 'mi'].freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable

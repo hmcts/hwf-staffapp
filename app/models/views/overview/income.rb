@@ -3,7 +3,7 @@ module Views
     class Income < Views::Overview::Base
 
       def all_fields
-        %w[children? children income]
+        ['children?', 'children', 'income']
       end
 
       def initialize(application)

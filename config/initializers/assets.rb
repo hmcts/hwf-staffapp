@@ -9,8 +9,8 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w[income_calculator.js]
+Rails.application.config.assets.precompile += ['income_calculator.js']
 
-Rails.application.config.assets.precompile += %w[*.png *.ico]
-Rails.application.config.assets.precompile += %w[.svg .eot .woff .ttf]
-Rails.application.config.assets.precompile += %w[ckeditor/*]
+Rails.application.config.assets.precompile += ['*.png', '*.ico']
+Rails.application.config.assets.precompile += ['.svg', '.eot', '.woff', '.ttf']
+Rails.application.config.assets.precompile += ['ckeditor/*']

@@ -10,7 +10,7 @@ RSpec.describe Views::Overview::Income do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql %w[children? children income] }
+    it { is_expected.to eql ['children?', 'children', 'income'] }
   end
 
   describe '#children??' do

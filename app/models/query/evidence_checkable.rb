@@ -18,7 +18,7 @@ module Query
         applications: {
           benefits: false,
           application_type: 'income',
-          outcome: %w[part full]
+          outcome: ['part', 'full']
         },
         details: {
           emergency_reason: nil

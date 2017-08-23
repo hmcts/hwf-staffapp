@@ -43,7 +43,7 @@ class BenefitCheckRunner
   end
 
   def was_error?
-    !%w[Yes No].include?(previous_check.dwp_result)
+    !['Yes', 'No'].include?(previous_check.dwp_result)
   end
 
   def same_as_before?

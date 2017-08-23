@@ -3,7 +3,7 @@ module Views
     class Result < Views::Overview::Base
 
       def all_fields
-        %w[savings_passed? benefits_passed? income_passed?]
+        ['savings_passed?', 'benefits_passed?', 'income_passed?']
       end
 
       def initialize(application)
@@ -34,7 +34,7 @@ module Views
         part_payment = I18n.t('income_part', scope: path)
         return part_payment if @application.waiting_for_part_payment?
 
-        convert_to_pass_fail(%w[full part].include?(@application.outcome).to_s)
+        convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
       end
 
       def result
@@ -42,7 +42,7 @@ module Views
         return 'callout' if @application.evidence_check.present?
         return 'full' if return_full?
         return 'none' if @application.outcome.nil?
-        %w[full part none].include?(@application.outcome) ? @application.outcome : 'error'
+        ['full', 'part', 'none'].include?(@application.outcome) ? @application.outcome : 'error'
       end
 
       private

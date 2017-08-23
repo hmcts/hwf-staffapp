@@ -8,7 +8,7 @@ module Views
     end
 
     def result
-      %w[granted full part paid none return].include?(outcome) ? outcome : 'error'
+      ['granted', 'full', 'part', 'paid', 'none', 'return'].include?(outcome) ? outcome : 'error'
     end
 
     def amount_to_pay
@@ -22,7 +22,7 @@ module Views
     end
 
     def income
-      format_locale(%w[full part].include?(result).to_s)
+      format_locale(['full', 'part'].include?(result).to_s)
     end
 
     def return_type
