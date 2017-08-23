@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 RSpec.describe Views::Overview::SavingsAndInvestments do
@@ -9,7 +10,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql %w[min_threshold_exceeded max_threshold_exceeded amount] }
+    it { is_expected.to eql ['min_threshold_exceeded', 'max_threshold_exceeded', 'amount'] }
   end
 
   describe '#min_threshold_exceeded' do

@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 def personal_details_without_ni_number

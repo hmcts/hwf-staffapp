@@ -43,7 +43,7 @@ class BenefitCheckRunner
   end
 
   def was_error?
-    !%w[Yes No].include?(previous_check.dwp_result)
+    !['Yes', 'No'].include?(previous_check.dwp_result)
   end
 
   def same_as_before?
@@ -51,7 +51,7 @@ class BenefitCheckRunner
   end
 
   def applicant_same?
-    %i[last_name date_of_birth ni_number].all? do |field|
+    [:last_name, :date_of_birth, :ni_number].all? do |field|
       previous_check.send(field) == applicant.send(field)
     end
   end

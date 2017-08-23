@@ -11,7 +11,7 @@ module Views
       end
 
       def all_fields
-        %w[benefits dependants number_of_children total_monthly_income savings]
+        ['benefits', 'dependants', 'number_of_children', 'total_monthly_income', 'savings']
       end
 
       def benefits_result
@@ -23,7 +23,7 @@ module Views
       end
 
       def income_result
-        format_locale(%w[full part].include?(result).to_s)
+        format_locale(['full', 'part'].include?(result).to_s)
       end
 
       def savings_result

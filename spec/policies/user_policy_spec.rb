@@ -38,7 +38,7 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:update) }
       end
 
-      %w[manager admin mi].each do |role|
+      ['manager', 'admin', 'mi'].each do |role|
         context "when trying to set a role to #{role}" do
           before do
             subject_user.role = role
@@ -94,7 +94,7 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.not_to permit_action(:edit_password) }
         it { is_expected.not_to permit_action(:update_password) }
 
-        %w[user manager].each do |role|
+        ['user', 'manager'].each do |role|
           context "when role set to #{role}" do
             let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 
@@ -103,7 +103,7 @@ RSpec.describe UserPolicy, type: :policy do
           end
         end
 
-        %w[admin mi].each do |role|
+        ['admin', 'mi'].each do |role|
           context "when role set to #{role}" do
             let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 
@@ -120,7 +120,7 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:edit) }
       it { is_expected.not_to permit_action(:destroy) }
 
-      %w[admin mi].each do |role|
+      ['admin', 'mi'].each do |role|
         context "when trying to set a role to #{role}" do
           before do
             subject_user.role = role
@@ -185,7 +185,7 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:update) }
       end
 
-      %w[user manager admin].each do |role|
+      ['user', 'manager', 'admin'].each do |role|
         context "when trying to set a role to #{role}" do
           before do
             subject_user.role = role

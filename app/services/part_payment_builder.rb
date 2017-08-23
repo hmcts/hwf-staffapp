@@ -21,7 +21,7 @@ class PartPaymentBuilder
   end
 
   def part_payment_needed?
-    part_remission_or_not_evidence_checked unless @application.part_payment.present?
+    part_remission_or_not_evidence_checked if @application.part_payment.blank?
   end
 
   def part_remission_or_not_evidence_checked
@@ -29,7 +29,7 @@ class PartPaymentBuilder
   end
 
   def evidence_check_payment_validation?
-    !@application.evidence_check.present? || @application.evidence_check.completed_at.present?
+    @application.evidence_check.blank? || @application.evidence_check.completed_at.present?
   end
 
   def expires_at

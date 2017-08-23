@@ -6,7 +6,7 @@ RSpec.describe FeedbackPolicy, type: :policy do
   let(:office) { build_stubbed(:office) }
   let(:feedback) { build_stubbed(:feedback) }
 
-  %i[staff manager].each do |user_type|
+  [:staff, :manager].each do |user_type|
     context "for #{user_type}" do
       let(:user) { build_stubbed(user_type, office: office) }
 

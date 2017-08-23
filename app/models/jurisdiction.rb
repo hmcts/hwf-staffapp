@@ -19,7 +19,7 @@ class Jurisdiction < ActiveRecord::Base
 
   def display_full
     result = name
-    result.concat(" (#{abbr})") unless abbr.blank?
+    result.concat(" (#{abbr})") if abbr.present?
     result
   end
 end

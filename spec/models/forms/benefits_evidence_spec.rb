@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::BenefitsEvidence do
   subject(:form) { described_class.new(benefit_override) }
 
-  params_list = %i[evidence correct incorrect_reason]
+  params_list = [:evidence, :correct, :incorrect_reason]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do

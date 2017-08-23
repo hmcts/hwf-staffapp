@@ -8,7 +8,7 @@ RSpec.describe Views::Overview::Details do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql(%w[fee jurisdiction date_received form_name case_number deceased_name date_of_death date_fee_paid emergency_reason]) }
+    it { is_expected.to eql(['fee', 'jurisdiction', 'date_received', 'form_name', 'case_number', 'deceased_name', 'date_of_death', 'date_fee_paid', 'emergency_reason']) }
   end
 
   describe '#fee' do
@@ -71,7 +71,7 @@ RSpec.describe Views::Overview::Details do
 
   describe 'delegated methods' do
     describe '-> Detail' do
-      %i[form_name case_number deceased_name emergency_reason].each do |getter|
+      [:form_name, :case_number, :deceased_name, :emergency_reason].each do |getter|
         it { expect(view.public_send(getter)).to eql(application.detail.public_send(getter)) }
       end
     end

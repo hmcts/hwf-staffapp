@@ -32,7 +32,7 @@ RSpec.describe 'users/invitations/new', type: :view do
 
     before do
       assign(:user, User.new)
-      assign(:roles, %w[user manager])
+      assign(:roles, ['user', 'manager'])
       sign_in manager
       render
     end

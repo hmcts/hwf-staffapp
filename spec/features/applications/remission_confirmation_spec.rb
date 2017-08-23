@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 RSpec.feature 'Confirmation page for remission', type: :feature do

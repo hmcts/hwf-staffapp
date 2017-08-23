@@ -114,7 +114,7 @@ Rails.application.routes.draw do
   post 'home/online_search'
   post 'home/completed_search'
 
-  %w[400 404 500 503].each do |error|
+  ['400', '404', '500', '503'].each do |error|
     get "static/#{error}" => "static##{error}"
   end
 

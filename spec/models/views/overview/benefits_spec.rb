@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 RSpec.describe Views::Overview::Benefits do
@@ -9,7 +10,7 @@ RSpec.describe Views::Overview::Benefits do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql %w[on_benefits? override? override_valid?] }
+    it { is_expected.to eql ['on_benefits?', 'override?', 'override_valid?'] }
   end
 
   describe '#on_benefits?' do

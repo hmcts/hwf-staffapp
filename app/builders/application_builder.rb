@@ -44,8 +44,10 @@ class ApplicationBuilder
   end
 
   def online_application_attributes(online_application)
-    fields = %i[benefits reference
-                income income_min_threshold_exceeded income_max_threshold_exceeded]
+    fields = [
+      :benefits, :reference, :income, :income_min_threshold_exceeded, :income_max_threshold_exceeded
+    ]
+
     prepare_attributes(fields, online_application).merge(dependent_attributes(online_application))
   end
 
@@ -59,18 +61,21 @@ class ApplicationBuilder
   end
 
   def online_applicant_attributes(online_application)
-    fields = %i[title first_name last_name date_of_birth ni_number married]
+    fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :married]
     prepare_attributes(fields, online_application)
   end
 
   def online_detail_attributes(online_application)
-    fields = %i[fee jurisdiction date_received form_name case_number probate deceased_name
-                date_of_death refund date_fee_paid emergency_reason]
+    fields = [
+      :fee, :jurisdiction, :date_received, :form_name, :case_number, :probate, :deceased_name,
+      :date_of_death, :refund, :date_fee_paid, :emergency_reason
+    ]
+
     prepare_attributes(fields, online_application)
   end
 
   def online_saving_attributes(online_application)
-    fields = %i[min_threshold_exceeded max_threshold_exceeded over_61 amount]
+    fields = [:min_threshold_exceeded, :max_threshold_exceeded, :over_61, :amount]
     {
       min_threshold: Settings.savings_threshold.minimum,
       max_threshold: Settings.savings_threshold.maximum

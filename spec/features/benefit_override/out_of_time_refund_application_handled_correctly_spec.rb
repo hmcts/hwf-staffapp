@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 RSpec.feature 'Out of time refunds are correctly handled', type: :feature do

@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'rails_helper'
 
 RSpec.feature 'The result is shown on the confirmation page', type: :feature do
