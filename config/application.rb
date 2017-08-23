@@ -32,7 +32,7 @@ module FrStaffapp
     config.active_record.raise_in_transactional_callbacks = true
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += ["#{Rails.root}/scrapers", "#{Rails.root}/lib", "#{Rails.root}/builders"]
+    config.autoload_paths << Rails.root.join('lib')
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = 'en-GB'
