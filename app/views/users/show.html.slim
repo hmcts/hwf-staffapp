@@ -28,6 +28,6 @@ ul.list.list-pad
   - if current_user == @user
     li= link_to "Change your password", edit_user_registration_path(@user)
   - if UserManagement.new(current_user, @user).deletion_permitted?
-    li= link_to 'Remove staff member', user_path(@user), method: :delete
+    li= link_to 'Remove staff member', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' }
   - if current_user.elevated?
     li = link_to 'Back to list of staff', users_path

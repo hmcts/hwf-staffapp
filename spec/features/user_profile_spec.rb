@@ -5,8 +5,10 @@ RSpec.feature 'User profile', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: create(:office) }
+  let(:user) { create :user, name: 'Jim Halpert', office: office }
   let(:another_user) { create :user, office: create(:office) }
+  let(:manager) { create :manager, office: office }
+  let(:office) { create :office }
 
   context 'as a user' do
 
@@ -86,6 +88,45 @@ RSpec.feature 'User profile', type: :feature do
       scenario 'their name has updated' do
         expect(page).to have_text new_name
       end
+    end
+  end
+
+  context 'as a manager' do
+
+    before do
+      login_as manager
+      user
+      visit '/'
+      click_link 'View staff'
+      click_link 'Jim Halpert'
+    end
+
+    scenario 'canceling removing user dialog',js: true do
+      within(:xpath, './/section[@id="content"]') do
+        expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
+        expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
+
+        page.dismiss_confirm do
+          click_link "Remove staff member"
+        end
+      end
+      expect(current_path).to eql(user_path(user))
+    end
+
+    scenario 'confirm removing user dialog',js: true do
+      within(:xpath, './/section[@id="content"]') do
+        expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
+        expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
+
+        page.accept_confirm do
+          click_link "Remove staff member"
+        end
+      end
+
+      expect(current_path).to eql('/users')
+      expect(page).not_to have_xpath(".//h2[contains(.,'Staff details')]")
+      expect(page).to have_xpath(".//h2[contains(.,'Staff')]")
+      expect(page).not_to have_text('Jim Halpert')
     end
   end
 end
