@@ -101,7 +101,7 @@ RSpec.feature 'User profile', type: :feature do
       click_link 'Jim Halpert'
     end
 
-    scenario 'canceling removing user dialog',js: true do
+    scenario 'canceling removing user dialog', js: true do
       within(:xpath, './/section[@id="content"]') do
         expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
         expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
@@ -113,7 +113,7 @@ RSpec.feature 'User profile', type: :feature do
       expect(current_path).to eql(user_path(user))
     end
 
-    scenario 'confirm removing user dialog',js: true do
+    scenario 'confirm removing user dialog', js: true do
       within(:xpath, './/section[@id="content"]') do
         expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
         expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
