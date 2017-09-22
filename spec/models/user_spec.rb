@@ -73,6 +73,11 @@ describe User, type: :model do
           expect(user).to be_valid
         end
 
+        it 'allows @justice.gov.uk' do
+          user.email = 'test.user@justice.gov.uk'
+          expect(user).to be_valid
+        end
+
         context 'non white listed emails' do
           let(:invalid_email) { 'email.that.rocks@gmail.com' }
           before { user.email = invalid_email }

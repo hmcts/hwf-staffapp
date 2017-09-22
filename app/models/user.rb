@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
 
   # rubocop:disable LineLength
-  email_regex = /\A([^@\s]+)@(((justice|hmcourts-service|hmcts)\.gsi|digital\.justice)\.gov\.uk|hmcts\.net)\z/i
+  email_regex = /\A([^@\s]+)@(((justice|hmcourts-service|hmcts)\.gsi|digital\.justice|justice)\.gov\.uk|hmcts\.net)\z/i
   # rubocop:enable LineLength
 
   validates :role, :name, presence: true
