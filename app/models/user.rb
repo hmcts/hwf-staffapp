@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   belongs_to :office
   belongs_to :jurisdiction
+  has_many :applications
 
   ROLES = ['user', 'manager', 'admin', 'mi'].freeze
 
