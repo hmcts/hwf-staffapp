@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
+    load_users_last_applications
     @online_search_form = Forms::Search.new
     @completed_search_form = Forms::Search.new
     @state = DwpMonitor.new.state
@@ -48,6 +49,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def load_users_last_applications
+    @last_updated_applications = last_updated
+  end
+
   def assign_waiting_for_evidence
     @waiting_for_evidence = waiting_for_evidence.map do |application|
       Views::ApplicationList.new(application.evidence_check)
@@ -66,6 +71,10 @@ class HomeController < ApplicationController
 
   def waiting_for_part_payment
     Query::WaitingForPartPayment.new(current_user).find
+  end
+
+  def last_updated
+    Query::LastUpdatedApplications.new(current_user).find
   end
 
   def search_params(type)
