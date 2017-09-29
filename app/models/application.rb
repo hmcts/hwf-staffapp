@@ -6,14 +6,14 @@ class Application < ActiveRecord::Base
   belongs_to :office
   belongs_to :business_entity
   belongs_to :online_application
-  has_many :benefit_checks
-  has_one :applicant
-  has_one :detail, inverse_of: :application
-  has_one :saving, inverse_of: :application
-  has_one :evidence_check, required: false
-  has_one :part_payment, required: false
-  has_one :benefit_override, required: false
-  has_one :decision_override, required: false
+  has_many :benefit_checks, dependent: :destroy
+  has_one :applicant, dependent: :destroy
+  has_one :detail, inverse_of: :application, dependent: :destroy
+  has_one :saving, inverse_of: :application, dependent: :destroy
+  has_one :evidence_check, required: false, dependent: :destroy
+  has_one :part_payment, required: false, dependent: :destroy
+  has_one :benefit_override, required: false, dependent: :destroy
+  has_one :decision_override, required: false, dependent: :destroy
 
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
     Application.where(state: states[:waiting_for_evidence]).
