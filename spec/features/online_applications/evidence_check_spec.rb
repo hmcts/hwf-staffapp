@@ -49,7 +49,9 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     click_link 'Back to start'
 
     reference = Application.last.reference
-    click_link reference
+    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+      click_link reference
+    end
 
     # because it's 10th so random evidence check
     expect(page).to have_text("#{reference} - Waiting for evidence")
@@ -68,7 +70,9 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     # because there is a flag from previous check
     expect(page).to have_text 'Evidence of income needs to be checked'
     click_link 'Back to start'
-    click_link Application.last.reference
+    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+      click_link Application.last.reference
+    end
     click_link 'Start now'
     choose 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     click_button 'Next'
