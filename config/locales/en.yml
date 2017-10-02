@@ -16,6 +16,19 @@ en-GB:
     :false: '✗ Failed'
     true: '✓ Passed'
     false: '✗ Failed'
+  updated_applications:
+    dashboard:
+      heading: Your last applications
+      caption: Applications that you worked on last
+      no_records: There are no applications that you worked on
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        status: Status
+        updated_at: Last updated
+      table:
+        missing_reference: 'no reference number'
+
   completed_applications:
     title: Completed
     caption: Completed applications
@@ -69,6 +82,8 @@ en-GB:
         applicant: Applicant
         processed_by: Processed by
         processed_on: Date processed
+        status: Status
+        updated_at: Last updated
   part_payment:
     correct: 'Yes'
     incorrect: 'No'
