@@ -4,8 +4,8 @@ module Query
       @user = user
     end
 
-    def find
-      @user.applications.order(updated_at: :desc).limit(5)
+    def find(limit: nil)
+      @user.applications.order(updated_at: :desc).limit(limit)
     end
   end
 end

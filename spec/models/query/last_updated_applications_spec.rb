@@ -21,5 +21,13 @@ RSpec.describe Query::LastUpdatedApplications, type: :model do
     it "contains applications completely deleted from user's office in descending order of deletion" do
       is_expected.to eq([application1, application3, application2])
     end
+
+    context 'with limit' do
+      subject { query.find(limit: 2) }
+
+      it "contains applications completely deleted from user's office in descending order of deletion" do
+        is_expected.to eq([application1, application3])
+      end
+    end
   end
 end
