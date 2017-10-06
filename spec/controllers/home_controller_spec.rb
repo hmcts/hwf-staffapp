@@ -72,6 +72,27 @@ RSpec.describe HomeController, type: :controller do
         it 'assigns the DwpMonitor state' do
           expect(assigns(:state)).to be_a String
         end
+
+        it "assigns last updated applications" do
+          expect(assigns(:last_updated_applications)).to eq([])
+        end
+      end
+
+      context 'as a user with applications' do
+        let(:application) { build_stubbed :application }
+
+        before do
+          query = instance_double('Query::LastUpdatedApplications')
+          allow(Query::LastUpdatedApplications).to receive(:new).and_return query
+          allow(query).to receive(:find).with(limit: 5).and_return [application]
+          sign_in staff
+          get :index
+        end
+
+        it "assigns last updated applications" do
+          expect(assigns(:last_updated_applications)).to eq([application])
+        end
+
       end
 
       context 'as an admin' do

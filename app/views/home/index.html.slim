@@ -70,6 +70,7 @@ h1.visuallyhidden Help with fees - Staff application
 - if policy(:application).index?
   =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
   =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
+  =render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
   =render('home/processed_and_deleted_aplications')
 
 -if policy(:report).index? || policy(:office).index?

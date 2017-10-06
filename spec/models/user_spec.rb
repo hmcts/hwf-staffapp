@@ -9,6 +9,8 @@ describe User, type: :model do
   let(:admin_user)    { build :admin_user }
   let(:mi)            { build :mi }
 
+  it { is_expected.to have_many(:applications) }
+
   it 'pass factory build' do
     expect(user).to be_valid
   end
