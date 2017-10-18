@@ -140,6 +140,25 @@ RSpec.describe Views::Overview::Application do
     end
   end
 
+  describe '#total_monthly_income_from_evidence' do
+    subject { view.total_monthly_income_from_evidence }
+
+    let(:application) { build_stubbed(:application, evidence_check: evidence_check, income: 100) }
+
+    context 'when evidence check is empty' do
+      let(:evidence_check) { nil }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when evidence check is 123' do
+      let(:evidence_check) { build_stubbed(:evidence_check, income: 123) }
+
+      it { is_expected.to eql '£123' }
+    end
+  end
+
+
   describe '#number_of_children' do
     subject { view.number_of_children }
 
