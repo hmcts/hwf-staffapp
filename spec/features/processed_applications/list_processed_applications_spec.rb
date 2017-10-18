@@ -68,7 +68,7 @@ RSpec.feature 'List processed applications', type: :feature do
   end
 
   context 'with evidence check' do
-    let!(:evidence_check) { create :evidence_check_full_outcome, application: application5 }
+    before { create :evidence_check_full_outcome, application: application5 }
 
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'

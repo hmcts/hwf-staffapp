@@ -158,7 +158,6 @@ RSpec.describe Views::Overview::Application do
     end
   end
 
-
   describe '#number_of_children' do
     subject { view.number_of_children }
 

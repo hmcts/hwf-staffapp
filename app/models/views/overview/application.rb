@@ -47,7 +47,8 @@ module Views
       end
 
       def total_monthly_income_from_evidence
-        @application.evidence_check ? format_currency(@application.evidence_check.income.round) : nil
+        return nil if @application.evidence_check.blank?
+        format_currency(@application.evidence_check.income.round)
       end
 
       def number_of_children
