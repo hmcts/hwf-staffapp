@@ -66,4 +66,30 @@ RSpec.feature 'List processed applications', type: :feature do
     expect(page).to have_content('Processed application')
     expect(page).to have_content('The applicant has paid £100 towards the fee')
   end
+
+  context 'with evidence check' do
+    before { create :evidence_check_full_outcome, application: application5 }
+
+    scenario 'contains income from evidence check and from application' do
+      visit '/processed_applications'
+      click_link 'Next page'
+      click_link application5.reference
+
+      expect(page).to have_content('Processed application')
+      expect(page).to have_text('Total monthly income£2,000')
+      expect(page).to have_text('Total monthly income from Evidence£100')
+    end
+  end
+
+  context 'without evidence check' do
+    scenario 'contains income from evidence check and from application' do
+      visit '/processed_applications'
+      click_link 'Next page'
+      click_link application5.reference
+
+      expect(page).to have_content('Processed application')
+      expect(page).to have_text('Total monthly income£2,000')
+      expect(page).not_to have_text('Total monthly income from Evidence')
+    end
+  end
 end

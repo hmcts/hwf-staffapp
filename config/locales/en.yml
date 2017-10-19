@@ -255,6 +255,7 @@ en-GB:
         savings_result: Savings
         number_of_children: Number of children
         total_monthly_income: Total monthly income
+        total_monthly_income_from_evidence: Total monthly income from Evidence
       views/overview/applicant:
         full_name: Full name
         date_of_birth: Date of birth

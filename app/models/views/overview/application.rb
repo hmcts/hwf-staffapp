@@ -46,6 +46,11 @@ module Views
         @application.income ? format_currency(@application.income.round) : format_threshold_income
       end
 
+      def total_monthly_income_from_evidence
+        return nil if @application.evidence_check.blank?
+        format_currency(@application.evidence_check.income.round)
+      end
+
       def number_of_children
         @application.children
       end
