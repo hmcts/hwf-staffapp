@@ -151,6 +151,12 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to be nil }
     end
 
+    context 'when evidence check has nil income' do
+      let(:evidence_check) { build_stubbed(:evidence_check, income: nil) }
+
+      it { is_expected.to be nil }
+    end
+
     context 'when evidence check is 123' do
       let(:evidence_check) { build_stubbed(:evidence_check, income: 123) }
 
