@@ -65,7 +65,7 @@ class LogStuff
     return local_fields, local_tags
   end
 
-  ["fatal", "error", "warn", "info", "debug"].each do |severity|
+  ['fatal', 'error', 'warn', 'info', 'debug'].each do |severity|
     eval <<-EOM, nil, __FILE__, __LINE__ + 1
       def self.#{severity}(*args, &block)
         self.log(:#{severity}, *args, &block )
