@@ -1,6 +1,6 @@
 -content_for :edit
   - change_link = ['Change part-payment', accuracy_part_payment_path(@part_payment)]
-  =build_section 'Part-payment', @result, %w[part_payment reason], *change_link
+  =build_section 'Part-payment', @result, ['part_payment', 'reason'], *change_link
 
 -content_for :result
   #result.callout class=@result.callout
