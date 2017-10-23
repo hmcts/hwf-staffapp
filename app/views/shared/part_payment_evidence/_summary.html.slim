@@ -4,7 +4,7 @@ header
 =content_for(:edit)
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details
-=build_section 'Result', @application_view, %w[savings_result income_result]
+=build_section 'Result', @application_view, ['savings_result', 'income_result']
 = content_for :result
 
 = form_for source, url: "summary_save_#{type}".to_sym, method: :post, html: { autocomplete: 'off' } do |f|

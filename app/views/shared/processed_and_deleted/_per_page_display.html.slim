@@ -1,6 +1,6 @@
 ul.pagination.inline-list.util_mt-medium.util_mb-small
   li Display:
-  - %w[15 30 50 All].each do |new_per_page|
+  - ['15', '30', '50', 'All'].each do |new_per_page|
     li.per-page
       -if params[:per_page].eql?(new_per_page)
         strong= new_per_page

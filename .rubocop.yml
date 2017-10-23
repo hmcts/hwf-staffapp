@@ -139,18 +139,6 @@ Lint/AssignmentInCondition:
 Lint/Loop:
   Enabled: false
 
-# Just a preference to use %w[] over %w()
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%w': '[]'
-    '%W': '[]'
-    '%i': '[]'
-
-# %w doesn't always make for clearer test data
-Style/WordArray:
-  Exclude:
-    - 'spec/**/*'
-
 RSpec/NestedGroups:
   Max: 10
 
