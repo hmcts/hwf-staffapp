@@ -9,11 +9,12 @@ RSpec.describe Users::InvitationsController, type: :controller do
   let(:admin_user) { create :admin_user, office: office }
   let(:manager_user) { create :manager, office: office }
   let(:user) { build :user }
+  let(:user_email) { user.email }
 
   let(:invitation) do
     {
       name: user.name,
-      email: user.email,
+      email: user_email,
       office_id: office.id
     }
   end
@@ -47,8 +48,10 @@ RSpec.describe Users::InvitationsController, type: :controller do
       end
 
       context 'when manager tries to invite a deleted user' do
+        let(:user_email) { user.email }
+
         before do
-          create :deleted_user, email: user.email, office: office
+          create :deleted_user, email: user_email, office: office
           post :create, user: manager_invitation
         end
 
@@ -58,6 +61,14 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
         it 'renders a flash warning' do
           expect(flash[:alert]).to include('That user has previously been deleted')
+        end
+
+        context 'case insesitive' do
+          let(:user_email) { user.email.capitalize }
+
+          it 'renders a flash warning' do
+            expect(flash[:alert]).to include('That user has previously been deleted')
+          end
         end
       end
     end
