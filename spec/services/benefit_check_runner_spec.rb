@@ -111,8 +111,8 @@ RSpec.describe BenefitCheckRunner do
         include_examples 'runs benefit check record'
       end
 
-      context 'when date_fee_paid is older then three months from today (for refund)' do
-        let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months) }
+      context 'when date_fee_paid is older then three months from today and date_received is blank' do
+        let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months, date_received: nil) }
 
         it 'does not create a BenefitCheck record' do
           expect { run }.not_to change { application.benefit_checks.count }
@@ -226,16 +226,45 @@ RSpec.describe BenefitCheckRunner do
   describe '#benefit_check_date_valid?' do
 
     subject { service.benefit_check_date_valid? }
-    context 'when date_fee_paid is older then three months from today (for refund)' do
-      let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months) }
 
-      it { is_expected.to be false }
+    let(:detail) {
+      build(:complete_detail,
+        date_fee_paid: date_fee_paid,
+        date_received: date_received)
+    }
+
+    context 'when date_fee_paid is older then three months' do
+      let(:date_fee_paid) { Time.zone.today - 4.months }
+
+      context 'and date_received is older then 3 months' do
+        let(:date_received) { Time.zone.today - 3.months }
+        it { is_expected.to be false }
+      end
+
+      context 'and date_received is less then 3 months' do
+        let(:date_received) { Time.zone.today - 2.months }
+        it { is_expected.to be true }
+      end
     end
 
-    context 'when date_fee_paid is less then three months old (for refund)' do
-      let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 1.month) }
+    context 'when date_received is blank' do
+      let(:date_received) { '' }
 
-      it { is_expected.to be true }
+      context 'and date_fee_paid is older then 3 months' do
+        let(:date_fee_paid) { Time.zone.today - 3.months }
+        it { is_expected.to be false }
+      end
+
+      context 'and date_fee_paid is less then 3 months' do
+        let(:date_fee_paid) { Time.zone.today - 2.months }
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when date_received and date_fee_paid is blank' do
+      let(:date_fee_paid) { '' }
+      let(:date_received) { '' }
+      it { expect { subject }.to raise_error(NoMethodError)}
     end
   end
 end

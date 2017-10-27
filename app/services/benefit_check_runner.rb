@@ -73,11 +73,7 @@ class BenefitCheckRunner
   end
 
   def benefit_check_date
-    if detail.date_fee_paid.present?
-      detail.date_fee_paid
-    elsif detail.date_received.present?
-      detail.date_received
-    end
+    detail.date_received || detail.date_fee_paid
   end
 
   def build_hash
