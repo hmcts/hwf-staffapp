@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit([:name, :office_id, :jurisdiction_id, :role])
+    params.require(:user).permit([:name, :office_id, :jurisdiction_id, :role, :email])
   end
 
   def user_transfer_notice
