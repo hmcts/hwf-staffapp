@@ -41,7 +41,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
     dwp_api_response 'Yes'
   end
 
-  it "should not fail based on invalid date" do
+  it "do not fail when valid date" do
     visit '/'
     fill_in :online_search_reference, with: online_application_1.reference
     click_button 'Look up'
@@ -56,7 +56,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
     expect(page).to have_content 'Eligible for help with fees'
   end
 
-  it "should fail based on invalid date" do
+  it "fail when invalid date" do
     visit '/'
     fill_in :online_search_reference, with: online_application_2.reference
     click_button 'Look up'

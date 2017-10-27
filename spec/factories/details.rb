@@ -22,6 +22,7 @@ FactoryGirl.define do
     trait :out_of_time_refund do
       refund true
       date_fee_paid Time.zone.now - 3.months
+      date_received nil
     end
 
     trait :emergency do

@@ -264,7 +264,7 @@ RSpec.describe BenefitCheckRunner do
     context 'when date_received and date_fee_paid is blank' do
       let(:date_fee_paid) { '' }
       let(:date_received) { '' }
-      it { expect { subject }.to raise_error(NoMethodError)}
+      it { expect { service.benefit_check_date_valid? }.to raise_error(NoMethodError) }
     end
   end
 end
