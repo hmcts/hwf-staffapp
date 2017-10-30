@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable,
     :invitable,
-    :registerable
+    :registerable,
+    :confirmable
 
   scope :active, -> { where('current_sign_in_at >= ?', inactivate_date) }
   scope :inactive, (lambda do
@@ -43,6 +44,8 @@ class User < ActiveRecord::Base
     allow_nil: true
   }
   validate :jurisdiction_is_valid
+
+  before_create :skip_confirmation!
 
   def elevated?
     admin? || manager?

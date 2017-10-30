@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518145329) do
+ActiveRecord::Schema.define(version: 20171030112757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "tablefunc"
 
   create_table "applicants", force: :cascade do |t|
     t.integer  "application_id", null: false
@@ -340,8 +339,13 @@ ActiveRecord::Schema.define(version: 20170518145329) do
     t.integer  "office_id",                           null: false
     t.integer  "jurisdiction_id"
     t.datetime "deleted_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
