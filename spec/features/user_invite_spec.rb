@@ -7,7 +7,6 @@ RSpec.feature 'User management,', type: :feature do
 
   let(:admin_user)    { create :admin_user }
   let!(:offices)      { create :office, name: 'Bristol' }
-  let!(:user)         { create :user }
 
   context 'Admin user' do
     scenario 'invites a user' do
