@@ -28,13 +28,6 @@ RSpec.feature 'User management,', type: :feature do
       expect(page).to have_xpath('//td', text: offices.name)
     end
 
-    scenario 'edits users details, but not their email address' do
-      login_as admin_user
-      visit edit_user_path(user.id)
-      expect(page).not_to have_xpath("//input[@value='#{user.email}']")
-      expect(page).to have_content user.email
-    end
-
     scenario 'invites a user with an invalid email address' do
       new_email = 'invalid@email.com'
       login_as(admin_user, scope: :user)
