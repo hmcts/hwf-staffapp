@@ -8,14 +8,14 @@ module Users
 
       if resource.errors.empty?
         set_flash_message!(:notice, :confirmed)
-        redirect_to after_confirmation_path
       else
         set_flash_message!(:alert, :error)
-        redirect_to after_confirmation_path
       end
+      redirect_to after_confirmation_path
     end
 
     private
+
     def after_confirmation_path
       if current_user
         user_path(current_user)
