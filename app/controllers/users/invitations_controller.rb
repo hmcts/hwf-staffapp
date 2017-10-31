@@ -43,7 +43,7 @@ module Users
     end
 
     def deleted_user_exists?
-      User.with_deleted.find_by(email: invite_params[:email])
+      User.with_deleted.find_by(email: invite_params[:email].downcase)
     end
   end
 end
