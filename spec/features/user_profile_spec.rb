@@ -47,7 +47,7 @@ RSpec.feature 'User profile', type: :feature do
         scenario 'allow users to change their password' do
           fill_in :user_password, with: 'password1'
           click_button 'Update password'
-          expect(page).to have_text 'Your account has been updated successfully'
+          expect(page).to have_text 'Your password was updated successfully'
         end
 
         scenario 'prompts user to set a new password' do
