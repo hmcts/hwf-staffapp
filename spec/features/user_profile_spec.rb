@@ -47,7 +47,7 @@ RSpec.feature 'User profile', type: :feature do
         scenario 'allow users to change their password' do
           fill_in :user_password, with: 'password1'
           click_button 'Update password'
-          expect(page).to have_text 'Your password was updated successfully'
+          expect(page).to have_text 'Your account has been updated successfully'
         end
 
         scenario 'prompts user to set a new password' do
@@ -89,8 +89,8 @@ RSpec.feature 'User profile', type: :feature do
       end
 
       scenario 'their name and email has updated' do
-        expect(page).to have_text new_name
-        expect(page).to have_text new_email
+        expect(page).to have_text "We have sent an email with a confirmation link to #{new_email} address."
+        expect(page).to have_text "Please allow 5-10 minutes for this message to arrive."
       end
     end
 

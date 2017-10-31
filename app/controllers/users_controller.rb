@@ -64,7 +64,8 @@ class UsersController < ApplicationController
   end
 
   def flash_notices_for_update(update_successful)
-    flash[:notice] = 'User updated' if update_successful
+    flash[:notice] = 'User updated.' if update_successful
+    flash[:notice] += " #{email_confiration_message}" if new_email?
     flash[:notice] = user_transfer_notice if UserManagement.new(current_user, @user).transferred?
   end
 
@@ -115,5 +116,14 @@ class UsersController < ApplicationController
     authorize user, :edit?
     user.assign_attributes(user_params)
     authorize user, :update?
+  end
+
+  def new_email?
+    return false if params[:user][:email].blank?
+    params[:user][:email] != user.email
+  end
+
+  def email_confiration_message
+    t('activerecord.attributes.user.email_update_confirmation', new_email: params[:user][:email])
   end
 end

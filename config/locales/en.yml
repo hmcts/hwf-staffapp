@@ -536,6 +536,7 @@ en-GB:
         new_password_hint: Use at least 8 numbers or letters for your password.
         password_confirmation: Confirm new password
         reset_password_token: Your password reset link has expired. Please request a new link using the reset password function and try again.
+        email_update_confirmation: We have sent an email with a confirmation link to %{new_email} address. Please allow 5-10 minutes for this message to arrive.
       business_entity:
         name: BE Description
         be_code: BE Code
