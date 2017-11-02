@@ -13,8 +13,9 @@ RSpec.describe AlertNotifier do
         let(:state) { 'online' }
 
         it "do not send and email if all is good" do
-          expect(ApplicationMailer).not_to receive(:dwp_is_down_notifier)
-          AlertNotifier.run!
+          mailer = class_spy(ApplicationMailer)
+          described_class.run!
+          expect(mailer).not_to have_received(:dwp_is_down_notifier)
         end
       end
 
@@ -22,10 +23,10 @@ RSpec.describe AlertNotifier do
         let(:state) { 'offline' }
 
         it "send and email if dwp is offline" do
-          mailer = instance_double('ActionMailer::MessageDelivery')
+          mailer = instance_spy('ActionMailer::MessageDelivery')
           allow(ApplicationMailer).to receive(:dwp_is_down_notifier).and_return mailer
-          expect(mailer).to receive(:deliver_now)
-          AlertNotifier.run!
+          described_class.run!
+          expect(mailer).to have_received(:deliver_now)
         end
       end
     end
