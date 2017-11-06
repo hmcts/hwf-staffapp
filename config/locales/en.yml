@@ -512,7 +512,7 @@ en-GB:
               blank: 'Enter your email address'
               not_found: Your email address has not been recognised. First check that you've typed it correctly. For more help <a href='mailto:trial.feedback@digital.justice.gov.uk'>contact us</a>
               taken: This email has already been taken
-              invalid_email: "You’re not able to create an account with this email address. Only 'name@hmcts.gsi.gov.uk, name@hmcts.net, name@justice.gov.uk, name@justice.digital.gov.uk, hmcourts-service.gsi.gov.uk' emails can be used. For more help, <a href='mailto:%{email}'>contact us</a>"
+              invalid_email: "You're not able to create an account with this email address. Only approved domains are allowed. For more help, <a href='mailto:%{email}'>contact us</a>"
             name:
               blank: You must enter a name for the user
             current_password:
@@ -536,6 +536,7 @@ en-GB:
         new_password_hint: Use at least 8 numbers or letters for your password.
         password_confirmation: Confirm new password
         reset_password_token: Your password reset link has expired. Please request a new link using the reset password function and try again.
+        email_update_confirmation: We have sent an email with a confirmation link to %{new_email} address. Please allow 5-10 minutes for this message to arrive.
       business_entity:
         name: BE Description
         be_code: BE Code

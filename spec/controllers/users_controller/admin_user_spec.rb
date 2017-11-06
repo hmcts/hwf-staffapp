@@ -127,9 +127,9 @@ RSpec.describe UsersController, type: :controller do
           expect(user_not_on_admins_team.role).to eql 'user'
         end
 
-        it "does't update the requested user's email" do
+        it "update user's email via cornfirmable" do
           user_not_on_admins_team.reload
-          expect(user_not_on_admins_team.email).not_to eql new_attributes[:email]
+          expect(user_not_on_admins_team.unconfirmed_email).to eql new_attributes[:email]
         end
 
         it 'assigns the requested user as @user' do

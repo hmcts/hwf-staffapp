@@ -79,14 +79,32 @@ RSpec.feature 'User profile', type: :feature do
 
     context 'update their profile' do
       let(:new_name) { 'New user name' }
+      let(:new_email) { 'new_user_email@hmcts.net' }
+
       before do
         visit edit_user_path user.id
         fill_in 'user_name', with: new_name
+        fill_in 'user_email', with: new_email
         click_button 'Save changes'
       end
 
-      scenario 'their name has updated' do
-        expect(page).to have_text new_name
+      scenario 'their name and email has updated' do
+        expect(page).to have_text "We have sent an email with a confirmation link to #{new_email} address."
+        expect(page).to have_text "Please allow 5-10 minutes for this message to arrive."
+      end
+    end
+
+    context 'update their profile with invalid email' do
+      let(:new_email) { 'new_user_email@gmail.com' }
+
+      before do
+        visit edit_user_path user.id
+        fill_in 'user_email', with: new_email
+        click_button 'Save changes'
+      end
+
+      scenario 'email has not been updated' do
+        expect(page).to have_text("You're not able to create an account with this email address. Only approved domains are allowed.")
       end
     end
   end

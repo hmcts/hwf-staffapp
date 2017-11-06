@@ -123,7 +123,8 @@ Rails.application.routes.draw do
   devise_for :users, skip: :registrations, controllers: {
     invitations: 'users/invitations',
     passwords: 'users/passwords',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    confirmations: 'users/confirmations'
   }
   resources :users
   as :user do
