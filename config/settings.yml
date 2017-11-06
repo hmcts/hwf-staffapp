@@ -6,10 +6,7 @@ mail:
   et:
     england_wales: ETHelpwithfees@hmcts.gsi.gov.uk
     scotland: GLASGOWET@hmcts.gsi.gov.uk
-  dwp_notification_alert:
-    - dan.thompson@digital.justice.gov.uk
-    - kathryn.kram@justice.gov.uk
-    - sustainingteamsupport@hmcts.net
+  dwp_notification_alert: <%= ENV['DWP_NOTIFICATION_ALERT_EMAILS'] %>
 evidence_check:
   expires_in_days: 14
 part_payment:
