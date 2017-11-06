@@ -20,7 +20,7 @@ en-GB:
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Please confirm your Help with Fees staff email"
       reset_password_instructions:
         subject: "Please confirm your new password request"
         hello: "Dear %{name}"
