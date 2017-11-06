@@ -104,7 +104,7 @@ RSpec.feature 'User profile', type: :feature do
       end
 
       scenario 'email has not been updated' do
-        expect(page).to have_text('You’re not able to create an account with this email address')
+        expect(page).to have_text("You're not able to create an account with this email address. Only approved domains are allowed.")
       end
     end
   end
