@@ -66,3 +66,6 @@ en-GB:
           one: 1. Your help with fees application will be assessed by staff at our Central Office.
           two: 2. The Central Office will let you know the outcome of your help with fees application, or if they need more information from you. This usually takes no longer than 5 working days.
       warning: 'Your case will not proceed until you send your help with fees reference number and employment tribunal claim number to the tribunal.'
+    dwp_alert_notification:
+      subject: Help With Fees - DWP API Checker alert
+      message: Help With Fees - DWP API Checker seems to be down. Please be aware.
