@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicationMailer, type: :mailer do
   describe '#dwp_is_down_notifier' do
 
-    let(:email) {
-      ['dan.thompson@digital.justice.gov.uk',
-       'kathryn.kram@justice.gov.uk',
-       'sustainingteamsupport@hmcts.net']
-    }
+    let(:email) { ['dan@test.com', 'petr@test.gov.uk'] }
     let(:mail) { described_class.dwp_is_down_notifier }
 
     describe 'renders the headers' do
