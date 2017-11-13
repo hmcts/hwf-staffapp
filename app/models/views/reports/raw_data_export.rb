@@ -22,7 +22,13 @@ module Views
         decision_cost: 'departmental cost',
         source: 'source',
         granted: 'granted?',
-        evidence_checked: 'evidence checked?'
+        evidence_checked: 'evidence checked?',
+        savings_amount: 'savings and investments amount',
+        case_number: 'case number',
+        postcode: 'postcode',
+        date_of_birth: 'date of birth',
+        date_received: 'date received',
+        date_submitted_online: 'date submitted online'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -55,8 +61,8 @@ module Views
 
       def build_data
         Application.
-          select(:id, :fee, :form_name, :probate, :refund, :application_type,
-            :income, :children, :decision, :amount_to_pay, :decision_cost, :married).
+          select(:id, 'details.fee', 'details.form_name', 'details.probate', 'details.refund', :application_type,
+            :income, :children, :decision, :amount_to_pay, :decision_cost, 'applicants.married').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
@@ -70,9 +76,15 @@ module Views
           details.emergency_reason IS NOT NULL AS emergency,
           jurisdictions.name AS jurisdiction,
           business_entities.be_code AS bec_code,
-          CASE WHEN reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
+          CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
-          CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked
+          CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
+          savings.amount AS savings_amount,
+          details.case_number AS case_number,
+          oa.postcode AS postcode,
+          applicants.date_of_birth AS date_of_birth,
+          details.date_received AS date_received,
+          oa.created_at AS date_submitted_online
         COLUMNS
       end
 
@@ -81,6 +93,8 @@ module Views
           LEFT JOIN offices ON offices.id = applications.office_id
           LEFT JOIN decision_overrides de ON de.application_id = applications.id
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
+          LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
+          LEFT JOIN savings ON savings.application_id = applications.id
         JOINS
       end
     end
