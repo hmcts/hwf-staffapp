@@ -23,6 +23,7 @@ module Views
         source: 'source',
         granted: 'granted?',
         evidence_checked: 'evidence checked?',
+        capital: 'capital',
         savings_amount: 'savings and investments amount',
         case_number: 'case number',
         postcode: 'postcode',
@@ -79,6 +80,11 @@ module Views
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
+          CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000+'
+               WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
+               WHEN savings.max_threshold_exceeded = FALSE THEN '0 - 2,999'
+               ELSE ''
+          END AS capital,
           savings.amount AS savings_amount,
           details.case_number AS case_number,
           oa.postcode AS postcode,
