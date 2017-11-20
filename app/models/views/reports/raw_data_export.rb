@@ -62,8 +62,9 @@ module Views
 
       def build_data
         Application.
-          select(:id, 'details.fee', 'details.form_name', 'details.probate', 'details.refund', :application_type,
-            :income, :children, :decision, :amount_to_pay, :decision_cost, 'applicants.married').
+          select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
+            'application_type', 'income', 'children', 'decision', 'amount_to_pay',
+            'decision_cost', 'applicants.married').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
