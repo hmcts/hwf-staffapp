@@ -1,16 +1,17 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  user: <%= ENV['DB_USERNAME'] || nil %>
+  user: <%= ENV.fetch('DB_USERNAME', nil) %>
+  host: <%= ENV.fetch('DB_HOST', 'localhost') %>
   pool: 10
 
 development:
   <<: *default
-  database: fr-staffapp_development
+  database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_development') %>
 
 test:
   <<: *default
-  database: fr-staffapp_test
+  database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_test') %>
 
 production:
   <<: *default

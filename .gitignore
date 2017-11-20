@@ -31,3 +31,4 @@ node_modules
 /tests/reports
 /tests/reports/*
 selenium-debug.log
+.idea
