@@ -41,33 +41,42 @@ RSpec.feature 'Processing refund application with valid date received date', typ
     dwp_api_response 'Yes'
   end
 
-  it "do not fail when valid date" do
-    visit '/'
-    fill_in :online_search_reference, with: online_application_1.reference
-    click_button 'Look up'
-    expect(page).to have_content "Application details"
-    choose jurisdiction.name
-    click_button 'Next'
-    expect(page).to have_content "Check details"
-    click_button 'Complete processing'
+  context 'Online refund application' do
+    it "do not fail when valid date" do
+      visit '/'
+      fill_in :online_search_reference, with: online_application_1.reference
+      click_button 'Look up'
+      expect(page).to have_content "Application details"
+      choose jurisdiction.name
+      date_received = find(:xpath, './/input[@id="online_application_date_received"]').value
+      expect(date_received).to eq(online_application_1.date_received.to_s)
 
-    expect(page).to have_content 'Savings and investments✓ Passed'
-    expect(page).to have_content 'Benefits✓ Passed'
-    expect(page).to have_content 'Eligible for help with fees'
-  end
+      click_button 'Next'
+      expect(page).to have_content "Check details"
+      click_button 'Complete processing'
 
-  it "ingnore online application when invalid date" do
-    visit '/'
-    fill_in :online_search_reference, with: online_application_2.reference
-    click_button 'Look up'
-    expect(page).to have_content "Application details"
-    choose jurisdiction.name
-    click_button 'Next'
-    expect(page).to have_content "Check details"
-    click_button 'Complete processing'
+      expect(page).to have_content 'Savings and investments✓ Passed'
+      expect(page).to have_content 'Benefits✓ Passed'
+      expect(page).to have_content 'Eligible for help with fees'
+    end
 
-    expect(page).to have_content 'Savings and investments✓ Passed'
-    expect(page).to have_content 'Benefits✓ Passed'
-    expect(page).to have_content 'Eligible for help with fees'
+    it "ignore date_received date because it was already validated" do
+      visit '/'
+      fill_in :online_search_reference, with: online_application_2.reference
+      click_button 'Look up'
+      expect(page).to have_content "Application details"
+      choose jurisdiction.name
+      date_received = find(:xpath, './/input[@id="online_application_date_received"]').value
+      expect(date_received).to eq(online_application_2.date_received.to_s)
+
+      click_button 'Next'
+      expect(page).to have_content "Check details"
+      click_button 'Complete processing'
+
+      expect(page).to have_content 'Savings and investments✓ Passed'
+      expect(page).to have_content 'Benefits✓ Passed'
+      expect(page).to have_content 'Eligible for help with fees'
+    end
+
   end
 end
