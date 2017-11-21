@@ -7,7 +7,7 @@ RSpec.describe ApplicationMailer, type: :mailer do
     let(:mail) { described_class.dwp_is_down_notifier }
 
     describe 'renders the headers' do
-      it { expect(mail.subject).to eq('Help With Fees - DWP API Checker alert') }
+      it { expect(mail.subject).to eq("Help With Fees - DWP API Checker alert (test)") }
       it { expect(mail.to).to eq(email) }
       it { expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk']) }
     end
