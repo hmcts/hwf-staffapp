@@ -243,7 +243,7 @@ ActiveRecord::Schema.define(version: 20171030112757) do
     t.integer  "income"
     t.boolean  "refund",                        null: false
     t.date     "date_fee_paid"
-    t.boolean  "probate",                       null: false
+    t.boolean  "probate"
     t.string   "deceased_name"
     t.date     "date_of_death"
     t.string   "case_number"
