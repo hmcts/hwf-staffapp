@@ -25,6 +25,7 @@ class BenefitCheckRunner
   end
 
   def benefit_check_date_valid?
+    return true if @application.online_application
     benefit_check_date > Time.zone.now - 3.months
   end
 
@@ -73,7 +74,11 @@ class BenefitCheckRunner
   end
 
   def benefit_check_date
-    detail.date_received || detail.date_fee_paid
+    if detail.date_fee_paid.present?
+      detail.date_fee_paid
+    elsif detail.date_received.present?
+      detail.date_received
+    end
   end
 
   def build_hash

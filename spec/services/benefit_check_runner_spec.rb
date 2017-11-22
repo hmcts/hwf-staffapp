@@ -241,10 +241,6 @@ RSpec.describe BenefitCheckRunner do
         it { is_expected.to be false }
       end
 
-      context 'and date_received is less then 3 months' do
-        let(:date_received) { Time.zone.today - 2.months }
-        it { is_expected.to be true }
-      end
     end
 
     context 'when date_received is blank' do
