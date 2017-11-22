@@ -56,7 +56,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
     expect(page).to have_content 'Eligible for help with fees'
   end
 
-  it "fail when invalid date" do
+  it "ingnore online application when invalid date" do
     visit '/'
     fill_in :online_search_reference, with: online_application_2.reference
     click_button 'Look up'
@@ -66,7 +66,8 @@ RSpec.feature 'Processing refund application with valid date received date', typ
     expect(page).to have_content "Check details"
     click_button 'Complete processing'
 
-    expect(page).to have_content 'Not eligible for help with fees'
     expect(page).to have_content 'Savings and investments✓ Passed'
+    expect(page).to have_content 'Benefits✓ Passed'
+    expect(page).to have_content 'Eligible for help with fees'
   end
 end
