@@ -414,7 +414,7 @@ en-GB:
             date_fee_paid:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: This date can’t be more than 3 months before the application was received
+              after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
               before_or_equal_to: This date can’t be after the application was received
             date_of_death:
               blank: Enter the date

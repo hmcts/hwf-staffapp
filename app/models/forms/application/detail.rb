@@ -43,7 +43,8 @@ module Forms
 
       with_options if: :validate_date_fee_paid? do
         validates :date_fee_paid, date: {
-          before_or_equal_to: :max_refund_date,
+          after_or_equal_to: :max_refund_date,
+          before_or_equal_to: :date_received,
           allow_blank: false
         }
       end
@@ -59,7 +60,11 @@ module Forms
       end
 
       def max_refund_date
-        date_received if date_received.present?
+        date_received - 3.months if date_received.present?
+      end
+
+      def valid_refund_date_range?
+        # (date_fee_paid + 3.months) >= date_received
       end
 
       def validate_date_fee_paid?
