@@ -200,6 +200,23 @@ RSpec.describe Forms::Application::Detail do
 
                 expect(refund.errors[:date_fee_paid]).to eq ['This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application']
               end
+
+              context 'discretion applied' do
+                it 'false' do
+                  subject.discretion_applied = false
+                  expect(refund).to be_valid
+                end
+
+                it 'true' do
+                  subject.discretion_applied = true
+                  expect(refund).to be_valid
+                end
+
+                it 'nil' do
+                  subject.discretion_applied = nil
+                  expect(refund).not_to be_valid
+                end
+              end
             end
           end
         end

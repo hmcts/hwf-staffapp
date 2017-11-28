@@ -320,6 +320,9 @@ en-GB:
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
         date_hint: Use this format DD/MM/YYYY
+        discretion_applied: Delivery Manager discretion applied?
+        discretion_applied_false: 'No'
+        discretion_applied_true: 'Yes'
       forms/application/savings_investment:
         header: Savings and investments
         explanation: In question 7, how much do they have in savings and investments?

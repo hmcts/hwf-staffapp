@@ -64,12 +64,8 @@ module Forms
         date_received - 3.months if date_received.present?
       end
 
-      def valid_refund_date_range?
-        # (date_fee_paid + 3.months) >= date_received
-      end
-
       def validate_date_fee_paid?
-        refund? && (date_received.is_a?(Date) || date_received.is_a?(Time))
+        refund? && (date_received.is_a?(Date) || date_received.is_a?(Time)) && @discretion_applied.nil?
       end
 
       def tomorrow

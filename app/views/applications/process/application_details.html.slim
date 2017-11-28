@@ -86,6 +86,21 @@
                   span.hint.block = t('date_hint', scope: @form.i18n_scope)
                 = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
                 = f.text_field :date_fee_paid, { class: 'form-control medium-field' }
+                - if @form.errors[:date_fee_paid].present?
+                  fieldset.discretion_applied
+                    = f.label :discretion_applied, class: 'form-label'
+                    = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
+                    .options.radio.cf
+                      .option
+                        label.block-label for='application_discretion_applied_false'
+                          = f.radio_button :discretion_applied, 'false'
+                          = t('discretion_applied_false', scope: @form.i18n_scope)
+                      .option
+                        label.block-label for='application_discretion_applied_true'
+                          = f.radio_button :discretion_applied, 'true'
+                          = t('discretion_applied_true', scope: @form.i18n_scope)
+
+
 
         fieldset
           legend.visuallyhidden Emergency case details
