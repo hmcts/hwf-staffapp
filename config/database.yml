@@ -9,7 +9,7 @@ development:
   <<: *default
   database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_development') %>
 
-test:
+test: &test
   <<: *default
   database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_test') %>
 
@@ -21,3 +21,5 @@ production:
   password: <%= ENV['DB_PASSWORD'] %>
   database: <%= ENV['DB_NAME'] || 'fr-staffapp' %>
   pool: 15
+cucumber:
+  <<: *test
