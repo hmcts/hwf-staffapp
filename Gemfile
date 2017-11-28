@@ -98,9 +98,9 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'cucumber-rails', '~> 1.5', require: false
   gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
+  gem 'cucumber-rails', '~> 1.5', require: false
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
