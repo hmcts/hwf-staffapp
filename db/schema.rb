@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030112757) do
+ActiveRecord::Schema.define(version: 20171127154854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 20171030112757) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "details", force: :cascade do |t|
-    t.integer  "application_id",   null: false
+    t.integer  "application_id",     null: false
     t.decimal  "fee"
     t.integer  "jurisdiction_id"
     t.date     "date_received"
@@ -159,8 +159,9 @@ ActiveRecord::Schema.define(version: 20171030112757) do
     t.boolean  "refund"
     t.date     "date_fee_paid"
     t.string   "emergency_reason"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.boolean  "discretion_applied"
   end
 
   add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree

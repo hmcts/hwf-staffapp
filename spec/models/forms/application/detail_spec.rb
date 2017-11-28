@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Detail do
   subject(:form) { described_class.new(detail) }
 
-  params_list = [:fee, :jurisdiction_id, :date_received, :probate, :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name, :case_number, :emergency, :emergency_reason]
+  params_list = [:fee, :jurisdiction_id, :date_received, :probate,
+                 :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name,
+                 :case_number, :emergency, :emergency_reason, :discretion_applied]
 
   let(:detail) { attributes_for :detail }
 
@@ -182,8 +184,21 @@ RSpec.describe Forms::Application::Detail do
 
               it 'returns an error' do
                 refund.valid?
-
                 expect(refund.errors[:date_fee_paid]).to eq ['This date can’t be after the application was received']
+              end
+            end
+          end
+
+          describe 'and date received' do
+            describe 'longer then 3 months' do
+              let(:date_fee_paid) { Time.zone.local(2014, 1, 15, 8, 0, 0) }
+
+              it { is_expected.not_to be_valid }
+
+              it 'returns an error' do
+                refund.valid?
+
+                expect(refund.errors[:date_fee_paid]).to eq ['This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application']
               end
             end
           end

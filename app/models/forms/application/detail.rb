@@ -17,7 +17,8 @@ module Forms
           emergency_reason: String,
           date_fee_paid: Date,
           form_name: String,
-          case_number: String }
+          case_number: String,
+          discretion_applied: Boolean }
       end
 
       define_attributes
