@@ -97,6 +97,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'cucumber-rails', '~> 1.5', require: false
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
