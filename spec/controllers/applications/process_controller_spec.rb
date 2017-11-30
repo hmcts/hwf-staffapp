@@ -4,21 +4,21 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
 
-  let(:personal_information_form) { double }
-  let(:application_details_form) { double }
-  let(:savings_investments_form) { double }
-  let(:benefit_form) { double }
-  let(:income_form) { double }
+  let(:personal_information_form) { double('personal_information_form') }
+  let(:application_details_form) { double('application_details_form') }
+  let(:savings_investments_form) { double('savings_investments_form') }
+  let(:benefit_form) { double(('benefit_form')) }
+  let(:income_form) { double('income_form') }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
-  let(:savings_pass_fail_service) { double }
-  let(:dwp_monitor) { double }
+  let(:savings_pass_fail_service) { double('savings_pass_fail_service') }
+  let(:dwp_monitor) { double('dwp_monitor') }
   let(:dwp_state) { 'online' }
 
   before do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
-    allow(Forms::Application::Applicant).to receive(:new).with(application.applicant).and_return(personal_information_form)
     allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
+    allow(Forms::Application::Applicant).to receive(:new).with(application.applicant).and_return(personal_information_form)
     allow(Forms::Application::SavingsInvestment).to receive(:new).with(application.saving).and_return(savings_investments_form)
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
@@ -123,25 +123,29 @@ RSpec.describe Applications::ProcessController, type: :controller do
   end
 
   describe 'PUT #application_details_save' do
-    let(:expected_params) { { fee: '300' } }
+    let(:success) { true }
+    let(:app_form) do
+      instance_double('ApplicationFormSave',
+        success?: success,
+        redirect_url: application_summary_path(application),
+        details: application_details_form)
+    end
+    let(:expected_params) { { discretion_applied: 'false' } }
 
     before do
-      allow(application_details_form).to receive(:update_attributes).with(expected_params)
-      allow(application_details_form).to receive(:save).and_return(form_save)
+      allow(ApplicationFormSave).to receive(:new).with(application, expected_params).and_return app_form
 
       put :application_details_save, application_id: application.id, application: expected_params
     end
 
-    context 'when the form can be saved' do
-      let(:form_save) { true }
-
-      it 'redirects to savings_investments' do
-        expect(response).to redirect_to(application_savings_investments_path(application))
+    context 'when the ApplicationFormSave is success' do
+      it 'redirects to given url' do
+        expect(response).to redirect_to(application_summary_path(application))
       end
     end
 
     context 'when the form can not be saved' do
-      let(:form_save) { false }
+      let(:success) { false }
 
       it 'renders the correct template' do
         expect(response).to render_template(:application_details)

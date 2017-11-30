@@ -34,11 +34,11 @@ module Applications
     end
 
     def application_details_save
-      @form = Forms::Application::Detail.new(application.detail)
-      @form.update_attributes(form_params(:details))
+      app_form_save = ApplicationFormSave.new(application, form_params(:details))
+      @form = app_form_save.details
 
-      if @form.save
-        redirect_to(action: :savings_investments)
+      if app_form_save.success?
+        redirect_to app_form_save.redirect_url
       else
         @jurisdictions = user_jurisdictions
         render :application_details

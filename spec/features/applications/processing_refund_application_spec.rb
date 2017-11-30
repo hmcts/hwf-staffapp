@@ -124,24 +124,19 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         check "This is a refund case"
         fill_in "application_date_fee_paid", with: 4.months.ago.to_s
         click_button 'Next'
+        expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
-        choose 'Less than £3,000'
-        fill_in 'application_amount', with: 0
+        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          choose 'No'
+        end
         click_button 'Next'
 
-        expect(page).to have_content "Does the applicant receive benefits?"
-        choose 'Yes'
-        click_button 'Next'
-        expect(page).to have_content "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid"
-        choose "benefit_override_evidence_true"
-        choose "benefit_override_correct_true"
-        click_button 'Next'
+        expect(page).to have_content "Check details"
+        expect(page).to have_content "Delivery Manager discretion appliedNo"
 
         click_button 'Complete processing'
-
-        expect(page).to have_content 'Savings and investments✓ Passed'
-        expect(page).to have_content 'Benefits✓ Passed'
-        expect(page).to have_content 'Eligible for help with fees'
+        expect(page).to have_content 'Not eligible for help with fees'
+        expect(page).to have_content 'Delivery Manager Discretion✗ Failed'
       end
     end
 
@@ -202,7 +197,6 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         choose "benefit_override_evidence_true"
         choose "benefit_override_correct_true"
         click_button 'Next'
-        binding.pry
 
         click_button 'Complete processing'
 

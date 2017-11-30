@@ -5,18 +5,42 @@ require 'rails_helper'
 RSpec.describe Views::Confirmation::Result do
   subject(:view) { described_class.new(application) }
 
-  let(:application) { build_stubbed(:application) }
+  let(:application) { build_stubbed(:application, detail: detail) }
   let(:string_passed) { '✓ Passed' }
   let(:string_failed) { '✗ Failed' }
   let(:string_waiting_evidence) { 'Waiting for evidence' }
   let(:string_part_payment) { 'Waiting for part-payment' }
   let(:scope) { 'convert_pass_fail' }
   let(:saving) { double }
+  let(:detail) { build_stubbed(:detail) }
 
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['savings_passed?', 'benefits_passed?', 'income_passed?'] }
+    it { is_expected.to eql ['savings_passed?', 'benefits_passed?', 'income_passed?', 'discretion_applied?'] }
+  end
+
+  describe '#discretion_applied?' do
+    subject { view.discretion_applied? }
+
+    context "when discretion is denied" do
+      let(:detail) { build_stubbed(:detail, discretion_applied: false) }
+
+      it { is_expected.to eq I18n.t((false).to_s, scope: scope) }
+    end
+
+    context "when discretion is granted" do
+      let(:detail) { build_stubbed(:detail, discretion_applied: true) }
+
+      it { is_expected.to eq I18n.t((true).to_s, scope: scope) }
+    end
+
+    context "when discretion is nil" do
+      let(:detail) { build_stubbed(:detail, discretion_applied: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
   end
 
   describe '#savings_passed?' do
@@ -29,6 +53,19 @@ RSpec.describe Views::Confirmation::Result do
         end
 
         it { is_expected.to eq I18n.t((!value).to_s, scope: scope) }
+      end
+
+      context 'discretion applied' do
+        context "when threshold_exceeded is #{value}" do
+          let(:detail) { build_stubbed(:detail, discretion_applied: value) }
+
+          before do
+            allow(application).to receive(:saving).and_return(saving)
+            allow(saving).to receive(:passed?).and_return(!value)
+          end
+
+          it { is_expected.to be_nil }
+        end
       end
     end
   end

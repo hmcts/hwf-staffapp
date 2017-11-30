@@ -3,7 +3,7 @@ module Views
     class Result < Views::Overview::Base
 
       def all_fields
-        ['savings_passed?', 'benefits_passed?', 'income_passed?']
+        ['savings_passed?', 'benefits_passed?', 'income_passed?', 'discretion_applied?']
       end
 
       def initialize(application)
@@ -11,6 +11,7 @@ module Views
       end
 
       def savings_passed?
+        return if display_check_when_discretion_applied?
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
@@ -35,6 +36,11 @@ module Views
         return part_payment if @application.waiting_for_part_payment?
 
         convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+      end
+
+      def discretion_applied?
+        return if @application.detail.discretion_applied.nil?
+        convert_to_pass_fail(@application.detail.discretion_applied)
       end
 
       def result
@@ -85,6 +91,10 @@ module Views
 
       def benefits_have_been_overridden?
         application_type_is?('benefit') && benefit_overridden?
+      end
+
+      def display_check_when_discretion_applied?
+        @application.detail.discretion_applied != nil
       end
     end
   end

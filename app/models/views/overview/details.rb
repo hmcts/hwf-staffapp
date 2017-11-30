@@ -3,7 +3,7 @@ module Views
     class Details
       include ActionView::Helpers::NumberHelper
 
-      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, to: :detail)
+      delegate(:form_name, :case_number, :deceased_name, :emergency_reason,  to: :detail)
 
       def initialize(application)
         @application = application
@@ -12,7 +12,7 @@ module Views
       def all_fields
         [
           'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-          'deceased_name', 'date_of_death', 'date_fee_paid', 'emergency_reason'
+          'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied', 'emergency_reason'
         ]
       end
 
@@ -28,6 +28,11 @@ module Views
         define_method(method) do
           format_date(detail.public_send(method))
         end
+      end
+
+      def discretion_applied
+        return if detail.discretion_applied.nil?
+        I18n.t("activemodel.attributes.forms/application/detail.discretion_applied_#{detail.discretion_applied}")
       end
 
       private

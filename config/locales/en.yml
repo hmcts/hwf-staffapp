@@ -247,6 +247,7 @@ en-GB:
         income_passed?: Income
         income_part: 'Waiting for part-payment'
         income_evidence: 'Waiting for evidence'
+        discretion_applied?: 'Delivery Manager Discretion'
       views/overview/application:
         savings: Savings and investments
         benefits: Receiving eligible benefits
@@ -273,6 +274,7 @@ en-GB:
         refund: This is a refund case
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
+        discretion_applied: Delivery Manager discretion applied
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
