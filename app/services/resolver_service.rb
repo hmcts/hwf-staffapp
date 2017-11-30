@@ -65,7 +65,9 @@ class ResolverService
 
   def complete_application(application)
     attributes = completed_application_attributes.tap do |attrs|
-      if decide_evidence_check(application)
+      if complete_because_discretion_applied?(application)
+        attrs.merge!(decided_attributes(application))
+      elsif decide_evidence_check(application)
         attrs[:state] = :waiting_for_evidence
       elsif decide_part_payment(application)
         attrs[:state] = :waiting_for_part_payment
@@ -114,5 +116,9 @@ class ResolverService
 
   def decide_evidence_check(application)
     EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
+  end
+
+  def complete_because_discretion_applied?(application)
+    application.detail.discretion_applied == false
   end
 end
