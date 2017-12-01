@@ -18,7 +18,9 @@ module Forms
           date_fee_paid: Date,
           form_name: String,
           case_number: String,
-          discretion_applied: Boolean }
+          discretion_applied: Boolean,
+          discretion_manager_name: String,
+          discretion_reason: String }
       end
 
       define_attributes
@@ -28,6 +30,7 @@ module Forms
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
+      validates :discretion_manager_name, :discretion_reason, presence: true, if: Proc.new { |detail| detail.discretion_applied }
 
       validates :date_received, date: {
         after_or_equal_to: :min_date,
