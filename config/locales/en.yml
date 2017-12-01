@@ -429,6 +429,10 @@ en-GB:
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: "is too long, it needs to be less than 500 characters"
+            discretion_manager_name:
+              blank: Enter Delivery Manager name
+            discretion_reason:
+              blank: Enter Discretionary reason
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
