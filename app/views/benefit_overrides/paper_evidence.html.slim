@@ -3,9 +3,9 @@
     header
       h2.heading-xlarge.util_mb-small Benefits
 
-    - if error_message_partial
+    - if error_message_partial(@application)
      .page-error.util_mb-medium
-        = render(error_message_partial)
+        = render(error_message_partial(@application))
 
     = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
 
