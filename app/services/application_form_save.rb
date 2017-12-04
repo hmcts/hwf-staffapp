@@ -33,6 +33,6 @@ class ApplicationFormSave
   end
 
   def continue_with_discretion_applied?
-    @form.discretion_applied.nil? != false
+    @form.discretion_applied != false
   end
 end

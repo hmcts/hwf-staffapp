@@ -30,6 +30,15 @@ RSpec.describe ApplicationFormSave do
         service.details
         expect(service.redirect_url).to eql("/applications/#{application.id}/savings_investments")
       end
+
+      context 'discretion_applied granted' do
+        let(:discretion_applied) { true }
+
+        it "return saving path" do
+          service.details
+          expect(service.redirect_url).to eql("/applications/#{application.id}/savings_investments")
+        end
+      end
     end
 
     context 'no errors and discretion denied' do
