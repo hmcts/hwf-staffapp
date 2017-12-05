@@ -31,7 +31,7 @@ module Views
       end
 
       def discretion_applied
-        return if detail.discretion_applied.nil?
+        return if @application.is_a?(OnlineApplication) || detail.discretion_applied.nil?
         I18n.t("activemodel.attributes.forms/application/detail.discretion_applied_#{detail.discretion_applied}")
       end
 
