@@ -15,7 +15,7 @@ module Forms
     private
 
     def fields_to_update
-      { correct: correct, incorrect_reason: incorrect_reason }
+      { correct: evidence, incorrect_reason: incorrect_reason }
     end
 
     def persist!
@@ -26,7 +26,7 @@ module Forms
     end
 
     def outcome
-      correct ? 'full' : 'none'
+      evidence ? 'full' : 'none'
     end
   end
 end
