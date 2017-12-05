@@ -34,40 +34,11 @@ RSpec.describe Forms::BenefitsEvidence do
       end
 
       context 'for true' do
-        context 'with attribute "correct"' do
-          let(:params) { { evidence: true, correct: correct } }
+        let(:evidence) { true }
 
-          context 'when not set' do
-            let(:correct) { nil }
-
-            it { is_expected.to be false }
-          end
-
-          context 'when true' do
-            let(:correct) { true }
-
-            it { is_expected.to be true }
-          end
-
-          context 'when false' do
-            context 'with attribute incorrect_reason' do
-              let(:params) { { evidence: true, correct: false, incorrect_reason: reason } }
-
-              context 'not set' do
-                let(:reason) { nil }
-
-                it { is_expected.to be false }
-              end
-
-              context 'set' do
-                let(:reason) { 'SOME REASON' }
-
-                it { is_expected.to be true }
-              end
-            end
-          end
-        end
+        it { is_expected.to be true }
       end
+
     end
   end
 

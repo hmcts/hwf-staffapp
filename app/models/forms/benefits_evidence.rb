@@ -11,8 +11,6 @@ module Forms
     define_attributes
 
     validates :evidence, inclusion: { in: [true, false] }
-    validates :correct, inclusion: { in: [true, false] }, if: :evidence?
-    validates :incorrect_reason, presence: true, if: '(evidence? == true) && (correct? == false)'
 
     private
 
