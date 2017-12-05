@@ -3,7 +3,7 @@ module Views
     class Benefits < Base
 
       def all_fields
-        ['on_benefits?', 'override?', 'override_valid?']
+        ['on_benefits?']
       end
 
       def initialize(application)

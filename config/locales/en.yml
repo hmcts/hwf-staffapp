@@ -364,7 +364,7 @@ en-GB:
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
-        evidence: 'Has the applicant provided paper evidence?'
+        evidence: 'Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?'
         evidence_false: 'No'
         evidence_true: 'Yes, the applicant has provided paper evidence'
         correct: 'Is the evidence for the correct applicant and dated within 3 months of the fee being paid?'
