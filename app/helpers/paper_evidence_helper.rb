@@ -10,6 +10,8 @@ module PaperEvidenceHelper
   def benefit_check_error_message
     if invalid_timing?
       'out_of_time'
+    elsif discretion_applied == true
+      return nil
     else
       case last_benefit_check_result
       when nil, 'undetermined'
@@ -26,7 +28,11 @@ module PaperEvidenceHelper
 
   def invalid_timing?
     !BenefitCheckRunner.new(@application).benefit_check_date_valid? &&
-    @application.detail.discretion_applied.nil?
+    discretion_applied.nil?
+  end
+
+  def discretion_applied
+     @application.detail.discretion_applied
   end
 
 end

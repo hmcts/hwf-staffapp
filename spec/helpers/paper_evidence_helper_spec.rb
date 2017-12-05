@@ -22,8 +22,13 @@ RSpec.describe PaperEvidenceHelper, type: :helper do
       context 'discretion granted' do
         let(:detail) { build_stubbed :detail, discretion_applied: true }
 
-        it "return nil" do
+        it "when result was no return nil" do
           allow(helper).to receive(:last_benefit_check_result).and_return 'no'
+          expect(template).to be_nil
+        end
+
+        it "when last_benefit_check_result was invalid return nil" do
+          allow(helper).to receive(:last_benefit_check_result).and_return nil
           expect(template).to be_nil
         end
       end
