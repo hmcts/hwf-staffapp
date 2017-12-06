@@ -161,13 +161,13 @@ describe ResolverService do
           before { application.detail.update(discretion_applied: false) }
 
           it "complete application without EvidenceCheck" do
-            expect(EvidenceCheckSelector).not_to receive(:new)
             complete
+            expect(EvidenceCheckSelector).not_to have_received(:new)
           end
 
           it "complete application without PartPaymentBuilder" do
-            expect(PartPaymentBuilder).not_to receive(:new)
             complete
+            expect(PartPaymentBuilder).not_to have_received(:new)
           end
         end
 
@@ -175,14 +175,14 @@ describe ResolverService do
           before { application.detail.update(discretion_applied: true) }
 
           it "complete application with EvidenceCheck" do
-            expect(EvidenceCheckSelector).to receive(:new)
             complete
+            expect(EvidenceCheckSelector).to have_received(:new)
           end
 
           it "complete application with PartPaymentBuilder" do
             allow(EvidenceCheckSelector).to receive(:new).and_return evidence_check_selector
-            expect(PartPaymentBuilder).to receive(:new)
             complete
+            expect(PartPaymentBuilder).to have_received(:new)
           end
         end
 
@@ -190,14 +190,14 @@ describe ResolverService do
           before { application.detail.update(discretion_applied: nil) }
 
           it "complete application with EvidenceCheck" do
-            expect(EvidenceCheckSelector).to receive(:new)
             complete
+            expect(EvidenceCheckSelector).to have_received(:new)
           end
 
           it "complete application with PartPaymentBuilder" do
             allow(EvidenceCheckSelector).to receive(:new).and_return evidence_check_selector
-            expect(PartPaymentBuilder).to receive(:new)
             complete
+            expect(PartPaymentBuilder).to have_received(:new)
           end
         end
 

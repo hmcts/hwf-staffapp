@@ -2,13 +2,15 @@ require 'rails_helper'
 
 RSpec.describe PaperEvidenceHelper, type: :helper do
 
-  let(:application) { build_stubbed :application, detail: detail }
-  let(:detail) { build_stubbed :detail, discretion_applied: nil }
-
   subject(:template) { helper.error_message_partial(application) }
 
+  let(:application) { build_stubbed :application, detail: detail }
+  let(:detail) { build_stubbed :detail, discretion_applied: nil }
+  let(:benefit_check_runner) { instance_double('BenefitCheckRunner') }
+
   before do
-    allow(BenefitCheckRunner).to receive_message_chain(:new, :benefit_check_date_valid?).and_return benefit_check
+    allow(BenefitCheckRunner).to receive(:new).and_return benefit_check_runner
+    allow(benefit_check_runner).to receive(:benefit_check_date_valid?).and_return benefit_check
   end
 
   describe '#error_message_partial' do

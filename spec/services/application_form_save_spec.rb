@@ -49,9 +49,12 @@ RSpec.describe ApplicationFormSave do
         expect(service.redirect_url).to eql("/applications/#{application.id}/summary")
       end
 
-      it "set the outcome" do
-        expect(application).to receive(:update).with(outcome: "none")
-        service.details
+      context 'udpate application' do
+        let(:application) { instance_spy('Application') }
+        it "set the outcome" do
+          service.details
+          expect(application).to have_received(:update).with(outcome: "none")
+        end
       end
     end
 

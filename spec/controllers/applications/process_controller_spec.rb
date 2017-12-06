@@ -4,14 +4,14 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
 
-  let(:personal_information_form) { double('personal_information_form') }
-  let(:application_details_form) { double('application_details_form') }
-  let(:savings_investments_form) { double('savings_investments_form') }
-  let(:benefit_form) { double('benefit_form') }
-  let(:income_form) { double('income_form') }
+  let(:personal_information_form) { instance_double('Forms::Application::Applicant') }
+  let(:application_details_form) { instance_double('Forms::Application::Detail') }
+  let(:savings_investments_form) { instance_double('Forms::Application::SavingsInvestment') }
+  let(:benefit_form) { instance_double('Forms::Application::Benefit') }
+  let(:income_form) { instance_double('Forms::Application::Income') }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
-  let(:savings_pass_fail_service) { double('savings_pass_fail_service') }
-  let(:dwp_monitor) { double('dwp_monitor') }
+  let(:savings_pass_fail_service) { instance_double('SavingsPassFailService') }
+  let(:dwp_monitor) { instance_double('DwpMonitor') }
   let(:dwp_state) { 'online' }
 
   before do
