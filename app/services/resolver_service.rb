@@ -65,18 +65,24 @@ class ResolverService
 
   def complete_application(application)
     attributes = completed_application_attributes.tap do |attrs|
-      if complete_because_discretion_applied?(application)
+
+      if complete_because_discretion_applied?(application) ||
+         application_state(application).nil?
         attrs.merge!(decided_attributes(application))
-      elsif decide_evidence_check(application)
-        attrs[:state] = :waiting_for_evidence
-      elsif decide_part_payment(application)
-        attrs[:state] = :waiting_for_part_payment
       else
-        attrs.merge!(decided_attributes(application))
+        attrs[:state] = application_state(application)
       end
     end
 
     application.update!(attributes)
+  end
+
+  def application_state(application)
+    if decide_evidence_check(application)
+      :waiting_for_evidence
+    elsif decide_part_payment(application)
+      :waiting_for_part_payment
+    end
   end
 
   def complete_evidence_check(evidence_check)
@@ -103,11 +109,6 @@ class ResolverService
 
   def lookup_decision(outcome)
     { 'full' => 'full', 'part' => 'part', 'none' => 'none', 'return' => 'none' }[outcome]
-  end
-
-  def evidence_check_and_payment
-    decide_evidence_check(@calling_object)
-    decide_part_payment(@calling_object)
   end
 
   def decide_part_payment(application)
