@@ -30,7 +30,8 @@ module Forms
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
-      validates :discretion_manager_name, :discretion_reason, presence: true, if: Proc.new { |detail| detail.discretion_applied }
+      validates :discretion_manager_name,
+        :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
       validates :date_received, date: {
         after_or_equal_to: :min_date,
@@ -68,7 +69,8 @@ module Forms
       end
 
       def validate_date_fee_paid?
-        refund? && (date_received.is_a?(Date) || date_received.is_a?(Time)) && @discretion_applied.nil?
+        refund? && (date_received.is_a?(Date) ||
+          date_received.is_a?(Time)) && @discretion_applied.nil?
       end
 
       def tomorrow

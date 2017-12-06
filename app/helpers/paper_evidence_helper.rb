@@ -11,14 +11,9 @@ module PaperEvidenceHelper
     if invalid_timing?
       'out_of_time'
     elsif discretion_applied == true
-      return nil
+      nil
     else
-      case last_benefit_check_result
-      when nil, 'undetermined'
-        'missing_details'
-      when 'server unavailable', 'unspecified error'
-        'technical_error'
-      end
+      last_benefit_check_result_partial
     end
   end
 
@@ -28,11 +23,19 @@ module PaperEvidenceHelper
 
   def invalid_timing?
     !BenefitCheckRunner.new(@application).benefit_check_date_valid? &&
-    discretion_applied.nil?
+      discretion_applied.nil?
   end
 
   def discretion_applied
-     @application.detail.discretion_applied
+    @application.detail.discretion_applied
   end
 
+  def last_benefit_check_result_partial
+    case last_benefit_check_result
+    when nil, 'undetermined'
+      'missing_details'
+    when 'server unavailable', 'unspecified error'
+      'technical_error'
+    end
+  end
 end
