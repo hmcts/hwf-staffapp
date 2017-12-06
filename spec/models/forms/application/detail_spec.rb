@@ -204,36 +204,36 @@ RSpec.describe Forms::Application::Detail do
 
               context 'discretion applied' do
                 it 'false' do
-                  subject.discretion_applied = false
+                  refund.discretion_applied = false
                   expect(refund).to be_valid
                 end
 
                 context 'is granted' do
-                  before { subject.discretion_applied = true }
+                  before { refund.discretion_applied = true }
 
                   it 'true' do
-                    subject.discretion_reason = 'Dan'
-                    subject.discretion_manager_name = 'Looks legit'
+                    refund.discretion_reason = 'Dan'
+                    refund.discretion_manager_name = 'Looks legit'
                     expect(refund).to be_valid
                   end
 
                   it 'true but no manager name' do
-                    subject.discretion_reason = ''
-                    subject.discretion_manager_name = 'Looks legit'
+                    refund.discretion_reason = ''
+                    refund.discretion_manager_name = 'Looks legit'
 
                     expect(refund).not_to be_valid
                   end
 
                   it 'true but no reason' do
-                    subject.discretion_reason = 'Dan'
-                    subject.discretion_manager_name = ''
+                    refund.discretion_reason = 'Dan'
+                    refund.discretion_manager_name = ''
 
                     expect(refund).not_to be_valid
                   end
                 end
 
                 it 'nil' do
-                  subject.discretion_applied = nil
+                  refund.discretion_applied = nil
                   expect(refund).not_to be_valid
                 end
               end

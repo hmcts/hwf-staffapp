@@ -14,9 +14,8 @@ RSpec.describe ApplicationFormSave do
   end
 
   let(:discretion_applied) { nil }
-  let(:errors) {{}}
+  let(:errors) { {} }
   let(:saved) { true }
-
 
   describe '#details' do
     before do
@@ -45,19 +44,19 @@ RSpec.describe ApplicationFormSave do
       let(:discretion_applied) { false }
 
       it "return saving path" do
-        allow(application).to receive(:update).with({ outcome: "none" })
+        allow(application).to receive(:update).with(outcome: "none")
         service.details
         expect(service.redirect_url).to eql("/applications/#{application.id}/summary")
       end
 
       it "set the outcome" do
-        expect(application).to receive(:update).with({ outcome: "none" })
+        expect(application).to receive(:update).with(outcome: "none")
         service.details
       end
     end
 
     context 'errors' do
-      let(:errors) {[{ date_fee_paid: 'test' }]}
+      let(:errors) { [{ date_fee_paid: 'test' }] }
       let(:saved) { false }
 
       it "blank saving path" do

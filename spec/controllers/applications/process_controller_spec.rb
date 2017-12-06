@@ -7,7 +7,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
   let(:personal_information_form) { double('personal_information_form') }
   let(:application_details_form) { double('application_details_form') }
   let(:savings_investments_form) { double('savings_investments_form') }
-  let(:benefit_form) { double(('benefit_form')) }
+  let(:benefit_form) { double('benefit_form') }
   let(:income_form) { double('income_form') }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
   let(:savings_pass_fail_service) { double('savings_pass_fail_service') }

@@ -26,13 +26,13 @@ RSpec.describe Views::Confirmation::Result do
     context "when discretion is denied" do
       let(:detail) { build_stubbed(:detail, discretion_applied: false) }
 
-      it { is_expected.to eq I18n.t((false).to_s, scope: scope) }
+      it { is_expected.to eq I18n.t(false.to_s, scope: scope) }
     end
 
     context "when discretion is granted" do
       let(:detail) { build_stubbed(:detail, discretion_applied: true) }
 
-      it { is_expected.to eq I18n.t((true).to_s, scope: scope) }
+      it { is_expected.to eq I18n.t(true.to_s, scope: scope) }
     end
 
     context "when discretion is nil" do
