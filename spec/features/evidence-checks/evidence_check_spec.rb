@@ -27,7 +27,7 @@ RSpec.feature 'Evidence check', type: :feature do
     fill_application_details
     fill_saving_and_investment
     fill_benefits(true)
-    fill_benefit_evidence(paper_provided: true, paper_correct: true)
+    fill_benefit_evidence(paper_provided: true)
 
     expect(page).to have_text 'Check details'
     click_button 'Complete processing'

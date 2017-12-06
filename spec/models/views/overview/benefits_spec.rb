@@ -10,7 +10,7 @@ RSpec.describe Views::Overview::Benefits do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['on_benefits?'] }
+    it { is_expected.to eql ['on_benefits?', 'override?'] }
   end
 
   describe '#on_benefits?' do
@@ -42,6 +42,20 @@ RSpec.describe Views::Overview::Benefits do
 
     context 'when user selected "no" to on benefits' do
       let(:application) { build_stubbed :application, benefits: false }
+
+      it { is_expected.to eq nil }
+    end
+
+    context 'when discretion_applied hide if discretion_applied true' do
+      let(:application) { build_stubbed :application, benefits: true, detail: detail }
+      let(:detail) { build_stubbed :detail, discretion_applied: true }
+
+      it { is_expected.to eq nil }
+    end
+
+    context 'when discretion_applied hide if discretion_applied false' do
+      let(:application) { build_stubbed :application, benefits: true, detail: detail }
+      let(:detail) { build_stubbed :detail, discretion_applied: false }
 
       it { is_expected.to eq nil }
     end

@@ -3,7 +3,7 @@ module Views
     class Benefits < Base
 
       def all_fields
-        ['on_benefits?']
+        ['on_benefits?', 'override?']
       end
 
       def initialize(application)
@@ -15,6 +15,7 @@ module Views
       end
 
       def override?
+        return if hide_when_discretion_applied?
         convert_to_boolean(benefit_overridden?) if @application.benefits?
       end
 
@@ -28,6 +29,10 @@ module Views
 
       def benefit_overridden?
         !@application.benefit_override.nil?
+      end
+
+      def hide_when_discretion_applied?
+        @application.detail.try(:discretion_applied) != nil
       end
     end
   end
