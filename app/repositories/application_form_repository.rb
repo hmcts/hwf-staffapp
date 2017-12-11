@@ -13,6 +13,7 @@ class ApplicationFormRepository
     @form = form_class.new(application.detail)
     update_form_attributes_and_save
     load_template_path
+    udpate_outcome
     @form
   end
 
@@ -41,12 +42,18 @@ class ApplicationFormRepository
   end
 
   def load_template_path
-    if @form.errors.blank? && continue_with_discretion_applied?
-      @redirect_url = application_savings_investments_path(application)
-    elsif @form.errors.blank? && !continue_with_discretion_applied?
-      @redirect_url = application_summary_path(application)
-      application_outcome('none')
-    end
+    return if @form.errors.present?
+    @redirect_url = next_page_url
+  end
+
+  def next_page_url
+    return application_savings_investments_path(application) if continue_with_discretion_applied?
+    application_summary_path(application)
+  end
+
+  def udpate_outcome
+    return if continue_with_discretion_applied?
+    application_outcome('none')
   end
 
 end
