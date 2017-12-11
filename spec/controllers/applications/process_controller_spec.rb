@@ -125,15 +125,15 @@ RSpec.describe Applications::ProcessController, type: :controller do
   describe 'PUT #application_details_save' do
     let(:success) { true }
     let(:app_form) do
-      instance_double('ApplicationFormSave',
+      instance_double('ApplicationFormRepository',
         success?: success,
         redirect_url: application_summary_path(application),
-        details: application_details_form)
+        process: application_details_form)
     end
     let(:expected_params) { { discretion_applied: 'false' } }
 
     before do
-      allow(ApplicationFormSave).to receive(:new).with(application, expected_params).and_return app_form
+      allow(ApplicationFormRepository).to receive(:new).with(application, expected_params).and_return app_form
 
       put :application_details_save, application_id: application.id, application: expected_params
     end

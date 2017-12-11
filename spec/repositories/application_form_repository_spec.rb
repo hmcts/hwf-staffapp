@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationFormSave do
-  subject(:service) { described_class.new(application, form_params) }
+RSpec.describe ApplicationFormRepository do
+  subject(:repository) { described_class.new(application, form_params) }
 
   let(:application) { build_stubbed :application, detail: detail }
   let(:detail) { build_stubbed :detail }
@@ -17,7 +17,7 @@ RSpec.describe ApplicationFormSave do
   let(:errors) { {} }
   let(:saved) { true }
 
-  describe '#details' do
+  describe '#process details' do
     before do
       allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
       allow(application_details_form).to receive(:update_attributes).with(form_params)
@@ -26,16 +26,16 @@ RSpec.describe ApplicationFormSave do
 
     context 'no errors and empty discretion' do
       it "return saving path" do
-        service.details
-        expect(service.redirect_url).to eql("/applications/#{application.id}/savings_investments")
+        repository.process(:detail)
+        expect(repository.redirect_url).to eql("/applications/#{application.id}/savings_investments")
       end
 
       context 'discretion_applied granted' do
         let(:discretion_applied) { true }
 
         it "return saving path" do
-          service.details
-          expect(service.redirect_url).to eql("/applications/#{application.id}/savings_investments")
+          repository.process(:detail)
+          expect(repository.redirect_url).to eql("/applications/#{application.id}/savings_investments")
         end
       end
     end
@@ -45,14 +45,14 @@ RSpec.describe ApplicationFormSave do
 
       it "return saving path" do
         allow(application).to receive(:update).with(outcome: "none")
-        service.details
-        expect(service.redirect_url).to eql("/applications/#{application.id}/summary")
+        repository.process(:detail)
+        expect(repository.redirect_url).to eql("/applications/#{application.id}/summary")
       end
 
       context 'udpate application' do
         let(:application) { instance_spy('Application') }
         it "set the outcome" do
-          service.details
+          repository.process(:detail)
           expect(application).to have_received(:update).with(outcome: "none")
         end
       end
@@ -63,13 +63,13 @@ RSpec.describe ApplicationFormSave do
       let(:saved) { false }
 
       it "blank saving path" do
-        service.details
-        expect(service.redirect_url).to be_nil
+        repository.process(:detail)
+        expect(repository.redirect_url).to be_nil
       end
 
       it "set the outcome" do
-        service.details
-        expect(service.success?).to be_falsey
+        repository.process(:detail)
+        expect(repository.success?).to be_falsey
       end
     end
   end

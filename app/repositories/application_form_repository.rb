@@ -1,4 +1,4 @@
-class ApplicationFormSave
+class ApplicationFormRepository
   include Rails.application.routes.url_helpers
   attr_reader :application, :form_params, :redirect_url, :form
 
@@ -8,8 +8,9 @@ class ApplicationFormSave
     @success = false
   end
 
-  def details
-    @form = Forms::Application::Detail.new(application.detail)
+  def process(form_name)
+    form_class = format_form_class_name(form_name)
+    @form = form_class.new(application.detail)
     update_form_attributes_and_save
     load_template_path
     @form
@@ -20,6 +21,11 @@ class ApplicationFormSave
   end
 
   private
+
+  def format_form_class_name(form_name)
+    form_name = form_name.to_s.classify
+    "Forms::Application::#{form_name}".constantize
+  end
 
   def update_form_attributes_and_save
     @form.update_attributes(form_params)

@@ -34,11 +34,11 @@ module Applications
     end
 
     def application_details_save
-      app_form_save = ApplicationFormSave.new(application, form_params(:details))
-      @form = app_form_save.details
+      app_form_repository = ApplicationFormRepository.new(application, form_params(:details))
+      @form = app_form_repository.process(:details)
 
-      if app_form_save.success?
-        redirect_to app_form_save.redirect_url
+      if app_form_repository.success?
+        redirect_to app_form_repository.redirect_url
       else
         @jurisdictions = user_jurisdictions
         render :application_details
