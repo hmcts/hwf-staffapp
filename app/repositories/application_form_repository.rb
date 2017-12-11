@@ -12,7 +12,7 @@ class ApplicationFormRepository
     form_class = format_form_class_name(form_name)
     @form = form_class.new(application.detail)
     update_form_attributes_and_save
-    load_template_path
+    assign_template_path
     udpate_outcome
     @form
   end
@@ -41,7 +41,7 @@ class ApplicationFormRepository
     application.update(outcome: outcome)
   end
 
-  def load_template_path
+  def assign_template_path
     return if @form.errors.present?
     @redirect_url = next_page_url
   end
