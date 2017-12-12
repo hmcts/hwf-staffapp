@@ -231,6 +231,53 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content 'Eligible for help with fees'
       end
 
+      it "invalid date discretion granted" do
+        visit '/'
+        click_button 'Start now'
+        expect(page).to have_content "Personal details"
+        complete_page_as 'personal_information', application, true
+
+        expect(page).to have_content "Application details"
+        complete_page_as 'application_details', application, false
+        check "This is a refund case"
+        fill_in "application_date_fee_paid", with: 4.months.ago.to_s
+        click_button 'Next'
+        expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+
+        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          choose 'Yes'
+        end
+        click_button 'Next'
+
+        expect(page).to have_content("Enter Delivery Manager name")
+        expect(page).to have_content("Enter Discretionary reason")
+
+        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          fill_in 'Discretion manager name', with: 'Dan'
+          fill_in 'Discretion reason', with: 'Looks legit'
+        end
+        click_button 'Next'
+
+        choose 'Less than £3,000'
+        fill_in 'application_amount', with: 0
+        click_button 'Next'
+
+        expect(page).to have_content "Does the applicant receive benefits?"
+        choose 'No'
+        click_button 'Next'
+
+        expect(page).to have_content "In question 10, does the applicant financially support any children?"
+        choose 'No'
+        fill_in 'application_income', with: 1000
+        click_button 'Next'
+
+        expect(page).to have_content "Check details"
+        click_button 'Complete processing'
+
+        expect(page).to have_content 'Savings and investments✓ Passed'
+        expect(page).to have_content 'Eligible for help with fees'
+      end
+
       it "discretion granted" do
         visit '/'
         click_button 'Start now'

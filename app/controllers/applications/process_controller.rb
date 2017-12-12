@@ -186,7 +186,7 @@ module Applications
       if benefits
         benefit_check_runner.run
         determine_override
-      elsif no_benefits_paper_evidence?
+      elsif benefits && no_benefits_paper_evidence?
         redirect_to application_benefit_override_paper_evidence_path(application)
       else
         redirect_to(action: :income)

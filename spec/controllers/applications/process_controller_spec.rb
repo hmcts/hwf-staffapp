@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Applications::ProcessController, type: :controller do
   let(:user)          { create :user }
-  let(:application) { build_stubbed(:application, office: user.office) }
+  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+  let(:detail) { build_stubbed(:detail) }
 
   let(:personal_information_form) { instance_double('Forms::Application::Applicant') }
   let(:application_details_form) { instance_double('Forms::Application::Detail') }
@@ -318,6 +319,14 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
         it 'redirects to the income page' do
           expect(response).to redirect_to(application_income_path(application))
+        end
+
+        context "it's refund" do
+          let(:detail) { build_stubbed(:detail, refund: true) }
+
+          it "still goes to income page" do
+            expect(response).to redirect_to(application_income_path(application))
+          end
         end
       end
     end
