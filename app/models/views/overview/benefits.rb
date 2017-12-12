@@ -15,7 +15,6 @@ module Views
       end
 
       def override?
-        return if hide_when_discretion_applied?
         convert_to_boolean(benefit_overridden?) if @application.benefits?
       end
 

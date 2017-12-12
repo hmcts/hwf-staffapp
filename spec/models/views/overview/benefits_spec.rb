@@ -45,20 +45,6 @@ RSpec.describe Views::Overview::Benefits do
 
       it { is_expected.to eq nil }
     end
-
-    context 'when discretion_applied hide if discretion_applied true' do
-      let(:application) { build_stubbed :application, benefits: true, detail: detail }
-      let(:detail) { build_stubbed :detail, discretion_applied: true }
-
-      it { is_expected.to eq nil }
-    end
-
-    context 'when discretion_applied hide if discretion_applied false' do
-      let(:application) { build_stubbed :application, benefits: true, detail: detail }
-      let(:detail) { build_stubbed :detail, discretion_applied: false }
-
-      it { is_expected.to eq nil }
-    end
   end
 
   describe '#override_valid?' do
