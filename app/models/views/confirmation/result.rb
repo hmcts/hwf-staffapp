@@ -11,7 +11,6 @@ module Views
       end
 
       def savings_passed?
-        return if display_check_when_discretion_applied?
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
@@ -93,9 +92,6 @@ module Views
         application_type_is?('benefit') && benefit_overridden?
       end
 
-      def display_check_when_discretion_applied?
-        @application.detail.discretion_applied != nil
-      end
     end
   end
 end

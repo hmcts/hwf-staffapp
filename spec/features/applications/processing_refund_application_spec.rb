@@ -139,6 +139,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           click_button 'Complete processing'
           expect(page).to have_content 'Not eligible for help with fees'
           expect(page).to have_content 'Delivery Manager Discretion✗ Failed'
+          expect(page).not_to have_content 'Savings and investments✓ Passed'
         end
 
         it "discretion granted" do
@@ -192,6 +193,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           expect(page).to have_content 'Benefits✓ Passed'
           expect(page).to have_content 'Eligible for help with fees'
           expect(page).to have_content 'Delivery Manager Discretion✓ Passed'
+          expect(page).to have_content 'Savings and investments✓ Passed'
         end
       end
     end

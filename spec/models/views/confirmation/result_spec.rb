@@ -54,19 +54,6 @@ RSpec.describe Views::Confirmation::Result do
 
         it { is_expected.to eq I18n.t((!value).to_s, scope: scope) }
       end
-
-      context 'discretion applied' do
-        context "when threshold_exceeded is #{value}" do
-          let(:detail) { build_stubbed(:detail, discretion_applied: value) }
-
-          before do
-            allow(application).to receive(:saving).and_return(saving)
-            allow(saving).to receive(:passed?).and_return(!value)
-          end
-
-          it { is_expected.to be_nil }
-        end
-      end
     end
   end
 
