@@ -26,10 +26,6 @@ Rails.application.routes.draw do
       to: 'applications/process#personal_information', as: :personal_information
     put 'personal_information',
       to: 'applications/process#personal_information_save', as: :personal_information_save
-    get 'application_details',
-      to: 'applications/process#application_details', as: :application_details
-    put 'application_details',
-      to: 'applications/process#application_details_save', as: :application_details_save
     get 'savings_investments',
       to: 'applications/process#savings_investments', as: :savings_investments
     put 'savings_investments',
@@ -43,6 +39,9 @@ Rails.application.routes.draw do
     put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
     put 'override', to: 'applications/process#override', as: :override
+
+    resources :details, only: [:index, :create],  module: 'applications/process'
+
   end
 
   resources :online_applications, only: [:edit, :update, :show] do

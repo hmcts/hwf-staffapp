@@ -22,26 +22,9 @@ module Applications
       @form.update_attributes(form_params(:applicant))
 
       if @form.save
-        redirect_to(action: :application_details)
+        redirect_to application_details_path
       else
         render :personal_information
-      end
-    end
-
-    def application_details
-      @form = Forms::Application::Detail.new(application.detail)
-      @jurisdictions = user_jurisdictions
-    end
-
-    def application_details_save
-      app_form_repository = ApplicationFormRepository.new(application, form_params(:details))
-      @form = app_form_repository.process(:details)
-
-      if app_form_repository.success?
-        redirect_to app_form_repository.redirect_url
-      else
-        @jurisdictions = user_jurisdictions
-        render :application_details
       end
     end
 

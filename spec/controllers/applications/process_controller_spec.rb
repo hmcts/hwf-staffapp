@@ -82,7 +82,7 @@ RSpec.describe Applications::ProcessController, type: :controller do
       let(:form_save) { true }
 
       it 'redirects to application_details' do
-        expect(response).to redirect_to(application_application_details_path(application))
+        expect(response).to redirect_to(application_details_path(application))
       end
     end
 
@@ -95,69 +95,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
 
       it 'assigns the correct form' do
         expect(assigns(:form)).to eql(personal_information_form)
-      end
-    end
-  end
-
-  describe 'GET #application_details' do
-    before do
-      get :application_details, application_id: application.id
-    end
-
-    context 'when the application does exist' do
-      it 'responds with 200' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'renders the correct template' do
-        expect(response).to render_template(:application_details)
-      end
-
-      it 'assigns the correct form' do
-        expect(assigns(:form)).to eql(application_details_form)
-      end
-
-      it 'assigns user\'s jurisdictions' do
-        expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
-      end
-    end
-  end
-
-  describe 'PUT #application_details_save' do
-    let(:success) { true }
-    let(:app_form) do
-      instance_double('ApplicationFormRepository',
-        success?: success,
-        redirect_url: application_summary_path(application),
-        process: application_details_form)
-    end
-    let(:expected_params) { { discretion_applied: 'false' } }
-
-    before do
-      allow(ApplicationFormRepository).to receive(:new).with(application, expected_params).and_return app_form
-
-      put :application_details_save, application_id: application.id, application: expected_params
-    end
-
-    context 'when the ApplicationFormSave is success' do
-      it 'redirects to given url' do
-        expect(response).to redirect_to(application_summary_path(application))
-      end
-    end
-
-    context 'when the form can not be saved' do
-      let(:success) { false }
-
-      it 'renders the correct template' do
-        expect(response).to render_template(:application_details)
-      end
-
-      it 'assigns the correct form' do
-        expect(assigns(:form)).to eql(application_details_form)
-      end
-
-      it 'assigns user\'s jurisdictions' do
-        expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
       end
     end
   end
