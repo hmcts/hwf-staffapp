@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
     put 'override', to: 'applications/process#override', as: :override
 
-    resources :details, only: [:index, :create],  module: 'applications/process'
+    resources :details, only: [:index, :create], module: 'applications/process'
 
   end
 

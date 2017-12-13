@@ -1,21 +1,23 @@
-module Applications::Process
-  class DetailsController < Applications::ProcessController
-    before_action :authorize_application_update
+module Applications
+  module Process
+    class DetailsController < Applications::ProcessController
+      before_action :authorize_application_update
 
-    def index
-      @form = Forms::Application::Detail.new(application.detail)
-      @jurisdictions = user_jurisdictions
-    end
-
-    def create
-      app_form_repository = ApplicationFormRepository.new(application, form_params(:details))
-      @form = app_form_repository.process(:details)
-
-      if app_form_repository.success?
-        redirect_to app_form_repository.redirect_url
-      else
+      def index
+        @form = Forms::Application::Detail.new(application.detail)
         @jurisdictions = user_jurisdictions
-        render :index
+      end
+
+      def create
+        app_form_repository = ApplicationFormRepository.new(application, form_params(:details))
+        @form = app_form_repository.process(:details)
+
+        if app_form_repository.success?
+          redirect_to app_form_repository.redirect_url
+        else
+          @jurisdictions = user_jurisdictions
+          render :index
+        end
       end
     end
   end
