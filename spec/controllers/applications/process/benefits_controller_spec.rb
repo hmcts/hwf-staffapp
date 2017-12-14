@@ -15,9 +15,8 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
     allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
   end
 
-
   describe 'GET #benefits' do
-    let(:saving) { double('saving') }
+    let(:saving) { double }
 
     before do
       allow(application).to receive(:saving).and_return(saving)

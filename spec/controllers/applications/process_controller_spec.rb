@@ -36,7 +36,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
-
   describe 'GET #income' do
     let(:application) { build_stubbed(:application, office: user.office, benefits: benefits) }
 
