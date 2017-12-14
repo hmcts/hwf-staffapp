@@ -1,5 +1,4 @@
 module Applications
-  # rubocop:disable ClassLength
   class ProcessController < ApplicationController
     before_action :authorize_application_update, except: :create
     before_action :check_completed_redirect, except: [:create, :confirmation, :override]
@@ -11,27 +10,6 @@ module Applications
 
       application.save
       redirect_to application_personal_informations_path(application)
-    end
-
-    def income
-      if !application.benefits?
-        @form = Forms::Application::Income.new(application)
-        render :income
-      else
-        redirect_to application_summary_path(application)
-      end
-    end
-
-    def income_save
-      @form = Forms::Application::Income.new(application)
-      @form.update_attributes(form_params(:income))
-
-      if @form.save
-        IncomeCalculationRunner.new(application).run
-        redirect_to(action: :summary)
-      else
-        render :income
-      end
     end
 
     def summary
@@ -120,7 +98,7 @@ module Applications
       elsif benefits && no_benefits_paper_evidence?
         redirect_to application_benefit_override_paper_evidence_path(application)
       else
-        redirect_to application_income_path(application)
+        redirect_to application_incomes_path(application)
       end
     end
 

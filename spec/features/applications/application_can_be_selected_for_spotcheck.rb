@@ -19,7 +19,7 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
     end
 
     scenario 'Every 10th application is selected for evidence check' do
-      visit application_income_path(application)
+      visit application_incomes_path(application)
 
       click_button 'Next'
       click_button 'Next'
@@ -36,7 +36,7 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
     end
 
     scenario 'Every 2nd application is selected for evidence check' do
-      visit application_income_path(application)
+      visit application_incomes_path(application)
 
       click_button 'Next'
       click_button 'Next'

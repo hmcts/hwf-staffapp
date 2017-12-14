@@ -9,7 +9,7 @@ header
 -if @application.saving.passed?
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
   -if !@application.benefits
-    =build_section_with_defaults 'Income', @income, application_income_path(@application)
+    =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
 
 = form_for @application, url: application_summary_save_path(@application), method: :put do |f|
   = f.submit 'Complete processing', :class => 'button primary large'

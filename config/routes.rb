@@ -22,8 +22,6 @@ Rails.application.routes.draw do
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
-    get 'income', to: 'applications/process#income', as: :income
-    put 'income', to: 'applications/process#income_save', as: :income_save
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get 'summary', to: 'applications/process#summary', as: :summary
     put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
@@ -34,6 +32,7 @@ Rails.application.routes.draw do
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
     resources :benefits, only: [:index, :create], module: 'applications/process'
+    resources :incomes, only: [:index, :create], module: 'applications/process'
 
   end
 
