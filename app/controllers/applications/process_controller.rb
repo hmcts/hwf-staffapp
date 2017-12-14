@@ -10,22 +10,7 @@ module Applications
       authorize application
 
       application.save
-      redirect_to application_personal_information_path(application)
-    end
-
-    def personal_information
-      @form = Forms::Application::Applicant.new(application.applicant)
-    end
-
-    def personal_information_save
-      @form = Forms::Application::Applicant.new(application.applicant)
-      @form.update_attributes(form_params(:applicant))
-
-      if @form.save
-        redirect_to application_details_path
-      else
-        render :personal_information
-      end
+      redirect_to application_personal_informations_path(application)
     end
 
     def savings_investments

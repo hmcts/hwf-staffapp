@@ -1,7 +1,7 @@
 header
   h2.heading-xlarge Check details
 
-=build_section_with_defaults 'Personal details', @applicant, application_personal_information_path(@application)
+=build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
 =build_section_with_defaults 'Application details', @details, application_details_path(@application)
 - if display_savings?(@application)
   =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)
