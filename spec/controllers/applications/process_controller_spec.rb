@@ -2,14 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Applications::ProcessController, type: :controller do
   let(:user)          { create :user }
-  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
-  let(:detail) { build_stubbed(:detail) }
-
-
+  let(:application) { build_stubbed(:application, office: user.office) }
   let(:benefit_form) { instance_double('Forms::Application::Benefit') }
   let(:income_form) { instance_double('Forms::Application::Income') }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
-  let(:savings_pass_fail_service) { instance_double('SavingsPassFailService') }
   let(:dwp_monitor) { instance_double('DwpMonitor') }
   let(:dwp_state) { 'online' }
 
@@ -19,7 +15,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
     allow(Forms::Application::Benefit).to receive(:new).with(application).and_return(benefit_form)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
-    allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(savings_pass_fail_service)
     allow(dwp_monitor).to receive(:state).and_return(dwp_state)
     allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
   end
@@ -42,8 +37,6 @@ RSpec.describe Applications::ProcessController, type: :controller do
       expect(response).to redirect_to(application_personal_informations_path(application))
     end
   end
-
-
 
   describe 'GET #benefits' do
     let(:saving) { double }

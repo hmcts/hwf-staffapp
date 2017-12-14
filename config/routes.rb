@@ -35,11 +35,6 @@ Rails.application.routes.draw do
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
-    #     get 'savings_investments',
-    #   to: 'applications/process#savings_investments', as: :savings_investments
-    # put 'savings_investments',
-    #   to: 'applications/process#savings_investments_save', as: :savings_investments_save
-
 
   end
 
