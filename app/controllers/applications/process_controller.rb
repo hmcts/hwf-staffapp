@@ -13,22 +13,6 @@ module Applications
       redirect_to application_personal_informations_path(application)
     end
 
-    def savings_investments
-      @form = Forms::Application::SavingsInvestment.new(application.saving)
-    end
-
-    def savings_investments_save
-      @form = Forms::Application::SavingsInvestment.new(application.saving)
-      @form.update_attributes(form_params(:savings_investments))
-
-      if @form.save
-        SavingsPassFailService.new(application.saving).calculate!
-        redirect_to(action: :benefits)
-      else
-        render :savings_investments
-      end
-    end
-
     def benefits
       @state = DwpMonitor.new.state
       if application.saving.passed?

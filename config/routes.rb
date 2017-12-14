@@ -22,10 +22,6 @@ Rails.application.routes.draw do
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
-    get 'savings_investments',
-      to: 'applications/process#savings_investments', as: :savings_investments
-    put 'savings_investments',
-      to: 'applications/process#savings_investments_save', as: :savings_investments_save
     get 'benefits', to: 'applications/process#benefits', as: :benefits
     put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
     get 'income', to: 'applications/process#income', as: :income
@@ -38,6 +34,12 @@ Rails.application.routes.draw do
 
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
+    resources :savings_investments, only: [:index, :create], module: 'applications/process'
+    #     get 'savings_investments',
+    #   to: 'applications/process#savings_investments', as: :savings_investments
+    # put 'savings_investments',
+    #   to: 'applications/process#savings_investments_save', as: :savings_investments_save
+
 
   end
 
