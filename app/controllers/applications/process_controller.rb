@@ -13,27 +13,6 @@ module Applications
       redirect_to application_personal_informations_path(application)
     end
 
-    def benefits
-      @state = DwpMonitor.new.state
-      if application.saving.passed?
-        @form = Forms::Application::Benefit.new(application)
-        render :benefits
-      else
-        redirect_to application_summary_path(application)
-      end
-    end
-
-    def benefits_save
-      @form = Forms::Application::Benefit.new(application)
-      @form.update_attributes(form_params(:benefits))
-
-      if @form.save
-        benefit_check_and_redirect(@form.benefits)
-      else
-        render :benefits
-      end
-    end
-
     def income
       if !application.benefits?
         @form = Forms::Application::Income.new(application)
@@ -141,7 +120,7 @@ module Applications
       elsif benefits && no_benefits_paper_evidence?
         redirect_to application_benefit_override_paper_evidence_path(application)
       else
-        redirect_to(action: :income)
+        redirect_to application_income_path(application)
       end
     end
 
@@ -149,7 +128,7 @@ module Applications
       if benefit_check_runner.can_override?
         redirect_to application_benefit_override_paper_evidence_path(application)
       else
-        redirect_to(action: :summary)
+        redirect_to application_summary_path(application)
       end
     end
 
