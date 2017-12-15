@@ -12,24 +12,6 @@ module Applications
       redirect_to application_personal_informations_path(application)
     end
 
-    def summary
-      @applicant = Views::Overview::Applicant.new(application)
-      @details = Views::Overview::Details.new(application)
-      @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
-      @benefits = Views::Overview::Benefits.new(application)
-      @income = Views::Overview::Income.new(application)
-    end
-
-    def summary_save
-      ResolverService.new(application, current_user).complete
-      redirect_to application_confirmation_path(application.id)
-    rescue ActiveRecord::RecordInvalid => ex
-      flash[:alert] = I18n.t('error_messages.summary.validation')
-      Raven.capture_exception(ex, application_id: @application.id)
-
-      redirect_to application_summary_path(@application)
-    end
-
     def confirmation
       if application.evidence_check.present?
         redirect_to(evidence_check_path(application.evidence_check.id))
