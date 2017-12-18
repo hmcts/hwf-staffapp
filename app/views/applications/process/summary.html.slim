@@ -3,7 +3,9 @@ header
 
 =build_section_with_defaults 'Personal details', @applicant, application_personal_information_path(@application)
 =build_section_with_defaults 'Application details', @details, application_application_details_path(@application)
-=build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)
+
+- if display_savings?(@application)
+  =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)
 
 -if @application.saving.passed?
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)

@@ -135,6 +135,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
 
           expect(page).to have_content "Check details"
           expect(page).to have_content "Delivery Manager discretion appliedNo"
+          expect(page).not_to have_content "Savings and investments"
 
           click_button 'Complete processing'
           expect(page).to have_content 'Not eligible for help with fees'
@@ -187,6 +188,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           expect(page).to have_content "Delivery Manager discretion appliedYes"
           expect(page).to have_content "Applicant provided paper evidenceYes"
           expect(page).not_to have_content "Benefits letter checkedNo"
+          expect(page).to have_content "Savings and investments"
 
           click_button 'Complete processing'
 
