@@ -15,10 +15,6 @@ module Views
       end
 
       def override?
-        convert_to_boolean(benefit_overridden?) if @application.benefits?
-      end
-
-      def override_valid?
         if @application.benefits? && benefit_overridden?
           convert_to_boolean(@application.benefit_override.correct)
         end
