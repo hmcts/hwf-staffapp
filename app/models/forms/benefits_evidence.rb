@@ -19,10 +19,8 @@ module Forms
     end
 
     def persist!
-      if evidence
-        @object.update(fields_to_update)
-        @object.application.update(outcome: outcome)
-      end
+      @object.update(fields_to_update)
+      @object.application.update(outcome: outcome)
     end
 
     def outcome

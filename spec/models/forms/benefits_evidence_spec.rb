@@ -64,8 +64,8 @@ RSpec.describe Forms::BenefitsEvidence do
 
         it { is_expected.to be true }
 
-        it 'does not set application outcome' do
-          expect(updated_application.outcome).to be nil
+        it 'does set application outcome' do
+          expect(updated_application.outcome).to eq 'none'
         end
 
         it 'does not persist the benefit_override' do
