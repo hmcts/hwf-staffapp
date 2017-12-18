@@ -164,7 +164,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           expect(page).to have_content("Enter Discretionary reason")
 
           within(:xpath, './/fieldset[@class="discretion_applied"]') do
-            fill_in 'Discretion manager name', with: 'Dan'
+            fill_in 'Delivery Manager name', with: 'Dan'
             fill_in 'Discretion reason', with: 'Looks legit'
           end
           click_button 'Next'
@@ -253,7 +253,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content("Enter Discretionary reason")
 
         within(:xpath, './/fieldset[@class="discretion_applied"]') do
-          fill_in 'Discretion manager name', with: 'Dan'
+          fill_in 'Delivery Manager name', with: 'Dan'
           fill_in 'Discretion reason', with: 'Looks legit'
         end
         click_button 'Next'
@@ -300,7 +300,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content("Enter Discretionary reason")
 
         within(:xpath, './/fieldset[@class="discretion_applied"]') do
-          fill_in 'Discretion manager name', with: 'Dan'
+          fill_in 'Delivery Manager name', with: 'Dan'
           fill_in 'Discretion reason', with: 'Looks legit'
         end
         click_button 'Next'

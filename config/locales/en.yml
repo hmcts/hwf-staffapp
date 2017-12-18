@@ -325,6 +325,7 @@ en-GB:
         discretion_applied: Delivery Manager discretion applied?
         discretion_applied_false: 'No'
         discretion_applied_true: 'Yes'
+        discretion_manager_name: Delivery Manager name
       forms/application/savings_investment:
         header: Savings and investments
         explanation: In question 7, how much do they have in savings and investments?
