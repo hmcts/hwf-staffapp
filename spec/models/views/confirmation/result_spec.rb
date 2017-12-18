@@ -17,7 +17,7 @@ RSpec.describe Views::Confirmation::Result do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['savings_passed?', 'benefits_passed?', 'income_passed?', 'discretion_applied?'] }
+    it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?'] }
   end
 
   describe '#discretion_applied?' do
@@ -97,7 +97,7 @@ RSpec.describe Views::Confirmation::Result do
       context 'and the evidence is incorrect' do
         let(:value) { false }
 
-        it { is_expected.to eq string_failed }
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence') }
       end
     end
 

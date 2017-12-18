@@ -36,9 +36,11 @@ RSpec.feature 'Processing refund application with valid date received date', typ
       jurisdiction: jurisdiction)
   end
 
+  let(:dwp_response) { 'Yes' }
+
   before do
     login_as user
-    dwp_api_response 'Yes'
+    dwp_api_response dwp_response
   end
 
   context 'Online refund application' do
@@ -113,6 +115,43 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content 'Eligible for help with fees'
       end
 
+      context 'failed dwp' do
+        let(:dwp_response) { 'No' }
+
+        it "failed paper evidence" do
+          visit '/'
+          click_button 'Start now'
+          expect(page).to have_content "Personal details"
+          complete_page_as 'personal_information', application, true
+
+          expect(page).to have_content "Application details"
+          complete_page_as 'application_details', application, false
+          check "This is a refund case"
+          fill_in "application_date_fee_paid", with: 10.days.ago.to_s
+          click_button 'Next'
+
+          choose 'Less than £3,000'
+          click_button 'Next'
+
+          expect(page).to have_content "Does the applicant receive benefits?"
+          choose 'Yes'
+          click_button 'Next'
+
+          expect(page).to have_content "Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?"
+          choose 'No'
+          click_button 'Next'
+
+          expect(page).to have_content "Check details"
+          expect(page).to have_content "Applicant receiving benefitsYes"
+          expect(page).to have_content "Applicant provided paper evidenceNo"
+          click_button 'Complete processing'
+
+          expect(page).to have_content 'Savings and investments✓ Passed'
+          expect(page).to have_content 'Benefits✗ Failed (paper evidence checked)'
+          expect(page).to have_content 'Not eligible for help with fees'
+        end
+      end
+
       context 'invalid date' do
 
         it "discretion denied" do
@@ -140,7 +179,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           click_button 'Complete processing'
           expect(page).to have_content 'Not eligible for help with fees'
           expect(page).to have_content 'Delivery Manager Discretion✗ Failed'
-          expect(page).not_to have_content 'Savings and investments✓ Passed'
+          expect(page).not_to have_content 'Savings and investments'
         end
 
         it "discretion granted" do
