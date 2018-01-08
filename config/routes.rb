@@ -34,7 +34,6 @@ Rails.application.routes.draw do
     get 'summary', to: 'applications/process/summary#index'
     post 'summary', to: 'applications/process/summary#create'
 
-
   end
 
   resources :online_applications, only: [:edit, :update, :show] do
