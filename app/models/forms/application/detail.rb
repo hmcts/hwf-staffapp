@@ -17,7 +17,10 @@ module Forms
           emergency_reason: String,
           date_fee_paid: Date,
           form_name: String,
-          case_number: String }
+          case_number: String,
+          discretion_applied: Boolean,
+          discretion_manager_name: String,
+          discretion_reason: String }
       end
 
       define_attributes
@@ -27,6 +30,8 @@ module Forms
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
+      validates :discretion_manager_name,
+        :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
       validates :date_received, date: {
         after_or_equal_to: :min_date,
@@ -43,7 +48,8 @@ module Forms
 
       with_options if: :validate_date_fee_paid? do
         validates :date_fee_paid, date: {
-          before_or_equal_to: :max_refund_date,
+          after_or_equal_to: :max_refund_date,
+          before_or_equal_to: :date_received,
           allow_blank: false
         }
       end
@@ -59,11 +65,12 @@ module Forms
       end
 
       def max_refund_date
-        date_received if date_received.present?
+        date_received - 3.months if date_received.present?
       end
 
       def validate_date_fee_paid?
-        refund? && (date_received.is_a?(Date) || date_received.is_a?(Time))
+        refund? && (date_received.is_a?(Date) ||
+          date_received.is_a?(Time)) && @discretion_applied.nil?
       end
 
       def tomorrow

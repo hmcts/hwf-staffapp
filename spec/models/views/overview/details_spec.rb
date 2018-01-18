@@ -4,11 +4,15 @@ RSpec.describe Views::Overview::Details do
   subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
+  let(:online_application) { build_stubbed(:online_application) }
 
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql(['fee', 'jurisdiction', 'date_received', 'form_name', 'case_number', 'deceased_name', 'date_of_death', 'date_fee_paid', 'emergency_reason']) }
+    it do
+      is_expected.to eql(['fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
+                          'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied', 'emergency_reason'])
+    end
   end
 
   describe '#fee' do
@@ -73,6 +77,24 @@ RSpec.describe Views::Overview::Details do
     describe '-> Detail' do
       [:form_name, :case_number, :deceased_name, :emergency_reason].each do |getter|
         it { expect(view.public_send(getter)).to eql(application.detail.public_send(getter)) }
+      end
+    end
+  end
+
+  describe 'discretion_applied' do
+    context 'online_application' do
+      subject(:view) { described_class.new(online_application) }
+      it "return nil" do
+        expect(view.discretion_applied).to be_nil
+      end
+    end
+
+    context 'application' do
+      let(:application) { build_stubbed :application, detail: detail }
+      let(:detail) { build_stubbed :detail, discretion_applied: true }
+
+      it "return nil" do
+        expect(view.discretion_applied).to eql('Yes')
       end
     end
   end

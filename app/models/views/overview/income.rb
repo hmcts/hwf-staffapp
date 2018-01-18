@@ -19,7 +19,7 @@ module Views
       end
 
       def income
-        "£#{@application.income.round}"
+        "£#{@application.income.try(:round)}"
       end
     end
   end

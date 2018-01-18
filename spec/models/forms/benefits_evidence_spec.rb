@@ -34,40 +34,11 @@ RSpec.describe Forms::BenefitsEvidence do
       end
 
       context 'for true' do
-        context 'with attribute "correct"' do
-          let(:params) { { evidence: true, correct: correct } }
+        let(:evidence) { true }
 
-          context 'when not set' do
-            let(:correct) { nil }
-
-            it { is_expected.to be false }
-          end
-
-          context 'when true' do
-            let(:correct) { true }
-
-            it { is_expected.to be true }
-          end
-
-          context 'when false' do
-            context 'with attribute incorrect_reason' do
-              let(:params) { { evidence: true, correct: false, incorrect_reason: reason } }
-
-              context 'not set' do
-                let(:reason) { nil }
-
-                it { is_expected.to be false }
-              end
-
-              context 'set' do
-                let(:reason) { 'SOME REASON' }
-
-                it { is_expected.to be true }
-              end
-            end
-          end
-        end
+        it { is_expected.to be true }
       end
+
     end
   end
 
@@ -93,8 +64,8 @@ RSpec.describe Forms::BenefitsEvidence do
 
         it { is_expected.to be true }
 
-        it 'does not set application outcome' do
-          expect(updated_application.outcome).to be nil
+        it 'does set application outcome' do
+          expect(updated_application.outcome).to eq 'none'
         end
 
         it 'does not persist the benefit_override' do
@@ -103,35 +74,17 @@ RSpec.describe Forms::BenefitsEvidence do
       end
 
       context 'when evidence is provided' do
-        context 'when evidence is correct' do
-          let(:params) { { evidence: true, correct: true } }
+        let(:params) { { evidence: true, correct: nil } }
 
-          it { is_expected.to be true }
+        it { is_expected.to be true }
 
-          it 'sets application outcome to full' do
-            expect(updated_application.outcome).to eql('full')
-          end
-
-          describe 'does persists the benefit_override with correct values' do
-            it { expect(updated_benefit_override).to be_persisted }
-            it { expect(updated_benefit_override.correct).to be true }
-          end
+        it 'sets application outcome to full' do
+          expect(updated_application.outcome).to eql('full')
         end
 
-        context 'when evidence is not correct' do
-          let(:params) { { evidence: true, correct: false, incorrect_reason: 'REASON' } }
-
-          it { is_expected.to be true }
-
-          it 'sets application outcome to none' do
-            expect(updated_application.outcome).to eql('none')
-          end
-
-          describe 'does persists the benefit_override with correct values' do
-            it { expect(updated_benefit_override).to be_persisted }
-            it { expect(updated_benefit_override.correct).to be false }
-            it { expect(updated_benefit_override.incorrect_reason).to eql('REASON') }
-          end
+        describe 'does persists the benefit_override with correct values' do
+          it { expect(updated_benefit_override).to be_persisted }
+          it { expect(updated_benefit_override.correct).to be true }
         end
       end
     end

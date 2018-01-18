@@ -54,15 +54,11 @@ RSpec.feature 'No NI number provided', type: :feature do
   context 'when the user processes paper evidence' do
     before do
       choose 'benefit_override_evidence_true'
+      click_button 'Next'
     end
 
-    context 'when the evidence is valid' do
+    context 'when the applicant has provided paper valid evidence' do
       let(:full_remission) { 'Eligible for help with fees' }
-
-      before do
-        choose 'benefit_override_correct_true'
-        click_button 'Next'
-      end
 
       scenario 'has the correct title and message' do
         expect(page).to have_content 'Check details'
@@ -82,24 +78,6 @@ RSpec.feature 'No NI number provided', type: :feature do
             expect(page).to have_content 'Smith'
           end
         end
-      end
-    end
-
-    context 'when the evidence is invalid' do
-      before do
-        choose 'benefit_override_correct_false'
-        fill_in 'benefit_override_incorrect_reason', with: 'some reason'
-        click_button 'Next'
-      end
-
-      scenario 'takes them the confirmation page' do
-        expect(page).to have_content 'Check details'
-      end
-
-      context 'when the user progresses to the confirmation page' do
-        before { click_button 'Complete processing' }
-
-        it { expect(page).to have_content no_remission }
       end
     end
   end

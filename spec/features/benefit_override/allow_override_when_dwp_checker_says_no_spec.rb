@@ -53,35 +53,23 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
   context 'when the user provides paper evidence' do
     before do
       choose 'benefit_override_evidence_true'
+      click_button 'Next'
     end
 
     context 'and the evidence is correct' do
       describe 'when displaying the summary' do
-        before do
-          choose 'benefit_override_correct_true'
-          click_button 'Next'
-        end
-
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
           expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
-          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Benefits letter checked"]/following-sibling::*[1][text()="Yes"]')
         end
       end
     end
 
     context 'when the user does not provide supporting evidence' do
       describe 'when displaying the summary' do
-        before do
-          choose 'benefit_override_correct_false'
-          fill_in 'benefit_override_incorrect_reason', with: 'some reason'
-          click_button 'Next'
-        end
-
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
           expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Applicant provided paper evidence"]/following-sibling::*[1][text()="Yes"]')
-          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Benefits letter checked"]/following-sibling::*[1][text()="No"]')
         end
       end
     end

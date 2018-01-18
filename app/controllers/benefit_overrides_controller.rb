@@ -33,25 +33,4 @@ class BenefitOverridesController < ApplicationController
   def allowed_params
     params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
   end
-
-  helper_method def error_message_partial
-    @error_message_partial ||= benefit_check_error_message
-  end
-
-  def benefit_check_error_message
-    if !BenefitCheckRunner.new(application).benefit_check_date_valid?
-      'out_of_time'
-    else
-      case last_benefit_check_result
-      when nil, 'undetermined'
-        'missing_details'
-      when 'server unavailable', 'unspecified error'
-        'technical_error'
-      end
-    end
-  end
-
-  def last_benefit_check_result
-    application.last_benefit_check.try(:dwp_result).try(:downcase)
-  end
 end

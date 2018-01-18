@@ -247,6 +247,7 @@ en-GB:
         income_passed?: Income
         income_part: 'Waiting for part-payment'
         income_evidence: 'Waiting for evidence'
+        discretion_applied?: 'Delivery Manager Discretion'
       views/overview/application:
         savings: Savings and investments
         benefits: Receiving eligible benefits
@@ -273,6 +274,7 @@ en-GB:
         refund: This is a refund case
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
+        discretion_applied: Delivery Manager discretion applied
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
@@ -320,6 +322,10 @@ en-GB:
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
         date_hint: Use this format DD/MM/YYYY
+        discretion_applied: Delivery Manager discretion applied?
+        discretion_applied_false: 'No'
+        discretion_applied_true: 'Yes'
+        discretion_manager_name: Delivery Manager name
       forms/application/savings_investment:
         header: Savings and investments
         explanation: In question 7, how much do they have in savings and investments?
@@ -351,6 +357,7 @@ en-GB:
         'true': '✓ Passed'
         'false': '✗ Failed'
         passed_with_evidence: '✓ Passed (paper evidence checked)'
+        failed_with_evidence: '✗ Failed (paper evidence checked)'
         passed_by_override: "✓ Passed (by manager's decision)"
         savings_investments: Savings and investments
         benefits: Benefits
@@ -359,7 +366,7 @@ en-GB:
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
-        evidence: 'Has the applicant provided paper evidence?'
+        evidence: 'Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?'
         evidence_false: 'No'
         evidence_true: 'Yes, the applicant has provided paper evidence'
         correct: 'Is the evidence for the correct applicant and dated within 3 months of the fee being paid?'
@@ -414,7 +421,7 @@ en-GB:
             date_fee_paid:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: This date can’t be more than 3 months before the application was received
+              after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
               before_or_equal_to: This date can’t be after the application was received
             date_of_death:
               blank: Enter the date
@@ -424,6 +431,10 @@ en-GB:
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: "is too long, it needs to be less than 500 characters"
+            discretion_manager_name:
+              blank: Enter Delivery Manager name
+            discretion_reason:
+              blank: Enter Discretionary reason
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:

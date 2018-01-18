@@ -157,6 +157,50 @@ describe ResolverService do
           include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 0
         end
 
+        context 'for discretion applied set to false' do
+          before { application.detail.update(discretion_applied: false) }
+
+          it "complete application without EvidenceCheck" do
+            complete
+            expect(EvidenceCheckSelector).not_to have_received(:new)
+          end
+
+          it "complete application without PartPaymentBuilder" do
+            complete
+            expect(PartPaymentBuilder).not_to have_received(:new)
+          end
+        end
+
+        context 'for discretion applied set to true' do
+          before { application.detail.update(discretion_applied: true) }
+
+          it "complete application with EvidenceCheck" do
+            complete
+            expect(EvidenceCheckSelector).to have_received(:new)
+          end
+
+          it "complete application with PartPaymentBuilder" do
+            allow(EvidenceCheckSelector).to receive(:new).and_return evidence_check_selector
+            complete
+            expect(PartPaymentBuilder).to have_received(:new)
+          end
+        end
+
+        context 'for discretion applied set to nil' do
+          before { application.detail.update(discretion_applied: nil) }
+
+          it "complete application with EvidenceCheck" do
+            complete
+            expect(EvidenceCheckSelector).to have_received(:new)
+          end
+
+          it "complete application with PartPaymentBuilder" do
+            allow(EvidenceCheckSelector).to receive(:new).and_return evidence_check_selector
+            complete
+            expect(PartPaymentBuilder).to have_received(:new)
+          end
+        end
+
         include_examples 'application reference and business_entity'
       end
 

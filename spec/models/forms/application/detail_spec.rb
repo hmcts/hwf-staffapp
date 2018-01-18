@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Detail do
   subject(:form) { described_class.new(detail) }
 
-  params_list = [:fee, :jurisdiction_id, :date_received, :probate, :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name, :case_number, :emergency, :emergency_reason]
+  params_list = [:fee, :jurisdiction_id, :date_received, :probate,
+                 :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name,
+                 :case_number, :emergency, :emergency_reason, :discretion_applied,
+                 :discretion_manager_name, :discretion_reason]
 
   let(:detail) { attributes_for :detail }
 
@@ -182,8 +185,57 @@ RSpec.describe Forms::Application::Detail do
 
               it 'returns an error' do
                 refund.valid?
-
                 expect(refund.errors[:date_fee_paid]).to eq ['This date can’t be after the application was received']
+              end
+            end
+          end
+
+          describe 'and date received' do
+            describe 'longer then 3 months' do
+              let(:date_fee_paid) { Time.zone.local(2014, 1, 15, 8, 0, 0) }
+
+              it { is_expected.not_to be_valid }
+
+              it 'returns an error' do
+                refund.valid?
+
+                expect(refund.errors[:date_fee_paid]).to eq ['This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application']
+              end
+
+              context 'discretion applied' do
+                it 'false' do
+                  refund.discretion_applied = false
+                  expect(refund).to be_valid
+                end
+
+                context 'is granted' do
+                  before { refund.discretion_applied = true }
+
+                  it 'true' do
+                    refund.discretion_reason = 'Dan'
+                    refund.discretion_manager_name = 'Looks legit'
+                    expect(refund).to be_valid
+                  end
+
+                  it 'true but no manager name' do
+                    refund.discretion_reason = ''
+                    refund.discretion_manager_name = 'Looks legit'
+
+                    expect(refund).not_to be_valid
+                  end
+
+                  it 'true but no reason' do
+                    refund.discretion_reason = 'Dan'
+                    refund.discretion_manager_name = ''
+
+                    expect(refund).not_to be_valid
+                  end
+                end
+
+                it 'nil' do
+                  refund.discretion_applied = nil
+                  expect(refund).not_to be_valid
+                end
               end
             end
           end

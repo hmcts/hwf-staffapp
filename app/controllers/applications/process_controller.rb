@@ -34,11 +34,11 @@ module Applications
     end
 
     def application_details_save
-      @form = Forms::Application::Detail.new(application.detail)
-      @form.update_attributes(form_params(:details))
+      app_form_repository = ApplicationFormRepository.new(application, form_params(:details))
+      @form = app_form_repository.process(:details)
 
-      if @form.save
-        redirect_to(action: :savings_investments)
+      if app_form_repository.success?
+        redirect_to app_form_repository.redirect_url
       else
         @jurisdictions = user_jurisdictions
         render :application_details
@@ -186,6 +186,8 @@ module Applications
       if benefits
         benefit_check_runner.run
         determine_override
+      elsif benefits && no_benefits_paper_evidence?
+        redirect_to application_benefit_override_paper_evidence_path(application)
       else
         redirect_to(action: :income)
       end
@@ -196,6 +198,12 @@ module Applications
         redirect_to application_benefit_override_paper_evidence_path(application)
       else
         redirect_to(action: :summary)
+      end
+    end
+
+    def no_benefits_paper_evidence?
+      if application.detail.refund?
+        !BenefitCheckRunner.new(application).benefit_check_date_valid?
       end
     end
   end

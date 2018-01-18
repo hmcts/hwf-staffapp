@@ -1,4 +1,6 @@
 class ResolverService
+  include ResolverServiceAttribute
+
   class UndefinedOutcome < StandardError; end
   class NotDeletable < StandardError; end
 
@@ -35,46 +37,26 @@ class ResolverService
     raise UndefinedOutcome if @calling_object.outcome.blank?
   end
 
-  def completed_attributes
-    { completed_at: @time, completed_by: @user }
-  end
-
-  def completed_application_attributes
-    completed_attributes.tap do |attrs|
-      attrs.merge! BusinessEntityGenerator.new(@calling_object).attributes
-      if @calling_object.reference.blank?
-        generator = ReferenceGenerator.new(@calling_object)
-        attrs.merge!(generator.attributes)
-      end
-    end
-  end
-
-  def decided_attributes(source)
-    {
-      decision: lookup_decision(source.outcome),
-      decision_type: derive_object(source),
-      decision_date: @time,
-      decision_cost: ResolverCostCalculator.new(source).cost,
-      state: :processed
-    }
-  end
-
-  def deleted_attributes
-    { deleted_at: Time.zone.now, deleted_by: @user, state: :deleted }
-  end
-
   def complete_application(application)
     attributes = completed_application_attributes.tap do |attrs|
-      if decide_evidence_check(application)
-        attrs[:state] = :waiting_for_evidence
-      elsif decide_part_payment(application)
-        attrs[:state] = :waiting_for_part_payment
-      else
+
+      if complete_because_discretion_applied?(application) ||
+         application_state(application).nil?
         attrs.merge!(decided_attributes(application))
+      elsif application_state(application).present?
+        attrs[:state] = application_state(application)
       end
     end
 
     application.update!(attributes)
+  end
+
+  def application_state(application)
+    if decide_evidence_check(application)
+      :waiting_for_evidence
+    elsif decide_part_payment(application)
+      :waiting_for_part_payment
+    end
   end
 
   def complete_evidence_check(evidence_check)
@@ -103,16 +85,19 @@ class ResolverService
     { 'full' => 'full', 'part' => 'part', 'none' => 'none', 'return' => 'none' }[outcome]
   end
 
-  def evidence_check_and_payment
-    decide_evidence_check(@calling_object)
-    decide_part_payment(@calling_object)
-  end
-
   def decide_part_payment(application)
-    PartPaymentBuilder.new(application, Settings.part_payment.expires_in_days).decide!
+    @decide_part_payment ||= PartPaymentBuilder.new(
+      application, Settings.part_payment.expires_in_days
+    ).decide!
   end
 
   def decide_evidence_check(application)
-    EvidenceCheckSelector.new(application, Settings.evidence_check.expires_in_days).decide!
+    @decide_evidence_check ||= EvidenceCheckSelector.new(
+      application, Settings.evidence_check.expires_in_days
+    ).decide!
+  end
+
+  def complete_because_discretion_applied?(application)
+    application.detail.discretion_applied == false
   end
 end

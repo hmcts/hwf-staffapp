@@ -10,7 +10,7 @@ RSpec.describe Views::Overview::Benefits do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['on_benefits?', 'override?', 'override_valid?'] }
+    it { is_expected.to eql ['on_benefits?', 'override?'] }
   end
 
   describe '#on_benefits?' do
@@ -29,26 +29,6 @@ RSpec.describe Views::Overview::Benefits do
 
   describe '#override?' do
     subject { view.override? }
-
-    context 'when a benefit_override exists' do
-      before { build_stubbed(:benefit_override, application: application) }
-
-      it { is_expected.to eq I18n.t('convert_boolean.true') }
-    end
-
-    context 'when no benefit_override exists' do
-      it { is_expected.to eq I18n.t('convert_boolean.false') }
-    end
-
-    context 'when user selected "no" to on benefits' do
-      let(:application) { build_stubbed :application, benefits: false }
-
-      it { is_expected.to eq nil }
-    end
-  end
-
-  describe '#override_valid?' do
-    subject { view.override_valid? }
 
     context 'when a benefit_override exists' do
       [true, false].each do |value|

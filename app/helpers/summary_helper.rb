@@ -17,6 +17,10 @@ module SummaryHelper
     end
   end
 
+  def display_savings?(application)
+    application.detail.discretion_applied != false
+  end
+
   private
 
   def all_fields_empty?(object, fields)
