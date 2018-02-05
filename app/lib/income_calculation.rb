@@ -29,15 +29,18 @@ class IncomeCalculation
   end
 
   def calculate_using_amount
-    if income > thresholds.max_threshold
+    if can_applicant_pay_full_fee?
       set_outcome('none', @application.detail.fee)
     elsif applicants_maximum_contribution.zero?
       set_outcome('full', 0)
     elsif applicants_contribution_is_partial
       set_outcome('part', minimum_payable_to_applicant.to_i)
-    elsif minimum_payable_to_applicant == @application.detail.fee
-      set_outcome('none', @application.detail.fee)
     end
+  end
+
+  def can_applicant_pay_full_fee?
+    income > thresholds.max_threshold ||
+      minimum_payable_to_applicant == @application.detail.fee
   end
 
   def calculate_using_thresholds
@@ -100,7 +103,7 @@ class IncomeCalculation
   end
 
   def round_down_to_nearest_10(amount)
-    return 0 if amount < 0
+    return 0 if amount.negative?
     rounded = amount.round(-1)
     return rounded if rounded <= amount
     rounded - 10
