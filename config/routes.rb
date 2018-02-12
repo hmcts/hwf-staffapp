@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
-    put 'override', to: 'applications/process#override', as: :override
+    put 'override', to: 'applications/process/override#update', as: :override
 
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
