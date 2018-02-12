@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
     get 'income_result', to: 'applications/process#income_result', as: :income_result
-    get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
+    get 'confirmation', to: 'applications/process/confirmation#index', as: :confirmation
     put 'override', to: 'applications/process/override#update', as: :override
 
     resources :personal_informations, only: [:index, :create], module: 'applications/process'

@@ -33,20 +33,4 @@ RSpec.describe Applications::ProcessController, type: :controller do
     end
   end
 
-  context 'GET #confirmation' do
-    before { get :confirmation, application_id: application.id }
-
-    it 'displays the confirmation view' do
-      expect(response).to render_template :confirmation
-    end
-
-    it 'assigns application' do
-      expect(assigns(:application)).to eql(application)
-    end
-
-    it 'assigns confirm' do
-      expect(assigns(:confirm)).to be_a_kind_of(Views::Confirmation::Result)
-    end
-  end
-
 end

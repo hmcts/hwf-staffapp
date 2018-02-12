@@ -11,7 +11,7 @@ module Applications
           redirect_to(application_confirmation_path(application))
         else
           @confirm = Views::Confirmation::Result.new(application)
-          render :confirmation
+          render 'applications/process/confirmation/index'
         end
       end
     end

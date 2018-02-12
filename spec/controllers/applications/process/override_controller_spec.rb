@@ -45,7 +45,7 @@ RSpec.describe Applications::Process::OverrideController, type: :controller do
         let(:override_value) { nil }
 
         it 're-renders the confirmation page' do
-          expect(response).to render_template(:confirmation)
+          expect(response).to render_template('applications/process/confirmation/index')
         end
       end
 
@@ -53,7 +53,7 @@ RSpec.describe Applications::Process::OverrideController, type: :controller do
         let(:override_value) { 'other' }
 
         it 're-renders the confirmation page' do
-          expect(response).to render_template(:confirmation)
+          expect(response).to render_template('applications/process/confirmation/index')
         end
       end
     end

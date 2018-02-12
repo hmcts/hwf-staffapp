@@ -12,15 +12,6 @@ module Applications
       redirect_to application_personal_informations_path(application)
     end
 
-    def confirmation
-      if application.evidence_check.present?
-        redirect_to(evidence_check_path(application.evidence_check.id))
-      else
-        @confirm = Views::Confirmation::Result.new(application)
-        @form = Forms::Application::DecisionOverride.new(application)
-      end
-    end
-
     private
 
     def build_override_params
