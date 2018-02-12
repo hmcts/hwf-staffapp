@@ -2,6 +2,7 @@ module Applications
   module Process
     class OverrideController < Applications::ProcessController
       before_action :authorize_application_update
+      skip_before_action :check_completed_redirect
 
       def update
         @form = Forms::Application::DecisionOverride.new(decision_override)
