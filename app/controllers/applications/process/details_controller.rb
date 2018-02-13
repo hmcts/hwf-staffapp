@@ -19,6 +19,12 @@ module Applications
           render :index
         end
       end
+
+      private
+
+      def user_jurisdictions
+        current_user.office.jurisdictions
+      end
     end
   end
 end

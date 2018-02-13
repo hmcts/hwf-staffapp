@@ -23,6 +23,37 @@ module Applications
           render :index
         end
       end
+
+      private
+
+      def benefit_check_runner
+        @benefit_check_runner ||= BenefitCheckRunner.new(application)
+      end
+
+      def benefit_check_and_redirect(benefits)
+        if benefits
+          benefit_check_runner.run
+          determine_override
+        elsif benefits && no_benefits_paper_evidence?
+          redirect_to application_benefit_override_paper_evidence_path(application)
+        else
+          redirect_to application_incomes_path(application)
+        end
+      end
+
+      def determine_override
+        if benefit_check_runner.can_override?
+          redirect_to application_benefit_override_paper_evidence_path(application)
+        else
+          redirect_to application_summary_path(application)
+        end
+      end
+
+      def no_benefits_paper_evidence?
+        if application.detail.refund?
+          !BenefitCheckRunner.new(application).benefit_check_date_valid?
+        end
+      end
     end
   end
 end
