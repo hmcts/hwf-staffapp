@@ -22,27 +22,18 @@ Rails.application.routes.draw do
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
-    get 'personal_information',
-      to: 'applications/process#personal_information', as: :personal_information
-    put 'personal_information',
-      to: 'applications/process#personal_information_save', as: :personal_information_save
-    get 'application_details',
-      to: 'applications/process#application_details', as: :application_details
-    put 'application_details',
-      to: 'applications/process#application_details_save', as: :application_details_save
-    get 'savings_investments',
-      to: 'applications/process#savings_investments', as: :savings_investments
-    put 'savings_investments',
-      to: 'applications/process#savings_investments_save', as: :savings_investments_save
-    get 'benefits', to: 'applications/process#benefits', as: :benefits
-    put 'benefits', to: 'applications/process#benefits_save', as: :benefits_save
-    get 'income', to: 'applications/process#income', as: :income
-    put 'income', to: 'applications/process#income_save', as: :income_save
     get 'income_result', to: 'applications/process#income_result', as: :income_result
-    get 'summary', to: 'applications/process#summary', as: :summary
-    put 'summary_save', to: 'applications/process#summary_save', as: :summary_save
-    get 'confirmation', to: 'applications/process#confirmation', as: :confirmation
-    put 'override', to: 'applications/process#override', as: :override
+    get 'confirmation', to: 'applications/process/confirmation#index', as: :confirmation
+    put 'override', to: 'applications/process/override#update', as: :override
+
+    resources :personal_informations, only: [:index, :create], module: 'applications/process'
+    resources :details, only: [:index, :create], module: 'applications/process'
+    resources :savings_investments, only: [:index, :create], module: 'applications/process'
+    resources :benefits, only: [:index, :create], module: 'applications/process'
+    resources :incomes, only: [:index, :create], module: 'applications/process'
+    get 'summary', to: 'applications/process/summary#index'
+    post 'summary', to: 'applications/process/summary#create'
+
   end
 
   resources :online_applications, only: [:edit, :update, :show] do
