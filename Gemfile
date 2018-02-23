@@ -65,6 +65,8 @@ gem 'will_paginate'
 
 # Soft deletion
 gem "paranoia", "~> 2.0"
+
+# tracking model changes
 gem "paper_trail"
 
 group :development do
