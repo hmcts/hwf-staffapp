@@ -37,7 +37,7 @@ RSpec.feature 'Admin can manage message info', type: :feature do
     end
   end
 
-  context 'befor log in' do
+  context 'before log in' do
     before do
       create :notification, message: 'This is message from admin, hear, hear.', show: true
     end
