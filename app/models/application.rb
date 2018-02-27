@@ -1,4 +1,5 @@
 class Application < ActiveRecord::Base
+  has_paper_trail
 
   belongs_to :user, -> { with_deleted }
   belongs_to :completed_by, -> { with_deleted }, class_name: 'User'
