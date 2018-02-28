@@ -1,3 +1,6 @@
+.grid
+  .column
+    = render('shared/notifications') if @notification.present? && @notification.show
 .grid-row
   .column-two-thirds
 

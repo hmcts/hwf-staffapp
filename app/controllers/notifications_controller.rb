@@ -19,7 +19,7 @@ class NotificationsController < ApplicationController
   private
 
   def notification
-    @notification = Notification.first
+    @notification = Notification.first_or_create
   end
 
   def notification_params
