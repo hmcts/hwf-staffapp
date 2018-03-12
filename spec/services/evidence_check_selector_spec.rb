@@ -39,6 +39,51 @@ describe EvidenceCheckSelector do
       end
     end
 
+    describe 'should_run?' do
+      before do
+        allow(evidence_check_selector).to receive(:evidence_check_type).and_return 'test'
+      end
+
+      context 'return false if it is emergency' do
+        let(:application) { create :application_full_remission, emergency_reason: 'test' }
+
+        it 'application is emergency' do
+          expect(application).not_to receive(:create_evidence_check)
+          evidence_check_selector.decide!
+        end
+      end
+
+      context 'return false if it no remissions is granted' do
+        let(:application) { create :application_no_remission }
+
+        it 'application is emergency' do
+          expect(application).not_to receive(:create_evidence_check)
+          evidence_check_selector.decide!
+        end
+      end
+
+      context 'return false if it is benefit application' do
+        let(:application) { create :application_full_remission, :benefit_type }
+
+        it 'application is emergency' do
+          expect(application).not_to receive(:create_evidence_check)
+          evidence_check_selector.decide!
+        end
+      end
+
+      context 'return false if it is benefit application' do
+        let(:application) { create :application_full_remission, detail: detail }
+        let(:detail) { create :detail, :out_of_time_refund, discretion_applied: false }
+
+        it 'application is emergency' do
+          # @application.detail.discretion_applied
+          # binding.pry/
+          expect(application).not_to receive(:create_evidence_check)
+          evidence_check_selector.decide!
+        end
+      end
+    end
+
     context 'for a non-benefit remission application' do
       context 'for a non-refund application' do
         let(:application) { create :application_full_remission, reference: 'XY55-22-3' }
