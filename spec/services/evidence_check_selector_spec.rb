@@ -39,47 +39,53 @@ describe EvidenceCheckSelector do
       end
     end
 
-    describe 'should_run?' do
+    describe 'should not run' do
+      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income' }
+      let(:detail) { build_stubbed :detail }
+
       before do
         allow(evidence_check_selector).to receive(:evidence_check_type).and_return 'test'
+        allow(application).to receive(:detail).and_return detail
       end
 
-      context 'return false if it is emergency' do
-        let(:application) { create :application_full_remission, emergency_reason: 'test' }
+      it "creates EV check" do
+        evidence_check_selector.decide!
+        expect(application).to have_received(:create_evidence_check)
+      end
 
-        it 'application is emergency' do
-          expect(application).not_to receive(:create_evidence_check)
+      context 'if it is emergency' do
+        let(:detail) { build_stubbed :detail, emergency_reason: 'test' }
+
+        it do
           evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
         end
       end
 
-      context 'return false if it no remissions is granted' do
-        let(:application) { create :application_no_remission }
+      context 'if it is benefit application' do
+        let(:detail) { build_stubbed :detail, :out_of_time_refund, discretion_applied: false }
 
-        it 'application is emergency' do
-          expect(application).not_to receive(:create_evidence_check)
+        it do
           evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
         end
       end
 
-      context 'return false if it is benefit application' do
-        let(:application) { create :application_full_remission, :benefit_type }
+      context 'if no remissions is granted' do
+        let(:application) { instance_spy 'Application', outcome: 'none', application_type: 'income' }
 
-        it 'application is emergency' do
-          expect(application).not_to receive(:create_evidence_check)
+        it do
           evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
         end
       end
 
-      context 'return false if it is benefit application' do
-        let(:application) { create :application_full_remission, detail: detail }
-        let(:detail) { create :detail, :out_of_time_refund, discretion_applied: false }
+      context 'if it is benefit application' do
+        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'benefit' }
 
-        it 'application is emergency' do
-          # @application.detail.discretion_applied
-          # binding.pry/
-          expect(application).not_to receive(:create_evidence_check)
+        it do
           evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
         end
       end
     end
