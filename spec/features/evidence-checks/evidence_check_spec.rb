@@ -81,8 +81,8 @@ RSpec.feature 'Evidence check', type: :feature do
       fill_application_details
       fill_saving_and_investment
 
-      fill_benefits(true)
-      fill_benefit_evidence(paper_provided: true, paper_correct: true)
+      fill_benefits(false)
+      fill_income(false)
       click_button 'Complete processing'
 
       expect(has_evidence_check_flagged?).to be_truthy

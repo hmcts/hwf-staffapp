@@ -22,10 +22,10 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     create(:online_application, :completed, :with_reference,
       married: false,
       children: 0,
-      benefits: true,
+      benefits: false,
       fee: 155,
       form_name: 'D11',
-      emergency_reason: 'freezing order',
+      income: 1000,
       ni_number: online_application_1.ni_number)
   end
   let(:old_application) { create :old_application, reference: online_application_1.reference }
@@ -36,7 +36,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     create_list :application_part_remission, 9
   end
 
-  scenario 'Processing benefit based application with previois' do
+  scenario 'Processing income based application from online application' do
     visit  home_index_url
 
     fill_in 'Reference', with: online_application_1.reference
