@@ -5,7 +5,7 @@ class EvidenceCheckSelector
   end
 
   def decide!
-    return if should_not_run?
+    return if skip_ev_check?
     type = evidence_check_type
     @application.create_evidence_check(expires_at: expires_at, check_type: type) if type
   end
@@ -66,7 +66,7 @@ class EvidenceCheckSelector
     applications.present?
   end
 
-  def should_not_run?
+  def skip_ev_check?
     @application.detail.emergency_reason.present? ||
       @application.outcome == 'none' ||
       @application.application_type != 'income' ||

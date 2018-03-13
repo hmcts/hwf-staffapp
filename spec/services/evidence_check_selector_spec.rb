@@ -39,7 +39,7 @@ describe EvidenceCheckSelector do
       end
     end
 
-    describe 'should not run' do
+    describe 'should skip EV check' do
       let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income' }
       let(:detail) { build_stubbed :detail }
 
