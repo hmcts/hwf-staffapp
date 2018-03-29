@@ -111,6 +111,40 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
         post_summary_save
       end
     end
+
+    describe 'only new aplications are processed' do
+      before do
+        sign_in user
+        allow(ResolverService).to receive(:new)
+      end
+
+      context 'waiting_for_evidence_state' do
+        let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office) }
+
+        it do
+          post :create, application_id: application.id
+          expect(ResolverService).not_to have_received(:new).with(application, user)
+        end
+      end
+
+      context 'waiting_for_part_payment_state' do
+        let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
+
+        it do
+          post :create, application_id: application.id
+          expect(ResolverService).not_to have_received(:new).with(application, user)
+        end
+      end
+
+      context 'processed_state' do
+        let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
+
+        it do
+          post :create, application_id: application.id
+          expect(ResolverService).not_to have_received(:new).with(application, user)
+        end
+      end
+    end
   end
 
 end

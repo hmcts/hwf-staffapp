@@ -12,13 +12,20 @@ module Applications
       end
 
       def create
-        ResolverService.new(application, current_user).complete
+        resolve_only_new_applications
         redirect_to application_confirmation_path(application.id)
       rescue ActiveRecord::RecordInvalid => ex
         flash[:alert] = I18n.t('error_messages.summary.validation')
         Raven.capture_exception(ex, application_id: @application.id)
 
         redirect_to application_summary_path(@application)
+      end
+
+      private
+
+      def resolve_only_new_applications
+        return if application.state != 'created'
+        ResolverService.new(application, current_user).complete
       end
     end
   end
