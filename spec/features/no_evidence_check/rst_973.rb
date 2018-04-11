@@ -32,7 +32,7 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
     end
   end
 
-  context 'Refund application' do
+  context 'Refund application no evidence check for emergency 2nd application' do
     let(:application) { create :application_full_remission, :refund }
 
     before do
@@ -52,7 +52,7 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
 	    expect(page).to have_content('✓ Eligible for help with fees')
     end
 
-  context 'Duplicate NINO with previous evidence checked' do
+  context 'Duplicate NINO emergency appliation' do
 
 	let(:application) { create :application_full_remission }
 
@@ -83,7 +83,7 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
 		    expect(page).to_not have_content('Evidence of income needs to be checked for this application')
 		    expect(page).to have_content('✓ Eligible for help with fees')
 
-		end
+	    end
    end
   end
 end

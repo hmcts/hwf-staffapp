@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is not evidence check when an emergency app', type: :feature do
+RSpec.feature 'Application outside of 3 month limit is not evidence checked when discretion is no', type: :feature do
 
  include Warden::Test::Helpers
  Warden.test_mode!
