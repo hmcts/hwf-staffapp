@@ -35,7 +35,7 @@ end
 def fill_application_date_over_limit
   fill_in 'Fee', with: '1000'
   choose Jurisdiction.first.display_full.to_s
-  
+
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is a refund case'
 
@@ -103,12 +103,8 @@ end
 
 def fill_income_above_threshold
   expect(page).to have_text 'income'
-  if supporting_children
-    choose 'Yes'
-    fill_in 'Number of children', with: '2'
-  else
-    choose 'No'
-  end
+  choose 'application_dependents_false'
+
   fill_in 'Total monthly income', with: '6000'
 
   click_button 'Next'

@@ -19,55 +19,53 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
    end
 
    scenario 'Every 2nd application is not evidence checked when outside 3 month limit' do
-   start_new_application
-   fill_personal_details
-   fill_application_date_over_limit
-   click_button "Complete processing"
+     start_new_application
+     fill_personal_details
+     fill_application_date_over_limit
+     click_button "Complete processing"
 
-   expect(page).to_not have_content('Evidence of income needs to be checked for this application')
-   expect(page).to have_content('✗   Not eligible for help with fees')
-
-   end
-
- context 'Duplicate NINO with previous evidence checked'do
-
- let(:application) { create :application_full_remission }
-
- scenario 'No evidence check on duplicate NINO when outside 3 month limit' do
-
-   visit home_index_url
-
-   within "#process-application" do
-     expect(page).to have_text('Process application')
-     click_button "Start now"
-   end
-
-   fill_personal_details('SN123456D')
-   fill_application_details
-   fill_saving_and_investment
-
-   fill_benefits(false)
-   fill_income(false)
-
-   expect(page).to have_text 'Check details'
-   click_button 'Complete processing'
-
-   visit home_index_url
-   create_flag_check('SN123456D')
-
-   click_button "Start now"
-   fill_personal_details('SN123456D')
-   fill_application_date_over_limit
-
-   click_button 'Complete processing'
-
-
-   expect(page).to_not have_content('Evidence of income needs to be checked for this application')
-   expect(page).to have_content '✗   Not eligible for help with fees'
-
+     expect(page).to_not have_content('Evidence of income needs to be checked for this application')
+     expect(page).to have_content('✗   Not eligible for help with fees')
 
    end
- end
 
-end
+   context 'Duplicate NINO with previous evidence checked'do
+
+   let(:application) { create :application_full_remission }
+
+      scenario 'No evidence check on duplicate NINO when outside 3 month limit' do
+
+        visit home_index_url
+
+        within "#process-application" do
+          expect(page).to have_text('Process application')
+          click_button "Start now"
+        end
+
+        fill_personal_details('SN123456D')
+        fill_application_details
+        fill_saving_and_investment
+
+        fill_benefits(false)
+        fill_income(false)
+
+        expect(page).to have_text 'Check details'
+        click_button 'Complete processing'
+
+        visit home_index_url
+        create_flag_check('SN123456D')
+
+        click_button "Start now"
+        fill_personal_details('SN123456D')
+        fill_application_date_over_limit
+
+        click_button 'Complete processing'
+
+        expect(page).to_not have_content('Evidence of income needs to be checked for this application')
+        expect(page).to have_content '✗   Not eligible for help with fees'
+
+      end
+    end
+
+  end
 end
