@@ -53,8 +53,7 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
     end
 
   context 'Duplicate NINO emergency appliation' do
-
-	let(:application) { create :application_full_remission }
+	   let(:application) { create :application_full_remission }
 
 	scenario 'No evidence check on duplicate NINO when an emergency application' do
 		start_new_application
