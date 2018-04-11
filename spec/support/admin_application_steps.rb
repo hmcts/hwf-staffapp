@@ -10,7 +10,7 @@ def fill_personal_details(ni_number = 'SN123456C')
 end
 
 def fill_application_details
-  expect(page).to have_text 'Application details'
+  expect(page).to have_css("h2", :text => "Application details")
   fill_in 'Fee', with: '1000'
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
@@ -29,6 +29,19 @@ def fill_application_dates
   check 'This is a refund case'
 
   fill_in 'Date fee paid', with: 2.days.ago.to_date.to_s
+  click_button 'Next'
+end
+
+def fill_application_date_over_limit
+  fill_in 'Fee', with: '1000'
+  choose Jurisdiction.first.display_full.to_s
+  
+  fill_in 'Date application received', with: Date.yesterday.to_s
+  check 'This is a refund case'
+
+  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  click_button 'Next'
+  choose 'application_discretion_applied_false'
   click_button 'Next'
 end
 
@@ -86,6 +99,19 @@ end
 def has_evidence_check_flagged?
   ev_check = evidene_check
   ev_check && ev_check.check_type == 'flag'
+end
+
+def fill_income_above_threshold
+  expect(page).to have_text 'income'
+  if supporting_children
+    choose 'Yes'
+    fill_in 'Number of children', with: '2'
+  else
+    choose 'No'
+  end
+  fill_in 'Total monthly income', with: '6000'
+
+  click_button 'Next'
 end
 
 def evidene_check
