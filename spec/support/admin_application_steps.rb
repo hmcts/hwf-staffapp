@@ -32,22 +32,6 @@ def fill_application_dates
   click_button 'Next'
 end
 
-def fill_application_date_over_limit
-  fill_in 'Fee', with: '1000'
-  choose Jurisdiction.first.display_full.to_s
-
-  fill_in 'Date application received', with: Date.yesterday.to_s
-  check 'This is a refund case'
-
-  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
-  click_button 'Next'
-end
-
-def fill_no_discretion
-  choose 'application_discretion_applied_false'
-  click_button 'Next'
-end
-
 def fill_application_emergency_details
   expect(page).to have_text 'Application details'
   fill_in 'Fee', with: '1000'
@@ -140,4 +124,20 @@ end
 
 def create_flag_check(ni_number)
   EvidenceCheckFlag.create(ni_number: ni_number, active: true, count: 1)
+end
+
+def fill_application_date_over_limit
+  fill_in 'Fee', with: '1000'
+  choose Jurisdiction.first.display_full.to_s
+
+  fill_in 'Date application received', with: Date.yesterday.to_s
+  check 'This is a refund case'
+
+  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  click_button 'Next'
+end
+
+def fill_no_discretion
+  choose 'application_discretion_applied_false'
+  click_button 'Next'
 end
