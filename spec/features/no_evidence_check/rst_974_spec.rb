@@ -24,7 +24,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
       fill_application_date_over_limit
       click_button "Complete processing"
 
-      expect(page).to_not have_content('Evidence of income needs to be checked for this application')
+      expect(page).not_to have_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✗   Not eligible for help with fees')
 
     end
@@ -44,7 +44,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
 
         fill_personal_details('SN123456D')
         fill_application_details
-        fill_saving_and_investment        
+        fill_saving_and_investment
         fill_benefits(false)
         fill_income(false)
 
@@ -60,7 +60,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
 
         click_button 'Complete processing'
 
-        expect(page).to_not have_content('Evidence of income needs to be checked for this application')
+        expect(page).not_to have_content('Evidence of income needs to be checked for this application')
         expect(page).to have_content '✗   Not eligible for help with fees'
 
       end
