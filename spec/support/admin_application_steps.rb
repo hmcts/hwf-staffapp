@@ -55,9 +55,28 @@ def fill_application_emergency_details
   click_button 'Next'
 end
 
+
 def fill_saving_and_investment
   expect(page).to have_text 'Savings and investments'
   choose 'Less than £3,000'
+  click_button 'Next'
+end
+
+def fill_saving_exceeded_over_61
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  choose 'application_max_threshold_exceeded_true'
+
+  click_button 'Next'
+end
+
+def fill_saving_above_threshold
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  fill_in 'How much do they have in savings and investments?', with: '4000'
+
   click_button 'Next'
 end
 
