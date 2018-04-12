@@ -10,7 +10,7 @@ class ProcessingPerformanceExport
   end
 
   def processed_query
-    Application.where(state: @application_state, created_at: @from..@to)
+    Application.where(state: @application_state, created_at: @from..@to).order('created_at asc')
   end
 
   def export
@@ -49,7 +49,7 @@ class ProcessingPerformanceExport
   end
 
   def application_outcome(application)
-    case application
+    case application.outcome
     when 'full'
       'full payment'
     when 'part'
