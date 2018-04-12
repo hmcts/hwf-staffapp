@@ -107,6 +107,9 @@ def fill_application_date_over_limit
 
   fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
   click_button 'Next'
+end
+
+def fill_no_discretion
   choose 'application_discretion_applied_false'
   click_button 'Next'
 end
