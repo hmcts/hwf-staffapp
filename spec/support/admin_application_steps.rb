@@ -10,7 +10,7 @@ def fill_personal_details(ni_number = 'SN123456C')
 end
 
 def fill_application_details
-  expect(page).to have_css("h2", :text => "Application details")
+  expect(page).to have_css("h2", text: "Application details")
   fill_in 'Fee', with: '1000'
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
@@ -41,6 +41,9 @@ def fill_application_date_over_limit
 
   fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
   click_button 'Next'
+end
+
+def fill_no_discretion
   choose 'application_discretion_applied_false'
   click_button 'Next'
 end
