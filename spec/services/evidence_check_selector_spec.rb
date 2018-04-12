@@ -39,6 +39,57 @@ describe EvidenceCheckSelector do
       end
     end
 
+    describe 'should skip EV check' do
+      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income' }
+      let(:detail) { build_stubbed :detail }
+
+      before do
+        allow(evidence_check_selector).to receive(:evidence_check_type).and_return 'test'
+        allow(application).to receive(:detail).and_return detail
+      end
+
+      it "creates EV check" do
+        evidence_check_selector.decide!
+        expect(application).to have_received(:create_evidence_check)
+      end
+
+      context 'if it is emergency' do
+        let(:detail) { build_stubbed :detail, emergency_reason: 'test' }
+
+        it do
+          evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
+        end
+      end
+
+      context 'if it is benefit application' do
+        let(:detail) { build_stubbed :detail, :out_of_time_refund, discretion_applied: false }
+
+        it do
+          evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
+        end
+      end
+
+      context 'if no remissions is granted' do
+        let(:application) { instance_spy 'Application', outcome: 'none', application_type: 'income' }
+
+        it do
+          evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
+        end
+      end
+
+      context 'if it is benefit application' do
+        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'benefit' }
+
+        it do
+          evidence_check_selector.decide!
+          expect(application).not_to have_received(:create_evidence_check)
+        end
+      end
+    end
+
     context 'for a non-benefit remission application' do
       context 'for a non-refund application' do
         let(:application) { create :application_full_remission, reference: 'XY55-22-3' }
