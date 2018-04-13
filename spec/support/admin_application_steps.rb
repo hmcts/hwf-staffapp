@@ -38,7 +38,7 @@ def fill_application_emergency_details
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is an emergency case'
-  fill_in 'Reason for emergency', with: "I'm in hurry"
+  fill_in 'Reason for emergency', with: 'Iam in a hurry'
   click_button 'Next'
 end
 
