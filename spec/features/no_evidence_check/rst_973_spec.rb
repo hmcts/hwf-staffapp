@@ -25,7 +25,7 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
       fill_saving_and_investment
       fill_benefits(false)
       fill_income(false)
-      click_button "Complete processing"
+      click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✓ Eligible for help with fees')
@@ -43,12 +43,12 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
       start_new_application
       fill_personal_details
       check 'This is an emergency case'
-      fill_in 'Reason for emergency', with: "I'm in hurry"
+      fill_in 'Reason for emergency', with: 'I am in a hurry'
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(false)
       fill_income(false)
-      click_button "Complete processing"
+      click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✓ Eligible for help with fees')
