@@ -10,7 +10,7 @@ def fill_personal_details(ni_number = 'SN123456C')
 end
 
 def fill_application_details
-  expect(page).to have_css("h2", text: "Application details")
+  expect(page).to have_css('h2', text: 'Application details')
   fill_in 'Fee', with: '1000'
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
