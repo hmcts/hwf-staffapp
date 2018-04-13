@@ -66,6 +66,24 @@ def fill_saving_above_threshold
   click_button 'Next'
 end
 
+def fill_saving_above_threshold
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  fill_in 'How much do they have in savings and investments?', with: '4000'
+
+  click_button 'Next'
+end
+
+def fill_saving_exceeded_over_61
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  choose 'application_max_threshold_exceeded_true'
+
+  click_button 'Next'
+end
+
 def fill_benefits(benefits)
   expect(page).to have_text 'Benefits'
   choose benefits ? 'Yes' : 'No'
