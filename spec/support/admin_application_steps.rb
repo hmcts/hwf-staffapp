@@ -42,7 +42,6 @@ def fill_application_emergency_details
   click_button 'Next'
 end
 
-
 def fill_saving_and_investment
   expect(page).to have_text 'Savings and investments'
   choose 'Less than £3,000'
