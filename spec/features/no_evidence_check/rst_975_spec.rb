@@ -33,7 +33,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold',
       fill_application_details
       fill_saving_exceeded_over_61
 
-      click_button "Complete processing"
+      click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✗   Not eligible for help with fees')
@@ -53,7 +53,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold',
       fill_application_refund_details
       fill_saving_above_threshold
 
-      click_button "Complete processing"
+      click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✗   Not eligible for help with fees')
@@ -77,7 +77,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold',
         visit home_index_url
         create_flag_check('SN123456D')
 
-        click_button "Start now"
+        click_button 'Start now'
         fill_personal_details('SN123456D')
         fill_application_details
         fill_saving_above_threshold
