@@ -36,6 +36,7 @@ class ProcessingPerformanceExport
       data[index] << application_format(application)
       data[index] << application.office.name
       data[index] << application_outcome(application)
+      data[index] << evidence_check_required(application)
     end
     data
   end
@@ -67,10 +68,15 @@ class ProcessingPerformanceExport
      'Decision time in minutes',
      'Paper or digital application',
      'Processing office',
-     'Outcome']
+     'Outcome',
+     'Evidence check required']
   end
 
   def decision_time_in_minutes(application)
     ((application.completed_at - application.created_at)/60).round(2)
+  end
+
+  def evidence_check_required(application)
+    (application.evidence_check.present?) ? 'Yes' : 'No'
   end
 end
