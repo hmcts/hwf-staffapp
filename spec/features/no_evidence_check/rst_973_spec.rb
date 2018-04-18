@@ -86,5 +86,38 @@ RSpec.feature 'Application is not evidence check when an emergency app', type: :
 
       end
     end
+
+    context 'Duplicate NINO application where EV not flagged' do
+      let(:application) { create :application_full_remission }
+
+      scenario 'evidence check on for duplicate NINO when not flagged' do
+        start_new_application
+        fill_personal_details('SN123456D')
+        fill_application_details
+        fill_saving_and_investment
+
+        fill_benefits(false)
+        fill_income(false)
+
+        expect(page).to have_text 'Check details'
+        click_button 'Complete processing'
+
+        visit home_index_url
+
+        click_button 'Start now'
+        fill_personal_details('SN123456D')
+        fill_application_details
+        fill_saving_and_investment
+
+        fill_benefits(false)
+        fill_income(false)
+        click_button 'Complete processing'
+
+        expect(page).not_to have_content('Evidence of income needs to be checked')
+        expect(page).to have_content('✓ Eligible for help with fees')
+
+      end
+    end
+
   end
 end
