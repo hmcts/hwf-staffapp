@@ -21,7 +21,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
     scenario 'Every 2nd application is not evidence checked when outside 3 month limit' do
       start_new_application
       fill_personal_details
-      fill_application_date_over_limit
+      fill_application_date_set_discretion_no
       click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked for this application')
@@ -56,7 +56,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
 
         click_button 'Start now'
         fill_personal_details('SN123456D')
-        fill_application_date_over_limit
+        fill_application_date_set_discretion_no
 
         click_button 'Complete processing'
 
