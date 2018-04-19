@@ -30,7 +30,7 @@ RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked for this application')
+      expect(page).not_to have_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
