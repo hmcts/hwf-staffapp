@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is not evidence checked when above saving threshold', type: :feature do
+RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -53,52 +53,51 @@ RSpec.feature 'Application is not evidence checked when above saving threshold',
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked for this application')
+      expect(page).not_to have_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
+  end
 
-    context 'Income Application within 3 month of application Date' do
-      let(:application) { create :application_full_remission, :refund }
+  context 'Income Application within 3 month of application Date' do
+    let(:application) { create :application_full_remission, :refund }
 
-      before do
-        create_list :application_full_remission, 1, :refund
-      end
-
-      scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
-        start_new_application
-        fill_personal_details
-        fill_application_refund_details
-        fill_saving_and_investment
-        fill_benefits(false)
-        fill_income(false)
-
-        click_button 'Complete processing'
-
-        expect(page).to have_content('Evidence of income needs to be checked for this application')
-        expect(page).not_to have_content('✓ Eligible for help with fees')
-      end
+    before do
+      create_list :application_full_remission, 1, :refund
     end
 
-    context 'Income Application exceeds 3month application and Discretion applied' do
-      let(:application) { create :application_full_remission, :refund }
+    scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
+      start_new_application
+      fill_personal_details
+      fill_application_refund_details
+      fill_saving_and_investment
+      fill_benefits(false)
+      fill_income(false)
 
-      before do
-        create_list :application_full_remission, 1, :refund
-      end
+      click_button 'Complete processing'
+      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).not_to have_content('✓ Eligible for help with fees')
+    end
+  end
 
-      scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
-        start_new_application
-        fill_personal_details
-        fill_application_date_set_discretion_yes
-        fill_saving_and_investment
-        fill_benefits(false)
-        fill_income(false)
+  context 'Income Application exceeds 3month application and Discretion applied' do
+    let(:application) { create :application_full_remission, :refund }
 
-        click_button 'Complete processing'
+    before do
+      create_list :application_full_remission, 1, :refund
+    end
 
-        expect(page).to have_content('Evidence of income needs to be checked for this application')
-        expect(page).not_to have_content('✓ Eligible for help with fees')
-      end
+    scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
+      start_new_application
+      fill_personal_details
+      fill_application_date_set_discretion_yes
+      fill_saving_and_investment
+      fill_benefits(false)
+      fill_income(false)
+
+      click_button 'Complete processing'
+
+      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).not_to have_content('✓ Eligible for help with fees')
     end
   end
 end
