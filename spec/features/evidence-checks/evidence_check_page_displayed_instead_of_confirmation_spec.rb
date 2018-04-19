@@ -15,16 +15,34 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
 
   let(:application) { create :application_full_remission, office: office, jurisdiction: jurisdiction }
 
-  scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
-    create_list :application_full_remission, 9
+  context '1 in 10 spot check' do
+    scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
+      create_list :application_full_remission, 9
 
-    visit application_summary_path(application)
+      visit application_summary_path(application)
 
-    click_button 'Complete processing'
+      click_button 'Complete processing'
 
-    expect(page).to have_content 'Evidence of income needs to be checked'
+      expect(page).to have_content 'Evidence of income needs to be checked'
 
-    expect(evidence_check_rendered?).to be true
+      expect(evidence_check_rendered?).to be true
+    end
+  end
+
+  context '1 in 2 spotcheck refund application' do
+    let(:application) { create :application_full_remission, :refund, office: office, jurisdiction: jurisdiction }
+
+    scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
+      create_list :application_full_remission, 1, :refund
+
+      visit application_summary_path(application)
+
+      click_button 'Complete processing'
+
+      expect(page).to have_content 'Evidence of income needs to be checked'
+
+      expect(evidence_check_rendered?).to be true
+    end
   end
 
   scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
