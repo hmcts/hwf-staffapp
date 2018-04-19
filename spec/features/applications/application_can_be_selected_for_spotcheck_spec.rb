@@ -23,8 +23,8 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
 
       click_button 'Next'
       click_button 'Next'
-
-      expect(page).to have_content('Evidence of income needs to be checked for this application')
+      save_and_open_page
+      expect(page).to have_content('Evidence of income needs to be checked')
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.feature 'Application can be selected for evidence check', type: :feature d
       click_button 'Next'
       click_button 'Next'
 
-      expect(page).to have_content('Evidence of income needs to be checked for this application')
+      expect(page).to have_content('Evidence of income needs to be checked')
     end
   end
 end
