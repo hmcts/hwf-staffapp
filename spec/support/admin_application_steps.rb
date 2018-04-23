@@ -9,17 +9,17 @@ def fill_personal_details(ni_number = 'SN123456C')
   click_button 'Next'
 end
 
-def fill_application_details
+def fill_application_details(court_fee = '1000')
   expect(page).to have_css('h2', text: 'Application details')
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: court_fee
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   click_button 'Next'
 end
 
-def fill_application_refund_details
+def fill_application_refund_details(court_fee = '1000')
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: court_fee
   choose Jurisdiction.first.display_full.to_s
   fill_application_dates
 end
@@ -106,11 +106,11 @@ def has_evidence_check_flagged?
   ev_check && ev_check.check_type == 'flag'
 end
 
-def fill_income_above_threshold
+def fill_income_above_threshold(monthly_income = '6000')
   expect(page).to have_text 'income'
   choose 'application_dependents_false'
 
-  fill_in 'Total monthly income', with: '6000'
+  fill_in 'Total monthly income', with: monthly_income
 
   click_button 'Next'
 end
