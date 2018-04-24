@@ -65,7 +65,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       application2
     end
 
-    scenario '' do
+    scenario 'finishing EV check and creating new application with same NINO' do
       visit home_index_url
       within(:css, '.waiting-for-evidence') do
         expect(page).to have_content(application1.reference)
