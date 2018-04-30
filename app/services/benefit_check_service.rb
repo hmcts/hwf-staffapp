@@ -21,7 +21,7 @@ class BenefitCheckService
 
   def check_remote_api
     @check_item.save!
-    query_proxy_api
+    process_proxy_api_call
     if @result
       @check_item.dwp_result = @response['benefit_checker_status']
       @check_item.dwp_api_token = @response['confirmation_ref']
@@ -30,10 +30,8 @@ class BenefitCheckService
     @check_item.save!
   end
 
-  def query_proxy_api
-    @response = JSON.parse(RestClient.post("#{ENV['DWP_API_PROXY']}/api/benefit_checks", params))
-    fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
-    @result = true
+  def process_proxy_api_call
+    query_proxy_api
   rescue RestClient::BadRequest => e
     log_error JSON.parse(e.response)['error'], 'BadRequest'
   rescue Exceptions::UndeterminedDwpCheck
@@ -42,6 +40,12 @@ class BenefitCheckService
     log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Server unavailable'
   rescue => e
     log_error(e.message, 'Unspecified error')
+  end
+
+  def query_proxy_api
+    @response = JSON.parse(RestClient.post("#{ENV['DWP_API_PROXY']}/api/benefit_checks", params))
+    fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
+    @result = true
   end
 
   def params

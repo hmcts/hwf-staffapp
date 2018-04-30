@@ -59,7 +59,7 @@ describe BenefitCheckService do
       end
 
       context 'simulating a 400 error' do
-        let(:message) {{ 'error': "LSCBC210: Error in request parameter 'Surname'" }.to_json }
+        let(:message) { { 'error': "LSCBC210: Error in request parameter 'Surname'" }.to_json }
 
         before do
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
