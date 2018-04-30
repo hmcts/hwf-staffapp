@@ -34,6 +34,8 @@ class BenefitCheckService
     @response = JSON.parse(RestClient.post("#{ENV['DWP_API_PROXY']}/api/benefit_checks", params))
     fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
     @result = true
+  rescue RestClient::BadRequest => e
+    log_error JSON.parse(e.response)['error'], 'BadRequest'
   rescue Exceptions::UndeterminedDwpCheck
     log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
   rescue Errno::ECONNREFUSED
