@@ -2,6 +2,13 @@ class ProcessingPerformanceExport
   require 'csv'
   attr_reader :processed_data, :preformated_data
 
+  HEADERS = ['Application reference number', 'Submission date (digital only)',
+             'Date received (paper only)', 'Created at', 'Completed at',
+             'Date Processed', 'Decision time in minutes',
+             'Processing time in minutes', 'Paper or digital application',
+             'Processing office', 'Outcome', 'Applicaion status',
+             'Application type', 'Evidence check required'].freeze
+
   def initialize(date_from = nil, date_to = nil)
     @from = date_from
     @to = date_to
@@ -10,7 +17,10 @@ class ProcessingPerformanceExport
   end
 
   def process_query
-    @processed_data = Application.where(state: @application_state, created_at: @from..@to).order('created_at asc')
+    @processed_data = Application.where(
+      state: @application_state,
+      created_at: @from..@to
+    ).order('created_at asc')
   end
 
   def export
@@ -19,8 +29,8 @@ class ProcessingPerformanceExport
   end
 
   def to_csv
-    CSV.open("processing_performance_export.csv", "wb", {:force_quotes=>true}) do |csv|
-      csv << headers
+    CSV.open("processing_performance_export.csv", "wb", force_quotes: true) do |csv|
+      csv << ::HEADERS
       @preformated_data.each do |row|
         csv << row
       end
@@ -30,11 +40,13 @@ class ProcessingPerformanceExport
   private
 
   def check_date_range
-    return if @from.respond_to?(:strftime) && @to.respond_to?(:strftime)
-    @from = DateTime.parse('May 1 2017 00:00')
-    @to = DateTime.parse('April 30 2018 23:59')
+    return if @from.respond_to?(:strftime) &&
+              @to.respond_to?(:strftime)
+    @from = DateTime.parse('May 1 2017 00:00').utc
+    @to = DateTime.parse('April 30 2018 23:59').utc
   end
 
+  # rubocop:disable all
   def preformate_data
     @preformated_data = []
     @processed_data.each_with_index do |application, index|
@@ -55,17 +67,18 @@ class ProcessingPerformanceExport
       @preformated_data[index] << evidence_check_required(application)
     end
   end
+  # rubocop:enable all
 
   def online_application_submitted(application)
-    (application.online_application) ? application.online_application.created_at : nil
+    application.online_application ? application.online_application.created_at : nil
   end
 
   def paper_application_received(application)
-    (application.online_application) ? nil : application.detail.date_received
+    application.online_application ? nil : application.detail.date_received
   end
 
   def application_format(application)
-    (application.online_application) ? 'digital' : 'paper'
+    application.online_application ? 'digital' : 'paper'
   end
 
   def application_outcome(application)
@@ -79,32 +92,15 @@ class ProcessingPerformanceExport
     end
   end
 
-  def headers
-    ['Application reference number',
-     'Submission date (digital only)',
-     'Date received (paper only)',
-     'Created at',
-     'Completed at',
-     'Date Processed',
-     'Decision time in minutes',
-     'Processing time in minutes',
-     'Paper or digital application',
-     'Processing office',
-     'Outcome',
-     'Applicaion status',
-     'Application type',
-     'Evidence check required']
-  end
-
   def decision_time_in_minutes(application)
-    ((application.completed_at - application.created_at)/60).round(2)
+    ((application.completed_at - application.created_at) / 60).round(2)
   end
 
   def process_time_in_minutes(application)
-    ((application.updated_at - application.created_at)/60).round(2)
+    ((application.updated_at - application.created_at) / 60).round(2)
   end
 
   def evidence_check_required(application)
-    (application.evidence_check.present?) ? 'Yes' : 'No'
+    application.evidence_check.present? ? 'Yes' : 'No'
   end
 end
