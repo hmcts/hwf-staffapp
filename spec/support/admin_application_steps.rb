@@ -9,17 +9,17 @@ def fill_personal_details(ni_number = 'SN123456C')
   click_button 'Next'
 end
 
-def fill_application_details
-  expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+def fill_application_details(court_fee = '1000')
+  expect(page).to have_css('h2', text: 'Application details')
+  fill_in 'Fee', with: court_fee
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   click_button 'Next'
 end
 
-def fill_application_refund_details
+def fill_application_refund_details(court_fee = '1000')
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'Fee', with: court_fee
   choose Jurisdiction.first.display_full.to_s
   fill_application_dates
 end
@@ -38,13 +38,31 @@ def fill_application_emergency_details
   choose Jurisdiction.first.display_full.to_s
   fill_in 'Date application received', with: Date.yesterday.to_s
   check 'This is an emergency case'
-  fill_in 'Reason for emergency', with: "I'm in hurry"
+  fill_in 'Reason for emergency', with: 'Iam in a hurry'
   click_button 'Next'
 end
 
 def fill_saving_and_investment
   expect(page).to have_text 'Savings and investments'
   choose 'Less than £3,000'
+  click_button 'Next'
+end
+
+def fill_saving_exceeded_over_61
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  choose 'application_max_threshold_exceeded_true'
+
+  click_button 'Next'
+end
+
+def fill_saving_above_threshold
+  expect(page).to have_text 'Savings and investments'
+  choose 'application_min_threshold_exceeded_true'
+
+  fill_in 'How much do they have in savings and investments?', with: '4000'
+
   click_button 'Next'
 end
 
@@ -88,6 +106,15 @@ def has_evidence_check_flagged?
   ev_check && ev_check.check_type == 'flag'
 end
 
+def fill_income_above_threshold(monthly_income = '6000')
+  expect(page).to have_text 'income'
+  choose 'application_dependents_false'
+
+  fill_in 'Total monthly income', with: monthly_income
+
+  click_button 'Next'
+end
+
 def evidene_check
   reference_number = find(:xpath, './/span[@class="reference-number"]').text
   application = Application.where(reference: reference_number).last
@@ -96,4 +123,35 @@ end
 
 def create_flag_check(ni_number)
   EvidenceCheckFlag.create(ni_number: ni_number, active: true, count: 1)
+end
+
+def fill_application_date_over_limit
+  fill_in 'Fee', with: '1000'
+  choose Jurisdiction.first.display_full.to_s
+
+  fill_in 'Date application received', with: Date.yesterday.to_s
+  check 'This is a refund case'
+end
+
+def fill_application_date_set_discretion_no
+  fill_application_date_over_limit
+  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  click_button 'Next'
+
+  choose 'application_discretion_applied_false'
+  click_button 'Next'
+end
+
+def fill_application_date_set_discretion_yes
+  fill_application_date_over_limit
+  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  click_button 'Next'
+
+  choose 'application_discretion_applied_true'
+
+  within(:css, '#discretion-applied-yes-only') do
+    fill_in 'Delivery Manager name', with: 'Tester'
+    fill_in 'Discretion reason', with: 'test in progress'
+  end
+  click_button 'Next'
 end
