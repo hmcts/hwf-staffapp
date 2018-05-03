@@ -1,22 +1,27 @@
 class ProcessingPerformanceExport
   require 'csv'
-  attr_reader :processed
+  attr_reader :processed_data, :preformated_data
 
-  def initialize
-    @from = DateTime.parse('March 1 2017 00:00')
-    @to = DateTime.parse('February 28 2018 23:59')
+  def initialize(date_from = nil, date_to = nil)
+    @from = date_from
+    @to = date_to
+    check_date_range
     @application_state = 3
-    @processed = processed_query
   end
 
-  def processed_query
-    Application.where(state: @application_state, created_at: @from..@to).order('created_at asc')
+  def process_query
+    @processed_data = Application.where(state: @application_state, created_at: @from..@to).order('created_at asc')
   end
 
   def export
+    process_query
+    preformate_data
+  end
+
+  def to_csv
     CSV.open("processing_performance_export.csv", "wb", {:force_quotes=>true}) do |csv|
       csv << headers
-      preformated_data.each do |row|
+      @preformated_data.each do |row|
         csv << row
       end
     end
@@ -24,25 +29,39 @@ class ProcessingPerformanceExport
 
   private
 
-  def preformated_data
-    data = []
-    @processed.each_with_index do |application, index|
-      data[index] = []
-      data[index] << application.reference
-      data[index] << online_application_submitted(application)
-      data[index] << application.created_at
-      data[index] << application.completed_at
-      data[index] << decision_time_in_minutes(application)
-      data[index] << application_format(application)
-      data[index] << application.office.name
-      data[index] << application_outcome(application)
-      data[index] << evidence_check_required(application)
+  def check_date_range
+    return if @from.respond_to?(:strftime) && @to.respond_to?(:strftime)
+    @from = DateTime.parse('May 1 2017 00:00')
+    @to = DateTime.parse('April 30 2018 23:59')
+  end
+
+  def preformate_data
+    @preformated_data = []
+    @processed_data.each_with_index do |application, index|
+      @preformated_data[index] = []
+      @preformated_data[index] << application.reference
+      @preformated_data[index] << online_application_submitted(application)
+      @preformated_data[index] << paper_application_received(application)
+      @preformated_data[index] << application.created_at
+      @preformated_data[index] << application.completed_at
+      @preformated_data[index] << application.updated_at
+      @preformated_data[index] << decision_time_in_minutes(application)
+      @preformated_data[index] << process_time_in_minutes(application)
+      @preformated_data[index] << application_format(application)
+      @preformated_data[index] << application.office.name
+      @preformated_data[index] << application_outcome(application)
+      @preformated_data[index] << application.state
+      @preformated_data[index] << application.application_type
+      @preformated_data[index] << evidence_check_required(application)
     end
-    data
   end
 
   def online_application_submitted(application)
     (application.online_application) ? application.online_application.created_at : nil
+  end
+
+  def paper_application_received(application)
+    (application.online_application) ? nil : application.detail.date_received
   end
 
   def application_format(application)
@@ -63,17 +82,26 @@ class ProcessingPerformanceExport
   def headers
     ['Application reference number',
      'Submission date (digital only)',
+     'Date received (paper only)',
      'Created at',
      'Completed at',
+     'Date Processed',
      'Decision time in minutes',
+     'Processing time in minutes',
      'Paper or digital application',
      'Processing office',
      'Outcome',
+     'Applicaion status',
+     'Application type',
      'Evidence check required']
   end
 
   def decision_time_in_minutes(application)
     ((application.completed_at - application.created_at)/60).round(2)
+  end
+
+  def process_time_in_minutes(application)
+    ((application.updated_at - application.created_at)/60).round(2)
   end
 
   def evidence_check_required(application)
