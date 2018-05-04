@@ -6,9 +6,10 @@ class ProcessingPerformanceExport
   HEADERS = ['Application reference number', 'Submission date (digital only)',
              'Date received (paper only)', 'Created at', 'Completed at',
              'Date Processed', 'Decision time in minutes',
-             'Processing time in minutes', 'Processing time in words', 'Paper or digital application',
-             'Processing office', 'Outcome', 'Applicaion status',
-             'Application type', 'Evidence check required'].freeze
+             'Processing time in minutes', 'Processing time in words',
+             'Paper or digital application', 'Processing office',
+             'Outcome', 'Applicaion status', 'Application type',
+             'Evidence check required'].freeze
 
   def initialize(date_from = nil, date_to = nil)
     @from = date_from
@@ -19,8 +20,7 @@ class ProcessingPerformanceExport
   def process_query
     @processed_data = Application.where(
       created_at: @from..@to
-    ).where.not(state: 4).
-      order('created_at asc')
+    ).where.not(state: 4).order('created_at asc')
   end
 
   def export

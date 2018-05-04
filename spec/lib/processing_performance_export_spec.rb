@@ -28,7 +28,6 @@ RSpec.describe ProcessingPerformanceExport do
       updated_at: 10.minutes.ago,
       reference: 'AB002-18-1'
 
-
     create :application_full_remission, :with_office, :processed_state,
       created_at: 30.minutes.ago,
       completed_at: 28.minutes.ago,
