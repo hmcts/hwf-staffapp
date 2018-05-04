@@ -1,11 +1,12 @@
 class ProcessingPerformanceExport
   require 'csv'
+  include ActionView::Helpers::DateHelper
   attr_reader :processed_data, :preformated_data
 
   HEADERS = ['Application reference number', 'Submission date (digital only)',
              'Date received (paper only)', 'Created at', 'Completed at',
              'Date Processed', 'Decision time in minutes',
-             'Processing time in minutes', 'Paper or digital application',
+             'Processing time in minutes', 'Processing time in words', 'Paper or digital application',
              'Processing office', 'Outcome', 'Applicaion status',
              'Application type', 'Evidence check required'].freeze
 
@@ -13,14 +14,13 @@ class ProcessingPerformanceExport
     @from = date_from
     @to = date_to
     check_date_range
-    @application_state = 3
   end
 
   def process_query
     @processed_data = Application.where(
-      state: @application_state,
       created_at: @from..@to
-    ).order('created_at asc')
+    ).where.not(state: 4).
+      order('created_at asc')
   end
 
   def export
@@ -30,7 +30,7 @@ class ProcessingPerformanceExport
 
   def to_csv
     CSV.open("processing_performance_export.csv", "wb", force_quotes: true) do |csv|
-      csv << ::HEADERS
+      csv << ProcessingPerformanceExport::HEADERS
       @preformated_data.each do |row|
         csv << row
       end
@@ -59,6 +59,7 @@ class ProcessingPerformanceExport
       @preformated_data[index] << application.updated_at
       @preformated_data[index] << decision_time_in_minutes(application)
       @preformated_data[index] << process_time_in_minutes(application)
+      @preformated_data[index] << process_time_in_words(application)
       @preformated_data[index] << application_format(application)
       @preformated_data[index] << application.office.name
       @preformated_data[index] << application_outcome(application)
@@ -94,10 +95,22 @@ class ProcessingPerformanceExport
 
   def decision_time_in_minutes(application)
     ((application.completed_at - application.created_at) / 60).round(2)
+  rescue NoMethodError
+    return nil
   end
 
   def process_time_in_minutes(application)
+    return nil if application.state != 'processed'
     ((application.updated_at - application.created_at) / 60).round(2)
+  rescue NoMethodError
+    return nil
+  end
+
+  def process_time_in_words(application)
+    return nil if application.state != 'processed'
+    distance_of_time_in_words(application.updated_at, application.created_at, include_seconds: true)
+  rescue NoMethodError
+    return nil
   end
 
   def evidence_check_required(application)
