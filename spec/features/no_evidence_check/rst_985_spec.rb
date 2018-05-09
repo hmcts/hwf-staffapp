@@ -101,4 +101,48 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       expect(page).not_to have_content('✓ Eligible for help with fees')
     end
   end
+
+  context 'Duplicate NINO not included in 1 in 2 count for Refund application' do
+    let(:application) { create :application_full_remission, :refund }
+
+    before do
+      create_list :application_full_remission, 1, :refund
+    end
+
+    scenario 'Create duplicate NINO and verify it is not included in 1 in 2 count' do
+      start_new_application
+      fill_personal_details('SN987654D')
+      fill_application_details
+      fill_saving_and_investment
+      fill_benefits(false)
+      fill_income(false)
+      expect(page).to have_text 'Check details'
+      click_button 'Complete processing'
+      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_content('✓ Eligible for help with fees')
+
+      visit home_index_url
+      create_flag_check('SN987654D')
+
+      click_button 'Start now'
+      fill_personal_details('SN987654D')
+      fill_application_details
+      fill_saving_and_investment
+      fill_benefits(false)
+      fill_income(false)
+      click_button 'Complete processing'
+      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).not_to have_content('✓ Eligible for help with fees')
+
+      start_new_application
+      fill_personal_details
+      fill_application_refund_details
+      fill_saving_and_investment
+      fill_benefits(false)
+      fill_income(false)
+      click_button 'Complete processing'
+      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).not_to have_content('✓ Eligible for help with fees')
+    end
+  end
 end
