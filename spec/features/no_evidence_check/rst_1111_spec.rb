@@ -15,7 +15,7 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
   end
 
   context 'DWP outcome is Undetermined' do
-    let(:dwp_result) { 'undetermined' }
+    let(:dwp_result) { 'Undetermined' }
     let(:application) { create :application_full_remission }
 
     before do
@@ -34,12 +34,12 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       click_button 'Complete processing'
 
       expect(page).not_to have_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
 
   context 'DWP outcome is pass' do
-    let(:dwp_result) { 'yes' }
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission }
 
     before do
@@ -53,16 +53,15 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
       expect(page).not_to have_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
 
   context 'DWP Outcome is pass and paper evidence is true' do
-    let(:dwp_result) { 'yes' }
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
@@ -76,7 +75,6 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: true)
 
       click_button 'Complete processing'
 
@@ -86,7 +84,7 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
   end
 
   context 'DWP Outcome is ECONNREFUSED' do
-    let(:dwp_result) { 'no' }
+    let(:dwp_result) { 'Server unavailable' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
@@ -100,7 +98,7 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: true)
+      fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
 
@@ -110,7 +108,7 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
   end
 
   context 'DWP Outcome is Yes for emergency application' do
-    let(:dwp_result) { 'yes' }
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
@@ -124,7 +122,6 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       fill_application_emergency_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: true)
 
       click_button 'Complete processing'
 
