@@ -1,7 +1,7 @@
 class ProcessingPerformanceExport
   require 'csv'
   include ActionView::Helpers::DateHelper
-  attr_reader :processed_data, :preformated_data
+  attr_reader :processed_data, :preformatted_data
 
   HEADERS = ['Application reference number', 'Submission date (digital only)',
              'Date received (paper only)', 'Created at', 'Completed at',
@@ -25,13 +25,13 @@ class ProcessingPerformanceExport
 
   def export
     process_query
-    preformate_data
+    formate_data
   end
 
   def to_csv
     CSV.open("processing_performance_export.csv", "wb", force_quotes: true) do |csv|
       csv << ProcessingPerformanceExport::HEADERS
-      @preformated_data.each do |row|
+      @preformatted_data.each do |row|
         csv << row
       end
     end
@@ -47,25 +47,25 @@ class ProcessingPerformanceExport
   end
 
   # rubocop:disable all
-  def preformate_data
-    @preformated_data = []
+  def formate_data
+    @preformatted_data = []
     @processed_data.each_with_index do |application, index|
-      @preformated_data[index] = []
-      @preformated_data[index] << application.reference
-      @preformated_data[index] << online_application_submitted(application)
-      @preformated_data[index] << paper_application_received(application)
-      @preformated_data[index] << application.created_at
-      @preformated_data[index] << application.completed_at
-      @preformated_data[index] << application.updated_at
-      @preformated_data[index] << decision_time_in_minutes(application)
-      @preformated_data[index] << process_time_in_minutes(application)
-      @preformated_data[index] << process_time_in_words(application)
-      @preformated_data[index] << application_format(application)
-      @preformated_data[index] << application.office.name
-      @preformated_data[index] << application_outcome(application)
-      @preformated_data[index] << application.state
-      @preformated_data[index] << application.application_type
-      @preformated_data[index] << evidence_check_required(application)
+      @preformatted_data[index] = []
+      @preformatted_data[index] << application.reference
+      @preformatted_data[index] << online_application_submitted(application)
+      @preformatted_data[index] << paper_application_received(application)
+      @preformatted_data[index] << application.created_at
+      @preformatted_data[index] << application.completed_at
+      @preformatted_data[index] << application.updated_at
+      @preformatted_data[index] << decision_time_in_minutes(application)
+      @preformatted_data[index] << process_time_in_minutes(application)
+      @preformatted_data[index] << process_time_in_words(application)
+      @preformatted_data[index] << application_format(application)
+      @preformatted_data[index] << application.office.name
+      @preformatted_data[index] << application_outcome(application)
+      @preformatted_data[index] << application.state
+      @preformatted_data[index] << application.application_type
+      @preformatted_data[index] << evidence_check_required(application)
     end
   end
   # rubocop:enable all

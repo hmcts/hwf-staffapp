@@ -46,7 +46,7 @@ RSpec.describe ProcessingPerformanceExport do
 
     let(:data) do
       processing_perfomance_export.export
-      processing_perfomance_export.preformated_data
+      processing_perfomance_export.preformatted_data
     end
 
     it "includes processed applications" do
