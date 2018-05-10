@@ -1,25 +1,28 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
+RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
   let(:user) { create :user }
+  let(:dwp_result) { nil }
+  let(:dwp_status) { 200 }
 
   before do
-    dwp_api_response ''
     login_as user
+    dwp_api_response(dwp_result, dwp_status)
   end
 
-  context 'Benefit application excluded in the 1 in 10 count' do
+  context 'DWP outcome is Undetermined' do
+    let(:dwp_result) { 'Undetermined' }
     let(:application) { create :application_full_remission }
 
     before do
       create_list :application_full_remission, 9
     end
 
-    scenario 'Every 10th application is not evidence check when a benefit application' do
+    scenario 'Benefit application skipped from ev check when dwp is undertermined' do
       start_new_application
 
       fill_personal_details
@@ -35,43 +38,43 @@ RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
     end
   end
 
-  context 'Benefit application with paper evidence false excluded in the 1 in 10 count' do
+  context 'DWP outcome is pass' do
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission }
 
     before do
       create_list :application_full_remission, 9
     end
 
-    scenario 'Every 10th application is not evidence check when a benefit application paper check is false' do
+    scenario 'Benefit application skipped from ev check when dwp is pass' do
       start_new_application
 
       fill_personal_details
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
       expect(page).not_to have_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
 
-  context 'Benefit application excluded in the 1 in 2 count' do
+  context 'DWP Outcome is pass and paper evidence is true' do
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
       create_list :application_full_remission, 1, :refund
     end
 
-    scenario 'Every 2nd application is not evidence check when Benefit Application' do
+    scenario 'Benefit application skipped from ev check when dwp is pass and paper evidence confirmed' do
       start_new_application
 
       fill_personal_details
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
-      fill_benefit_evidence(paper_provided: true)
 
       click_button 'Complete processing'
 
@@ -80,7 +83,8 @@ RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
     end
   end
 
-  context 'Benefit application with papper evidence false excluded in the 1 in 2 count' do
+  context 'DWP Outcome is ECONNREFUSED' do
+    let(:dwp_result) { 'Server unavailable' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
@@ -103,46 +107,26 @@ RSpec.feature 'Application is evidence checked when 1 in X', type: :feature do
     end
   end
 
-  context 'Income Application within 3 month of application Date' do
+  context 'DWP Outcome is Yes for emergency application' do
+    let(:dwp_result) { 'Yes' }
     let(:application) { create :application_full_remission, :refund }
 
     before do
       create_list :application_full_remission, 1, :refund
     end
 
-    scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
+    scenario 'No evidence check on emergency applications' do
       start_new_application
+
       fill_personal_details
-      fill_application_refund_details
+      fill_application_emergency_details
       fill_saving_and_investment
-      fill_benefits(false)
-      fill_income(false)
-
-      click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
-    end
-  end
-
-  context 'Income Application exceeds 3month application and Discretion applied' do
-    let(:application) { create :application_full_remission, :refund }
-
-    before do
-      create_list :application_full_remission, 1, :refund
-    end
-
-    scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
-      start_new_application
-      fill_personal_details
-      fill_application_date_set_discretion_yes
-      fill_saving_and_investment
-      fill_benefits(false)
-      fill_income(false)
+      fill_benefits(true)
 
       click_button 'Complete processing'
 
-      expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
 end
