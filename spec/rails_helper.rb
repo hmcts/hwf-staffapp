@@ -89,10 +89,6 @@ RSpec.configure do |config|
 
   config.include ApplicationFormMacros, type: :feature
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
   config.before(:all) do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
   end
@@ -106,19 +102,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     ActionMailer::Base.deliveries = []
-    DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
-  end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 end
