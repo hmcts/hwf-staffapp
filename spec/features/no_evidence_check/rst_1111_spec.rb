@@ -110,7 +110,6 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       expect(page).to have_content('✗   Not eligible for help with fees')
     end
 
-
     it_behaves_like 'duplicated NINO for failed DWP'
   end
 
