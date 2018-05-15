@@ -36,6 +36,8 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       expect(page).not_to have_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
+
+    it_behaves_like 'duplicated NINO for failed DWP'
   end
 
   context 'DWP outcome is pass' do
@@ -58,6 +60,8 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       expect(page).not_to have_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
+
+    it_behaves_like 'duplicated NINO for successfull DWP'
   end
 
   context 'DWP Outcome is pass and paper evidence is true' do
@@ -105,6 +109,8 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
       expect(page).not_to have_content('Evidence of income needs to be checked')
       expect(page).to have_content('✗   Not eligible for help with fees')
     end
+
+    it_behaves_like 'duplicated NINO for failed DWP'
   end
 
   context 'DWP Outcome is Yes for emergency application' do

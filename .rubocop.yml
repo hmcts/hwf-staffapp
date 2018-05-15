@@ -162,6 +162,7 @@ Rails/HttpPositionalArguments:
 RSpec/MultipleExpectations:
   Exclude:
     - 'spec/features/**/*'
+    - 'spec/support/shared_examples/**/*'
 
 RSpec/ExampleLength:
   Exclude:
