@@ -78,7 +78,7 @@ describe BusinessEntityService do
     describe 'when sent new sop_code' do
       let(:name) { 'test-jurisdiction' }
       let(:be_code) { business_entity.be_code }
-      let(:sop_code) { business_entity.sop_code.reverse }
+      let(:sop_code) { '9999999' }
 
       it { is_expected.to be_a_kind_of BusinessEntity }
 
