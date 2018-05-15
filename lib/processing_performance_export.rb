@@ -42,8 +42,8 @@ class ProcessingPerformanceExport
   def check_date_range
     return if @from.respond_to?(:strftime) &&
               @to.respond_to?(:strftime)
-    @from = DateTime.parse('May 1 2017 00:00').utc
-    @to = DateTime.parse('April 30 2018 23:59').utc
+    @from = Time.zone.parse('May 1 2017 00:00')
+    @to = Time.zone.parse('April 30 2018 23:59')
   end
 
   # rubocop:disable all
