@@ -42,6 +42,10 @@ RSpec.describe ProcessingPerformanceExport do
       completed_at: 29.minutes.ago
   end
 
+  after(:all) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
   describe 'export data' do
 
     let(:data) do
