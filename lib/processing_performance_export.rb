@@ -3,7 +3,7 @@ class ProcessingPerformanceExport
   include ActionView::Helpers::DateHelper
   attr_reader :processed_data, :preformatted_data
 
-  HEADERS = ['Application reference number', 'Submission date (digital only)',
+  HEADERS = ['Application reference number', 'Date received (digital only)',
              'Date received (paper only)', 'Created at', 'Completed at',
              'Date Processed', 'Decision time in minutes',
              'Processing time in minutes', 'Processing time in words',
@@ -71,7 +71,7 @@ class ProcessingPerformanceExport
   # rubocop:enable all
 
   def online_application_submitted(application)
-    application.online_application ? application.online_application.created_at : nil
+    application.online_application ? application.online_application.date_received : nil
   end
 
   def paper_application_received(application)

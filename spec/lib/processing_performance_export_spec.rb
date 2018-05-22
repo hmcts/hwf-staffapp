@@ -26,6 +26,7 @@ RSpec.describe ProcessingPerformanceExport do
       created_at: 100.minutes.ago,
       completed_at: 90.minutes.ago,
       updated_at: 10.minutes.ago,
+      date_received: 5.minutes.ago,
       reference: 'AB002-18-1'
 
     create :application_full_remission, :with_office, :processed_state,
@@ -65,7 +66,7 @@ RSpec.describe ProcessingPerformanceExport do
       end
 
       it 'Submission date (digital only)' do
-        expect(line[1]).to eql(online_application.created_at)
+        expect(line[1]).to eql(online_application.date_received)
       end
 
       it 'Date received (paper only)' do
