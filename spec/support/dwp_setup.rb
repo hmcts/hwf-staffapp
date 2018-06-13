@@ -3,14 +3,14 @@ module DwpSetup
   def build_dwp_checks_with_bad_requests(yes_response = 5, bad_requests = 5)
     teardown
     create_list :benefit_check, yes_response, :yes_result
-    create_list :benefit_check, bad_requests, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
+    create_list :benefit_check, bad_requests, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable'
   end
 
   def build_dwp_checks_with_all_errors
     teardown
     create_list :benefit_check, 12, :yes_result
     create_list :benefit_check, 4, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
-    create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '400 Bad Request'
+    create_list :benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable'
     create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
   end
 
