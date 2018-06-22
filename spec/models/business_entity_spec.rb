@@ -29,25 +29,25 @@ RSpec.describe BusinessEntity, type: :model do
     end
 
     describe 'sop_code valid in context' do
-      subject { create :business_entity }
-      let(:business_entity) { build(:business_entity, sop_code: subject.sop_code) }
+      subject(:business_entity) { create :business_entity }
+      let(:business_entity_2) { build(:business_entity, sop_code: business_entity.sop_code) }
 
       it "of office_id and name" do
-        business_entity.office_id = subject.office_id
-        business_entity.name = subject.name
-        expect(business_entity).not_to be_valid
+        business_entity_2.office_id = business_entity.office_id
+        business_entity_2.name = business_entity.name
+        expect(business_entity_2).not_to be_valid
       end
 
       it "of office_id" do
-        business_entity.office_id = subject.office_id
-        business_entity.name = 'Newcastle Court of Protection'
-        expect(business_entity).to be_valid
+        business_entity_2.office_id = business_entity.office_id
+        business_entity_2.name = 'Newcastle Court of Protection'
+        expect(business_entity_2).to be_valid
       end
 
       it "of name" do
-        business_entity.office_id = subject.office_id + 1
-        business_entity.name = subject.name
-        expect(business_entity).to be_valid
+        business_entity_2.office_id = business_entity.office_id + 1
+        business_entity_2.name = business_entity.name
+        expect(business_entity_2).to be_valid
       end
     end
   end
