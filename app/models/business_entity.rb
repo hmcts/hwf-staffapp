@@ -7,7 +7,7 @@ class BusinessEntity < ActiveRecord::Base
   }
 
   validates :office, :jurisdiction, :sop_code, :name, :valid_from, presence: true
-  validates :sop_code, uniqueness: { scope: :be_code }
+  validates :sop_code, uniqueness: { scope: [:office_id, :name] }
 
   validates :valid_to, date: {
     after: :valid_from, allow_blank: true
