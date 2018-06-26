@@ -1,4 +1,5 @@
 class BusinessEntityService
+  attr_reader :business_entity
 
   def initialize(office, jurisdiction)
     @office = office
@@ -30,13 +31,12 @@ class BusinessEntityService
     case @persist_status
     when :new
       save_new
-    when :update_existing
+    when :update_existing, :delete
       save_existing
     when :update_duplicate
       save_both
-    when :delete
-      save_existing
     end
+    any_errors?
   end
 
   private
@@ -68,10 +68,12 @@ class BusinessEntityService
 
   def save_new
     @new_business_entity.save
+    @business_entity = @new_business_entity
   end
 
   def save_existing
     @existing_business_entity.save
+    @business_entity = @existing_business_entity
   end
 
   def set_update_type
@@ -84,5 +86,9 @@ class BusinessEntityService
 
   def deactivate_existing
     @existing_business_entity.assign_attributes(valid_to: @timestamp)
+  end
+
+  def any_errors?
+    @business_entity.try(:errors).blank?
   end
 end

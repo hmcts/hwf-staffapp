@@ -31,6 +31,7 @@ table
             -case j.status
               -when 'delete'
                 =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
+                |&nbsp;
                 =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
               -when 'edit'
                 =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)

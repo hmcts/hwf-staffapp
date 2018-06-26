@@ -159,6 +159,24 @@ describe BusinessEntityService do
       it 'creates a new business_entity' do
         expect { persist }.to change { BusinessEntity.count }.by 1
       end
+
+      it 'the business_entity has no error messages' do
+        service.persist!
+        expect(service.business_entity.errors.messages).to be_blank
+      end
+    end
+
+    context 'when persisting a new object with invalid data' do
+      before { service.build_new(name: '', sop_code: '123456789') }
+
+      it 'the business_entity has no error messages' do
+        service.persist!
+        expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
+      end
+
+      it 'return false' do
+        expect(service.persist!).to be_falsey
+      end
     end
 
     context 'when persisting an update' do
@@ -169,10 +187,32 @@ describe BusinessEntityService do
           expect { persist }.to change { BusinessEntity.count }.by 1
         end
 
+        it 'return true if no errors' do
+          expect(service.persist!).to be_truthy
+        end
+
         it 'sets the valid_to date of the existing business_entity' do
           service.persist!
           business_entity.reload
           expect(business_entity.valid_to).not_to eq nil
+        end
+
+        it 'the business_entity has no error messages' do
+          service.persist!
+          expect(service.business_entity.errors.messages).to be_blank
+        end
+      end
+
+      context 'invalid data' do
+        before { service.build_update(name: '', sop_code: '987654321') }
+
+        it 'return false if fails to persist' do
+          expect(service.persist!).to be_falsey
+        end
+
+        it 'the business_entity has the error messages' do
+          service.persist!
+          expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
         end
       end
 
@@ -196,6 +236,11 @@ describe BusinessEntityService do
 
       it 'sets the current office and jurisdiction business_entity to nil' do
         expect(BusinessEntity.current_for(office, jurisdiction)).to be nil
+      end
+
+      it 'the business_entity has no error messages' do
+        service.persist!
+        expect(service.business_entity.errors.messages).to be_blank
       end
     end
   end

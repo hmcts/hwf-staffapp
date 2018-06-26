@@ -28,9 +28,27 @@ RSpec.describe BusinessEntity, type: :model do
       end
     end
 
-    describe 'sop_code' do
-      subject { build :business_entity }
-      it { is_expected.to validate_uniqueness_of(:sop_code).ignoring_case_sensitivity.scoped_to(:be_code) }
+    describe 'sop_code valid in context' do
+      subject(:business_entity) { create :business_entity }
+      let(:business_entity_2) { build(:business_entity, sop_code: business_entity.sop_code) }
+
+      it "of office_id and name" do
+        business_entity_2.office_id = business_entity.office_id
+        business_entity_2.name = business_entity.name
+        expect(business_entity_2).not_to be_valid
+      end
+
+      it "of office_id" do
+        business_entity_2.office_id = business_entity.office_id
+        business_entity_2.name = 'Newcastle Court of Protection'
+        expect(business_entity_2).to be_valid
+      end
+
+      it "of name" do
+        business_entity_2.office_id = business_entity.office_id + 1
+        business_entity_2.name = business_entity.name
+        expect(business_entity_2).to be_valid
+      end
     end
   end
 
