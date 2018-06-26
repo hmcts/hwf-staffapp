@@ -41,6 +41,7 @@ class BusinessEntitiesController < ApplicationController
     if business_entity_service.persist!
       redirect_to office_business_entities_path
     else
+      @business_entity = business_entity_service.business_entity
       render fail_route
     end
   end
