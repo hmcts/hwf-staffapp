@@ -23,6 +23,7 @@ module Views
       end
 
       def income_result
+        return if @application.income.blank?
         format_locale(['full', 'part'].include?(result).to_s)
       end
 
@@ -32,6 +33,11 @@ module Views
 
       def benefits
         convert_to_boolean(@application.benefits?)
+      end
+
+      def paper_evidence
+        return if @application.benefit_override.blank?
+        format_locale(@application.benefit_override.correct)
       end
 
       def type

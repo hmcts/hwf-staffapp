@@ -13,7 +13,7 @@ module Views
         [
           'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
           'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied',
-          'emergency_reason'
+          'discretion_manager_name', 'discretion_reason', 'emergency_reason'
         ]
       end
 
@@ -35,6 +35,18 @@ module Views
         return if @application.is_a?(OnlineApplication) || detail.discretion_applied.nil?
         scope = 'activemodel.attributes.forms/application/detail'
         I18n.t(".discretion_applied_#{detail.discretion_applied}", scope: scope)
+      end
+
+      def discretion_manager_name
+        return if discretion_applied.blank?
+        scope = 'activemodel.attributes.forms/application/detail'
+        detail.discretion_manager_name
+      end
+
+      def discretion_reason
+        return if discretion_applied.blank?
+        scope = 'activemodel.attributes.forms/application/detail'
+        detail.discretion_reason
       end
 
       private

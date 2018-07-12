@@ -259,6 +259,7 @@ en-GB:
       views/overview/application:
         savings: Savings and investments
         benefits: Receiving eligible benefits
+        paper_evidence: Paper evidence check
         benefits_result: Benefits
         income_result: Income
         savings_result: Savings
@@ -283,6 +284,8 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
         discretion_applied: Delivery Manager discretion applied
+        discretion_manager_name: Delivery Manager name
+        discretion_reason: Discretion reasons
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
