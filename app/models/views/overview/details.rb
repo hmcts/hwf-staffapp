@@ -39,13 +39,11 @@ module Views
 
       def discretion_manager_name
         return if discretion_applied.blank?
-        scope = 'activemodel.attributes.forms/application/detail'
         detail.discretion_manager_name
       end
 
       def discretion_reason
         return if discretion_applied.blank?
-        scope = 'activemodel.attributes.forms/application/detail'
         detail.discretion_reason
       end
 
