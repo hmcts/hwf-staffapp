@@ -47,6 +47,32 @@ RSpec.describe ProcessingPerformanceExport do
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  # RSpec/MessageSpies: disable
+  context 'wrong date format' do
+    let(:default_date_range) { { created_at: Time.zone.parse('May 1 2017 00:00')..Time.zone.parse('April 30 2018 23:59') } }
+    let(:ar_relation) { instance_double('Application::ActiveRecord_Relation') }
+    let(:ar_where) { instance_double('ActiveRecord::QueryMethods::WhereChain') }
+    let(:ar_not) { instance_double('Application::ActiveRecord_Relation', order: []) }
+
+    before do
+      allow(ar_relation).to receive(:where).and_return ar_where
+      allow(ar_where).to receive(:not).and_return ar_not
+    end
+
+    it "if FROM is not a Date" do
+      allow(Application).to receive(:where).with(default_date_range).and_return ar_relation
+      pp_export = described_class.new('test', Time.zone.today.end_of_day)
+      pp_export.export
+    end
+
+    it "if TO is not a Date" do
+      allow(Application).to receive(:where).with(default_date_range).and_return ar_relation
+      pp_export = described_class.new(Time.zone.today.end_of_day, 'test')
+      pp_export.export
+    end
+  end
+  # RSpec/MessageSpies: enable
+
   describe 'export data' do
 
     let(:data) do
