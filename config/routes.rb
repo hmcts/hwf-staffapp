@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resource :notifications, only: [:edit, :update]
+  resource :dwp_warnings
 
   post 'api/submissions' => 'api/submissions#create'
   get 'reports' => 'reports#index'

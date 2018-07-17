@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     load_users_last_applications
     @online_search_form = Forms::Search.new
     @completed_search_form = Forms::Search.new
-    @state = DwpMonitor.new.state
+    @state = dwp_checker_state
     @notification = Notification.first
   end
 
