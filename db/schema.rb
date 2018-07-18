@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223104947) do
+ActiveRecord::Schema.define(version: 20180717100104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,12 @@ ActiveRecord::Schema.define(version: 20180223104947) do
   end
 
   add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree
+
+  create_table "dwp_warnings", force: :cascade do |t|
+    t.string   "check_state", default: "default_checker"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
 
   create_table "evidence_check_flags", force: :cascade do |t|
     t.string   "ni_number"

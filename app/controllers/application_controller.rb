@@ -33,4 +33,9 @@ class ApplicationController < ActionController::Base
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
   end
+
+  def dwp_checker_state
+    return DwpMonitor.new.state if DwpWarning.use_default_check?
+    DwpWarning.last.check_state
+  end
 end
