@@ -11,7 +11,8 @@ RSpec.describe Views::Overview::Details do
 
     it do
       is_expected.to eql(['fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-                          'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied', 'emergency_reason'])
+                          'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied',
+                          'discretion_manager_name', 'discretion_reason', 'emergency_reason'])
     end
   end
 
