@@ -20,7 +20,7 @@ class OfficePolicy < BasePolicy
   end
 
   def update?
-    admin? || (manager? && same_office?)
+    admin?
   end
 
   private

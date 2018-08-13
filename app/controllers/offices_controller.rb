@@ -39,8 +39,9 @@ class OfficesController < ApplicationController
   end
 
   def update
-    office.assign_attributes(office_params)
     authorize office
+
+    office.assign_attributes(office_params)
 
     if office.save
       flash[:notice] = 'Office was successfully updated'
