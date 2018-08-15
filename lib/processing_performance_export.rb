@@ -1,4 +1,5 @@
 class ProcessingPerformanceExport
+
   require 'csv'
   include ActionView::Helpers::DateHelper
   attr_reader :processed_data, :preformatted_data
