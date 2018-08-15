@@ -47,6 +47,17 @@ RSpec.describe ProcessingPerformanceExport do
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  it 'has headers' do
+    headers = ['Application reference number', 'Date received (digital only)',
+               'Date received (paper only)', 'Created at', 'Completed at',
+               'Date Processed', 'Decision time in minutes',
+               'Processing time in minutes', 'Processing time in words',
+               'Paper or digital application', 'Processing office',
+               'Outcome', 'Applicaion status', 'Application type',
+               'Evidence check required']
+    expect(ProcessingPerformanceExport::HEADERS).to eql(headers)
+  end
+
   # RSpec/MessageSpies: disable
   context 'wrong date format' do
     let(:default_date_range) { { created_at: Time.zone.parse('May 1 2017 00:00')..Time.zone.parse('April 30 2018 23:59') } }
