@@ -36,5 +36,6 @@ exclude_paths:
 - config/
 - db/
 - spec/
+- spec/lib/
 - tests/
 - vendor/
