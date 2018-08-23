@@ -15,3 +15,8 @@ header
   = f.submit 'Complete processing', :class => 'button primary large'
 
 
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      googleDataLayerPush.init()
+    });

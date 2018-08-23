@@ -31,3 +31,4 @@
 //= require login
 //= require fee_field
 //= require close_alerts
+//= require data_layer_push

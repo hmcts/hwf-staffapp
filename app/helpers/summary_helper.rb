@@ -1,14 +1,14 @@
 module SummaryHelper
 
   def build_section_with_defaults(summary_text, object, link_url = nil)
-    link = ["Change #{summary_text.downcase}", link_url] if link_url
+    link = ["Change #{summary_text.downcase}", link_url, summary_text.parameterize] if link_url
     build_section summary_text, object, object.all_fields, *link
   end
 
-  def build_section(summary_text, object, fields, link_title = nil, link_url = nil)
+  def build_section(summary_text, object, fields, link_title = nil, link_url = nil, section_name = nil)
     unless all_fields_empty?(object, fields)
       content_tag(:div, class: 'summary-section') do
-        content = build_header(summary_text, link_title, link_url)
+        content = build_header(summary_text, link_title, link_url, section_name)
         fields.each do |row|
           content << build_data_row(object, row)
         end
@@ -27,19 +27,19 @@ module SummaryHelper
     fields.map { |f| object.send(f) }.all?(&:blank?)
   end
 
-  def build_header(summary_name, link_title, link_url)
+  def build_header(summary_name, link_title, link_url, section_name)
     content_tag(:div, class: 'grid-row header-row') do
       content_tag(:div, class: 'column-two-thirds') do
         content_tag(:h4, summary_name.to_s, class: 'heading-medium util_mt-0')
-      end + build_link(link_title, link_url)
+      end + build_link(link_title, link_url, section_name)
     end
   end
 
-  def build_link(link_title, link_url)
+  def build_link(link_title, link_url, section_name)
     if link_title.present? && link_url.present?
       link_class = 'column-one-third'
       content_tag(:div, class: link_class) do
-        link_to(link_title, link_url, class: 'right')
+        link_to(link_title, link_url, class: 'right', data: { section_name: section_name })
       end
     end
   end
