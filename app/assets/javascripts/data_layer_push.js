@@ -1,4 +1,4 @@
-var googleDataLayerPush = function(){
+var googleDataLayerPush = (function(){
   var googleDataLayerPush = {};
 
   function bindLinks(){
@@ -13,8 +13,8 @@ var googleDataLayerPush = function(){
   }
 
   googleDataLayerPush.init = function(value) {
-    bindLinks()
+    bindLinks();
   };
   return googleDataLayerPush;
 
-}();
+}());
