@@ -60,12 +60,12 @@ RSpec.describe SummaryHelper, type: :helper do
 
         it 'returns the correct html' do
           expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" data-section-name=\"null\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
-          expect(helper.build_section('section name', view, ['fee'], title, url)).to eq(expected)
+          expect(helper.build_section('section name', view, ['fee'], { title: title, url: url })).to eq(expected)
         end
 
         it 'returns the correct html with data attribute' do
           expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" data-section-name=\"#{title}\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
-          expect(helper.build_section('section name', view, ['fee'], title, url, title)).to eq(expected)
+          expect(helper.build_section('section name', view, ['fee'], { title: title, url: url, section_name: title })).to eq(expected)
         end
       end
 

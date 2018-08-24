@@ -1,14 +1,20 @@
 module SummaryHelper
 
   def build_section_with_defaults(summary_text, object, link_url = nil)
-    link = ["Change #{summary_text.downcase}", link_url, summary_text.parameterize] if link_url
-    build_section summary_text, object, object.all_fields, *link
+    link_attributes = {}
+    if link_url
+      link_attributes.merge!(title: "Change #{summary_text.downcase}",
+                             url: link_url,
+                             section_name: summary_text.parameterize)
+    end
+
+    build_section summary_text, object, object.all_fields, link_attributes
   end
 
-  def build_section(summary_text, object, fields, link_title = nil, link_url = nil, section_name = nil)
+  def build_section(summary_text, object, fields, link_attributes = {})
     unless all_fields_empty?(object, fields)
       content_tag(:div, class: 'summary-section') do
-        content = build_header(summary_text, link_title, link_url, section_name)
+        content = build_header(summary_text, link_attributes)
         fields.each do |row|
           content << build_data_row(object, row)
         end
@@ -27,19 +33,23 @@ module SummaryHelper
     fields.map { |f| object.send(f) }.all?(&:blank?)
   end
 
-  def build_header(summary_name, link_title, link_url, section_name)
+  def build_header(summary_name, link_attributes)
     content_tag(:div, class: 'grid-row header-row') do
       content_tag(:div, class: 'column-two-thirds') do
         content_tag(:h4, summary_name.to_s, class: 'heading-medium util_mt-0')
-      end + build_link(link_title, link_url, section_name)
+
+      end + build_link(link_attributes)
     end
   end
 
-  def build_link(link_title, link_url, section_name)
-    if link_title.present? && link_url.present?
+  def build_link(link_attributes)
+    if link_attributes[:title].present? && link_attributes[:url].present?
       link_class = 'column-one-third'
       content_tag(:div, class: link_class) do
-        link_to(link_title, link_url, class: 'right', data: { section_name: section_name })
+        link_to(link_attributes[:title],
+          link_attributes[:url],
+          class: 'right',
+          data: { section_name: link_attributes[:section_name] })
       end
     end
   end
