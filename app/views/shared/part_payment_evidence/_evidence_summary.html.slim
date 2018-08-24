@@ -1,6 +1,6 @@
 -content_for :edit
-  - change_evidence_link = [ 'Change application evidence', accuracy_evidence_path(@evidence) ]
-  =build_section 'Evidence', @evidence_view, ['correct', 'incorrect_reason', 'income'], *change_evidence_link
+  - change_evidence_link = { title: 'Change application evidence', url: accuracy_evidence_path(@evidence) }
+  =build_section 'Evidence', @evidence_view, ['correct', 'incorrect_reason', 'income'], change_evidence_link
 
 -content_for :result
   =render(partial: 'shared/remission_type', locals: { source: @result })
