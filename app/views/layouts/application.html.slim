@@ -6,6 +6,7 @@
 
 - content_for :head
   = csrf_meta_tags
+  = render('shared/analytics')
   = yield :head_scripts
 
 - content_for :content_override
@@ -50,6 +51,6 @@
 
 - content_for :javascripts
   = javascript_include_tag('application.js')
-  = render('shared/analytics')
+
 
 = render template: "layouts/local-template"
