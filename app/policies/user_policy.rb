@@ -3,6 +3,10 @@ class UserPolicy < BasePolicy
     manager? || admin?
   end
 
+  def invite?
+    admin?
+  end
+
   def list_deleted?
     admin?
   end

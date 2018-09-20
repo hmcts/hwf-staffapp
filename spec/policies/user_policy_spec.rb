@@ -19,6 +19,7 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.not_to permit_action(:list_deleted) }
     it { is_expected.not_to permit_action(:destroy) }
     it { is_expected.not_to permit_action(:restore) }
+    it { is_expected.not_to permit_action(:invite) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
 
@@ -66,6 +67,7 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.to permit_action(:new) }
     it { is_expected.not_to permit_action(:list_deleted) }
     it { is_expected.not_to permit_action(:restore) }
+    it { is_expected.not_to permit_action(:invite) }
 
     context 'when the subject_user belongs to the same office as the manager' do
       let(:subject_user) { build_stubbed(:user, office: office) }
@@ -138,6 +140,7 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:list_deleted) }
     it { is_expected.to permit_action(:restore) }
+    it { is_expected.to permit_action(:invite) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:new) }
     it { is_expected.to permit_action(:create) }
@@ -166,6 +169,7 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.not_to permit_action(:list_deleted) }
     it { is_expected.not_to permit_action(:destroy) }
     it { is_expected.not_to permit_action(:restore) }
+    it { is_expected.not_to permit_action(:invite) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
 

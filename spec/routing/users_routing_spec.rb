@@ -34,5 +34,9 @@ RSpec.describe UsersController, type: :routing do
     it 'routes to #restore' do
       expect(patch: '/users/1/restore').to route_to('users#restore', id: '1')
     end
+
+    it 'routes to #invite' do
+      expect(patch: '/users/1/invite').to route_to('users#invite', id: '1')
+    end
   end
 end

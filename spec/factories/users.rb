@@ -28,5 +28,14 @@ FactoryGirl.define do
     factory :active_user do
       current_sign_in_at 1.month.ago
     end
+    trait :invitation_sent do
+      invitation_sent_at 3.months.ago
+    end
+    trait :invitation_not_accepted do
+      invitation_accepted_at nil
+    end
+    trait :invitation_accepted do
+      invitation_accepted_at 2.months.ago
+    end
   end
 end

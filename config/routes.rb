@@ -112,6 +112,7 @@ Rails.application.routes.draw do
 
   get 'users/deleted' => 'users#deleted', as: 'deleted_users'
   patch 'users/:id/restore' => 'users#restore', as: 'restore_user'
+  patch 'users/:id/invite' => 'users#invite', as: 'invite_user'
   devise_for :users, skip: :registrations, controllers: {
     invitations: 'users/invitations',
     passwords: 'users/passwords',

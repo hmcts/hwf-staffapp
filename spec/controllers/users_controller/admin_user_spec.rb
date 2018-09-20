@@ -196,5 +196,18 @@ RSpec.describe UsersController, type: :controller do
         end
       end
     end
+
+    describe 'PATCH #invite' do
+
+      before { patch :invite, id: user_not_on_admins_team.to_param }
+
+      it 'returns a redirect code' do
+        expect(response).to have_http_status(:redirect)
+      end
+
+      it 'returns a confirmation message' do
+        expect(flash[:notice]).to eq("An invitation was sent to #{user_not_on_admins_team.name}")
+      end
+    end
   end
 end
