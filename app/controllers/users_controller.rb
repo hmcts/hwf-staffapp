@@ -49,6 +49,14 @@ class UsersController < ApplicationController
     redirect_to redirect_after_restore
   end
 
+  def invite
+    authorize user
+    user.invite!
+
+    flash[:notice] = "An invitation was sent to #{user.name}"
+    redirect_to users_path
+  end
+
   protected
 
   def user

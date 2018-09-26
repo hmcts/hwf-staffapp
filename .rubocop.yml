@@ -30,6 +30,9 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ClassLength:
+  Max: 120
+
 # Allow expect {}.to blocks in specs
 # but not in the code
 Style/BlockDelimiters:
