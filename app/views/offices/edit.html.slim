@@ -1,6 +1,10 @@
 header
   h2.heading-xlarge Change office details
 
+- if current_user.manager?
+  div.important-notice.util_mb-large
+    strong = t('offices.jurisdictions_warning')
+
 = render 'form', with_jurisdictions: true
 
 ul
