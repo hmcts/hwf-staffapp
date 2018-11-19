@@ -5,7 +5,7 @@ class AddMediumToApplications < ActiveRecord::Migration
     reversible do |direction|
       direction.up do
         Application.where("reference ~* ?", "HWF").update_all(medium: "digital")
-        Application.where.not("reference ~* ?", "HWF").update_all(medium: "paper")
+        Application.where("reference !~* ? OR reference IS NULL", "HWF").update_all(medium: 'paper')
       end
     end
   end
