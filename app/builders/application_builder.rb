@@ -12,7 +12,8 @@ class ApplicationBuilder
       user_id: @user.id,
       applicant: build_applicant,
       detail: build_details,
-      saving: build_saving
+      saving: build_saving,
+      medium: 'paper'
     )
   end
 
@@ -23,7 +24,8 @@ class ApplicationBuilder
       online_application: online_application,
       applicant: Applicant.new(online_applicant_attributes(online_application)),
       detail: Detail.new(online_detail_attributes(online_application)),
-      saving: Saving.new(online_saving_attributes(online_application))
+      saving: Saving.new(online_saving_attributes(online_application)),
+      medium: 'digital'
     }.merge(online_application_attributes(online_application))
 
     Application.new(attributes)
