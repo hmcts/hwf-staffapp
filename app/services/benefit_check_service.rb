@@ -33,7 +33,7 @@ class BenefitCheckService
   def process_proxy_api_call
     query_proxy_api
   rescue RestClient::BadRequest => e
-    log_error JSON.parse(e.response)['error'], 'BadRequest'
+    log_bad_request_error(e)
   rescue Exceptions::UndeterminedDwpCheck
     log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
   rescue Errno::ECONNREFUSED
@@ -68,4 +68,19 @@ class BenefitCheckService
     @check_item.update!(dwp_result: result)
     LogStuff.log @check_item.class.name.titleize.humanize, message
   end
+
+  def log_bad_request_error(e)
+    json_response = JSON.parse(e.response)['error']
+    request_type = parse_response_error(json_response)
+    log_error json_response, request_type
+  end
+
+  def parse_response_error(response_error)
+    if (/LSCBC9\d{2}:/.match response_error).present?
+      return 'Unspecified Error'
+    end
+
+    'BadRequest'
+  end
+
 end
