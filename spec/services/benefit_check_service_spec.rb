@@ -59,20 +59,42 @@ describe BenefitCheckService do
       end
 
       context 'simulating a 400 error' do
-        let(:message) { { 'error': "LSCBC210: Error in request parameter 'Surname'" }.to_json }
-
         before do
           stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
             to_return(status: 400, body: message, headers: {})
           described_class.new(check)
         end
 
-        it 'returns the error in message' do
-          expect(check.error_message).to eql("LSCBC210: Error in request parameter 'Surname'")
+        context 'LSCBC210' do
+          let(:message) { { 'error': "LSCBC210: Error in request parameter 'Surname'" }.to_json }
+
+          it 'returns the error in message' do
+            expect(check.error_message).to eql("LSCBC210: Error in request parameter 'Surname'")
+          end
+
+          it 'assign dwp_result as Unspecified Error' do
+            expect(check.dwp_result).to eql("BadRequest")
+          end
+
+          it 'returns fail' do
+            expect(check.benefits_valid).to be false
+          end
         end
 
-        it 'returns fail' do
-          expect(check.benefits_valid).to be false
+        context 'LSCBC959' do
+          let(:message) { { 'error': "LSCBC959: Service unavailable" }.to_json }
+
+          it 'returns the error in message' do
+            expect(check.error_message).to eql("LSCBC959: Service unavailable")
+          end
+
+          it 'assign dwp_result as Unspecified Error' do
+            expect(check.dwp_result).to eql("Unspecified Error")
+          end
+
+          it 'returns fail' do
+            expect(check.benefits_valid).to be false
+          end
         end
       end
     end
