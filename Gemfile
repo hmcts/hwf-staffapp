@@ -102,6 +102,13 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
+  gem 'chromedriver-helper', '~> 1.1'
+  gem 'geckodriver-helper', '~> 0.0'
+  gem 'poltergeist', '1.15.0'
+  gem 'selenium-webdriver', '~> 3.10'
+  gem 'shoulda-matchers'
+  gem 'site_prism', '~> 2.9'
+  gem 'timecop'
   gem 'capybara-webkit'
   gem 'chromedriver-helper', '~> 1.1'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
