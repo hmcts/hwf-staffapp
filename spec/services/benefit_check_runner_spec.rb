@@ -136,6 +136,40 @@ RSpec.describe BenefitCheckRunner do
           end
         end
 
+        ['Yes', 'No', 'Undetermined', 'Deceased', 'BadRequest'].each do |result|
+          context "when the DWP result is #{result}" do
+            let(:existing_benefit_check) do
+              create :benefit_check,
+                application: application,
+                last_name: applicant.last_name,
+                date_of_birth: applicant.date_of_birth + 1.day,
+                ni_number: applicant.ni_number,
+                date_to_check: detail.date_received,
+                dwp_result: result
+            end
+
+            it { expect { run }.not_to change { application.benefit_checks.count } }
+          end
+        end
+
+        ['Unspecified Error', nil].each do |result|
+          context "when the DWP result is #{result}" do
+            before{ allow(BenefitCheckService).to receive(:new) }
+
+            let(:existing_benefit_check) do
+              create :benefit_check,
+                application: application,
+                last_name: applicant.last_name,
+                date_of_birth: applicant.date_of_birth + 1.day,
+                ni_number: applicant.ni_number,
+                date_to_check: detail.date_received,
+                dwp_result: result
+            end
+
+            it { expect { run }.to change { application.benefit_checks.count } }
+          end
+        end
+
         context 'when there was an error before' do
           let(:existing_benefit_check) do
             create :benefit_check,
