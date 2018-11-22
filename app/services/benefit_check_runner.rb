@@ -40,7 +40,7 @@ class BenefitCheckRunner
   end
 
   def should_run?
-    benefit_check_date_valid? && (previous_check.nil? || !same_as_before? || was_error?)
+    benefit_check_date_valid? && !valid_previous_check? && (!same_as_before? || was_error?)
   end
 
   def was_error?
@@ -48,6 +48,7 @@ class BenefitCheckRunner
   end
 
   def same_as_before?
+    return false if previous_check.blank?
     applicant_same? && (previous_check.date_to_check == benefit_check_date)
   end
 
@@ -59,6 +60,15 @@ class BenefitCheckRunner
 
   def previous_check
     @previous_check ||= @application.last_benefit_check
+  end
+
+  def valid_previous_check?
+    @previous_check ||= @application.last_benefit_check
+    return false if @previous_check.blank?
+
+    not_rerunable_resposnes = ["yes", "no", "undetermined", "deceased", "badrequest"]
+    result = @previous_check.dwp_result.downcase
+    result && not_rerunable_resposnes.include?(result)
   end
 
   def benefit_check
