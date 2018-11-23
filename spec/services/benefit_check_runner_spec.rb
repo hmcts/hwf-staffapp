@@ -154,7 +154,7 @@ RSpec.describe BenefitCheckRunner do
 
         ['Unspecified Error', nil].each do |result|
           context "when the DWP result is #{result}" do
-            before{ allow(BenefitCheckService).to receive(:new) }
+            before { allow(BenefitCheckService).to receive(:new) }
 
             let(:existing_benefit_check) do
               create :benefit_check,
