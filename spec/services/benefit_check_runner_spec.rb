@@ -225,19 +225,24 @@ RSpec.describe BenefitCheckRunner do
   end
 
   describe '#can_override?' do
-    before do
-      allow(BenefitCheck).to receive(:create).and_return(benefit_check)
-    end
 
     subject { service.can_override? }
 
     context 'when the runner did not run' do
+      before do
+        allow(BenefitCheck).to receive(:create).and_return(benefit_check)
+      end
+
       let(:benefit_check) { nil }
 
       it { is_expected.to be true }
     end
 
     context 'when the runner ran' do
+      before do
+        allow(service).to receive(:previous_check).and_return(benefit_check)
+      end
+
       [
         { result: nil, overridable: true },
         { result: 'yes', overridable: false },

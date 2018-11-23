@@ -21,6 +21,7 @@ class BenefitCheckRunner
   end
 
   def can_override?
+    @benefit_check = previous_check if previous_check
     benefit_check.blank? || benefit_check.dwp_result.blank? || overridable_result?
   end
 
