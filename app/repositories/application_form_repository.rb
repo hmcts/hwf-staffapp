@@ -37,8 +37,8 @@ class ApplicationFormRepository
     @form.discretion_applied != false
   end
 
-  def application_outcome(outcome)
-    application.update(outcome: outcome)
+  def application_outcome_and_type(outcome, application_type)
+    application.update(outcome: outcome, application_type: application_type)
   end
 
   def assign_template_path
@@ -53,7 +53,8 @@ class ApplicationFormRepository
 
   def udpate_outcome
     return if continue_with_discretion_applied?
-    application_outcome('none')
+
+    application_outcome_and_type('none', 'none')
   end
 
 end
