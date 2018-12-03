@@ -44,7 +44,7 @@ RSpec.describe ApplicationFormRepository do
       let(:discretion_applied) { false }
 
       it "return saving path" do
-        allow(application).to receive(:update).with(outcome: "none")
+        allow(application).to receive(:update).with(outcome: "none", application_type: 'none')
         repository.process(:detail)
         expect(repository.redirect_url).to eql("/applications/#{application.id}/summary")
       end
@@ -53,7 +53,7 @@ RSpec.describe ApplicationFormRepository do
         let(:application) { instance_spy('Application') }
         it "set the outcome" do
           repository.process(:detail)
-          expect(application).to have_received(:update).with(outcome: "none")
+          expect(application).to have_received(:update).with(outcome: "none", application_type: 'none')
         end
       end
     end
