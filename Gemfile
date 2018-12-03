@@ -117,6 +117,7 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'webmock'
+  gem 'pry'
 end
 
 # heroku deployment

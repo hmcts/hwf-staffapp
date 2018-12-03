@@ -1,7 +1,6 @@
 include Warden::Test::Helpers
 Warden.test_mode!
 
-
 def wait_for
   Timeout.timeout(Capybara.default_max_wait_time) do
     begin
@@ -57,20 +56,20 @@ def admin_user
   @admin_user ||= FactoryGirl.build(:applicant, application: application)
 end
 
-def user_signed_in
-  office = FactoryGirl.create(:office)
-  user = FactoryGirl.create(:user, office: office)
-  manager = FactoryGirl.create(:manager, office: office)
-  business_entity = office.business_entities.first
-  login_as user
-  sign_in_page.load_page 
-end
+# def user_signed_in
+#   office = FactoryGirl.create(:office)
+#   user = FactoryGirl.create(:user, office: office)
+#   manager = FactoryGirl.create(:manager, office: office)
+#   business_entity = office.business_entities.first
+#   login_as user
+#   sign_in_page.load_page 
+# end
 
-def admin_signed_in
-  office = FactoryGirl.create(:office)
-  admin = FactoryGirl.create(:admin_user, office: office)
-  manager = FactoryGirl.create(:manager, office: office)
-  business_entity = office.business_entities.first
-  login_as admin
-  sign_in_page.load_page
-end
+# def admin_signed_in
+#   office = FactoryGirl.create(:office)
+#   admin = FactoryGirl.create(:admin_user, office: office)
+#   manager = FactoryGirl.create(:manager, office: office)
+#   business_entity = office.business_entities.first
+#   login_as admin
+#   sign_in_page.load_page
+# end

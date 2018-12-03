@@ -16,15 +16,25 @@ class SignInPage < BasePage
   end
 
   def admin_account
+    # office = FactoryGirl.create(:office)
+    # admin = FactoryGirl.create(:admin_user, office: office)
+    # manager = FactoryGirl.create(:manager, office: office)
+    # business_entity = office.business_entities.first
+    user = User.first
+    content.user_email.set user.email
+    content.user_password.set 'password'
     binding.pry
-    content.user_email.set ''
-    content.user_password.set ''
     sign_in
   end
 
   def user_account
-    content.user_email.set ''
-    content.user_password.set ''
+    office = FactoryGirl.create(:office)
+    admin = FactoryGirl.create(:admin_user, office: office)
+    manager = FactoryGirl.create(:manager, office: office)
+    business_entity = office.business_entities.first
+    binding.pry
+    content.user_email.set user_email
+    content.user_password.set user_password
     sign_in
   end
 end
