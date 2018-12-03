@@ -546,6 +546,7 @@ DEPENDENCIES
   paranoia (~> 2.0)
   pg (= 0.20)
   poltergeist (= 1.15.0)
+  pry
   pry-rails
   pundit (~> 1.0)
   rack-host-redirect
