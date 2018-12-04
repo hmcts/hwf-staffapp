@@ -50,7 +50,7 @@ class HomeController < ApplicationController
   end
 
   def load_users_last_applications
-    @last_updated_applications ||= Query::LastUpdatedApplications.new(current_user).find(limit: 5)
+    @last_updated_applications ||= Query::LastUpdatedApplications.new(current_user).find(limit: 20)
   end
 
   def assign_waiting_for_evidence
