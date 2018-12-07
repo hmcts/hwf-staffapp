@@ -1,4 +1,5 @@
 Given("I am signed in as admin") do
+  binding.pry
   admin_signed_in
   expect(admin_dashboard_page).to have_welcome_user
 end
