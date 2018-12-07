@@ -18,8 +18,4 @@ Feature: My user dashboard
 
   Scenario: Time of day
     Then I should see checks by time of day
-
-  Scenario: 5 day benefit check/court graphs
-    When I click on court graphs under the header 5 day benefit check/court graphs
-    Then I am taken to reports and graphs
     

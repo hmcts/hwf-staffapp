@@ -109,7 +109,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'timecop'
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
   gem 'cucumber-rails', '~> 1.5', require: false
   gem 'database_cleaner'
