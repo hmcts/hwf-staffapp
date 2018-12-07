@@ -28,10 +28,6 @@ When("I search for an application using valid reference number") do
   user_dashboard_page.search_valid_reference
 end
 
-Then("I am taken to ....") do
-  binding.pry
-end
-
 When("I search for an application using invalid reference number") do
   binding.pry
   user_dashboard_page.search_invalid_reference
