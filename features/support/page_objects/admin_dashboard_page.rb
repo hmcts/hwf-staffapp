@@ -1,7 +1,7 @@
 class AdminDashboardPage < BasePage
   element :welcome_user, '#proposition-menu', text: 'Welcome user'
   element :view_profile, 'a', text: 'View profile'
-  element :view_office, 'a', text: 'View office'  
+  element :view_office, 'a', text: 'View office'
   element :staff_guides, 'a', text: 'Staff Guides'
   section :content, '#content' do
     element :dwp_restored, '.dwp-restored', text: 'The connection with the DWP is currently working. Benefits based and income based applications can now be processed.'
