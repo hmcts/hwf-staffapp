@@ -15,19 +15,19 @@ Feature: Sign in page
       When I successfully sign in as admin
       Then I am taken to my admin dashboard
 
-    Scenario: Successful sign in as an manager
-      When I successfully sign in a manager
-      Then I am taken to my manager dashboard
-
     Scenario: Invalid credentials
       When I attempt to sign in with invalid credentials
       Then I should see invalid email or password error message
 
-    Scenario: Forgot your password
-      When I click on forgot your password
+    Scenario: Get help - forgot password
+      When I see forgot your password guidance
+      And I click on the link get a new password
       Then I am taken to get a new password page
 
-    Scenario: Get help
-      Then I should see forgot your password with get a new password link
-      And I should see do not have an account
-      And I should be able to email support if I am having technical issues
+    Scenario: Get help - don't have an account
+      And I see get help
+      Then I should see under don't have an account that I need to contact my manager
+
+    Scenario: Get help - having techniocal issues
+      When I see having technical issues
+      Then I should be able to send an email to help with fees support
