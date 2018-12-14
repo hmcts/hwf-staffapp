@@ -109,7 +109,6 @@ group :test do
   gem 'selenium-webdriver', '~> 3.10'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
-  gem 'timecop'
   gem 'capybara-webkit'
   gem 'chromedriver-helper', '~> 1.1'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
