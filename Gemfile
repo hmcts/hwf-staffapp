@@ -114,7 +114,6 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
-  gem 'shoulda-matchers'
   gem 'webmock'
   gem 'pry'
 end
