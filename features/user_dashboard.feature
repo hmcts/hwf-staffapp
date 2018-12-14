@@ -1,4 +1,4 @@
-@e2e
+@manual
 
 Feature: My dashboard
 

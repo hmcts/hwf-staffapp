@@ -1,4 +1,4 @@
-@e2e
+@manual
 
 Feature: Waiting for evidence
   Given I am on an application that is waiting for evidence
