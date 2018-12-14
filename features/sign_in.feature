@@ -1,5 +1,3 @@
-@e2e
-
 Feature: Sign in page
 
   Background: Navigating to the sign in page
