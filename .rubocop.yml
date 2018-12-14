@@ -29,6 +29,7 @@ Metrics/LineLength:
   Max: 100
   Exclude:
     - 'spec/**/*'
+    - 'features/**/*'
 
 Metrics/ClassLength:
   Max: 120
