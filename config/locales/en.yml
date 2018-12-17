@@ -581,7 +581,6 @@ en-GB:
   devise:
     registrations:
       heading: Change your password
-      updated: Your password was updated successfully
   out_of_box:
     ie_warning: IE User! We recommend you use Firefox for a superior experience
     office:
