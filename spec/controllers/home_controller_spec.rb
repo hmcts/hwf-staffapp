@@ -84,7 +84,7 @@ RSpec.describe HomeController, type: :controller do
         before do
           query = instance_double('Query::LastUpdatedApplications')
           allow(Query::LastUpdatedApplications).to receive(:new).and_return query
-          allow(query).to receive(:find).with(limit: 5).and_return [application]
+          allow(query).to receive(:find).with(limit: 20).and_return [application]
           sign_in staff
           get :index
         end

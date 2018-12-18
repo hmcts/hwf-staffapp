@@ -232,6 +232,8 @@ en-GB:
         offline: "Display DWP check is down message"
         online: "Display DWP check is working message"
         default: "Use the default DWP check to display message"
+  offices:
+    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees.support@digital.justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
 
   activemodel:
     attributes:
@@ -579,7 +581,6 @@ en-GB:
   devise:
     registrations:
       heading: Change your password
-      updated: Your password was updated successfully
   out_of_box:
     ie_warning: IE User! We recommend you use Firefox for a superior experience
     office:

@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     manager_setup = ManagerSetup.new(resource, session)
-    if manager_setup.setup_office?
+    if manager_setup.setup_profile?
       manager_setup.start!
-      edit_office_path(current_user.office)
+      edit_user_path(current_user)
     else
       root_path
     end

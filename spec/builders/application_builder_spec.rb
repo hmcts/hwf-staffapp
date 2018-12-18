@@ -51,6 +51,10 @@ RSpec.describe ApplicationBuilder do
         expect(build_result.detail.jurisdiction).to eql(user.jurisdiction)
       end
 
+      it 'has the correct medium attribute stored' do
+        expect(build_result.medium).to eq('paper')
+      end
+
       it 'does not have reference set' do
         expect(build_result.reference).to be nil
       end
@@ -74,6 +78,10 @@ RSpec.describe ApplicationBuilder do
     describe 'the application' do
       it 'has the user stored' do
         expect(built_application.user).to eql(user)
+      end
+
+      it 'has the correct medium attribute stored' do
+        expect(built_application.medium).to eq('digital')
       end
 
       it 'has office assigned from the user' do

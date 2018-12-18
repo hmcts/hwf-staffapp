@@ -16,12 +16,16 @@ class HwfReferenceGenerator
   def generate_reference
     begin
       reference = reference_string
-    end until OnlineApplication.find_by(reference: reference).nil?
+    end until (OnlineApplication.find_by(reference: reference).nil? && prefix_is_unique(reference))
 
     reference
   end
 
   def reference_string
     "HWF-#{Array.new(LENGTH) { DICTIONARY.sample }.join.scan(/.{1,3}/).join('-')}"
+  end
+
+  def prefix_is_unique(reference)
+    reference.scan(/(HWF)+/i).count == 1
   end
 end

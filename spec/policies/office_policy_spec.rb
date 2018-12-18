@@ -37,7 +37,7 @@ RSpec.describe OfficePolicy, type: :policy do
 
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:edit) }
-      it { is_expected.to permit_action(:update) }
+      it { is_expected.not_to permit_action(:update) }
     end
 
     context 'when the user does not belong to the office' do

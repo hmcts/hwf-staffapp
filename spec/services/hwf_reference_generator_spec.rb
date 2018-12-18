@@ -22,12 +22,22 @@ RSpec.describe HwfReferenceGenerator, type: :service do
 
     context 'when the generated reference number already exists' do
       before do
-        create(:online_application, reference: 'collision')
-        allow(generator).to receive(:reference_string).and_return('collision', 'no-collision')
+        create(:online_application, reference: 'hwf-collision')
+        allow(generator).to receive(:reference_string).and_return('hwf-collision', 'hwf-no-collision')
       end
 
       it 'keeps generating until there is no collision' do
-        expect(attributes[:reference]).to eql('no-collision')
+        expect(attributes[:reference]).to eql('hwf-no-collision')
+      end
+    end
+
+    context 'when the generated reference contains HWF more then once' do
+      before do
+        allow(generator).to receive(:reference_string).and_return('HWF-AHW-HWF', 'HWF-HWF-HWF', 'HWF-HWF-HWA', 'HWF-HAF-HWA')
+      end
+
+      it 'keeps generating until there is no collision' do
+        expect(attributes[:reference]).to eql('HWF-HAF-HWA')
       end
     end
   end
