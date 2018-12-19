@@ -6,6 +6,7 @@ FactoryGirl.define do
       date_received Time.zone.today
       refund false
       probate nil
+      case_number 'JK123456A'
     end
 
     trait :probate do

@@ -1,0 +1,41 @@
+h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
+  = t("search_results.title")
+
+- if list.present?
+  table.search-results
+    caption.visuallyhidden = t("search_results.title")
+    thead
+      tr.align-top
+        th = t("#{type}.table_header.reference")
+        th = t("#{type}.table_header.entered")
+        th = t("#{type}.table_header.first_name_html")
+        th = t("#{type}.table_header.last_name_html")
+        th = t("#{type}.table_header.ni_number_html")
+        th = t("#{type}.table_header.case_number")
+        th = t("#{type}.table_header.fee")
+        th = t("#{type}.table_header.remission")
+        th = t("#{type}.table_header.completed")
+        th = t("#{type}.table_header.last_processed_by_html")
+
+
+    tbody
+      - list.each do |record|
+        tr
+          - if record.reference.blank?
+            td = link_to t("#{type}.table.missing_reference"), application_personal_informations_path(record)
+          - else
+            td = link_to record.reference, path_for_application_based_on_state(record)
+          td = record.created_at.strftime(Date::DATE_FORMATS[:default])
+          td = record.applicant.first_name
+          td = record.applicant.last_name
+          td = record.applicant.ni_number
+          td = record.detail.try(:case_number)
+          td = number_to_currency(record.detail.try(:fee), unit: '£', precision: 2)
+          td = number_to_currency(record.decision_cost || 0, unit: '£', precision: 2)
+          - if record.decision_date.present?
+            td = record.decision_date.strftime(Date::DATE_FORMATS[:default])
+          - else
+            td = t("#{type}.table.missing_decision_date")
+          td = record.user.name
+- else
+  p =t("#{type}.dashboard.no_records")

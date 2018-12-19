@@ -21,7 +21,7 @@ class ApplicationSearch
   def completed
     if application_exists && application_completed
       if user_can_access
-        CompletedApplicationRedirect.new(@application).path
+        [@application]
       else
         set_error_and_return_nil(:processed_by, office_name: application_office)
       end

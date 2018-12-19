@@ -47,6 +47,7 @@ en-GB:
     index:
       title: Processed applications
       no_applications: There are no processed applications for your office.
+      search_result: 'Search result'
     detail:
       title: Processed application
   deleted_applications:
@@ -55,6 +56,23 @@ en-GB:
       no_applications: There are no deleted applications for your office.
     detail:
       title: Deleted application
+  search_results:
+    title: 'Search results'
+    table_header:
+      reference: Reference
+      entered: Entered
+      first_name_html: "First<br />name"
+      last_name_html: "Last<br />name"
+      ni_number_html: "NI<br />number"
+      case_number: Case number
+      fee: Fee
+      last_processed_by_html: "Last<br />processed"
+      remission: Remission
+      completed: Completed
+    table:
+      missing_decision_date: Undecided
+      missing_reference: No reference number
+
   emergency:
     status:
       :true: 'Yes'

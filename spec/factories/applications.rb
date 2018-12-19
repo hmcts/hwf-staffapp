@@ -119,6 +119,7 @@ FactoryGirl.define do
       children 1
       outcome 'full'
       application_type 'income'
+      decision_date Time.zone.today
     end
 
     factory :application_no_remission do

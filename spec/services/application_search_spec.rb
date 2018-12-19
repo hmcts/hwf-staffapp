@@ -130,7 +130,7 @@ RSpec.describe ApplicationSearch do
           let(:application) { build_stubbed(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
 
           it 'returns the evidence check url' do
-            is_expected.to eql(evidence_path(evidence_check))
+            is_expected.to eq([application])
           end
         end
 
@@ -139,7 +139,7 @@ RSpec.describe ApplicationSearch do
           let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, reference: reference, office: user.office, part_payment: part_payment) }
 
           it 'returns the part payment url' do
-            is_expected.to eql(part_payment_path(part_payment))
+            is_expected.to eq([application])
           end
         end
 
@@ -147,15 +147,15 @@ RSpec.describe ApplicationSearch do
           let(:application) { build_stubbed(:application, :processed_state, reference: reference, office: user.office) }
 
           it 'returns the processed application url' do
-            is_expected.to eql(processed_application_path(application))
+            is_expected.to eq([application])
           end
         end
 
         context 'when deleted' do
           let(:application) { build_stubbed(:application, :deleted_state, reference: reference, office: user.office) }
 
-          it 'returns the deleted application url' do
-            is_expected.to eql(deleted_application_path(application))
+          it 'returns the deleted application' do
+            is_expected.to eq([application])
           end
         end
       end

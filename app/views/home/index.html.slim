@@ -10,18 +10,6 @@ h1.visuallyhidden Help with fees - Staff application
 -if @notification.present? && @notification.show
   =render('shared/notifications')
 
-.grid-row
-  .column-one-half
-    | &nbsp;
-  .column-one-half
-    .util_pt-medium.util_mt-medium
-      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path) do |f|
-        = f.label :reference, class: 'form-label visuallyhidden'
-          | Search applications by reference
-        = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
-        = f.submit 'Search', class: 'submit-button util_margin-0'
-
 
 .grid-row.staff-panels
   - if policy(:application).new?
@@ -65,9 +53,19 @@ h1.visuallyhidden Help with fees - Staff application
           .util_mt-0
             = f.submit 'Look up', class: 'button util_margin-0'
 
+.grid-row
+  .column-one-half
+    .util_pt-medium.util_mt-medium
+      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path) do |f|
+        = f.label :reference, 'Enter the reference, applicant’s name or case number', class: 'form-label'
+        = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
+        = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
+        = f.submit 'Search', class: 'submit-button util_margin-0'
 
 
 - if policy(:application).index?
+  - if @search_results
+    =render('home/search_results', type: :search_results, list: @search_results)
   =render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
   =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
   =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)

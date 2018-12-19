@@ -195,12 +195,12 @@ RSpec.describe HomeController, type: :controller do
         let(:completed_result) { processed_application_path(application) }
         let(:completed_error) { nil }
 
-        it 'redirects to the edit page for that application' do
-          expect(response).to redirect_to(completed_result)
+        it 'renders the index view' do
+          expect(response).to render_template :index
         end
 
-        it 'does not assign the DwpMonitor state' do
-          expect(assigns(:state)).to be nil
+        it 'does assign the DwpMonitor state' do
+          expect(assigns(:state)).not_to be nil
         end
       end
     end
