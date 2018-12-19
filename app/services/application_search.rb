@@ -19,17 +19,15 @@ class ApplicationSearch
   end
 
   def completed
-    Application.extended_search(@query).except_created
-
-    # if application_exists && application_completed
-    #   if user_can_access
-    #     [@application]
-    #   else
-    #     set_error_and_return_nil(:processed_by, office_name: application_office)
-    #   end
-    # else
-    #   set_error_and_return_nil(:not_found)
-    # end
+    if application_exists && application_completed
+      if user_can_access
+        [@application]
+      else
+        set_error_and_return_nil(:processed_by, office_name: application_office)
+      end
+    else
+      set_error_and_return_nil(:not_found)
+    end
   end
 
   private

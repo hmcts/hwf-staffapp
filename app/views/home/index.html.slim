@@ -60,7 +60,7 @@ h1.visuallyhidden Help with fees - Staff application
         = f.label :reference, 'Enter the reference, applicant’s name or case number', class: 'form-label'
         = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
         = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
-        = f.submit 'Search', class: 'submit-button'
+        = f.submit 'Search', class: 'submit-button util_margin-0'
 
 
 - if policy(:application).index?

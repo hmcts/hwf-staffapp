@@ -127,20 +127,29 @@ RSpec.feature 'User can search for online application', type: :feature do
     expect(page).to have_text(result_application.reference)
   end
 
-  # rubocop:disable AbcSize
   def then_have_all_the_columns_populated_correctly(result_application)
     within(:xpath, './/table[@class="search-results"]') do
-      expect(find(:xpath, './/td[1]').text).to eq(result_application.reference)
-      expect(find(:xpath, './/td[2]').text).to eq(result_application.created_at.strftime('%d/%m/%Y'))
-      expect(find(:xpath, './/td[3]').text).to eq(result_application.applicant.first_name)
-      expect(find(:xpath, './/td[4]').text).to eq(result_application.applicant.last_name)
-      expect(find(:xpath, './/td[5]').text).to eq(result_application.applicant.ni_number)
-      expect(find(:xpath, './/td[6]').text).to eq(result_application.detail.case_number)
-      expect(find(:xpath, './/td[7]').text).to eq('£410.00')
-      expect(find(:xpath, './/td[8]').text).to eq('£0.00')
-      expect(find(:xpath, './/td[9]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
-      expect(find(:xpath, './/td[10]').text).to eq(result_application.user.name)
+      reference = find(:xpath, './/td[1]').text
+      entered = find(:xpath, './/td[2]').text
+      first_name = find(:xpath, './/td[3]').text
+      last_name = find(:xpath, './/td[4]').text
+      ni_number = find(:xpath, './/td[5]').text
+      case_number = find(:xpath, './/td[6]').text
+      fee = find(:xpath, './/td[7]').text
+      remission = find(:xpath, './/td[8]').text
+      completed = find(:xpath, './/td[9]').text
+      last_processed = find(:xpath, './/td[10]').text
+
+      expect(reference).to      eq(result_application.reference)
+      expect(entered).to        eq(result_application.created_at.strftime('%d/%m/%Y'))
+      expect(first_name).to     eq(result_application.applicant.first_name)
+      expect(last_name).to      eq(result_application.applicant.last_name)
+      expect(ni_number).to      eq(result_application.applicant.ni_number)
+      expect(case_number).to    eq(result_application.detail.case_number)
+      expect(fee).to            eq('£410.00')
+      expect(remission).to      eq('£0.00')
+      expect(completed).to      eq(result_application.decision_date.strftime('%d/%m/%Y'))
+      expect(last_processed).to eq(result_application.user.name)
     end
   end
-  # rubocop:enable AbcSize
 end
