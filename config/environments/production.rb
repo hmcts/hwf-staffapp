@@ -92,7 +92,7 @@ Rails.application.configure do
 
     ActionMailer::Base.default_url_options = {
       host: smtp_domain,
-      protocol:  ENV['SMTP_PROTOCOL'] || 'http'
+      protocol: ENV['SMTP_PROTOCOL'] || 'http'
     }
     ActionMailer::Base.default from: Settings.mail.from
     ActionMailer::Base.default reply_to: Settings.mail.reply_to

@@ -22,6 +22,7 @@ module Forms
           discretion_manager_name: String,
           discretion_reason: String }
       end
+      # rubocop:enable MethodLength
 
       define_attributes
 
