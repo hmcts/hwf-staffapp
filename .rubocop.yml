@@ -97,6 +97,12 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/LeadingBlankLines:
+  Enabled: false
+
 # We have a mixture at the moment, so don't enforce anything.
 Style/FormatString:
   Enabled: false
@@ -124,6 +130,9 @@ Style/SignalException:
 # Let us use foo? methods
 Style/TrivialAccessors:
   AllowPredicates: true
+
+Style/DateTime:
+  Enabled: false
 
 # Prefer sensible naming to comments everywhere.
 Documentation:
@@ -174,6 +183,18 @@ RSpec/ExampleLength:
 Rails/ApplicationRecord:
   Enabled: false
 
+Rails/InverseOf:
+  Enabled: false
+
+Rails/ActiveRecordAliases:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
 Style/WordArray:
   EnforcedStyle: brackets
 
@@ -182,6 +203,12 @@ Style/SymbolArray:
 
 Style/FormatStringToken:
   EnforcedStyle: template
+
+Style/Encoding:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
