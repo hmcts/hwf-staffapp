@@ -1,3 +1,4 @@
+# rubocop:disable all
 require 'active_record/connection_adapters/postgresql/schema_statements'
 
 #
@@ -12,7 +13,7 @@ module ActiveRecord
       module SchemaStatements
         # Resets the sequence of a table's primary key to the maximum value.
         def reset_pk_sequence!(table, pk = nil, sequence = nil) #:nodoc:
-          unless pk and sequence
+          unless pk && sequence
             default_pk, default_sequence = pk_and_sequence_for(table)
 
             pk ||= default_pk
@@ -35,7 +36,7 @@ module ActiveRecord
             end
 
             select_value <<-end_sql, 'SCHEMA'
-              SELECT setval(#{quote(quoted_sequence)}, #{max_pk ? max_pk : minvalue}, #{max_pk ? true : false})
+              SELECT setval(#{quote(quoted_sequence)}, #{max_pk || minvalue}, #{max_pk ? true : false})
             end_sql
           end
         end
@@ -43,3 +44,4 @@ module ActiveRecord
     end
   end
 end
+# rubocop:enable all

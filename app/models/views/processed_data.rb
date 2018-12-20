@@ -40,7 +40,7 @@ module Views
     end
 
     def evidence_check_valid?
-      evidence_check && evidence_check.completed_at
+      evidence_check&.completed_at
     end
 
     def evidence_check
@@ -48,7 +48,7 @@ module Views
     end
 
     def part_payment_valid?
-      part_payment && part_payment.completed_at
+      part_payment&.completed_at
     end
 
     def part_payment

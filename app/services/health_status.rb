@@ -1,6 +1,6 @@
 class HealthStatus
-
-  def self.current_status # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
+  def self.current_status
     services = {
       database: {
         description: "Postgres database", ok: database
@@ -21,7 +21,6 @@ class HealthStatus
     false
   end
 
-  # rubocop:disable Metrics/MethodLength
   def self.smtp
     host = ActionMailer::Base.smtp_settings[:address]
     port = ActionMailer::Base.smtp_settings[:port]
@@ -44,4 +43,5 @@ class HealthStatus
     Rails.logger.error "The DWP API errored with: #{error}"
     false
   end
+  # rubocop:enable Metrics/MethodLength
 end
