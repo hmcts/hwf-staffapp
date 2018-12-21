@@ -14,4 +14,4 @@ Rails.application.config.assets.precompile += ['income_calculator.js']
 Rails.application.config.assets.precompile += ['*.png', '*.ico']
 Rails.application.config.assets.precompile += ['.svg', '.eot', '.woff', '.ttf']
 Rails.application.config.assets.precompile += ['ckeditor/*']
-Rails.application.config.assets.precompile += %w( chartkick.js )
+Rails.application.config.assets.precompile += ['chartkick.js']

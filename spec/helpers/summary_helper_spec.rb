@@ -37,7 +37,6 @@ RSpec.describe SummaryHelper, type: :helper do
           expect(helper.build_section('section name', view, ['form_name', 'date_received'])).to be nil
         end
       end
-
       context 'when requested fields contain some data' do
         it 'returns only the populated field' do
           expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'

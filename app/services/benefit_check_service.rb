@@ -7,7 +7,7 @@ class BenefitCheckService
     begin
       validate_inputs
       check_remote_api
-    rescue
+    rescue StandardError
       @check_item.benefits_valid = @result
       log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
     end
@@ -26,7 +26,7 @@ class BenefitCheckService
       @check_item.dwp_result = @response['benefit_checker_status']
       @check_item.dwp_api_token = @response['confirmation_ref']
     end
-    @check_item.benefits_valid = (@check_item.dwp_result == 'Yes' ? true : false)
+    @check_item.benefits_valid = (@check_item.dwp_result == 'Yes')
     @check_item.save!
   end
 
@@ -38,7 +38,7 @@ class BenefitCheckService
     log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
   rescue Errno::ECONNREFUSED
     log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Server unavailable'
-  rescue => e
+  rescue StandardError => e
     log_error(e.message, 'Unspecified error')
   end
 
@@ -59,7 +59,7 @@ class BenefitCheckService
   end
 
   def process_check_date
-    check_date = @check_item.date_to_check ? @check_item.date_to_check : Time.zone.today
+    check_date = @check_item.date_to_check || Time.zone.today
     check_date.strftime('%Y%m%d')
   end
 

@@ -4,8 +4,9 @@ module Forms
 
       MINIMUM_AGE = 16
       MAXIMUM_AGE = 120
+      # rubocop:disable MutableConstant
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-
+      # rubocop:enable MutableConstant
       include ActiveModel::Validations::Callbacks
 
       def self.permitted_attributes

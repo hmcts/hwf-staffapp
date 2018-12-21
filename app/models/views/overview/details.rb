@@ -54,7 +54,7 @@ module Views
       end
 
       def format_date(date)
-        date.to_s(:gov_uk_long) if date
+        date&.to_s(:gov_uk_long)
       end
     end
   end
