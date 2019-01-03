@@ -54,7 +54,7 @@ module Views
     end
 
     def part_payment_successful
-      @application.part_payment && @application.part_payment.correct?
+      @application.part_payment&.correct?
     end
 
     def outcome_from

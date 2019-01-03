@@ -37,7 +37,6 @@ module SummaryHelper
     content_tag(:div, class: 'grid-row header-row') do
       content_tag(:div, class: 'column-two-thirds') do
         content_tag(:h4, summary_name.to_s, class: 'heading-medium util_mt-0')
-
       end + build_link(link_attributes)
     end
   end

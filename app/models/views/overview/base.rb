@@ -5,7 +5,7 @@ module Views
       private
 
       def convert_to_boolean(input)
-        I18n.t("convert_boolean.#{input.present? ? input : 'false'}")
+        I18n.t("convert_boolean.#{input.presence || 'false'}")
       end
     end
   end

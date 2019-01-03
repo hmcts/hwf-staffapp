@@ -47,7 +47,7 @@ class FormObject
 
   def extract_params(object)
     get_attribs(object).select do |key, _|
-      self.class.permitted_attributes.keys.include?(key.to_sym)
+      self.class.permitted_attributes.keys?(key.to_sym)
     end
   end
 
