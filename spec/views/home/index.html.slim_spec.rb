@@ -193,7 +193,7 @@ RSpec.describe "home/index.html.slim", type: :view do
 
           it { is_expected.to have_content 'You can only process:' }
 
-          it { is_expected.to have_content I18n.t('error_messages.benefit_check.cannot_process_application') }
+          it { is_expected.to have_content I18n.t('index.process.digital.dwp-down') }
 
           it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"]') }
 
