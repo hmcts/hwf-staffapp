@@ -124,6 +124,7 @@ en-GB:
   error_messages:
     benefit_check:
       dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
+      cannot_process_application: This is a benefits-based application which cannot be processed until the DWP checker is available
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
     dwp_unavailable: "The DWP checker is currently unavailable, you won't be able to check if applicants are receiving benefits. We are aware of this issue and are investigating. We apologise for the inconvenience."
     dwp_warning: "There may be a problem with the service. You may not be able to check if applicants are receiving benefits, this is being investigated."
@@ -150,7 +151,7 @@ en-GB:
             - "income-based applications"
             - "benefits-based applications if the applicant has provided paper evidence"
       digital:
-        dwp-down: "Please wait until the DWP checker is available to process online applications"
+        dwp-down: "You can only process income-based applications. Please wait until the DWP checker is available to process online benefits-based applications"
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'

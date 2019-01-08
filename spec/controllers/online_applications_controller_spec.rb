@@ -59,6 +59,31 @@ RSpec.describe OnlineApplicationsController, type: :controller do
           expect(assigns(:form).jurisdiction_id).to be_nil
         end
       end
+
+      context 'when the Benefits Checker is down' do
+        before do
+          build_dwp_checks_with_bad_requests
+          get :edit, id: id
+        end
+
+        context 'when it is an income based application' do
+          let(:online_application) { build_stubbed(:online_application, :income) }
+
+          it 'renders the edit template' do
+            expect(response).to render_template(:edit)
+          end
+        end
+
+        context 'when it is a benefits based application' do
+          it 'redirects to homepage' do
+            expect(response).to redirect_to(root_path)
+          end
+
+          it 'sets the alert flash message' do
+            expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+          end
+        end
+      end
     end
   end
 
