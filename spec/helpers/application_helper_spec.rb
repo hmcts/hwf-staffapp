@@ -13,6 +13,7 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  # rubocop:disable HeredocDelimiterNaming
   describe 'markdown' do
     it 'changes markdown to HTML' do
       source = <<-END.strip_heredoc
@@ -34,4 +35,5 @@ RSpec.describe ApplicationHelper do
       expect(markdown(source)).not_to match(/<blink/)
     end
   end
+  # rubocop:enable HeredocDelimiterNaming
 end

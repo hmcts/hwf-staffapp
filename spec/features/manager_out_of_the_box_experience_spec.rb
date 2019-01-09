@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 # I'm disabling this Rubocop check to allow writing readable scenarios
-# rubocop:disable RSpec/InstanceVariable
 
 RSpec.feature 'Manager has to setup their preferences', type: :feature do
 

@@ -54,6 +54,7 @@ module Api
         :feedback_opt_in
       )
     end
+    # rubocop:enable MethodLength
 
     def authenticate
       authenticate_or_request_with_http_token do |token, _options|
