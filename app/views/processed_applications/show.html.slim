@@ -16,3 +16,9 @@
           = f.text_field :deleted_reason, class: 'form-control'
 
         = f.submit 'Delete application', :class => 'button'
+
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.processedApplication();
+    });

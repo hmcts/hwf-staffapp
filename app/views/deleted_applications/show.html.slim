@@ -1,1 +1,7 @@
 =render('shared/processed_and_deleted/show', state: :deleted)
+
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.deletedApplication();
+    });

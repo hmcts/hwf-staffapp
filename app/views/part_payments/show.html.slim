@@ -1,1 +1,7 @@
 =render(partial: 'shared/part_payment_evidence/show', locals: { source: @part_payment, type: 'part-payment' })
+
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.partPayment();
+    });
