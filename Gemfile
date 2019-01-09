@@ -99,7 +99,6 @@ group :development, :test do
   gem 'timecop'
 end
 
-
 group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
@@ -114,8 +113,6 @@ group :test do
   gem 'poltergeist', '1.15.0'
   gem 'pry'
   gem 'selenium-webdriver', '~> 3.10'
-  gem 'site_prism', '~> 2.9'
-  gem 'webmock'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'webmock'

@@ -6,6 +6,7 @@ require 'active_record/connection_adapters/postgresql/schema_statements'
 # Updates sequence logic to support PostgreSQL 10.
 #
 
+# rubocop:disable all
 module ActiveRecord
   module ConnectionAdapters
     module PostgreSQL
@@ -43,3 +44,4 @@ module ActiveRecord
     end
   end
 end
+# rubocop:enable all
