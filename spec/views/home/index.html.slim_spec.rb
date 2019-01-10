@@ -193,11 +193,11 @@ RSpec.describe "home/index.html.slim", type: :view do
 
           it { is_expected.to have_content 'You can only process:' }
 
-          it { is_expected.to have_content 'Please wait until the DWP checker is available to process online applications' }
+          it { is_expected.to have_content I18n.t('index.process.digital.dwp-down') }
 
-          it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit" and @disabled]') }
+          it { is_expected.to have_xpath('//input[@value="Look up" and @name="commit"]') }
 
-          it { is_expected.to have_xpath('//input[@id="online_search_reference" and @disabled]') }
+          it { is_expected.to have_xpath('//input[@id="online_search_reference"]') }
         end
       end
     end

@@ -61,9 +61,9 @@ h1.visuallyhidden Help with fees - Staff application
             = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
             .field-wrapper
               span.prefix HWF
-              = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off', disabled: @state=='offline' }
+              = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off' }
           .util_mt-0
-            = f.submit 'Look up', class: 'button util_margin-0', disabled: @state=='offline'
+            = f.submit 'Look up', class: 'button util_margin-0'
 
 
 
