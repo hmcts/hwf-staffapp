@@ -5,6 +5,15 @@
 # files.
 
 require 'cucumber/rails'
+require 'capybara/dsl'
+require 'capybara/poltergeist'
+require 'capybara-screenshot/cucumber'
+require 'rest-client'
+require 'selenium-webdriver'
+
+require_relative './page_objects/base_page'
+
+Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -28,31 +37,33 @@ require 'cucumber/rails'
 #
 ActionController::Base.allow_rescue = false
 
-# Remove/comment out the lines below if your app doesn't have a database.
-# For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
-begin
-  DatabaseCleaner.strategy = :transaction
-rescue NameError
-  raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
+#Define global variables
+ENV['zap_proxy'] = "localhost"
+ENV['zap_proxy_port'] = '8099'
+
+#Below lines are our driver profile settings to reach internet through a proxy
+#You can set security=true as environment variable or declare it on command window
+if ENV['security'] == "true"
+  Capybara.register_driver :selenium do |app|
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile["network.proxy.type"] = 1
+    profile["network.proxy.http"] = ENV['zap_proxy']
+    profile["network.proxy.http_port"] = ENV['zap_proxy_port']
+    Capybara::Selenium::Driver.new(app, :profile => profile)
+  end
 end
 
-# You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
-# See the DatabaseCleaner documentation for details. Example:
-#
-#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     # { :except => [:widgets] } may not do what you expect here
-#     # as Cucumber::Rails::Database.javascript_strategy overrides
-#     # this setting.
-#     DatabaseCleaner.strategy = :truncation
-#   end
-#
-#   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
-#
+ENV['NO_PROXY'] = ENV['no_proxy'] = '127.0.0.1'
+if ENV['APP_HOST']
+  Capybara.app_host = ENV['APP_HOST']
+  if Capybara.app_host.chars.last != '/'
+    Capybara.app_host += '/'
+  end
+end
 
-# Possible values are :truncation and :transaction
-# The :transaction strategy is faster, but might give you threading problems.
-# See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
-Cucumber::Rails::Database.javascript_strategy = :truncation
-
+Before do
+  ActiveRecord::FixtureSet.reset_cache
+  fixtures_folder = File.join(Rails.root, 'spec', 'fixtures')
+  fixtures = Dir[File.join(fixtures_folder, '*.yml')].map {|f| File.basename(f, '.yml') }
+  ActiveRecord::FixtureSet.create_fixtures(fixtures_folder, fixtures)
+end
