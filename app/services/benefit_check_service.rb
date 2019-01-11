@@ -69,8 +69,8 @@ class BenefitCheckService
     LogStuff.log @check_item.class.name.titleize.humanize, message
   end
 
-  def log_bad_request_error(e)
-    json_response = JSON.parse(e.response)['error']
+  def log_bad_request_error(error)
+    json_response = JSON.parse(error.response)['error']
     request_type = parse_response_error(json_response)
     log_error json_response, request_type
   end
