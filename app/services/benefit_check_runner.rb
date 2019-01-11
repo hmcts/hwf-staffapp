@@ -41,10 +41,12 @@ class BenefitCheckRunner
   end
 
   def should_run?
-    benefit_check_date_valid? && !valid_previous_check? && (!same_as_before? || was_error?)
+    return true if benefit_check_date_valid? && !same_as_before?
+    benefit_check_date_valid? && !valid_previous_check? && was_error?
   end
 
   def was_error?
+    return false unless previous_check
     !['Yes', 'No'].include?(previous_check.dwp_result)
   end
 

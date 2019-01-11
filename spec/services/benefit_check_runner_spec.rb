@@ -113,6 +113,7 @@ RSpec.describe BenefitCheckRunner do
 
       context 'when date_fee_paid is older then three months from today and date_received is blank' do
         let(:detail) { build(:complete_detail, :refund, date_fee_paid: Time.zone.today - 3.months, date_received: nil) }
+        before { allow(BenefitCheckService).to receive(:new) }
 
         it 'does not create a BenefitCheck record' do
           expect { run }.not_to change { application.benefit_checks.count }
@@ -142,13 +143,31 @@ RSpec.describe BenefitCheckRunner do
               create :benefit_check,
                 application: application,
                 last_name: applicant.last_name,
-                date_of_birth: applicant.date_of_birth + 1.day,
+                date_of_birth: applicant.date_of_birth,
                 ni_number: applicant.ni_number,
                 date_to_check: detail.date_received,
                 dwp_result: result
             end
 
             it { expect { run }.not_to change { application.benefit_checks.count } }
+          end
+        end
+
+        ['Yes', 'No', 'Undetermined', 'Deceased', 'BadRequest'].each do |result|
+          context "when the DWP result is #{result} and something changed" do
+            before { allow(BenefitCheckService).to receive(:new) }
+
+            let(:existing_benefit_check) do
+              create :benefit_check,
+                application: application,
+                last_name: 'Jones',
+                date_of_birth: applicant.date_of_birth,
+                ni_number: applicant.ni_number,
+                date_to_check: detail.date_received,
+                dwp_result: result
+            end
+
+            it { expect { run }.to change { application.benefit_checks.count } }
           end
         end
 
@@ -160,7 +179,7 @@ RSpec.describe BenefitCheckRunner do
               create :benefit_check,
                 application: application,
                 last_name: applicant.last_name,
-                date_of_birth: applicant.date_of_birth + 1.day,
+                date_of_birth: applicant.date_of_birth,
                 ni_number: applicant.ni_number,
                 date_to_check: detail.date_received,
                 dwp_result: result
