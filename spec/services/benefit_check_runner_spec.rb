@@ -260,11 +260,17 @@ RSpec.describe BenefitCheckRunner do
     context 'when the runner ran' do
       before do
         allow(service).to receive(:previous_check).and_return(benefit_check)
-        allow(service).to receive(:is_first_check?).and_return(true)
+        allow(service).to receive(:first_check?).and_return(true)
       end
 
       [
         { result: nil, overridable: true },
+        { result: 'yes', overridable: false },
+        { result: 'no', overridable: true },
+        { result: 'deceased', overridable: false },
+        { result: 'server unavailable', overridable: true },
+        { result: 'superseded', overridable: false },
+        { result: 'undetermined', overridable: true },
         { result: 'unspecified error', overridable: true }
       ].each do |definition|
         context "when result was #{definition[:result]}" do

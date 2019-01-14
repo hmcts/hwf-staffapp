@@ -22,7 +22,8 @@ class BenefitCheckRunner
 
   def can_override?
     @benefit_check = previous_check if previous_check
-    benefit_check.blank? || benefit_check.dwp_result.blank? || (overridable_result? && is_first_check?)
+    benefit_check.blank? || benefit_check.dwp_result.blank? ||
+      (overridable_result? && first_check?)
   end
 
   def benefit_check_date_valid?
@@ -41,7 +42,7 @@ class BenefitCheckRunner
   end
 
   def should_run?
-    is_first_check?
+    first_check?
     return true if benefit_check_date_valid? && !same_as_before?
     benefit_check_date_valid? && !valid_previous_check? && was_error?
   end
@@ -112,8 +113,8 @@ class BenefitCheckRunner
     ['no', 'server unavailable', 'undetermined', 'unspecified error'].include?(result)
   end
 
-  def is_first_check?
-    @first_check ||= (@application.benefit_checks.count == 0)
+  def first_check?
+    @first_check ||= @application.benefit_checks.count.zero?
   end
 
 end
