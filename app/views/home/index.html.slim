@@ -54,13 +54,18 @@ h1.visuallyhidden Help with fees - Staff application
             = f.submit 'Look up', class: 'button util_margin-0'
 
 .grid-row
-  .column-one-half
+  .column-one
     .util_pt-medium.util_mt-medium
       = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path) do |f|
-        = f.label :reference, 'Enter the reference, applicant’s name or case number', class: 'form-label'
-        = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
-        = f.submit 'Search', class: 'submit-button util_margin-0'
+        .search-input
+          = f.label :reference, 'Enter the reference, applicant’s name or case number', class: 'form-label'
+          = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
+          = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
+        .search-type
+          = f.label :search_type, 'What are you looking for?'
+          = f.label :search_type, @completed_search_form.errors[:search_type].join('').html_safe, class: 'error' if @completed_search_form.errors[:search_type].present?
+          = f.select :search_type, ['reference', 'name', 'case_number']
+          = f.submit 'Search', class: 'submit-button'
 
 
 - if policy(:application).index?
