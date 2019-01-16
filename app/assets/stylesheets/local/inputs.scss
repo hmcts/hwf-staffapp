@@ -80,17 +80,42 @@ select {
   position: relative;
 
   input[type="text"] {
-    width: 600px;
-    max-width: 92% !important;
+    width: 500px;
+    max-width: 100% !important;
     height: 40px;
   }
 
+  .search-input {
+    display: block;
+    float: left;
+    // border: 1px solid #f00;
+  }
+
+  .search-type {
+    width: 300px;
+    display: block;
+    float: left;
+
+    select {
+      float: left;
+      height: 40px;
+      line-height: 25px;
+      padding: 4px;
+      margin-top: 1px;
+      margin-left: 4px;
+      option {
+        font-family: arial, sans-serif;
+        font-size: 19px !important;
+      }
+    }
+  }
+
   .submit-button {
-    position: absolute;
-    right: 0;
+    float: left;
     width: 40px;
     height: 40px;
-    margin-left: 0;
+    margin-left: 4px;
+    margin-top: 1px;
     border: 1px solid $grey-1;
     overflow: hidden;
     text-indent: -999em;
