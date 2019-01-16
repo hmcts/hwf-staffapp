@@ -51,7 +51,7 @@ module Forms
       end
 
       def validate_dob
-        if date_of_birth =~ /[a-zA-Z]/
+        if /[a-zA-Z]/.match?(date_of_birth.to_s)
           errors.add(:date_of_birth, "can't contain non numbers")
         elsif !date_of_birth.is_a?(Date)
           errors.add(:date_of_birth, :not_a_date)
