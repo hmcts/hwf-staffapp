@@ -80,13 +80,14 @@ class HomeController < ApplicationController
   end
 
   def search_params(type)
-    params.require(:"#{type}_search").permit(:reference)
+    params.require(:"#{type}_search").permit(:reference, :search_type)
   end
 
   def search_and_return(type)
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
+
     if form.valid?
-      search = ApplicationSearch.new(form.reference, current_user)
+      search = ApplicationSearch.new(form.reference, form.search_type, current_user)
       search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
     end
   end

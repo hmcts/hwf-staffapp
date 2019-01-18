@@ -2,8 +2,9 @@ class ApplicationSearch
   include Rails.application.routes.url_helpers
   attr_reader :error_message
 
-  def initialize(reference, current_user)
-    @reference = reference
+  def initialize(query, search_type, current_user)
+    @query = query
+    @search_type = search_type
     @current_user = current_user
   end
 
@@ -19,25 +20,41 @@ class ApplicationSearch
   end
 
   def completed
-    if application_exists && application_completed
-      if user_can_access
-        [@application]
-      else
-        set_error_and_return_nil(:processed_by, office_name: application_office)
-      end
+    if @search_type == 'reference'
+      @q = Application.ransack(reference_eq: @query)
+    elsif @search_type == 'name'
+      name = @query.split
+      last = name.pop
+      @q = Application.ransack(
+        {applicant_first_name_matches: name.join(' '), applicant_last_name_matches: last, state_not_eq: 0}
+      )
+    elsif @search_type == 'case_number'
+      @q = Application.ransack(detail_case_number_matches: @query)
     else
-      set_error_and_return_nil(:not_found)
+      @q = Application.ransack
     end
+
+    @q.result.limit(10)
+
+    # if application_exists && application_completed
+    #   if user_can_access
+    #     [@application]
+    #   else
+    #     set_error_and_return_nil(:processed_by, office_name: application_office)
+    #   end
+    # else
+    #   set_error_and_return_nil(:not_found)
+    # end
   end
 
   private
 
   def prepare_reference!
-    if @reference.present?
-      reference = @reference.upcase
+    if @query.present?
+      reference = @query.upcase
       reference.gsub!('HWF', '')
       reference.gsub!(/[- ]/, '')
-      @reference = "HWF-#{reference.scan(/.{1,3}/).join('-')}"
+      @query = "HWF-#{reference.scan(/.{1,3}/).join('-')}"
     end
   end
 
@@ -55,7 +72,7 @@ class ApplicationSearch
   end
 
   def application_exists
-    @application ||= Application.find_by(reference: @reference.upcase)
+    @application ||= Application.find_by(reference: @query.upcase)
   end
 
   def application_completed
@@ -67,7 +84,7 @@ class ApplicationSearch
   end
 
   def online_application_exists
-    @online_application ||= OnlineApplication.find_by(reference: @reference.upcase)
+    @online_application ||= OnlineApplication.find_by(reference: @query.upcase)
   end
 
   def online_application_income_invalid?
