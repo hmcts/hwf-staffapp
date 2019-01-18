@@ -2,8 +2,9 @@ class ApplicationSearch
   include Rails.application.routes.url_helpers
   attr_reader :error_message
 
-  def initialize(query, current_user)
+  def initialize(query, search_type, current_user)
     @query = query
+    @search_type = search_type
     @current_user = current_user
   end
 
@@ -19,15 +20,31 @@ class ApplicationSearch
   end
 
   def completed
-    if application_exists && application_completed
-      if user_can_access
-        [@application]
-      else
-        set_error_and_return_nil(:processed_by, office_name: application_office)
-      end
+    if @search_type == 'reference'
+      @q = Application.ransack(reference_eq: @query)
+    elsif @search_type == 'name'
+      name = @query.split
+      last = name.pop
+      @q = Application.ransack(
+        {applicant_first_name_matches: name.join(' '), applicant_last_name_matches: last, state_not_eq: 0}
+      )
+    elsif @search_type == 'case_number'
+      @q = Application.ransack(detail_case_number_matches: @query)
     else
-      set_error_and_return_nil(:not_found)
+      @q = Application.ransack
     end
+
+    @q.result.limit(10)
+
+    # if application_exists && application_completed
+    #   if user_can_access
+    #     [@application]
+    #   else
+    #     set_error_and_return_nil(:processed_by, office_name: application_office)
+    #   end
+    # else
+    #   set_error_and_return_nil(:not_found)
+    # end
   end
 
   private
