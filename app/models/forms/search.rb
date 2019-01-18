@@ -4,7 +4,6 @@ module Forms
     include ActiveModel::Model
 
     attribute :reference, String
-    attribute :search_type, String
 
     validates :reference, presence: true
   end
