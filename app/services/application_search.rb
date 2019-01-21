@@ -19,20 +19,22 @@ class ApplicationSearch
   end
 
   def completed
-    Application.extended_search(@query).except_created
+    if @query.blank?
+      return set_error_and_return_nil(:search_blank)
+    end
 
-    # if application_exists && application_completed
-    #   if user_can_access
-    #     [@application]
-    #   else
-    #     set_error_and_return_nil(:processed_by, office_name: application_office)
-    #   end
-    # else
-    #   set_error_and_return_nil(:not_found)
-    # end
+    results = search_query
+    return set_error_and_return_nil(:search_not_found) if results.blank?
+    results
   end
 
   private
+
+  def search_query
+    Application.extended_search(@query).
+      except_created.
+      given_office_only(@current_user.office_id)
+  end
 
   def prepare_reference!
     if @query.present?
@@ -58,10 +60,6 @@ class ApplicationSearch
 
   def application_exists
     @application ||= Application.find_by(reference: @query.upcase)
-  end
-
-  def application_completed
-    !@application.created?
   end
 
   def user_can_access

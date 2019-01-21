@@ -29,6 +29,9 @@ class Application < ActiveRecord::Base
   end)
 
   scope :except_created, -> { where.not(state: 0) }
+  scope :given_office_only, lambda { |office_id|
+    where(office_id: office_id)
+  }
 
   enum state: {
     created: 0,

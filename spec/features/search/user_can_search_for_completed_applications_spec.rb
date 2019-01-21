@@ -27,12 +27,6 @@ RSpec.feature 'User can search for online application', type: :feature do
     then_they_get_a_blank_error
   end
 
-  scenario 'User provides a wrong reference number' do
-    given_user_is_on_the_homepage
-    when_they_search_for_not_existent_application
-    then_they_get_a_not_found_error
-  end
-
   scenario 'User provides a reference number for an existing processed application' do
     given_user_is_on_the_homepage
     when_they_search_for_an_existing_processed_application

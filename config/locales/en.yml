@@ -527,7 +527,9 @@ en-GB:
           attributes:
             reference:
               blank: 'Please enter a reference number'
+              search_blank: "Enter the reference, applicant’s name or case number"
               not_found: 'Reference number is not recognised'
+              search_not_found: "No results. Enter the reference, applicant's name or case number exactly"
               processed_html: 'This application has been processed, <a href="%{application_path}">view application</a>'
               processed_by: 'This application has been processed by %{office_name}'
               income_error: 'This application is incomplete and can’t be processed. Please ask the applicant to apply again.'
