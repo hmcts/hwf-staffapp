@@ -10,7 +10,7 @@ class DashboardPage < BasePage
     element :online_search_reference, '#online_search_reference'
     element :search_label, '.form-label', text: 'Enter the reference, applicant’s name or case number'
     element :search_button, 'input[value="Search"]'
-    element :no_records_found, '.translation_missing', text: 'No Records'
+    element :no_results_found, '.error', text: 'No results. Enter the reference, applicant\'s name or case number exactly'
     element :cant_be_blank_error, '.error', text: 'Please enter a reference number'
     element :search_results_header, 'h3', text: 'Search results'
     element :search_results_header, '.align-top', text: 'Reference Entered First name Last name NI number Case number Fee Remission Completed Last processed'

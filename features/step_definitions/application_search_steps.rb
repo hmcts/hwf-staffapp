@@ -44,7 +44,7 @@ When("my search is invalid") do
 end
 
 Then("I should see reference number is not recognised error message") do
-  expect(dashboard_page.content).to have_no_records_found
+  expect(dashboard_page.content).to have_no_results_found
 end
 
 When("I search leaving the input box blank") do
