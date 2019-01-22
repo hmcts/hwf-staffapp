@@ -1,18 +1,20 @@
 Before do
-
-  Jurisdiction.create![
-    { name: 'County', abbr: nil },
-    { name: 'Family', abbr: nil },
-    { name: 'High', abbr: nil },
-    { name: 'Insolvency', abbr: nil },
-    { name: 'Magistrates', abbr: nil },
-    { name: 'Probate', abbr: nil },
-    { name: 'Employment', abbr: nil },
-    { name: 'Gambling', abbr: nil },
-    { name: 'Gender recognition', abbr: nil },
-    { name: 'Immigration (first-tier)', abbr: nil },
-    { name: 'Immigration (upper)', abbr: nil },
-    { name: 'Property', abbr: nil }]
+  Jurisdiction.create!(
+    [
+      { name: 'County', abbr: nil },
+      { name: 'Family', abbr: nil },
+      { name: 'High', abbr: nil },
+      { name: 'Insolvency', abbr: nil },
+      { name: 'Magistrates', abbr: nil },
+      { name: 'Probate', abbr: nil },
+      { name: 'Employment', abbr: nil },
+      { name: 'Gambling', abbr: nil },
+      { name: 'Gender recognition', abbr: nil },
+      { name: 'Immigration (first-tier)', abbr: nil },
+      { name: 'Immigration (upper)', abbr: nil },
+      { name: 'Property', abbr: nil }
+    ]
+  )
 
   office = Office.create! name: 'Digital',
                           entity_code: 'MA105',
