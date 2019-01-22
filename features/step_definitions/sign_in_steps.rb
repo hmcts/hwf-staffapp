@@ -54,7 +54,7 @@ end
 
 Then("I am taken to get a new password page") do
   expect(current_path).to eq '/users/password/new'
-  expect(new_password_page.content).to have_new_password_header
+  expect(new_password_page.content).to have_header
 end
 
 Then("I see get help") do

@@ -163,6 +163,7 @@ RSpec/ExpectActual:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'features/**/*'
     - 'config/**/*'
     - 'lib/tasks/**/*'
 

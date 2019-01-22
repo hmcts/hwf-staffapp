@@ -1,4 +1,4 @@
-@manual
+@manual @wip
 
 Feature: User navigation
   

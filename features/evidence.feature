@@ -1,4 +1,4 @@
-@manual
+@manual @wip
 
 Feature: Waiting for evidence
   Given I am on an application that is waiting for evidence

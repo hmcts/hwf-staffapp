@@ -1,8 +1,3 @@
-Given("I am signed in as a user") do
-  user_signed_in
-  expect(user_dashboard_page).to have_welcome_user
-end
-
 When("I click on view profile") do
   user_dashboard_page.view_profile.click
 end
@@ -38,7 +33,7 @@ Then("I should see the reference number is not recognised error message") do
 end
 
 When("I start a new application") do
-  # steps need implementing - wip
+  dashboard_page.process_application
 end
 
 Then("I am taken to the applicants personal details page") do

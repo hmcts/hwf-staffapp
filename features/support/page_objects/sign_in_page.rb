@@ -42,16 +42,16 @@ class SignInPage < BasePage
     sign_in
   end
 
-  def manager_account
-    manager = User.third
-    content.user_email.set manager.email
+  def admin_account
+    admin = User.first
+    content.user_email.set admin.email
     content.user_password.set 'password'
     sign_in
   end
 
-  def admin_account
-    admin = User.first
-    content.user_email.set admin.email
+  def manager_account
+    manager = User.third
+    content.user_email.set manager.email
     content.user_password.set 'password'
     sign_in
   end
