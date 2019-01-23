@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/AbcSize
 class ApplicationDetailsPage < BasePage
   section :content, '#content' do
     element :header, 'h2', text: 'Application details'
@@ -23,10 +24,11 @@ class ApplicationDetailsPage < BasePage
     next_page
   end
 
-    def submit_with_fee_300
+  def submit_with_fee_300
     content.application_fee.set '300'
     content.application_jurisdiction.click
     content.application_date_received.set Time.zone.today - 2.months
     next_page
   end
 end
+# rubocop:enable Metrics/AbcSize
