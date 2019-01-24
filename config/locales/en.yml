@@ -64,7 +64,7 @@ en-GB:
       first_name_html: "First<br />name"
       last_name_html: "Last<br />name"
       ni_number_html: "NI<br />number"
-      case_number: Case number
+      case_number_html: "Case<br />number"
       fee: Fee
       last_processed_by_html: "Last<br />processed"
       remission: Remission
@@ -527,9 +527,9 @@ en-GB:
           attributes:
             reference:
               blank: 'Please enter a reference number'
-              search_blank: "Enter the reference, applicant’s name or case number"
+              search_blank: "Enter the reference, applicant’s firts or last name or case number"
               not_found: 'Reference number is not recognised'
-              search_not_found: "No results. Enter the reference, applicant's name or case number exactly"
+              search_not_found: "No results. Enter the reference, applicant's first or last name or case number exactly"
               processed_html: 'This application has been processed, <a href="%{application_path}">view application</a>'
               processed_by: 'This application has been processed by %{office_name}'
               income_error: 'This application is incomplete and can’t be processed. Please ask the applicant to apply again.'
