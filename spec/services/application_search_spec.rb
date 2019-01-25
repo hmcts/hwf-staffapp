@@ -177,7 +177,7 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         service_completed
-        expect(service.error_message).to eq "No results. Enter the reference, applicant's name or case number exactly"
+        expect(service.error_message).to eq "No results found. Try again"
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         service_completed
-        expect(service.error_message).to eq "Enter the reference, applicant’s name or case number"
+        expect(service.error_message).to eq "Enter a search term"
       end
     end
 

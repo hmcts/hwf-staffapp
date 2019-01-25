@@ -91,13 +91,11 @@ RSpec.feature 'User can search for online application', type: :feature do
   end
 
   def then_they_get_a_blank_error
-    expect(page).to have_text('Please enter a reference number')
-    expect(page).not_to have_text('Search results')
+    expect(page).to have_text('Enter a search term')
   end
 
   def then_they_get_a_not_found_error
-    expect(page).to have_text('Reference number is not recognised')
-    expect(page).not_to have_text('Search results')
+    expect(page).to have_text('No results found. Try again')
   end
 
   def then_they_are_redirected_to_the_processed_application_page
@@ -133,7 +131,6 @@ RSpec.feature 'User can search for online application', type: :feature do
       expect(find(:xpath, './/td[7]').text).to eq('£410.00')
       expect(find(:xpath, './/td[8]').text).to eq('£0.00')
       expect(find(:xpath, './/td[9]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
-      expect(find(:xpath, './/td[10]').text).to eq(result_application.user.name)
     end
   end
   # rubocop:enable AbcSize
