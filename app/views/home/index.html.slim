@@ -59,7 +59,7 @@ h1.visuallyhidden Help with fees - Staff application
       = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search')) do |f|
         = f.label :reference, 'Enter the reference, applicant’s name or case number', class: 'form-label'
         = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'form-control', autocomplete: 'off', placeholder: 'Search applications by reference' }
+        = f.text_field :reference, { class: 'form-control', autocomplete: 'off' }
         = f.submit 'Search', class: 'submit-button'
 
 
