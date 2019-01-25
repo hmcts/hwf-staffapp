@@ -107,7 +107,6 @@ class HomeController < ApplicationController
     else
       yield if block_given?
 
-      # load_waiting_applications
       @state = DwpMonitor.new.state
       render :index
     end

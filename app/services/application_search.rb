@@ -24,7 +24,7 @@ class ApplicationSearch
     end
 
     results = search_query
-    return set_error_and_return_nil(:search_not_found) if results.blank?
+    return set_error_and_return_nil(:search_not_found, search_query: @query) if results.blank?
     results
   end
 

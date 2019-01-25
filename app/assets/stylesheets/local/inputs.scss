@@ -80,9 +80,16 @@ select {
   position: relative;
 
   input[type="text"] {
-    width: 600px;
-    max-width: 92% !important;
+    width: 372px;
+    max-width: 80% !important;
     height: 40px;
+  }
+
+  .button {
+    position: absolute;
+    margin-left: 5px;
+    border: 0;
+    height: 38px;
   }
 
   .submit-button {
@@ -99,6 +106,10 @@ select {
 
   .field_with_errors {
     display: inline;
+  }
+
+  .form-label h2 {
+    font-weight: bold;
   }
 }
 
