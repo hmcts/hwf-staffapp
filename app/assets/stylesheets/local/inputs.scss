@@ -85,23 +85,29 @@ select {
     height: 40px;
   }
 
-  .button {
-    position: absolute;
-    margin-left: 5px;
-    border: 0;
-    height: 38px;
-  }
-
-  .submit-button {
+  .search-button {
     position: absolute;
     right: 0;
-    width: 40px;
-    height: 40px;
+    height: 38px;
     margin-left: 0;
-    border: 1px solid $grey-1;
+    border: none;
     overflow: hidden;
-    text-indent: -999em;
-    background: $grey-1 asset_url('icon_search-local.png') 50% 50% no-repeat;
+    cursor: pointer;
+    background-color: #00823b;
+    color: #fff;
+    box-shadow: 0 2px 0 #003618;
+    border: none;
+    font-size: 19px;
+    line-height: 1.3157894737;
+    padding: 8px 15px;
+  }
+  .search-button:hover {
+    background-color: #00692f;
+  }
+  .search-button:active {
+    bottom: -1px;
+    height: 38px;
+    box-shadow: 0 0;
   }
 
   .field_with_errors {
