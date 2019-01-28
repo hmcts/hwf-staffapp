@@ -8,7 +8,7 @@ Given("I am signed in as a user that has processed multiple applications") do
 end
 
 When("I search for an application using a valid hwf reference") do
-  expect(dashboard_page.content).to have_search_label
+  expect(dashboard_page.content).to have_search_header
   dashboard_page.search_by_hwf_reference
 end
 

@@ -47,7 +47,7 @@ end
 
 def confirmation_page
   @confirmation_page ||= ConfirmationPage.new
-end
+end 
 
 def next_page
   base_page.content.next_button.click
@@ -80,11 +80,17 @@ def submit_savings_more_than
   savings_investments_page.submit_exact_amount
 end
 
-delegate :submit_benefits_yes, to: :benefits_page
+def submit_benefits_yes
+  benefits_page.submit_benefits_yes
+end
 
-delegate :submit_evidence_yes, to: :paper_evidence_page
+def submit_evidence_yes
+  paper_evidence_page.submit_evidence_yes
+end
 
-delegate :complete_processing, to: :summary_page
+def complete_processing
+  summary_page.complete_processing
+end
 
 def go_to_summary_page
   start_application
@@ -100,7 +106,9 @@ def go_to_confirmation_page
   complete_processing
 end
 
-delegate :back_to_start, to: :confirmation_page
+def back_to_start
+  confirmation_page.back_to_start
+end
 
 def processed_eligable_application
   start_application
