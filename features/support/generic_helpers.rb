@@ -47,7 +47,7 @@ end
 
 def confirmation_page
   @confirmation_page ||= ConfirmationPage.new
-end 
+end
 
 def next_page
   base_page.content.next_button.click
@@ -60,7 +60,11 @@ def start_application
 end
 
 def submit_required_personal_details
-  personal_details_page.submit_required_information
+  personal_details_page.submit_required_personal_details
+end
+
+def submit_all_personal_details
+  personal_details_page.submit_all_personal_details
 end
 
 def submit_fee_600
@@ -112,7 +116,7 @@ end
 
 def processed_eligable_application
   start_application
-  submit_required_personal_details
+  submit_all_personal_details
   submit_fee_600
   submit_savings_less_than
   submit_benefits_yes

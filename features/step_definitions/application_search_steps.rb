@@ -14,16 +14,27 @@ end
 
 Then("I see that application under search results") do
   expect(dashboard_page.content).to have_search_results_header
-  expect(dashboard_page.content).to have_search_results_header
   expect(dashboard_page.content.search_results_group.found_application.text).to have_content 'PA19-000001'
 end
 
-When("I search for an application by name") do
-  dashboard_page.search_by_name
+Then("I should see the result for that full name") do
+  expect(dashboard_page.content.search_results_group.found_application.text).to have_content 'John Christopher Smith'
+end
+
+When("I search for an application using a last name") do
+  dashboard_page.search_by_last_name
+end
+
+When("I search for an application using a full name") do
+  dashboard_page.search_by_full_name
 end
 
 When("there are multiple results for that name") do
   expect(dashboard_page.content.search_results_group.found_application.result_by_name.count).to eq 2
+end
+
+When("there is a single result for that full name") do
+  expect(dashboard_page.content.search_results_group.found_application.result_by_name.count).to eq 1
 end
 
 Then("I should see a list of the results for that name") do

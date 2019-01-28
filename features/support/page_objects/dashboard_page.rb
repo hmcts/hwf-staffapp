@@ -10,10 +10,9 @@ class DashboardPage < BasePage
     element :online_search_reference, '#online_search_reference'
     element :search_header, 'h2', text: 'Find an application'
     element :search_button, 'input[value="Search"]'
-    element :no_results_found, '.error', text: 'No results. Enter the reference, applicant\'s name or case number exactly'
-    element :cant_be_blank_error, '.error', text: 'Enter a reference number'
+    element :no_results_found, '.error', text: 'You can\'t search "invalid". Enter the reference, applicant’s first or last name or case number.'
+    element :cant_be_blank_error, '.error', text: 'Enter a search term'
     element :search_results_header, 'h3', text: 'Search results'
-    element :search_results_header, '.align-top', text: 'Reference Entered First name Last name NI number Case number Fee Remission Completed Last processed'
     section :search_results_group, '.search-results' do
       section :found_application, 'tbody' do
         elements :result_by_name, 'tr'
@@ -45,8 +44,13 @@ class DashboardPage < BasePage
     content.search_button.click
   end
 
-  def search_by_name
+  def search_by_last_name
     content.completed_search_reference.set 'Smith'
+    content.search_button.click
+  end
+
+  def search_by_full_name
+    content.completed_search_reference.set 'John Christopher Smith'
     content.search_button.click
   end
 

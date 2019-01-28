@@ -8,7 +8,7 @@ And("I am on the personal details part of the application") do
 end
 
 When("I successfully submit my required personal details") do
-  personal_details_page.submit_required_information
+  personal_details_page.submit_required_personal_details
 end
 
 Then("I should be taken to the application details page") do
