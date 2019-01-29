@@ -43,9 +43,8 @@ When("I attempt to sign in with invalid credentials") do
   sign_in_page.invalid_credentials
 end
 
-# this is not the correct GDS behaviour
 Then("I should see invalid email or password error message") do
-  expect(sign_in_page.content).to have_sign_in_alert
+  expect(sign_in_page.content.sign_in_alert.text).to eq 'Invalid Email or password.×'
 end
 
 When("I click on forgot your password") do
