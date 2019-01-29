@@ -1,5 +1,5 @@
 Before do
-  Jurisdiction.create!(
+  jurisdictions = Jurisdiction.create!(
     [
       { name: 'County', abbr: nil },
       { name: 'Family', abbr: nil },
@@ -16,7 +16,9 @@ Before do
     ]
   )
 
-  office = Office.create!(name: 'Digital', entity_code: 'MA105', jurisdiction_ids: [1])
+  office = Office.create! name: 'Digital',
+                          entity_code: 'MA105',
+                          jurisdiction_ids: [jurisdictions[0].id]
 
   User.create!   name: 'Test Admin',
                  email: 'user_1@digital.justice.gov.uk',
