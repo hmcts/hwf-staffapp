@@ -18,6 +18,6 @@ And("I submit how much they have") do
 end
 
 Then("I should be taken to the benefits page") do
-  expect(current_path).to eq '/applications/2/benefits'
+  expect(benefits_page).to be_displayed
   expect(benefits_page.content).to have_header
 end

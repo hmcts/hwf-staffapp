@@ -1,4 +1,6 @@
 class SavingsInvestmentsPage < BasePage
+  set_url '/applications/2/savings_investments'
+
   section :content, '#content' do
     element :header, 'h2', text: 'Savings and investments'
     element :less_than, '.block-label', text: 'Less than £3,000'

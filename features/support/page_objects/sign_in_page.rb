@@ -2,7 +2,7 @@ class SignInPage < BasePage
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  set_url '/'
+  set_url '/users/sign_in'
 
   element :welcome_test_user, 'span', text: 'Welcome Test User'
   element :welcome_test_manager, 'span', text: 'Welcome Test Manager'

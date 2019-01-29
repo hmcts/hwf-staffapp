@@ -13,6 +13,8 @@ Feature: Sign in page
       When I successfully sign in as admin
       Then I am taken to my admin dashboard
 
+    # error message does not follow gds and needs improvement
+    @wip 
     Scenario: Invalid credentials
       When I attempt to sign in with invalid credentials
       Then I should see invalid email or password error message

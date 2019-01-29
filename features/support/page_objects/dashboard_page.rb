@@ -1,4 +1,6 @@
 class DashboardPage < BasePage
+  set_url '/'
+
   element :welcome_user, '#proposition-menu', text: 'Welcome user'
   element :view_profile, 'a', text: 'View profile'
   element :view_office, 'a', text: 'View office'

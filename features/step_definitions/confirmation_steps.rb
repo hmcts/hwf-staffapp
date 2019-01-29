@@ -3,7 +3,7 @@ And("I have processed an application") do
 end
 
 Given("I am on the confirmation page") do
-  expect(current_path).to eq '/applications/2/confirmation'
+  expect(confirmation_page).to be_displayed
   expect(confirmation_page.content).to have_eligible
 end
 
@@ -12,7 +12,7 @@ When("I click on back to start") do
 end
 
 Then("I should be taken back to my dashboard") do
-  expect(current_path).to eq '/'
+  expect(dashboard_page).to be_displayed
 end
 
 Then("I should see my processed application in your last applications") do

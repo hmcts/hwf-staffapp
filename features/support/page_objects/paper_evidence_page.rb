@@ -1,4 +1,6 @@
 class PaperEvidencePage < BasePage
+  set_url '/applications/2/benefit_override/paper_evidence'
+
   section :content, '#content' do
     element :no, '.block-label', text: 'No'
     element :yes, '.block-label', text: 'Yes, the applicant has provided paper evidence'

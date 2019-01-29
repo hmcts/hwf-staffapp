@@ -3,12 +3,11 @@ Given("I am on the Help with Fees staff application home page") do
 end
 
 When("I am not signed in") do
-  expect(current_path).to eq '/users/sign_in'
-  expect(sign_in_page.content).to have_sign_in_alert
+  expect(sign_in_page).to be_displayed
 end
 
 When("I am redirected to the sign in page") do
-  expect(current_path).to eq '/users/sign_in'
+  expect(sign_in_page).to be_displayed
 end
 
 When("I successfully sign in as a user") do
@@ -44,7 +43,7 @@ When("I attempt to sign in with invalid credentials") do
 end
 
 Then("I should see invalid email or password error message") do
-  expect(sign_in_page.content.sign_in_alert.text).to eq 'Invalid Email or password.×'
+  expect(sign_in_page.content.sign_in_alert.text).to eq 'You need to sign in before continuing. ×'
 end
 
 When("I click on forgot your password") do
@@ -52,7 +51,7 @@ When("I click on forgot your password") do
 end
 
 Then("I am taken to get a new password page") do
-  expect(current_path).to eq '/users/password/new'
+  expect(new_password_page).to be_displayed
   expect(new_password_page.content).to have_header
 end
 

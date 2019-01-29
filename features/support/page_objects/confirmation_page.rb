@@ -1,4 +1,6 @@
 class ConfirmationPage < BasePage
+  set_url '/applications/2/confirmation'
+
   section :content, '#content' do
     element :eligible, 'h3', text: '✓ Eligible for help with fees'
     element :complete_processing_button, 'input[value="Complete processing"]'

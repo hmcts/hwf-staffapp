@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/AbcSize
 class ApplicationDetailsPage < BasePage
+  set_url '/applications/2/details'
+
   section :content, '#content' do
     element :header, 'h2', text: 'Application details'
     element :fee_label, '.form-label', text: 'Fee'

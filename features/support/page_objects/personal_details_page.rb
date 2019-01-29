@@ -1,4 +1,6 @@
 class PersonalDetailsPage < BasePage
+  set_url '/applications/2/personal_informations'
+
   section :content, '#content' do
     element :header, 'h2', text: 'Personal details'
     element :application_title, '#application_title'
