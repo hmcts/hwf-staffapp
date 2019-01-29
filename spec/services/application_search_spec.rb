@@ -114,73 +114,59 @@ RSpec.describe ApplicationSearch do
 
     let(:existing_reference) { 'XYZ-123-ABC' }
     let(:wrong_reference) { 'XYZ-WRO-NG' }
-    let(:application) { build_stubbed(:application) }
-
-    before do
-      allow(Application).to receive(:find_by).with(reference: existing_reference).and_return(application)
-      allow(Application).to receive(:find_by).with(reference: wrong_reference).and_return(nil)
-    end
 
     context 'when there is an application with the given reference' do
       let(:reference) { existing_reference }
+      before { application }
 
       context 'when the application has been processed in the same office' do
         context 'when waiting for evidence' do
-          let(:evidence_check) { build_stubbed(:evidence_check) }
-          let(:application) { build_stubbed(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
+          let(:evidence_check) { create(:evidence_check) }
+          let(:application) { create(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
 
-          it 'returns the evidence check url' do
-            is_expected.to eql(evidence_path(evidence_check))
+          it 'returns the application' do
+            expect(service_completed).to eq([application])
           end
         end
 
         context 'when waiting for part payment' do
-          let(:part_payment) { build_stubbed(:part_payment) }
-          let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, reference: reference, office: user.office, part_payment: part_payment) }
+          let(:part_payment) { create(:part_payment) }
+          let(:application) { create(:application, :waiting_for_part_payment_state, reference: reference, office: user.office, part_payment: part_payment) }
 
           it 'returns the part payment url' do
-            is_expected.to eql(part_payment_path(part_payment))
+            is_expected.to eq([application])
           end
         end
 
         context 'when processed' do
-          let(:application) { build_stubbed(:application, :processed_state, reference: reference, office: user.office) }
+          let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }
 
           it 'returns the processed application url' do
-            is_expected.to eql(processed_application_path(application))
+            is_expected.to eq([application])
           end
         end
 
         context 'when deleted' do
-          let(:application) { build_stubbed(:application, :deleted_state, reference: reference, office: user.office) }
+          let(:application) { create(:application, :deleted_state, reference: reference, office: user.office) }
 
-          it 'returns the deleted application url' do
-            is_expected.to eql(deleted_application_path(application))
+          it 'returns the deleted application' do
+            is_expected.to eq([application])
           end
         end
       end
 
       context 'when the application has not been processed in the same office' do
-        let(:office) { build_stubbed :office }
-        let(:application) { build_stubbed(:application, :processed_state, reference: reference, office: office) }
+        let(:office) { create :office }
+        let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
-        it { is_expected.to be nil }
-
-        it 'sets the correct error message' do
-          service_completed
-          expect(service.error_message).to include(office.name)
-        end
+        it { expect(service_completed).to be nil }
+        it {}
       end
 
       context 'when the application has not yet been completed' do
-        let(:application) { build_stubbed(:application, reference: reference) }
+        let(:application) { create(:application, :uncompleted, reference: reference) }
 
-        it { is_expected.to be nil }
-
-        it 'sets the correct error message' do
-          service_completed
-          expect(service.error_message).to eq 'Reference number is not recognised'
-        end
+        it { expect(service_completed).to be nil }
       end
     end
 
@@ -191,8 +177,20 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         service_completed
-        expect(service.error_message).to eq 'Reference number is not recognised'
+        expect(service.error_message).to eq "You can't search \"XYZ-WRO-NG\". Enter the reference, applicant’s first or last name or case number."
       end
     end
+
+    context 'when the search is empty' do
+      let(:reference) { '' }
+
+      it { is_expected.to be nil }
+
+      it 'sets the correct error message' do
+        service_completed
+        expect(service.error_message).to eq "Enter a search term"
+      end
+    end
+
   end
 end

@@ -1,4 +1,4 @@
-@manual
+@manual @wip
 
 Feature: Before you start
 

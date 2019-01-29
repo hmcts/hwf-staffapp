@@ -1,9 +1,9 @@
-@manual
+@manual @wip
 
 Feature: My dashboard
 
   Background: Signed in as a user
-    Given I am signed in as a user
+    Given I successfully sign in as a user
 
   Scenario: View profile
     When I click on view profile
@@ -16,6 +16,7 @@ Feature: My dashboard
   Scenario: DWP connection
     Then I should see the status of the DWP connection
 
+  @wip
   Scenario: Search a valid reference
     When I search for an application using valid reference number
     Then I am taken to ....
@@ -28,6 +29,7 @@ Feature: My dashboard
     When I start a new application
     Then I am taken to the applicants personal details page
 
+  @wip
   Scenario: Process an online application
     When I look up a valid hwf reference
     Then I am taken to ....

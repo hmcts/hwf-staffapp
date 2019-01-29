@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   skip_after_action :verify_authorized
+  before_action :load_users_last_applications
 
   def index
     manager_setup_progress
@@ -13,9 +14,14 @@ class HomeController < ApplicationController
   end
 
   def completed_search
-    search_or_render(:completed) do
-      @online_search_form = Forms::Search.new
-    end
+    @online_search_form = Forms::Search.new
+    @completed_search_form = Forms::Search.new
+    @state = dwp_checker_state
+    @notification = Notification.first
+
+    @search_results = search_and_return(:completed)
+
+    render :index
   end
 
   def online_search
@@ -79,10 +85,19 @@ class HomeController < ApplicationController
 
   def search_and_return(type)
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
+
     if form.valid?
-      search = ApplicationSearch.new(form.reference, current_user)
-      search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
+      process_search(form, type)
+    elsif type == :completed && form.reference.blank?
+      form.errors.clear
+      form.errors.add(:reference, blank_search_params_message)
+      nil
     end
+  end
+
+  def process_search(form, type)
+    search = ApplicationSearch.new(form.reference, current_user)
+    search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
   end
 
   def search_or_render(type)
@@ -92,9 +107,13 @@ class HomeController < ApplicationController
     else
       yield if block_given?
 
-      load_waiting_applications
       @state = DwpMonitor.new.state
       render :index
     end
+  end
+
+  def blank_search_params_message
+    scope = 'activemodel.errors.models.forms/search.attributes.reference'
+    I18n.t(:search_blank, scope: scope)
   end
 end

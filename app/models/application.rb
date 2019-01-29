@@ -1,4 +1,10 @@
 class Application < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :extended_search, against: [:reference], associated_against: {
+    detail: [:case_number],
+    applicant: [:first_name, :last_name]
+  }
+
   has_paper_trail
 
   belongs_to :user, -> { with_deleted }
@@ -21,6 +27,11 @@ class Application < ActiveRecord::Base
       joins(:evidence_check).
       joins(:applicant).where('applicants.ni_number = ?', ni_number)
   end)
+
+  scope :except_created, -> { where.not(state: 0) }
+  scope :given_office_only, lambda { |office_id|
+    where(office_id: office_id)
+  }
 
   enum state: {
     created: 0,
