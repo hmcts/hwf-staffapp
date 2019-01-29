@@ -16,9 +16,7 @@ Before do
     ]
   )
 
-  office = Office.create! name: 'Digital',
-                          entity_code: 'MA105',
-                          jurisdiction_ids: [1]
+  office = Office.create!(name: 'Digital', entity_code: 'MA105', jurisdiction_ids: [1])
 
   User.create!   name: 'Test Admin',
                  email: 'user_1@digital.justice.gov.uk',
