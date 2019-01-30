@@ -3,7 +3,7 @@ And("I have processed an application") do
 end
 
 Given("I am on the confirmation page") do
-  expect(current_path).to eq '/applications/2/confirmation'
+  expect(current_path).to include 'confirmation'
   expect(confirmation_page.content).to have_eligible
 end
 
