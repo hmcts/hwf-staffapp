@@ -56,7 +56,7 @@ h1.visuallyhidden Help with fees - Staff application
 .grid-row
   .column-one-half
     .util_pt-medium.util_mt-medium
-      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search')) do |f|
+      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get) do |f|
         = f.label :reference, class: 'form-label'
           h2 = t('search_form.label')
         = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
