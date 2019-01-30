@@ -1,6 +1,6 @@
 Given("I am on the application details part of the application") do
   submit_required_personal_details
-  expect(application_details_page).to be_displayed
+  expect(current_path).to eq '/applications/2/details'
   expect(application_details_page.content).to have_header
 end
 
