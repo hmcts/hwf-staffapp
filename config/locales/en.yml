@@ -618,3 +618,7 @@ en-GB:
     page_entries_info:
       multi_page: "Showing %{from} to %{to} of %{count} results"
       multi_page_html: "Showing <b>%{from}</b>&nbsp;to&nbsp;<b>%{to}</b> of <b>%{count}</b> results"
+      single_page_html:
+        zero:  ""
+        one:   "Showing <b>1</b> result"
+        other: "Showing <b>all&nbsp;%{count}</b> results"
