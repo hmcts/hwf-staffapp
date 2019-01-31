@@ -36,7 +36,10 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
           - else
             td = t("#{type}.table.missing_decision_date")
       tr
-        td colspan="10"
+        td colspan="5"
           = will_paginate list
+        td colspan="5"
+          .pagination.pagination-info
+            = page_entries_info list, model: Application
 - else
   p =t("search_results.no_results")
