@@ -1,7 +1,7 @@
 class Application < ActiveRecord::Base
   include PgSearch
 
-  self.per_page = 100
+  self.per_page = 50
 
   pg_search_scope :extended_search, against: [:reference], associated_against: {
     detail: [:case_number],
