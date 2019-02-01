@@ -1,6 +1,7 @@
 = form_for @form, url: path, method: :put, html: { autocomplete: 'off' } do |f|
   header
-    h2.heading-xlarge Generate report
+    h2.heading-xlarge
+      = header
 
   .form-group
     = f.label :date_from, class: 'form-label'

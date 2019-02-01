@@ -3,8 +3,10 @@ header
 
 
 dl
-  dt =link_to 'Finance report', reports_finance_report_path
+  dt =link_to 'Finance aggregated report', reports_finance_report_path
   dd Date delimited report of financial expenditure
+  dt =link_to 'Finance transactional report', reports_finance_transactional_report_path
+  dd Date delimited transaction-level Finance report
   - if policy(:report).graphs?
     dt =link_to 'Graphs', graphs_report_path
     dd 5 day graphs for benefit checks by business unit
