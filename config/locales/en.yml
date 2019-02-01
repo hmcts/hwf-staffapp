@@ -329,6 +329,10 @@ en-GB:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
+      forms/report/finance_transactional_report:
+        date_from: 'Date from'
+        date_to: 'Date to'
+        date_hint: Use this format DD/MM/YYYY
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
@@ -419,6 +423,14 @@ en-GB:
     errors:
       models:
         forms/finance_report:
+          date_hint: Enter the date in this format DD/MM/YYYY
+          attributes:
+            date_from:
+              blank: 'Please enter a start date'
+            date_to:
+              blank: 'Please enter an end date'
+              after: 'Date must be after the start date'
+        forms/report/finance_transactional_report:
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:
             date_from:

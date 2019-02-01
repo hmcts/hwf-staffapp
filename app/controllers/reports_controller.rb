@@ -3,6 +3,25 @@ class ReportsController < ApplicationController
     authorize :report
   end
 
+  def finance_transactional_report
+    authorize :report, :show?
+    @form = Forms::Report::FinanceTransactionalReport.new
+  end
+
+  def finance_transactional_report_generator
+    authorize :report, :show?
+
+    @form = ftr_form
+    if @form.valid?
+      build_and_return_data(
+        FinanceTransactionalReportBuilder.new(ftr_params[:date_from], ftr_params[:date_to]).to_csv,
+        'finance-transactional-report'
+      )
+    else
+      render :finance_transactional_report
+    end
+  end
+
   def finance_report
     authorize :report, :show?
     @form = Forms::FinanceReport.new
@@ -61,6 +80,17 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:forms_finance_report).permit(:date_from, :date_to)
+  end
+
+  def ftr_form
+    Forms::Report::FinanceTransactionalReport.new(
+      date_from: ftr_params[:date_from],
+      date_to: ftr_params[:date_to]
+    )
+  end
+
+  def ftr_params
+    params.require(:forms_report_finance_transactional_report).permit(:date_from, :date_to)
   end
 
   def load_graph_data
