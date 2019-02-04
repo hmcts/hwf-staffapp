@@ -64,6 +64,7 @@ class FinanceTransactionalReportBuilder
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).
       where(state: Application.states[:processed]).
-      order(decision_date: :desc)
+      order('decision_date::timestamp::date ASC').
+      order('offices.entity_code ASC')
   end
 end
