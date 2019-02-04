@@ -4,9 +4,7 @@ class SignInPage < BasePage
 
   set_url '/'
 
-  element :welcome_test_user, 'span', text: 'Welcome Test User'
-  element :welcome_test_manager, 'span', text: 'Welcome Test Manager'
-  element :welcome_test_admin, 'span', text: 'Welcome Test Admin'
+  element :welcome_user, 'span', text: 'Welcome user'
   section :content, '#content' do
     element :generate_reports, 'h3', text: 'Generate reports'
     element :view_offices, 'h3', text: 'View offices'
@@ -36,23 +34,23 @@ class SignInPage < BasePage
   end
 
   def user_account
-    user = User.second
+    user = FactoryGirl.create(:user)
     content.user_email.set user.email
-    content.user_password.set 'password'
+    content.user_password.set user.password
     sign_in
   end
 
   def admin_account
-    admin = User.first
-    content.user_email.set admin.email
-    content.user_password.set 'password'
+    user = FactoryGirl.create(:admin_user)
+    content.user_email.set user.email
+    content.user_password.set user.password
     sign_in
   end
 
   def manager_account
-    manager = User.third
-    content.user_email.set manager.email
-    content.user_password.set 'password'
+    user = FactoryGirl.create(:manager)
+    content.user_email.set user.email
+    content.user_password.set user.password
     sign_in
   end
 

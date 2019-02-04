@@ -6,7 +6,7 @@ class ApplicationDetailsPage < BasePage
     element :application_fee, '#application_fee'
     element :fee_error, '.error', text: 'Enter the fee'
     element :jurisdiction_label, '.form-label', text: 'Jurisdiction'
-    element :county_jurisdiction, '.block-label', text: 'County'
+    element :county_jurisdiction, '#application_jurisdiction_id_1'
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'
     element :date_received_label, '.form-label', text: 'Date application received'
     element :date_received_hint, '.hint', text: 'Use this format DD/MM/YYYY'
