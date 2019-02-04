@@ -74,7 +74,7 @@ window.moj.Modules.GtmTrackTimestamps = {
 
   serchPerformed: function() {
     var timestamps = this.getTimestamps()
-    console.log('search clicked');
+
     dataLayer.push({
       'event': 'SearchPerformed',
       'searchResult': ''
@@ -83,7 +83,7 @@ window.moj.Modules.GtmTrackTimestamps = {
 
   serchResultClick: function() {
     var timestamps = this.getTimestamps()
-    console.log('search result clicked');
+
     dataLayer.push({
       'event': 'Searchresult_Timestamp',
       'hompageTimestamp': timestamps.homepage,
