@@ -29,7 +29,7 @@ module Views
         @application_type = app.application_type
         @application_id = app.id
         @reference = app.reference
-        @decision_date = app.decision_date
+        @decision_date = app.decision_date.to_date
       end
 
       def assign_office_attrs(app)
