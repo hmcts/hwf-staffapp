@@ -86,7 +86,7 @@ window.moj.Modules.GtmTrackTimestamps = {
     });
   },
 
-  serchResultClick: function() {
+  searchResultClick: function() {
     var timestamps = this.getTimestamps()
 
     dataLayer.push({
@@ -97,9 +97,35 @@ window.moj.Modules.GtmTrackTimestamps = {
     });
   },
 
+  sectionLinkClick: function(section_name) {
+    var timestamps = this.getTimestamps()
+
+    dataLayer.push({
+      'event': section_name,
+      'hompageTimestamp': timestamps.homepage
+    });
+  },
+
   bindHomepageEvents: function() {
-    $('.waiting-for-updated_applications a').click(function(){
+    $('.updated_applications a').click(function(){
       moj.Modules.GtmTrackTimestamps.yourLastApplication();
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('your-last-applications-section');
+    });
+
+    $('.waiting-for-evidence a').click(function(){
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-evidence-section');
+    });
+
+    $('.waiting-for-part_payment a').click(function(){
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-part-payment-section');
+    });
+
+    $('a.processed-applications').click(function(){
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('processed-applications-section');
+    });
+
+    $('a.deleted-applications').click(function(){
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('deleted-applications-section');
     });
 
     if($('#completed_search_reference').val().length > 0){
@@ -107,7 +133,8 @@ window.moj.Modules.GtmTrackTimestamps = {
     }
 
     $('table.search-results a').click(function(){
-      moj.Modules.GtmTrackTimestamps.serchResultClick();
+      moj.Modules.GtmTrackTimestamps.searchResultClick();
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('search-results-section')
     });
   }
 };
