@@ -73,11 +73,16 @@ window.moj.Modules.GtmTrackTimestamps = {
   },
 
   serchPerformed: function() {
-    var timestamps = this.getTimestamps()
+    var results = $('table.search-results').size();
+    var search_result = 'Failure';
+
+    if(results > 0){
+      search_result = 'Success';
+    }
 
     dataLayer.push({
       'event': 'SearchPerformed',
-      'searchResult': ''
+      'searchResult': search_result
     });
   },
 
@@ -97,9 +102,9 @@ window.moj.Modules.GtmTrackTimestamps = {
       moj.Modules.GtmTrackTimestamps.yourLastApplication();
     });
 
-    $('.search-button').click(function(){
+    if($('#completed_search_reference').val().length > 0){
       moj.Modules.GtmTrackTimestamps.serchPerformed();
-    });
+    }
 
     $('table.search-results a').click(function(){
       moj.Modules.GtmTrackTimestamps.serchResultClick();
