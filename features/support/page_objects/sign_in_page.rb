@@ -35,6 +35,7 @@ class SignInPage < BasePage
 
   def user_account
     user = FactoryGirl.create(:user)
+    100.times { FactoryGirl.create(:application, :processed_state, office: user.office) }
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
