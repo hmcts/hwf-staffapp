@@ -50,6 +50,31 @@
       }
     }
   }
+  a {
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  a.next_page {
+    text-decoration: none;
+    margin-left: 10px;
+
+    &::after {
+      @include pseuds('right');
+    }
+  }
+  a.previous_page {
+    text-decoration: none;
+    margin-right: 10px;
+
+    &::before {
+      @include pseuds('left');
+    }
+  }
+  em.current {
+    font-style: normal;
+    font-weight: bold;
+  }
 
   .pages {
     text-align: center;
@@ -61,4 +86,5 @@
 
 .pagination-info {
   float: right;
+  margin-top: 53px;
 }
