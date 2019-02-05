@@ -612,13 +612,14 @@ en-GB:
       heading: Choose jurisdictions
       advice: Select all the jurisdictions that are handled in your office
   will_paginate:
-    previous_label: "&#8592; Previous"
-    next_label: "Next &#8594;"
+    previous_label: "Previous"
+    next_label: "Next"
     page_gap: "&hellip;"
+    customized_page_separator: "Page %{page} of %{total}"
     page_entries_info:
       multi_page: "Showing %{from} to %{to} of %{count} results"
-      multi_page_html: "Showing <b>%{from}</b>&nbsp;to&nbsp;<b>%{to}</b> of <b>%{count}</b> results"
+      multi_page_html: "<b>%{count}</b> results"
       single_page_html:
         zero:  ""
-        one:   "Showing <b>1</b> result"
+        one:   "<b>1</b> result"
         other: "Showing <b>all&nbsp;%{count}</b> results"
