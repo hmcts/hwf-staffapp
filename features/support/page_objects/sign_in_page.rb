@@ -33,9 +33,23 @@ class SignInPage < BasePage
     content.sign_in_button.click
   end
 
+  def with_applications
+    100.times do
+      application = FactoryGirl.create(:application, :processed_state, office: user.office)
+      FactoryGirl.create(:applicant_with_all_details, application: application)
+    end
+  end
+
+  def user_account_with_applications
+    user = FactoryGirl.create(:user)
+    with_applications
+    content.user_email.set user.email
+    content.user_password.set user.password
+    sign_in
+  end
+
   def user_account
     user = FactoryGirl.create(:user)
-    100.times { FactoryGirl.create(:application, :processed_state, office: user.office) }
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
