@@ -66,13 +66,13 @@ h1.visuallyhidden Help with fees - Staff application
 
 - if policy(:application).index?
   - if @search_results
-    =render('home/search_results', type: :search_results, list: @search_results)
-  =render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
-  =render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
-  =render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
-  =render('home/processed_and_deleted_aplications')
+    = render('home/search_results', type: :search_results, list: @search_results)
+  = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
+  = render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
+  = render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
+  = render('home/processed_and_deleted_aplications')
 
--if policy(:report).index? || policy(:office).index?
+- if policy(:report).index? || policy(:office).index?
   .grid-row.equal-heightboxes.util_mt-medium
     - if policy(:report).index?
       .column-one-half
@@ -87,10 +87,11 @@ h1.visuallyhidden Help with fees - Staff application
           p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
           = link_to 'View offices', offices_path
 
-=render 'home/graphs'
+= render 'home/graphs'
 
 - content_for(:javascripts)
   javascript:
     $(document).ready(function () {
       moj.Modules.GtmTrackTimestamps.hompage();
+      moj.Modules.GtmTrackTimestamps.bindHomepageEvents();
     });
