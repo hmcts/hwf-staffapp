@@ -105,12 +105,7 @@ window.moj.Modules.GtmTrackTimestamps = {
     });
   },
 
-  bindHomepageEvents: function() {
-    $('.updated_applications a').click(function(){
-      moj.Modules.GtmTrackTimestamps.yourLastApplication();
-      moj.Modules.GtmTrackTimestamps.sectionLinkClick('your-last-applications-section');
-    });
-
+  trackLinksClicked: function() {
     $('.waiting-for-evidence a').click(function(){
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-evidence-section');
     });
@@ -127,17 +122,26 @@ window.moj.Modules.GtmTrackTimestamps = {
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('deleted-applications-section');
     });
 
+    $('.updated_applications a').click(function(){
+      moj.Modules.GtmTrackTimestamps.yourLastApplication();
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('your-last-applications-section');
+    });
+
+    $('table.search-results a').click(function(){
+      moj.Modules.GtmTrackTimestamps.searchResultClick();
+      moj.Modules.GtmTrackTimestamps.sectionLinkClick('search-results-section')
+    });
+  },
+
+  bindHomepageEvents: function() {
+    moj.Modules.GtmTrackTimestamps.trackLinksClicked();
+
     if($('#completed_search_reference').val().length > 0){
       moj.Modules.GtmTrackTimestamps.serchPerformed('Failure');
     }
 
     $('.search-button').click(function(){
       moj.Modules.GtmTrackTimestamps.serchPerformed('');
-    });
-
-    $('table.search-results a').click(function(){
-      moj.Modules.GtmTrackTimestamps.searchResultClick();
-      moj.Modules.GtmTrackTimestamps.sectionLinkClick('search-results-section')
     });
   }
 };
