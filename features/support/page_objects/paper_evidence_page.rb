@@ -1,7 +1,7 @@
 class PaperEvidencePage < BasePage
   section :content, '#content' do
-    element :no, '.block-label', text: 'No'
-    element :yes, '.block-label', text: 'Yes, the applicant has provided paper evidence'
+    element :no, 'label', text: 'No'
+    element :yes, 'label', text: 'Yes, the applicant has provided paper evidence'
   end
 
   def submit_evidence_yes
