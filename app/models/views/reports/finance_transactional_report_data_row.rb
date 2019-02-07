@@ -33,7 +33,7 @@ module Views
       end
 
       def assign_office_attrs(app)
-        @entity_code = app.office.entity_code
+        @entity_code = app.business_entity.be_code
         @office_name = app.office.name
       end
 
