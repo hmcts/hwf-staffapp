@@ -61,6 +61,7 @@ class FinanceTransactionalReportBuilder
     Application.
       includes(:detail).
       includes(office: :jurisdictions).
+      includes(:business_entity).
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).
       where(state: Application.states[:processed]).
