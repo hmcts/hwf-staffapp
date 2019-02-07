@@ -52,26 +52,26 @@
   }
   a {
     text-decoration: none;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
   span.next_page {
-    margin-left: 10px;
+    display: none;
   }
   a.next_page {
     text-decoration: none;
-    margin-left: 10px;
+    margin-left: 6px;
 
     &::after {
       @include pseuds('right');
     }
   }
   span.previous_page {
-    margin-right: 10px;
+    display: none;
   }
   a.previous_page {
     text-decoration: none;
-    margin-right: 10px;
+    margin-right: 6px;
 
     &::before {
       @include pseuds('left');
@@ -80,6 +80,8 @@
   em.current {
     font-style: normal;
     font-weight: bold;
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   .pages {
