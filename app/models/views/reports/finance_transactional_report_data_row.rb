@@ -38,7 +38,7 @@ module Views
       end
 
       def assign_jurisdiction_attrs(app)
-        @jurisdiction_name = app.office.jurisdictions.first.name
+        @jurisdiction_name = app.business_entity.jurisdiction.name
       end
 
       def assign_details_attrs(app)
