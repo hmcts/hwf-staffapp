@@ -37,7 +37,7 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
             td = t("#{type}.table.missing_decision_date")
       tr
         td colspan="5"
-          = will_paginate list, inner_window: 1
+          = will_paginate list, inner_window: 1, params: { anchor: 'new_completed_search' }
         td colspan="5"
           .pagination.pagination-info
             = page_entries_info list, model: Application
