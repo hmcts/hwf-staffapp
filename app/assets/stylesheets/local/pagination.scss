@@ -55,6 +55,9 @@
     margin-left: 5px;
     margin-right: 5px;
   }
+  span.next_page {
+    margin-left: 10px;
+  }
   a.next_page {
     text-decoration: none;
     margin-left: 10px;
@@ -62,6 +65,9 @@
     &::after {
       @include pseuds('right');
     }
+  }
+  span.previous_page {
+    margin-right: 10px;
   }
   a.previous_page {
     text-decoration: none;
