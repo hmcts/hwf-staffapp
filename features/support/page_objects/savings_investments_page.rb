@@ -1,10 +1,10 @@
 class SavingsInvestmentsPage < BasePage
   section :content, '#content' do
     element :header, 'h2', text: 'Savings and investments'
-    element :less_than, 'label', text: 'Less than £3,000'
-    element :more_than, 'label', text: 'More than £3,000'
+    element :less_than, '.block-label', text: 'Less than £3,000'
+    element :more_than, '.block-label', text: 'More than £3,000'
     element :savings_amount_label, 'label', text: 'How much do they have in savings and investments?'
-    element :application_amount, '#application_amount', text: ''
+    element :application_amount, '#application_amount'
   end
 
   def submit_less_than
