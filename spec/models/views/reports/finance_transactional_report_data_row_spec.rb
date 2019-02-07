@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
   subject(:data) { described_class.new(application) }
 
-  let(:application) { create(:application_full_remission, :with_office, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2018-12-01')) }
+  let(:application) { create(:application_full_remission, :with_office, :with_business_entity, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2018-12-01')) }
 
   describe 'attributes' do
     it { is_expected.to respond_to :month_year }
@@ -28,7 +28,7 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
     end
 
     it 'sets the entity_code' do
-      expect(data.entity_code).to eq(application.office.entity_code)
+      expect(data.entity_code).to eq(application.business_entity.be_code)
     end
 
     it 'sets the office_name' do
