@@ -12,6 +12,12 @@ module HomeHelper
     end
   end
 
+  def formatted_results_count(results)
+    # I'm doing this manualy because will_paginate doesn't support the count with delimiter
+    content_tag(:b, number_with_delimiter(results.total_entries)) +
+      content_tag(:span, " result".pluralize(results.total_entries))
+  end
+
   private
 
   def waiting_for_evidence_path(application)
