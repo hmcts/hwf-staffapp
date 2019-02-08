@@ -30,29 +30,37 @@ When("I search for an application using a full name") do
   dashboard_page.search_by_full_name
 end
 
-When("there are multiple results for that name") do
-  expect(dashboard_page.content).to have_search_results_header
-  expect(dashboard_page.content.search_results_group.found_application.result_by_name.count).to eq 2
-end
-
 When("there is a single result for that full name") do
   expect(dashboard_page.content).to have_search_results_header
-  expect(dashboard_page.content.search_results_group.found_application.result_by_name.count).to eq 1
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[0].text).to include 'John Christopher Smith'
 end
 
-Then("I should see a list of the results for that name") do
+Then("I should see a list of the results for that last name") do
   expect(dashboard_page.content).to have_search_results_header
-  expect(dashboard_page.content.search_results_group.found_application.result_by_name[0].text).to have_content 'Smith'
-  expect(dashboard_page.content.search_results_group.found_application.result_by_name[1].text).to have_content 'Smith'
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[0].text).to include 'Smith'
+  expect(result[1].text).to include 'Smith'
+end
+
+And("that there is one result") do
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[1].text).to eq '1 result'
+end
+
+And("that there are two results") do
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[2].text).to eq '2 results'
 end
 
 When("I search for an application using a case number") do
   dashboard_page.search_case_number
 end
 
-Then("I should see a list of the results with that case number") do
+Then("there is a single result for that case number") do
   expect(dashboard_page.content).to have_search_results_header
-  expect(dashboard_page.content.search_results_group.found_application.text).to have_content 'E71YX571'
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[0].text).to have_content 'E71YX571'
 end
 
 When("my search is invalid") do

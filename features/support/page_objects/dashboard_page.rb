@@ -15,7 +15,7 @@ class DashboardPage < BasePage
     element :search_results_header, 'h3', text: 'Search results'
     section :search_results_group, '.search-results' do
       section :found_application, 'tbody' do
-        elements :result_by_name, 'tr'
+        elements :result, 'tr'
       end
     end
     element :completed_search_reference, '#completed_search_reference'
