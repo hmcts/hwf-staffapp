@@ -34,4 +34,9 @@ Feature: Search application
     Given I am signed in as a user that has processed an application
     When I search leaving the input box blank
     Then I get the cannot be blank error message
-    
+  
+  Scenario: Pagination
+    Given I have more than 20 search results
+    Then I see that it's paginated by 20 results per page
+    And I can navigate forward a page
+    And I can navigate back a page

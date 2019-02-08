@@ -22,6 +22,10 @@ class DashboardPage < BasePage
     element :look_up_button, 'input[value="Look up"]'
     element :start_now_button, 'input[value="Start now"]'
     element :last_application, 'td', text: 'Smith'
+    element :pagination_info, '.pagination pagination-info'
+    element :pagination, '.pagination'
+    element :next_page, '.next_page', text: 'Next'
+    element :previous_page, '.previous_page', text: 'Previous'
   end
 
   def look_up_valid_reference
@@ -59,9 +63,23 @@ class DashboardPage < BasePage
     content.search_button.click
   end
 
-  def search_case_number
-    content.completed_search_reference.set 'E71YX571'
+  def search_case_number(case_number)
+    content.completed_search_reference.set case_number
     content.search_button.click
+  end
+
+  def paginated_search_results
+    sign_in_page.load_page
+    sign_in_page.user_account_with_applications
+    dashboard_page.search_case_number('JK123456A')
+  end
+
+  def pagination_next_page
+    content.next_page.click
+  end
+
+  def pagination_previous_page
+    content.previous_page.click
   end
 
   def process_application

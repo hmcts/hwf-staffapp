@@ -54,7 +54,7 @@ And("that there are two results") do
 end
 
 When("I search for an application using a case number") do
-  dashboard_page.search_case_number
+  dashboard_page.search_case_number('E71YX571')
 end
 
 Then("there is a single result for that case number") do
@@ -79,4 +79,23 @@ end
 Then("I get the cannot be blank error message") do
   expect(dashboard_page.content).to have_no_search_results_header
   expect(dashboard_page.content).to have_cant_be_blank_error
+end
+
+Given("I have more than 20 search results") do
+  dashboard_page.paginated_search_results
+end
+
+Then("I see that it's paginated by 20 results per page") do
+  result = dashboard_page.content.search_results_group.found_application.result
+  expect(result[25].text).to include '123…1516'
+end
+
+And("I can navigate forward a page") do
+  dashboard_page.pagination_next_page
+  expect(dashboard_page.content).to have_previous_page
+end
+
+And("I can navigate back a page") do
+  dashboard_page.pagination_previous_page
+  expect(dashboard_page.content).to have_no_previous_page
 end
