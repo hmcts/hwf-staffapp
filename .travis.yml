@@ -21,8 +21,6 @@ addons:
     - xvfb
   postgresql: 9.6
 script:
-- bundle exec rake rubocop
 - bundle exec rake db:create db:schema:load
-- DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec
-- bundle exec cucumber
-- bundle exec rake jasmine:ci
+- DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
+
