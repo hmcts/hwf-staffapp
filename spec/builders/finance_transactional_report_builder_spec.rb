@@ -31,7 +31,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
     end
 
     it 'contains the transactional data' do
-      application = create(:application_full_remission, :with_office, :processed_state, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
+      application = create(:application_full_remission, :with_office, :with_business_entity, :processed_state, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
 
       is_expected.to include(application.reference)
     end
