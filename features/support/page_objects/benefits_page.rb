@@ -1,8 +1,8 @@
 class BenefitsPage < BasePage
   section :content, '#content' do
     element :header, 'h2', text: 'Benefits'
-    element :no, '.block-label', text: 'No'
-    element :yes, '.block-label', text: 'Yes'
+    element :no, 'label', text: 'No'
+    element :yes, 'label', text: 'Yes'
   end
 
   def submit_benefits_yes

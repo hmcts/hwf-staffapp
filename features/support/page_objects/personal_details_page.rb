@@ -8,8 +8,8 @@ class PersonalDetailsPage < BasePage
     element :application_date_of_birth, '#application_date_of_birth'
     element :application_ni_number, '#application_ni_number'
     element :date_of_birth_error, '.error', text: 'Enter a valid date of birth'
-    element :status_single, '.block-label', text: 'Single'
-    element :status_married, '.block-label', text: 'Married or living with someone and sharing an income'
+    element :status_single, 'label', text: 'Single'
+    element :status_married, 'label', text: 'Married or living with someone and sharing an income'
   end
 
   def full_name
