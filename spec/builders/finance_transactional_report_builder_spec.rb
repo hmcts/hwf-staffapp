@@ -27,7 +27,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
     end
 
     it 'contains headers' do
-      is_expected.to include('Month-Year,Entity Code,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount')
+      is_expected.to include('Month-Year,BEC,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount')
     end
 
     it 'contains the transactional data' do

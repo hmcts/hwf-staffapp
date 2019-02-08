@@ -3,7 +3,7 @@ class FinanceTransactionalReportBuilder
 
   CSV_FIELDS = {
     month_year: 'Month-Year',
-    entity_code: 'Entity Code',
+    entity_code: 'BEC',
     office_name: 'Office Name',
     jurisdiction_name: 'Jurisdiction Name',
     remission_amount: 'Remission Amount',
