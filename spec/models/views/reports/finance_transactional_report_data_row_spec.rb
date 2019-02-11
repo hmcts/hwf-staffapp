@@ -36,7 +36,7 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
     end
 
     it 'sets the jurisdiction_name' do
-      expect(data.jurisdiction_name).to eq(application.office.jurisdictions.first.name)
+      expect(data.jurisdiction_name).to eq(application.business_entity.jurisdiction.name)
     end
 
     it 'sets the remission_amount' do
