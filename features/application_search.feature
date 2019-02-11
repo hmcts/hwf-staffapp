@@ -37,6 +37,6 @@ Feature: Search application
   
   Scenario: Pagination
     Given I have more than 20 search results
-    Then I see that it's paginated by 20 results per page
+    Then I see that it is paginated by 20 results per page
     And I can navigate forward a page
     And I can navigate back a page
