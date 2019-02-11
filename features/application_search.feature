@@ -23,7 +23,7 @@ Feature: Search application
   Scenario: Search application by case number
     Given I am signed in as a user that has processed an application
     When I search for an application using a case number
-    Then there is a single result for that case number
+    Then I should see there is a single result for that case number
 
   Scenario: Invalid search
     Given I am signed in as a user that has processed an application

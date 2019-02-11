@@ -60,7 +60,7 @@ When("I search for an application using a case number") do
   application_search_page.search_case_number('E71YX571')
 end
 
-Then("there is a single result for that case number") do
+Then("I should see there is a single result for that case number") do
   expect(application_search_page.content).to have_search_results_header
   result = application_search_page.content.search_results_group.found_application.result
   expect(result[0].text).to have_content 'E71YX571'
