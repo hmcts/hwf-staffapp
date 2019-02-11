@@ -6,13 +6,13 @@ Feature: Search application
     Given I am signed in as a user that has processed an application
     When I search for an application using a valid hwf reference
     Then I see that application under search results
-    And that there is one result
+    And that there is one result for my office
 
   Scenario: Search application by last name - multiple results
     Given I am signed in as a user that has processed multiple applications
     When I search for an application using a last name
     Then I should see a list of the results for that last name
-    And that there are two results
+    And that there are two results for my office
 
   Scenario: Search application by full name
     Given I am signed in as a user that has processed multiple applications

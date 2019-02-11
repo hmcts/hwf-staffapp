@@ -43,13 +43,16 @@ Then("I should see a list of the results for that last name") do
   expect(result[1].text).to include 'Smith'
 end
 
-And("that there is one result") do
+And("that there is one result for my office") do
   result = application_search_page.content.search_results_group.found_application.result
+  expect(result[0].text).to include 'PA19'
   expect(result[1].text).to eq '1 result'
 end
 
-And("that there are two results") do
+And("that there are two results for my office") do
   result = application_search_page.content.search_results_group.found_application.result
+  expect(result[0].text).to include 'PA19'
+  expect(result[1].text).to include 'PA19'
   expect(result[2].text).to eq '2 results'
 end
 
