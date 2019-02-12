@@ -22,6 +22,7 @@ class DashboardPage < BasePage
     element :look_up_button, 'input[value="Look up"]'
     element :start_now_button, 'input[value="Start now"]'
     element :last_application, 'td', text: 'Smith'
+    element :generate_reports_button, '.button', text: 'Generate reports'
   end
 
   def look_up_valid_reference
@@ -66,5 +67,9 @@ class DashboardPage < BasePage
 
   def process_application
     content.start_now_button.click
+  end
+
+  def generate_reports
+    content.generate_reports_button.click
   end
 end

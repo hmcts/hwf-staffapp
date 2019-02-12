@@ -1,8 +1,3 @@
-Given("I am signed in as admin") do
-  admin_signed_in
-  expect(admin_dashboard_page).to have_welcome_user
-end
-
 Then("I should see the reference number is not recognised") do
 end
 
