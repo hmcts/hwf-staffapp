@@ -66,6 +66,15 @@ Then("I should see there is a single result for that case number") do
   expect(result[0].text).to have_content 'E71YX571'
 end
 
+When("I search for an application using a national insurance number") do
+  application_search_page.search_ni_number
+end
+
+Then("I should see there is a single result for that national insurance number") do
+  result = application_search_page.content.search_results_group.found_application.result
+  expect(result[0].text).to include 'JR054008D'
+end
+
 When("my search is invalid") do
   application_search_page.search_invalid_reference
 end
