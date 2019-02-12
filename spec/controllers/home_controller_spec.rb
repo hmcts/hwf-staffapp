@@ -141,7 +141,7 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe 'POST #completed_search' do
+  describe 'GET #completed_search' do
     let(:application) { build_stubbed(:application) }
     let(:search) { nil }
 
@@ -150,7 +150,7 @@ RSpec.describe HomeController, type: :controller do
       allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
 
       sign_in(user)
-      post :completed_search, completed_search: { reference: reference }
+      get :completed_search, completed_search: { reference: reference }
     end
 
     let(:user) { staff }
@@ -191,9 +191,11 @@ RSpec.describe HomeController, type: :controller do
         end
       end
 
-      context 'when the search returns a url' do
-        let(:completed_result) { processed_application_path(application) }
+      context 'when the search returns a results' do
         let(:completed_error) { nil }
+        let(:completed_result) { instance_double(Application::ActiveRecord_Relation, paginate: paginated_result) }
+        let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, joins: search_result) }
+        let(:search_result) { instance_double(Application::ActiveRecord_Relation, reorder: [processed_application_path(application)]) }
 
         it 'renders the index view' do
           expect(response).to render_template :index

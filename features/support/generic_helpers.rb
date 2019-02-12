@@ -22,6 +22,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def application_search_page
+  @application_search_page ||= ApplicationSearchPage.new
+end
+
 def savings_investments_page
   @savings_investments_page ||= SavingsInvestmentsPage.new
 end
