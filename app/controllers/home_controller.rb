@@ -18,8 +18,11 @@ class HomeController < ApplicationController
     @completed_search_form = Forms::Search.new
     @state = dwp_checker_state
     @notification = Notification.first
-
     @search_results = search_and_return(:completed)
+
+    if @search_results
+      @search_results = paginate_search_results
+    end
 
     render :index
   end
@@ -115,5 +118,13 @@ class HomeController < ApplicationController
   def blank_search_params_message
     scope = 'activemodel.errors.models.forms/search.attributes.reference'
     I18n.t(:search_blank, scope: scope)
+  end
+
+  def paginate_search_results
+    @search_results.
+      paginate(page: params[:page]).
+      # There is a bug when you try to order by assocations, this is a fix for it
+      joins('LEFT JOIN applicants on applications.id = applicants.application_id').
+      reorder('applications.created_at DESC, applicants.first_name ASC, applicants.last_name ASC')
   end
 end

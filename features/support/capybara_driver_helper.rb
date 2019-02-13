@@ -4,7 +4,6 @@ Capybara.configure do |config|
   config.default_max_wait_time = 30
   config.match = :prefer_exact
   config.exact = true
-  config.ignore_hidden_elements = false
   config.visible_text_only = true
 end
 

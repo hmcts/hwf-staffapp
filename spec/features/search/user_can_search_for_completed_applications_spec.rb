@@ -122,15 +122,15 @@ RSpec.feature 'User can search for online application', type: :feature do
   # rubocop:disable AbcSize
   def then_have_all_the_columns_populated_correctly(result_application)
     within(:xpath, './/table[@class="search-results"]') do
-      expect(find(:xpath, './/td[1]').text).to eq(result_application.reference)
-      expect(find(:xpath, './/td[2]').text).to eq(result_application.created_at.strftime('%d/%m/%Y'))
-      expect(find(:xpath, './/td[3]').text).to eq(result_application.applicant.first_name)
-      expect(find(:xpath, './/td[4]').text).to eq(result_application.applicant.last_name)
-      expect(find(:xpath, './/td[5]').text).to eq(result_application.applicant.ni_number)
-      expect(find(:xpath, './/td[6]').text).to eq(result_application.detail.case_number)
-      expect(find(:xpath, './/td[7]').text).to eq('£410.00')
-      expect(find(:xpath, './/td[8]').text).to eq('£0.00')
-      expect(find(:xpath, './/td[9]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
+      expect(find(:xpath, './/tr[1]/td[1]').text).to eq(result_application.reference)
+      expect(find(:xpath, './/tr[1]/td[2]').text).to eq(result_application.created_at.strftime('%d/%m/%Y'))
+      expect(find(:xpath, './/tr[1]/td[3]').text).to eq(result_application.applicant.first_name)
+      expect(find(:xpath, './/tr[1]/td[4]').text).to eq(result_application.applicant.last_name)
+      expect(find(:xpath, './/tr[1]/td[5]').text).to eq(result_application.applicant.ni_number)
+      expect(find(:xpath, './/tr[1]/td[6]').text).to eq(result_application.detail.case_number)
+      expect(find(:xpath, './/tr[1]/td[7]').text).to eq('£410.00')
+      expect(find(:xpath, './/tr[1]/td[8]').text).to eq('£0.00')
+      expect(find(:xpath, './/tr[1]/td[9]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
     end
   end
   # rubocop:enable AbcSize

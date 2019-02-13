@@ -1,5 +1,8 @@
 class Application < ActiveRecord::Base
   include PgSearch
+
+  self.per_page = 25
+
   pg_search_scope :extended_search, against: [:reference], associated_against: {
     detail: [:case_number],
     applicant: [:first_name, :last_name]
