@@ -2,7 +2,7 @@ class ApplicationSearchPage < BasePage
   section :content, '#content' do
     element :search_header, 'h2', text: 'Find an application'
     element :search_button, 'input[value="Search"]'
-    element :no_results_found_error, '.error', text: 'You can\'t search "invalid". Enter the reference, applicant’s first or last name, case number or NI number.'
+    element :no_results_found_error, '.error', text: 'No results found.'
     element :cant_be_blank_error, '.error', text: 'Enter a search term'
     element :search_results_header, 'h3', text: 'Search results'
     section :search_results_group, '.search-results' do
