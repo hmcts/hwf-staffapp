@@ -61,12 +61,10 @@ en-GB:
     table_header:
       reference: Reference
       entered: Entered
-      first_name_html: "First<br />name"
-      last_name_html: "Last<br />name"
-      ni_number_html: "NI<br />number"
-      case_number_html: "Case<br />number"
+      first_name: "First name"
+      last_name: "Last name"
+      case_number: "Case number"
       fee: Fee
-      last_processed_by_html: "Last<br />processed"
       remission: Remission
       completed: Completed
     table:
