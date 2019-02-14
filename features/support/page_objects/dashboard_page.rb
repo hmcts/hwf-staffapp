@@ -9,6 +9,7 @@ class DashboardPage < BasePage
     element :start_now_button, 'input[value="Start now"]'
     element :processed_applications, 'a', text: 'Processed applications'
     element :last_application, 'td', text: 'Smith'
+    element :generate_reports_button, '.button', text: 'Generate reports'
     element :deleted_applications, 'a', text: 'Deleted applications'
     element :online_search_reference, '#online_search_reference'
   end
@@ -30,5 +31,9 @@ class DashboardPage < BasePage
 
   def process_application
     content.start_now_button.click
+  end
+
+  def generate_reports
+    content.generate_reports_button.click
   end
 end

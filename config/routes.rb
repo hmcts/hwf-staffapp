@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'
+  get 'reports/finance_transactional_report' => 'reports#finance_transactional_report'
   get 'reports/graphs' => 'reports#graphs', as: :graphs_report
   put 'reports/finance_report' => 'reports#finance_report_generator'
+  put 'reports/finance_transactional_report' => 'reports#finance_transactional_report_generator'
   get 'letter_templates' => 'reports#letters'
   get 'reports/raw_data' => 'reports#raw_data'
   put 'reports/raw_data' => 'reports#raw_data_export'

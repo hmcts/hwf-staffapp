@@ -46,6 +46,14 @@ def confirmation_page
   @confirmation_page ||= ConfirmationPage.new
 end
 
+def generate_report_page
+  @generate_report_page ||= GenerateReportPage.new
+end
+
+def reports_page
+  @reports_page ||= ReportsPage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
@@ -105,6 +113,11 @@ end
 def go_to_confirmation_page
   go_to_summary_page
   complete_processing
+end
+
+def go_to_finance_transactional_report_page
+  visit(reports_page.url)
+  reports_page.finance_transactional_report
 end
 
 def back_to_start
