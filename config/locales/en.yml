@@ -438,6 +438,7 @@ en-GB:
             date_to:
               blank: 'Please enter an end date'
               after: 'Date must be after the start date'
+              not_a_date: Please enter a valid date
         forms/application/applicant:
           attributes:
             last_name:
