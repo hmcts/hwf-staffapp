@@ -12,7 +12,7 @@ module Forms
       validates :date_to, date: {
         after: :date_from, allow_blank: true,
         before: proc { |obj| obj.date_from + 2.years },
-        message: "The date range can't be longer than 2 years",
+        message: "The date range can't be longer than 2 years"
       }, if: :date_from
 
       def i18n_scope
