@@ -3,6 +3,7 @@ Capybara.configure do |config|
   config.default_driver = driver
   config.default_max_wait_time = 30
   config.match = :prefer_exact
+  config.exact = true
   config.visible_text_only = true
 end
 
@@ -12,6 +13,9 @@ end
 
 Capybara.register_driver :firefox do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
+  profile['browser.download.dir'] = DownloadHelpers::PATH.to_s
+  profile['browser.download.folderList'] = 2
+  profile['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
   profile['browser.cache.disk.enable'] = false
   profile['browser.cache.memory.enable'] = false
   Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)

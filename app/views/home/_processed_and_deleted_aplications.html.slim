@@ -5,7 +5,7 @@ table.completed-applications
   tbody
     tr
       td
-        = link_to(t('processed_applications.index.title'), processed_applications_path)
+        = link_to(t('processed_applications.index.title'), processed_applications_path, class: 'processed-applications')
     tr
       td
-        = link_to(t('deleted_applications.index.title'), deleted_applications_path)
+        = link_to(t('deleted_applications.index.title'), deleted_applications_path, class: 'deleted-applications')

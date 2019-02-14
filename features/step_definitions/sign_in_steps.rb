@@ -13,12 +13,13 @@ end
 
 When("I successfully sign in as a user") do
   sign_in_page.user_account
-  expect(sign_in_page).to have_welcome_test_user
+  expect(sign_in_page).to have_welcome_user
 end
 
 When("I successfully sign in as admin") do
+  sign_in_page.load_page
   sign_in_page.admin_account
-  expect(sign_in_page).to have_welcome_test_admin
+  expect(sign_in_page).to have_welcome_user
 end
 
 Then("I am taken to my user dashboard") do

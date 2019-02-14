@@ -6,12 +6,13 @@ Feature: Search application
     Given I am signed in as a user that has processed an application
     When I search for an application using a valid hwf reference
     Then I see that application under search results
+    And that there is one result for my office
 
   Scenario: Search application by last name - multiple results
     Given I am signed in as a user that has processed multiple applications
     When I search for an application using a last name
-    And there are multiple results for that name
-    Then I should see a list of the results for that name
+    Then I should see a list of the results for that last name
+    And that there are two results for my office
 
   Scenario: Search application by full name
     Given I am signed in as a user that has processed multiple applications
@@ -22,7 +23,7 @@ Feature: Search application
   Scenario: Search application by case number
     Given I am signed in as a user that has processed an application
     When I search for an application using a case number
-    Then I should see a list of the results with that case number
+    Then I should see there is a single result for that case number
 
   Scenario: Invalid search
     Given I am signed in as a user that has processed an application
@@ -33,4 +34,9 @@ Feature: Search application
     Given I am signed in as a user that has processed an application
     When I search leaving the input box blank
     Then I get the cannot be blank error message
-    
+  
+  Scenario: Pagination
+    Given I have more than 20 search results
+    Then I see that it is paginated by 20 results per page
+    And I can navigate forward a page
+    And I can navigate back a page

@@ -1,10 +1,3 @@
-module WaitUntil
-  def self.wait_until(timeout = 10, message = nil, &block)
-    wait = Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
-    wait.until(&block)
-  end
-end
-
 def base_page
   @base_page ||= BasePage.new
 end
@@ -29,6 +22,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def application_search_page
+  @application_search_page ||= ApplicationSearchPage.new
+end
+
 def savings_investments_page
   @savings_investments_page ||= SavingsInvestmentsPage.new
 end
@@ -47,6 +44,14 @@ end
 
 def confirmation_page
   @confirmation_page ||= ConfirmationPage.new
+end
+
+def generate_report_page
+  @generate_report_page ||= GenerateReportPage.new
+end
+
+def reports_page
+  @reports_page ||= ReportsPage.new
 end
 
 def next_page
@@ -108,6 +113,11 @@ end
 def go_to_confirmation_page
   go_to_summary_page
   complete_processing
+end
+
+def go_to_finance_transactional_report_page
+  visit(reports_page.url)
+  reports_page.finance_transactional_report
 end
 
 def back_to_start
