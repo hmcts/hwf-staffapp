@@ -532,7 +532,7 @@ en-GB:
               blank: 'Please enter a reference number'
               search_blank: "Enter a search term"
               not_found: 'Reference number is not recognised'
-              search_not_found: No results found.
+              search_not_found: No results found
               processed_html: 'This application has been processed, <a href="%{application_path}">view application</a>'
               processed_by: 'This application has been processed by %{office_name}'
               income_error: 'This application is incomplete and can’t be processed. Please ask the applicant to apply again.'

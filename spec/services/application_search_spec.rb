@@ -177,7 +177,7 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         service_completed
-        expect(service.error_message).to eq "No results found."
+        expect(service.error_message).to eq "No results found"
       end
     end
 
