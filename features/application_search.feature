@@ -25,6 +25,11 @@ Feature: Search application
     When I search for an application using a case number
     Then I should see there is a single result for that case number
 
+  Scenario: Search application by national insurance number
+    Given I am signed in as a user that has processed an application
+    When I search for an application using a national insurance number
+    Then I should see there is a single result for that national insurance number
+
   Scenario: Invalid search
     Given I am signed in as a user that has processed an application
     When my search is invalid

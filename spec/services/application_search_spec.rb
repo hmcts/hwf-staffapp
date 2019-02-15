@@ -177,7 +177,7 @@ RSpec.describe ApplicationSearch do
 
       it 'sets the correct error message' do
         service_completed
-        expect(service.error_message).to eq "You can't search \"XYZ-WRO-NG\". Enter the reference, applicant’s first or last name or case number."
+        expect(service.error_message).to eq "No results found"
       end
     end
 
