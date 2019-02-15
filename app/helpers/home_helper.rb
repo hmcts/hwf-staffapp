@@ -18,6 +18,15 @@ module HomeHelper
       content_tag(:span, " result".pluralize(results.total_entries))
   end
 
+  def sort_link_helper(column)
+    direction = 'desc'
+    if @sort_by == column.to_s
+      direction = (@sort_to == 'desc') ? 'asc' : 'desc'
+    end
+
+    link = request.original_url.gsub(/(&sort_by|&sort_to)=.*/,'')
+    link + "&sort_by=#{column}&sort_to=#{direction}#new_completed_search"
+  end
   private
 
   def waiting_for_evidence_path(application)
