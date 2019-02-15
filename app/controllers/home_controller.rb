@@ -121,6 +121,9 @@ class HomeController < ApplicationController
   end
 
   def paginate_search_results
+    @sort_by = params['sort_by']
+    @sort_to = params['sort_to']
+
     @search_results.
       paginate(page: params[:page]).
       # There is a bug when you try to order by assocations, this is a fix for it
