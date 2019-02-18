@@ -9,14 +9,12 @@ class HomeController < ApplicationController
     load_users_last_applications
     @online_search_form = Forms::Search.new
     @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
     @notification = Notification.first
   end
 
   def completed_search
     @online_search_form = Forms::Search.new
     @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
     @notification = Notification.first
     @search_results = search_and_return(:completed)
 
@@ -110,7 +108,6 @@ class HomeController < ApplicationController
     else
       yield if block_given?
 
-      @state = DwpMonitor.new.state
       render :index
     end
   end

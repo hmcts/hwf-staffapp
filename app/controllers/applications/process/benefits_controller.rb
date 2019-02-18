@@ -4,7 +4,6 @@ module Applications
       before_action :authorize_application_update
 
       def index
-        @state = dwp_checker_state
         if application.saving.passed?
           @form = Forms::Application::Benefit.new(application)
           render :index

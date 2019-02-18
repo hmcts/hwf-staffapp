@@ -12,11 +12,12 @@
 - content_for :content_override
   #wrapper.group
     .container
-      .phase-banner
+      div class=("dwp-banner-#{@dwp_state}")
         p
-          strong.phase-tag= Rails.application.config.phase.upcase
+          strong.dwp-tag DWP checker
           span
-            | Tell us what you think and #{link_to 'help us improve', current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"}
+            =render("shared/dwp/#{@dwp_state}")
+
     .container
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
@@ -47,8 +48,11 @@
               li= link_to 'DWP message', edit_dwp_warnings_path
             li= link_to 'Staff Guides', guide_path
             li= link_to 'Letter templates', letter_templates_path
+            li= link_to 'Feedback', feedback_path
             li= link_to 'Sign out', destroy_user_session_path, :method => :delete
-
+        - else
+          ul#proposition-links
+            li= link_to 'Feedback', "mailto:#{Settings.mail.feedback}"
 
 - content_for :javascripts
   = javascript_include_tag('application.js')

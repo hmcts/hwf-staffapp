@@ -147,9 +147,9 @@ en-GB:
       dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
       cannot_process_application: This is a benefits-based application which cannot be processed until the DWP checker is available
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
-    dwp_unavailable: "The DWP checker is currently unavailable, you won't be able to check if applicants are receiving benefits. We are aware of this issue and are investigating. We apologise for the inconvenience."
-    dwp_warning: "There may be a problem with the service. You may not be able to check if applicants are receiving benefits, this is being investigated."
-    dwp_restored: "The connection with the DWP is currently working. Benefits based and income based applications can now be processed."
+    dwp_unavailable: You can’t check an applicant’s benefits. We’re investigating this issue.
+    dwp_warning: You may not be able to check an applicant’s benefits. We’re investigating this issue.
+    dwp_restored: You can process benefits and income based applications.
     create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
     benefit_checker:

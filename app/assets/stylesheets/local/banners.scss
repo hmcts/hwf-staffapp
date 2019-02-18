@@ -26,6 +26,16 @@
   border: 1px solid $grass-green;
 }
 
+.dwp-warning {
+  padding: $gutter $gutter-half;
+  background-color: $orange-25;
+  border: 1px solid $orange;
+}
+
+.dwp-warning p, .dwp-restored p {
+  font-size: 16px !important;
+}
+
 .ie-warning {
   color: $error-colour;
   background: $error-background;
