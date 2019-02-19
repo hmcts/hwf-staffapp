@@ -1,6 +1,6 @@
 class ApplicationSearch
   include Rails.application.routes.url_helpers
-  attr_reader :error_message
+  attr_reader :error_message, :results
 
   def initialize(query, current_user)
     @query = query
@@ -23,9 +23,17 @@ class ApplicationSearch
       return set_error_and_return_nil(:search_blank)
     end
 
-    results = search_query
-    return set_error_and_return_nil(:search_not_found, search_query: @query) if results.blank?
-    results
+    @results = search_query
+    return set_error_and_return_nil(:search_not_found, search_query: @query) if @results.blank?
+    @results
+  end
+
+  def paginate_search_results(params)
+    @sort_by = params[:sort_by]
+    @sort_to = params[:sort_to]
+
+    @results = paginate_results(params[:page])
+    @results.reorder(sort_results)
   end
 
   private
@@ -103,5 +111,46 @@ class ApplicationSearch
   def set_error_and_return_nil(i18n_key, i18n_params = {})
     @error_message = I18n.t(i18n_key, { scope: scope }.merge(i18n_params))
     nil
+  end
+
+  def paginate_results(page)
+    results.paginate(page: page).
+      # There is a bug when you try to order by assocations, this is a fix for it
+      joins('LEFT JOIN applicants on applications.id = applicants.application_id').
+      joins('LEFT JOIN details on applications.id = details.application_id')
+  end
+
+  def sort_results
+    default_sort = ['applications.created_at DESC']
+    if @sort_by != 'first_name'
+      default_sort << 'applicants.first_name ASC'
+    end
+    if @sort_by != 'last_name'
+      default_sort << 'applicants.last_name ASC'
+    end
+
+    default_sort.unshift(new_sort_param) if @sort_by.present?
+    default_sort.join(', ')
+  end
+
+  def new_sort_param
+    case @sort_by
+    when 'reference'
+      "applications.reference #{@sort_to}"
+    when 'entered'
+      "applications.created_at #{@sort_to}"
+    when 'first_name'
+      "applicants.first_name #{@sort_to}"
+    when 'last_name'
+      "applicants.last_name #{@sort_to}"
+    when 'case_number'
+      "details.case_number #{@sort_to}"
+    when 'fee'
+      "details.fee #{@sort_to}"
+    when 'remission'
+      "applications.decision_cost #{@sort_to}"
+    when 'completed'
+      "applications.decision_date #{@sort_to}"
+    end
   end
 end

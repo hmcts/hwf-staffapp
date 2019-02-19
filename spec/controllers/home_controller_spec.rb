@@ -190,20 +190,34 @@ RSpec.describe HomeController, type: :controller do
           expect(assigns(:state)).to be_a String
         end
       end
+    end
+  end
 
-      context 'when the search returns a results' do
-        let(:completed_error) { nil }
-        let(:completed_result) { instance_double(Application::ActiveRecord_Relation, paginate: paginated_result) }
-        let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, joins: search_result) }
-        let(:search_result) { instance_double(Application::ActiveRecord_Relation, reorder: [processed_application_path(application)]) }
+  describe 'GET #completed_search with pagination' do
+    let(:application) { build_stubbed(:application) }
+    let(:user) { staff }
+    let(:reference) { 'whatever' }
+    let(:search) { instance_double(ApplicationSearch, 'search_class', completed: completed_result, error_message: completed_error) }
 
-        it 'renders the index view' do
-          expect(response).to render_template :index
-        end
+    before do
+      allow(Application).to receive(:find_by).with(reference: application.reference).and_return(application)
+      allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
+      allow(search).to receive(:paginate_search_results).with(sort_by: 'first_name', sort_to: 'asc', page: '2').and_return(search)
 
-        it 'does assign the DwpMonitor state' do
-          expect(assigns(:state)).not_to be nil
-        end
+      sign_in(user)
+      get :completed_search, completed_search: { reference: reference }, sort_to: 'asc', sort_by: 'first_name', page: 2
+    end
+
+    context 'when the search returns a results' do
+      let(:completed_error) { nil }
+      let(:completed_result) { ['asd'] }
+
+      it 'renders the index view' do
+        expect(response).to render_template :index
+      end
+
+      it 'does assign the DwpMonitor state' do
+        expect(assigns(:state)).not_to be nil
       end
     end
   end

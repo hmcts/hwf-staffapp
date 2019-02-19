@@ -55,3 +55,46 @@ table.income {
     }
   }
 }
+
+table.search-results {
+  th {
+    position: relative;
+    padding-right: 10px;
+  }
+
+  th a:visited {
+    color: #005ea5;
+  }
+
+  th.sort_arrows a:after {
+    content: " \25b2";
+    right: 10px;
+    top: 13px;
+    font-size: 0.5em;
+    position: absolute;
+  }
+
+  th.sort_arrows a:before {
+    content: " \25bc";
+    right: 10px;
+    top: 21px;
+    font-size: 0.5em;
+    position: absolute;
+  }
+
+  th.sort_arrow_asc a:before {
+    content: " \25bc";
+    right: 10px;
+    top: 16px;
+    font-size: 0.7em;
+    position: absolute;
+  }
+
+  th.sort_arrow_desc a:before {
+    content: " \25b2";
+    right: 10px;
+    top: 16px;
+    font-size: 0.7em;
+    position: absolute;
+  }
+}
