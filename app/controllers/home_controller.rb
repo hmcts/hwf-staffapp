@@ -99,8 +99,8 @@ class HomeController < ApplicationController
   end
 
   def process_search(form, type)
-    search = ApplicationSearch.new(form.reference, current_user)
-    search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
+    @search = ApplicationSearch.new(form.reference, current_user)
+    @search.send(type) || (form.errors.add(:reference, @search.error_message) && nil)
   end
 
   def search_or_render(type)
@@ -123,11 +123,7 @@ class HomeController < ApplicationController
   def paginate_search_results
     @sort_by = params['sort_by']
     @sort_to = params['sort_to']
-
-    @search_results.
-      paginate(page: params[:page]).
-      # There is a bug when you try to order by assocations, this is a fix for it
-      joins('LEFT JOIN applicants on applications.id = applicants.application_id').
-      reorder('applications.created_at DESC, applicants.first_name ASC, applicants.last_name ASC')
+    pagination_params = { sort_to: @sort_to, sort_by: @sort_by, page: params[:page] }
+    @search.paginate_search_results(pagination_params)
   end
 end

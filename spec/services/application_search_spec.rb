@@ -193,4 +193,40 @@ RSpec.describe ApplicationSearch do
     end
 
   end
+
+  describe '#paginate_search_results' do
+    let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, 'paginated') }
+
+    let(:reference) { 'XYZ-123-ABC' }
+    let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }
+    let(:pagination_params) { { 'sort_to': 'DESC', 'sort_by': 'last_name', 'page': 1 } }
+
+    before do
+      application
+      service.completed
+    end
+
+    it 'paginate the results' do
+      allow(paginated_result).to receive(:reorder)
+
+      service.paginate_search_results(pagination_params)
+      expect(service.results).to eq([application])
+    end
+
+    context 'sort' do
+      let(:sort_string) { 'applicants.last_name DESC, applications.created_at DESC, applicants.first_name ASC' }
+      let(:search_service) { service }
+
+      before do
+        allow(search_service).to receive(:paginate_results).and_return paginated_result
+        allow(paginated_result).to receive(:reorder).with(sort_string).and_return 'sorted results'
+      end
+
+      it 'sorts paginated results' do
+        results = service.paginate_search_results(pagination_params)
+        expect(results).to eql('sorted results')
+      end
+
+    end
+  end
 end
