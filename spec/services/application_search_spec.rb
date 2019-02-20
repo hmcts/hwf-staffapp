@@ -9,8 +9,8 @@ RSpec.describe ApplicationSearch do
 
   it { is_expected.to respond_to :error_message }
 
-  describe '#completed' do
-    subject(:service_completed) { service.completed }
+  describe '#call' do
+    subject(:service_completed) { service.call }
 
     let(:existing_reference) { 'XYZ-123-ABC' }
     let(:wrong_reference) { 'XYZ-WRO-NG' }
@@ -103,7 +103,7 @@ RSpec.describe ApplicationSearch do
 
     before do
       application
-      service.completed
+      service.call
     end
 
     it 'paginate the results' do
