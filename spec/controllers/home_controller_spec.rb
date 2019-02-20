@@ -171,7 +171,7 @@ RSpec.describe HomeController, type: :controller do
     context 'when reference parameter is present' do
       let(:reference) { 'whatever' }
 
-      let(:search) { instance_double(ApplicationSearch, completed: completed_result, error_message: completed_error) }
+      let(:search) { instance_double(ApplicationSearch, call: completed_result, error_message: completed_error) }
 
       context 'when the search returns nil and an error' do
         let(:completed_result) { nil }
@@ -197,7 +197,7 @@ RSpec.describe HomeController, type: :controller do
     let(:application) { build_stubbed(:application) }
     let(:user) { staff }
     let(:reference) { 'whatever' }
-    let(:search) { instance_double(ApplicationSearch, 'search_class', completed: completed_result, error_message: completed_error) }
+    let(:search) { instance_double(ApplicationSearch, 'search_class', call: completed_result, error_message: completed_error) }
 
     before do
       allow(Application).to receive(:find_by).with(reference: application.reference).and_return(application)

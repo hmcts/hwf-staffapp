@@ -6,29 +6,18 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
-    load_users_last_applications
-    @online_search_form = Forms::Search.new
-    @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
-    @notification = Notification.first
+    load_defaults
   end
 
   def completed_search
-    @online_search_form = Forms::Search.new
-    @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
-    @notification = Notification.first
+    load_defaults
     @search_results = search_and_return(:completed)
-
-    if @search_results
-      @search_results = paginate_search_results
-    end
 
     render :index
   end
 
   def online_search
-    search_or_render(:online) do
+    search_or_render do
       @completed_search_form = Forms::Search.new
     end
   end
@@ -89,22 +78,34 @@ class HomeController < ApplicationController
   def search_and_return(type)
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
 
-    if form.valid?
-      process_search(form, type)
-    elsif type == :completed && form.reference.blank?
-      form.errors.clear
-      form.errors.add(:reference, blank_search_params_message)
-      nil
+    if ready_to_search?(form)
+      process_search(form)
     end
   end
 
-  def process_search(form, type)
-    @search = ApplicationSearch.new(form.reference, current_user)
-    @search.send(type) || (form.errors.add(:reference, @search.error_message) && nil)
+  def ready_to_search?(form)
+    return true if form.reference.present?
+    form.errors.add(:reference, blank_search_params_message)
+    nil
   end
 
-  def search_or_render(type)
-    result = search_and_return(type)
+  def process_search(form)
+    @search = ApplicationSearch.new(form.reference, current_user)
+    results = (@search.call || (form.errors.add(:reference, @search.error_message) && nil))
+    paginate_search_results if results
+  end
+
+  def online_process_search
+    @online_search_form = Forms::Search.new(search_params(:online))
+
+    if @online_search_form.valid?
+      @search = OnlineApplicationSearch.new(@online_search_form.reference, current_user)
+      @search.online || (@online_search_form.errors.add(:reference, @search.error_message) && nil)
+    end
+  end
+
+  def search_or_render
+    result = online_process_search
     if result
       redirect_to(result)
     else
@@ -125,5 +126,12 @@ class HomeController < ApplicationController
     @sort_to = params['sort_to']
     pagination_params = { sort_to: @sort_to, sort_by: @sort_by, page: params[:page] }
     @search.paginate_search_results(pagination_params)
+  end
+
+  def load_defaults
+    @online_search_form = Forms::Search.new
+    @completed_search_form = Forms::Search.new
+    @state = dwp_checker_state
+    @notification = Notification.first
   end
 end

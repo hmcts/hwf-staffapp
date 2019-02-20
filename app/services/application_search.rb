@@ -1,5 +1,4 @@
 class ApplicationSearch
-  include Rails.application.routes.url_helpers
   attr_reader :error_message, :results
 
   SORT_PARAMS = { reference: 'applications.reference', entered: 'applications.created_at',
@@ -13,7 +12,7 @@ class ApplicationSearch
     @current_user = current_user
   end
 
-  def completed
+  def call
     if @query.blank?
       return set_error_and_return_nil(:search_blank)
     end
