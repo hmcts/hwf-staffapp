@@ -17,8 +17,12 @@ class HomeController < ApplicationController
   end
 
   def online_search
-    search_or_render do
-      @completed_search_form = Forms::Search.new
+    result = online_process_search
+    if result
+      redirect_to(result)
+    else
+      load_defaults
+      render :index
     end
   end
 
@@ -48,27 +52,15 @@ class HomeController < ApplicationController
   end
 
   def load_users_last_applications
-    @last_updated_applications ||= Query::LastUpdatedApplications.new(current_user).find(limit: 20)
+    @last_updated_applications ||= LoadApplications.load_users_last_applications(current_user)
   end
 
   def assign_waiting_for_evidence
-    @waiting_for_evidence = waiting_for_evidence.map do |application|
-      Views::ApplicationList.new(application.evidence_check)
-    end
+    @waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user)
   end
 
   def assign_waiting_for_part_payment
-    @waiting_for_part_payment = waiting_for_part_payment.map do |application|
-      Views::ApplicationList.new(application.part_payment)
-    end
-  end
-
-  def waiting_for_evidence
-    Query::WaitingForEvidence.new(current_user).find
-  end
-
-  def waiting_for_part_payment
-    Query::WaitingForPartPayment.new(current_user).find
+    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user)
   end
 
   def search_params(type)
@@ -78,9 +70,7 @@ class HomeController < ApplicationController
   def search_and_return(type)
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
 
-    if ready_to_search?(form)
-      process_search(form)
-    end
+    process_search(form) if ready_to_search?(form)
   end
 
   def ready_to_search?(form)
@@ -101,18 +91,6 @@ class HomeController < ApplicationController
     if @online_search_form.valid?
       @search = OnlineApplicationSearch.new(@online_search_form.reference, current_user)
       @search.online || (@online_search_form.errors.add(:reference, @search.error_message) && nil)
-    end
-  end
-
-  def search_or_render
-    result = online_process_search
-    if result
-      redirect_to(result)
-    else
-      yield if block_given?
-
-      @state = DwpMonitor.new.state
-      render :index
     end
   end
 
