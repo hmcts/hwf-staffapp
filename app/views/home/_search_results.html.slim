@@ -6,23 +6,14 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
     caption.visuallyhidden = t("search_results.title")
     thead
       tr.align-top
-        th class="#{sort_link_class(:reference)}"
-          = link_to t("#{type}.table_header.reference"), sort_link_helper(:reference)
-        th class="#{sort_link_class(:entered)}"
-          = link_to t("#{type}.table_header.entered"), sort_link_helper(:entered)
-        th class="#{sort_link_class(:first_name)}"
-          = link_to t("#{type}.table_header.first_name"), sort_link_helper(:first_name)
-        th class="#{sort_link_class(:last_name)}"
-          = link_to t("#{type}.table_header.last_name"), sort_link_helper(:last_name)
-        th class="#{sort_link_class(:case_number)}"
-          = link_to t("#{type}.table_header.case_number"), sort_link_helper(:case_number)
-        th class="#{sort_link_class(:fee)}"
-          = link_to t("#{type}.table_header.fee"), sort_link_helper(:fee)
-        th class="#{sort_link_class(:remission)}"
-          = link_to t("#{type}.table_header.remission"), sort_link_helper(:remission)
-        th class="#{sort_link_class(:completed)}"
-          = link_to t("#{type}.table_header.completed"), sort_link_helper(:completed)
-
+        - if list.count == 1
+          - search_table_headers.each do |header_key|
+            th
+              = t("#{type}.table_header.#{header_key}")
+        - else
+          - search_table_headers.each do |header_key|
+            th class="#{sort_link_class(header_key)}"
+              = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key)
 
     tbody
       - list.each do |record|

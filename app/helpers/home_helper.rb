@@ -33,6 +33,11 @@ module HomeHelper
     "sort_arrow_#{sort_direction}"
   end
 
+  def search_table_headers
+    [:reference, :entered, :first_name, :last_name,
+     :case_number, :fee, :remission, :completed]
+  end
+
   private
 
   def sort_direction
