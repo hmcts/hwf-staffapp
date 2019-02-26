@@ -78,7 +78,7 @@ GEM
     capybara-webkit (1.15.1)
       capybara (>= 2.3, < 4.0)
       json
-    chartkick (3.0.1)
+    chartkick (2.3.5)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (1.2.0)
@@ -516,7 +516,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   capybara-webkit
-  chartkick
+  chartkick (= 2.3.5)
   chromedriver-helper (~> 1.1)
   ckeditor_rails (~> 4.6)
   climate_control
