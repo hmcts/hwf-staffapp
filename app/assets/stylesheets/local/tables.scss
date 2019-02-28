@@ -67,6 +67,10 @@ table.search-results {
   }
   th a {
     text-decoration: none;
+    padding-right: 10px;
+  }
+  th.sort_arrows a:focus, th.sort_arrow_desc a:focus, th.sort_arrow_asc a:focus, {
+    background-color: white !important;
   }
 
   th.sort_arrows a:after {
