@@ -19,7 +19,7 @@ module HomeHelper
   end
 
   def sort_link_helper(column)
-    direction = 'desc'
+    direction = 'asc'
     if @sort_by == column.to_s
       direction = sort_direction
     end

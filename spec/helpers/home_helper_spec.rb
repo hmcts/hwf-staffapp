@@ -51,9 +51,9 @@ RSpec.describe HomeHelper do
     end
 
     it "no replacing the sort direction" do
-      @sort_to = 'desc'
+      @sort_to = 'asc'
       @sort_by = 'first_name'
-      new_link = 'http://localhost:3000/home/completed_search?completed_search&reference=Philip&commit=Search&sort_by=last_name&sort_to=desc#new_completed_search'
+      new_link = 'http://localhost:3000/home/completed_search?completed_search&reference=Philip&commit=Search&sort_by=last_name&sort_to=asc#new_completed_search'
       expect(sort_link_helper('last_name')).to eql(new_link)
     end
   end
