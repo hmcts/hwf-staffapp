@@ -31,7 +31,7 @@ Feature: Search application
     Then I should see there is a single result for that national insurance number
     But the national insurance number is not displayed in the list of results
 
-  Scenario: Sort search results by reference
+  Scenario: Sort search results
     Given I have a list of search results
     Then I can sort by reference
     And I can sort by entered
