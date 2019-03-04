@@ -6,6 +6,14 @@ class ApplicationSearchPage < BasePage
     element :cant_be_blank_error, '.error', text: 'Enter a search term'
     element :search_results_header, 'h3', text: 'Search results'
     section :search_results_group, '.search-results' do
+      element :sort_reference, 'a', text: 'Reference'
+      element :sort_entered, 'a', text: 'Entered'
+      element :sort_first_name, 'a', text: 'First name'
+      element :sort_last_name, 'a', text: 'Last name'
+      element :sort_case_number, 'a', text: 'Case number'
+      element :sort_fee, 'a', text: 'Fee'
+      element :sort_remission, 'a', text: 'Remission'
+      element :sort_completed, 'a', text: 'Completed'
       section :found_application, 'tbody' do
         elements :result, 'tr'
       end
@@ -59,5 +67,37 @@ class ApplicationSearchPage < BasePage
 
   def pagination_previous_page
     content.previous_page.click
+  end
+
+  def sort_by_reference
+    application_search_page.content.search_results_group.sort_reference.click
+  end
+
+  def sort_by_entered
+    application_search_page.content.search_results_group.sort_entered.click
+  end
+
+  def sort_by_first_name
+    application_search_page.content.search_results_group.sort_first_name.click
+  end
+
+  def sort_by_last_name
+    application_search_page.content.search_results_group.sort_last_name.click
+  end
+
+  def sort_by_case_number
+    application_search_page.content.search_results_group.sort_case_number.click
+  end
+
+  def sort_by_fee
+    application_search_page.content.search_results_group.sort_fee.click
+  end
+
+  def sort_by_remission
+    application_search_page.content.search_results_group.sort_remission.click
+  end
+
+  def sort_by_completed
+    application_search_page.content.search_results_group.sort_completed.click
   end
 end
