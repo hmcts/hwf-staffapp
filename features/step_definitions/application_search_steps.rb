@@ -126,14 +126,12 @@ Then("I can sort by reference") do
   expect(application_search_page.content.search_results_group.sort_reference['href']).to include 'sort_by=reference&sort_to=asc'
   application_search_page.sort_by_reference
   expect(application_search_page.content.search_results_group.sort_reference['href']).to include 'sort_by=reference&sort_to=desc'
-  # expect(application_search_page.content.search_results_group).to have_sort_reference
 end
 
 And("I can sort by entered") do
   expect(application_search_page.content.search_results_group.sort_entered['href']).to include '&sort_by=entered&sort_to=asc'
   application_search_page.sort_by_entered
   expect(application_search_page.content.search_results_group.sort_entered['href']).to include '&sort_by=entered&sort_to=desc'
-  # expect(application_search_page.content.search_results_group).to have_sort_by_entered
 end
 
 Then("I can sort by first name") do
