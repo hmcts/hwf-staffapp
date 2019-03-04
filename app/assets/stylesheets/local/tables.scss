@@ -60,10 +60,17 @@ table.search-results {
   th {
     position: relative;
     padding-right: 10px;
+    width: 100px;
   }
 
   th a:visited {
     color: #005ea5;
+  }
+  th a {
+    text-decoration: none;
+  }
+  th.sort_arrows a:focus, th.sort_arrow_desc a:focus, th.sort_arrow_asc a:focus, {
+    background-color: white !important;
   }
 
   th.sort_arrows a:after {

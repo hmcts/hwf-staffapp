@@ -19,7 +19,7 @@ module HomeHelper
   end
 
   def sort_link_helper(column)
-    direction = 'desc'
+    direction = 'asc'
     if @sort_by == column.to_s
       direction = sort_direction
     end
@@ -31,6 +31,11 @@ module HomeHelper
   def sort_link_class(column)
     return 'sort_arrows' if @sort_by != column.to_s
     "sort_arrow_#{sort_direction}"
+  end
+
+  def search_table_headers
+    [:reference, :entered, :first_name, :last_name,
+     :case_number, :fee, :remission, :completed]
   end
 
   private
