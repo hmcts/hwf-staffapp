@@ -6,30 +6,23 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_waiting_applications
-    load_users_last_applications
-    @online_search_form = Forms::Search.new
-    @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
-    @notification = Notification.first
+    load_defaults
   end
 
   def completed_search
-    @online_search_form = Forms::Search.new
-    @completed_search_form = Forms::Search.new
-    @state = dwp_checker_state
-    @notification = Notification.first
+    load_defaults
     @search_results = search_and_return(:completed)
-
-    if @search_results
-      @search_results = paginate_search_results
-    end
 
     render :index
   end
 
   def online_search
-    search_or_render(:online) do
-      @completed_search_form = Forms::Search.new
+    result = online_process_search
+    if result
+      redirect_to(result)
+    else
+      load_defaults
+      render :index
     end
   end
 
@@ -59,27 +52,15 @@ class HomeController < ApplicationController
   end
 
   def load_users_last_applications
-    @last_updated_applications ||= Query::LastUpdatedApplications.new(current_user).find(limit: 20)
+    @last_updated_applications ||= LoadApplications.load_users_last_applications(current_user)
   end
 
   def assign_waiting_for_evidence
-    @waiting_for_evidence = waiting_for_evidence.map do |application|
-      Views::ApplicationList.new(application.evidence_check)
-    end
+    @waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user)
   end
 
   def assign_waiting_for_part_payment
-    @waiting_for_part_payment = waiting_for_part_payment.map do |application|
-      Views::ApplicationList.new(application.part_payment)
-    end
-  end
-
-  def waiting_for_evidence
-    Query::WaitingForEvidence.new(current_user).find
-  end
-
-  def waiting_for_part_payment
-    Query::WaitingForPartPayment.new(current_user).find
+    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user)
   end
 
   def search_params(type)
@@ -89,29 +70,27 @@ class HomeController < ApplicationController
   def search_and_return(type)
     form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
 
-    if form.valid?
-      process_search(form, type)
-    elsif type == :completed && form.reference.blank?
-      form.errors.clear
-      form.errors.add(:reference, blank_search_params_message)
-      nil
-    end
+    process_search(form) if ready_to_search?(form)
   end
 
-  def process_search(form, type)
-    search = ApplicationSearch.new(form.reference, current_user)
-    search.send(type) || (form.errors.add(:reference, search.error_message) && nil)
+  def ready_to_search?(form)
+    return true if form.reference.present?
+    form.errors.add(:reference, blank_search_params_message)
+    nil
   end
 
-  def search_or_render(type)
-    result = search_and_return(type)
-    if result
-      redirect_to(result)
-    else
-      yield if block_given?
+  def process_search(form)
+    @search = ApplicationSearch.new(form.reference, current_user)
+    results = (@search.call || (form.errors.add(:reference, @search.error_message) && nil))
+    paginate_search_results if results
+  end
 
-      @state = DwpMonitor.new.state
-      render :index
+  def online_process_search
+    @online_search_form = Forms::Search.new(search_params(:online))
+
+    if @online_search_form.valid?
+      @search = OnlineApplicationSearch.new(@online_search_form.reference, current_user)
+      @search.online || (@online_search_form.errors.add(:reference, @search.error_message) && nil)
     end
   end
 
@@ -121,10 +100,16 @@ class HomeController < ApplicationController
   end
 
   def paginate_search_results
-    @search_results.
-      paginate(page: params[:page]).
-      # There is a bug when you try to order by assocations, this is a fix for it
-      joins('LEFT JOIN applicants on applications.id = applicants.application_id').
-      reorder('applications.created_at DESC, applicants.first_name ASC, applicants.last_name ASC')
+    @sort_by = params['sort_by']
+    @sort_to = params['sort_to']
+    pagination_params = { sort_to: @sort_to, sort_by: @sort_by, page: params[:page] }
+    @search.paginate_search_results(pagination_params)
+  end
+
+  def load_defaults
+    @online_search_form ||= Forms::Search.new
+    @completed_search_form ||= Forms::Search.new
+    @state = dwp_checker_state
+    @notification = Notification.first
   end
 end

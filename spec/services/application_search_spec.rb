@@ -9,108 +9,8 @@ RSpec.describe ApplicationSearch do
 
   it { is_expected.to respond_to :error_message }
 
-  describe '#online' do
-    subject { service.online }
-
-    let(:existing_reference) { 'HWF-123-ABC' }
-    let(:wrong_reference) { 'HWF-WRO-NG' }
-    let(:online_application) { build_stubbed(:online_application, reference: existing_reference) }
-    let(:online_application_url) { edit_online_application_path(online_application) }
-
-    before do
-      allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(online_application)
-      allow(OnlineApplication).to receive(:find_by).with(reference: wrong_reference).and_return(nil)
-    end
-
-    context 'when reference is nil' do
-      it { is_expected.to eq nil }
-    end
-
-    context 'when an online_application exists' do
-      describe 'can be found using various input formats of the reference number' do
-        [
-          'HWF-123-ABC',
-          'HWF 123 ABC',
-          'HWF123ABC',
-          '123-ABC',
-          '123 ABC',
-          'hwf-123-abc',
-          '123-abc',
-          '123 abc'
-        ].each do |format|
-          context "for '#{format}' format" do
-            let(:reference) { format }
-
-            it { is_expected.to eql online_application_url }
-          end
-        end
-      end
-    end
-
-    context 'when an application has been processed in my office' do
-      let(:reference) { existing_reference }
-      let(:application) { build_stubbed(:application, reference: online_application.reference, office: user.office) }
-
-      before do
-        allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application)
-        service.online
-      end
-
-      it { is_expected.to be nil }
-
-      it 'sets the correct error message' do
-        expect(service.error_message).to include('view application')
-      end
-    end
-
-    context 'when an application has been processed by a different office' do
-      let(:office) { create :office }
-      let(:reference) { existing_reference }
-      let(:application) { build_stubbed(:application, reference: online_application.reference, office: office) }
-
-      before do
-        allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application)
-        service.online
-      end
-
-      it { is_expected.to be nil }
-
-      it 'sets the correct error message' do
-        expect(service.error_message).to include(office.name)
-      end
-    end
-
-    context 'when the reference is not there' do
-      let(:reference) { wrong_reference }
-
-      before { service.online }
-
-      it { is_expected.to be nil }
-
-      it 'sets the correct error message' do
-        expect(service.error_message).to eq 'Reference number is not recognised'
-      end
-    end
-
-    context 'when the application has been submitted with invalid data' do
-      let(:reference) { existing_reference }
-      let(:invalid_online_application) { build_stubbed(:online_application, :invalid_income, reference: existing_reference) }
-
-      before do
-        allow(OnlineApplication).to receive(:find_by).with(reference: existing_reference).and_return(invalid_online_application)
-        service.online
-      end
-
-      it { is_expected.to be nil }
-
-      it 'sets the correct error message' do
-        expect(service.error_message).to eq(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))
-      end
-    end
-  end
-
-  describe '#completed' do
-    subject(:service_completed) { service.completed }
+  describe '#call' do
+    subject(:service_completed) { service.call }
 
     let(:existing_reference) { 'XYZ-123-ABC' }
     let(:wrong_reference) { 'XYZ-WRO-NG' }
@@ -192,5 +92,41 @@ RSpec.describe ApplicationSearch do
       end
     end
 
+  end
+
+  describe '#paginate_search_results' do
+    let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, 'paginated') }
+
+    let(:reference) { 'XYZ-123-ABC' }
+    let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }
+    let(:pagination_params) { { 'sort_to': 'DESC', 'sort_by': 'last_name', 'page': 1 } }
+
+    before do
+      application
+      service.call
+    end
+
+    it 'paginate the results' do
+      allow(paginated_result).to receive(:reorder)
+
+      service.paginate_search_results(pagination_params)
+      expect(service.results).to eq([application])
+    end
+
+    context 'sort' do
+      let(:sort_string) { 'applicants.last_name DESC, applications.created_at DESC, applicants.first_name ASC' }
+      let(:search_service) { service }
+
+      before do
+        allow(search_service).to receive(:paginate_results).and_return paginated_result
+        allow(paginated_result).to receive(:reorder).with(sort_string).and_return 'sorted results'
+      end
+
+      it 'sorts paginated results' do
+        results = service.paginate_search_results(pagination_params)
+        expect(results).to eql('sorted results')
+      end
+
+    end
   end
 end

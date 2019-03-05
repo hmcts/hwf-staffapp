@@ -126,11 +126,10 @@ RSpec.feature 'User can search for online application', type: :feature do
       expect(find(:xpath, './/tr[1]/td[2]').text).to eq(result_application.created_at.strftime('%d/%m/%Y'))
       expect(find(:xpath, './/tr[1]/td[3]').text).to eq(result_application.applicant.first_name)
       expect(find(:xpath, './/tr[1]/td[4]').text).to eq(result_application.applicant.last_name)
-      expect(find(:xpath, './/tr[1]/td[5]').text).to eq(result_application.applicant.ni_number)
-      expect(find(:xpath, './/tr[1]/td[6]').text).to eq(result_application.detail.case_number)
-      expect(find(:xpath, './/tr[1]/td[7]').text).to eq('£410.00')
-      expect(find(:xpath, './/tr[1]/td[8]').text).to eq('£0.00')
-      expect(find(:xpath, './/tr[1]/td[9]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
+      expect(find(:xpath, './/tr[1]/td[5]').text).to eq(result_application.detail.case_number)
+      expect(find(:xpath, './/tr[1]/td[6]').text).to eq('£410.00')
+      expect(find(:xpath, './/tr[1]/td[7]').text).to eq('£0.00')
+      expect(find(:xpath, './/tr[1]/td[8]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
     end
   end
   # rubocop:enable AbcSize

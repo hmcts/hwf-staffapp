@@ -72,7 +72,11 @@ end
 
 Then("I should see there is a single result for that national insurance number") do
   result = application_search_page.content.search_results_group.found_application.result
-  expect(result[0].text).to include 'JR054008D'
+  expect(result[0].text).to include 'John Christopher Smith'
+end
+
+Then("the national insurance number is not displayed in the list of results") do
+  expect(application_search_page.content.search_results_group).to have_no_content('JR054008D')
 end
 
 When("my search is invalid") do
@@ -110,4 +114,58 @@ end
 And("I can navigate back a page") do
   application_search_page.pagination_previous_page
   expect(application_search_page.content).to have_no_previous_page
+end
+
+Given("I have a list of search results") do
+  processed_eligable_application
+  processed_ineligable_application
+  application_search_page.search_by_last_name
+end
+
+Then("I can sort by reference") do
+  expect(application_search_page.content.search_results_group.sort_reference['href']).to include 'sort_by=reference&sort_to=asc'
+  application_search_page.sort_by_reference
+  expect(application_search_page.content.search_results_group.sort_reference['href']).to include 'sort_by=reference&sort_to=desc'
+end
+
+And("I can sort by entered") do
+  expect(application_search_page.content.search_results_group.sort_entered['href']).to include '&sort_by=entered&sort_to=asc'
+  application_search_page.sort_by_entered
+  expect(application_search_page.content.search_results_group.sort_entered['href']).to include '&sort_by=entered&sort_to=desc'
+end
+
+Then("I can sort by first name") do
+  expect(application_search_page.content.search_results_group.sort_first_name['href']).to include '&sort_by=first_name&sort_to=asc'
+  application_search_page.sort_by_first_name
+  expect(application_search_page.content.search_results_group.sort_first_name['href']).to include '&sort_by=first_name&sort_to=desc'
+end
+
+Then("I can sort by last name") do
+  expect(application_search_page.content.search_results_group.sort_last_name['href']).to include '&sort_by=last_name&sort_to=asc'
+  application_search_page.sort_by_last_name
+  expect(application_search_page.content.search_results_group.sort_last_name['href']).to include '&sort_by=last_name&sort_to=desc'
+end
+
+Then("I can sort by case number") do
+  expect(application_search_page.content.search_results_group.sort_case_number['href']).to include '&sort_by=case_number&sort_to=asc'
+  application_search_page.sort_by_case_number
+  expect(application_search_page.content.search_results_group.sort_case_number['href']).to include '&sort_by=case_number&sort_to=desc'
+end
+
+Then("I can sort by fee") do
+  expect(application_search_page.content.search_results_group.sort_fee['href']).to include '&sort_by=fee&sort_to=asc'
+  application_search_page.sort_by_fee
+  expect(application_search_page.content.search_results_group.sort_fee['href']).to include '&sort_by=fee&sort_to=desc'
+end
+
+Then("I can sort by remission") do
+  expect(application_search_page.content.search_results_group.sort_remission['href']).to include '&sort_by=remission&sort_to=asc'
+  application_search_page.sort_by_remission
+  expect(application_search_page.content.search_results_group.sort_remission['href']).to include '&sort_by=remission&sort_to=desc'
+end
+
+Then("I can sort by completed") do
+  expect(application_search_page.content.search_results_group.sort_completed['href']).to include '&sort_by=completed&sort_to=asc'
+  application_search_page.sort_by_completed
+  expect(application_search_page.content.search_results_group.sort_completed['href']).to include '&sort_by=completed&sort_to=desc'
 end
