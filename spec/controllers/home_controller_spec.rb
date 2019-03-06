@@ -207,10 +207,6 @@ RSpec.describe HomeController, type: :controller do
       it 'renders the index view' do
         expect(response).to render_template :index
       end
-
-      it 'does assign the DwpMonitor state' do
-        expect(assigns(:state)).not_to be nil
-      end
     end
   end
 
