@@ -27,6 +27,18 @@ Feature: Search application
     Given I am signed in as a user that has processed an application
     When I search for an application using a national insurance number
     Then I should see there is a single result for that national insurance number
+    But the national insurance number is not displayed in the list of results
+
+  Scenario: Sort search results
+    Given I have a list of search results
+    Then I can sort by reference
+    And I can sort by entered
+    And I can sort by first name
+    And I can sort by last name
+    And I can sort by case number
+    And I can sort by fee
+    And I can sort by remission
+    And I can sort by completed
 
   Scenario: Invalid search
     Given I am signed in as a user that has processed an application

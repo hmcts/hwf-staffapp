@@ -6,16 +6,14 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
     caption.visuallyhidden = t("search_results.title")
     thead
       tr.align-top
-        th = t("#{type}.table_header.reference")
-        th = t("#{type}.table_header.entered")
-        th = t("#{type}.table_header.first_name_html")
-        th = t("#{type}.table_header.last_name_html")
-        th = t("#{type}.table_header.ni_number_html")
-        th = t("#{type}.table_header.case_number_html")
-        th = t("#{type}.table_header.fee")
-        th = t("#{type}.table_header.remission")
-        th = t("#{type}.table_header.completed")
-
+        - if list.count == 1
+          - search_table_headers.each do |header_key|
+            th
+              = t("#{type}.table_header.#{header_key}")
+        - else
+          - search_table_headers.each do |header_key|
+            th class="#{sort_link_class(header_key)}"
+              = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key)
 
     tbody
       - list.each do |record|
@@ -27,7 +25,6 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
           td = record.created_at.strftime(Date::DATE_FORMATS[:default])
           td = record.applicant.first_name
           td = record.applicant.last_name
-          td = record.applicant.ni_number
           td = record.detail.try(:case_number)
           td = number_to_currency(record.detail.try(:fee), unit: '£', precision: 2)
           td = number_to_currency(record.decision_cost || 0, unit: '£', precision: 2)
@@ -39,8 +36,9 @@ h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#
         td colspan="5"
           = will_paginate list, inner_window: 1, link_separator: nil, params: { anchor: 'new_completed_search' }
         td colspan="5"
-          .pagination.pagination-info
+          .pagination-info
             = formatted_results_count(list)
 
 - else
   p =t("search_results.no_results")
+

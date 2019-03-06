@@ -89,10 +89,17 @@
   }
 
   b { font-weight: bold }
+}
 
+table.search-results div.pagination {
+  margin-top: 0px !important;
 }
 
 .pagination-info {
   float: right;
-  margin-top: 53px;
+  margin-top: 23px;
+  @include core-19;
+  clear: both;
+
+  b { font-weight: bold }
 }

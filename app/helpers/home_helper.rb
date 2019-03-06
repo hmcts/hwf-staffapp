@@ -18,7 +18,31 @@ module HomeHelper
       content_tag(:span, " result".pluralize(results.total_entries))
   end
 
+  def sort_link_helper(column)
+    direction = 'asc'
+    if @sort_by == column.to_s
+      direction = sort_direction
+    end
+
+    link = request.original_url.gsub(/(&sort_by|&sort_to)=.*/, '')
+    link + "&sort_by=#{column}&sort_to=#{direction}#new_completed_search"
+  end
+
+  def sort_link_class(column)
+    return 'sort_arrows' if @sort_by != column.to_s
+    "sort_arrow_#{sort_direction}"
+  end
+
+  def search_table_headers
+    [:reference, :entered, :first_name, :last_name,
+     :case_number, :fee, :remission, :completed]
+  end
+
   private
+
+  def sort_direction
+    @sort_to == 'desc' ? 'asc' : 'desc'
+  end
 
   def waiting_for_evidence_path(application)
     record = Views::ApplicationList.new(application.evidence_check)
