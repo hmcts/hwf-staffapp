@@ -2,6 +2,7 @@ Then("I am on the DWP warning message page") do
   navigation_page.go_to_dwp_message_page
   expect(current_path).to include '/dwp_warnings/edit'
   expect(dwp_message_page.content).to have_header
+  binding.pry
 end
 
 Then("I should see use the default DWP message is pre-selected") do

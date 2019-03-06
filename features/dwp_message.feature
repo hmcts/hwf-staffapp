@@ -32,3 +32,10 @@ Feature: DWP warning message
     And I click on save changes
     Then I should see your changes have been saved message
     And I should see a message saying I can process benefits and income based applications
+
+  @wip @manual
+  Scenario: DWP warning message
+    Given I successfully sign in as admin
+    When the DWP warning is active
+    Then I should see a message saying you may not be able to check an applicants benefits
+    

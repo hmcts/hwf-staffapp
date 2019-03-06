@@ -1,6 +1,6 @@
 class DwpMessagePage < BasePage
-  element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP CHECKERYou can’t check an applicant’s benefits. We’re investigating this issue.'
-  element :dwp_online_banner, '.dwp-banner-online', text: 'DWP CHECKERYou can process benefits and income based applications.'
+  element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
+  element :dwp_online_banner, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
   section :content, '#content' do
     element :header, 'h2', text: 'Choose the DWP message'
     element :offline_message, 'label', text: 'Display DWP check is down message'
