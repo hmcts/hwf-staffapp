@@ -8,28 +8,15 @@ Feature: My dashboard
   Scenario: View profile
     When I click on view profile
     Then I am taken to my details
-
+  
   Scenario: Staff guides
     When I click on staff guides
     Then I am taken to the guide page
-
-  Scenario: DWP connection
-    Then I should see the status of the DWP connection
-
-  @wip
-  Scenario: Search a valid reference
-    When I search for an application using valid reference number
-    Then I am taken to ....
-
-  Scenario: Search an invalid reference
-    When I search for an application using invalid reference number
-    Then I should see the reference number is not recognised error message
 
   Scenario: Process application
     When I start a new application
     Then I am taken to the applicants personal details page
 
-  @wip
   Scenario: Process an online application
     When I look up a valid hwf reference
     Then I am taken to ....
@@ -53,7 +40,7 @@ Feature: My dashboard
   Scenario: Processed applications
     When I click on processed applications
     Then I am taken to all processed applicantions
-
+  
   Scenario: Deleted applications
     When I click on deleted applications
     Then I am taken to all deleted applicantions

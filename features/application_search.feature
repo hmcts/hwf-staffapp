@@ -1,6 +1,4 @@
 Feature: Search application
-
-  Background: Signed in as a user
     
   Scenario: Search application by valid hwf reference - single result
     Given I am signed in as a user that has processed an application

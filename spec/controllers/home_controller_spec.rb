@@ -11,7 +11,7 @@ RSpec.describe HomeController, type: :controller do
 
         before { sign_in staff }
 
-        subject { assigns(:state) }
+        subject { assigns(:dwp_state) }
 
         context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
           before do
@@ -67,10 +67,6 @@ RSpec.describe HomeController, type: :controller do
 
         it 'assigns the search form' do
           expect(assigns(:online_search_form)).to be_a(Forms::Search)
-        end
-
-        it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
         end
 
         it "assigns last updated applications" do
@@ -185,10 +181,6 @@ RSpec.describe HomeController, type: :controller do
           it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
           it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
         end
-
-        it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
-        end
       end
     end
   end
@@ -214,10 +206,6 @@ RSpec.describe HomeController, type: :controller do
 
       it 'renders the index view' do
         expect(response).to render_template :index
-      end
-
-      it 'does assign the DwpMonitor state' do
-        expect(assigns(:state)).not_to be nil
       end
     end
   end
@@ -264,10 +252,6 @@ RSpec.describe HomeController, type: :controller do
           it { expect(assigns(:online_search_form)).to be_a(Forms::Search) }
           it { expect(assigns(:completed_search_form)).to be_a(Forms::Search) }
         end
-
-        it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
-        end
       end
 
       context 'when an online application is found with that reference' do
@@ -275,10 +259,6 @@ RSpec.describe HomeController, type: :controller do
 
         it 'redirects to the edit page for that online application' do
           expect(response).to redirect_to(edit_online_application_path(online_application))
-        end
-
-        it 'does not assign the DwpMonitor state' do
-          expect(assigns(:state)).to be nil
         end
       end
 

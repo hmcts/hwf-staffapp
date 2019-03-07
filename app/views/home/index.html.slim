@@ -4,8 +4,6 @@ h1.visuallyhidden Help with fees - Staff application
 
 - if dwp_maintenance?
   =render("shared/dwp/maintenance")
-- else
-  =render("shared/dwp/#{@state}")
 
 -if @notification.present? && @notification.show
   =render('shared/notifications')
@@ -15,7 +13,7 @@ h1.visuallyhidden Help with fees - Staff application
   - if policy(:application).new?
     .column-one-half#process-application
       .util_pt-medium
-        - if @state == 'offline'
+        - if @dwp_state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.paper.dwp-down.heading')
             ul.list.list-bullet
@@ -39,7 +37,7 @@ h1.visuallyhidden Help with fees - Staff application
   .column-one-half#process-online-application
     .util_pt-medium
       = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-        - if @state == 'offline'
+        - if @dwp_state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.digital.dwp-down')
         .panel.flexi data-equalheight="true" data-heightgroup="2"
@@ -55,7 +53,7 @@ h1.visuallyhidden Help with fees - Staff application
 
 .grid-row
   .column-one-half
-    .util_pt-medium.util_mt-medium
+    .util_pt-medium.util_mt-small
       = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get) do |f|
         = f.label :reference, class: 'form-label'
           h2 = t('search_form.label')
@@ -73,7 +71,7 @@ h1.visuallyhidden Help with fees - Staff application
   = render('home/processed_and_deleted_aplications')
 
 - if policy(:report).index? || policy(:office).index?
-  .grid-row.equal-heightboxes.util_mt-medium
+  .grid-row.equal-heightboxes.util_mt-small
     - if policy(:report).index?
       .column-one-half
         .panel

@@ -109,7 +109,6 @@ class HomeController < ApplicationController
   def load_defaults
     @online_search_form ||= Forms::Search.new
     @completed_search_form ||= Forms::Search.new
-    @state = dwp_checker_state
     @notification = Notification.first
   end
 end
