@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
-  before_action :dwp_checker_state
   after_action :verify_authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -36,11 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dwp_checker_state
-    @dwp_state =
-      if DwpWarning.use_default_check?
-        DwpMonitor.new.state
-      else
-        DwpWarning.last.check_state
-      end
+    return DwpMonitor.new.state if DwpWarning.use_default_check?
+    DwpWarning.last.check_state
   end
 end

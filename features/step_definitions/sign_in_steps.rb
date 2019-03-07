@@ -12,7 +12,6 @@ When("I am redirected to the sign in page") do
 end
 
 When("I successfully sign in as a user") do
-  sign_in_page.load_page
   sign_in_page.user_account
   expect(sign_in_page).to have_welcome_user
 end

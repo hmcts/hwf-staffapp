@@ -5,7 +5,7 @@
       header
           h2.heading-xlarge.util_mb-small Benefits
 
-      -if @dwp_state=='offline'
+      -if @state=='offline'
         .util_mt-tiny.util_mb-small
           .page-error = t('error_messages.benefit_check.dwp_unavailable')
 
