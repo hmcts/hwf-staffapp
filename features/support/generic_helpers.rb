@@ -54,14 +54,6 @@ def reports_page
   @reports_page ||= ReportsPage.new
 end
 
-def dwp_message_page
-  @dwp_message_page ||= DwpMessagePage.new
-end
-
-def navigation_page
-  @navigation_page ||= NavigationPage.new
-end
-
 def next_page
   base_page.content.next_button.click
 end

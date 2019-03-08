@@ -21,19 +21,9 @@
 }
 
 .dwp-restored {
-  padding: 10px $gutter-half 0px $gutter-half;
+  padding: $gutter $gutter-half;
   background-color: $grass-green-25;
   border: 1px solid $grass-green;
-}
-
-.dwp-warning {
-  padding: 10px $gutter-half 0px $gutter-half;
-  background-color: $orange-25;
-  border: 1px solid $orange;
-}
-
-.dwp-warning p, .dwp-restored p {
-  font-size: 16px !important;
 }
 
 .ie-warning {

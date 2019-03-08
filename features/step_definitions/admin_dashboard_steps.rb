@@ -1,5 +1,4 @@
 Then("I should see the reference number is not recognised") do
-  # steps need implementing - wip
 end
 
 When("I click on view office") do
