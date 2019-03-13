@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.10'
+gem 'rails', '~> 4.2.11'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.20'
