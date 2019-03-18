@@ -297,7 +297,7 @@ en-GB:
         fee: Fee
         jurisdiction: Jurisdiction
         date_received: Date received
-        form_name: Form name or number
+        form_name: Form number
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
@@ -344,13 +344,13 @@ en-GB:
         date_of_birth_hint: Use this format DD/MM/YYYY
         married_false: Single
         married_true: Married or living with someone and sharing an income
-        form_name_summary: Form name or number
+        form_name_summary: Form number
       forms/application/detail:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
         form_name: Form number
-        form_name_hint: You'll find this on the bottomo of the form, for example C100 or ADM1A
+        form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
@@ -419,6 +419,9 @@ en-GB:
           - 3: "Your delivery manager has allowed discretion with this application"
         option_other: 'Other'
         reason: 'Other reason'
+      forms/online_application:
+        form_name: Form number
+        form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
     errors:
       models:
         forms/finance_report:
@@ -565,6 +568,9 @@ en-GB:
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: "is too long, it needs to be less than 500 characters"
+            form_name:
+              invalid: You entered the help with fees form number. Enter the number on your court or tribunal form
+
   activerecord:
     errors:
       models:
