@@ -128,6 +128,36 @@ RSpec.describe Forms::Application::Detail do
       end
     end
 
+    context 'form name' do
+      let(:detail) do
+        build_stubbed(:complete_detail, form_name: form_name)
+      end
+
+      context 'when user types EX160' do
+        let(:form_name) { 'EX160' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types ex160' do
+        let(:form_name) { 'ex160' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types COP44A' do
+        let(:form_name) { 'COP44A' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types COP45A' do
+        let(:form_name) { 'COP45A' }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
     describe 'refund' do
       subject(:refund) do
         params = { jurisdiction_id: 1,

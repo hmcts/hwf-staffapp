@@ -40,6 +40,7 @@
       .form-group
         = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
+          span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 

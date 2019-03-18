@@ -349,7 +349,8 @@ en-GB:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
-        form_name: Form number or name
+        form_name: Form number
+        form_name_hint: You'll find this on the bottomo of the form, for example C100 or ADM1A
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
@@ -481,6 +482,8 @@ en-GB:
               blank: Enter Delivery Manager name
             discretion_reason:
               blank: Enter Discretionary reason
+            form_name:
+              invalid: You entered the help with fees form number. Enter the number on your court or tribunal form
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
