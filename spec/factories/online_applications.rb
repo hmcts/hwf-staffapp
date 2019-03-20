@@ -57,6 +57,7 @@ FactoryGirl.define do
       fee 450
       jurisdiction
       date_received Time.zone.yesterday
+      form_name 'ABC123'
     end
 
     trait :threshold_exceeded do

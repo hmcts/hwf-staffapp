@@ -97,6 +97,12 @@ RSpec.describe Forms::OnlineApplication do
 
         it { is_expected.to be_valid }
       end
+
+      context "can't be blank" do
+        let(:form_name) { '' }
+
+        it { is_expected.not_to be_valid }
+      end
     end
 
   end

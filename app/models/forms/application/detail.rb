@@ -40,6 +40,7 @@ module Forms
       }
 
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
+      validates :form_name, presence: true
 
       with_options if: :probate? do
         validates :deceased_name, presence: true

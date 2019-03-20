@@ -22,6 +22,7 @@ module Forms
     }
 
     validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
+    validates :form_name, presence: true
 
     def initialize(online_application)
       super(online_application)

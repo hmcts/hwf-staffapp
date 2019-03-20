@@ -487,6 +487,7 @@ en-GB:
               blank: Enter Discretionary reason
             form_name:
               invalid: You entered the help with fees form number. Enter the number on your court or tribunal form
+              blank: Enter a valid form number
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
@@ -570,7 +571,7 @@ en-GB:
               too_long: "is too long, it needs to be less than 500 characters"
             form_name:
               invalid: You entered the help with fees form number. Enter the number on your court or tribunal form
-
+              blank: Enter a valid form number
   activerecord:
     errors:
       models:

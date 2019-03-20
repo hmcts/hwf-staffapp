@@ -7,6 +7,7 @@ FactoryGirl.define do
       refund false
       probate nil
       case_number 'JK123456A'
+      form_name 'ABC123'
     end
 
     trait :probate do
