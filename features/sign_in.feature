@@ -28,6 +28,6 @@ Feature: Sign in page
       And I see get help
       Then I should see under don't have an account that I need to contact my manager
 
-    Scenario: Get help - having techniocal issues
+    Scenario: Get help - having technical issues
       When I see having technical issues
       Then I should be able to send an email to help with fees support

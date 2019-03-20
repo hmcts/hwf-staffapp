@@ -3,7 +3,7 @@
 Feature: My user dashboard
 
   Background: Signed in as admin
-    Given I am signed in as admin
+    Given I successfully sign in as admin
 
   Scenario: Generate a report
     When I look up a invalid hwf reference
