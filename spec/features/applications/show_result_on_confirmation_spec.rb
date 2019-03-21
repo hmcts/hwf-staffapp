@@ -32,6 +32,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       fill_in 'application_fee', with: '300'
       find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
       fill_in 'application_date_received', with: Time.zone.today - 3.days
+      fill_in 'Form number', with: 'ABC123'
       click_button 'Next'
     end
 

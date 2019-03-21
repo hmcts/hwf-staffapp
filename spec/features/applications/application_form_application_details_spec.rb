@@ -33,7 +33,7 @@ RSpec.feature 'Completing the application details page of an application form', 
       before { click_button 'Next' }
 
       scenario 'renders error' do
-        expect(page).to have_xpath('//label[@class="error"]', count: '2')
+        expect(page).to have_xpath('//label[@class="error"]', count: '3')
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.feature 'Completing the application details page of an application form', 
           before { click_button 'Next' }
 
           scenario 'renders errors' do
-            expect(page).to have_xpath('//label[@class="error"]', count: '4')
+            expect(page).to have_xpath('//label[@class="error"]', count: '5')
           end
         end
       end
@@ -72,7 +72,7 @@ RSpec.feature 'Completing the application details page of an application form', 
           scenario 'renders errors' do
             # The date_fee_paid can't be validated until date_received is filled in,
             # therefore there's no error for that field
-            expect(page).to have_xpath('//label[@class="error"]', count: '2')
+            expect(page).to have_xpath('//label[@class="error"]', count: '3')
           end
         end
       end
@@ -104,7 +104,7 @@ RSpec.feature 'Completing the application details page of an application form', 
       before { click_button 'Next' }
 
       scenario 'renders error' do
-        expect(page).to have_xpath('//label[@class="error"]', count: '3')
+        expect(page).to have_xpath('//label[@class="error"]', count: '4')
       end
     end
   end

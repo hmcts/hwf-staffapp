@@ -44,6 +44,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
               fill_in 'application_fee', with: 300
               fill_in 'application_date_received', with: Time.zone.yesterday
+              fill_in 'Form number', with: 'ABC123'
               click_button 'Next'
             end
 
@@ -187,6 +188,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
               fill_in 'application_fee', with: 300
               fill_in 'application_date_received', with: Time.zone.yesterday
+              fill_in 'Form number', with: 'ABC123'
               click_button 'Next'
             end
 
