@@ -18,7 +18,7 @@ class ApplicationDetailsPage < BasePage
     element :form_hint, 'label', text: 'You\'ll find this on the bottom of the form, for example C100 or ADM1A'
     element :form_input, '#application_form_name'
     element :form_error_message, '.error', text: 'Enter a valid form number'
-    element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on your court or tribunal form'
+    element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
   end
 
   def submit_with_fee_600
