@@ -16,6 +16,7 @@ def application_details
   fill_in 'application_fee', with: 410
   find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
   fill_in 'application_date_received', with: Time.zone.today
+  fill_in 'Form number', with: 'ABC123'
   click_button 'Next'
 end
 

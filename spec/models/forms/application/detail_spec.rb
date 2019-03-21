@@ -54,7 +54,7 @@ RSpec.describe Forms::Application::Detail do
 
     describe 'Date application received' do
       let(:application_details) do
-        params = { jurisdiction_id: 1, fee: 500 }
+        params = { jurisdiction_id: 1, fee: 500, form_name: 'ABC123' }
         described_class.new(params)
       end
 
@@ -75,7 +75,8 @@ RSpec.describe Forms::Application::Detail do
                    date_received: Time.zone.yesterday,
                    probate: probate_status,
                    deceased_name: deceased_name,
-                   date_of_death: date_of_death }
+                   date_of_death: date_of_death,
+                   form_name: 'ABC123' }
         described_class.new(params)
       end
 
@@ -128,13 +129,50 @@ RSpec.describe Forms::Application::Detail do
       end
     end
 
+    context 'form name' do
+      let(:detail) do
+        build_stubbed(:complete_detail, form_name: form_name)
+      end
+
+      context 'when user types EX160' do
+        let(:form_name) { 'EX160' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types ex160' do
+        let(:form_name) { 'ex160' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types COP44A' do
+        let(:form_name) { 'COP44A' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when user types COP45A' do
+        let(:form_name) { 'COP45A' }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when form_name is blank' do
+        let(:form_name) { '' }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
     describe 'refund' do
       subject(:refund) do
         params = { jurisdiction_id: 1,
                    fee: 500,
                    date_received: date_received,
                    refund: refund_status,
-                   date_fee_paid: date_fee_paid }
+                   date_fee_paid: date_fee_paid,
+                   form_name: 'ABC123' }
         described_class.new(params)
       end
 
@@ -269,7 +307,8 @@ RSpec.describe Forms::Application::Detail do
                    fee: 500,
                    date_received: Time.zone.yesterday,
                    emergency: true,
-                   emergency_reason: 'REASON' }
+                   emergency_reason: 'REASON',
+                   form_name: 'ABC123' }
         described_class.new(params)
       end
 

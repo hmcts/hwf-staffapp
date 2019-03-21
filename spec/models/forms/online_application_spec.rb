@@ -82,6 +82,29 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to validate_presence_of(:emergency_reason) }
       end
     end
+
+    describe 'form_name' do
+      let(:online_application) { build_stubbed :online_application, :completed, form_name: form_name }
+
+      context 'EX160' do
+        let(:form_name) { 'EX160' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'EX161' do
+        let(:form_name) { 'EX161' }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "can't be blank" do
+        let(:form_name) { '' }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
   end
 
   describe '#save' do
