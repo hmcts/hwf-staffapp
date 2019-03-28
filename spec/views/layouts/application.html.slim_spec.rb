@@ -51,4 +51,31 @@ RSpec.describe 'layouts/application', type: :view do
       end
     end
   end
+
+  describe 'DWP notification' do
+    context 'when the service is online' do
+      it 'displays the restored message' do
+        @state = 'online'
+
+        expect(render).to have_content I18n.t('error_messages.dwp_restored')
+      end
+    end
+
+    context 'when the service is failing or restoring' do
+      it 'displays the warning message' do
+        @state = 'warning'
+
+        expect(render).to have_content I18n.t('error_messages.dwp_warning')
+      end
+    end
+
+    context 'when the service is offline' do
+      it 'displays the unavailable message' do
+        @state = 'offline'
+
+        expect(render).to have_content I18n.t('error_messages.dwp_unavailable')
+      end
+    end
+  end
+
 end
