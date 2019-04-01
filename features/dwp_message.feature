@@ -15,7 +15,7 @@ Feature: DWP warning message
     When I check display DWP check is down message
     And I click on save changes
     Then I should see your changes have been saved message
-    And I go to the homepage by clicking on Help with fees
+    When I go to the homepage by clicking on Help with fees
     Then I should see a message saying I am unable to check an applicants benefits
     
   Scenario: DWP is working message
@@ -24,7 +24,7 @@ Feature: DWP warning message
     When I check display DWP check is working message
     And I click on save changes
     Then I should see your changes have been saved message
-    And I go to the homepage by clicking on Help with fees
+    When I go to the homepage by clicking on Help with fees
     Then I should see a message saying I can process benefits and income based applications
     
   Scenario: Use the default DWP message
@@ -33,6 +33,5 @@ Feature: DWP warning message
     When I check use the default DWP check to display message
     And I click on save changes
     Then I should see your changes have been saved message
-    And I go to the homepage by clicking on Help with fees
+    When I go to the homepage by clicking on Help with fees
     Then I should see a message saying I can process benefits and income based applications
-      
