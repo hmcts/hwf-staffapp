@@ -1,10 +1,7 @@
 class DashboardPage < BasePage
-  element :welcome_user, '#proposition-menu', text: 'Welcome user'
-  element :view_profile, 'a', text: 'View profile'
-  element :view_office, 'a', text: 'View office'
-  element :staff_guides, 'a', text: 'Staff Guides'
+  element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
+  element :dwp_online_banner, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
   section :content, '#content' do
-    element :dwp_restored, '.dwp-restored', text: 'The connection with the DWP is currently working. Benefits based and income based applications can now be processed.'
     element :look_up_button, 'input[value="Look up"]'
     element :start_now_button, 'input[value="Start now"]'
     element :processed_applications, 'a', text: 'Processed applications'
@@ -22,11 +19,6 @@ class DashboardPage < BasePage
   def look_up_invalid_reference
     content.online_search_reference.set 'invalid'
     content.look_up_button.click
-  end
-
-  def search_valid_reference
-    content.completed_search_reference.set 'valid'
-    content.search_button.click
   end
 
   def process_application
