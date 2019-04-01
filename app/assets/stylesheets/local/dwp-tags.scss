@@ -1,0 +1,79 @@
+@mixin dwp-banner($state: online) {
+  padding: 10px 0 8px 0;
+  @include media(tablet) {
+    padding-bottom: 10px;
+  }
+  border-bottom: 1px solid $border-colour;
+  max-width: 960px;
+  margin: 0 15px;
+
+  @media (min-width: 640px) {
+    margin: 0 30px;
+  }
+
+  @media (min-width: 1020px) {
+    margin: 0 auto;
+  }
+
+  p {
+    margin: 0;
+    color: $banner-text-colour;
+    @include core-16;
+  }
+
+  .dwp-tag {
+    @include dwp-tag($state);
+  }
+
+  span {
+    vertical-align: top;
+
+    @include media(tablet) {
+      vertical-align: baseline;
+    }
+  }
+}
+
+@mixin dwp-tag($state: online) {
+  @include inline-block;
+  vertical-align: top;
+
+  @include media(tablet){
+    vertical-align: baseline;
+  }
+
+  margin: 0 8px 0 0;
+  padding: 2px 5px 0;
+
+  @include bold-16($line-height: 20/16);
+  letter-spacing: 1px;
+  text-decoration: none;
+
+  color: #fff;
+  @if $state == online {
+    background-color: #00AD00;
+  } @else if $state == offline {
+    background-color: #E00000;
+  } @else if $state == warning {
+    background-color: #B88A00;
+  } @else if $state == maintenance {
+    background-color: #E00000;
+  }
+}
+
+
+.dwp-banner-online {
+  @include dwp-banner($state: online);
+}
+
+.dwp-banner-offline {
+  @include dwp-banner($state: offline);
+}
+
+.dwp-banner-warning {
+  @include dwp-banner($state: warning);
+}
+
+.dwp-banner-maintenance {
+  @include dwp-banner($state: maintenance);
+}
