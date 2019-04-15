@@ -85,7 +85,7 @@ en-GB:
         There’s a problem with the applicant’s surname, date of birth or National Insurance number.
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
       technical_error: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
-      out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
+      out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were Benefits declared in application on the date they paid."
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
@@ -264,8 +264,8 @@ en-GB:
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
       views/overview/benefits:
-        on_benefits?: Applicant receiving benefits
-        override?: Applicant provided paper evidence
+        on_benefits?: Benefits declared in application
+        override?: Correct evidence provided
         override_valid?: Benefits letter checked
       views/overview/income:
         children?: Applicant has children
@@ -280,8 +280,8 @@ en-GB:
         discretion_applied?: 'Delivery Manager Discretion'
       views/overview/application:
         savings: Savings and investments
-        benefits: Receiving eligible benefits
-        paper_evidence: Paper evidence check
+        benefits: Benefits declared in application
+        paper_evidence: Correct evidence provided
         benefits_result: Benefits
         income_result: Income
         savings_result: Savings
