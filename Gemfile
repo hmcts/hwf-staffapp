@@ -124,7 +124,6 @@ gem 'rails_12factor', group: :production
 gem 'chartkick', '2.3.5'
 gem 'ckeditor_rails', '~> 4.6'
 gem 'groupdate'
-gem 'newrelic_rpm'
 gem 'pg_search'
 gem 'rest-client'
 gem 'virtus'
