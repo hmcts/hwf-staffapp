@@ -393,8 +393,8 @@ en-GB:
         full: '✓ Passed'
         part: '✓ Partial'
         none: '✗ Failed'
-        'true': '✓ Passed'
-        'false': '✗ Failed'
+        'true': 'Yes'
+        'false': 'No'
         passed_with_evidence: '✓ Passed (paper evidence checked)'
         failed_with_evidence: '✗ Failed (paper evidence checked)'
         passed_by_override: "✓ Passed (by manager's decision)"
