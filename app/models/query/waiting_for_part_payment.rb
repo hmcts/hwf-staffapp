@@ -5,7 +5,8 @@ module Query
     end
 
     def find
-      @user.office.applications.waiting_for_part_payment.order(:completed_at)
+      @user.office.applications.waiting_for_part_payment.order(:completed_at).
+        includes(:part_payment, :user, :applicant)
     end
   end
 end
