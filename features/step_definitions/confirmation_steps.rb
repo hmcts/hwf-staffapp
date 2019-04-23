@@ -1,5 +1,5 @@
 And("I have processed an application") do
-  go_to_confirmation_page
+  confirmation_page.go_to_confirmation_page
 end
 
 Given("I am on the confirmation page") do

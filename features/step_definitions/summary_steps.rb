@@ -1,5 +1,5 @@
 Given("I have completed an application") do
-  go_to_summary_page
+  summary_page.go_to_summary_page
 end
 
 Given("I am on the summary page") do

@@ -7,6 +7,11 @@ class SavingsInvestmentsPage < BasePage
     element :application_amount, '#application_amount'
   end
 
+  def go_to_savings_investment_page
+    personal_details_page.submit_required_personal_details
+    application_details_page.submit_fee_600
+  end
+
   def submit_less_than
     content.less_than.click
     next_page

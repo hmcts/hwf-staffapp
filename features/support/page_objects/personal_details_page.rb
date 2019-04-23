@@ -22,6 +22,10 @@ class PersonalDetailsPage < BasePage
     content.application_date_of_birth.set '10.02.1986'
   end
 
+  def valid_ni
+    content.application_ni_number.set 'JR054008D'
+  end
+
   def submit_required_personal_details
     content.application_last_name.set 'Smith'
     valid_dob
@@ -32,7 +36,7 @@ class PersonalDetailsPage < BasePage
   def submit_all_personal_details
     full_name
     valid_dob
-    content.application_ni_number.set 'JR054008D'
+    valid_ni
     content.status_single.click
     next_page
   end

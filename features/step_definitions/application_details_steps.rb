@@ -1,11 +1,11 @@
 Given(/^I am on the application details part of the application$/) do
-  submit_required_personal_details
+  application_details_page.go_to_application_details_page
   expect(current_path).to include 'details'
   expect(application_details_page.content).to have_header
 end
 
 When(/^I successfully submit my required application details$/) do
-  application_details_page.submit_with_fee_600
+  application_details_page.submit_fee_600
 end
 
 Then(/^I should be taken to savings and investments page$/) do
