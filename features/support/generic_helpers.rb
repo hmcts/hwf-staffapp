@@ -72,57 +72,6 @@ def start_application
   dashboard_page.process_application
 end
 
-def submit_required_personal_details
-  personal_details_page.submit_required_personal_details
-end
-
-def submit_all_personal_details
-  personal_details_page.submit_all_personal_details
-end
-
-def submit_fee_600
-  application_details_page.submit_with_fee_600
-end
-
-def submit_fee_300
-  application_details_page.submit_with_fee_300
-end
-
-def submit_savings_less_than
-  savings_investments_page.submit_less_than
-end
-
-def submit_savings_more_than
-  savings_investments_page.submit_more_than
-  savings_investments_page.submit_exact_amount
-end
-
-def submit_benefits_yes
-  benefits_page.submit_benefits_yes
-end
-
-def submit_evidence_yes
-  paper_evidence_page.submit_evidence_yes
-end
-
-def complete_processing
-  summary_page.complete_processing
-end
-
-def go_to_summary_page
-  start_application
-  submit_required_personal_details
-  submit_fee_600
-  submit_savings_less_than
-  submit_benefits_yes
-  submit_evidence_yes
-end
-
-def go_to_confirmation_page
-  go_to_summary_page
-  complete_processing
-end
-
 def go_to_finance_transactional_report_page
   visit(reports_page.url)
   reports_page.finance_transactional_report
@@ -134,20 +83,20 @@ end
 
 def processed_eligable_application
   start_application
-  submit_all_personal_details
-  submit_fee_600
-  submit_savings_less_than
-  submit_benefits_yes
-  submit_evidence_yes
-  complete_processing
+  personal_details_page.submit_all_personal_details
+  application_details_page.submit_fee_600
+  savings_investments_page.submit_less_than
+  benefits_page.submit_benefits_yes
+  paper_evidence_page.submit_evidence_yes
+  summary_page.complete_processing
   back_to_start
 end
 
 def processed_ineligable_application
   dashboard_page.process_application
-  submit_required_personal_details
-  submit_fee_300
-  submit_savings_more_than
-  complete_processing
+  personal_details_page.submit_required_personal_details
+  application_details_page.submit_fee_300
+  savings_investments_page.submit_exact_amount
+  summary_page.complete_processing
   back_to_start
 end

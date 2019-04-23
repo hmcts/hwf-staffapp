@@ -1,8 +1,5 @@
 Given("I am on the paper evidence part of the application") do
-  submit_required_personal_details
-  submit_fee_600
-  submit_savings_less_than
-  submit_benefits_yes
+  paper_evidence_page.go_to_paper_evidence_page
 end
 
 When("I successfully submit my required paper evidence details") do
