@@ -33,9 +33,21 @@ class ApplicationSearch
   private
 
   def search_query
-    Application.extended_search(@query).
-      except_created.
-      given_office_only(@current_user.office_id)
+    if reference_number?(@query)
+      Application.where(reference: @query).except_created
+    elsif name_search?(@query)
+      Application.name_search(@query).except_created
+    else
+      Application.extended_search(@query).except_created
+    end
+  end
+
+  def name_search?(query)
+    /\d/i.match(query).blank?
+  end
+
+  def reference_number?(query)
+    /(PA\d\d-\d*)|(HWF-\S{3}-\S{3})/i.match(query).present?
   end
 
   def scope
