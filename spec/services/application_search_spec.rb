@@ -59,8 +59,7 @@ RSpec.describe ApplicationSearch do
         let(:office) { create :office }
         let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
-        it { expect(service_completed).to be nil }
-        it {}
+        it { expect(service_completed).to eq([application]) }
       end
 
       context 'when the application has not yet been completed' do
