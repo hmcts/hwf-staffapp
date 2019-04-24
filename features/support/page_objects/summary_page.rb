@@ -3,10 +3,12 @@ class SummaryPage < BasePage
     element :header, 'h2', text: 'Check details'
     element :complete_processing_button, 'input[value="Complete processing"]'
     sections :summary_section, '.summary-section' do
-      element :summary_header, 'h4'
-      sections :row, '.grid-row' do
-        element :change_benefits, 'a', text: 'Change benefits'
-      end
+      element :benefits_header, 'h4', text: 'Benefits'
+      element :change_benefits, 'a', text: 'Change benefits'
+      element :benefits_question, '.column-one-third', text: 'Benefits declared in application'
+      element :evidence_question, '.column-one-third', text: 'Correct evidence provided'
+      element :answer_yes, '.column-two-thirds', text: 'Yes'
+      element :answer_no, '.column-two-thirds', text: 'No'
     end
   end
 
