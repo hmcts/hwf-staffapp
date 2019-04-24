@@ -34,6 +34,10 @@ def benefits_page
   @benefits_page ||= BenefitsPage.new
 end
 
+def incomes_page
+  @incomes_page ||= IncomesPage.new
+end
+
 def paper_evidence_page
   @paper_evidence_page ||= PaperEvidencePage.new
 end
