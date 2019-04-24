@@ -1,5 +1,7 @@
 And("I am on the reports page") do
-  visit(reports_page.url)
+  dashboard_page.generate_reports
+  expect(reports_page).to be_displayed
+  expect(reports_page.content).to have_management_information_header
 end
 
 When("I click on finance aggregated report") do
