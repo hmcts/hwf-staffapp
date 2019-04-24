@@ -12,3 +12,8 @@ Feature: Summary page
       When I see benefit summary 
       Then I should see I have declared benefits in this application
       And I have provided the correct evidence
+
+    Scenario: Change benefit answers
+      When I click on change benefits
+      And I change my answer to no
+      Then I should see that my new answer is displayed in the benefit summary

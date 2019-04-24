@@ -4,8 +4,9 @@ class SummaryPage < BasePage
     element :complete_processing_button, 'input[value="Complete processing"]'
     sections :summary_section, '.summary-section' do
       element :summary_header, 'h4'
-      element :benefit_declared_yes, '.grid-row', text: 'Benefits declared in application Yes'
-      element :evidence_provided_yes, '.grid-row', text: 'Correct evidence provided Yes'
+      sections :row, '.grid-row' do
+        element :change_benefits, 'a', text: 'Change benefits'
+      end
     end
   end
 
