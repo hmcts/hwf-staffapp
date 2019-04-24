@@ -3,7 +3,9 @@ def fill_personal_details(ni_number = 'SN123456C')
   fill_in 'Title', with: 'Mr.'
   fill_in 'First and middle names', with: 'Johny'
   fill_in 'Last name', with: 'Mnemonick'
-  fill_in 'Date of birth', with: '01/01/2000'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: '2000'
   fill_in 'National Insurance number', with: ni_number
   choose 'Single'
   click_button 'Next'

@@ -341,8 +341,11 @@ en-GB:
         full_name: Full name
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
+        day_date_of_birth: 'Day'
+        month_date_of_birth: 'Month'
+        year_date_of_birth: 'Year'
         married: Status
-        date_of_birth_hint: Use this format DD/MM/YYYY
+        date_of_birth_hint: For example, 04 10 1992
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number

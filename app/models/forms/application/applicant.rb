@@ -13,6 +13,9 @@ module Forms
         {
           last_name: String,
           date_of_birth: Date,
+          day_date_of_birth: Integer,
+          month_date_of_birth: Integer,
+          year_date_of_birth: Integer,
           married: Boolean,
           title: String,
           ni_number: String,
@@ -24,12 +27,23 @@ module Forms
 
       before_validation :format_ni_number
       before_validation :strip_whitespace!
+      before_validation :format_dob
 
       def format_ni_number
         unless ni_number.nil?
           ni_number.upcase!
           ni_number.delete!(' ')
         end
+      end
+
+      def format_dob
+        @date_of_birth = concat_dob_dates.to_date
+      rescue ArgumentError
+        @date_of_birth = concat_dob_dates
+      end
+
+      def concat_dob_dates
+        "#{day_date_of_birth}/#{month_date_of_birth}/#{year_date_of_birth}"
       end
 
       validates :last_name, presence: true, length: { minimum: 2, allow_blank: true }
@@ -88,7 +102,7 @@ module Forms
           title: title,
           last_name: last_name,
           first_name: first_name,
-          date_of_birth: date_of_birth,
+          date_of_birth: format_dob,
           married: married,
           ni_number: ni_number
         }

@@ -13,7 +13,9 @@ module ApplicationFormMacros
   def complete_personal_information(application)
     applicant = application.applicant
     fill_in 'application_last_name', with: applicant.last_name
-    fill_in 'application_date_of_birth', with: applicant.date_of_birth
+    fill_in 'application_day_date_of_birth', with: applicant.date_of_birth.day
+    fill_in 'application_month_date_of_birth', with: applicant.date_of_birth.month
+    fill_in 'application_year_date_of_birth', with: applicant.date_of_birth.year
     fill_in 'application_ni_number', with: applicant.ni_number if applicant.ni_number.present?
     if applicant.married
       choose 'application_married_true'

@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 def personal_details_page
+  dob = Time.zone.today - 25.years
   fill_in 'application_last_name', with: 'Hirani'
-  fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
+  fill_in 'application_day_date_of_birth', with: dob.day
+  fill_in 'application_month_date_of_birth', with: dob.month
+  fill_in 'application_year_date_of_birth', with: dob.year
   fill_in 'application_ni_number', with: 'JK089012B'
   choose 'application_married_false'
   click_button 'Next'
