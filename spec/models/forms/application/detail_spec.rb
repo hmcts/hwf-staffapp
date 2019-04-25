@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Detail do
   subject(:form) { described_class.new(detail) }
 
-  params_list = [:fee, :jurisdiction_id, :date_received, :probate,
+  params_list = [:fee, :jurisdiction_id, :date_received,
+                 :day_date_received, :month_date_received, :year_date_received, :probate,
                  :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name,
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason]
@@ -20,7 +21,7 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { build_stubbed(:complete_detail) }
 
     params_list.each do |attr_name|
-      next if attr_name.equal?(:emergency)
+      next if attr_name.to_s =~ /day|month|year|emergency/
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail.send(attr_name)
       end

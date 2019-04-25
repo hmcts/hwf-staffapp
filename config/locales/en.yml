@@ -353,6 +353,9 @@ en-GB:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
+        day_date_received: Day
+        month_date_received: Month
+        year_date_received: Year
         form_name: Form number
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         case_number: Case number
@@ -363,7 +366,7 @@ en-GB:
         date_fee_paid: Date fee paid
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
-        date_hint: Use this format DD/MM/YYYY
+        date_hint: For example, 04 10 2018
         discretion_applied: Delivery Manager discretion applied?
         discretion_applied_false: 'No'
         discretion_applied_true: 'Yes'

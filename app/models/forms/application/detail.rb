@@ -1,6 +1,7 @@
 module Forms
   module Application
     class Detail < ::FormObject
+      include ActiveModel::Validations::Callbacks
 
       TIME_LIMIT_FOR_PROBATE = 20
 
@@ -9,6 +10,9 @@ module Forms
         { fee: Integer,
           jurisdiction_id: Integer,
           date_received: Date,
+          day_date_received: Integer,
+          month_date_received: Integer,
+          year_date_received: Integer,
           probate: Boolean,
           date_of_death: Date,
           deceased_name: String,
@@ -25,6 +29,8 @@ module Forms
       # rubocop:enable MethodLength
 
       define_attributes
+
+      before_validation :format_date_received
 
       validates :fee, numericality: { allow_blank: true }
       validates :fee, presence: true
@@ -56,6 +62,16 @@ module Forms
           before_or_equal_to: :date_received,
           allow_blank: false
         }
+      end
+
+      def format_date_received
+        @date_received = concat_date_receiveds.to_date
+      rescue ArgumentError
+        @date_of_birth = concat_date_receiveds
+      end
+
+      def concat_date_receiveds
+        "#{day_date_received}/#{month_date_received}/#{year_date_received}"
       end
 
       private
@@ -118,8 +134,9 @@ module Forms
       end
 
       def fields_to_update
+        excluded_keys = [:emergency, :day_date_received, :month_date_received, :year_date_received]
         {}.tap do |fields|
-          (self.class.permitted_attributes.keys - [:emergency]).each do |name|
+          (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)
           end
         end

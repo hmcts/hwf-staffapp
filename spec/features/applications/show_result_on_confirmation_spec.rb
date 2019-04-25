@@ -11,6 +11,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
   let(:dob) { Time.zone.today - 25.years }
+  let(:date_received) { Time.zone.today - 3.days }
 
   after { Capybara.use_default_driver }
 
@@ -35,7 +36,9 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       expect(page).to have_xpath('//h2', text: 'Application details')
       fill_in 'application_fee', with: '300'
       find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
-      fill_in 'application_date_received', with: Time.zone.today - 3.days
+      fill_in 'application_day_date_received', with: date_received.day
+      fill_in 'application_month_date_received', with: date_received.month
+      fill_in 'application_year_date_received', with: date_received.year
       fill_in 'Form number', with: 'ABC123'
       click_button 'Next'
     end

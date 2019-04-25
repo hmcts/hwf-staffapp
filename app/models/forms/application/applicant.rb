@@ -9,6 +9,7 @@ module Forms
       # rubocop:enable MutableConstant
       include ActiveModel::Validations::Callbacks
 
+      # rubocop:disable MethodLength
       def self.permitted_attributes
         {
           last_name: String,
@@ -22,6 +23,7 @@ module Forms
           first_name: String
         }
       end
+      # rubocop:enable MethodLength
 
       define_attributes
 

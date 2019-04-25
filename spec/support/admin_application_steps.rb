@@ -15,7 +15,7 @@ def fill_application_details(court_fee = '1000')
   expect(page).to have_css('h2', text: 'Application details')
   fill_in 'Fee', with: court_fee
   select_jurisdiction
-  fill_in 'Date application received', with: Date.yesterday.to_s
+  fill_in_date_received(Date.yesterday)
   fill_in 'Form number', with: 'ABC123'
   click_button 'Next'
 end
@@ -29,7 +29,8 @@ def fill_application_refund_details(court_fee = '1000')
 end
 
 def fill_application_dates
-  fill_in 'Date application received', with: Date.yesterday.to_s
+  fill_in_date_received(Date.yesterday)
+
   check 'This is a refund case'
 
   fill_in 'Date fee paid', with: 2.days.ago.to_date.to_s
@@ -40,7 +41,8 @@ def fill_application_emergency_details
   expect(page).to have_text 'Application details'
   fill_in 'Fee', with: '1000'
   select_jurisdiction
-  fill_in 'Date application received', with: Date.yesterday.to_s
+  fill_in_date_received(Date.yesterday)
+
   fill_in 'Form number', with: 'ABC123'
   check 'This is an emergency case'
   fill_in 'Reason for emergency', with: 'Iam in a hurry'
@@ -133,7 +135,8 @@ end
 def fill_application_date_over_limit
   fill_in 'Fee', with: '1000'
   select_jurisdiction
-  fill_in 'Date application received', with: Date.yesterday.to_s
+  fill_in_date_received(Date.yesterday)
+
   fill_in 'Form number', with: 'ABC123'
   check 'This is a refund case'
 end
@@ -164,4 +167,10 @@ end
 
 def select_jurisdiction
   choose Jurisdiction.first.display_full.to_s
+end
+
+def fill_in_date_received(date_received)
+  fill_in 'application_day_date_received', with: date_received.day
+  fill_in 'application_month_date_received', with: date_received.month
+  fill_in 'application_year_date_received', with: date_received.year
 end
