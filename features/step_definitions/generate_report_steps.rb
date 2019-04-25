@@ -1,5 +1,6 @@
 Given("I am on the finance aggregated report page") do
   dashboard_page.generate_reports
+  reports_page.finance_aggregated_report
   expect(current_path).to include '/reports/finance_report'
   expect(generate_report_page.content).to have_aggregated_header
 end

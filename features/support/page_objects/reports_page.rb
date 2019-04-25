@@ -2,6 +2,7 @@ class ReportsPage < BasePage
   set_url '/reports'
 
   section :content, '#content' do
+    element :management_information_header, 'h2', text: 'Management Information'
     element :finance_aggregated_report_link, 'a', text: 'Finance aggregated report'
     element :finance_aggregated_report_help, 'dd', text: 'Date delimited report of financial expenditure'
     element :finance_transactional_report_link, 'a', text: 'Finance transactional report'
