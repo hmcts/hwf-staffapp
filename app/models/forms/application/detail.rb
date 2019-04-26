@@ -15,6 +15,9 @@ module Forms
           year_date_received: Integer,
           probate: Boolean,
           date_of_death: Date,
+          day_date_of_death: Integer,
+          month_date_of_death: Integer,
+          year_date_of_death: Integer,
           deceased_name: String,
           refund: Boolean,
           emergency: Boolean,
@@ -31,6 +34,7 @@ module Forms
       define_attributes
 
       before_validation :format_date_received
+      before_validation :format_date_of_death
 
       validates :fee, numericality: { allow_blank: true }
       validates :fee, presence: true
@@ -72,6 +76,16 @@ module Forms
 
       def concat_date_receiveds
         "#{day_date_received}/#{month_date_received}/#{year_date_received}"
+      end
+
+      def format_date_of_death
+        @date_of_death = concat_date_of_death.to_date
+      rescue ArgumentError
+        @date_of_birth = concat_date_of_death
+      end
+
+      def concat_date_of_death
+        "#{day_date_of_death}/#{month_date_of_death}/#{year_date_of_death}"
       end
 
       private
@@ -134,7 +148,9 @@ module Forms
       end
 
       def fields_to_update
-        excluded_keys = [:emergency, :day_date_received, :month_date_received, :year_date_received]
+        excluded_keys = [:emergency,
+          :day_date_received, :month_date_received, :year_date_received,
+          :day_date_of_death, :month_date_of_death, :year_date_of_death]
         {}.tap do |fields|
           (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)

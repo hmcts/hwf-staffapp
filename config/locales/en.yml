@@ -362,6 +362,9 @@ en-GB:
         probate: This is a probate case
         deceased_name: Name of the deceased
         date_of_death: Date of their death
+        day_date_of_death: Day
+        month_date_of_death: Month
+        year_date_of_death: Year
         refund: This is a refund case
         date_fee_paid: Date fee paid
         emergency: This is an emergency case

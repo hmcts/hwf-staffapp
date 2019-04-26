@@ -5,7 +5,8 @@ RSpec.describe Forms::Application::Detail do
 
   params_list = [:fee, :jurisdiction_id, :date_received,
                  :day_date_received, :month_date_received, :year_date_received, :probate,
-                 :date_of_death, :deceased_name, :refund, :date_fee_paid, :form_name,
+                 :date_of_death, :day_date_of_death, :month_date_of_death, :year_date_of_death,
+                 :deceased_name, :refund, :date_fee_paid, :form_name,
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason]
 
