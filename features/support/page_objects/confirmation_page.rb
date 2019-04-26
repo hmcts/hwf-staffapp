@@ -1,6 +1,22 @@
 class ConfirmationPage < BasePage
   section :content, '#content' do
+    section :summary_section, '.summary-section' do
+      element :result_header, 'h4', text: 'Result'
+      element :savings_question, '.column-one-third', text: 'Savings and investments'
+      element :benefits_question, '.column-one-third', text: 'Benefits'
+      element :savings_passed, '.column-two-thirds', text: 'Passed'
+      element :benefits_passed, '.column-two-thirds', text: '✓ Passed (paper evidence checked)'
+    end
+    element :reference_number_is, 'h3', text: 'The reference number is'
+    element :reference_number, '.reference-number', text: 'PA19-000001'
     element :eligible, 'h3', text: '✓ Eligible for help with fees'
+    section :guidence, '.guidance' do
+      element :next_steps_steps, 'h4', text: 'Next steps'
+      element :write_ref, 'li', text: 'Write the reference number on the top right corner of the paper form'
+      element :copy_ref, 'li', text: 'Copy the reference number into the case management system'
+      element :can_be_issued, 'li', text: 'The applicant’s process can now be issued'
+      element :see_guides, 'a', text: 'See the guides'
+    end
     element :complete_processing_button, 'input[value="Complete processing"]'
     element :back_to_start, '.button', text: 'Back to start'
   end

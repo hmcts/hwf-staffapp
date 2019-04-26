@@ -58,6 +58,10 @@ def reports_page
   @reports_page ||= ReportsPage.new
 end
 
+def guide_page
+  @guide_page ||= GuidePage.new
+end
+
 def dwp_message_page
   @dwp_message_page ||= DwpMessagePage.new
 end
