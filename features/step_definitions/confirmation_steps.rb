@@ -20,20 +20,6 @@ Then("I should see my processed application in your last applications") do
   expect(dashboard_page.content).to have_last_application
 end
 
-Then("I look at the result") do
-  expect(confirmation_page.content.summary_section).to have_result_header
-end
-
-Then("I should see the result for savings and investments") do
-  expect(confirmation_page.content.summary_section).to have_savings_question
-  expect(confirmation_page.content.summary_section).to have_savings_passed
-end
-
-Then("I should see the result for benefits") do
-  expect(confirmation_page.content.summary_section).to have_benefits_question
-  expect(confirmation_page.content.summary_section).to have_benefits_passed
-end
-
 Then("I should see that the applicant is eligible for help with fees") do
   expect(confirmation_page.content).to have_eligible
 end

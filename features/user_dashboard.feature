@@ -39,7 +39,7 @@ Feature: My dashboard
     
   Scenario: Processed applications
     When I click on processed applications
-    Then I am taken to all processed applicantions
+    Then I am taken to all processed applications
   
   Scenario: Deleted applications
     When I click on deleted applications

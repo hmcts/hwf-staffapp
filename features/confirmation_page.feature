@@ -5,9 +5,9 @@ Feature: Confirmation page
     And I am on the confirmation page
 
     Scenario: Result
-      When I look at the result
-      Then I should see the result for savings and investments
-      And I should see the result for benefits
+      When I look at the result on the confirmation page
+      Then I should see the result for savings and investments on the confirmation page
+      And I should see the result for benefits on the confirmation page
 
     Scenario: Eligibility
       Then I should see that the applicant is eligible for help with fees

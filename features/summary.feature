@@ -10,7 +10,7 @@ Feature: Summary page
 
     Scenario: Displays benefit summary
       When I see benefit summary 
-      Then I should see I have declared benefits in this application
+      Then I should see declared benefits in this application
       And I have provided the correct evidence
 
     Scenario: Change benefit answers

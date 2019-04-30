@@ -1,12 +1,5 @@
 class ConfirmationPage < BasePage
   section :content, '#content' do
-    section :summary_section, '.summary-section' do
-      element :result_header, 'h4', text: 'Result'
-      element :savings_question, '.column-one-third', text: 'Savings and investments'
-      element :benefits_question, '.column-one-third', text: 'Benefits'
-      element :savings_passed, '.column-two-thirds', text: 'Passed'
-      element :benefits_passed, '.column-two-thirds', text: '✓ Passed (paper evidence checked)'
-    end
     element :reference_number_is, 'h3', text: 'The reference number is'
     element :reference_number, '.reference-number', text: 'PA19-000001'
     element :eligible, 'h3', text: '✓ Eligible for help with fees'

@@ -51,8 +51,3 @@ end
 When("I click on processed applications") do
   dashboard_page.content.processed_applications.click
 end
-
-Then("I am taken to all processed applicantions") do
-  expect(current_path).to include '/processed_applications'
-  expect(processed_applications_page.content).to have_header
-end
