@@ -26,6 +26,10 @@ def application_search_page
   @application_search_page ||= ApplicationSearchPage.new
 end
 
+def processed_applications_page
+  @processed_applications_page ||= ProcessedApplicationsPage.new
+end
+
 def savings_investments_page
   @savings_investments_page ||= SavingsInvestmentsPage.new
 end
