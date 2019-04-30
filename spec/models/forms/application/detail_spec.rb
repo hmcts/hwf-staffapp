@@ -7,6 +7,7 @@ RSpec.describe Forms::Application::Detail do
                  :day_date_received, :month_date_received, :year_date_received, :probate,
                  :date_of_death, :day_date_of_death, :month_date_of_death, :year_date_of_death,
                  :deceased_name, :refund, :date_fee_paid, :form_name,
+                 :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid,
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason]
 
@@ -15,6 +16,21 @@ RSpec.describe Forms::Application::Detail do
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
       expect(described_class.permitted_attributes.keys).to match_array(params_list)
+    end
+  end
+
+  context 'before validation callbacks' do
+    describe 'date applied' do
+      before do
+        form.day_date_received = 1
+        form.month_date_received = 2
+        form.year_date_received = 2019
+        form.valid?
+      end
+
+      it 'saves the values to instance variable' do
+        expect(form.date_received.to_s).to eq('01/02/2019')
+      end
     end
   end
 
@@ -71,13 +87,21 @@ RSpec.describe Forms::Application::Detail do
       let(:deceased_name) { 'Bob the builder' }
       let(:probate_status) { true }
       let(:date_of_death) { Time.zone.yesterday }
+      let(:date_of_death_day) { date_of_death.day }
+      let(:date_of_death_month) { date_of_death.month }
+      let(:date_of_death_year) { date_of_death.year }
+      let(:date_received) { Time.zone.yesterday }
       let(:probate) do
         params = { jurisdiction_id: 1,
                    fee: 500,
-                   date_received: Time.zone.yesterday,
+                   day_date_received: date_received.day,
+                   month_date_received: date_received.month,
+                   year_date_received: date_received.year,
                    probate: probate_status,
                    deceased_name: deceased_name,
-                   date_of_death: date_of_death,
+                   day_date_of_death: date_of_death_day,
+                   month_date_of_death: date_of_death_month,
+                   year_date_of_death: date_of_death_year,
                    form_name: 'ABC123' }
         described_class.new(params)
       end
@@ -94,7 +118,9 @@ RSpec.describe Forms::Application::Detail do
       describe 'requires' do
         describe 'date of death' do
           describe 'presence' do
-            let(:date_of_death) { nil }
+            let(:date_of_death_day) { nil }
+            let(:date_of_death_month) { nil }
+            let(:date_of_death_year) { nil }
 
             before { probate.valid? }
 

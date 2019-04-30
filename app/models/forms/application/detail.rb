@@ -23,6 +23,9 @@ module Forms
           emergency: Boolean,
           emergency_reason: String,
           date_fee_paid: Date,
+          day_date_fee_paid: Integer,
+          month_date_fee_paid: Integer,
+          year_date_fee_paid: Integer,
           form_name: String,
           case_number: String,
           discretion_applied: Boolean,
@@ -33,8 +36,7 @@ module Forms
 
       define_attributes
 
-      before_validation :format_date_received
-      before_validation :format_date_of_death
+      before_validation :format_date_fields
 
       validates :fee, numericality: { allow_blank: true }
       validates :fee, presence: true
@@ -68,24 +70,24 @@ module Forms
         }
       end
 
-      def format_date_received
-        @date_received = concat_date_receiveds.to_date
-      rescue ArgumentError
-        @date_of_birth = concat_date_receiveds
+      def format_date_fields
+        [:date_received, :date_of_death, :date_fee_paid].each do |key|
+          format_dates(key)
+        end
       end
 
-      def concat_date_receiveds
-        "#{day_date_received}/#{month_date_received}/#{year_date_received}"
+      def format_dates(date_attr_name)
+        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name).to_date)
+      rescue ArgumentError => ex
+        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name))
       end
 
-      def format_date_of_death
-        @date_of_death = concat_date_of_death.to_date
-      rescue ArgumentError
-        @date_of_birth = concat_date_of_death
-      end
+      def concat_dates(date_attr_name)
+        day = self.send("day_#{date_attr_name}")
+        month = self.send("month_#{date_attr_name}")
+        year = self.send("year_#{date_attr_name}")
 
-      def concat_date_of_death
-        "#{day_date_of_death}/#{month_date_of_death}/#{year_date_of_death}"
+        "#{day}/#{month}/#{year}"
       end
 
       private
@@ -150,7 +152,8 @@ module Forms
       def fields_to_update
         excluded_keys = [:emergency,
           :day_date_received, :month_date_received, :year_date_received,
-          :day_date_of_death, :month_date_of_death, :year_date_of_death]
+          :day_date_of_death, :month_date_of_death, :year_date_of_death,
+          :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid]
         {}.tap do |fields|
           (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)
