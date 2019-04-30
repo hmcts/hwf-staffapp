@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181114150745) do
+ActiveRecord::Schema.define(version: 20190412141132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 20181114150745) do
   end
 
   add_index "applicants", ["application_id"], name: "index_applicants_on_application_id", using: :btree
+  add_index "applicants", ["first_name"], name: "index_applicants_on_first_name", using: :btree
+  add_index "applicants", ["last_name"], name: "index_applicants_on_last_name", using: :btree
+  add_index "applicants", ["ni_number"], name: "index_applicants_on_ni_number", using: :btree
 
   create_table "applications", force: :cascade do |t|
     t.datetime "created_at",                                null: false
@@ -68,9 +71,13 @@ ActiveRecord::Schema.define(version: 20181114150745) do
   end
 
   add_index "applications", ["business_entity_id"], name: "index_applications_on_business_entity_id", using: :btree
+  add_index "applications", ["created_at"], name: "index_applications_on_created_at", using: :btree
+  add_index "applications", ["decision_cost"], name: "index_applications_on_decision_cost", using: :btree
+  add_index "applications", ["decision_date"], name: "index_applications_on_decision_date", using: :btree
   add_index "applications", ["office_id"], name: "index_applications_on_office_id", using: :btree
   add_index "applications", ["online_application_id"], name: "index_applications_on_online_application_id", using: :btree
   add_index "applications", ["reference"], name: "index_applications_on_reference", unique: true, using: :btree
+  add_index "applications", ["state"], name: "index_applications_on_state", using: :btree
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
   create_table "benefit_checks", force: :cascade do |t|
@@ -169,6 +176,8 @@ ActiveRecord::Schema.define(version: 20181114150745) do
   end
 
   add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree
+  add_index "details", ["case_number"], name: "index_details_on_case_number", using: :btree
+  add_index "details", ["fee"], name: "index_details_on_fee", using: :btree
 
   create_table "dwp_warnings", force: :cascade do |t|
     t.string   "check_state", default: "default_checker"
