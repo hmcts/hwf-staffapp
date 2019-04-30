@@ -14,10 +14,6 @@ Then("I am taken to the guide page") do
   # steps need implementing - wip
 end
 
-Then("I should see the status of the DWP connection") do
-  expect(user_dashboard_page.content).to have_dwp_restored
-end
-
 When("I search for an application using valid reference number") do
   # steps need implementing - wip
   user_dashboard_page.search_valid_reference
@@ -69,14 +65,6 @@ When("I click on the reference number of one of my last applications") do
 end
 
 Then("I am taken to that application") do
-  # steps need implementing - wip
-end
-
-When("I click on processed applications") do
-  user_dashboard_page.content.processed_applications.click
-end
-
-Then("I am taken to all processed applicantions") do
   # steps need implementing - wip
 end
 

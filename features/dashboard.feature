@@ -1,18 +1,21 @@
-@manual @wip
+@manual
 
 Feature: My dashboard
 
   Background: Signed in as a user
-    Given I successfully sign in as a user
+    Given I am signed in as a user that has processed multiple applications
 
+  @wip
   Scenario: View profile
     When I click on view profile
     Then I am taken to my details
 
+  @wip
   Scenario: Staff guides
     When I click on staff guides
     Then I am taken to the guide page
 
+  @wip
   Scenario: DWP connection
     Then I should see the status of the DWP connection
 
@@ -21,10 +24,12 @@ Feature: My dashboard
     When I search for an application using valid reference number
     Then I am taken to ....
 
+  @wip
   Scenario: Search an invalid reference
     When I search for an application using invalid reference number
     Then I should see the reference number is not recognised error message
 
+  @wip
   Scenario: Process application
     When I start a new application
     Then I am taken to the applicants personal details page
@@ -34,6 +39,7 @@ Feature: My dashboard
     When I look up a valid hwf reference
     Then I am taken to ....
 
+  @wip
   Scenario: Invalid hwf number
     When I look up a invalid hwf reference
     Then I should see the reference number is not recognised error message
