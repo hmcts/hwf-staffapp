@@ -7,8 +7,8 @@ RSpec.describe Views::PartPayment::Result do
 
   let(:application) { build_stubbed(:application) }
   let(:part_payment) { build_stubbed(:part_payment, application: application) }
-  let(:string_passed) { '✓ Passed' }
-  let(:string_failed) { '✗ Failed' }
+  let(:string_passed) { 'Yes' }
+  let(:string_failed) { 'No' }
 
   it 'inherits features of Views::ApplicationResult' do
     expect(view).to be_a(Views::ApplicationResult)
