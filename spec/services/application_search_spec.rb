@@ -56,10 +56,20 @@ RSpec.describe ApplicationSearch do
       end
 
       context 'when the application has not been processed in the same office' do
-        let(:office) { create :office }
-        let(:application) { create(:application, :processed_state, reference: reference, office: office) }
+        context 'admin user' do
+          let(:user) { create :admin }
+          let(:office) { create :office }
+          let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
-        it { expect(service_completed).to eq([application]) }
+          it { expect(service_completed).to eq([application]) }
+        end
+
+        context 'staff user' do
+          let(:office) { create :office }
+          let(:application) { create(:application, :processed_state, reference: reference, office: office) }
+
+          it { expect(service_completed).to be_nil }
+        end
       end
 
       context 'when the application has not yet been completed' do

@@ -17,7 +17,7 @@ class ApplicationSearch
       return set_error_and_return_nil(:search_blank)
     end
 
-    @results = search_query
+    @results = conditional_office_filter(search_query)
     return set_error_and_return_nil(:search_not_found, search_query: @query) if @results.blank?
     @results
   end
@@ -40,6 +40,12 @@ class ApplicationSearch
     else
       Application.extended_search(@query).except_created
     end
+  end
+
+  def conditional_office_filter(query)
+    return query if @current_user.admin?
+
+    query.given_office_only(@current_user.office_id)
   end
 
   def name_search?(query)
