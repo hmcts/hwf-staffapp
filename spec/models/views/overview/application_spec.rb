@@ -19,19 +19,19 @@ RSpec.describe Views::Overview::Application do
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }
 
-      it { is_expected.to eq '✓ Passed' }
+      it { is_expected.to eq 'Yes' }
     end
 
     context 'when the application is a part remission' do
       let(:outcome) { 'part' }
 
-      it { is_expected.to eq '✓ Passed' }
+      it { is_expected.to eq 'Yes' }
     end
 
     context 'when the application is a non remission' do
       let(:outcome) { 'none' }
 
-      it { is_expected.to eq '✗ Failed' }
+      it { is_expected.to eq 'No' }
     end
   end
 
@@ -43,13 +43,13 @@ RSpec.describe Views::Overview::Application do
     context 'when the application has valid savings and investments' do
       let(:result) { true }
 
-      it { is_expected.to eq '✓ Passed' }
+      it { is_expected.to eq 'Yes' }
     end
 
     context 'when the application does not have valid savings and investments' do
       let(:result) { false }
 
-      it { is_expected.to eq '✗ Failed' }
+      it { is_expected.to eq 'No' }
     end
   end
 
@@ -67,13 +67,13 @@ RSpec.describe Views::Overview::Application do
       context 'when the dwp_result is Yes' do
         let(:result) { 'Yes' }
 
-        it { is_expected.to eq '✓ Passed' }
+        it { is_expected.to eq 'Yes' }
       end
 
       context 'when the dwp_result is No' do
         let(:result) { 'No' }
 
-        it { is_expected.to eq '✗ Failed' }
+        it { is_expected.to eq 'No' }
       end
 
       context 'when a decision_overide exists' do

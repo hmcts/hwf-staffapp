@@ -21,7 +21,11 @@ class ApplicationDetailsPage < BasePage
     element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
   end
 
-  def submit_with_fee_600
+  def go_to_application_details_page
+    personal_details_page.submit_all_personal_details
+  end
+
+  def submit_fee_600
     content.application_fee.set '600'
     content.jurisdiction.click
     content.application_date_received.set Time.zone.today - 2.months
@@ -30,7 +34,7 @@ class ApplicationDetailsPage < BasePage
     next_page
   end
 
-  def submit_with_fee_300
+  def submit_fee_300
     content.application_fee.set '300'
     content.jurisdiction.click
     content.application_date_received.set Time.zone.today - 2.months

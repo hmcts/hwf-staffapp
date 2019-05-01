@@ -6,8 +6,8 @@ RSpec.describe Views::ApplicationResult do
   subject(:view) { described_class.new(application) }
 
   let(:application) { build_stubbed(:application) }
-  let(:string_passed) { '✓ Passed' }
-  let(:string_failed) { '✗ Failed' }
+  let(:string_passed) { 'Yes' }
+  let(:string_failed) { 'No' }
 
   describe '#amount_to_pay' do
     subject { view.amount_to_pay }
