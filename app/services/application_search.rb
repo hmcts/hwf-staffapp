@@ -17,8 +17,8 @@ class ApplicationSearch
       return set_error_and_return_nil(:search_blank)
     end
 
-    @results = conditional_office_filter(search_query)
-    return set_error_and_return_nil(:search_not_found, search_query: @query) if @results.blank?
+    @results = search_query
+    return nil if error_checker
     @results
   end
 
@@ -34,18 +34,13 @@ class ApplicationSearch
 
   def search_query
     if reference_number?(@query)
-      Application.where(reference: @query).except_created
+      result = Application.where(reference: @query).except_created
+      processed_by_check(result)
     elsif name_search?(@query)
-      Application.name_search(@query).except_created
+      Application.name_search(@query).except_created.given_office_only(@current_user.office_id)
     else
-      Application.extended_search(@query).except_created
+      Application.extended_search(@query).except_created.given_office_only(@current_user.office_id)
     end
-  end
-
-  def conditional_office_filter(query)
-    return query if @current_user.admin?
-
-    query.given_office_only(@current_user.office_id)
   end
 
   def name_search?(query)
@@ -63,6 +58,24 @@ class ApplicationSearch
   def set_error_and_return_nil(i18n_key, i18n_params = {})
     @error_message = I18n.t(i18n_key, { scope: scope }.merge(i18n_params))
     nil
+  end
+
+  def error_checker
+    if @results.blank?
+      set_error_and_return_nil(:search_not_found, search_query: @query)
+      return true
+    elsif @processed_by.present?
+      set_error_and_return_nil(:processed_by, search_query: @query, office_name: @processed_by)
+      return true
+    end
+    false
+  end
+
+  def processed_by_check(result)
+    if result.present? && result.last.office_id != @current_user.office_id
+      @processed_by = result.last.office.name
+    end
+    result
   end
 
   def paginate_results(page)
