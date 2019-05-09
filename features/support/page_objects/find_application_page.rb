@@ -1,8 +1,9 @@
-class ApplicationSearchPage < BasePage
+class FindApplicationPage < BasePage
   section :content, '#content' do
     element :search_header, 'h2', text: 'Find an application'
     element :search_button, 'input[value="Search"]'
     element :no_results_found_error, '.error', text: 'No results found'
+    element :processed_by_another_office, '.error', text: 'This application has been processed by '
     element :cant_be_blank_error, '.error', text: 'Enter a search term'
     element :search_results_header, 'h3', text: 'Search results'
     section :search_results_group, '.search-results' do
@@ -58,7 +59,7 @@ class ApplicationSearchPage < BasePage
   def paginated_search_results
     sign_in_page.load_page
     sign_in_page.user_account_with_applications
-    application_search_page.search_case_number('JK123456A')
+    find_application_page.search_case_number('JK123456A')
   end
 
   def pagination_next_page
@@ -70,34 +71,34 @@ class ApplicationSearchPage < BasePage
   end
 
   def sort_by_reference
-    application_search_page.content.search_results_group.sort_reference.click
+    find_application_page.content.search_results_group.sort_reference.click
   end
 
   def sort_by_entered
-    application_search_page.content.search_results_group.sort_entered.click
+    find_application_page.content.search_results_group.sort_entered.click
   end
 
   def sort_by_first_name
-    application_search_page.content.search_results_group.sort_first_name.click
+    find_application_page.content.search_results_group.sort_first_name.click
   end
 
   def sort_by_last_name
-    application_search_page.content.search_results_group.sort_last_name.click
+    find_application_page.content.search_results_group.sort_last_name.click
   end
 
   def sort_by_case_number
-    application_search_page.content.search_results_group.sort_case_number.click
+    find_application_page.content.search_results_group.sort_case_number.click
   end
 
   def sort_by_fee
-    application_search_page.content.search_results_group.sort_fee.click
+    find_application_page.content.search_results_group.sort_fee.click
   end
 
   def sort_by_remission
-    application_search_page.content.search_results_group.sort_remission.click
+    find_application_page.content.search_results_group.sort_remission.click
   end
 
   def sort_by_completed
-    application_search_page.content.search_results_group.sort_completed.click
+    find_application_page.content.search_results_group.sort_completed.click
   end
 end

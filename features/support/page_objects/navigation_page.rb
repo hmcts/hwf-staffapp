@@ -10,6 +10,7 @@ class NavigationPage < BasePage
     element :staff_guides, 'a', text: 'Staff Guides'
     element :letter_templates, 'a', text: 'Letter templates'
     element :feedback, 'a', text: 'Feedback'
+    element :sign_out, 'a', text: 'Sign out'
   end
 
   def go_to_dwp_message_page
@@ -18,5 +19,9 @@ class NavigationPage < BasePage
 
   def go_to_homepage
     proposition_links.help_with_fees_home.click
+  end
+
+  def sign_out
+    proposition_links.sign_out.click
   end
 end
