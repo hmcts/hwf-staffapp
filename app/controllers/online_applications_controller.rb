@@ -11,6 +11,15 @@ class OnlineApplicationsController < ApplicationController
     @form = Forms::OnlineApplication.new(online_application)
     @form.enable_default_jurisdiction(current_user)
     assign_jurisdictions
+
+    event = GtmOnRails::DataLayer::Event.new(
+      'Application tracking',
+      medium: 'digital',
+      type: 'TBC',
+      office_id: current_user.office.id,
+      jurisdiction_id: 'TBC'
+    )
+    data_layer.push(event)
   end
 
   def update
@@ -27,6 +36,15 @@ class OnlineApplicationsController < ApplicationController
 
   def show
     build_sections
+
+    event = GtmOnRails::DataLayer::Event.new(
+      'Application tracking',
+      medium: 'digital',
+      type: 'TBC',
+      office_id: current_user.office.id,
+      jurisdiction_id: online_application.jurisdiction_id
+    )
+    data_layer.push(event)
   end
 
   def complete
