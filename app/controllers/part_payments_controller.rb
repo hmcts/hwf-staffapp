@@ -8,10 +8,32 @@ class PartPaymentsController < ApplicationController
 
     processing_details
     build_sections
+
+    event = GtmOnRails::DataLayer::Event.new(
+        'Application tracking',
+        medium:           application.medium || 'NA',
+        type:             application.application_type || 'NA',
+        office_id:        current_user.office.id,
+        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
+        rails_controller: controller_name,
+        rails_action:     action_name
+      )
+    data_layer.push(event)
   end
 
   def accuracy
     @form = Forms::PartPayment::Accuracy.new(part_payment)
+
+    event = GtmOnRails::DataLayer::Event.new(
+        'Application tracking',
+        medium:           application.medium || 'NA',
+        type:             application.application_type || 'NA',
+        office_id:        current_user.office.id,
+        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
+        rails_controller: controller_name,
+        rails_action:     action_name
+      )
+    data_layer.push(event)
   end
 
   def accuracy_save
@@ -29,6 +51,17 @@ class PartPaymentsController < ApplicationController
     @part_payment = part_payment
     build_sections
     @result = Views::PartPayment::Result.new(part_payment)
+
+    event = GtmOnRails::DataLayer::Event.new(
+        'Application tracking',
+        medium:           application.medium || 'NA',
+        type:             application.application_type || 'NA',
+        office_id:        current_user.office.id,
+        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
+        rails_controller: controller_name,
+        rails_action:     action_name
+      )
+    data_layer.push(event)
   end
 
   def summary_save
@@ -39,10 +72,32 @@ class PartPaymentsController < ApplicationController
   def confirmation
     build_sections
     @result = Views::PartPayment::Result.new(part_payment)
+
+    event = GtmOnRails::DataLayer::Event.new(
+        'Application tracking',
+        medium:           application.medium || 'NA',
+        type:             application.application_type || 'NA',
+        office_id:        current_user.office.id,
+        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
+        rails_controller: controller_name,
+        rails_action:     action_name
+      )
+    data_layer.push(event)
   end
 
   def return_letter
     build_sections
+
+    event = GtmOnRails::DataLayer::Event.new(
+        'Application tracking',
+        medium:           application.medium || 'NA',
+        type:             application.application_type || 'NA',
+        office_id:        current_user.office.id,
+        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
+        rails_controller: controller_name,
+        rails_action:     action_name
+      )
+    data_layer.push(event)
   end
 
   def return_application
