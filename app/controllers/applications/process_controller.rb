@@ -1,7 +1,9 @@
 module Applications
   class ProcessController < ApplicationController
     before_action :authorize_application_update, except: :create
-    before_action :track_application, only: [:index, :edit, :show]
+    before_action only: [:index, :edit, :show] do
+      track_application(application, 'TBC')
+    end
     before_action :check_completed_redirect, except: [:create]
 
     def create
@@ -13,19 +15,6 @@ module Applications
     end
 
     private
-
-    def track_application
-      event = GtmOnRails::DataLayer::Event.new(
-          'Application tracking',
-          medium:           application.medium || 'TBC',
-          type:             application.application_type || 'TBC',
-          office_id:        current_user.office.id,
-          jurisdiction_id:  application.detail.jurisdiction_id || 'TBC',
-          rails_controller: controller_name,
-          rails_action:     action_name
-        )
-      data_layer.push(event)
-    end
 
     def authorize_application_update
       authorize application, :update?

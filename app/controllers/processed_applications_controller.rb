@@ -15,16 +15,7 @@ class ProcessedApplicationsController < ApplicationController
     @form = Forms::Application::Delete.new(application)
     assign_views
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def update

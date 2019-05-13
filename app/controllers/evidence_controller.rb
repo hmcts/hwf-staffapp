@@ -9,31 +9,13 @@ class EvidenceController < ApplicationController
     processing_details
     build_sections
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def accuracy
     @form = Forms::Evidence::Accuracy.new(evidence)
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def accuracy_save
@@ -50,16 +32,7 @@ class EvidenceController < ApplicationController
   def income
     @form = Forms::Evidence::Income.new(evidence)
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def income_save
@@ -76,16 +49,7 @@ class EvidenceController < ApplicationController
   def result
     application_result
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def summary
@@ -93,16 +57,7 @@ class EvidenceController < ApplicationController
     build_sections
     application_result
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def summary_save
@@ -114,31 +69,13 @@ class EvidenceController < ApplicationController
   def confirmation
     evidence_confirmation
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def return_letter
     build_sections
 
-    event = GtmOnRails::DataLayer::Event.new(
-        'Application tracking',
-        medium:           application.medium || 'NA',
-        type:             application.application_type || 'NA',
-        office_id:        current_user.office.id,
-        jurisdiction_id:  application.detail.jurisdiction_id || 'NA',
-        rails_controller: controller_name,
-        rails_action:     action_name
-      )
-    data_layer.push(event)
+    track_application(application)
   end
 
   def return_application
