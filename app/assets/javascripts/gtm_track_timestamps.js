@@ -74,6 +74,7 @@ window.moj.Modules.GtmTrackTimestamps = {
 
   serchPerformed: function(search_result) {
     var results = $('table.search-results').size();
+    var search_query = $('#completed_search_reference').val();
 
     if(results > 0){
       search_result = 'Success';
@@ -81,7 +82,8 @@ window.moj.Modules.GtmTrackTimestamps = {
 
     dataLayer.push({
       'event': 'SearchPerformed',
-      'searchResult': search_result
+      'searchResult': search_result,
+      'searchQuery': search_query
     });
   },
 
