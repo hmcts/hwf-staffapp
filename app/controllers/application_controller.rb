@@ -39,23 +39,28 @@ class ApplicationController < ActionController::Base
     DwpWarning.last.check_state
   end
 
-  def track_application(app, default = 'NA')
-    event = GtmOnRails::DataLayer::Event.new('Application tracking',
-      medium: app.medium || default,
-      type: app.application_type || default,
-      office_id: current_user.office.id,
-      jurisdiction_id: app.detail.jurisdiction_id || default)
-
+  def add_datalayer_event(name, data)
+    event = GtmOnRails::DataLayer::Event.new(name, data)
     data_layer.push(event)
   end
 
+  def track_application(app, default = 'NA')
+    data = {
+      medium: app.medium || default,
+      type: app.application_type || default,
+      office_id: current_user.office.id,
+      jurisdiction_id: app.detail.jurisdiction_id || default
+    }
+    add_datalayer_event('Application tracking', data)
+  end
+
   def track_online_application(app)
-    event = GtmOnRails::DataLayer::Event.new('Application tracking',
+    data = {
       medium: 'digital',
       type: 'TBC',
       office_id: current_user.office.id,
-      jurisdiction_id: app.jurisdiction_id || 'TBC')
-
-    data_layer.push(event)
+      jurisdiction_id: app.jurisdiction_id || 'TBC'
+    }
+    add_datalayer_event('Application tracking', data)
   end
 end
