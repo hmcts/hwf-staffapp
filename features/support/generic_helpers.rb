@@ -22,8 +22,8 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
-def application_search_page
-  @application_search_page ||= ApplicationSearchPage.new
+def find_application_page
+  @find_application_page ||= FindApplicationPage.new
 end
 
 def application_page

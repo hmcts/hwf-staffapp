@@ -5,7 +5,11 @@ class Application < ActiveRecord::Base
 
   pg_search_scope :extended_search, against: [:reference], associated_against: {
     detail: [:case_number],
-    applicant: [:first_name, :last_name, :ni_number]
+    applicant: [:ni_number]
+  }
+
+  pg_search_scope :name_search, associated_against: {
+    applicant: [:first_name, :last_name]
   }
 
   has_paper_trail
