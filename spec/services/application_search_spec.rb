@@ -12,8 +12,8 @@ RSpec.describe ApplicationSearch do
   describe '#call' do
     subject(:service_completed) { service.call }
 
-    let(:existing_reference) { 'XYZ-123-ABC' }
-    let(:wrong_reference) { 'XYZ-WRO-NG' }
+    let(:existing_reference) { 'HWF-123-ABC' }
+    let(:wrong_reference) { 'PA18-WRO-NG' }
 
     context 'when there is an application with the given reference' do
       let(:reference) { existing_reference }
@@ -56,11 +56,16 @@ RSpec.describe ApplicationSearch do
       end
 
       context 'when the application has not been processed in the same office' do
-        let(:office) { create :office }
-        let(:application) { create(:application, :processed_state, reference: reference, office: office) }
+        context 'staff user' do
+          let(:office) { create :office, name: 'ACDC Office' }
+          let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
-        it { expect(service_completed).to be nil }
-        it {}
+          it { expect(service_completed).to be_nil }
+          it 'return error about different office processing this application' do
+            service_completed
+            expect(service.error_message).to eq("This application has been processed by ACDC Office")
+          end
+        end
       end
 
       context 'when the application has not yet been completed' do
@@ -97,7 +102,7 @@ RSpec.describe ApplicationSearch do
   describe '#paginate_search_results' do
     let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, 'paginated') }
 
-    let(:reference) { 'XYZ-123-ABC' }
+    let(:reference) { 'HWF-123-ABC' }
     let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }
     let(:pagination_params) { { 'sort_to': 'DESC', 'sort_by': 'last_name', 'page': 1 } }
 
