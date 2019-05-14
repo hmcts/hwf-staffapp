@@ -76,6 +76,10 @@ window.moj.Modules.GtmTrackTimestamps = {
     var results = $('table.search-results').size();
     var search_query = $('#completed_search_reference').val();
 
+    if(search_query.length == 0){
+      search_query = '(Blank)';
+    }
+
     if(results > 0){
       search_result = 'Success';
     }
