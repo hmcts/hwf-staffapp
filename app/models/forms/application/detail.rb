@@ -72,22 +72,8 @@ module Forms
 
       def format_date_fields
         [:date_received, :date_of_death, :date_fee_paid].each do |key|
-          format_dates(key)
+          format_dates(key) if format_the_dates?(key)
         end
-      end
-
-      def format_dates(date_attr_name)
-        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name).to_date)
-      rescue ArgumentError => ex
-        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name))
-      end
-
-      def concat_dates(date_attr_name)
-        day = self.send("day_#{date_attr_name}")
-        month = self.send("month_#{date_attr_name}")
-        year = self.send("year_#{date_attr_name}")
-
-        "#{day}/#{month}/#{year}"
       end
 
       private
@@ -160,6 +146,31 @@ module Forms
           end
         end
       end
+
+      def format_the_dates?(date_attr_name)
+        date = self.send("#{date_attr_name}")
+        day = self.send("day_#{date_attr_name}")
+        month = self.send("month_#{date_attr_name}")
+        year = self.send("year_#{date_attr_name}")
+
+        !(day.blank? && month.blank? && year.blank? && date.present?)
+      end
+
+      def format_dates(date_attr_name)
+        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name).to_date)
+      rescue ArgumentError
+        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name))
+      end
+
+      def concat_dates(date_attr_name)
+        day = self.send("day_#{date_attr_name}")
+        month = self.send("month_#{date_attr_name}")
+        year = self.send("year_#{date_attr_name}")
+        return '' if day.blank? || month.blank? || year.blank?
+
+        "#{day}/#{month}/#{year}"
+      end
+
     end
   end
 end
