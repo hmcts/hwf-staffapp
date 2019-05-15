@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
+  before_action :track_office_id, if: :user_signed_in?
   after_action :verify_authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -62,5 +63,9 @@ class ApplicationController < ActionController::Base
       jurisdiction_id: app.jurisdiction_id || 'TBC'
     }
     add_datalayer_event('Application tracking', data)
+  end
+
+  def track_office_id
+    add_datalayer_event('Office id', office_id: current_user.office_id)
   end
 end
