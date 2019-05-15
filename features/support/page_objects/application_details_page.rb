@@ -10,7 +10,9 @@ class ApplicationDetailsPage < BasePage
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'
     element :date_received_label, 'label', text: 'Date application received'
     element :date_received_hint, '.hint', text: 'Use this format DD/MM/YYYY'
-    element :application_date_received, '#application_date_received'
+    element :application_day_date_received, '#application_day_date_received'
+    element :application_month_date_received, '#application_month_date_received'
+    element :application_year_date_received, '#application_year_date_received'
     element :application_date_error, '.error', text: 'Enter the date in this format DD/MM/YYYY'
     element :case_number_label, 'label', text: 'Case number'
     element :application_case_number, '#application_case_number'
@@ -28,7 +30,10 @@ class ApplicationDetailsPage < BasePage
   def submit_fee_600
     content.application_fee.set '600'
     content.jurisdiction.click
-    content.application_date_received.set Time.zone.today - 2.months
+    date_received = Time.zone.today - 2.months
+    content.application_day_date_received.set date_received.day
+    content.application_month_date_received.set date_received.month
+    content.application_year_date_received.set date_received.year
     content.form_input.set 'C100'
     content.application_case_number.set 'E71YX571'
     next_page
@@ -37,7 +42,10 @@ class ApplicationDetailsPage < BasePage
   def submit_fee_300
     content.application_fee.set '300'
     content.jurisdiction.click
-    content.application_date_received.set Time.zone.today - 2.months
+    date_received = Time.zone.today - 2.months
+    content.application_day_date_received.set date_received.day
+    content.application_month_date_received.set date_received.month
+    content.application_year_date_received.set date_received.year
     content.form_input.set 'C100'
     next_page
   end
@@ -45,7 +53,11 @@ class ApplicationDetailsPage < BasePage
   def submit_without_form_number
     content.application_fee.set '300'
     content.jurisdiction.click
-    content.application_date_received.set Time.zone.today - 2.months
+    date_received = Time.zone.today - 2.months
+    content.application_day_date_received.set date_received.day
+    content.application_month_date_received.set date_received.month
+    content.application_year_date_received.set date_received.year
+
     next_page
   end
 end

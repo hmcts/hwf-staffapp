@@ -5,7 +5,9 @@ class PersonalDetailsPage < BasePage
     element :application_first_name, '#application_first_name'
     element :application_last_name, '#application_last_name'
     element :last_name_error, '.field_with_errors', text: 'Enter the applicant\'s last name'
-    element :application_date_of_birth, '#application_date_of_birth'
+    element :application_day_date_of_birth, '#application_day_date_of_birth'
+    element :application_month_date_of_birth, '#application_month_date_of_birth'
+    element :application_year_date_of_birth, '#application_year_date_of_birth'
     element :application_ni_number, '#application_ni_number'
     element :date_of_birth_error, '.error', text: 'Enter a valid date of birth'
     element :status_single, 'label', text: 'Single'
@@ -19,7 +21,9 @@ class PersonalDetailsPage < BasePage
   end
 
   def valid_dob
-    content.application_date_of_birth.set '10.02.1986'
+    content.application_day_date_of_birth.set '10'
+    content.application_month_date_of_birth.set '02'
+    content.application_year_date_of_birth.set '1986'
   end
 
   def valid_ni
