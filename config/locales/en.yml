@@ -367,6 +367,9 @@ en-GB:
         year_date_of_death: Year
         refund: This is a refund case
         date_fee_paid: Date fee paid
+        day_date_fee_paid: Day
+        month_date_fee_paid: Month
+        year_date_fee_paid: Year
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
         date_hint: For example, 04 10 2018
