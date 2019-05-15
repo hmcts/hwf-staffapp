@@ -1,5 +1,9 @@
 class EvidenceController < ApplicationController
   before_action :authorize_evidence_check_update, except: :show
+  before_action only: [:accuracy, :income, :result, :summary,
+                       :confirmation, :return_letter, :show] do
+    track_application(application)
+  end
 
   include SectionViewsHelper
 
@@ -8,14 +12,10 @@ class EvidenceController < ApplicationController
 
     processing_details
     build_sections
-
-    track_application(application)
   end
 
   def accuracy
     @form = Forms::Evidence::Accuracy.new(evidence)
-
-    track_application(application)
   end
 
   def accuracy_save
@@ -31,8 +31,6 @@ class EvidenceController < ApplicationController
 
   def income
     @form = Forms::Evidence::Income.new(evidence)
-
-    track_application(application)
   end
 
   def income_save
@@ -48,16 +46,12 @@ class EvidenceController < ApplicationController
 
   def result
     application_result
-
-    track_application(application)
   end
 
   def summary
     evidence_view
     build_sections
     application_result
-
-    track_application(application)
   end
 
   def summary_save
@@ -68,14 +62,10 @@ class EvidenceController < ApplicationController
 
   def confirmation
     evidence_confirmation
-
-    track_application(application)
   end
 
   def return_letter
     build_sections
-
-    track_application(application)
   end
 
   def return_application

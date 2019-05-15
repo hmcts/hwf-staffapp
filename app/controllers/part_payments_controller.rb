@@ -1,5 +1,8 @@
 class PartPaymentsController < ApplicationController
   before_action :authorize_part_payment_update, except: :show
+  before_action only: [:show, :accuracy, :summary, :confirmation, :return_letter] do
+    track_application(application)
+  end
 
   include SectionViewsHelper
 
@@ -8,14 +11,10 @@ class PartPaymentsController < ApplicationController
 
     processing_details
     build_sections
-
-    track_application(application)
   end
 
   def accuracy
     @form = Forms::PartPayment::Accuracy.new(part_payment)
-
-    track_application(application)
   end
 
   def accuracy_save
@@ -33,8 +32,6 @@ class PartPaymentsController < ApplicationController
     @part_payment = part_payment
     build_sections
     @result = Views::PartPayment::Result.new(part_payment)
-
-    track_application(application)
   end
 
   def summary_save
@@ -45,14 +42,10 @@ class PartPaymentsController < ApplicationController
   def confirmation
     build_sections
     @result = Views::PartPayment::Result.new(part_payment)
-
-    track_application(application)
   end
 
   def return_letter
     build_sections
-
-    track_application(application)
   end
 
   def return_application

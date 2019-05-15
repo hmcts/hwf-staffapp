@@ -1,6 +1,9 @@
 class OnlineApplicationsController < ApplicationController
   before_action :authorize_online_application, except: :create
   before_action :check_completed_redirect
+  before_action only: [:edit, :show] do
+    track_online_application(online_application)
+  end
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_homepage
 
   include SectionViewsHelper
@@ -11,8 +14,6 @@ class OnlineApplicationsController < ApplicationController
     @form = Forms::OnlineApplication.new(online_application)
     @form.enable_default_jurisdiction(current_user)
     assign_jurisdictions
-
-    track_online_application(online_application)
   end
 
   def update
@@ -29,8 +30,6 @@ class OnlineApplicationsController < ApplicationController
 
   def show
     build_sections
-
-    track_online_application(online_application)
   end
 
   def complete
