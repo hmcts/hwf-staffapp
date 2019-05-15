@@ -49,7 +49,6 @@ class ApplicationController < ActionController::Base
     data = {
       medium: app.medium || default,
       type: app.application_type || default,
-      office_id: current_user.office.id,
       jurisdiction_id: app.detail.jurisdiction_id || default
     }
     add_datalayer_event('Application tracking', data)
@@ -59,7 +58,6 @@ class ApplicationController < ActionController::Base
     data = {
       medium: 'digital',
       type: 'TBC',
-      office_id: current_user.office.id,
       jurisdiction_id: app.jurisdiction_id || 'TBC'
     }
     add_datalayer_event('Application tracking', data)
