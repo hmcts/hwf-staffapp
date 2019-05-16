@@ -14,6 +14,8 @@ class ProcessedApplicationsController < ApplicationController
 
     @form = Forms::Application::Delete.new(application)
     assign_views
+
+    track_application(application)
   end
 
   def update

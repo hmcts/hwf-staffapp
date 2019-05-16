@@ -13,6 +13,8 @@ class DeletedApplicationsController < ApplicationController
     authorize application
 
     assign_views
+
+    track_application(application)
   end
 
   private

@@ -69,6 +69,9 @@ gem "paranoia", "~> 2.0"
 # tracking model changes
 gem "paper_trail"
 
+# Google tag Manager
+gem 'gtm_on_rails'
+
 group :development do
   # speed up local development via livereload
   gem 'guard-livereload'

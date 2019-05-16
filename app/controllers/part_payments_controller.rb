@@ -1,5 +1,8 @@
 class PartPaymentsController < ApplicationController
   before_action :authorize_part_payment_update, except: :show
+  before_action only: [:show, :accuracy, :summary, :confirmation, :return_letter] do
+    track_application(application)
+  end
 
   include SectionViewsHelper
 

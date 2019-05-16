@@ -1,6 +1,9 @@
 module Applications
   class ProcessController < ApplicationController
     before_action :authorize_application_update, except: :create
+    before_action only: [:index, :edit, :show] do
+      track_application(application, 'TBC')
+    end
     before_action :check_completed_redirect, except: [:create]
 
     def create

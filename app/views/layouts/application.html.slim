@@ -6,7 +6,7 @@
 
 - content_for :head
   = csrf_meta_tags
-  = render('shared/analytics')
+  = render_gtm_on_rails_tag_in_head
   = yield :head_scripts
 
 - content_for :content_override

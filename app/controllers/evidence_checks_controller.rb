@@ -3,6 +3,9 @@ class EvidenceChecksController < ApplicationController
     authorize evidence_check
 
     @application = evidence_check.application
+
+    track_application(@application, 'TBC')
+
     @confirm = Views::Confirmation::Result.new(@application)
   end
 

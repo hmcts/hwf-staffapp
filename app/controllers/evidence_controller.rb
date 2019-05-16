@@ -1,5 +1,9 @@
 class EvidenceController < ApplicationController
   before_action :authorize_evidence_check_update, except: :show
+  before_action only: [:accuracy, :income, :result, :summary,
+                       :confirmation, :return_letter, :show] do
+    track_application(application)
+  end
 
   include SectionViewsHelper
 
