@@ -2,6 +2,7 @@ module Forms
   module Application
     class Detail < ::FormObject
       include ActiveModel::Validations::Callbacks
+      include DataFieldFormattable
 
       TIME_LIMIT_FOR_PROBATE = 20
 
@@ -137,40 +138,15 @@ module Forms
 
       def fields_to_update
         excluded_keys = [:emergency,
-          :day_date_received, :month_date_received, :year_date_received,
-          :day_date_of_death, :month_date_of_death, :year_date_of_death,
-          :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid]
+                         :day_date_received, :month_date_received, :year_date_received,
+                         :day_date_of_death, :month_date_of_death, :year_date_of_death,
+                         :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid]
         {}.tap do |fields|
           (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)
           end
         end
       end
-
-      def format_the_dates?(date_attr_name)
-        date = self.send("#{date_attr_name}")
-        day = self.send("day_#{date_attr_name}")
-        month = self.send("month_#{date_attr_name}")
-        year = self.send("year_#{date_attr_name}")
-
-        !(day.blank? && month.blank? && year.blank? && date.present?)
-      end
-
-      def format_dates(date_attr_name)
-        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name).to_date)
-      rescue ArgumentError
-        instance_variable_set("@#{date_attr_name}", concat_dates(date_attr_name))
-      end
-
-      def concat_dates(date_attr_name)
-        day = self.send("day_#{date_attr_name}")
-        month = self.send("month_#{date_attr_name}")
-        year = self.send("year_#{date_attr_name}")
-        return '' if day.blank? || month.blank? || year.blank?
-
-        "#{day}/#{month}/#{year}"
-      end
-
     end
   end
 end
