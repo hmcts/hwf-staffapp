@@ -33,7 +33,7 @@ def fill_application_dates
 
   check 'This is a refund case'
 
-  fill_in 'Date fee paid', with: 2.days.ago.to_date.to_s
+  fill_in_date_fee_paid(2.days.ago.to_date)
   click_button 'Next'
 end
 
@@ -143,7 +143,7 @@ end
 
 def fill_application_date_set_discretion_no
   fill_application_date_over_limit
-  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  fill_in_date_fee_paid(4.months.ago.to_date)
   fill_in 'Form number', with: 'ABC123'
   click_button 'Next'
 
@@ -153,7 +153,7 @@ end
 
 def fill_application_date_set_discretion_yes
   fill_application_date_over_limit
-  fill_in 'Date fee paid', with: 4.months.ago.to_date.to_s
+  fill_in_date_fee_paid(4.months.ago.to_date)
   click_button 'Next'
 
   choose 'application_discretion_applied_true'
@@ -173,4 +173,10 @@ def fill_in_date_received(date_received)
   fill_in 'application_day_date_received', with: date_received.day
   fill_in 'application_month_date_received', with: date_received.month
   fill_in 'application_year_date_received', with: date_received.year
+end
+
+def fill_in_date_fee_paid(date_fee_paid)
+  fill_in 'application_day_date_fee_paid', with: date_fee_paid.day
+  fill_in 'application_month_date_fee_paid', with: date_fee_paid.month
+  fill_in 'application_year_date_fee_paid', with: date_fee_paid.year
 end
