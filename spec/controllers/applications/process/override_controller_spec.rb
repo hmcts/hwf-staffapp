@@ -19,7 +19,7 @@ RSpec.describe Applications::Process::OverrideController, type: :controller do
     let(:override_reason) { nil }
     let(:params) { { value: override_value, reason: override_reason, created_by_id: user.id } }
 
-    before { put :update, application_id: application.id, application: params }
+    before { put :update, params: { application_id: application.id, application: params }}
 
     context 'when the parameters are valid' do
       context 'by selecting a radio button' do
