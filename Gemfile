@@ -119,6 +119,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'webmock'
+  gem 'rails-controller-testing'
 end
 
 # heroku deployment
