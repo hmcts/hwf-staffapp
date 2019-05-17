@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
 
   describe 'GET #summary' do
     before do
-      get :index, application_id: application.id
+      get :index, params: { application_id: application.id }
     end
 
     context 'when the application does exist' do
@@ -65,7 +65,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
 
         Timecop.freeze(current_time) do
           sign_in user
-          post :create, application_id: application.id
+          post :create, params: { application_id: application.id }
         end
       end
 
@@ -92,7 +92,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
       def post_summary_save
         Timecop.freeze(current_time) do
           sign_in user
-          post :create, application_id: application.id
+          post :create, params: { application_id: application.id }
         end
       end
 
@@ -122,7 +122,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
         let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office) }
 
         it do
-          post :create, application_id: application.id
+          post :create, params: { application_id: application.id }
           expect(ResolverService).not_to have_received(:new).with(application, user)
         end
       end
@@ -131,7 +131,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
         let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
 
         it do
-          post :create, application_id: application.id
+          post :create, params: { application_id: application.id }
           expect(ResolverService).not_to have_received(:new).with(application, user)
         end
       end
@@ -140,7 +140,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
         let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
 
         it do
-          post :create, application_id: application.id
+          post :create, params: { application_id: application.id }
           expect(ResolverService).not_to have_received(:new).with(application, user)
         end
       end
