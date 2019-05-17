@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.11'
+gem 'rails', '5.2.3'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.20'
@@ -32,9 +32,9 @@ gem 'coffee-rails', '~> 4.2.1'
 # gem 'therubyracer', platforms: :ruby
 
 # use GDS assets, styles etc...
-gem 'govuk_elements_rails', '0.3.0'
-gem 'govuk_frontend_toolkit', '4.7.0'
-gem 'moj_template', '~> 0.23.2'
+# gem 'govuk_elements_rails', '0.3.0'
+# gem 'govuk_frontend_toolkit', '4.7.0'
+# gem 'moj_template', '~> 0.23.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
