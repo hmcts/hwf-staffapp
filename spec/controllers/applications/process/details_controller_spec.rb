@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
 
   describe 'GET #application_details' do
     before do
-      get :index, application_id: application.id
+      get :index, params: { application_id: application.id }
     end
 
     context 'when the application does exist' do
@@ -50,7 +50,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
     before do
       allow(ApplicationFormRepository).to receive(:new).with(application, expected_params).and_return app_form
 
-      post :create, application_id: application.id, application: expected_params
+      post :create, params: { application_id: application.id, application: expected_params }
     end
 
     context 'when the ApplicationFormSave is success' do
