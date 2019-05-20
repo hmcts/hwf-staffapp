@@ -8,7 +8,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     subject { response }
     before do
       sign_in admin
-      get :index, office_id: office.id
+      get :index, params: { office_id: office.id }
     end
 
     it { is_expected.to have_http_status(:success) }
@@ -29,7 +29,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     before { sign_in admin }
 
     describe 'when an unused jurisdiction parameter is provided' do
-      before { get :new, office_id: office.id, jurisdiction_id: jurisdiction.id }
+      before { get :new, params: { office_id: office.id, jurisdiction_id: jurisdiction.id }}
 
       it { is_expected.to have_http_status(:success) }
 
@@ -41,7 +41,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'when an used jurisdiction parameter is provided' do
-      before { get :new, office_id: office.id, jurisdiction_id: business_entity.jurisdiction.id }
+      before { get :new, params: { office_id: office.id, jurisdiction_id: business_entity.jurisdiction.id }}
 
       it { is_expected.to have_http_status(:redirect) }
 
@@ -50,7 +50,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'when a jursidiction parameter is not provided' do
-      before { get :new, office_id: office.id }
+      before { get :new, params: { office_id: office.id }}
 
       it { is_expected.to have_http_status(:redirect) }
 
@@ -66,7 +66,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     before do
       sign_in admin
-      post :create, params
+      post :create, params: params
     end
 
     describe 'with the correct parameters' do
@@ -93,7 +93,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     before do
       sign_in admin
-      get :edit, office_id: office.id, id: business_entity.id
+      get :edit, params: { office_id: office.id, id: business_entity.id }
     end
 
     it { is_expected.to have_http_status(:success) }
@@ -113,7 +113,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     before do
       sign_in admin
-      put :update, office_id: office.id, id: business_entity.id, business_entity: params
+      put :update, params: { office_id: office.id, id: business_entity.id, business_entity: params }
     end
 
     describe 'with the correct parameters' do
@@ -140,7 +140,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     before do
       sign_in admin
-      get :deactivate, office_id: office.id, id: business_entity.id
+      get :deactivate, params: { office_id: office.id, id: business_entity.id }
     end
 
     it { is_expected.to have_http_status(:success) }
@@ -159,7 +159,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
 
     before do
       sign_in admin
-      post :confirm_deactivate, office_id: office.id, id: business_entity.id
+      post :confirm_deactivate, params: { office_id: office.id, id: business_entity.id }
     end
 
     it { is_expected.to have_http_status(:redirect) }

@@ -31,6 +31,6 @@ class BenefitOverridesController < ApplicationController
   end
 
   def allowed_params
-    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
+    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys).to_h
   end
 end

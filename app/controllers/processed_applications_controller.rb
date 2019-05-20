@@ -38,7 +38,7 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def delete_params
-    params.require(:application).permit(*Forms::Application::Delete.permitted_attributes.keys)
+    params.require(:application).permit(*Forms::Application::Delete.permitted_attributes.keys).to_h
   end
 
   def save_and_respond_on_update

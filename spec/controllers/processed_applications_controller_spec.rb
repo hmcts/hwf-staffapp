@@ -47,7 +47,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index, page: page, per_page: per_page, sort: sort
+      get :index, params: { page: page, per_page: per_page, sort: sort }
     end
 
     it 'returns the correct status code' do
@@ -138,7 +138,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :show, id: application1.id
+      get :show, params: { id: application1.id }
     end
 
     include_examples 'renders correctly and assigns required variables'
@@ -153,7 +153,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       allow(delete_form).to receive(:save).and_return(form_save)
       allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 
-      put :update, id: application1.id, application: expected_params
+      put :update, params: { id: application1.id, application: expected_params }
     end
 
     context 'when the form can be saved' do
