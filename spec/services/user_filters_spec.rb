@@ -21,7 +21,8 @@ RSpec.describe UserFilters do
 
   describe '#apply' do
     it 'returns an ActiveRecord collection' do
-      expect(filtered_users).to be_an User::ActiveRecord_Relation
+      ar_collection_class = User.const_get(:ActiveRecord_Relation)
+      expect(filtered_users).to be_an ar_collection_class
     end
 
     context 'without filters' do
