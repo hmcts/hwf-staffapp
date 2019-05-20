@@ -44,7 +44,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index, page: page, per_page: per_page
+      get :index, params: { page: page, per_page: per_page }
     end
 
     it 'returns the correct status code' do
@@ -97,7 +97,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :show, id: application1.id
+      get :show, params: { id: application1.id }
     end
 
     it 'returns the correct status code' do

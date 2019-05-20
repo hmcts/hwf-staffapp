@@ -17,7 +17,7 @@ shared_examples 'a user regardless of role' do
     context 'for their own profile' do
       context 'and the users office has jurisdictions' do
         it 'it lists them' do
-          get :edit, id: user.to_param
+          get :edit, params: { id: user.to_param }
           expect(assigns(:jurisdictions).count).to eq 3
         end
       end
@@ -26,7 +26,7 @@ shared_examples 'a user regardless of role' do
         describe 'it shows a text warning' do
           before do
             office.jurisdictions.delete_all
-            get :edit, id: user.to_param
+            get :edit, params: { id: user.to_param }
           end
 
           it { expect(assigns(:jurisdictions).count).to eq 0 }

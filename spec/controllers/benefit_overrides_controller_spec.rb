@@ -15,7 +15,7 @@ RSpec.describe BenefitOverridesController, type: :controller do
   end
 
   describe 'GET #paper_evidence' do
-    before { get :paper_evidence, application_id: application.id }
+    before { get :paper_evidence, params: { application_id: application.id }}
 
     it { expect(response).to have_http_status(200) }
 
@@ -27,9 +27,9 @@ RSpec.describe BenefitOverridesController, type: :controller do
   end
 
   describe 'POST #paper_evidence_save' do
-    subject(:post_save) { post :paper_evidence_save, params }
+    subject(:post_save) { post :paper_evidence_save, params: params }
 
-    let(:override_params) { { evidence: false } }
+    let(:override_params) { { evidence: 'false' } }
     let(:params) { { application_id: application.id, benefit_override: override_params } }
 
     before do
