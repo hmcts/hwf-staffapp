@@ -60,7 +60,7 @@
 
   </head>
 
-  <body class="<%= content_for?(:body_classes) ? raw("#{yield(:body_classes)}") : "#{config_item(:phase).to_s.downcase} #{config_item(:product_type).to_s.downcase}" %>">
+  <body class="<%= content_for?(:body_classes) ? raw("#{yield(:body_classes)}") : "#{Rails.application.config.phase.to_s.downcase} #{Rails.application.config.product_type.to_s.downcase}" %>">
     <%= render_gtm_on_rails_tag_in_body %>
     <script type="text/javascript">document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
@@ -97,7 +97,7 @@
               <% else %>
                 <div class="header-proposition">
                   <div class="content">
-                    <a href="/" id="proposition-name"><%= "#{config_item(:proposition_title)}" %></a>
+                    <a href="/" id="proposition-name"><%= "#{Rails.application.config.proposition_title}" %></a>
                     <%= yield(:proposition_links) %>
                   </div>
                 </div>
