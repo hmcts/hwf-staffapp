@@ -40,7 +40,7 @@ RSpec.feature 'Completing the application details page of an application form', 
     context 'before expanding optional fields' do
       it 'are hidden' do
         expect(page).not_to have_xpath('//input[@id="application_deceased_name"]')
-        expect(page).not_to have_xpath('//input[@id="application_date_fee_paid"]')
+        expect(page).not_to have_xpath('//input[@id="application_day_date_fee_paid"]')
       end
 
       context 'expanding probate' do
@@ -63,7 +63,7 @@ RSpec.feature 'Completing the application details page of an application form', 
         before { check 'application_refund' }
 
         it 'shows the refund section' do
-          expect(page).to have_xpath('//input[@id="application_date_fee_paid"]')
+          expect(page).to have_xpath('//input[@id="application_day_date_fee_paid"]')
         end
 
         context 'submitting empty' do

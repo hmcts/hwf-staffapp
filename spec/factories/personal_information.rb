@@ -1,7 +1,9 @@
 FactoryGirl.define do
   factory :personal_information, class: Forms::Application::Applicant do
     last_name 'Foo'
-    date_of_birth '01/01/1980'
+    day_date_of_birth '01'
+    month_date_of_birth '01'
+    year_date_of_birth '1980'
     married false
 
     factory :full_personal_information do

@@ -341,8 +341,11 @@ en-GB:
         full_name: Full name
         ni_number: 'National Insurance number'
         date_of_birth: 'Date of birth'
+        day_date_of_birth: 'Day'
+        month_date_of_birth: 'Month'
+        year_date_of_birth: 'Year'
         married: Status
-        date_of_birth_hint: Use this format DD/MM/YYYY
+        date_of_birth_hint: For example, 31 3 1980
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
@@ -350,17 +353,26 @@ en-GB:
         fee: Fee
         jurisdiction_id: Jurisdiction
         date_received: Date application received
+        day_date_received: Day
+        month_date_received: Month
+        year_date_received: Year
         form_name: Form number
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
         date_of_death: Date of their death
+        day_date_of_death: Day
+        month_date_of_death: Month
+        year_date_of_death: Year
         refund: This is a refund case
         date_fee_paid: Date fee paid
+        day_date_fee_paid: Day
+        month_date_fee_paid: Month
+        year_date_fee_paid: Year
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
-        date_hint: Use this format DD/MM/YYYY
+        date_hint: For example, 04 10 2018
         discretion_applied: Delivery Manager discretion applied?
         discretion_applied_false: 'No'
         discretion_applied_true: 'Yes'

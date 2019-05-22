@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Forms::Application::Applicant do
   subject(:created_applicant) { described_class.new(personal_information) }
 
-  params_list = [:last_name, :date_of_birth, :married, :title, :first_name, :ni_number]
+  params_list = [:last_name, :date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
+                 :married, :title, :first_name, :ni_number]
 
   let(:personal_information) { attributes_for :personal_information }
 
@@ -20,7 +21,13 @@ RSpec.describe Forms::Application::Applicant do
     describe 'date_of_birth' do
 
       context 'when the date_of_birth is less than minimum age allowed' do
-        before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
+        let(:minimum_age) { Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
+
+        before do
+          personal_information[:day_date_of_birth] = minimum_age.day
+          personal_information[:month_date_of_birth] = minimum_age.month
+          personal_information[:year_date_of_birth] = minimum_age.year
+        end
 
         it { expect(created_applicant.valid?).not_to be true }
 
@@ -33,7 +40,13 @@ RSpec.describe Forms::Application::Applicant do
       end
 
       context 'when the date_of_birth exceeds maximum allowed age' do
-        before { personal_information[:date_of_birth] = Time.zone.today - (described_class::MAXIMUM_AGE + 1).years }
+        let(:maximum_age) { Time.zone.today - (described_class::MAXIMUM_AGE + 1).years }
+
+        before do
+          personal_information[:day_date_of_birth] = maximum_age.day
+          personal_information[:month_date_of_birth] = maximum_age.month
+          personal_information[:year_date_of_birth] = maximum_age.year
+        end
 
         it { expect(created_applicant.valid?).not_to be true }
 
@@ -45,14 +58,13 @@ RSpec.describe Forms::Application::Applicant do
         end
       end
 
-      context 'when the date_of_birth is a non date value' do
-        before { personal_information[:date_of_birth] = 'some string' }
-
-        it { expect(created_applicant.valid?).not_to be true }
-      end
-
       context 'when the the date_of_birth is passed a two digit year' do
-        before { personal_information[:date_of_birth] = '1/11/80' }
+
+        before do
+          personal_information[:day_date_of_birth] = 1
+          personal_information[:month_date_of_birth] = 11
+          personal_information[:year_date_of_birth] = 80
+        end
 
         it { expect(created_applicant.valid?).not_to be true }
 
@@ -154,6 +166,7 @@ RSpec.describe Forms::Application::Applicant do
     let(:form) { described_class.new(applicant) }
 
     params_list.each do |attr_name|
+      next if attr_name.to_s =~ /day|month|year/
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq applicant.send(attr_name)
       end
@@ -166,13 +179,18 @@ RSpec.describe Forms::Application::Applicant do
     most_attribs = params_list.reject { |k, _| k == :date_of_birth }
 
     most_attribs.each do |attr_name|
+      next if attr_name.to_s =~ /day|month|year/
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq hash[attr_name]
       end
     end
 
     it 'assign date_of_birth attribute' do
-      expect(form.date_of_birth).to eq hash[:date_of_birth].to_date
+      day = hash[:day_date_of_birth]
+      month = hash[:month_date_of_birth]
+      year = hash[:year_date_of_birth]
+      form.valid?
+      expect(form.date_of_birth).to eq "#{day}/#{month}/#{year}".to_date
     end
   end
 
@@ -193,12 +211,14 @@ RSpec.describe Forms::Application::Applicant do
           title: 'Mr',
           last_name: 'foo',
           first_name: 'bar',
-          date_of_birth: dob,
+          day_date_of_birth: '01',
+          month_date_of_birth: '01',
+          year_date_of_birth: '1980',
           married: true,
           ni_number: 'AB123456A'
         }
       end
-      let(:params_without_dob) { params.tap { |p| p.delete(:date_of_birth) } }
+
       let(:parsed_dob) { Date.parse(dob) }
 
       it { is_expected.to be true }
@@ -209,7 +229,8 @@ RSpec.describe Forms::Application::Applicant do
       end
 
       it 'saves the parameters in the applicant' do
-        params_without_dob.each do |key, value|
+        params.each do |key, value|
+          next if key.to_s =~ /day|month|year/
           expect(applicant.send(key)).to eql(value)
         end
       end

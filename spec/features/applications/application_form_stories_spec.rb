@@ -10,6 +10,8 @@ RSpec.feature 'Completing the application details', type: :feature do
   let!(:jurisdictions) { create_list :jurisdiction, 3 }
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
+  let(:dob) { Time.zone.today - 25.years }
+  let(:date_received) { Time.zone.yesterday }
 
   before do
     Capybara.current_driver = :webkit
@@ -26,7 +28,9 @@ RSpec.feature 'Completing the application details', type: :feature do
           start_new_application
 
           fill_in 'application_last_name', with: 'Smith'
-          fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
+          fill_in 'application_day_date_of_birth', with: dob.day
+          fill_in 'application_month_date_of_birth', with: dob.month
+          fill_in 'application_year_date_of_birth', with: dob.year
           fill_in 'application_ni_number', with: 'AB123456A'
           choose 'application_married_false'
           click_button 'Next'
@@ -43,7 +47,9 @@ RSpec.feature 'Completing the application details', type: :feature do
             before do
               find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
               fill_in 'application_fee', with: 300
-              fill_in 'application_date_received', with: Time.zone.yesterday
+              fill_in 'application_day_date_received', with: date_received.day
+              fill_in 'application_month_date_received', with: date_received.month
+              fill_in 'application_year_date_received', with: date_received.year
               fill_in 'Form number', with: 'ABC123'
               click_button 'Next'
             end
@@ -187,7 +193,9 @@ RSpec.feature 'Completing the application details', type: :feature do
             before do
               find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
               fill_in 'application_fee', with: 300
-              fill_in 'application_date_received', with: Time.zone.yesterday
+              fill_in 'application_day_date_received', with: date_received.day
+              fill_in 'application_month_date_received', with: date_received.month
+              fill_in 'application_year_date_received', with: date_received.year
               fill_in 'Form number', with: 'ABC123'
               click_button 'Next'
             end

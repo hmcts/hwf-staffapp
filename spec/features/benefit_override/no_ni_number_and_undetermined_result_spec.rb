@@ -3,11 +3,14 @@
 require 'rails_helper'
 
 def personal_details_without_ni_number
+  dob = Time.zone.today - 25.years
   login_as user
   start_new_application
 
   fill_in 'application_last_name', with: 'Smith'
-  fill_in 'application_date_of_birth', with: Time.zone.today - 25.years
+  fill_in 'application_day_date_of_birth', with: dob
+  fill_in 'application_month_date_of_birth', with: dob
+  fill_in 'application_year_date_of_birth', with: dob
   choose 'application_married_false'
   click_button 'Next'
 end
@@ -15,7 +18,10 @@ end
 def application_details
   fill_in 'application_fee', with: 410
   find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
-  fill_in 'application_date_received', with: Time.zone.today
+  date_received = Time.zone.today
+  fill_in 'application_day_date_received', with: date_received.day
+  fill_in 'application_month_date_received', with: date_received.month
+  fill_in 'application_year_date_received', with: date_received.year
   fill_in 'Form number', with: 'ABC123'
   click_button 'Next'
 end

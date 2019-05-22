@@ -1,6 +1,8 @@
 module Forms
   module Application
     class Detail < ::FormObject
+      include ActiveModel::Validations::Callbacks
+      include DataFieldFormattable
 
       TIME_LIMIT_FOR_PROBATE = 20
 
@@ -9,13 +11,22 @@ module Forms
         { fee: Integer,
           jurisdiction_id: Integer,
           date_received: Date,
+          day_date_received: Integer,
+          month_date_received: Integer,
+          year_date_received: Integer,
           probate: Boolean,
           date_of_death: Date,
+          day_date_of_death: Integer,
+          month_date_of_death: Integer,
+          year_date_of_death: Integer,
           deceased_name: String,
           refund: Boolean,
           emergency: Boolean,
           emergency_reason: String,
           date_fee_paid: Date,
+          day_date_fee_paid: Integer,
+          month_date_fee_paid: Integer,
+          year_date_fee_paid: Integer,
           form_name: String,
           case_number: String,
           discretion_applied: Boolean,
@@ -25,6 +36,8 @@ module Forms
       # rubocop:enable MethodLength
 
       define_attributes
+
+      before_validation :format_date_fields
 
       validates :fee, numericality: { allow_blank: true }
       validates :fee, presence: true
@@ -56,6 +69,12 @@ module Forms
           before_or_equal_to: :date_received,
           allow_blank: false
         }
+      end
+
+      def format_date_fields
+        [:date_received, :date_of_death, :date_fee_paid].each do |key|
+          format_dates(key) if format_the_dates?(key)
+        end
       end
 
       private
@@ -118,8 +137,12 @@ module Forms
       end
 
       def fields_to_update
+        excluded_keys = [:emergency,
+                         :day_date_received, :month_date_received, :year_date_received,
+                         :day_date_of_death, :month_date_of_death, :year_date_of_death,
+                         :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid]
         {}.tap do |fields|
-          (self.class.permitted_attributes.keys - [:emergency]).each do |name|
+          (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)
           end
         end
