@@ -9,7 +9,8 @@ class PersonalDetailsPage < BasePage
     element :application_month_date_of_birth, '#application_month_date_of_birth'
     element :application_year_date_of_birth, '#application_year_date_of_birth'
     element :application_ni_number, '#application_ni_number'
-    element :date_of_birth_error, '.error', text: 'Enter a valid date of birth'
+    element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'
+    element :under_16_error, '.error', text: 'The applicant can\'t be under 16 years old'
     element :status_single, 'label', text: 'Single'
     element :status_married, 'label', text: 'Married or living with someone and sharing an income'
   end
@@ -24,6 +25,12 @@ class PersonalDetailsPage < BasePage
     content.application_day_date_of_birth.set '10'
     content.application_month_date_of_birth.set '02'
     content.application_year_date_of_birth.set '1986'
+  end
+
+  def under_16_dob
+    content.application_day_date_of_birth.set '10'
+    content.application_month_date_of_birth.set '02'
+    content.application_year_date_of_birth.set  Time.zone.today.year
   end
 
   def valid_ni

@@ -16,10 +16,13 @@ Feature: Personal details page
       When I fill in the form with a last name with one letter
       Then I should see error message last name is too short
 
-    @manual @wip
-    Scenario: Invalid date of birth
-      When I enter an invalid date of birth
+    Scenario: Date of birth blank
+      When I leave the date of birth blank
       Then I should see the invalid date of birth error message
+
+    Scenario: Cannot be under 16 years old
+      When I submit a date that makes the applicant under 16 years old
+      Then I should see that the applicant cannot be under 16 years old error message
 
     Scenario: Successfully submit my required personal details
       When I successfully submit my required personal details
