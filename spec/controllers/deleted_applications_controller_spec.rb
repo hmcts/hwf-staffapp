@@ -63,13 +63,14 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       let(:page) { 4 }
 
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 4, per_page: 2)
+        expect(relation).to have_received(:paginate).with(page: 4, per_page: 0)
       end
     end
 
     context 'when page parameter is not set' do
+      let(:per_page) { 2 }
       it 'calls pagination with page as nil and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
+        expect(relation).to have_received(:paginate).with(page: 0, per_page: 2)
       end
     end
 
@@ -84,13 +85,13 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       let(:per_page) { 3 }
 
       it 'calls pagination with the page number and params number per page' do
-        expect(relation).to have_received(:paginate).with(page: 1, per_page: 3)
+        expect(relation).to have_received(:paginate).with(page: 0, per_page: 3)
       end
     end
 
     context 'when the per_page parameter is not set' do
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
+        expect(relation).to have_received(:paginate).with(page: 0, per_page: 0)
       end
     end
   end

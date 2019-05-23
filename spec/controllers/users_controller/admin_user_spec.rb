@@ -168,7 +168,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'PATCH #restore' do
-      let(:deleted_user) { create :user, params: { deleted_at: Time.zone.now }}
+      let(:deleted_user) { create :user, deleted_at: Time.zone.now }
 
       before do
         patch :restore, params: { id: deleted_user.to_param }
