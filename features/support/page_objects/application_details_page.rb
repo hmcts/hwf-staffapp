@@ -2,8 +2,6 @@
 class ApplicationDetailsPage < BasePage
   section :content, '#content' do
     element :header, 'h2', text: 'Application details'
-    element :fee_label, 'label', text: 'Fee'
-    element :application_fee, '#application_fee'
     element :fee_error, '.error', text: 'Enter the fee'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
     element :jurisdiction, 'input[value="1"]'
@@ -14,8 +12,6 @@ class ApplicationDetailsPage < BasePage
     element :application_month_date_received, '#application_month_date_received'
     element :application_year_date_received, '#application_year_date_received'
     element :application_date_error, '.error', text: 'Enter the date in this format DD/MM/YYYY'
-    element :case_number_label, 'label', text: 'Case number'
-    element :application_case_number, '#application_case_number'
     element :form_label, 'label', text: 'Form number'
     element :form_hint, 'label', text: 'You\'ll find this on the bottom of the form, for example C100 or ADM1A'
     element :form_input, '#application_form_name'
@@ -28,19 +24,19 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_fee_600
-    content.application_fee.set '600'
+    fill_in('How much is the court or tribunal fee?', with: '600')
     content.jurisdiction.click
     date_received = Time.zone.today - 2.months
     content.application_day_date_received.set date_received.day
     content.application_month_date_received.set date_received.month
     content.application_year_date_received.set date_received.year
     content.form_input.set 'C100'
-    content.application_case_number.set 'E71YX571'
+    fill_in('Case number', with: 'E71YX571')
     next_page
   end
 
   def submit_fee_300
-    content.application_fee.set '300'
+    fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
     date_received = Time.zone.today - 2.months
     content.application_day_date_received.set date_received.day
@@ -51,7 +47,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_without_form_number
-    content.application_fee.set '300'
+    fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
     date_received = Time.zone.today - 2.months
     content.application_day_date_received.set date_received.day

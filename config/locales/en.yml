@@ -350,7 +350,7 @@ en-GB:
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
       forms/application/detail:
-        fee: Fee
+        fee: How much is the court or tribunal fee?
         jurisdiction_id: Jurisdiction
         date_received: Date application received
         day_date_received: Day
@@ -433,6 +433,7 @@ en-GB:
         option_other: 'Other'
         reason: 'Other reason'
       forms/online_application:
+        fee: How much is the court or tribunal fee?
         form_name: Form number
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
     errors:
