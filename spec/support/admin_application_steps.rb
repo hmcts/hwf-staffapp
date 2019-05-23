@@ -11,7 +11,7 @@ end
 
 def fill_application_details(court_fee = '1000')
   expect(page).to have_css('h2', text: 'Application details')
-  fill_in 'Fee', with: court_fee
+  fill_in 'application_fee', with: court_fee
   select_jurisdiction
   fill_in 'Date application received', with: Date.yesterday.to_s
   fill_in 'Form number', with: 'ABC123'
@@ -20,7 +20,7 @@ end
 
 def fill_application_refund_details(court_fee = '1000')
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: court_fee
+  fill_in 'application_fee', with: court_fee
   select_jurisdiction
   fill_in 'Form number', with: 'ABC123'
   fill_application_dates
@@ -36,7 +36,7 @@ end
 
 def fill_application_emergency_details
   expect(page).to have_text 'Application details'
-  fill_in 'Fee', with: '1000'
+  fill_in 'application_fee', with: '1000'
   select_jurisdiction
   fill_in 'Date application received', with: Date.yesterday.to_s
   fill_in 'Form number', with: 'ABC123'
@@ -129,7 +129,7 @@ def create_flag_check(ni_number)
 end
 
 def fill_application_date_over_limit
-  fill_in 'Fee', with: '1000'
+  fill_in 'application_fee', with: '1000'
   select_jurisdiction
   fill_in 'Date application received', with: Date.yesterday.to_s
   fill_in 'Form number', with: 'ABC123'
