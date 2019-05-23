@@ -2,7 +2,7 @@ shared_examples 'a user regardless of role' do
 
   describe 'GET #show' do
     it 'sees a change password link' do
-      get :show, id: controller.current_user.to_param
+      get :show, params: { id: controller.current_user.to_param }
       expect(response.body).to have_xpath("//a[@href='#{user_registration_path}']")
     end
   end
