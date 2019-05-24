@@ -11,7 +11,7 @@ RSpec.feature 'Business entity management:', type: :feature do
   let(:business_entity) { office.business_entities.first }
 
   before do
-    OfficeJurisdiction.delete_all(jurisdiction_id: office.jurisdictions.last.id)
+    OfficeJurisdiction.where(jurisdiction_id: office.jurisdictions.last.id).delete_all
     login_as admin
   end
 
