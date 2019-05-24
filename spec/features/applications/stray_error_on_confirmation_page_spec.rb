@@ -7,9 +7,9 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
 
   let!(:jurisdictions) { create_list :jurisdiction, 3 }
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
-  let!(:user) { create(:user, office: office) }
   let(:dob) { Time.zone.today - 25.years }
   let(:date_received) { Time.zone.today - 3.days }
+  let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
