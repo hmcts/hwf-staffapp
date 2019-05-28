@@ -66,7 +66,7 @@ class FinanceTransactionalReportBuilder
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).
       where(state: Application.states[:processed]).
-      order('decision_date::timestamp::date ASC').
-      order('business_entities.be_code ASC')
+      order(Arel.sql('decision_date::timestamp::date ASC')).
+      order(Arel.sql('business_entities.be_code ASC'))
   end
 end
