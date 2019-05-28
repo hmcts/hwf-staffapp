@@ -34,10 +34,10 @@ class SignInPage < BasePage
   end
 
   def user_account_with_applications
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     100.times do
-      application = FactoryGirl.create(:application, :processed_state, office: user.office)
-      FactoryGirl.create(:applicant_with_all_details, application: application)
+      application = FactoryBot.create(:application, :processed_state, office: user.office)
+      FactoryBot.create(:applicant_with_all_details, application: application)
     end
     content.user_email.set user.email
     content.user_password.set user.password
@@ -45,21 +45,21 @@ class SignInPage < BasePage
   end
 
   def user_account
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
   end
 
   def admin_account
-    user = FactoryGirl.create(:admin_user)
+    user = FactoryBot.create(:admin_user)
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
   end
 
   def manager_account
-    user = FactoryGirl.create(:manager)
+    user = FactoryBot.create(:manager)
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in

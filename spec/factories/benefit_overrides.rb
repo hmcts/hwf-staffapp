@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :benefit_override do
-    correct false
+    correct { false }
     association :completed_by, factory: :user
   end
 end
