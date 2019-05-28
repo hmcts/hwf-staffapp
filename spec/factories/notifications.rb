@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :notification do
-    message "Random message"
-    show false
+    message { "Random message" }
+    show { false }
   end
 end

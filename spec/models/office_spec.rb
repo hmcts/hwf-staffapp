@@ -31,12 +31,12 @@ RSpec.describe Office, type: :model do
   end
 
   describe 'managers' do
-    let(:office)      { FactoryGirl.create :office }
+    let(:office)      { FactoryBot.create :office }
 
     it 'returns a list of user in the manager role' do
       User.delete_all
-      FactoryGirl.create_list :user, 3, office: office
-      FactoryGirl.create :manager, office: office
+      FactoryBot.create_list :user, 3, office: office
+      FactoryBot.create :manager, office: office
       expect(office.managers.count).to eq 1
     end
   end

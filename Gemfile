@@ -93,7 +93,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
