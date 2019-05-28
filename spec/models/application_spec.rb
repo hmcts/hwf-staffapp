@@ -27,7 +27,7 @@ RSpec.describe Application, type: :model do
 
   it { is_expected.to validate_uniqueness_of(:reference).allow_blank }
 
-  it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
+  it { is_expected.to define_enum_for(:state).with_values([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
 
   it { is_expected.to have_many(:benefit_checks).dependent(:destroy) }
   it { is_expected.to have_one(:saving).dependent(:destroy) }
