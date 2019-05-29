@@ -9,6 +9,7 @@ gem 'sentry-raven'
 gem 'pg', '0.20'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
+gem 'bootsnap', require: false
 
 # configuration
 gem 'config'
