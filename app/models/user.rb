@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable
   devise :database_authenticatable,
-    :recoverable,
-    :trackable,
-    :validatable,
-    :invitable,
-    :registerable,
-    :confirmable
+         :recoverable,
+         :trackable,
+         :validatable,
+         :invitable,
+         :registerable,
+         :confirmable
 
   scope :active, -> { where('current_sign_in_at >= ?', inactivate_date) }
   scope :inactive, (lambda do

@@ -40,7 +40,7 @@ RSpec.describe ReportsController, type: :controller do
       subject { response }
 
       context 'with invalid data - nil date from' do
-        before { put :finance_report_generator, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } }}
+        before { put :finance_report_generator, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -48,7 +48,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :finance_report_generator, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }}
+        before { put :finance_report_generator, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -82,14 +82,14 @@ RSpec.describe ReportsController, type: :controller do
       subject { response }
 
       context 'with invalid data - nil date from' do
-        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: { date_from: nil, date_to: '2018-12-31' } }}
+        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: { date_from: nil, date_to: '2018-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
         it { is_expected.to render_template :finance_transactional_report }
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: { date_from: '2018-01-01', date_to: '2018-12-31' } }}
+        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: { date_from: '2018-01-01', date_to: '2018-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -157,7 +157,7 @@ RSpec.describe ReportsController, type: :controller do
       subject { response }
 
       context 'with invalid data - nil date from' do
-        before { put :raw_data_export, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } }}
+        before { put :raw_data_export, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -165,7 +165,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :raw_data_export, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } }}
+        before { put :raw_data_export, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } } }
 
         it { is_expected.to have_http_status(:success) }
 

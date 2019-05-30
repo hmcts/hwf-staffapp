@@ -68,7 +68,8 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def update_params
-    params.require(:online_application).permit(*Forms::OnlineApplication.permitted_attributes.keys).to_h
+    params.require(:online_application).
+      permit(*Forms::OnlineApplication.permitted_attributes.keys).to_h
   end
 
   def assign_jurisdictions

@@ -150,7 +150,7 @@ RSpec.describe HomeController, type: :controller do
       allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
 
       sign_in(user)
-      get :completed_search, params: { completed_search: { reference: reference }}
+      get :completed_search, params: { completed_search: { reference: reference } }
     end
 
     let(:user) { staff }

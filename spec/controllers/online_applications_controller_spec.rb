@@ -226,7 +226,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
 
     describe 'when accessing the personal_details view' do
-      before { get :edit, params: { id: online_application.id }}
+      before { get :edit, params: { id: online_application.id } }
 
       subject { response }
 

@@ -169,8 +169,8 @@ describe EvidenceCheckSelector do
         let(:evidence_check) { create(:evidence_check, application: application_old) }
         let(:application_old) do
           create(:application, :income_type,
-            state: 1,
-            applicant: applicant_old)
+                 state: 1,
+                 applicant: applicant_old)
         end
         let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
 

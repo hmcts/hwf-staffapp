@@ -41,9 +41,9 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
     let(:success) { true }
     let(:app_form) do
       instance_double('ApplicationFormRepository',
-        success?: success,
-        redirect_url: application_summary_path(application),
-        process: application_details_form)
+                      success?: success,
+                      redirect_url: application_summary_path(application),
+                      process: application_details_form)
     end
     let(:expected_params) { { discretion_applied: 'false' } }
 
