@@ -55,7 +55,7 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #show' do
-    subject(:make_request) { get :show, params: { id: office.id } }
+    subject(:make_request) { get :show, id: office.id }
 
     before do
       mock_authorize(office, authorized)
@@ -103,7 +103,7 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'GET #edit' do
-    subject(:make_request) { get :edit, params: { id: office.id } }
+    subject(:make_request) { get :edit, id: office.id }
 
     let(:assigned_jurisdiction) { create :jurisdiction }
 
@@ -134,7 +134,7 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'POST #create' do
-    subject(:make_request) { post :create, params: { office: params } }
+    subject(:make_request) { post :create, office: params }
 
     let(:new_office) { build_stubbed(:office) }
     let(:params) { valid_params }
@@ -186,7 +186,7 @@ RSpec.describe OfficesController, type: :controller do
   end
 
   describe 'PUT #update' do
-    subject(:make_request) { put :update, params: { id: existing_office.id, office: params } }
+    subject(:make_request) { put :update, id: existing_office.id, office: params }
 
     let(:existing_office) { office }
     let(:params) { valid_params }

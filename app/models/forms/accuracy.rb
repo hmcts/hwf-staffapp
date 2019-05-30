@@ -1,6 +1,5 @@
 module Forms
   class Accuracy < ::FormObject
-
     def self.permitted_attributes
       {
         correct: Boolean,
@@ -11,8 +10,7 @@ module Forms
     define_attributes
 
     validates :correct, inclusion: { in: [true, false] }
-    validates :incorrect_reason, presence: true, length: { maximum: 500 },
-                                 if: proc { |a| a.correct? == false }
+    validates :incorrect_reason, presence: true, length: { maximum: 500 }, if: 'correct? == false'
 
     private
 

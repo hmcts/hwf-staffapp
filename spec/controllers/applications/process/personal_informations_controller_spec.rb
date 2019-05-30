@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
 
   describe 'GET #personal_information' do
     before do
-      get :index, params: { application_id: application.id }
+      get :index, application_id: application.id
     end
 
     context 'when the application does exist' do
@@ -34,13 +34,13 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   end
 
   describe 'PUT #personal_information_save' do
-    let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: 'false' } }
+    let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: false } }
 
     before do
       allow(personal_information_form).to receive(:update_attributes).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
 
-      post :create, params: { application_id: application.id, application: expected_params }
+      post :create, application_id: application.id, application: expected_params
     end
 
     context 'when the form can be saved' do
@@ -68,7 +68,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:application) { create :application, :processed_state, office: user.office }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      before { get :index, application_id: application.id }
 
       subject { response }
 
@@ -86,7 +86,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:application) { create :application, :deleted_state, office: user.office }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      before { get :index, application_id: application.id }
 
       subject { response }
 
@@ -105,7 +105,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:evidence) { create :evidence_check, application: application }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      before { get :index, application_id: application.id }
 
       subject { response }
 
@@ -124,7 +124,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:part_payment) { create(:part_payment, application: application) }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      before { get :index, application_id: application.id }
 
       subject { response }
 

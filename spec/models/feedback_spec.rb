@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Feedback, type: :model do
 
-  let(:feedback) { create :feedback }
+  let(:feedback) { build :feedback }
 
   it 'passes factory build' do
     expect(feedback).to be_valid

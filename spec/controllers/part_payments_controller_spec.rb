@@ -30,7 +30,7 @@ RSpec.describe PartPaymentsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :show, params: { id: part_payment.id }
+      get :show, id: part_payment.id
     end
 
     it 'returns the correct status code' do
@@ -51,7 +51,7 @@ RSpec.describe PartPaymentsController, type: :controller do
 
   describe 'GET #accuracy' do
     before do
-      get :accuracy, params: { id: part_payment.id }
+      get :accuracy, id: part_payment.id
     end
 
     it 'returns the correct status code' do
@@ -68,13 +68,13 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'POST #accuracy_save' do
-    let(:expected_form_params) { { correct: 'true', incorrect_reason: 'reason' } }
+    let(:expected_form_params) { { correct: true, incorrect_reason: 'reason' } }
 
     before do
       allow(accuracy_form).to receive(:update_attributes).with(expected_form_params)
       allow(accuracy_form).to receive(:save).and_return(form_save)
 
-      post :accuracy_save, params: { id: part_payment.id, part_payment: expected_form_params }
+      post :accuracy_save, id: part_payment.id, part_payment: expected_form_params
     end
 
     context 'when the form can be saved' do
@@ -99,7 +99,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #summary' do
-    before { get :summary, params: { id: part_payment } }
+    before { get :summary, id: part_payment }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -122,7 +122,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     before do
       allow(ResolverService).to receive(:new).with(part_payment, user).and_return(resolver)
 
-      post :summary_save, params: { id: part_payment }
+      post :summary_save, id: part_payment
     end
 
     it 'returns the correct status code' do
@@ -135,7 +135,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #confirmation' do
-    before { get :confirmation, params: { id: part_payment } }
+    before { get :confirmation, id: part_payment }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -151,7 +151,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #return_letter' do
-    before { get :return_letter, params: { id: part_payment } }
+    before { get :return_letter, id: part_payment }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -173,7 +173,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     before do
       allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
 
-      post :return_application, params: { id: part_payment }
+      post :return_application, id: part_payment
     end
 
     context 'when no error generated' do

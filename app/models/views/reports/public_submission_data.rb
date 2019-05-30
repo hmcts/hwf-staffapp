@@ -38,7 +38,7 @@ module Views
           group('offices.name').
           pluck(
             :name,
-            Arel.sql('cast(AVG(applications.completed_at-online_applications.created_at) as text)')
+            'cast(AVG(applications.completed_at-online_applications.created_at) as text)'
           )
       end
 
@@ -49,7 +49,7 @@ module Views
           group('offices.name').
           pluck(
             :name,
-            Arel.sql('cast(AVG(applications.completed_at-online_applications.created_at) as text)')
+            'cast(AVG(applications.completed_at-online_applications.created_at) as text)'
           )
       end
     end

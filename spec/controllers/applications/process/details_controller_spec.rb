@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
 
   describe 'GET #application_details' do
     before do
-      get :index, params: { application_id: application.id }
+      get :index, application_id: application.id
     end
 
     context 'when the application does exist' do
@@ -41,16 +41,16 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
     let(:success) { true }
     let(:app_form) do
       instance_double('ApplicationFormRepository',
-                      success?: success,
-                      redirect_url: application_summary_path(application),
-                      process: application_details_form)
+        success?: success,
+        redirect_url: application_summary_path(application),
+        process: application_details_form)
     end
     let(:expected_params) { { discretion_applied: 'false' } }
 
     before do
       allow(ApplicationFormRepository).to receive(:new).with(application, expected_params).and_return app_form
 
-      post :create, params: { application_id: application.id, application: expected_params }
+      post :create, application_id: application.id, application: expected_params
     end
 
     context 'when the ApplicationFormSave is success' do

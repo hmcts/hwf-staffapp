@@ -13,14 +13,14 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #show' do
       it 'redirects to login page' do
-        get :show, params: { id: test_user.to_param }
+        get :show, id: test_user.to_param
         expect(response).to redirect_to(user_session_path)
       end
     end
 
     describe 'GET #edit' do
       it 'redirects to login page' do
-        get :edit, params: { id: test_user.to_param }
+        get :edit, id: test_user.to_param
         expect(response).to redirect_to(user_session_path)
       end
     end

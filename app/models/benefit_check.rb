@@ -17,7 +17,7 @@ class BenefitCheck < ActiveRecord::Base
     joins(:application).
       where('applications.office_id = ?', office_id).
       group(:dwp_result).
-      order(Arel.sql('length(dwp_result)'))
+      order('length(dwp_result)')
   }
 
   def outcome

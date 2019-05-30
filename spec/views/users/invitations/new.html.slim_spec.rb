@@ -7,7 +7,7 @@ RSpec.describe 'users/invitations/new', type: :view do
     assign(:offices, Office.all)
   end
   context 'as an admin' do
-    let(:admin) { FactoryBot.create :admin_user }
+    let(:admin) { FactoryGirl.create :admin_user }
     before do
       assign(:user, User.new)
       assign(:roles, User::ROLES)
@@ -28,7 +28,7 @@ RSpec.describe 'users/invitations/new', type: :view do
   end
 
   context 'as a manager' do
-    let(:manager) { FactoryBot.create :manager }
+    let(:manager) { FactoryGirl.create :manager }
 
     before do
       assign(:user, User.new)
