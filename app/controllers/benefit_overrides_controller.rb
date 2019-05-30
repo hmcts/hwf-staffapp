@@ -8,7 +8,6 @@ class BenefitOverridesController < ApplicationController
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
     @form.update_attributes(allowed_params)
-
     if @form.save
       redirect_to application_summary_path(application)
     else
