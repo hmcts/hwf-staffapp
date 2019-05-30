@@ -10,12 +10,6 @@ RSpec.describe Application, type: :model do
   let(:detail) { create(:detail) }
 
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:completed_by).class_name('User') }
-  it { is_expected.to belong_to(:deleted_by).class_name('User') }
-  it { is_expected.to belong_to(:office) }
-  it { is_expected.to belong_to(:business_entity) }
-  it { is_expected.to belong_to(:online_application) }
-
   it { is_expected.to have_one(:applicant).dependent(:destroy) }
   it { is_expected.to have_one(:detail).dependent(:destroy) }
 

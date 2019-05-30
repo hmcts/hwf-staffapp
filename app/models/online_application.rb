@@ -1,5 +1,5 @@
 class OnlineApplication < ActiveRecord::Base
-  belongs_to :jurisdiction
+  belongs_to :jurisdiction, optional: true
 
   validates :ni_number, :date_of_birth, :first_name, :last_name, :address,
     :postcode, presence: true
