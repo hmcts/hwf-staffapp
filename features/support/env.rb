@@ -10,6 +10,7 @@ require 'capybara/poltergeist'
 require 'capybara-screenshot/cucumber'
 require 'rest-client'
 require 'selenium-webdriver'
+require './support/saucelabs/browsers'
 
 require_relative './page_objects/base_page'
 

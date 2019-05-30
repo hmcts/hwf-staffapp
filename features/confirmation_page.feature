@@ -1,3 +1,5 @@
+@saucelabs
+
 Feature: Confirmation page
 
   Background: Confirmation page
