@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe OnlineApplication, type: :model do
   subject(:online_application) { build :online_application }
 
-  it { is_expected.to belong_to(:jurisdiction) }
-
   it { is_expected.to validate_presence_of(:ni_number) }
   it { is_expected.to validate_presence_of(:date_of_birth) }
   it { is_expected.to validate_presence_of(:first_name) }
