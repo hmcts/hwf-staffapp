@@ -18,7 +18,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     before do
       allow(form).to receive(:enable_default_jurisdiction).with(user)
       allow(form).to receive(:jurisdiction_id).and_return(user.jurisdiction_id)
-      get :edit, id: id
+      get :edit, params: { id: id }
     end
 
     context 'when no online application is found with the id' do
@@ -63,7 +63,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       context 'when the Benefits Checker is down' do
         before do
           build_dwp_checks_with_bad_requests
-          get :edit, id: id
+          get :edit, params: { id: id }
         end
 
         context 'when it is an income based application' do
@@ -95,7 +95,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(form).to receive(:update_attributes).with(params)
       allow(form).to receive(:save).and_return(form_save)
 
-      put :update, id: id, online_application: params
+      put :update, params: { id: id, online_application: params }
     end
 
     context 'when no online application is found with the id' do
@@ -146,7 +146,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(Views::Overview::Application).to receive(:new).with(online_application).and_return(overview)
       allow(Views::Overview::Details).to receive(:new).with(online_application).and_return(overview)
 
-      get :show, id: id
+      get :show, params: { id: id }
     end
 
     context 'when no online application is found with the id' do
@@ -186,7 +186,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
       allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(pass_fail_service)
 
-      post :complete, id: id
+      post :complete, params: { id: id }
     end
 
     context 'when no online application is found with the id' do
@@ -226,7 +226,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
 
     describe 'when accessing the personal_details view' do
-      before { get :edit, id: online_application.id }
+      before { get :edit, params: { id: online_application.id } }
 
       subject { response }
 

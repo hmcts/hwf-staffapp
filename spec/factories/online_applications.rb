@@ -1,44 +1,44 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :online_application do
 
     transient do
-      convert_to_application false
+      convert_to_application { false }
     end
 
-    married false
-    min_threshold_exceeded false
-    max_threshold_exceeded nil
-    over_61 false
-    amount nil
-    benefits true
-    children 0
-    refund false
-    probate false
-    ni_number 'AB123456C'
-    date_of_birth Time.zone.parse('10/03/1976')
-    first_name 'Peter'
-    last_name 'Smith'
-    address '102 Petty France, London'
-    postcode 'SW1H 9AJ'
-    email_contact false
-    phone_contact false
-    post_contact false
-    feedback_opt_in true
+    married { false }
+    min_threshold_exceeded { false }
+    max_threshold_exceeded { nil }
+    over_61 { false }
+    amount { nil }
+    benefits { true }
+    children { 0 }
+    refund { false }
+    probate { false }
+    ni_number { 'AB123456C' }
+    date_of_birth { Time.zone.parse('10/03/1976') }
+    first_name { 'Peter' }
+    last_name { 'Smith' }
+    address { '102 Petty France, London' }
+    postcode { 'SW1H 9AJ' }
+    email_contact { false }
+    phone_contact { false }
+    post_contact { false }
+    feedback_opt_in { true }
 
     factory :online_application_with_all_details do
-      children 2
-      refund true
-      date_fee_paid Time.zone.now - 2.months
-      probate true
-      deceased_name 'Some Deceased'
-      date_of_death Time.zone.now - 3.months
-      case_number '234567'
-      form_name 'FGDH122'
-      email_contact true
-      email_address 'peter.smith@example.com'
-      phone_contact true
-      phone '2345678'
-      post_contact true
+      children { 2 }
+      refund { true }
+      date_fee_paid { Time.zone.now - 2.months }
+      probate { true }
+      deceased_name { 'Some Deceased' }
+      date_of_death { Time.zone.now - 3.months }
+      case_number { '234567' }
+      form_name { 'FGDH122' }
+      email_contact { true }
+      email_address { 'peter.smith@example.com' }
+      phone_contact { true }
+      phone { '2345678' }
+      post_contact { true }
     end
 
     trait :with_reference do
@@ -47,61 +47,61 @@ FactoryGirl.define do
     end
 
     trait :emergency_completed do
-      fee 450
+      fee { 450 }
       jurisdiction
-      date_received Time.zone.yesterday
-      emergency_reason 'EMERGENCY'
+      date_received { Time.zone.yesterday }
+      emergency_reason { 'EMERGENCY' }
     end
 
     trait :completed do
-      fee 450
+      fee { 450 }
       jurisdiction
-      date_received Time.zone.yesterday
-      form_name 'ABC123'
+      date_received { Time.zone.yesterday }
+      form_name { 'ABC123' }
     end
 
     trait :threshold_exceeded do
-      min_threshold_exceeded true
-      amount 3500
+      min_threshold_exceeded { true }
+      amount { 3500 }
     end
 
     trait :benefits do
-      benefits true
+      benefits { true }
     end
 
     trait :income do
-      benefits false
-      income 450
+      benefits { false }
+      income { 450 }
     end
 
     trait :et do
-      form_name 'ET1'
-      case_number 'ET16/12345'
+      form_name { 'ET1' }
+      case_number { 'ET16/12345' }
     end
 
     trait :invalid_income do
-      benefits false
-      income nil
-      income_min_threshold_exceeded nil
-      income_max_threshold_exceeded nil
+      benefits { false }
+      income { nil }
+      income_min_threshold_exceeded { nil }
+      income_max_threshold_exceeded { nil }
     end
 
     trait :with_email do
-      email_address 'foo@bar.com'
+      email_address { 'foo@bar.com' }
     end
 
     trait :with_refund do
-      refund true
-      date_fee_paid Time.zone.now - 2.months
+      refund { true }
+      date_fee_paid { Time.zone.now - 2.months }
     end
 
     after(:create) do |online_application, evaluator|
       if evaluator.convert_to_application
         create(:application,
-          :processed_state,
-          :with_office,
-          online_application: online_application,
-          reference: online_application.reference)
+               :processed_state,
+               :with_office,
+               online_application: online_application,
+               reference: online_application.reference)
       end
     end
   end

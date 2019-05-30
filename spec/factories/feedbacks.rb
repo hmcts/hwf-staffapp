@@ -1,9 +1,9 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :feedback do
-    experience nil
-    ideas nil
-    rating nil
-    help nil
+    experience { nil }
+    ideas { nil }
+    rating { nil }
+    help { nil }
     user
     office
   end

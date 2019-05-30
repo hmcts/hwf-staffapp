@@ -42,7 +42,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #show' do
       context 'for a user in their office' do
 
-        before { get :show, id: user_on_my_team.to_param }
+        before { get :show, params: { id: user_on_my_team.to_param } }
 
         it 'renders the view' do
           expect(response).to render_template :show
@@ -57,7 +57,7 @@ RSpec.describe UsersController, type: :controller do
         it 'returns a pundit error' do
           expect {
             bypass_rescue
-            get :show, id: user_not_my_team.to_param
+            get :show, params: { id: user_not_my_team.to_param }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe UsersController, type: :controller do
       context 'role' do
         before do
           sign_in manager
-          get :edit, id: manager.to_param
+          get :edit, params: { id: manager.to_param }
         end
 
         it 'shows them their role' do
@@ -79,14 +79,14 @@ RSpec.describe UsersController, type: :controller do
         it 'returns a pundit error' do
           expect {
             bypass_rescue
-            get :edit, id: User.last.to_param
+            get :edit, params: { id: User.last.to_param }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
       context 'for a user in their office' do
         it 'shows edit page' do
-          get :edit, id: User.first.to_param
+          get :edit, params: { id: User.first.to_param }
           expect(response).to render_template :edit
         end
       end
@@ -108,7 +108,7 @@ RSpec.describe UsersController, type: :controller do
           it 'raises Pundit error' do
             expect {
               bypass_rescue
-              post :update, id: manager.id, user: { role: 'admin' }
+              post :update, params: { id: manager.id, user: { role: 'admin' } }
             }.to raise_error Pundit::NotAuthorizedError
           end
         end
@@ -116,7 +116,7 @@ RSpec.describe UsersController, type: :controller do
         context "when trying to escalate their office's user role" do
           context 'to manager' do
             before do
-              post :update, id: user_on_my_team.id, user: { role: 'manager' }
+              post :update, params: { id: user_on_my_team.id, user: { role: 'manager' } }
               user_on_my_team.reload
             end
 
@@ -129,7 +129,7 @@ RSpec.describe UsersController, type: :controller do
             it 'raises Pundit error' do
               expect {
                 bypass_rescue
-                post :update, id: user_on_my_team.id, user: { role: 'admin' }
+                post :update, params: { id: user_on_my_team.id, user: { role: 'admin' } }
               }.to raise_error Pundit::NotAuthorizedError
             end
           end
@@ -139,7 +139,7 @@ RSpec.describe UsersController, type: :controller do
           it 'raises Pundit error' do
             expect {
               bypass_rescue
-              post :update, id: user_not_my_team.id, user: { role: 'manager' }
+              post :update, params: { id: user_not_my_team.id, user: { role: 'manager' } }
             }.to raise_error Pundit::NotAuthorizedError
           end
         end
@@ -154,7 +154,7 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before { put :update, id: user_on_my_team.to_param, user: new_attributes }
+        before { put :update, params: { id: user_on_my_team.to_param, user: new_attributes } }
 
         it "doesn't update the user's email" do
           assigns(:user)
@@ -175,7 +175,7 @@ RSpec.describe UsersController, type: :controller do
           let(:role) { 'user' }
 
           before do
-            put :update, id: user_on_my_team.to_param, user: { office_id: new_office.id, role: role }
+            put :update, params: { id: user_on_my_team.to_param, user: { office_id: new_office.id, role: role } }
           end
 
           describe 'updates the user' do
@@ -201,7 +201,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
 
-        before { put :update, id: user_on_my_team.to_param, user: attributes_for(:invalid_user) }
+        before { put :update, params: { id: user_on_my_team.to_param, user: attributes_for(:invalid_user) } }
 
         it 'assigns the user as @user' do
           expect(assigns(:user)).to eq(user_on_my_team)

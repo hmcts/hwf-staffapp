@@ -7,7 +7,7 @@ RSpec.describe Api::SubmissionsController, type: :controller do
   before do
     allow(Settings.submission).to receive(:token).and_return('my-big-secret')
     controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(auth_token)
-    post :create, online_application: submitted
+    post :create, params: { online_application: submitted }
   end
 
   describe 'POST #create' do

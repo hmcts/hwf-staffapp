@@ -34,18 +34,18 @@
 @import "design-patterns/buttons";
 
 
-/*from govuk_elements*/
-@import 'elements/helpers';
-@import 'elements/reset';
-@import 'elements/elements-typography';
-// @import 'elements/layout'; // replaced with a local version, as the gem version doesn't seem to have grid layout
-@import 'elements/forms';
-@import 'elements/tables';
-@import 'elements/buttons';
-@import 'elements/details';
-@import 'elements/lists';
-@import 'elements/panels';
-@import "elements/icons";
+// /*from govuk_elements*/
+// @import 'elements/helpers';
+// @import 'elements/reset';
+// @import 'elements/elements-typography';
+// // @import 'elements/layout'; // replaced with a local version, as the gem version doesn't seem to have grid layout
+// @import 'elements/forms';
+// @import 'elements/tables';
+// @import 'elements/buttons';
+// @import 'elements/details';
+// @import 'elements/lists';
+// @import 'elements/panels';
+// @import "elements/icons";
 
 
 /*local replacements for govuk_elements files*/

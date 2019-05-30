@@ -27,14 +27,14 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            get :show, id: test_user.to_param
+            get :show, params: { id: test_user.to_param }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
       context 'when viewing their own profile' do
         it 'shows them their profile' do
-          get :show, id: user.to_param
+          get :show, params: { id: user.to_param }
           expect(response).to have_http_status(:success)
         end
       end
@@ -45,13 +45,13 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            get :edit, id: test_user.to_param
+            get :edit, params: { id: test_user.to_param }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
       context 'when trying to edit their own profile' do
-        before { get :edit, id: user.to_param }
+        before { get :edit, params: { id: user.to_param } }
 
         it 'shows them their profile' do
           expect(response).to have_http_status(:success)
@@ -87,7 +87,7 @@ RSpec.describe UsersController, type: :controller do
         let(:new_jurisdiction) { create :jurisdiction }
         before do
           params = { name: new_name, office_id: new_office.id, jurisdiction_id: new_jurisdiction.id }
-          post :update, id: user.id, user: params
+          post :update, params: { id: user.id, user: params }
           user.reload
         end
 
@@ -107,7 +107,7 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            post :update, id: user.id, user: { role: 'admin' }
+            post :update, params: { id: user.id, user: { role: 'admin' } }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
@@ -116,7 +116,7 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            post :update, id: test_user.id, user: { name: 'random value' }
+            post :update, params: { id: test_user.id, user: { name: 'random value' } }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
