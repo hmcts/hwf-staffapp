@@ -29,7 +29,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     before { sign_in admin }
 
     describe 'when an unused jurisdiction parameter is provided' do
-      before { get :new, params: { office_id: office.id, jurisdiction_id: jurisdiction.id }}
+      before { get :new, params: { office_id: office.id, jurisdiction_id: jurisdiction.id } }
 
       it { is_expected.to have_http_status(:success) }
 
@@ -41,7 +41,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'when an used jurisdiction parameter is provided' do
-      before { get :new, params: { office_id: office.id, jurisdiction_id: business_entity.jurisdiction.id }}
+      before { get :new, params: { office_id: office.id, jurisdiction_id: business_entity.jurisdiction.id } }
 
       it { is_expected.to have_http_status(:redirect) }
 
@@ -50,7 +50,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
     end
 
     describe 'when a jursidiction parameter is not provided' do
-      before { get :new, params: { office_id: office.id }}
+      before { get :new, params: { office_id: office.id } }
 
       it { is_expected.to have_http_status(:redirect) }
 

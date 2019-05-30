@@ -120,7 +120,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #summary' do
-    before { get :summary, params: { id: part_payment }}
+    before { get :summary, params: { id: part_payment } }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -156,7 +156,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #confirmation' do
-    before { get :confirmation, params: { id: part_payment }}
+    before { get :confirmation, params: { id: part_payment } }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)
@@ -172,7 +172,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   end
 
   describe 'GET #return_letter' do
-    before { get :return_letter, params: { id: part_payment }}
+    before { get :return_letter, params: { id: part_payment } }
 
     it 'returns the correct status code' do
       expect(response).to have_http_status(200)

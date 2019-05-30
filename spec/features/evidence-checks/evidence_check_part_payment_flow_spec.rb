@@ -15,10 +15,10 @@ RSpec.feature 'Part payment application with evidence check', type: :feature do
 
   let(:application) do
     create :application_part_remission, :refund,
-      office: office, jurisdiction: jurisdiction,
-      fee: 5000,
-      income: 3083,
-      children: 2
+           office: office, jurisdiction: jurisdiction,
+           fee: 5000,
+           income: 3083,
+           children: 2
   end
 
   scenario 'Is marked as waiting for payment after providing evidence' do

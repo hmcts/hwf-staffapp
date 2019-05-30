@@ -51,7 +51,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'when trying to edit their own profile' do
-        before { get :edit, params: { id: user.to_param }}
+        before { get :edit, params: { id: user.to_param } }
 
         it 'shows them their profile' do
           expect(response).to have_http_status(:success)
@@ -107,7 +107,7 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            post :update, params: { id: user.id, user: { role: 'admin' }}
+            post :update, params: { id: user.id, user: { role: 'admin' } }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
@@ -116,7 +116,7 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            post :update, params: { id: test_user.id, user: { name: 'random value' }}
+            post :update, params: { id: test_user.id, user: { name: 'random value' } }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end

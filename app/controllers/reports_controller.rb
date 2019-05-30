@@ -105,9 +105,9 @@ class ReportsController < ApplicationController
 
   def build_and_return_data(data_set, prefix)
     send_data data_set,
-      filename: "#{prefix}-#{@form.start_date}-#{@form.end_date}.csv",
-      type: 'text/csv',
-      disposition: 'attachment'
+              filename: "#{prefix}-#{@form.start_date}-#{@form.end_date}.csv",
+              type: 'text/csv',
+              disposition: 'attachment'
   end
 
   def extract_raw_data

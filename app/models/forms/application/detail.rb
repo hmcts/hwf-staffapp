@@ -45,7 +45,7 @@ module Forms
       validate :reason
       validate :emergency_reason_size
       validates :discretion_manager_name,
-        :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
+                :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
       validates :date_received, date: {
         after_or_equal_to: :min_date,
