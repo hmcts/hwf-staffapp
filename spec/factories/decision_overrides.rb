@@ -1,7 +1,7 @@
-FactoryBot.define do
+FactoryGirl.define do
   factory :decision_override do
     association :user
-    reason { "My reasons" }
+    reason "My reasons"
 
     after(:build) do |override|
       override.application ||= build(:application, decision_override: override)

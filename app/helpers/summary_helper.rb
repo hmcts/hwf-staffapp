@@ -46,9 +46,9 @@ module SummaryHelper
       link_class = 'column-one-third'
       content_tag(:div, class: link_class) do
         link_to(link_attributes[:title],
-                link_attributes[:url],
-                class: 'right',
-                data: { section_name: link_attributes[:section_name] })
+          link_attributes[:url],
+          class: 'right',
+          data: { section_name: link_attributes[:section_name] })
       end
     end
   end

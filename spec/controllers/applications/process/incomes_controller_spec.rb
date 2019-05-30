@@ -17,7 +17,7 @@ RSpec.describe Applications::Process::IncomesController, type: :controller do
     let(:application) { build_stubbed(:application, office: user.office, benefits: benefits) }
 
     before do
-      get :index, params: { application_id: application.id }
+      get :index, application_id: application.id
     end
 
     context 'when application is on benefits' do
@@ -46,13 +46,13 @@ RSpec.describe Applications::Process::IncomesController, type: :controller do
   end
 
   describe 'PUT #income_save' do
-    let(:expected_params) { { 'dependents': 'false' } }
+    let(:expected_params) { { dependents: false } }
 
     before do
       allow(income_form).to receive(:update_attributes).with(expected_params)
       allow(income_form).to receive(:save).and_return(form_save)
 
-      post :create, params: { application_id: application.id, application: expected_params }
+      post :create, application_id: application.id, application: expected_params
     end
 
     context 'when the form can be saved' do

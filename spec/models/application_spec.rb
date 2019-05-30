@@ -10,6 +10,12 @@ RSpec.describe Application, type: :model do
   let(:detail) { create(:detail) }
 
   it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:completed_by).class_name('User') }
+  it { is_expected.to belong_to(:deleted_by).class_name('User') }
+  it { is_expected.to belong_to(:office) }
+  it { is_expected.to belong_to(:business_entity) }
+  it { is_expected.to belong_to(:online_application) }
+
   it { is_expected.to have_one(:applicant).dependent(:destroy) }
   it { is_expected.to have_one(:detail).dependent(:destroy) }
 
@@ -21,7 +27,7 @@ RSpec.describe Application, type: :model do
 
   it { is_expected.to validate_uniqueness_of(:reference).allow_blank }
 
-  it { is_expected.to define_enum_for(:state).with_values([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
+  it { is_expected.to define_enum_for(:state).with([:created, :waiting_for_evidence, :waiting_for_part_payment, :processed, :deleted]) }
 
   it { is_expected.to have_many(:benefit_checks).dependent(:destroy) }
   it { is_expected.to have_one(:saving).dependent(:destroy) }

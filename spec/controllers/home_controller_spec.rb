@@ -150,7 +150,7 @@ RSpec.describe HomeController, type: :controller do
       allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
 
       sign_in(user)
-      get :completed_search, params: { completed_search: { reference: reference } }
+      get :completed_search, completed_search: { reference: reference }
     end
 
     let(:user) { staff }
@@ -205,7 +205,7 @@ RSpec.describe HomeController, type: :controller do
       allow(search).to receive(:paginate_search_results).with(sort_by: 'first_name', sort_to: 'asc', page: '2').and_return(search)
 
       sign_in(user)
-      get :completed_search, params: { completed_search: { reference: reference }, sort_to: 'asc', sort_by: 'first_name', page: 2 }
+      get :completed_search, completed_search: { reference: reference }, sort_to: 'asc', sort_by: 'first_name', page: 2
     end
 
     context 'when the search returns a results' do
@@ -232,7 +232,7 @@ RSpec.describe HomeController, type: :controller do
       allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application) unless application.nil?
 
       sign_in(user)
-      post :online_search, params: { online_search: search_params }
+      post :online_search, online_search: search_params
     end
 
     let(:user) { staff }

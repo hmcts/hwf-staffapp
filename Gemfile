@@ -3,10 +3,9 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.3'
+gem 'rails', '~> 4.2.11'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
-gem 'bootsnap', require: false
 gem 'pg', '0.20'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
@@ -33,7 +32,7 @@ gem 'coffee-rails', '~> 4.2.1'
 # gem 'therubyracer', platforms: :ruby
 
 # use GDS assets, styles etc...
-# gem 'govuk_elements_rails', '0.3.0'
+gem 'govuk_elements_rails', '0.3.0'
 gem 'govuk_frontend_toolkit', '4.7.0'
 gem 'moj_template', '~> 0.23.2'
 
@@ -94,7 +93,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
-  gem 'factory_bot_rails'
+  gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
@@ -116,7 +115,6 @@ group :test do
   gem 'launchy'
   gem 'poltergeist', '1.15.0'
   gem 'pry'
-  gem 'rails-controller-testing'
   gem 'selenium-webdriver', '~> 3.10'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'

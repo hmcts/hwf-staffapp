@@ -10,23 +10,23 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
   let(:user) { create :user, office: office }
   let(:online_application_1) do
     create(:online_application, :completed, :with_reference,
-           married: false,
-           children: 3,
-           benefits: false,
-           fee: 155,
-           form_name: 'D11',
-           income_min_threshold_exceeded: false)
+      married: false,
+      children: 3,
+      benefits: false,
+      fee: 155,
+      form_name: 'D11',
+      income_min_threshold_exceeded: false)
   end
 
   let(:online_application_2) do
     create(:online_application, :completed, :with_reference,
-           married: false,
-           children: 0,
-           benefits: false,
-           fee: 155,
-           form_name: 'D11',
-           income: 1000,
-           ni_number: online_application_1.ni_number)
+      married: false,
+      children: 0,
+      benefits: false,
+      fee: 155,
+      form_name: 'D11',
+      income: 1000,
+      ni_number: online_application_1.ni_number)
   end
   let(:old_application) { create :old_application, reference: online_application_1.reference }
 

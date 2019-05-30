@@ -103,7 +103,7 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_params
-    params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes).to_h
+    params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes)
   end
 
   def redirect_after_accuracy_save
@@ -115,7 +115,7 @@ class EvidenceController < ApplicationController
   end
 
   def income_params
-    params.require(:evidence).permit(*Forms::Evidence::Income.permitted_attributes).to_h
+    params.require(:evidence).permit(*Forms::Evidence::Income.permitted_attributes)
   end
 
   def application_result

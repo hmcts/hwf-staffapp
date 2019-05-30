@@ -44,7 +44,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index, params: { page: page, per_page: per_page }
+      get :index, page: page, per_page: per_page
     end
 
     it 'returns the correct status code' do
@@ -63,14 +63,13 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       let(:page) { 4 }
 
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 4, per_page: 0)
+        expect(relation).to have_received(:paginate).with(page: 4, per_page: 2)
       end
     end
 
     context 'when page parameter is not set' do
-      let(:per_page) { 2 }
       it 'calls pagination with page as nil and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 2)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
       end
     end
 
@@ -85,20 +84,20 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       let(:per_page) { 3 }
 
       it 'calls pagination with the page number and params number per page' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 3)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 3)
       end
     end
 
     context 'when the per_page parameter is not set' do
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 0)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
       end
     end
   end
 
   describe 'GET #show' do
     before do
-      get :show, params: { id: application1.id }
+      get :show, id: application1.id
     end
 
     it 'returns the correct status code' do
