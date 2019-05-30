@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'for themselves' do
-        before { get :show, params: { id: admin_user }}
+        before { get :show, params: { id: admin_user } }
         it 'does not have a delete user link' do
           expect(response.body).not_to have_content 'Remove staff member'
         end
@@ -64,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'for a user not in their office' do
 
-        before { get :show, params: { id: user_not_on_admins_team.to_param }}
+        before { get :show, params: { id: user_not_on_admins_team.to_param } }
 
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
@@ -120,7 +120,7 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before { put :update, params: { id: user_not_on_admins_team.to_param, user: new_attributes }}
+        before { put :update, params: { id: user_not_on_admins_team.to_param, user: new_attributes } }
 
         it 'updates the requested user' do
           user_not_on_admins_team.reload
@@ -143,7 +143,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
 
-        before { put :update, params: { id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) }}
+        before { put :update, params: { id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) } }
 
         it 'assigns the user as @user' do
           expect(assigns(:user)).to eq(user_not_on_admins_team)
@@ -190,7 +190,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'deleting another user' do
-        before { get :destroy, params: { id: user_on_admins_team.to_param }}
+        before { get :destroy, params: { id: user_on_admins_team.to_param } }
         it 'redirects to the user index' do
           expect(response).to redirect_to(users_path)
         end
@@ -199,7 +199,7 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'PATCH #invite' do
 
-      before { patch :invite, params: { id: user_not_on_admins_team.to_param }}
+      before { patch :invite, params: { id: user_not_on_admins_team.to_param } }
 
       it 'returns a redirect code' do
         expect(response).to have_http_status(:redirect)

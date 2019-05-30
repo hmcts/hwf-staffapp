@@ -68,7 +68,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:application) { create :application, :processed_state, office: user.office }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id }}
+      before { get :index, params: { application_id: application.id } }
 
       subject { response }
 
@@ -86,7 +86,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:application) { create :application, :deleted_state, office: user.office }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id }}
+      before { get :index, params: { application_id: application.id } }
 
       subject { response }
 
@@ -105,7 +105,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:evidence) { create :evidence_check, application: application }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id }}
+      before { get :index, params: { application_id: application.id } }
 
       subject { response }
 
@@ -124,7 +124,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let!(:part_payment) { create(:part_payment, application: application) }
 
     describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id }}
+      before { get :index, params: { application_id: application.id } }
 
       subject { response }
 

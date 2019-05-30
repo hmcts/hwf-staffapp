@@ -10,30 +10,30 @@ RSpec.feature 'Processing refund application with valid date received date', typ
 
   let(:online_application_1) do
     create(:online_application, :completed, :with_reference,
-      married: false,
-      children: 3,
-      benefits: true,
-      fee: 1550,
-      form_name: 'D11',
-      income_min_threshold_exceeded: false,
-      refund: true,
-      date_fee_paid: 4.months.ago,
-      date_received: 2.months.ago,
-      jurisdiction: jurisdiction)
+           married: false,
+           children: 3,
+           benefits: true,
+           fee: 1550,
+           form_name: 'D11',
+           income_min_threshold_exceeded: false,
+           refund: true,
+           date_fee_paid: 4.months.ago,
+           date_received: 2.months.ago,
+           jurisdiction: jurisdiction)
   end
 
   let(:online_application_2) do
     create(:online_application, :completed, :with_reference,
-      married: false,
-      children: 3,
-      benefits: true,
-      fee: 1550,
-      form_name: 'D11',
-      income_min_threshold_exceeded: false,
-      refund: true,
-      date_fee_paid: 5.months.ago,
-      date_received: 3.months.ago,
-      jurisdiction: jurisdiction)
+           married: false,
+           children: 3,
+           benefits: true,
+           fee: 1550,
+           form_name: 'D11',
+           income_min_threshold_exceeded: false,
+           refund: true,
+           date_fee_paid: 5.months.ago,
+           date_received: 3.months.ago,
+           jurisdiction: jurisdiction)
   end
 
   let(:dwp_response) { 'Yes' }

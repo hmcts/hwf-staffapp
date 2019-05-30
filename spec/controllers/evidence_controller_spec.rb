@@ -17,7 +17,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #show' do
     context 'as a signed out user' do
-      before { get :show, params: { id: evidence.id }}
+      before { get :show, params: { id: evidence.id } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -46,7 +46,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #accuracy' do
     context 'as a signed out user' do
-      before { get :accuracy, params: { id: evidence.id }}
+      before { get :accuracy, params: { id: evidence.id } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -86,7 +86,7 @@ RSpec.describe EvidenceController, type: :controller do
     let(:expected_form_params) { { correct: 'true', incorrect_reason: 'reason' } }
 
     context 'as a signed out user' do
-      before { post :accuracy_save, params: { id: evidence.id, evidence: expected_form_params }}
+      before { post :accuracy_save, params: { id: evidence.id, evidence: expected_form_params } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -140,7 +140,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #income' do
     context 'as a signed out user' do
-      before { get :income, params: { id: evidence.id }}
+      before { get :income, params: { id: evidence.id } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -174,7 +174,7 @@ RSpec.describe EvidenceController, type: :controller do
     let(:expected_form_params) { { income: '1000' } }
 
     context 'as a signed out user' do
-      before { post :income_save, params: { id: evidence.id, evidence: expected_form_params }}
+      before { post :income_save, params: { id: evidence.id, evidence: expected_form_params } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -215,7 +215,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #result' do
     context 'as a signed out user' do
-      before { get :result, params: { id: evidence }}
+      before { get :result, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -240,7 +240,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #summary' do
     context 'as a signed out user' do
-      before { get :summary, params: { id: evidence }}
+      before { get :summary, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -267,7 +267,7 @@ RSpec.describe EvidenceController, type: :controller do
     let(:resolver) { instance_double(ResolverService, complete: nil) }
 
     context 'as a signed out user' do
-      before { post :summary_save, params: { id: evidence }}
+      before { post :summary_save, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -295,7 +295,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #confirmation' do
     context 'as a signed out user' do
-      before { post :summary_save, params: { id: evidence }}
+      before { post :summary_save, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -324,7 +324,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'GET #return_letter' do
     context 'as a signed out user' do
-      before { get :return_letter, params: { id: evidence }}
+      before { get :return_letter, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -345,7 +345,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe 'POST #return_application' do
     context 'as a signed out user' do
-      before { post :return_application, params: { id: evidence }}
+      before { post :return_application, params: { id: evidence } }
 
       it { expect(response).to have_http_status(:redirect) }
 
