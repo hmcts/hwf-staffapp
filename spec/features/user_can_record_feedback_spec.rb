@@ -22,8 +22,8 @@ RSpec.feature 'Recording feedback', type: :feature do
       click_button 'Send feedback'
 
       expect(page).to have_xpath('//div[@class="alert-box notice"]',
-        text: 'Your feedback has been recorded',
-        count: 1)
+                                 text: 'Your feedback has been recorded',
+                                 count: 1)
     end
   end
 end

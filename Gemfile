@@ -6,10 +6,10 @@ gem 'dotenv-rails', groups: [:development, :test] # this has to be here because 
 gem 'rails', '5.2.3'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
+gem 'bootsnap', require: false
 gem 'pg', '0.20'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'bootsnap', require: false
 
 # configuration
 gem 'config'
@@ -116,11 +116,11 @@ group :test do
   gem 'launchy'
   gem 'poltergeist', '1.15.0'
   gem 'pry'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver', '~> 3.10'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'webmock'
-  gem 'rails-controller-testing'
 end
 
 # heroku deployment

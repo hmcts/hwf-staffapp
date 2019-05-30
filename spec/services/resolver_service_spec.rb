@@ -11,7 +11,7 @@ describe ResolverService do
   let(:existing_reference) { nil }
   let(:application) do
     create(:application, :uncompleted, :undecided,
-      fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference)
+           fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference)
   end
 
   describe '#complete' do

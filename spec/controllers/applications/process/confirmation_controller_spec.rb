@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::ConfirmationController, type: :controller 
   end
 
   context 'GET #index' do
-    before { get :index, params: { application_id: application.id }}
+    before { get :index, params: { application_id: application.id } }
 
     it 'displays the confirmation view' do
       expect(response).to render_template :index
