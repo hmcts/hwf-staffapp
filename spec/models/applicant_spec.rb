@@ -4,6 +4,7 @@ RSpec.describe Applicant, type: :model do
   let(:application) { build_stubbed(:application) }
   let(:applicant) { build :applicant, application: application }
 
+  it { is_expected.to belong_to(:application) }
   it { is_expected.to validate_presence_of(:application) }
 
   describe 'before validation' do

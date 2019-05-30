@@ -47,7 +47,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index, params: { page: page, per_page: per_page, sort: sort }
+      get :index, page: page, per_page: per_page, sort: sort
     end
 
     it 'returns the correct status code' do
@@ -66,13 +66,13 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       let(:page) { 4 }
 
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 4, per_page: 0)
+        expect(relation).to have_received(:paginate).with(page: 4, per_page: 2)
       end
     end
 
     context 'when page parameter is not set' do
       it 'calls pagination with page as nil and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 0)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
       end
     end
 
@@ -87,13 +87,13 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       let(:per_page) { 3 }
 
       it 'calls pagination with the page number and params number per page' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 3)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 3)
       end
     end
 
     context 'when the per_page parameter is not set' do
       it 'calls pagination with the page number and defined number per page (settings)' do
-        expect(relation).to have_received(:paginate).with(page: 0, per_page: 0)
+        expect(relation).to have_received(:paginate).with(page: 1, per_page: 2)
       end
     end
   end
@@ -138,7 +138,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :show, params: { id: application1.id }
+      get :show, id: application1.id
     end
 
     include_examples 'renders correctly and assigns required variables'
@@ -153,7 +153,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
       allow(delete_form).to receive(:save).and_return(form_save)
       allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 
-      put :update, params: { id: application1.id, application: expected_params }
+      put :update, id: application1.id, application: expected_params
     end
 
     context 'when the form can be saved' do

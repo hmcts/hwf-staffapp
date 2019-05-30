@@ -22,7 +22,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
       allow(application).to receive(:saving).and_return(saving)
       allow(saving).to receive(:passed?).and_return(savings_valid)
 
-      get :index, params: { application_id: application.id }
+      get :index, application_id: application.id
     end
 
     context 'when application failed savings and investments' do
@@ -65,7 +65,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
   end
 
   describe 'PUT #benefits_save' do
-    let(:expected_params) { { 'benefits': 'false' } }
+    let(:expected_params) { { benefits: false } }
     let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
     let(:user_says_on_benefits) { false }
     let(:can_override) { false }
@@ -76,7 +76,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
 
-      post :create, params: { application_id: application.id, application: expected_params }
+      post :create, application_id: application.id, application: expected_params
     end
 
     context 'when the form can be saved' do

@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   # Include Factory Girl syntax to simplify calls to factories
-  config.include FactoryBot::Syntax::Methods
+  config.include FactoryGirl::Syntax::Methods
 
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -107,7 +107,7 @@ RSpec.configure do |config|
   config.before(:each) do
     ActionMailer::Base.deliveries = []
     DatabaseCleaner.strategy = :transaction
-    FactoryBot.reload
+    FactoryGirl.reload
   end
 
   config.before(:each, :js => true) do

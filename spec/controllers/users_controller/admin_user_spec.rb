@@ -39,7 +39,7 @@ RSpec.describe UsersController, type: :controller do
       context 'for a user in their office' do
 
         before do
-          get :show, params: { id: user_on_admins_team.to_param }
+          get :show, id: user_on_admins_team.to_param
         end
 
         it 'renders the view' do
@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context 'for themselves' do
-        before { get :show, params: { id: admin_user } }
+        before { get :show, id: admin_user }
         it 'does not have a delete user link' do
           expect(response.body).not_to have_content 'Remove staff member'
         end
@@ -64,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'for a user not in their office' do
 
-        before { get :show, params: { id: user_not_on_admins_team.to_param } }
+        before { get :show, id: user_not_on_admins_team.to_param }
 
         it 'returns a success code' do
           expect(response).to have_http_status(:success)
@@ -78,21 +78,21 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #show' do
       it 'shows user details' do
-        get :show, params: { id: user_not_on_admins_team.to_param }
+        get :show, id: user_not_on_admins_team.to_param
         expect(assigns(:user)).to eq(user_not_on_admins_team)
       end
     end
 
     describe 'GET #edit' do
       it 'shows edit page' do
-        get :edit, params: { id: user_not_on_admins_team.to_param }
+        get :edit, id: user_not_on_admins_team.to_param
         expect(assigns(:user)).to eq(user_not_on_admins_team)
       end
 
       context 'role' do
         before do
           sign_in admin_user
-          get :edit, params: { id: admin_user.to_param }
+          get :edit, id: admin_user.to_param
         end
 
         it 'shows them their role' do
@@ -120,7 +120,7 @@ RSpec.describe UsersController, type: :controller do
           }
         }
 
-        before { put :update, params: { id: user_not_on_admins_team.to_param, user: new_attributes } }
+        before { put :update, id: user_not_on_admins_team.to_param, user: new_attributes }
 
         it 'updates the requested user' do
           user_not_on_admins_team.reload
@@ -143,7 +143,7 @@ RSpec.describe UsersController, type: :controller do
 
       context 'with invalid params' do
 
-        before { put :update, params: { id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) } }
+        before { put :update, id: user_not_on_admins_team.to_param, user: attributes_for(:invalid_user) }
 
         it 'assigns the user as @user' do
           expect(assigns(:user)).to eq(user_not_on_admins_team)
@@ -171,7 +171,7 @@ RSpec.describe UsersController, type: :controller do
       let(:deleted_user) { create :user, deleted_at: Time.zone.now }
 
       before do
-        patch :restore, params: { id: deleted_user.to_param }
+        patch :restore, id: deleted_user.to_param
       end
 
       it 'returns a redirect code' do
@@ -184,13 +184,13 @@ RSpec.describe UsersController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            delete :destroy, params: { id: admin_user.to_param }
+            delete :destroy, id: admin_user.to_param
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
 
       context 'deleting another user' do
-        before { get :destroy, params: { id: user_on_admins_team.to_param } }
+        before { get :destroy, id: user_on_admins_team.to_param }
         it 'redirects to the user index' do
           expect(response).to redirect_to(users_path)
         end
@@ -199,7 +199,7 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'PATCH #invite' do
 
-      before { patch :invite, params: { id: user_not_on_admins_team.to_param } }
+      before { patch :invite, id: user_not_on_admins_team.to_param }
 
       it 'returns a redirect code' do
         expect(response).to have_http_status(:redirect)

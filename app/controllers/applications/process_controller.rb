@@ -31,7 +31,7 @@ module Applications
 
     def form_params(type)
       class_name = "Forms::Application::#{type.to_s.classify}".constantize
-      params.require(:application).permit(*class_name.permitted_attributes.keys).to_h
+      params.require(:application).permit(*class_name.permitted_attributes.keys)
     end
 
     def application

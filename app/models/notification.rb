@@ -1,5 +1,6 @@
 class Notification < ActiveRecord::Base
-  validate :only_one_record_allowed, on: :create
+  before_create :only_one_record_allowed
+
   validates :show, inclusion: [true, false]
 
   private

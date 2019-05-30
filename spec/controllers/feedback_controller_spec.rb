@@ -56,13 +56,13 @@ RSpec.describe FeedbackController, type: :controller do
       let(:feedback_attributes) { attributes_for(:feedback, user: user, office: office) }
 
       it 'returns http success' do
-        post :create, params: { feedback: feedback_attributes }
+        post :create, feedback: feedback_attributes
         expect(response).to redirect_to(root_path)
       end
 
       it 'creates a new feedback entry' do
         expect {
-          post :create, params: { feedback: feedback_attributes }
+          post :create, feedback: feedback_attributes
         }.to change(Feedback, :count).by(1)
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe FeedbackController, type: :controller do
       it 'raises Pundit error' do
         expect {
           bypass_rescue
-          post :create, params: { feedback: feedback_attributes }
+          post :create, feedback: feedback_attributes
         }.to raise_error Pundit::NotAuthorizedError
       end
 

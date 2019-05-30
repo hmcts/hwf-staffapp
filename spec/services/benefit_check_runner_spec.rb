@@ -123,12 +123,12 @@ RSpec.describe BenefitCheckRunner do
         context 'when all the fields are exactly the same as before' do
           let(:existing_benefit_check) do
             create :benefit_check,
-                   :no_result,
-                   application: application,
-                   last_name: applicant.last_name,
-                   date_of_birth: applicant.date_of_birth,
-                   ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+              :no_result,
+              application: application,
+              last_name: applicant.last_name,
+              date_of_birth: applicant.date_of_birth,
+              ni_number: applicant.ni_number,
+              date_to_check: detail.date_received
           end
 
           it 'does not create a BenefitCheck record' do
@@ -139,12 +139,12 @@ RSpec.describe BenefitCheckRunner do
         context 'when there was an error before' do
           let(:existing_benefit_check) do
             create :benefit_check,
-                   :error_result,
-                   application: application,
-                   last_name: applicant.last_name,
-                   date_of_birth: applicant.date_of_birth,
-                   ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+              :error_result,
+              application: application,
+              last_name: applicant.last_name,
+              date_of_birth: applicant.date_of_birth,
+              ni_number: applicant.ni_number,
+              date_to_check: detail.date_received
           end
 
           include_examples 'runs benefit check record'
@@ -153,11 +153,11 @@ RSpec.describe BenefitCheckRunner do
         context 'when something has changed from before' do
           let(:existing_benefit_check) do
             create :benefit_check,
-                   application: application,
-                   last_name: 'Different',
-                   date_of_birth: applicant.date_of_birth,
-                   ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+              application: application,
+              last_name: 'Different',
+              date_of_birth: applicant.date_of_birth,
+              ni_number: applicant.ni_number,
+              date_to_check: detail.date_received
           end
 
           include_examples 'runs benefit check record'
@@ -229,8 +229,8 @@ RSpec.describe BenefitCheckRunner do
 
     let(:detail) {
       build(:complete_detail,
-            date_fee_paid: date_fee_paid,
-            date_received: date_received)
+        date_fee_paid: date_fee_paid,
+        date_received: date_received)
     }
 
     context 'when date_fee_paid is older then three months' do

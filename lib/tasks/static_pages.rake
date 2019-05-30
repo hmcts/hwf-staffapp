@@ -2,8 +2,7 @@ namespace :static_pages do
   desc "Generates static pages"
   Rails.application.middleware.tap do |middleware|
     middleware.delete ActiveRecord::Migration::CheckPending
-    # not supported anymore - do we need this? #TODO update
-    # middleware.delete ActiveRecord::ConnectionAdapters::ConnectionManagement
+    middleware.delete ActiveRecord::ConnectionAdapters::ConnectionManagement
     middleware.delete ActiveRecord::QueryCache
   end
   task generate: 'assets:precompile' do

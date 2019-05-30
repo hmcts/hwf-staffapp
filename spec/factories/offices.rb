@@ -1,4 +1,4 @@
-FactoryBot.define do
+FactoryGirl.define do
   factory :office do
     transient do
       jurisdictions_count { 2 }
@@ -10,7 +10,7 @@ FactoryBot.define do
     jurisdictions { build_list :jurisdiction, jurisdictions_count }
 
     factory :invalid_office do
-      name { nil }
+      name nil
     end
 
     after(:create) do |office, _|

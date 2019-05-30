@@ -100,8 +100,7 @@ RSpec.describe ApplicationSearch do
   end
 
   describe '#paginate_search_results' do
-    let(:ar_class) { Application.const_get(:ActiveRecord_Relation) }
-    let(:paginated_result) { instance_double(ar_class, 'paginated') }
+    let(:paginated_result) { instance_double(Application::ActiveRecord_Relation, 'paginated') }
 
     let(:reference) { 'HWF-123-ABC' }
     let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }

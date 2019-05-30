@@ -30,7 +30,7 @@ RSpec.describe BusinessEntity, type: :model do
 
     describe 'sop_code valid in context' do
       subject(:business_entity) { create :business_entity }
-      let(:business_entity_2) { create(:business_entity, sop_code: business_entity.sop_code) }
+      let(:business_entity_2) { build(:business_entity, sop_code: business_entity.sop_code) }
 
       it "of office_id and name" do
         business_entity_2.office_id = business_entity.office_id

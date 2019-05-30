@@ -2,7 +2,7 @@ shared_examples 'a user regardless of role' do
 
   describe 'GET #show' do
     it 'sees a change password link' do
-      get :show, params: { id: controller.current_user.to_param }
+      get :show, id: controller.current_user.to_param
       expect(response.body).to have_xpath("//a[@href='#{user_registration_path}']")
     end
   end
@@ -17,7 +17,7 @@ shared_examples 'a user regardless of role' do
     context 'for their own profile' do
       context 'and the users office has jurisdictions' do
         it 'it lists them' do
-          get :edit, params: { id: user.to_param }
+          get :edit, id: user.to_param
           expect(assigns(:jurisdictions).count).to eq 3
         end
       end
@@ -26,7 +26,7 @@ shared_examples 'a user regardless of role' do
         describe 'it shows a text warning' do
           before do
             office.jurisdictions.delete_all
-            get :edit, params: { id: user.to_param }
+            get :edit, id: user.to_param
           end
 
           it { expect(assigns(:jurisdictions).count).to eq 0 }

@@ -610,33 +610,6 @@ en-GB:
           attributes:
             name:
               blank: Enter the office name
-        decision_override:
-          attributes:
-            application:
-              required: "can't be blank"
-            user:
-              required: "can't be blank"
-        applicant:
-          attributes:
-            application:
-              required: "can't be blank"
-        saving:
-          attributes:
-            application:
-              required: "can't be blank"
-        benefit_override:
-          attributes:
-            application:
-              required: "can't be blank"
-        detail:
-          attributes:
-            application:
-              required: "can't be blank"
-        evidence_check:
-          attributes:
-            application:
-              required: "can't be blank"
-
     attributes:
       user:
         current_password: Current password

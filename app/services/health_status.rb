@@ -31,16 +31,16 @@ class HealthStatus
         smtp.finish
       end
       true
-    rescue StandardError => e
-      Rails.logger.error "The SMTP server errored with: #{e}"
+    rescue StandardError => error
+      Rails.logger.error "The SMTP server errored with: #{error}"
       false
     end
   end
 
   def self.api
     DwpMonitor.new.state == 'online'
-  rescue StandardError => e
-    Rails.logger.error "The DWP API errored with: #{e}"
+  rescue StandardError => error
+    Rails.logger.error "The DWP API errored with: #{error}"
     false
   end
   # rubocop:enable Metrics/MethodLength

@@ -8,6 +8,7 @@ class BenefitOverridesController < ApplicationController
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
     @form.update_attributes(allowed_params)
+
     if @form.save
       redirect_to application_summary_path(application)
     else
@@ -30,7 +31,6 @@ class BenefitOverridesController < ApplicationController
   end
 
   def allowed_params
-    params.require(:benefit_override).
-      permit(*Forms::BenefitsEvidence.permitted_attributes.keys).to_h
+    params.require(:benefit_override).permit(*Forms::BenefitsEvidence.permitted_attributes.keys)
   end
 end
