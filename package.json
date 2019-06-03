@@ -16,5 +16,8 @@
     "require-dir": "^0.1.0",
     "selenium-server-standalone-jar": "~3.0",
     "moment": "^2.11.1"
+  },
+  "dependencies": {
+    "govuk-frontend": "^2.12.0"
   }
 }
