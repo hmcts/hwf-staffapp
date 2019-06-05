@@ -15,6 +15,10 @@
 
 
 $govuk-global-styles: true;
+
+$govuk-fonts-path: 'govuk-frontend/assets/fonts/';
+$govuk-images-path: 'govuk-frontend/assets/images/';
+
 @import "govuk-frontend/all";
 
 // /*from govuk_frontend_toolkit*/
