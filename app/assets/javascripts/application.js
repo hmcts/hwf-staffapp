@@ -12,16 +12,18 @@
 //
 
 // libraries
-//= require jquery
-//= require ckeditor-jquery
+// = require jquery
+// = require rails-ujs
+// = require ckeditor-jquery
+// = require govuk-frontend/all
 
-// vendor plugins
+//vendor plugins
 //= require details.polyfill
 
-// module loader
+//module loader
 //= require module_loader
 
-// modules
+//modules
 //= require radio_checkbox_module
 //= require income
 //= require evidence_confirmation
