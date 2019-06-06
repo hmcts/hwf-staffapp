@@ -471,7 +471,7 @@ en-GB:
         forms/application/detail:
           attributes:
             fee:
-              blank: Enter the fee
+              blank: Enter a court or tribunal fee
               not_a_number: The fee should be numeric
             jurisdiction_id:
               blank: You must select a jurisdiction
@@ -571,7 +571,7 @@ en-GB:
         forms/online_application:
           attributes:
             fee:
-              blank: Enter the fee
+              blank: Enter a court or tribunal fee
               not_a_number: The fee should be numeric
             jurisdiction_id:
               blank: You must select a jurisdiction
