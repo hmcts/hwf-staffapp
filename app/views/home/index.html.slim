@@ -9,21 +9,21 @@ h1.visuallyhidden Help with fees - Staff application
   =render('shared/notifications')
 
 
-.grid-row.staff-panels
+.govuk-grid-row.staff-panels
   - if policy(:application).new?
-    .column-one-half#process-application
+    .govuk-grid-column-one-half#process-application
       .util_pt-medium
         - if @state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.paper.dwp-down.heading')
-            ul.list.list-bullet
+            ul.govuk-list.govuk-list--bullet
               -t('index.process.paper.dwp-down.options').each do |option|
                 li =option
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.heading-medium.util_mt-0 Process application
+          h2.govuk-heading-m.util_mt-0 Process application
           .panel-inner
             p.util_mb-0 You'll need:
-            ul.list.list-bullet
+            ul.govuk-list.govuk-list--bullet
               li the help with fees application form (EX160)
               li the court or tribunal form related to the application
 
@@ -32,34 +32,34 @@ h1.visuallyhidden Help with fees - Staff application
           - else
             .util_mt-0
               = form_tag(create_applications_path) do
-                = submit_tag 'Start now', class: 'button util_margin-0'
+                = submit_tag 'Start now', class: 'govuk-button'
 
-  .column-one-half#process-online-application
+  .govuk-grid-column-one-half#process-online-application
     .util_pt-medium
       = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
         - if @state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.digital.dwp-down')
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.heading-medium.util_mt-0 Process an online application
-          .form-group.panel-inner
-            = f.label :reference, class: 'form-label'
+          h2.govuk-heading-m.util_mt-0 Process an online application
+          .govuk-form-group
+            = f.label :reference, class: 'govuk-label'
             = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
             .field-wrapper
               span.prefix HWF
-              = f.text_field :reference, { class: 'form-control small-field', autocomplete: 'off' }
+              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
           .util_mt-0
-            = f.submit 'Look up', class: 'button util_margin-0'
+            = f.submit 'Look up', class: 'govuk-button'
 
-.grid-row
-  .column-one-half
-    .util_pt-medium.util_mt-medium
-      = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get) do |f|
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get) do |f|
+      .govuk-form-group
         = f.label :reference, class: 'form-label'
           h2 = t('search_form.label')
         = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'form-control', autocomplete: 'off' }
-        = f.submit 'Search', class: 'search-button'
+        = f.text_field :reference, { class: 'govuk-input govuk-!-width-two-quarters', autocomplete: 'off' }
+        = f.submit 'Search', class: 'govuk-button'
 
 
 - if policy(:application).index?

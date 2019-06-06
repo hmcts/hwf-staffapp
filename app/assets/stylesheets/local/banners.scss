@@ -4,8 +4,8 @@
   text-align: center;
 
   &.result {
-    background-color: $grey-1;
-    color: $white;
+    background-color: govuk-colour("grey-1");
+    color: govuk-colour("white");
   }
 
   .check {
@@ -14,22 +14,22 @@
   }
 
   .reference-number {
-    @include core-36;
+    // @include core-36;
     font-weight: bold;
     display: block;
   }
 }
 
 .dwp-restored {
-  padding: 10px $gutter-half 0px $gutter-half;
-  background-color: $grass-green-25;
-  border: 1px solid $grass-green;
+  padding: 10px 15px 0px 15px;
+  background-color: govuk-colour("light-green");
+  border: 1px solid govuk-colour("green");
 }
 
 .dwp-warning {
-  padding: 10px $gutter-half 0px $gutter-half;
-  background-color: $orange-25;
-  border: 1px solid $orange;
+  padding: 10px 15px 0px 15px;
+  background-color: govuk-colour("orange");
+  border: 1px solid govuk-colour("orange");
 }
 
 .dwp-warning p, .dwp-restored p {
@@ -37,11 +37,14 @@
 }
 
 .ie-warning {
-  color: $error-colour;
+  color: $govuk-error-colour;
   background: $error-background;
 }
 
 #global-cookie-message {
+  padding: 10px 0;
+  background-color: #d5e8f3;
+  display: block;
   p {
     max-width: 960px;
     margin: auto;

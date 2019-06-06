@@ -42,18 +42,6 @@ $govuk-images-path: 'govuk-frontend/assets/images/';
 // @import "design-patterns/buttons";
 
 
-// // /*from govuk_elements*/
-// // @import 'elements/helpers';
-// // @import 'elements/reset';
-// // @import 'elements/elements-typography';
-// // // @import 'elements/layout'; // replaced with a local version, as the gem version doesn't seem to have grid layout
-// // @import 'elements/forms';
-// // @import 'elements/tables';
-// // @import 'elements/buttons';
-// // @import 'elements/details';
-// // @import 'elements/lists';
-// // @import 'elements/panels';
-// // @import "elements/icons";
 
 
 // /*local replacements for govuk_elements files*/
@@ -61,9 +49,17 @@ $govuk-images-path: 'govuk-frontend/assets/images/';
 
 
 /*local*/
+@import 'local/conditionals';
+@import 'local/colours';
+@import 'local/measurements';
+@import 'local/typography';
 @import 'local/panels';
-/*@import 'local/phase-banner';
 @import 'local/banners';
+@import 'local/dwp-tags';
+
+
+// @import 'local/phase-banner';
+
 @import 'local/navigation';
 @import 'local/letters';
 @import 'local/summary';
@@ -72,7 +68,7 @@ $govuk-images-path: 'govuk-frontend/assets/images/';
 @import 'local/tables';
 @import 'local/footer';
 @import 'local/pagination';
-@import 'local/typography';
+
 @import 'local/headings';
 @import 'local/icons';
 @import 'local/labels';
@@ -82,6 +78,4 @@ $govuk-images-path: 'govuk-frontend/assets/images/';
 @import 'local/lists';
 @import 'local/block-grid';
 @import 'local/utilities';
-@import 'local/dwp-tags';
 
-*/
