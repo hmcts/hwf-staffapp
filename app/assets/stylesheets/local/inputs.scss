@@ -55,12 +55,11 @@ select {
 .field-wrapper {
   border: 1px solid $grey-2;
   width: auto;
-
   display: inline-block;
 
 
   .prefix {
-    padding: 5px 10px;
+    padding: 0.7em;
     background-color: $grey-3;
     float: left;
   }
@@ -74,6 +73,9 @@ select {
     float: left;
     padding: 5px 4px 3px 9px;
   }
+  #online_search_reference {
+    width: 80% !important;
+  }
 }
 
 .new_completed_search {
@@ -85,21 +87,8 @@ select {
     height: 40px;
   }
 
-  .search-button {
-    position: absolute;
-    right: 0;
-    height: 38px;
-    margin-left: 0;
-    border: none;
-    overflow: hidden;
-    cursor: pointer;
-    background-color: #00823b;
-    color: #fff;
-    box-shadow: 0 2px 0 #003618;
-    border: none;
-    font-size: 19px;
-    line-height: 1.3157894737;
-    padding: 8px 15px;
+  .govuk-button {
+    margin-left: 11px;
   }
   .search-button:hover {
     background-color: #00692f;

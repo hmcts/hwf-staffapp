@@ -24,6 +24,13 @@
   }
 }
 
+#process-application .flexi, #process-online-application .flexi {
+  height: 187px;
+  .govuk-button {
+    margin-bottom: 0;
+  }
+}
+
 .panel-indent {
   clear: both;
   border-left: 4px solid #bfc1c3;
@@ -99,7 +106,7 @@
   }
 }
 
-.grid-row.staff-panels {
+.govuk-grid-row.staff-panels {
   margin-top: 30px;
 }
 
