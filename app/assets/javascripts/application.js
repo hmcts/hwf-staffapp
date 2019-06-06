@@ -29,7 +29,6 @@
 //= require equal_height_boxes
 //= require cookies
 //= require login
-//= require fee_field
 //= require close_alerts
 //= require data_layer_push
 //= require gtm_track_timestamps

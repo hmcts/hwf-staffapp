@@ -12,8 +12,6 @@
         .field-wrapper
           span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control', type: 'number', step: '0.01' }
-        .js-hidden#large-fee-message
-          .warning Before you continue, check that the fee amount is correct.
 
       .form-group
         fieldset
