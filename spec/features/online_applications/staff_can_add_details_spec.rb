@@ -57,7 +57,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   end
 
   def then_the_application_fails_to_save
-    expect(page).to have_content 'Enter the fee'
+    expect(page).to have_content 'Enter a court or tribunal fee'
     expect(page).to have_content 'You must select a jurisdiction'
   end
 end
