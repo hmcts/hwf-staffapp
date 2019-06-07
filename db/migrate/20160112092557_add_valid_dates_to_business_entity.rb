@@ -1,4 +1,4 @@
-class AddValidDatesToBusinessEntity < ActiveRecord::Migration
+class AddValidDatesToBusinessEntity < ActiveRecord::Migration[5.2]
   def up
     add_column :business_entities, :valid_from, :datetime
     add_column :business_entities, :valid_to, :datetime

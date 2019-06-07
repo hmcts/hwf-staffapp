@@ -1,4 +1,4 @@
-class AddOnlineApplicationTables < ActiveRecord::Migration
+class AddOnlineApplicationTables < ActiveRecord::Migration[5.2]
   def change
     create_table :online_failures do |t|
       t.text :received_data, null: false

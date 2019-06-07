@@ -1,4 +1,4 @@
-class AddBusinessEntityToApplication < ActiveRecord::Migration
+class AddBusinessEntityToApplication < ActiveRecord::Migration[5.2]
   def up
     add_reference :applications, :business_entity, index: true, null: true, foreign_key: true
 

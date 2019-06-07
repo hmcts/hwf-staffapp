@@ -1,4 +1,4 @@
-class AddDecisionDateAndDecisionCostToApplication < ActiveRecord::Migration
+class AddDecisionDateAndDecisionCostToApplication < ActiveRecord::Migration[5.2]
   def change
     change_table :applications do |t|
       t.datetime :decision_date, null: true, index: true

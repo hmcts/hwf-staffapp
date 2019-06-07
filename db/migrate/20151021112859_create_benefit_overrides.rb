@@ -1,4 +1,4 @@
-class CreateBenefitOverrides < ActiveRecord::Migration
+class CreateBenefitOverrides < ActiveRecord::Migration[5.2]
   def change
     create_table :benefit_overrides do |t|
       t.references :application, index: true, null: false
