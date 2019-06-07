@@ -56,7 +56,9 @@ table.income {
   }
 }
 
-table.search-results {
+table.search-results.govuk-table {
+  font-size: 16px !important;
+
   th {
     position: relative;
     padding-right: 10px;
