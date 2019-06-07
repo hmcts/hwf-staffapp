@@ -1,4 +1,4 @@
-class RenameSpotcheckToEvidenceCheck < ActiveRecord::Migration
+class RenameSpotcheckToEvidenceCheck < ActiveRecord::Migration[5.2]
   def change
     rename_table :spotchecks, :evidence_checks
   end

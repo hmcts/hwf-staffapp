@@ -1,4 +1,4 @@
-class AddTimestampsToBenefitCheck < ActiveRecord::Migration
+class AddTimestampsToBenefitCheck < ActiveRecord::Migration[5.2]
   def up
     change_table(:benefit_checks) { |t| t.timestamps }
     migrate_sql = <<-SQL.gsub(/^\s+\|/, '')

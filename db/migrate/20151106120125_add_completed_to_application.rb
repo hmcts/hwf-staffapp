@@ -1,4 +1,4 @@
-class AddCompletedToApplication < ActiveRecord::Migration
+class AddCompletedToApplication < ActiveRecord::Migration[5.2]
   def up
     add_column :applications, :completed_at, :datetime
     add_reference :applications, :completed_by, references: :users
