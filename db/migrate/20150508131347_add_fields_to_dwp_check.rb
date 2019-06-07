@@ -1,4 +1,4 @@
-class AddFieldsToDwpCheck < ActiveRecord::Migration
+class AddFieldsToDwpCheck < ActiveRecord::Migration[5.2]
   def change
     add_column :dwp_checks, :our_api_token, :string
     add_reference :dwp_checks, :office, index: true, foreign_key: true

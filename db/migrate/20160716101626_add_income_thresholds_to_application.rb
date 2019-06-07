@@ -1,4 +1,4 @@
-class AddIncomeThresholdsToApplication < ActiveRecord::Migration
+class AddIncomeThresholdsToApplication < ActiveRecord::Migration[5.2]
   def change
     change_table :applications do |t|
       t.boolean :income_min_threshold_exceeded, null: true

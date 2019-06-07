@@ -1,4 +1,4 @@
-class AddCalculatorFieldsToApplication < ActiveRecord::Migration
+class AddCalculatorFieldsToApplication < ActiveRecord::Migration[5.2]
   def change
     add_column :applications, :application_type, :string
     add_column :applications, :application_outcome, :string

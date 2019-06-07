@@ -1,4 +1,4 @@
-class CorrectApplicationOutcomeBasedOnBenefitOverride < ActiveRecord::Migration
+class CorrectApplicationOutcomeBasedOnBenefitOverride < ActiveRecord::Migration[5.2]
   def change
     counter = 0
     BenefitOverride.all.each do |bo|

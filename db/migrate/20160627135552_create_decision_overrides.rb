@@ -1,4 +1,4 @@
-class CreateDecisionOverrides < ActiveRecord::Migration
+class CreateDecisionOverrides < ActiveRecord::Migration[5.2]
   def change
     create_table :decision_overrides do |t|
       t.references :user, index: true, foreign_key: true

@@ -1,4 +1,4 @@
-class MigrateDecisionToApplication < ActiveRecord::Migration
+class MigrateDecisionToApplication < ActiveRecord::Migration[5.2]
   def up
     DecisionMigration.new.run!
   end

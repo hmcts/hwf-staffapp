@@ -1,4 +1,4 @@
-class AddReferenceToApplicationAndDropReferences < ActiveRecord::Migration
+class AddReferenceToApplicationAndDropReferences < ActiveRecord::Migration[5.2]
   def up
     # later on, this column would ideally be set to NOT NULL
     add_column :applications, :reference, :string, null: true

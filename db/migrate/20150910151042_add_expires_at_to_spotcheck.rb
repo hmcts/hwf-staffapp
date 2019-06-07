@@ -1,4 +1,4 @@
-class AddExpiresAtToSpotcheck < ActiveRecord::Migration
+class AddExpiresAtToSpotcheck < ActiveRecord::Migration[5.2]
   def up
     add_column :spotchecks, :expires_at, :datetime
 

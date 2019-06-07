@@ -1,4 +1,4 @@
-class CreateR2Calculators < ActiveRecord::Migration
+class CreateR2Calculators < ActiveRecord::Migration[5.2]
   def change
     create_table :r2_calculators do |t|
       t.decimal :fee

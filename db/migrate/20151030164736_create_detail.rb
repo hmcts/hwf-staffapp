@@ -1,4 +1,4 @@
-class CreateDetail < ActiveRecord::Migration
+class CreateDetail < ActiveRecord::Migration[5.2]
   COLUMNS = {
     fee: :decimal,
     jurisdiction_id: :integer,

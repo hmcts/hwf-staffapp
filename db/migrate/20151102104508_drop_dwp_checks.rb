@@ -1,4 +1,4 @@
-class DropDwpChecks < ActiveRecord::Migration
+class DropDwpChecks < ActiveRecord::Migration[5.2]
   def change
     drop_table :dwp_checks do |t|
       t.string   "last_name"

@@ -1,4 +1,4 @@
-class CreateEvidenceCheckFlag < ActiveRecord::Migration
+class CreateEvidenceCheckFlag < ActiveRecord::Migration[5.2]
   def change
     create_table :evidence_check_flags do |t|
       t.string :ni_number

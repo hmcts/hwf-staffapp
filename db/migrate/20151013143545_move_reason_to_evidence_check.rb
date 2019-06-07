@@ -1,4 +1,4 @@
-class MoveReasonToEvidenceCheck < ActiveRecord::Migration
+class MoveReasonToEvidenceCheck < ActiveRecord::Migration[5.2]
   def up
     add_column :evidence_checks, :incorrect_reason, :string, null: true
 

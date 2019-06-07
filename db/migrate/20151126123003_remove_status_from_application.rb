@@ -1,4 +1,4 @@
-class RemoveStatusFromApplication < ActiveRecord::Migration
+class RemoveStatusFromApplication < ActiveRecord::Migration[5.2]
   def change
     remove_column :applications, :status, :string
   end

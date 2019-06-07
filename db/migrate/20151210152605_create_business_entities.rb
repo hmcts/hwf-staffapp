@@ -1,4 +1,4 @@
-class CreateBusinessEntities < ActiveRecord::Migration
+class CreateBusinessEntities < ActiveRecord::Migration[5.2]
   def up
     create_table :business_entities do |t|
       t.references :office, null: false, index: true

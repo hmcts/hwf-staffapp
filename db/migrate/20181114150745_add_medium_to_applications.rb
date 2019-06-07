@@ -1,4 +1,4 @@
-class AddMediumToApplications < ActiveRecord::Migration
+class AddMediumToApplications < ActiveRecord::Migration[5.2]
   def change
     add_column :applications, :medium, :string
 
