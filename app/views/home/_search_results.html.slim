@@ -2,40 +2,40 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
   = t("search_results.title")
 
 - if list.present?
-  table.search-results
-    caption.visuallyhidden = t("search_results.title")
-    thead
-      tr.align-top
+  table.search-results.govuk-table
+    caption.visuallyhidden.govuk-table__caption = t("search_results.title")
+    thead.govuk-table__head
+      tr.align-top.govuk-table__row
         - if list.count == 1
           - search_table_headers.each do |header_key|
-            th
+            th.govuk-table__header
               = t("#{type}.table_header.#{header_key}")
         - else
           - search_table_headers.each do |header_key|
-            th class="#{sort_link_class(header_key)}"
+            th class="#{sort_link_class(header_key)} govuk-table__header"
               = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key)
 
     tbody
       - list.each do |record|
-        tr
+        tr.govuk-table__row
           - if record.reference.blank?
-            td = link_to t("#{type}.table.missing_reference"), application_personal_informations_path(record)
+            td.govuk-table__cell = link_to t("#{type}.table.missing_reference"), application_personal_informations_path(record)
           - else
-            td = link_to record.reference, path_for_application_based_on_state(record)
-          td = record.created_at.strftime(Date::DATE_FORMATS[:default])
-          td = record.applicant.first_name
-          td = record.applicant.last_name
-          td = record.detail.try(:case_number)
-          td = number_to_currency(record.detail.try(:fee), unit: '£', precision: 2)
-          td = number_to_currency(record.decision_cost || 0, unit: '£', precision: 2)
+            td class="govuk-table__cell" = link_to record.reference, path_for_application_based_on_state(record)
+          td.govuk-table__cell = record.created_at.strftime(Date::DATE_FORMATS[:default])
+          td.govuk-table__cell = record.applicant.first_name
+          td.govuk-table__cell = record.applicant.last_name
+          td.govuk-table__cell = record.detail.try(:case_number)
+          td.govuk-table__cell = number_to_currency(record.detail.try(:fee), unit: '£', precision: 2)
+          td.govuk-table__cell = number_to_currency(record.decision_cost || 0, unit: '£', precision: 2)
           - if record.decision_date.present?
-            td = record.decision_date.strftime(Date::DATE_FORMATS[:default])
+            td.govuk-table__cell = record.decision_date.strftime(Date::DATE_FORMATS[:default])
           - else
-            td = t("#{type}.table.missing_decision_date")
-      tr
-        td colspan="5"
+            td.govuk-table__cell = t("#{type}.table.missing_decision_date")
+      tr.govuk-table__row
+        td.govuk-table__cell colspan="5"
           = will_paginate list, inner_window: 1, link_separator: nil, params: { anchor: 'new_completed_search' }
-        td colspan="5"
+        td.govuk-table__cell colspan="5"
           .pagination-info
             = formatted_results_count(list)
 

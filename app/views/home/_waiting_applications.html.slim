@@ -2,20 +2,20 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
   =t("#{type}.dashboard.heading")
 
 - if list.present?
-  table *{class: "waiting-for-#{type}"}
-    caption.visuallyhidden =t("#{type}.dashboard.caption")
-    thead
-      tr
-        th =t("#{type}.dashboard.table_header.reference")
-        th =t("#{type}.dashboard.table_header.applicant")
-        th =t("#{type}.dashboard.table_header.processed_by")
-        th =t("#{type}.dashboard.table_header.processed_on")
-    tbody
+  table *{class: "govuk-table waiting-for-#{type}"}
+    caption.visuallyhidden =t("#{type}.dashboard.caption govuk-table__caption")
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header =t("#{type}.dashboard.table_header.reference")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.processed_by")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.processed_on")
+    tbody.govuk-table__body
       - list.each do |record|
-        tr
-          td =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
-          td =record.applicant
-          td =record.processed_by
-          td =record.processed_on
+        tr.govuk-table__row"
+          td.govuk-table__cell =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
+          td.govuk-table__cell =record.applicant
+          td.govuk-table__cell =record.processed_by
+          td.govuk-table__cell =record.processed_on
 - else
   p =t("#{type}.dashboard.no_records")
