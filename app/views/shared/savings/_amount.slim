@@ -1,4 +1,4 @@
-.form-group.panel-indent.util-mt-0
+.govuk-form-group.panel-indent.util-mt-0
   = f.label :amount, t('amount', scope: @form.i18n_scope), class: 'form-label'
   = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
   .field-wrapper
