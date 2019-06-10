@@ -4,7 +4,7 @@ header
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
   .govuk-form-group
-    = f.label :current_password, class: 'form-label'
+    = f.label :current_password, class: 'govuk-label'
       = t('activerecord.attributes.user.current_password')
     = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
     = f.password_field :current_password, autofocus: true, class: 'form-control'

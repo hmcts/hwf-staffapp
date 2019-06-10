@@ -12,7 +12,7 @@
       .govuk-form-group
         fieldset
           legend.visuallyhidden Does the applicant receive benefits?
-          = f.label :benefits, class: 'form-label'
+          = f.label :benefits, class: 'govuk-label'
           = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
           = f.hidden_field :benefits, value: nil
           .options.radio.cf

@@ -12,7 +12,7 @@
       .govuk-form-group
         fieldset
           legend.visuallyhidden Paper evidence
-          = f.label :evidence, class: 'form-label'
+          = f.label :evidence, class: 'govuk-label'
           = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
           .options.radio.cf
             .option
