@@ -1,7 +1,7 @@
 = form_for @form, as: :application, url: application_savings_investments_path, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       header
         h2.heading-xlarge =t('header', scope: @form.i18n_scope)
 
@@ -67,7 +67,7 @@
               th Fee
               td £#{@application.detail.fee.floor}
 
-    .column-one-third
+    .govuk-grid-column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Savings and investments
         p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'

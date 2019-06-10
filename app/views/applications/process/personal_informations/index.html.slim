@@ -1,7 +1,7 @@
 = form_for @form, as: :application, url: :application_personal_informations, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
 
       header
         h2.heading-xlarge Personal details
@@ -64,7 +64,7 @@
 
       = f.submit 'Next', :class => 'button primary'
 
-    .column-one-third
+    .govuk-grid-column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Before you start
         p Check the statement of truth has been signed.

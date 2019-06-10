@@ -1,7 +1,7 @@
 = form_for @form, as: :evidence, url: :income_save_evidence, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       header
         h2.heading-xlarge Income
 
@@ -14,7 +14,7 @@
 
       = f.submit 'Next', :class => 'button primary'
 
-    .column-one-third
+    .govuk-grid-column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Total monthly income
         ul.list.list-bullet

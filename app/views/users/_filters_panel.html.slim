@@ -1,6 +1,6 @@
 div#staff-filters.panel
-  div.grid-row
-    div.column-third
+  div.govuk-grid-row
+    div.govuk-grid-column-third
       h2.heading-small Last logged in filter
       = form_tag users_path, method: :get do
         div.util_mb-tiny
@@ -12,7 +12,7 @@ div#staff-filters.panel
         div
           = submit_tag "Filter", class: 'button'
           = link_to 'Clear', users_path, { class: 'button' }
-    div.column-two-thirds.util_mt-small
+    div.govuk-grid-column-two-thirds.util_mt-small
       p You can use this filter to see whether members of staff have not logged in within the last three months.
       p If you are a Manager, please select 'inactive' from the Activity drop-down list and then click on the Filter button. You will then see all your members of staff who have not logged in within the last three months (Please ignore the greyed-out Offices drop-down list which is for Admin users only).
       p To clear the filter, click on the Clear button.

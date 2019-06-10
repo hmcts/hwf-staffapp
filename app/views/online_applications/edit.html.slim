@@ -1,7 +1,7 @@
 = form_for @form, as: :online_application, url: online_application_path, method: :put, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       header
         h2.heading-xlarge Application details
 
@@ -73,7 +73,7 @@
 
       = f.submit 'Next', class: 'button primary'
 
-    .column-one-third
+    .govuk-grid-column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Emergency cases
 

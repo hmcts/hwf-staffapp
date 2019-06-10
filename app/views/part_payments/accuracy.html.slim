@@ -1,11 +1,11 @@
-.grid-row
-  .column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
     header
       h2.heading-xlarge Part-payment details
 
     = render 'shared/forms/accuracy', { form: @form, model: :part_payment, url: :accuracy_save_part_payment }
 
-  .column-one-third
+  .govuk-grid-column-one-third
     .guidance
       h4.heading-medium.util_mt-medium Before you start
       h5.heading-small Check the part-payment:
