@@ -13,7 +13,7 @@ Feature: Application details page
       Then I should see enter a valid form number error message
     
     Scenario: Leaving fee blank
-      When I submit the form without a fee number
+      When I submit the form without a fee amount
       Then I should see enter a fee error message
 
     Scenario: Fee is £20,000 or over

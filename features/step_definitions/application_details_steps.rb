@@ -30,7 +30,7 @@ Then(/^I should see you entered the help with fees form number error message$/) 
   expect(application_details_page.content).to have_invalid_form_number_message
 end
 
-When(/^I submit the form without a fee number$/) do
+When(/^I submit the form without a fee amount$/) do
   next_page
 end
 
