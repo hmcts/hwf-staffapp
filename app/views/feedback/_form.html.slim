@@ -10,15 +10,15 @@
   hr
 
   .govuk-form-group
-    = f.label :experience, class: 'form-label'
+    = f.label :experience, class: 'govuk-label'
     = f.text_area :experience, rows: 3, class: 'form-control'
 
   .govuk-form-group
-    = f.label :ideas, class: 'form-label'
+    = f.label :ideas, class: 'govuk-label'
     = f.text_area :ideas, rows: 3, class: 'form-control'
 
   .govuk-form-group
-    = f.label :rating, class: 'form-label'
+    = f.label :rating, class: 'govuk-label'
     .options.radio.cf
       .option
         = f.label :rating_1, class: 'block-label'
@@ -42,7 +42,7 @@
           |5 - very good
 
   .govuk-form-group
-    = f.label :help, class: 'form-label'
+    = f.label :help, class: 'govuk-label'
     .options.radio.cf
       .option
         = label_tag 'help_score_1', class: 'block-label'

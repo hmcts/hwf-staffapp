@@ -1,10 +1,10 @@
 = form_for @user do |f|
   .govuk-form-group
-    = f.label :name, class: 'form-label'
+    = f.label :name, class: 'govuk-label'
     = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
   .govuk-form-group
-    = f.label :email, class: 'form-label'
+    = f.label :email, class: 'govuk-label'
     = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
     = f.text_field :email, { class: 'form-control' }
 

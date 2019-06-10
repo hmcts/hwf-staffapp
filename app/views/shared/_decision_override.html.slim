@@ -10,7 +10,7 @@
           .govuk-form-group
             fieldset
               legend.visuallyhidden Reasons for granting help with fees
-              = f.label :value, class: 'form-label'
+              = f.label :value, class: 'govuk-label'
               = f.label :value, @form.errors[:value].join(', '), class: 'error' if @form.errors[:value].present?
               = f.hidden_field :value, value: nil
               .options.radio.cf
@@ -25,7 +25,7 @@
                       = f.radio_button :value, :other, { class: 'show-hide-section', data: { section: 'discretion-reason', show: 'false' } }
                       = t('option_other', scope: @form.i18n_scope)
                   .govuk-form-group.panel-indent.start-hidden#discretion-reason-only
-                    = f.label :reason, class: 'form-label'
+                    = f.label :reason, class: 'govuk-label'
                     = f.label :reason, @form.errors[:reason].join(', '), class: 'error' if @form.errors[:reason].present?
                     = f.text_area :reason, rows: 3, class: 'form-control'
 

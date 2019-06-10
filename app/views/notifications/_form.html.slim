@@ -1,6 +1,6 @@
 = form_for(@notification, url: notifications_path, action: :patch) do |f|
   .govuk-form-group
-    = f.label :message, class: 'form-label'
+    = f.label :message, class: 'govuk-label'
     = f.text_area :message, cols: '70', rows: '7', :class => 'ckeditor'
 
   .govuk-form-group

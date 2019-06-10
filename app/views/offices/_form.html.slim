@@ -1,7 +1,7 @@
 = form_for @office do |f|
 
   .govuk-form-group
-    = f.label :name, t('functions.offices.label_name'), class: 'form-label'
+    = f.label :name, t('functions.offices.label_name'), class: 'govuk-label'
     = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
 
@@ -13,7 +13,7 @@
       .govuk-form-group
         fieldset
           legend.visuallyhidden Jurisdictions
-          = f.label :jurisdictions, class: 'form-label'
+          = f.label :jurisdictions, class: 'govuk-label'
           = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
           .options.radio.cf
               =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|

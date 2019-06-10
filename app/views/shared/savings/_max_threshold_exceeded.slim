@@ -1,7 +1,7 @@
 .govuk-form-group.panel-indent.util-mt-0
   fieldset
     legend.visuallyhidden Maximum savings
-    = f.label :max_threshold_exceeded, t('max_threshold_exceeded', scope: @form.i18n_scope), class: 'form-label'
+    = f.label :max_threshold_exceeded, t('max_threshold_exceeded', scope: @form.i18n_scope), class: 'govuk-label'
     = f.label :max_threshold_exceeded, @form.errors[:max_threshold_exceeded].join(', '), class: 'error' if @form.errors[:max_threshold_exceeded].present?
     = f.hidden_field :max_threshold_exceeded, value: nil
     .options.radio.cf

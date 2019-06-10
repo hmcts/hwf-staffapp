@@ -1,5 +1,5 @@
 .govuk-form-group
-  label.form-label Main jurisdiction
+  label.govuk-label Main jurisdiction
   = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error' if @user.errors[:jurisdiction_id].present?
   - if @jurisdictions.present?
     .options.radio.cf
