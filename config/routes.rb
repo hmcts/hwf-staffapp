@@ -37,11 +37,15 @@ Rails.application.routes.draw do
     get 'summary', to: 'applications/process/summary#index'
     post 'summary', to: 'applications/process/summary#create'
 
+    get 'approve', to: 'applications/process/details#approve'
+    put 'approve', to: 'applications/process/details#approve_save'
   end
 
   resources :online_applications, only: [:edit, :update, :show] do
     member do
       post :complete
+      get 'approve', to: 'online_applications#approve'
+      put 'approve', to: 'online_applications#approve_save'
     end
   end
 

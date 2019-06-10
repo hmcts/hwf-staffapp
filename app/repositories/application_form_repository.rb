@@ -1,6 +1,5 @@
 class ApplicationFormRepository
-  include Rails.application.routes.url_helpers
-  attr_reader :application, :form_params, :redirect_url, :form
+  attr_reader :application, :form_params, :form
 
   def initialize(application, form_params)
     @application = application
@@ -12,7 +11,6 @@ class ApplicationFormRepository
     form_class = format_form_class_name(form_name)
     @form = form_class.new(application.detail)
     update_form_attributes_and_save
-    assign_template_path
     udpate_outcome
     @form
   end
@@ -39,16 +37,6 @@ class ApplicationFormRepository
 
   def application_outcome_and_type(outcome, application_type)
     application.update(outcome: outcome, application_type: application_type)
-  end
-
-  def assign_template_path
-    return if @form.errors.present?
-    @redirect_url = next_page_url
-  end
-
-  def next_page_url
-    return application_savings_investments_path(application) if continue_with_discretion_applied?
-    application_summary_path(application)
   end
 
   def udpate_outcome

@@ -12,6 +12,8 @@ RSpec.describe OnlineApplicationPolicy, type: :policy do
     it { is_expected.to permit_action(:update) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:complete) }
+    it { is_expected.to permit_action(:approve) }
+    it { is_expected.to permit_action(:approve_save) }
   end
 
   context 'for manager' do
@@ -21,6 +23,8 @@ RSpec.describe OnlineApplicationPolicy, type: :policy do
     it { is_expected.to permit_action(:update) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:complete) }
+    it { is_expected.to permit_action(:approve) }
+    it { is_expected.to permit_action(:approve_save) }
   end
 
   context 'for admin' do

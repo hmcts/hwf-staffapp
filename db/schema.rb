@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412141132) do
+ActiveRecord::Schema.define(version: 20190610102245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "tablefunc"
 
   create_table "applicants", force: :cascade do |t|
     t.integer  "application_id", null: false
@@ -173,6 +172,8 @@ ActiveRecord::Schema.define(version: 20190412141132) do
     t.boolean  "discretion_applied"
     t.string   "discretion_manager_name"
     t.string   "discretion_reason"
+    t.string   "fee_manager_firstname"
+    t.string   "fee_manager_lastname"
   end
 
   add_index "details", ["application_id"], name: "index_details_on_application_id", using: :btree
@@ -293,6 +294,8 @@ ActiveRecord::Schema.define(version: 20190412141132) do
     t.integer  "amount"
     t.boolean  "income_min_threshold_exceeded"
     t.boolean  "income_max_threshold_exceeded"
+    t.string   "fee_manager_firstname"
+    t.string   "fee_manager_lastname"
   end
 
   add_index "online_applications", ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id", using: :btree
