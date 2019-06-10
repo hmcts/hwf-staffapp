@@ -5,7 +5,7 @@
       header
         h2.heading-xlarge Income
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Children and income
           = f.label :dependents, class: 'form-label'
@@ -21,12 +21,12 @@
                 = t('income_true', scope: @form.i18n_scope)
 
           .panel-indent.util_mt-0.util_mb-0#children-only
-            .form-group
+            .govuk-form-group
               = f.label :children, class: 'form-label'
               = f.label :children, @form.errors[:children].join(', '), class: 'error' if @form.errors[:children].present?
               = f.text_field :children
           .panel-indent.util_mt-0#income-input
-            .form-group
+            .govuk-form-group
               = f.label :income, class: 'form-label'
               = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
               .field-wrapper

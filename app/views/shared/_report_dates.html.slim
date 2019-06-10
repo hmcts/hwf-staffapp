@@ -3,14 +3,14 @@
     h2.heading-xlarge
       = header
 
-  .form-group
+  .govuk-form-group
     = f.label :date_from, class: 'form-label'
       = t('date_from')
       span.hint.block = t('date_hint', scope: @form.i18n_scope)
     = f.label :date_from, @form.errors[:date_from].join(', '), class: 'error' if @form.errors[:date_from].present?
     = f.text_field :date_from, { class: 'form-control' }
 
-  .form-group
+  .govuk-form-group
     = f.label :date_to, class: 'form-label'
       = t('date_to')
       span.hint.block = t('date_hint', scope: @form.i18n_scope)
