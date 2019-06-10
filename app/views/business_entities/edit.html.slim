@@ -4,11 +4,11 @@ header
 = form_for [office, business_entity], method: :put do |f|
   = f.hidden_field :be_code
   .govuk-form-group
-    = f.label :sop_code, class: 'form-label'
+    = f.label :sop_code, class: 'govuk-label'
     = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
     = f.text_field :sop_code, { class: 'form-control' }
   .govuk-form-group
-    = f.label :name, class: 'form-label'
+    = f.label :name, class: 'govuk-label'
     = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
 

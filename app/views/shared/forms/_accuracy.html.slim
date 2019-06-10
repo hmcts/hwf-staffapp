@@ -1,6 +1,6 @@
 = form_for form, as: model, url: url, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .govuk-form-group
-    = f.label :correct, t("#{model}.labels.correct"), class: 'form-label'
+    = f.label :correct, t("#{model}.labels.correct"), class: 'govuk-label'
     = f.label :correct, form.errors[:correct].join(', '), class: 'error' if form.errors[:correct].present?
     .options.radio.cf
       .option
@@ -13,7 +13,7 @@
           = t("#{model}.incorrect")
 
     .panel-indent.util_mt-0#reason-input
-      = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason"), class: 'form-label'
+      = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason"), class: 'govuk-label'
       = f.label :incorrect_reason, form.errors[:incorrect_reason].join(', '), class: 'error' if form.errors[:incorrect_reason].present?
       = f.text_area :incorrect_reason, rows: 3, class: 'form-control'
 

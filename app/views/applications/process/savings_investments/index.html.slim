@@ -8,7 +8,7 @@
       .govuk-form-group
         fieldset
           legend.visuallyhidden Amount of savings
-          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
+          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
           = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
           = f.hidden_field :min_threshold_exceeded, value: nil
           .options.radio.cf
@@ -33,7 +33,7 @@
               .govuk-form-group.panel-indent.util-mt-0
                 fieldset
                   legend.visuallyhidden Applicant's partner's age
-                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
+                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'govuk-label'
                   = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
                   = f.hidden_field :over_61, value: nil
                   .options.radio.cf

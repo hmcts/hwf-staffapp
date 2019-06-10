@@ -5,22 +5,22 @@ header
   - User.invite_key_fields.each do |field|
 
     .govuk-form-group
-      = f.label :name, class: 'form-label'
+      = f.label :name, class: 'govuk-label'
       = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
       = f.text_field :name, class: 'form-control'
 
     .govuk-form-group
-      = f.label field, class: 'form-label'
+      = f.label field, class: 'govuk-label'
       = f.label field, @user.errors[field].join(', ').html_safe, class: 'error' if @user.errors[field].present?
       = f.text_field field, class: 'form-control'
 
   .govuk-form-group
-    = f.label(:roles, 'Role', class: 'form-label')
+    = f.label(:roles, 'Role', class: 'govuk-label')
     = f.collection_select :role, @roles, :to_s, :humanize
 
   -if current_user.admin?
     .govuk-form-group
-      = f.label(:office_id, 'Office', class: 'form-label')
+      = f.label(:office_id, 'Office', class: 'govuk-label')
       = f.collection_select :office_id, @offices, :id, :name
   -elsif current_user.manager?
     = f.hidden_field :office_id, value: current_user.office.id
