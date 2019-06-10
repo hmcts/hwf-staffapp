@@ -3,4 +3,4 @@
   = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
   .field-wrapper
     span.prefix £
-    = f.text_field :amount, { class: 'form-control' }
+    = f.text_field :amount, { class: 'govuk-input' }

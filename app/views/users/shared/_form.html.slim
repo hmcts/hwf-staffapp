@@ -2,11 +2,11 @@
   .govuk-form-group
     = f.label :name, class: 'govuk-label'
     = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
-    = f.text_field :name, { class: 'form-control' }
+    = f.text_field :name, { class: 'govuk-input' }
   .govuk-form-group
     = f.label :email, class: 'govuk-label'
     = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
-    = f.text_field :email, { class: 'form-control' }
+    = f.text_field :email, { class: 'govuk-input' }
 
   = render(partial: 'users/shared/form_roles', locals: {f: f})
 

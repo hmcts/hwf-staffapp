@@ -3,7 +3,7 @@
   .govuk-form-group
     = f.label :name, t('functions.offices.label_name'), class: 'govuk-label'
     = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
-    = f.text_field :name, { class: 'form-control' }
+    = f.text_field :name, { class: 'govuk-input' }
 
   - if with_jurisdictions
     -if @jurisdictions.count.eql?(0)

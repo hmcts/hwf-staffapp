@@ -7,12 +7,12 @@ header
     .govuk-form-group
       = f.label :name, class: 'govuk-label'
       = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
-      = f.text_field :name, class: 'form-control'
+      = f.text_field :name, class: 'govuk-input'
 
     .govuk-form-group
       = f.label field, class: 'govuk-label'
       = f.label field, @user.errors[field].join(', ').html_safe, class: 'error' if @user.errors[field].present?
-      = f.text_field field, class: 'form-control'
+      = f.text_field field, class: 'govuk-input'
 
   .govuk-form-group
     = f.label(:roles, 'Role', class: 'govuk-label')

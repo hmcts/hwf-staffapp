@@ -12,11 +12,11 @@ header
       =t('activerecord.attributes.user.new_password')
       span.hint.block =t('activerecord.attributes.user.new_password_hint')
     = f.label :password, resource.errors[:password].join(', ').html_safe, class: 'error' if resource.errors[:password].present?
-    = f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control'
+    = f.password_field :password, autofocus: true, autocomplete: "off", class: 'govuk-input'
 
   .govuk-form-group
     = f.label :password_confirmation, class: 'govuk-label'
     = f.label :password_confirmation, resource.errors[:password_confirmation].join(', ').html_safe, class: 'error' if resource.errors[:password_confirmation].present?
-    = f.password_field :password_confirmation, autofocus: true, autocomplete: "off", class: 'form-control'
+    = f.password_field :password_confirmation, autofocus: true, autocomplete: "off", class: 'govuk-input'
 
   = f.submit t('devise.invitations.edit.submit_button'), class: 'button'

@@ -6,11 +6,11 @@ header
   .govuk-form-group
     = f.label :sop_code, class: 'govuk-label'
     = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
-    = f.text_field :sop_code, { class: 'form-control' }
+    = f.text_field :sop_code, { class: 'govuk-input' }
   .govuk-form-group
     = f.label :name, class: 'govuk-label'
     = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
-    = f.text_field :name, { class: 'form-control' }
+    = f.text_field :name, { class: 'govuk-input' }
 
   p.important-notice.cb.util_mb-large =t('business_entities.edit_warning', office: office.name)
 

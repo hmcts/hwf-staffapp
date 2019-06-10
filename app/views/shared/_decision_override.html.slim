@@ -27,6 +27,6 @@
                   .govuk-form-group.panel-indent.start-hidden#discretion-reason-only
                     = f.label :reason, class: 'govuk-label'
                     = f.label :reason, @form.errors[:reason].join(', '), class: 'error' if @form.errors[:reason].present?
-                    = f.text_area :reason, rows: 3, class: 'form-control'
+                    = f.text_area :reason, rows: 3, class: 'govuk-input'
 
           = f.submit 'Update application', :class => 'button'

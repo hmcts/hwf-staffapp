@@ -19,7 +19,7 @@ select {
   max-width: 92%;
 }
 
-.form-control-smaller {
+.govuk-input-smaller {
   width: 100%;
 
   @media (min-width: 641px) {
@@ -27,11 +27,11 @@ select {
   }
 }
 
-.error .form-control {
+.error .govuk-input {
   border: 1px solid $grey-2;
 }
 
-.error > .form-control {
+.error > .govuk-input {
   border: 4px solid #b10e1e;
 }
 

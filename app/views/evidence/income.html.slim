@@ -10,7 +10,7 @@
         = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :income, class: 'form-control'
+          = f.text_field :income, class: 'govuk-input'
 
       = f.submit 'Next', :class => 'button primary'
 
