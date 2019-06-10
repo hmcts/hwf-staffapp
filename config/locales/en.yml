@@ -471,7 +471,8 @@ en-GB:
         forms/application/detail:
           attributes:
             fee:
-              blank: Enter the fee
+              blank: Enter a court or tribunal fee
+              less_than: You need to enter an amount below £20,000
               not_a_number: The fee should be numeric
             jurisdiction_id:
               blank: You must select a jurisdiction
@@ -571,7 +572,8 @@ en-GB:
         forms/online_application:
           attributes:
             fee:
-              blank: Enter the fee
+              blank: Enter a court or tribunal fee
+              less_than: You need to enter an amount below £20,000
               not_a_number: The fee should be numeric
             jurisdiction_id:
               blank: You must select a jurisdiction

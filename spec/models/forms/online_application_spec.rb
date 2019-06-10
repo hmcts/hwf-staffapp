@@ -55,7 +55,7 @@ RSpec.describe Forms::OnlineApplication do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
-    it { is_expected.to validate_numericality_of(:fee) }
+    it { is_expected.to validate_numericality_of(:fee).is_less_than(20_000) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
     it { is_expected.to validate_length_of(:emergency_reason).is_at_most(500) }
 
