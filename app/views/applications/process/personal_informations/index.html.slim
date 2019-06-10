@@ -10,35 +10,37 @@
         = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title, class: 'govuk-label'
           =t('title', scope: @form.i18n_scope)
-        = f.text_field :title, { class: 'govuk-input small-field' }
+        = f.text_field :title, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :first_name, class: 'govuk-label'
           =t('first_name', scope: @form.i18n_scope)
         = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
-        = f.text_field :first_name, { class: 'govuk-input' }
+        = f.text_field :first_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :last_name, class: 'govuk-label'
         = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
-        = f.text_field :last_name, { class: 'govuk-input' }
+        = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :date_of_birth, class: 'govuk-label'
           = t('date_of_birth', scope: @form.i18n_scope)
           span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
         = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
-        .form-date
-          .govuk-form-group.govuk-form-group-day
-            = f.label :day_date_of_birth, class: 'govuk-label'
-            = f.text_field :day_date_of_birth, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-          .govuk-form-group.govuk-form-group-month
-            = f.label :month_date_of_birth, class: 'govuk-label'
-            = f.text_field :month_date_of_birth, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-          .govuk-form-group.govuk-form-group-year
-            = f.label :year_date_of_birth, class: 'govuk-label'
-            = f.text_field :year_date_of_birth, class: 'govuk-input', type:"number", pattern: "[0-9]*"
-
+        .govuk-date-input
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-day
+              = f.label :day_date_of_birth, class: 'govuk-label'
+              = f.text_field :day_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-month
+              = f.label :month_date_of_birth, class: 'govuk-label'
+              = f.text_field :month_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-year
+              = f.label :year_date_of_birth, class: 'govuk-label'
+              = f.text_field :year_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*"
 
 
 
@@ -47,22 +49,22 @@
           =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
         = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
-        = f.text_field :ni_number, { class: 'govuk-input transform-upper' }
+        = f.text_field :ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
 
       .govuk-form-group
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Select the applicant's marital status
           = f.label :married, class: 'govuk-label'
           = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
-          .options.radio.cf
-            label.block-label for='application_married_false'
-              = f.radio_button :married, 'false'
-              = t('married_false', scope: @form.i18n_scope)
-            label.block-label for='application_married_true'
-              = f.radio_button :married, 'true'
-              = t('married_true', scope: @form.i18n_scope)
+          .govuk-radios
+            .govuk-radios__item
+              = f.radio_button :married, 'false', class: 'govuk-radios__input'
+              = f.label t('married_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label'
+            .govuk-radios__item
+              = f.radio_button :married, 'true', class: 'govuk-radios__input'
+              = f.label t('married_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label'
 
-      = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', :class => 'govuk-button'
 
     .govuk-grid-column-one-third
       .guidance
