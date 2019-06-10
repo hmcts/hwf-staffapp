@@ -15,7 +15,7 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
             th class="#{sort_link_class(header_key)} govuk-table__header"
               = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key)
 
-    tbody
+    tbody.govuk-table__body
       - list.each do |record|
         tr.govuk-table__row
           - if record.reference.blank?

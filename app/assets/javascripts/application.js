@@ -17,11 +17,11 @@
 // = require ckeditor-jquery
 // = require govuk-frontend/all
 
-//vendor plugins
-//= require details.polyfill
+// vendor plugins
+// = require details.polyfill
 
-//module loader
-//= require module_loader
+// module loader
+// = require module_loader
 
 //modules
 //= require radio_checkbox_module

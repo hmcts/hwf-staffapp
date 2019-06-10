@@ -12,7 +12,7 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_on")
     tbody.govuk-table__body
       - list.each do |record|
-        tr.govuk-table__row"
+        tr.govuk-table__row
           td.govuk-table__cell =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
           td.govuk-table__cell =record.applicant
           td.govuk-table__cell =record.processed_by

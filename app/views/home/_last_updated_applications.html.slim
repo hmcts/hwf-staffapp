@@ -2,28 +2,28 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
   =t("#{type}.dashboard.heading")
 
 - if list.present?
-  table *{class: "#{type}"}
-    caption.visuallyhidden =t("#{type}.dashboard.caption")
-    thead
-      tr
-        th =t("#{type}.dashboard.table_header.reference")
-        th =t("#{type}.dashboard.table_header.id")
-        th =t("#{type}.dashboard.table_header.status")
-        th =t("#{type}.dashboard.table_header.applicant")
-        th =t("#{type}.dashboard.table_header.updated_at")
+  table *{class: "#{type} govuk-table"}
+    caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header =t("#{type}.dashboard.table_header.reference")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.id")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.status")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.updated_at")
 
 
-    tbody
+    tbody.govuk-table__body
       - list.each do |record|
-        tr
+        tr.govuk-table__row
           - if record.reference.blank?
-            td = t("#{type}.dashboard.table.missing_reference")
-            td =link_to record.id, application_personal_informations_path(record)
+            td.govuk-table__cell = t("#{type}.dashboard.table.missing_reference")
+            td.govuk-table__cell =link_to record.id, application_personal_informations_path(record)
           - else
-            td = link_to record.reference, path_for_application_based_on_state(record)
-            td =record.id
-          td =record.state
-          td =record.applicant.full_name
-          td =record.updated_at
+            td.govuk-table__cell = link_to record.reference, path_for_application_based_on_state(record)
+            td.govuk-table__cell =record.id
+          td.govuk-table__cell =record.state
+          td.govuk-table__cell =record.applicant.full_name
+          td.govuk-table__cell =record.updated_at
 - else
   p =t("#{type}.dashboard.no_records")
