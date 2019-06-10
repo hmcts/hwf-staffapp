@@ -13,7 +13,7 @@ Then(/^I should be taken to savings and investments page$/) do
   expect(savings_investments_page.content).to have_header
 end
 
-When(/^I submit the form without a number$/) do
+When(/^I submit the form without a form number$/) do
   application_details_page.submit_without_form_number
 end
 
@@ -28,4 +28,21 @@ end
 
 Then(/^I should see you entered the help with fees form number error message$/) do
   expect(application_details_page.content).to have_invalid_form_number_message
+end
+
+When(/^I submit the form without a fee number$/) do
+  next_page
+end
+
+Then(/^I should see enter a fee error message$/) do
+  expect(application_details_page.content).to have_fee_blank_error
+end
+
+Then(/^I should see error message telling me that the fee needs to be below £20,000$/) do
+  expect(application_details_page.content).to have_exceed_fee_limit_error
+end
+
+When(/^I submit the form with a fee £20,000 or over$/) do
+  fill_in 'How much is the court or tribunal fee?', with: '20000'
+  next_page
 end

@@ -9,8 +9,16 @@ Feature: Application details page
       Then I should be taken to savings and investments page
 
     Scenario: Leaving form number blank
-      When I submit the form without a number
+      When I submit the form without a form number
       Then I should see enter a valid form number error message
+    
+    Scenario: Leaving fee blank
+      When I submit the form without a fee number
+      Then I should see enter a fee error message
+
+    Scenario: Fee is £20,000 or over
+      When I submit the form with a fee £20,000 or over
+      Then I should see error message telling me that the fee needs to be below £20,000
 
     Scenario: Entering a help with fees form number
       When I submit the form with a help with fees form number 'COP44A'
