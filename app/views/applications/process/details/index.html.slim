@@ -1,7 +1,7 @@
 = form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
 
       header
         h2.heading-xlarge Application details
@@ -156,7 +156,7 @@
 
       = f.submit 'Next', class: 'button'
 
-    .column-one-third
+    .govuk-grid-column-one-third
       .guidance
         h4.heading-medium.util_mt-medium Refunds
         strong Check the refund:

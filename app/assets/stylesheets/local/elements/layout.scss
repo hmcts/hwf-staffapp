@@ -34,28 +34,28 @@
 //   </div>
 // </div>
 
-// Use .grid-row to define a row for grid columns to sit in
-.grid-row {
+// Use .govuk-grid-row to define a row for grid columns to sit in
+.govuk-grid-row {
   @extend %grid-row;
 }
 
 // Use .grid-column to create a grid column with 15px gutter
 // By default grid columns break to become full width at tablet size
-.column-quarter,
-.column-one-quarter {
+.govuk-grid-column-quarter,
+.govuk-grid-column-one-quarter {
   @include grid-column(1 / 4);
 }
 
-.column-half,
-.column-one-half {
+.govuk-grid-column-half,
+.govuk-grid-column-one-half {
   @include grid-column(1 / 2);
 }
 
-.column-third,
-.column-one-third {
+.govuk-grid-column-third,
+.govuk-grid-column-one-third {
   @include grid-column(1 / 3);
 }
 
-.column-two-thirds {
+.govuk-grid-column-two-thirds {
   @include grid-column(2 / 3);
 }
