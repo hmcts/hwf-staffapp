@@ -8,7 +8,7 @@ header
   .govuk-form-group
     = f.label :email, class: 'govuk-label'
     = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
-    = f.text_field :email, { class: 'form-control' }
+    = f.text_field :email, { class: 'govuk-input' }
 
   = f.submit t('devise.passwords.new.submit_button'), class: 'button util_mb-medium'
 

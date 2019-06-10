@@ -13,7 +13,7 @@
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
+          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input' }
 
       .govuk-form-group
         fieldset
@@ -35,24 +35,22 @@
         = f.label :date_received, class: 'govuk-label'
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         .form-date
-          .form-group.form-group-day
-            = f.label :day_date_received, class: 'form-label'
-            = f.text_field :day_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-          .form-group.form-group-month
-            = f.label :month_date_received, class: 'form-label'
-            = f.text_field :month_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-          .form-group.form-group-year
-            = f.label :year_date_received, class: 'form-label'
-            = f.text_field :year_date_received, class: 'form-control', type:"number", pattern: "[0-9]*"
-
-
+          .govuk-form-group.govuk-form-group-day
+            = f.label :day_date_received, class: 'govuk-label'
+            = f.text_field :day_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-form-group.govuk-form-group-month
+            = f.label :month_date_received, class: 'govuk-label'
+            = f.text_field :month_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-form-group.govuk-form-group-year
+            = f.label :year_date_received, class: 'govuk-label'
+            = f.text_field :year_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*"
 
       .govuk-form-group
         = f.label :form_name, class: 'govuk-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
-        = f.text_field :form_name, { class: 'form-control' }
+        = f.text_field :form_name, { class: 'govuk-input' }
 
       .govuk-form-group
         .options.radio.cf
@@ -67,7 +65,7 @@
               .govuk-form-group.panel-indent.util_mt-0
                 = f.label :emergency_reason, class: 'govuk-label'
                 = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-                = f.text_area :emergency_reason, { class: 'form-control' }
+                = f.text_area :emergency_reason, { class: 'govuk-input' }
 
       = f.submit 'Next', class: 'button primary'
 
