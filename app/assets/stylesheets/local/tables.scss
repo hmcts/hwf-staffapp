@@ -1,4 +1,5 @@
 table .right {
+  font-size: 16px !important;
   text-align: right;
 }
 
@@ -56,8 +57,12 @@ table.income {
   }
 }
 
-table.search-results.govuk-table {
+table.search-results.govuk-table, table.updated_applications,
+table.waiting-for-evidence, table.waiting-for-part_payment  {
   font-size: 16px !important;
+}
+
+table.search-results.govuk-table {
 
   th {
     position: relative;
