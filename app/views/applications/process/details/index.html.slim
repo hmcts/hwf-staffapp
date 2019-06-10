@@ -6,14 +6,14 @@
       header
         h2.heading-xlarge Application details
 
-      .form-group
+      .govuk-form-group
         = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control', type: 'number', step: '0.01' }
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Select jurisdiction
           = f.label :jurisdiction_id, class: 'form-label'
@@ -28,37 +28,37 @@
           - else
             = t('error_messages.jurisdictions.none_in_office')
 
-      .form-group
+      .govuk-form-group
         = f.label :date_received, class: 'form-label'
           =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         .form-date
-          .form-group.form-group-day
+          .govuk-form-group.govuk-form-group-day
             = f.label :day_date_received, class: 'form-label'
             = f.text_field :day_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-          .form-group.form-group-month
+          .govuk-form-group.govuk-form-group-month
             = f.label :month_date_received, class: 'form-label'
             = f.text_field :month_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-          .form-group.form-group-year
+          .govuk-form-group.govuk-form-group-year
             = f.label :year_date_received, class: 'form-label'
             = f.text_field :year_date_received, class: 'form-control', type:"number", pattern: "[0-9]*"
 
 
-      .form-group
+      .govuk-form-group
         = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
-      .form-group
+      .govuk-form-group
         = f.label :case_number, class: 'form-label'
           =t('case_number', scope: @form.i18n_scope)
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
         = f.text_field :case_number, { class: 'form-control' }
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Probate case details
           .options.radio.cf
@@ -68,24 +68,24 @@
 
           #probate-only.start-hidden
             .panel-indent
-              .form-group
+              .govuk-form-group
                 = f.label :deceased_name, class: 'form-label'
                 = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
                 = f.text_field :deceased_name, { class: 'form-control' }
 
-              .form-group
+              .govuk-form-group
                 = f.label :date_of_death, class: 'form-label'
                   = t('date_of_death', scope: @form.i18n_scope)
                   span.hint.block = t('date_hint', scope: @form.i18n_scope)
                 = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
                 .form-date
-                  .form-group.form-group-day
+                  .govuk-form-group.govuk-form-group-day
                     = f.label :day_date_of_death, class: 'form-label'
                     = f.text_field :day_date_of_death, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-                  .form-group.form-group-month
+                  .govuk-form-group.govuk-form-group-month
                     = f.label :month_date_of_death, class: 'form-label'
                     = f.text_field :month_date_of_death, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-                  .form-group.form-group-year
+                  .govuk-form-group.govuk-form-group-year
                     = f.label :year_date_of_death, class: 'form-label'
                     = f.text_field :year_date_of_death, class: 'form-control', type:"number", pattern: "[0-9]*"
 
@@ -99,19 +99,19 @@
 
           #refund-only.start-hidden
             .panel-indent
-              .form-group
+              .govuk-form-group
                 = f.label :date_fee_paid, class: 'form-label'
                   = t('date_fee_paid', scope: @form.i18n_scope)
                   span.hint.block = t('date_hint', scope: @form.i18n_scope)
                 = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
                 .form-date
-                  .form-group.form-group-day
+                  .govuk-form-group.govuk-form-group-day
                     = f.label :day_date_fee_paid, class: 'form-label'
                     = f.text_field :day_date_fee_paid, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-                  .form-group.form-group-month
+                  .govuk-form-group.govuk-form-group-month
                     = f.label :month_date_fee_paid, class: 'form-label'
                     = f.text_field :month_date_fee_paid, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-                  .form-group.form-group-year
+                  .govuk-form-group.govuk-form-group-year
                     = f.label :year_date_fee_paid, class: 'form-label'
                     = f.text_field :year_date_fee_paid, class: 'form-control', type:"number", pattern: "[0-9]*"
 
@@ -130,11 +130,11 @@
                           = t('discretion_applied_true', scope: @form.i18n_scope)
                     #discretion-applied-yes-only.start-hidden
                       .panel-indent
-                        .form-group
+                        .govuk-form-group
                           = f.label :discretion_manager_name, class: 'form-label'
                           = f.label :discretion_manager_name, @form.errors[:discretion_manager_name].join(', '), class: 'error' if @form.errors[:discretion_manager_name].present?
                           = f.text_field :discretion_manager_name, class: 'form-control'
-                        .form-group
+                        .govuk-form-group
                           = f.label :discretion_reason, class: 'form-label'
                           = f.label :discretion_reason, @form.errors[:discretion_reason].join(', '), class: 'error' if @form.errors[:discretion_reason].present?
                           = f.text_area :discretion_reason, class: 'form-control'
@@ -149,7 +149,7 @@
 
           #emergency-only.start-hidden
             .panel-indent
-              .form-group
+              .govuk-form-group
                 = f.label :emergency_reason, class: 'form-label'
                 = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
                 = f.text_area :emergency_reason, class: 'form-control'

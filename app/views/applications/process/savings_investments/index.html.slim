@@ -5,7 +5,7 @@
       header
         h2.heading-xlarge =t('header', scope: @form.i18n_scope)
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Amount of savings
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
@@ -30,7 +30,7 @@
               =f.hidden_field :over_61, value: 'false'
               =render('shared/savings/amount', f: f)
             -elsif @application.applicant.married?
-              .form-group.panel-indent.util-mt-0
+              .govuk-form-group.panel-indent.util-mt-0
                 fieldset
                   legend.visuallyhidden Applicant's partner's age
                   = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'

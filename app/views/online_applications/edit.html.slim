@@ -8,14 +8,14 @@
       p.util_mb-0 Full name
       p: strong= @online_application.full_name
 
-      .form-group
+      .govuk-form-group
         = f.label :fee, class: 'form-label'
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'form-control' }
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Jurisdictions
           = f.label :jurisdiction_id, class: 'form-label'
@@ -31,7 +31,7 @@
           - else
             = t('error_messages.jurisdictions.none_in_office')
 
-      .form-group
+      .govuk-form-group
         = f.label :date_received, class: 'form-label'
           =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
@@ -49,14 +49,14 @@
 
 
 
-      .form-group
+      .govuk-form-group
         = f.label :form_name, class: 'form-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'form-control' }
 
-      .form-group
+      .govuk-form-group
         .options.radio.cf
           fieldset
             legend.visuallyhidden Emergency case details
@@ -66,7 +66,7 @@
                 = t('emergency', scope: @form.i18n_scope)
 
             #emergency-only.start-hidden
-              .form-group.panel-indent.util_mt-0
+              .govuk-form-group.panel-indent.util_mt-0
                 = f.label :emergency_reason, class: 'form-label'
                 = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
                 = f.text_area :emergency_reason, { class: 'form-control' }

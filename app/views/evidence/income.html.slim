@@ -5,7 +5,7 @@
       header
         h2.heading-xlarge Income
 
-      .form-group
+      .govuk-form-group
         = f.label :income, class: 'form-label'
         = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
         .field-wrapper

@@ -3,7 +3,7 @@ header
 
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
-  .form-group
+  .govuk-form-group
     = f.label :current_password, class: 'form-label'
       = t('activerecord.attributes.user.current_password')
     = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
@@ -11,7 +11,7 @@ header
 
   =render( partial: '/users/shared/change_password', locals: { f: f } )
 
-  .form-group
+  .govuk-form-group
     = f.submit 'Update password', class: 'button'
 
   ul.list.list-pad

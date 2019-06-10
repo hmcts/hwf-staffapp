@@ -1,6 +1,6 @@
 = form_for @office do |f|
 
-  .form-group
+  .govuk-form-group
     = f.label :name, t('functions.offices.label_name'), class: 'form-label'
     = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
@@ -10,7 +10,7 @@
       .util_mt-medium
         p =t("#{@current_user.elevated? ? 'manager' : 'user'}_html", scope:'business_entities.not_set', email: Settings.mail.tech_support)
     -else
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Jurisdictions
           = f.label :jurisdictions, class: 'form-label'

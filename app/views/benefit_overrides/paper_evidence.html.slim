@@ -9,7 +9,7 @@
 
     = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
 
-      .form-group
+      .govuk-form-group
         fieldset
           legend.visuallyhidden Paper evidence
           = f.label :evidence, class: 'form-label'

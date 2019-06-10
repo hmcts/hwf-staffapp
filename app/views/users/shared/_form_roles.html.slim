@@ -1,4 +1,4 @@
-.form-group
+.govuk-form-group
   = f.label(:roles, 'Role', class: 'form-label')
   = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error' if @user.errors[:role].present?
   -if current_user.elevated?

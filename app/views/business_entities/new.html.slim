@@ -2,11 +2,11 @@ header
   h2.heading-large New business entity for #{jurisdiction.name} in #{office.name}
 
 = form_for [office, business_entity], url: office_business_entities_url(jurisdiction_id: jurisdiction.id), method: :post do |f|
-  .form-group
+  .govuk-form-group
     = f.label :sop_code, class: 'form-label'
     = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
     = f.text_field :sop_code, { class: 'form-control' }
-  .form-group
+  .govuk-form-group
     = f.label :name, class: 'form-label'
     = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
     = f.text_field :name, { class: 'form-control' }
