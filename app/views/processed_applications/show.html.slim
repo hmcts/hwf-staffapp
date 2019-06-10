@@ -13,7 +13,7 @@
         .govuk-form-group
           = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope), class: 'govuk-label'
           = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
-          = f.text_field :deleted_reason, class: 'form-control'
+          = f.text_field :deleted_reason, class: 'govuk-input'
 
         = f.submit 'Delete application', :class => 'button'
 

@@ -1,4 +1,4 @@
 .govuk-form-group
   = f.label :office_id, class: 'govuk-label'
   = f.label :office_id, @user.errors[:office_id].join(', ').html_safe, class: 'error' if @user.errors[:office_id].present?
-  = f.collection_select :office_id, @offices, :id, :name, { class: 'form-control' }
+  = f.collection_select :office_id, @offices, :id, :name, { class: 'govuk-input' }
