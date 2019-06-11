@@ -30,6 +30,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def allowed_params
+    return {} if params[:benefit_override].blank?
     params.require(:benefit_override).
       permit(*Forms::BenefitsEvidence.permitted_attributes.keys).to_h
   end

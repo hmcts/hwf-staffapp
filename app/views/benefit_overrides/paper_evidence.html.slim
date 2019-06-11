@@ -13,25 +13,24 @@
         fieldset
           legend.visuallyhidden Paper evidence
           = f.label :evidence, class: 'govuk-label'
-          = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
-          .options.radio.cf
-            .option
-              label.block-label for='benefit_override_evidence_false'
-                = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
-                = t('evidence_false', scope: @form.i18n_scope)
-            .option
-              label.block-label for='benefit_override_evidence_true'
-                = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
-                = t('evidence_true', scope: @form.i18n_scope)
+          span#changed-name-error.govuk-error-message
+            = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :evidence, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('evidence_false', scope: @form.i18n_scope), for: 'benefit_override_evidence_false', class: 'govuk-label govuk-radios__label'
+            .govuk-radios__item
+              = f.radio_button :evidence, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' } }
+              = f.label t('evidence_true', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
 
-      = f.submit 'Next', class: 'button primary'
+      = f.submit 'Next', class: 'govuk-button'
 
   .govuk-grid-column-one-third
     .guidance
-      h4.govuk-heading-m.util_mt-medium Paper evidence
+      h4.govuk-heading-m Paper evidence
       p You may need to check paper evidence to confirm the applicant is receiving benefits. This is usually an official letter.
       p: strong For example when:
-      ul.list.list-bullet
+      ul.govuk-list.govuk-list--bullet
         li the applicant hasn't provided their National Insurance number
         li the applicant recently started receiving benefits but the Department for Work and Pensions is not up to date
         li the applicant receives joint benefits and the benefit is in the applicant's partner's name

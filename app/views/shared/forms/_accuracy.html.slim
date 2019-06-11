@@ -17,4 +17,4 @@
       = f.label :incorrect_reason, form.errors[:incorrect_reason].join(', '), class: 'error' if form.errors[:incorrect_reason].present?
       = f.text_area :incorrect_reason, rows: 3, class: 'govuk-input'
 
-  = f.submit 'Next', :class => 'button primary'
+  = f.submit 'Next', class: 'govuk-button'
