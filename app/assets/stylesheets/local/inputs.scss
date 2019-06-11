@@ -56,7 +56,8 @@ select {
   border: 1px solid $grey-2;
   width: auto;
   display: inline-block;
-
+  border-color: $govuk-input-border-colour;
+  border-width: 2px;
 
   .prefix {
     padding: 0.7em;
@@ -123,4 +124,8 @@ select {
     height: 40px;
     margin-left: 10px;
   }
+}
+
+fieldset {
+  border: none;
 }

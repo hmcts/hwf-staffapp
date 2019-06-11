@@ -7,7 +7,8 @@
         h2.govuk-heading-xl Personal details
 
       .govuk-form-group
-        = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title, class: 'govuk-label'
           =t('title', scope: @form.i18n_scope)
         = f.text_field :title, { class: 'govuk-input govuk-!-width-one-half' }
@@ -15,19 +16,22 @@
       .govuk-form-group
         = f.label :first_name, class: 'govuk-label'
           =t('first_name', scope: @form.i18n_scope)
-        = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :last_name, class: 'govuk-label'
-        = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
         = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :date_of_birth, class: 'govuk-label'
           = t('date_of_birth', scope: @form.i18n_scope)
           span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
-        = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
         .govuk-date-input
           .govuk-date-input__item
             .govuk-form-group.govuk-form-group-day
@@ -48,21 +52,24 @@
         = f.label :ni_number, class: 'govuk-label'
           =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
-        = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
+          span#changed-name-error.govuk-error-message
+            = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
 
       .govuk-form-group
         fieldset.govuk-fieldset
           legend.visuallyhidden Select the applicant's marital status
-          = f.label :married, class: 'govuk-label'
-          = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
+          span#changed-name-error.govuk-error-message
+            = f.label :married, class: 'govuk-label'
+            = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
           .govuk-radios
             .govuk-radios__item
               = f.radio_button :married, 'false', class: 'govuk-radios__input'
-              = f.label t('married_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label'
+              = f.label t('married_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_married_false'
+
             .govuk-radios__item
               = f.radio_button :married, 'true', class: 'govuk-radios__input'
-              = f.label t('married_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label'
+              = f.label t('married_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_married_true'
 
       = f.submit 'Next', :class => 'govuk-button'
 
