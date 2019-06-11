@@ -1,6 +1,7 @@
 .govuk-form-group.panel-indent.util-mt-0
   = f.label :amount, t('amount', scope: @form.i18n_scope), class: 'govuk-label'
-  = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
+  span#changed-name-error.govuk-error-message
+    = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
   .field-wrapper
     span.prefix £
     = f.text_field :amount, { class: 'govuk-input' }
