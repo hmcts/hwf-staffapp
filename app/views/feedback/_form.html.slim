@@ -2,7 +2,7 @@
 
   - if @feedback.errors.any?
     #error_explanation
-      h3.heading-medium = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
+      h3.govuk-heading-m = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
       ul
         - @feedback.errors.full_messages.each do |message|
           li = message

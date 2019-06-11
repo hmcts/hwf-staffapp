@@ -1,6 +1,6 @@
-h4.heading-medium.util_mt-medium Letters
+h4.govuk-heading-m.util_mt-medium Letters
 
-h4.heading-medium Processed application results in part payment
+h4.govuk-heading-m Processed application results in part payment
 .confirmation-letter
   = t('letters.part-payment.send_part_payment_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -11,14 +11,14 @@ h4.heading-medium Processed application results in part payment
       children: '{AUTO: APPLICANTS CHILDREN}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h4.heading-medium Evidence check - received, but not correct
+h4.govuk-heading-m Evidence check - received, but not correct
 .confirmation-letter
   = t('letters.evidence.evidence_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h4.heading-medium Evidence check - requested, but not received
+h4.govuk-heading-m Evidence check - requested, but not received
 .confirmation-letter
   = t('letters.evidence.no_evidence_received_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -26,7 +26,7 @@ h4.heading-medium Evidence check - requested, but not received
       user_name: '{AUTO: CURRENT USERS NAME}',
       expiry_date: '{AUTO: DATE EVIDENCE DUE}')
 
-h4.heading-medium Processed application results in evidence check
+h4.govuk-heading-m Processed application results in evidence check
 .confirmation-letter
   = t('letters.evidence.send_evidence_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -34,7 +34,7 @@ h4.heading-medium Processed application results in evidence check
       user_name: '{AUTO: CURRENT USERS NAME}',
       expiry_date: '{AUTO: DATE EVIDENCE DUE}')
 
-h4.heading-medium Part payment - requested, but not received
+h4.govuk-heading-m Part payment - requested, but not received
 .confirmation-letter
   = t('letters.part-payment.no_part_payment_received_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -43,20 +43,20 @@ h4.heading-medium Part payment - requested, but not received
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO DATE FOR PAYMENT}')
 
-h4.heading-medium Part payment - received, but not correct
+h4.govuk-heading-m Part payment - received, but not correct
 .confirmation-letter
   = t('letters.part-payment.part_payment_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h4.heading-medium Application rejected because of DWP deceased response
+h4.govuk-heading-m Application rejected because of DWP deceased response
 .confirmation-letter
   = t('letters.reject.reject_dwp_deceased_html',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h4.heading-medium Application rejected because savings threshold exceeded
+h4.govuk-heading-m Application rejected because savings threshold exceeded
 .confirmation-letter
   = t('letters.reject.reject_over_savings_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -66,7 +66,7 @@ h4.heading-medium Application rejected because savings threshold exceeded
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h4.heading-medium Application rejected because income threshold exceeded
+h4.govuk-heading-m Application rejected because income threshold exceeded
 .confirmation-letter
   = t('letters.reject.reject_over_income_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -76,7 +76,7 @@ h4.heading-medium Application rejected because income threshold exceeded
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h4.heading-medium Application rejected because benefits not received
+h4.govuk-heading-m Application rejected because benefits not received
 .confirmation-letter
   = t('letters.reject.reject_no_benefits_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
