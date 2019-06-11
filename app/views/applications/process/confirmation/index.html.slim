@@ -1,4 +1,4 @@
-h4.heading-medium.util_mt-medium Reference
+h4.govuk-heading-m.util_mt-medium Reference
 #result.callout.evidence-check-reference
   h3.heading-large.text-center
     span.check
@@ -27,7 +27,7 @@ h4.heading-medium.util_mt-medium Reference
         date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
 .guidance
-  h4.heading-medium Next steps
+  h4.govuk-heading-m Next steps
   ul.list.list-bullet
     -if @application.outcome.eql?('full')
       li Write the reference number on the top right corner of the paper form

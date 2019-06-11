@@ -1,4 +1,4 @@
-h4.heading-medium.util_mt-medium Reference
+h4.govuk-heading-m.util_mt-medium Reference
 #result.callout.evidence-check-reference
   h3.heading-large.text-center
     span.check
@@ -14,7 +14,7 @@ h4.heading-medium.util_mt-medium Reference
   h3.heading-large = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 .guidance
-  h4.heading-medium =t('evidence_check.next_steps.title')
+  h4.govuk-heading-m =t('evidence_check.next_steps.title')
   ul.list.list-bullet
     - t('evidence_check.next_steps.steps').each do |step|
       li =step
