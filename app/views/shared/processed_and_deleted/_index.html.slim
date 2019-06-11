@@ -1,5 +1,5 @@
 header#head
-  h2.heading-xlarge =t("#{state}_applications.index.title")
+  h2.govuk-heading-xl =t("#{state}_applications.index.title")
 
 - unless @applications.empty?
   =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
