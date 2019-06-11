@@ -68,10 +68,10 @@
 
     .govuk-grid-column-one-third
       .guidance
-        h4.heading-medium.util_mt-medium Before you start
+        h4.govuk-heading-m Before you start
         p Check the statement of truth has been signed.
         strong Check the applicant is not:
-        ul.list.list-bullet
+        ul.govuk-list.govuk-list--bullet
           li receiving legal aid
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
@@ -81,14 +81,14 @@
           li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        h4.heading-medium National Insurance number
+        h4.govuk-heading-m National Insurance number
         strong If NI number isn't provided:
-        ul.list.list-bullet
+        ul.govuk-list.govuk-list--bullet
           li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
         p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
-        h4.heading-medium Status
+        h4.govuk-heading-m Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
         p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
