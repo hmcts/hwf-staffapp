@@ -11,7 +11,7 @@
         = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
+          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input govuk-!-width-one-half', type: 'number', step: '0.01' }
 
       .govuk-form-group
         fieldset
@@ -20,11 +20,11 @@
           = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
           = f.hidden_field :jurisdiction_id, value: nil
           - if @jurisdictions.present?
-            .options.radio.cf
+            .govuk-radios.govuk-radios--small
               =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-                = b.label class: 'block-label' do
-                  = b.radio_button(data: @form.jurisdiction_id)
-                  = b.text
+                .govuk-radios__item
+                  = b.radio_button(data: @form.jurisdiction_id, class: 'govuk-radios__input')
+                  = b.label(class: 'govuk-label govuk-radios__label')
           - else
             = t('error_messages.jurisdictions.none_in_office')
 
@@ -33,38 +33,40 @@
           =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
-        .form-date
-          .govuk-form-group.govuk-form-group-day
-            = f.label :day_date_received, class: 'govuk-label'
-            = f.text_field :day_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-          .govuk-form-group.govuk-form-group-month
-            = f.label :month_date_received, class: 'govuk-label'
-            = f.text_field :month_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-          .govuk-form-group.govuk-form-group-year
-            = f.label :year_date_received, class: 'govuk-label'
-            = f.text_field :year_date_received, class: 'govuk-input', type:"number", pattern: "[0-9]*"
-
+        .govuk-date-input
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-day
+              = f.label :day_date_received, class: 'govuk-label'
+              = f.text_field :day_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-month
+              = f.label :month_date_received, class: 'govuk-label'
+              = f.text_field :month_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-year
+              = f.label :year_date_received, class: 'govuk-label'
+              = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*"
 
       .govuk-form-group
         = f.label :form_name, class: 'govuk-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
-        = f.text_field :form_name, { class: 'govuk-input' }
+        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         = f.label :case_number, class: 'govuk-label'
           =t('case_number', scope: @form.i18n_scope)
         = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error' if @form.errors[:case_number].present?
-        = f.text_field :case_number, { class: 'govuk-input' }
+        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
         fieldset
           legend.visuallyhidden Probate case details
-          .options.radio.cf
-            = f.label :probate, class: 'block-label'
-              = f.check_box :probate, { class: 'show-hide-checkbox', data: { section: 'probate' } }
-              = t('probate', scope: @form.i18n_scope)
+          .govuk-checkboxes.govuk-checkboxes--small
+            .govuk-checkboxes__item
+              = f.check_box :probate, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'probate' } }
+              = f.label t('probate', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
 
           #probate-only.start-hidden
             .panel-indent
@@ -92,10 +94,10 @@
 
         fieldset
           legend.visuallyhidden Refund case details
-          .options.radio.cf
-            = f.label :refund, class: 'block-label'
-              = f.check_box :refund, { class: 'show-hide-checkbox', data: { section: 'refund' } }
-              = t('refund', scope: @form.i18n_scope)
+          .govuk-checkboxes.govuk-checkboxes--small
+            .govuk-checkboxes__item
+              = f.check_box :refund, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'refund' } }
+              = f.label t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
 
           #refund-only.start-hidden
             .panel-indent
@@ -142,10 +144,10 @@
 
         fieldset
           legend.visuallyhidden Emergency case details
-          .options.radio.cf
-            = f.label :emergency, class: 'block-label'
-              = f.check_box :emergency, { class: 'show-hide-checkbox', data: { section: 'emergency' } }
-              = t('emergency', scope: @form.i18n_scope)
+          .govuk-checkboxes.govuk-checkboxes--small
+            .govuk-checkboxes__item
+              = f.check_box :emergency, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'emergency' } }
+              = f.label t('emergency', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
 
           #emergency-only.start-hidden
             .panel-indent
@@ -154,20 +156,20 @@
                 = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
                 = f.text_area :emergency_reason, class: 'govuk-input'
 
-      = f.submit 'Next', class: 'button'
+      = f.submit 'Next', class: 'govuk-button'
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m.util_mt-medium Refunds
+        h4.govuk-heading-m Refunds
         strong Check the refund:
-        ul.list.list-bullet
+        ul.govuk-list.govuk-list--bullet
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
         p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
         h4.govuk-heading-m Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
         strong Example of emergency cases:
-        ul.list.list-bullet
+        ul.govuk-list.govuk-list--bullet
         	li suspending an eviction
         	li debtor insolvency petition
         	li children or vulnerable adults
