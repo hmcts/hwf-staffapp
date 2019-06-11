@@ -8,7 +8,8 @@
 
       .govuk-form-group
         = f.label :fee, class: 'govuk-label'
-        = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
@@ -17,7 +18,8 @@
         fieldset
           legend.visuallyhidden Select jurisdiction
           = f.label :jurisdiction_id, class: 'govuk-label'
-          = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+          span#changed-name-error.govuk-error-message
+            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
           = f.hidden_field :jurisdiction_id, value: nil
           - if @jurisdictions.present?
             .govuk-radios.govuk-radios--small
@@ -32,7 +34,8 @@
         = f.label :date_received, class: 'govuk-label'
           =t('date_received', scope: @form.i18n_scope)
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
-        = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         .govuk-date-input
           .govuk-date-input__item
             .govuk-form-group.govuk-form-group-day
@@ -51,7 +54,8 @@
         = f.label :form_name, class: 'govuk-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
-        = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
+        span#changed-name-error.govuk-error-message
+          = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
@@ -66,20 +70,22 @@
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
               = f.check_box :probate, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'probate' } }
-              = f.label t('probate', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
+              = f.label t('probate', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_probate'
 
           #probate-only.start-hidden
             .panel-indent
               .govuk-form-group
                 = f.label :deceased_name, class: 'govuk-label'
-                = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
+                span#changed-name-error.govuk-error-message
+                  = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error' if @form.errors[:deceased_name].present?
                 = f.text_field :deceased_name, { class: 'govuk-input govuk-!-width-one-half' }
 
               .govuk-form-group
                 = f.label :date_of_death, class: 'govuk-label'
                   = t('date_of_death', scope: @form.i18n_scope)
                   span.hint.block = t('date_hint', scope: @form.i18n_scope)
-                = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
+                span#changed-name-error.govuk-error-message
+                  = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error' if @form.errors[:date_of_death].present?
 
                 .govuk-date-input
                   .govuk-date-input__item
@@ -101,7 +107,7 @@
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
               = f.check_box :refund, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'refund' } }
-              = f.label t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
+              = f.label t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_refund'
 
           #refund-only.start-hidden
             .panel-indent
@@ -109,7 +115,8 @@
                 = f.label :date_fee_paid, class: 'govuk-label'
                   = t('date_fee_paid', scope: @form.i18n_scope)
                   span.hint.block = t('date_hint', scope: @form.i18n_scope)
-                = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
+                span#changed-name-error.govuk-error-message
+                  = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error' if @form.errors[:date_fee_paid].present?
                 .govuk-date-input
                   .govuk-date-input__item
                     .govuk-form-group.govuk-form-group-day
@@ -127,7 +134,8 @@
                 - if display_discretion_block?(@form)
                   fieldset.discretion_applied
                     = f.label :discretion_applied, class: 'govuk-label'
-                    = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
+                    span#changed-name-error.govuk-error-message
+                      = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
                     .govuk-checkboxes.govuk-checkboxes--small
                       .govuk-checkboxes__item
                         = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
@@ -140,11 +148,13 @@
                       .panel-indent
                         .govuk-form-group
                           = f.label :discretion_manager_name, class: 'govuk-label'
-                          = f.label :discretion_manager_name, @form.errors[:discretion_manager_name].join(', '), class: 'error' if @form.errors[:discretion_manager_name].present?
+                          span#changed-name-error.govuk-error-message
+                            = f.label :discretion_manager_name, @form.errors[:discretion_manager_name].join(', '), class: 'error' if @form.errors[:discretion_manager_name].present?
                           = f.text_field :discretion_manager_name, class: 'govuk-input govuk-input govuk-!-width-one-half'
                         .govuk-form-group
                           = f.label :discretion_reason, class: 'govuk-label'
-                          = f.label :discretion_reason, @form.errors[:discretion_reason].join(', '), class: 'error' if @form.errors[:discretion_reason].present?
+                          span#changed-name-error.govuk-error-message
+                            = f.label :discretion_reason, @form.errors[:discretion_reason].join(', '), class: 'error' if @form.errors[:discretion_reason].present?
                           = f.text_area :discretion_reason, class: 'govuk-textarea'
 
 
@@ -153,13 +163,14 @@
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
               = f.check_box :emergency, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'emergency' } }
-              = f.label t('emergency', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label'
+              = f.label t('emergency', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_emergency'
 
           #emergency-only.start-hidden
             .panel-indent
               .govuk-form-group
                 = f.label :emergency_reason, class: 'govuk-label'
-                = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
+                span#changed-name-error.govuk-error-message
+                  = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
                 = f.text_area :emergency_reason, class: 'govuk-textarea'
 
       = f.submit 'Next', class: 'govuk-button'
