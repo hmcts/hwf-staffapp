@@ -9,17 +9,16 @@
         fieldset
           legend.visuallyhidden Amount of savings
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
-          = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
+          span#changed-name-error.govuk-error-message
+            = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
           = f.hidden_field :min_threshold_exceeded, value: nil
-          .options.radio.cf
-            .option
-              label.block-label for='application_min_threshold_exceeded_false'
-                = f.radio_button :min_threshold_exceeded, 'false', { class: 'show-hide-section' }
-                = t('less_than', scope: @form.i18n_scope)
-            .option
-              label.block-label for='application_min_threshold_exceeded_true'
-                = f.radio_button :min_threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
-                = t('more_than', scope: @form.i18n_scope)
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('less_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_false'
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
+              = f.label t('more_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_true'
 
         #threshold-exceeded-only.start-hidden
           - if @application.applicant.over_61?
@@ -34,7 +33,8 @@
                 fieldset
                   legend.visuallyhidden Applicant's partner's age
                   = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'govuk-label'
-                  = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                  span#changed-name-error.govuk-error-message
+                    = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
                   = f.hidden_field :over_61, value: nil
                   .options.radio.cf
                     .option
@@ -50,7 +50,7 @@
                     #partner-over-61-only.start-hidden
                       = render('shared/savings/max_threshold_exceeded', f: f)
 
-      = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', :class => 'govuk-button'
 
       details.util_mt-medium
         summary
@@ -69,6 +69,6 @@
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m.util_mt-medium Savings and investments
+        h4.govuk-heading-m Savings and investments
         p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'
