@@ -1,7 +1,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     header
-      h2.heading-xlarge Processing complete
+      h2.govuk-heading-xl Processing complete
 
     - unless @confirmation.outcome == 'full'
       = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
