@@ -36,17 +36,15 @@
                   span#changed-name-error.govuk-error-message
                     = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
                   = f.hidden_field :over_61, value: nil
-                  .options.radio.cf
-                    .option
-                      label.block-label for='application_over_61_false'
-                        = f.radio_button :over_61, 'false', { class: 'show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
-                        = t('over_61_false', scope: @form.i18n_scope)
+                  .govuk-radios.govuk-radios--small
+                    .govuk-radios__item
+                      = f.radio_button :over_61, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
+                      = f.label t('over_61_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_false'
                     #partner-under-61-only.start-hidden
                       =render('shared/savings/amount', f: f)
-                    .option
-                      label.block-label for='application_over_61_true'
-                        = f.radio_button :over_61, 'true', { class: 'show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
-                        = t('over_61_true', scope: @form.i18n_scope)
+                    .govuk-radios__item
+                        = f.radio_button :over_61, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
+                        = f.label t('over_61_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_true'
                     #partner-over-61-only.start-hidden
                       = render('shared/savings/max_threshold_exceeded', f: f)
 
