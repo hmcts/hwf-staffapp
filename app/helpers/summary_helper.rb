@@ -13,7 +13,7 @@ module SummaryHelper
 
   def build_section(summary_text, object, fields, link_attributes = {})
     unless all_fields_empty?(object, fields)
-      content_tag(:div, class: 'summary-section') do
+      content_tag(:dl, class: 'govuk-summary-list govuk-summary-list--no-border') do
         content = build_header(summary_text, link_attributes)
         fields.each do |row|
           content << build_data_row(object, row)
@@ -34,8 +34,8 @@ module SummaryHelper
   end
 
   def build_header(summary_name, link_attributes)
-    content_tag(:div, class: 'grid-row header-row') do
-      content_tag(:div, class: 'column-two-thirds') do
+    content_tag(:div, class: 'govuk-summary-list__row header-row') do
+      content_tag(:dt, class: 'govuk-summary-list__key') do
         content_tag(:h4, summary_name.to_s, class: 'heading-medium util_mt-0')
       end + build_link(link_attributes)
     end
@@ -43,11 +43,12 @@ module SummaryHelper
 
   def build_link(link_attributes)
     if link_attributes[:title].present? && link_attributes[:url].present?
-      link_class = 'column-one-third'
-      content_tag(:div, class: link_class) do
+      link_class = 'govuk-summary-list__value'
+      # binding.pry
+      content_tag(:dd, class: link_class) do
         link_to(link_attributes[:title],
                 link_attributes[:url],
-                class: 'right',
+                class: 'govuk-link',
                 data: { section_name: link_attributes[:section_name] })
       end
     end
@@ -58,17 +59,17 @@ module SummaryHelper
     value = object.send(field)
 
     if value.present?
-      rows = content_tag(:div, label, class: 'column-one-third')
-      rows << content_tag(:div, value, class: value_style(value))
+      rows = content_tag(:dt, label, class: 'govuk-summary-list__key')
+      rows << content_tag(:dd, value, class: value_style(value))
 
-      content_tag(:div, class: 'grid-row') do
+      content_tag(:div, class: 'govuk-summary-list__row') do
         rows
       end
     end
   end
 
   def value_style(value)
-    ['column-two-thirds'].tap do |styles|
+    ['govuk-summary-list__value'].tap do |styles|
       case value
       when /^✓/
         styles << 'summary-result passed'
