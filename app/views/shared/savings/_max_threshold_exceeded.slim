@@ -4,12 +4,10 @@
     = f.label :max_threshold_exceeded, t('max_threshold_exceeded', scope: @form.i18n_scope), class: 'govuk-label'
     = f.label :max_threshold_exceeded, @form.errors[:max_threshold_exceeded].join(', '), class: 'error' if @form.errors[:max_threshold_exceeded].present?
     = f.hidden_field :max_threshold_exceeded, value: nil
-    .options.radio.cf
-        .option
-          label.block-label for='application_max_threshold_exceeded_false'
-            = f.radio_button :max_threshold_exceeded, 'false', { class: 'show-hide-section' }
-            = t('less_than_max', scope: @form.i18n_scope)
-        .option
-          label.block-label for='application_max_threshold_exceeded_true'
-            = f.radio_button :max_threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'max-threshold-exceeded', show: 'true' } }
-            = t('more_than_max', scope: @form.i18n_scope)
+    .govuk-radios.govuk-radios--small
+      .govuk-radios__item
+        = f.radio_button :max_threshold_exceeded, 'false', { class: 'govuk-radios__input show-hide-section' }
+        = f.label t('less_than_max', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_max_threshold_exceeded_false'
+      .govuk-radios__item
+        = f.radio_button :max_threshold_exceeded, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'max-threshold-exceeded', show: 'true' } }
+        = f.label t('more_than_max', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_max_threshold_exceeded_true'
