@@ -1,3 +1,3 @@
-ActionView::Base.field_error_proc = Proc.new do |html_tag, instance_tag|
+ActionView::Base.field_error_proc = proc do |html_tag, _instance_tag|
   html_tag
 end
