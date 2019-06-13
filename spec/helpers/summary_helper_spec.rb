@@ -21,7 +21,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
     context 'when called with minimal data' do
       it 'returns the correct html' do
-        expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
+        expected = '<dl class="govuk-summary-list govuk-summary-list--no-border"><div class="govuk-summary-list__row header-row"><dt class="govuk-summary-list__key"><h4 class="heading-medium util_mt-0">section name</h4></dt></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
         expect(helper.build_section_with_defaults('section name', view)).to eq(expected)
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
       context 'when requested fields contain some data' do
         it 'returns only the populated field' do
-          expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
+          expected = '<dl class="govuk-summary-list govuk-summary-list--no-border"><div class="govuk-summary-list__row header-row"><dt class="govuk-summary-list__key"><h4 class="heading-medium util_mt-0">section name</h4></dt></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
           expect(helper.build_section('section name', view, ['fee', 'form_name', 'date_received'])).to eq(expected)
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe SummaryHelper, type: :helper do
       let(:view) { instance_double(Views::Overview::Details, fee: '£310') }
 
       it 'returns the correct html' do
-        expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">£310</div></div></div>'
+        expected = '<dl class="govuk-summary-list govuk-summary-list--no-border"><div class="govuk-summary-list__row header-row"><dt class="govuk-summary-list__key"><h4 class="heading-medium util_mt-0">section name</h4></dt></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
         expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
       end
 
@@ -59,12 +59,12 @@ RSpec.describe SummaryHelper, type: :helper do
         let(:url) { 'URL' }
 
         it 'returns the correct html' do
-          expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
+          expected = "<dl class=\"govuk-summary-list govuk-summary-list--no-border\"><div class=\"govuk-summary-list__row header-row\"><dt class=\"govuk-summary-list__key\"><h4 class=\"heading-medium util_mt-0\">section name</h4></dt><dd class=\"govuk-summary-list__value\"><a class=\"govuk-link\" href=\"#{url}\">#{title}</a></dd></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd></div></dl>"
           expect(helper.build_section('section name', view, ['fee'], title: title, url: url)).to eq(expected)
         end
 
         it 'returns the correct html with data attribute' do
-          expected = "<div class=\"summary-section\"><div class=\"grid-row header-row\"><div class=\"column-two-thirds\"><h4 class=\"heading-medium util_mt-0\">section name</h4></div><div class=\"column-one-third\"><a class=\"right\" data-section-name=\"#{title}\" href=\"#{url}\">#{title}</a></div></div><div class=\"grid-row\"><div class=\"column-one-third\">Fee</div><div class=\"column-two-thirds\">£310</div></div></div>"
+          expected = "<dl class=\"govuk-summary-list govuk-summary-list--no-border\"><div class=\"govuk-summary-list__row header-row\"><dt class=\"govuk-summary-list__key\"><h4 class=\"heading-medium util_mt-0\">section name</h4></dt><dd class=\"govuk-summary-list__value\"><a class=\"govuk-link\" data-section-name=\"#{title}\" href=\"#{url}\">#{title}</a></dd></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd></div></dl>"
           expect(helper.build_section('section name', view, ['fee'], title: title, url: url, section_name: title)).to eq(expected)
         end
       end
@@ -73,7 +73,7 @@ RSpec.describe SummaryHelper, type: :helper do
         let(:view) { instance_double(Views::Overview::Details, fee: 'WA123456A') }
 
         it 'returns the correct html' do
-          expected = '<div class="summary-section"><div class="grid-row header-row"><div class="column-two-thirds"><h4 class="heading-medium util_mt-0">section name</h4></div></div><div class="grid-row"><div class="column-one-third">Fee</div><div class="column-two-thirds">WA123456A</div></div></div>'
+          expected = '<dl class="govuk-summary-list govuk-summary-list--no-border"><div class="govuk-summary-list__row header-row"><dt class="govuk-summary-list__key"><h4 class="heading-medium util_mt-0">section name</h4></dt></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">WA123456A</dd></div></dl>'
           expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
         end
       end
