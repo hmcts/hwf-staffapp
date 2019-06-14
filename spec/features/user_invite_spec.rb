@@ -38,8 +38,7 @@ RSpec.feature 'User management,', type: :feature do
       select('Bristol', from: 'user_office_id')
 
       click_button 'Send an invitation'
-
-      expect(page).to have_xpath('//div[contains(@class, "field_with_errors")]/label[@for="user_email" and @class="error"]', text: /not able to create an account with this email address/)
+      expect(page).to have_xpath('//label[@for="user_email" and @class="error"]', text: /not able to create an account with this email address/)
       expect(page).to have_xpath("//input[@value='#{new_email}']")
     end
 

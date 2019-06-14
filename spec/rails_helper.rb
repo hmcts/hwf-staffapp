@@ -103,6 +103,7 @@ RSpec.configure do |config|
   end
 
   Capybara.javascript_driver = :webkit
+  Capybara.raise_server_errors = false
 
   config.before(:each) do
     ActionMailer::Base.deliveries = []
