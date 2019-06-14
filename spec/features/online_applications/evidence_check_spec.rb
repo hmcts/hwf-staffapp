@@ -49,7 +49,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     click_link 'Back to start'
 
     reference = Application.last.reference
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link reference
     end
 
@@ -70,7 +70,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     # because there is a flag from previous check
     expect(page).to have_text 'Evidence of income needs to be checked'
     click_link 'Back to start'
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link Application.last.reference
     end
     click_link 'Start now'

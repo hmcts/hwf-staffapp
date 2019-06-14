@@ -19,7 +19,7 @@ RSpec.feature 'User can accept invite', type: :feature do
 
       click_button I18n.t('devise.invitations.edit.submit_button')
 
-      expect(page).to have_xpath('//div[@class="alert-box notice"]',
+      expect(page).to have_xpath('//div[@class="govuk-error-summary__body"]',
                                  text: 'Your password was set successfully. You are now signed in.',
                                  count: 1)
     end

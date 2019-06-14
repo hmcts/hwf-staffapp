@@ -20,8 +20,7 @@ RSpec.feature 'Recording feedback', type: :feature do
       choose 'help_score_1'
 
       click_button 'Send feedback'
-
-      expect(page).to have_xpath('//div[@class="alert-box notice"]',
+      expect(page).to have_xpath('//div[@class="govuk-error-summary__body"]',
                                  text: 'Your feedback has been recorded',
                                  count: 1)
     end
