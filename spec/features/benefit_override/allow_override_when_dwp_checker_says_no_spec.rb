@@ -67,7 +67,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
       describe 'when displaying the summary' do
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Correct evidence provided"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//dt[contains(@class,"govuk-summary-list__key")][text()="Correct evidence provided"]/following-sibling::*[1][text()="Yes"]')
         end
       end
     end
@@ -76,7 +76,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
       describe 'when displaying the summary' do
         scenario 'shows the benefits result as passed' do
           expect(page).to have_content 'Check details'
-          expect(page).to have_xpath('//div[contains(@class,"column-one-third")][text()="Correct evidence provided"]/following-sibling::*[1][text()="Yes"]')
+          expect(page).to have_xpath('//dt[contains(@class,"govuk-summary-list__key")][text()="Correct evidence provided"]/following-sibling::*[1][text()="Yes"]')
         end
       end
     end

@@ -50,7 +50,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     click_link 'Waiting for evidence'
     reference = Application.last.reference
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link reference
     end
 
@@ -76,7 +76,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     click_link 'Back to start'
 
     click_link 'Waiting for evidence'
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link Application.last.reference
     end
     click_link 'Start now'
