@@ -58,5 +58,11 @@
 - content_for :javascripts
   = javascript_include_tag('application.js')
 
+- if (flash.present? && flash.keys.join != 'notice') || (@form && @form.errors.present?)
+  - content_for :javascripts
+    javascript:
+      $(document).ready(function () {
+        moj.Modules.GtmTrackTimestamps.trackErrorMessage();
+      });
 
 = render template: "layouts/local-template"

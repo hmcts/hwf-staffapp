@@ -149,5 +149,31 @@ window.moj.Modules.GtmTrackTimestamps = {
     $('.search-button').click(function(){
       moj.Modules.GtmTrackTimestamps.serchPerformed('');
     });
+  },
+
+  trackErrorMessage:  function() {
+    var error_messages = moj.Modules.GtmTrackTimestamps.readErrorMessages()
+    if(error_messages.length > 0) {
+      dataLayer.push({
+        'event': 'ErrorMessage',
+        'errorMessageText': error_messages
+      });
+    }
+  },
+
+  readErrorMessages: function(){
+    var val = []
+    var error_messages = '';
+
+    if($('.alert-box').size() > 0){
+      error_messages = $('.alert-box').text()
+    } else if($('label.error').size() > 0) {
+      $('label.error').each(function() {
+        val.push($( this ).text());
+      });
+      error_messages = val.join(' ');
+    }
+
+    return error_messages;
   }
 };
