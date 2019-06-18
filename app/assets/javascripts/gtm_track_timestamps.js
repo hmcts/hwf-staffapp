@@ -171,7 +171,7 @@ window.moj.Modules.GtmTrackTimestamps = {
       $('label.error').each(function() {
         val.push($( this ).text());
       });
-      error_messages = val.join(' ');
+      error_messages = val.join(', ');
     }
 
     return error_messages;
