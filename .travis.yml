@@ -19,6 +19,7 @@ addons:
     packages:
     - qtbase5-dev
     - xvfb
+    - libqtwebkit-dev
   postgresql: 9.6
 script:
 - bundle exec rake rubocop
