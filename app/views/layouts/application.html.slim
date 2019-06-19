@@ -58,5 +58,9 @@
 - content_for :javascripts
   = javascript_include_tag('application.js')
 
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.trackErrorMessage();
+    });
 
 = render template: "layouts/local-template"
