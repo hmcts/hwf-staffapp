@@ -41,7 +41,7 @@ module Applications
       def reset_fee_manager_approval_fields
         detail = application.detail
 
-        if detail.fee <= 10_000
+        if detail.fee < Settings.fee_approval_threshold
           detail.update(fee_manager_firstname: nil, fee_manager_lastname: nil)
         end
       end

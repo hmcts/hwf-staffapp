@@ -34,6 +34,6 @@ class DetailsRouter
   end
 
   def needs_approval?
-    application.detail.fee > 10_000
+    application.detail.fee >= Settings.fee_approval_threshold
   end
 end

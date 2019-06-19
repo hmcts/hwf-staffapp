@@ -75,7 +75,7 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def decide_next_step
-    if @form.fee <= 10_000
+    if @form.fee < Settings.fee_approval_threshold
       reset_fee_manager_approval_fields
       redirect_to action: :show
     else

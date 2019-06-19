@@ -13,7 +13,7 @@ describe DetailsRouter do
     let(:details) { build_stubbed(:complete_detail, fee: fee) }
 
     context 'when fee needs approval' do
-      let(:fee) { 15_000 }
+      let(:fee) { Settings.fee_approval_threshold }
 
       it { is_expected.to eql application_approve_path(application) }
     end

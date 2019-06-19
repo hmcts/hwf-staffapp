@@ -31,3 +31,4 @@ income:
   married_supplement: 160
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
+fee_approval_threshold: 10000.01
