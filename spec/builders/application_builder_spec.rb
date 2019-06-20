@@ -68,7 +68,7 @@ RSpec.describe ApplicationBuilder do
       end
     end
 
-    let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed) }
+    let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, :with_fee_manager_approval) }
 
     describe 'builds and returns non persisted Application' do
       it { is_expected.to be_a(Application) }
@@ -187,7 +187,9 @@ RSpec.describe ApplicationBuilder do
       describe 'the detail' do
         subject(:built_detail) { built_application.detail }
 
-        [:fee, :jurisdiction, :date_received, :form_name, :case_number, :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid, :emergency_reason].each do |column|
+        [:fee, :jurisdiction, :date_received, :form_name, :case_number,
+         :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid,
+         :emergency_reason, :fee_manager_firstname, :fee_manager_lastname].each do |column|
           it "has #{column} assigned" do
             expect(built_detail.public_send(column)).to eql(online_application.public_send(column))
           end

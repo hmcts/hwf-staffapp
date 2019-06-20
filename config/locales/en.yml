@@ -436,6 +436,9 @@ en-GB:
         fee: How much is the court or tribunal fee?
         form_name: Form number
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
+      forms/fee_approval:
+        first_name: Manager's first name
+        last_name: Manager's last name
     errors:
       models:
         forms/finance_report:
@@ -588,6 +591,12 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+        forms/fee_approval:
+          attributes:
+            fee_manager_firstname:
+              blank: Enter a manager's first name
+            fee_manager_lastname:
+              blank: Enter a manager's last name
   activerecord:
     errors:
       models:

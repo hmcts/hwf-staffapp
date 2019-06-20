@@ -21,7 +21,7 @@ class OnlineApplicationsController < ApplicationController
     @form.update_attributes(update_params)
 
     if @form.save
-      redirect_to(action: :show)
+      decide_next_step
     else
       assign_jurisdictions
       render :edit
@@ -37,6 +37,21 @@ class OnlineApplicationsController < ApplicationController
     process_application(application)
 
     redirect_to application_confirmation_path(application)
+  end
+
+  def approve
+    @form = Forms::FeeApproval.new(online_application)
+  end
+
+  def approve_save
+    @form = Forms::FeeApproval.new(online_application)
+    @form.update_attributes(update_approve_params)
+
+    if @form.save
+      redirect_to action: :show
+    else
+      render :approve
+    end
   end
 
   private
@@ -59,6 +74,19 @@ class OnlineApplicationsController < ApplicationController
     end
   end
 
+  def decide_next_step
+    if @form.fee < Settings.fee_approval_threshold
+      reset_fee_manager_approval_fields
+      redirect_to action: :show
+    else
+      redirect_to action: :approve
+    end
+  end
+
+  def reset_fee_manager_approval_fields
+    online_application.update(fee_manager_firstname: nil, fee_manager_lastname: nil)
+  end
+
   def online_application
     @online_application ||= OnlineApplication.find(params[:id])
   end
@@ -69,6 +97,10 @@ class OnlineApplicationsController < ApplicationController
 
   def update_params
     params.require(:online_application).permit(*Forms::OnlineApplication.permitted_attributes.keys)
+  end
+
+  def update_approve_params
+    params.require(:online_application).permit(*Forms::FeeApproval.permitted_attributes.keys)
   end
 
   def assign_jurisdictions

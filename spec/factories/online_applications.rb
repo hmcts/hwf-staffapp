@@ -95,6 +95,12 @@ FactoryGirl.define do
       date_fee_paid Time.zone.now - 2.months
     end
 
+    trait :with_fee_manager_approval do
+      fee 14_000
+      fee_manager_firstname 'Jane'
+      fee_manager_lastname 'Doe'
+    end
+
     after(:create) do |online_application, evaluator|
       if evaluator.convert_to_application
         create(:application,

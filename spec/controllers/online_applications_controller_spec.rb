@@ -90,10 +90,13 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   describe 'PUT #update' do
     let(:params) { {} }
     let(:form_save) { false }
+    let(:fee) { 500 }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
       allow(form).to receive(:save).and_return(form_save)
+      allow(form).to receive(:fee).and_return(fee)
+      allow(online_application).to receive(:update).and_return(true)
 
       put :update, id: id, online_application: params
     end
@@ -107,14 +110,25 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     end
 
     context 'when an online application is found with the id' do
-      let(:params) { { fee: '100', jurisdiction_id: jurisdiction.id.to_s } }
       let(:id) { online_application.id }
+      let(:params) { { fee: '100', jurisdiction_id: jurisdiction.id.to_s } }
 
       context 'when the form can be saved' do
         let(:form_save) { true }
 
-        it 'redirects to the summary page' do
-          expect(response).to redirect_to(online_application_path(online_application))
+        context 'when the fee is equal or less than £10,000' do
+          it 'redirects to the summary page' do
+            expect(response).to redirect_to(online_application_path(online_application))
+          end
+        end
+
+        context 'when the fee is higher than £10,000' do
+          let(:fee) { 15_000 }
+          let(:params) { { fee: fee.to_s } }
+
+          it 'redirects to the approval page' do
+            expect(response).to redirect_to(approve_online_application_path(online_application))
+          end
         end
       end
 
@@ -236,6 +250,59 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'is expected to set the flash message' do
         expect(flash[:alert]).to eql 'This application has been processed. You can’t edit any details.'
+      end
+    end
+  end
+
+  context 'fee approval' do
+    let(:form) { instance_double('Forms::FeeApproval') }
+
+    before do
+      allow(Forms::FeeApproval).to receive(:new).with(online_application).and_return(form)
+    end
+
+    describe 'GET #approve' do
+      before do
+        get :approve, id: online_application.id
+      end
+
+      it 'renders the edit template' do
+        expect(response).to render_template(:approve)
+      end
+
+      it 'assigns the edit form' do
+        expect(assigns(:form)).to eql(form)
+      end
+
+      it 'assigns the online_application' do
+        expect(assigns(:online_application)).to eql(online_application)
+      end
+    end
+
+    describe 'PUT #approve_save' do
+      let(:params) { { fee_manager_firstname: 'Jane', fee_manager_lastname: 'Doe' } }
+
+      before do
+        allow(form).to receive(:update_attributes).with(params)
+        allow(form).to receive(:save).and_return(form_save)
+
+        put :approve_save, id: online_application.id, online_application: params
+      end
+
+      context 'when the form can be saved' do
+        let(:form_save) { true }
+
+        it 'redirects to the summary page' do
+          expect(response).to redirect_to(online_application_path(online_application))
+        end
+      end
+
+      context 'when the form can not be saved' do
+        let(:form_save) { false }
+
+        it 'renders the edit template' do
+          expect(response).to render_template(:approve)
+        end
       end
     end
   end

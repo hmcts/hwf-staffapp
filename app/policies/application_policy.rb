@@ -19,6 +19,14 @@ class ApplicationPolicy < BasePolicy
     staff_or_manager? && same_office?
   end
 
+  def approve?
+    staff_or_manager? && same_office?
+  end
+
+  def approve_save?
+    staff_or_manager? && same_office?
+  end
+
   class Scope < BasePolicy::Scope
     def resolve
       if staff_or_manager?

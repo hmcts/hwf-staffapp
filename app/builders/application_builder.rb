@@ -70,7 +70,8 @@ class ApplicationBuilder
   def online_detail_attributes(online_application)
     fields = [
       :fee, :jurisdiction, :date_received, :form_name, :case_number, :probate, :deceased_name,
-      :date_of_death, :refund, :date_fee_paid, :emergency_reason
+      :date_of_death, :refund, :date_fee_paid, :emergency_reason, :fee_manager_firstname,
+      :fee_manager_lastname
     ]
 
     prepare_attributes(fields, online_application)

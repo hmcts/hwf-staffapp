@@ -14,4 +14,12 @@ class OnlineApplicationPolicy < BasePolicy
   def complete?
     staff_or_manager?
   end
+
+  def approve?
+    staff_or_manager?
+  end
+
+  def approve_save?
+    staff_or_manager?
+  end
 end

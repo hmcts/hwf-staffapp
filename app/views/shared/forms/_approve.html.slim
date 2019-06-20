@@ -1,0 +1,21 @@
+= form_for form, as: as, url: url, method: :put, html: { autocomplete: 'off' } do |f|
+
+  .grid-row
+    .column-two-thirds
+      header
+        h2.heading-xlarge Ask a manager
+
+      p You entered a court and tribunal fee that is more than £10,000. You need to ask a manager to approve this.
+
+      .form-group
+        = f.label :first_name, class: 'form-label'
+        = f.label :fee_manager_firstname, form.errors[:fee_manager_firstname].join(', '), class: 'error' if form.errors[:fee_manager_firstname].present?
+        = f.text_field :fee_manager_firstname, { class: 'form-control' }
+
+
+      .form-group
+        = f.label :last_name, class: 'form-label'
+        = f.label :fee_manager_lastname, form.errors[:fee_manager_lastname].join(', '), class: 'error' if form.errors[:fee_manager_lastname].present?
+        = f.text_field :fee_manager_lastname, { class: 'form-control' }
+
+      = f.submit 'Next', class: 'button primary'
