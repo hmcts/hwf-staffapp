@@ -96,9 +96,9 @@ FactoryBot.define do
     end
 
     trait :with_fee_manager_approval do
-      fee 14_000
-      fee_manager_firstname 'Jane'
-      fee_manager_lastname 'Doe'
+      fee { 14_000 }
+      fee_manager_firstname { 'Jane' }
+      fee_manager_lastname { 'Doe' }
     end
 
     after(:create) do |online_application, evaluator|

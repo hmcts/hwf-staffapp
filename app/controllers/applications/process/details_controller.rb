@@ -51,7 +51,7 @@ module Applications
       end
 
       def update_approve_params
-        params.require(:application).permit(*Forms::FeeApproval.permitted_attributes.keys)
+        params.require(:application).permit(*Forms::FeeApproval.permitted_attributes.keys).to_h
       end
     end
   end

@@ -88,7 +88,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
 
     describe 'GET #approve' do
       before do
-        get :approve, application_id: application.id
+        get :approve, params: { application_id: application.id }
       end
 
       it 'renders the :approve template' do
@@ -111,7 +111,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
         allow(form).to receive(:update_attributes).with(params)
         allow(form).to receive(:save).and_return(form_save)
 
-        put :approve_save, application_id: application.id, application: params
+        put :approve_save, params: { application_id: application.id, application: params }
       end
 
       context 'when the form can be saved' do
