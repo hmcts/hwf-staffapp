@@ -263,7 +263,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
     describe 'GET #approve' do
       before do
-        get :approve, id: online_application.id
+        get :approve, params: { id: online_application.id }
       end
 
       it 'renders the edit template' do
@@ -286,7 +286,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
         allow(form).to receive(:update_attributes).with(params)
         allow(form).to receive(:save).and_return(form_save)
 
-        put :approve_save, id: online_application.id, online_application: params
+        put :approve_save, params: { id: online_application.id, online_application: params }
       end
 
       context 'when the form can be saved' do
