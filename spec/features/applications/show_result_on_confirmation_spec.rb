@@ -58,6 +58,32 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       end
     end
 
+    context 'has wrong DOB' do
+      before do
+        choose :application_min_threshold_exceeded_true
+        fill_in :application_amount, with: 3500
+        click_button 'Next'
+      end
+
+      scenario 'the summary page shows the benefit data' do
+        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_content('Date of birth21 June 1994')
+        click_link 'Change personal details'
+
+        expect(page).to have_xpath('.//input[@id="application_day_date_of_birth"][@value="21"]')
+        expect(page).to have_xpath('.//input[@id="application_month_date_of_birth"][@value="6"]')
+        expect(page).to have_xpath('.//input[@id="application_year_date_of_birth"][@value="1994"]')
+
+        fill_in 'application_day_date_of_birth', with: dob.day + 1
+        fill_in 'application_month_date_of_birth', with: dob.month + 1
+        fill_in 'application_year_date_of_birth', with: dob.year + 1
+        click_button 'Next'
+        click_button 'Next'
+        click_button 'Next'
+        expect(page).to have_content('Date of birth22 July 1995')
+      end
+    end
+
     context 'does not exceed the savings threshold' do
       before do
         choose 'application_min_threshold_exceeded_false'

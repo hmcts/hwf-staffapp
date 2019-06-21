@@ -48,6 +48,21 @@ module Forms
         "#{day_date_of_birth}/#{month_date_of_birth}/#{year_date_of_birth}"
       end
 
+      def day_date_of_birth
+        return @day_date_of_birth if @day_date_of_birth
+        date_of_birth&.day
+      end
+
+      def month_date_of_birth
+        return @month_date_of_birth if @month_date_of_birth
+        date_of_birth&.month
+      end
+
+      def year_date_of_birth
+        return @year_date_of_birth if @year_date_of_birth
+        date_of_birth&.year
+      end
+
       validates :last_name, presence: true, length: { minimum: 2, allow_blank: true }
       validate :dob_age_valid?
       validates :married, inclusion: { in: [true, false] }
