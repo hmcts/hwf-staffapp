@@ -40,11 +40,13 @@ module Forms
 
       def format_dob
         @date_of_birth = concat_dob_dates.to_date
-      rescue ArgumentError
+      rescue StandardError
         @date_of_birth = concat_dob_dates
       end
 
       def concat_dob_dates
+        return nil if day_date_of_birth.blank? || month_date_of_birth.blank? ||
+                      month_date_of_birth.blank?
         "#{day_date_of_birth}/#{month_date_of_birth}/#{year_date_of_birth}"
       end
 
