@@ -11,7 +11,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
   let(:dob) { Time.zone.today - 25.years }
-  let(:date_received) { Time.zone.today - 3.days }
+  let(:date_received) { Time.zone.today - 20.days }
 
   after { Capybara.use_default_driver }
 
@@ -67,20 +67,51 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       scenario 'the summary page shows the benefit data' do
         expect(page).to have_xpath('//h2', text: 'Check details')
-        expect(page).to have_content('Date of birth21 June 1994')
+        dob_text = dob.strftime('%-d %B %Y')
+        expect(page).to have_content("Date of birth#{dob_text}")
         click_link 'Change personal details'
 
-        expect(page).to have_xpath('.//input[@id="application_day_date_of_birth"][@value="21"]')
-        expect(page).to have_xpath('.//input[@id="application_month_date_of_birth"][@value="6"]')
-        expect(page).to have_xpath('.//input[@id="application_year_date_of_birth"][@value="1994"]')
+        expect(page).to have_xpath(".//input[@id='application_day_date_of_birth'][@value='#{dob.day}']")
+        expect(page).to have_xpath(".//input[@id='application_month_date_of_birth'][@value='#{dob.month}']")
+        expect(page).to have_xpath(".//input[@id='application_year_date_of_birth'][@value='#{dob.year}']")
 
-        fill_in 'application_day_date_of_birth', with: dob.day + 1
-        fill_in 'application_month_date_of_birth', with: dob.month + 1
-        fill_in 'application_year_date_of_birth', with: dob.year + 1
+        fill_in 'application_day_date_of_birth', with: '22'
+        fill_in 'application_month_date_of_birth', with: '7'
+        fill_in 'application_year_date_of_birth', with: '1995'
         click_button 'Next'
         click_button 'Next'
         click_button 'Next'
         expect(page).to have_content('Date of birth22 July 1995')
+      end
+    end
+
+    context 'has wrong application received date' do
+      let(:new_date_received) { date_received - 1.month }
+      before do
+        choose :application_min_threshold_exceeded_true
+        fill_in :application_amount, with: 3500
+        click_button 'Next'
+      end
+
+      scenario 'the summary page shows the benefit data' do
+        date_received_text = date_received.strftime('%-d %B %Y')
+        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_content("Date received#{date_received_text}")
+        click_link 'Change application details'
+
+        expect(page).to have_xpath(".//input[@id='application_day_date_received'][@value='#{date_received.day}']")
+        expect(page).to have_xpath(".//input[@id='application_month_date_received'][@value='#{date_received.month}']")
+        expect(page).to have_xpath(".//input[@id='application_year_date_received'][@value='#{date_received.year}']")
+
+        fill_in 'application_day_date_received', with: new_date_received.day
+        fill_in 'application_month_date_received', with: new_date_received.month
+        fill_in 'application_year_date_received', with: new_date_received.year
+
+        click_button 'Next'
+        click_button 'Next'
+
+        date_received_text = new_date_received.strftime('%-d %B %Y')
+        expect(page).to have_content("Date received#{date_received_text}")
       end
     end
 
