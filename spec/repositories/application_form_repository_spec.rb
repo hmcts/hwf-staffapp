@@ -10,7 +10,7 @@ RSpec.describe ApplicationFormRepository do
   end
   let(:application_details_form) do
     instance_double('Forms::Application::Detail',
-      errors: errors, discretion_applied: discretion_applied, fee: fee)
+                    errors: errors, discretion_applied: discretion_applied, fee: fee)
   end
 
   let(:discretion_applied) { nil }
