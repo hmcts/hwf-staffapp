@@ -61,7 +61,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       scenario 'the summary page shows the benefit data' do
         expect(page).to have_xpath('//h2', text: 'Check details')
         dob_text = dob.strftime('%-d %B %Y')
-        expect(page).to have_content("Date of birth#{dob_text}")
+        expect(page).to have_content("Date of birth #{dob_text}")
         click_link 'Change personal details'
 
         expect(page).to have_xpath(".//input[@id='application_day_date_of_birth'][@value='#{dob.day}']")
@@ -74,7 +74,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         click_button 'Next'
         click_button 'Next'
         click_button 'Next'
-        expect(page).to have_content('Date of birth22 July 1995')
+        expect(page).to have_content('Date of birth 22 July 1995')
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       scenario 'the summary page shows the benefit data' do
         date_received_text = date_received.strftime('%-d %B %Y')
         expect(page).to have_xpath('//h2', text: 'Check details')
-        expect(page).to have_content("Date received#{date_received_text}")
+        expect(page).to have_content("Date received #{date_received_text}")
         click_link 'Change application details'
 
         expect(page).to have_xpath(".//input[@id='application_day_date_received'][@value='#{date_received.day}']")
@@ -105,7 +105,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         click_button 'Next'
 
         date_received_text = new_date_received.strftime('%-d %B %Y')
-        expect(page).to have_content("Date received#{date_received_text}")
+        expect(page).to have_content("Date received #{date_received_text}")
       end
     end
 
@@ -137,8 +137,8 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       scenario 'the summary page shows the benefit data' do
         deceased_date_text = deceased_date.strftime('%-d %B %Y')
         expect(page).to have_xpath('//h2', text: 'Check details')
-        expect(page).to have_content("Name of the deceasedJane")
-        expect(page).to have_content("Date of their death#{deceased_date_text}")
+        expect(page).to have_content("Name of the deceased Jane")
+        expect(page).to have_content("Date of their death #{deceased_date_text}")
 
         click_link 'Change application details'
 
@@ -154,7 +154,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         click_button 'Next'
 
         new_deceased_date_text = new_deceased_date.strftime('%-d %B %Y')
-        expect(page).to have_content("Date of their death#{new_deceased_date_text}")
+        expect(page).to have_content("Date of their death #{new_deceased_date_text}")
       end
     end
 
@@ -185,7 +185,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       scenario 'the summary page shows the benefit data' do
         refund_date_text = refund_date.strftime('%-d %B %Y')
         expect(page).to have_xpath('//h2', text: 'Check details')
-        expect(page).to have_content("Date fee paid#{refund_date_text}")
+        expect(page).to have_content("Date fee paid #{refund_date_text}")
 
         click_link 'Change application details'
 
@@ -201,7 +201,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         click_button 'Next'
 
         new_refund_date_text = new_refund_date.strftime('%-d %B %Y')
-        expect(page).to have_content("Date fee paid#{new_refund_date_text}")
+        expect(page).to have_content("Date fee paid #{new_refund_date_text}")
       end
     end
 
