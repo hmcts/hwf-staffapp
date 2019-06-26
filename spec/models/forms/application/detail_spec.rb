@@ -49,6 +49,8 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { attributes_for :complete_detail }
 
     params_list.each do |attr_name|
+      next if attr_name.to_s =~ /day|month|year|emergency/
+
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail[attr_name]
       end
@@ -312,14 +314,6 @@ RSpec.describe Forms::Application::Detail do
           let(:date_fee_paid) { nil }
 
           before { refund.valid? }
-
-          context 'when date_received is not set or invalid' do
-            let(:date_received) { '20/2900/' }
-
-            it 'does not set date_received error' do
-              expect(refund.errors).not_to include(:date_fee_paid)
-            end
-          end
 
           context 'when date_received is set and is a valid date' do
             it 'sets an error on date_received field' do

@@ -25,4 +25,49 @@ module DataFieldFormattable
     "#{day}/#{month}/#{year}"
   end
 
+  def day_date_received
+    return @day_date_received if @day_date_received
+    date_received&.day
+  end
+
+  def month_date_received
+    return @month_date_received if @month_date_received
+    date_received&.month
+  end
+
+  def year_date_received
+    return @year_date_received if @year_date_received
+    date_received&.year
+  end
+
+  def day_date_of_death
+    return @day_date_of_death if @day_date_of_death
+    date_of_death&.day
+  end
+
+  def month_date_of_death
+    return @month_date_of_death if @month_date_of_death
+    date_of_death&.month
+  end
+
+  def year_date_of_death
+    return @year_date_of_death if @year_date_of_death
+    date_of_death&.year
+  end
+
+  def day_date_fee_paid
+    return @day_date_fee_paid if @day_date_fee_paid
+    date_fee_paid&.day
+  end
+
+  def month_date_fee_paid
+    return @month_date_fee_paid if @month_date_fee_paid
+    date_fee_paid&.month
+  end
+
+  def year_date_fee_paid
+    return @year_date_fee_paid if @year_date_fee_paid
+    date_fee_paid&.year
+  end
+
 end
