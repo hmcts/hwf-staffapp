@@ -1,9 +1,9 @@
 # rubocop:disable Metrics/AbcSize
 class ApplicationDetailsPage < BasePage
-  section :content, '#content' do
+  section :content, '#main-content' do
     element :header, 'h2', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
-    element :jurisdiction, 'input[value="1"]'
+    element :jurisdiction, '.govuk-radios__item'
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'
     element :date_received_label, 'label', text: 'Date application received'
     element :date_received_hint, '.hint', text: 'Use this format DD/MM/YYYY'

@@ -60,3 +60,5 @@ if ENV['APP_HOST']
     Capybara.app_host += '/'
   end
 end
+
+Capybara.raise_server_errors = false
