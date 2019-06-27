@@ -15,10 +15,10 @@ class SignInPage < BasePage
     element :user_email, '#user_email'
     element :user_password, '#user_password'
     element :sign_in_button, 'input[value="Sign in"]'
-    element :sign_in_alert, '.alert-box', text: 'You need to sign in before continuing.'
+    element :sign_in_alert, '.govuk-error-summary', text: 'You need to sign in before continuing.'
     element :forgot_your_password, 'a', text: 'Forgot your password?'
     section :guidance, '.guidance' do
-      element :get_help_header, 'h3', text: 'Get help'
+      element :get_help_header, 'h2', text: 'Get help'
       element :forgot_password, 'p', text: 'Forgot your password'
       element :follow_steps, 'p', text: 'Follow these steps to '
       element :get_new_password_link, 'a', text: 'get a new password'

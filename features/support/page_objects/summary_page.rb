@@ -2,7 +2,7 @@ class SummaryPage < BasePage
   section :content, '#content' do
     element :header, 'h2', text: 'Check details'
     element :complete_processing_button, 'input[value="Complete processing"]'
-    sections :summary_section, '.summary-section' do
+    sections :summary_section, '.govuk-summary-list' do
       element :change_benefits, 'a', text: 'Change benefits'
     end
   end

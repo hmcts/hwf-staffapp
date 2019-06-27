@@ -1,7 +1,7 @@
 class IncomesPage < BasePage
   section :content, '#content' do
-    element :no, '.block-label', text: 'No'
-    element :yes, '.block-label', text: 'Yes'
+    element :no, '.govuk-label', text: 'No'
+    element :yes, '.govuk-label', text: 'Yes'
   end
 
   def submit_incomes_no
