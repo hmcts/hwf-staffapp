@@ -62,7 +62,7 @@
           span#changed-name-error.govuk-error-message
             = f.label :married, class: 'govuk-label'
             = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
-          .govuk-radios
+          .govuk-radios.govuk-radios--small
             .govuk-radios__item
               = f.radio_button :married, 'false', class: 'govuk-radios__input'
               = f.label t('married_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_married_false'
