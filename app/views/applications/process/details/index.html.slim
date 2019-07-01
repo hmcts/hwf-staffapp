@@ -48,7 +48,7 @@
           .govuk-date-input__item
             .govuk-form-group.govuk-form-group-year
               = f.label :year_date_received, class: 'govuk-label'
-              = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*"
+              = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
       .govuk-form-group
         = f.label :form_name, class: 'govuk-label'
@@ -99,7 +99,7 @@
                   .govuk-date-input__item
                     .govuk-form-group.govuk-form-group-year
                       = f.label :year_date_of_death, class: 'govuk-label'
-                      = f.text_field :year_date_of_death, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*"
+                      = f.text_field :year_date_of_death, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
 
         fieldset
@@ -129,7 +129,7 @@
                   .govuk-date-input__item
                     .govuk-form-group.govuk-form-group-year
                       = f.label :year_date_fee_paid, class: 'govuk-label'
-                      = f.text_field :year_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*"
+                      = f.text_field :year_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
                 - if display_discretion_block?(@form)
                   fieldset.discretion_applied
