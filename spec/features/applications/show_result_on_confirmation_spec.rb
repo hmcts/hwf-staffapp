@@ -44,9 +44,9 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       scenario 'the summary page shows the benefit data' do
         expect(page).to have_xpath('//h2', text: 'Check details')
-        expect(page).to have_xpath('//h4', text: 'Savings and investments')
-        expect(page).to have_no_xpath('//h4', text: 'Income')
-        expect(page).to have_no_xpath('//h4', text: 'Benefits')
+        expect(page).to have_xpath('//h2', text: 'Savings and investments')
+        expect(page).to have_no_xpath('//h2', text: 'Income')
+        expect(page).to have_no_xpath('//h2', text: 'Benefits')
       end
     end
 
@@ -62,7 +62,8 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         expect(page).to have_xpath('//h2', text: 'Check details')
         dob_text = dob.strftime('%-d %B %Y')
         expect(page).to have_content("Date of birth #{dob_text}")
-        click_link 'Change personal details'
+
+        first(:xpath, ".//a[@data-section-name='personal-details']").click
 
         expect(page).to have_xpath(".//input[@id='application_day_date_of_birth'][@value='#{dob.day}']")
         expect(page).to have_xpath(".//input[@id='application_month_date_of_birth'][@value='#{dob.month}']")
@@ -91,7 +92,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         date_received_text = date_received.strftime('%-d %B %Y')
         expect(page).to have_xpath('//h2', text: 'Check details')
         expect(page).to have_content("Date received #{date_received_text}")
-        click_link 'Change application details'
+        first(:xpath, ".//a[@data-section-name='application-details']").click
 
         expect(page).to have_xpath(".//input[@id='application_day_date_received'][@value='#{date_received.day}']")
         expect(page).to have_xpath(".//input[@id='application_month_date_received'][@value='#{date_received.month}']")
@@ -140,7 +141,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         expect(page).to have_content("Name of the deceased Jane")
         expect(page).to have_content("Date of their death #{deceased_date_text}")
 
-        click_link 'Change application details'
+        first(:xpath, ".//a[@data-section-name='application-details']").click
 
         expect(page).to have_xpath(".//input[@id='application_day_date_of_death'][@value='#{deceased_date.day}']")
         expect(page).to have_xpath(".//input[@id='application_month_date_of_death'][@value='#{deceased_date.month}']")
@@ -187,7 +188,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         expect(page).to have_xpath('//h2', text: 'Check details')
         expect(page).to have_content("Date fee paid #{refund_date_text}")
 
-        click_link 'Change application details'
+        first(:xpath, ".//a[@data-section-name='application-details']").click
 
         expect(page).to have_xpath(".//input[@id='application_day_date_fee_paid'][@value='#{refund_date.day}']")
         expect(page).to have_xpath(".//input[@id='application_month_date_fee_paid'][@value='#{refund_date.month}']")
@@ -220,9 +221,9 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
         scenario 'the summary page shows the benefit data' do
           expect(page).to have_xpath('//h2', text: 'Check details')
-          expect(page).to have_xpath('//h4', text: 'Savings and investments')
-          expect(page).to have_xpath('//h4', text: 'Benefits')
-          expect(page).to have_no_xpath('//h4', text: 'Income')
+          expect(page).to have_xpath('//h2', text: 'Savings and investments')
+          expect(page).to have_xpath('//h2', text: 'Benefits')
+          expect(page).to have_no_xpath('//h2', text: 'Income')
 
           expect(page).to have_no_xpath('//div[contains(@class,"callout")]')
         end
@@ -255,9 +256,9 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
         scenario 'the summary page shows the income data' do
           expect(page).to have_xpath('//h2', text: 'Check details')
-          expect(page).to have_xpath('//h4', text: 'Savings and investments')
-          expect(page).to have_xpath('//h4', text: 'Benefits')
-          expect(page).to have_xpath('//h4', text: 'Income')
+          expect(page).to have_xpath('//h2', text: 'Savings and investments')
+          expect(page).to have_xpath('//h2', text: 'Benefits')
+          expect(page).to have_xpath('//h2', text: 'Income')
 
           expect(page).to have_no_xpath('//div[contains(@class,"callout")]')
         end
