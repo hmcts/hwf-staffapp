@@ -3,7 +3,7 @@ class SummaryPage < BasePage
     element :header, 'h2', text: 'Check details'
     element :complete_processing_button, 'input[value="Complete processing"]'
     sections :summary_section, '.govuk-summary-list' do
-      element :change_benefits, 'a', text: 'Change benefits'
+      element :change_benefits, 'a', text: 'ChangeBenefits declared in application'
     end
   end
 

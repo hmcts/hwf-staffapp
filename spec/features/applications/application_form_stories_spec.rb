@@ -67,12 +67,12 @@ RSpec.feature 'Completing the application details', type: :feature do
 
               scenario 'the summary page is shown with correct display' do
                 expect(page).to have_xpath('//h2', text: 'Check details')
-                expect(page).to have_xpath('//h4', text: 'Savings and investments')
+                expect(page).to have_xpath('//h2', text: 'Savings and investments')
                 expect(page).to have_content('Less than £3,000 No')
                 expect(page).to have_content('Savings amount £3500')
                 expect(page).to have_no_content('More than £16,000')
-                expect(page).to have_no_xpath('//h4', text: 'Benefits')
-                expect(page).to have_no_xpath('//h4', text: 'Income')
+                expect(page).to have_no_xpath('//h2', text: 'Benefits')
+                expect(page).to have_no_xpath('//h2', text: 'Income')
               end
             end
 
@@ -104,9 +104,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                   scenario 'the summary page is shown with correct display' do
                     expect(page).to have_xpath('//h2', text: 'Check details')
-                    expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                    expect(page).to have_xpath('//h4', text: 'Benefits')
-                    expect(page).to have_no_xpath('//h4', text: 'Income')
+                    expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                    expect(page).to have_xpath('//h2', text: 'Benefits')
+                    expect(page).to have_no_xpath('//h2', text: 'Income')
                   end
                 end
               end
@@ -141,13 +141,13 @@ RSpec.feature 'Completing the application details', type: :feature do
                     context 'on summary page' do
                       scenario 'the summary page is shown with correct display' do
                         expect(page).to have_xpath('//h2', text: 'Check details')
-                        expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                        expect(page).to have_xpath('//h4', text: 'Benefits')
-                        expect(page).to have_xpath('//h4', text: 'Income')
+                        expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                        expect(page).to have_xpath('//h2', text: 'Benefits')
+                        expect(page).to have_xpath('//h2', text: 'Income')
                       end
 
                       context 'when the user returns to the savings threshold' do
-                        before { click_link 'Change savings and investments' }
+                        before { click_link 'ChangeLess than £3,000' }
 
                         scenario 'savings and investments is shown' do
                           expect(page).to have_xpath('//h2', text: 'Savings and investments')
@@ -162,9 +162,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                           scenario 'the summary page is shown with correct display' do
                             expect(page).to have_xpath('//h2', text: 'Check details')
-                            expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                            expect(page).to have_no_xpath('//h4', text: 'Benefits')
-                            expect(page).to have_no_xpath('//h4', text: 'Income')
+                            expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                            expect(page).to have_no_xpath('//h2', text: 'Benefits')
+                            expect(page).to have_no_xpath('//h2', text: 'Income')
                           end
                         end
                       end
@@ -213,9 +213,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
               scenario 'the summary page is shown with correct display' do
                 expect(page).to have_xpath('//h2', text: 'Check details')
-                expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                expect(page).to have_no_xpath('//h4', text: 'Benefits')
-                expect(page).to have_no_xpath('//h4', text: 'Income')
+                expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                expect(page).to have_no_xpath('//h2', text: 'Benefits')
+                expect(page).to have_no_xpath('//h2', text: 'Income')
               end
             end
 
@@ -237,13 +237,13 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                 scenario 'the summary page is shown with correct display' do
                   expect(page).to have_xpath('//h2', text: 'Check details')
-                  expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                  expect(page).to have_xpath('//h4', text: 'Benefits')
-                  expect(page).to have_no_xpath('//h4', text: 'Income')
+                  expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                  expect(page).to have_xpath('//h2', text: 'Benefits')
+                  expect(page).to have_no_xpath('//h2', text: 'Income')
                 end
 
                 context 'when the user returns to the savings threshold' do
-                  before { click_link 'Change savings and investments' }
+                  before { click_link 'ChangeLess than £3,000' }
 
                   scenario 'savings and investments is shown' do
                     expect(page).to have_xpath('//h2', text: 'Savings and investments')
@@ -258,9 +258,9 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                     scenario 'the summary page is shown with correct display' do
                       expect(page).to have_xpath('//h2', text: 'Check details')
-                      expect(page).to have_xpath('//h4', text: 'Savings and investments')
-                      expect(page).to have_no_xpath('//h4', text: 'Benefits')
-                      expect(page).to have_no_xpath('//h4', text: 'Income')
+                      expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                      expect(page).to have_no_xpath('//h2', text: 'Benefits')
+                      expect(page).to have_no_xpath('//h2', text: 'Income')
                     end
                   end
                 end
