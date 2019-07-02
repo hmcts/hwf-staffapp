@@ -174,11 +174,6 @@ Metrics/BlockLength:
 Rails/HttpPositionalArguments:
   Enabled: false
 
-RSpec/MultipleExpectations:
-  Exclude:
-    - 'spec/features/**/*'
-    - 'spec/support/shared_examples/**/*'
-
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*'
@@ -186,7 +181,7 @@ RSpec/ExampleLength:
 Rails/Delegate:
   Exclude:
     - 'features/**/*'
-  
+
 Rails/ApplicationRecord:
   Enabled: false
 
