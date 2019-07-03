@@ -54,7 +54,18 @@ class ApplicationDetailsPage < BasePage
     content.application_day_date_received.set date_received.day
     content.application_month_date_received.set date_received.month
     content.application_year_date_received.set date_received.year
+    next_page
+  end
 
+  def submit_fee_1001
+    fill_in 'How much is the court or tribunal fee?', with: '10001'
+    content.jurisdiction.click
+    date_received = Time.zone.today - 2.months
+    content.application_day_date_received.set date_received.day
+    content.application_month_date_received.set date_received.month
+    content.application_year_date_received.set date_received.year
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571')
     next_page
   end
 end

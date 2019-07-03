@@ -22,6 +22,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def approve_page
+  @approve_page ||= ApprovePage.new
+end
+
 def find_application_page
   @find_application_page ||= FindApplicationPage.new
 end
