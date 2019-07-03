@@ -50,7 +50,10 @@ RSpec.feature 'Processing refund application with valid date received date', typ
       click_button 'Look up'
       expect(page).to have_content "Application details"
       choose jurisdiction.name
-      date_received = find(:xpath, './/input[@id="online_application_date_received"]').value
+      day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
+      month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
+      year = find(:xpath, './/input[@id="online_application_year_date_received"]').value
+      date_received = "#{day}/#{month}/#{year}".to_date.to_s
       expect(date_received).to eq(online_application_1.date_received.to_s)
 
       click_button 'Next'
@@ -68,7 +71,10 @@ RSpec.feature 'Processing refund application with valid date received date', typ
       click_button 'Look up'
       expect(page).to have_content "Application details"
       choose jurisdiction.name
-      date_received = find(:xpath, './/input[@id="online_application_date_received"]').value
+      day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
+      month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
+      year = find(:xpath, './/input[@id="online_application_year_date_received"]').value
+      date_received = "#{day}/#{month}/#{year}".to_date.to_s
       expect(date_received).to eq(online_application_2.date_received.to_s)
 
       click_button 'Next'

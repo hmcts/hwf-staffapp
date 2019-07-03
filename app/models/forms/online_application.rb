@@ -1,15 +1,23 @@
 module Forms
   class OnlineApplication < FormObject
+    include ActiveModel::Validations::Callbacks
+    include DataFieldFormattable
+
     def self.permitted_attributes
       { fee: Integer,
         jurisdiction_id: Integer,
         date_received: Date,
+        day_date_received: Integer,
+        month_date_received: Integer,
+        year_date_received: Integer,
         form_name: String,
         emergency: Boolean,
         emergency_reason: String }
     end
 
     define_attributes
+
+    before_validation :format_date_fields
 
     validates :fee, presence: true,
                     numericality: { allow_blank: true, less_than: 20_000 }
@@ -32,6 +40,10 @@ module Forms
 
     def enable_default_jurisdiction(user)
       self.jurisdiction_id = user.jurisdiction_id
+    end
+
+    def format_date_fields
+      format_dates(:date_received) if format_the_dates?(:date_received)
     end
 
     private

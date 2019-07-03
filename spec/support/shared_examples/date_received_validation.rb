@@ -17,13 +17,9 @@ shared_examples 'date_received validation' do
   context 'when the format is invalid' do
     before do
       Timecop.freeze(Time.zone.local(2015, 12, 1, 10, 10, 10)) do
-        if form.is_a?(Forms::OnlineApplication)
-          form.date_received = '32/09/2015'
-        else
-          form.day_date_received = '32'
-          form.month_date_received = '09'
-          form.year_date_received = '2015'
-        end
+        form.day_date_received = '32'
+        form.month_date_received = '09'
+        form.year_date_received = '2015'
         form.valid?
       end
     end
