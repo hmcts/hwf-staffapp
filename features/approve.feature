@@ -7,4 +7,7 @@ Feature: Ask a manager page
       When I successfully submit a manager name
       Then I am taken to the savings and investments page
    
+    Scenario: Manager name error message
+      When I click on next without supplying a manager name
+      Then I should see enter manager name error message
    

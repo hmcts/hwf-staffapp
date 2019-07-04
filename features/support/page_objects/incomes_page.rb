@@ -6,7 +6,7 @@ class IncomesPage < BasePage
 
   def submit_incomes_no
     content.no.click
-    content.fill_in 'Total monthly income', with: '1200'
+    fill_in 'Total monthly income', with: '1200'
     next_page
   end
 
