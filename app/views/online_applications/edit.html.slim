@@ -33,8 +33,21 @@
 
       .form-group
         = f.label :date_received, class: 'form-label'
+          =t('date_received', scope: @form.i18n_scope)
+          span.hint.block = t('date_hint', scope: @form.i18n_scope)
         = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
-        = f.text_field :date_received, { class: 'form-control' }
+        .form-date
+          .form-group.form-group-day
+            = f.label :day_date_received, class: 'form-label'
+            = f.text_field :day_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .form-group.form-group-month
+            = f.label :month_date_received, class: 'form-label'
+            = f.text_field :month_date_received, class: 'form-control', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .form-group.form-group-year
+            = f.label :year_date_received, class: 'form-label'
+            = f.text_field :year_date_received, class: 'form-control', type:"number", pattern: "[0-9]*"
+
+
 
       .form-group
         = f.label :form_name, class: 'form-label'
