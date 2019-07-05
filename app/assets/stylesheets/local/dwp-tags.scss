@@ -64,6 +64,8 @@
 
 .dwp-banner-online {
   @include dwp-banner($state: online);
+  position: relative;
+  top: -40px;
 }
 
 .dwp-banner-offline {
