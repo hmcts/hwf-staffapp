@@ -46,3 +46,12 @@ When(/^I submit the form with a fee £20,000 or over$/) do
   fill_in 'How much is the court or tribunal fee?', with: '20000'
   next_page
 end
+
+When("I submit the form with a fee £10,001 - £19,999") do
+  application_details_page.submit_fee_1001
+end
+
+Then("I should be taken to ask a manager page") do
+  expect(current_url).to end_with '/applications/1/approve'
+  expect(approve_page.content).to have_header
+end

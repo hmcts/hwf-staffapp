@@ -20,6 +20,10 @@ Feature: Application details page
       When I submit the form with a fee £20,000 or over
       Then I should see error message telling me that the fee needs to be below £20,000
 
+    Scenario: Fee is £10,001 - £19,999
+      When I submit the form with a fee £10,001 - £19,999
+      Then I should be taken to ask a manager page
+
     Scenario: Entering a help with fees form number
       When I submit the form with a help with fees form number 'COP44A'
       Then I should see you entered the help with fees form number error message
