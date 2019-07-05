@@ -8,13 +8,17 @@
     color: govuk-colour("white");
   }
 
+  h3.govuk-heading-l {
+    color: govuk-colour("white");
+  }
+
   .check {
     display: inline-block;
     padding-right: 10px;
   }
 
   .reference-number {
-    // @include core-36;
+    @include core-36;
     font-weight: bold;
     display: block;
   }

@@ -1,6 +1,6 @@
 h4.govuk-heading-m.util_mt-medium Reference
 #result.callout.evidence-check-reference
-  h3.heading-large.text-center
+  h3.govuk-heading-l.text-center
     span.check
       | ✓
     | The reference number is
@@ -11,7 +11,7 @@ h4.govuk-heading-m.util_mt-medium Reference
   = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
-  h3.heading-large = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
+  h3.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 .guidance
   h4.govuk-heading-m =t('evidence_check.next_steps.title')
@@ -22,4 +22,4 @@ h4.govuk-heading-m.util_mt-medium Reference
 .confirmation-letter
   =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
-=link_to t('evidence_check.back_to_start'), root_path, class: 'button util_mt-medium'
+=link_to t('evidence_check.back_to_start'), root_path, class: 'govuk-button'
