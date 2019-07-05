@@ -1,6 +1,6 @@
 h4.govuk-heading-m.util_mt-medium Reference
 #result.callout.evidence-check-reference
-  h3.heading-large.text-center
+  h3.govuk-heading-l.text-center
     span.check
       | ✓
     | The reference number is
@@ -11,7 +11,7 @@ h4.govuk-heading-m.util_mt-medium Reference
   = build_section 'Result', @confirm, @confirm.all_fields
 
 #result.callout class="callout-#{@confirm.result}"
-  h3.heading-large = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
+  h3.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
 
@@ -44,4 +44,4 @@ h4.govuk-heading-m.util_mt-medium Reference
 
   p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
-= link_to 'Back to start', root_path, class: 'button util_mt-medium'
+= link_to 'Back to start', root_path, class: 'govuk-button'
