@@ -2,31 +2,33 @@
   - show_override = @form.errors.empty? ? {} : { open: 'open' }
 
   .panel#override_panel
-    details *show_override
-      summary
-        span.summary.primary Grant help with fees
-      div.util_mt-small
+    details.govuk-details *show_override
+      summary.govuk-details__summary
+        span.govuk-details__summary-text
+          | Grant help with fees
+
+      .govuk-details__text
         = form_for @form, as: :application, url: path, method: :put, html: { autocomplete: 'off', class: 'override-form' } do |f|
           .govuk-form-group
-            fieldset
+            fieldset.govuk-fieldset
               legend.visuallyhidden Reasons for granting help with fees
               = f.label :value, class: 'govuk-label'
               = f.label :value, @form.errors[:value].join(', '), class: 'error' if @form.errors[:value].present?
               = f.hidden_field :value, value: nil
-              .options.radio.cf
-                  - t('options', scope: @form.i18n_scope).each do |option|
-                    .option
-                      label.block-label for="application_value_#{option.keys.first}"
-                        = f.radio_button :value, option.keys.first, { class: 'show-hide-section' }
-                        =option.values.first
-
-                  .option
-                    label.block-label for="application_value_other"
-                      = f.radio_button :value, :other, { class: 'show-hide-section', data: { section: 'discretion-reason', show: 'false' } }
+              .govuk-radios.govuk-radios--small
+                - t('options', scope: @form.i18n_scope).each do |option|
+                  .govuk-radios__item
+                    = f.radio_button :value, option.keys.first, { class: 'show-hide-section govuk-radios__input' }
+                    label.govuk-label.govuk-radios__label for="application_value_#{option.keys.first}"
+                      = option.values.first
+                .govuk-radios__item
+                    = f.radio_button :value, :other, { class: 'show-hide-section govuk-radios__input', data: { section: 'discretion-reason', show: 'false' } }
+                    label.govuk-label.govuk-radios__label for="application_value_other"
                       = t('option_other', scope: @form.i18n_scope)
-                  .govuk-form-group.panel-indent.start-hidden#discretion-reason-only
-                    = f.label :reason, class: 'govuk-label'
-                    = f.label :reason, @form.errors[:reason].join(', '), class: 'error' if @form.errors[:reason].present?
-                    = f.text_area :reason, rows: 3, class: 'govuk-input'
+                .govuk-form-group.panel-indent.start-hidden#discretion-reason-only
+                  = f.label :reason, class: 'govuk-label'
+                  = f.label :reason, @form.errors[:reason].join(', '), class: 'govuk-error-message' if @form.errors[:reason].present?
+                  = f.text_area :reason, rows: 3, class: 'govuk-textarea'
 
-          = f.submit 'Update application', :class => 'button'
+          = f.submit 'Update application', :class => 'govuk-button'
+

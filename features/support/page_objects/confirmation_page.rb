@@ -10,7 +10,8 @@ class ConfirmationPage < BasePage
       element :can_be_issued, 'li', text: 'The applicant’s process can now be issued'
       element :see_guides, 'a', text: 'See the guides'
     end
-    element :back_to_start, '.button', text: 'Back to start'
+    element :complete_processing_button, 'input[value="Complete processing"]'
+    element :back_to_start, '.govuk-button', text: 'Back to start'
   end
 
   def go_to_confirmation_page

@@ -17,9 +17,6 @@
 // = require ckeditor-jquery
 // = require govuk-frontend/all
 
-// vendor plugins
-// = require details.polyfill
-
 // module loader
 // = require module_loader
 

@@ -51,7 +51,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
 
     context 'when on application processed page' do
       scenario "'Back to start' link redirects to home page" do
-        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="heading-large"]')
+        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="govuk-heading-l"]')
         click_link 'Back to start'
         expect(page).to have_button 'Start now'
       end
