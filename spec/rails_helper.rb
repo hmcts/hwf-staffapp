@@ -94,11 +94,11 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
+    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
   end
 
   Capybara::Webkit.configure do |config|
-    config.allow_url('http://www.google.com/jsapi')
+    config.allow_url('http://www.gstatic.com/charts/loader.js')
     config.block_unknown_urls
   end
 

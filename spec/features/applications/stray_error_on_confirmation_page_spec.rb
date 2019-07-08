@@ -12,7 +12,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
   let(:date_received) { Time.zone.today - 3.days }
 
   before do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.google.com/jsapi'])
+    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
     Capybara.current_driver = :webkit
   end
 
