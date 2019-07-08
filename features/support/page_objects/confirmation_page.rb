@@ -11,7 +11,7 @@ class ConfirmationPage < BasePage
       element :see_guides, 'a', text: 'See the guides'
     end
     element :complete_processing_button, 'input[value="Complete processing"]'
-    element :back_to_start, '.button', text: 'Back to start'
+    element :back_to_start, '.govuk-button', text: 'Back to start'
   end
 
   def go_to_confirmation_page

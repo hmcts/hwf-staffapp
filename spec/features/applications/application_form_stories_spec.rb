@@ -269,7 +269,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   before { click_button 'Complete processing' }
 
                   scenario 'the confirmation is shown' do
-                    expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="heading-large"]')
+                    expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="govuk-heading-l"]')
                   end
 
                   context 'when the user clicks Back to Start' do
