@@ -28,8 +28,8 @@ Feature: My dashboard
     Then I should see the reference number is not recognised error message
 
   @wip @manual
-  Scenario: Process application
-    When I start a new application
+  Scenario: Process a paper application
+    When I start to process a new paper application
     Then I am taken to the applicants personal details page
 
   @wip @manual
