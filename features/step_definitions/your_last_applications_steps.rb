@@ -10,10 +10,6 @@ Given("I abandon the application") do
   dashboard_page.go_home
 end
 
-Then("I should see that partially processed application under your last applications") do
-  expect(dashboard_page.content).to have_updated_applications
-end
-
 When("I open my last application") do
   dashboard_page.content.last_application_link.click
 end

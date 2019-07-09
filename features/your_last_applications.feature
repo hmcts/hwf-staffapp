@@ -7,9 +7,6 @@ Feature: Processed applications
     And I fill in the application details
     And I abandon the application
 
-    Scenario: Open my last application
-      Then I should see that partially processed application under your last applications
-
     Scenario: Opening my last application
       When I open my last application
       Then I should see the personal details populated with information
