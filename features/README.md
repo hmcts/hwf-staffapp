@@ -60,6 +60,8 @@ Replace <SAUCE_USERNAME> and <SAUCE_ACCESS_KEY> with your account details
 
 Wait for 'Sauce Connect is up, you may start your tests.'
 
+[Add the tag '@saucelabs' to a scenario/s that you want to run.]
+
 To run Sauce Labs feature using specific browser:
 $ DRIVER=saucelabs SAUCELABS_BROWSER=ie11_win7 cucumber --tags @saucelabs
 
