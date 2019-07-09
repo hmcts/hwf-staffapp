@@ -79,6 +79,9 @@
     margin: 0;
     text-align: left;
   }
+  h4#more-guides {
+    color: govuk-colour("white");
+  }
 
   &.not-received, &.no, &.callout-none, &.callout-error, &.callout-return {
     background-color: $govuk-error-colour;
