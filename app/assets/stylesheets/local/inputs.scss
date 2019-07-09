@@ -3,6 +3,10 @@ input[type=text]{
     background-color: $grey-3;
   }
 }
+.input-disabled {
+  border-color: $govuk-border-colour;
+  background-color: govuk-colour("grey-4");
+}
 
 input.decoy {
   // used to prevent browser autofill
