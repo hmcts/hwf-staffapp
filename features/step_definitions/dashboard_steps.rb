@@ -32,10 +32,6 @@ Then("I should see the reference number is not recognised error message") do
   # steps need implementing - wip
 end
 
-When("I start a new application") do
-  dashboard_page.process_application
-end
-
 Then("I am taken to the applicants personal details page") do
   # steps need implementing - wip
 end

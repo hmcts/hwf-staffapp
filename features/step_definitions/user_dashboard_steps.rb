@@ -28,7 +28,7 @@ Then("I should see the reference number is not recognised error message") do
   # steps need implementing - wip
 end
 
-When("I start a new application") do
+When("I start to process a new paper application") do
   dashboard_page.process_application
 end
 

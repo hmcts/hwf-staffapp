@@ -14,7 +14,7 @@ Feature: My dashboard
     Then I am taken to the guide page
 
   Scenario: Process application
-    When I start a new application
+    When I start to process a new paper application
     Then I am taken to the applicants personal details page
 
   Scenario: Process an online application
