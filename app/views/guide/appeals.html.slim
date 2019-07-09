@@ -3,7 +3,7 @@ header
     span.hint.util_mb-0
       | Staff guide
     | Appeals
-  p.lede
+  p.govuk-body-l
     | What to do when an applicant appeals the decision.
 
 .govuk-grid-row
@@ -20,61 +20,64 @@ header
     p
       a href='#unsuccess' Unsuccessful appeals
     p
-      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
+      a.govuk-button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
   .govuk-grid-column-two-thirds
 
-    h3.heading-large id="intro" Introduction
+    h3.govuk-heading-l id="intro" Introduction
 
     p An applicant may appeal if they disagree with the decision about their application for help with fees. However, if they've made a mistake, for example, they've stated their income incorrectly or not given all relevant information, you should recommend that they apply again rather than appeal.
-    h3.heading-large id="who-can-appeal" Who can appeal
+    h3.govuk-heading-l id="who-can-appeal" Who can appeal
     h5.govuk-heading-m The appeal:
     ul.govuk-list.govuk-list--bullet
       li must be made within 14 days from the date they had to appeal
       li must include the original application along with any evidence or new information
 
     .panel
-      h3.heading-large.util_mt-0 id="what-to-do" What to do
+      h3.govuk-heading-l.util_mt-0 id="what-to-do" What to do
       h5.govuk-heading-m If you receive an appeal:
       ul.govuk-list.govuk-list--bullet
         li Pass the appeal on to your delivery manager
         li The delivery manager will deal with the appeal
 
-    h3.heading-large id="success" Successful appeals
+    h3.govuk-heading-l id="success" Successful appeals
     p If the delivery manager decides that the applicant’s appeal is valid, they will write to the applicant with the outcome.
 
-    h3.heading-large id="unsuccess" Unsuccessful appeals
+    h3.govuk-heading-l id="unsuccess" Unsuccessful appeals
     p The delivery manager must write to the applicant within 10 days of receiving the appeal. The applicant may then appeal again to the operational manager.
     p The operational manager’s decision is final.
 
-.panel.callout.blue.util_mt-large
-  h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
+.govuk-grid-row
+  .govuk-grid-column-full
 
-ul.block-grid.small-block-grid-2.medium-block-grid-4
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_process_application_path
-          span Process application
-          = image_tag("icon-process.png")
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_part_payments_path
-          span Part payments
-          = image_tag("icon-part-fee.png")
+    .panel.callout.blue.util_mt-large
+      h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_evidence_checks_path
-          span Evidence checks
-          = image_tag("icon-evidence.png")
+    ul.block-grid.small-block-grid-2.medium-block-grid-4
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_process_application_path
+              span Process application
+              = image_tag("icon-process.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_part_payments_path
+              span Part payments
+              = image_tag("icon-part-fee.png")
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_suspected_fraud_path
-          span Suspected fraud
-          = image_tag("icon-fraud.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_evidence_checks_path
+              span Evidence checks
+              = image_tag("icon-evidence.png")
+
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_suspected_fraud_path
+              span Suspected fraud
+              = image_tag("icon-fraud.png")

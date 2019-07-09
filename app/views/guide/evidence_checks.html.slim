@@ -3,7 +3,7 @@ header
     span.hint.util_mb-0
       | Staff guide
     | Evidence checks
-  p.lede
+  p.govuk-body-l
     | What to do when an application is marked for an evidence check.
 
 .govuk-grid-row
@@ -24,12 +24,12 @@ header
     p
       a href='#sources' Sources of evidence
     p
-      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
+      a.govuk-button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
   .govuk-grid-column-two-thirds
 
-    h3.heading-large.util_mt-medium id="intro" Introduction
+    h3.govuk-heading-l.util_mt-medium id="intro" Introduction
 
     p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
     p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
@@ -38,16 +38,16 @@ header
     p You won't be able to finish processing the application until you've received the evidence.
 
 
-    h3.heading-large id="before-start" Before you start
+    h3.govuk-heading-l id="before-start" Before you start
     h5.govuk-heading-m When you receive the evidence:
     ul.govuk-list.govuk-list--bullet
       li check the name on the evidence matches the name on the application
       li check the evidence is dated within 3 months of receiving the application
       li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid)
 
-    h3.heading-large id="problems-evidence" Problems with the evidence
+    h3.govuk-heading-l id="problems-evidence" Problems with the evidence
     p You may not be able to process the evidence provided by an applicant. Common problems are:
-    ol.list.list-number
+    ol.govuk-list.govuk-list--number
       li the name on the evidence doesn't match the name of the applicant
       li the evidence is out of date
       li the applicant has not provided all evidence required
@@ -55,7 +55,7 @@ header
     p If a couple is receiving a shared benefit but the benefits letter doesn't state the applicant’s name the applicant must provide additional evidence to show they live at the same address as their partner.
 
     .panel
-      h3.heading-large.util_mt-0 id="what-to-do" What to do
+      h3.govuk-heading-l.util_mt-0 id="what-to-do" What to do
 
       h5.govuk-heading-m To process evidence:
       ul.govuk-list.govuk-list--bullet
@@ -77,7 +77,7 @@ header
         li send this letter and the application back to the applicant
         li the application will be removed from the list 'Waiting for evidence'
 
-    h3.heading-large id="calculate" How to calculate total monthly income
+    h3.govuk-heading-l id="calculate" How to calculate total monthly income
     h5.govuk-heading-m You need to:
     ul.govuk-list.govuk-list--bullet
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
@@ -85,7 +85,7 @@ header
       li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income')}
       li check the total against the bank statements
 
-    h3.heading-large id="not-include" What not to include as income
+    h3.govuk-heading-l id="not-include" What not to include as income
     ul.govuk-list.govuk-list--bullet
       li
         | #{link_to '6 benefits', guide_process_application_path(anchor: 'benefits')} <br>
@@ -97,120 +97,123 @@ header
         | such as Carer’s Allowance, Housing Benefit, or childcare element of Working Tax Credit
 
 
-    h3.heading-large id="sources" Sources of evidence
+    h3.govuk-heading-l id="sources" Sources of evidence
 
-    table
-      caption.visuallyhidden Table of supplementary information on sources of evidence
-      tbody
-        tr
-          th scope="row"
+    table.govuk-table
+      caption.visuallyhidden.govuk-table__caption Table of supplementary information on sources of evidence
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Bank statements
-          td
+          td.govuk-table__cell
             p The applicant will be asked to provide the most recent month’s bank statement for their main bank account. Check the money coming in matches the amounts shown on the supporting evidence.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Wages
-          td
+          td.govuk-table__cell
             p Employed: Applicants should provide their most recent payslip which should be no more than 6 weeks old.
 
             p Self employed:  Applicants should provide their most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.
 
             p If a self-employed applicant doesn’t have either of these documents, they will need to provide bank statements that show income for the previous tax year.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Child Benefit
             p Working Tax Credit
             p Child Tax Credit
-          td
+          td.govuk-table__cell
             p A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that the applicant is receiving Child Benefit, Working Tax Credit or Child Tax Credit.
 
             p In some cases an applicant may not have a Child Benefit Award Notice dated within the last three months. If this is the case, check their bank statements for evidence of money coming in.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Child maintenance payments
-          td
+          td.govuk-table__cell
             p Document(s) showing the payment amounts and how often they are made. This can be one of the following:
             ul
               li sealed court order
               li Child Support Agency Assessment
               li signed voluntary agreement or letter of agreement signed by both parties
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Contribution-based Jobseeker’s Allowance (JSA)
             p Contribution-based Employment and Support Allowance (ESA)
             p Universal Credit
-          td
+          td.govuk-table__cell
             p A letter from the Department for Work and Pensions (DWP) dated in the last 3 months confirming how much is being received and how often.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Any other benefits
-          td
+          td.govuk-table__cell
             p A letter dated in the last 3 months confirming how much is being received and how often.
 
             p Note that the #{link_to '6 eligible benefits', guide_process_application_path(anchor: 'benefits') } and the #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income') } shouldn’t be included as income.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Pensions
-          td
+          td.govuk-table__cell
             p A letter or statement showing pension payments.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Rent from people living with the applicant
-          td
+          td.govuk-table__cell
             p A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Rent from any properties owned
-          td
+          td.govuk-table__cell
             p Tenancy agreement or lease relating to each property showing the rents currently being paid and how often.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Stocks, shares, bonds, savings and/or any other financial arrangements
-          td
+          td.govuk-table__cell
             p Current statements or certificates showing the arrangement and how much income is obtained. Only the interest paid out on stocks, bonds, shares, savings etc can be considered as income.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Income received by any other means such as selling goods publicly or privately, including sales over the internet
-          td
+          td.govuk-table__cell
             p Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (e.g. family heirlooms), would normally be classified as ‘savings and investments’ rather than income.
-        tr
-          th scope="row"
+        tr.govuk-table__row
+          th.govuk-table__header scope="row"
             p Prisoner’s income
-          td
+          td.govuk-table__cell
             p Prisoners should provide a Prisoner Income and Expenditure Statement (PIES). This shows the amount of their earnings, spending, private cash and savings.
             p If the prisoner is in a private prison the format of their financial statement may be slightly different. You need to check details of earnings and private cash.
 
-    h3.heading-large id="non-english" Evidence in languages other than English
+    h3.govuk-heading-l id="non-english" Evidence in languages other than English
     p Evidence must be supplied in English. However, courts and tribunals in Wales can also accept evidence in Welsh.
     p If the original evidence is in another language, then it must be provided along with a certified translation.
 
-.panel.callout.blue.util_mt-large
-  h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
+.govuk-grid-row
+  .govuk-grid-column-full
 
-ul.block-grid.small-block-grid-2.medium-block-grid-4
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_process_application_path
-          span Process application
-          = image_tag("icon-process.png")
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_part_payments_path
-          span Part payments
-          = image_tag("icon-part-fee.png")
+    .panel.callout.blue.util_mt-large
+      h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_appeals_path
-          span Appeals
-          = image_tag("icon-appeals.png")
+    ul.block-grid.small-block-grid-2.medium-block-grid-4
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_process_application_path
+              span Process application
+              = image_tag("icon-process.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_part_payments_path
+              span Part payments
+              = image_tag("icon-part-fee.png")
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_suspected_fraud_path
-          span Suspected fraud
-          = image_tag("icon-fraud.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_appeals_path
+              span Appeals
+              = image_tag("icon-appeals.png")
+
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_suspected_fraud_path
+              span Suspected fraud
+              = image_tag("icon-fraud.png")
