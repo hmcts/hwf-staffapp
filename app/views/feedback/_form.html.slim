@@ -11,59 +11,59 @@
 
   .govuk-form-group
     = f.label :experience, class: 'govuk-label'
-    = f.text_area :experience, rows: 3, class: 'govuk-input'
+    = f.text_area :experience, rows: 3, class: 'govuk-textarea'
 
   .govuk-form-group
     = f.label :ideas, class: 'govuk-label'
-    = f.text_area :ideas, rows: 3, class: 'govuk-input'
+    = f.text_area :ideas, rows: 3, class: 'govuk-textarea'
 
   .govuk-form-group
     = f.label :rating, class: 'govuk-label'
-    .options.radio.cf
-      .option
-        = f.label :rating_1, class: 'block-label'
-          = f.radio_button :rating, 1
-          |1 - very poor
-      .option
-        = f.label :rating_2, class: 'block-label'
-          = f.radio_button :rating, 2
+    .govuk-radios.govuk-radios--small
+      .govuk-radios__item
+        = f.radio_button :rating, 1, class: 'govuk-radios__input'
+        = f.label :rating_1, class: 'govuk-label govuk-radios__label'
+          | 1 - very poor
+      .govuk-radios__item
+        = f.radio_button :rating, 2, class: 'govuk-radios__input'
+        = f.label :rating_2, class: 'govuk-label govuk-radios__label'
           |2
-      .option
-        = f.label :rating_3, class: 'block-label'
-          = f.radio_button :rating, 3
+      .govuk-radios__item
+        = f.radio_button :rating, 3, class: 'govuk-radios__input'
+        = f.label :rating_3, class: 'govuk-label govuk-radios__label'
           |3
-      .option
-        = f.label :rating_4, class: 'block-label'
-          = f.radio_button :rating, 4
+      .govuk-radios__item
+        = f.radio_button :rating, 4, class: 'govuk-radios__input'
+        = f.label :rating_4, class: 'govuk-label govuk-radios__label'
           |4
-      .option
-        = f.label :rating_5, class: 'block-label'
-          = f.radio_button :rating, 5
+      .govuk-radios__item
+        = f.radio_button :rating, 5, class: 'govuk-radios__input'
+        = f.label :rating_5, class: 'govuk-label govuk-radios__label'
           |5 - very good
 
   .govuk-form-group
     = f.label :help, class: 'govuk-label'
-    .options.radio.cf
-      .option
-        = label_tag 'help_score_1', class: 'block-label'
-          = radio_button_tag 'help_score', 1, class: 'help-radio-btn'
+    .govuk-radios.govuk-radios--small
+      .govuk-radios__item
+        = radio_button_tag 'help_score', 1, '', class: 'govuk-radios__input'
+        = label_tag 'help_score_1', class: 'govuk-label govuk-radios__label'
           = t('feedback.rating_1')
-      .option
-        = label_tag 'help_score_2', class: 'block-label'
-          = radio_button_tag 'help_score', 2, class: 'help-radio-btn'
+      .govuk-radios__item
+        = radio_button_tag 'help_score', 2, '', class: 'govuk-radios__input'
+        = label_tag 'help_score_2', class: 'govuk-label govuk-radios__label'
           = t('feedback.rating_2')
-      .option
-        = label_tag 'help_score_3', class: 'block-label'
-          = radio_button_tag 'help_score', 3, class: 'help-radio-btn'
+      .govuk-radios__item
+        = radio_button_tag 'help_score', 3, '', class: 'govuk-radios__input'
+        = label_tag 'help_score_3', class: 'govuk-label govuk-radios__label'
           = t('feedback.rating_3')
-      .option
-        = label_tag 'help_score_4', class: 'block-label'
-          = radio_button_tag 'help_score', 4, class: 'help-radio-btn', value: false
+      .govuk-radios__item
+        = radio_button_tag 'help_score', 4, '', class: 'govuk-radios__input', value: false
+        = label_tag 'help_score_4', class: 'govuk-label govuk-radios__label'
           = t('feedback.rating_4')
 
       .panel-indent#extra-help
         .govuk-form-group
           .label.inline Please enter details
-          = text_field_tag 'feedback[help]'
+          = text_field_tag 'feedback[help]', '' , class: 'govuk-input govuk-!-width-one-quarter'
 
   = f.submit 'Send feedback', class: 'govuk-button'
