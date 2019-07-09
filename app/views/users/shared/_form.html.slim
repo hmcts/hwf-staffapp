@@ -1,12 +1,14 @@
 = form_for @user do |f|
   .govuk-form-group
     = f.label :name, class: 'govuk-label'
-    = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
-    = f.text_field :name, { class: 'govuk-input' }
+    span.govuk-error-message
+      = f.label :name, @user.errors[:name].join(', ').html_safe, class: 'error' if @user.errors[:name].present?
+    = f.text_field :name, { class: 'govuk-input govuk-!-width-one-half' }
   .govuk-form-group
     = f.label :email, class: 'govuk-label'
-    = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
-    = f.text_field :email, { class: 'govuk-input' }
+    span.govuk-error-message
+      = f.label :email, @user.errors[:email].join(', ').html_safe, class: 'error' if @user.errors[:email].present?
+    = f.text_field :email, { class: 'govuk-input govuk-!-width-one-half' }
 
   = render(partial: 'users/shared/form_roles', locals: {f: f})
 
@@ -14,5 +16,5 @@
 
   = render(partial: 'users/shared/form_jurisdiction', locals: {f: f})
 
-  = f.submit 'Save changes', class: 'button'
+  = f.submit 'Save changes', class: 'govuk-button'
 
