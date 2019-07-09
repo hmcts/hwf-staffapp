@@ -13,9 +13,8 @@ end
 
 Capybara.register_driver :saucelabs do |app|
   browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
-  accessible_selenium_adapter_for do
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
-  end
+
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
 end
 
 Capybara.register_driver :firefox do |app|
