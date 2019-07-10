@@ -5,9 +5,10 @@
 
   .govuk-form-group
     fieldset
-      .options.radio.cf
-        = f.label :show, class: 'block-label' do
-          = f.check_box :show
-          = 'Show on admin homepage'
+      .govuk-checkboxes.govuk-checkboxes--small
+        .govuk-checkboxes__item
+          = f.check_box :show, class: 'govuk-checkboxes__input'
+          = f.label :show, class: 'govuk-label govuk-checkboxes__label'
+            | Show on admin homepage
 
-  = f.submit 'Save changes', class: 'button'
+  = f.submit 'Save changes', class: 'govuk-button'
