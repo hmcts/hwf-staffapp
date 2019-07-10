@@ -1,13 +1,10 @@
 
 
-
-- if @notification.present? && @notification.show
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = render('shared/notifications') if @notification.present? && @notification.show
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - if @notification.present? && @notification.show
+      = render('shared/notifications') if @notification.present? && @notification.show
+
     h1.govuk-heading-xl Sign in
 
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
