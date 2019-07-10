@@ -1,14 +1,15 @@
 header
   h2.govuk-heading-xl.util_mb-medium = t 'devise.passwords.new.header'
 
-.text.util_mb-large
+.govuk-body-l
   p = t 'devise.passwords.new.instructions'
 
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { autocomplete: 'off', method: :post }) do |f|
   .govuk-form-group
     = f.label :email, class: 'govuk-label'
-    = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
-    = f.text_field :email, { class: 'govuk-input' }
+    span.govuk-error-message
+      = f.label :email, resource.errors[:email].join('').html_safe, class: 'error' if resource.errors[:email].present?
+    = f.text_field :email, { class: 'govuk-input govuk-!-width-one-third' }
 
   = f.submit t('devise.passwords.new.submit_button'), class: 'govuk-button'
 
