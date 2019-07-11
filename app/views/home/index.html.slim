@@ -57,7 +57,8 @@ h1.visuallyhidden Help with fees - Staff application
       .govuk-form-group
         = f.label :reference, class: 'govuk-label govuk-label'
           h2 = t('search_form.label')
-        = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
+        span.govuk-error-message
+          = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
         = f.text_field :reference, { class: 'govuk-input govuk-!-width-two-quarters', autocomplete: 'off' }
         = f.submit 'Search', class: 'govuk-button'
 
