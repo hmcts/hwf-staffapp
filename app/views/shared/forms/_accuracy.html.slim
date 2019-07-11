@@ -2,19 +2,19 @@
   .govuk-form-group
     = f.label :correct, t("#{model}.labels.correct"), class: 'govuk-label'
     = f.label :correct, form.errors[:correct].join(', '), class: 'error' if form.errors[:correct].present?
-    .options.radio.cf
-      .option
-        label.block-label for="#{model}_correct_true"
-          = f.radio_button :correct, 'true'
-          = t("#{model}.correct")
-      .option
-        label.block-label for="#{model}_correct_false"
-          = f.radio_button :correct, 'false'
-          = t("#{model}.incorrect")
+    .govuk-radios.govuk-radios--small
+      .govuk-radios__item
+          = f.radio_button :correct, 'true', class: 'govuk-radios__input'
+          label.govuk-label.govuk-radios__label for="#{model}_correct_true"
+            = t("#{model}.correct")
+      .govuk-radios__item
+          = f.radio_button :correct, 'false', class: 'govuk-radios__input'
+          label.govuk-label.govuk-radios__label for="#{model}_correct_false"
+            = t("#{model}.incorrect")
 
     .panel-indent.util_mt-0#reason-input
       = f.label :incorrect_reason, t("#{model}.labels.incorrect_reason"), class: 'govuk-label'
       = f.label :incorrect_reason, form.errors[:incorrect_reason].join(', '), class: 'error' if form.errors[:incorrect_reason].present?
-      = f.text_area :incorrect_reason, rows: 3, class: 'govuk-input'
+      = f.text_area :incorrect_reason, rows: 3, class: 'govuk-textarea'
 
   = f.submit 'Next', class: 'govuk-button'
