@@ -3,13 +3,13 @@ header
 
 .panel
   h4.govuk-heading-m.util_mt-0 Process #{type}
-  = link_to 'Start now', send("accuracy_#{type.underscore}_path", source), class: 'button util_mb-medium'
+  = link_to 'Start now', send("accuracy_#{type.underscore}_path", source), class: 'govuk-button util_mb-medium'
   details
     summary
       span.summary.primary What to do if the #{type} can’t be processed
     div.panel-indent.util_mb-0.util_mt-0
       p #{type.capitalize} needs to arrive by <strong>#{source.expires_at.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process #{type}, choose ‘Return application’ to remove it from ‘Waiting for #{type}' and return everything to the applicant.
-      = link_to 'Return application', send("return_letter_#{type.underscore}_path", source), class: 'button alternative small util_mb-0'
+      = link_to 'Return application', send("return_letter_#{type.underscore}_path", source), class: 'govuk-button alternative small util_mb-0'
 
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details

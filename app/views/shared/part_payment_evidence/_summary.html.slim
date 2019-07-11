@@ -8,4 +8,4 @@ header
 = content_for :result
 
 = form_for source, url: "summary_save_#{type}".to_sym, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Complete processing', :class => 'button primary large'
+  = f.submit 'Complete processing', :class => 'govuk-button primary large'
