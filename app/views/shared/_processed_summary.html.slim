@@ -1,7 +1,7 @@
 h4.govuk-heading-m.util_mt-0 Processing summary
-table.processed_summary.util_mb-large
-  caption.visuallyhidden Application processing summary
-  tbody
+table.govuk-table
+  caption.visuallyhidden.govuk-table__caption Application processing summary
+  tbody.govuk-table__body
     =render(partial: 'shared/processed_summary_row', locals: { title: 'Application processed', source: source.application_processed })
     =render(partial: 'shared/processed_summary_row', locals: { title: 'Application granted', source: source.application_override })
     =render(partial: 'shared/processed_summary_row', locals: { title: 'Application deleted', source: source.application_deleted })
