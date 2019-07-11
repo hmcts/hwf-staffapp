@@ -10,6 +10,9 @@ gem 'pg', '0.20'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
 
+# Azure key vault secrets to ENV variables
+gem 'azure_env_secrets', git: 'https://github.com/ministryofjustice/azure_env_secrets.git', tag: 'v0.1.3'
+
 # configuration
 gem 'config'
 

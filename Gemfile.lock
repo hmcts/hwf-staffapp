@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/ministryofjustice/azure_env_secrets.git
+  revision: b72195789c350839d8a7f492eb2938c5101d5400
+  tag: v0.1.3
+  specs:
+    azure_env_secrets (0.1.3)
+
+GIT
   remote: https://github.com/shadabahmed/logstasher.git
   revision: 0b80e972753ba7ef36854b48d2c371e32963bc8d
   ref: 0b80e972753ba7ef36854b48d2c371e32963bc8d
@@ -512,6 +519,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  azure_env_secrets!
   better_errors
   binding_of_caller
   byebug
