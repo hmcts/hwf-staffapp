@@ -5,19 +5,19 @@ header
 = form_for(@dwp_warning, url: dwp_warnings_path, action: :patch) do |f|
   .govuk-form-group
     fieldset
-      .govuk-checkboxes.govuk-checkboxes--small
-        .govuk-checkboxes__item
-          = f.radio_button :check_state, DwpWarning::STATES[:offline], class: 'govuk-checkboxes__input'
-          = f.label :check_state, class: 'govuk-label govuk-checkboxes__label', for: 'dwp_warning_check_state_offline'
+      .govuk-radios.govuk-radios--small
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:offline], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_offline'
             = t('.form.offline')
-        .govuk-checkboxes__item
-          = f.radio_button :check_state, DwpWarning::STATES[:online], class: 'govuk-checkboxes__input'
-          = f.label :check_state, class: 'govuk-label govuk-checkboxes__label', for: 'dwp_warning_check_state_online'
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:online], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_online'
             = t('.form.online')
 
-        .govuk-checkboxes__item
-          = f.radio_button :check_state, DwpWarning::STATES[:default_checker], class: 'govuk-checkboxes__input'
-          = f.label :check_state, class: 'govuk-label govuk-checkboxes__label', for: 'dwp_warning_check_state_default_checker'
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:default_checker], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_default_checker'
             = t('.form.default')
 
   = f.submit 'Save changes', class: 'govuk-button'
