@@ -122,6 +122,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'webmock'
+  gem 'rspec_junit_formatter', '~> 0.4.1'
 end
 
 # heroku deployment
