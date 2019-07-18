@@ -11,7 +11,8 @@ RSpec.feature 'Evidence check flow', type: :feature do
   let(:application) { create :application_full_remission, user: user, office: office }
   let(:outcome) { nil }
   let(:amount) { nil }
-  let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount }
+  let(:income) { nil }
+  let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount, income: income }
 
   before { login_as user }
 
@@ -242,12 +243,19 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       context 'rejected' do
         let(:outcome) { 'none' }
+        let(:income) { 2000 }
 
-        it { expect(page).to have_content 'a problem with the documents you have sent' }
+        it { expect(page).to have_content 'Unfortunately you’re not eligible and will have to pay the full fee' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
         it { expect(page).to have_content(user.name) }
+
+        it { expect(page).to have_content(evidence.amount_to_pay) }
+
+        it { expect(page).to have_content 'Maximum amount of income allowed: £5,490' }
+
+        it { expect(page).to have_content 'Your income total: £2,000' }
       end
     end
   end
