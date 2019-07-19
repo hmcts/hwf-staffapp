@@ -1,5 +1,8 @@
 .evidence-confirmation-letter
-  =t('letters.evidence.evidence_incorrect_html',
+  =t('letters.reject.reject_over_income_html',
      reference: confirmation.application.reference,
      full_name: confirmation.application.applicant.full_name,
-     user_name: current_user.name)
+     user_name: current_user.name,
+     fee_amount: number_to_currency(confirmation.amount_to_pay, precision: 0, unit: '£'),
+     income_total: number_to_currency(confirmation.income, precision: 0, unit: '£'),
+     income_threshold: number_to_currency(maximum_income_allowed(confirmation.application), precision: 0, unit: '£'))
