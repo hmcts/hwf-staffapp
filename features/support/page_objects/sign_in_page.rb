@@ -8,9 +8,8 @@ class SignInPage < BasePage
   section :content, '#content' do
     element :generate_reports, 'h3', text: 'Generate reports'
     element :view_offices, 'h3', text: 'View offices'
-    element :waiting_for_evidence, 'h3', text: 'Waiting for evidence'
-    element :waiting_for_part_payment, 'h3', text: 'Waiting for part-payment'
     element :your_last_applications, 'h3', text: 'Your last applications'
+    element :in_progress_applications, 'h3', text: 'In progress'
     element :completed_applications, 'h3', text: 'Completed'
     element :user_email, '#user_email'
     element :user_password, '#user_password'
