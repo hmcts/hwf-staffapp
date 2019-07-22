@@ -64,9 +64,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :evidence_checks, only: :show
+  resources :evidence_checks, only: [:index, :show]
 
-  resources :part_payments, only: :show do
+  resources :part_payments, only: [:index, :show] do
     member do
       get :accuracy
       post :accuracy_save

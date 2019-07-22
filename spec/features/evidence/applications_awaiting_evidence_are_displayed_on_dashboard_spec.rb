@@ -23,7 +23,7 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
   end
 
   scenario 'User is presented the list of applications awaiting evidence only for their office' do
-    visit root_path
+    visit evidence_checks_path
 
     within '.waiting-for-evidence' do
       expect(page).to have_content(application1.reference)
@@ -33,7 +33,7 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type:
   end
 
   scenario 'applications by deleted users are shown' do
-    visit root_path
+    visit evidence_checks_path
 
     within '.waiting-for-evidence' do
       expect(page).to have_content(application3.reference)

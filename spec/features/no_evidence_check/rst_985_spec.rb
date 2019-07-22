@@ -66,7 +66,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     end
 
     scenario 'finishing EV check and creating new application with same NINO' do
-      visit home_index_url
+      visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do
         expect(page).to have_content(application1.reference)
         expect(page).to have_content(application2.reference)
@@ -74,6 +74,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
 
       click_link application1.reference
       expect(page).to have_text "#{application1.reference} - Waiting for evidence"
+
       click_link 'Start now'
       choose 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
       click_button 'Next'
@@ -83,12 +84,14 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       click_link 'Next'
       click_button 'Complete processing'
       expect(page).to have_content('Processing complete')
-      visit home_index_url
 
+      visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do
         expect(page).not_to have_content(application1.reference)
         expect(page).to have_content(application2.reference)
       end
+
+      visit home_index_path
 
       click_button 'Start now'
       fill_personal_details('AB123456D')
