@@ -15,9 +15,9 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
     login_as user
   end
 
-  context 'when on home page' do
+  context 'when on waiting for part payment page' do
 
-    before { visit root_path }
+    before { visit part_payments_path }
 
     scenario 'shows the applications that are waiting for part-payment' do
       within '.waiting-for-part_payment' do
@@ -28,6 +28,7 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
 
     context 'processing an application for return' do
       before { click_link application1.reference }
+
       scenario 'shows the application data' do
         expect(page).to have_content 'Process part-payment'
         expect(page).to have_content application1.applicant.full_name
@@ -38,6 +39,7 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
         expect(page).to have_button 'Finish'
         click_button 'Finish'
         expect(page).to have_button 'Start now'
+        click_link 'Waiting for part-payment'
         within '.waiting-for-part_payment' do
           expect(page).to have_no_content(application1.reference)
         end

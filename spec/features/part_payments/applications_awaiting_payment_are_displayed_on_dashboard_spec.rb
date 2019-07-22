@@ -23,7 +23,7 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: 
   end
 
   scenario 'User is presented the list of applications awaiting payment only for their office' do
-    visit root_path
+    visit part_payments_path
 
     within '.waiting-for-part_payment' do
       expect(page).to have_content(application1.reference)
@@ -33,7 +33,7 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard', type: 
   end
 
   scenario 'applications by deleted users are shown' do
-    visit root_path
+    visit part_payments_path
 
     within '.waiting-for-part_payment' do
       expect(page).to have_content(application4.reference)

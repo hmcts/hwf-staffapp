@@ -35,6 +35,7 @@ RSpec.feature 'Part payment application with evidence check', type: :feature do
     expect(evidence_check_rendered?).to be true
 
     click_link 'Back to start'
+    visit evidence_checks_path
 
     within('table.waiting-for-evidence') do
       click_link application.reload.reference
