@@ -32,6 +32,8 @@ en-GB:
   completed_applications:
     title: Completed
     caption: Completed applications
+  in_progress_applications:
+    title: In progress
   processed_applications:
     table_header:
       reference: Reference
