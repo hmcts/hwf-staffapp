@@ -1,9 +1,12 @@
 @manual @wip
 
 Feature: Waiting for evidence
-  Given I am on an application that is waiting for evidence
 
+Background: Waiting for evidence
+  Given I successfully sign in as a user
+  
 Scenario: Process evidence
+  And there are applications waiting for evidence
   When I click on start now
   Then I should be taken to a page asking me if the evidence ready to process
 
