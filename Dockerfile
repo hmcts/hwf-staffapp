@@ -26,6 +26,7 @@ RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKE
 RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
 
 # running app as a servive
+ENV PHUSION true
 RUN mkdir /etc/service/app
 COPY run.sh /etc/service/app/run
 RUN chmod +x /etc/service/app/run
