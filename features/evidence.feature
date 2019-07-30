@@ -25,7 +25,7 @@ Scenario: Return application
 Scenario: Applicants personal details
   Then I should see the applicants personal details
 
-Scenario: Application details
+Scenario: Applicants application details
   Then I should see the application details
 
 Scenario: Applicants benefit details
