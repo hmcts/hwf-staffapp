@@ -1,10 +1,11 @@
 Given("I am signed in as a user that has processed an application") do
-  processed_eligable_application
+  start_application
+  eligable_application
 end
 
 Given("I am signed in as a user that has processed multiple applications") do
-  processed_eligable_application
-  processed_ineligable_application
+  start_application
+  multiple_applications
 end
 
 When("I search for an application using a valid hwf reference") do
@@ -117,8 +118,8 @@ And("I can navigate back a page") do
 end
 
 Given("I have a list of search results") do
-  processed_eligable_application
-  processed_ineligable_application
+  start_application
+  multiple_applications
   find_application_page.search_by_last_name
 end
 
@@ -171,7 +172,8 @@ Then("I can sort by completed") do
 end
 
 Given("a user has processed an application") do
-  processed_eligable_application
+  start_application
+  eligable_application
   navigation_page.sign_out
 end
 

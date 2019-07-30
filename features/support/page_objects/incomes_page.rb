@@ -4,7 +4,13 @@ class IncomesPage < BasePage
     element :yes, '.block-label', text: 'Yes'
   end
 
-  def submit_incomes_no
+  def submit_incomes_no_50
+    content.no.click
+    fill_in 'Total monthly income', with: '50'
+    next_page
+  end
+
+  def submit_incomes_no_1200
     content.no.click
     fill_in 'Total monthly income', with: '1200'
     next_page
