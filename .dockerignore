@@ -1,3 +1,5 @@
 .git
 log/*
 tmp/*
+azure-pipelines.yml
+Dockerfile
