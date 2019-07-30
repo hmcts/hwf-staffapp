@@ -5,6 +5,7 @@ class DashboardPage < BasePage
   section :content, '#content' do
     element :look_up_button, 'input[value="Look up"]'
     element :start_now_button, 'input[value="Start now"]'
+    element :in_progress_header, 'h3', text: 'In progress'
     element :processed_applications, 'a', text: 'Processed applications'
     element :last_application, 'td', text: 'Smith'
     element :last_application_link, 'a', text: '1'
