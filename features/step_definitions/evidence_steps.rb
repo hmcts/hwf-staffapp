@@ -124,8 +124,8 @@ Given("I should see the evidence details on the summary page") do
   expect(current_path).to include '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary).to have_evidence_header
   expect(evidence_page.content.evidence_summary).to have_change_application_evidence
-  expect(evidence_page.content.evidence_summary).to have_correct
   expect(evidence_page.content.evidence_summary).to have_income
+  expect(evidence_page.content.evidence_summary).to have_correct
 end
 
 When("I complete processing") do
