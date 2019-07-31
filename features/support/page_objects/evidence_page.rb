@@ -7,8 +7,7 @@ class EvidencePage < BasePage
     section :evidence_summary, '.summary-section' do
       element :evidence_header, 'h4', text: 'Evidence'
       element :change_application_evidence, '.column-one-third', text: 'Change application evidence'
-      element :correct, '.grid-row', text: 'Correct Yes'
-      element :income, '.grid-row', text: 'Income £500'
+      elements :evidence_answer, '.grid-row'
     end
   end
 end
