@@ -82,6 +82,18 @@ def navigation_page
   @navigation_page ||= NavigationPage.new
 end
 
+def evidence_accuracy_page
+  @evidence_accuracy_page ||= EvidenceAccuracyPage.new
+end
+
+def return_letter_page
+  @return_letter_page ||= ReturnLetterPage.new
+end
+
+def evidence_page
+  @evidence_page ||= EvidencePage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
@@ -101,22 +113,52 @@ def back_to_start
   confirmation_page.back_to_start
 end
 
-def processed_eligable_application
-  start_application
+def complete_processing
+  base_page.content.complete_processing_button.click
+end
+
+def eligable_application
   personal_details_page.submit_all_personal_details
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_yes
   paper_evidence_page.submit_evidence_yes
-  summary_page.complete_processing
+  complete_processing
   back_to_start
 end
 
-def processed_ineligable_application
-  dashboard_page.process_application
+def ineligable_application
   personal_details_page.submit_required_personal_details
   application_details_page.submit_fee_300
   savings_investments_page.submit_exact_amount
-  summary_page.complete_processing
+  complete_processing
+  back_to_start
+end
+
+def multiple_applications
+  eligable_application
+  dashboard_page.process_application
+  ineligable_application
+end
+
+def part_payment_application
+  dashboard_page.process_application
+  personal_details_page.submit_all_personal_details
+  application_details_page.submit_fee_600
+  savings_investments_page.submit_less_than
+  benefits_page.submit_benefits_no
+  incomes_page.submit_incomes_no_1200
+  complete_processing
+  back_to_start
+end
+
+def waiting_evidence_application
+  dashboard_page.process_application
+  personal_details_page.submit_all_personal_details
+  application_details_page.submit_as_refund_case
+  savings_investments_page.submit_less_than
+  benefits_page.submit_benefits_no
+  incomes_page.submit_incomes_no_50
+  complete_processing
   back_to_start
 end
