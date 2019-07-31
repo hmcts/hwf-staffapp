@@ -1,7 +1,3 @@
-Given("I am signed in as a user") do
-  binding.pry
-end
-
 When("I click on waiting for evidence") do
   expect(dashboard_page.content).to have_in_progress_header
   click_link('Waiting for evidence')
