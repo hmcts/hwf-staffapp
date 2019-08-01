@@ -43,7 +43,7 @@ Then("I should see whather the applicant is eligible for help with fees") do
 end
 
 Then("I should see the processing summmary") do
-  date_processed = Time.zone.now.strftime('%d %B %Y')
+  date_processed = Time.zone.now.strftime('%-d %B %Y')
   expect(evidence_accuracy_page.content).to have_processing_summary
   expect(page.text).to have_content date_processed
 end
