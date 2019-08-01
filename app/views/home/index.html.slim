@@ -75,10 +75,10 @@ h1.visuallyhidden Help with fees - Staff application
     tbody
       tr
         td
-          = link_to t("evidence.dashboard.heading"), evidence_checks_path
+          = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence'
       tr
         td
-          = link_to t("part_payment.dashboard.heading"), part_payments_path
+          = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment'
 
   = render('home/processed_and_deleted_aplications')
 

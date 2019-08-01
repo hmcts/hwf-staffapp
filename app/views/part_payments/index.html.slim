@@ -1,1 +1,7 @@
 = render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
+
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.partPaymentApplication();
+    });
