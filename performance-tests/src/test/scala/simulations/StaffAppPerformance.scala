@@ -16,15 +16,22 @@ with HttpConfiguration
 
   val scenario1 = scenario("Happy path for Help with Fees staff app")
 
-    .exec(http("Logging in")
+    .exec(http("Store authenticity token")
+        .get("/users/sign_in")
+        .check(css("input[name='authenticity_token']", "value").saveAs("csrfCookie")))
+
+    .exec(http("Sign in")
         .get("/users/sign_in")
         .formParam("user[email]", "alexa.ballantine+1@digital.justice.gov.uk")
         .formParam("user[password]", "123456789")
+        .formParam("authenticity_token", session => {
+              session("csrfCookie").as[String]
+        })
         .check(status.is(200)))
 
     .exec(http("Paper application - Personal details")
         .get("/applications/733032/personal_informations")
-        .formParam("application[first_name]", "Testy")
+        .formParam("application[first_name]", "Testy")  
         .formParam("application[last_name]", "McTest-Face")
         .formParam("application[day_date_of_birth]", "01")
         .formParam("application[month_date_of_birth]", "02")

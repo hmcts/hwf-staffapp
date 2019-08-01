@@ -9,12 +9,12 @@ Dependencies
 2. Run below to build your local docker container from where dockerfile exists.  If 'hwfgatling' image exists in your local you can skip this step
 
     ```
-    > docker build -t hwfgatling:local  .
+    > docker build -f performance-tests/Dockerfile -t hwfgatling:local .
 
     ```
 
 
-3. Run command below locally to run gatling scripts against docker images
+3. From the performance-tests directory, run gatling scripts against docker image
    ```
    > docker run --rm -it -v `pwd`/src/test/resources:/opt/gatling/conf -v `pwd`/src/test/scala/simulations:/opt/gatling/user-files/simulations -v `pwd`/results:/opt/gatling/results -v `pwd`/data:/opt/gatling/data hwfgatling:local -s simulations.StaffAppPerformance
    ```
