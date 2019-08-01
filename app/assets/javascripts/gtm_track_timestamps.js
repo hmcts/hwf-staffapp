@@ -136,12 +136,10 @@ window.moj.Modules.GtmTrackTimestamps = {
 
   trackLinksClicked: function() {
     $('a.waiting-for-evidence').click(function(){
-      console.log('evidence');
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-evidence-section');
     });
 
     $('a.waiting-for-part_payment').click(function(){
-      console.log('part');
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-part-payment-section');
     });
 
