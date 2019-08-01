@@ -16,35 +16,32 @@ with HttpConfiguration
 
   val scenario1 = scenario("Happy path for Help with Fees staff app")
 
-//////    .exec(http("Start Session")
-//////        .get("/users/sign_in"))
-
-    //////  Step One  //////
-
-//////    .exec(http("Store authenticity token")
-//////        .get("/users/sign_in")
-//////        .check(css("input[name='authenticity_token']", "value").saveAs("csrfCookie")))
-
     .exec(http("Logging in")
-        .put("/users/sign_in")
-        .formParam("user[email]", "alexa.ballantine+2@digital.justice.gov.uk")
-//////        .formParam("authenticity_token", session => {
-//////              session("csrfCookie").as[String]
-            })
+        .get("/users/sign_in")
+        .formParam("user[email]", "alexa.ballantine+1@digital.justice.gov.uk")
+        .formParam("user[password]", "123456789")
         .check(status.is(200)))
 
+    .exec(http("Paper application - Personal details")
+        .get("/applications/733032/personal_informations")
+        .formParam("application[first_name]", "Testy")
+        .formParam("application[last_name]", "McTest-Face")
+        .formParam("application[day_date_of_birth]", "01")
+        .formParam("application[month_date_of_birth]", "02")
+        .formParam("application[year_date_of_birth]", "1974")
+        .formParam("application[married]", "false")
+        .check(status.is(200)))
 
-    //////  Step Two  //////
+    .exec(http("Paper application - Application details")
+        .get("/applications/733032/personal_informations")
+        .formParam("application[fee]", "500")
+        .formParam("application[jurisdiction_id]", "3")
+        .formParam("application[day_date_received]", "01")
+        .formParam("application[month_date_received]", "06")
+        .formParam("application[year_date_received]", "2019")
+        .formParam("application[form_name]", "C100")
+        .check(status.is(200)))
 
-//////    .exec(http("Step Two")
-//////        .put("/questions/fee?locale=en")
-//////        .formParam("fee[paid]", "false")
-//////        .formParam("authenticity_token", session => {
-//////              session("csrfCookie").as[String]
-//////            })
-//////        .check(status.is(200)))
-
- 
   val userCount = conf.getInt("users")
   val durationInSeconds  = conf.getLong("duration")
 
