@@ -1,7 +1,15 @@
 Feature: My dashboard
 
   Background: Signed in as a user
-    Given I am signed in as a user that has processed multiple applications
+    Given I successfully sign in as a user
+
+  Scenario: In progress applications - waiting for evidence
+    When I click on waiting for evidence
+    Then I should be taken to evidence checks page
+
+  Scenario: In progress applications - waiting for part-payment
+    When I click on waiting for part-payment
+    Then I should be taken to part payments page
 
   @wip @manual
   Scenario: View profile

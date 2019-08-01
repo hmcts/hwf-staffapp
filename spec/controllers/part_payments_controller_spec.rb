@@ -28,6 +28,27 @@ RSpec.describe PartPaymentsController, type: :controller do
     allow(Views::PartPayment::Result).to receive(:new).with(part_payment).and_return(part_payment_result)
   end
 
+  describe 'GET #index' do
+    before do
+      allow(LoadApplications).to receive(:waiting_for_part_payment).with(user).and_return ['waiting apps']
+      get :index
+    end
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template(:index)
+    end
+
+    describe 'assigns the view models' do
+      it 'loads waiting_for_part_payment application for current user' do
+        expect(assigns(:waiting_for_part_payment)).to eql(['waiting apps'])
+      end
+    end
+  end
+
   describe 'GET #show' do
     before do
       get :show, id: part_payment.id

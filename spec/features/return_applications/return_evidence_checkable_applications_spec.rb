@@ -17,7 +17,7 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
 
   context 'when on home page' do
 
-    before { visit root_path }
+    before { visit evidence_checks_path }
 
     scenario 'shows the applications that should be checked for evidence' do
       within '.waiting-for-evidence' do
@@ -38,7 +38,6 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       click_link application1.reference
       click_link 'Return application'
       expect(page).to have_content 'Processing complete'
-      expect(page).to have_button 'Finish'
       click_button 'Finish'
       expect(page).to have_button 'Start now'
       expect(page).to have_no_content application1.reference

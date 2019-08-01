@@ -24,8 +24,7 @@ When("I successfully sign in as admin") do
 end
 
 Then("I am taken to my user dashboard") do
-  expect(sign_in_page.content).to have_waiting_for_evidence
-  expect(sign_in_page.content).to have_waiting_for_part_payment
+  expect(sign_in_page.content).to have_in_progress_applications
   expect(sign_in_page.content).to have_your_last_applications
   expect(sign_in_page.content).to have_completed_applications
   expect(sign_in_page.content).to have_no_generate_reports
@@ -35,8 +34,7 @@ end
 Then("I am taken to my admin dashboard") do
   expect(sign_in_page.content).to have_generate_reports
   expect(sign_in_page.content).to have_view_offices
-  expect(sign_in_page.content).to have_no_waiting_for_evidence
-  expect(sign_in_page.content).to have_no_waiting_for_part_payment
+  expect(sign_in_page.content).to have_no_in_progress_applications
   expect(sign_in_page.content).to have_no_your_last_applications
   expect(sign_in_page.content).to have_no_completed_applications
 end

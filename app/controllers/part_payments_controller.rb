@@ -1,10 +1,16 @@
 class PartPaymentsController < ApplicationController
-  before_action :authorize_part_payment_update, except: :show
+  skip_after_action :verify_authorized, only: :index
+
+  before_action :authorize_part_payment_update, except: [:show, :index]
   before_action only: [:show, :accuracy, :summary, :confirmation, :return_letter] do
     track_application(application)
   end
 
   include SectionViewsHelper
+
+  def index
+    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user)
+  end
 
   def show
     authorize part_payment

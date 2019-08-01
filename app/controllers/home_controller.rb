@@ -5,7 +5,6 @@ class HomeController < ApplicationController
   def index
     manager_setup_progress
     load_graphs_for_admin
-    load_waiting_applications
     load_defaults
   end
 
@@ -41,13 +40,6 @@ class HomeController < ApplicationController
     if current_user.admin?
       @total_type_count = BenefitCheck.group(:dwp_result).count
       @time_of_day_count = BenefitCheck.group_by_hour_of_day("created_at", format: '%l %p').count
-    end
-  end
-
-  def load_waiting_applications
-    unless current_user.admin?
-      assign_waiting_for_evidence
-      assign_waiting_for_part_payment
     end
   end
 

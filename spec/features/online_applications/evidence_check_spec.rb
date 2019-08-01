@@ -48,6 +48,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     expect(page).to have_text 'Evidence of income needs to be checked'
     click_link 'Back to start'
 
+    click_link 'Waiting for evidence'
     reference = Application.last.reference
     within(:xpath, './/table[@class="waiting-for-evidence"]') do
       click_link reference
@@ -58,8 +59,11 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     click_link 'Return application'
     click_button 'Finish'
 
+    click_link 'Waiting for part-payment'
     expect(page).to have_text('There are no applications waiting for part-payment')
     online_application_2
+
+    visit home_index_url
 
     fill_in 'Reference', with: online_application_2.reference
     click_button 'Look up'
@@ -70,6 +74,8 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     # because there is a flag from previous check
     expect(page).to have_text 'Evidence of income needs to be checked'
     click_link 'Back to start'
+
+    click_link 'Waiting for evidence'
     within(:xpath, './/table[@class="waiting-for-evidence"]') do
       click_link Application.last.reference
     end

@@ -1,3 +1,21 @@
+When("I click on waiting for evidence") do
+  expect(dashboard_page.content).to have_in_progress_header
+  click_link('Waiting for evidence')
+end
+
+Then("I should be taken to evidence checks page") do
+  expect(current_path).to include '/evidence_checks'
+end
+
+When("I click on waiting for part-payment") do
+  expect(dashboard_page.content).to have_in_progress_header
+  click_link('Waiting for part-payment')
+end
+
+Then("I should be taken to part payments page") do
+  expect(current_path).to include '/part_payments'
+end
+
 When("I click on view profile") do
   user_dashboard_page.view_profile.click
 end
