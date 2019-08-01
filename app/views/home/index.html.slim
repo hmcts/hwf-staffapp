@@ -66,8 +66,20 @@ h1.visuallyhidden Help with fees - Staff application
   - if @search_results
     = render('home/search_results', type: :search_results, list: @search_results)
   = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
-  = render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
-  = render('home/waiting_applications', type: :part_payment, list: @waiting_for_part_payment, start_path: :part_payment_path)
+
+
+  h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-evidence"}
+    =t("in_progress_applications.title")
+  table.in-progress-applications
+    caption.visuallyhidden = t('completed_applications.caption')
+    tbody
+      tr
+        td
+          = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence'
+      tr
+        td
+          = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment'
+
   = render('home/processed_and_deleted_aplications')
 
 - if policy(:report).index? || policy(:office).index?

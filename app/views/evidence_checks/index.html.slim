@@ -1,0 +1,7 @@
+= render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
+
+- content_for(:javascripts)
+  javascript:
+    $(document).ready(function () {
+      moj.Modules.GtmTrackTimestamps.evidenceApplication();
+    });
