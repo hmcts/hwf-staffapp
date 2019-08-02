@@ -157,7 +157,7 @@ jobs:
     #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
     #     azureContainerRegistry: $(azure.container.registry)
     #     command: 'Tag image'
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+    #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
       
     - task: Docker@1
       displayName: 'Push an image'
