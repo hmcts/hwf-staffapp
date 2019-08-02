@@ -124,8 +124,10 @@ Given("I should see the evidence details on the summary page") do
   expect(current_path).to include '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary).to have_evidence_header
   expect(evidence_page.content.evidence_summary).to have_change_application_evidence
-  expect(evidence_page.content.evidence_summary.evidence_answer[1].text).to eq 'CorrectYes'
-  expect(evidence_page.content.evidence_summary.evidence_answer[2].text).to eq 'Income£500'
+  expect(evidence_page.content.evidence_summary.evidence_answer_key[0].text).to eq 'Correct'
+  expect(evidence_page.content.evidence_summary.evidence_answer_value[0].text).to eq 'Yes'
+  expect(evidence_page.content.evidence_summary.evidence_answer_key[1].text).to eq 'Income'
+  expect(evidence_page.content.evidence_summary.evidence_answer_value[1].text).to eq '£500'
 end
 
 When("I complete processing") do
