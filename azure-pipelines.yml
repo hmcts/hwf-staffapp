@@ -93,16 +93,16 @@ jobs:
     - task: Docker@1
       displayName: 'Build an image'
       inputs:
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+        imageName: '$(azure.container.registry)/$(application.name):$(getDockerTag.DOCKER_TAG)'
         arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
 
-    - task: Docker@1
-      displayName: 'Tag image'
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-        azureContainerRegistry: $(azure.container.registry)
-        command: 'Tag image'
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+    # - task: Docker@1
+    #   displayName: 'Tag image'
+    #   inputs:
+    #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+    #     azureContainerRegistry: $(azure.container.registry)
+    #     command: 'Tag image'
+    #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
       
     - task: Docker@1
       displayName: 'Push an image'
@@ -148,15 +148,15 @@ jobs:
     - task: Docker@1
       displayName: 'Build an image'
       inputs:
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+        imageName: '$(azure.container.registry)/$(application.name):$(getDockerTag.DOCKER_TAG)'
         arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
 
-    - task: Docker@1
-      displayName: 'Tag image'
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-        azureContainerRegistry: $(azure.container.registry)
-        command: 'Tag image'
+    # - task: Docker@1
+    #   displayName: 'Tag image'
+    #   inputs:
+    #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+    #     azureContainerRegistry: $(azure.container.registry)
+    #     command: 'Tag image'
         imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
       
     - task: Docker@1
