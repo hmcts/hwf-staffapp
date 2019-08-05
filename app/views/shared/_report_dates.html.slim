@@ -15,6 +15,7 @@
           = f.label :date_from, @form.errors[:date_from].join(', '), class: 'error' if @form.errors[:date_from].present?
         = f.text_field :date_from, { class: 'govuk-input govuk-!-width-one-quarter' }
 
+
       .govuk-form-group.group-level
         = f.label :date_to, class: 'govuk-label'
           = t('date_to')
@@ -22,5 +23,24 @@
         span.govuk-error-message
           = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error' if @form.errors[:date_to].present?
         = f.text_field :date_to, { class: 'govuk-input govuk-!-width-one-quarter' }
+
+  / new filters
+  / h3.heading-medium Filters
+  / .form-group
+  /   = f.label :be_code, class: 'form-label'
+  /   = f.text_field :be_code, { class: 'form-control' }
+  / .form-group
+  /   = f.label :refund, class: 'block-label'
+  /     = f.check_box :refund
+  /     = t('refund', scope: @form.i18n_scope)
+  / .form-group
+  /   = f.label :application_type, class: 'form-label'
+  /   = f.select :application_type, [:benefit, :income], { class: 'form-control', include_blank: true }
+
+  / .form-group
+  /   = f.label :jurisdiction_id, class: 'form-label'
+  /   = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'form-control', include_blank: true }
+
   .govuk-form-group.group-level
     = f.submit 'Generate report', class: 'govuk-button'
+

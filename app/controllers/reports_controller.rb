@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
     @form = form
     if @form.valid?
       build_and_return_data(
-        FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to]).to_csv,
+        FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to], report_filters).to_csv,
         'finance-report'
       )
     else
@@ -79,7 +79,8 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:forms_finance_report).permit(:date_from, :date_to)
+    params.require(:forms_finance_report).permit(:date_from, :date_to,
+      :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def ftr_form
@@ -112,5 +113,14 @@ class ReportsController < ApplicationController
 
   def extract_raw_data
     Views::Reports::RawDataExport.new(report_params[:date_from], report_params[:date_to]).to_csv
+  end
+
+  def report_filters
+    filters = {}
+
+    ['be_code', 'refund', 'application_type', 'jurisdiction_id'].each do |key|
+      filters[key.to_sym] = report_params[key] if report_params[key].present?
+    end
+    filters
   end
 end
