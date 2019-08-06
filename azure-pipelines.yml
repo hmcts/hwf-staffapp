@@ -45,8 +45,8 @@ jobs:
         versionSpec: '= 2.5.5'
 
     - script: |
-        apt-get update
-        apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgres-client
+        sudo apt-get update
+        sudo apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgres-client
         gem install bundler -v 1.17.3
       displayName: 'before install'
 
