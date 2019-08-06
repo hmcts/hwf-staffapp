@@ -45,15 +45,25 @@ jobs:
         versionSpec: '= 2.5.5'
 
     - script: |
-        sudo apt-get update
-        sudo apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgres-client
-        gem install bundler -v 1.17.3
-      displayName: 'before install'
+        sudo docker ps
+        psql --host=postgres --username=postgres --command="SELECT 1;"
+      displayName: 'tests'
 
     - script: |
-        bundle install --retry=3 --jobs=4
-        psql -c 'create role fr login createdb;' -U postgres
-      displayName: 'before script'
+        psql --host=postgres --username=postgres --command="SELECT 1;"
+      displayName: 'PG'
+
+
+    # - script: |
+    #     sudo apt-get update
+    #     sudo apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgres-client
+    #     gem install bundler -v 1.17.3
+    #   displayName: 'before install'
+
+    # - script: |
+    #     bundle install --retry=3 --jobs=4
+    #     psql -c 'create role fr login createdb;' -U postgres
+    #   displayName: 'before script'
 
   #   - script: |
   #       bundle exec rubocop
