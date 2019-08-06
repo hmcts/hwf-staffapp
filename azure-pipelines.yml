@@ -45,15 +45,14 @@ jobs:
         versionSpec: '= 2.5.5'
 
     - script: |
-        psql -c 'create role fr login createdb;' -U postgres
         apt-get update
-        apt-get install -y qtbase5-dev xvfb libqtwebkit-dev
+        apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgres-client
         gem install bundler -v 1.17.3
       displayName: 'before install'
 
     - script: |
         bundle install --retry=3 --jobs=4
-        # psql -c 'create role fr login createdb;' -U postgres
+        psql -c 'create role fr login createdb;' -U postgres
       displayName: 'before script'
 
   #   - script: |
