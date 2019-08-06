@@ -40,9 +40,9 @@ jobs:
       postgres: postgres:9.6
     
     steps:
-    - task: UseRubyVersion@0
-      inputs:
-        versionSpec: '= 2.5.5'
+    # - task: UseRubyVersion@0
+    #   inputs:
+    #     versionSpec: '= 2.5.5'
 
     - script: |
         sudo apt-get update
@@ -70,9 +70,9 @@ jobs:
   #       testRunTitle: 'Ruby tests'
 
   - job: BuildAndPushImage
-    # dependsOn: TestApplication
-    # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')  
+    dependsOn: TestApplication
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    # condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')  
     pool:
       name: hmcts-pet  # name of the pool to run this job in
     steps:
@@ -120,14 +120,14 @@ jobs:
 
 
   - job: ManualBuildAndPushImage
-    # dependsOn: TestApplication
-    # condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.Reason'], 'Manual'))
-    condition: |
-      and
-      (
-        ne(variables['Build.SourceBranch'], 'refs/heads/develop'), 
-        eq(variables['Build.Reason'], 'Manual')
-      )
+    dependsOn: TestApplication
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.Reason'], 'Manual'))
+    # condition: |
+    #   and
+    #   (
+    #     ne(variables['Build.SourceBranch'], 'refs/heads/develop'), 
+    #     eq(variables['Build.Reason'], 'Manual')
+    #   )
     pool:
       name: hmcts-pet  # name of the pool to run this job in
     steps:
