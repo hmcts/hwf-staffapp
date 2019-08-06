@@ -45,9 +45,9 @@ jobs:
     #     versionSpec: '= 2.5.5'
 
     - script: |
-        sudo apt-get update
-        sudo apt-get install qtbase5-dev xvfb libqtwebkit-dev
-        gem install bundler -v 1.17.3
+        apt-get update
+        apt-get install -y qtbase5-dev xvfb libqtwebkit-dev postgresql-client ruby-full
+        # gem install bundler -v 1.17.3
       displayName: 'before install'
 
     - script: |
