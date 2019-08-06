@@ -52,6 +52,7 @@ jobs:
 
     - script: |
         sudo docker ps
+        sudo docker inspect $(sudo docker ps -a -q)
         psql --version
         psql --host=postgres --username=postgres --command="SELECT 1;"
       displayName: 'tests'
