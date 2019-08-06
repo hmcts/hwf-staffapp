@@ -23,37 +23,37 @@ variables:
   azure.subscription.endpoint: 'hmcts-pet'
   manual.branch.prefix: 'develop'
 
-# resources:
-#   containers:
-#   - container: my_container
-#     image: ubuntu:16.04
-#   - container: postgres
-#     image: postgres:9.6
+resources:
+  containers:
+  - container: my_container
+    image: ubuntu:16.04
+  - container: postgres
+    image: postgres:9.6
 
 jobs:
-  # - job: TestApplication
-  #   pool:
-  #     vmImage: 'Ubuntu-16.04'
-# container: my_container
+  - job: TestApplication
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    container: my_container
 
-# services:
-#   postgres: postgres:9.6
-  #   steps:
+    services:
+      postgres: postgres:9.6
+    
+    steps:
+    - task: UseRubyVersion@0
+      inputs:
+        versionSpec: '= 2.5.5'
 
-  #   - task: UseRubyVersion@0
-  #     inputs:
-  #       versionSpec: '= 2.5.5'
+    - script: |
+        sudo apt-get update
+        sudo apt-get install qtbase5-dev xvfb libqtwebkit-dev
+        gem install bundler -v 1.17.3
+      displayName: 'before install'
 
-  #   - script: |
-  #       sudo apt-get update
-  #       sudo apt-get install qtbase5-dev xvfb libqtwebkit-dev
-  #       gem install bundler -v 1.17.3
-  #     displayName: 'before install'
-
-  #   - script: |
-  #       bundle install --retry=3 --jobs=4
-  #       psql -c 'create role fr login createdb;' -U postgres
-  #     displayName: 'before script'
+    - script: |
+        bundle install --retry=3 --jobs=4
+        psql -c 'create role fr login createdb;' -U postgres
+      displayName: 'before script'
 
   #   - script: |
   #       bundle exec rubocop
