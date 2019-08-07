@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
@@ -11,7 +12,7 @@ gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
 
 # Azure key vault secrets to ENV variables
-gem 'azure_env_secrets', git: 'https://github.com/ministryofjustice/azure_env_secrets.git', tag: 'v0.1.3'
+gem 'azure_env_secrets', github: 'ministryofjustice/azure_env_secrets', tag: 'v0.1.3'
 
 # configuration
 gem 'config'
@@ -118,11 +119,11 @@ group :test do
   gem 'launchy'
   gem 'poltergeist', '1.15.0'
   gem 'pry'
+  gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'selenium-webdriver', '~> 3.10'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
   gem 'webmock'
-  gem 'rspec_junit_formatter', '~> 0.4.1'
 end
 
 # heroku deployment
