@@ -1,0 +1,42 @@
+parameters:
+  rubyVersion: ''
+  bundlerVersion: ''
+
+
+steps:
+- task: UseRubyVersion@0
+  inputs:
+    versionSpec: '$(rubyVersion)'
+
+- script: |
+    gem install bundler -v $(bundlerVersion)
+  displayName: 'install bundler'
+
+- script: |
+    bundle install --retry=3 --jobs=4
+  displayName: 'bundle install'
+
+- script: |
+    psql -h localhost -c 'create role fr login createdb;' -U postgres
+    psql -h localhost -c 'create role vsts login createdb;' -U postgres
+  displayName: 'PG role setup'
+
+- script: |
+    bundle exec rubocop
+  displayName: 'rubocop'
+
+- script: |
+    bundle exec rake db:create db:schema:load
+  displayName: 'DB load'
+
+- script: |
+    DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
+  displayName: 'cucumber'
+
+- script: |
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --format documentation --format RspecJunitFormatter --out test-rspec.xml
+  displayName: 'rspec'
+
+- script: |
+    bundle exec rake jasmine:ci
+  displayName: 'jasmine'
