@@ -52,12 +52,6 @@ jobs:
         gem install bundler -v 1.17.3
       displayName: 'before install'
 
-    # - script: |
-    #     sudo docker ps
-    #     curl localhost:5432
-    #     psql --host=localhost --username=postgres --command="SELECT 1;"
-    #   displayName: 'tests'
-
     - script: |
         bundle install --retry=3 --jobs=4
         psql -h localhost -c 'create role fr login createdb;' -U postgres
@@ -79,14 +73,13 @@ jobs:
     - script: |
         DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
         bundle exec rake jasmine:ci
-      displayName: 'script'
+      displayName: 'rspec'
 
-
-  #   - task: PublishTestResults@2
-  #     condition: succeededOrFailed()
-  #     inputs:
-  #       testResultsFiles: '**/test-*.xml'
-  #       testRunTitle: 'Ruby tests'
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFiles: '**/test-*.xml'
+        testRunTitle: 'Ruby tests'
 
   # - job: BuildAndPushImage
   #   dependsOn: TestApplication
