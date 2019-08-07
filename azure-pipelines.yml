@@ -31,7 +31,8 @@ resources:
     image: postgres:9.6
     ports:
     - 5432:5432
-    name: my-postgres
+    name: 
+    - my-postgres
 
 jobs:
   - job: TestApplication
@@ -54,14 +55,9 @@ jobs:
       displayName: 'before install'
 
     - script: |
-        env | sort
-      displayName: 'env'
-
-    - script: |
         sudo docker ps
         curl localhost:5432
-        curl postgres:5432
-        psql --host=postgres --username=postgres --command="SELECT 1;"
+        psql --host=localhost --username=postgres --command="SELECT 1;"
       displayName: 'tests'
 
 
