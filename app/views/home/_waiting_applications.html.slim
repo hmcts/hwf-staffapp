@@ -1,10 +1,13 @@
+- content_for :page_title
+  = t("#{type}.dashboard.heading")
+
 header#head
-  h2.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
+  h1.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
     =t("#{type}.dashboard.heading")
 
 - if list.present?
   table *{class: "govuk-table waiting-for-#{type}"}
-    caption.visuallyhidden =t("#{type}.dashboard.caption govuk-table__caption")
+    caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
     thead.govuk-table__head
       tr.govuk-table__row
         th.govuk-table__header =t("#{type}.dashboard.table_header.reference")

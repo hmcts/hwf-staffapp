@@ -1,9 +1,12 @@
+- content_for :page_title
+  = t('header', scope: @form.i18n_scope)
+
 = form_for @form, as: :application, url: application_savings_investments_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       header
-        h2.govuk-heading-xl =t('header', scope: @form.i18n_scope)
+        h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
 
       .govuk-form-group
         fieldset

@@ -1,5 +1,8 @@
+- content_for :page_title
+  = t('.header')
+
 header
-  h2.govuk-heading-xl = t('.header')
+  h1.govuk-heading-xl = t('.header')
 
 
 = form_for(@dwp_warning, url: dwp_warnings_path, action: :patch) do |f|

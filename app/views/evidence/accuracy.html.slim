@@ -1,7 +1,10 @@
+- content_for :page_title
+  = "Evidence"
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     header
-      h2.govuk-heading-xl Evidence
+      h1.govuk-heading-xl Evidence
 
     = render 'shared/forms/accuracy', { form: @form, model: :evidence, url: :accuracy_save_evidence }
 

@@ -1,9 +1,12 @@
+- content_for :page_title
+  = "Ask a manager"
+
 = form_for form, as: as, url: url, method: :put, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       header
-        h2.govuk-heading-xl Ask a manager
+        h1.govuk-heading-xl Ask a manager
 
       p You entered a court and tribunal fee that is more than £10,000. You need to ask a manager to approve this.
 

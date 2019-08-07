@@ -1,5 +1,8 @@
+- content_for :page_title
+  = "Waiting for #{type}"
+
 header
-  h2.govuk-heading-xl #{source.application.reference} - Waiting for #{type}
+  h1.govuk-heading-xl #{source.application.reference} - Waiting for #{type}
 
 .panel
   h4.govuk-heading-m.util_mt-0 Process #{type}
