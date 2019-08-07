@@ -39,7 +39,7 @@ jobs:
     # container: my_container
 
     services:
-      postgres1: postgres
+      postgres: postgres
     
     steps:
     - task: UseRubyVersion@0
@@ -54,7 +54,7 @@ jobs:
 
     - script: |
         sudo docker ps
-        psql --host=postgres1 --username=postgres --command="SELECT 1;"
+        psql --host=postgres --username=postgres --command="SELECT 1;"
       displayName: 'tests'
 
 
