@@ -49,6 +49,7 @@ $govuk-images-path: 'govuk-frontend/assets/images/';
 
 
 /*local*/
+@import 'local/layout';
 @import 'local/conditionals';
 @import 'local/colours';
 @import 'local/measurements';
