@@ -64,16 +64,12 @@ jobs:
         psql -h localhost -c 'create role vsts login createdb;' -U postgres
       displayName: 'before script'
 
-    # - script: |
-    #     bundle exec rubocop
-    #   displayName: 'rubocop'
-
     - script: |
         # bundle exec rubocop
         bundle exec rake db:create db:schema:load
-        # DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
-        # DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
-        # bundle exec rake jasmine:ci
+        DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
+        DISPLAY=localhost:1.0 xvfb-run bundle exec rake #spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
+        bundle exec rake jasmine:ci
       displayName: 'script'
 
   #   - task: PublishTestResults@2
