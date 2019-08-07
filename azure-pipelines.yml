@@ -71,7 +71,7 @@ jobs:
       displayName: 'cucumber'
 
     - script: |
-        DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
+        DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --format documentation --format RspecJunitFormatter --out test-rspec.xml
         bundle exec rake jasmine:ci
       displayName: 'rspec'
 
