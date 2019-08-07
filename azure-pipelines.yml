@@ -23,151 +23,62 @@ variables:
   azure.subscription.endpoint: 'hmcts-pet'
   manual.branch.prefix: 'develop'
 
-# resources:
-#   containers:
-#   - container: my_container
-#     image: ubuntu:16.04
-#   - container: postgres
-#     image: postgres:9.6
+resources:
+  containers:
+  # - container: my_container
+  #   image: ubuntu:16.04
+  - container: postgres
+    image: postgres:9.6
+    ports:
+    - 5432:5432
 
 jobs:
-  # - job: TestApplication
-  #   pool:
-  #     vmImage: 'Ubuntu-16.04'
-# container: my_container
+  - job: TestApplication
 
-# services:
-#   postgres: postgres:9.6
-  #   steps:
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    # container: my_container
 
-  #   - task: UseRubyVersion@0
-  #     inputs:
-  #       versionSpec: '= 2.5.5'
+    services:
+      postgres: postgres
+    
+    variables:
+      rubyVersion: '= 2.5.5'
+      bundlerVersion: '1.17.3'
+      aptDependencies: 'qtbase5-dev xvfb libqtwebkit-dev postgresql-client libpq-dev'
 
-  #   - script: |
-  #       sudo apt-get update
-  #       sudo apt-get install qtbase5-dev xvfb libqtwebkit-dev
-  #       gem install bundler -v 1.17.3
-  #     displayName: 'before install'
+    steps:
+    - template: ./pipeline-steps/add-dependencies.yaml
+    - template: ./pipeline-steps/test-application.yaml
+    - template: ./pipeline-steps/publish-tests.yaml
 
-  #   - script: |
-  #       bundle install --retry=3 --jobs=4
-  #       psql -c 'create role fr login createdb;' -U postgres
-  #     displayName: 'before script'
-
-  #   - script: |
-  #       bundle exec rubocop
-  #       bundle exec rake db:create db:schema:load
-  #       DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
-  #       DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
-  #       bundle exec rake jasmine:ci
-  #     displayName: 'script'
-
-  #   - task: PublishTestResults@2
-  #     condition: succeededOrFailed()
-  #     inputs:
-  #       testResultsFiles: '**/test-*.xml'
-  #       testRunTitle: 'Ruby tests'
 
   - job: BuildAndPushImage
-    # dependsOn: TestApplication
-    # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')  
+
+    dependsOn: TestApplication
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
     pool:
-      name: hmcts-pet  # name of the pool to run this job in
+      name: hmcts-pet
+
     steps:
-    - bash: |
-        repo_sha=$(git rev-parse --verify HEAD)
-        docker_image_tag_sha=${repo_sha:0:7}
-        echo "##vso[task.setvariable variable=DOCKER_TAG;isOutput=true]$(Build.SourceBranchName)-${docker_image_tag_sha}"
-      displayName: 'Get Docker Tag'
-      name: 'getDockerTag'
-
-    - task: Docker@1
-      displayName: login
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+    - template: ./pipeline-steps/docker-build.yaml
+      parameters:
         azureContainerRegistry: $(azure.container.registry)
-        command: login
-
-    - task: Docker@1
-      displayName: 'Build an image'
-      inputs:
-        imageName: '$(azure.container.registry)/$(application.name):$(getDockerTag.DOCKER_TAG)'
-        arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
-
-    # - task: Docker@1
-    #   displayName: 'Tag image'
-    #   inputs:
-    #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-    #     azureContainerRegistry: $(azure.container.registry)
-    #     command: 'Tag image'
-    #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
-      
-    - task: Docker@1
-      displayName: 'Push an image'
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-        azureContainerRegistry: $(azure.container.registry)
-        command: 'Push an image'
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
-
-    - task: Docker@1
-      displayName: logout
-      inputs:
-        command: logout
-
+        azureSubscriptionEndpoint: $(azure.subscription.endpoint)
+        applicationName: $(application.name)
 
 
   - job: ManualBuildAndPushImage
-    # dependsOn: TestApplication
-    # condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.Reason'], 'Manual'))
-    condition: |
-      and
-      (
-        ne(variables['Build.SourceBranch'], 'refs/heads/develop'), 
-        eq(variables['Build.Reason'], 'Manual')
-      )
+  
+    dependsOn: TestApplication
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.Reason'], 'Manual'))
     pool:
-      name: hmcts-pet  # name of the pool to run this job in
+      name: hmcts-pet
+
     steps:
-    - bash: |
-        repo_sha=$(git rev-parse --verify HEAD)
-        docker_image_tag_sha=${repo_sha:0:7}
-        echo "##vso[task.setvariable variable=DOCKER_TAG;isOutput=true]$(manual.branch.prefix)-$(Build.SourceBranchName)-${docker_image_tag_sha}"
-      displayName: 'Get Docker Tag'
-      name: 'getDockerTag'
-
-    - task: Docker@1
-      displayName: login
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+    - template: ./pipeline-steps/manual-docker-build.yaml
+      parameters:
         azureContainerRegistry: $(azure.container.registry)
-        command: login
-
-    - task: Docker@1
-      displayName: 'Build an image'
-      inputs:
-        imageName: '$(azure.container.registry)/$(application.name):$(getDockerTag.DOCKER_TAG)'
-        arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
-
-    # - task: Docker@1
-    #   displayName: 'Tag image'
-    #   inputs:
-    #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-    #     azureContainerRegistry: $(azure.container.registry)
-    #     command: 'Tag image'
-    #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
-      
-    - task: Docker@1
-      displayName: 'Push an image'
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-        azureContainerRegistry: $(azure.container.registry)
-        command: 'Push an image'
-        imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
-
-    - task: Docker@1
-      displayName: logout
-      inputs:
-        command: logout
+        azureSubscriptionEndpoint: $(azure.subscription.endpoint)
+        manualBranchPrefix: $(manual.branch.prefix)
+        applicationName: $(application.name)
