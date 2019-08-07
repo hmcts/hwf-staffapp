@@ -1,9 +1,12 @@
+- content_for :page_title
+  = "Application details"
+
 = form_for @form, as: :online_application, url: online_application_path, method: :put, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       header
-        h2.govuk-heading-xl Application details
+        h1.govuk-heading-xl Application details
 
       p.util_mb-0 Full name
       p: strong= @online_application.full_name
