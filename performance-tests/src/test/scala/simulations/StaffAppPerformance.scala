@@ -22,8 +22,8 @@ with HttpConfiguration
 
     .exec(http("Sign in")
         .put("/users/sign_in")
-        .formParam("user[email]", conf.getString("userEmail"))
-        .formParam("user[password]", conf.getString("userPassword"))
+        .formParam("user[email]", "alexa.ballantine+1@digital.justice.gov.uk")
+        .formParam("user[password]", "123456789")
         .formParam("authenticity_token", session => {
               session("csrfCookie").as[String]
         })
