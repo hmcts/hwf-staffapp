@@ -68,7 +68,7 @@ jobs:
         bundle exec rubocop
       displayName: 'rubocop'
 
-      - script: |
+    - script: |
         bundle exec rake db:create db:schema:load
       displayName: 'DB load'
 
