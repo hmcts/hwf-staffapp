@@ -30,7 +30,7 @@ resources:
   - container: postgres
     image: postgres:9.6
     ports:
-    - 5432
+    - 5432:5432
 
 jobs:
   - job: TestApplication
@@ -39,7 +39,7 @@ jobs:
     # container: my_container
 
     services:
-      postgres: postgres
+      postgres1: postgres
     
     steps:
     - task: UseRubyVersion@0
@@ -54,17 +54,15 @@ jobs:
 
     - script: |
         sudo docker ps
-        sudo docker inspect $(sudo docker ps -a -q)
-        psql --version
-        psql --host=postgres --username=postgres --command="SELECT 1;"
+        psql --host=postgres1 --username=postgres --command="SELECT 1;"
       displayName: 'tests'
 
 
 
-    # - script: |
-    #     bundle install --retry=3 --jobs=4
-    #     psql -c 'create role fr login createdb;' -U postgres
-    #   displayName: 'before script'
+    - script: |
+        # bundle install --retry=3 --jobs=4
+        psql -c 'create role fr login createdb;' -U postgres
+      displayName: 'before script'
 
   #   - script: |
   #       bundle exec rubocop
