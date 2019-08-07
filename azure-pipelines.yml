@@ -29,6 +29,8 @@ resources:
   #   image: ubuntu:16.04
   - container: postgres
     image: postgres:9.6
+    ports:
+    - 5432
 
 jobs:
   - job: TestApplication
