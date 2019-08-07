@@ -64,10 +64,9 @@ jobs:
         psql -h localhost -c 'create role vsts login createdb;' -U postgres
       displayName: 'before script'
 
-    - script: |
-        bundle exec rubocop
-      displayName: 'rubocop'
-
+    # - script: |
+    #     bundle exec rubocop
+    #   displayName: 'rubocop'
 
     - script: |
         # bundle exec rubocop
