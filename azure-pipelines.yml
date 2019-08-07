@@ -65,6 +65,11 @@ jobs:
       displayName: 'before script'
 
     - script: |
+        bundle exec rubocop
+      displayName: 'rubocop'
+
+
+    - script: |
         # bundle exec rubocop
         bundle exec rake db:create db:schema:load
         # DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
