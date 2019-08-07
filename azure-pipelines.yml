@@ -53,6 +53,10 @@ jobs:
       displayName: 'before install'
 
     - script: |
+        env | sort
+      displayName: 'env'
+
+    - script: |
         sudo docker ps
         psql --host=postgres --username=postgres --command="SELECT 1;"
       displayName: 'tests'
