@@ -31,8 +31,6 @@ resources:
     image: postgres:9.6
     ports:
     - 5432:5432
-    name: 
-    - my-postgres
 
 jobs:
   - job: TestApplication
@@ -54,26 +52,24 @@ jobs:
         gem install bundler -v 1.17.3
       displayName: 'before install'
 
-    - script: |
-        sudo docker ps
-        curl localhost:5432
-        psql --host=localhost --username=postgres --command="SELECT 1;"
-      displayName: 'tests'
-
-
+    # - script: |
+    #     sudo docker ps
+    #     curl localhost:5432
+    #     psql --host=localhost --username=postgres --command="SELECT 1;"
+    #   displayName: 'tests'
 
     - script: |
-        # bundle install --retry=3 --jobs=4
-        psql -c 'create role fr login createdb;' -U postgres
+        bundle install --retry=3 --jobs=4
+        psql -h localhost -c 'create role fr login createdb;' -U postgres
       displayName: 'before script'
 
-  #   - script: |
-  #       bundle exec rubocop
-  #       bundle exec rake db:create db:schema:load
-  #       DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
-  #       DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
-  #       bundle exec rake jasmine:ci
-  #     displayName: 'script'
+    - script: |
+        bundle exec rubocop
+        bundle exec rake db:create db:schema:load
+        DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
+        DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec --format documentation --format RspecJunitFormatter --out test-rspec.xml
+        bundle exec rake jasmine:ci
+      displayName: 'script'
 
   #   - task: PublishTestResults@2
   #     condition: succeededOrFailed()
