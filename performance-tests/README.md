@@ -6,10 +6,10 @@ Dependencies
 ### Running Gatling tests locally
 
 1. Start docker daemon 
-2. Run below to build your local docker container from where dockerfile exists.  If 'hwfgatling' image exists in your local you can skip this step
+2. From the performance-tests directory, run below to build your local docker container
 
     ```
-    > docker build -f performance-tests/Dockerfile -t hwfgatling:local . 
+    > docker build -t hwfgatling:local . 
 
     ```
 
