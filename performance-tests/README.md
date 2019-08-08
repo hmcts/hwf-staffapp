@@ -31,19 +31,3 @@ Note: if you are on os x you will need to include the following in the above com
 
     
 4. Reports folder will be created once tests successfully ran
-
-
-### Running Gatling tests using maven without container
-
-1. Get latest from this repo.
-
-2. Execute below command to run test
-
-    ```
-      > mvn gatling:execute
-
-      or for single simulation execution
-
-      > mvn gatling:execute -Dgatling.simulationClass=StaffAppPerformance
-
-    ```
