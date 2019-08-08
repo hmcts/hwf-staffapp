@@ -9,8 +9,8 @@ When("I click on start now") do
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
-  expect(current_path).to include '/evidence/1/accuracy'
   expect(evidence_accuracy_page.content).to have_header
+  expect(current_path).to include '/evidence/1/accuracy'
 end
 
 When("I click on what to do if the evidence cannot be processed") do
@@ -54,8 +54,8 @@ When("I click on return application") do
 end
 
 Then("I should be taken to the return letter page") do
-  expect(current_path).to include '/evidence/1/return_letter'
   expect(return_letter_page.content).to have_header
+  expect(current_path).to include '/evidence/1/return_letter'
 end
 
 Then("when I click on finish") do
