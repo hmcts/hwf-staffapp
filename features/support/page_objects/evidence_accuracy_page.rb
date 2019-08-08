@@ -1,6 +1,6 @@
 class EvidenceAccuracyPage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Evidence'
+    element :header, 'h1', text: 'Evidence'
     element :eligibility, 'h3', text: 'Eligible for help with fees'
     element :personal_details, 'h2', text: 'Personal details'
     element :application_details, 'h2', text: 'Application details'

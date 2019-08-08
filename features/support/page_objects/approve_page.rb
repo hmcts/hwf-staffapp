@@ -1,6 +1,6 @@
 class ApprovePage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Ask a manager'
+    element :header, 'h1', text: 'Ask a manager'
     element :first_name, '#application_fee_manager_firstname'
     element :last_name, '#application_fee_manager_lastname'
     element :error_first_name, 'label', text: 'Enter a manager\'s first name'

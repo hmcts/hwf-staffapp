@@ -1,6 +1,6 @@
 class DwpMessagePage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Choose the DWP message'
+    element :header, 'h1', text: 'Choose the DWP message'
     element :offline_message, 'label', text: 'Display DWP check is down message'
     element :online_message, 'label', text: 'Display DWP check is working message'
     element :default_message, 'label', text: 'Use the default DWP check to display message'

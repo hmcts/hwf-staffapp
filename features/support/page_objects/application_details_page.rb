@@ -1,7 +1,7 @@
 # rubocop:disable Metrics/AbcSize
 class ApplicationDetailsPage < BasePage
   section :content, '#main-content' do
-    element :header, 'h2', text: 'Application details'
+    element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
     element :jurisdiction, '.govuk-radios__item'
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'

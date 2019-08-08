@@ -1,6 +1,6 @@
 class BenefitsPage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Benefits'
+    element :header, 'h1', text: 'Benefits'
     element :no, 'label', text: 'No'
     element :yes, 'label', text: 'Yes'
   end

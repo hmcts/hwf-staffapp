@@ -37,7 +37,7 @@ RSpec.feature 'Completing the application details', type: :feature do
         end
 
         scenario 'application details is shown' do
-          expect(page).to have_xpath('//h2', text: 'Application details')
+          expect(page).to have_xpath('//h1', text: 'Application details')
         end
 
         context 'when the dwp says the applicant is not on benefits' do
@@ -55,7 +55,7 @@ RSpec.feature 'Completing the application details', type: :feature do
             end
 
             scenario 'savings and investments is shown' do
-              expect(page).to have_xpath('//h2', text: 'Savings and investments')
+              expect(page).to have_xpath('//h1', text: 'Savings and investments')
             end
 
             context 'when the applicant exceeds the savings threshold' do
@@ -66,7 +66,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               end
 
               scenario 'the summary page is shown with correct display' do
-                expect(page).to have_xpath('//h2', text: 'Check details')
+                expect(page).to have_xpath('//h1', text: 'Check details')
                 expect(page).to have_xpath('//h2', text: 'Savings and investments')
                 expect(page).to have_content('Less than £3,000 No')
                 expect(page).to have_content('Savings amount £3500')
@@ -83,7 +83,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               end
 
               scenario 'benefits is shown' do
-                expect(page).to have_xpath('//h2', text: 'Benefits')
+                expect(page).to have_xpath('//h1', text: 'Benefits')
               end
 
               context 'when the applicant says they are on benefits' do
@@ -93,7 +93,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 end
 
                 scenario 'benefit override page is shown with' do
-                  expect(page).to have_xpath('//h2', text: 'Benefits')
+                  expect(page).to have_xpath('//h1', text: 'Benefits')
                 end
 
                 context 'when benefits confirmed' do
@@ -103,7 +103,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   end
 
                   scenario 'the summary page is shown with correct display' do
-                    expect(page).to have_xpath('//h2', text: 'Check details')
+                    expect(page).to have_xpath('//h1', text: 'Check details')
                     expect(page).to have_xpath('//h2', text: 'Savings and investments')
                     expect(page).to have_xpath('//h2', text: 'Benefits')
                     expect(page).to have_no_xpath('//h2', text: 'Income')
@@ -118,7 +118,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 end
 
                 scenario 'income is shown' do
-                  expect(page).to have_xpath('//h2', text: 'Income')
+                  expect(page).to have_xpath('//h1', text: 'Income')
                 end
 
                 context 'when the applicant has children' do
@@ -140,7 +140,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                     context 'on summary page' do
                       scenario 'the summary page is shown with correct display' do
-                        expect(page).to have_xpath('//h2', text: 'Check details')
+                        expect(page).to have_xpath('//h1', text: 'Check details')
                         expect(page).to have_xpath('//h2', text: 'Savings and investments')
                         expect(page).to have_xpath('//h2', text: 'Benefits')
                         expect(page).to have_xpath('//h2', text: 'Income')
@@ -150,7 +150,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                         before { click_link 'ChangeLess than £3,000' }
 
                         scenario 'savings and investments is shown' do
-                          expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                          expect(page).to have_xpath('//h1', text: 'Savings and investments')
                         end
 
                         context 'and changes the threshold to exceeded' do
@@ -161,7 +161,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                           end
 
                           scenario 'the summary page is shown with correct display' do
-                            expect(page).to have_xpath('//h2', text: 'Check details')
+                            expect(page).to have_xpath('//h1', text: 'Check details')
                             expect(page).to have_xpath('//h2', text: 'Savings and investments')
                             expect(page).to have_no_xpath('//h2', text: 'Benefits')
                             expect(page).to have_no_xpath('//h2', text: 'Income')
@@ -201,7 +201,7 @@ RSpec.feature 'Completing the application details', type: :feature do
             end
 
             scenario 'savings and investments is shown' do
-              expect(page).to have_xpath('//h2', text: 'Savings and investments')
+              expect(page).to have_xpath('//h1', text: 'Savings and investments')
             end
 
             context 'when the applicant exceeds the savings threshold' do
@@ -212,7 +212,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               end
 
               scenario 'the summary page is shown with correct display' do
-                expect(page).to have_xpath('//h2', text: 'Check details')
+                expect(page).to have_xpath('//h1', text: 'Check details')
                 expect(page).to have_xpath('//h2', text: 'Savings and investments')
                 expect(page).to have_no_xpath('//h2', text: 'Benefits')
                 expect(page).to have_no_xpath('//h2', text: 'Income')
@@ -226,7 +226,7 @@ RSpec.feature 'Completing the application details', type: :feature do
               end
 
               scenario 'benefits is shown' do
-                expect(page).to have_xpath('//h2', text: 'Benefits')
+                expect(page).to have_xpath('//h1', text: 'Benefits')
               end
 
               context 'when the applicant says they are on benefits' do
@@ -236,7 +236,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 end
 
                 scenario 'the summary page is shown with correct display' do
-                  expect(page).to have_xpath('//h2', text: 'Check details')
+                  expect(page).to have_xpath('//h1', text: 'Check details')
                   expect(page).to have_xpath('//h2', text: 'Savings and investments')
                   expect(page).to have_xpath('//h2', text: 'Benefits')
                   expect(page).to have_no_xpath('//h2', text: 'Income')
@@ -246,7 +246,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   before { click_link 'ChangeLess than £3,000' }
 
                   scenario 'savings and investments is shown' do
-                    expect(page).to have_xpath('//h2', text: 'Savings and investments')
+                    expect(page).to have_xpath('//h1', text: 'Savings and investments')
                   end
 
                   context 'and changes the threshold to exceeded' do
@@ -257,7 +257,8 @@ RSpec.feature 'Completing the application details', type: :feature do
                     end
 
                     scenario 'the summary page is shown with correct display' do
-                      expect(page).to have_xpath('//h2', text: 'Check details')
+                      # save_and_open_page
+                      expect(page).to have_xpath('//h1', text: 'Check details')
                       expect(page).to have_xpath('//h2', text: 'Savings and investments')
                       expect(page).to have_no_xpath('//h2', text: 'Benefits')
                       expect(page).to have_no_xpath('//h2', text: 'Income')
