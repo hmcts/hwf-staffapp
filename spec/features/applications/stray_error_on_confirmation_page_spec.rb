@@ -32,7 +32,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
       choose 'application_married_false'
       click_button 'Next'
 
-      expect(page).to have_xpath('//h2', text: 'Application details')
+      expect(page).to have_xpath('//h1', text: 'Application details')
       fill_in 'application_fee', with: '300'
       find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
       fill_in 'application_day_date_received', with: date_received.day
@@ -41,11 +41,11 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
       fill_in 'Form number', with: 'ABC123'
       click_button 'Next'
 
-      expect(page).to have_xpath('//h2', text: 'Savings and investments')
+      expect(page).to have_xpath('//h1', text: 'Savings and investments')
       choose :application_min_threshold_exceeded_true
       fill_in :application_amount, with: 3500
       click_button 'Next'
-      expect(page).to have_xpath('//h2', text: 'Check details')
+      expect(page).to have_xpath('//h1', text: 'Check details')
       click_button 'Complete processing'
     end
 

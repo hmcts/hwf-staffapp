@@ -1,7 +1,7 @@
 class GenerateReportPage < BasePage
   section :content, '#content' do
-    element :aggregated_header, 'h2', text: 'Generate finance aggregated report'
-    element :transactional_header, 'h2', text: 'Generate finance transactional report'
+    element :aggregated_header, 'h1', text: 'Generate finance aggregated report'
+    element :transactional_header, 'h1', text: 'Generate finance transactional report'
     element :generate_report_button, 'input[value="Generate report"]'
     element :date_from_label, 'label', text: 'Date From'
     elements :date_hint, '.hint', text: 'Use this format DD/MM/YYYY'

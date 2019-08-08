@@ -1,6 +1,6 @@
 class PersonalDetailsPage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Personal details'
+    element :header, 'h1', text: 'Personal details'
     element :application_title, '#application_title'
     element :application_first_name, '#application_first_name'
     element :application_last_name, '#application_last_name'

@@ -43,7 +43,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       end
 
       scenario 'the summary page shows the benefit data' do
-        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_xpath('//h1', text: 'Check details')
         expect(page).to have_xpath('//h2', text: 'Savings and investments')
         expect(page).to have_no_xpath('//h2', text: 'Income')
         expect(page).to have_no_xpath('//h2', text: 'Benefits')
@@ -59,7 +59,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       end
 
       scenario 'the summary page shows the benefit data' do
-        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_xpath('//h1', text: 'Check details')
         dob_text = dob.strftime('%-d %B %Y')
         expect(page).to have_content("Date of birth #{dob_text}")
 
@@ -90,7 +90,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       scenario 'the summary page shows the benefit data' do
         date_received_text = date_received.strftime('%-d %B %Y')
-        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_xpath('//h1', text: 'Check details')
         expect(page).to have_content("Date received #{date_received_text}")
         first(:xpath, ".//a[@data-section-name='application-details']").click
 
@@ -115,7 +115,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       let(:new_deceased_date) { 3.months.ago + 11.days }
 
       before do
-        expect(page).to have_xpath('//h2', text: 'Application details')
+        expect(page).to have_xpath('//h1', text: 'Application details')
         fill_in 'application_fee', with: '300'
         find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
         fill_in 'application_day_date_received', with: date_received.day
@@ -137,7 +137,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       scenario 'the summary page shows the benefit data' do
         deceased_date_text = deceased_date.strftime('%-d %B %Y')
-        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_xpath('//h1', text: 'Check details')
         expect(page).to have_content("Name of the deceased Jane")
         expect(page).to have_content("Date of their death #{deceased_date_text}")
 
@@ -164,7 +164,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       let(:new_refund_date) { 3.months.ago + 11.days }
 
       before do
-        expect(page).to have_xpath('//h2', text: 'Application details')
+        expect(page).to have_xpath('//h1', text: 'Application details')
         fill_in 'application_fee', with: '300'
         find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
         fill_in 'application_day_date_received', with: date_received.day
@@ -185,7 +185,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
       scenario 'the summary page shows the benefit data' do
         refund_date_text = refund_date.strftime('%-d %B %Y')
-        expect(page).to have_xpath('//h2', text: 'Check details')
+        expect(page).to have_xpath('//h1', text: 'Check details')
         expect(page).to have_content("Date fee paid #{refund_date_text}")
 
         first(:xpath, ".//a[@data-section-name='application-details']").click
@@ -220,7 +220,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         end
 
         scenario 'the summary page shows the benefit data' do
-          expect(page).to have_xpath('//h2', text: 'Check details')
+          expect(page).to have_xpath('//h1', text: 'Check details')
           expect(page).to have_xpath('//h2', text: 'Savings and investments')
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_no_xpath('//h2', text: 'Income')
@@ -255,7 +255,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         end
 
         scenario 'the summary page shows the income data' do
-          expect(page).to have_xpath('//h2', text: 'Check details')
+          expect(page).to have_xpath('//h1', text: 'Check details')
           expect(page).to have_xpath('//h2', text: 'Savings and investments')
           expect(page).to have_xpath('//h2', text: 'Benefits')
           expect(page).to have_xpath('//h2', text: 'Income')
@@ -283,7 +283,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
   # rubocop:disable Metrics/AbcSize
   def application_details_step
-    expect(page).to have_xpath('//h2', text: 'Application details')
+    expect(page).to have_xpath('//h1', text: 'Application details')
     fill_in 'application_fee', with: '300'
     find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
     fill_in 'application_day_date_received', with: date_received.day
