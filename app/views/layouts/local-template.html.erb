@@ -1,12 +1,12 @@
 <%= yield :top_of_page %>
 <!DOCTYPE html>
-<html lang="en" class="govuk-template ">
+<html lang="en" class="govuk-template app-html-class">
 
   <head>
     <meta charset="utf-8" />
     <title><%= Rails.application.config.app_title + " - " %><%= yield :page_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#0b0c0c" />
+    <meta name="theme-color" content="blue" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -17,12 +17,13 @@
     <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_url 'govuk-apple-touch-icon-152x152.png'%>">
     <link rel="apple-touch-icon" href="<%= asset_url 'govuk-apple-touch-icon.png'%>">
 
+    <%= stylesheet_link_tag "application" %>
     <!--[if !IE 8]><!-->
-    <link href="/assets/govuk-frontend/all.css" rel="stylesheet" />
+      <%= stylesheet_link_tag "govuk-frontend/all" %>
     <!--<![endif]-->
 
     <!--[if IE 8]>
-      <link href="/assets/govuk-frontend/all-ie8.css" rel="stylesheet" />
+      <%= stylesheet_link_tag "govuk-frontend/all-ie8" %>
     <![endif]-->
 
     <!--[if lt IE 9]>
