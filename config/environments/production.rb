@@ -23,14 +23,14 @@ Rails.application.configure do
   config.public_file_server.enabled = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.assets.prefix = '/myassets'
+  config.assets.prefix = '/assets'
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
 
   # `config.assets.precompile` and `config.assets.version`
@@ -88,23 +88,23 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.after_initialize do
-    smtp_domain = ENV['SMTP_DOMAIN'] || 'localhost'
+  # config.after_initialize do
+  #   smtp_domain = ENV['SMTP_DOMAIN'] || 'localhost'
 
-    ActionMailer::Base.default_url_options = {
-      host: smtp_domain,
-      protocol: ENV['SMTP_PROTOCOL'] || 'http'
-    }
-    ActionMailer::Base.default from: Settings.mail.from
-    ActionMailer::Base.default reply_to: Settings.mail.reply_to
-    ActionMailer::Base.smtp_settings = {
-      address: ENV['SMTP_HOSTNAME'] || 'localhost',
-      port: ENV['SMTP_PORT'] || 587,
-      domain: smtp_domain,
-      user_name: ENV['SMTP_USERNAME'] || '',
-      password: ENV['SMTP_PASSWORD'] || '',
-      authentication: :login,
-      enable_starttls_auto: true
-    }
-  end
+  #   ActionMailer::Base.default_url_options = {
+  #     host: smtp_domain,
+  #     protocol: ENV['SMTP_PROTOCOL'] || 'http'
+  #   }
+  #   ActionMailer::Base.default from: Settings.mail.from
+  #   ActionMailer::Base.default reply_to: Settings.mail.reply_to
+  #   ActionMailer::Base.smtp_settings = {
+  #     address: ENV['SMTP_HOSTNAME'] || 'localhost',
+  #     port: ENV['SMTP_PORT'] || 587,
+  #     domain: smtp_domain,
+  #     user_name: ENV['SMTP_USERNAME'] || '',
+  #     password: ENV['SMTP_PASSWORD'] || '',
+  #     authentication: :login,
+  #     enable_starttls_auto: true
+  #   }
+  # end
 end
