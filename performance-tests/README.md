@@ -9,22 +9,22 @@ Dependencies
 2. From the performance-tests directory, run below to build your local docker container
 
     ```
-    > docker build -t hwfgatling:local . 
+    docker build -t hwfgatling:local . 
 
     ```
 
 
 3. From the performance-tests directory, run gatling scripts against docker image
    ```
-   > docker run --rm \
-  -e APP_URL=https://example.com \
-  -e APP_EMAIL=example@test.com \
-  -e APP_PASSWORD=example \
-  -v `pwd`/src/test/resources:/opt/gatling/conf \
-  -v `pwd`/src/test/scala/simulations:/opt/gatling/user-files/simulations \
-  -v `pwd`/results:/opt/gatling/results \
-  -v `pwd`/data:/opt/gatling/data \
-  hwfgatling:local -s simulations.StaffAppPerformance
+   docker run --rm \
+   -e APP_URL=https://example.com \
+   -e APP_EMAIL=example@test.com \
+   -e APP_PASSWORD=example \
+   -v `pwd`/src/test/resources:/opt/gatling/conf \
+   -v `pwd`/src/test/scala/simulations:/opt/gatling/user-files/simulations \
+   -v `pwd`/results:/opt/gatling/results \
+   -v `pwd`/data:/opt/gatling/data \
+   hwfgatling:local -s simulations.StaffAppPerformance
    ```
 
 Note: if you are on os x you will need to include the following in the above command `--add-host localhost:<IP>`
