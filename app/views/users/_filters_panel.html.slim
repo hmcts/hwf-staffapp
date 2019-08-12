@@ -1,18 +1,18 @@
-div#staff-filters.panel
-  div.govuk-grid-row
-    div.govuk-grid-column-third
+#staff-filters.panel
+  .govuk-grid-row
+    .govuk-grid-column-full
       h2.heading-small Last logged in filter
       = form_tag users_path, method: :get do
         .govuk-form-group
-          = label_tag 'Office', nil, class: 'govuk-label'
+          = label_tag 'Office', nil, class: 'govuk-label', for: 'office'
           = select_tag :office, options_for_select(Office.sorted.collect { |o| [o.name, o.id]}, params[:office]), prompt: 'Please select', disabled: !current_user.admin?, class: 'govuk-select'
         .govuk-form-group
-          = label_tag 'Activity', nil, class: 'govuk-label'
+          = label_tag 'Activity', nil, class: 'govuk-label', for: 'activity'
           = select_tag :activity, options_for_select([:active, :inactive], params[:activity]), prompt: 'Please select', class: 'govuk-select'
         .govuk-form-group
           = submit_tag "Filter", class: 'govuk-button'
           = link_to 'Clear', users_path, { class: 'govuk-button second-button' }
-    div.govuk-grid-column-two-thirds.util_mt-small
+    .govuk-grid-column-full
       p You can use this filter to see whether members of staff have not logged in within the last three months.
       p If you are a Manager, please select 'inactive' from the Activity drop-down list and then click on the Filter button. You will then see all your members of staff who have not logged in within the last three months (Please ignore the greyed-out Offices drop-down list which is for Admin users only).
       p To clear the filter, click on the Clear button.
