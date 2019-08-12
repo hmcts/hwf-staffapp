@@ -61,7 +61,7 @@ h1.visuallyhidden Help with fees - Staff application
           h2 = t('search_form.label')
         span.govuk-error-message
           = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'govuk-input govuk-!-width-two-quarters', autocomplete: 'off' }
+        = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
         = f.submit 'Search', class: 'govuk-button'
 
 - if policy(:application).index?
