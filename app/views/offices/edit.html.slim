@@ -10,7 +10,7 @@ header
 
 = render 'form', with_jurisdictions: true
 
-ul
-  li=link_to 'Show this office', @office
+ul.govuk-list
+  li.govuk-link=link_to 'Show this office', @office
   -unless current_user.manager?
-    li=link_to 'Back to list of offices', offices_path
+    li.govuk-link=link_to 'Back to list of offices', offices_path
