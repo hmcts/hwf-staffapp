@@ -2,8 +2,9 @@
 
   .govuk-form-group
     = f.label :name, t('functions.offices.label_name'), class: 'govuk-label'
-    = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
-    = f.text_field :name, { class: 'govuk-input' }
+    span.govuk-error-message
+      = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
+    = f.text_field :name, { class: 'govuk-input govuk-!-width-one-half' }
 
   - if with_jurisdictions
     -if @jurisdictions.count.eql?(0)
@@ -13,7 +14,8 @@
         fieldset.govuk-fieldset
           legend.visuallyhidden Jurisdictions
           = f.label :jurisdictions, class: 'govuk-label'
-          = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
+          span.govuk-error-message
+            = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
           .govuk-checkboxes.govuk-checkboxes--small
             =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
               .govuk-checkboxes__item

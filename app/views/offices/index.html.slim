@@ -4,22 +4,22 @@
 header
   h1.govuk-heading-xl Offices
 
-table
-  caption.visuallyhidden Table of offices
-  thead
-    tr
-      th Name of office
-      th Jurisdictions
-      td &nbsp;
+table.govuk-table
+  caption.visuallyhidden.govuk-table__caption Table of offices
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header scope="col" Name of office
+      th.govuk-table__header scope="col" Jurisdictions
+      td.govuk-table__header scope="col" Actions
 
-  tbody
+  tbody.govuk-table__body
     - @offices.each do |office|
-      tr
-        td = link_to office.name, office
-        td.center = office.jurisdictions.count
+      tr.govuk-table__row
+        td.govuk-table__cell = link_to office.name, office, class: 'govuk-link'
+        td.center.govuk-table__cell = office.jurisdictions.count
         - if policy(office).edit?
-          td = link_to 'Change details', edit_office_path(office)
+          td.govuk-table__cell = link_to 'Change details', edit_office_path(office), class: 'govuk-link'
 
 - if policy(:office).new?
 
-  = link_to 'New Office', new_office_path, class: 'button util_mt-medium'
+  = link_to 'Add New Office', new_office_path, class: 'govuk-button'
