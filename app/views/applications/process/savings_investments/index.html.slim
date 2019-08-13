@@ -5,11 +5,12 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+
       header
         h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
 
       .govuk-form-group
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Amount of savings
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
           span#changed-name-error.govuk-error-message
@@ -53,23 +54,24 @@
 
       = f.submit 'Next', :class => 'govuk-button'
 
-      details.util_mt-medium
+      details.govuk-body
         summary
           span.summary.primary Our calculation is based on this information
-        #result_table.util_mt-small
-          table
-            tr
-              th Age
-              td #{@application.applicant.age} years old
-            tr
-              th Status
-              td =t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
-            tr
-              th Fee
-              td £#{@application.detail.fee.floor}
+
+        dl.govuk-summary-list class="govuk-!-margin-top-3"
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Age
+            dd.govuk-summary-list__value #{@application.applicant.age} years old
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Fee
+            dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Status
+            dd.govuk-summary-list__value = number_to_currency(@application.detail.fee.floor, precision: 0, unit: '£')
+
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m Savings and investments
+        h2.govuk-heading-m Savings and investments
         p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'

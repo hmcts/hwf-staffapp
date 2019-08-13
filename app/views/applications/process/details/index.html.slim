@@ -18,7 +18,7 @@
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
 
       .govuk-form-group
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Select jurisdiction
           = f.label :jurisdiction_id, class: 'govuk-label'
           span#changed-name-error.govuk-error-message
@@ -68,7 +68,7 @@
         = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Probate case details
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
@@ -105,7 +105,7 @@
                       = f.text_field :year_date_of_death, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
 
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Refund case details
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
@@ -161,7 +161,7 @@
                           = f.text_area :discretion_reason, class: 'govuk-textarea'
 
 
-        fieldset
+        fieldset.govuk-fieldset
           legend.visuallyhidden Emergency case details
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
@@ -180,13 +180,13 @@
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m Refunds
+        h2.govuk-heading-m Refunds
         strong Check the refund:
         ul.govuk-list.govuk-list--bullet
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
         p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
-        h4.govuk-heading-m Emergency cases
+        h3.govuk-heading-m Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
         strong Example of emergency cases:
         ul.govuk-list.govuk-list--bullet
