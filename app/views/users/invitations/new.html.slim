@@ -1,10 +1,12 @@
 - content_for :page_title
   = t "devise.invitations.new.header"
 
-header
-  h1.govuk-heading-xl= t "devise.invitations.new.header"
-
 = form_for @user, url: user_invitation_path, html: {:method => :post} do |f|
+
+  header
+    h1.govuk-heading-xl= t "devise.invitations.new.header"
+
+
   - User.invite_key_fields.each do |field|
 
     .govuk-form-group

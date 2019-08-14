@@ -12,8 +12,9 @@
         p =t("#{@current_user.elevated? ? 'manager' : 'user'}_html", scope:'business_entities.not_set', email: Settings.mail.tech_support)
     -else
         fieldset.govuk-fieldset
-          legend.visuallyhidden Jurisdictions
-          = f.label :jurisdictions, class: 'govuk-label'
+          legend.govuk-fieldset__legend
+            h2.govuk-fieldset__heading Jurisdictions
+
           span.govuk-error-message
             = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
           .govuk-checkboxes.govuk-checkboxes--small

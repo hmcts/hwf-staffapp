@@ -1,11 +1,14 @@
+- content_for :page_title
+  = "Sign in"
 
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if @notification.present? && @notification.show
-      = render('shared/notifications') if @notification.present? && @notification.show
-
-    h1.govuk-heading-xl Sign in
+      div class="govuk-!-padding-top-7"
+        = render('shared/notifications') if @notification.present? && @notification.show
+    header
+      h1.govuk-heading-xl Sign in
 
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
       .govuk-form-group

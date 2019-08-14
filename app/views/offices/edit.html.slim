@@ -5,8 +5,12 @@ header
   h1.govuk-heading-xl Change office details
 
 - if current_user.manager?
-  div.important-notice.util_mb-large
-    strong = t('offices.jurisdictions_warning')
+
+  .govuk-warning-text
+    span.govuk-warning-text__icon aria-hidden="true" !
+    strong.govuk-warning-text__text
+      span.govuk-warning-text__assistive Warning
+      = t('offices.jurisdictions_warning')
 
 = render 'form', with_jurisdictions: true
 
