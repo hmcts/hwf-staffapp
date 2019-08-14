@@ -9,16 +9,17 @@
         h1.govuk-heading-xl Ask a manager
 
       p You entered a court and tribunal fee that is more than £10,000. You need to ask a manager to approve this.
-
       .govuk-form-group
-        = f.label :first_name, class: 'govuk-label'
-        = f.label :fee_manager_firstname, form.errors[:fee_manager_firstname].join(', '), class: 'error' if form.errors[:fee_manager_firstname].present?
+        = f.label :fee_manager_firstname, t('.fee_manager_first_name'), class: 'govuk-label'
+        span#changed-name-error.govuk-error-message
+          = f.label :fee_manager_firstname, form.errors[:fee_manager_firstname].join(', '), class: 'error' if form.errors[:fee_manager_firstname].present?
         = f.text_field :fee_manager_firstname, { class: 'govuk-input govuk-!-width-one-half' }
 
 
       .govuk-form-group
-        = f.label :last_name, class: 'govuk-label'
-        = f.label :fee_manager_lastname, form.errors[:fee_manager_lastname].join(', '), class: 'error' if form.errors[:fee_manager_lastname].present?
+        = f.label :fee_manager_lastname, t('.fee_manager_last_name'), class: 'govuk-label'
+        span#changed-name-error.govuk-error-message
+          = f.label :fee_manager_lastname, form.errors[:fee_manager_lastname].join(', '), class: 'error' if form.errors[:fee_manager_lastname].present?
         = f.text_field :fee_manager_lastname, { class: 'govuk-input govuk-!-width-one-half' }
 
       = f.submit 'Next', class: 'govuk-button'

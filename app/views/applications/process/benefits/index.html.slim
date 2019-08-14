@@ -9,8 +9,8 @@
         h1.govuk-heading-xl.util_mb-small Benefits
 
       -if @state=='offline'
-        .util_mt-tiny.util_mb-small
-          .page-error = t('error_messages.benefit_check.dwp_unavailable')
+        .page-error.util_mb-medium.govuk-error-summary__body
+          = t('error_messages.benefit_check.dwp_unavailable')
 
       .govuk-form-group
         fieldset.govuk-fieldset
