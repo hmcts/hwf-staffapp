@@ -22,7 +22,7 @@ header
           th.govuk-table__header Updates
           th.govuk-table__header Invitations
       tbody.govuk-table__body
-        -@users.limit(100).each do |user|
+        -@users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
               = link_to user_path(user) do

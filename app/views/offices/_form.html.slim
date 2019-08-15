@@ -21,6 +21,7 @@
             =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
               .govuk-checkboxes__item
                 = b.check_box(class: 'govuk-checkboxes__input')
-                = b.label(class: 'govuk-label govuk-checkboxes__label')
+                = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text} (#{@becs[b.value]})" }
+
 
   = f.submit class: 'govuk-button util_mt-medium'
