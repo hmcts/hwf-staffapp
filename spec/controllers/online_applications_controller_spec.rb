@@ -231,7 +231,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       end
 
       it 'redirects to the application confirmation page' do
-        expect(response).to redirect_to(application_confirmation_path(application))
+        expect(response).to redirect_to(application_confirmation_path(application, 'digital'))
       end
     end
   end

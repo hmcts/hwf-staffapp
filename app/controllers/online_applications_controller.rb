@@ -35,8 +35,7 @@ class OnlineApplicationsController < ApplicationController
   def complete
     application = ApplicationBuilder.new(current_user).build_from(online_application)
     process_application(application)
-
-    redirect_to application_confirmation_path(application)
+    redirect_to application_confirmation_path(application, 'digital')
   end
 
   def approve

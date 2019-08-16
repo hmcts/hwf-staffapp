@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Applications::Process::ConfirmationController, type: :controller do
-  let(:user)          { create :user }
+  let(:user)        { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:dwp_monitor) { instance_double('DwpMonitor') }
   let(:dwp_state) { 'online' }
@@ -15,7 +15,7 @@ RSpec.describe Applications::Process::ConfirmationController, type: :controller 
   end
 
   context 'GET #index' do
-    before { get :index, application_id: application.id }
+    before { get :index, application_id: application.id, type: 'paper' }
 
     it 'displays the confirmation view' do
       expect(response).to render_template :index
