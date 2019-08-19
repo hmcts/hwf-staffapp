@@ -5,12 +5,12 @@ header
   h1.govuk-heading-l New business entity for #{jurisdiction.name} in #{office.name}
 
 = form_for [office, business_entity], url: office_business_entities_url(jurisdiction_id: jurisdiction.id), method: :post do |f|
-  .govuk-form-group
+  .govuk-form-group.group-level
     = f.label :sop_code, class: 'govuk-label'
     span.govuk-error-message
       = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
     = f.text_field :sop_code, { class: 'govuk-input govuk-!-width-one-half' }
-  .govuk-form-group
+  .govuk-form-group.group-level
     = f.label :name, class: 'govuk-label'
     span.govuk-error-message
       = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?

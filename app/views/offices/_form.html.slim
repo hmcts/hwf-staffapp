@@ -1,6 +1,6 @@
 = form_for @office do |f|
 
-  .govuk-form-group
+  .govuk-form-group.group-level
     = f.label :name, t('functions.offices.label_name'), class: 'govuk-label'
     span.govuk-error-message
       = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
@@ -19,9 +19,12 @@
             = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
           .govuk-checkboxes.govuk-checkboxes--small
             =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
-              .govuk-checkboxes__item
-                = b.check_box(class: 'govuk-checkboxes__input')
-                = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text} (#{@becs[b.value]})" }
+                .govuk-checkboxes__item
+                  = b.check_box(class: 'govuk-checkboxes__input')
+                  - if @becs
+                    = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text} (#{@becs[b.value]})" }
+                  - else
+                    = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text}" }
 
 
   = f.submit class: 'govuk-button util_mt-medium'

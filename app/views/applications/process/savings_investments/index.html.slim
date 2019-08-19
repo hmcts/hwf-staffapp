@@ -9,7 +9,7 @@
       header
         h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.visuallyhidden Amount of savings
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'

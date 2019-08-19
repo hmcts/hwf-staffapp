@@ -6,7 +6,7 @@ header
 
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
-  .govuk-form-group
+  .govuk-form-group.group-level
     = f.label :current_password, class: 'govuk-label'
       = t('activerecord.attributes.user.current_password')
     span.govuk-error-message
