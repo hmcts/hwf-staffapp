@@ -1,10 +1,13 @@
-header
-  h1.govuk-heading-xl.util_mb-medium = t 'devise.passwords.new.header'
-
-.govuk-body-l
-  p = t 'devise.passwords.new.instructions'
+- content_for :page_title
+  = t 'devise.passwords.new.header'
 
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { autocomplete: 'off', method: :post }) do |f|
+  header
+    h1.govuk-heading-xl = t 'devise.passwords.new.header'
+
+  .govuk-body-l
+    p = t 'devise.passwords.new.instructions'
+
   .govuk-form-group
     = f.label :email, class: 'govuk-label'
     span.govuk-error-message

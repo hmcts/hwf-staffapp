@@ -1,24 +1,30 @@
 = form_for @office do |f|
 
-  .govuk-form-group
+  .govuk-form-group.group-level
     = f.label :name, t('functions.offices.label_name'), class: 'govuk-label'
-    = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
-    = f.text_field :name, { class: 'govuk-input' }
+    span.govuk-error-message
+      = f.label :name, @office.errors[:name].join(', '), class: 'error' if @office.errors[:name].present?
+    = f.text_field :name, { class: 'govuk-input govuk-!-width-one-half' }
 
   - if with_jurisdictions
     -if @jurisdictions.count.eql?(0)
       .util_mt-medium
         p =t("#{@current_user.elevated? ? 'manager' : 'user'}_html", scope:'business_entities.not_set', email: Settings.mail.tech_support)
     -else
-      .govuk-form-group
-        fieldset
-          legend.visuallyhidden Jurisdictions
-          = f.label :jurisdictions, class: 'govuk-label'
-          = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
-          .options.radio.cf
-              =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
-                = b.label class: 'block-label' do
-                  = b.check_box
-                  = "#{b.text} (#{@becs[b.value]})"
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            h2.govuk-fieldset__heading Jurisdictions
+
+          span.govuk-error-message
+            = f.label :jurisdictions, @office.errors[:jurisdictions].join(', ').html_safe, class: 'error' if @office.errors[:jurisdictions].present?
+          .govuk-checkboxes.govuk-checkboxes--small
+            =collection_check_boxes(:office, :jurisdiction_ids, @jurisdictions, :id, :display_full) do |b|
+                .govuk-checkboxes__item
+                  = b.check_box(class: 'govuk-checkboxes__input')
+                  - if @becs
+                    = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text} (#{@becs[b.value]})" }
+                  - else
+                    = b.label(class: 'govuk-label govuk-checkboxes__label') { "#{b.text}" }
+
 
   = f.submit class: 'govuk-button util_mt-medium'

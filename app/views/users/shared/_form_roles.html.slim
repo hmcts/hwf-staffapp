@@ -1,6 +1,7 @@
-.govuk-form-group
+.govuk-form-group.group-level
   = f.label(:roles, 'Role', class: 'govuk-label')
-  = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error' if @user.errors[:role].present?
+  span.govuk-error-message
+    = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error' if @user.errors[:role].present?
 
   -if current_user.elevated?
     - if (@user.manager? && (@user == current_user))

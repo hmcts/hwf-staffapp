@@ -9,33 +9,33 @@
       header
         h1.govuk-heading-xl Personal details
 
-      .govuk-form-group
-        span#changed-name-error.govuk-error-message
+      .govuk-form-group.group-level
+        span.govuk-error-message
           = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
         = f.label :title, class: 'govuk-label'
           =t('title', scope: @form.i18n_scope)
         = f.text_field :title, { class: 'govuk-input govuk-!-width-one-half' }
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :first_name, class: 'govuk-label'
           =t('first_name', scope: @form.i18n_scope)
-        span#changed-name-error.govuk-error-message
+        span.govuk-error-message
           = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
         = f.text_field :first_name, { class: 'govuk-input govuk-!-width-one-half' }
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :last_name, class: 'govuk-label'
-        span#changed-name-error.govuk-error-message
+        span.govuk-error-message
           = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
         = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :date_of_birth, class: 'govuk-label'
           = t('date_of_birth', scope: @form.i18n_scope)
           span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
-        span#changed-name-error.govuk-error-message
+        span.govuk-error-message
           = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
-        .govuk-date-input
+        .govuk-date-input class="#{'error_dates' if @form.errors[:date_of_birth].present?}"
           .govuk-date-input__item
             .govuk-form-group.govuk-form-group-day
               = f.label :day_date_of_birth, class: 'govuk-label'
@@ -51,18 +51,18 @@
 
 
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :ni_number, class: 'govuk-label'
           =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
-          span#changed-name-error.govuk-error-message
+          span.govuk-error-message
             = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
         = f.text_field :ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.visuallyhidden Select the applicant's marital status
-          span#changed-name-error.govuk-error-message
+          span.govuk-error-message
             = f.label :married, class: 'govuk-label'
             = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
           .govuk-radios.govuk-radios--small
@@ -78,27 +78,28 @@
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m Before you start
+        h2.govuk-heading-m Before you start
         p Check the statement of truth has been signed.
-        strong Check the applicant is not:
+        h3.govuk-heading-s Check the applicant is not:
         ul.govuk-list.govuk-list--bullet
           li receiving legal aid
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        strong Check the fee:
+        h3.govuk-heading-s Check the fee:
         ul.govuk-list.govuk-list--bullet
           li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'not-eligible'), target: 'blank'
-        h4.govuk-heading-m National Insurance number
-        strong If NI number isn't provided:
+
+        h2.govuk-heading-m National Insurance number
+        h3.govuk-heading-s If NI number isn't provided:
         ul.govuk-list.govuk-list--bullet
           li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
         p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
-        h4.govuk-heading-m Status
+        h2.govuk-heading-m Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
         p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'

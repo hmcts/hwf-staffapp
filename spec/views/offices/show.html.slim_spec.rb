@@ -26,7 +26,7 @@ RSpec.describe "offices/show", type: :view do
   end
 
   it 'renders the office jurisdictions' do
-    is_expected.to have_text("Jurisdictions#{jurisdictions[0].abbr}#{jurisdictions[1].abbr}")
+    is_expected.to have_text("Jurisdictions#{jurisdictions[0].abbr}, #{jurisdictions[1].abbr}")
   end
 
   describe 'Change details link' do

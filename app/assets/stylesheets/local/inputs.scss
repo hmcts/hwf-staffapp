@@ -64,6 +64,7 @@ select {
   border-width: 2px;
 
   .prefix {
+    font-family: "nta", Arial, sans-serif;
     padding: 0.7em;
     background-color: $grey-3;
     float: left;
@@ -93,7 +94,7 @@ select {
   }
 
   .govuk-button {
-    margin-left: 11px;
+    float: right;
   }
   .search-button:hover {
     background-color: #00692f;

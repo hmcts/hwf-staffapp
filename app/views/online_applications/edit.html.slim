@@ -11,18 +11,20 @@
       p.util_mb-0 Full name
       p: strong= @online_application.full_name
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
-        = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
+        span.govuk-error-message
+          = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
           = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input' }
 
-      .govuk-form-group
-        fieldset
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
           legend.visuallyhidden Select jurisdiction
           = f.label :jurisdiction_id, class: 'govuk-label'
-          = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+          span.govuk-error-message
+            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
           = f.hidden_field :jurisdiction_id, value: nil
           - if @jurisdictions.present?
             .govuk-radios.govuk-radios--small
@@ -34,11 +36,12 @@
           - else
             = t('error_messages.jurisdictions.none_in_office')
 
-      .govuk-form-group
-        = f.label :date_received, class: 'govuk-label'
-          =t('date_received', scope: @form.i18n_scope)
-          span.hint.block = t('date_hint', scope: @form.i18n_scope)
-        span#changed-name-error.govuk-error-message
+      .govuk-form-group.group-level
+        legend.govuk-fieldset__legend
+          h2.govuk-fieldset__heading =t('date_received', scope: @form.i18n_scope)
+
+        span.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+        span.govuk-error-message
           = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         .govuk-date-input
           .govuk-date-input__item
@@ -55,54 +58,40 @@
               = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         = f.label :form_name, class: 'govuk-label'
           =t('form_name', scope: @form.i18n_scope)
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
-        span#changed-name-error.govuk-error-message
+        span.govuk-error-message
           = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
-      .govuk-form-group
+      .govuk-form-group.group-level
         .govuk-checkboxes.govuk-checkboxes--small
-          fieldset
+          fieldset.govuk-fieldset
             legend.visuallyhidden Emergency case details
             .govuk-checkboxes__item
               = f.check_box :emergency, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'emergency' } }
-              = f.label :emergency, class: 'govuk-label govuk-checkboxes__label', for: 'emergency'
+              = f.label :emergency, class: 'govuk-label govuk-checkboxes__label', for: 'online_application_emergency'
 
 
             #emergency-only.start-hidden
               .govuk-form-group.panel-indent.util_mt-0
                 = f.label :emergency_reason, class: 'govuk-label'
-                span#changed-name-error.govuk-error-message
+                span.govuk-error-message
                   = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
                 = f.text_area :emergency_reason, { class: 'govuk-textarea' }
 
-        / fieldset
-        /   legend.visuallyhidden Emergency case details
-        /   .govuk-checkboxes.govuk-checkboxes--small
-        /     .govuk-checkboxes__item
-        /       = f.check_box :emergency, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'emergency' } }
-        /       = f.label t('emergency', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_emergency'
-
-        /   #emergency-only.start-hidden
-        /     .panel-indent
-        /       .govuk-form-group
-        /         = f.label :emergency_reason, class: 'govuk-label'
-        /         span#changed-name-error.govuk-error-message
-        /           = f.label :emergency_reason, @form.errors[:emergency_reason].join(', '), class: 'error' if @form.errors[:emergency_reason].present?
-        /         = f.text_area :emergency_reason, class: 'govuk-textarea'
 
       = f.submit 'Next', class: 'govuk-button'
 
     .govuk-grid-column-one-third
       .guidance
-        h4.govuk-heading-m.util_mt-medium Emergency cases
+        h2.govuk-heading-m Emergency cases
 
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
 
-        h5.heading-small Example of emergency cases:
+        h3.govuk-heading-s Example of emergency cases:
         ul.govuk-list.govuk-list--bullet
           li suspending an eviction
           li debtor insolvency petition

@@ -13,7 +13,7 @@ module SummaryHelper
 
   def build_section(summary_text, object, fields, link_attributes = {})
     unless all_fields_empty?(object, fields)
-      content_tag(:dl, class: 'govuk-summary-list govuk-summary-list--no-border') do
+      content_tag(:dl, class: 'govuk-summary-list') do
         content = build_header(summary_text)
         fields.each do |row|
           content << build_data_row(object, row, link_attributes)
@@ -34,8 +34,8 @@ module SummaryHelper
   end
 
   def build_header(summary_name)
-    content_tag(:div, class: 'govuk-summary-list__row header-row') do
-      content_tag(:h2, summary_name.to_s, class: 'heading-medium util_mt-0')
+    content_tag(:div, class: 'govuk-summary-list__row') do
+      content_tag(:h2, summary_name.to_s, class: 'govuk-heading-m')
     end
   end
 

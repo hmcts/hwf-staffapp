@@ -43,10 +43,12 @@ h1.visuallyhidden Help with fees - Staff application
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.digital.dwp-down')
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.govuk-heading-m.util_mt-0 Process an online application
+          h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
+            | Process an online application
           .govuk-form-group
             = f.label :reference, class: 'govuk-label'
-            = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
+            span.govuk-error-message
+              = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
             .field-wrapper
               span.prefix HWF
               = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
@@ -61,7 +63,7 @@ h1.visuallyhidden Help with fees - Staff application
           h2 = t('search_form.label')
         span.govuk-error-message
           = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'govuk-input govuk-!-width-two-quarters', autocomplete: 'off' }
+        = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
         = f.submit 'Search', class: 'govuk-button'
 
 - if policy(:application).index?
@@ -75,7 +77,7 @@ h1.visuallyhidden Help with fees - Staff application
   .govuk-grid-row
     .govuk-grid-column-full
 
-      h3.heading-medium.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-evidence"}
+      h3.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
         =t("in_progress_applications.title")
       table.in-progress-applications
         caption.visuallyhidden = t('in_progress_applications.caption')
