@@ -43,7 +43,8 @@ h1.visuallyhidden Help with fees - Staff application
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p =t('index.process.digital.dwp-down')
         .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.govuk-heading-m Process an online application
+          h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
+            | Process an online application
           .govuk-form-group
             = f.label :reference, class: 'govuk-label'
             span.govuk-error-message
