@@ -5,3 +5,16 @@
 section#content.cf>form, section#content.cf>header {
   padding-top: 40px;
 }
+
+div.govuk-footer__navigation {
+  div.govuk-footer__section:first-child {
+    -webkit-box-flex: 1 !important;
+    -webkit-flex-grow: 1 !important;
+    -ms-flex-positive: 1 !important;
+    flex-grow: 1 !important; // Support: Flexbox
+            flex-grow: 1; // Support: Flexbox
+    -webkit-flex-shrink: 1;
+        -ms-flex-negative: 1;
+            flex-shrink: 1; // Support: Flexbox
+  }
+}
