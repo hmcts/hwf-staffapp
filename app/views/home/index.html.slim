@@ -59,13 +59,23 @@ h1.visuallyhidden Help with fees - Staff application
 .govuk-grid-row
   .govuk-grid-column-one-half
     = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get) do |f|
-      .govuk-form-group
-        = f.label :reference, class: 'govuk-label govuk-label'
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--s
           h2 = t('search_form.label')
-        span.govuk-error-message
-          = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
-        = f.submit 'Search', class: 'govuk-button'
+        .govuk-form-group
+          .govuk-grid-row
+            .govuk-grid-column-full
+              = f.label :reference, class: 'govuk-label'
+              - if @completed_search_form.errors[:reference].present?
+                span.govuk-error-message
+                  = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error'
+
+            .govuk-grid-column-three-quarters
+              = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
+            .govuk-grid-column-one-quarter
+              = f.submit 'Search', class: 'govuk-button'
+
+
 
 - if policy(:application).index?
   - if @search_results

@@ -85,32 +85,19 @@ select {
 }
 
 .new_completed_search {
-  position: relative;
-
-  input[type="text"] {
-    width: 372px;
-    max-width: 80% !important;
-    height: 40px;
+  legend h2 {
+    margin-bottom: 0px;
   }
 
-  .govuk-button {
-    float: right;
+  .govuk-grid-column-three-quarters {
+    margin-bottom: 20px;
   }
-  .search-button:hover {
-    background-color: #00692f;
-  }
-  .search-button:active {
-    bottom: -1px;
-    height: 38px;
-    box-shadow: 0 0;
+  .govuk-grid-column-one-quarter {
+    text-align: right;
   }
 
   .field_with_errors {
     display: inline;
-  }
-
-  .govuk-label h2 {
-    font-weight: bold;
   }
 }
 
