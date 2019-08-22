@@ -25,9 +25,11 @@
 }
 
 #process-application .flexi, #process-online-application .flexi {
-  height: 200px;
+  border: 1px solid $govuk-border-colour;
+  padding: 20px;
+
   .govuk-button {
-    margin-bottom: 0;
+    margin: 0;
   }
   .govuk-error-message {
     margin:0;
@@ -36,6 +38,14 @@
   h2.govuk-heading-m.error {
     margin-bottom: 0px;
   }
+}
+
+#process-application .govuk-form-group {
+  margin-bottom: 0px;
+}
+
+#process-online-application .govuk-form-group:last-child {
+  margin-bottom: 10px;
 }
 
 .panel-indent {
@@ -118,6 +128,7 @@
 
 .govuk-grid-row.staff-panels {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .dwp-down {
@@ -126,9 +137,9 @@
   margin-bottom: 0;
   padding: 10px 20px;
 
-  * {
-    font-size: 14px;
-  }
+  // * {
+  //   font-size: 14px;
+  // }
 
   ul, p {
     margin-bottom: 0;
