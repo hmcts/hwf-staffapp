@@ -5,7 +5,7 @@ header#head
   h1.govuk-heading-xl =t("#{state}_applications.index.title")
 
 .govuk-grid-row
-  .govuk-grid-column-full
+  .govuk-grid-column-full.table_data
     - unless @applications.empty?
       =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
 
