@@ -5,8 +5,8 @@ RSpec.feature 'Recording and viewing feedback', type: :feature do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user)          { create :user, office: create(:office) }
-  let(:admin)          { create :admin_user, office: create(:office) }
+  let(:user) { create :user, office: create(:office) }
+  let(:admin) { create :admin_user, office: create(:office) }
 
   context 'as a user' do
     scenario 'creates a feedback record' do
@@ -32,7 +32,7 @@ RSpec.feature 'Recording and viewing feedback', type: :feature do
   end
 
   context 'as an admin' do
-    let(:feedback) { create :feedback, experience: 'It works fine.'}
+    let(:feedback) { create :feedback, experience: 'It works fine.' }
     before { feedback }
 
     scenario 'read a feedback records' do
