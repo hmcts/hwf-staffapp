@@ -1,7 +1,7 @@
 #staff-filters.panel
   .govuk-grid-row
     .govuk-grid-column-full
-      h2.heading-small Last logged in filter
+      h2.govuk-heading-s Last logged in filter
       = form_tag users_path, method: :get do
         .govuk-form-group
           = label_tag 'Office', nil, class: 'govuk-label', for: 'office'
