@@ -114,6 +114,9 @@
 
   <%= javascript_include_tag "application" %>
   <script src="<%= asset_path "govuk-frontend/all.js" %>" type="text/javascript"></script>
+
+  <%= yield :javascripts %>
+
   <script>
     window.GOVUKFrontend.initAll()
     $(moj.init);
