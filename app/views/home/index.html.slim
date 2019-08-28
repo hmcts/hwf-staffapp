@@ -12,48 +12,49 @@ h1.visuallyhidden Help with fees - Staff application
 
 
 .govuk-grid-row.staff-panels
-  - if policy(:application).new?
-    .govuk-grid-column-one-half#process-application
+  section aria-label="Process applications"
+    - if policy(:application).new?
+      .govuk-grid-column-one-half#process-application
+        .util_pt-medium
+          - if @state == 'offline'
+            .dwp-down data-equalheight="true" data-heightgroup="1"
+              p =t('index.process.paper.dwp-down.heading')
+              ul.govuk-list.govuk-list--bullet
+                -t('index.process.paper.dwp-down.options').each do |option|
+                  li =option
+          .panel.flexi data-equalheight="true" data-heightgroup="2"
+            h2.govuk-heading-m.util_mt-0 Process application
+            .panel-inner
+              p.util_mb-0 You'll need:
+              ul.govuk-list.govuk-list--bullet
+                li the help with fees application form (EX160)
+                li the court or tribunal form related to the application
+
+            - if current_user.office.jurisdictions.empty?
+              p Please ask your manager to assign jurisdictions to your office.
+            - else
+              .util_mt-0
+                = form_tag(create_applications_path) do
+                  = submit_tag 'Start now', class: 'govuk-button'
+
+    .govuk-grid-column-one-half#process-online-application
       .util_pt-medium
-        - if @state == 'offline'
-          .dwp-down data-equalheight="true" data-heightgroup="1"
-            p =t('index.process.paper.dwp-down.heading')
-            ul.govuk-list.govuk-list--bullet
-              -t('index.process.paper.dwp-down.options').each do |option|
-                li =option
-        .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.govuk-heading-m.util_mt-0 Process application
-          .panel-inner
-            p.util_mb-0 You'll need:
-            ul.govuk-list.govuk-list--bullet
-              li the help with fees application form (EX160)
-              li the court or tribunal form related to the application
-
-          - if current_user.office.jurisdictions.empty?
-            p Please ask your manager to assign jurisdictions to your office.
-          - else
+        = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
+          - if @state == 'offline'
+            .dwp-down data-equalheight="true" data-heightgroup="1"
+              p =t('index.process.digital.dwp-down')
+          .panel.flexi data-equalheight="true" data-heightgroup="2"
+            h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
+              | Process an online application
+            .govuk-form-group
+              = f.label :reference, class: 'govuk-label'
+              span.govuk-error-message
+                = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
+              .field-wrapper
+                span.prefix HWF
+                = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
             .util_mt-0
-              = form_tag(create_applications_path) do
-                = submit_tag 'Start now', class: 'govuk-button'
-
-  .govuk-grid-column-one-half#process-online-application
-    .util_pt-medium
-      = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-        - if @state == 'offline'
-          .dwp-down data-equalheight="true" data-heightgroup="1"
-            p =t('index.process.digital.dwp-down')
-        .panel.flexi data-equalheight="true" data-heightgroup="2"
-          h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
-            | Process an online application
-          .govuk-form-group
-            = f.label :reference, class: 'govuk-label'
-            span.govuk-error-message
-              = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
-            .field-wrapper
-              span.prefix HWF
-              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
-          .util_mt-0
-            = f.submit 'Look up', class: 'govuk-button'
+              = f.submit 'Look up', class: 'govuk-button'
 
 .govuk-grid-row
   .govuk-grid-column-one-half
@@ -67,45 +68,47 @@ h1.visuallyhidden Help with fees - Staff application
         = f.submit 'Search', class: 'govuk-button'
 
 - if policy(:application).index?
-  - if @search_results
+  section aria-label="Applications"
+    - if @search_results
+      .govuk-grid-row
+        = render('home/search_results', type: :search_results, list: @search_results)
     .govuk-grid-row
-      = render('home/search_results', type: :search_results, list: @search_results)
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
+      .govuk-grid-column-full
+        = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
 
-  .govuk-grid-row
-    .govuk-grid-column-full
+    .govuk-grid-row
+      .govuk-grid-column-full
 
-      h3.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
-        =t("in_progress_applications.title")
-      table.in-progress-applications
-        caption.visuallyhidden = t('in_progress_applications.caption')
-        tbody
-          tr
-            td
-              = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence'
-          tr
-            td
-              = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment'
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render('home/processed_and_deleted_aplications')
+        h3.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
+          =t("in_progress_applications.title")
+        table.in-progress-applications
+          caption.visuallyhidden = t('in_progress_applications.caption')
+          tbody
+            tr
+              td
+                = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence'
+            tr
+              td
+                = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment'
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = render('home/processed_and_deleted_aplications')
 
 - if policy(:report).index? || policy(:office).index?
-  .govuk-grid-row.equal-heightboxes.util_mt-medium
-    - if policy(:report).index?
-      .govuk-grid-column-one-half
-        .panel
-          h3.govuk-heading-m.util_mt-0 Generate reports
-          p Export national finance reports related to Help with fees applications and download monthly summary data.
-          = link_to 'Generate reports', reports_path, class: 'button util_mb-0'
-    - if policy(:office).index?
-      .govuk-grid-column-one-half
-        .panel
-          h3.govuk-heading-m.util_mt-0 View offices
-          p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
-          = link_to 'View offices', offices_path
+  section aria-label="Reports"
+    .govuk-grid-row.equal-heightboxes.util_mt-medium
+      - if policy(:report).index?
+        .govuk-grid-column-one-half
+          .panel
+            h3.govuk-heading-m.util_mt-0 Generate reports
+            p Export national finance reports related to Help with fees applications and download monthly summary data.
+            = link_to 'Generate reports', reports_path, class: 'button util_mb-0'
+      - if policy(:office).index?
+        .govuk-grid-column-one-half
+          .panel
+            h3.govuk-heading-m.util_mt-0 View offices
+            p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
+            = link_to 'View offices', offices_path
 
 = render 'home/graphs'
 
