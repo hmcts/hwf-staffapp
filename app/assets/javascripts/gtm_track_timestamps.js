@@ -188,8 +188,8 @@ window.moj.Modules.GtmTrackTimestamps = {
     var val = []
     var error_messages = '';
 
-    if($('.alert-box').size() > 0){
-      error_messages = $('.alert-box').text()
+    if($('.govuk-error-summary__body').size() > 0){
+      error_messages = $('.govuk-error-summary__body').text()
     } else if($('label.error').size() > 0) {
       $('label.error').each(function() {
         val.push($( this ).text());
