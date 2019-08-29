@@ -33,38 +33,37 @@
         = yield
 
 - content_for :proposition_header
-  .header-proposition
-    .content
-      nav#proposition-menu
-        a#proposition-name.govuk-header__link.govuk-header__link--service-name href="/" = Rails.application.config.app_title
-        - if user_signed_in?
-          ul#navigation.govuk-header__navigation
-            li.govuk-header__navigation-item
-              span Welcome #{current_user.name}
-            li.govuk-header__navigation-item
-              = link_to "View profile", user_path(current_user.id), {class: 'govuk-header__link'}
-            -if current_user.elevated?
-              li.govuk-header__navigation-item
-                = link_to 'View office', current_user.office, {class: 'govuk-header__link'}
-              li.govuk-header__navigation-item
-                = link_to 'View staff', users_path, {class: 'govuk-header__link'}
-            -if current_user.admin?
-              li.govuk-header__navigation-item
-                = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-header__link'}
-              li.govuk-header__navigation-item
-                = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-header__link'}
-            li.govuk-header__navigation-item
-              = link_to 'Staff Guides', guide_path, {class: 'govuk-header__link'}
-            li.govuk-header__navigation-item
-              = link_to 'Feedback', feedback_path, {class: 'govuk-header__link'}
-            li.govuk-header__navigation-item
-              = link_to 'Letter templates', letter_templates_path, {class: 'govuk-header__link'}
-            li.govuk-header__navigation-item
-              = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
-        - else
-          ul#navigation.govuk-header__navigation
-            li.govuk-header__navigation-item
-              = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-header__link'}
+  a.govuk-header__link.govuk-header__link--service-name href="/" = Rails.application.config.app_title
+  button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
+  nav
+    - if user_signed_in?
+      ul#navigation.govuk-header__navigation aria-label="Top Level Navigation"
+        li.govuk-header__navigation-item
+          span Welcome #{current_user.name}
+        li.govuk-header__navigation-item
+          = link_to "View profile", user_path(current_user.id), {class: 'govuk-header__link govuk-header__navigation-item--active'}
+        -if current_user.elevated?
+          li.govuk-header__navigation-item
+            = link_to 'View office', current_user.office, {class: 'govuk-header__link'}
+          li.govuk-header__navigation-item
+            = link_to 'View staff', users_path, {class: 'govuk-header__link'}
+        -if current_user.admin?
+          li.govuk-header__navigation-item
+            = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-header__link'}
+          li.govuk-header__navigation-item
+            = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Staff Guides', guide_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Feedback', feedback_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Letter templates', letter_templates_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
+    - else
+      ul#navigation.govuk-header__navigation
+        li.govuk-header__navigation-item
+          = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-header__link'}
 
 
 - content_for :javascripts

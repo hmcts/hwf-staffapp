@@ -13,7 +13,7 @@ RSpec.feature 'Naviation links', type: :feature do
     scenario 'display navigation' do
       login_as(user)
       visit root_url
-      within(:xpath, './/div[@class="header-proposition"]') do
+      within(:xpath, './/ul[@class="govuk-header__navigation"]') do
         expect(page).to have_text('Welcome Johny Mnemonic')
         expect(page).to have_xpath(".//a[contains(.,'View profile')][@href='#{user_path(user)}']")
         expect(page).to have_xpath(".//a[contains(.,'Staff Guides')][@href='#{guide_path}']")
@@ -29,7 +29,7 @@ RSpec.feature 'Naviation links', type: :feature do
     scenario 'display navigation' do
       login_as(manager)
       visit root_url
-      within(:xpath, './/div[@class="header-proposition"]') do
+      within(:xpath, './/ul[@class="govuk-header__navigation"]') do
         expect(page).to have_text('Welcome Agent Smith')
         expect(page).to have_xpath(".//a[contains(.,'View profile')][@href='#{user_path(manager)}']")
         expect(page).to have_xpath(".//a[contains(.,'View office')][@href='#{office_path(office)}']")
