@@ -1,17 +1,18 @@
 - content_for :page_title
   = "Evidence checks"
 
-header
-  h2.guide-headline.guide-headline-evidence.govuk-heading-xl
-    span.hint.util_mb-0
-      | Staff guide
+header.guide-headline.guide-headline-evidence
+  span.guideline-hint.govuk-heading-m
+    | Staff guide
+  h1.guide-headline.govuk-heading-xl
     | Evidence checks
   p.govuk-body-l
     | What to do when an application is marked for an evidence check.
 
 .govuk-grid-row
   aside.govuk-grid-column-one-third
-    h5.govuk-heading-m.util_mt-medium Contents
+    h2.govuk-heading-m.util_mt-medium Contents
+
     p
       a href='#intro' Introduction
     p
@@ -42,7 +43,7 @@ header
 
 
     h3.govuk-heading-l id="before-start" Before you start
-    h5.govuk-heading-m When you receive the evidence:
+    h4.govuk-heading-m When you receive the evidence:
     ul.govuk-list.govuk-list--bullet
       li check the name on the evidence matches the name on the application
       li check the evidence is dated within 3 months of receiving the application
@@ -60,7 +61,7 @@ header
     .panel
       h3.govuk-heading-l.util_mt-0 id="what-to-do" What to do
 
-      h5.govuk-heading-m To process evidence:
+      h4.govuk-heading-m To process evidence:
       ul.govuk-list.govuk-list--bullet
         li select the application from the list ‘Waiting for evidence’
         li select 'Process evidence'
@@ -69,10 +70,10 @@ header
         li get the result and follow the next steps to process the application
         li store the evidence securely, separate from the case file
 
-      h5.govuk-heading-m Returning evidence
+      h4.govuk-heading-m Returning evidence
       p You should not return evidence to the applicant unless they ask for it and provide a stamped addressed envelope. Before returning evidence, make a photocopy and store it with the application.
 
-      h5.govuk-heading-m When no evidence is received after 14 calendar days:
+      h4.govuk-heading-m When no evidence is received after 14 calendar days:
       ul.govuk-list.govuk-list--bullet
         li select the application from the list 'Waiting for evidence'
         li click 'What to do if the evidence can't be processed' and 'Return application'
@@ -81,7 +82,7 @@ header
         li the application will be removed from the list 'Waiting for evidence'
 
     h3.govuk-heading-l id="calculate" How to calculate total monthly income
-    h5.govuk-heading-m You need to:
+    h4.govuk-heading-m You need to:
     ul.govuk-list.govuk-list--bullet
       li add up all the income from payslips and evidence <br>(before tax and National Insurance)
       li include their partner’s income (if they have one)
@@ -191,32 +192,32 @@ header
   .govuk-grid-column-full
 
     .panel.callout.blue.util_mt-large
-      h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
+      h3.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
 
     ul.block-grid.small-block-grid-2.medium-block-grid-4
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_process_application_path
               span Process application
-              = image_tag("icon-process.png")
+              = image_tag("icon-process.png", alt: 'Process application guide icon')
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_part_payments_path
               span Part payments
-              = image_tag("icon-part-fee.png")
+              = image_tag("icon-part-fee.png", alt: 'Part payments guide icon')
 
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_appeals_path
               span Appeals
-              = image_tag("icon-appeals.png")
+              = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
 
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_suspected_fraud_path
               span Suspected fraud
-              = image_tag("icon-fraud.png")
+              = image_tag("icon-fraud.png", alt: 'Process application guide icon')

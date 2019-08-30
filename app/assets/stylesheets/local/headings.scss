@@ -29,10 +29,11 @@ p + h5 {
   background-position: 0 -400px;
 }
 
-h2.guide-headline {
-  padding-left: 80px;
+header.guide-headline {
+
   background-repeat: no-repeat;
   background-size: 55px;
+  background-position-y: 40px;
 
   &.guide-headline-appeals {
     background-image: asset_url('icon-sml-appeals.png');
@@ -50,12 +51,26 @@ h2.guide-headline {
     background-image: asset_url('icon-sml-process.png');
   }
 
+}
+
+h1.guide-headline {
+  padding-left: 80px;
+  background-repeat: no-repeat;
+  background-size: 55px;
+
+
   span {
     @include core-24;
     display: block;
     margin-bottom: 0;
     font-weight: normal;
   }
+}
+span.guideline-hint {
+  font-weight: normal;
+  color: #6f777b;
+  margin-left: 82px;
+  margin-bottom: 0;
 }
 
 h4.guide-subheadline {
