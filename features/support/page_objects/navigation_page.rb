@@ -1,5 +1,5 @@
 class NavigationPage < BasePage
-  section :proposition_links, '#proposition-menu' do
+  section :proposition_links, '.govuk-header__content' do
     element :help_with_fees_home, 'a', text: 'Help with fees'
     element :welcome_user, 'li', text: 'Welcome user'
     element :view_profile, 'a', text: 'View profile'

@@ -10,62 +10,71 @@ h1.visuallyhidden Help with fees - Staff application
 -if @notification.present? && @notification.show
   =render('shared/notifications')
 
-
 .govuk-grid-row.staff-panels
   section aria-label="Process applications"
     - if policy(:application).new?
       .govuk-grid-column-one-half#process-application
-        .util_pt-medium
-          - if @state == 'offline'
-            .dwp-down data-equalheight="true" data-heightgroup="1"
-              p =t('index.process.paper.dwp-down.heading')
-              ul.govuk-list.govuk-list--bullet
-                -t('index.process.paper.dwp-down.options').each do |option|
-                  li =option
-          .panel.flexi data-equalheight="true" data-heightgroup="2"
-            h2.govuk-heading-m.util_mt-0 Process application
-            .panel-inner
-              p.util_mb-0 You'll need:
-              ul.govuk-list.govuk-list--bullet
-                li the help with fees application form (EX160)
-                li the court or tribunal form related to the application
+        - if @state == 'offline'
+          .dwp-down data-equalheight="true" data-heightgroup="1"
+            p.govuk-body-s =t('index.process.paper.dwp-down.heading')
+            ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
+              -t('index.process.paper.dwp-down.options').each do |option|
+                li class="govuk-!-font-size-16" =option
+        .flexi data-equalheight="true"
+          h2.govuk-heading-m Process application
 
-            - if current_user.office.jurisdictions.empty?
-              p Please ask your manager to assign jurisdictions to your office.
-            - else
-              .util_mt-0
-                = form_tag(create_applications_path) do
-                  = submit_tag 'Start now', class: 'govuk-button'
+          p.govuk-body You'll need:
+          ul.govuk-list.govuk-list--bullet
+            li the help with fees application form (EX160)
+            li the court or tribunal form related to the application
+
+          - if current_user.office.jurisdictions.empty?
+            p Please ask your manager to assign jurisdictions to your office.
+          - else
+            .govuk-form-group
+              = form_tag(create_applications_path) do
+                = submit_tag 'Start now', class: 'govuk-button'
 
     .govuk-grid-column-one-half#process-online-application
-      .util_pt-medium
-        = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-          - if @state == 'offline'
-            .dwp-down data-equalheight="true" data-heightgroup="1"
-              p =t('index.process.digital.dwp-down')
-          .panel.flexi data-equalheight="true" data-heightgroup="2"
-            h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
-              | Process an online application
-            .govuk-form-group
-              = f.label :reference, class: 'govuk-label'
+      = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
+        - if @state == 'offline'
+          .dwp-down data-equalheight="true" data-heightgroup="1"
+            p.govuk-body-s =t('index.process.digital.dwp-down')
+        .flexi data-equalheight="true"
+          h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
+            | Process an online application
+
+          .govuk-form-group.group-level
+            = f.label :reference, class: 'govuk-label'
+            - if @online_search_form.errors[:reference].present?
               span.govuk-error-message
-                = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error' if @online_search_form.errors[:reference].present?
-              .field-wrapper
-                span.prefix HWF
-                = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
-            .util_mt-0
-              = f.submit 'Look up', class: 'govuk-button'
+                = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error'
+            span#reference-hint.govuk-hint
+              = t('index.process.digital.hint')
+            = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint' }
+          .govuk-form-group
+            = f.submit 'Look up', class: 'govuk-button'
 
 .govuk-grid-row
   .govuk-grid-column-one-half
     = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get, html: { role: 'search' }) do |f|
-      .govuk-form-group
-        = f.label :reference, class: 'govuk-label govuk-label'
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--s
           h2 = t('search_form.label')
-        span.govuk-error-message
-          = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error' if @completed_search_form.errors[:reference].present?
-        = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
-        = f.submit 'Search', class: 'govuk-button'
+        .govuk-form-group
+          .govuk-grid-row
+            .govuk-grid-column-full
+              = f.label :reference, t('index.search.label'), class: 'govuk-label'
+              span#reference-hint.govuk-hint
+                = t('index.search.hint')
+              - if @completed_search_form.errors[:reference].present?
+                span.govuk-error-message
+                  = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error'
+
+            .govuk-grid-column-three-quarters
+              = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
+            .govuk-grid-column-one-quarter
+              = f.submit 'Search', class: 'govuk-button search-button'
 
 - if policy(:application).index?
   section aria-label="Applications"
@@ -73,7 +82,7 @@ h1.visuallyhidden Help with fees - Staff application
       .govuk-grid-row
         = render('home/search_results', type: :search_results, list: @search_results)
     .govuk-grid-row
-      .govuk-grid-column-full
+      .govuk-grid-column-full.table_data
         = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
 
     .govuk-grid-row

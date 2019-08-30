@@ -1,28 +1,26 @@
-footer#footer.govuk-footer role= "conteninfo"
+footer.govuk-footer role= "conteninfo"
   .govuk-width-container
     .govuk-footer__navigation
-      .govuk-grid-row
-        .govuk-grid-column-one-half
-          h4.govuk-footer__heading.govuk-heading-m
-            = t('footer.contact_us.heading')
-          h5.govuk-heading-s
-            = t('footer.contact_us.email_us')
-          p: a[href='mailto:#{Settings.mail.tech_support}'] #{Settings.mail.tech_support}
-          h5.govuk-heading-s
-            = t('footer.contact_us.give_feedback')
-          p = link_to t('footer.contact_us.tell_us_what_you_think'), current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
+      .govuk-footer__section
+        h2.govuk-footer__heading.govuk-heading-m
+          = t('footer.contact_us.heading')
+        h3.govuk-heading-s
+          = t('footer.contact_us.email_us')
+        p: a[href='mailto:#{Settings.mail.tech_support}'] #{Settings.mail.tech_support}
+        h3.govuk-heading-s
+          = t('footer.contact_us.give_feedback')
+        p = link_to t('footer.contact_us.tell_us_what_you_think'), current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
 
-        // GUIDES
-        - if user_signed_in?
-          .govuk-grid-column-one-half
-            h4.govuk-footer__heading.govuk-heading-m
-              = t('footer.staff_guides.heading')
-            .govuk-grid-row
-              .govuk-grid-column-two-thirds
-                p = t('footer.staff_guides.copy')
-                p = link_to t('footer.staff_guides.link'), guide_path
-              .govuk-grid-column-one-third
-                = image_tag("footer-guides.png", alt: 'Guides')
+      // GUIDES
+      .govuk-footer__section class="govuk-!-width-one-third"
+        h2.govuk-footer__heading.govuk-heading-m
+          = t('footer.staff_guides.heading')
+        .govuk-grid-row
+          div class='govuk-grid-column-two-thirds'
+            p = t('footer.staff_guides.copy')
+            p = link_to t('footer.staff_guides.link'), guide_path
+          div class='govuk-grid-column-one-third'
+            = image_tag("footer-guides.png", alt: 'Guides')
 
 
     hr.govuk-footer__section-break
@@ -38,6 +36,4 @@ footer#footer.govuk-footer role= "conteninfo"
 
         .govuk-footer__meta-item
           a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" © Crown copyright
-
-
 

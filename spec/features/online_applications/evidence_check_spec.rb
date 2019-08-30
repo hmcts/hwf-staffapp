@@ -39,7 +39,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
   scenario 'Processing income based application from online application' do
     visit  home_index_url
 
-    fill_in 'Reference', with: online_application_1.reference
+    fill_in 'online_search[reference]', with: online_application_1.reference
     click_button 'Look up'
 
     choose Jurisdiction.first.display_full.to_s
@@ -65,7 +65,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     visit home_index_url
 
-    fill_in 'Reference', with: online_application_2.reference
+    fill_in 'online_search[reference]', with: online_application_2.reference
     click_button 'Look up'
 
     choose Jurisdiction.first.display_full.to_s
