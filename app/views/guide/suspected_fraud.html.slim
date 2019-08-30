@@ -1,17 +1,17 @@
 - content_for :page_title
   = "Suspected fraud"
 
-header
-  h2.guide-headline.guide-headline-fraud.govuk-heading-xl
-    span.hint.util_mb-0
-      | Staff guide
+header.guide-headline.guide-headline-fraud
+  span.guideline-hint.govuk-heading-m
+    | Staff guide
+  h1.guide-headline.govuk-heading-xl
     | Suspected fraud
   p.govuk-body-l
     | What to do if you suspect an applicant has deliberately provided false information.
 
 .govuk-grid-row
   aside.govuk-grid-column-one-third
-    h5.govuk-heading-m.util_mt-medium Contents
+    h2.govuk-heading-m.util_mt-medium Contents
     p
       a href='#intro' Introduction
     p
@@ -38,7 +38,7 @@ header
 
       p  In cases of doubt, the delivery manager may ask the applicant to supply additional evidence to confirm the statements in their application.
 
-      h5.govuk-heading-m Example cases of doubt include:
+      h4.govuk-heading-m Example cases of doubt include:
       ul.govuk-list.govuk-list--bullet
         li where the application states a couple have a number of financially dependent children, but the income figures do not include any child benefit or child tax credit
         li  where there is significant income from interest or dividend payments, but the applicant has declared only a small amount of savings and investments
@@ -64,32 +64,32 @@ header
   .govuk-grid-column-full
 
     .panel.callout.blue.util_mt-large
-      h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
+      h3.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
 
     ul.block-grid.small-block-grid-2.medium-block-grid-4
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_process_application_path
               span Process application
-              = image_tag("icon-process.png")
+              = image_tag("icon-process.png", alt: 'Process application guide icon')
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_part_payments_path
               span Part payments
-              = image_tag("icon-part-fee.png")
+              = image_tag("icon-part-fee.png", alt: 'Part payments guide icon')
 
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_evidence_checks_path
               span Evidence checks
-              = image_tag("icon-evidence.png")
+              = image_tag("icon-evidence.png", alt: 'Evidence checks guide icon')
 
       li
         .panel.guide-cols
-          h5
+          h4
             = link_to guide_appeals_path
               span Appeals
-              = image_tag("icon-appeals.png")
+              = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
