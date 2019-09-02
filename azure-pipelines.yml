@@ -9,12 +9,17 @@ trigger:
   batch: true
   branches:
     include:
+      - master
       - develop
+  tags:
+    include:
+    - v*
       
 pr:
   autoCancel: true
   branches:
     include:
+      - master
       - develop
       - feature/*
 
@@ -53,10 +58,10 @@ jobs:
     - template: ./pipeline-steps/publish-tests.yaml
 
 
-  - job: BuildAndPushImage
+  - job: BuildAndPushImageCI
 
     dependsOn: TestApplication
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/')), ne(variables['Build.Reason'], 'Manual'))
     pool:
       name: hmcts-pet
 
@@ -68,15 +73,30 @@ jobs:
         applicationName: $(application.name)
 
 
-  - job: ManualBuildAndPushImage
-  
+  - job: BuildAndPushImageRelease
+
     dependsOn: TestApplication
-    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.Reason'], 'Manual'))
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     pool:
       name: hmcts-pet
 
     steps:
-    - template: ./pipeline-steps/manual-docker-build.yaml
+    - template: ./pipeline-steps/docker-build-release.yaml
+      parameters:
+        azureContainerRegistry: $(azure.container.registry)
+        azureSubscriptionEndpoint: $(azure.subscription.endpoint)
+        applicationName: $(application.name)
+
+
+  - job: ManualBuildAndPushImage
+  
+    dependsOn: TestApplication
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
+    pool:
+      name: hmcts-pet
+
+    steps:
+    - template: ./pipeline-steps/docker-build-manual.yaml
       parameters:
         azureContainerRegistry: $(azure.container.registry)
         azureSubscriptionEndpoint: $(azure.subscription.endpoint)
