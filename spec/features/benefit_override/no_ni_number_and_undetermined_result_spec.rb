@@ -104,7 +104,7 @@ RSpec.feature 'No NI number provided', type: :feature do
 
       it do
         expect(page).to have_content no_remission
-        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="govuk-heading-l"]')
+        expect(page).to have_xpath('//div[contains(@class,"callout")]/h2[@class="govuk-heading-l"]')
         expect(page).to have_content no_remission
       end
     end

@@ -1,20 +1,22 @@
 - content_for :page_title
   = "Result"
 
-h4.govuk-heading-m.util_mt-medium Reference
-#result.callout.evidence-check-reference
-  h3.govuk-heading-l.text-center
-    span.check
-      | ✓
-    | The reference number is
-    span.reference-number
-      = @application.reference
+.govuk-grid-row
+  .govuk-grid-column-full
+    .govuk-panel.govuk-panel--confirmation
+      h1.govuk-panel__title Application complete
+      .govuk-panel__body
+        | Reference number
+        br
+        strong = @application.reference
+
+
+#result.callout class="callout-#{@confirm.result}"
+  h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 .util_mt-medium
   = build_section 'Result', @confirm, @confirm.all_fields
 
-#result.callout class="callout-#{@confirm.result}"
-  h3.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
 =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
 
@@ -29,22 +31,22 @@ h4.govuk-heading-m.util_mt-medium Reference
         children: @application.children,
         date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
-.guidance
-  h4.govuk-heading-m Next steps
-  ul.govuk-list.govuk-list--bullet
-    -if @application.outcome.eql?('full')
-      li Write the reference number on the top right corner of the paper form
-      li Copy the reference number into the case management system
-      li The applicant’s process can now be issued
-    -elsif @application.outcome.eql?('part')
-      li Write to the applicant with details of how much they have to pay
-      li Store the application form in a secure location until you receive the part-payment
-      li Write the reference number on the top right corner of the paper form
-    -else
-      li Write the reference number on the top right corner of the paper form
-      li Copy the reference number into the case management system
-      li Write to the applicant and send back all the documents
 
-  p: strong = link_to 'See the guides', guide_path, target: 'blank'
+h2.govuk-heading-m Next steps
+
+-if @application.outcome.eql?('full')
+  p.govuk-body Write the reference number on the top right corner of the paper form
+  p.govuk-body Copy the reference number into the case management system
+  p.govuk-body The applicant’s process can now be issued
+-elsif @application.outcome.eql?('part')
+  p.govuk-body Write to the applicant with details of how much they have to pay
+  p.govuk-body Store the application form in a secure location until you receive the part-payment
+  p.govuk-body Write the reference number on the top right corner of the paper form
+-else
+  p.govuk-body Write the reference number on the top right corner of the paper form
+  p.govuk-body Copy the reference number into the case management system
+  p.govuk-body Write to the applicant and send back all the documents
+
+p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
 = link_to 'Back to start', root_path, class: 'govuk-button'
