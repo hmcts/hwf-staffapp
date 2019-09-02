@@ -6,64 +6,47 @@ header
   p.govuk-body-l How to process an application, deal with evidence checks, part-payments, appeals, and fraud.
 
 .govuk-grid-row
-  .small-12.columns
-    ul.block-grid.small-block-grid-2.medium-block-grid-4.large-block-grid-5
-      li
-        .panel.guide-cols
-          h4
-            = link_to how_to_url
-              span How to Guide
-              = image_tag("icon-how-to.png", alt: 'How to Guide icon')
-      li
-        .panel.guide-cols
-          h4
-            = link_to key_control_checks_url
-              span Key Control Checks
-              = image_tag("checklist.jpg", alt: 'Key Control Checks guide icon')
-      li
-        .panel.guide-cols
-          h4
-            = link_to staff_guidance_url
-              span Staff guidance
-              = image_tag("icon-guidance.png", alt: 'Staff guidance guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to how_to_url
+      span How to Guide
+      = image_tag("icon-how-to.png", alt: 'How to Guide icon')
 
-      li
-        .panel.guide-cols
-          h4
-            = link_to guide_process_application_path
-              span Process application
-              = image_tag("icon-process.png", alt: 'Process application guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to key_control_checks_url
+      span Key Control Checks
+      = image_tag("checklist.jpg", alt: 'Key Control Checks guide icon', class: 'guidence-icon')
 
-      li
-        .panel.guide-cols
-          h4
-            = link_to guide_evidence_checks_path
-              span Evidence checks
-              = image_tag("icon-evidence.png", alt: 'Evidence checks guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to staff_guidance_url
+      span Staff guidance
+      = image_tag("icon-guidance.png", alt: 'Staff guidance guide icon')
 
-      li
-        .panel.guide-cols
-          h4
-            = link_to guide_part_payments_path
-              span Part-payments
-              = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_process_application_path
+      span Process application
+      = image_tag("icon-process.png", alt: 'Process application guide icon')
 
-      li
-        .panel.guide-cols
-          h4
-            = link_to guide_appeals_path
-              span Appeals
-              = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
-      li
-        .panel.guide-cols
-          h4
-            = link_to fraud_awareness_url
-              span Fraud awareness
-              = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_evidence_checks_path
+      span Evidence checks
+      = image_tag("icon-evidence.png", alt: 'Evidence checks guide icon')
 
-      li
-        .panel.guide-cols
-          h4
-            = link_to guide_suspected_fraud_path
-              span Suspected fraud
-              = image_tag("icon-fraud.png", alt: 'Suspected fraud guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_part_payments_path
+      span Part-payments
+      = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_appeals_path
+      span Appeals
+      = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to fraud_awareness_url
+      span Fraud awareness
+      = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_suspected_fraud_path
+      span Suspected fraud
+      = image_tag("icon-fraud.png", alt: 'Suspected fraud guide icon')
