@@ -10,7 +10,6 @@ trigger:
   branches:
     include:
       - master
-      - develop
   tags:
     include:
     - v*
@@ -20,7 +19,6 @@ pr:
   branches:
     include:
       - master
-      - develop
       - feature/*
 
 variables:
