@@ -24,7 +24,7 @@ pr:
 variables:
   application.name: 'hwf-staff'
   azure.subscription.endpoint: 'hmcts-pet'
-  manual.branch.prefix: 'develop'
+  manual.branch.prefix: 'master'
 
 resources:
   containers:
