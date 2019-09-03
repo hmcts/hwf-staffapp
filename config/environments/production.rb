@@ -106,4 +106,8 @@ Rails.application.configure do
       enable_starttls_auto: true
     }
   end
+
+  Raven.configure do |config|
+    config.ssl_verification = Settings.sentry.ssl_verification == true
+  end
 end
