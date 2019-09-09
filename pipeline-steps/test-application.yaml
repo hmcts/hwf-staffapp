@@ -18,7 +18,7 @@ steps:
 
 - script: |
     psql -h localhost -c 'create role fr login createdb;' -U postgres
-    psql -h localhost -c 'create role vsts login createdb;' -U postgres
+    psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
   displayName: 'PG role setup'
 
 - script: |

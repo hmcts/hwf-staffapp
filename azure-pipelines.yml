@@ -59,7 +59,7 @@ jobs:
   - job: BuildAndPushImageCI
 
     dependsOn: TestApplication
-    condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/')), ne(variables['Build.Reason'], 'Manual'))
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/')), ne(variables['Build.Reason'], 'Manual'))
     pool:
       name: hmcts-pet
 
@@ -86,7 +86,7 @@ jobs:
         applicationName: $(application.name)
 
 
-  - job: ManualBuildAndPushImage
+  - job: BuildAndPushImageManual
   
     dependsOn: TestApplication
     condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
