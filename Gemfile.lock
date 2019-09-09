@@ -364,8 +364,6 @@ GEM
       actionpack (>= 5.0.1.x)
       actionview (>= 5.0.1.x)
       activesupport (>= 5.0.1.x)
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
