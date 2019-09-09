@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /usr/src/app
+
 case ${DOCKER_STATE} in
 migrate)
     echo "running migrate"
@@ -28,14 +28,33 @@ setup)
     ;;
 esac
 
-ROLE="${1:-app}"
-case ${ROLE} in
-worker)
-    echo "running worker"
-    bundle exec rake jobs:work
+ROLE1="${ROLE:-app}"
+PHUSION_SERVICE="${PHUSION:-false}"
+case ${PHUSION_SERVICE} in
+true)
+    echo "running as service"
+    cd /home/app/
+        case ${ROLE1} in
+        worker)
+            echo "running worker"
+            bundle exec rake jobs:work
+            ;;
+        *)
+            echo "running app"
+            bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+            ;;
+        esac
     ;;
 *)
-    echo "running app"
-    bundle exec unicorn -c config/unicorn.rb -p $UNICORN_PORT
+    case ${ROLE1} in
+    worker)
+        echo "running worker"
+        bundle exec rake jobs:work
+        ;;
+    *)
+        echo "running app"
+        bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+        ;;
+    esac
     ;;
 esac
