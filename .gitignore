@@ -22,6 +22,8 @@ coverage/*
 
 /.vagrant/*
 
+# Ignore node_modules
+node_modules/
 
 #nightwatch
 /tests/nightwatch/reports
