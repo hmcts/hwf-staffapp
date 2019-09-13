@@ -37,11 +37,6 @@ gem 'coffee-rails', '~> 4.2.1'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-# use GDS assets, styles etc...
-# gem 'govuk_elements_rails', '0.3.0'
-# gem 'govuk_frontend_toolkit', '4.7.0'
-# gem 'moj_template', '~> 0.23.2'
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
