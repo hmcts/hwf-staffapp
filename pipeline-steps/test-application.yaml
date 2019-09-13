@@ -17,12 +17,15 @@ steps:
   displayName: 'bundle install'
 
 - script: |
-    psql -h localhost -c 'create role fr login createdb;' -U postgres
-    psql -h localhost -c 'create role vsts login createdb;' -U postgres
+    npm install --production
+  displayName: 'npm install'
+
+- script: |
+    psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
   displayName: 'PG role setup'
 
 - script: |
-    bundle exec rubocop
+    bundle exec rubocop --fail-fast
   displayName: 'rubocop'
 
 - script: |
@@ -30,11 +33,11 @@ steps:
   displayName: 'DB load'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber
+    DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber --fail-fast
   displayName: 'cucumber'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --format documentation --format RspecJunitFormatter --out test-rspec.xml
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --fail-fast --format documentation --format RspecJunitFormatter --out test-rspec.xml
   displayName: 'rspec'
 
 - script: |
