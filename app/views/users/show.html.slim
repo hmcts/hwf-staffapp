@@ -26,7 +26,7 @@ table.govuk-table
     th.govuk-table__header scope="row" Last logged in
     td.govuk-table__cell =@user.current_sign_in_at
 
-ul.govuk-list.govuk-list--bullet
+ul.govuk-list
   li= link_to 'Change details', edit_user_path(@user)
   - if current_user == @user
     li= link_to "Change your password", edit_user_registration_path(@user)
