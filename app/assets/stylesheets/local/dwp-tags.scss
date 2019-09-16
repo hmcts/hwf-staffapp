@@ -18,7 +18,6 @@
   p {
     margin: 0;
     color: $govuk-text-colour;
-    // @include core-16;
   }
 
   .dwp-tag {
@@ -38,14 +37,9 @@
   @include inline-block;
   vertical-align: top;
 
-  // @include media(tablet){
-  //   vertical-align: baseline;
-  // }
-
   margin: 0 8px 0 0;
   padding: 2px 5px 0;
 
-  // @include bold-16($line-height: 20/16);
   letter-spacing: 1px;
   text-decoration: none;
 
