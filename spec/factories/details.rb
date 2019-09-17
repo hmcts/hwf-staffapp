@@ -1,34 +1,34 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :detail do
     factory :complete_detail do
       association :jurisdiction
-      fee 310
-      date_received Time.zone.today
-      refund false
-      probate nil
-      case_number 'JK123456A'
-      form_name 'ABC123'
+      fee { 310 }
+      date_received { Time.zone.today }
+      refund { false }
+      probate { nil }
+      case_number { 'JK123456A' }
+      form_name { 'ABC123' }
     end
 
     trait :probate do
-      probate true
-      deceased_name 'John Smith'
-      date_of_death Time.zone.yesterday
+      probate { true }
+      deceased_name { 'John Smith' }
+      date_of_death { Time.zone.yesterday }
     end
 
     trait :refund do
-      refund true
-      date_fee_paid Time.zone.yesterday
+      refund { true }
+      date_fee_paid { Time.zone.yesterday }
     end
 
     trait :out_of_time_refund do
-      refund true
-      date_fee_paid Time.zone.now - 3.months
-      date_received nil
+      refund { true }
+      date_fee_paid { Time.zone.now - 3.months }
+      date_received { nil }
     end
 
     trait :emergency do
-      emergency_reason 'It can not wait'
+      emergency_reason { 'It can not wait' }
     end
 
     after(:build) do |detail|

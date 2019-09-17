@@ -1,5 +1,8 @@
+- content_for :page_title
+  = "Processing complete"
+
 header
-  h2.heading-xlarge Processing complete
+  h1.govuk-heading-xl Processing complete
 
 .evidence-confirmation-letter
   =t('letters.part-payment.no_part_payment_received_html',
@@ -10,4 +13,4 @@ header
      date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
 = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Finish', class: 'button'
+  = f.submit 'Finish', class: 'govuk-button'

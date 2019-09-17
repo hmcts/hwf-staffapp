@@ -14,9 +14,9 @@ module Applications
       def create
         resolve_only_new_applications
         redirect_to application_confirmation_path(application.id)
-      rescue ActiveRecord::RecordInvalid => ex
+      rescue ActiveRecord::RecordInvalid => e
         flash[:alert] = I18n.t('error_messages.summary.validation')
-        Raven.capture_exception(ex, application_id: @application.id)
+        Raven.capture_exception(e, application_id: @application.id)
 
         redirect_to application_summary_path(@application)
       end

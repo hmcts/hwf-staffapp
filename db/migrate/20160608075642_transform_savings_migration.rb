@@ -1,4 +1,4 @@
-class TransformSavingsMigration < ActiveRecord::Migration
+class TransformSavingsMigration < ActiveRecord::Migration[5.2]
   def up
     SavingsTransformation.new.up!
   end

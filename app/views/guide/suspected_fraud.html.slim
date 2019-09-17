@@ -1,14 +1,17 @@
+- content_for :page_title
+  = "Suspected fraud"
+
 header
-  h2.guide-headline.guide-headline-fraud.heading-xlarge
+  h2.guide-headline.guide-headline-fraud.govuk-heading-xl
     span.hint.util_mb-0
       | Staff guide
     | Suspected fraud
-  p.lede
+  p.govuk-body-l
     | What to do if you suspect an applicant has deliberately provided false information.
 
-.grid-row
-  .column-one-third
-    h5.heading-medium.util_mt-medium Contents
+.govuk-grid-row
+  aside.govuk-grid-column-one-third
+    h5.govuk-heading-m.util_mt-medium Contents
     p
       a href='#intro' Introduction
     p
@@ -16,12 +19,12 @@ header
     p
       a href='#further-info' Further information
     p
-      a.button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
+      a.govuk-button.alternative href="#more-guides" More guides &nbsp; &nbsp; ⬇
 
 
-  .column-two-thirds
+  .govuk-grid-column-two-thirds
 
-    h3.heading-large id="intro" Introduction
+    h3.govuk-heading-l id="intro" Introduction
 
     p The majority of applications should be processed at face value. However, in some cases you may doubt the applicant has provided accurate information.
 
@@ -30,13 +33,13 @@ header
     p If you suspect an application is fraudulent, or that evidence has been fraudulently altered, you should refer it to your delivery manager.
 
     .panel
-      h3.heading-large.util_mt-0 id="what-happens-next" What happens next
+      h3.govuk-heading-l.util_mt-0 id="what-happens-next" What happens next
       p Your delivery manager will decide whether there is a case of doubt, or whether the case could be one in which fraud is suspected.
 
       p  In cases of doubt, the delivery manager may ask the applicant to supply additional evidence to confirm the statements in their application.
 
-      h5.heading-medium Example cases of doubt include:
-      ul.list.list-bullet
+      h5.govuk-heading-m Example cases of doubt include:
+      ul.govuk-list.govuk-list--bullet
         li where the application states a couple have a number of financially dependent children, but the income figures do not include any child benefit or child tax credit
         li  where there is significant income from interest or dividend payments, but the applicant has declared only a small amount of savings and investments
         li where a bank statement shows regular payments that have not been disclosed as income
@@ -47,7 +50,7 @@ header
 
       p Where fraud is suspected, the delivery manager must retain and secure all documents and contact the HMCTS Governance and Assurance Fraud and Investigations Team.
 
-    h3.heading-large id="further-info" Further information
+    h3.govuk-heading-l id="further-info" Further information
 
 
     p
@@ -57,33 +60,36 @@ header
 
     p For more information #{link_to 'visit the fraud page on the intranet', 'http://libra.lcd.gsi.gov.uk/hmcts/governance-assurance/fraud-investigations/index.htm'}.
 
-.panel.callout.blue.util_mt-large
-  h4.heading-medium.util_margin-0.text-left id="more-guides" More guides
+.govuk-grid-row
+  .govuk-grid-column-full
 
-ul.block-grid.small-block-grid-2.medium-block-grid-4
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_process_application_path
-          span Process application
-          = image_tag("icon-process.png")
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_part_payments_path
-          span Part payments
-          = image_tag("icon-part-fee.png")
+    .panel.callout.blue.util_mt-large
+      h4.govuk-heading-m.util_margin-0.text-left id="more-guides" More guides
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_evidence_checks_path
-          span Evidence checks
-          = image_tag("icon-evidence.png")
+    ul.block-grid.small-block-grid-2.medium-block-grid-4
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_process_application_path
+              span Process application
+              = image_tag("icon-process.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_part_payments_path
+              span Part payments
+              = image_tag("icon-part-fee.png")
 
-  li
-    .panel.guide-cols
-      h5
-        = link_to guide_appeals_path
-          span Appeals
-          = image_tag("icon-appeals.png")
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_evidence_checks_path
+              span Evidence checks
+              = image_tag("icon-evidence.png")
+
+      li
+        .panel.guide-cols
+          h5
+            = link_to guide_appeals_path
+              span Appeals
+              = image_tag("icon-appeals.png")

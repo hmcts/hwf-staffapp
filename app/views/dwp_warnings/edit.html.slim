@@ -1,21 +1,26 @@
+- content_for :page_title
+  = t('.header')
+
 header
-  h2.heading-xlarge = t('.header')
+  h1.govuk-heading-xl = t('.header')
 
 
 = form_for(@dwp_warning, url: dwp_warnings_path, action: :patch) do |f|
-  .form-group
+  .govuk-form-group
     fieldset
+      .govuk-radios.govuk-radios--small
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:offline], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_offline'
+            = t('.form.offline')
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:online], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_online'
+            = t('.form.online')
 
-      = f.label :check_state, class: 'block-label', for: 'dwp_warning_check_state_offline' do
-        = f.radio_button :check_state, DwpWarning::STATES[:offline]
-        = t('.form.offline')
+        .govuk-radios__item
+          = f.radio_button :check_state, DwpWarning::STATES[:default_checker], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'dwp_warning_check_state_default_checker'
+            = t('.form.default')
 
-      = f.label :check_state, class: 'block-label', for: 'dwp_warning_check_state_online' do
-        = f.radio_button :check_state, DwpWarning::STATES[:online]
-        = t('.form.online')
-
-      = f.label :check_state, class: 'block-label', for: 'dwp_warning_check_state_default_checker' do
-        = f.radio_button :check_state, DwpWarning::STATES[:default_checker]
-        = t('.form.default')
-
-  = f.submit 'Save changes', class: 'button'
+  = f.submit 'Save changes', class: 'govuk-button'

@@ -1,4 +1,4 @@
-class AddIncomeOutcomeAndAmountToPayToEvidenceCheck < ActiveRecord::Migration
+class AddIncomeOutcomeAndAmountToPayToEvidenceCheck < ActiveRecord::Migration[5.2]
   def change
     add_column :evidence_checks, :income, :integer
     add_column :evidence_checks, :outcome, :string

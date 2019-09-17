@@ -1,5 +1,8 @@
+- content_for :page_title
+  = "Processing complete"
+
 header
-  h2.heading-xlarge Processing complete
+  h1.govuk-heading-xl Processing complete
 
 .evidence-confirmation-letter
   =t('letters.evidence.no_evidence_received_html',
@@ -9,4 +12,4 @@ header
      expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Finish', class: 'button'
+  = f.submit 'Finish', class: 'govuk-button'

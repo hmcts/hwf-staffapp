@@ -1,17 +1,20 @@
-.grid-row
-  .column-two-thirds
-    header
-      h2.heading-xlarge Processing complete
+- content_for :page_title
+  = "Processing complete"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    header class='govuk-!-padding-top-7'
+      h1.govuk-heading-xl Processing complete
 
     - if @result.callout == 'no'
       = render('failed_letter')
 
-    = link_to 'Back to start', root_path, class: 'button'
+    = link_to 'Back to start', root_path, class: 'govuk-button'
 
-  .column-one-third
+  aside.govuk-grid-column-one-third
     .guidance
-      h4.heading-medium.util_mt-medium Next steps
-      ul.list.list-bullet
+      h4.govuk-heading-m.util_mt-medium Next steps
+      ul.govuk-list.govuk-list--bullet
         -if @result.callout == 'yes'
           li copy reference into the case management system
         - else

@@ -1,13 +1,20 @@
+- content_for :page_title
+  = "Change office details"
+
 header
-  h2.heading-xlarge Change office details
+  h1.govuk-heading-xl Change office details
 
 - if current_user.manager?
-  div.important-notice.util_mb-large
-    strong = t('offices.jurisdictions_warning')
+
+  .govuk-warning-text
+    span.govuk-warning-text__icon aria-hidden="true" !
+    strong.govuk-warning-text__text
+      span.govuk-warning-text__assistive Warning
+      = t('offices.jurisdictions_warning')
 
 = render 'form', with_jurisdictions: true
 
-ul
-  li=link_to 'Show this office', @office
+ul.govuk-list
+  li.govuk-link=link_to 'Show this office', @office
   -unless current_user.manager?
-    li=link_to 'Back to list of offices', offices_path
+    li.govuk-link=link_to 'Back to list of offices', offices_path

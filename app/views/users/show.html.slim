@@ -1,29 +1,32 @@
+- content_for :page_title
+  = "Staff details"
+
 header
-  h2.heading-xlarge Staff details
+  h1.govuk-heading-xl Staff details
 
-table.util_mb-large
-  caption.visuallyhidden Staff details
-  tr
-    th scope="row" Full name
-    td =@user.name
-  tr
-    th scope="row" Email
-    td =@user.email
-  tr
-    th scope="row" Role
-    td =@user.role.humanize
-  tr
-    th scope="row" Office
-    td =@user.office.name
-  tr
-    th scope="row" Main jurisdiction
-    td
+table.govuk-table
+  caption.visuallyhidden.govuk-table__caption Staff details
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Full name
+    td.govuk-table__cell =@user.name
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Email
+    td.govuk-table__cell =@user.email
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Role
+    td.govuk-table__cell =@user.role.humanize
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Office
+    td.govuk-table__cell =@user.office.name
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Main jurisdiction
+    td.govuk-table__cell
       =@user.jurisdiction.name if @user.jurisdiction.present?
-  tr
-    th scope="row" Last logged in
-    td =@user.current_sign_in_at
+  tr.govuk-table__row
+    th.govuk-table__header scope="row" Last logged in
+    td.govuk-table__cell =@user.current_sign_in_at
 
-ul.list.list-pad
+ul.govuk-list
   li= link_to 'Change details', edit_user_path(@user)
   - if current_user == @user
     li= link_to "Change your password", edit_user_registration_path(@user)

@@ -3,6 +3,10 @@ input[type=text]{
     background-color: $grey-3;
   }
 }
+.input-disabled {
+  border-color: $govuk-border-colour;
+  background-color: govuk-colour("grey-4");
+}
 
 input.decoy {
   // used to prevent browser autofill
@@ -19,7 +23,7 @@ select {
   max-width: 92%;
 }
 
-.form-control-smaller {
+.govuk-input-smaller {
   width: 100%;
 
   @media (min-width: 641px) {
@@ -27,11 +31,11 @@ select {
   }
 }
 
-.error .form-control {
+.error .govuk-input {
   border: 1px solid $grey-2;
 }
 
-.error > .form-control {
+.error > .govuk-input {
   border: 4px solid #b10e1e;
 }
 
@@ -55,12 +59,13 @@ select {
 .field-wrapper {
   border: 1px solid $grey-2;
   width: auto;
-
   display: inline-block;
-
+  border-color: $govuk-input-border-colour;
+  border-width: 2px;
 
   .prefix {
-    padding: 5px 10px;
+    font-family: "nta", Arial, sans-serif;
+    padding: 0.7em;
     background-color: $grey-3;
     float: left;
   }
@@ -74,48 +79,25 @@ select {
     float: left;
     padding: 5px 4px 3px 9px;
   }
+  #online_search_reference {
+    width: 77% !important;
+  }
 }
 
 .new_completed_search {
-  position: relative;
-
-  input[type="text"] {
-    width: 372px;
-    max-width: 80% !important;
-    height: 40px;
+  legend h2 {
+    margin-bottom: 0px;
   }
 
-  .search-button {
-    position: absolute;
-    right: 0;
-    height: 38px;
-    margin-left: 0;
-    border: none;
-    overflow: hidden;
-    cursor: pointer;
-    background-color: #00823b;
-    color: #fff;
-    box-shadow: 0 2px 0 #003618;
-    border: none;
-    font-size: 19px;
-    line-height: 1.3157894737;
-    padding: 8px 15px;
+  .govuk-grid-column-three-quarters {
+    margin-bottom: 20px;
   }
-  .search-button:hover {
-    background-color: #00692f;
-  }
-  .search-button:active {
-    bottom: -1px;
-    height: 38px;
-    box-shadow: 0 0;
+  .govuk-grid-column-one-quarter {
+    text-align: right;
   }
 
   .field_with_errors {
     display: inline;
-  }
-
-  .form-label h2 {
-    font-weight: bold;
   }
 }
 
@@ -134,4 +116,12 @@ select {
     height: 40px;
     margin-left: 10px;
   }
+}
+
+fieldset {
+  border: none;
+}
+
+.second-button {
+  margin-left: govuk-spacing(1);
 }

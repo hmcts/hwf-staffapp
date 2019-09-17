@@ -1,8 +1,9 @@
 class SummaryPage < BasePage
   section :content, '#content' do
-    element :header, 'h2', text: 'Check details'
-    sections :summary_section, '.summary-section' do
-      element :change_benefits, 'a', text: 'Change benefits'
+    element :header, 'h1', text: 'Check details'
+    element :complete_processing_button, 'input[value="Complete processing"]'
+    sections :summary_section, '.govuk-summary-list' do
+      element :change_benefits, 'a', text: 'ChangeBenefits declared in application'
     end
   end
 

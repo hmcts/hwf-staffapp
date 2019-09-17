@@ -37,7 +37,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(application) }
 
       scenario 'the correct view is rendered' do
-        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="heading-large"]')
+        expect(page).to have_xpath('//div[contains(@class,"callout")]/h3[@class="govuk-heading-l"]')
       end
 
       scenario 'the next button is rendered' do
@@ -54,7 +54,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       end
 
       scenario 'the income label displays correctly' do
-        expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for part-payment')
+        expect(page).to have_xpath('//dd[contains(@class,"govuk-summary-list__value summary-result part") and contains(@class,"part")]', text: 'Waiting for part-payment')
       end
 
       scenario 'the grant help with fees form is not rendered' do
@@ -68,7 +68,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(application) }
 
       scenario 'the income label displays correctly' do
-        expect(page).to have_xpath('//div[contains(@class,"summary-result") and contains(@class,"part")]', text: 'Waiting for evidence')
+        expect(page).to have_xpath('//dd[contains(@class,"govuk-summary-list__value summary-result part") and contains(@class,"part")]', text: 'Waiting for evidence')
       end
 
       scenario 'the grant help with fees form is not rendered' do

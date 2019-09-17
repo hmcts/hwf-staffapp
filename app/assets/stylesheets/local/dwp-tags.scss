@@ -3,9 +3,9 @@
   @include media(tablet) {
     padding-bottom: 10px;
   }
-  border-bottom: 1px solid $border-colour;
+  border-bottom: 1px solid $govuk-border-colour;
   max-width: 960px;
-  margin: 0 15px;
+  margin: 0 15px 15px 0;
 
   @media (min-width: 640px) {
     margin: 0 30px;
@@ -17,8 +17,7 @@
 
   p {
     margin: 0;
-    color: $banner-text-colour;
-    @include core-16;
+    color: $govuk-text-colour;
   }
 
   .dwp-tag {
@@ -38,14 +37,9 @@
   @include inline-block;
   vertical-align: top;
 
-  @include media(tablet){
-    vertical-align: baseline;
-  }
-
   margin: 0 8px 0 0;
   padding: 2px 5px 0;
 
-  @include bold-16($line-height: 20/16);
   letter-spacing: 1px;
   text-decoration: none;
 
@@ -64,6 +58,7 @@
 
 .dwp-banner-online {
   @include dwp-banner($state: online);
+  position: relative;
 }
 
 .dwp-banner-offline {

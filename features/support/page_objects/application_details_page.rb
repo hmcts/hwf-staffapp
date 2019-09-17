@@ -1,9 +1,9 @@
 # rubocop:disable Metrics/AbcSize
 class ApplicationDetailsPage < BasePage
-  section :content, '#content' do
-    element :header, 'h2', text: 'Application details'
+  section :content, '#main-content' do
+    element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
-    element :jurisdiction, 'input[value="1"]'
+    element :jurisdiction, '.govuk-radios__item'
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'
     element :date_received_label, 'label', text: 'Date application received'
     element :date_received_hint, '.hint', text: 'Use this format DD/MM/YYYY'
@@ -14,7 +14,7 @@ class ApplicationDetailsPage < BasePage
     element :form_label, 'label', text: 'Form number'
     element :form_hint, 'label', text: 'You\'ll find this on the bottom of the form, for example C100 or ADM1A'
     element :form_input, '#application_form_name'
-    element :refund_case, '.block-label', text: 'This is a refund case'
+    element :refund_case, '.govuk-label', text: 'This is a refund case'
     element :exceed_fee_limit_error, '.error', text: 'You need to enter an amount below £20,000'
     element :fee_blank_error, '.error', text: 'Enter a court or tribunal fee'
     element :form_error_message, '.error', text: 'Enter a valid form number'

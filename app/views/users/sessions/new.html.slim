@@ -1,26 +1,30 @@
-.grid
-  .column
-    = render('shared/notifications') if @notification.present? && @notification.show
-.grid-row
-  .column-two-thirds
+- content_for :page_title
+  = "Sign in"
 
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if @notification.present? && @notification.show
+      div class="govuk-!-padding-top-7"
+        = render('shared/notifications') if @notification.present? && @notification.show
     header
-      h2.heading-xlarge.util_mb-medium Sign in
+      h1.govuk-heading-xl Sign in
 
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'off' }) do |f|
-      .form-group
-        = f.label :email, class: 'form-label'
-        = f.email_field :email, autofocus: true, class: 'form-control form-control-3-4'
-      .form-group
-        = f.label :password, class: 'form-label'
-        = f.password_field :password, autocomplete: "off", class: 'form-control form-control-3-4'
-      = f.submit "Sign in", class: 'button'
+      .govuk-form-group
+        = f.label :email, class: 'govuk-label'
+        = f.email_field :email, autofocus: true, class: 'govuk-input govuk-!-width-three-quarters', type: 'text'
+      .govuk-form-group
+        = f.label :password, class: 'govuk-label'
+        = f.password_field :password, autocomplete: "off", class: 'govuk-input govuk-!-width-three-quarters'
+      = f.submit "Sign in", class: 'govuk-button'
       .actions
         = link_to "Forgot your password?", new_password_path(resource_name)
 
-  .column-one-third
+  aside.govuk-grid-column-one-third
     .guidance
-      h3.heading-medium.util_mt-medium Get help
+      h2.govuk-heading-m Get help
+
       p.util_mb-0
         strong Forgot your password
       p Follow these steps to #{ link_to "get a new password", new_password_path(resource_name)}

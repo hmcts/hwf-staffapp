@@ -1,25 +1,27 @@
-header
-  h2.heading-xlarge Feedback received
+- content_for :page_title
+  = "Feedback received"
 
-.row
-  .columns.small-12
-    table
-      thead
-        tr
-          th User name
-          th Experience so far
-          th Ideas for improvement
-          th Rating score
-          th Help needed
-          th Office
-          th Created
-      tbody
-      -@feedback.each do |f|
-        tr
-          td =mail_to f.user.email, f.user.name, target: 'blank'
-          td =f.experience
-          td =f.ideas
-          td =f.rating
-          td =f.help
-          td =f.office.name
-          td =f.created_at
+header
+  h1.govuk-heading-xl Feedback received
+
+table.govuk-table.large-lists
+  caption.govuk-table__caption.visuallyhidden List of feedbacks received from users
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header scope="col" User name
+      th.govuk-table__header scope="col" Experience so far
+      th.govuk-table__header scope="col" Ideas for improvement
+      th.govuk-table__header scope="col" Rating score
+      th.govuk-table__header scope="col" Help needed
+      th.govuk-table__header scope="col" Office
+      th.govuk-table__header scope="col" Created
+  tbody.govuk-table__body
+    -@feedback.each do |f|
+      tr.govuk-table__row
+        td.govuk-table__cell scope="row" =mail_to f.user.email, f.user.name, target: 'blank'
+        td.govuk-table__cell scope="row" =f.experience
+        td.govuk-table__cell scope="row" =f.ideas
+        td.govuk-table__cell scope="row" =f.rating
+        td.govuk-table__cell scope="row" =f.help
+        td.govuk-table__cell scope="row" =f.office.name
+        td.govuk-table__cell scope="row" =f.created_at

@@ -1,5 +1,8 @@
+- content_for :page_title
+  = t("#{state}_applications.detail.title")
+
 header
-  h2.heading-xlarge
+  h1.govuk-heading-xl
     =@application.reference
     |&nbsp;-&nbsp;
     =t("#{state}_applications.detail.title")

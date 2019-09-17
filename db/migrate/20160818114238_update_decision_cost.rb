@@ -1,4 +1,4 @@
-class UpdateDecisionCost < ActiveRecord::Migration
+class UpdateDecisionCost < ActiveRecord::Migration[5.2]
   def up
     CorrectReturnedCosts.up!
   end

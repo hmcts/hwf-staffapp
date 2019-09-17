@@ -1,39 +1,41 @@
-.grid-row
-  .column-two-thirds
-    header
-      h2.heading-xlarge.util_mb-small Benefits
+- content_for :page_title
+  = "Benefits - paper evidence"
 
-    - if error_message_partial(@application)
-     .page-error.util_mb-medium
-        = render(error_message_partial(@application))
+= form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
 
-    = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      header
+        h1.govuk-heading-xl.util_mb-small Benefits
 
-      .form-group
-        fieldset
+      - if error_message_partial(@application)
+       .page-error.util_mb-medium.govuk-error-summary__body
+          = render(error_message_partial(@application))
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
           legend.visuallyhidden Paper evidence
-          = f.label :evidence, class: 'form-label'
-          = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
-          .options.radio.cf
-            .option
-              label.block-label for='benefit_override_evidence_false'
-                = f.radio_button :evidence, 'false', { class: 'show-hide-section' }
-                = t('evidence_false', scope: @form.i18n_scope)
-            .option
-              label.block-label for='benefit_override_evidence_true'
-                = f.radio_button :evidence, 'true', { class: 'show-hide-section', data: { section: 'evidence', show: 'true' } }
-                = t('evidence_true', scope: @form.i18n_scope)
+          = f.label :evidence, class: 'govuk-label'
+          span#changed-name-error.govuk-error-message
+            = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :evidence, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('evidence_false', scope: @form.i18n_scope), for: 'benefit_override_evidence_false', class: 'govuk-label govuk-radios__label'
+            .govuk-radios__item
+              = f.radio_button :evidence, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' } }
+              = f.label t('evidence_true', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
 
-      = f.submit 'Next', class: 'button primary'
+      = f.submit 'Next', class: 'govuk-button'
 
-  .column-one-third
-    .guidance
-      h4.heading-medium.util_mt-medium Paper evidence
-      p You may need to check paper evidence to confirm the applicant is receiving benefits. This is usually an official letter.
-      p: strong For example when:
-      ul.list.list-bullet
-        li the applicant hasn't provided their National Insurance number
-        li the applicant recently started receiving benefits but the Department for Work and Pensions is not up to date
-        li the applicant receives joint benefits and the benefit is in the applicant's partner's name
-      p If you’re processing applications at the counter, ask the applicant for paper evidence if any of the above situations applies to them.
-      p Otherwise you'll need to write to the applicant and ask them for paper evidence.
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m Paper evidence
+        p You may need to check paper evidence to confirm the applicant is receiving benefits. This is usually an official letter.
+        h3.govuk-heading-s For example when:
+        ul.govuk-list.govuk-list--bullet
+          li the applicant hasn't provided their National Insurance number
+          li the applicant recently started receiving benefits but the Department for Work and Pensions is not up to date
+          li the applicant receives joint benefits and the benefit is in the applicant's partner's name
+        p If you’re processing applications at the counter, ask the applicant for paper evidence if any of the above situations applies to them.
+        p Otherwise you'll need to write to the applicant and ask them for paper evidence.

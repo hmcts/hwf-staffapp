@@ -1,4 +1,4 @@
-class CreateBenefitCheck < ActiveRecord::Migration
+class CreateBenefitCheck < ActiveRecord::Migration[5.2]
   def change
     create_table :benefit_checks do |t|
       t.string :last_name

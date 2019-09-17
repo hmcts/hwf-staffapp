@@ -1,4 +1,4 @@
-class FixAndImproveForeignKeys < ActiveRecord::Migration
+class FixAndImproveForeignKeys < ActiveRecord::Migration[5.2]
   def change
     add_foreign_key :applicants, :applications, on_update: :cascade
 

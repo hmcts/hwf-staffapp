@@ -1,20 +1,25 @@
+- content_for :page_title
+  = "Edit business entity"
+
 header
-  h2.heading-large Edit business entity
+  h1.govuk-heading-l Edit business entity
 
 = form_for [office, business_entity], method: :put do |f|
   = f.hidden_field :be_code
-  .form-group
-    = f.label :sop_code, class: 'form-label'
-    = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
-    = f.text_field :sop_code, { class: 'form-control' }
-  .form-group
-    = f.label :name, class: 'form-label'
-    = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
-    = f.text_field :name, { class: 'form-control' }
+  .govuk-form-group.group-level
+    = f.label :sop_code, class: 'govuk-label'
+    span.govuk-error-message
+      = f.label :sop_code, business_entity.errors[:sop_code].join(', '), class: 'error' if business_entity.errors[:sop_code].present?
+    = f.text_field :sop_code, { class: 'govuk-input govuk-!-width-one-half' }
+  .govuk-form-group.group-level
+    = f.label :name, class: 'govuk-label'
+    span.govuk-error-message
+      = f.label :name, business_entity.errors[:name].join(', '), class: 'error' if business_entity.errors[:name].present?
+    = f.text_field :name, { class: 'govuk-input govuk-!-width-one-half' }
 
   p.important-notice.cb.util_mb-large =t('business_entities.edit_warning', office: office.name)
 
-  .actions = f.submit class: 'button'
+  .actions = f.submit class: 'govuk-button'
 
 .util_mt-medium
-  =link_to "Back to list of #{business_entity.office.name} business entities", office_business_entities_path(office_id: business_entity.office_id)
+  =link_to "Back to list of #{business_entity.office.name} business entities", office_business_entities_path(office_id: business_entity.office_id), class:'govuk-link'

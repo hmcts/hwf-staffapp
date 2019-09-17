@@ -1,23 +1,27 @@
+- content_for :page_title
+  = "Income"
+
 = form_for @form, as: :evidence, url: :income_save_evidence, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       header
-        h2.heading-xlarge Income
+        h1.govuk-heading-xl Income
 
-      .form-group
-        = f.label :income, class: 'form-label'
-        = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
+      .govuk-form-group.group-level
+        = f.label :income, class: 'govuk-label'
+        span.govuk-error-message
+          = f.label :income, @form.errors[:income].join(', '), class: 'error' if @form.errors[:income].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :income, class: 'form-control'
+          = f.text_field :income, class: 'govuk-input'
 
-      = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', class: 'govuk-button'
 
-    .column-one-third
+    aside.govuk-grid-column-one-third
       .guidance
-        h4.heading-medium.util_mt-medium Total monthly income
-        ul.list.list-bullet
+        h4.govuk-heading-m.util_mt-medium Total monthly income
+        ul.govuk-list.govuk-list--bullet
           li add up all the income from payslips and evidence (before tax and National Insurance)
           li include their partner’s income (if they have one)
           li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank'}

@@ -1,25 +1,28 @@
+- content_for :page_title
+  = t('header', scope: @form.i18n_scope)
+
 = form_for @form, as: :application, url: application_savings_investments_path, method: :post, html: { autocomplete: 'off' } do |f|
 
-  .grid-row
-    .column-two-thirds
-      header
-        h2.heading-xlarge =t('header', scope: @form.i18n_scope)
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
 
-      .form-group
-        fieldset
+      header
+        h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
           legend.visuallyhidden Amount of savings
-          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'form-label'
-          = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
+          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
+          span#changed-name-error.govuk-error-message
+            = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
           = f.hidden_field :min_threshold_exceeded, value: nil
-          .options.radio.cf
-            .option
-              label.block-label for='application_min_threshold_exceeded_false'
-                = f.radio_button :min_threshold_exceeded, 'false', { class: 'show-hide-section' }
-                = t('less_than', scope: @form.i18n_scope)
-            .option
-              label.block-label for='application_min_threshold_exceeded_true'
-                = f.radio_button :min_threshold_exceeded, 'true', { class: 'show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
-                = t('more_than', scope: @form.i18n_scope)
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('less_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_false'
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
+              = f.label t('more_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_true'
 
         #threshold-exceeded-only.start-hidden
           - if @application.applicant.over_61?
@@ -30,45 +33,45 @@
               =f.hidden_field :over_61, value: 'false'
               =render('shared/savings/amount', f: f)
             -elsif @application.applicant.married?
-              .form-group.panel-indent.util-mt-0
+              .govuk-form-group.panel-indent.util-mt-0
                 fieldset
                   legend.visuallyhidden Applicant's partner's age
-                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'form-label'
-                  = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'govuk-label'
+                  span#changed-name-error.govuk-error-message
+                    = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
                   = f.hidden_field :over_61, value: nil
-                  .options.radio.cf
-                    .option
-                      label.block-label for='application_over_61_false'
-                        = f.radio_button :over_61, 'false', { class: 'show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
-                        = t('over_61_false', scope: @form.i18n_scope)
+                  .govuk-radios.govuk-radios--small
+                    .govuk-radios__item
+                      = f.radio_button :over_61, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
+                      = f.label t('over_61_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_false'
                     #partner-under-61-only.start-hidden
                       =render('shared/savings/amount', f: f)
-                    .option
-                      label.block-label for='application_over_61_true'
-                        = f.radio_button :over_61, 'true', { class: 'show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
-                        = t('over_61_true', scope: @form.i18n_scope)
+                    .govuk-radios__item
+                        = f.radio_button :over_61, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
+                        = f.label t('over_61_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_true'
                     #partner-over-61-only.start-hidden
                       = render('shared/savings/max_threshold_exceeded', f: f)
 
-      = f.submit 'Next', :class => 'button primary'
+      = f.submit 'Next', :class => 'govuk-button'
 
-      details.util_mt-medium
+      details.govuk-body
         summary
           span.summary.primary Our calculation is based on this information
-        #result_table.util_mt-small
-          table
-            tr
-              th Age
-              td #{@application.applicant.age} years old
-            tr
-              th Status
-              td =t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
-            tr
-              th Fee
-              td £#{@application.detail.fee.floor}
 
-    .column-one-third
+        dl.govuk-summary-list class="govuk-!-margin-top-3"
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Age
+            dd.govuk-summary-list__value #{@application.applicant.age} years old
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Fee
+            dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key Status
+            dd.govuk-summary-list__value = number_to_currency(@application.detail.fee.floor, precision: 0, unit: '£')
+
+
+    aside.govuk-grid-column-one-third
       .guidance
-        h4.heading-medium.util_mt-medium Savings and investments
+        h2.govuk-heading-m Savings and investments
         p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'

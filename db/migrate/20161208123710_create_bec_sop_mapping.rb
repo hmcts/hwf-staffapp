@@ -1,4 +1,4 @@
-class CreateBecSopMapping < ActiveRecord::Migration
+class CreateBecSopMapping < ActiveRecord::Migration[5.2]
   def up
     add_column :business_entities, :sop_code, :string
     rename_column :business_entities, :code, :be_code

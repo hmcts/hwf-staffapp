@@ -21,6 +21,9 @@ addons:
     - xvfb
     - libqtwebkit-dev
   postgresql: 9.6
+install:
+  - bundle install
+  - npm install
 script:
 - bundle exec rake rubocop
 - bundle exec rake db:create db:schema:load

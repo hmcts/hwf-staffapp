@@ -1,5 +1,3 @@
-- content_for :page_title
-  = Rails.application.config.app_title
 
 - content_for :stylesheets
   = stylesheet_link_tag('application.css')
@@ -21,42 +19,54 @@
     .container
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
-        - flash.each do |key, value|
-          .alert-box class="#{key}" data-alert=''
-            | #{value.html_safe}
-            = link_to '&times;'.html_safe, '#', class: 'close'
+        - if flash.keys.present?
+          .govuk-error-summary aria-labelledby="error-summary-title"  role="alert" tabindex="-1" data-module="error-summary"
+            - if flash.keys.join != 'notice'
+              h2.govuk-error-summary__title id="error-summary-title" There is a problem
+            .govuk-error-summary__body
+              ul.govuk-list.govuk-error-summary__list
+                - flash.each do |key, value|
+                  li class="#{key}" data-alert=''
+                    a href="#{key}" #{value.html_safe}
+
 
         = yield
 
 - content_for :proposition_header
-  .header-proposition
-    .content
-      - if user_signed_in?
-        a.js-header-toggle.menu href="#proposition-links"  Menu
-      nav#proposition-menu
-        a#proposition-name href="/" = Rails.application.config.app_title
-        - if user_signed_in?
-          ul#proposition-links
-            li
-              span Welcome #{current_user.name}
-            li= link_to "View profile", user_path(current_user.id)
-            -if current_user.elevated?
-              li= link_to 'View office', current_user.office
-              li= link_to 'View staff', users_path
-            -if current_user.admin?
-              li= link_to 'Edit banner', edit_notifications_path
-              li= link_to 'DWP message', edit_dwp_warnings_path
-            li= link_to 'Staff Guides', guide_path
-            li= link_to 'Feedback', feedback_path
-            li= link_to 'Letter templates', letter_templates_path
-            li= link_to 'Sign out', destroy_user_session_path, :method => :delete
-        - else
-          ul#proposition-links
-            li= link_to 'Feedback', "mailto:#{Settings.mail.feedback}"
+  a.govuk-header__link.govuk-header__link--service-name href="/" = Rails.application.config.app_title
+  button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
+  nav
+    - if user_signed_in?
+      ul#navigation.govuk-header__navigation aria-label="Top Level Navigation"
+        li.govuk-header__navigation-item
+          span Welcome #{current_user.name}
+        li.govuk-header__navigation-item
+          = link_to "View profile", user_path(current_user.id), {class: 'govuk-header__link govuk-header__navigation-item--active'}
+        -if current_user.elevated?
+          li.govuk-header__navigation-item
+            = link_to 'View office', current_user.office, {class: 'govuk-header__link'}
+          li.govuk-header__navigation-item
+            = link_to 'View staff', users_path, {class: 'govuk-header__link'}
+        -if current_user.admin?
+          li.govuk-header__navigation-item
+            = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-header__link'}
+          li.govuk-header__navigation-item
+            = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Staff Guides', guide_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Feedback', feedback_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Letter templates', letter_templates_path, {class: 'govuk-header__link'}
+        li.govuk-header__navigation-item
+          = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
+    - else
+      ul#navigation.govuk-header__navigation
+        li.govuk-header__navigation-item
+          = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-header__link'}
 
 
 - content_for :javascripts
-  = javascript_include_tag('application.js')
 
   javascript:
     $(document).ready(function () {

@@ -1,4 +1,4 @@
-class CreateApplicant < ActiveRecord::Migration
+class CreateApplicant < ActiveRecord::Migration[5.2]
   def up
     create_table :applicants do |t|
       t.references :application, index: true, null: false

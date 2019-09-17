@@ -15,11 +15,11 @@ class Application < ActiveRecord::Base
   has_paper_trail
 
   belongs_to :user, -> { with_deleted }
-  belongs_to :completed_by, -> { with_deleted }, class_name: 'User'
-  belongs_to :deleted_by, -> { with_deleted }, class_name: 'User'
-  belongs_to :office
-  belongs_to :business_entity
-  belongs_to :online_application
+  belongs_to :completed_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :deleted_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :office, optional: true
+  belongs_to :business_entity, optional: true
+  belongs_to :online_application, optional: true
   has_many :benefit_checks, dependent: :destroy
   has_one :applicant, dependent: :destroy
   has_one :detail, inverse_of: :application, dependent: :destroy

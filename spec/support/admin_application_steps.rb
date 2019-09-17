@@ -12,7 +12,7 @@ def fill_personal_details(ni_number = 'SN123456C')
 end
 
 def fill_application_details(court_fee = '1000')
-  expect(page).to have_css('h2', text: 'Application details')
+  expect(page).to have_css('h1', text: 'Application details')
   fill_in 'application_fee', with: court_fee
   select_jurisdiction
   fill_in_date_received(Date.yesterday)

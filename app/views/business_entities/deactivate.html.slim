@@ -1,5 +1,9 @@
+- content_for :page_title
+  = "Deactivate #{business_entity.name} for #{office.name}"
+
+
 header
-  h2.heading-large Deactivate #{business_entity.name} for #{office.name}
+  h1.govuk-heading-l Deactivate #{business_entity.name} for #{office.name}
 
 = form_for @business_entity, url: confirm_deactivate_office_business_entity_path, method: :post do |f|
 

@@ -32,7 +32,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
       before { sign_in manager_user }
 
       describe 'does allow you to invite managers as a manager' do
-        before { post :create, user: manager_invitation }
+        before { post :create, params: { user: manager_invitation } }
 
         it { expect(invited_user['email']).to eq user.email }
         it { expect(invited_user['invited_by_id']).to eq manager_user.id }
@@ -42,7 +42,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
         it 'raises Pundit error' do
           expect {
             bypass_rescue
-            post :create, user: admin_invitation
+            post :create, params: { user: admin_invitation }
           }.to raise_error Pundit::NotAuthorizedError
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
         before do
           create :deleted_user, email: user_email, office: office
-          post :create, user: manager_invitation
+          post :create, params: { user: manager_invitation }
         end
 
         it 'restores and invites the user' do
@@ -79,14 +79,14 @@ RSpec.describe Users::InvitationsController, type: :controller do
         before { sign_in admin_user }
 
         describe 'does allow you to invite managers as an admin' do
-          before { post :create, user: manager_invitation }
+          before { post :create, params: { user: manager_invitation } }
 
           it { expect(invited_user['email']).to eq user.email }
           it { expect(invited_user['invited_by_id']).to eq admin_user.id }
         end
 
         describe 'does allow admins to invite admins' do
-          before { post :create, user: admin_invitation }
+          before { post :create, params: { user: admin_invitation } }
 
           it { expect(invited_user['email']).to eq user.email }
           it { expect(invited_user['invited_by_id']).to eq admin_user.id }

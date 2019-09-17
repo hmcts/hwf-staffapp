@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.11'
+gem 'rails', '5.2.3'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.20'
@@ -16,6 +16,8 @@ gem 'azure_env_secrets', github: 'ministryofjustice/azure_env_secrets', tag: 'v0
 
 # configuration
 gem 'config'
+# speed up start
+gem 'bootsnap', require: false
 
 # authentication
 gem 'devise'
@@ -34,11 +36,6 @@ gem 'uglifier', '>= 2.7.2'
 gem 'coffee-rails', '~> 4.2.1'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
-# use GDS assets, styles etc...
-gem 'govuk_elements_rails', '0.3.0'
-gem 'govuk_frontend_toolkit', '4.7.0'
-gem 'moj_template', '~> 0.23.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -81,7 +78,7 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'terminal-notifier-guard'
-  gem 'web-console', '~> 2.1'
+  gem 'web-console', '~> 3.7.0'
 end
 
 gem 'nokogiri'
@@ -97,7 +94,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
@@ -119,6 +116,7 @@ group :test do
   gem 'launchy'
   gem 'poltergeist', '1.15.0'
   gem 'pry'
+  gem 'rails-controller-testing'
   gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'selenium-webdriver', '~> 3.10'
   gem 'shoulda-matchers'

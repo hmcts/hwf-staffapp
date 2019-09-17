@@ -34,6 +34,7 @@ en-GB:
     caption: Completed applications
   in_progress_applications:
     title: In progress
+    caption: In progress applications
   processed_applications:
     table_header:
       reference: Reference
@@ -174,6 +175,10 @@ en-GB:
             - "benefits-based applications if the applicant has provided paper evidence"
       digital:
         dwp-down: "You can only process income-based applications. Please wait until the DWP checker is available to process online benefits-based applications"
+        hint: For example, HWF-MPA-XQE
+    search:
+      label: 'Search'
+      hint: 'For example, HWF-MPA-XQE or John Smith'
   feedback:
     rating_1: 'No'
     rating_2: 'I used an accessibility tool such as a screen reader'
@@ -628,6 +633,33 @@ en-GB:
           attributes:
             name:
               blank: Enter the office name
+        decision_override:
+          attributes:
+            application:
+              required: "can't be blank"
+            user:
+              required: "can't be blank"
+        applicant:
+          attributes:
+            application:
+              required: "can't be blank"
+        saving:
+          attributes:
+            application:
+              required: "can't be blank"
+        benefit_override:
+          attributes:
+            application:
+              required: "can't be blank"
+        detail:
+          attributes:
+            application:
+              required: "can't be blank"
+        evidence_check:
+          attributes:
+            application:
+              required: "can't be blank"
+
     attributes:
       user:
         current_password: Current password

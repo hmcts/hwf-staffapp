@@ -1,4 +1,4 @@
-class AddDetailsToOnlineApplication < ActiveRecord::Migration
+class AddDetailsToOnlineApplication < ActiveRecord::Migration[5.2]
   def change
     change_table :online_applications do |t|
       t.decimal :fee

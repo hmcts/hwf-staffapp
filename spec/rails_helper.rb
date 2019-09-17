@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   # Include Factory Girl syntax to simplify calls to factories
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -103,11 +103,12 @@ RSpec.configure do |config|
   end
 
   Capybara.javascript_driver = :webkit
+  Capybara.raise_server_errors = false
 
   config.before(:each) do
     ActionMailer::Base.deliveries = []
     DatabaseCleaner.strategy = :transaction
-    FactoryGirl.reload
+    FactoryBot.reload
   end
 
   config.before(:each, :js => true) do

@@ -32,7 +32,7 @@ en-GB:
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the Department for Work and Pensions did not confirm that you’re receiving one of these benefits:</p>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
           <li>income-based Jobseeker’s Allowance (JSA)</li>
           <li>income-related Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
@@ -48,7 +48,7 @@ en-GB:
         If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Check the name of the benefit: there are some benefits that are similarly named to the 6 qualifying benefits:</p>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
           <li>contribution-based Job Seekers Allowance</li>
           <li>contribution-based Employment and Support Allowance</li>
           <li>Pension Credit (savings credit)</li>
@@ -80,7 +80,7 @@ en-GB:
         <p>If you're applying for a refund of a fee you've already paid, send a bank statement from the month you paid the fee.</p>
         <p>Plus, you’ll need to send copies of all the following documents that apply to you. Remember to write the reference number %{reference} on everything you send.</p>
         <div><strong>Wages</strong></div>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
           <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
           <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation. If you don’t have either of these, you’ll need to send bank statements that show income for the previous tax year.</li>
         </ul>
@@ -89,7 +89,7 @@ en-GB:
         <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
         <div><strong>Child maintenance payments</strong></div>
         <p>Document(s) showing the payment amounts and how often they are made. This can be one of the following:</p>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
           <li>sealed court order</li>
           <li>Child Support Agency Assessment</li>
           <li>signed voluntary agreement or letter of agreement signed by both parties</li>
@@ -137,7 +137,7 @@ en-GB:
         <p>Number of children: %{children}</p>
         <p>Amount to pay: %{part_payment_amount}</p>
         <p><strong>How to pay</strong></p>
-        <ul class="list list-bullet">
+        <ul class="govuk-list govuk-list--bullet">
           <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for %{part_payment_amount}</li>
           <li>by debit card over the phone</li>
           <li>in person with a cheque, cash or debit card at the court counter</li>

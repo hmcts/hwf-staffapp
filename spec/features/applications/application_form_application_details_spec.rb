@@ -26,7 +26,7 @@ RSpec.feature 'Completing the application details page of an application form', 
     end
 
     it 'renders the page' do
-      expect(page).to have_xpath('//h2', text: 'Application details')
+      expect(page).to have_xpath('//h1', text: 'Application details')
     end
 
     context 'submitting the form empty' do
@@ -83,7 +83,7 @@ RSpec.feature 'Completing the application details page of an application form', 
 
       context 'and submitting the form' do
         scenario 'renders the next page' do
-          expect(page).to have_xpath('//h2', text: 'Savings and investments')
+          expect(page).to have_xpath('//h1', text: 'Savings and investments')
         end
       end
     end
@@ -97,7 +97,7 @@ RSpec.feature 'Completing the application details page of an application form', 
     end
 
     it 'renders the page' do
-      expect(page).to have_xpath('//h2', text: 'Application details')
+      expect(page).to have_xpath('//h1', text: 'Application details')
     end
 
     context 'submitting the form empty' do

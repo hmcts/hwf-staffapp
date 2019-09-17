@@ -1,42 +1,51 @@
+- content_for :page_title
+  = "Business entities for #{office.name}"
+
 header
-  h2.heading-large Business entities for #{office.name}
+  h1.govuk-heading-l Business entities for #{office.name}
 
-table
-  caption.visuallyhidden Table of business entities for #{office.name}
-  thead
-    tr
-      th Jurisdiction
-      th =t('activerecord.attributes.business_entity.be_code')
-      th =t('activerecord.attributes.business_entity.sop_code')
-      th =t('activerecord.attributes.business_entity.name')
-      th
+  -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
+    -if group[0]==1
+      .govuk-warning-text
+        span.govuk-warning-text__icon aria-hidden="true" !
+        strong.govuk-warning-text__text
+          span.govuk-warning-text__assistive Warning
+          = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
+.govuk-grid-row
+  .govuk-grid-column-full.table_data
 
-  tbody
-    -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
-      -if group[0]==1
-        tr
-          td colspan="4"
-            p.important-notice = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
-      -group[1].each do |j|
-        tr
-          td
-            =j.jurisdiction_name
-          td
-            =j.business_entity_code
-          td
-            =j.business_entity_sop_code
-          td
-            = j.business_entity_name
-          td align="right"
-            -case j.status
-              -when 'delete'
-                =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
-                |&nbsp;
-                =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
-              -when 'edit'
-                =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
-              -when 'add'
-                =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
+    table.govuk-table
+      caption.visuallyhidden.govuk-table__caption Table of business entities for #{office.name}
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header scope='col' Jurisdiction
+          th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.be_code')
+          th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.sop_code')
+          th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.name')
+          th.govuk-table__header scope='col' Actions
 
-.util_mt-medium
-  =link_to 'Return to Office', office_path(office)
+      tbody.govuk-table__body
+        -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
+          -group[1].each do |j|
+            tr.govuk-table__row
+              td.govuk-table__cell
+                =j.jurisdiction_name
+              td.govuk-table__cell
+                =j.business_entity_code
+              td.govuk-table__cell
+                =j.business_entity_sop_code
+              td.govuk-table__cell
+                = j.business_entity_name
+              td.govuk-table__cell align="right"
+                -case j.status
+                  -when 'delete'
+                    =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
+                    |&nbsp;
+                    =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
+                  -when 'edit'
+                    =link_to 'Update', edit_office_business_entity_path(office, id: j.business_entity_id)
+                  -when 'add'
+                    =link_to 'Add', new_office_business_entity_path(office, jurisdiction_id: j.jurisdiction_id)
+
+    .govuk-body
+      =link_to 'Return to Office', office_path(office), class:'govuk-link'

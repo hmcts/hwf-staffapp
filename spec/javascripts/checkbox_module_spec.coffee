@@ -22,7 +22,7 @@ describe "RadioAndCheckboxModule", ->
           <div class="small-12 medium-8 large-5 columns">
             <div class="form-group panel-indent">
               <label for="application_date_fee_paid">Date fee paid</label>
-              <input class="form-control" type="text" value="01/07/2015" name="application[date_fee_paid]" id="application_date_fee_paid">
+              <input class="govuk-input" type="text" value="01/07/2015" name="application[date_fee_paid]" id="application_date_fee_paid">
             </div>
           </div>
         </div>

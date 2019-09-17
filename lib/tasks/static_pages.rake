@@ -2,7 +2,6 @@ namespace :static_pages do
   desc "Generates static pages"
   Rails.application.middleware.tap do |middleware|
     middleware.delete ActiveRecord::Migration::CheckPending
-    middleware.delete ActiveRecord::ConnectionAdapters::ConnectionManagement
     middleware.delete ActiveRecord::QueryCache
   end
   task generate: 'assets:precompile' do

@@ -58,8 +58,8 @@ class BusinessEntitiesController < ApplicationController
     BusinessEntity.current_for(office, jurisdiction).tap do |business_entity|
       if business_entity
         flash[:alert] = t('error_messages.create_be_exists',
-          jurisdiction: business_entity.jurisdiction.name,
-          office: business_entity.office.name)
+                          jurisdiction: business_entity.jurisdiction.name,
+                          office: business_entity.office.name)
       end
     end
   end

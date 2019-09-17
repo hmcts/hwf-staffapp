@@ -1,8 +1,8 @@
 .panel {
-  border: solid 1px $grey-3;
+  border: solid 1px govuk-colour("grey-3");
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: $grey-4;
+  background: govuk-colour("grey-4");
 
   li, p, label {
     font-size: 16px;
@@ -22,6 +22,30 @@
       }
     }
   }
+}
+
+#process-application .flexi, #process-online-application .flexi {
+  border: 1px solid $govuk-border-colour;
+  padding: 20px;
+
+  .govuk-button {
+    margin: 0;
+  }
+  .govuk-error-message {
+    margin:0;
+    padding: 0;
+  }
+  h2.govuk-heading-m.error {
+    margin-bottom: 0px;
+  }
+}
+
+#process-application .govuk-form-group {
+  margin-bottom: 0px;
+}
+
+#process-online-application .govuk-form-group:last-child {
+  margin-bottom: 10px;
 }
 
 .panel-indent {
@@ -45,14 +69,14 @@
     margin-bottom: 30px;
   }
 
-  .form-group:last-child {
+  .govuk-form-group:last-child {
     margin-bottom: 10px;
   }
 }
 
 .guidance {
-  border-top: 5px solid $govuk-blue;
-  padding: 0 $gutter-half/2 0;
+  border-top: 5px solid govuk-colour("blue");
+  padding-top: govuk-spacing(5);
   margin-top: 30px;
 }
 
@@ -60,30 +84,33 @@
   padding: 30px 15px;
   margin-bottom: 2em;
   color: #ffffff;
-  background-color: $orange;
+  background-color: govuk-colour("orange");
 
   &.blue {
-    background-color: $govuk-blue;
-    color: $white;
+    background-color: govuk-colour("blue");
+    color: govuk-colour("white");
   }
 
   h3 {
-    color: $page-colour;
+    color: $govuk-text-colour;
     margin: 0;
     text-align: left;
   }
+  h4#more-guides {
+    color: govuk-colour("white");
+  }
 
   &.not-received, &.no, &.callout-none, &.callout-error, &.callout-return {
-    background-color: $error-colour;
+    background-color: $govuk-error-colour;
   }
   &.received, &.yes, &.callout-full, &.callout-granted, &.callout-paid {
-    background-color: $turquoise;
+    background-color: govuk-colour("turquoise");
   }
   &.callout-part, &.callout-evidence-check {
-    background: $orange;
+    background: govuk-colour("orange");
   }
   &.evidence-check-reference {
-    background-color: $grey-1;
+    background-color: govuk-colour("grey-1");
     text-align: center;
     padding: 30px;
     .check {
@@ -99,8 +126,9 @@
   }
 }
 
-.grid-row.staff-panels {
+.govuk-grid-row.staff-panels {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .dwp-down {
@@ -108,10 +136,6 @@
   border: 1px solid #f3a536;
   margin-bottom: 0;
   padding: 10px 20px;
-
-  * {
-    font-size: 14px;
-  }
 
   ul, p {
     margin-bottom: 0;
@@ -121,11 +145,3 @@
     border-top: none;
   }
 }
-
-// & + .grid-row {
-//   margin-top: 0;
-
-//   .panel {
-//     border-top: none;
-//   }
-// }

@@ -1,4 +1,4 @@
-class AddNewSavingFieldsToOnlineApplication < ActiveRecord::Migration
+class AddNewSavingFieldsToOnlineApplication < ActiveRecord::Migration[5.2]
   def change
     rename_column :online_applications, :threshold_exceeded, :min_threshold_exceeded
     add_column :online_applications, :max_threshold_exceeded, :boolean

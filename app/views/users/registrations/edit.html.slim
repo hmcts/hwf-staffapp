@@ -1,18 +1,22 @@
+- content_for :page_title
+  = t('devise.registrations.heading')
+
 header
-  h2.heading-xlarge =t('devise.registrations.heading')
+  h1.govuk-heading-xl =t('devise.registrations.heading')
 
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 
-  .form-group
-    = f.label :current_password, class: 'form-label'
+  .govuk-form-group.group-level
+    = f.label :current_password, class: 'govuk-label'
       = t('activerecord.attributes.user.current_password')
-    = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
-    = f.password_field :current_password, autofocus: true, class: 'form-control'
+    span.govuk-error-message
+      = f.label :current_password, resource.errors[:current_password].join(', '), class: 'error' if resource.errors[:current_password].present?
+    = f.password_field :current_password, autofocus: true, class: 'govuk-input govuk-!-width-one-half'
 
   =render( partial: '/users/shared/change_password', locals: { f: f } )
 
-  .form-group
-    = f.submit 'Update password', class: 'button'
+  .govuk-form-group
+    = f.submit 'Update password', class: 'govuk-button'
 
-  ul.list.list-pad
-    li= link_to "Back", :back
+  ul.govuk-list
+    li.govuk-link= link_to "Back", :back

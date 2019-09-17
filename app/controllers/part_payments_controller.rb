@@ -82,6 +82,6 @@ class PartPaymentsController < ApplicationController
   end
 
   def accuracy_params
-    params.require(:part_payment).permit(*Forms::Accuracy.permitted_attributes)
+    params.require(:part_payment).permit(*Forms::Accuracy.permitted_attributes).to_h
   end
 end

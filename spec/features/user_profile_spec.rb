@@ -18,7 +18,7 @@ RSpec.feature 'User profile', type: :feature do
     end
 
     scenario 'link to their profile' do
-      top_right_corner = '//ul[@id="proposition-links"]/li/span'
+      top_right_corner = '//ul[@id="navigation"]/li/span'
       expect(page).to have_xpath("#{top_right_corner}[contains(., '#{user.name}')]")
     end
 
@@ -121,7 +121,7 @@ RSpec.feature 'User profile', type: :feature do
 
     scenario 'canceling removing user dialog', js: true do
       within(:xpath, './/section[@id="content"]') do
-        expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
+        expect(page).to have_xpath(".//h1[contains(.,'Staff details')]")
         expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
 
         page.dismiss_confirm do
@@ -133,7 +133,7 @@ RSpec.feature 'User profile', type: :feature do
 
     scenario 'confirm removing user dialog', js: true do
       within(:xpath, './/section[@id="content"]') do
-        expect(page).to have_xpath(".//h2[contains(.,'Staff details')]")
+        expect(page).to have_xpath(".//h1[contains(.,'Staff details')]")
         expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
 
         page.accept_confirm do
@@ -142,8 +142,8 @@ RSpec.feature 'User profile', type: :feature do
       end
 
       expect(current_path).to eql('/users')
-      expect(page).not_to have_xpath(".//h2[contains(.,'Staff details')]")
-      expect(page).to have_xpath(".//h2[contains(.,'Staff')]")
+      expect(page).not_to have_xpath(".//h1[contains(.,'Staff details')]")
+      expect(page).to have_xpath(".//h1[contains(.,'Staff')]")
       expect(page).not_to have_text('Jim Halpert')
     end
   end

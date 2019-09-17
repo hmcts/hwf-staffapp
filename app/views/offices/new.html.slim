@@ -1,7 +1,10 @@
+- content_for :page_title
+  = "New office"
+
 header
-  h2.heading-xlarge New office
+  h1.govuk-heading-xl New office
 
 = render 'form', with_jurisdictions: false
 
-ul.list
-  li= link_to 'Back', offices_path
+
+= link_to 'Back', offices_path, class: 'govuk-link'

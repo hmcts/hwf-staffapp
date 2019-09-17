@@ -10,23 +10,23 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
   let(:user) { create :user, office: office }
   let(:online_application_1) do
     create(:online_application, :completed, :with_reference,
-      married: false,
-      children: 3,
-      benefits: false,
-      fee: 155,
-      form_name: 'D11',
-      income_min_threshold_exceeded: false)
+           married: false,
+           children: 3,
+           benefits: false,
+           fee: 155,
+           form_name: 'D11',
+           income_min_threshold_exceeded: false)
   end
 
   let(:online_application_2) do
     create(:online_application, :completed, :with_reference,
-      married: false,
-      children: 0,
-      benefits: false,
-      fee: 155,
-      form_name: 'D11',
-      income: 1000,
-      ni_number: online_application_1.ni_number)
+           married: false,
+           children: 0,
+           benefits: false,
+           fee: 155,
+           form_name: 'D11',
+           income: 1000,
+           ni_number: online_application_1.ni_number)
   end
   let(:old_application) { create :old_application, reference: online_application_1.reference }
 
@@ -39,7 +39,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
   scenario 'Processing income based application from online application' do
     visit  home_index_url
 
-    fill_in 'Reference', with: online_application_1.reference
+    fill_in 'online_search[reference]', with: online_application_1.reference
     click_button 'Look up'
 
     choose Jurisdiction.first.display_full.to_s
@@ -50,7 +50,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     click_link 'Waiting for evidence'
     reference = Application.last.reference
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link reference
     end
 
@@ -65,7 +65,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     visit home_index_url
 
-    fill_in 'Reference', with: online_application_2.reference
+    fill_in 'online_search[reference]', with: online_application_2.reference
     click_button 'Look up'
 
     choose Jurisdiction.first.display_full.to_s
@@ -76,7 +76,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     click_link 'Back to start'
 
     click_link 'Waiting for evidence'
-    within(:xpath, './/table[@class="waiting-for-evidence"]') do
+    within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link Application.last.reference
     end
     click_link 'Start now'

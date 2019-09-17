@@ -4,4 +4,15 @@
   background-color: $grey-4;
   padding: $gutter-half;
   margin-bottom: $gutter;
+
+  strong {
+    font-family: "nta", Arial, sans-serif;
+    margin-bottom: 5px;
+  }
+
+  p {
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+  ul { margin-top: 5px; }
 }

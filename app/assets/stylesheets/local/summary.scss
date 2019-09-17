@@ -1,5 +1,4 @@
-div.summary-section {
-  border-bottom: solid 1px $grey-2;
+dl.govuk-summary-list {
   margin-bottom: 30px;
   padding-bottom: .5em;
 
@@ -16,7 +15,7 @@ div.summary-section {
     }
   }
 
-  .grid-row {
+  .govuk-grid-row {
     padding-bottom: 10px;
   }
 
