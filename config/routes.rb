@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get ':type/confirmation', to: 'applications/process/confirmation#index', as: :confirmation,
-                        defaults: { type: 'paper' }
+                              defaults: { type: 'paper' }
     put 'override', to: 'applications/process/override#update', as: :override
 
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
