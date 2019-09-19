@@ -26,6 +26,7 @@ en-GB:
         applicant: Applicant
         status: Status
         updated_at: Last updated
+        id: Id
       table:
         missing_reference: 'no reference number'
 
@@ -396,6 +397,8 @@ en-GB:
         partner_over_61: "In question 8, is the applicant's partner 61 or over?"
         over_61_false: 'No'
         over_61_true: 'Yes'
+        married_false: 'Single'
+        married_true: 'Married or living with someone and sharing an income'
       forms/application/benefit:
         benefits: Is the applicant receiving one of the benefits listed in question 9?
         benefits_false: 'No'
