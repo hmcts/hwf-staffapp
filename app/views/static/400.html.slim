@@ -1,4 +1,15 @@
-header
-  h2 This page cannot be found
+- content_for :page_title
+  = "Page not found"
 
-p Check that you’ve entered the correct web address or <a href="/">start processing a new application</a> for help with fees.
+.govuk-width-container
+  main#main-content class="govuk-main-wrapper govuk-main-wrapper--l" role="main"
+    .govuk-grid-row
+      .govuk-grid-column-full
+        h1.govuk-heading-xl.error-pages Page not found
+        p.govuk-body If you typed the web address, check it is correct.
+        p.govuk-body If you pasted the web address, check you copied the entire address.
+        p.govuk-body
+          | If the web address is correct or you selected a link or button, contact the Help with Fees support
+          a.govuk-link href="mailto:helpwithfees.support@digital.justice.gov.uk"
+            |  helpwithfees.support@digital.justice.gov.uk
+          | .

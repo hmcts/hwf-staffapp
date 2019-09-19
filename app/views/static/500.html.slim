@@ -1,4 +1,16 @@
-header
-  h2 We are experiencing technical difficulties
+- content_for :page_title
+  = "Sorry, there is a problem with the service"
 
-p It's not possible to process an application for help with fees online at the moment. Please check back later.
+
+.govuk-width-container
+  main#main-content class="govuk-main-wrapper govuk-main-wrapper--l" role="main"
+    .govuk-grid-row
+      .govuk-grid-column-full
+        h1.govuk-heading-xl.error-pages Sorry, there is a problem with the service
+        p.govuk-body Try again later
+        p.govuk-body Our team was notified and will take a look at this problem.
+        p.govuk-body
+          | Contact Help with Fees support
+          a.govuk-link href="mailto:helpwithfees.support@digital.justice.gov.uk"
+            |  helpwithfees.support@digital.justice.gov.uk
+          | , for more help.
