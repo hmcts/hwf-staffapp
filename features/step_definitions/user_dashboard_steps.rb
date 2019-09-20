@@ -9,7 +9,7 @@ end
 
 When("I click on waiting for part-payment") do
   expect(dashboard_page.content).to have_in_progress_header
-  click_link('Waiting for part-payment')
+  click_link('Waiting for part-payments')
 end
 
 Then("I should be taken to part payments page") do
