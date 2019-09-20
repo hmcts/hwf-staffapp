@@ -1,6 +1,3 @@
-- content_for :page_title
-  = "Processed application"
-
 =render('shared/processed_and_deleted/show', state: :processed)
 
 - details_attributes = @form.errors.empty? ? {} : { open: 'open' }
