@@ -30,10 +30,10 @@ Then("I should see a help with fees reference number") do
 end
 
 Then("I should see the next steps") do
-  expect(confirmation_page.content.guidence).to have_next_steps_steps
-  expect(confirmation_page.content.guidence).to have_write_ref
-  expect(confirmation_page.content.guidence).to have_copy_ref
-  expect(confirmation_page.content.guidence).to have_can_be_issued
+  expect(confirmation_page.content).to have_next_steps_steps
+  expect(confirmation_page.content).to have_write_ref
+  expect(confirmation_page.content).to have_copy_ref
+  expect(confirmation_page.content).to have_can_be_issued
 end
 
 When("I can view the guides in a new window") do

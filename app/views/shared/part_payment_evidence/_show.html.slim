@@ -5,7 +5,7 @@ header
   h1.govuk-heading-xl #{source.application.reference} - Waiting for #{type}
 
 .panel
-  h4.govuk-heading-m.util_mt-0 Process #{type}
+  h2.govuk-heading-m Process #{type}
   = link_to 'Start now', send("accuracy_#{type.underscore}_path", source), class: 'govuk-button util_mb-medium'
   details.govuk-details data-module="govuk-details"
     summary.govuk-details__summary
