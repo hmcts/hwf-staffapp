@@ -115,7 +115,7 @@ en-GB:
       correct: Is the part-payment correct?
       incorrect_reason: Describe the problem with the part-payment
     dashboard:
-      heading: Waiting for part-payment
+      heading: Waiting for part-payments
       caption: Applications that are waiting for part-payment
       no_records: There are no applications waiting for part-payment
       table_header:
