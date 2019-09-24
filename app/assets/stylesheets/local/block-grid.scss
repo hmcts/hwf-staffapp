@@ -71,37 +71,38 @@
   }
 }
 
-
-
-.guide-cols {
-  padding: 20px 0;
-
-  h5 {
-    @include core-16;
+.govuk-grid-column-one-quarter.guide-cols {
+  @include core-16;
+  text-align: center;
+  font-weight: bold;
+  a {
+    text-decoration: none;
     text-align: center;
-    font-weight: bold;
-
-    a {
-      text-decoration: none;
-      text-align: center;
-      box-sizing: border-box;
-    }
+    box-sizing: border-box;
+    padding: 45px;
+    display: inline-block;
+    border: 1px solid $govuk-border-colour;
+    margin-bottom: 35px;
 
     span {
       display: block;
       min-height: 40px;
     }
-  }
 
-  img {
-    padding: 10px;
-    width: auto;
-    max-height: 150px;
-    margin: auto;
-
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-    vertical-align: middle;
+    img {
+      padding: 10px;
+      width: auto;
+      max-height: 150px;
+      margin: auto;
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    img.guidence-icon {
+      width: 160px;
+      height: 160px;
+    }
   }
 }
+

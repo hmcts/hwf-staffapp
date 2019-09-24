@@ -1,7 +1,7 @@
 -if @form.application_overridable?(@application)
   - show_override = @form.errors.empty? ? {} : { open: 'open' }
 
-  .panel#override_panel
+  #override_panel
     details.govuk-details *show_override
       summary.govuk-details__summary
         span.govuk-details__summary-text

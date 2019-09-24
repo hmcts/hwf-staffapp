@@ -1,15 +1,14 @@
 class ConfirmationPage < BasePage
   section :content, '#content' do
-    element :reference_number_is, 'h3', text: 'The reference number is'
+    element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
     element :reference_number, '.reference-number', text: 'PA19-000001'
-    element :eligible, 'h3', text: '✓ Eligible for help with fees'
-    section :guidence, '.guidance' do
-      element :next_steps_steps, 'h4', text: 'Next steps'
-      element :write_ref, 'li', text: 'Write the reference number on the top right corner of the paper form'
-      element :copy_ref, 'li', text: 'Copy the reference number into the case management system'
-      element :can_be_issued, 'li', text: 'The applicant’s process can now be issued'
-      element :see_guides, 'a', text: 'See the guides'
-    end
+    element :eligible, 'h2', text: '✓ Eligible for help with fees'
+
+    element :next_steps_steps, 'h2', text: 'Next steps'
+    element :write_ref, 'p', text: 'Write the reference number on the top right corner of the paper form'
+    element :copy_ref, 'p', text: 'Copy the reference number into the case management system'
+    element :can_be_issued, 'p', text: 'The applicant’s process can now be issued'
+    element :see_guides, 'a', text: 'See the guides'
     element :complete_processing_button, 'input[value="Complete processing"]'
     element :back_to_start, '.govuk-button', text: 'Back to start'
   end

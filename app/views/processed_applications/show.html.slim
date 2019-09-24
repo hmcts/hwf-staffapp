@@ -11,7 +11,7 @@ details.govuk-details *details_attributes
 
     = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off', class: 'delete-form govuk-!-margin-top-3' } do |f|
       .govuk-form-group
-        = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope), class: 'govuk-label', for: 'deleted_reason'
+        = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope), class: 'govuk-label', for: 'application_deleted_reason'
         span.govuk-error-message
           = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
         = f.text_field :deleted_reason, class: 'govuk-input'

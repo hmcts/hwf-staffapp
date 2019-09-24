@@ -2,23 +2,22 @@
   = "Processing complete"
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    header class='govuk-!-padding-top-7'
-      h1.govuk-heading-xl Processing complete
+  .govuk-grid-column-full
+    .govuk-panel.govuk-panel--confirmation
+      h1.govuk-panel__title Processing complete
 
     - if @result.callout == 'no'
       = render('failed_letter')
 
-    = link_to 'Back to start', root_path, class: 'govuk-button'
+    h2.govuk-heading-m Next steps
 
-  aside.govuk-grid-column-one-third
-    .guidance
-      h4.govuk-heading-m.util_mt-medium Next steps
-      ul.govuk-list.govuk-list--bullet
-        -if @result.callout == 'yes'
-          li copy reference into the case management system
-        - else
-          li write to applicant using the template provided
-          li add the reference to the letter
-          li post the letter and all the documents back to the applicant
-      p: strong= link_to 'See the guides', guide_path, target: 'blank'
+    -if @result.callout == 'yes'
+      p.govuk-body copy reference into the case management system
+    - else
+      p.govuk-body write to applicant using the template provided
+      p.govuk-body add the reference to the letter
+      p.govuk-body post the letter and all the documents back to the applicant
+
+    p: strong= link_to 'See the guides', guide_path, target: 'blank'
+
+    = link_to 'Back to start', root_path, class: 'govuk-button'

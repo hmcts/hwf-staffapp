@@ -1,25 +1,30 @@
-h4.govuk-heading-m.util_mt-medium Reference
-#result.callout.evidence-check-reference
-  h3.govuk-heading-l.text-center
-    span.check
-      | ✓
-    | The reference number is
-    span.reference-number
-      = @application.reference
+- content_for :page_title
+  = "Result"
 
-.util_mt-medium
-  = build_section 'Result', @confirm, @confirm.all_fields
+.govuk-grid-row
+  .govuk-grid-column-full
+    .govuk-panel.govuk-panel--confirmation
+      h1.govuk-panel__title Application complete
+      .govuk-panel__body
+        | Reference number
+        br
+        strong.reference-number = @application.reference
 
-#result.callout class="callout-#{@confirm.result}"
-  h3.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
+    #result.callout class="callout-#{@confirm.result}"
+      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
 
-.guidance
-  h4.govuk-heading-m =t('evidence_check.next_steps.title')
-  ul.govuk-list.govuk-list--bullet
+    .util_mt-medium
+      = build_section 'Result', @confirm, @confirm.all_fields
+
+
+    h2.govuk-heading-m =t('evidence_check.next_steps.title')
+
     - t('evidence_check.next_steps.steps').each do |step|
-      li =step
+      p.govuk-body = step
 
-.confirmation-letter
-  =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
 
-=link_to t('evidence_check.back_to_start'), root_path, class: 'govuk-button'
+
+    .confirmation-letter
+      =t('letters.evidence.send_evidence_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+
+    =link_to t('evidence_check.back_to_start'), root_path, class: 'govuk-button'

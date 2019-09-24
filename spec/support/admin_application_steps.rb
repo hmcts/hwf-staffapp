@@ -123,7 +123,7 @@ def fill_income_above_threshold(monthly_income = '6000')
 end
 
 def evidene_check
-  reference_number = find(:xpath, './/span[@class="reference-number"]').text
+  reference_number = find(:xpath, './/strong[@class="reference-number"]').text
   application = Application.where(reference: reference_number).last
   application.try(:evidence_check)
 end

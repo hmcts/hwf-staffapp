@@ -80,7 +80,8 @@ h1.visuallyhidden Help with fees - Staff application
   section aria-label="Applications"
     - if @search_results
       .govuk-grid-row
-        = render('home/search_results', type: :search_results, list: @search_results)
+        .govuk-grid-column-full.table_data
+          = render('home/search_results', type: :search_results, list: @search_results)
     .govuk-grid-row
       .govuk-grid-column-full.table_data
         = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
