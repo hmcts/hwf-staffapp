@@ -66,6 +66,6 @@ class FinanceReportBuilder
       exclude_hq_teams.
       joins('LEFT JOIN applications ON business_entity_id = business_entities.id').
       where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
-      where('applications.state = 3').uniq { |s| s.values_at(:office, :jurisdiction) }
+      where('applications.state = 3').distinct { |s| s.values_at(:office, :jurisdiction) }
   end
 end

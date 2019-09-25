@@ -7,12 +7,6 @@ RSpec.describe FinanceReportBuilder do
   let(:business_entity) { create :business_entity }
   let(:excluded_office) { create :office, name: 'Digital' }
   let(:excluded_business_entity) { create :business_entity, office: excluded_office }
-  let(:application1) do
-    create(:application_full_remission, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity)
-  end
-  let(:application2) do
-    create(:application_full_remission, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: excluded_business_entity)
-  end
   let(:current_time) { Time.zone.parse('2016-02-02 15:50:10') }
   let(:start_date) { Time.zone.parse('2015-10-05 12:30:40') }
   let(:end_date) { Time.zone.parse('2016-01-10 16:35:00') }
@@ -27,6 +21,8 @@ RSpec.describe FinanceReportBuilder do
     it { is_expected.to be_a String }
 
     it 'does not include digital' do
+      create(:application_full_remission, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: excluded_business_entity)
+
       is_expected.not_to include('Digital')
     end
 
@@ -38,6 +34,12 @@ RSpec.describe FinanceReportBuilder do
     it 'contains dynamic meta data (dates)' do
       is_expected.to include('Period Selected:,05/10/2015-10/01/2016')
       is_expected.to include('Run:,02/02/2016 15:50')
+    end
+
+    it 'contains data for distinct business entities' do
+      create_list :application_full_remission, 2, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
+
+      is_expected.to include(business_entity.be_code)
     end
   end
 end
