@@ -400,7 +400,7 @@ en-GB:
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
       forms/application/benefit:
-        benefits: Is the applicant receiving one of the benefits listed in question 9?
+        benefits: Is the applicant receiving one of these benefits?
         benefits_false: 'No'
         benefits_true: 'Yes'
       forms/application/income:
