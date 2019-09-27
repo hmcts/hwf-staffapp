@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Accuracy do
   subject(:form) { described_class.new(evidence) }
 
-  params_list = [:correct, :incorrect_reason]
+  params_list = [:correct, :incorrect_reason, :incorrect_reason_category]
 
   let(:evidence) { build_stubbed :evidence_check }
 

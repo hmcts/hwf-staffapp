@@ -4,7 +4,8 @@ module Forms
     def self.permitted_attributes
       {
         correct: Boolean,
-        incorrect_reason: String
+        incorrect_reason: String,
+        incorrect_reason_category: Array
       }
     end
 

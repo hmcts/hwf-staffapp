@@ -64,9 +64,16 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
-      fill_in 'evidence_incorrect_reason', with: 'SOME REASON'
+
+      choose 'Not arrived or too late'
+      check 'Requested sources not provided'
+      check 'Wrong type provided'
+
       click_button 'Next'
       expect(page).to have_content 'Check details'
+      expect(page).to have_content 'Not arrived or too late'
+      expect(page).to have_content 'Requested sources not provided'
+      expect(page).to have_content 'Wrong type provided'
     end
   end
 
