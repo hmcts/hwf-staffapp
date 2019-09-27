@@ -1,11 +1,10 @@
 - content_for :page_title
   = t("#{state}_applications.detail.title")
 
-header
-  h1.govuk-heading-xl
-    =@application.reference
-    |&nbsp;-&nbsp;
-    =t("#{state}_applications.detail.title")
+h1.govuk-heading-xl
+  =@application.reference
+  |&nbsp;-&nbsp;
+  =t("#{state}_applications.detail.title")
 
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details

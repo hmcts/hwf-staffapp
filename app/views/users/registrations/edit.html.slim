@@ -1,8 +1,7 @@
 - content_for :page_title
   = t('devise.registrations.heading')
 
-header
-  h1.govuk-heading-xl =t('devise.registrations.heading')
+h1.govuk-heading-xl =t('devise.registrations.heading')
 
 = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch }) do |f|
 

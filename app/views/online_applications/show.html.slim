@@ -1,8 +1,7 @@
 - content_for :page_title
   = "Check details"
 
-header
-  h1.govuk-heading-xl Check details
+h1.govuk-heading-xl Check details
 
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details, edit_online_application_path(@online_application)
