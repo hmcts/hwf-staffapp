@@ -1,16 +1,16 @@
 - content_for :page_title
   = "Business entities for #{office.name}"
 
-header
-  h1.govuk-heading-l Business entities for #{office.name}
+h1.govuk-heading-l Business entities for #{office.name}
 
-  -@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
-    -if group[0]==1
-      .govuk-warning-text
-        span.govuk-warning-text__icon aria-hidden="true" !
-        strong.govuk-warning-text__text
-          span.govuk-warning-text__assistive Warning
-          = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
+-@jurisdictions.sort_by(&:sequence).group_by(&:sequence).each do |group|
+  -if group[0]==1
+    .govuk-warning-text
+      span.govuk-warning-text__icon aria-hidden="true" !
+      strong.govuk-warning-text__text
+        span.govuk-warning-text__assistive Warning
+        = t('business_entities.remove_warning_html', managers: format_managers_combined_contacts(office.managers, true).html_safe, office: office.name)
+
 .govuk-grid-row
   .govuk-grid-column-full.table_data
 

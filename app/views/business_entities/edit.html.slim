@@ -1,8 +1,7 @@
 - content_for :page_title
   = "Edit business entity"
 
-header
-  h1.govuk-heading-l Edit business entity
+h1.govuk-heading-l Edit business entity
 
 = form_for [office, business_entity], method: :put do |f|
   = f.hidden_field :be_code

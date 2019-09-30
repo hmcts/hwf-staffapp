@@ -1,8 +1,7 @@
 - content_for :page_title
   = "New business entity for #{jurisdiction.name} in #{office.name}"
 
-header
-  h1.govuk-heading-l New business entity for #{jurisdiction.name} in #{office.name}
+h1.govuk-heading-l New business entity for #{jurisdiction.name} in #{office.name}
 
 = form_for [office, business_entity], url: office_business_entities_url(jurisdiction_id: jurisdiction.id), method: :post do |f|
   .govuk-form-group.group-level
