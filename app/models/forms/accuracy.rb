@@ -12,8 +12,6 @@ module Forms
     define_attributes
 
     validates :correct, inclusion: { in: [true, false] }
-    validates :incorrect_reason, presence: true, length: { maximum: 500 },
-                                 if: proc { |a| a.correct? == false }
 
     private
 

@@ -103,23 +103,14 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_params
-    list = params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes).to_h
-    list.merge(incorrect_reason_params) if incorrect_reason_params
-  end
-
-  def incorrect_reason_params
-    category_reason_params = params.require(:evidence)['incorrect_reason_category']
-    return {} if category_reason_params.blank?
-    category_params = category_reason_params.reject { |category| category == '0' }
-    return { incorrect_reason_category: category_params } if category_params
-    {}
+    params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes).to_h
   end
 
   def redirect_after_accuracy_save
     if @form.correct
       redirect_to income_evidence_path
     else
-      redirect_to summary_evidence_path
+      redirect_to evidence_accuracy_failed_reason_path(evidence)
     end
   end
 

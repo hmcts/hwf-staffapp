@@ -22,6 +22,7 @@ FactoryBot.define do
     factory :evidence_check_incorrect do
       correct { false }
       incorrect_reason { 'SOME REASON' }
+      incorrect_reason_category { ['reason 1', 'reason 2'] }
       outcome { 'none' }
     end
 

@@ -21,50 +21,6 @@
         span.govuk-error-message
           = f.label :incorrect_reason, form.errors[:incorrect_reason].join(', '), class: 'error' if form.errors[:incorrect_reason].present?
         = f.text_area :incorrect_reason, rows: 3, class: 'govuk-textarea'
-    -else
-      .panel-indent#reason-input.accuracy-incorrect-reasons
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend
-            h2.govuk-fieldset__heading.govuk-heading-s = t("#{model}.labels.incorrect_reason")
-          - if @form.errors[:incorrect_reason].present?
-            span.govuk-error-message
-              = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error'
-          .govuk-form-group.govuk-radios.govuk-radios--small
-            .govuk-radios__item
-              = f.radio_button :incorrect_reason, 'not_arrived_or_late', class: 'govuk-radios__input'
-              = f.label t('evidence.not_arrived_or_late'), for: 'evidence_incorrect_reason_not_arrived_or_late', class: 'govuk-label govuk-radios__label'
-            .govuk-radios__item
-              = f.radio_button :incorrect_reason, 'citizen_not_processing', class: 'govuk-radios__input'
-              = f.label t('evidence.citizen_not_processing'), for: 'evidence_incorrect_reason_citizen_not_processing', class: 'govuk-label govuk-radios__label'
-            .govuk-radios__item
-              = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input'
-              = f.label t('evidence.staff_error'), for: 'evidence_incorrect_reason_staff_error', class: 'govuk-label govuk-radios__label'
-
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend
-            h2.govuk-fieldset__heading.govuk-heading-s Rejection reasons category
-          - if @form.errors[:incorrect_reason_category].present?
-            span.govuk-error-message
-              = f.label :incorrect_reason, @form.errors[:incorrect_reason_category].join(', '), class: 'error'
-          .govuk-form-group.govuk-checkboxes.govuk-checkboxes--small
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category,  { multiple: true, class: 'govuk-checkboxes__input' }, 'requested_source_not_provided'
-              = f.label t('evidence.requested_source_not_provided'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_requested_source_not_provided'
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'wrong_type_provided'
-              = f.label t('evidence.wrong_type_provided'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_wrong_type_provided'
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'unreadable_or_illegible'
-              = f.label t('evidence.unreadable_or_illegible'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_unreadable_or_illegible'
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'pages_missing'
-              = f.label t('evidence.pages_missing'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_pages_missing'
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'cannot_identify_applicant'
-              = f.label t('evidence.cannot_identify_applicant'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_cannot_identify_applicant'
-            .govuk-checkboxes__item
-              = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'wrong_date_range'
-              = f.label t('evidence.wrong_date_range'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_wrong_date_range'
 
   = f.submit 'Next', class: 'govuk-button'
 

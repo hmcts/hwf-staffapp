@@ -21,42 +21,6 @@ RSpec.describe Forms::Accuracy do
     subject { form.valid? }
 
     context 'for attribute "correct"' do
-      context 'when true' do
-        let(:params) { { correct: true } }
-
-        it { is_expected.to be true }
-
-        context 'if the reason had been set' do
-          let(:params) { { correct: true, incorrect_reason: 'some reason' } }
-
-          it { is_expected.to be true }
-        end
-      end
-
-      context 'when false' do
-        let(:params) { { correct: false, incorrect_reason: incorrect_reason } }
-
-        context 'when attribute "incorrect_reason" is set' do
-          context 'when it is over 500 characters' do
-            let(:incorrect_reason) { 'X' * 501 }
-
-            it { is_expected.to be false }
-          end
-
-          context 'when it is less than 500 characters' do
-            let(:incorrect_reason) { 'SOME REASON' }
-
-            it { is_expected.to be true }
-          end
-        end
-
-        context 'when attribute "incorrect_reason" is not set' do
-          let(:incorrect_reason) { nil }
-
-          it { is_expected.to be false }
-        end
-      end
-
       context 'when not a boolean value' do
         let(:params) { { correct: 'some string' } }
 
