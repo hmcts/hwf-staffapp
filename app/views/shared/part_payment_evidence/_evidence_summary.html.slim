@@ -1,6 +1,6 @@
 -content_for :edit
   - change_evidence_link = { url: accuracy_evidence_path(@evidence) }
-  - change_income_link = { url: income_evidence_path }
+  - change_income_link = { url: income_evidence_path(@evidence) }
   - change_incorrect_reason_link = { url: evidence_accuracy_failed_reason_path(@evidence) }
   - change_incorrect_reason_category_link = { url: evidence_accuracy_incorrect_reason_path(@evidence) }
 
