@@ -9,9 +9,13 @@ RSpec.describe SummaryHelper, type: :helper do
     i18n_fee = "#{i18n_key}fee"
     i18n_name = "#{i18n_key}form_name"
     i18n_date = "#{i18n_key}date_received"
+    i18n_correct = "#{i18n_key}correct"
+    i18n_income = "#{i18n_key}income"
     allow(I18n).to receive(:t).with(i18n_fee).and_return('Fee')
     allow(I18n).to receive(:t).with(i18n_name).and_return('Form name')
     allow(I18n).to receive(:t).with(i18n_date).and_return('Date received')
+    allow(I18n).to receive(:t).with(i18n_correct).and_return('Correct')
+    allow(I18n).to receive(:t).with(i18n_income).and_return('Income')
   end
 
   it { expect(helper).to be_a described_class }
@@ -79,4 +83,38 @@ RSpec.describe SummaryHelper, type: :helper do
       end
     end
   end
+
+  describe 'build_section_with_custom_links' do
+    let(:view) { instance_double(Views::Evidence, correct: 'Yes', income: '£2990') }
+    let(:url1) { accuracy_evidence_path(id: 234) }
+    let(:url2) { income_evidence_path(id: 234) }
+    let(:row1) {{ key:'correct', link_attributes: {url: url1} }}
+    let(:row2) {{ key:'income', link_attributes: {url: url2} }}
+
+    context 'when called with list of attributes' do
+      it 'returns the correct html' do
+        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Correct</span></a></dd></div>"
+        expected += "<div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Income</dt><dd class=\"govuk-summary-list__value\">£2990</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url2}\">Change<span class=\"govuk-visually-hidden\">Income</span></a></dd></div></dl>"
+        expect(helper.build_section_with_custom_links('Evidence', view, [row1, row2])).to eq(expected)
+      end
+    end
+
+    context 'when called with missing some attributes' do
+      it 'empty array' do
+        expect(helper.build_section_with_custom_links('Evidence', view, [])).to be_nil
+      end
+
+      it 'missing url' do
+        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
+        expect(helper.build_section_with_custom_links('Evidence', view, [{ key:'correct', link_attributes: {} }])).to eq(expected)
+      end
+
+      it 'missing link_attributes' do
+        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
+        expect(helper.build_section_with_custom_links('Evidence', view, [{ key:'correct'}])).to eq(expected)
+      end
+    end
+  end
+
 end
+
