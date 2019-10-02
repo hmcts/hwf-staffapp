@@ -21,8 +21,10 @@ RSpec.describe Forms::Evidence::Accuracy do
     context 'for a valid form when the evidence is correct' do
       let(:incorrect_reason) { 'REASON' }
       let(:incorrect_reason_category) { ['reason 1', 'reason 2'] }
-      let(:params) { { correct: true, incorrect_reason: incorrect_reason,
-        incorrect_reason_category: incorrect_reason_category } }
+      let(:params) {
+        { correct: true, incorrect_reason: incorrect_reason,
+          incorrect_reason_category: incorrect_reason_category }
+      }
 
       before { form_save && evidence.reload }
 
@@ -34,8 +36,8 @@ RSpec.describe Forms::Evidence::Accuracy do
         expect(evidence.incorrect_reason_category).to eql []
       end
 
-      it 'keeps the incorrect reason category empty' do
-        expect(evidence.incorrect_reason).to eql nil
+      it 'keeps the incorrect reason nil' do
+        expect(evidence.incorrect_reason).to be nil
       end
 
     end

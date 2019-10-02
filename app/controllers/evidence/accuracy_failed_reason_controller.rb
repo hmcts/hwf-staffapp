@@ -9,15 +9,8 @@ module Evidence
     def update
       @form = Forms::Evidence::Accuracy.new(evidence)
 
-      if accuracy_reasons_check
-        reasons = params.require(:evidence).permit(:incorrect_reason)
-        @form.update_attributes(reasons)
-
-        if @form.save
-          redirect_to evidence_accuracy_incorrect_reason_path(evidence)
-        else
-          render :show
-        end
+      if accuracy_reasons_check && save_accuracy_reasons
+        redirect_to evidence_accuracy_incorrect_reason_path(evidence)
       else
         render :show
       end
@@ -26,9 +19,15 @@ module Evidence
     private
 
     def accuracy_reasons_check
-      return true if params.has_key?(:evidence)
+      return true if params.key?(:evidence)
       @form.errors.add(:incorrect_reason, 'Please select from one of the options')
       false
+    end
+
+    def save_accuracy_reasons
+      reasons = params.require(:evidence).permit(:incorrect_reason)
+      @form.update_attributes(reasons)
+      @form.save
     end
 
   end

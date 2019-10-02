@@ -103,7 +103,7 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_params
-    return {} unless params.has_key?(:evidence)
+    return {} unless params.key?(:evidence)
     params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes).to_h
   end
 

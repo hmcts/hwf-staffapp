@@ -23,7 +23,7 @@ module SummaryHelper
     end
   end
 
-  def build_section_with_custom_links(summary_text, object, fields, link_attributes = {})
+  def build_section_with_custom_links(summary_text, object, fields, _link_attributes = {})
     unless all_fields_empty?(object, fields)
       content_tag(:dl, class: 'govuk-summary-list') do
         content = build_header(summary_text)
@@ -44,7 +44,7 @@ module SummaryHelper
 
   def all_fields_empty?(object, fields)
     fields.map do |f|
-      (f.is_a?(Hash)) ? object.send(f[:key]) : object.send(f)
+      f.is_a?(Hash) ? object.send(f[:key]) : object.send(f)
     end.all?(&:blank?)
   end
 

@@ -88,8 +88,8 @@ RSpec.describe SummaryHelper, type: :helper do
     let(:view) { instance_double(Views::Evidence, correct: 'Yes', income: '£2990') }
     let(:url1) { accuracy_evidence_path(id: 234) }
     let(:url2) { income_evidence_path(id: 234) }
-    let(:row1) {{ key:'correct', link_attributes: {url: url1} }}
-    let(:row2) {{ key:'income', link_attributes: {url: url2} }}
+    let(:row1) { { key: 'correct', link_attributes: { url: url1 } } }
+    let(:row2) { { key: 'income', link_attributes: { url: url2 } } }
 
     context 'when called with list of attributes' do
       it 'returns the correct html' do
@@ -106,15 +106,14 @@ RSpec.describe SummaryHelper, type: :helper do
 
       it 'missing url' do
         expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
-        expect(helper.build_section_with_custom_links('Evidence', view, [{ key:'correct', link_attributes: {} }])).to eq(expected)
+        expect(helper.build_section_with_custom_links('Evidence', view, [{ key: 'correct', link_attributes: {} }])).to eq(expected)
       end
 
       it 'missing link_attributes' do
         expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
-        expect(helper.build_section_with_custom_links('Evidence', view, [{ key:'correct'}])).to eq(expected)
+        expect(helper.build_section_with_custom_links('Evidence', view, [{ key: 'correct' }])).to eq(expected)
       end
     end
   end
 
 end
-

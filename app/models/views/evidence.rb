@@ -19,7 +19,6 @@ module Views
     end
 
     def incorrect_reason_category
-
       @evidence.incorrect_reason_category.try(:map) do |item|
         I18n.t("evidence.#{item}")
       end.try(:join, ', ')
