@@ -16,9 +16,9 @@ module Applications
         redirect_to application_confirmation_path(application.id, 'paper')
       rescue ActiveRecord::RecordInvalid => e
         flash[:alert] = I18n.t('error_messages.summary.validation')
-        Raven.capture_exception(e, application_id: @application.id)
+        Raven.capture_exception(e, application_id: application.id)
 
-        redirect_to application_summary_path(@application)
+        redirect_to application_summary_path(application)
       end
 
       private
