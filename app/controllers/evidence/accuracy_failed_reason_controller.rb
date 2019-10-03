@@ -25,7 +25,7 @@ module Evidence
     end
 
     def save_accuracy_reasons
-      reasons = params.require(:evidence).permit(:incorrect_reason)
+      reasons = params.require(:evidence).permit(:incorrect_reason).to_h
       @form.update_attributes(reasons)
       @form.save
     end

@@ -1,5 +1,6 @@
 module Evidence
   class AccuracyIncorrectReasonController < EvidenceController
+
     def show
       authorize evidence
       @form = Forms::Evidence::Accuracy.new(evidence)
@@ -7,9 +8,8 @@ module Evidence
 
     def update
       @form = Forms::Evidence::Accuracy.new(evidence)
-
       if accuracy_reasons_check && save_accuracy_reasons_category
-        redirect_to summary_evidence_path
+        redirect_to summary_evidence_path(evidence)
       else
         render :show
       end
@@ -24,8 +24,8 @@ module Evidence
     end
 
     def category_params
-      return {} unless params.key?(:accuracy_incorrect_reason)
-      params.require(:accuracy_incorrect_reason).
+      return {} unless params.key?(:evidence)
+      params.require(:evidence).
         permit(incorrect_reason_category: [])[:incorrect_reason_category].
         reject { |value| value == '0' }
     end
