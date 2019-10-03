@@ -207,6 +207,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def page_expectation(outcome, fields = [])
       expect(page).to have_content(outcome)
       fields.each do |field|
@@ -214,6 +215,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         expect(page).to have_link("Change#{field[:title]}", href: field[:url])
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 
   context 'when on "Evidence confirmation" page' do
