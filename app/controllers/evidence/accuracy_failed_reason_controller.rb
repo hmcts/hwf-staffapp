@@ -20,7 +20,7 @@ module Evidence
 
     def accuracy_reasons_check
       return true if params.key?(:evidence)
-      @form.errors.add(:incorrect_reason, 'Please select from one of the options')
+      @form.errors.add(:incorrect_reason, 'Select from one of the options')
       false
     end
 

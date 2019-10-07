@@ -19,7 +19,7 @@ module Evidence
 
     def accuracy_reasons_check
       return true if category_params.present?
-      @form.errors.add(:incorrect_reason_category, 'Please select from one of the options')
+      @form.errors.add(:incorrect_reason_category, 'Select from one of the options')
       false
     end
 
