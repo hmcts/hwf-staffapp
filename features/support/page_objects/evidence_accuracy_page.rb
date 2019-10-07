@@ -15,3 +15,4 @@ class EvidenceAccuracyPage < BasePage
     element :answer_question_error, '.error', text: 'You need to say whether the evidence can be processed'
   end
 end
+
