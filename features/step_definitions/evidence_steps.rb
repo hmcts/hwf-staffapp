@@ -10,7 +10,7 @@ end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
   expect(evidence_accuracy_page.content).to have_header
-  expect(current_path).to include '/evidence/1/accuracy'
+  expect(current_path).to end_with '/evidence/1/accuracy'
 end
 
 When("I click on what to do if the evidence cannot be processed") do
@@ -94,9 +94,9 @@ When("I submit that there is a problem with evidence") do
   next_page
 end
 
-When("I give a reason why there is a problem") do
-  fill_in 'Describe the problem with the evidence', with: 'Test is the reason'
-  next_page
+Then("I should be taken to the problem with the evidence page") do
+  expect(current_path).to end_with '/evidence/accuracy_failed_reason/1'
+  expect(problem_with_evidence_page.content).to have_header
 end
 
 When("I do not give a reason") do
@@ -121,7 +121,7 @@ Given("I have successfully submitted the evidence") do
 end
 
 Given("I should see the evidence details on the summary page") do
-  expect(current_path).to include '/evidence/1/summary'
+  expect(current_path).to end_with '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary).to have_evidence_header
   expect(evidence_page.content.evidence_summary).to have_change_application_evidence
   expect(evidence_page.content.evidence_summary.evidence_answer_key[0].text).to eq 'Correct'

@@ -48,12 +48,11 @@ Scenario: Evidence is correct
 Scenario: Submit problem with evidence
   And I click on start now
   When I submit that there is a problem with evidence
-  And I give a reason why there is a problem
+  Then I should be taken to the problem with the evidence page
 
 Scenario: Problem with evidence error message
   And I click on start now
-  When I submit that there is a problem with evidence
-  And I do not give a reason
+  When I do not give a reason
   Then I should see this question must be answered error message
 
 Scenario: Eligible income amount
