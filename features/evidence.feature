@@ -50,9 +50,9 @@ Scenario: Submit problem with evidence
   When I submit that there is a problem with evidence
   Then I should be taken to the problem with the evidence page
 
-Scenario: Problem with evidence error message
+Scenario: Evidence error message
   And I click on start now
-  When I do not give a reason
+  When I click on next without selecting yes or no
   Then I should see this question must be answered error message
 
 Scenario: Eligible income amount

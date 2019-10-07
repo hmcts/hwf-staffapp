@@ -99,7 +99,7 @@ Then("I should be taken to the problem with the evidence page") do
   expect(problem_with_evidence_page.content).to have_header
 end
 
-When("I do not give a reason") do
+When("I click on next without selecting yes or no") do
   next_page
 end
 
