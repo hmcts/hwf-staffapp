@@ -4,7 +4,7 @@ And("I am on an application waiting for evidence") do
   click_link('PA19-000002')
 end
 
-When("I click on start now") do
+When("I click on start now to process the evidence") do
   click_link('Start now')
 end
 
@@ -97,10 +97,6 @@ end
 Then("I should be taken to the problem with the evidence page") do
   expect(current_path).to end_with '/evidence/accuracy_failed_reason/1'
   expect(problem_with_evidence_page.content).to have_header
-end
-
-When("I click on next without selecting yes or no") do
-  next_page
 end
 
 Then("I should see this question must be answered error message") do
