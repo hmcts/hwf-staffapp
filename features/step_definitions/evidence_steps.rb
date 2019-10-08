@@ -14,42 +14,42 @@ Then("I should be taken to a page asking me if the evidence ready to process") d
 end
 
 When("I click on what to do if the evidence cannot be processed") do
-  evidence_accuracy_page.content.evidence_can_not_be_processed.click
+  evidence_page.content.evidence_can_not_be_processed.click
 end
 
 Then("I should see instructions with a deadline to submit the evidence") do
   date_received = (Time.zone.now + 2.weeks).strftime("%Y-%m-%d")
-  expect(evidence_accuracy_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{date_received}"
+  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{date_received}"
 end
 
 Then("I should see the applicants personal details") do
-  expect(evidence_accuracy_page.content).to have_personal_details
+  expect(evidence_page.content).to have_personal_details
 end
 
 Then("I should see the application details") do
-  expect(evidence_accuracy_page.content).to have_application_details
+  expect(evidence_page.content).to have_application_details
 end
 
 Then("I should see the applicants benefit details") do
-  expect(evidence_accuracy_page.content).to have_benefits
+  expect(evidence_page.content).to have_benefits
 end
 
 Then("I should see the applicants income details") do
-  expect(evidence_accuracy_page.content).to have_income
+  expect(evidence_page.content).to have_income
 end
 
 Then("I should see whather the applicant is eligible for help with fees") do
-  expect(evidence_accuracy_page.content).to have_eligibility
+  expect(evidence_page.content).to have_eligable_header
 end
 
 Then("I should see the processing summmary") do
   date_processed = Time.zone.now.strftime('%-d %B %Y')
-  expect(evidence_accuracy_page.content).to have_processing_summary
+  expect(evidence_page.content).to have_processing_summary
   expect(page.text).to have_content date_processed
 end
 
 When("I click on return application") do
-  evidence_accuracy_page.content.evidence_can_not_be_processed.click
+  evidence_page.content.evidence_can_not_be_processed.click
   click_link('Return application')
 end
 
