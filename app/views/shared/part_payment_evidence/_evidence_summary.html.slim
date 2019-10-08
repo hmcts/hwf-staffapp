@@ -4,7 +4,7 @@
   - change_incorrect_reason_link = { url: evidence_accuracy_failed_reason_path(@evidence) }
   - change_incorrect_reason_category_link = { url: evidence_accuracy_incorrect_reason_path(@evidence) }
 
-  =build_section_with_custom_links 'Evidence rejected', @evidence_view,
+  =build_section_with_custom_links 'Evidence', @evidence_view,
     [ { key:'correct', link_attributes: change_evidence_link },
       { key:'income', link_attributes: change_income_link },
       { key:'incorrect_reason', link_attributes: change_incorrect_reason_link },
