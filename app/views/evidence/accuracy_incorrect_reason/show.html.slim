@@ -4,11 +4,9 @@
 = form_for :evidence, url: :evidence_accuracy_incorrect_reason, method: :put, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl What is the reason for rejecting the evidence?
 
       fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-          h1.govuk-fieldset__heading What is the reason for rejecting the evidence?
-
         span#how-contacted-conditional-hint.govuk-hint Select all that apply.
 
         - if @form.errors[:incorrect_reason_category].present?

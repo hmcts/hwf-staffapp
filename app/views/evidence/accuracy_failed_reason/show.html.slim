@@ -4,11 +4,10 @@
 = form_for :evidence, url: :evidence_accuracy_failed_reason, method: :put, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      header class='govuk-!-padding-top-7'
+        h1.govuk-heading-xl What is the problem with the evidence?
 
       fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-          h1.govuk-fieldset__heading What is the problem with the evidence?
-
         - if @form.errors[:incorrect_reason].present?
           span.govuk-error-message
             = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error'
