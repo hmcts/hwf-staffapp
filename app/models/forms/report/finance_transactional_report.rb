@@ -11,7 +11,6 @@ module Forms
       attribute :application_type, String
       attribute :jurisdiction_id, Integer
 
-
       validates :date_to, :date_from, presence: true
 
       validates :date_to, date: {
