@@ -347,9 +347,12 @@ en-GB:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
+        application_type_benefit: Benefit
+        application_type_income: Income
       forms/report/finance_transactional_report:
         date_from: 'Date from'
         date_to: 'Date to'
+        date_hint: Use this format DD/MM/YYYY
         date_hint: Use this format DD/MM/YYYY
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
