@@ -69,8 +69,9 @@ RSpec.describe ReportsController, type: :controller do
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
-            expect(FinanceReportBuilder).to receive(:new).with('2015-01-01', '2015-12-31', filters).and_return ['report']
+            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
             put :finance_report_generator, params: { forms_finance_report: report_params }
+            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', filters)
           end
         end
 
@@ -78,9 +79,11 @@ RSpec.describe ReportsController, type: :controller do
           let(:filters) { { jurisdiction_id: '1' } }
 
           it 'sends filter to DataReport' do
+            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
             report_params = dates.merge(filters)
-            expect(FinanceReportBuilder).to receive(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1').and_return ['report']
+
             put :finance_report_generator, params: { forms_finance_report: report_params }
+            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1')
           end
         end
 
@@ -89,8 +92,9 @@ RSpec.describe ReportsController, type: :controller do
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
-            expect(FinanceReportBuilder).to receive(:new).with('2015-01-01', '2015-12-31', {}).and_return ['report']
+            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
             put :finance_report_generator, params: { forms_finance_report: report_params }
+            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', {})
           end
         end
 
