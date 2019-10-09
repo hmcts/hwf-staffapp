@@ -16,7 +16,7 @@ class FinanceTransactionalReportBuilder
     fee: 'Fee Amount'
   }.freeze
 
-  def initialize(start_date, end_date)
+  def initialize(start_date, end_date, filters = {})
     @date_from = DateTime.parse(start_date.to_s).utc
     @date_to = DateTime.parse(end_date.to_s).utc.end_of_day
   end
