@@ -118,8 +118,8 @@ RSpec.describe EvidenceController, type: :controller do
         context 'when the form evidence is not correct' do
           let(:form) { instance_double(Forms::Evidence::Accuracy, correct: false) }
 
-          it 'redirects to the income page' do
-            expect(response).to redirect_to(summary_evidence_path(evidence))
+          it 'redirects to the evidence failed reason page' do
+            expect(response).to redirect_to(evidence_accuracy_failed_reason_path(evidence))
           end
         end
       end

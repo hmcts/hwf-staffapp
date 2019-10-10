@@ -65,6 +65,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :evidence do
+    resources :accuracy_failed_reason, only: [:show, :update]
+    resources :accuracy_incorrect_reason, only: [:show, :update]
+  end
+
   resources :evidence_checks, only: [:index, :show]
 
   resources :part_payments, only: [:index, :show] do

@@ -103,6 +103,7 @@ class EvidenceController < ApplicationController
   end
 
   def accuracy_params
+    return {} unless params.key?(:evidence)
     params.require(:evidence).permit(*Forms::Evidence::Accuracy.permitted_attributes).to_h
   end
 
@@ -110,7 +111,7 @@ class EvidenceController < ApplicationController
     if @form.correct
       redirect_to income_evidence_path
     else
-      redirect_to summary_evidence_path
+      redirect_to evidence_accuracy_failed_reason_path(evidence)
     end
   end
 
