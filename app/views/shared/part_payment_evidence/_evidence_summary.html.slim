@@ -1,6 +1,14 @@
 -content_for :edit
-  - change_evidence_link = { title: 'Change application evidence', url: accuracy_evidence_path(@evidence) }
-  =build_section 'Evidence', @evidence_view, ['correct', 'incorrect_reason', 'income'], change_evidence_link
+  - change_evidence_link = { url: accuracy_evidence_path(@evidence) }
+  - change_income_link = { url: income_evidence_path(@evidence) }
+  - change_incorrect_reason_link = { url: evidence_accuracy_failed_reason_path(@evidence) }
+  - change_incorrect_reason_category_link = { url: evidence_accuracy_incorrect_reason_path(@evidence) }
+
+  =build_section_with_custom_links 'Evidence', @evidence_view,
+    [ { key:'correct', link_attributes: change_evidence_link },
+      { key:'income', link_attributes: change_income_link },
+      { key:'incorrect_reason', link_attributes: change_incorrect_reason_link },
+      { key:'incorrect_reason_category', link_attributes: change_incorrect_reason_category_link } ]
 
 -content_for :result
   =render(partial: 'shared/remission_type', locals: { source: @result })

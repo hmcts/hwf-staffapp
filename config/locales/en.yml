@@ -94,6 +94,16 @@ en-GB:
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
+    not_arrived_or_late: not arrived or too late
+    citizen_not_processing: citizen not proceeding
+    staff_error: staff error
+    requested_source_not_provided: requested sources not provided
+    wrong_type_provided: wrong type provided
+    unreadable_or_illegible: unreadable or illegible
+    pages_missing: pages missing
+    cannot_identify_applicant: cannot identify applicant
+    wrong_date_range: wrong date range
+
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -320,6 +330,7 @@ en-GB:
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
+        incorrect_reason_category: Incorrect reason category
         income: Income
       views/application_result:
         savings: Savings and investments
