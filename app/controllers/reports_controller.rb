@@ -72,10 +72,7 @@ class ReportsController < ApplicationController
   private
 
   def form
-    Forms::FinanceReport.new(
-      date_from: report_params[:date_from],
-      date_to: report_params[:date_to]
-    )
+    Forms::FinanceReport.new(report_params)
   end
 
   def report_params
@@ -84,10 +81,7 @@ class ReportsController < ApplicationController
   end
 
   def ftr_form
-    Forms::Report::FinanceTransactionalReport.new(
-      date_from: ftr_params[:date_from],
-      date_to: ftr_params[:date_to]
-    )
+    Forms::Report::FinanceTransactionalReport.new(ftr_params)
   end
 
   def ftr_params
