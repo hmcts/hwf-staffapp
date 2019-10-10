@@ -22,6 +22,12 @@ div.govuk-footer__navigation {
   overflow: auto;
 }
 
+#reason-input.panel-indent.accuracy-incorrect-reasons {
+  margin-top: 10px;
+}
+.accuracy-incorrect-reasons fieldset {
+  margin-bottom: 15px;
+}
 div.govuk-panel--confirmation  {
   margin-top: 40px;
 }

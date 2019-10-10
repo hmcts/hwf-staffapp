@@ -22,6 +22,7 @@ FactoryBot.define do
     factory :evidence_check_incorrect do
       correct { false }
       incorrect_reason { 'SOME REASON' }
+      incorrect_reason_category { ['unreadable_or_illegible', 'cannot_identify_applicant'] }
       outcome { 'none' }
     end
 

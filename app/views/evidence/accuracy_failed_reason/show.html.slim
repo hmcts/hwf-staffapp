@@ -1,0 +1,32 @@
+- content_for :page_title
+  = "What is the problem with the evidence?"
+
+= form_for :evidence, url: :evidence_accuracy_failed_reason, method: :put, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      header class='govuk-!-padding-top-7'
+        h1.govuk-heading-xl What is the problem with the evidence?
+
+      fieldset.govuk-fieldset
+        - if @form.errors[:incorrect_reason].present?
+          span.govuk-error-message
+            = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error'
+        .govuk-form-group.govuk-radios.govuk-radios--small
+          .govuk-radios__item
+
+            = f.radio_button :incorrect_reason, 'not_arrived_or_late', class: 'govuk-radios__input'
+            = f.label t('evidence.not_arrived_or_late'), for: 'evidence_incorrect_reason_not_arrived_or_late', class: 'govuk-label govuk-radios__label'
+          .govuk-radios__item
+            = f.radio_button :incorrect_reason, 'citizen_not_processing', class: 'govuk-radios__input'
+            = f.label t('evidence.citizen_not_processing'), for: 'evidence_incorrect_reason_citizen_not_processing', class: 'govuk-label govuk-radios__label'
+          .govuk-radios__item
+            = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input'
+            = f.label t('evidence.staff_error'), for: 'evidence_incorrect_reason_staff_error', class: 'govuk-label govuk-radios__label'
+
+        = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m Evidence:
+        p =link_to 'See more about problems with the evidence', guide_evidence_checks_path(anchor: 'problems-evidence'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

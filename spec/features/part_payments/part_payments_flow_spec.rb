@@ -35,17 +35,13 @@ RSpec.feature 'Part Payments flow', type: :feature do
     before { visit accuracy_part_payment_path(id: part_payment.id) }
 
     it 'displays the title of the page' do
-      expect(page).to have_content 'Part-payment details'
-    end
-
-    it 'displays the form label' do
-      expect(page).to have_content 'Is the part-payment correct?'
+      expect(page).to have_content 'Is the part-payment ready to process?'
     end
 
     scenario 'it re-renders the page when the page is submitted without anything filled in' do
       click_button 'Next'
 
-      expect(page).to have_content 'Is the part-payment correct?'
+      expect(page).to have_content 'Is the part-payment ready to process?'
     end
 
     describe 'confirming the payment is correct' do

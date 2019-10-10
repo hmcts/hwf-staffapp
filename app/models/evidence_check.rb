@@ -3,4 +3,6 @@ class EvidenceCheck < ActiveRecord::Base
   belongs_to :completed_by, -> { with_deleted }, class_name: 'User', optional: true
 
   validates :expires_at, presence: true
+
+  serialize :incorrect_reason_category
 end
