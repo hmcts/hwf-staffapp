@@ -41,7 +41,7 @@ h1.govuk-heading-xl = header
 
         .govuk-grid-column-one-third
           .govuk-form-group
-            = f.label :jurisdiction_id, class: 'govuk-label', for: 'forms_finance_report_jurisdiction_id'
+            = f.label :jurisdiction_id, class: 'govuk-label', for: "#{form_name}_jurisdiction_id"
             = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: true }
 
       .govuk-grid-row class='govuk-!-margin-top-4'
@@ -51,16 +51,16 @@ h1.govuk-heading-xl = header
           .govuk-radios.govuk-radios--small.govuk-radios--inline
             .govuk-radios__item
               = f.radio_button :application_type, 'benefit', class: 'govuk-radios__input'
-              = f.label :application_type, t('application_type_benefit', scope: @form.i18n_scope), for: 'forms_finance_report_application_type_benefit', class: 'govuk-label govuk-radios__label'
+              = f.label :application_type, t('application_type_benefit', scope: @form.i18n_scope), for: "#{form_name}_application_type_benefit", class: 'govuk-label govuk-radios__label'
             .govuk-radios__item
               = f.radio_button :application_type, 'income', class: 'govuk-radios__input'
-              = f.label :application_type, t('application_type_income', scope: @form.i18n_scope), for: 'forms_finance_report_application_type_income', class: 'govuk-label govuk-radios__label'
+              = f.label :application_type, t('application_type_income', scope: @form.i18n_scope), for: "#{form_name}_application_type_income", class: 'govuk-label govuk-radios__label'
 
         .govuk-grid-column-one-third
           .govuk-checkboxes.govuk-checkboxes--small
             .govuk-checkboxes__item
               = f.check_box :refund, class: 'govuk-checkboxes__input'
-              = f.label :refund, t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'forms_finance_report_refund'
+              = f.label :refund, t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: "#{form_name}_refund"
 
 
 
