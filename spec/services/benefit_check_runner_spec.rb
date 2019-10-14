@@ -141,12 +141,12 @@ RSpec.describe BenefitCheckRunner do
           context "when the DWP result is #{result}" do
             let(:existing_benefit_check) do
               create :benefit_check,
-                application: application,
-                last_name: applicant.last_name,
-                date_of_birth: applicant.date_of_birth,
-                ni_number: applicant.ni_number,
-                date_to_check: detail.date_received,
-                dwp_result: result
+                     application: application,
+                     last_name: applicant.last_name,
+                     date_of_birth: applicant.date_of_birth,
+                     ni_number: applicant.ni_number,
+                     date_to_check: detail.date_received,
+                     dwp_result: result
             end
 
             it { expect { run }.not_to change { application.benefit_checks.count } }
@@ -159,12 +159,12 @@ RSpec.describe BenefitCheckRunner do
 
             let(:existing_benefit_check) do
               create :benefit_check,
-                application: application,
-                last_name: 'Jones',
-                date_of_birth: applicant.date_of_birth,
-                ni_number: applicant.ni_number,
-                date_to_check: detail.date_received,
-                dwp_result: result
+                     application: application,
+                     last_name: 'Jones',
+                     date_of_birth: applicant.date_of_birth,
+                     ni_number: applicant.ni_number,
+                     date_to_check: detail.date_received,
+                     dwp_result: result
             end
 
             it { expect { run }.to change { application.benefit_checks.count } }
@@ -177,12 +177,12 @@ RSpec.describe BenefitCheckRunner do
 
             let(:existing_benefit_check) do
               create :benefit_check,
-                application: application,
-                last_name: applicant.last_name,
-                date_of_birth: applicant.date_of_birth,
-                ni_number: applicant.ni_number,
-                date_to_check: detail.date_received,
-                dwp_result: result
+                     application: application,
+                     last_name: applicant.last_name,
+                     date_of_birth: applicant.date_of_birth,
+                     ni_number: applicant.ni_number,
+                     date_to_check: detail.date_received,
+                     dwp_result: result
             end
 
             it { expect { run }.to change { application.benefit_checks.count } }
