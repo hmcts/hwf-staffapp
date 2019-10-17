@@ -723,3 +723,10 @@ en-GB:
         zero:  ""
         one:   "<b>1</b> result"
         other: "Showing <b>all&nbsp;%{count}</b> results"
+
+  users:
+    shared:
+      form_roles:
+        roles: Roles
+      form_jurisdiction:
+        main_jurisdiction: Main jurisdiction
