@@ -48,7 +48,7 @@ Scenario: Evidence is correct
 Scenario: Submit problem with evidence
   And I click on start now to process the evidence
   When I submit that there is a problem with evidence
-  Then I should be taken to the problem with the evidence page
+  Then I should be taken to the reason for rejecting the evidence page
 
 Scenario: Evidence error message
   And I click on start now to process the evidence

@@ -66,17 +66,12 @@ RSpec.feature 'Evidence check flow', type: :feature do
       choose 'evidence_correct_false'
       click_button 'Next'
 
-      expect(page).to have_content 'What is the problem with the evidence?'
-      choose 'Not arrived or too late'
-      click_button 'Next'
-
       expect(page).to have_content 'What is the reason for rejecting the evidence?'
       check 'Requested sources not provided'
       check 'Wrong type provided'
       click_button 'Next'
 
       expect(page).to have_content 'Check details'
-      expect(page).to have_content 'not arrived or too late'
       expect(page).to have_content 'requested sources not provided'
       expect(page).to have_content 'wrong type provided'
     end
