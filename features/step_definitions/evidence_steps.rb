@@ -53,6 +53,15 @@ When("I click on return application") do
   click_link('Return application')
 end
 
+Then("I should be taken to the problem with evidence page") do
+  expect(problem_with_evidence_page.content).to have_header
+end
+
+When("I click on the problem with evidence") do
+  problem_with_evidence_page.content.not_arrived_too_late.click
+  next_page
+end
+
 Then("I should be taken to the return letter page") do
   expect(return_letter_page.content).to have_header
   expect(current_path).to include '/evidence/1/return_letter'
