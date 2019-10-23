@@ -1,5 +1,5 @@
 class NavigationPage < BasePage
-  section :proposition_links, '.govuk-header__content' do
+  section :navigation_link, '.govuk-header__content' do
     element :help_with_fees_home, 'a', text: 'Help with fees'
     element :welcome_user, 'li', text: 'Welcome user'
     element :view_profile, 'a', text: 'View profile'
@@ -14,14 +14,14 @@ class NavigationPage < BasePage
   end
 
   def go_to_dwp_message_page
-    proposition_links.dwp_message.trigger('click')
+    navigation_link.dwp_message.trigger('click')
   end
 
   def go_to_homepage
-    proposition_links.help_with_fees_home.trigger('click')
+    navigation_link.help_with_fees_home.trigger('click')
   end
 
   def sign_out
-    proposition_links.sign_out.trigger('click')
+    navigation_link.sign_out.trigger('click')
   end
 end
