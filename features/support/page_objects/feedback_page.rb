@@ -6,7 +6,7 @@ class FeedbackPage < BasePage
     element :send_feedback_button, 'input[value="Send feedback"]'
     element :notice, '.notice', text: 'Your feedback has been recorded'
   end
-  
+
   def submit_new_feedback
     fill_in 'What is your experience of using the service so far?', with: 'Top quality experience'
     fill_in 'Do you have any ideas for how this service could be improved?', with: 'No it is perfect, well done'
