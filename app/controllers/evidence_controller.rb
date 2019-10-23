@@ -111,7 +111,7 @@ class EvidenceController < ApplicationController
     if @form.correct
       redirect_to income_evidence_path
     else
-      redirect_to evidence_accuracy_failed_reason_path(evidence)
+      redirect_to evidence_accuracy_incorrect_reason_path(evidence)
     end
   end
 
