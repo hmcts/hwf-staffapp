@@ -14,14 +14,14 @@ class NavigationPage < BasePage
   end
 
   def go_to_dwp_message_page
-    navigation_link.dwp_message.trigger('click')
+    navigation_link.dwp_message.click
   end
 
   def go_to_homepage
-    navigation_link.help_with_fees_home.trigger('click')
+    navigation_link.help_with_fees_home.click
   end
 
   def sign_out
-    navigation_link.sign_out.trigger('click')
+    navigation_link.sign_out.click
   end
 end

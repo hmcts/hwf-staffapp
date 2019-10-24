@@ -1,6 +1,8 @@
-Given("I am on your feedback page") do
+And("I am on your feedback page") do
   navigation_page.navigation_link.feedback.click
   expect(current_path).to end_with '/feedback'
+  expect(feedback_page.content).to have_user_feedback_header
+  expect(feedback_page.content).to have_welcome_feedback
 end
 
 When("I successfully submit my feedback") do
@@ -13,4 +15,9 @@ end
 
 Then("I should see your feedback has been recorded notification") do
   expect(feedback_page.content).to have_notice
+end
+
+Then("I can email if I have an urgent question or something isn't working") do
+  expect(feedback_page.content).to have_email_us
+  expect(feedback_page.content.email['href']).to eq 'mailto:helpwithfees.feedback@digital.justice.gov.uk'
 end
