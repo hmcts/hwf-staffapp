@@ -1,6 +1,6 @@
 Feature: Your feedback page
 
-Background: Waiting for evidence
+Background: Your feedback page
   Given I successfully sign in as a user
   And I am on your feedback page
 
