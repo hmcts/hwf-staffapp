@@ -26,8 +26,7 @@
             .govuk-error-summary__body
               ul.govuk-list.govuk-error-summary__list
                 - flash.each do |key, value|
-                  li class="#{key}" data-alert=''
-                    a href="#{key}" #{value.html_safe}
+                  li class="#{key}" data-alert='' #{value.html_safe}
 
 
         = yield
