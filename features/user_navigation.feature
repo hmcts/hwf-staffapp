@@ -1,7 +1,7 @@
 Feature: User navigation
   
   Background: Logged in as a user
-    Given I am signed in as a user that has processed an application
+    Given I successfully sign in as a user
 
   @manual @wip
   Scenario: View profile
@@ -21,7 +21,6 @@ Feature: User navigation
   Scenario: Letter templates
     When I click 
 
-  @manual @wip
   Scenario: Sign out
     When I click on sign out
     Then I am taken to the sign in page

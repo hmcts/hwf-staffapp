@@ -78,10 +78,6 @@ def feedback_page
   @feedback_page ||= FeedbackPage.new
 end
 
-def feedback_received_page
-  @feedback_received_page ||= FeedbackReceivedPage.new
-end
-
 def reports_page
   @reports_page ||= ReportsPage.new
 end
