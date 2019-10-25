@@ -18,5 +18,5 @@ Feature: View staff
       Then I can change the details of that member of staff
 
     Scenario: Re-invite 
-      When I click om re-invite
+      When I click on re-invite
       Then I can re-invite that member of staff
