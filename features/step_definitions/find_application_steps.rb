@@ -1,13 +1,3 @@
-Given("I am signed in as a user that has processed an application") do
-  start_application
-  eligable_application
-end
-
-Given("I am signed in as a user that has processed multiple applications") do
-  start_application
-  multiple_applications
-end
-
 When("I search for an application using a valid hwf reference") do
   expect(find_application_page.content).to have_search_header
   find_application_page.search_by_hwf_reference
