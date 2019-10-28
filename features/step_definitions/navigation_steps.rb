@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 When("I click on feedback") do
   navigation_page.navigation_link.feedback.click
 end
