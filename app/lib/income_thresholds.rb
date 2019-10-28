@@ -19,6 +19,7 @@ class IncomeThresholds
   end
 
   def children_supplement
+    return 0 if @children.blank?
     @children * settings.per_child_increment
   end
 

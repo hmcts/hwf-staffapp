@@ -3,10 +3,26 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    header class='govuk-!-padding-top-7'
-      h1.govuk-heading-xl Is the evidence ready to process?
+    = form_for @form, as: :evidence, url: :accuracy_save_evidence, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend class='govuk-!-padding-top-7'
+            h1.govuk-heading-xl Is the evidence ready to process?
+          - if @form.errors[:correct].present?
+            span.govuk-error-message
+              = f.label :correct, @form.errors[:correct].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+                = f.radio_button :correct, 'true', class: 'govuk-radios__input'
+                label.govuk-label.govuk-radios__label for="evidence_correct_true"
+                  = t("evidence.correct")
+            .govuk-radios__item
+                = f.radio_button :correct, 'false', class: 'govuk-radios__input'
+                label.govuk-label.govuk-radios__label for="evidence_correct_false"
+                  = t("evidence.incorrect")
 
-    = render 'shared/forms/accuracy', { form: @form, model: :evidence, url: :accuracy_save_evidence }
+
+      = f.submit 'Next', class: 'govuk-button'
 
   aside.govuk-grid-column-one-third
     .guidance
