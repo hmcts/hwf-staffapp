@@ -264,7 +264,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content(evidence.amount_to_pay) }
 
-        it { expect(page).to have_content 'Maximum amount of income allowed: £5,490' }
+        it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
 
         it { expect(page).to have_content 'Your income total: £2,000' }
       end
