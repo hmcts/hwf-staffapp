@@ -94,6 +94,14 @@ def navigation_page
   @navigation_page ||= NavigationPage.new
 end
 
+def send_invitation_page
+  @send_invitation_page ||= SendInvitationPage.new
+end
+
+def deleted_staff_page
+  @deleted_staff_page ||= DeletedStaffPage.new
+end
+
 def evidence_accuracy_page
   @evidence_accuracy_page ||= EvidenceAccuracyPage.new
 end

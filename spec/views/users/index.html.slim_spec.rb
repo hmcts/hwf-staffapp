@@ -48,18 +48,18 @@ RSpec.describe 'users/index', type: :view do
     end
   end
 
-  describe 'The link to deleted users page' do
-    context 'when user has permission to list deleted users' do
+  describe 'The link to deleted staff page' do
+    context 'when user has permission to list deleted staff' do
       let(:user_list_deleted?) { true }
 
       it 'is rendered' do
-        expect(rendered).to have_link('List deleted users')
+        expect(rendered).to have_link('Deleted staff')
       end
     end
 
-    context 'when user does not have permission to list deleted users' do
+    context 'when user does not have permission to list deleted staff' do
       it 'is not rendered' do
-        expect(rendered).not_to have_link('List deleted users')
+        expect(rendered).not_to have_link('Deleted staff')
       end
     end
   end
