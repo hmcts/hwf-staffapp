@@ -9,7 +9,7 @@ module Views
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'ni_number', 'status']
+        ['full_name', 'date_of_birth', 'ni_number', 'status', 'litigation_friend_details']
       end
 
       def ni_number
@@ -23,6 +23,10 @@ module Views
 
       def date_of_birth
         format_date applicant.date_of_birth
+      end
+
+      def litigation_friend_details
+        applicant.litigation_friend_details
       end
 
       private

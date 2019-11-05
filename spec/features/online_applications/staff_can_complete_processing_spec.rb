@@ -9,6 +9,7 @@ RSpec.feature 'Staff can complete processing of an online application', type: :f
   let(:income_based_none) { create :online_application, :with_reference, :income, :completed, income: 5000, jurisdiction: user.office.jurisdictions.first }
   let(:income_based_part) { create :online_application, :with_reference, :income, :completed, income: 1300, jurisdiction: user.office.jurisdictions.first }
   let(:income_based_full) { create :online_application, :with_reference, :income, :completed, income: 600, jurisdiction: user.office.jurisdictions.first }
+  let(:income_based_minor) { create :online_application, :with_reference, :income, :completed, :litigation, income: 600, jurisdiction: user.office.jurisdictions.first }
 
   let(:user) { create :staff }
 
@@ -50,6 +51,17 @@ RSpec.feature 'Staff can complete processing of an online application', type: :f
     given_user_wants_to_complete_income_based_application_with_low_income
     when_they_complete_processing
     then_they_get_successful_income_outcome
+  end
+
+  scenario 'The online application is income based with litigation details' do
+    given_user_wants_to_complete_income_based_application_with_minor
+    then_they_see_litigation_details
+    when_they_complete_processing
+    then_they_get_successful_income_outcome
+  end
+
+  def given_user_wants_to_complete_income_based_application_with_minor
+    visit "/online_applications/#{income_based_minor.id}"
   end
 
   def given_user_wants_to_complete_income_based_application_with_low_income
@@ -110,4 +122,10 @@ RSpec.feature 'Staff can complete processing of an online application', type: :f
     expect(page).to have_content('Income✓ Passed')
     expect(page).to have_content('Eligible for help with fees')
   end
+
+  def then_they_see_litigation_details
+    expect(page).to have_content('Litigation friend details')
+    expect(page).to have_content('As one friend to another')
+  end
+
 end

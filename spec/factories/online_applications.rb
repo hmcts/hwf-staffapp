@@ -101,6 +101,10 @@ FactoryBot.define do
       fee_manager_lastname { 'Doe' }
     end
 
+    trait :litigation do
+      litigation_friend_details { 'As one friend to another' }
+    end
+
     after(:create) do |online_application, evaluator|
       if evaluator.convert_to_application
         create(:application,

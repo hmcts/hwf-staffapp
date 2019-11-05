@@ -312,6 +312,7 @@ en-GB:
         date_of_birth: Date of birth
         ni_number: National Insurance number
         status: Status
+        litigation_friend_details: Litigation friend details
       views/overview/details:
         fee: Fee
         jurisdiction: Jurisdiction
