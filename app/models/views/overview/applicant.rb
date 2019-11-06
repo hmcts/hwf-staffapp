@@ -3,6 +3,7 @@ module Views
     class Applicant
 
       delegate(:full_name, to: :applicant)
+      delegate(:litigation_friend_details, to: :applicant)
 
       def initialize(application)
         @application = application
@@ -23,10 +24,6 @@ module Views
 
       def date_of_birth
         format_date applicant.date_of_birth
-      end
-
-      def litigation_friend_details
-        applicant.litigation_friend_details
       end
 
       private
