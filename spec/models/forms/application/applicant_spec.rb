@@ -29,13 +29,18 @@ RSpec.describe Forms::Application::Applicant do
           personal_information[:year_date_of_birth] = minimum_age.year
         end
 
-        it { expect(created_applicant.valid?).not_to be true }
+        it { expect(created_applicant).to be_valid }
 
         describe 'error message' do
           before { created_applicant.valid? }
           let(:error) { ["Applicant's date of birth cannot be in the future"] }
 
           it { expect(created_applicant.errors[:date_of_birth]).to eql error }
+
+          # describe 'too_young? method' do
+          #   before { created_applicant.date_of_birth = minimum_age }
+          #   it { expect(created_applicant.too_young?).to be true }
+
         end
       end
 

@@ -3,7 +3,17 @@
 
 h1.govuk-heading-xl Check details
 
-=build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+- personal_link = { url: application_personal_informations_path(@application) }
+- litigation_link = { url: application_litigation_details_path(@application) }
+
+=build_section_with_custom_links 'Personal details', @applicant,
+  [ { key:'full_name', link_attributes: personal_link },
+    { key:'date_of_birth', link_attributes: personal_link },
+    { key:'ni_number', link_attributes: personal_link },
+    { key:'status', link_attributes: personal_link },
+    { key:'litigation_friend_details', link_attributes: litigation_link } ]
+
+
 =build_section_with_defaults 'Application details', @details, application_details_path(@application)
 - if display_savings?(@application)
   =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)

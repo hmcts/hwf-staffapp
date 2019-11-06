@@ -12,10 +12,19 @@ module Applications
         @form.update_attributes(form_params(:applicant))
 
         if @form.save
+          redirect_to redirect_to_link(@form)
+        elsif @form.save
           redirect_to application_details_path
         else
           render :index
         end
+      end
+
+      private
+
+      def redirect_to_link(form)
+        return application_litigation_details_path if form.too_young?
+        application_details_path
       end
     end
   end

@@ -1,0 +1,24 @@
+- content_for :page_title
+  = "Litigation friend details"
+
+= form_for @form, as: :application, url: :application_litigation_details, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = link_to 'Back', application_personal_informations_path, class: "govuk-back-link"
+      h1.govuk-heading-xl Litigation friend details
+
+      .govuk-form-group.group-level
+        - if @form.errors[:litigation_friend_details].present?
+          span.govuk-error-message
+            = f.label :litigation_friend_details, @form.errors[:litigation_friend_details].join(', '), class: 'error'
+        = f.label :litigation_friend_details, class: 'govuk-label'
+          =t('litigation_friend_details', scope: @form.i18n_scope)
+        = f.text_area :litigation_friend_details, { class: 'govuk-textarea',  rows: '5' }
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m Guidelines
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

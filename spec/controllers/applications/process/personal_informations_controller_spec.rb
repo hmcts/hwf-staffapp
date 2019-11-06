@@ -35,10 +35,12 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
 
   describe 'PUT #personal_information_save' do
     let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: 'false' } }
+    let(:too_young_validation) { false }
 
     before do
       allow(personal_information_form).to receive(:update_attributes).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
+      allow(personal_information_form).to receive(:too_young?).and_return(too_young_validation)
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -48,6 +50,14 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
 
       it 'redirects to application_details' do
         expect(response).to redirect_to(application_details_path(application))
+      end
+
+      context 'when the applicant is too young' do
+        let(:too_young_validation) { true }
+
+        it 'redirects to application_details' do
+          expect(response).to redirect_to(application_litigation_details_path(application))
+        end
       end
     end
 

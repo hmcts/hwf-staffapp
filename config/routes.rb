@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     put 'override', to: 'applications/process/override#update', as: :override
 
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
+    resources :litigation_details, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
     resources :benefits, only: [:index, :create], module: 'applications/process'

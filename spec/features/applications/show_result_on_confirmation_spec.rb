@@ -50,6 +50,23 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       end
     end
 
+    context 'applicant is under 15' do
+      let(:dob) { Time.zone.today - 14.years }
+      before do
+        fill_in :application_litigation_friend_details, with: 'As one friend to another'
+        click_button 'Next'
+        application_details_step
+        choose :application_min_threshold_exceeded_true
+        fill_in :application_amount, with: 3500
+        click_button 'Next'
+      end
+
+      scenario 'the summary page shows the litigation friend details' do
+        expect(page).to have_content('Litigation friend details')
+        expect(page).to have_content('As one friend to another')
+      end
+    end
+
     context 'has wrong DOB' do
       before do
         application_details_step

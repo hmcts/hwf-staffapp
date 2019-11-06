@@ -70,6 +70,10 @@ module Forms
       validates :married, inclusion: { in: [true, false] }
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
 
+      def too_young?
+        date_of_birth > (Time.zone.today - MINIMUM_AGE.years)
+      end
+
       private
 
       def strip_whitespace!
@@ -108,7 +112,6 @@ module Forms
       end
 
       def validate_dob_ranges
-        too_young_error if too_young?
         too_old_error if too_old?
       end
 
