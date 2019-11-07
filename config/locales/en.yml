@@ -514,6 +514,10 @@ en-GB:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             married:
               inclusion: Select a marital status
+        forms/application/litigation_detail:
+          attributes:
+            litigation_friend_details:
+              blank: Enter the applicant's litigation friend details
         forms/application/detail:
           attributes:
             fee:
