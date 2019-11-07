@@ -26,10 +26,7 @@ Then("I should see that the applicant cannot be under 16 years old error message
 end
 
 When("I submit a date that makes the applicant under 16 years old") do
-  personal_details_page.full_name
-  personal_details_page.under_16_dob
-  personal_details_page.content.status_single.click
-  next_page
+  personal_details_page.submit_minor_details
 end
 
 Then("I should be taken to the litigation details page") do

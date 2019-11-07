@@ -13,7 +13,8 @@ class SummaryPage < BasePage
 
   def go_to_summary_page
     start_application
-    personal_details_page.submit_all_personal_details
+    personal_details_page.submit_minor_details
+    litigation_details_page.submit_litigation_details
     application_details_page.submit_fee_600
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes

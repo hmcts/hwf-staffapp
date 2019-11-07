@@ -5,8 +5,7 @@ Given("I am on the litigation details page") do
 end
 
 When("I successfully submit litigation details") do
-  fill_in 'As the applicant is under the age of 16, please provide the Litigation Friend details', with: 'name, address, telephone'
-  next_page
+  litigation_details_page.submit_litigation_details
 end
 
 When("I click next without adding the applicants litigation details") do

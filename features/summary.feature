@@ -8,6 +8,9 @@ Feature: Summary page
       When I successfully submit my application
       Then I should be taken to the confirmation page
 
+    Scenario: Displays litigation friend details summary
+      Then I should see litigation friend details summary
+      
     Scenario: Displays benefit summary
       When I see benefit summary 
       Then I should see declared benefits in this application

@@ -52,4 +52,12 @@ class PersonalDetailsPage < BasePage
     content.status_single.click
     next_page
   end
+
+  def submit_minor_details
+    full_name
+    under_16_dob
+    valid_ni
+    content.status_single.click
+    next_page
+  end
 end

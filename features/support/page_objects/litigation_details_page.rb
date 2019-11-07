@@ -4,6 +4,11 @@ class LitigationDetailsPage < BasePage
     element :error, '.error', text: 'Enter the applicant\'s litigation friend details'
   end
 
+  def submit_litigation_details
+    fill_in 'As the applicant is under the age of 16, please provide the Litigation Friend details', with: 'name, address, telephone'
+    next_page
+  end
+
   def go_to_litigation_details_page
     start_application
     personal_details_page.full_name

@@ -28,3 +28,7 @@ Then("I should see that my new answer is displayed in the benefit summary") do
   incomes_page.submit_incomes_no_50
   expect(application_page.content.summary_section[3]).to have_answer_no
 end
+
+When("I should see litigation friend details summary") do
+  expect(summary_page.content.summary_section[0].text).to include 'Litigation friend details name, address, telephone ChangeLitigation friend details'
+end
