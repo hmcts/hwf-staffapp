@@ -18,6 +18,10 @@ def personal_details_page
   @personal_details_page ||= PersonalDetailsPage.new
 end
 
+def litigation_details_page
+  @litigation_details_page ||= LitigationDetailsPage.new
+end
+
 def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end

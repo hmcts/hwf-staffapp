@@ -25,6 +25,18 @@ Then("I should see that the applicant cannot be under 16 years old error message
   expect(personal_details_page.content).to have_dob_in_the_future_error
 end
 
+When("I submit a date that makes the applicant under 16 years old") do
+  personal_details_page.full_name
+  personal_details_page.under_16_dob
+  personal_details_page.content.status_single.click
+  next_page
+end
+
+Then("I should be taken to the litigation details page") do
+  expect(current_path).to end_with '/litigation_details'
+  expect(litigation_details_page.content).to have_header
+end
+
 Then("I should see the invalid date of birth error message") do
   expect(personal_details_page.content).to have_invalid_date_of_birth_error
 end

@@ -24,6 +24,10 @@ Feature: Personal details page
       When I submit a date that makes the applicant born in the future
       Then I should see that the applicant cannot be under 16 years old error message
 
+    Scenario: Applicants under 16 years old
+      When I submit a date that makes the applicant under 16 years old
+      Then I should be taken to the litigation details page
+
     Scenario: Successfully submit my required personal details
       When I successfully submit my required personal details
       Then I should be taken to the application details page
