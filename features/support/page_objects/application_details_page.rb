@@ -82,7 +82,7 @@ class ApplicationDetailsPage < BasePage
     next_page
   end
 
-  def submit_fee_1001
+  def submit_fee_10001
     fill_in('How much is the court or tribunal fee?', with: '10001')
     content.jurisdiction.click
     date_application_received

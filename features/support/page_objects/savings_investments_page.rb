@@ -23,7 +23,7 @@ class SavingsInvestmentsPage < BasePage
 
   def submit_exact_amount
     content.more_than.click
-    content.application_amount.set '10000'
+    content.application_amount.set '10000.01'
     next_page
   end
 end
