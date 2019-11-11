@@ -381,7 +381,7 @@ en-GB:
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
       forms/application/litigation_detail:
-        litigation_friend_details: As the applicant is under the age of 16, please provide the Litigation Friend details
+        litigation_friend_details: As the applicant is under the age of 16, please provide the Litigation Friend's name
 
       forms/application/detail:
         fee: How much is the court or tribunal fee?

@@ -5,7 +5,7 @@ class LitigationDetailsPage < BasePage
   end
 
   def submit_litigation_details
-    fill_in 'As the applicant is under the age of 16, please provide the Litigation Friend details', with: 'name, address, telephone'
+    fill_in "As the applicant is under the age of 16, please provide the Litigation Friend's name", with: 'name, address, telephone'
     next_page
   end
 

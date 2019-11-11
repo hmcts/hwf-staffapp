@@ -80,7 +80,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         dob_text = dob.strftime('%-d %B %Y')
         expect(page).to have_content("Date of birth #{dob_text}")
 
-        first(:xpath, ".//a[@data-section-name='personal-details']").click
+        click_link('ChangeDate of birth')
 
         expect(page).to have_xpath(".//input[@id='application_day_date_of_birth'][@value='#{dob.day}']")
         expect(page).to have_xpath(".//input[@id='application_month_date_of_birth'][@value='#{dob.month}']")
