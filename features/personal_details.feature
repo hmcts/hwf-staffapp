@@ -20,8 +20,8 @@ Feature: Personal details page
       When I leave the date of birth blank
       Then I should see the invalid date of birth error message
 
-    Scenario: Cannot be under 16 years old
-      When I submit a date that makes the applicant under 16 years old
+    Scenario: Cannot be under 0 years old
+      When I submit a date that makes the applicant born in the future
       Then I should see that the applicant cannot be under 16 years old error message
 
     Scenario: Successfully submit my required personal details

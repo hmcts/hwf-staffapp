@@ -503,7 +503,7 @@ en-GB:
               blank: Enter the applicant's last name
               too_short: Last name is too short (minimum is 2 characters)
             date_of_birth:
-              too_young: "The applicant can't be under %{minimum_age} years old"
+              too_young: "Applicant date of birth must be in the future."
               too_old: "The applicant can't be over %{maximum_age} years old"
               not_a_date: 'Enter a valid date of birth'
             ni_number:
