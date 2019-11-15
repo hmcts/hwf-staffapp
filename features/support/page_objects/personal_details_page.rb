@@ -10,7 +10,7 @@ class PersonalDetailsPage < BasePage
     element :application_year_date_of_birth, '#application_year_date_of_birth'
     element :application_ni_number, '#application_ni_number'
     element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'
-    element :dob_in_the_future_error, '.error', text: "Applicant's date of birth can't be in the future."
+    element :dob_in_the_future_error, '.error', text: "Applicant's Date of Birth cannot be in the future."
     element :status_single, 'label', text: 'Single'
     element :status_married, 'label', text: 'Married or living with someone and sharing an income'
   end
