@@ -33,7 +33,7 @@ RSpec.describe Forms::Application::Applicant do
 
         describe 'error message' do
           before { created_applicant.valid? }
-          let(:error) { ["Applicant date of birth must be in the future."] }
+          let(:error) { ["Applicant's date of birth can't be in the future."] }
 
           it { expect(created_applicant.errors[:date_of_birth]).to eql error }
         end
