@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ReportsController, type: :controller do
   let(:admin)     { create :admin_user }
-  let(:date_from) { {day: "01", month: "01", year: "2015"} }
-  let(:date_to) { {day: "31", month: "12", year: "2015"} }
+  let(:date_from) { { day: "01", month: "01", year: "2015" } }
+  let(:date_to) { { day: "31", month: "12", year: "2015" } }
   let(:dates) {
     { day_date_from: '01',
       month_date_from: '01',
@@ -57,7 +57,7 @@ RSpec.describe ReportsController, type: :controller do
             day_date_to: '31',
             month_date_to: '12',
             year_date_to: '2015' }
-          }
+        }
         before { put :finance_report_generator, params: { forms_finance_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
@@ -256,7 +256,7 @@ RSpec.describe ReportsController, type: :controller do
             day_date_to: '31',
             month_date_to: '12',
             year_date_to: '2015' }
-          }
+        }
 
         before { put :raw_data_export, params: { forms_finance_report: dates } }
 
@@ -281,4 +281,3 @@ RSpec.describe ReportsController, type: :controller do
     end
   end
 end
-

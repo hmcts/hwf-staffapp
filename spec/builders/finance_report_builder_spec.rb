@@ -15,11 +15,11 @@ RSpec.describe FinanceReportBuilder do
   let(:current_time) { Time.zone.parse('2016-02-02 15:50:10') }
   let(:start_date) { Time.zone.parse('2015-10-05 12:30:40') }
   let(:start_date_params) {
-    {day: start_date.day, month: start_date.month, year: start_date.year}
+    { day: start_date.day, month: start_date.month, year: start_date.year }
   }
   let(:end_date) { Time.zone.parse('2016-01-10 16:35:00') }
   let(:end_date_params) {
-    {day: end_date.day, month: end_date.month, year: end_date.year}
+    { day: end_date.day, month: end_date.month, year: end_date.year }
   }
 
   let(:filters) {}

@@ -1,16 +1,15 @@
 class ReportsController < ApplicationController
+  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data]
+
   def index
     authorize :report
   end
 
   def finance_transactional_report
-    authorize :report, :show?
     @form = Forms::Report::FinanceTransactionalReport.new
   end
 
   def finance_transactional_report_generator
-    authorize :report, :show?
-
     @form = ftr_form
     if @form.valid?
       build_and_return_data(
@@ -23,18 +22,13 @@ class ReportsController < ApplicationController
   end
 
   def finance_report
-    authorize :report, :show?
     @form = Forms::FinanceReport.new
   end
 
   def finance_report_generator
-    authorize :report, :show?
     @form = form
     if @form.valid?
-      build_and_return_data(
-        finance_report_builder.to_csv,
-        'finance-report'
-      )
+      build_and_return_data(finance_report_builder.to_csv, 'finance-report')
     else
       render :finance_report
     end
@@ -60,7 +54,6 @@ class ReportsController < ApplicationController
   end
 
   def raw_data_export
-    authorize :report, :show?
     @form = form
     if @form.valid?
       build_and_return_data(extract_raw_data, 'help-with-fees-extract')
@@ -76,9 +69,7 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:forms_finance_report).
-      permit(:day_date_from, :month_date_from, :year_date_from,
-       :day_date_to, :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
+    form_params(:forms_finance_report)
   end
 
   def ftr_form
@@ -86,9 +77,13 @@ class ReportsController < ApplicationController
   end
 
   def ftr_params
-    params.require(:forms_report_finance_transactional_report).
-      permit(:day_date_from, :month_date_from, :year_date_from,
-       :day_date_to, :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
+    form_params(:forms_report_finance_transactional_report)
+  end
+
+  def form_params(form_name)
+    params.require(form_name).
+      permit(:day_date_from, :month_date_from, :year_date_from, :day_date_to,
+             :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def load_graph_data
@@ -145,5 +140,9 @@ class ReportsController < ApplicationController
     { day: params_type[:day_date_to],
       month: params_type[:month_date_to],
       year: params_type[:year_date_to] }
+  end
+
+  def authorise_report_show
+    authorize :report, :show?
   end
 end
