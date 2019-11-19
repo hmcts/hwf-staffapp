@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe ReportsController, type: :controller do
   let(:admin)     { create :admin_user }
+  let(:date_from) { {day: "01", month: "01", year: "2015"} }
+  let(:date_to) { {day: "31", month: "12", year: "2015"} }
+  let(:dates) {
+    { day_date_from: '01',
+      month_date_from: '01',
+      year_date_from: '2015',
+      day_date_to: '31',
+      month_date_to: '12',
+      year_date_to: '2015' }
+  }
 
   it_behaves_like 'Pundit denies access to', :index
   it_behaves_like 'Pundit denies access to', :finance_report
@@ -40,7 +50,15 @@ RSpec.describe ReportsController, type: :controller do
       subject { response }
 
       context 'with invalid data - nil date from' do
-        before { put :finance_report_generator, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } } }
+        let(:dates) {
+          { day_date_from: nil,
+            month_date_from: nil,
+            year_date_from: nil,
+            day_date_to: '31',
+            month_date_to: '12',
+            year_date_to: '2015' }
+          }
+        before { put :finance_report_generator, params: { forms_finance_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -48,7 +66,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :finance_report_generator, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } } }
+        before { put :finance_report_generator, params: { forms_finance_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -62,7 +80,6 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'filters' do
-        let(:dates) { { date_from: '2015-01-01', date_to: '2015-12-31' } }
 
         context 'with filters' do
           let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
@@ -71,7 +88,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
             allow(FinanceReportBuilder).to receive(:new).and_return ['report']
             put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', filters)
+            expect(FinanceReportBuilder).to have_received(:new).with(date_from, date_to, filters)
           end
         end
 
@@ -83,7 +100,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
 
             put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1')
+            expect(FinanceReportBuilder).to have_received(:new).with(date_from, date_to, jurisdiction_id: '1')
           end
         end
 
@@ -94,7 +111,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
             allow(FinanceReportBuilder).to receive(:new).and_return ['report']
             put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', {})
+            expect(FinanceReportBuilder).to have_received(:new).with(date_from, date_to, {})
           end
         end
 
@@ -128,7 +145,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: { date_from: '2018-01-01', date_to: '2018-12-31' } } }
+        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -142,8 +159,6 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'filters' do
-        let(:dates) { { date_from: '2015-01-01', date_to: '2015-12-31' } }
-
         context 'with filters' do
           let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
 
@@ -151,7 +166,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
             allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', filters)
+            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, filters)
           end
         end
 
@@ -163,7 +178,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
 
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1')
+            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, jurisdiction_id: '1')
           end
         end
 
@@ -174,7 +189,7 @@ RSpec.describe ReportsController, type: :controller do
             report_params = dates.merge(filters)
             allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', {})
+            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, {})
           end
         end
       end
@@ -234,7 +249,16 @@ RSpec.describe ReportsController, type: :controller do
       subject { response }
 
       context 'with invalid data - nil date from' do
-        before { put :raw_data_export, params: { forms_finance_report: { date_from: nil, date_to: '2015-12-31' } } }
+        let(:dates) {
+          { day_date_from: nil,
+            month_date_from: nil,
+            year_date_from: nil,
+            day_date_to: '31',
+            month_date_to: '12',
+            year_date_to: '2015' }
+          }
+
+        before { put :raw_data_export, params: { forms_finance_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -242,7 +266,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :raw_data_export, params: { forms_finance_report: { date_from: '2015-01-01', date_to: '2015-12-31' } } }
+        before { put :raw_data_export, params: { forms_finance_report: dates } }
 
         it { is_expected.to have_http_status(:success) }
 
@@ -257,3 +281,4 @@ RSpec.describe ReportsController, type: :controller do
     end
   end
 end
+

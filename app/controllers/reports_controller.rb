@@ -77,7 +77,8 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:forms_finance_report).
-      permit(:date_from, :date_to, :be_code, :refund, :application_type, :jurisdiction_id)
+      permit(:day_date_from, :month_date_from, :year_date_from,
+       :day_date_to, :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def ftr_form
@@ -86,7 +87,8 @@ class ReportsController < ApplicationController
 
   def ftr_params
     params.require(:forms_report_finance_transactional_report).
-      permit(:date_from, :date_to, :be_code, :refund, :application_type, :jurisdiction_id)
+      permit(:day_date_from, :month_date_from, :year_date_from,
+       :day_date_to, :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def load_graph_data
@@ -107,7 +109,7 @@ class ReportsController < ApplicationController
   end
 
   def extract_raw_data
-    Views::Reports::RawDataExport.new(report_params[:date_from], report_params[:date_to]).to_csv
+    Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params)).to_csv
   end
 
   def filters(form_params)
@@ -121,16 +123,27 @@ class ReportsController < ApplicationController
 
   def finance_report_builder
     FinanceReportBuilder.new(
-      report_params[:date_from], report_params[:date_to],
+      date_from(report_params), date_to(report_params),
       filters(report_params)
     )
   end
 
   def finance_transactional_report_builder
     FinanceTransactionalReportBuilder.new(
-      ftr_params[:date_from],
-      ftr_params[:date_to],
+      date_from(ftr_params), date_to(ftr_params),
       filters(ftr_params)
     )
+  end
+
+  def date_from(params_type)
+    { day: params_type[:day_date_from],
+      month: params_type[:month_date_from],
+      year: params_type[:year_date_from] }
+  end
+
+  def date_to(params_type)
+    { day: params_type[:day_date_to],
+      month: params_type[:month_date_to],
+      year: params_type[:year_date_to] }
   end
 end

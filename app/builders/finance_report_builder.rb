@@ -21,9 +21,13 @@ class FinanceReportBuilder
   }.freeze
 
   def initialize(start_date, end_date, filters = {})
-    @date_from = DateTime.parse(start_date.to_s).utc
-    @date_to = DateTime.parse(end_date.to_s).utc.end_of_day
+    @date_from = format_dates(start_date).utc
+    @date_to = format_dates(end_date).utc.utc.end_of_day
     @filters = filters
+  end
+
+  def format_dates(date_attribute)
+    DateTime.parse(date_attribute.values.join('/'))
   end
 
   def to_csv
