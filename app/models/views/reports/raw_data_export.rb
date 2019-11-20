@@ -36,12 +36,12 @@ module Views
       ATTRIBUTES = FIELDS.keys
 
       def initialize(start_date, end_date)
-        @date_from = format_dates(start_date).utc
-        @date_to = format_dates(end_date).utc.utc.end_of_day
+        @date_from = format_dates(start_date)
+        @date_to = format_dates(end_date).end_of_day
       end
 
       def format_dates(date_attribute)
-        DateTime.parse(date_attribute.values.join('/'))
+        DateTime.parse(date_attribute.values.join('/')).utc
       end
 
       def to_csv
