@@ -6,10 +6,14 @@ class GenerateReportPage < BasePage
     element :date_from_label, 'label', text: 'Date From'
     elements :date_hint, '.hint', text: 'Use this format DD/MM/YYYY'
     element :aggregated_date_from, '#forms_finance_report_date_from'
-    element :transactional_date_from, '#forms_report_finance_transactional_report_date_from'
+    element :transactional_day_date_from, '#forms_report_finance_transactional_report_day_date_from'
+    element :transactional_month_date_from, '#forms_report_finance_transactional_report_month_date_from'
+    element :transactional_year_date_from, '#forms_report_finance_transactional_report_year_date_from'
     element :date_to_label, 'label', text: 'Date To'
     element :aggregated_date_to, '#forms_finance_report_date_to'
-    element :transactional_date_to, '#forms_report_finance_transactional_report_date_to'
+    element :transactional_day_date_to, '#forms_report_finance_transactional_report_day_date_to'
+    element :transactional_month_date_to, '#forms_report_finance_transactional_report_month_date_to'
+    element :transactional_year_date_to, '#forms_report_finance_transactional_report_year_date_to'
     element :blank_start_date_error, '.error', text: 'Please enter a start date'
     element :blank_end_date_error, '.error', text: 'Please enter an end date'
     element :date_range_error, '.error', text: 'The date range can\'t be longer than 2 years'
@@ -38,8 +42,14 @@ class GenerateReportPage < BasePage
   end
 
   def enter_invalid_transactional_date
-    content.transactional_date_from.set Time.zone.today - 30.months
-    content.transactional_date_to.set Time.zone.today
+    date_from = Time.zone.today - 30.months
+    date_to = Time.zone.today
+    content.transactional_day_date_from.set date_from.day
+    content.transactional_month_date_from.set date_from.month
+    content.transactional_year_date_from.set date_from.year
+    content.transactional_day_date_to.set date_to.day
+    content.transactional_month_date_to.set date_to.month
+    content.transactional_year_date_to.set date_to.year
     generate_report
   end
 end
