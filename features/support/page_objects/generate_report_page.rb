@@ -13,7 +13,7 @@ class GenerateReportPage < BasePage
     element :aggregated_date_to, '#forms_finance_report_date_to'
     element :transactional_day_date_to, '#forms_report_finance_transactional_report_day_date_to'
     element :transactional_month_date_to, '#forms_report_finance_transactional_report_month_date_to'
-    element :transactional_year_date_to, '#forms_report_finance_transactional_report_year_ date_to'
+    element :transactional_year_date_to, '#forms_report_finance_transactional_report_year_date_to'
     element :blank_start_date_error, '.error', text: 'Please enter a start date'
     element :blank_end_date_error, '.error', text: 'Please enter an end date'
     element :date_range_error, '.error', text: 'The date range can\'t be longer than 2 years'
