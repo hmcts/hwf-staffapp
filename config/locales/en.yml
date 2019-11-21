@@ -360,6 +360,12 @@ en-GB:
       forms/report/finance_transactional_report:
         date_from: 'Date from'
         date_to: 'Date to'
+        day_date_from: 'Day'
+        month_date_from: 'Month'
+        year_date_from: 'Year'
+        day_date_to: 'Day'
+        month_date_to: 'Month'
+        year_date_to: 'Year'
         date_hint: Use this format DD/MM/YYYY
         date_hint: Use this format DD/MM/YYYY
         application_type_benefit: Benefit

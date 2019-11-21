@@ -25,6 +25,7 @@ h1.govuk-heading-xl = header
           .govuk-form-group.govuk-form-group-year
             = f.label :year_date_from, class: 'govuk-label'
             = f.text_field :year_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
   .govuk-form-group
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend
@@ -47,14 +48,6 @@ h1.govuk-heading-xl = header
             = f.label :year_date_to, class: 'govuk-label'
             = f.text_field :year_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
-
-      / .govuk-form-group.group-level
-      /   = f.label :date_to, class: 'govuk-label'
-      /     = t('date_to')
-      /     span.hint.block = t('date_hint', scope: @form.i18n_scope)
-      /   span.govuk-error-message
-      /     = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error' if @form.errors[:date_to].present?
-      /   = f.text_field :date_to, { class: 'govuk-input govuk-!-width-one-third' }
       - if filters
         h2.govuk-heading-s class='govuk-!-margin-top-8' Filters
 
@@ -90,6 +83,6 @@ h1.govuk-heading-xl = header
 
 
 
-      .govuk-form-group.group-level
-        = f.submit 'Generate report', class: 'govuk-button'
+  .govuk-form-group.group-level
+    = f.submit 'Generate report', class: 'govuk-button'
 
