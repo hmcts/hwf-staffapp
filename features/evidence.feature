@@ -21,6 +21,15 @@ Scenario: Return application
   And when I click on finish
   Then I should be taken back to my dashboard
 
+Scenario: Return application when citizen is not proceeding
+  When I click on return application
+  Then I should be taken to the problem with evidence page
+  When I click on the citizen not proceeding
+  Then I should be taken to the return letter page
+  And I should see a not proceeding application letter template
+  And when I click on finish
+  Then I should be taken back to my dashboard
+
 Scenario: Applicants personal details
   Then I should see the applicants personal details
 
