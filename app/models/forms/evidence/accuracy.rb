@@ -6,7 +6,8 @@ module Forms
       def fields_to_update
         reset_incorrect_reasons if correct
         { correct: correct, incorrect_reason: incorrect_reason,
-          incorrect_reason_category: incorrect_reason_category }.tap do |fields|
+          incorrect_reason_category: incorrect_reason_category,
+          staff_error_details: staff_error_details }.tap do |fields|
           fields[:outcome] = 'none' unless correct
         end
       end

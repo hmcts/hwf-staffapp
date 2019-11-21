@@ -19,8 +19,12 @@
             = f.radio_button :incorrect_reason, 'citizen_not_processing', class: 'govuk-radios__input'
             = f.label t('evidence.citizen_not_processing'), for: 'evidence_incorrect_reason_citizen_not_processing', class: 'govuk-label govuk-radios__label'
           .govuk-radios__item
-            = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input'
+            = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input show-hide-section', data: { section: 'error-details', show: 'false' }
             = f.label t('evidence.staff_error'), for: 'evidence_incorrect_reason_staff_error', class: 'govuk-label govuk-radios__label'
+
+        .govuk-form-group.start-hidden#error-details-only
+          = f.label :staff_error_details, t('.staff_error_details.label'), class: 'govuk-label'
+          = f.text_area :staff_error_details, class: 'govuk-textarea govuk-input--width-20', rows: "3"
 
         = f.submit 'Next', class: 'govuk-button'
 
