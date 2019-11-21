@@ -24,7 +24,7 @@ module Evidence
     end
 
     def save_accuracy_reasons
-      reasons = params.require(:evidence).permit(:incorrect_reason).to_h
+      reasons = params.require(:evidence).permit(:incorrect_reason, :staff_error_details).to_h
       reasons.merge!(correct: false)
       @form.update_attributes(reasons)
       @form.save
