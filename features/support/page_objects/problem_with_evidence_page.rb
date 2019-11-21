@@ -3,6 +3,7 @@ class ProblemWithEvidencePage < BasePage
     element :header, 'h1', text: 'What is the problem with the evidence?'
     element :not_arrived_too_late, '.govuk-label', text: 'Not arrived or too late'
     element :not_proceeding, '.govuk-label', text: 'Citizen not proceeding'
+    element :staff_error, '.govuk-label', text: 'Staff error'
     element :error, '.error', text: 'Please select from one of the options'
   end
 

@@ -1,6 +1,11 @@
+And("there is an application waiting for evidence") do
+  sign_in_page.load_page
+  sign_in_page.user_account
+  waiting_evidence_application
+  waiting_evidence_application
+end
+
 And("I am on an application waiting for evidence") do
-  waiting_evidence_application
-  waiting_evidence_application
   click_link('PA19-000002')
 end
 
@@ -23,29 +28,29 @@ Then("I should see instructions with a deadline to submit the evidence") do
 end
 
 Then("I should see the applicants personal details") do
-  expect(evidence_page.content).to have_personal_details
+  expect(evidence_page.content.evidence_summary[0]).to have_personal_details
 end
 
 Then("I should see the application details") do
-  expect(evidence_page.content).to have_application_details
+  expect(evidence_page.content.evidence_summary[1]).to have_application_details
 end
 
 Then("I should see the applicants benefit details") do
-  expect(evidence_page.content).to have_benefits
+  expect(evidence_page.content.evidence_summary[2]).to have_benefits
 end
 
 Then("I should see the applicants income details") do
-  expect(evidence_page.content).to have_income
+  expect(evidence_page.content.evidence_summary[3]).to have_income
 end
 
-Then("I should see whather the applicant is eligible for help with fees") do
+Then("I should see whether the applicant is eligible for help with fees") do
   expect(evidence_page.content).to have_eligable_header
 end
 
 Then("I should see the processing summmary") do
   date_processed = Time.zone.now.strftime('%-d %B %Y')
   expect(evidence_page.content).to have_processing_summary
-  expect(page.text).to have_content date_processed
+  expect(evidence_page.content.text).to have_content date_processed
 end
 
 When("I click on return application") do
@@ -57,33 +62,9 @@ Then("I should be taken to the problem with evidence page") do
   expect(problem_with_evidence_page.content).to have_header
 end
 
-When("I click on the problem with evidence") do
-  problem_with_evidence_page.content.not_arrived_too_late.click
-  next_page
-end
-
-When("I click on the citizen not proceeding") do
-  problem_with_evidence_page.content.not_proceeding.click
-  next_page
-end
-
 Then("I should be taken to the return letter page") do
   expect(return_letter_page.content).to have_header
   expect(current_path).to include '/evidence/1/return_letter'
-end
-
-Then("when I click on finish") do
-  click_button('Finish')
-end
-
-Then("I should see a return application letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven’t received any information, we’re unable to process your application'
-end
-
-Then("I should see a not proceeding application letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'we are returning the application as you no longer wish to proceed'
 end
 
 When("I submit that the evidence is correct") do
@@ -136,14 +117,11 @@ Given("I have successfully submitted the evidence") do
   click_link('Next')
 end
 
-Given("I should see the evidence details on the summary page") do
+Then("I should see the evidence details on the summary page") do
   expect(current_path).to end_with '/evidence/1/summary'
-  expect(evidence_page.content.evidence_summary).to have_evidence_header
-  expect(evidence_page.content.evidence_summary).to have_change_application_evidence
-  expect(evidence_page.content.evidence_summary.evidence_answer_key[0].text).to eq 'Correct'
-  expect(evidence_page.content.evidence_summary.evidence_answer_value[0].text).to eq 'Yes'
-  expect(evidence_page.content.evidence_summary.evidence_answer_key[1].text).to eq 'Income'
-  expect(evidence_page.content.evidence_summary.evidence_answer_value[1].text).to eq '£500'
+  expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
+  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to eq 'Correct Yes ChangeCorrect'
+  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to eq 'Income £500 ChangeIncome'
 end
 
 When("I complete processing") do
