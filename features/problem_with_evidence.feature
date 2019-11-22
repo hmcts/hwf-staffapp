@@ -29,3 +29,4 @@ Feature: Problem with evidence page
     When I click on staff error
     And I submit the details of the staff error
     Then I am taken to the rejection letter page
+    And on the processed application I can see that the reason for not being processed is staff error

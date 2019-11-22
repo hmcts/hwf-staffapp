@@ -15,5 +15,6 @@ class EvidencePage < BasePage
       elements :summary_row, '.govuk-summary-list__row'
     end
     element :processing_summary, 'h2', text: 'Processing summary'
+    elements :table_row, '.govuk-table__row'
   end
 end
