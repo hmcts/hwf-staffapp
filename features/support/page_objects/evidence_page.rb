@@ -18,5 +18,6 @@ class EvidencePage < BasePage
       elements :evidence_answer_key, '.govuk-summary-list__key'
       elements :evidence_answer_value, '.govuk-summary-list__value'
     end
+    elements :table_row, '.govuk-table__row'
   end
 end
