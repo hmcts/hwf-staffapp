@@ -42,3 +42,12 @@ end
 When("I click on finish") do
   click_button('Finish')
 end
+
+When("I click on staff error") do
+  problem_with_evidence_page.content.staff_error.click
+end
+
+When("I submit the details of the staff error") do
+  fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
+  next_page
+end

@@ -24,3 +24,8 @@ Feature: Problem with evidence page
   Scenario: Problem with evidence error message
     When I click on next without making a selection
     Then I should see select from one of the options error message
+
+  Scenario: Staff error
+    When I click on staff error
+    And I submit the details of the staff error
+    Then I am taken to the rejection letter page
