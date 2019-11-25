@@ -5,7 +5,8 @@ module Forms
       {
         correct: Boolean,
         incorrect_reason: String,
-        incorrect_reason_category: Array
+        incorrect_reason_category: Array,
+        staff_error_details: String
       }
     end
 
