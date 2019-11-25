@@ -89,11 +89,33 @@ RSpec.describe Evidence::AccuracyFailedReasonController, type: :controller do
       end
 
       context 'when the form is empty' do
-        let(:expected_form_params) { {} }
+        let(:expected_form_params) { { correct: false } }
         let(:form_save) { true }
 
         it 'renders the incorrect reason page template again' do
           expect(response).to render_template(:show)
+        end
+
+        context 'emtpy staff error details' do
+          let(:expected_form_params) {
+            { incorrect_reason: 'staff_error', staff_error_details: '', correct: false }
+          }
+          let(:form_save) { true }
+
+          it 'renders the incorrect reason page template again' do
+            expect(response).to render_template(:show)
+          end
+        end
+
+        context 'staff error details with a content' do
+          let(:expected_form_params) {
+            { incorrect_reason: 'staff_error', staff_error_details: 'wrong ref', correct: false }
+          }
+          let(:form_save) { true }
+
+          it 'renders the incorrect reason page template again' do
+            expect(response).to redirect_to(return_letter_evidence_path(evidence))
+          end
         end
       end
     end
