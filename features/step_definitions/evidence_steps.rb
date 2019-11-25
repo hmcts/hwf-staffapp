@@ -62,6 +62,11 @@ When("I click on the problem with evidence") do
   next_page
 end
 
+When("I click on the citizen not proceeding") do
+  problem_with_evidence_page.content.not_proceeding.click
+  next_page
+end
+
 Then("I should be taken to the return letter page") do
   expect(return_letter_page.content).to have_header
   expect(current_path).to include '/evidence/1/return_letter'
@@ -73,6 +78,12 @@ end
 
 Then("I should see a return application letter template") do
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven’t received any information, we’re unable to process your application'
+end
+
+Then("I should see a not proceeding application letter template") do
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'we are returning the application as you no longer wish to proceed'
 end
 
 When("I submit that the evidence is correct") do
