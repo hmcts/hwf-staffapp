@@ -32,6 +32,9 @@
           .govuk-checkboxes__item
             = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'wrong_date_range'
             = f.label t('evidence.wrong_date_range'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_wrong_date_range'
+          .govuk-checkboxes__item
+            = f.check_box :incorrect_reason_category, { multiple: true, class: 'govuk-checkboxes__input' }, 'savings_investment_too_high'
+            = f.label t('evidence.savings_investment_too_high'), class: 'govuk-label govuk-checkboxes__label', for: 'evidence_incorrect_reason_category_savings_investment_too_high'
 
 
         = f.submit 'Next', class: 'govuk-button'

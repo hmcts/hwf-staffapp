@@ -19,7 +19,8 @@ module Evidence
 
     def accuracy_reasons_check
       return true if category_params.present?
-      @form.errors.add(:incorrect_reason_category, 'Select from one of the options')
+      message = I18n.t('incorrect_reason_category.blank', scope: i18_scope)
+      @form.errors.add(:incorrect_reason_category, message)
       false
     end
 
@@ -33,6 +34,10 @@ module Evidence
     def save_accuracy_reasons_category
       @form.update_attributes(incorrect_reason_category: category_params)
       @form.save
+    end
+
+    def i18_scope
+      'activemodel.errors.models.forms/evidence/accuracy.attributes'
     end
 
   end
