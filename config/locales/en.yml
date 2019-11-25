@@ -92,7 +92,7 @@ en-GB:
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
 
   evidence:
-    correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+    correct: 'Yes, the evidence is for the correct applicant and covers the correct time period'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
     not_arrived_or_late: not arrived or too late
     citizen_not_processing: citizen not proceeding
@@ -103,7 +103,7 @@ en-GB:
     pages_missing: pages missing
     cannot_identify_applicant: cannot identify applicant
     wrong_date_range: wrong date range
-
+    savings_investment_too_high: where requested, savings and investments too high
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -585,6 +585,8 @@ en-GB:
             incorrect_reason:
               blank: 'This question must be answered'
               too_long: "Your description must be less than 500 characters"
+            incorrect_reason_category:
+              blank: 'Select from at least one of the following options'
         forms/part_payment/accuracy:
           attributes:
             correct:
