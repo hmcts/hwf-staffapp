@@ -1,4 +1,30 @@
-=render(partial: 'shared/part_payment_evidence/show', locals: { source: @evidence, type: 'evidence' })
+- content_for :page_title
+  = "#{@evidence.application.reference} - Waiting for evidence"
+
+h1.govuk-heading-xl #{@evidence.application.reference} - Waiting for evidence
+
+.panel
+  h2.govuk-heading-m Process evidence
+  = link_to 'Start now', send("accuracy_evidence_path", @evidence), class: 'govuk-button util_mb-medium'
+  details.govuk-details data-module="govuk-details"
+    summary.govuk-details__summary
+      span.govuk-details__summary-text What to do if evidence hasn't arrived
+    .govuk-details__text
+      | Evidence needs to arrive by <strong>#{@evidence.expires_at.to_s(:gov_uk_long)}</strong> for this application.
+      |  If you haven't received the evidence, the citizen is not proceeding or staff error, choose 'Return application' to remove it from 'Waiting for evidence' and return everything to the applicant.
+    .govuk-details__text
+      = link_to 'Return application', send("evidence_accuracy_failed_reason_path", @evidence), class: 'govuk-button'
+
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Benefits', @application_view, ['benefits']
+=build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income']
+=build_section 'Result', @application_view, ['benefits_result', 'savings_result', 'income_result']
+
+=render(partial: 'shared/remission_type', locals: { source: @application_view })
+
+=render(partial: 'shared/processed_summary', locals: { source: @processing_details })
+
 
 - content_for(:javascripts)
   javascript:
