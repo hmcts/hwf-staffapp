@@ -9,6 +9,6 @@ Feature: Reason for rejecting the evidence
     Then I am taken to the summary page
     And I should see my answers for evidence on the summary page
 
-  Scenario: Reason for rejecting the evidence error message
-    When I click on next without making a selection
-    Then I should see select from one of the options error message
+  # Scenario: Reason for rejecting the evidence error message
+  #   When I click on next without making a selection
+  #   Then I should see select from one of the options error message
