@@ -23,7 +23,7 @@ module Applications
       private
 
       def redirect_to_link(form)
-        return application_litigation_details_path if form.too_young?
+        return application_litigation_details_path if form.need_a_litigation_friend?
         application_details_path
       end
     end

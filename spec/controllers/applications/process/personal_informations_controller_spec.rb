@@ -40,7 +40,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     before do
       allow(personal_information_form).to receive(:update_attributes).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
-      allow(personal_information_form).to receive(:too_young?).and_return(too_young_validation)
+      allow(personal_information_form).to receive(:need_a_litigation_friend?).and_return(too_young_validation)
 
       post :create, params: { application_id: application.id, application: expected_params }
     end

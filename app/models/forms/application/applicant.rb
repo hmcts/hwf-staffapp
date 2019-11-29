@@ -70,7 +70,7 @@ module Forms
       validates :married, inclusion: { in: [true, false] }
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
 
-      def too_young?
+      def need_a_litigation_friend?
         date_of_birth > (Time.zone.today - MINIMUM_AGE.years)
       end
 
@@ -95,16 +95,16 @@ module Forms
         end
       end
 
-      def too_young?
-        date_of_birth > Time.zone.today
-      end
-
       def too_old?
         date_of_birth < (Time.zone.today - MAXIMUM_AGE.years)
       end
 
+      def too_young?
+        date_of_birth > Time.zone.today
+      end
+
       def too_young_error
-        errors.add(:date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
+        errors.add(:date_of_birth, :too_young)
       end
 
       def too_old_error
@@ -112,6 +112,7 @@ module Forms
       end
 
       def validate_dob_ranges
+        too_young_error if too_young?
         too_old_error if too_old?
       end
 
