@@ -256,7 +256,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         let(:outcome) { 'none' }
         let(:income) { 2000 }
 
-        it { expect(page).to have_content 'Unfortunately you’re not eligible and will have to pay the full fee' }
+        it { expect(page).to have_content 'insufficient evidence, or if relevant, your savings are too high to get Help with Fees support' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
@@ -266,7 +266,6 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
 
-        it { expect(page).to have_content 'Your income total: £2,000' }
       end
     end
   end
