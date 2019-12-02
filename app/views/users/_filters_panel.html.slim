@@ -12,13 +12,6 @@
         .govuk-form-group
           = submit_tag "Filter", class: 'govuk-button'
           = link_to 'Clear', users_path, { class: 'govuk-button second-button' }
-          ul.govuk-list
-            - if policy(:user).new?
-              li.govuk-link= link_to 'Add staff', new_user_invitation_path
-
-            - if policy(:user).list_deleted?
-              li.govuk-link= link_to 'Deleted staff', deleted_users_path
-
     .govuk-grid-column-full
       p You can use this filter to see whether members of staff have not logged in within the last three months.
       p If you are a Manager, please select 'inactive' from the Activity drop-down list and then click on the Filter button. You will then see all your members of staff who have not logged in within the last three months (Please ignore the greyed-out Offices drop-down list which is for Admin users only).

@@ -78,10 +78,6 @@ def feedback_page
   @feedback_page ||= FeedbackPage.new
 end
 
-def users_page
-  @users_page ||= UsersPage.new
-end
-
 def reports_page
   @reports_page ||= ReportsPage.new
 end
@@ -96,14 +92,6 @@ end
 
 def navigation_page
   @navigation_page ||= NavigationPage.new
-end
-
-def send_invitation_page
-  @send_invitation_page ||= SendInvitationPage.new
-end
-
-def deleted_staff_page
-  @deleted_staff_page ||= DeletedStaffPage.new
 end
 
 def evidence_accuracy_page
