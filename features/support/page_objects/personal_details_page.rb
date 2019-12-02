@@ -34,6 +34,13 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set tomorrow.year
   end
 
+  def under_16_dob
+    yesterday = Time.zone.yesterday
+    content.application_day_date_of_birth.set yesterday.day
+    content.application_month_date_of_birth.set yesterday.month
+    content.application_year_date_of_birth.set yesterday.year
+  end
+
   def valid_ni
     content.application_ni_number.set 'JR054008D'
   end
