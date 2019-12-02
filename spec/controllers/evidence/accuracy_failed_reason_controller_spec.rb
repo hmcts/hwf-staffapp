@@ -38,7 +38,7 @@ RSpec.describe Evidence::AccuracyFailedReasonController, type: :controller do
 
   describe 'POST #update' do
     let(:expected_form_params) {
-      { incorrect_reason: "no_evidence", correct: false }
+      { incorrect_reason: "no_evidence" }
     }
 
     context 'as a signed out user' do
@@ -71,7 +71,7 @@ RSpec.describe Evidence::AccuracyFailedReasonController, type: :controller do
           let(:form) { instance_double(Forms::Evidence::Accuracy, correct: true) }
 
           it 'redirects to the summary page' do
-            expect(response).to redirect_to(return_letter_evidence_path(evidence))
+            expect(response).to redirect_to(evidence_accuracy_incorrect_reason_path(evidence))
           end
         end
       end

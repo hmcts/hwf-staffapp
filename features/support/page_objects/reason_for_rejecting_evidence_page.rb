@@ -18,5 +18,7 @@ class ReasonForRejectingEvidencePage < BasePage
     click_link('Start now')
     evidence_accuracy_page.content.problem_with_evidence.click
     next_page
+    problem_with_evidence_page.content.not_arrived_too_late.click
+    next_page
   end
 end

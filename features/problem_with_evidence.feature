@@ -6,7 +6,7 @@ Feature: Problem with evidence page
 
   Scenario: What is the problem with the evidence
     When I successfully submit one of the problems
-    Then I am taken to the rejection letter page
+    Then I am taken to the reason for rejecting the evidence page
 
   Scenario: Problem with evidence error message
     When I click on next without making a selection

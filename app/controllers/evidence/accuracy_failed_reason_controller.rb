@@ -8,8 +8,9 @@ module Evidence
 
     def update
       @form = Forms::Evidence::Accuracy.new(evidence)
+
       if accuracy_reasons_check && save_accuracy_reasons
-        redirect_to return_letter_evidence_path(evidence)
+        redirect_to evidence_accuracy_incorrect_reason_path(evidence)
       else
         render :show
       end
@@ -25,7 +26,6 @@ module Evidence
 
     def save_accuracy_reasons
       reasons = params.require(:evidence).permit(:incorrect_reason).to_h
-      reasons.merge!(correct: false)
       @form.update_attributes(reasons)
       @form.save
     end

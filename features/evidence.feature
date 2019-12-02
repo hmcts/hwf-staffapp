@@ -3,7 +3,7 @@ Feature: Waiting for evidence
 Background: Waiting for evidence
   Given I successfully sign in as a user
   And I am on an application waiting for evidence
-
+  
 Scenario: Process evidence
   When I click on start now to process the evidence
   Then I should be taken to a page asking me if the evidence ready to process
@@ -14,10 +14,11 @@ Scenario: What to do if evidence cannot be processed
 
 Scenario: Return application
   When I click on return application
-  Then I should be taken to the problem with evidence page
-  When I click on the problem with evidence
   Then I should be taken to the return letter page
   And I should see a return application letter template
+
+Scenario: Return application
+  When I click on return application
   And when I click on finish
   Then I should be taken back to my dashboard
 
@@ -47,7 +48,7 @@ Scenario: Evidence is correct
 Scenario: Submit problem with evidence
   And I click on start now to process the evidence
   When I submit that there is a problem with evidence
-  Then I should be taken to the reason for rejecting the evidence page
+  Then I should be taken to the problem with the evidence page
 
 Scenario: Evidence error message
   And I click on start now to process the evidence

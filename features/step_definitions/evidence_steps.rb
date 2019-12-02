@@ -53,15 +53,6 @@ When("I click on return application") do
   click_link('Return application')
 end
 
-Then("I should be taken to the problem with evidence page") do
-  expect(problem_with_evidence_page.content).to have_header
-end
-
-When("I click on the problem with evidence") do
-  problem_with_evidence_page.content.not_arrived_too_late.click
-  next_page
-end
-
 Then("I should be taken to the return letter page") do
   expect(return_letter_page.content).to have_header
   expect(current_path).to include '/evidence/1/return_letter'
@@ -103,9 +94,9 @@ When("I submit that there is a problem with evidence") do
   next_page
 end
 
-Then("I should be taken to the reason for rejecting the evidence page") do
-  expect(current_path).to end_with '/evidence/accuracy_incorrect_reason/1'
-  expect(reason_for_rejecting_evidence_page.content).to have_header
+Then("I should be taken to the problem with the evidence page") do
+  expect(current_path).to end_with '/evidence/accuracy_failed_reason/1'
+  expect(problem_with_evidence_page.content).to have_header
 end
 
 Then("I should see this question must be answered error message") do

@@ -9,7 +9,8 @@ class ProblemWithEvidencePage < BasePage
     waiting_evidence_application
     waiting_evidence_application
     click_link('PA19-000002')
-    evidence_page.content.evidence_can_not_be_processed.click
-    click_link('Return application')
+    click_link('Start now')
+    evidence_accuracy_page.content.problem_with_evidence.click
+    next_page
   end
 end

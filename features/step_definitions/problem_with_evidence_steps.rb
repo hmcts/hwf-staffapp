@@ -8,6 +8,6 @@ When("I successfully submit one of the problems") do
   next_page
 end
 
-Then("I am taken to the rejection letter page") do
-  expect(current_path).to eq '/evidence/1/return_letter'
+Then("I am taken to the reason for rejecting the evidence page") do
+  expect(current_path).to eq '/evidence/accuracy_incorrect_reason/1'
 end
