@@ -1,10 +1,9 @@
 - content_for :page_title
-  = "Is the evidence ready to process?"
+  = "Evidence"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    header class='govuk-!-padding-top-7'
-      h1.govuk-heading-xl Is the evidence ready to process?
+    h1.govuk-heading-xl Evidence
 
     = render 'shared/forms/accuracy', { form: @form, model: :evidence, url: :accuracy_save_evidence }
 

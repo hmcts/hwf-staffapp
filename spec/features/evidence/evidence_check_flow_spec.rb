@@ -64,21 +64,9 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
+      fill_in 'evidence_incorrect_reason', with: 'SOME REASON'
       click_button 'Next'
-
-      expect(page).to have_content 'What is the problem with the evidence?'
-      choose 'Not arrived or too late'
-      click_button 'Next'
-
-      expect(page).to have_content 'What is the reason for rejecting the evidence?'
-      check 'Requested sources not provided'
-      check 'Wrong type provided'
-      click_button 'Next'
-
       expect(page).to have_content 'Check details'
-      expect(page).to have_content 'not arrived or too late'
-      expect(page).to have_content 'requested sources not provided'
-      expect(page).to have_content 'wrong type provided'
     end
   end
 
@@ -144,11 +132,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for an unsuccessful outcome' do
       let(:evidence) { create :evidence_check_incorrect, application: application }
       let(:expected_fields) do
-        [
-          { title: 'Correct', value: 'No', url: accuracy_evidence_path(evidence) },
-          { title: 'Reason', value: evidence.incorrect_reason, url: evidence_accuracy_failed_reason_path(evidence) },
-          { title: 'Incorrect reason category', value: 'unreadable or illegible, cannot identify applicant', url: evidence_accuracy_incorrect_reason_path(evidence) }
-        ]
+        {
+          'Correct' => 'No',
+          'Reason' => evidence.incorrect_reason
+        }
       end
 
       it 'renders correct outcome' do
@@ -164,10 +151,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for a part remission outcome' do
       let(:evidence) { create :evidence_check_part_outcome, application: application }
       let(:expected_fields) do
-        [
-          { title: 'Correct', value: 'Yes', url: accuracy_evidence_path(evidence) },
-          { title: 'Income', value: "£#{evidence.income}", url: income_evidence_path(evidence) }
-        ]
+        {
+          'Correct' => 'Yes',
+          'Income' => "£#{evidence.income}"
+        }
       end
 
       it 'renders correct outcome' do
@@ -190,11 +177,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for a full remission outcome' do
       let(:evidence) { create :evidence_check_full_outcome, application: application }
       let(:expected_fields) do
-        [
-          { title: 'Correct', value: 'Yes', url: accuracy_evidence_path(evidence) },
-          { title: 'Income', value: "£#{evidence.income}", url: income_evidence_path(evidence) }
-        ]
-
+        {
+          'Correct' => 'Yes',
+          'Income' => "£#{evidence.income}"
+        }
       end
 
       it 'renders correct outcome' do
@@ -207,15 +193,14 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
-    def page_expectation(outcome, fields = [])
+    def page_expectation(outcome, fields = {})
       expect(page).to have_content(outcome)
-      fields.each do |field|
-        expect(page).to have_content("#{field[:title]}#{field[:value]}")
-        expect(page).to have_link("Change#{field[:title]}", href: field[:url])
+
+      fields.each do |title, value|
+        expect(page).to have_content("#{title}#{value}")
+        expect(page).to have_link("Change#{title}", href: accuracy_evidence_path(evidence))
       end
     end
-    # rubocop:enable Metrics/AbcSize
   end
 
   context 'when on "Evidence confirmation" page' do
