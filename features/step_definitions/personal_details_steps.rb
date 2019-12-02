@@ -16,13 +16,13 @@ Then("I should be taken to the application details page") do
   expect(application_details_page.content).to have_header
 end
 
-When("I submit a date that makes the applicant born in the future") do
-  personal_details_page.in_the_future_dob
+When("I submit a date that makes the applicant under 16 years old") do
+  personal_details_page.under_16_dob
   next_page
 end
 
 Then("I should see that the applicant cannot be under 16 years old error message") do
-  expect(personal_details_page.content).to have_dob_in_the_future_error
+  expect(personal_details_page.content).to have_under_16_error
 end
 
 Then("I should see the invalid date of birth error message") do
