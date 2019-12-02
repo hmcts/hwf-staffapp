@@ -26,7 +26,8 @@
             .govuk-error-summary__body
               ul.govuk-list.govuk-error-summary__list
                 - flash.each do |key, value|
-                  li class="#{key}" data-alert='' #{value.html_safe}
+                  li class="#{key}" data-alert=''
+                    a href="#{key}" #{value.html_safe}
 
 
         = yield
@@ -54,7 +55,7 @@
         li.govuk-header__navigation-item
           = link_to 'Staff Guides', guide_path, {class: 'govuk-header__link'}
         li.govuk-header__navigation-item
-          = link_to 'Feedback', feedback_link, {class: 'govuk-header__link'}
+          = link_to 'Feedback', feedback_path, {class: 'govuk-header__link'}
         li.govuk-header__navigation-item
           = link_to 'Letter templates', letter_templates_path, {class: 'govuk-header__link'}
         li.govuk-header__navigation-item
