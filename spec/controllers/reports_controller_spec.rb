@@ -60,45 +60,6 @@ RSpec.describe ReportsController, type: :controller do
           expect(response.headers['Content-Type']).to include('text/csv')
         end
       end
-
-      context 'filters' do
-        let(:dates) { { date_from: '2015-01-01', date_to: '2015-12-31' } }
-
-        context 'with filters' do
-          let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
-
-          it 'sends filter to DataReport' do
-            report_params = dates.merge(filters)
-            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
-            put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', filters)
-          end
-        end
-
-        context 'only with present filters' do
-          let(:filters) { { jurisdiction_id: '1' } }
-
-          it 'sends filter to DataReport' do
-            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
-            report_params = dates.merge(filters)
-
-            put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1')
-          end
-        end
-
-        context 'no filters' do
-          let(:filters) { {} }
-
-          it 'sends filter to DataReport' do
-            report_params = dates.merge(filters)
-            allow(FinanceReportBuilder).to receive(:new).and_return ['report']
-            put :finance_report_generator, params: { forms_finance_report: report_params }
-            expect(FinanceReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', {})
-          end
-        end
-
-      end
     end
 
     describe 'GET #finance_transactional_report' do
@@ -138,44 +99,6 @@ RSpec.describe ReportsController, type: :controller do
 
         it 'sets the file type' do
           expect(response.headers['Content-Type']).to include('text/csv')
-        end
-      end
-
-      context 'filters' do
-        let(:dates) { { date_from: '2015-01-01', date_to: '2015-12-31' } }
-
-        context 'with filters' do
-          let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
-
-          it 'sends filter to DataReport' do
-            report_params = dates.merge(filters)
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
-            put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', filters)
-          end
-        end
-
-        context 'only with present filters' do
-          let(:filters) { { jurisdiction_id: '1' } }
-
-          it 'sends filter to DataReport' do
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
-            report_params = dates.merge(filters)
-
-            put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', jurisdiction_id: '1')
-          end
-        end
-
-        context 'no filters' do
-          let(:filters) { {} }
-
-          it 'sends filter to DataReport' do
-            report_params = dates.merge(filters)
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
-            put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with('2015-01-01', '2015-12-31', {})
-          end
         end
       end
     end
