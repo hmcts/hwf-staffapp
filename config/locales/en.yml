@@ -461,7 +461,6 @@ en-GB:
         month_date_received: Month
         year_date_received: Year
         date_hint: For example, 04 10 2018
-        date_received: Date received
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -723,10 +722,3 @@ en-GB:
         zero:  ""
         one:   "<b>1</b> result"
         other: "Showing <b>all&nbsp;%{count}</b> results"
-
-  users:
-    shared:
-      form_roles:
-        roles: Roles
-      form_jurisdiction:
-        main_jurisdiction: Main jurisdiction
