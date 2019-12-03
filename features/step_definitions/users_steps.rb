@@ -1,5 +1,5 @@
 Given("I am on the staff page") do
-  navigation_page.navigation_link.view_staff.click
+  navigation_page.proposition_links.view_staff.click
   expect(users_page.content).to have_header
   expect(current_path).to end_with '/users'
 end
