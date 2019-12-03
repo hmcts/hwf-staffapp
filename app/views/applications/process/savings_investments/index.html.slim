@@ -62,7 +62,7 @@
             dd.govuk-summary-list__value #{@application.applicant.age} years old
           .govuk-summary-list__row
             dt.govuk-summary-list__key Fee
-            dd.govuk-summary-list__value = number_to_currency(@application.detail.fee.floor, precision: 0, unit: '£')
+            dd.govuk-summary-list__value = number_to_currency(@application.detail.fee, precision: 2, unit: '£')
           .govuk-summary-list__row
             dt.govuk-summary-list__key Status
             dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
