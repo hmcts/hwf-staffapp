@@ -1,16 +1,14 @@
 = form_for(@notification, url: notifications_path, action: :patch) do |f|
-  fieldset.govuk-fieldset
-    legend class='govuk-!-padding-top-7'
-      h1.govuk-heading-xl Edit Notifications Message
-    .govuk-form-group
-      = f.label :message, class: 'govuk-label'
-      = f.text_area :message, cols: '70', rows: '7', :class => 'ckeditor'
+  .govuk-form-group
+    = f.label :message, class: 'govuk-label'
+    = f.text_area :message, cols: '70', rows: '7', :class => 'ckeditor'
 
-    .govuk-form-group
+  .govuk-form-group
+    fieldset
       .govuk-checkboxes.govuk-checkboxes--small
         .govuk-checkboxes__item
           = f.check_box :show, class: 'govuk-checkboxes__input'
           = f.label :show, class: 'govuk-label govuk-checkboxes__label'
             | Show on admin homepage
 
-    = f.submit 'Save changes', class: 'govuk-button'
+  = f.submit 'Save changes', class: 'govuk-button'

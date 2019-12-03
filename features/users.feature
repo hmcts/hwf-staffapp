@@ -1,13 +1,18 @@
+@manual @wip
+
 Feature: Users
 
-    Background: Staff page
-      Given I successfully sign in as admin
-      And I am on the staff page
+    Scenario: Add user
+      Given I am signed in as admin
+      And I am on the users page
+      When I successfully add a new user
+      Then they should get an invitation via an email
 
-    Scenario: Add staff
-      When I click on the add staff link
-      Then I should be taken to the send invitation page
+    Scenario: Invitation received
+      Given I have received an email invitation
+      When I click on the link
+      Then ....
 
-    Scenario: Deleted users
-      When I click on the deleted users link
-      Then I should be taken to the deleted staff page
+    
+      
+

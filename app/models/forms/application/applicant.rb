@@ -92,7 +92,7 @@ module Forms
       end
 
       def too_young?
-        date_of_birth > Time.zone.today
+        date_of_birth > (Time.zone.today - MINIMUM_AGE.years)
       end
 
       def too_old?

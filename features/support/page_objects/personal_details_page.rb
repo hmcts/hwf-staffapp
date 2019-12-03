@@ -10,7 +10,7 @@ class PersonalDetailsPage < BasePage
     element :application_year_date_of_birth, '#application_year_date_of_birth'
     element :application_ni_number, '#application_ni_number'
     element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'
-    element :dob_in_the_future_error, '.error', text: "Applicant's date of birth cannot be in the future"
+    element :under_16_error, '.error', text: 'The applicant can\'t be under 16 years old'
     element :status_single, 'label', text: 'Single'
     element :status_married, 'label', text: 'Married or living with someone and sharing an income'
   end
@@ -27,11 +27,10 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
-  def in_the_future_dob
-    tomorrow = Time.zone.tomorrow
-    content.application_day_date_of_birth.set tomorrow.day
-    content.application_month_date_of_birth.set tomorrow.month
-    content.application_year_date_of_birth.set tomorrow.year
+  def under_16_dob
+    content.application_day_date_of_birth.set '10'
+    content.application_month_date_of_birth.set '02'
+    content.application_year_date_of_birth.set  Time.zone.today.year
   end
 
   def valid_ni

@@ -94,16 +94,6 @@ en-GB:
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
-    not_arrived_or_late: not arrived or too late
-    citizen_not_processing: citizen not proceeding
-    staff_error: staff error
-    requested_source_not_provided: requested sources not provided
-    wrong_type_provided: wrong type provided
-    unreadable_or_illegible: unreadable or illegible
-    pages_missing: pages missing
-    cannot_identify_applicant: cannot identify applicant
-    wrong_date_range: wrong date range
-
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -330,7 +320,6 @@ en-GB:
       views/evidence:
         correct: Correct
         incorrect_reason: Reason
-        incorrect_reason_category: Incorrect reason category
         income: Income
       views/application_result:
         savings: Savings and investments
@@ -347,21 +336,10 @@ en-GB:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
-        application_type_benefit: Benefit
-        application_type_income: Income
-        jurisdiction: Jurisdiction
-        be_code: Business entity code
       forms/report/finance_transactional_report:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
-        date_hint: Use this format DD/MM/YYYY
-        application_type_benefit: Benefit
-        application_type_income: Income
-        refund: Refund
-        jurisdiction: Jurisdiction
-        be_code: Business entity code
-
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
@@ -472,7 +450,6 @@ en-GB:
         month_date_received: Month
         year_date_received: Year
         date_hint: For example, 04 10 2018
-        date_received: Date received
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -487,7 +464,6 @@ en-GB:
             date_to:
               blank: 'Please enter an end date'
               after: 'Date must be after the start date'
-              not_a_date: 'Please endter a valid date'
         forms/report/finance_transactional_report:
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:
@@ -503,7 +479,7 @@ en-GB:
               blank: Enter the applicant's last name
               too_short: Last name is too short (minimum is 2 characters)
             date_of_birth:
-              too_young: "Applicant's date of birth cannot be in the future"
+              too_young: "The applicant can't be under %{minimum_age} years old"
               too_old: "The applicant can't be over %{maximum_age} years old"
               not_a_date: 'Enter a valid date of birth'
             ni_number:
@@ -735,10 +711,3 @@ en-GB:
         zero:  ""
         one:   "<b>1</b> result"
         other: "Showing <b>all&nbsp;%{count}</b> results"
-
-  users:
-    shared:
-      form_roles:
-        roles: Roles
-      form_jurisdiction:
-        main_jurisdiction: Main jurisdiction

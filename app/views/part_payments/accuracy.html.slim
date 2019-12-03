@@ -3,33 +3,9 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: :part_payment, url: :accuracy_save_part_payment, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
-      .govuk-form-group.group-level
-        fieldset.govuk-fieldset
-          legend class='govuk-!-padding-top-7'
-            h1.govuk-heading-xl Is the part-payment ready to process?
-          - if @form.errors[:correct].present?
-            span.govuk-error-message
-              = f.label :correct, @form.errors[:correct].join(', '), class: 'error'
-          .govuk-radios.govuk-radios--small
-            .govuk-radios__item
-                = f.radio_button :correct, 'true', class: 'govuk-radios__input'
-                label.govuk-label.govuk-radios__label for="part_payment_correct_true"
-                  = t("part_payment.correct")
-            .govuk-radios__item
-                = f.radio_button :correct, 'false', class: 'govuk-radios__input'
-                label.govuk-label.govuk-radios__label for="part_payment_correct_false"
-                  = t("part_payment.incorrect")
+    h1.govuk-heading-xl Part-payment details
 
-        .panel-indent.util_mt-0#reason-input
-          = f.label :incorrect_reason, t("part_payment.labels.incorrect_reason"), class: 'govuk-label'
-          - if @form.errors[:incorrect_reason].present?
-            span.govuk-error-message
-              = f.label :incorrect_reason, @form.errors[:incorrect_reason].join(', '), class: 'error'
-          = f.text_area :incorrect_reason, rows: 3, class: 'govuk-textarea'
-
-      = f.submit 'Next', class: 'govuk-button'
-
+    = render 'shared/forms/accuracy', { form: @form, model: :part_payment, url: :accuracy_save_part_payment }
 
   aside.govuk-grid-column-one-third
     .guidance
