@@ -27,6 +27,11 @@ sudo apt-get install qt5-default libqt5webkit5-dev
 sudo apt-get install xvfb
 ```
 
+You will also need to install govuk-frontend library
+```
+npm install --save govuk-frontend
+```
+
 #### Creating initial user
 There is a rake task that takes email, password and role
 
