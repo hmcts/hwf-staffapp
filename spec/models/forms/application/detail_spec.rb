@@ -411,13 +411,13 @@ RSpec.describe Forms::Application::Detail do
       let(:params) {
         { jurisdiction_id: jurisdiction.id,
           fee: 11.34,
-          date_received: Date.today,
+          date_received: Time.zone.today,
           date_fee_paid: 1.month.ago,
           form_name: 'ABC123' }
-        }
+      }
 
-      it { expect(detail.fee.to_f).to eql(11.34) }
-      it { expect(form.fee.to_f).to eql(11.34) }
+      it { expect(detail.fee.to_f).to be(11.34) }
+      it { expect(form.fee.to_f).to be(11.34) }
     end
   end
 end
