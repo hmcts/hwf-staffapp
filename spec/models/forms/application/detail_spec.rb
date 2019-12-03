@@ -405,5 +405,19 @@ RSpec.describe Forms::Application::Detail do
 
       it { is_expected.to be false }
     end
+
+    context 'fee is saved as decimal value' do
+      before { update_form }
+      let(:params) {
+        { jurisdiction_id: jurisdiction.id,
+          fee: 11.34,
+          date_received: Date.today,
+          date_fee_paid: 1.month.ago,
+          form_name: 'ABC123' }
+        }
+
+      it { expect(detail.fee.to_f).to eql(11.34) }
+      it { expect(form.fee.to_f).to eql(11.34) }
+    end
   end
 end

@@ -18,7 +18,7 @@ module Views
       end
 
       def fee
-        number_to_currency(detail.fee.round, precision: 0, unit: '£')
+        number_to_currency(detail.fee, precision: 2, unit: '£')
       end
 
       def jurisdiction

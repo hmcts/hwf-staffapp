@@ -21,19 +21,11 @@ RSpec.describe Views::Overview::Details do
 
     let(:application) { build_stubbed(:application, fee: fee_amount) }
 
-    context 'rounds down' do
+    context 'display 2 decimal places' do
       let(:fee_amount) { 1005.49 }
 
       it 'formats the fee amount correctly' do
-        is_expected.to eq '£1,005'
-      end
-    end
-
-    context 'when its under £1' do
-      let(:fee_amount) { 0.49 }
-
-      it 'formats the fee amount correctly' do
-        is_expected.to eq '£0'
+        is_expected.to eq '£1,005.49'
       end
     end
   end
