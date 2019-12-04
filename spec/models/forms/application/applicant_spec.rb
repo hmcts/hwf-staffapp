@@ -21,7 +21,7 @@ RSpec.describe Forms::Application::Applicant do
     describe 'date_of_birth' do
 
       context 'when the date_of_birth is less than minimum age allowed' do
-        let(:minimum_age) { Time.zone.today - (described_class::MINIMUM_AGE - 1).years }
+        let(:minimum_age) { Time.zone.today + 1.day }
 
         before do
           personal_information[:day_date_of_birth] = minimum_age.day
@@ -33,7 +33,7 @@ RSpec.describe Forms::Application::Applicant do
 
         describe 'error message' do
           before { created_applicant.valid? }
-          let(:error) { ["The applicant can't be under #{described_class::MINIMUM_AGE} years old"] }
+          let(:error) { ["Applicant's date of birth cannot be in the future"] }
 
           it { expect(created_applicant.errors[:date_of_birth]).to eql error }
         end
