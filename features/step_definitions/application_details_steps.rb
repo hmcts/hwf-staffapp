@@ -47,6 +47,14 @@ When(/^I submit the form with a fee £20,000 or over$/) do
   next_page
 end
 
+When(/^I submit the form with a fee of £500.51$/) do
+  application_details_page.submit_pence_to_summary
+end
+
+When(/^I should see the amount including pence on the summary page$/) do
+  expect(summary_page.text).to have_content '£500.51'
+end
+
 When("I submit the form with a fee £10,001 - £19,999") do
   application_details_page.submit_fee_1001
 end

@@ -90,5 +90,17 @@ class ApplicationDetailsPage < BasePage
     fill_in('Case number', with: 'E71YX571')
     next_page
   end
+
+  def submit_pence_to_summary
+    fill_in('How much is the court or tribunal fee?', with: '500.51')
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571')
+    next_page
+    savings_investments_page.submit_less_than
+    benefits_page.submit_benefits_yes
+    paper_evidence_page.submit_evidence_yes
+  end
 end
 # rubocop:enable Metrics/AbcSize
