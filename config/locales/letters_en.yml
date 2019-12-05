@@ -27,6 +27,16 @@ en-GB:
         <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
+      reject_evidence_generic_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your application for help with fees. Unfortunately, we cannot process your claim as you have sent us incorrect or insufficient evidence, or if relevant, your savings are too high to get Help with Fees support.</p>
+        <p>We are rejecting your claim.</p>
+        <p><strong>If you disagree with this decision</strong></p>
+        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
+        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>
       reject_no_benefits_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
