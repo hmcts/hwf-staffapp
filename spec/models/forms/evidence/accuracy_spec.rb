@@ -43,7 +43,8 @@ RSpec.describe Forms::Evidence::Accuracy do
     end
 
     context 'for a valid form when the evidence is incorrect' do
-      let(:params) { { correct: false } }
+      let(:staff_error_details) { 'wrong ref number' }
+      let(:params) { { correct: false, staff_error_details: staff_error_details } }
 
       before { form_save && evidence.reload }
 
@@ -51,6 +52,9 @@ RSpec.describe Forms::Evidence::Accuracy do
         expect(evidence.outcome).to eql('none')
       end
 
+      it 'updates staff_error_details' do
+        expect(evidence.staff_error_details).to eql(staff_error_details)
+      end
     end
   end
 end
