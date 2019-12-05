@@ -45,7 +45,7 @@ RSpec.feature 'Part payment application with evidence check', type: :feature do
     click_link 'Start now'
 
     expect(page).to have_content 'Is the evidence ready to process?'
-    choose "Yes, the evidence is for the correct applicant and dated in the last 3 months"
+    choose "Yes, the evidence is for the correct applicant and covers the correct time period"
     click_button 'Next'
 
     fill_in 'evidence_income', with: 3951

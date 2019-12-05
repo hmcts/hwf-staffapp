@@ -128,3 +128,7 @@ When("I complete processing") do
   complete_processing
   back_to_start
 end
+
+Then("I should see select from one of the problem options error message") do
+  problem_with_evidence_page.content.header
+end
