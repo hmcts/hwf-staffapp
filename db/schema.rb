@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_133153) do
+ActiveRecord::Schema.define(version: 2019_11_21_152746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2019_09_24_133153) do
     t.string "incorrect_reason"
     t.string "check_type"
     t.string "incorrect_reason_category"
+    t.string "staff_error_details"
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
   end
 

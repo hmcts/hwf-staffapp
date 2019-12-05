@@ -118,6 +118,10 @@ en-GB:
         processed_on: Date processed
         status: Status
         updated_at: Last updated
+    accuracy_failed_reason:
+      show:
+        staff_error_details:
+          label: Please add details of the staff error
   part_payment:
     correct: 'Yes'
     incorrect: 'No'

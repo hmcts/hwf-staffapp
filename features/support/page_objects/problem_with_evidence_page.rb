@@ -5,6 +5,7 @@ class ProblemWithEvidencePage < BasePage
     element :not_proceeding, '.govuk-label', text: 'Citizen not proceeding'
     element :staff_error, '.govuk-label', text: 'Staff error'
     element :error, '.error', text: 'Please select from one of the options'
+    element :staff_error, '.govuk-label', text: 'Staff error'
   end
 
   def go_to_problem_with_evidence_page
