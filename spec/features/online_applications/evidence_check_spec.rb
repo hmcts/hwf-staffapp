@@ -82,7 +82,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
       click_link Application.last.reference
     end
     click_link 'Start now'
-    choose 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+    choose 'Yes, the evidence is for the correct applicant and covers the correct time period'
     click_button 'Next'
 
     fill_in 'evidence_income', with: '1359'
