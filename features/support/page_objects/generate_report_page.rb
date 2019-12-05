@@ -13,12 +13,6 @@ class GenerateReportPage < BasePage
     element :blank_start_date_error, '.error', text: 'Please enter a start date'
     element :blank_end_date_error, '.error', text: 'Please enter an end date'
     element :date_range_error, '.error', text: 'The date range can\'t be longer than 2 years'
-    element :filter_header, 'h2', text: 'Filters'
-    element :jurisdiction, '.govuk-label', text: 'Jurisdiction'
-    element :application_type, 'legend', text: 'Application type'
-    element :benefit_label, '.govuk-label', text: 'Benefit'
-    element :income_label, '.govuk-label', text: 'Income'
-    element :refund, '.govuk-label', text: 'Refund'
   end
 
   def generate_report

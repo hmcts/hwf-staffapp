@@ -20,10 +20,9 @@ class FinanceReportBuilder
     none_sum: 'granted basis amount'
   }.freeze
 
-  def initialize(start_date, end_date, filters = {})
+  def initialize(start_date, end_date)
     @date_from = DateTime.parse(start_date.to_s).utc
     @date_to = DateTime.parse(end_date.to_s).utc.end_of_day
-    @filters = filters
   end
 
   def to_csv
@@ -63,45 +62,10 @@ class FinanceReportBuilder
   end
 
   def distinct_offices_jurisdictions
-    list = offices_jurisdictions_query
-    list = filtered_query(list)
-    list.distinct { |s| s.values_at(:office, :jurisdiction) }
-  end
-
-  def offices_jurisdictions_query
     BusinessEntity.
       exclude_hq_teams.
       joins('LEFT JOIN applications ON business_entity_id = business_entities.id').
       where('decision_date BETWEEN :d1 AND :d2', d1: @date_from, d2: @date_to).
-      where('applications.state = 3')
-  end
-
-  def filtered_query(list)
-    return list if @filters.blank?
-    list = list.where(be_code: be_code_filter) if be_code_filter
-    list = list.where(jurisdiction_id: jurisdiction_filter) if jurisdiction_filter
-    list = list.where('applications.application_type = ?', app_type_filter) if app_type_filter
-
-    if refund_filter
-      list = list.joins('LEFT JOIN details ON applications.id = details.application_id').
-             where('details.refund = true')
-    end
-    list
-  end
-
-  def be_code_filter
-    @filters[:be_code]
-  end
-
-  def jurisdiction_filter
-    @filters[:jurisdiction_id]
-  end
-
-  def refund_filter
-    @filters[:refund]
-  end
-
-  def app_type_filter
-    @filters[:application_type]
+      where('applications.state = 3').distinct { |s| s.values_at(:office, :jurisdiction) }
   end
 end

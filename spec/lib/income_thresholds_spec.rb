@@ -33,15 +33,6 @@ RSpec.describe IncomeThresholds do
       end
     end
 
-    context 'when kids are set to nil' do
-      let(:married) { true }
-      let(:children) { nil }
-
-      it 'calculates the right minimum threshold' do
-        is_expected.to eq 1245
-      end
-    end
-
     context 'when the applicant is married with kids' do
       let(:married) { true }
       let(:children) { 2 }
@@ -58,15 +49,6 @@ RSpec.describe IncomeThresholds do
     context 'when the applicant is single without kids' do
       let(:married) { false }
       let(:children) { 0 }
-
-      it 'calculates the right minimum threshold' do
-        is_expected.to eq 5085
-      end
-    end
-
-    context 'when the kids are set to nil' do
-      let(:married) { false }
-      let(:children) { nil }
 
       it 'calculates the right minimum threshold' do
         is_expected.to eq 5085

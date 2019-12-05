@@ -12,13 +12,6 @@ Feature: Generate report page
       When I enter a valid date for finance aggregated reports
       Then a finance aggregated report is downloaded
 
-    Scenario: Filters
-      Given I am on the finance aggregated report page
-      Then I can filter by business entity code
-      And I can filter by jurisdiction
-      And I can filter by application type
-      And I can filter refund cases
-  
     Scenario: Generate finance aggregated report without dates
       Given I am on the finance aggregated report page
       When I try and generate a report without entering dates

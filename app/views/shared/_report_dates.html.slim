@@ -1,18 +1,19 @@
 - content_for :page_title
   = header
 
-h1.govuk-heading-xl = header
-
 = form_for @form, url: path, method: :put, html: { autocomplete: 'off' } do |f|
   .govuk-form-group
     fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+        h1.govuk-heading-xl = header
+
       .govuk-form-group.group-level
         = f.label :date_from, class: 'govuk-label'
           = t('date_from')
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         span.govuk-error-message
           = f.label :date_from, @form.errors[:date_from].join(', '), class: 'error' if @form.errors[:date_from].present?
-        = f.text_field :date_from, { class: 'govuk-input govuk-!-width-one-third' }
+        = f.text_field :date_from, { class: 'govuk-input govuk-!-width-one-quarter' }
 
       .govuk-form-group.group-level
         = f.label :date_to, class: 'govuk-label'
@@ -20,42 +21,6 @@ h1.govuk-heading-xl = header
           span.hint.block = t('date_hint', scope: @form.i18n_scope)
         span.govuk-error-message
           = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error' if @form.errors[:date_to].present?
-        = f.text_field :date_to, { class: 'govuk-input govuk-!-width-one-third' }
-      - if filters
-        h2.govuk-heading-s class='govuk-!-margin-top-8' Filters
-
-        .govuk-form-group.group-level
-          = f.label :be_code, class: 'govuk-label'
-            = t('be_code', scope: @form.i18n_scope)
-          - if @form.errors[:be_code].present?
-            span.govuk-error-message
-              = f.label :be_code, @form.errors[:be_code].join(', '), class: 'error'
-          = f.text_field :be_code, { class: 'govuk-input govuk-!-width-one-third' }
-
-        .govuk-form-group
-          = f.label :jurisdiction_id, class: 'govuk-label', for: "#{form_name}_jurisdiction_id"
-          = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: true }
-
-        .govuk-form-group
-          .govuk-checkboxes.govuk-checkboxes--small
-            .govuk-checkboxes__item
-              = f.check_box :refund, class: 'govuk-checkboxes__input'
-              = f.label :refund, t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: "#{form_name}_refund"
-
-        .govuk-form-group.filter
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--s Application type
-
-          .govuk-radios.govuk-radios--small.govuk-radios--inline
-            .govuk-radios__item
-              = f.radio_button :application_type, 'benefit', class: 'govuk-radios__input'
-              = f.label :application_type, t('application_type_benefit', scope: @form.i18n_scope), for: "#{form_name}_application_type_benefit", class: 'govuk-label govuk-radios__label'
-            .govuk-radios__item
-              = f.radio_button :application_type, 'income', class: 'govuk-radios__input'
-              = f.label :application_type, t('application_type_income', scope: @form.i18n_scope), for: "#{form_name}_application_type_income", class: 'govuk-label govuk-radios__label'
-
-
-
-
-      .govuk-form-group.group-level
-        = f.submit 'Generate report', class: 'govuk-button'
-
+        = f.text_field :date_to, { class: 'govuk-input govuk-!-width-one-quarter' }
+  .govuk-form-group.group-level
+    = f.submit 'Generate report', class: 'govuk-button'
