@@ -103,7 +103,7 @@ en-GB:
     pages_missing: pages missing
     cannot_identify_applicant: cannot identify applicant
     wrong_date_range: wrong date range
-    savings_investment_too_high: where requested, savings and investments too high
+    savings_investment_too_high: where requested, savings and investments are too high
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -586,7 +586,7 @@ en-GB:
               blank: 'This question must be answered'
               too_long: "Your description must be less than 500 characters"
             incorrect_reason_category:
-              blank: 'Select from at least one of the following options'
+              blank: 'Select a reason or reasons why you are rejecting the evidence'
         forms/part_payment/accuracy:
           attributes:
             correct:
