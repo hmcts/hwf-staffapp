@@ -6,6 +6,10 @@ module Forms
 
       attribute :date_from, Date
       attribute :date_to, Date
+      attribute :be_code, String
+      attribute :refund, Boolean
+      attribute :application_type, String
+      attribute :jurisdiction_id, Integer
 
       validates :date_to, :date_from, presence: true
 
