@@ -47,3 +47,21 @@ end
 Then("I should see date range exceeds two years error message") do
   expect(generate_report_page.content).to have_date_range_error
 end
+
+Then("I can filter by business entity code") do
+  expect(generate_report_page.content).to have_filter_header
+  fill_in('Business entity code', with: 'Test code')
+end
+
+Then("I can filter by jurisdiction") do
+  expect(generate_report_page.content).to have_jurisdiction
+end
+
+Then("I can filter by application type") do
+  expect(generate_report_page.content).to have_benefit_label
+  generate_report_page.content.income_label.click
+end
+
+Then("I can filter refund cases") do
+  generate_report_page.content.refund.click
+end
