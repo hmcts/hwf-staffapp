@@ -16,9 +16,10 @@ class FinanceTransactionalReportBuilder
     fee: 'Fee Amount'
   }.freeze
 
-  def initialize(start_date, end_date)
+  def initialize(start_date, end_date, filters = {})
     @date_from = DateTime.parse(start_date.to_s).utc
     @date_to = DateTime.parse(end_date.to_s).utc.end_of_day
+    @filters = filters
   end
 
   def to_csv
@@ -58,6 +59,10 @@ class FinanceTransactionalReportBuilder
   end
 
   def applications
+    filtered_query(report_default_query)
+  end
+
+  def report_default_query
     Application.
       includes(:detail).
       includes(:office).
@@ -69,4 +74,34 @@ class FinanceTransactionalReportBuilder
       order(Arel.sql('decision_date::timestamp::date ASC')).
       order(Arel.sql('business_entities.be_code ASC'))
   end
+
+  def filtered_query(list)
+    list = list.where(business_entity_id: be_code_filter) if be_code_filter
+    list = list.where('details.refund = true') if refund_filter
+    list = list.where(application_type: app_type_filter) if app_type_filter
+    if jurisdiction_filter
+      list = list.where('business_entities.jurisdiction_id = ?', jurisdiction_filter)
+    end
+
+    list
+  end
+
+  def be_code_filter
+    if @filters[:be_code]
+      BusinessEntity.where(be_code: @filters[:be_code]).map(&:id)
+    end
+  end
+
+  def jurisdiction_filter
+    @filters[:jurisdiction_id]
+  end
+
+  def refund_filter
+    @filters[:refund]
+  end
+
+  def app_type_filter
+    @filters[:application_type]
+  end
+
 end
