@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
     @form = ftr_form
     if @form.valid?
       build_and_return_data(
-        FinanceTransactionalReportBuilder.new(ftr_params[:date_from], ftr_params[:date_to]).to_csv,
+        finance_transactional_report_builder.to_csv,
         'finance-transactional-report'
       )
     else
@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
     @form = form
     if @form.valid?
       build_and_return_data(
-        FinanceReportBuilder.new(report_params[:date_from], report_params[:date_to]).to_csv,
+        finance_report_builder.to_csv,
         'finance-report'
       )
     else
@@ -72,25 +72,21 @@ class ReportsController < ApplicationController
   private
 
   def form
-    Forms::FinanceReport.new(
-      date_from: report_params[:date_from],
-      date_to: report_params[:date_to]
-    )
+    Forms::FinanceReport.new(report_params)
   end
 
   def report_params
-    params.require(:forms_finance_report).permit(:date_from, :date_to)
+    params.require(:forms_finance_report).
+      permit(:date_from, :date_to, :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def ftr_form
-    Forms::Report::FinanceTransactionalReport.new(
-      date_from: ftr_params[:date_from],
-      date_to: ftr_params[:date_to]
-    )
+    Forms::Report::FinanceTransactionalReport.new(ftr_params)
   end
 
   def ftr_params
-    params.require(:forms_report_finance_transactional_report).permit(:date_from, :date_to)
+    params.require(:forms_report_finance_transactional_report).
+      permit(:date_from, :date_to, :be_code, :refund, :application_type, :jurisdiction_id)
   end
 
   def load_graph_data
@@ -112,5 +108,29 @@ class ReportsController < ApplicationController
 
   def extract_raw_data
     Views::Reports::RawDataExport.new(report_params[:date_from], report_params[:date_to]).to_csv
+  end
+
+  def filters(form_params)
+    filters = {}
+
+    ['be_code', 'refund', 'application_type', 'jurisdiction_id'].each do |key|
+      filters[key.to_sym] = form_params[key] if form_params[key].present?
+    end
+    filters
+  end
+
+  def finance_report_builder
+    FinanceReportBuilder.new(
+      report_params[:date_from], report_params[:date_to],
+      filters(report_params)
+    )
+  end
+
+  def finance_transactional_report_builder
+    FinanceTransactionalReportBuilder.new(
+      ftr_params[:date_from],
+      ftr_params[:date_to],
+      filters(ftr_params)
+    )
   end
 end
