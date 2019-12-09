@@ -54,14 +54,6 @@ def paper_evidence_page
   @paper_evidence_page ||= PaperEvidencePage.new
 end
 
-def problem_with_evidence_page
-  @problem_with_evidence_page ||= ProblemWithEvidencePage.new
-end
-
-def reason_for_rejecting_evidence_page
-  @reason_for_rejecting_evidence_page ||= ReasonForRejectingEvidencePage.new
-end
-
 def summary_page
   @summary_page ||= SummaryPage.new
 end
@@ -72,14 +64,6 @@ end
 
 def generate_report_page
   @generate_report_page ||= GenerateReportPage.new
-end
-
-def feedback_page
-  @feedback_page ||= FeedbackPage.new
-end
-
-def users_page
-  @users_page ||= UsersPage.new
 end
 
 def reports_page
@@ -96,14 +80,6 @@ end
 
 def navigation_page
   @navigation_page ||= NavigationPage.new
-end
-
-def send_invitation_page
-  @send_invitation_page ||= SendInvitationPage.new
-end
-
-def deleted_staff_page
-  @deleted_staff_page ||= DeletedStaffPage.new
 end
 
 def evidence_accuracy_page

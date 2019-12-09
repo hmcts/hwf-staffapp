@@ -1,5 +1,13 @@
+When("I click on view profile") do
+  dashboard_page.view_profile.click
+end
+
 Then("I am taken to my details") do
   # steps need implementing - wip
+end
+
+When("I click on staff guides") do
+  dashboard_page.staff_guides.click
 end
 
 Then("I am taken to the guide page") do

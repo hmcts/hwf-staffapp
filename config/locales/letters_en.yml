@@ -109,13 +109,6 @@ en-GB:
         <p>Please send this letter back with the information about your income so we can match it to your application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
-      citizen_not_processing_html: |
-        <p>Dear %{full_name}</p>
-        <p><strong>Reference: %{reference}</strong></p>
-        <p>We are writing to let you know that we are returning the application as you no longer wish to proceed.</p>
-        <p>If you still want help with fees, you will have to fill in a new application.</p>
-        <p>Yours sincerely,</p>
-        <p>%{user_name}</p>
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>

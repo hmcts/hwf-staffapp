@@ -36,10 +36,6 @@ module ProcessedViewsHelper
     params[:per_page].try(:to_i) || Settings.processed_deleted.per_page
   end
 
-  def citizen_not_proceeding(evidence)
-    evidence.try(:incorrect_reason) == 'citizen_not_processing'
-  end
-
   private
 
   def per_page_is_all?
