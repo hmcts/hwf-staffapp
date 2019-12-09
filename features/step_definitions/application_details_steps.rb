@@ -56,7 +56,7 @@ When(/^I should see the amount including pence on the summary page$/) do
 end
 
 When("I submit the form with a fee £10,001 - £19,999") do
-  application_details_page.submit_fee_1001
+  application_details_page.submit_fee_10001
 end
 
 Then("I should be taken to ask a manager page") do

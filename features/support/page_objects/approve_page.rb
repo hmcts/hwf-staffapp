@@ -10,7 +10,7 @@ class ApprovePage < BasePage
   def go_to_approve_page
     start_application
     personal_details_page.submit_required_personal_details
-    application_details_page.submit_fee_1001
+    application_details_page.submit_fee_10001
   end
 
   def submit_full_name

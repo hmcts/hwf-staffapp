@@ -11,12 +11,19 @@ class SummaryPage < BasePage
     end
   end
 
-  def go_to_summary_page
+  def go_to_summary_page_low_savings
     start_application
     personal_details_page.submit_all_personal_details
     application_details_page.submit_fee_600
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes
     paper_evidence_page.submit_evidence_yes
+  end
+
+  def go_to_summary_page_high_savings
+    start_application
+    personal_details_page.submit_all_personal_details
+    application_details_page.submit_fee_600
+    savings_investments_page.submit_exact_amount
   end
 end
