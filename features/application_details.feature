@@ -24,6 +24,10 @@ Feature: Application details page
       When I submit the form with a fee £10,001 - £19,999
       Then I should be taken to ask a manager page
 
+    Scenario: Fee includes pence
+      When I submit the form with a fee of £500.51
+      Then I should see the amount including pence on the summary page
+
     Scenario: Entering a help with fees form number
       When I submit the form with a help with fees form number 'COP44A'
       Then I should see you entered the help with fees form number error message

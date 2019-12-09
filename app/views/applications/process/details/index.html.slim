@@ -13,7 +13,7 @@
           = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: "#{@form.fee.to_f.floor if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
+          = f.text_field :fee, { value: "#{@form.fee.to_f if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
