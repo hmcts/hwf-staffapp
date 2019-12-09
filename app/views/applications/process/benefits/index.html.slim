@@ -15,8 +15,9 @@
         fieldset.govuk-fieldset
           legend.visuallyhidden Does the applicant receive benefits?
           = f.label :benefits, class: 'govuk-label'
-          span#changed-name-error.govuk-error-message
-            = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error' if @form.errors[:benefits].present?
+          - if @form.errors[:benefits].present?
+            span.govuk-error-message
+              = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error'
           = f.hidden_field :benefits, value: nil
           .govuk-radios.govuk-radios--small
             .govuk-radios__item

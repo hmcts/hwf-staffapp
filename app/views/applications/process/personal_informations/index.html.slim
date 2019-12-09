@@ -8,8 +8,9 @@
       h1.govuk-heading-xl Personal details
 
       .govuk-form-group.group-level
-        span.govuk-error-message
-          = f.label :title, @form.errors[:title].join(', '), class: 'error' if @form.errors[:title].present?
+        - if @form.errors[:title].present?
+          span.govuk-error-message
+            = f.label :title, @form.errors[:title].join(', '), class: 'error'
         = f.label :title, class: 'govuk-label'
           =t('title', scope: @form.i18n_scope)
         = f.text_field :title, { class: 'govuk-input govuk-!-width-one-half' }
@@ -17,52 +18,56 @@
       .govuk-form-group.group-level
         = f.label :first_name, class: 'govuk-label'
           =t('first_name', scope: @form.i18n_scope)
-        span.govuk-error-message
-          = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error' if @form.errors[:first_name].present?
+        - if @form.errors[:first_name].present?
+          span.govuk-error-message
+            = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error'
         = f.text_field :first_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         = f.label :last_name, class: 'govuk-label'
-        span.govuk-error-message
-          = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error' if @form.errors[:last_name].present?
+        - if @form.errors[:last_name].present?
+          span.govuk-error-message
+            = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error'
         = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
-        = f.label :date_of_birth, class: 'govuk-label'
-          = t('date_of_birth', scope: @form.i18n_scope)
-          span.hint.block = t('date_of_birth_hint', scope: @form.i18n_scope)
-        span.govuk-error-message
-          = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error' if @form.errors[:date_of_birth].present?
-        .govuk-date-input class="#{'error_dates' if @form.errors[:date_of_birth].present?}"
-          .govuk-date-input__item
-            .govuk-form-group.govuk-form-group-day
-              = f.label :day_date_of_birth, class: 'govuk-label'
-              = f.text_field :day_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
-          .govuk-date-input__item
-            .govuk-form-group.govuk-form-group-month
-              = f.label :month_date_of_birth, class: 'govuk-label'
-              = f.text_field :month_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
-          .govuk-date-input__item
-            .govuk-form-group.govuk-form-group-year
-              = f.label :year_date_of_birth, class: 'govuk-label'
-              = f.text_field :year_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
-
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            = t('date_of_birth', scope: @form.i18n_scope)
+          span.govuk-hint = t('date_of_birth_hint', scope: @form.i18n_scope)
+          - if @form.errors[:date_of_birth].present?
+            span.govuk-error-message
+              = f.label :date_of_birth, @form.errors[:date_of_birth].join(', '), class: 'error'
+          .govuk-date-input class="#{'error_dates' if @form.errors[:date_of_birth].present?}"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-day
+                = f.label :day_date_of_birth, class: 'govuk-label'
+                = f.text_field :day_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-month
+                = f.label :month_date_of_birth, class: 'govuk-label'
+                = f.text_field :month_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-year
+                = f.label :year_date_of_birth, class: 'govuk-label'
+                = f.text_field :year_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
 
       .govuk-form-group.group-level
         = f.label :ni_number, class: 'govuk-label'
           =t('ni_number', scope: @form.i18n_scope)
           span.hint =t('general.required_for_benefits').html_safe
-          span.govuk-error-message
-            = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error' if @form.errors[:ni_number].present?
+          - if @form.errors[:ni_number].present?
+            span.govuk-error-message
+              = f.label :ni_number, @form.errors[:ni_number].join(', '), class: 'error'
         = f.text_field :ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
-          legend.visuallyhidden Select the applicant's marital status
-          span.govuk-error-message
-            = f.label :married, class: 'govuk-label'
-            = f.label :married, @form.errors[:married].join(', '), class: 'error' if @form.errors[:married].present?
+          legend.govuk-fieldset__legend Select the applicant's marital status
+          - if @form.errors[:married].present?
+            span.govuk-error-message
+              = f.label :married, @form.errors[:married].join(', '), class: 'error'
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
               = f.radio_button :married, 'false', class: 'govuk-radios__input'
