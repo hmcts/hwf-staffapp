@@ -336,10 +336,21 @@ en-GB:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
+        application_type_benefit: Benefit
+        application_type_income: Income
+        jurisdiction: Jurisdiction
+        be_code: Business entity code
       forms/report/finance_transactional_report:
         date_from: 'Date from'
         date_to: 'Date to'
         date_hint: Use this format DD/MM/YYYY
+        date_hint: Use this format DD/MM/YYYY
+        application_type_benefit: Benefit
+        application_type_income: Income
+        refund: Refund
+        jurisdiction: Jurisdiction
+        be_code: Business entity code
+
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
@@ -450,6 +461,7 @@ en-GB:
         month_date_received: Month
         year_date_received: Year
         date_hint: For example, 04 10 2018
+        date_received: Date received
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -464,6 +476,7 @@ en-GB:
             date_to:
               blank: 'Please enter an end date'
               after: 'Date must be after the start date'
+              not_a_date: 'Please endter a valid date'
         forms/report/finance_transactional_report:
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:
@@ -711,3 +724,10 @@ en-GB:
         zero:  ""
         one:   "<b>1</b> result"
         other: "Showing <b>all&nbsp;%{count}</b> results"
+
+  users:
+    shared:
+      form_roles:
+        roles: Roles
+      form_jurisdiction:
+        main_jurisdiction: Main jurisdiction

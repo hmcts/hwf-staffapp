@@ -13,10 +13,10 @@
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
-          legend.visuallyhidden Paper evidence
-          = f.label :evidence, class: 'govuk-label'
-          span#changed-name-error.govuk-error-message
-            = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error' if @form.errors[:evidence].present?
+          legend.govuk-fieldset__legend = t('evidence', scope: @form.i18n_scope)
+          - if @form.errors[:evidence].present?
+            span.govuk-error-message
+              = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error'
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
               = f.radio_button :evidence, 'false', { class: 'govuk-radios__input show-hide-section' }
