@@ -4,28 +4,34 @@ RSpec.describe Forms::FinanceReport do
   subject { report }
 
   let(:report) { described_class.new }
+  let(:date_from) { Time.zone.today.-1.month }
+  let(:date_to) { Time.zone.today }
 
   describe 'validations' do
     before do
-      report.date_from = Time.zone.today.-1.month
-      report.date_to = Time.zone.today
+      report.day_date_from = date_from.day
+      report.month_date_from = date_from.month
+      report.year_date_from = date_from.year
+      report.day_date_to = date_to.day
+      report.month_date_to = date_to.month
+      report.year_date_to = date_to.year
     end
 
     describe 'date_from' do
-      it { is_expected.to validate_presence_of(:date_from) }
+      it { is_expected.to be_valid }
 
       context 'when the date_from is less than date_to' do
-        before { report.date_from = Time.zone.tomorrow }
+        let(:date_from) { date_to + 1.day }
 
         it { is_expected.not_to be_valid }
       end
     end
 
     describe 'date_to' do
-      it { is_expected.to validate_presence_of(:date_to) }
+      it { is_expected.to be_valid }
 
       context 'when date_to is before date_from' do
-        before { report.date_to = Time.zone.today.-1.year }
+        let(:date_to) { date_from - 1.year }
 
         it { is_expected.not_to be_valid }
       end

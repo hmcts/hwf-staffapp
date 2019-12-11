@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe FinanceTransactionalReportBuilder do
-  subject(:frb) { described_class.new(start_date, end_date, filters) }
+  subject(:frb) { described_class.new(start_date_params, end_date_params, filters) }
 
   let(:filters) { {} }
 
   let(:current_time) { Time.zone.parse('2019-01-30 15:50:10') }
   let(:start_date) { Time.zone.parse('2018-1-05 12:30:40') }
   let(:end_date) { Time.zone.parse('2018-10-10 16:35:00') }
+  let(:start_date_params) {
+    { day: start_date.day, month: start_date.month, year: start_date.year }
+  }
+  let(:end_date_params) {
+    { day: end_date.day, month: end_date.month, year: end_date.year }
+  }
 
   let(:jurisdiction1) { create :jurisdiction }
   let(:jurisdiction2) { create :jurisdiction }
