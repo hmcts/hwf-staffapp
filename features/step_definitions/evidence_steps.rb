@@ -132,3 +132,10 @@ end
 Then("I should see select from one of the problem options error message") do
   problem_with_evidence_page.content.header
 end
+
+Then("I should see next steps information for rejection letter") do
+  expect(return_letter_page.content).to have_header
+  expect(return_letter_page.content.evidence_next_steps).to have_header
+  expect(return_letter_page.content.evidence_next_steps).to have_text
+  expect(return_letter_page.content.evidence_next_steps).to have_link
+end

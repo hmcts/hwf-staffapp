@@ -3,6 +3,13 @@
 
 h1.govuk-heading-xl Processing complete
 
+div.evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
+  h2.govuk-heading-l Next steps
+  p.govuk-text
+    | Write to the applicant using the letter on this page and send back all the documents
+    | Update the case management system for this Help with Fees application
+  p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
+
 
 - if citizen_not_proceeding(@evidence)
   .evidence-confirmation-letter
