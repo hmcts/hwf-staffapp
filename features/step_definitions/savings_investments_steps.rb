@@ -12,7 +12,7 @@ end
 
 And("I submit how much they have") do
   expect(savings_investments_page.content).to have_savings_amount_label
-  savings_investments_page.content.application_amount.set '10000'
+  savings_investments_page.content.application_amount.set '10000.01'
   next_page
 end
 
