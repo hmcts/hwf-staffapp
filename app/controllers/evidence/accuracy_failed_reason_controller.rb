@@ -1,5 +1,6 @@
 module Evidence
   class AccuracyFailedReasonController < EvidenceController
+    before_action :clear_reason_category, only: [:update]
 
     def show
       authorize evidence
@@ -49,6 +50,10 @@ module Evidence
         return true
       end
       false
+    end
+
+    def clear_reason_category
+      evidence.clear_incorrect_reason_category!
     end
   end
 end
