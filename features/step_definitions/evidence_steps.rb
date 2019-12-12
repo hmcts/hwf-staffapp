@@ -139,3 +139,7 @@ Then("I should see next steps information for rejection letter") do
   expect(return_letter_page.content.evidence_next_steps).to have_text
   expect(return_letter_page.content.evidence_next_steps).to have_link
 end
+
+Then("I should not see next steps information for rejection letter") do
+  expect(return_letter_page.content).to have_no_content('Next steps')
+end
