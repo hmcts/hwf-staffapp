@@ -36,7 +36,13 @@ end
 
 Then("I should see a not proceeding application letter template") do
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'we are returning the application as you no longer wish to proceed'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers'
+end
+
+Then("I should see a evidence incorrect letter template") do
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'There’s a problem with the documents you sent:'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'How to pay'
 end
 
 When("I click on finish") do

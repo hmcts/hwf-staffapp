@@ -14,6 +14,7 @@ Feature: Problem with evidence page
     When I submit the page with citizen not proceeding
     Then I should be taken to the return letter page
     And I should see a not proceeding application letter template
+    And I should see next steps information for citizen not proceeding letter
     When I click on finish
     Then I should be taken back to my dashboard
 
@@ -25,8 +26,9 @@ Feature: Problem with evidence page
     When I click on staff error
     And I submit the details of the staff error
     Then I am taken to the rejection letter page
+    And I should see a evidence incorrect letter template
     And I should see next steps information for evidence incorrect letter
-    And on the processed application I can see that the reason for not being processed is staff error
+    Then on the processed application I can see that the reason for not being processed is staff error
 
   Scenario: Evidence not received
     When I submit the page with not arrived or too late
