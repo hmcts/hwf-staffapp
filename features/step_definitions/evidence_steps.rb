@@ -133,13 +133,20 @@ Then("I should see select from one of the problem options error message") do
   problem_with_evidence_page.content.header
 end
 
-Then("I should see next steps information for rejection letter") do
-  expect(return_letter_page.content).to have_header
+Then("I should see next steps information for not received letter") do
   expect(return_letter_page.content.evidence_next_steps).to have_header
-  expect(return_letter_page.content.evidence_next_steps).to have_text
+  expect(return_letter_page.content.evidence_next_steps).to have_not_received_text
   expect(return_letter_page.content.evidence_next_steps).to have_link
 end
 
-Then("I should not see next steps information for rejection letter") do
-  expect(return_letter_page.content).to have_no_content('Next steps')
+Then("I should see next steps information for evidence incorrect letter") do
+  expect(return_letter_page.content.evidence_next_steps).to have_header
+  expect(return_letter_page.content.evidence_next_steps).to have_evidence_incorrect_text
+  expect(return_letter_page.content.evidence_next_steps).to have_link
+end
+
+Then("I should see next steps information for citizen not proceeding letter") do
+  expect(return_letter_page.content.evidence_next_steps).to have_header
+  expect(return_letter_page.content.evidence_next_steps).to have_citizen_not_proceeding_text
+  expect(return_letter_page.content.evidence_next_steps).to have_link
 end

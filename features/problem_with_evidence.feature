@@ -25,10 +25,9 @@ Feature: Problem with evidence page
     When I click on staff error
     And I submit the details of the staff error
     Then I am taken to the rejection letter page
-    And I should not see next steps information for rejection letter
     And on the processed application I can see that the reason for not being processed is staff error
 
   Scenario: Evidence not received
     When I submit the page with not arrived or too late
-    Then I should see next steps information for rejection letter
+    Then I should see next steps information for not received letter
 
