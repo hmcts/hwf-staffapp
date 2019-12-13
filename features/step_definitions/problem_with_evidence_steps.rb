@@ -5,48 +5,17 @@ When("I am on the problem with evidence page") do
   expect(problem_with_evidence_page.content).to have_header
 end
 
-When("I successfully submit one of the problems") do
-  problem_with_evidence_page.content.not_arrived_too_late.click
-  next_page
-end
-
-Then("I am taken to the rejection letter page") do
-  expect(current_path).to eq '/evidence/1/return_letter'
+Then("I should be taken to the return letter page") do
+  expect(return_letter_page.content).to have_header
+  expect(current_path).to include '/evidence/1/return_letter'
 end
 
 When("I submit the page with not arrived or too late") do
-  problem_with_evidence_page.content.not_arrived_too_late.click
-  next_page
+  problem_with_evidence_page.submit_not_arrived_too_late
 end
 
 When("I submit the page with citizen not proceeding") do
-  problem_with_evidence_page.content.not_proceeding.click
-  next_page
-end
-
-When("I submit the page with staff error") do
-  problem_with_evidence_page.content.staff_error.click
-  next_page
-end
-
-Then("I should see evidence has not arrived or too late letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven’t received any information, we’re unable to process your application'
-end
-
-Then("I should see a not proceeding application letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers'
-end
-
-Then("I should see a evidence incorrect letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'There’s a problem with the documents you sent:'
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'How to pay'
-end
-
-When("I click on finish") do
-  click_button('Finish')
+  problem_with_evidence_page.submit_not_proceeding
 end
 
 When("I click on staff error") do
@@ -56,10 +25,4 @@ end
 When("I submit the details of the staff error") do
   fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
   next_page
-end
-
-And("on the processed application I can see that the reason for not being processed is staff error") do
-  click_button('Finish')
-  click_link('PA19-000002')
-  expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff_error"'
 end
