@@ -19,6 +19,6 @@ end
 
 Then("I should see my answers for evidence on the summary page") do
   expect(summary_page.content.summary_section[0]).to have_evidence_header
-  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Correct No ChangeCorrect'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Incorrect reason category requested sources not provided, wrong type provided, unreadable or illegible, pages missing, cannot identify applicant, wrong date range ChangeIncorrect reason category'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Ready to process No ChangeReady to process'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reasons requested sources not provided, wrong type provided, unreadable or illegible, pages missing, cannot identify applicant, wrong date range ChangeReasons'
 end

@@ -332,9 +332,9 @@ en-GB:
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
       views/evidence:
-        correct: Correct
-        incorrect_reason: Reason
-        incorrect_reason_category: Incorrect reason category
+        correct: Ready to process
+        incorrect_reason: The problem
+        incorrect_reason_category: Reason
         income: Income
       views/application_result:
         savings: Savings and investments
