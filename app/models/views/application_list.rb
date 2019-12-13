@@ -42,7 +42,7 @@ module Views
     end
 
     def fee
-      number_to_currency(@application.detail.fee, unit: '£', precision: 0)
+      number_to_currency(@application.detail.fee, unit: '£', precision: 2)
     end
 
     def emergency

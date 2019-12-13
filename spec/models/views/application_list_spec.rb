@@ -91,7 +91,7 @@ RSpec.describe Views::ApplicationList do
       let(:detail) { build(:detail, fee: 3913) }
 
       it 'returns the fee formatted as a currency' do
-        is_expected.to eql('£3,913')
+        is_expected.to eql('£3,913.00')
       end
     end
 
@@ -304,10 +304,10 @@ RSpec.describe Views::ApplicationList do
     describe '#fee' do
       subject { view.fee }
 
-      let(:detail) { build(:detail, fee: 3913) }
+      let(:detail) { build(:detail, fee: 3913.34) }
 
       it 'returns the fee formatted as a currency' do
-        is_expected.to eql('£3,913')
+        is_expected.to eql('£3,913.34')
       end
     end
 
