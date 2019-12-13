@@ -38,6 +38,14 @@ module HomeHelper
      :case_number, :fee, :remission, :completed]
   end
 
+  def feedback_link
+    if current_user.admin?
+      feedback_display_path
+    else
+      feedback_path
+    end
+  end
+
   private
 
   def sort_direction
