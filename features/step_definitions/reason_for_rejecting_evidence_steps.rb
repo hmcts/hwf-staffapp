@@ -13,12 +13,23 @@ When("I successfully submit multiple reasons") do
   next_page
 end
 
+When("I successfully submit a single reason") do
+  reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
+  next_page
+end
+
 Then("I am taken to the summary page") do
   expect(current_path).to end_with '/evidence/1/summary'
 end
 
-Then("I should see my answers for evidence on the summary page") do
+Then("I should see my reasons for evidence on the summary page") do
   expect(summary_page.content.summary_section[0]).to have_evidence_header
   expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Ready to process No ChangeReady to process'
   expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reasons requested sources not provided, wrong type provided, unreadable or illegible, pages missing, cannot identify applicant, wrong date range ChangeReasons'
+end
+
+Then("I should see my reason for evidence on the summary page") do
+  expect(summary_page.content.summary_section[0]).to have_evidence_header
+  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Ready to process No ChangeReady to process'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reason requested sources not provided ChangeReason'
 end
