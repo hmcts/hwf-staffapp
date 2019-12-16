@@ -154,7 +154,7 @@ en-GB:
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
-          <li>calling xxxxxxxx with your debit card details</li>
+          <li>calling <strong>add phone number</strong> with your debit card details</li>
           <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
         <h3 class='govuk-heading-m'>If you disagree</h3>
