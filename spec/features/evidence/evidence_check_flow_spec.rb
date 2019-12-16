@@ -72,8 +72,8 @@ RSpec.feature 'Evidence check flow', type: :feature do
       click_button 'Next'
 
       expect(page).to have_content 'Check details'
-      expect(page).to have_content 'requested sources not provided'
-      expect(page).to have_content 'wrong type provided'
+      expect(page).to have_content 'Requested sources not provided'
+      expect(page).to have_content 'Wrong type provided'
     end
   end
 
@@ -142,7 +142,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         [
           { title: 'Ready to process', value: 'No', url: accuracy_evidence_path(evidence) },
           { title: 'The problem', value: evidence.incorrect_reason, url: evidence_accuracy_failed_reason_path(evidence) },
-          { title: 'Reasons', value: 'unreadable or illegible, cannot identify applicant', url: evidence_accuracy_incorrect_reason_path(evidence) }
+          { title: 'Reasons', value: 'Unreadable or illegible, Cannot identify applicant', url: evidence_accuracy_incorrect_reason_path(evidence) }
         ]
       end
 

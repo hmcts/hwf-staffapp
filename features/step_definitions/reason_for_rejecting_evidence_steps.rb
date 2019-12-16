@@ -25,11 +25,11 @@ end
 Then("I should see my reasons for evidence on the summary page") do
   expect(summary_page.content.summary_section[0]).to have_evidence_header
   expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Ready to process No ChangeReady to process'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reasons requested sources not provided, wrong type provided, unreadable or illegible, pages missing, cannot identify applicant, wrong date range ChangeReasons'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reasons Requested sources not provided, Wrong type provided, Unreadable or illegible, Pages missing, Cannot identify applicant, Wrong date range ChangeReasons'
 end
 
 Then("I should see my reason for evidence on the summary page") do
   expect(summary_page.content.summary_section[0]).to have_evidence_header
   expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Ready to process No ChangeReady to process'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reason requested sources not provided ChangeReason'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reason Requested sources not provided ChangeReason'
 end
