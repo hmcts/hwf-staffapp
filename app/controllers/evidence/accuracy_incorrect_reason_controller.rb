@@ -1,5 +1,6 @@
 module Evidence
   class AccuracyIncorrectReasonController < EvidenceController
+    before_action :clear_incorrect_reason, only: [:update]
 
     def show
       authorize evidence
@@ -38,6 +39,10 @@ module Evidence
 
     def i18_scope
       'activemodel.errors.models.forms/evidence/accuracy.attributes'
+    end
+
+    def clear_incorrect_reason
+      evidence.clear_incorrect_reason!
     end
 
   end
