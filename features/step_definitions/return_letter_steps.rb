@@ -53,6 +53,12 @@ Then("I should see next steps information for citizen not proceeding") do
   expect(return_letter_page.content.evidence_next_steps).to have_link
 end
 
+Then("I should see no letter template") do
+  expect(return_letter_page.content).to have_header
+  expect(return_letter_page.content).not_to have_content('Next steps')
+  expect(return_letter_page.content).not_to have_content('Yours sincerely')
+end
+
 When("I click on finish") do
   click_button('Finish')
 end

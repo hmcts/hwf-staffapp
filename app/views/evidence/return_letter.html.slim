@@ -34,23 +34,6 @@ h1.govuk-heading-xl Processing complete
        full_name: @applicant.full_name,
        user_name: current_user.name,
        expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
-/ staff error
--else
-  .evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
-    h2.govuk-heading-l Next steps
-    p.govuk-text
-      | Write to the applicant using the letter on this page (deleting those bullet points that do not apply) and send back all the documents.
-    p.govuk-text
-      | Update the case management system noting the reasons why evidence is incorrect.
-    p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
-
-  .evidence-confirmation-letter
-    =t('letters.evidence.evidence_incorrect_html',
-       reference: @application_view.reference,
-       full_name: @applicant.full_name,
-       user_name: current_user.name,
-       expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]),
-       amount_to_pay: @evidence.amount_to_pay)
 
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
