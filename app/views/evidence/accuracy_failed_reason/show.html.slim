@@ -1,11 +1,11 @@
 - content_for :page_title
-  = "What is the problem with the evidence?"
+  = "What is the problem?"
 
 = form_for :evidence, url: :evidence_accuracy_failed_reason, method: :put, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       header class='govuk-!-padding-top-7'
-        h1.govuk-heading-xl What is the problem with the evidence?
+        h1.govuk-heading-xl What is the problem?
 
       fieldset.govuk-fieldset
         - if @form.errors[:incorrect_reason].present?

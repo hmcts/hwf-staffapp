@@ -1,6 +1,6 @@
 class ProblemWithEvidencePage < BasePage
   section :content, '#content' do
-    element :header, 'h1', text: 'What is the problem with the evidence?'
+    element :header, 'h1', text: 'What is the problem?'
     element :not_arrived_too_late, '.govuk-label', text: 'Not arrived or too late'
     element :not_proceeding, '.govuk-label', text: 'Citizen not proceeding'
     element :staff_error, '.govuk-label', text: 'Staff error'
