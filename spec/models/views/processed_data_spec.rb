@@ -81,6 +81,12 @@ RSpec.describe Views::ProcessedData do
 
         it { is_expected.to eql(on: evidence.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: evidence.completed_by.name, text: 'Reason not processed: "SOME REASON"') }
       end
+
+      context 'has a returned evidence_check with translated reason' do
+        let(:evidence) { build_stubbed :evidence_check_incorrect, :completed, incorrect_reason: "citizen_not_processing" }
+
+        it { is_expected.to eql(on: evidence.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: evidence.completed_by.name, text: 'Reason not processed: "citizen not proceeding"') }
+      end
     end
   end
 
