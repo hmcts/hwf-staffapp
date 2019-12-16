@@ -11,11 +11,13 @@ RSpec.describe SummaryHelper, type: :helper do
     i18n_date = "#{i18n_key}date_received"
     i18n_correct = "#{i18n_key}correct"
     i18n_income = "#{i18n_key}income"
+    i18n_reason = "#{i18n_key}incorrect_reason_category"
     allow(I18n).to receive(:t).with(i18n_fee).and_return('Fee')
     allow(I18n).to receive(:t).with(i18n_name).and_return('Form name')
     allow(I18n).to receive(:t).with(i18n_date).and_return('Date received')
     allow(I18n).to receive(:t).with(i18n_correct).and_return('Correct')
     allow(I18n).to receive(:t).with(i18n_income).and_return('Income')
+    allow(I18n).to receive(:t).with(i18n_reason).and_return('Reason')
   end
 
   it { expect(helper).to be_a described_class }
@@ -97,6 +99,29 @@ RSpec.describe SummaryHelper, type: :helper do
         expected += "<div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Income</dt><dd class=\"govuk-summary-list__value\">£2990</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url2}\">Change<span class=\"govuk-visually-hidden\">Income</span></a></dd></div></dl>"
         expect(helper.build_section_with_custom_links('Evidence', view, [row1, row2])).to eq(expected)
       end
+    end
+
+    describe 'Plural key' do
+      let(:row1) { { key: 'incorrect_reason_category', link_attributes: { url: url1 } } }
+
+      context 'incorrect reason category plural header' do
+        let(:view) { instance_double(Views::Evidence, incorrect_reason_category: 'test1, test2') }
+        it 'when there are multiple values' do
+          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reasons</dt><dd class=\"govuk-summary-list__value\">test1, test2</dd>"
+          expected += "<dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Reasons</span></a></dd></div></dl>"
+          expect(helper.build_section_with_custom_links('Evidence', view, [row1])).to eq(expected)
+        end
+      end
+
+      context 'incorrect reason category singular header' do
+        let(:view) { instance_double(Views::Evidence, incorrect_reason_category: 'test1') }
+        it 'when there is one value' do
+          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reason</dt><dd class=\"govuk-summary-list__value\">test1</dd>"
+          expected += "<dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Reason</span></a></dd></div></dl>"
+          expect(helper.build_section_with_custom_links('Evidence', view, [row1])).to eq(expected)
+        end
+      end
+
     end
 
     context 'when called with missing some attributes' do

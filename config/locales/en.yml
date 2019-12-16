@@ -97,13 +97,13 @@ en-GB:
     not_arrived_or_late: not arrived or too late
     citizen_not_processing: citizen not proceeding
     staff_error: staff error
-    requested_source_not_provided: requested sources not provided
-    wrong_type_provided: wrong type provided
-    unreadable_or_illegible: unreadable or illegible
-    pages_missing: pages missing
-    cannot_identify_applicant: cannot identify applicant
-    wrong_date_range: wrong date range
-    savings_investment_too_high: where requested, savings and investments are too high
+    requested_source_not_provided: Requested sources not provided
+    wrong_type_provided: Wrong type provided
+    unreadable_or_illegible: Unreadable or illegible
+    pages_missing: Pages missing
+    cannot_identify_applicant: Cannot identify applicant
+    wrong_date_range: Wrong date range
+    savings_investment_too_high: Where requested, savings and investments are too high
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -332,9 +332,9 @@ en-GB:
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
       views/evidence:
-        correct: Correct
-        incorrect_reason: Reason
-        incorrect_reason_category: Incorrect reason category
+        correct: Ready to process
+        incorrect_reason: The problem
+        incorrect_reason_category: Reason
         income: Income
       views/application_result:
         savings: Savings and investments
