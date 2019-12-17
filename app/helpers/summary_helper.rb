@@ -70,8 +70,8 @@ module SummaryHelper
   end
 
   def build_data_row(object, field, link_attributes = {})
-    label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
     value = object.send(field)
+    label = single_or_plural_label(object, field, value)
 
     if value.present?
       rows = content_tag(:dt, label, class: 'govuk-summary-list__key')
@@ -95,5 +95,13 @@ module SummaryHelper
         styles << 'summary-result part'
       end
     end.join(' ')
+  end
+
+  def single_or_plural_label(object, field, value)
+    label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
+    if field == 'incorrect_reason_category' && value.try(:include?, ',')
+      return label.pluralize
+    end
+    label
   end
 end
