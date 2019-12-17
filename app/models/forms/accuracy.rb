@@ -4,15 +4,15 @@ module Forms
     def self.permitted_attributes
       {
         correct: Boolean,
-        incorrect_reason: String
+        incorrect_reason: String,
+        incorrect_reason_category: Array,
+        staff_error_details: String
       }
     end
 
     define_attributes
 
     validates :correct, inclusion: { in: [true, false] }
-    validates :incorrect_reason, presence: true, length: { maximum: 500 },
-                                 if: proc { |a| a.correct? == false }
 
     private
 

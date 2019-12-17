@@ -76,7 +76,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       expect(page).to have_text "#{application1.reference} - Waiting for evidence"
 
       click_link 'Start now'
-      choose 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+      choose 'Yes, the evidence is for the correct applicant and covers the correct time period'
       click_button 'Next'
 
       fill_in :evidence_income, with: application1.income

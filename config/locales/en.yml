@@ -92,8 +92,18 @@ en-GB:
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
 
   evidence:
-    correct: 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+    correct: 'Yes, the evidence is for the correct applicant and covers the correct time period'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
+    not_arrived_or_late: not arrived or too late
+    citizen_not_processing: citizen not proceeding
+    staff_error: staff error
+    requested_source_not_provided: Requested sources not provided
+    wrong_type_provided: Wrong type provided
+    unreadable_or_illegible: Unreadable or illegible
+    pages_missing: Pages missing
+    cannot_identify_applicant: Cannot identify applicant
+    wrong_date_range: Wrong date range
+    savings_investment_too_high: Where requested, savings and investments are too high
     labels:
       correct: Is the evidence ready to process?
       incorrect_reason: Describe the problem with the evidence
@@ -108,6 +118,10 @@ en-GB:
         processed_on: Date processed
         status: Status
         updated_at: Last updated
+    accuracy_failed_reason:
+      show:
+        staff_error_details:
+          label: Please add details of the staff error
   part_payment:
     correct: 'Yes'
     incorrect: 'No'
@@ -318,8 +332,9 @@ en-GB:
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
       views/evidence:
-        correct: Correct
-        incorrect_reason: Reason
+        correct: Ready to process
+        incorrect_reason: The problem
+        incorrect_reason_category: Reason
         income: Income
       views/application_result:
         savings: Savings and investments
@@ -595,6 +610,8 @@ en-GB:
             incorrect_reason:
               blank: 'This question must be answered'
               too_long: "Your description must be less than 500 characters"
+            incorrect_reason_category:
+              blank: 'Select a reason or reasons why you are rejecting the evidence'
         forms/part_payment/accuracy:
           attributes:
             correct:

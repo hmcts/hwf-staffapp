@@ -54,6 +54,14 @@ def paper_evidence_page
   @paper_evidence_page ||= PaperEvidencePage.new
 end
 
+def problem_with_evidence_page
+  @problem_with_evidence_page ||= ProblemWithEvidencePage.new
+end
+
+def reason_for_rejecting_evidence_page
+  @reason_for_rejecting_evidence_page ||= ReasonForRejectingEvidencePage.new
+end
+
 def summary_page
   @summary_page ||= SummaryPage.new
 end

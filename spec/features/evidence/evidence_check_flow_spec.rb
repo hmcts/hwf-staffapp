@@ -64,9 +64,16 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
-      fill_in 'evidence_incorrect_reason', with: 'SOME REASON'
       click_button 'Next'
+
+      expect(page).to have_content 'What is the reason for rejecting the evidence?'
+      check 'Requested sources not provided'
+      check 'Wrong type provided'
+      click_button 'Next'
+
       expect(page).to have_content 'Check details'
+      expect(page).to have_content 'Requested sources not provided'
+      expect(page).to have_content 'Wrong type provided'
     end
   end
 
@@ -132,10 +139,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for an unsuccessful outcome' do
       let(:evidence) { create :evidence_check_incorrect, application: application }
       let(:expected_fields) do
-        {
-          'Correct' => 'No',
-          'Reason' => evidence.incorrect_reason
-        }
+        [
+          { title: 'Ready to process', value: 'No', url: accuracy_evidence_path(evidence) },
+          { title: 'The problem', value: evidence.incorrect_reason, url: evidence_accuracy_failed_reason_path(evidence) },
+          { title: 'Reasons', value: 'Unreadable or illegible, Cannot identify applicant', url: evidence_accuracy_incorrect_reason_path(evidence) }
+        ]
       end
 
       it 'renders correct outcome' do
@@ -151,10 +159,10 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for a part remission outcome' do
       let(:evidence) { create :evidence_check_part_outcome, application: application }
       let(:expected_fields) do
-        {
-          'Correct' => 'Yes',
-          'Income' => "£#{evidence.income}"
-        }
+        [
+          { title: 'Ready to process', value: 'Yes', url: accuracy_evidence_path(evidence) },
+          { title: 'Income', value: "£#{evidence.income}", url: income_evidence_path(evidence) }
+        ]
       end
 
       it 'renders correct outcome' do
@@ -177,10 +185,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'for a full remission outcome' do
       let(:evidence) { create :evidence_check_full_outcome, application: application }
       let(:expected_fields) do
-        {
-          'Correct' => 'Yes',
-          'Income' => "£#{evidence.income}"
-        }
+        [
+          { title: 'Ready to process', value: 'Yes', url: accuracy_evidence_path(evidence) },
+          { title: 'Income', value: "£#{evidence.income}", url: income_evidence_path(evidence) }
+        ]
+
       end
 
       it 'renders correct outcome' do
@@ -193,14 +202,15 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
     end
 
-    def page_expectation(outcome, fields = {})
+    # rubocop:disable Metrics/AbcSize
+    def page_expectation(outcome, fields = [])
       expect(page).to have_content(outcome)
-
-      fields.each do |title, value|
-        expect(page).to have_content("#{title}#{value}")
-        expect(page).to have_link("Change#{title}", href: accuracy_evidence_path(evidence))
+      fields.each do |field|
+        expect(page).to have_content("#{field[:title]}#{field[:value]}")
+        expect(page).to have_link("Change#{field[:title]}", href: field[:url])
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 
   context 'when on "Evidence confirmation" page' do
@@ -246,7 +256,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         let(:outcome) { 'none' }
         let(:income) { 2000 }
 
-        it { expect(page).to have_content 'Unfortunately you’re not eligible and will have to pay the full fee' }
+        it { expect(page).to have_content ' There’s a problem with the documents you sent' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
@@ -256,7 +266,6 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
 
-        it { expect(page).to have_content 'Your income total: £2,000' }
       end
     end
   end

@@ -4,10 +4,17 @@ module Forms
       private
 
       def fields_to_update
-        self.incorrect_reason = nil if correct
-        { correct: correct, incorrect_reason: incorrect_reason }.tap do |fields|
+        reset_incorrect_reasons if correct
+        { correct: correct, incorrect_reason: incorrect_reason,
+          incorrect_reason_category: incorrect_reason_category,
+          staff_error_details: staff_error_details }.tap do |fields|
           fields[:outcome] = 'none' unless correct
         end
+      end
+
+      def reset_incorrect_reasons
+        self.incorrect_reason = nil if correct
+        self.incorrect_reason_category = [] if correct
       end
     end
   end

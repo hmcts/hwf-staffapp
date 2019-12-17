@@ -57,6 +57,8 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
     # because it's 10th so random evidence check
     expect(page).to have_text("#{reference} - Waiting for evidence")
     click_link 'Return application'
+    choose 'Citizen not proceeding'
+    click_button 'Next'
     click_button 'Finish'
 
     click_link 'Waiting for part-payment'
@@ -80,7 +82,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
       click_link Application.last.reference
     end
     click_link 'Start now'
-    choose 'Yes, the evidence is for the correct applicant and dated in the last 3 months'
+    choose 'Yes, the evidence is for the correct applicant and covers the correct time period'
     click_button 'Next'
 
     fill_in 'evidence_income', with: '1359'

@@ -23,6 +23,19 @@ module SummaryHelper
     end
   end
 
+  def build_section_with_custom_links(summary_text, object, fields, _link_attributes = {})
+    unless all_fields_empty?(object, fields)
+      content_tag(:dl, class: 'govuk-summary-list') do
+        content = build_header(summary_text)
+        fields.each do |row|
+          row[:link_attributes] = {} if row[:link_attributes].blank?
+          content << build_data_row(object, row[:key], row[:link_attributes])
+        end
+        content
+      end
+    end
+  end
+
   def display_savings?(application)
     application.detail.discretion_applied != false
   end
@@ -30,7 +43,9 @@ module SummaryHelper
   private
 
   def all_fields_empty?(object, fields)
-    fields.map { |f| object.send(f) }.all?(&:blank?)
+    fields.map do |f|
+      f.is_a?(Hash) ? object.send(f[:key]) : object.send(f)
+    end.all?(&:blank?)
   end
 
   def build_header(summary_name)
@@ -41,7 +56,7 @@ module SummaryHelper
 
   def build_link(link_attributes, label = '')
     # rubocop:disable Rails/OutputSafety
-    if link_attributes[:title].present? && link_attributes[:url].present?
+    if link_attributes[:url].present?
       link_class = 'govuk-summary-list__actions'
       content_tag(:dd, class: link_class) do
         link_to(link_attributes[:url],
@@ -55,8 +70,8 @@ module SummaryHelper
   end
 
   def build_data_row(object, field, link_attributes = {})
-    label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
     value = object.send(field)
+    label = single_or_plural_label(object, field, value)
 
     if value.present?
       rows = content_tag(:dt, label, class: 'govuk-summary-list__key')
@@ -80,5 +95,13 @@ module SummaryHelper
         styles << 'summary-result part'
       end
     end.join(' ')
+  end
+
+  def single_or_plural_label(object, field, value)
+    label = I18n.t("activemodel.attributes.#{object.class.name.underscore}.#{field}")
+    if field == 'incorrect_reason_category' && value.try(:include?, ',')
+      return label.pluralize
+    end
+    label
   end
 end
