@@ -22,6 +22,11 @@ describe EvidenceCheck, type: :model do
       check_with_reason.clear_incorrect_reason_category!
       expect(check_with_reason.staff_error_details).to be_nil
     end
+
+    it 'clear income' do
+      check_with_reason.clear_incorrect_reason!
+      expect(check_with_reason.income).to be_nil
+    end
   end
 
 end

@@ -8,6 +8,7 @@ class EvidenceCheck < ActiveRecord::Base
 
   def clear_incorrect_reason!
     self.incorrect_reason = nil
+    self.income = nil
     save
   end
 
