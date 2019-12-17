@@ -98,7 +98,7 @@ module Views
         text = object.detail.emergency_reason
         prefix = 'Reason for emergency'
       else
-        text = object.incorrect_reason
+        text = incorect_reason_text(object)
         prefix = 'Reason not processed'
       end
       build_text prefix, text
@@ -106,6 +106,14 @@ module Views
 
     def build_text(prefix, text)
       "#{prefix}: \"#{text}\"" if text
+    end
+
+    def incorect_reason_text(object)
+      translation = I18n.t("evidence.#{object.incorrect_reason}")
+      if object.incorrect_reason.blank? || translation.include?('translation missing')
+        return object.incorrect_reason
+      end
+      translation
     end
   end
 end

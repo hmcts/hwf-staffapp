@@ -40,6 +40,10 @@ module ProcessedViewsHelper
     evidence.try(:incorrect_reason) == 'citizen_not_processing'
   end
 
+  def evidence_not_received(evidence)
+    evidence.try(:incorrect_reason) == 'not_arrived_or_late'
+  end
+
   private
 
   def per_page_is_all?

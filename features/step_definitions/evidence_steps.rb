@@ -62,11 +62,6 @@ Then("I should be taken to the problem with evidence page") do
   expect(problem_with_evidence_page.content).to have_header
 end
 
-Then("I should be taken to the return letter page") do
-  expect(return_letter_page.content).to have_header
-  expect(current_path).to include '/evidence/1/return_letter'
-end
-
 When("I submit that the evidence is correct") do
   evidence_accuracy_page.content.correct_evidence.click
   next_page

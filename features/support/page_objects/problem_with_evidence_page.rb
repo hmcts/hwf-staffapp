@@ -14,4 +14,20 @@ class ProblemWithEvidencePage < BasePage
     evidence_page.content.evidence_can_not_be_processed.click
     click_link('Return application')
   end
+
+  def submit_not_arrived_too_late
+    problem_with_evidence_page.content.not_arrived_too_late.click
+    next_page
+  end
+
+  def submit_not_proceeding
+    problem_with_evidence_page.content.not_proceeding.click
+    next_page
+  end
+
+  def submit_staff_error
+    problem_with_evidence_page.content.staff_error.click
+    fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
+    next_page
+  end
 end

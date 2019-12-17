@@ -1,8 +1,15 @@
+.evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
+  h2.govuk-heading-l Next steps
+  p.govuk-text
+    | Write to the applicant using the letter on this page (deleting those bullet points that do not apply) and send back all the documents.
+  p.govuk-text
+    | Update the case management system noting the reasons why evidence is incorrect.
+  p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
+
 .evidence-confirmation-letter
   =t('letters.reject.reject_evidence_generic_html',
      reference: confirmation.application.reference,
      full_name: confirmation.application.applicant.full_name,
      user_name: current_user.name,
      fee_amount: number_to_currency(confirmation.amount_to_pay, precision: 0, unit: '£'),
-     income_total: number_to_currency(confirmation.income, precision: 0, unit: '£'),
-     income_threshold: number_to_currency(maximum_income_allowed(confirmation.application), precision: 0, unit: '£'))
+     expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))

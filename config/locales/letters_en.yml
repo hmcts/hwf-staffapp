@@ -30,11 +30,28 @@ en-GB:
       reject_evidence_generic_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees. Unfortunately, we cannot process your claim as you have sent us incorrect or insufficient evidence, or if relevant, your savings are too high to get Help with Fees support.</p>
-        <p>We are rejecting your claim.</p>
-        <p><strong>If you disagree with this decision</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
-        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
+        <p>We’ve received from you the additional evidence for your help with fees application. There’s a problem with the documents you sent:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The requested evidence has not been provided.</li>
+          <li>The wrong type of evidence has been provided.</li>
+          <li>The evidence provided is unreadable / illegible.</li>
+          <li>There are pages missing from the evidence you have provided.</li>
+          <li>You cannot be identified on the evidence.</li>
+          <li>The evidence is for the wrong date range.</li>
+          <li>Your savings are too high.</li>
+        </ul>
+        <p>Unfortunately, this means that the application for help with fees is unsuccessful. </p>
+        <p>You have to pay the fee of £%{fee_amount}. You need to pay this by %{expiry_date}.</p>
+        <p>This may have an impact on the original case or claim related to this application.</p>
+        <h3 class='govuk-heading-m'>How to pay</h3>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
+          <li>calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>If you disagree</h3>
+        <p>If you think you are eligible for help with your fees and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application, your evidence and any further evidence to support your application. We will reply to you within 10 working days from receiving your application. </p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
@@ -122,25 +139,43 @@ en-GB:
       citizen_not_processing_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We are writing to let you know that we are returning the application as you no longer wish to proceed.</p>
-        <p>If you still want help with fees, you will have to fill in a new application.</p>
+        <p>As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers.</p>
+        <p>If you still want to apply for Help with Fees, you will have to fill in a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
-        <p>As we haven’t received any information, we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
-        <p> If you still want help with your fees, you will have to complete a new application. </p>
+        <p>As we haven’t received any information, we’re unable to process your application. You have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       evidence_incorrect_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received the additional information for your application for help with fees. However, there’s a problem with the documents you have sent.</p>
-        <p>(PLEASE EXPLAIN WHY EVIDENCE CAN'T BE ACCEPTED, FOR EXAMPLE: BANK STATEMENTS ARE OUT OF DATE</p>
-        <p>Unfortunately we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
-        <p>If you still want help with your fees, you will have to complete a new application.</p>
+        <p>We’ve received from you the additional evidence for your help with fees application. There’s a problem with the documents you sent:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The requested evidence has not been provided.</li>
+          <li>The wrong type of evidence has been provided.</li>
+          <li>The evidence provided is unreadable / illegible.</li>
+          <li>There are pages missing from the evidence you have provided.</li>
+          <li>You cannot be identified on the evidence.</li>
+          <li>The evidence is for the wrong date range.</li>
+          <li>Your savings are too high.</li>
+        </ul>
+        <p>Unfortunately, this means that the application for help with fees is unsuccessful. </p>
+        <p>You have to pay the fee of £%{amount_to_pay}. You need to pay this by %{expiry_date}.</p>
+        <p>This may have an impact on the original case or claim related to this application.</p>
+        <h3 class='govuk-heading-m'>How to pay</h3>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
+          <li>calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>If you disagree</h3>
+        <p>If you think you are eligible for help with your fees and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application, your evidence and any further evidence to support your application. We will reply to you within 10 working days from receiving your application. </p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
     part-payment:

@@ -256,7 +256,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         let(:outcome) { 'none' }
         let(:income) { 2000 }
 
-        it { expect(page).to have_content 'insufficient evidence, or if relevant, your savings are too high to get Help with Fees support' }
+        it { expect(page).to have_content ' There’s a problem with the documents you sent' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
