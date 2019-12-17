@@ -41,7 +41,7 @@ en-GB:
           <li>Your savings are too high.</li>
         </ul>
         <p>Unfortunately, this means that the application for help with fees is unsuccessful. </p>
-        <p>You have to pay the fee of £%{fee_amount}. You need to pay this by %{expiry_date}.</p>
+        <p>You have to pay the fee of <strong>&lt;add fee&gt;</strong>. You need to pay this by %{expiry_date}.</p>
         <p>This may have an impact on the original case or claim related to this application.</p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>You can pay by:</p>
