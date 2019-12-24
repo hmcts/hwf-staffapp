@@ -127,7 +127,7 @@ end
 # heroku deployment
 gem 'rails_12factor', group: :production
 
-gem 'chartkick', '~> 3.2.0'
+gem 'chartkick', '~> 3.3.0'
 gem 'ckeditor_rails', '~> 4.6'
 gem 'groupdate'
 gem 'pg_search'
