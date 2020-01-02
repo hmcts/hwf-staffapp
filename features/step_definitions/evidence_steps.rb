@@ -6,7 +6,7 @@ And("there is an application waiting for evidence") do
 end
 
 And("I am on an application waiting for evidence") do
-  click_link('PA19-000002')
+  click_link("#{reference_prefix}-000002")
 end
 
 When("I click on start now to process the evidence") do

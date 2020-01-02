@@ -174,3 +174,7 @@ def waiting_evidence_application
   complete_processing
   back_to_start
 end
+
+def reference_prefix
+  "PA#{Time.zone.now.strftime('%y')}"
+end
