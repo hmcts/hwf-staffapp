@@ -1,7 +1,7 @@
 class ConfirmationPage < BasePage
   section :content, '#content' do
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
-    element :reference_number, '.reference-number', text: 'PA19-000001'
+    element :reference_number, '.reference-number'
     element :eligible, 'h2', text: '✓ Eligible for help with fees'
 
     element :next_steps_steps, 'h2', text: 'Next steps'

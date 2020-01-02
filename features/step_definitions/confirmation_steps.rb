@@ -26,7 +26,8 @@ end
 
 Then("I should see a help with fees reference number") do
   expect(confirmation_page.content).to have_reference_number_is
-  expect(confirmation_page.content).to have_reference_number
+  reference_number = "#{reference_prefix}-000001"
+  expect(confirmation_page.content.reference_number.text).to eql(reference_number)
 end
 
 Then("I should see the next steps") do

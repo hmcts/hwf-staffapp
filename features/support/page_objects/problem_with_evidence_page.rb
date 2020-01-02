@@ -10,7 +10,7 @@ class ProblemWithEvidencePage < BasePage
   def go_to_problem_with_evidence_page
     waiting_evidence_application
     waiting_evidence_application
-    click_link('PA19-000002')
+    click_link("#{reference_prefix}-000002")
     evidence_page.content.evidence_can_not_be_processed.click
     click_link('Return application')
   end

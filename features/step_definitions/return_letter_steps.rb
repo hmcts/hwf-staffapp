@@ -20,17 +20,20 @@ Then("I am on the return letter page after selecting staff error") do
 end
 
 Then("I should see evidence has not arrived or too late letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  reference = "#{reference_prefix}-000002"
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include "Reference: #{reference}"
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven’t received any information, we’re unable to process your application'
 end
 
 Then("I should see a not proceeding application letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  reference = "#{reference_prefix}-000002"
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include "Reference: #{reference}"
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers'
 end
 
 Then("I should see a evidence incorrect letter template") do
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'Reference: PA19-000002'
+  reference = "#{reference_prefix}-000002"
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include "Reference: #{reference}"
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'There’s a problem with the documents you sent:'
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'How to pay'
 end
@@ -65,6 +68,6 @@ end
 
 And("on the processed application I can see that the reason for not being processed is staff error") do
   click_button('Finish')
-  click_link('PA19-000002')
+  click_link("#{reference_prefix}-000002")
   expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff error"'
 end

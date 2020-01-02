@@ -37,7 +37,7 @@ class FindApplicationPage < BasePage
   end
 
   def search_by_hwf_reference
-    content.completed_search_reference.set 'PA19-000001'
+    content.completed_search_reference.set "#{reference_prefix}-000001"
     content.search_button.click
   end
 
