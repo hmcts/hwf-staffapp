@@ -124,6 +124,11 @@ When("I complete processing") do
   back_to_start
 end
 
+When("I complete processing and go back") do
+  complete_processing
+  page.go_back
+end
+
 Then("I should see select from one of the problem options error message") do
   problem_with_evidence_page.content.header
 end

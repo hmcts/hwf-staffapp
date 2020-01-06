@@ -76,3 +76,10 @@ Scenario: Return to dashboard
   When I have successfully submitted the evidence
   And I complete processing
   Then I should be taken back to my dashboard
+
+Scenario: Return to dashboard
+  And I am on an application waiting for evidence
+  When I have successfully submitted the evidence
+  And I complete processing and go back
+  Then I should be taken back to my dashboard
+
