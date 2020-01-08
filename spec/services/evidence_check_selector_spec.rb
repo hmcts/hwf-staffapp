@@ -109,6 +109,10 @@ describe EvidenceCheckSelector do
           it 'sets expiration on the evidence_check' do
             expect(decision.expires_at).to eql(current_time + expires_in_days.days)
           end
+
+          it 'does not saves the ccmcc check type' do
+            expect(decision.ccmcc_check_type).to be nil
+          end
         end
 
         context 'when the application is not the 10th' do
@@ -128,6 +132,7 @@ describe EvidenceCheckSelector do
             allow(CCMCCEvidenceCheckRules).to receive(:new).and_return ccmcc
             allow(ccmcc).to receive(:rule_applies?).and_return true
             allow(ccmcc).to receive(:frequency).and_return 1
+            allow(ccmcc).to receive(:check_type).and_return '5k rule'
 
             create_list :application_full_remission, 4
             create_list :application, 5
@@ -135,6 +140,10 @@ describe EvidenceCheckSelector do
 
           it 'creates evidence_check record for the application' do
             is_expected.to be_a(EvidenceCheck)
+          end
+
+          it 'saves the ccmcc check type' do
+            expect(decision.ccmcc_check_type).to eq('5k rule')
           end
         end
       end

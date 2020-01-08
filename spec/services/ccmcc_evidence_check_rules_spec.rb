@@ -28,6 +28,11 @@ RSpec.describe CCMCCEvidenceCheckRules do
         ccmcc_check_rules.rule_applies?
         expect(ccmcc_check_rules.frequency).to be 1
       end
+
+      it 'check type value' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.check_type).to eq('over 5 thousand')
+      end
     end
 
     describe 'under 5k rule' do
