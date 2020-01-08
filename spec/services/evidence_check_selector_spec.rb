@@ -121,6 +121,22 @@ describe EvidenceCheckSelector do
             is_expected.to be nil
           end
         end
+
+        context 'CCMCC application frequency applies' do
+          before do
+            ccmcc = instance_double(CCMCCEvidenceCheckRules)
+            allow(CCMCCEvidenceCheckRules).to receive(:new).and_return ccmcc
+            allow(ccmcc).to receive(:rule_applies?).and_return true
+            allow(ccmcc).to receive(:frequency).and_return 1
+
+            create_list :application_full_remission, 4
+            create_list :application, 5
+          end
+
+          it 'creates evidence_check record for the application' do
+            is_expected.to be_a(EvidenceCheck)
+          end
+        end
       end
 
       context 'for a refund application' do
