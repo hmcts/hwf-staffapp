@@ -16,7 +16,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
     context 'refund application' do
       let(:application) { create :application, :refund, office: ccmcc, fee: 5000 }
-      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
   end
 

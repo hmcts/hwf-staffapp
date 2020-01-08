@@ -11,7 +11,6 @@ class CCMCCEvidenceCheckRules
 
   def rule_applies?
     return false unless same_office?
-    return false if @application.detail.refund?
     over_five_thousand?
   end
 
