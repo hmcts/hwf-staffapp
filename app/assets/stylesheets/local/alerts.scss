@@ -41,3 +41,8 @@
 
   }
 }
+
+.govuk-error-summary__list li {
+  color: $govuk-error-colour;
+  font-weight: bold;
+}
