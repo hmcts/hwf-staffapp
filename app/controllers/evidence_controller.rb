@@ -5,7 +5,7 @@ class EvidenceController < ApplicationController
     track_application(application)
   end
 
-  before_action :only_non_processed_applications, except: [:show, :confirmation]
+  before_action :only_non_processed_applications, except: [:confirmation]
 
   include SectionViewsHelper
 

@@ -45,12 +45,8 @@ RSpec.describe EvidenceController, type: :controller do
       context 'processed evidence' do
         let(:evidence) { create :evidence_check, :completed, application_id: application.id }
 
-        it 'should not redirect to dashboard' do
-          expect(response).not_to redirect_to(root_path)
-        end
-
-        it 'renders the correct template' do
-          expect(response).to render_template('show')
+        it 'should redirect to dashboard' do
+          expect(response).to redirect_to(root_path)
         end
       end
     end
