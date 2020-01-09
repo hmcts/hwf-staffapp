@@ -78,8 +78,8 @@ Scenario: Return to dashboard
   Then I should be taken back to my dashboard
 
 Scenario: Return to dashboard
-  And I am on an application waiting for evidence
-  When I have successfully submitted the evidence
-  And I complete processing and go back
+  And I have successfully processed the evidence
+  When I use the browser back button
   Then I should be taken back to my dashboard
+  And I should see a message telling me that the application has been processed
 

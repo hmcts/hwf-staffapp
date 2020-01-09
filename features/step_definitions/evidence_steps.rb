@@ -112,6 +112,18 @@ Given("I have successfully submitted the evidence") do
   click_link('Next')
 end
 
+Given("I have successfully processed the evidence") do
+  evidence_page.processed_evidence
+end
+
+Given("I use the browser back button") do
+  page.go_back
+end
+
+Given("I should see a message telling me that the application has been processed") do
+  expect(evidence_page.content).to have_error_message
+end
+
 Then("I should see the evidence details on the summary page") do
   expect(current_path).to end_with '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
@@ -122,11 +134,6 @@ end
 When("I complete processing") do
   complete_processing
   back_to_start
-end
-
-When("I complete processing and go back") do
-  complete_processing
-  page.go_back
 end
 
 Then("I should see select from one of the problem options error message") do
