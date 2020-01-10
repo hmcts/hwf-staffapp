@@ -125,27 +125,6 @@ describe EvidenceCheckSelector do
             is_expected.to be nil
           end
         end
-
-        context 'CCMCC application frequency applies' do
-          before do
-            ccmcc = instance_double(CCMCCEvidenceCheckRules)
-            allow(CCMCCEvidenceCheckRules).to receive(:new).and_return ccmcc
-            allow(ccmcc).to receive(:rule_applies?).and_return true
-            allow(ccmcc).to receive(:frequency).and_return 1
-            allow(ccmcc).to receive(:check_type).and_return '5k rule'
-
-            create_list :application_full_remission, 4
-            create_list :application, 5
-          end
-
-          it 'creates evidence_check record for the application' do
-            is_expected.to be_a(EvidenceCheck)
-          end
-
-          it 'saves the ccmcc check type' do
-            expect(decision.ccmcc_check_type).to eq('5k rule')
-          end
-        end
       end
 
       context 'for a refund application' do
@@ -222,6 +201,66 @@ describe EvidenceCheckSelector do
           decision = described_class.new(application, expires_in_days).decide!
 
           expect(decision).not_to be_a(EvidenceCheck)
+        end
+      end
+    end
+
+    context 'CCMCC application frequency applies' do
+      let(:application) { create :application_full_remission, reference: 'XY55-22-3' }
+      let(:query_type) { nil }
+      let(:frequency) { 1 }
+
+      before do
+        ccmcc = instance_double(CCMCCEvidenceCheckRules)
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return ccmcc
+        allow(ccmcc).to receive(:rule_applies?).and_return true
+        allow(ccmcc).to receive(:frequency).and_return 1
+        allow(ccmcc).to receive(:check_type).and_return '5k rule'
+        allow(ccmcc).to receive(:query_type).and_return query_type
+      end
+
+      context 'query all' do
+        let(:frequency) { 2 }
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+
+        before do
+          create_list :application_full_remission, 1, :refund
+          create_list :application, 1
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
+
+      context 'query only non refund applications' do
+        before do
+          create_list :application_full_remission, 4
+          create_list :application, 5
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+
+        it 'saves the ccmcc check type' do
+          expect(decision.ccmcc_check_type).to eq('5k rule')
+        end
+      end
+
+      context 'query only refund applications' do
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
+        before do
+          create_list :application_full_remission, 4, :refund
+          create_list :application, 5
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+
+        it 'saves the ccmcc check type' do
+          expect(decision.ccmcc_check_type).to eq('5k rule')
         end
       end
     end
