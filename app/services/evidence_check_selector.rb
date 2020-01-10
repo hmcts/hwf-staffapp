@@ -27,16 +27,11 @@ class EvidenceCheckSelector
   def evidence_check?
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
       if ccmcc_evidence_rules?
-        get_evidence_check(@ccmcc.frequency, false)
+        ccmcc_evidence_rules_check
       else
         @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
       end
     end
-  end
-
-  def ccmcc_evidence_rules?
-    @ccmcc = CCMCCEvidenceCheckRules.new(@application)
-    @ccmcc.rule_applies?
   end
 
   def flagged?
@@ -53,6 +48,10 @@ class EvidenceCheckSelector
 
   def get_evidence_check(frequency, refund)
     position = application_position(refund)
+    position_matching_frequency?(position, frequency)
+  end
+
+  def position_matching_frequency?(position, frequency)
     (position > 1) && (position % frequency).zero?
   end
 
@@ -89,4 +88,21 @@ class EvidenceCheckSelector
     evidence_check_attributes.merge!(ccmcc_check_type: @ccmcc.check_type) if @ccmcc.try(:check_type)
     @application.create_evidence_check(evidence_check_attributes)
   end
+
+  def ccmcc_evidence_rules_check
+    if CCMCCEvidenceCheckRules::QUERY_ALL == @ccmcc.query_type
+      position = Query::EvidenceCheckable.new.find_all.
+                 where('applications.id <= ?', @application.id).count
+      position_matching_frequency?(position, @ccmcc.frequency)
+    else
+      refund = CCMCCEvidenceCheckRules::QUERY_REFUND == @ccmcc.query_type
+      get_evidence_check(@ccmcc.frequency, refund)
+    end
+  end
+
+  def ccmcc_evidence_rules?
+    @ccmcc = CCMCCEvidenceCheckRules.new(@application)
+    @ccmcc.rule_applies?
+  end
+
 end
