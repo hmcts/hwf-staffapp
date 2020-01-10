@@ -7,7 +7,9 @@ class EvidenceCheckSelector
   def decide!
     return if skip_ev_check?
     type = evidence_check_type
-    @application.create_evidence_check(expires_at: expires_at, check_type: type) if type
+    if type
+      save_evidence_check(type)
+    end
   end
 
   private
@@ -24,8 +26,17 @@ class EvidenceCheckSelector
 
   def evidence_check?
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
-      @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
+      if ccmcc_evidence_rules?
+        get_evidence_check(@ccmcc.frequency, false)
+      else
+        @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
+      end
     end
+  end
+
+  def ccmcc_evidence_rules?
+    @ccmcc = CCMCCEvidenceCheckRules.new(@application)
+    @ccmcc.rule_applies?
   end
 
   def flagged?
@@ -71,5 +82,11 @@ class EvidenceCheckSelector
       @application.outcome == 'none' ||
       @application.application_type != 'income' ||
       @application.detail.discretion_applied == false
+  end
+
+  def save_evidence_check(type)
+    evidence_check_attributes = { expires_at: expires_at, check_type: type }
+    evidence_check_attributes.merge!(ccmcc_check_type: @ccmcc.check_type) if @ccmcc.try(:check_type)
+    @application.create_evidence_check(evidence_check_attributes)
   end
 end
