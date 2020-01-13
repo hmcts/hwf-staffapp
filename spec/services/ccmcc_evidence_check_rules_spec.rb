@@ -44,6 +44,17 @@ RSpec.describe CCMCCEvidenceCheckRules do
         ccmcc_check_rules.rule_applies?
         expect(ccmcc_check_rules.query_type).to eq(:all)
       end
+
+      context 'way over 5 thousand' do
+        let(:application) { create :application, office: ccmcc, fee: 100000 }
+        it { expect(ccmcc_check_rules.rule_applies?).to be true }
+
+        it 'has the frequency of 1 - as every application applies' do
+          ccmcc_check_rules.rule_applies?
+          expect(ccmcc_check_rules.frequency).to be 1
+        end
+
+      end
     end
 
     describe '25percent is checked on £1000 to £4999' do
@@ -93,11 +104,48 @@ RSpec.describe CCMCCEvidenceCheckRules do
           expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
         end
       end
-
-      context '£999' do
-        let(:application) { create :application, office: ccmcc, fee: 999 }
-        it { expect(ccmcc_check_rules.rule_applies?).to be false }
-      end
     end
   end
+
+  describe '25percent is checked on £100 to £999' do
+    context 'refund' do
+      let(:application) { create :application, :refund, office: ccmcc, fee: 999 }
+
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
+
+      it 'check query_type' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.query_type).to be CCMCCEvidenceCheckRules::QUERY_REFUND
+      end
+
+      it 'has the frequency of 4 - as 25 percent' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.frequency).to be 4
+      end
+
+      it 'check type value' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999')
+      end
+    end
+
+    context 'non refund' do
+      let(:application) { create :application, office: ccmcc, fee: 999 }
+
+      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+    end
+  end
+
+  describe 'under 100' do
+    context 'refund' do
+      let(:application) { create :application, office: ccmcc, fee: 99 }
+      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+    end
+
+    context 'not a refund' do
+      let(:application) { create :application, :refund, office: ccmcc, fee: 99 }
+      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+    end
+  end
+
 end
