@@ -8,6 +8,8 @@ class CCMCCEvidenceCheckRules
   ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION = 'between 100 and 999 refund'.freeze
   ONE_TO_ONE_THOUSAND_RULE_FREQUENCY = 10
   ONE_TO_ONE_THOUSAND_RULE_ANNOTATION = 'between 100 and 999 non refund'.freeze
+  UNDER_ONE_HUNDRED_RULE_ANNOTATION = 'under 100'.freeze
+  UNDER_ONE_HUNDRED_RULE_FREQUENCY = 50
   QUERY_ALL = :all
   QUERY_REFUND = :refund
 
@@ -22,6 +24,7 @@ class CCMCCEvidenceCheckRules
     fee_range_applies?
   end
 
+  # rubocop:disable Metrics/MethodLength
   def fee_range_applies?
     case @application.detail.fee
     when 5000..Float::INFINITY
@@ -30,10 +33,13 @@ class CCMCCEvidenceCheckRules
       between_one_and_five_thousands
     when 100..999
       between_one_hundred_and_ninehundredninetynine
+    when 0..99
+      under_one_hundred
     else
       false
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -66,4 +72,12 @@ class CCMCCEvidenceCheckRules
     end
     true
   end
+
+  def under_one_hundred
+    @frequency = UNDER_ONE_HUNDRED_RULE_FREQUENCY
+    @check_type = UNDER_ONE_HUNDRED_RULE_ANNOTATION
+    @query_type = QUERY_ALL
+    true
+  end
+
 end
