@@ -4,8 +4,10 @@ class CCMCCEvidenceCheckRules
   FIVE_K_RULE_ANNOTATION = 'over 5 thousand'.freeze
   ONE_TO_5_K_RULE_FREQUENCY = 4
   ONE_TO_5_K_RULE_ANNOTATION = 'between 1 and 5 thousand'.freeze
-  ONE_TO_ONE_THOUSAND_RULE_FREQUENCY = 4
-  ONE_TO_ONE_THOUSAND_RULE_ANNOTATION = 'between 100 and 999'.freeze
+  ONE_TO_ONE_THOUSAND_REFUND_RULE_FREQUENCY = 4
+  ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION = 'between 100 and 999 refund'.freeze
+  ONE_TO_ONE_THOUSAND_RULE_FREQUENCY = 10
+  ONE_TO_ONE_THOUSAND_RULE_ANNOTATION = 'between 100 and 999 non refund'.freeze
   QUERY_ALL = :all
   QUERY_REFUND = :refund
 
@@ -40,7 +42,6 @@ class CCMCCEvidenceCheckRules
   end
 
   def over_five_thousand
-    return false if @application.detail.fee < 5000
     @frequency = FIVE_K_RULE_FREQUENCY
     @check_type = FIVE_K_RULE_ANNOTATION
     @query_type = QUERY_ALL
@@ -48,8 +49,6 @@ class CCMCCEvidenceCheckRules
   end
 
   def between_one_and_five_thousands
-    return false if @application.detail.fee < 1000
-    return false if @application.detail.fee > 4999
     return false if @application.detail.refund
     @frequency = ONE_TO_5_K_RULE_FREQUENCY
     @check_type = ONE_TO_5_K_RULE_ANNOTATION
@@ -57,12 +56,14 @@ class CCMCCEvidenceCheckRules
   end
 
   def between_one_hundred_and_ninehundredninetynine
-    return false if @application.detail.fee < 100
-    return false if @application.detail.fee > 999
-    return false if @application.detail.refund == false
-    @query_type = QUERY_REFUND
-    @frequency = ONE_TO_ONE_THOUSAND_RULE_FREQUENCY
-    @check_type = ONE_TO_ONE_THOUSAND_RULE_ANNOTATION
+    if @application.detail.refund
+      @query_type = QUERY_REFUND
+      @frequency = ONE_TO_ONE_THOUSAND_REFUND_RULE_FREQUENCY
+      @check_type = ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION
+    else
+      @frequency = ONE_TO_ONE_THOUSAND_RULE_FREQUENCY
+      @check_type = ONE_TO_ONE_THOUSAND_RULE_ANNOTATION
+    end
     true
   end
 end

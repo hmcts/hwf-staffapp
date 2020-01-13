@@ -107,7 +107,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
     end
   end
 
-  describe '25percent is checked on £100 to £999' do
+  describe 'check on £100 to £999' do
     context 'refund' do
       let(:application) { create :application, :refund, office: ccmcc, fee: 999 }
 
@@ -125,14 +125,30 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999')
+        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999 refund')
       end
     end
 
     context 'non refund' do
       let(:application) { create :application, office: ccmcc, fee: 999 }
 
-      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
+
+      it 'check query_type' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.query_type).to be nil
+      end
+
+      it 'has the frequency of 10 - as 10 percent' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.frequency).to be 10
+      end
+
+      it 'check type value' do
+        ccmcc_check_rules.rule_applies?
+        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999 non refund')
+      end
+
     end
   end
 
