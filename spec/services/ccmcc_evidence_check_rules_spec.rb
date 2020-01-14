@@ -57,51 +57,64 @@ RSpec.describe CCMCCEvidenceCheckRules do
       end
     end
 
-    describe '25percent is checked on £1000 to £4999' do
+    describe 'check on £1000 to £4999' do
       context 'refund' do
         let(:application) { create :application, :refund, office: ccmcc, fee: 1000 }
 
-        it { expect(ccmcc_check_rules.rule_applies?).to be false }
+        it { expect(ccmcc_check_rules.rule_applies?).to be true }
 
         it 'check query_type' do
           ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.query_type).to be nil
+          expect(ccmcc_check_rules.query_type).to be CCMCCEvidenceCheckRules::QUERY_REFUND
         end
-      end
 
-      context '£1000' do
-        let(:application) { create :application, office: ccmcc, fee: 1000 }
-
-        it { expect(ccmcc_check_rules.rule_applies?).to be true }
-
-        it 'has the frequency of 4 - as 25 percent' do
+        it 'has the frequency of 2 - as 50 percent' do
           ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.frequency).to be 4
+          expect(ccmcc_check_rules.frequency).to be 2
         end
 
         it 'check type value' do
           ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+          expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand refund')
         end
 
-        it 'check query_type' do
-          ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.query_type).to be nil
-        end
       end
 
-      context '£4999' do
-        let(:application) { create :application, office: ccmcc, fee: 4999 }
-        it { expect(ccmcc_check_rules.rule_applies?).to be true }
+      context 'non refund' do
+        context '£1000' do
+          let(:application) { create :application, office: ccmcc, fee: 1000 }
 
-        it 'has the frequency of 4 - as 25 percent' do
-          ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.frequency).to be 4
+          it { expect(ccmcc_check_rules.rule_applies?).to be true }
+
+          it 'has the frequency of 4 - as 25 percent' do
+            ccmcc_check_rules.rule_applies?
+            expect(ccmcc_check_rules.frequency).to be 4
+          end
+
+          it 'check type value' do
+            ccmcc_check_rules.rule_applies?
+            expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+          end
+
+          it 'check query_type' do
+            ccmcc_check_rules.rule_applies?
+            expect(ccmcc_check_rules.query_type).to be nil
+          end
         end
 
-        it 'check type value' do
-          ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+        context '£4999' do
+          let(:application) { create :application, office: ccmcc, fee: 4999 }
+          it { expect(ccmcc_check_rules.rule_applies?).to be true }
+
+          it 'has the frequency of 4 - as 25 percent' do
+            ccmcc_check_rules.rule_applies?
+            expect(ccmcc_check_rules.frequency).to be 4
+          end
+
+          it 'check type value' do
+            ccmcc_check_rules.rule_applies?
+            expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+          end
         end
       end
     end
