@@ -41,6 +41,14 @@ RSpec.describe EvidenceController, type: :controller do
       it 'assigns the details model' do
         expect(assigns(:details)).to be_a(Views::Overview::Details)
       end
+
+      context 'processed evidence' do
+        let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+
+        it 'should redirect to dashboard' do
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 
@@ -319,6 +327,18 @@ RSpec.describe EvidenceController, type: :controller do
       it 'assigns the evidence check as confirmation' do
         expect(assigns(:confirmation)).to eql(evidence)
       end
+
+      context 'processed evidence' do
+        let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+
+        it 'should not redirect to dashboard' do
+          expect(response).not_to redirect_to(root_path)
+        end
+
+        it 'renders the correct template' do
+          expect(response).to render_template('confirmation')
+        end
+      end
     end
   end
 
@@ -340,6 +360,19 @@ RSpec.describe EvidenceController, type: :controller do
       it { expect(response).to have_http_status(200) }
 
       it { expect(response).to render_template('return_letter') }
+    end
+
+    context 'processed evidence' do
+      let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+
+      before do
+        sign_in user
+        get :return_letter, params: { id: evidence }
+      end
+
+      it 'should redirect to dashboard' do
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 

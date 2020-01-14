@@ -5,6 +5,8 @@ class EvidenceController < ApplicationController
     track_application(application)
   end
 
+  before_action :only_non_processed_applications, except: [:confirmation]
+
   include SectionViewsHelper
 
   def show
@@ -125,5 +127,12 @@ class EvidenceController < ApplicationController
 
   def evidence_confirmation
     @confirmation = evidence
+  end
+
+  def only_non_processed_applications
+    if @evidence.try(:completed_at).present?
+      flash[:alert] = I18n.t('application_redirect.processed')
+      redirect_to root_path
+    end
   end
 end
