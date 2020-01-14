@@ -4,6 +4,8 @@ class CCMCCEvidenceCheckRules
   FIVE_K_RULE_ANNOTATION = 'over 5 thousand'.freeze
   ONE_TO_5_K_RULE_FREQUENCY = 4
   ONE_TO_5_K_RULE_ANNOTATION = 'between 1 and 5 thousand'.freeze
+  ONE_TO_5_K_RULE_REFUND_FREQUENCY = 2
+  ONE_TO_5_K_RULE_REFUND_ANNOTATION = 'between 1 and 5 thousand refund'.freeze
   ONE_TO_ONE_THOUSAND_REFUND_RULE_FREQUENCY = 4
   ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION = 'between 100 and 999 refund'.freeze
   ONE_TO_ONE_THOUSAND_RULE_FREQUENCY = 10
@@ -55,9 +57,14 @@ class CCMCCEvidenceCheckRules
   end
 
   def between_one_and_five_thousands
-    return false if @application.detail.refund
-    @frequency = ONE_TO_5_K_RULE_FREQUENCY
-    @check_type = ONE_TO_5_K_RULE_ANNOTATION
+    if @application.detail.refund
+      @frequency = ONE_TO_5_K_RULE_REFUND_FREQUENCY
+      @check_type = ONE_TO_5_K_RULE_REFUND_ANNOTATION
+      @query_type = QUERY_REFUND
+    else
+      @frequency = ONE_TO_5_K_RULE_FREQUENCY
+      @check_type = ONE_TO_5_K_RULE_ANNOTATION
+    end
     true
   end
 
