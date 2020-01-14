@@ -14,13 +14,13 @@
         .govuk-form-group.govuk-radios.govuk-radios--small
           .govuk-radios__item
 
-            = f.radio_button :incorrect_reason, 'not_arrived_or_late', class: 'govuk-radios__input'
+            = f.radio_button :incorrect_reason, 'not_arrived_or_late', class: 'govuk-radios__input show-hide-section'
             = f.label t('evidence.not_arrived_or_late'), for: 'evidence_incorrect_reason_not_arrived_or_late', class: 'govuk-label govuk-radios__label'
           .govuk-radios__item
-            = f.radio_button :incorrect_reason, 'citizen_not_processing', class: 'govuk-radios__input'
+            = f.radio_button :incorrect_reason, 'citizen_not_processing', class: 'govuk-radios__input show-hide-section'
             = f.label t('evidence.citizen_not_processing'), for: 'evidence_incorrect_reason_citizen_not_processing', class: 'govuk-label govuk-radios__label'
           .govuk-radios__item
-            = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input show-hide-section', data: { section: 'error-details', show: 'false' }
+            = f.radio_button :incorrect_reason, 'staff_error', class: 'govuk-radios__input show-hide-section', data: { section: 'error-details' }
             = f.label t('evidence.staff_error'), for: 'evidence_incorrect_reason_staff_error', class: 'govuk-label govuk-radios__label'
 
         .govuk-form-group.start-hidden.group-level#error-details-only
