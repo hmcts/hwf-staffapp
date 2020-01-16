@@ -20,6 +20,15 @@ RSpec.describe CCMCCEvidenceCheckRules do
     end
   end
 
+  describe 'CCMCC clean_annotation_data' do
+    before do
+      ccmcc_check_rules.rule_applies?
+      ccmcc_check_rules.clean_annotation_data
+    end
+
+    it { expect(ccmcc_check_rules.check_type).to be nil }
+  end
+
   context 'ccmcc application' do
     context 'refund' do
       let(:application) { create :application, :refund, office: ccmcc, fee: 5000 }

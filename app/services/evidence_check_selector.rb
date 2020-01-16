@@ -27,7 +27,9 @@ class EvidenceCheckSelector
   def evidence_check?
     if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
       if ccmcc_evidence_rules?
-        ccmcc_evidence_rules_check
+        outcome = ccmcc_evidence_rules_check
+        @ccmcc.clean_annotation_data unless outcome
+        outcome
       else
         @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
       end
