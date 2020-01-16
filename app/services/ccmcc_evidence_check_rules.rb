@@ -43,6 +43,10 @@ class CCMCCEvidenceCheckRules
   end
   # rubocop:enable Metrics/MethodLength
 
+  def clean_annotation_data
+    @check_type = nil
+  end
+
   private
 
   def same_office?

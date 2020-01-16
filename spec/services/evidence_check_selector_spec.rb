@@ -211,12 +211,12 @@ describe EvidenceCheckSelector do
       let(:frequency) { 1 }
 
       before do
-        ccmcc = instance_double(CCMCCEvidenceCheckRules)
-        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return ccmcc
-        allow(ccmcc).to receive(:rule_applies?).and_return true
-        allow(ccmcc).to receive(:frequency).and_return 1
-        allow(ccmcc).to receive(:check_type).and_return '5k rule'
-        allow(ccmcc).to receive(:query_type).and_return query_type
+        @ccmcc = instance_double(CCMCCEvidenceCheckRules, clean_annotation_data: true)
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return @ccmcc
+        allow(@ccmcc).to receive(:rule_applies?).and_return true
+        allow(@ccmcc).to receive(:frequency).and_return frequency
+        allow(@ccmcc).to receive(:check_type).and_return '5k rule'
+        allow(@ccmcc).to receive(:query_type).and_return query_type
       end
 
       context 'query all' do
@@ -261,6 +261,26 @@ describe EvidenceCheckSelector do
 
         it 'saves the ccmcc check type' do
           expect(decision.ccmcc_annotation).to eq('5k rule')
+        end
+
+        it "don't clean annotaiton data" do
+          decision
+          expect(@ccmcc).not_to have_received(:clean_annotation_data)
+        end
+      end
+
+      context 'the frequency does not match' do
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
+        let(:frequency) { 3 }
+
+        before do
+          create_list :application_full_remission, 4, :refund
+          create_list :application, 5
+        end
+
+        it 'cleans the ccmcc annotation data' do
+          decision
+          expect(@ccmcc).to have_received(:clean_annotation_data)
         end
       end
     end
