@@ -10,6 +10,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
     it { expect(ccmcc_check_rules.rule_applies?).to be true }
 
     context 'not ccmcc application' do
+      before { ccmcc }
       let(:application) { create :application, office: digital, fee: 5000 }
       it { expect(ccmcc_check_rules.rule_applies?).to be false }
     end
@@ -18,6 +19,10 @@ RSpec.describe CCMCCEvidenceCheckRules do
       let(:application) { create :application, :refund, office: ccmcc, fee: 5000 }
       it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
+  end
+
+  describe 'ccmcc office id' do
+    it { expect(ccmcc_check_rules.office_id).to eql(ccmcc.id) }
   end
 
   describe 'CCMCC clean_annotation_data' do

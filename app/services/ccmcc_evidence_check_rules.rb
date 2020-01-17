@@ -26,6 +26,10 @@ class CCMCCEvidenceCheckRules
     fee_range_applies?
   end
 
+  def office_id
+    @office_id ||= Office.where(entity_code: OFFICE_CODE).pluck(:id).last
+  end
+
   # rubocop:disable Metrics/MethodLength
   def fee_range_applies?
     case @application.detail.fee

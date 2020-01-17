@@ -93,13 +93,16 @@ class EvidenceCheckSelector
 
   def ccmcc_evidence_rules_check
     if CCMCCEvidenceCheckRules::QUERY_ALL == @ccmcc.query_type
-      position = Query::EvidenceCheckable.new.find_all.
-                 where('applications.id <= ?', @application.id).count
-      position_matching_frequency?(position, @ccmcc.frequency)
+      query = 'applications.id <= ? AND applications.office_id = ?'
+      values = [@application.id, @ccmcc.office_id]
     else
       refund = CCMCCEvidenceCheckRules::QUERY_REFUND == @ccmcc.query_type
-      get_evidence_check(@ccmcc.frequency, refund)
+      query = 'applications.id <= ? AND applications.office_id = ? AND details.refund = ?'
+      values = [@application.id, @ccmcc.office_id, refund]
     end
+
+    position = Query::EvidenceCheckable.new.find_all.where([query, values].flatten).count
+    position_matching_frequency?(position, @ccmcc.frequency)
   end
 
   def ccmcc_evidence_rules?
