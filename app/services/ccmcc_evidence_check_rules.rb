@@ -27,7 +27,7 @@ class CCMCCEvidenceCheckRules
   end
 
   def office_id
-    @office_id ||= Office.find_by(entity_code: OFFICE_CODE).id
+    @office_id ||= Office.where(entity_code: OFFICE_CODE).pluck(:id).last
   end
 
   # rubocop:disable Metrics/MethodLength
