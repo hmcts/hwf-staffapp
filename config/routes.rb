@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'letter_templates' => 'reports#letters'
   get 'reports/raw_data' => 'reports#raw_data'
   put 'reports/raw_data' => 'reports#raw_data_export'
+  get 'reports/ccmcc_data' => 'reports#ccmcc_data'
+  put 'reports/ccmcc_data' => 'reports#ccmcc_data_export'
 
   get '/applications/new' => 'applications/build#create'
   resources :applications, only: [] do
