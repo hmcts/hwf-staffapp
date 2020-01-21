@@ -33,14 +33,9 @@ module Views
       def to_csv
         CSV.generate do |csv|
           csv << HEADERS
-
           data.each do |row|
             csv << ATTRIBUTES.map do |attr|
-              if attr == :ev_id
-                ev_check(row)
-              else
-                row.send(attr)
-              end
+              process_row(row, attr)
             end
           end
         end
@@ -59,11 +54,20 @@ module Views
       def build_data
         Application.left_outer_joins(:evidence_check).distinct.
           select('applications.reference', 'applications.created_at', 'details.fee',
-                 'applications.outcome', 'applications.decision', 'applications.amount_to_pay', 'applications.decision_cost',
-                 'users.name', 'evidence_checks.id as ev_id', 'evidence_checks.check_type', 'evidence_checks.ccmcc_annotation', 'details.refund',
+                 'applications.outcome', 'applications.decision', 'applications.amount_to_pay',
+                 'applications.decision_cost', 'users.name', 'evidence_checks.id as ev_id',
+                 'evidence_checks.check_type', 'evidence_checks.ccmcc_annotation', 'details.refund',
                  'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
           where("offices.entity_code = 'DH403'").where(application_type: 'income')
+      end
+
+      def process_row(row, attr)
+        if attr == :ev_id
+          ev_check(row)
+        else
+          row.send(attr)
+        end
       end
 
       def ev_check(row)

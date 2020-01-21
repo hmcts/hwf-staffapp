@@ -279,48 +279,5 @@ RSpec.describe ReportsController, type: :controller do
         end
       end
     end
-
-    describe 'PUT #ccmcc_data' do
-      subject { response }
-
-      context 'with invalid data - nil date from' do
-        let(:dates) {
-          { day_date_from: nil,
-            month_date_from: nil,
-            year_date_from: nil,
-            day_date_to: '31',
-            month_date_to: '12',
-            year_date_to: '2015' }
-        }
-
-        before { put :ccmcc_data_export, params: { forms_finance_report: dates } }
-
-        it { is_expected.to have_http_status(:success) }
-
-        it { is_expected.to render_template :ccmcc_data }
-      end
-
-      context 'ccmcc builder' do
-        it 'does something' do
-          allow(Views::Reports::CCMCCDataExport).to receive(:new).and_return([])
-          put :ccmcc_data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::CCMCCDataExport).to have_received(:new)
-        end
-      end
-
-      context 'with valid data - both from and to dates' do
-        before { put :ccmcc_data_export, params: { forms_finance_report: dates } }
-
-        it { is_expected.to have_http_status(:success) }
-
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('help-with-fees-ccmcc-extract-')
-        end
-
-        it 'sets the file type' do
-          expect(response.headers['Content-Type']).to include('text/csv')
-        end
-      end
-    end
   end
 end
