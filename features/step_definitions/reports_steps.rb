@@ -64,5 +64,5 @@ When("I click on ccmcc data extract") do
 end
 
 Then("I should be taken to the ccmcc data extract page") do
-  expect(current_path).to include '/reports/ccmcc_data'
+  expect(current_path).to include '/report/ccmcc_data'
 end
