@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
-  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data]
+  before_action :authorise_report_show, except: [:index, :graphs, :public,
+                                                 :letters, :raw_data, :ccmcc_data]
 
   def index
     authorize :report
@@ -62,6 +63,20 @@ class ReportsController < ApplicationController
     end
   end
 
+  def ccmcc_data
+    authorize :report, :ccmcc_data?
+    @form = Forms::FinanceReport.new
+  end
+
+  def ccmcc_data_export
+    @form = form
+    if @form.valid?
+      build_and_return_data(extract_ccmcc_data, 'help-with-fees-ccmcc-extract')
+    else
+      render :ccmcc_data
+    end
+  end
+
   private
 
   def form
@@ -105,6 +120,10 @@ class ReportsController < ApplicationController
 
   def extract_raw_data
     Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params)).to_csv
+  end
+
+  def extract_ccmcc_data
+    Views::Reports::CCMCCDataExport.new(date_from(report_params), date_to(report_params)).to_csv
   end
 
   def filters(form_params)
