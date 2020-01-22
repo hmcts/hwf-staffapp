@@ -59,7 +59,7 @@ module Views
                  'evidence_checks.check_type', 'evidence_checks.ccmcc_annotation', 'details.refund',
                  'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
-          where("offices.entity_code = 'DH403'").where(application_type: 'income')
+          where("offices.entity_code = ?", ccmcc_code).where(application_type: 'income')
       end
 
       def process_row(row, attr)
@@ -72,6 +72,10 @@ module Views
 
       def ev_check(row)
         row.ev_id.blank? ? 'No' : 'Yes'
+      end
+
+      def ccmcc_code
+        CCMCCEvidenceCheckRules::OFFICE_CODE
       end
 
     end
