@@ -7,6 +7,7 @@ module Views
         reference: 'reference number',
         created_at: 'created at',
         fee: 'fee',
+        estimated_cost: 'estimated cost',
         outcome: 'outcome',
         amount_to_pay: 'applicant pays',
         decision_cost: 'departmental cost',
@@ -65,6 +66,8 @@ module Views
       def process_row(row, attr)
         if attr == :ev_id
           ev_check(row)
+        elsif attr == :estimated_cost
+          decision_cost_calculation(row)
         else
           row.send(attr)
         end
@@ -76,6 +79,10 @@ module Views
 
       def ccmcc_code
         CCMCCEvidenceCheckRules::OFFICE_CODE
+      end
+
+      def decision_cost_calculation(row)
+        (row.fee - row.amount_to_pay.to_f) || 0
       end
 
     end
