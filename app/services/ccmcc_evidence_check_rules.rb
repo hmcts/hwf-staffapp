@@ -32,7 +32,7 @@ class CCMCCEvidenceCheckRules
 
   # rubocop:disable Metrics/MethodLength
   def fee_range_applies?
-    case @application.detail.fee
+    case amount_to_remit
     when 5000..Float::INFINITY
       over_five_thousand
     when 1000..4999
@@ -52,6 +52,10 @@ class CCMCCEvidenceCheckRules
   end
 
   private
+
+  def amount_to_remit
+    @application.detail.fee - @application.amount_to_pay
+  end
 
   def same_office?
     @application.office.try(:entity_code) == OFFICE_CODE
