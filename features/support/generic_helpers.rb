@@ -76,6 +76,7 @@ end
 
 def feedback_page
   @feedback_page ||= FeedbackPage.new
+end
 
 def users_page
   @users_page ||= UsersPage.new
