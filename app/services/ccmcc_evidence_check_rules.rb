@@ -1,16 +1,16 @@
 class CCMCCEvidenceCheckRules
   OFFICE_CODE = 'DH403'.freeze
   FIVE_K_RULE_FREQUENCY = 1
-  FIVE_K_RULE_ANNOTATION = 'over 5 thousand'.freeze
+  FIVE_K_RULE_ANNOTATION = '1 over 5 thousand'.freeze
   ONE_TO_5_K_RULE_FREQUENCY = 4
-  ONE_TO_5_K_RULE_ANNOTATION = 'between 1 and 5 thousand'.freeze
+  ONE_TO_5_K_RULE_ANNOTATION = '3 between 1 and 5 thousand non-refund'.freeze
   ONE_TO_5_K_RULE_REFUND_FREQUENCY = 2
-  ONE_TO_5_K_RULE_REFUND_ANNOTATION = 'between 1 and 5 thousand refund'.freeze
+  ONE_TO_5_K_RULE_REFUND_ANNOTATION = '2 between 1 and 5 thousand refund'.freeze
   ONE_TO_ONE_THOUSAND_REFUND_RULE_FREQUENCY = 4
-  ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION = 'between 100 and 999 refund'.freeze
+  ONE_TO_ONE_THOUSAND_REFUND_RULE_ANNOTATION = '4 between 100 and 999 refund'.freeze
   ONE_TO_ONE_THOUSAND_RULE_FREQUENCY = 10
-  ONE_TO_ONE_THOUSAND_RULE_ANNOTATION = 'between 100 and 999 non refund'.freeze
-  UNDER_ONE_HUNDRED_RULE_ANNOTATION = 'under 100'.freeze
+  ONE_TO_ONE_THOUSAND_RULE_ANNOTATION = '5 between 100 and 999 non-refund'.freeze
+  UNDER_ONE_HUNDRED_RULE_ANNOTATION = '6 under 100'.freeze
   UNDER_ONE_HUNDRED_RULE_FREQUENCY = 50
   QUERY_ALL = :all
   QUERY_REFUND = :refund
