@@ -1,4 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby25-nodejs-onbuild:0.2
+FROM employmenttribunal.azurecr.io/ruby25-nodejs-onbuild:0.3
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
