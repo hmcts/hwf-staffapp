@@ -51,7 +51,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('over 5 thousand')
+        expect(ccmcc_check_rules.check_type).to eq('1 over 5 thousand')
       end
 
       it 'check query_type' do
@@ -98,7 +98,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
         it 'check type value' do
           ccmcc_check_rules.rule_applies?
-          expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand refund')
+          expect(ccmcc_check_rules.check_type).to eq('2 between 1 and 5 thousand refund')
         end
 
         context 'part payment' do
@@ -125,7 +125,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
           it 'check type value' do
             ccmcc_check_rules.rule_applies?
-            expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+            expect(ccmcc_check_rules.check_type).to eq('3 between 1 and 5 thousand non-refund')
           end
 
           it 'check query_type' do
@@ -145,7 +145,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
           it 'check type value' do
             ccmcc_check_rules.rule_applies?
-            expect(ccmcc_check_rules.check_type).to eq('between 1 and 5 thousand')
+            expect(ccmcc_check_rules.check_type).to eq('3 between 1 and 5 thousand non-refund')
           end
         end
 
@@ -180,7 +180,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999 refund')
+        expect(ccmcc_check_rules.check_type).to eq('4 between 100 and 999 refund')
       end
 
       context 'part payment' do
@@ -212,7 +212,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('between 100 and 999 non refund')
+        expect(ccmcc_check_rules.check_type).to eq('5 between 100 and 999 non-refund')
       end
 
       context 'part payment' do
@@ -244,7 +244,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('under 100')
+        expect(ccmcc_check_rules.check_type).to eq('6 under 100')
       end
 
       context 'part payment' do
@@ -275,7 +275,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check type value' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.check_type).to eq('under 100')
+        expect(ccmcc_check_rules.check_type).to eq('6 under 100')
       end
 
       context 'part payment' do
