@@ -44,7 +44,6 @@ jobs:
 
     services:
       postgres: postgres
-    
     variables:
       rubyVersion: '= 2.5.7'
       bundlerVersion: '1.17.3'
@@ -57,7 +56,6 @@ jobs:
 
 
   - job: BuildAndPushImageCI
-
     dependsOn: TestApplication
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/')), ne(variables['Build.Reason'], 'Manual'))
     pool:
