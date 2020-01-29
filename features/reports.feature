@@ -29,3 +29,7 @@ Feature: Reports page
     Scenario: Raw data extract
       When I click on raw data extract
       Then I should be taken to the raw data extract page
+
+    Scenario: CCMCC data extract
+      When I click on ccmcc data extract
+      Then I should be taken to the ccmcc data extract page

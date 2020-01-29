@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   get 'reports/raw_data' => 'reports#raw_data'
   put 'reports/raw_data' => 'reports#raw_data_export'
 
+  namespace :report do
+    get 'ccmcc_data' => 'ccmcc_data#show'
+    put 'ccmcc_data' => 'ccmcc_data#data_export'
+  end
+
   get '/applications/new' => 'applications/build#create'
   resources :applications, only: [] do
 
