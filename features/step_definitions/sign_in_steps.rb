@@ -83,3 +83,15 @@ Then("I should be able to send an email to help with fees support") do
   mailto = 'mailto:helpwithfees.support@digital.justice.gov.uk'
   expect(sign_in_page.content.guidance.email_support['href']).to eq mailto
 end
+
+When("I sign out") do
+  navigation_page.navigation_link.sign_out.click
+end
+
+Then("I should be on sign in page") do
+  expect(sign_in_page.content).to have_sign_in_title
+end
+
+Then("I should not see invalid email or password error message") do
+  expect(sign_in_page.content).not_to have_sign_in_alert
+end

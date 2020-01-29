@@ -9,6 +9,13 @@ Feature: Sign in page
       When I successfully sign in as a user
       Then I am taken to my user dashboard
 
+    Scenario: Successful sign in and sign out as a user
+      When I successfully sign in as a user
+      Then I am taken to my user dashboard
+      When I sign out
+      Then I should be on sign in page
+      And I should not see invalid email or password error message
+
     Scenario: Successful sign in as an admin
       When I successfully sign in as admin
       Then I am taken to my admin dashboard

@@ -13,6 +13,7 @@ class SignInPage < BasePage
     element :completed_applications, 'h3', text: 'Completed'
     element :user_email, '#user_email'
     element :user_password, '#user_password'
+    element :sign_in_title, 'h1', text: 'Sign in'
     element :sign_in_button, 'input[value="Sign in"]'
     element :sign_in_alert, '.govuk-error-summary', text: 'You need to sign in before continuing.'
     element :forgot_your_password, 'a', text: 'Forgot your password?'
