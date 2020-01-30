@@ -109,6 +109,10 @@ describe EvidenceCheckSelector do
           it 'sets expiration on the evidence_check' do
             expect(decision.expires_at).to eql(current_time + expires_in_days.days)
           end
+
+          it 'does not saves the ccmcc check type' do
+            expect(decision.ccmcc_annotation).to be nil
+          end
         end
 
         context 'when the application is not the 10th' do
@@ -197,6 +201,139 @@ describe EvidenceCheckSelector do
           decision = described_class.new(application, expires_in_days).decide!
 
           expect(decision).not_to be_a(EvidenceCheck)
+        end
+      end
+    end
+
+    context 'CCMCC application frequency applies' do
+      let(:application) { create :application_full_remission, office: ccmcc_office }
+      let(:query_type) { nil }
+      let(:frequency) { 1 }
+      let(:ccmcc_office) { create :office, entity_code: 'DH403' }
+      let(:digital_office) { create :office, entity_code: 'dig' }
+
+      before do
+        @ccmcc = instance_double(CCMCCEvidenceCheckRules, clean_annotation_data: true)
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return @ccmcc
+        allow(@ccmcc).to receive(:rule_applies?).and_return true
+        allow(@ccmcc).to receive(:frequency).and_return frequency
+        allow(@ccmcc).to receive(:check_type).and_return '5k rule'
+        allow(@ccmcc).to receive(:query_type).and_return query_type
+        allow(@ccmcc).to receive(:office_id).and_return ccmcc_office.id
+      end
+
+      context 'frequency is calculated against the ccmcc office only' do
+        let(:frequency) { 2 }
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+
+        context 'digital_office' do
+          context 'just refund' do
+            let(:application) { create :application_full_remission, :refund, office: ccmcc_office }
+
+            before do
+              create :application_full_remission, :refund, office: digital_office
+              create :application_full_remission, office: digital_office
+            end
+
+            let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
+
+            it 'creates evidence_check record for the application' do
+              is_expected.not_to be_a(EvidenceCheck)
+            end
+          end
+
+          context 'just normal' do
+            before do
+              create :application_full_remission, :refund, office: digital_office
+              create :application_full_remission, office: digital_office
+            end
+
+            let(:query_type) { nil }
+
+            it 'creates evidence_check record for the application' do
+              is_expected.not_to be_a(EvidenceCheck)
+            end
+          end
+
+          context 'all' do
+            let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+            before do
+              create_list :application_full_remission, 2, :refund, office: digital_office
+              create :application_full_remission, office: digital_office
+            end
+
+            it 'creates evidence_check record for the application' do
+              is_expected.not_to be_a(EvidenceCheck)
+            end
+          end
+        end
+      end
+
+      context 'query all' do
+        let(:frequency) { 2 }
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+
+        before do
+          create :application_full_remission, :refund, office: ccmcc_office
+          create :application, office: ccmcc_office
+          create :application, office: digital_office
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
+
+      context 'query only non refund applications' do
+        before do
+          create_list :application_full_remission, 4, office: ccmcc_office
+          create_list :application, 5, office: ccmcc_office
+          create :application, office: digital_office
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+
+        it 'saves the ccmcc check type' do
+          expect(decision.ccmcc_annotation).to eq('5k rule')
+        end
+      end
+
+      context 'query only refund applications' do
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
+        before do
+          create_list :application_full_remission, 4, :refund, office: ccmcc_office
+          create_list :application, 5, office: ccmcc_office
+          create :application, :refund, office: digital_office
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+
+        it 'saves the ccmcc check type' do
+          expect(decision.ccmcc_annotation).to eq('5k rule')
+        end
+
+        it "don't clean annotaiton data" do
+          decision
+          expect(@ccmcc).not_to have_received(:clean_annotation_data)
+        end
+      end
+
+      context 'the frequency does not match' do
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
+        let(:frequency) { 3 }
+
+        before do
+          create_list :application_full_remission, 4, :refund, office: ccmcc_office
+          create_list :application, 5, office: ccmcc_office
+        end
+
+        it 'cleans the ccmcc annotation data' do
+          decision
+          expect(@ccmcc).to have_received(:clean_annotation_data)
         end
       end
     end

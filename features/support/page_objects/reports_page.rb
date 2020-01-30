@@ -15,6 +15,8 @@ class ReportsPage < BasePage
     element :letters_help, 'dd', text: 'Display raw letters'
     element :raw_data_extract_link, 'a', text: 'Raw data extract'
     element :raw_data_extract_help, 'dd', text: 'Extract raw data by date for Analytical Services'
+    element :ccmcc_data_extract_link, 'a', text: 'CCMCC data extract'
+    element :ccmcc_data_extract_help, 'dd', text: 'Extract CCMCC data by date for Analytical Services'
   end
 
   def finance_aggregated_report
@@ -39,5 +41,9 @@ class ReportsPage < BasePage
 
   def raw_data_extract
     content.raw_data_extract_link.click
+  end
+
+  def ccmcc_data_extract
+    content.ccmcc_data_extract_link.click
   end
 end
