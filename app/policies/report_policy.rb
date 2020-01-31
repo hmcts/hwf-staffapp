@@ -22,4 +22,8 @@ class ReportPolicy < BasePolicy
   def raw_data?
     admin_or_mi?
   end
+
+  def ccmcc_data?
+    admin?
+  end
 end
