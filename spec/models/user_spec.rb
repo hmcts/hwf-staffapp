@@ -147,111 +147,51 @@ describe User, type: :model do
   end
 
   describe '@elevated?' do
-    it 'respond true if manager user' do
-      expect(manager.elevated?).to be true
-    end
-
-    it 'respond true if admin user' do
-      expect(admin_user.elevated?).to be true
-    end
-
-    it 'respond false if  user' do
-      expect(user.elevated?).to be false
-    end
+    it { expect(manager.elevated?).to be true }
+    it { expect(admin_user.elevated?).to be true }
+    it { expect(user.elevated?).to be false }
+    it { expect(reader.elevated?).to be false }
+    it { expect(mi.elevated?).to be false }
   end
 
   describe '#staff?' do
-    it 'respond false for staff' do
-      expect(user.staff?).to be true
-    end
-
-    it 'respond false if mi' do
-      expect(mi.staff?).to be false
-    end
-
-    it 'respond false for manager' do
-      expect(manager.staff?).to be false
-    end
-
-    it 'respond false for admin' do
-      expect(admin_user.staff?).to be false
-    end
+    it { expect(user.staff?).to be true }
+    it { expect(reader.staff?).to be false }
+    it { expect(manager.staff?).to be false }
+    it { expect(mi.staff?).to be false }
+    it { expect(admin_user.staff?).to be false }
   end
 
   describe '@manager?' do
-    it 'respond true if manager user' do
-      expect(manager.manager?).to be true
-    end
-
-    it 'respond false if mi' do
-      expect(mi.manager?).to be false
-    end
-
-    it 'respond false if admin user' do
-      expect(admin_user.manager?).to be false
-    end
-
-    it 'respond false if  user' do
-      expect(user.manager?).to be false
-    end
+    it { expect(user.manager?).to be false }
+    it { expect(reader.manager?).to be false }
+    it { expect(manager.manager?).to be true }
+    it { expect(mi.manager?).to be false }
+    it { expect(admin_user.manager?).to be false }
   end
 
   describe '@admin?' do
-    it 'respond true if admin user' do
-      expect(admin_user.admin?).to be true
-    end
-
-    it 'respond false if mi' do
-      expect(mi.admin?).to be false
-    end
-
-    it 'respond false if manager' do
-      expect(manager.admin?).to be false
-    end
-
-    it 'respond false if user' do
-      expect(user.admin?).to be false
-    end
+    it { expect(user.admin?).to be false }
+    it { expect(reader.admin?).to be false }
+    it { expect(manager.admin?).to be false }
+    it { expect(mi.admin?).to be false }
+    it { expect(admin_user.admin?).to be true }
   end
 
   describe '#mi?' do
-    it 'respond true if mi user' do
-      expect(mi.mi?).to be true
-    end
-
-    it 'respond false if admin' do
-      expect(admin_user.mi?).to be false
-    end
-
-    it 'respond false if manager' do
-      expect(manager.admin?).to be false
-    end
-
-    it 'respond false if user' do
-      expect(user.admin?).to be false
-    end
+    it { expect(user.mi?).to be false }
+    it { expect(reader.mi?).to be false }
+    it { expect(manager.mi?).to be false }
+    it { expect(mi.mi?).to be true }
+    it { expect(admin_user.mi?).to be false }
   end
 
   describe '#reader?' do
-    it 'respond true if reader user' do
-      expect(reader.reader?).to be true
-    end
-
-    it 'respond false if mi user' do
-      expect(reader.mi?).to be false
-    end
-
-    it 'respond false if admin' do
-      expect(reader.mi?).to be false
-    end
-
-    it 'respond false if manager' do
-      expect(reader.admin?).to be false
-    end
-
-    it 'respond false if user' do
-      expect(reader.admin?).to be false
-    end
+    it { expect(user.reader?).to be false }
+    it { expect(reader.reader?).to be true }
+    it { expect(manager.reader?).to be false }
+    it { expect(mi.reader?).to be false }
+    it { expect(admin_user.reader?).to be false }
   end
 
   describe 'soft deletion' do

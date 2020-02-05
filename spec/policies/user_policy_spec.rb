@@ -256,7 +256,6 @@ RSpec.describe UserPolicy, type: :policy do
     end
   end
 
-
   describe described_class::Scope do
     describe '#resolve' do
       subject(:resolve) { described_class.new(user, User).resolve }
