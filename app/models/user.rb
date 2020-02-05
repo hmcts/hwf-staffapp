@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   belongs_to :jurisdiction, optional: true
   has_many :applications
 
-  ROLES = ['user', 'manager', 'admin', 'mi'].freeze
+  ROLES = ['user', 'manager', 'admin', 'mi', 'reader'].freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable, :rememberable and :omniauthable
@@ -65,6 +65,10 @@ class User < ActiveRecord::Base
 
   def mi?
     role == 'mi'
+  end
+
+  def reader?
+    role == 'reader'
   end
 
   def send_devise_notification(notification, *args)

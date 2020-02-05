@@ -8,6 +8,7 @@ describe User, type: :model do
   let(:manager)       { build :manager }
   let(:admin_user)    { build :admin_user }
   let(:mi)            { build :mi }
+  let(:reader)        { build :reader }
 
   it { is_expected.to have_many(:applications) }
 
@@ -231,12 +232,34 @@ describe User, type: :model do
     end
   end
 
+  describe '#reader?' do
+    it 'respond true if reader user' do
+      expect(reader.reader?).to be true
+    end
+
+    it 'respond false if mi user' do
+      expect(reader.mi?).to be false
+    end
+
+    it 'respond false if admin' do
+      expect(reader.mi?).to be false
+    end
+
+    it 'respond false if manager' do
+      expect(reader.admin?).to be false
+    end
+
+    it 'respond false if user' do
+      expect(reader.admin?).to be false
+    end
+  end
+
   describe 'soft deletion' do
-    before { [admin_user, mi, manager, user].map(&:save) }
+    before { [admin_user, mi, manager, user, reader].map(&:save) }
 
     context 'to start off' do
-      it 'will have 3 users' do
-        expect(described_class.count).to eq 4
+      it 'will have 5 users' do
+        expect(described_class.count).to eq 5
       end
     end
 
@@ -244,7 +267,7 @@ describe User, type: :model do
       before { user.destroy }
 
       it 'removes the user from the default scope' do
-        expect(described_class.count).to eq 3
+        expect(described_class.count).to eq 4
       end
 
       it 'throws an error when using the default scope' do

@@ -15,6 +15,9 @@ FactoryBot.define do
     factory :mi do
       role { 'mi' }
     end
+    factory :reader do
+      role { 'reader' }
+    end
     factory :invalid_user do
       email { nil }
       name { nil }
