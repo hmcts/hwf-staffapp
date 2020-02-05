@@ -39,7 +39,7 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:update) }
       end
 
-      ['manager', 'admin', 'mi'].each do |role|
+      ['manager', 'admin', 'mi', 'reader'].each do |role|
         context "when trying to set a role to #{role}" do
           before do
             subject_user.role = role
@@ -208,6 +208,54 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:update_password) }
     end
   end
+
+  context 'for reader' do
+    let(:user) { build_stubbed(:reader) }
+
+    it { is_expected.not_to permit_action(:index) }
+    it { is_expected.not_to permit_action(:list_deleted) }
+    it { is_expected.not_to permit_action(:destroy) }
+    it { is_expected.not_to permit_action(:restore) }
+    it { is_expected.not_to permit_action(:invite) }
+    it { is_expected.not_to permit_action(:new) }
+    it { is_expected.not_to permit_action(:create) }
+
+    context 'when the subject_user is the reader themselves' do
+      let(:subject_user) { dup_user(user) }
+
+      it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:edit) }
+      it { is_expected.to permit_action(:edit_password) }
+      it { is_expected.to permit_action(:update_password) }
+
+      context 'when the role is reader' do
+        before do
+          subject_user.role = 'reader'
+        end
+
+        it { is_expected.to permit_action(:update) }
+      end
+
+      ['manager', 'admin', 'mi', 'user'].each do |role|
+        context "when trying to set a role to #{role}" do
+          before do
+            subject_user.role = role
+          end
+
+          it { is_expected.not_to permit_action(:update) }
+        end
+      end
+    end
+
+    context 'when the subject_user is not the reader themselves' do
+      it { is_expected.not_to permit_action(:show) }
+      it { is_expected.not_to permit_action(:edit) }
+      it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:edit_password) }
+      it { is_expected.not_to permit_action(:update_password) }
+    end
+  end
+
 
   describe described_class::Scope do
     describe '#resolve' do
