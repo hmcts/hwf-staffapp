@@ -16,7 +16,7 @@ class ReportPolicy < BasePolicy
   end
 
   def letter?
-    staff_or_manager? || admin_or_mi?
+    staff_or_manager? || admin_or_mi? || reader?
   end
 
   def raw_data?
