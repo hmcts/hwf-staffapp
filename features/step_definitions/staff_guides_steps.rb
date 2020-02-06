@@ -23,7 +23,7 @@ When("I click on key control checks") do
   guide_page.content.key_control_checks.click
 end
 
-When("I should be taken to the key control checks page") do
+When("I should be taken to the key control checks guide") do
   expect(current_url).to end_with '/documents/2017/10/help-with-fees-key-control-checks.pdf'
 end
 
@@ -36,7 +36,7 @@ When("I click on process application") do
   guide_page.content.process_application.click
 end
 
-Then("I should be taken to the process application page") do
+Then("I should be taken to the process application guide") do
   expect(current_url).to end_with '/guide/process_application'
   expect(process_application_guide_page).to have_header
 end
@@ -45,7 +45,7 @@ When("I click on evidance checks") do
   guide_page.content.evidence_checks.click
 end
 
-Then("I should be taken to the evidance checks page") do
+Then("I should be taken to the evidance checks guide") do
   expect(current_url).to end_with '/guide/evidence_checks'
   expect(evidence_checks_guide_page).to have_header
 end
@@ -54,7 +54,7 @@ When("I click on part-payments") do
   guide_page.content.part_payments.click
 end
 
-Then("I should be taken to the part-payments page") do
+Then("I should be taken to the part-payments guide") do
   expect(current_url).to end_with '/guide/part_payments'
   expect(part_payments_guide_page).to have_header
 end
@@ -63,7 +63,7 @@ When("I click on appeals") do
   guide_page.content.appeals.click
 end
 
-Then("I should be taken to the appeals page") do
+Then("I should be taken to the appeals guide") do
   expect(current_url).to end_with '/guide/appeals'
   expect(appeals_guide_page).to have_header
 end
@@ -76,7 +76,7 @@ When("I click on suspected fraud") do
   guide_page.content.suspected_fraud.click
 end
 
-Then("I should be taken to the suspected fraud page") do
+Then("I should be taken to the suspected fraud guide") do
   expect(current_url).to end_with '/guide/suspected_fraud'
   expect(suspected_fraud_guide_page).to have_header
 end

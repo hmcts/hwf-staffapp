@@ -29,22 +29,22 @@ Feature: Staff guides
     Scenario: Process application
       And I am signed in on the guide page
       When I click on process application
-      Then I should be taken to the process application page
+      Then I should be taken to the process application guide
 
     Scenario: Evidance checks
       And I am signed in on the guide page
       When I click on evidance checks
-      Then I should be taken to the evidance checks page
+      Then I should be taken to the evidance checks guide
 
     Scenario: Part-payments
       And I am signed in on the guide page
       When I click on part-payments
-      Then I should be taken to the part-payments page
+      Then I should be taken to the part-payments guide
     
     Scenario: Appeals
       And I am signed in on the guide page
       When I click on appeals
-      Then I should be taken to the appeals page
+      Then I should be taken to the appeals guide
     
     Scenario: Fraud awareness
       And I am signed in on the guide page
@@ -55,4 +55,4 @@ Feature: Staff guides
     Scenario: Suspected fraud
       And I am signed in on the guide page
       When I click on suspected fraud
-      Then I should be taken to the suspected fraud page
+      Then I should be taken to the suspected fraud guide
