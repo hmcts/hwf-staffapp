@@ -29,7 +29,7 @@ class ApplicationPolicy < BasePolicy
 
   class Scope < BasePolicy::Scope
     def resolve
-      if staff_or_manager?
+      if staff_or_manager? || reader?
         @scope.where(office: @user.office)
       else
         @scope.none

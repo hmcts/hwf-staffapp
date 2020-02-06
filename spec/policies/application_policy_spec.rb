@@ -131,6 +131,18 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
         it { is_expected.to be_empty }
       end
+
+      context 'for a reader' do
+        let(:user) { create(:reader) }
+
+        it { is_expected.to be_empty }
+
+        context 'same office' do
+          let(:user) { create(:reader, office: office) }
+
+          it { is_expected.to eq([application2]) }
+        end
+      end
     end
   end
 end
