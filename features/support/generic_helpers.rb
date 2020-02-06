@@ -106,6 +106,30 @@ def evidence_page
   @evidence_page ||= EvidencePage.new
 end
 
+def forbidden_page
+  @forbidden_page ||= ForbiddenPage.new
+end
+
+def process_application_guide_page
+  @process_application_guide_page ||= ProcessApplicationGuidePage.new
+end
+
+def evidence_checks_guide_page
+  @evidence_checks_guide_page ||= EvidenceChecksGuidePage.new
+end
+
+def part_payments_guide_page
+  @part_payments_guide_page ||= PartPaymentsGuidePage.new
+end
+
+def appeals_guide_page
+  @appeals_guide_page ||= AppealsGuidePage.new
+end
+
+def suspected_fraud_guide_page
+  @suspected_fraud_guide_page ||= SuspectedFraudGuidePage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
