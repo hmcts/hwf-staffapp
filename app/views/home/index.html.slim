@@ -35,25 +35,25 @@ h1.visuallyhidden Help with fees - Staff application
               = form_tag(create_applications_path) do
                 = submit_tag 'Start now', class: 'govuk-button'
 
-    .govuk-grid-column-one-half#process-online-application
-      = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-        - if @state == 'offline'
-          .dwp-down data-equalheight="true" data-heightgroup="1"
-            p.govuk-body-s =t('index.process.digital.dwp-down')
-        .flexi data-equalheight="true"
-          h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
-            | Process an online application
+      .govuk-grid-column-one-half#process-online-application
+        = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
+          - if @state == 'offline'
+            .dwp-down data-equalheight="true" data-heightgroup="1"
+              p.govuk-body-s =t('index.process.digital.dwp-down')
+          .flexi data-equalheight="true"
+            h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
+              | Process an online application
 
-          .govuk-form-group.group-level
-            = f.label :reference, class: 'govuk-label'
-            - if @online_search_form.errors[:reference].present?
-              span.govuk-error-message
-                = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error'
-            span#reference-hint.govuk-hint
-              = t('index.process.digital.hint')
-            = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint' }
-          .govuk-form-group
-            = f.submit 'Look up', class: 'govuk-button'
+            .govuk-form-group.group-level
+              = f.label :reference, class: 'govuk-label'
+              - if @online_search_form.errors[:reference].present?
+                span.govuk-error-message
+                  = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error'
+              span#reference-hint.govuk-hint
+                = t('index.process.digital.hint')
+              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint' }
+            .govuk-form-group
+              = f.submit 'Look up', class: 'govuk-button'
 
 .govuk-grid-row
   .govuk-grid-column-one-half

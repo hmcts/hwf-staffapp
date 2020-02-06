@@ -3,17 +3,18 @@
 
 h1.govuk-heading-xl #{@evidence.application.reference} - Waiting for evidence
 
-.panel
-  h2.govuk-heading-m Process evidence
-  = link_to 'Start now', send("accuracy_evidence_path", @evidence), class: 'govuk-button util_mb-medium'
-  details.govuk-details data-module="govuk-details"
-    summary.govuk-details__summary
-      span.govuk-details__summary-text What to do if evidence hasn't arrived
-    .govuk-details__text
-      | Evidence needs to arrive by <strong>#{@evidence.expires_at.to_s(:gov_uk_long)}</strong> for this application.
-      |  If you haven't received the evidence, the citizen is not proceeding or staff error, choose 'Return application' to remove it from 'Waiting for evidence' and return everything to the applicant.
-    .govuk-details__text
-      = link_to 'Return application', send("evidence_accuracy_failed_reason_path", @evidence), class: 'govuk-button'
+- if Pundit.policy(current_user, @evidence).update?
+  .panel
+    h2.govuk-heading-m Process evidence
+    = link_to 'Start now', send("accuracy_evidence_path", @evidence), class: 'govuk-button util_mb-medium'
+    details.govuk-details data-module="govuk-details"
+      summary.govuk-details__summary
+        span.govuk-details__summary-text What to do if evidence hasn't arrived
+      .govuk-details__text
+        | Evidence needs to arrive by <strong>#{@evidence.expires_at.to_s(:gov_uk_long)}</strong> for this application.
+        |  If you haven't received the evidence, the citizen is not proceeding or staff error, choose 'Return application' to remove it from 'Waiting for evidence' and return everything to the applicant.
+      .govuk-details__text
+        = link_to 'Return application', send("evidence_accuracy_failed_reason_path", @evidence), class: 'govuk-button'
 
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details
