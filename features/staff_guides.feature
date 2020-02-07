@@ -7,40 +7,52 @@ Feature: Staff guides
       When I click on see the guides in the footer
       Then I should be taken to the guide page
       And I should not see you need to sign in error message
-    
-    @wip
+
     Scenario: How to guide
-      Then I should be able to view the how to guide PDF
+      And I am signed in on the guide page
+      When I click on how to guide
+      But I am not within the network or connected to vpn
+      Then I should see you are accessing the intranet from outside the MoJ network
 
-    @wip
     Scenario: Key control checks
-      Then I should be able to view the key control checks PDF
+      And I am signed in on the guide page
+      When I click on key control checks
+      But I am not within the network or connected to vpn
+      Then I should see you are accessing the intranet from outside the MoJ network
 
-    @wip
     Scenario: Staff guidance
-      Then I should be able to view the staff guidance PDF
+      And I am signed in on the guide page
+      When I click on staff guidance
+      But I am not within the network or connected to vpn
+      Then I should see you are accessing the intranet from outside the MoJ network
     
-    @wip
     Scenario: Process application
-      Then I should be taken to process application guide page
+      And I am signed in on the guide page
+      When I click on process application
+      Then I should be taken to the process application guide
 
-    @wip
     Scenario: Evidance checks
-      Then I should be taken to evidance checks guide
+      And I am signed in on the guide page
+      When I click on evidance checks
+      Then I should be taken to the evidance checks guide
 
-    @wip
     Scenario: Part-payments
-      Then I should be taken to part-payments guide
+      And I am signed in on the guide page
+      When I click on part-payments
+      Then I should be taken to the part-payments guide
     
-    @wip
     Scenario: Appeals
-      Then I should be taken to appeals guide
+      And I am signed in on the guide page
+      When I click on appeals
+      Then I should be taken to the appeals guide
     
-    @wip
     Scenario: Fraud awareness
-      Then I should be able to view the fraud awareness
+      And I am signed in on the guide page
+      When I click on fraud awareness
+      But I am not within the network or connected to vpn
+      Then I should see you are accessing the intranet from outside the MoJ network
 
-    @wip
     Scenario: Suspected fraud
-      Then I should be taken to suspected fraud guide
-      
+      And I am signed in on the guide page
+      When I click on suspected fraud
+      Then I should be taken to the suspected fraud guide
