@@ -1,9 +1,9 @@
-Feature: User navigation
-  
-  Background: Sign in as a user
-    Given I successfully sign in as a user
+Feature: Read only navigation
 
- Scenario: View profile
+   Background: Sign in as a read only user
+     Given I successfully sign in read only user
+
+    Scenario: View profile
       Then I can view my profile
 
     Scenario: Staff guides
@@ -30,7 +30,3 @@ Feature: User navigation
   
     Scenario: Unable to edit DWP message
       Then I should not be able to navigate to the DWP warning message page
-   
-    Scenario: Sign out
-      When I click on sign out
-      Then I am taken to the sign in page

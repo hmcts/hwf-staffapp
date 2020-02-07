@@ -20,6 +20,10 @@ Feature: Sign in page
       When I successfully sign in as admin
       Then I am taken to my admin dashboard
 
+    Scenario: Successful sign in as a read only user
+      When I successfully sign in read only user
+      Then I am taken to my read only user dashboard
+
     # error message does not follow gds and needs improvement
     @wip
     Scenario: Invalid credentials

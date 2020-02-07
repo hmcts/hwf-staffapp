@@ -1,4 +1,6 @@
 class DwpMessagePage < BasePage
+  set_url '/dwp_warnings/edit'
+
   section :content, '#content' do
     element :header, 'h1', text: 'Choose the DWP message'
     element :offline_message, 'label', text: 'Display DWP check is down message'

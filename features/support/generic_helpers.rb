@@ -74,8 +74,28 @@ def generate_report_page
   @generate_report_page ||= GenerateReportPage.new
 end
 
+def profile_page
+  @profile_page ||= ProfilePage.new
+end
+
+def office_page
+  @office_page ||= OfficePage.new
+end
+
+def users_page
+  @users_page ||= UsersPage.new
+end
+
+def edit_banner_page
+  @edit_banner_page ||= EditBannerPage.new
+end
+
 def feedback_page
   @feedback_page ||= FeedbackPage.new
+end
+
+def letter_template_page
+  @letter_template_page ||= LetterTemplatePage.new
 end
 
 def reports_page
