@@ -77,7 +77,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
       end
 
       context 'refund' do
-        let(:filters) { { refund: true } }
+        let(:filters) { { refund: '1' } }
 
         it 'contains data for distinct business entities' do
           application1 = create(:application_full_remission, :with_office, :processed_state, :refund, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
@@ -118,7 +118,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
         let(:filters) {
           {
             application_type: 'income',
-            refund: true,
+            refund: '1',
             jurisdiction_id: jurisdiction1.id,
             be_code: business_entity3.be_code
           }

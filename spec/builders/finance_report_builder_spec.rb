@@ -97,7 +97,7 @@ RSpec.describe FinanceReportBuilder do
       end
 
       context 'refund' do
-        let(:filters) { { refund: true } }
+        let(:filters) { { refund: '1' } }
 
         it 'contains data for distinct business entities' do
           create_list :application_full_remission, 2, :refund, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
@@ -135,7 +135,7 @@ RSpec.describe FinanceReportBuilder do
       end
 
       context 'all' do
-        let(:filters) { { refund: true, application_type: 'income', jurisdiction_id: jurisdiction2.id } }
+        let(:filters) { { refund: '1', application_type: 'income', jurisdiction_id: jurisdiction2.id } }
 
         it 'contains data for distinct business entities' do
           create_list :application_full_remission, 2, :refund, :income_type, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
