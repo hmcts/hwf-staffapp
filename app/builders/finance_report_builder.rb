@@ -102,7 +102,7 @@ class FinanceReportBuilder
   end
 
   def refund_filter
-    @filters[:refund]
+    @filters[:refund].to_i != 0
   end
 
   def app_type_filter
