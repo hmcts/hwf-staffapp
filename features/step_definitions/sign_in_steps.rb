@@ -31,7 +31,7 @@ end
 
 Then("I am taken to my read only user dashboard") do
   expect(find_application_page.content).to have_find_application_header
-  expect(sign_in_page.content).to have_your_last_applications
+  expect(sign_in_page.content).not_to have_your_last_applications
   expect(sign_in_page.content).to have_in_progress_applications
   expect(sign_in_page.content).to have_completed_applications
   expect(dashboard_page.content).to have_no_start_now_button
