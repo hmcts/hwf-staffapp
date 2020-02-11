@@ -34,13 +34,17 @@ Then("I am taken to my read only user dashboard") do
   expect(sign_in_page.content).to have_your_last_applications
   expect(sign_in_page.content).to have_in_progress_applications
   expect(sign_in_page.content).to have_completed_applications
+  expect(dashboard_page.content).to have_no_start_now_button
+  expect(dashboard_page.content).to have_no_look_up_button
   expect(sign_in_page.content).to have_no_generate_reports
   expect(sign_in_page.content).to have_no_view_offices
 end
 
 Then("I am taken to my user dashboard") do
-  expect(sign_in_page.content).to have_in_progress_applications
+  expect(dashboard_page.content).to have_start_now_button
+  expect(dashboard_page.content).to have_look_up_button
   expect(sign_in_page.content).to have_your_last_applications
+  expect(sign_in_page.content).to have_in_progress_applications
   expect(sign_in_page.content).to have_completed_applications
   expect(sign_in_page.content).to have_no_generate_reports
   expect(sign_in_page.content).to have_no_view_offices
@@ -50,6 +54,8 @@ Then("I am taken to my admin dashboard") do
   expect(find_application_page.content).to have_find_application_header
   expect(sign_in_page.content).to have_generate_reports
   expect(sign_in_page.content).to have_view_offices
+  expect(dashboard_page.content).to have_no_start_now_button
+  expect(dashboard_page.content).to have_no_look_up_button
   expect(sign_in_page.content).to have_no_in_progress_applications
   expect(sign_in_page.content).to have_no_your_last_applications
   expect(sign_in_page.content).to have_no_completed_applications
