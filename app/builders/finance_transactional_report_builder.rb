@@ -86,7 +86,6 @@ class FinanceTransactionalReportBuilder
     if jurisdiction_filter
       list = list.where('business_entities.jurisdiction_id = ?', jurisdiction_filter)
     end
-
     list
   end
 
@@ -101,7 +100,7 @@ class FinanceTransactionalReportBuilder
   end
 
   def refund_filter
-    @filters[:refund]
+    @filters[:refund].to_i != 0
   end
 
   def app_type_filter
