@@ -7,7 +7,7 @@ class BasePolicy
   end
 
   module RoleMethods
-    [:staff, :manager, :admin, :mi].each do |role|
+    [:staff, :manager, :admin, :mi, :reader].each do |role|
       define_method("#{role}?") do
         @user.send("#{role}?")
       end

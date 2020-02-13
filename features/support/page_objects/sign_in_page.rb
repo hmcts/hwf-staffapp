@@ -44,6 +44,13 @@ class SignInPage < BasePage
     sign_in
   end
 
+  def reader_account
+    user = FactoryBot.create(:reader)
+    content.user_email.set user.email
+    content.user_password.set user.password
+    sign_in
+  end
+
   def user_account
     user = FactoryBot.create(:user)
     content.user_email.set user.email

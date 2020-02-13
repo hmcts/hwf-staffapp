@@ -13,10 +13,6 @@ class NavigationPage < BasePage
     element :sign_out, 'a', text: 'Sign out'
   end
 
-  def go_to_dwp_message_page
-    navigation_link.dwp_message.click
-  end
-
   def go_to_homepage
     navigation_link.help_with_fees_home.click
   end

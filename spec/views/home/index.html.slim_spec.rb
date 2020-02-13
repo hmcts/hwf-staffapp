@@ -96,6 +96,7 @@ RSpec.describe "home/index.html.slim", type: :view do
   end
 
   describe 'Process an online application box' do
+    let(:application_new?) { true }
     it 'is rendered' do
       is_expected.to have_text 'Process an online application'
       is_expected.to have_button 'Look up'

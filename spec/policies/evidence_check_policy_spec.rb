@@ -52,4 +52,19 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
   end
+
+  context 'for a reader' do
+    let(:user) { build_stubbed(:reader) }
+
+    it { is_expected.not_to permit_action(:show) }
+    it { is_expected.not_to permit_action(:update) }
+
+    context 'when the application belongs to their office' do
+      let(:user) { build_stubbed(:reader, office: office) }
+
+      it { is_expected.to permit_action(:show) }
+      it { is_expected.not_to permit_action(:update) }
+    end
+
+  end
 end

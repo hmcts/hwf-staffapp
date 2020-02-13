@@ -66,7 +66,8 @@ class UserPolicy < BasePolicy
       'user' => ['user'],
       'manager' => ['user', 'manager'],
       'admin' => ['user', 'manager', 'admin', 'mi'],
-      'mi' => ['mi']
+      'mi' => ['mi'],
+      'reader' => ['reader']
     }
   end
 

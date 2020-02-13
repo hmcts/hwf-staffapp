@@ -1,5 +1,9 @@
 .govuk-form-group.group-level
+
   = f.label :office_id, class: 'govuk-label'
-  span.govuk-error-message
-    = f.label :office_id, @user.errors[:office_id].join(', ').html_safe, class: 'error' if @user.errors[:office_id].present?
-  = f.collection_select :office_id, @offices, :id, :name, {}, { class: 'govuk-select' }
+  -if current_user.elevated?
+    span.govuk-error-message
+      = f.label :office_id, @user.errors[:office_id].join(', ').html_safe, class: 'error' if @user.errors[:office_id].present?
+    = f.collection_select :office_id, @offices, :id, :name, {}, { class: 'govuk-select' }
+  -else
+    p.govuk-body-m class='govuk-input govuk-!-width-one-half input-disabled' #{@user.office.name}

@@ -1,4 +1,6 @@
 class FeedbackPage < BasePage
+  set_url '/feedback'
+
   section :content, '#content' do
     element :user_feedback_header, 'h1', text: 'Your feedback'
     element :admin_feedback_header, 'h1', text: 'Feedback received'

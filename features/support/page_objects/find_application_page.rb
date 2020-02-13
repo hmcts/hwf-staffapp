@@ -1,6 +1,6 @@
 class FindApplicationPage < BasePage
   section :content, '#content' do
-    element :search_header, 'h2', text: 'Find an application'
+    element :find_application_header, 'h2', text: 'Find an application'
     element :search_button, 'input[value="Search"]'
     element :no_results_found_error, '.error', text: 'No results found'
     element :processed_by_another_office, '.error', text: 'This application has been processed by '

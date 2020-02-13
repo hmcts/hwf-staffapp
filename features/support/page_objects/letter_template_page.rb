@@ -1,0 +1,7 @@
+class LetterTemplatePage < BasePage
+  set_url '/letter_templates'
+
+  section :content, '#content' do
+    element :header, 'h1', text: 'Letters'
+  end
+end
