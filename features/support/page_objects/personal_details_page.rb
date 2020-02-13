@@ -4,15 +4,24 @@ class PersonalDetailsPage < BasePage
     element :application_title, '#application_title'
     element :application_first_name, '#application_first_name'
     element :application_last_name, '#application_last_name'
-    element :last_name_error, '.field_with_errors', text: 'Enter the applicant\'s last name'
     element :application_day_date_of_birth, '#application_day_date_of_birth'
     element :application_month_date_of_birth, '#application_month_date_of_birth'
     element :application_year_date_of_birth, '#application_year_date_of_birth'
     element :application_ni_number, '#application_ni_number'
+    element :last_name_error, '.error', text: 'Enter the applicant\'s last name'
+    element :last_name_too_short_error, '.error', text: 'Last name is too short (minimum is 2 characters)'
     element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'
-    element :dob_in_the_future_error, '.error', text: "Applicant's date of birth cannot be in the future"
+    element :dob_in_the_future_error, '.error', text: 'Applicant\'s date of birth cannot be in the future'
+    element :martial_status_error, '.error', text: 'Select a marital status'
     element :status_single, 'label', text: 'Single'
     element :status_married, 'label', text: 'Married or living with someone and sharing an income'
+    section :guidance, '.guidance' do
+      elements :guidance_header, 'h2'
+      elements :guidance_text, 'p'
+      elements :guidance_list, 'ul'
+      elements :guidance_sub_heading, 'h3'
+      elements :guidance_link, 'a'
+    end
   end
 
   def full_name
