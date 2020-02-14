@@ -9,6 +9,8 @@ module Views
         jurisdiction: 'jurisdiction',
         bec_code: 'BEC code',
         fee: 'fee',
+        estimated_amount_to_pay: 'estimated applicant pay',
+        estimated_cost: 'estimated cost',
         application_type: 'application type',
         form_name: 'form',
         probate: 'probate',
@@ -18,7 +20,7 @@ module Views
         children: 'children',
         married: 'married',
         decision: 'decision',
-        amount_to_pay: 'applicant pays',
+        final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
         source: 'source',
         granted: 'granted?',
@@ -47,10 +49,23 @@ module Views
       def to_csv
         CSV.generate do |csv|
           csv << HEADERS
-
           data.each do |row|
-            csv << ATTRIBUTES.map { |attr| row.send(attr) }
+            csv << ATTRIBUTES.map do |attr|
+              process_row(row, attr)
+            end
           end
+        end
+      end
+
+      def process_row(row, attr)
+        if attr == :estimated_cost
+          estimated_decision_cost_calculation(row)
+        elsif attr == :estimated_amount_to_pay
+          estimation_amount_to_pay(row)
+        elsif attr == :final_amount_to_pay
+          final_amount_to_pay(row)
+        else
+          row.send(attr)
         end
       end
 
@@ -108,6 +123,20 @@ module Views
           LEFT JOIN savings ON savings.application_id = applications.id
         JOINS
       end
+
+      def estimated_decision_cost_calculation(row)
+        (row.fee - row.amount_to_pay.to_f) || 0
+      end
+
+      def estimation_amount_to_pay(row)
+        row.amount_to_pay || 0
+      end
+
+      def final_amount_to_pay(row)
+        ec_amount = row.evidence_check.try(:amount_to_pay)
+        ec_amount || row.amount_to_pay
+      end
+
     end
   end
 end
