@@ -502,7 +502,7 @@ en-GB:
               blank: 'Please enter a start date'
             date_to:
               blank: 'Please enter an end date'
-              after: 'Date must be after the start date'
+              after: 'Enter a date that is after the date from'
               not_a_date: 'Please enter a valid date'
         forms/report/finance_transactional_report:
           date_hint: Enter the date in this format DD/MM/YYYY
@@ -511,7 +511,7 @@ en-GB:
               blank: 'Please enter a start date'
             date_to:
               blank: 'Please enter an end date'
-              after: 'Date must be after the start date'
+              after: 'Enter a date that is after the date from'
               not_a_date: Please enter a valid date
         forms/application/applicant:
           attributes:
