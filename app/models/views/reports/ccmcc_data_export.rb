@@ -7,9 +7,10 @@ module Views
         reference: 'reference number',
         created_at: 'created at',
         fee: 'fee',
+        amount_to_pay: 'estimated applicant pays',
         estimated_cost: 'estimated cost',
         outcome: 'outcome',
-        amount_to_pay: 'applicant pays',
+        final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
         name: 'processed by',
         ev_id: 'evidence check',
@@ -57,6 +58,7 @@ module Views
           select('applications.reference', 'applications.created_at', 'details.fee',
                  'applications.outcome', 'applications.decision', 'applications.amount_to_pay',
                  'applications.decision_cost', 'users.name', 'evidence_checks.id as ev_id',
+                 'evidence_checks.amount_to_pay as ev_amount_to_pay',
                  'evidence_checks.check_type', 'evidence_checks.ccmcc_annotation', 'details.refund',
                  'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
@@ -66,8 +68,12 @@ module Views
       def process_row(row, attr)
         if attr == :ev_id
           ev_check(row)
+        elsif attr == :amount_to_pay
+          row.amount_to_pay.to_i
         elsif attr == :estimated_cost
           decision_cost_calculation(row)
+        elsif attr == :final_amount_to_pay
+          final_amount_to_pay(row)
         else
           row.send(attr)
         end
@@ -82,7 +88,11 @@ module Views
       end
 
       def decision_cost_calculation(row)
-        (row.fee - row.amount_to_pay.to_f) || 0
+        (row.fee - row.amount_to_pay.to_i).to_f || 0
+      end
+
+      def final_amount_to_pay(row)
+        row.try(:ev_amount_to_pay).to_i || row.amount_to_pay.to_i
       end
 
     end

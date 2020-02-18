@@ -34,8 +34,12 @@ RSpec.describe Views::Reports::CCMCCDataExport do
 
   describe 'data returned should only include income applications for CCMCC office' do
     subject { data.total_count }
-    let(:part_remission) { create :application_part_remission, :waiting_for_evidence_state, :income_type, office: ccmcc_office, created_at: Time.zone.now - 5.days }
-    let(:full_remission) { create :application_full_remission, :processed_state, :income_type, office: ccmcc_office, decision_cost: 410 }
+    let(:part_remission) { create :application_part_remission, :waiting_for_evidence_state, :income_type,
+      office: ccmcc_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part }
+    let(:full_remission) { create :application_full_remission, :processed_state, :income_type,
+     office: ccmcc_office, decision_cost: 410, evidence_check: evidence_check_full }
+    let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
+    let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
 
     before do
       # include these
@@ -58,8 +62,10 @@ RSpec.describe Views::Reports::CCMCCDataExport do
         amount_to_pay = part_remission.amount_to_pay.to_i
         reference = part_remission.reference
         estimated_cost = fee - amount_to_pay
+        final_applicant_pays = part_remission.evidence_check.amount_to_pay.to_i
+        final_departmental_cost = part_remission.decision_cost
         created_at = part_remission.created_at
-        part_remission_row = "#{reference},#{created_at},#{fee},#{estimated_cost},part,#{amount_to_pay},,user"
+        part_remission_row = "#{reference},#{created_at},#{fee},#{amount_to_pay},#{estimated_cost},part,#{final_applicant_pays},#{final_departmental_cost},user"
         expect(export).to include(part_remission_row)
       end
     end
@@ -68,11 +74,13 @@ RSpec.describe Views::Reports::CCMCCDataExport do
       it 'estimated_cost is the fee and decision_cost is present' do
         export = data.to_csv
         fee = full_remission.detail.fee.to_f
+        amount_to_pay = full_remission.amount_to_pay.to_i
         reference = full_remission.reference
-        decision_cost = full_remission.decision_cost
-        estimated_cost = fee
+        estimated_cost = fee - amount_to_pay
+        final_applicant_pays = full_remission.evidence_check.amount_to_pay.to_i
+        final_departmental_cost = full_remission.decision_cost
         created_at = full_remission.created_at
-        full_remission_row = "#{reference},#{created_at},#{fee},#{estimated_cost},full,,#{decision_cost},user"
+        full_remission_row = "#{reference},#{created_at},#{fee},#{amount_to_pay},#{estimated_cost},full,#{final_applicant_pays},#{final_departmental_cost},user"
         expect(export).to include(full_remission_row)
       end
     end
