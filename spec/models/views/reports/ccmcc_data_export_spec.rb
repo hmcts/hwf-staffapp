@@ -42,6 +42,7 @@ RSpec.describe Views::Reports::CCMCCDataExport do
       create :application_full_remission, :processed_state, :income_type,
              office: ccmcc_office, decision_cost: 410, evidence_check: evidence_check_full
     }
+
     let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
 
