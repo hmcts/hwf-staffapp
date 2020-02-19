@@ -26,4 +26,8 @@ class ReportPolicy < BasePolicy
   def ccmcc_data?
     admin?
   end
+
+  def fees_mechanical_data?
+    admin?
+  end
 end
