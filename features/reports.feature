@@ -33,3 +33,7 @@ Feature: Reports page
     Scenario: CCMCC data extract
       When I click on ccmcc data extract
       Then I should be taken to the ccmcc data extract page
+
+    Scenario: Fees & Mechanical data extract
+      When I click on fees & mechanical data extract
+      Then I should be taken to the fees & mechanical data extract page
