@@ -35,10 +35,14 @@ RSpec.describe Views::Reports::FeesMechanicalDataExport do
 
   describe 'data returned should only include income applications for FeesMechanical office' do
     subject { data.total_count }
-    let(:part_remission) { create :application_part_remission, :waiting_for_evidence_state, :income_type,
-      office: fees_mechanical_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part }
-    let(:full_remission) { create :application_full_remission, :processed_state, :income_type,
-     office: fees_mechanical_office, decision_cost: 410, evidence_check: evidence_check_full }
+    let(:part_remission) {
+      create :application_part_remission, :waiting_for_evidence_state, :income_type,
+             office: fees_mechanical_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part
+    }
+    let(:full_remission) {
+      create :application_full_remission, :processed_state, :income_type,
+             office: fees_mechanical_office, decision_cost: 410, evidence_check: evidence_check_full
+    }
     let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
 
