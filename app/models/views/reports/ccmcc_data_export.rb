@@ -15,7 +15,7 @@ module Views
         name: 'processed by',
         ev_id: 'evidence check',
         check_type: 'evidence checked type',
-        ccmcc_annotation: 'ccmcc annotations',
+        checks_annotation: 'ccmcc annotations',
         refund: 'refund',
         state: 'application state'
       }.freeze
@@ -59,8 +59,8 @@ module Views
                  'applications.outcome', 'applications.decision', 'applications.amount_to_pay',
                  'applications.decision_cost', 'users.name', 'evidence_checks.id as ev_id',
                  'evidence_checks.amount_to_pay as ev_amount_to_pay',
-                 'evidence_checks.check_type', 'evidence_checks.ccmcc_annotation', 'details.refund',
-                 'applications.state').
+                 'evidence_checks.check_type', 'evidence_checks.checks_annotation',
+                 'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
           where("offices.entity_code = ?", ccmcc_code).where(application_type: 'income')
       end
