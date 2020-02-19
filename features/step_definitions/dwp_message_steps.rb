@@ -12,14 +12,6 @@ When("I check display DWP check is down message") do
   dwp_message_page.check_offline
 end
 
-When("I click on save changes") do
-  dwp_message_page.save_changes
-end
-
-Then("I should see your changes have been saved message") do
-  expect(dwp_message_page.content).to have_saved_alert
-end
-
 Then("I should see a message saying I am unable to check an applicants benefits") do
   expect(dashboard_page).to have_dwp_offline_banner
 end
@@ -38,6 +30,6 @@ end
 
 When("I check use the default DWP check to display message") do
   dwp_message_page.check_offline
-  dwp_message_page.save_changes
+  save_changes
   dwp_message_page.check_default
 end
