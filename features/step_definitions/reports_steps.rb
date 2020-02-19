@@ -66,3 +66,12 @@ end
 Then("I should be taken to the ccmcc data extract page") do
   expect(current_path).to include '/report/ccmcc_data'
 end
+
+When("I click on fees & mechanical data extract") do
+  expect(reports_page.content).to have_fees_mechanical_data_extract_help
+  reports_page.fees_mechanical_data_extract
+end
+
+Then("I should be taken to the fees & mechanical data extract page") do
+  expect(current_path).to include '/report/fees_mechanical_data'
+end
