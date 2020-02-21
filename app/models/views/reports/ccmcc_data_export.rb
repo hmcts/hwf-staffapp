@@ -65,6 +65,7 @@ module Views
           where("offices.entity_code = ?", ccmcc_code).where(application_type: 'income')
       end
 
+      # rubocop:disable Metrics/MethodLength
       def process_row(row, attr)
         if attr == :ev_id
           ev_check(row)
@@ -78,6 +79,7 @@ module Views
           row.send(attr)
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def ev_check(row)
         row.ev_id.blank? ? 'No' : 'Yes'
