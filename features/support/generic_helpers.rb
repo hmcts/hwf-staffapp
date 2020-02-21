@@ -154,6 +154,10 @@ def next_page
   base_page.content.next_button.click
 end
 
+def save_changes
+  base_page.content.save_changes_button.click
+end
+
 def start_application
   sign_in_page.load_page
   sign_in_page.user_account

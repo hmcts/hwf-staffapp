@@ -15,3 +15,11 @@ end
 Then("I should see select from one of the options error message") do
   expect(base_page.content).to have_select_from_list_error
 end
+
+When("I click on save changes") do
+  save_changes
+end
+
+Then("I should see your changes have been saved message") do
+  expect(base_page.content).to have_saved_alert
+end
