@@ -48,6 +48,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  config.force_ssl = true
   config.ssl_options = {
     hsts: { expires: 1.year, preload: true },
     redirect: { exclude: ->(request) { /ping/.match?(request.path) } }
