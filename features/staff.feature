@@ -1,9 +1,15 @@
-@manual @wip
-
 Feature: View staff
 
   Background: View staff
-    Given I am on the staff page
+    Given I am signed in as admin on the staff page
+
+    Scenario: Add staff
+      When I click on add staff
+      Then I am taken to the send invitation page
+
+    Scenario: Deleted staff
+      When I click on deleted staff
+      Then I am taken to the deleted staff page
 
     Scenario: Filter by office
       When I filter by office
@@ -16,7 +22,3 @@ Feature: View staff
     Scenario: Change details
       When I click on change details of one of the members of staff
       Then I can change the details of that member of staff
-
-    Scenario: Re-invite 
-      When I click on re-invite
-      Then I can re-invite that member of staff

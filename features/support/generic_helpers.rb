@@ -150,6 +150,14 @@ def suspected_fraud_guide_page
   @suspected_fraud_guide_page ||= SuspectedFraudGuidePage.new
 end
 
+def staff_page
+  @staff_page ||= StaffPage.new
+end
+
+def edit_staff_page
+  @edit_staff_page ||= EditStaffPage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
