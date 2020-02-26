@@ -116,7 +116,8 @@ module CalculatorTestData # rubocop:disable ModuleLength
       { id: 110, fee: '410', married_status: false, children: '6', income: '2500', remit: '410', they_pay: '0', type: 'full' },
       { id: 111, fee: '410', married_status: false, children: '6', income: '2600', remit: '390', they_pay: '20', type: 'part' },
       { id: 112, fee: '410', married_status: false, children: '6', income: '3000', remit: '190', they_pay: '220', type: 'part' },
-      { id: 113, fee: '5000', married_status: true, children: '2', income: '7436', remit: '0', they_pay: '5000', type: 'none' }
+      { id: 113, fee: '5000', married_status: true, children: '2', income: '7436', remit: '0', they_pay: '5000', type: 'none' },
+      { id: 114, fee: '5000.35', married_status: true, children: '2', income: '7436', remit: '0', they_pay: '5000.35', type: 'none' }
     ]
   end
 end
