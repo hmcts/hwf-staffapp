@@ -1,7 +1,9 @@
 module Views
   module Reports
-    class CCMCCDataExport
+    class FeesMechanicalDataExport
       require 'csv'
+
+      FM_OFFICE_CODE = 'IE413'.freeze
 
       FIELDS = {
         reference: 'reference number',
@@ -15,7 +17,7 @@ module Views
         name: 'processed by',
         ev_id: 'evidence check',
         check_type: 'evidence checked type',
-        checks_annotation: 'ccmcc annotations',
+        checks_annotation: 'fees_mechanical annotations',
         refund: 'refund',
         state: 'application state'
       }.freeze
@@ -62,7 +64,7 @@ module Views
                  'evidence_checks.check_type', 'evidence_checks.checks_annotation',
                  'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
-          where("offices.entity_code = ?", ccmcc_code).where(application_type: 'income')
+          where("offices.entity_code = ?", fees_mechanical_code).where(application_type: 'income')
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -85,8 +87,8 @@ module Views
         row.ev_id.blank? ? 'No' : 'Yes'
       end
 
-      def ccmcc_code
-        CCMCCEvidenceCheckRules::OFFICE_CODE
+      def fees_mechanical_code
+        FM_OFFICE_CODE
       end
 
       def decision_cost_calculation(row)
