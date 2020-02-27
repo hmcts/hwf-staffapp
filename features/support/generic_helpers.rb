@@ -154,6 +154,10 @@ def staff_page
   @staff_page ||= StaffPage.new
 end
 
+def staff_details_page
+  @staff_details_page ||= StaffDetailsPage.new
+end
+
 def edit_staff_page
   @edit_staff_page ||= EditStaffPage.new
 end

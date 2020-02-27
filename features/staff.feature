@@ -21,4 +21,6 @@ Feature: View staff
 
     Scenario: Change details
       When I click on change details of one of the members of staff
-      Then I can change the details of that member of staff
+      And I change the details of that member of staff
+      Then I am taken to the staff details page
+      And I can see the details have been changed

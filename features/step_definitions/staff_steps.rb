@@ -29,9 +29,11 @@ When("I click on change details of one of the members of staff") do
   click_on 'Change details'
 end
 
-Then("I can change the details of that member of staff") do
+Then("I change the details of that member of staff") do
   expect(edit_staff_page).to be_displayed
   expect(edit_staff_page.content).to have_header
+  fill_in 'Name', with: 'Admin'
+  click_button 'Save changes'
 end
 
 When("I click on add staff") do
@@ -48,4 +50,13 @@ end
 
 Then("I am taken to the deleted staff page") do
   expect(current_path).to eq '/users/deleted'
+end
+
+Then("I am taken to the staff details page") do
+  expect(current_path).to eq '/users/1'
+end
+
+Then("I can see the details have been changed") do
+  expect(staff_details_page.content).to have_user_updated
+  expect(staff_details_page.content).to have_table_row
 end
