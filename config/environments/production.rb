@@ -51,7 +51,7 @@ Rails.application.configure do
   config.force_ssl = true
   config.ssl_options = {
     hsts: { expires: 1.year, preload: true },
-    redirect: { exclude: ->(request) { /ping/.match?(request.path) } }
+    redirect: { exclude: ->(request) { /ping|submissions/.match?(request.path) } }
   }
 
   # Use the lowest log level to ensure availability of diagnostic information
