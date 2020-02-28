@@ -5,13 +5,13 @@ Given("I am signed in as admin on the staff page") do
 end
 
 When("I filter by office") do
-  office = staff_page.content.office_dropdown.text
+  office = User.last.office.name
   select office, from: "Office"
   staff_page.content.filter_button.click
 end
 
 Then("I see all the results for that office") do
-  selected_office = find("option[selected='selected']").text
+  selected_office = User.last.office.name
   office_result = staff_page.content.office_result.text
   expect(selected_office).to eq office_result
 end
