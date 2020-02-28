@@ -13,8 +13,12 @@ module Views
 
     def amount_to_pay
       if outcome_from.amount_to_pay.present?
-        "£#{outcome_from.amount_to_pay.round}"
+        "£#{parse_amount_to_pay(outcome_from.amount_to_pay)}"
       end
+    end
+
+    def parse_amount_to_pay(amount_to_pay)
+      amount_to_pay % 1 != 0 ? amount_to_pay : amount_to_pay.to_i
     end
 
     def savings

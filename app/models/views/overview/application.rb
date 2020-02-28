@@ -70,11 +70,15 @@ module Views
 
       def amount_to_pay
         if evidence_or_application.amount_to_pay.present?
-          "£#{evidence_or_application.amount_to_pay.round}"
+          "£#{parse_amount_to_pay(evidence_or_application.amount_to_pay)}"
         end
       end
 
       private
+
+      def parse_amount_to_pay(amount_to_pay)
+        amount_to_pay % 1 != 0 ? amount_to_pay : amount_to_pay.to_i
+      end
 
       def format_threshold_income
         if @application.income_min_threshold_exceeded == false
