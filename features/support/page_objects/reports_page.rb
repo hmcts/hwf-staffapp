@@ -17,6 +17,8 @@ class ReportsPage < BasePage
     element :raw_data_extract_help, 'dd', text: 'Extract raw data by date for Analytical Services'
     element :ccmcc_data_extract_link, 'a', text: 'CCMCC data extract'
     element :ccmcc_data_extract_help, 'dd', text: 'Extract CCMCC data by date for Analytical Services'
+    element :fees_mechanical_data_extract_link, 'a', text: 'Fees & Mechanical recording data extract'
+    element :fees_mechanical_data_extract_help, 'dd', text: 'Extract Fees & Mechanical recording data by date for Analytical Services'
   end
 
   def finance_aggregated_report
@@ -45,5 +47,9 @@ class ReportsPage < BasePage
 
   def ccmcc_data_extract
     content.ccmcc_data_extract_link.click
+  end
+
+  def fees_mechanical_data_extract
+    content.fees_mechanical_data_extract_link.click
   end
 end

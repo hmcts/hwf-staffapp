@@ -86,9 +86,9 @@ class EvidenceCheckSelector
   end
 
   def save_evidence_check(type)
-    evidence_check_attributes = { expires_at: expires_at, check_type: type }
-    evidence_check_attributes.merge!(ccmcc_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
-    @application.create_evidence_check(evidence_check_attributes)
+    ev_check_attributes = { expires_at: expires_at, check_type: type }
+    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
+    @application.create_evidence_check(ev_check_attributes)
   end
 
   def ccmcc_evidence_rules_check

@@ -97,6 +97,10 @@ RSpec.configure do |config|
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
   end
 
+  config.before(:each) do |example|
+    stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
+  end
+
   Capybara::Webkit.configure do |config|
     config.allow_url('http://www.gstatic.com/charts/loader.js')
     config.block_unknown_urls

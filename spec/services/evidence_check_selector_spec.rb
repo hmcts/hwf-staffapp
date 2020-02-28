@@ -111,7 +111,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not saves the ccmcc check type' do
-            expect(decision.ccmcc_annotation).to be nil
+            expect(decision.checks_annotation).to be nil
           end
         end
 
@@ -296,7 +296,7 @@ describe EvidenceCheckSelector do
         end
 
         it 'saves the ccmcc check type' do
-          expect(decision.ccmcc_annotation).to eq('5k rule')
+          expect(decision.checks_annotation).to eq('5k rule')
         end
       end
 
@@ -313,7 +313,7 @@ describe EvidenceCheckSelector do
         end
 
         it 'saves the ccmcc check type' do
-          expect(decision.ccmcc_annotation).to eq('5k rule')
+          expect(decision.checks_annotation).to eq('5k rule')
         end
 
         it "don't clean annotaiton data" do

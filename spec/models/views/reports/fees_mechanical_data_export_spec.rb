@@ -2,10 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Views::Reports::CCMCCDataExport do
+RSpec.describe Views::Reports::FeesMechanicalDataExport do
+
   subject(:data) { described_class.new(start_date_params, end_date_params) }
 
-  let(:ccmcc_office) { create :office, entity_code: 'DH403' }
+  let(:fees_mechanical_office) { create :office, entity_code: 'IE413' }
   let(:digital_office) { create :office, name: 'Digital' }
   let(:start_date) { Time.zone.today.-1.month }
   let(:start_date_params) {
@@ -21,7 +22,7 @@ RSpec.describe Views::Reports::CCMCCDataExport do
   end
 
   describe '#to_csv' do
-    let(:application) { create :application, :income_type, office: ccmcc_office }
+    let(:application) { create :application, :income_type, office: fees_mechanical_office }
 
     before {
       create :evidence_check_full_outcome, application: application
@@ -32,17 +33,16 @@ RSpec.describe Views::Reports::CCMCCDataExport do
     it { is_expected.to be_a String }
   end
 
-  describe 'data returned should only include income applications for CCMCC office' do
+  describe 'data returned should only include income applications for FeesMechanical office' do
     subject { data.total_count }
     let(:part_remission) {
       create :application_part_remission, :waiting_for_evidence_state, :income_type,
-             office: ccmcc_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part
+             office: fees_mechanical_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part
     }
     let(:full_remission) {
       create :application_full_remission, :processed_state, :income_type,
-             office: ccmcc_office, decision_cost: 410, evidence_check: evidence_check_full
+             office: fees_mechanical_office, decision_cost: 410, evidence_check: evidence_check_full
     }
-
     let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
 
@@ -50,12 +50,12 @@ RSpec.describe Views::Reports::CCMCCDataExport do
       # include these
       part_remission
       full_remission
-      create :application_part_remission, :income_type, office: ccmcc_office, created_at: Time.zone.now - 5.days
+      create :application_part_remission, :income_type, office: fees_mechanical_office, created_at: Time.zone.now - 5.days
       # and exclude the following
-      create :application_full_remission, :processed_state, :benefit_type, office: ccmcc_office
+      create :application_full_remission, :processed_state, :benefit_type, office: fees_mechanical_office
       create :application_full_remission, :processed_state, :income_type, office: digital_office
       create :application_full_remission, :waiting_for_evidence_state, :income_type, office: digital_office
-      create :application_full_remission, :processed_state, :income_type, office: ccmcc_office, created_at: Time.zone.now - 2.months
+      create :application_full_remission, :processed_state, :income_type, office: fees_mechanical_office, created_at: Time.zone.now - 2.months
     end
 
     it { is_expected.to eq 3 }

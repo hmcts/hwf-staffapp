@@ -16,15 +16,15 @@ h1.govuk-heading-xl = header
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-day
             = f.label :day_date_from, class: 'govuk-label'
-            = f.text_field :day_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+            = f.text_field :day_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-2', inputmode: "numeric", pattern: "[0-9]*", min: "0", max: "31"
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-month
             = f.label :month_date_from, class: 'govuk-label'
-            = f.text_field :month_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+            = f.text_field :month_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-2', inputmode: "numeric", pattern: "[0-9]*", min: "0", max: "12"
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-year
             = f.label :year_date_from, class: 'govuk-label'
-            = f.text_field :year_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+            = f.text_field :year_date_from, class: 'govuk-input govuk-date-input__input govuk-input--width-4', inputmode: "numeric", pattern: "[0-9]*"
 
   .govuk-form-group
     fieldset.govuk-fieldset
@@ -38,15 +38,15 @@ h1.govuk-heading-xl = header
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-day
             = f.label :day_date_to, class: 'govuk-label'
-            = f.text_field :day_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+            = f.text_field :day_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-2', inputmode: "numeric", pattern: "[0-9]*", min: "0", max: "31"
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-month
             = f.label :month_date_to, class: 'govuk-label'
-            = f.text_field :month_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+            = f.text_field :month_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-2', inputmode: "numeric", pattern: "[0-9]*", min: "0", max: "12"
         .govuk-date-input__item
           .govuk-form-group.govuk-form-group-year
             = f.label :year_date_to, class: 'govuk-label'
-            = f.text_field :year_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+            = f.text_field :year_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-4', inputmode: "numeric", pattern: "[0-9]*"
 
       - if filters
         h2.govuk-heading-s class='govuk-!-margin-top-8' Filters

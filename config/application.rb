@@ -30,6 +30,11 @@ module FrStaffapp
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = 'en-GB'
+
+    config.middleware.use(
+      ApplicationInsights::Rack::TrackRequest,
+      ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
+    )
   end
   WillPaginate.per_page = 20
 end

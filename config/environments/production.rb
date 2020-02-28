@@ -48,7 +48,11 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
+  config.ssl_options = {
+    hsts: { expires: 1.year, preload: true },
+    redirect: { exclude: ->(request) { /ping|submissions/.match?(request.path) } }
+  }
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -65,6 +69,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "fr_staffapp_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
+  config.action_view.automatically_disable_submit_tag = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
