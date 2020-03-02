@@ -72,7 +72,7 @@ module Views
         if attr == :ev_id
           ev_check(row)
         elsif attr == :amount_to_pay
-          row.amount_to_pay.to_i
+          row.amount_to_pay.to_f
         elsif attr == :estimated_cost
           decision_cost_calculation(row)
         elsif attr == :final_amount_to_pay
@@ -92,11 +92,11 @@ module Views
       end
 
       def decision_cost_calculation(row)
-        (row.fee - row.amount_to_pay.to_i).to_f || 0
+        (row.fee - row.amount_to_pay.to_f) || 0.0
       end
 
       def final_amount_to_pay(row)
-        row.try(:ev_amount_to_pay).to_i || row.amount_to_pay.to_i
+        row.try(:ev_amount_to_pay) || row.amount_to_pay
       end
 
     end

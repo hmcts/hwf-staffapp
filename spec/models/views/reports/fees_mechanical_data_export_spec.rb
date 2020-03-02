@@ -37,19 +37,26 @@ RSpec.describe Views::Reports::FeesMechanicalDataExport do
     subject { data.total_count }
     let(:part_remission) {
       create :application_part_remission, :waiting_for_evidence_state, :income_type,
-             office: fees_mechanical_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part
+             office: fees_mechanical_office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part, decision_cost: 309.7
     }
     let(:full_remission) {
       create :application_full_remission, :processed_state, :income_type,
              office: fees_mechanical_office, decision_cost: 410, evidence_check: evidence_check_full
     }
-    let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
+    let(:no_remission) {
+      create :application_no_remission, :processed_state, :income_type, fee: 410.74,
+             office: fees_mechanical_office, decision_cost: 0, evidence_check: evidence_check_none
+    }
+
+    let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100.3 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
+    let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34 }
 
     before do
       # include these
       part_remission
       full_remission
+      no_remission
       create :application_part_remission, :income_type, office: fees_mechanical_office, created_at: Time.zone.now - 5.days
       # and exclude the following
       create :application_full_remission, :processed_state, :benefit_type, office: fees_mechanical_office
@@ -58,19 +65,14 @@ RSpec.describe Views::Reports::FeesMechanicalDataExport do
       create :application_full_remission, :processed_state, :income_type, office: fees_mechanical_office, created_at: Time.zone.now - 2.months
     end
 
-    it { is_expected.to eq 3 }
+    it { is_expected.to eq 4 }
 
     context 'part_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
-        fee = part_remission.detail.fee.to_f
-        amount_to_pay = part_remission.amount_to_pay.to_i
         reference = part_remission.reference
-        estimated_cost = fee - amount_to_pay
-        final_applicant_pays = part_remission.evidence_check.amount_to_pay.to_i
-        final_departmental_cost = part_remission.decision_cost
         created_at = part_remission.created_at
-        part_remission_row = "#{reference},#{created_at},#{fee},#{amount_to_pay},#{estimated_cost},part,#{final_applicant_pays},#{final_departmental_cost},user"
+        part_remission_row = "#{reference},#{created_at},410.0,100.0,310.0,part,100.3,309.7,user"
         expect(export).to include(part_remission_row)
       end
     end
@@ -78,16 +80,22 @@ RSpec.describe Views::Reports::FeesMechanicalDataExport do
     context 'full_remission' do
       it 'estimated_cost is the fee and decision_cost is present' do
         export = data.to_csv
-        fee = full_remission.detail.fee.to_f
-        amount_to_pay = full_remission.amount_to_pay.to_i
         reference = full_remission.reference
-        estimated_cost = fee - amount_to_pay
-        final_applicant_pays = full_remission.evidence_check.amount_to_pay.to_i
-        final_departmental_cost = full_remission.decision_cost
         created_at = full_remission.created_at
-        full_remission_row = "#{reference},#{created_at},#{fee},#{amount_to_pay},#{estimated_cost},full,#{final_applicant_pays},#{final_departmental_cost},user"
+        full_remission_row = "#{reference},#{created_at},410.0,0.0,410.0,full,0.0,410.0,user"
         expect(export).to include(full_remission_row)
       end
     end
+
+    context 'no_remission' do
+      it 'estimated_cost is the fee and decision_cost is present' do
+        export = data.to_csv
+        reference = no_remission.reference
+        created_at = no_remission.created_at
+        full_remission_row = "#{reference},#{created_at},410.74,0.0,410.74,none,300.34,0.0,user"
+        expect(export).to include(full_remission_row)
+      end
+    end
+
   end
 end
