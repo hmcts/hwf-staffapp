@@ -105,7 +105,7 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:edit_office) }
         it { is_expected.to permit_action(:edit_jurisdiction) }
 
-        ['user', 'manager'].each do |role|
+        ['user', 'manager', 'reader'].each do |role|
           context "when role set to #{role}" do
             let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 

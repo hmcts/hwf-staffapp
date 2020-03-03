@@ -74,8 +74,8 @@ class UserPolicy < BasePolicy
   def allowed_role_changes
     {
       'user' => ['user'],
-      'manager' => ['user', 'manager'],
-      'admin' => ['user', 'manager', 'admin', 'mi'],
+      'manager' => ['user', 'manager', 'reader'],
+      'admin' => ['user', 'manager', 'admin', 'mi', 'reader'],
       'mi' => ['mi'],
       'reader' => ['reader']
     }
