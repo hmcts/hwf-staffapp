@@ -54,11 +54,12 @@ module Views
       end
 
       def build_data
-        Application.left_outer_joins(:evidence_check).distinct.
+        Application.left_outer_joins(:evidence_check).left_outer_joins(:part_payment).distinct.
           select('applications.reference', 'applications.created_at', 'details.fee',
                  'applications.outcome', 'applications.decision', 'applications.amount_to_pay',
                  'applications.decision_cost', 'users.name', 'evidence_checks.id as ev_id',
                  'evidence_checks.amount_to_pay as ev_amount_to_pay',
+                 'part_payments.outcome as pp_outcome',
                  'evidence_checks.check_type', 'evidence_checks.checks_annotation',
                  'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
@@ -94,6 +95,7 @@ module Views
       end
 
       def final_amount_to_pay(row)
+        return row.fee if row.try(:pp_outcome).present? && row.pp_outcome != 'part'
         row.try(:ev_amount_to_pay) || row.amount_to_pay
       end
 
