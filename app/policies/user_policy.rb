@@ -45,6 +45,16 @@ class UserPolicy < BasePolicy
     user_themselves?
   end
 
+  def edit_office?
+    return false if reader?
+    user_themselves? || manager? || admin?
+  end
+
+  def edit_jurisdiction?
+    return false if reader?
+    user_themselves? || manager? || admin?
+  end
+
   alias update_password? edit_password?
 
   class Scope < BasePolicy::Scope
