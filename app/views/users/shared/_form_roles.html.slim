@@ -7,11 +7,14 @@
         = f.label :roles, @user.errors[:role].join(', ').html_safe, class: 'error'
 
     -if current_user.elevated?
-      .govuk-radios.govuk-radios--small.govuk-radios--inline
-        =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
-          .govuk-radios__item
-            = b.radio_button(data: b.text, class: 'govuk-radios__input')
-            = b.label(class: 'govuk-label govuk-radios__label')
+      - if (@user.manager? && (@user == current_user))
+        p.govuk-body-m class='govuk-input govuk-!-width-one-third input-disabled'= current_user.role.humanize
+      - else
+        .govuk-radios.govuk-radios--small.govuk-radios--inline
+          =collection_radio_buttons(:user, :role, @roles, :to_s, :humanize) do |b|
+            .govuk-radios__item
+              = b.radio_button(data: b.text, class: 'govuk-radios__input')
+              = b.label(class: 'govuk-label govuk-radios__label')
 
     -else
       p.govuk-body-m class='govuk-input govuk-!-width-one-third input-disabled' #{@user.role.humanize}
