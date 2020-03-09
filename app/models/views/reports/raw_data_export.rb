@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module Views
   module Reports
     class RawDataExport
@@ -143,3 +144,4 @@ module Views
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

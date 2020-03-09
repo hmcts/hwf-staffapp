@@ -60,7 +60,6 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:part_payment_return) { create :part_payment_return_outcome }
     let(:part_payment_part) { create :part_payment_part_outcome }
 
-
     let(:applicant1) { create :applicant_with_all_details, married: true  }
     let(:applicant2) { create :applicant_with_all_details, married: true  }
     before do
@@ -69,9 +68,9 @@ RSpec.describe Views::Reports::RawDataExport do
       @part_no_ec = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                           amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part
       @part_no_ec_return_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return
+                                                                                    amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return
       @part_no_ec_none_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none
+                                                                                  amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none
       @full_ec = create :application_full_remission, :processed_state, evidence_check: evidence_check_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                        amount_to_pay: 0, decision_cost: 300, fee: 300
       @part_ec = create :application_part_remission, :processed_state, evidence_check: evidence_check_part, decision_date: Time.zone.now, office: office, business_entity: business_entity,
