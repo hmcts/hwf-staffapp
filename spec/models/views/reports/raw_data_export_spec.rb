@@ -56,6 +56,10 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
     let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34 }
+    let(:part_payment_none) { create :part_payment_none_outcome }
+    let(:part_payment_return) { create :part_payment_return_outcome }
+    let(:part_payment_part) { create :part_payment_part_outcome }
+
 
     let(:applicant1) { create :applicant_with_all_details, married: true  }
     let(:applicant2) { create :applicant_with_all_details, married: true  }
@@ -63,7 +67,11 @@ RSpec.describe Views::Reports::RawDataExport do
       @full_no_ec = create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                           amount_to_pay: 0, decision_cost: 300.24, fee: 300.24
       @part_no_ec = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 50, decision_cost: 250, fee: 300
+                                                                          amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part
+      @part_no_ec_return_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                          amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return
+      @part_no_ec_none_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                          amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none
       @full_ec = create :application_full_remission, :processed_state, evidence_check: evidence_check_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                        amount_to_pay: 0, decision_cost: 300, fee: 300
       @part_ec = create :application_part_remission, :processed_state, evidence_check: evidence_check_part, decision_date: Time.zone.now, office: office, business_entity: business_entity,
@@ -74,7 +82,7 @@ RSpec.describe Views::Reports::RawDataExport do
                                                                      amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3, income: 2000, evidence_check: evidence_check_none
     end
 
-    it { is_expected.to eq 6 }
+    it { is_expected.to eq 8 }
 
     context 'full_remission' do
 
@@ -91,6 +99,21 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = @part_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,3,true,part,50.0,250.0,paper"
+        expect(export).to include(row)
+      end
+
+      it 'part payment outcome is "return"' do
+        export = data.to_csv
+        jurisdiction = @part_no_ec_return_pp.detail.jurisdiction.name
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,3,true,part,300.45,0.0,paper"
+        expect(export).to include(row)
+      end
+
+      it 'part payment outcome is "none"' do
+        export = data.to_csv
+        jurisdiction = @part_no_ec_none_pp.detail.jurisdiction.name
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,3,true,part,300.45,0.0,paper"
+        # binding.pry
         expect(export).to include(row)
       end
     end

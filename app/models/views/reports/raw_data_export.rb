@@ -97,6 +97,7 @@ module Views
           details.emergency_reason IS NOT NULL AS emergency,
           jurisdictions.name AS jurisdiction,
           business_entities.be_code AS bec_code,
+          part_payments.outcome AS pp_outcome,
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
@@ -121,6 +122,7 @@ module Views
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id
+          LEFT JOIN part_payments ON part_payments.application_id = applications.id
         JOINS
       end
 
@@ -133,6 +135,7 @@ module Views
       end
 
       def final_amount_to_pay(row)
+        return row.fee if row.try(:pp_outcome).present? && row.pp_outcome != 'part'
         ec_amount = row.evidence_check.try(:amount_to_pay)
         ec_amount || row.amount_to_pay
       end
