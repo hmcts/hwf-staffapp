@@ -69,6 +69,10 @@ class UserPolicy < BasePolicy
     end
   end
 
+  def allowed_role
+    allowed_role_changes[@user.role]
+  end
+
   private
 
   def allowed_role_changes
