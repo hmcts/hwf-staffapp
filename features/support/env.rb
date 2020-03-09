@@ -62,3 +62,7 @@ if ENV['APP_HOST']
 end
 
 Capybara.raise_server_errors = false
+
+Before do |example|
+  stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
+end
