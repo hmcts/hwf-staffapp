@@ -63,6 +63,6 @@ end
 
 Capybara.raise_server_errors = false
 
-Before do |example|
+Before do
   stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
 end
