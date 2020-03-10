@@ -1,4 +1,5 @@
 CKEDITOR.editorConfig = function(config) {
+  config.language = 'en'
   config.forcePasteAsPlainText = true;
   config.removeDialogTabs = 'link:advanced';
   config.toolbar = [

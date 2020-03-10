@@ -101,8 +101,8 @@ GEM
     chromedriver-helper (1.2.0)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
-    ckeditor_rails (4.10.0)
-      railties (>= 3.0)
+    ckeditor (5.1.0)
+      orm_adapter (~> 0.5.0)
     climate_control (0.2.0)
     cliver (0.3.2)
     codeclimate-test-reporter (0.6.0)
@@ -549,7 +549,7 @@ DEPENDENCIES
   capybara-webkit
   chartkick (~> 3.3.0)
   chromedriver-helper (~> 1.1)
-  ckeditor_rails (~> 4.6)
+  ckeditor (~> 5.1)
   climate_control
   codeclimate-test-reporter (= 0.6.0)
   coffee-rails (~> 4.2.1)

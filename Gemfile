@@ -129,7 +129,7 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'chartkick', '~> 3.3.0'
-gem 'ckeditor_rails', '~> 4.6'
+gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'pg_search'
 gem 'rest-client'

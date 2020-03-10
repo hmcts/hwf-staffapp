@@ -1,4 +1,7 @@
 - content_for :page_title
   = "Edit Notifications Message"
 
+= content_for :head_scripts
+  = javascript_include_tag Ckeditor.cdn_url
+
 = render 'form'
