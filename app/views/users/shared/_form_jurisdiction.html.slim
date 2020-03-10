@@ -4,8 +4,9 @@
     - if @user.errors[:jurisdiction_id].present?
       span.govuk-error-message
         = f.label :jurisdiction_id, @user.errors[:jurisdiction_id].join(', ').html_safe, class: 'error'
+
     - if @jurisdictions.present?
-      -if current_user.elevated?
+      - if Pundit.policy(current_user, @user).edit_jurisdiction?
         .govuk-radios.govuk-radios--small
           .govuk-radios__item
             input type="radio" value="" name="user[jurisdiction_id]" id="user_jurisdiction_id" checked="true" class='govuk-radios__input'
