@@ -13,11 +13,19 @@ RSpec.describe Views::ApplicationResult do
     subject { view.amount_to_pay }
 
     shared_examples 'amount_to_pay examples' do
-      context 'rounds down' do
+      context 'displays the decimal' do
         let(:amount) { 100.49 }
 
         it 'formats the fee amount correctly' do
-          is_expected.to eq '£100'
+          is_expected.to eq '£100.49'
+        end
+      end
+
+      context 'hides the decimal if the amount does not have one' do
+        let(:amount) { 103 }
+
+        it 'formats the fee amount correctly' do
+          is_expected.to eq '£103'
         end
       end
 
@@ -25,7 +33,7 @@ RSpec.describe Views::ApplicationResult do
         let(:amount) { 0.49 }
 
         it 'formats the fee amount correctly' do
-          is_expected.to eq '£0'
+          is_expected.to eq '£0.49'
         end
       end
 

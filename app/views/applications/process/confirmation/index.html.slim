@@ -12,7 +12,7 @@
 
 
     #result.callout class="callout-#{@confirm.result}"
-      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{@application.amount_to_pay}")
+      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
 
     .util_mt-medium
       = build_section 'Result', @confirm, @confirm.all_fields
@@ -26,7 +26,7 @@
             reference: @application.reference,
             full_name: @application.applicant.full_name,
             user_name: current_user.name,
-            part_payment_amount: number_to_currency(@application.amount_to_pay, precision: 0),
+            part_payment_amount: number_to_currency(parse_amount_to_pay(@application.amount_to_pay), precision: 0),
             total_income: number_to_currency(@application.income, precision: 0),
             children: @application.children,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))

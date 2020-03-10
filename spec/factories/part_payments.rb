@@ -11,6 +11,10 @@ FactoryBot.define do
       outcome { 'none' }
     end
 
+    factory :part_payment_return_outcome do
+      outcome { 'return' }
+    end
+
     factory :part_payment_incorrect do
       correct { false }
       incorrect_reason { 'SOME REASON' }

@@ -111,9 +111,9 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
     context 'when the evidence check returns [part]' do
       let(:outcome) { 'part' }
-      let(:amount) { 45 }
+      let(:amount) { 45.4 }
 
-      it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h2[@class="govuk-heading-l"]', text: 'The applicant must pay £45 towards the fee') }
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-part")]/h2[@class="govuk-heading-l"]', text: 'The applicant must pay £45.4 towards the fee') }
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'
@@ -157,7 +157,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a part remission outcome' do
-      let(:evidence) { create :evidence_check_part_outcome, application: application }
+      let(:evidence) { create :evidence_check_part_outcome, application: application, amount_to_pay: 43.33 }
       let(:expected_fields) do
         [
           { title: 'Ready to process', value: 'Yes', url: accuracy_evidence_path(evidence) },
@@ -166,7 +166,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       end
 
       it 'renders correct outcome' do
-        page_expectation("The applicant must pay £#{evidence.amount_to_pay} towards the fee", expected_fields)
+        page_expectation("The applicant must pay £43.33 towards the fee", expected_fields)
       end
 
       context 'clicking the Complete processing button' do
