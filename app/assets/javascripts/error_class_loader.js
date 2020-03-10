@@ -1,10 +1,10 @@
 
 $.when( $.ready ).then(function() {
 
-  if($('label.error').size() > 0){
+  if($('label.error').length > 0){
 
     $('label.error').parents('div.govuk-form-group').each(function( index ) {
-      if($(this).children(':input').size()>0){
+      if($(this).children(':input').length > 0){
         $(this).children(':input').addClass('govuk-input--error');
       }
     });

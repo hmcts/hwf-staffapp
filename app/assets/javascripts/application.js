@@ -12,7 +12,7 @@
 //
 
 // libraries
-// = require jquery
+// = require jquery3
 // = require rails-ujs
 // = require govuk-frontend/all
 
