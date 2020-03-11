@@ -95,7 +95,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '5.0.2'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
