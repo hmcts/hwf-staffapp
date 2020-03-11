@@ -36,6 +36,8 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
         it { expect(invited_user['email']).to eq user.email }
         it { expect(invited_user['invited_by_id']).to eq manager_user.id }
+        it { expect(assigns(:roles)).to eq(['user', 'manager', 'reader']) }
+
       end
 
       context 'when manager tries to invite an admin' do
