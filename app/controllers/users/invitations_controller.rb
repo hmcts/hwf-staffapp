@@ -29,7 +29,7 @@ module Users
       @roles = if current_user.admin?
                  User::ROLES
                else
-                 ['user', 'manager']
+                 ['user', 'manager', 'reader']
                end
       @offices = Office.all.order(:name)
     end
