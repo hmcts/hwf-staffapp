@@ -315,6 +315,8 @@ RSpec.describe UserPolicy, type: :policy do
       let!(:user4) { create :user, office: other_office }
       let!(:user5) { create :manager, office: other_office }
       let!(:user6) { create :admin, office: other_office }
+      let!(:user7) { create :reader, office: office }
+      let!(:user8) { create :reader, office: other_office }
 
       context 'for staff' do
         let(:user) { create(:staff, office: office) }
@@ -326,7 +328,7 @@ RSpec.describe UserPolicy, type: :policy do
         let(:user) { create(:manager, office: office) }
 
         it 'returns only users and managers from the same office' do
-          is_expected.to match_array([user, user1, user2])
+          is_expected.to match_array([user, user1, user2, user7])
         end
       end
 
@@ -334,7 +336,7 @@ RSpec.describe UserPolicy, type: :policy do
         let(:user) { create(:admin, office: office) }
 
         it 'returns all users' do
-          is_expected.to match_array([user, user1, user2, user3, user4, user5, user6])
+          is_expected.to match_array([user, user1, user2, user3, user4, user5, user6, user7, user8])
         end
       end
 
