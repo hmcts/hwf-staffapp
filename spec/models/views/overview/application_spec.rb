@@ -241,8 +241,16 @@ RSpec.describe Views::Overview::Application do
     subject { view.amount_to_pay }
 
     shared_examples 'amount_to_pay examples' do
-      context 'rounds down' do
+      context 'with decimal' do
         let(:amount) { 100.49 }
+
+        it 'formats the fee amount correctly' do
+          is_expected.to eq '£100.49'
+        end
+      end
+
+      context 'without decimal' do
+        let(:amount) { 100.00 }
 
         it 'formats the fee amount correctly' do
           is_expected.to eq '£100'
@@ -253,7 +261,7 @@ RSpec.describe Views::Overview::Application do
         let(:amount) { 0.49 }
 
         it 'formats the fee amount correctly' do
-          is_expected.to eq '£0'
+          is_expected.to eq '£0.49'
         end
       end
 

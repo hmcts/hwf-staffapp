@@ -1,7 +1,7 @@
 .govuk-form-group.group-level
 
   = f.label :office_id, class: 'govuk-label'
-  -if current_user.elevated?
+  -if Pundit.policy(current_user, @user).edit_office?
     span.govuk-error-message
       = f.label :office_id, @user.errors[:office_id].join(', ').html_safe, class: 'error' if @user.errors[:office_id].present?
     = f.collection_select :office_id, @offices, :id, :name, {}, { class: 'govuk-select' }

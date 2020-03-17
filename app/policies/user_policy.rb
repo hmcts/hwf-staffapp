@@ -45,6 +45,16 @@ class UserPolicy < BasePolicy
     user_themselves?
   end
 
+  def edit_office?
+    return false if reader?
+    user_themselves? || manager? || admin?
+  end
+
+  def edit_jurisdiction?
+    return false if reader?
+    user_themselves? || manager? || admin?
+  end
+
   alias update_password? edit_password?
 
   class Scope < BasePolicy::Scope
@@ -59,13 +69,17 @@ class UserPolicy < BasePolicy
     end
   end
 
+  def allowed_role
+    allowed_role_changes[@user.role]
+  end
+
   private
 
   def allowed_role_changes
     {
       'user' => ['user'],
-      'manager' => ['user', 'manager'],
-      'admin' => ['user', 'manager', 'admin', 'mi'],
+      'manager' => ['user', 'manager', 'reader'],
+      'admin' => ['user', 'manager', 'admin', 'mi', 'reader'],
       'mi' => ['mi'],
       'reader' => ['reader']
     }

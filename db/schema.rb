@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_102147) do
+ActiveRecord::Schema.define(version: 2020_02_27_115846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_102147) do
     t.boolean "dependents"
     t.string "application_type"
     t.string "outcome"
-    t.integer "amount_to_pay"
+    t.decimal "amount_to_pay"
     t.boolean "high_threshold_exceeded"
     t.string "reference"
     t.datetime "completed_at"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_102147) do
     t.boolean "correct"
     t.integer "income"
     t.string "outcome"
-    t.integer "amount_to_pay"
+    t.decimal "amount_to_pay"
     t.datetime "completed_at"
     t.integer "completed_by_id"
     t.string "incorrect_reason"

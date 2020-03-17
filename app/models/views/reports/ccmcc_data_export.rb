@@ -54,11 +54,12 @@ module Views
       end
 
       def build_data
-        Application.left_outer_joins(:evidence_check).distinct.
+        Application.left_outer_joins(:evidence_check).left_outer_joins(:part_payment).distinct.
           select('applications.reference', 'applications.created_at', 'details.fee',
                  'applications.outcome', 'applications.decision', 'applications.amount_to_pay',
                  'applications.decision_cost', 'users.name', 'evidence_checks.id as ev_id',
                  'evidence_checks.amount_to_pay as ev_amount_to_pay',
+                 'part_payments.outcome as pp_outcome',
                  'evidence_checks.check_type', 'evidence_checks.checks_annotation',
                  'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
@@ -70,7 +71,7 @@ module Views
         if attr == :ev_id
           ev_check(row)
         elsif attr == :amount_to_pay
-          row.amount_to_pay.to_i
+          row.amount_to_pay.to_f
         elsif attr == :estimated_cost
           decision_cost_calculation(row)
         elsif attr == :final_amount_to_pay
@@ -90,11 +91,12 @@ module Views
       end
 
       def decision_cost_calculation(row)
-        (row.fee - row.amount_to_pay.to_i).to_f || 0
+        (row.fee - row.amount_to_pay.to_f) || 0.0
       end
 
       def final_amount_to_pay(row)
-        row.try(:ev_amount_to_pay).to_i || row.amount_to_pay.to_i
+        return row.fee if row.try(:pp_outcome).present? && row.pp_outcome != 'part'
+        row.try(:ev_amount_to_pay) || row.amount_to_pay
       end
 
     end

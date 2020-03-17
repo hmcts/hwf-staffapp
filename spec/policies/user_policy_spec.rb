@@ -23,6 +23,10 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
 
+    describe 'allowed roles' do
+      it { expect(policy.allowed_role).to eql(['user']) }
+    end
+
     context 'when the subject_user is the staff themselves' do
       let(:subject_user) { dup_user(user) }
 
@@ -30,6 +34,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.to permit_action(:edit) }
       it { is_expected.to permit_action(:edit_password) }
       it { is_expected.to permit_action(:update_password) }
+      it { is_expected.to permit_action(:edit_office) }
+      it { is_expected.to permit_action(:edit_jurisdiction) }
 
       context 'when the role is staff' do
         before do
@@ -56,12 +62,19 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:update) }
       it { is_expected.not_to permit_action(:edit_password) }
       it { is_expected.not_to permit_action(:update_password) }
+      it { is_expected.not_to permit_action(:edit_office) }
+      it { is_expected.not_to permit_action(:edit_jurisdiction) }
+
     end
   end
 
   context 'for manager' do
     let(:office) { build_stubbed(:office) }
     let(:user) { build_stubbed(:manager, office: office) }
+
+    describe 'allowed roles' do
+      it { expect(policy.allowed_role).to eql(['user', 'manager', 'reader']) }
+    end
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:new) }
@@ -81,6 +94,8 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.not_to permit_action(:destroy) }
         it { is_expected.to permit_action(:edit_password) }
         it { is_expected.to permit_action(:update_password) }
+        it { is_expected.to permit_action(:edit_office) }
+        it { is_expected.to permit_action(:edit_jurisdiction) }
 
         context 'when trying to set a role to admin' do
           before do
@@ -95,8 +110,10 @@ RSpec.describe UserPolicy, type: :policy do
         it { is_expected.to permit_action(:destroy) }
         it { is_expected.not_to permit_action(:edit_password) }
         it { is_expected.not_to permit_action(:update_password) }
+        it { is_expected.to permit_action(:edit_office) }
+        it { is_expected.to permit_action(:edit_jurisdiction) }
 
-        ['user', 'manager'].each do |role|
+        ['user', 'manager', 'reader'].each do |role|
           context "when role set to #{role}" do
             let(:subject_user) { build_stubbed(:user, office: office, role: role) }
 
@@ -121,6 +138,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:create) }
       it { is_expected.not_to permit_action(:edit) }
       it { is_expected.not_to permit_action(:destroy) }
+      it { is_expected.to permit_action(:edit_office) }
+      it { is_expected.to permit_action(:edit_jurisdiction) }
 
       ['admin', 'mi'].each do |role|
         context "when trying to set a role to #{role}" do
@@ -146,6 +165,12 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.to permit_action(:create) }
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:update) }
+    it { is_expected.to permit_action(:edit_office) }
+    it { is_expected.to permit_action(:edit_jurisdiction) }
+
+    describe 'allowed roles' do
+      it { expect(policy.allowed_role).to eql(['user', 'manager', 'admin', 'mi', 'reader']) }
+    end
 
     context 'when the subject_user is the admin themselves' do
       let(:subject_user) { dup_user(user) }
@@ -172,6 +197,12 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.not_to permit_action(:invite) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
+    it { is_expected.not_to permit_action(:edit_office) }
+    it { is_expected.not_to permit_action(:edit_jurisdiction) }
+
+    describe 'allowed roles' do
+      it { expect(policy.allowed_role).to eql(['mi']) }
+    end
 
     context 'when the subject_user is the mi themselves' do
       let(:subject_user) { dup_user(user) }
@@ -180,6 +211,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.to permit_action(:edit) }
       it { is_expected.to permit_action(:edit_password) }
       it { is_expected.to permit_action(:update_password) }
+      it { is_expected.to permit_action(:edit_office) }
+      it { is_expected.to permit_action(:edit_jurisdiction) }
 
       context 'when the role is mi' do
         before do
@@ -206,6 +239,9 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:update) }
       it { is_expected.not_to permit_action(:edit_password) }
       it { is_expected.not_to permit_action(:update_password) }
+      it { is_expected.not_to permit_action(:edit_office) }
+      it { is_expected.not_to permit_action(:edit_jurisdiction) }
+
     end
   end
 
@@ -219,6 +255,12 @@ RSpec.describe UserPolicy, type: :policy do
     it { is_expected.not_to permit_action(:invite) }
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
+    it { is_expected.not_to permit_action(:edit_office) }
+    it { is_expected.not_to permit_action(:edit_jurisdiction) }
+
+    describe 'allowed roles' do
+      it { expect(policy.allowed_role).to eql(['reader']) }
+    end
 
     context 'when the subject_user is the reader themselves' do
       let(:subject_user) { dup_user(user) }
@@ -227,6 +269,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.to permit_action(:edit) }
       it { is_expected.to permit_action(:edit_password) }
       it { is_expected.to permit_action(:update_password) }
+      it { is_expected.not_to permit_action(:edit_office) }
+      it { is_expected.not_to permit_action(:edit_jurisdiction) }
 
       context 'when the role is reader' do
         before do
@@ -253,6 +297,8 @@ RSpec.describe UserPolicy, type: :policy do
       it { is_expected.not_to permit_action(:update) }
       it { is_expected.not_to permit_action(:edit_password) }
       it { is_expected.not_to permit_action(:update_password) }
+      it { is_expected.not_to permit_action(:edit_office) }
+      it { is_expected.not_to permit_action(:edit_jurisdiction) }
     end
   end
 
