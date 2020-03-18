@@ -62,7 +62,7 @@ class UserPolicy < BasePolicy
       if admin?
         @scope.all
       elsif manager?
-        @scope.where(office: @user.office).where(role: [:user, :manager])
+        @scope.where(office: @user.office).where(role: [:user, :manager, :reader])
       else
         @scope.none
       end
