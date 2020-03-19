@@ -17,6 +17,12 @@ When("I successfully sign in as a user") do
   expect(sign_in_page).to have_welcome_user
 end
 
+When("I successfully sign in as a manager") do
+  sign_in_page.load_page
+  sign_in_page.manager_account
+  expect(sign_in_page).to have_welcome_user
+end
+
 When("I successfully sign in as admin") do
   sign_in_page.load_page
   sign_in_page.admin_account

@@ -1,21 +1,8 @@
-@manual @wip
+Feature: Staff profile
 
-Feature: View profile
-
-  Background: Help with Fees staff application profile page
-    Given I am on the Help with Fees staff application profile page
-
-    Scenario: Staff details
-      Then I should see my details
-
-    Scenario: Change details
-      When I click on change details
-      Then I should be able to change my details
-
-    Scenario: Change your password
-      When I clink on change your password
-      Then I am taken to change password page
-    
-    Scenario: Back to list of staff
-      When I click on back to list of staff
-      Then I am taken to user page
+    Scenario: Change user details page 
+      Given I successfully sign in as a user
+      And I am on the change details page
+      When I change my details
+      And I am on my profile page
+      Then I can see my profile has been changed

@@ -74,8 +74,16 @@ def generate_report_page
   @generate_report_page ||= GenerateReportPage.new
 end
 
+def change_profile_details_page
+  @change_profile_details_page ||= ChangeProfileDetailsPage.new
+end
+
 def profile_page
   @profile_page ||= ProfilePage.new
+end
+
+def staff_page
+  @staff_page ||= StaffPage.new
 end
 
 def office_page
