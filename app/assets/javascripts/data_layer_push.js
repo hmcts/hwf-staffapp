@@ -2,7 +2,7 @@ var googleDataLayerPush = (function(){
   var googleDataLayerPush = {};
 
   function bindLinks(){
-    $('a[data-section-name]').click(function(target){
+    $('a[data-section-name]').on('click', function(target){
       sectionName = $(target.currentTarget).data('section-name');
       pushDataLayerEvent(sectionName);
     });
