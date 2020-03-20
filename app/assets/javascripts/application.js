@@ -12,9 +12,8 @@
 //
 
 // libraries
-// = require jquery
+// = require jquery3
 // = require rails-ujs
-// = require ckeditor-jquery
 // = require govuk-frontend/all
 
 // module loader

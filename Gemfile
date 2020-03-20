@@ -30,7 +30,7 @@ gem 'pundit', '~> 1.0'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 2.7.2'
 # Use CoffeeScript for .coffee assets and views
@@ -95,11 +95,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '5.0.2'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.69.0', require: false
   gem 'rubocop-rspec', '1.30.1', require: false
   gem 'timecop'
 end
@@ -129,7 +129,7 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'chartkick', '~> 3.3.0'
-gem 'ckeditor_rails', '~> 4.6'
+gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'pg_search'
 gem 'rest-client'

@@ -1,5 +1,5 @@
 class Application < ActiveRecord::Base
-  include PgSearch
+  include PgSearch::Model
 
   self.per_page = 25
 

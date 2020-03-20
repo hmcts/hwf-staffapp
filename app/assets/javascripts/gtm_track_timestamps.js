@@ -96,7 +96,7 @@ window.moj.Modules.GtmTrackTimestamps = {
   },
 
   serchPerformed: function(search_result) {
-    var results = $('table.search-results').size();
+    var results = $('table.search-results').length;
     var search_query = $('#completed_search_reference').val();
 
     if(search_query.length == 0){
@@ -135,28 +135,28 @@ window.moj.Modules.GtmTrackTimestamps = {
   },
 
   trackLinksClicked: function() {
-    $('a.waiting-for-evidence').click(function(){
+    $('a.waiting-for-evidence').on('click', function(){
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-evidence-section');
     });
 
-    $('a.waiting-for-part_payment').click(function(){
+    $('a.waiting-for-part_payment').on('click', function(){
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('waiting-for-part-payment-section');
     });
 
-    $('a.processed-applications').click(function(){
+    $('a.processed-applications').on('click', function(){
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('processed-applications-section');
     });
 
-    $('a.deleted-applications').click(function(){
+    $('a.deleted-applications').on('click', function(){
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('deleted-applications-section');
     });
 
-    $('.updated_applications a').click(function(){
+    $('.updated_applications a').on('click', function(){
       moj.Modules.GtmTrackTimestamps.yourLastApplication();
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('your-last-applications-section');
     });
 
-    $('table.search-results a').click(function(){
+    $('table.search-results a').on('click', function(){
       moj.Modules.GtmTrackTimestamps.searchResultClick();
       moj.Modules.GtmTrackTimestamps.sectionLinkClick('search-results-section')
     });
@@ -169,7 +169,7 @@ window.moj.Modules.GtmTrackTimestamps = {
       moj.Modules.GtmTrackTimestamps.serchPerformed('Failure');
     }
 
-    $('.search-button').click(function(){
+    $('.search-button').on('click', function(){
       moj.Modules.GtmTrackTimestamps.serchPerformed('');
     });
   },
@@ -188,9 +188,9 @@ window.moj.Modules.GtmTrackTimestamps = {
     var val = []
     var error_messages = '';
 
-    if($('.govuk-error-summary__body').size() > 0){
+    if($('.govuk-error-summary__body').length > 0){
       error_messages = $('.govuk-error-summary__body').text()
-    } else if($('label.error').size() > 0) {
+    } else if($('label.error').length > 0) {
       $('label.error').each(function() {
         val.push($( this ).text());
       });
