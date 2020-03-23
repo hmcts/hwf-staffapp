@@ -72,6 +72,13 @@ class SignInPage < BasePage
     sign_in
   end
 
+  def mi_account
+    user = FactoryBot.create(:mi)
+    content.user_email.set user.email
+    content.user_password.set user.password
+    sign_in
+  end
+
   def invalid_credentials
     content.user_email.set 'invalid.com'
     content.user_password.set 'password'
