@@ -16,12 +16,6 @@ class StaffPage < BasePage
     end
   end
 
-  def mi_on_staff_page
-    sign_in_page.load_page
-    sign_in_page.mi_account
-    click_link 'View staff'
-  end
-
   def manager_on_staff_page
     sign_in_page.load_page
     sign_in_page.manager_account

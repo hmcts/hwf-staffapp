@@ -20,6 +20,7 @@ Feature: Staff
       When I click on deleted staff
       Then I am taken to the deleted staff page
 
-    Scenario: Office disabled
+    Scenario: Office disabled for manager
       Given I am manager on the staff page
       Then the office filter is disabled
+
