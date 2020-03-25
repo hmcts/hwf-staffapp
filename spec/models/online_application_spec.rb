@@ -24,7 +24,7 @@ RSpec.describe OnlineApplication, type: :model do
 
   describe '#ni_number validation' do
     context 'ho_number and ni_number is empty' do
-      before {online_application.ni_number = nil }
+      before { online_application.ni_number = nil }
 
       it { is_expected.not_to be_valid }
     end
