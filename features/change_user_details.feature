@@ -15,3 +15,9 @@ Feature: Change user details
     When I click on change details of a user
     And I change the member of staff to a reader
     Then I can see that the user is a reader
+
+  Scenario: Main jurisdiction
+    Given I am admin on the staff page
+    When I click on change details of a user
+    And I change the jurisdiction
+    Then I should see the jurisdiction has been updated

@@ -14,17 +14,16 @@ end
 
 When("I filter by office") do
   select(Office.last.name, from: 'Office')
-  staff_page.filter
+  click_button 'Filter'
 end
 
 Then("I see all the results for that office") do
-  office_name = Office.last.name
-  expect(staff_page.content.result_row[1].text).to have_content office_name
+  expect(staff_page.content.result_row[1].text).to have_content Office.last.name
 end
 
 When("I filter by activity") do
   select('active', from: 'Activity')
-  staff_page.filter
+  click_button 'Filter'
 end
 
 Then("I see all the results for that activity") do
