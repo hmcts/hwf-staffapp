@@ -1,11 +1,13 @@
 class OnlineApplication < ActiveRecord::Base
   belongs_to :jurisdiction, optional: true
 
-  validates :ni_number, :date_of_birth, :first_name, :last_name, :address,
+  validates :date_of_birth, :first_name, :last_name, :address,
             :postcode, presence: true
   validates :married, :min_threshold_exceeded, :benefits, :refund, :email_contact,
             :phone_contact, :post_contact, :feedback_opt_in, inclusion: [true, false]
   validates :reference, uniqueness: true
+
+  validates :ni_number, presence: true, if: ->(app) { app.ho_number.blank? }
 
   def full_name
     [title, first_name, last_name].compact.join(' ')
