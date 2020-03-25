@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_115846) do
+ActiveRecord::Schema.define(version: 2020_03_25_104858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_115846) do
     t.boolean "married"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "litigation_friend_details"
     t.index ["application_id"], name: "index_applicants_on_application_id"
     t.index ["first_name"], name: "index_applicants_on_first_name"
     t.index ["last_name"], name: "index_applicants_on_last_name"
@@ -287,6 +288,8 @@ ActiveRecord::Schema.define(version: 2020_02_27_115846) do
     t.boolean "income_max_threshold_exceeded"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
+    t.text "litigation_friend_details"
+    t.string "ho_number"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
