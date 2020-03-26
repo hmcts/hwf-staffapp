@@ -30,6 +30,6 @@ end
 
 When("I check use the default DWP check to display message") do
   dwp_message_page.check_offline
-  save_changes
+  click_button 'Save changes'
   dwp_message_page.check_default
 end
