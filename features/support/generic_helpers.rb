@@ -74,8 +74,8 @@ def generate_report_page
   @generate_report_page ||= GenerateReportPage.new
 end
 
-def change_profile_details_page
-  @change_profile_details_page ||= ChangeProfileDetailsPage.new
+def change_user_details_page
+  @change_user_details_page ||= ChangeUserDetailsPage.new
 end
 
 def profile_page
@@ -84,6 +84,10 @@ end
 
 def staff_page
   @staff_page ||= StaffPage.new
+end
+
+def staff_details_page
+  @staff_details_page ||= StaffDetailsPage.new
 end
 
 def office_page
@@ -160,10 +164,6 @@ end
 
 def next_page
   base_page.content.next_button.click
-end
-
-def save_changes
-  base_page.content.save_changes_button.click
 end
 
 def start_application

@@ -17,7 +17,7 @@ Then("I should see select from one of the options error message") do
 end
 
 When("I click on save changes") do
-  save_changes
+  click_button 'Save changes'
 end
 
 Then("I should see your changes have been saved message") do
