@@ -26,6 +26,7 @@
             .govuk-error-summary__body
               ul.govuk-list.govuk-error-summary__list
                 - flash.each do |key, value|
+                  - next unless value.is_a? String
                   li class="#{key}" data-alert='' #{value.html_safe}
 
 
