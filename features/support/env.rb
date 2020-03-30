@@ -40,6 +40,7 @@ ActionController::Base.allow_rescue = false
 #Define global variables
 ENV['zap_proxy'] = "localhost"
 ENV['zap_proxy_port'] = '8099'
+ENV['HOSTNAME'] = 'localhost'
 
 #Below lines are our driver profile settings to reach internet through a proxy
 #You can set security=true as environment variable or declare it on command window

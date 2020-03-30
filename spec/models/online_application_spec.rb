@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe OnlineApplication, type: :model do
   subject(:online_application) { build :online_application }
 
-  it { is_expected.to validate_presence_of(:ni_number) }
   it { is_expected.to validate_presence_of(:date_of_birth) }
   it { is_expected.to validate_presence_of(:first_name) }
   it { is_expected.to validate_presence_of(:last_name) }
@@ -22,6 +21,32 @@ RSpec.describe OnlineApplication, type: :model do
   it { is_expected.to allow_value(nil).for(:probate) }
 
   it { is_expected.to validate_uniqueness_of(:reference) }
+
+  describe '#ni_number validation' do
+    context 'ho_number and ni_number is empty' do
+      before { online_application.ni_number = nil }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context 'ho_number has a value and ni_number is empty' do
+      before do
+        online_application.ni_number = nil
+        online_application.ho_number = 'L123456'
+      end
+
+      it { is_expected.to be_valid }
+    end
+
+    context 'ho_number in empty and ni_number is is valid' do
+      before do
+        online_application.ni_number = 'SN123456C'
+        online_application.ho_number = nil
+      end
+
+      it { is_expected.to be_valid }
+    end
+  end
 
   describe '#full_name' do
     subject { online_application.full_name }
