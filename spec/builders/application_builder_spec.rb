@@ -153,7 +153,7 @@ RSpec.describe ApplicationBuilder do
       end
 
       context 'when the online application does not specify children' do
-        let(:online_application) { build_stubbed(:online_application_with_all_details, children: nil) }
+        let(:online_application) { build_stubbed(:online_application_with_all_details, children: nil, ho_number: 'L123456') }
 
         it 'has the dependents flag not to be set' do
           expect(built_application.dependents).to be nil
@@ -172,7 +172,7 @@ RSpec.describe ApplicationBuilder do
       describe 'the applicant' do
         subject(:built_applicant) { built_application.applicant }
 
-        [:title, :first_name, :last_name, :date_of_birth, :ni_number, :married].each do |column|
+        [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married].each do |column|
           it "has #{column} assigned" do
             expect(built_applicant.public_send(column)).to eql(online_application.public_send(column))
           end
