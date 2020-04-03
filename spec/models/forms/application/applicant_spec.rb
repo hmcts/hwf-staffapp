@@ -4,7 +4,7 @@ RSpec.describe Forms::Application::Applicant do
   subject(:created_applicant) { described_class.new(personal_information) }
 
   params_list = [:last_name, :date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
-                 :married, :title, :first_name, :ni_number]
+                 :married, :title, :first_name, :ni_number, :ho_number]
 
   let(:personal_information) { attributes_for :personal_information }
 
@@ -249,4 +249,115 @@ RSpec.describe Forms::Application::Applicant do
       end
     end
   end
+
+  describe 'Home office number validations' do
+    describe 'New HO format' do
+      before { personal_information[:ho_number] = '1212-0001-0240-0490' }
+
+      it { expect(created_applicant.valid?).to be true }
+
+      context 'multiple applicants' do
+        before { personal_information[:ho_number] = '1212-0001-0240-0490/1' }
+
+        it { expect(created_applicant.valid?).to be true }
+      end
+
+      context 'invalid' do
+        context 'not enought digits' do
+          before { personal_information[:ho_number] = '1212-0001-0240-040' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'letters mixed in' do
+          before { personal_information[:ho_number] = '12s2-0001-0240-0490' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+      end
+    end
+
+    context 'when NI not provided' do
+      before { personal_information[:ho_number] = 'L123456' }
+
+      it { expect(created_applicant.valid?).to be true }
+
+      describe 'format for single applicant' do
+        context 'invalid only numbers' do
+          before { personal_information[:ho_number] = '1234567' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid only letters' do
+          before { personal_information[:ho_number] = 'ABCDEFG' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid too short' do
+          before { personal_information[:ho_number] = 'L12345' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid letter not at the begining' do
+          before { personal_information[:ho_number] = '12L345' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+      end
+
+      describe 'format for multiple applicants' do
+        context 'invalid only numbers' do
+          before { personal_information[:ho_number] = '1234567/1' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid only letters' do
+          before { personal_information[:ho_number] = 'ABCDEFG/1' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid too short' do
+          before { personal_information[:ho_number] = 'L12345/1' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid letter not at the begining' do
+          before { personal_information[:ho_number] = '12L345/1' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid no number after slash' do
+          before { personal_information[:ho_number] = 'L123456/' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid number and letters after slash' do
+          before { personal_information[:ho_number] = 'L123456/1a' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'invalid letters after slash' do
+          before { personal_information[:ho_number] = 'L123456/a' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'valid numbers only after slash' do
+          before { personal_information[:ho_number] = 'L123456/20' }
+
+          it { expect(created_applicant.valid?).to be true }
+        end
+      end
+    end
+  end
+
 end
