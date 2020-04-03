@@ -6,6 +6,7 @@ module Forms
       MAXIMUM_AGE = 120
       # rubocop:disable MutableConstant
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
+      HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{6}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}.freeze
       # rubocop:enable MutableConstant
       include ActiveModel::Validations::Callbacks
 
@@ -20,6 +21,7 @@ module Forms
           married: Boolean,
           title: String,
           ni_number: String,
+          ho_number: String,
           first_name: String
         }
       end
@@ -69,6 +71,8 @@ module Forms
       validate :dob_age_valid?
       validates :married, inclusion: { in: [true, false] }
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
+      validates :ho_number, format: { with: HO_NUMBER_REGEXP }, allow_blank: true
+
 
       private
 
