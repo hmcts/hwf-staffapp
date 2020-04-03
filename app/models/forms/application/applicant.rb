@@ -73,7 +73,6 @@ module Forms
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validates :ho_number, format: { with: HO_NUMBER_REGEXP }, allow_blank: true
 
-
       private
 
       def strip_whitespace!
