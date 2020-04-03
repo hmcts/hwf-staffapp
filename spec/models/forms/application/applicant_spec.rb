@@ -215,7 +215,8 @@ RSpec.describe Forms::Application::Applicant do
           month_date_of_birth: '01',
           year_date_of_birth: '1980',
           married: true,
-          ni_number: 'AB123456A'
+          ni_number: 'AB123456A',
+          ho_number: 'L654321'
         }
       end
 
@@ -237,6 +238,10 @@ RSpec.describe Forms::Application::Applicant do
 
       it 'saves the correct date of birth' do
         expect(applicant.date_of_birth).to eql(parsed_dob)
+      end
+
+      it 'saves the correct ho_number' do
+        expect(applicant.ho_number).to eq 'L654321'
       end
     end
 

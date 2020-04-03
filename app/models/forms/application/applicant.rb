@@ -126,7 +126,8 @@ module Forms
           first_name: first_name,
           date_of_birth: format_dob,
           married: married,
-          ni_number: ni_number
+          ni_number: ni_number,
+          ho_number: ho_number
         }
       end
     end
