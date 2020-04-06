@@ -31,4 +31,5 @@ Feature: Personal details page
       And I see that I should check that the applicant is not
       And I see that I should check the fee
       And I see that I should look for a national insurance number
+      And I see more information about home office numbers
       And I see that I should check the status of the applicant
