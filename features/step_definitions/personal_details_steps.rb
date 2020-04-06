@@ -94,7 +94,7 @@ end
 
 Then("I see more information about home office numbers") do
   expect(personal_details_page.content.guidance.guidance_header[2].text).to eq 'Home Office reference number'
-  expect(personal_details_page.content.guidance.guidance_text[4].text).to eq 'A Home Office reference number needs to be provided if the applicant is subject to immigration control'
+  expect(personal_details_page.content.guidance.guidance_text[4].text).to eq 'A Home Office reference number may be provided if the applicant is subject to immigration control'
   expect(personal_details_page.content.guidance.guidance_text[5].text).to eq "An applicant can find their Home Office reference number on any correspondence received from the Home Office."
 end
 
