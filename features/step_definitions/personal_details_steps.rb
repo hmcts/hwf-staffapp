@@ -8,7 +8,14 @@ And("I am on the personal details part of the application") do
 end
 
 When("I successfully submit my required personal details") do
-  personal_details_page.submit_required_personal_details
+  expect(personal_details_page.content).to have_dob_legend
+  expect(personal_details_page.content).to have_dob_hint
+  expect(personal_details_page.content).to have_ni_label
+  expect(personal_details_page.content).to have_ni_hint
+  expect(personal_details_page.content).to have_ho_label
+  expect(personal_details_page.content).to have_ho_hint
+  expect(personal_details_page.content).to have_martial_status_legend
+  personal_details_page.submit_all_personal_details
 end
 
 Then("I should be taken to the application details page") do
@@ -50,7 +57,7 @@ Then("I should have to enter my marital status") do
 end
 
 When("I fill in the form with a last name with one letter") do
-  personal_details_page.content.application_last_name.set 'S'
+  fill_in 'Last name', with: 'S'
   next_page
 end
 
@@ -83,6 +90,12 @@ Then("I see that I should look for a national insurance number") do
   expect(personal_details_page.content.guidance.guidance_list[2].text).to eq "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don\'t process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[3].text).to eq 'What to do if you’re unable to obtain the NI number'
   expect(personal_details_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#ni-number'
+end
+
+Then("I see more information about home office numbers") do
+  expect(personal_details_page.content.guidance.guidance_header[2].text).to eq 'Home Office reference number'
+  expect(personal_details_page.content.guidance.guidance_text[4].text).to eq 'A Home Office reference number needs to be provided if the applicant is subject to immigration control'
+  expect(personal_details_page.content.guidance.guidance_text[5].text).to eq "An applicant can find their Home Office reference number on any correspondence received from the Home Office."
 end
 
 Then("I see that I should check the status of the applicant") do
