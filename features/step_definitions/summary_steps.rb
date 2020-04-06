@@ -36,3 +36,12 @@ end
 Then("I should see that the savings amount is rounded to the nearest pound") do
   expect(application_page.content.summary_section[2].text).to eq 'Savings and investments Less than £3,000 No ChangeLess than £3,000 Savings amount £10000 ChangeSavings amount'
 end
+
+Then("I should see the personal details") do
+  expect(summary_page.content.summary_section[0]).to have_personal_details_header
+  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Full name Mr John Christopher Smith ChangeFull name'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Date of birth 10 February 1986 ChangeDate of birth'
+  expect(summary_page.content.summary_section[0].list_row[3].text).to eq 'National Insurance number JR 05 40 08 D ChangeNational Insurance number'
+  expect(summary_page.content.summary_section[0].list_row[4].text).to eq 'Home Office reference number 1212-0001-0240-0490/01 ChangeHome Office reference number'
+  expect(summary_page.content.summary_section[0].list_row[5].text).to eq 'Status Single ChangeStatus'
+end

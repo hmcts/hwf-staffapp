@@ -6,6 +6,11 @@ Feature: Summary page
       When I successfully submit my application
       Then I should be taken to the confirmation page
 
+    Scenario: Displays personal details
+      Given I have completed an application
+      And I am on the summary page
+      Then I should see the personal details
+
     Scenario: Displays benefit summary
       Given I have completed an application
       And I am on the summary page
