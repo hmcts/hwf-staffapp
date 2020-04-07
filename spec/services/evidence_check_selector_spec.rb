@@ -160,7 +160,7 @@ describe EvidenceCheckSelector do
       context 'when the application is flagged for failed evidence check' do
         let(:applicant) { create :applicant_with_all_details }
         let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-        before { create :evidence_check_flag, ni_number: applicant.ni_number }
+        before { create :evidence_check_flag, reg_number: applicant.ni_number }
 
         it { is_expected.to be_a(EvidenceCheck) }
 

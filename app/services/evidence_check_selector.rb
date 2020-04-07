@@ -37,7 +37,8 @@ class EvidenceCheckSelector
   end
 
   def flagged?
-    EvidenceCheckFlag.exists?(ni_number: @application.applicant.ni_number, active: true)
+    registration_number = @application.applicant.ni_number || @application.applicant.ho_number
+    EvidenceCheckFlag.exists?(reg_number: registration_number, active: true)
   end
 
   def check_every_other_refund

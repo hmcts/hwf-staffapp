@@ -29,7 +29,8 @@ class EvidenceCheckFlaggingService
   private
 
   def evidence_check_flag
-    @evidence_check_flag ||= EvidenceCheckFlag.find_by(reg_number: registration_number, active: true)
+    @evidence_check_flag ||= EvidenceCheckFlag.find_by(reg_number: registration_number,
+                                                       active: true)
   end
 
   def registration_number
