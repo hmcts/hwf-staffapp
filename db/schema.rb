@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_074914) do
+ActiveRecord::Schema.define(version: 2020_04_07_080356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,12 +181,12 @@ ActiveRecord::Schema.define(version: 2020_04_02_074914) do
   end
 
   create_table "evidence_check_flags", id: :serial, force: :cascade do |t|
-    t.string "ni_number"
+    t.string "reg_number"
     t.boolean "active", default: true
     t.integer "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ni_number", "active"], name: "evidence_check_flags_active_unique", unique: true, where: "(active = true)"
+    t.index ["reg_number", "active"], name: "evidence_check_flags_active_unique", unique: true, where: "(active = true)"
   end
 
   create_table "evidence_checks", id: :serial, force: :cascade do |t|
