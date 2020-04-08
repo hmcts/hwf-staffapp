@@ -70,6 +70,48 @@ RSpec.describe Application, type: :model do
     end
   end
 
+  describe 'with_evidence_check_for_ho_number' do
+    context 'pending evidence check' do
+      let(:application) { create(:application, :waiting_for_evidence_state, applicant: applicant) }
+      let(:applicant) { create(:applicant, ho_number: ho_number) }
+      let(:ho_number) { 'L123456' }
+
+      it "matching HO number" do
+        list = Application.with_evidence_check_for_ho_number(ho_number)
+        expect(list).to eq([application])
+      end
+
+      it "not matching HO number" do
+        list = Application.with_evidence_check_for_ho_number('L654321')
+        expect(list).to eq([])
+      end
+
+      context 'missing evidence_check record' do
+        let(:list) { Application.with_evidence_check_for_ho_number(ho_number) }
+        it 'when there is no ev check' do
+          application.evidence_check.destroy
+          expect(list).to eq([])
+        end
+      end
+    end
+
+    context 'different state' do
+      let(:application) { create(:application, applicant: applicant) }
+      let(:applicant) { create(:applicant, ho_number: ho_number) }
+      let(:ho_number) { 'L123456' }
+
+      context 'matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ho_number(ho_number) }
+        it { expect(list).to eq([]) }
+      end
+
+      context 'not matching NI number' do
+        let(:list) { Application.with_evidence_check_for_ho_number('L654321') }
+        it { expect(list).to eq([]) }
+      end
+    end
+  end
+
   describe 'benefit checks' do
     let(:be_check1) { create :benefit_check, application: application, benefits_valid: true, dwp_result: 'Yes' }
     let(:be_check2) { create :benefit_check, application: application, benefits_valid: false, dwp_result: 'No' }

@@ -10,7 +10,7 @@ class EvidenceCheckFlaggingService
   end
 
   def can_be_flagged?
-    ni_number.present?
+    registration_number.present?
   end
 
   def process_flag
@@ -22,17 +22,18 @@ class EvidenceCheckFlaggingService
       end
       evidence_check_flag.save!
     else
-      EvidenceCheckFlag.create(ni_number: ni_number, count: 1) unless @evidence.correct
+      EvidenceCheckFlag.create(reg_number: registration_number, count: 1) unless @evidence.correct
     end
   end
 
   private
 
   def evidence_check_flag
-    @evidence_check_flag ||= EvidenceCheckFlag.find_by(ni_number: ni_number, active: true)
+    @evidence_check_flag ||= EvidenceCheckFlag.find_by(reg_number: registration_number,
+                                                       active: true)
   end
 
-  def ni_number
-    @ni_number ||= @application.applicant.ni_number
+  def registration_number
+    @registration_number ||= @application.applicant.ni_number || @application.applicant.ho_number
   end
 end

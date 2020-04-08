@@ -1,8 +1,8 @@
 And("there is an application waiting for evidence") do
   sign_in_page.load_page
   sign_in_page.user_account
-  waiting_evidence_application
-  waiting_evidence_application
+  waiting_evidence_application_ni
+  waiting_evidence_application_ni
 end
 
 And("I am on an application waiting for evidence") do

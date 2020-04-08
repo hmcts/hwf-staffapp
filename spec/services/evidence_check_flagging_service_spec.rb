@@ -20,6 +20,12 @@ describe EvidenceCheckFlaggingService do
 
       it { is_expected.to be true }
     end
+
+    context 'when the applicant has an ho_number' do
+      let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: nil }
+
+      it { is_expected.to be true }
+    end
   end
 
   describe '#process_flag' do
@@ -32,7 +38,7 @@ describe EvidenceCheckFlaggingService do
       let(:evidence_check) { create :evidence_check_full_outcome, :completed, application: application }
 
       context 'when a previous flag exists' do
-        let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
+        let!(:flag) { create :evidence_check_flag, reg_number: applicant.ni_number }
 
         it 'deactivates the flag' do
           expect { process_flag && flag.reload }.to change { flag.active }.to false
@@ -55,8 +61,17 @@ describe EvidenceCheckFlaggingService do
         end
       end
 
-      context 'when a previous flag exists' do
-        let!(:flag) { create :evidence_check_flag, ni_number: applicant.ni_number }
+      context 'when a previous flag exists for ni number' do
+        let!(:flag) { create :evidence_check_flag, reg_number: applicant.ni_number }
+
+        it 'increments the count on the existing flag' do
+          expect { process_flag && flag.reload }.to change { flag.count }.by(1)
+        end
+      end
+
+      context 'when a previous flag exists for ho number' do
+        let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: nil }
+        let!(:flag) { create :evidence_check_flag, reg_number: applicant.ho_number }
 
         it 'increments the count on the existing flag' do
           expect { process_flag && flag.reload }.to change { flag.count }.by(1)

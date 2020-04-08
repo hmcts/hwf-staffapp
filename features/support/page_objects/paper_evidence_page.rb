@@ -5,7 +5,7 @@ class PaperEvidencePage < BasePage
   end
 
   def go_to_paper_evidence_page
-    personal_details_page.submit_all_personal_details
+    personal_details_page.submit_all_personal_details_ni
     application_details_page.submit_fee_600
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes

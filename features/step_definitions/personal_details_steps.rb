@@ -15,7 +15,7 @@ When("I successfully submit my required personal details") do
   expect(personal_details_page.content).to have_ho_label
   expect(personal_details_page.content).to have_ho_hint
   expect(personal_details_page.content).to have_martial_status_legend
-  personal_details_page.submit_all_personal_details
+  personal_details_page.submit_all_personal_details_ni
 end
 
 Then("I should be taken to the application details page") do
