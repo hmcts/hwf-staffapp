@@ -82,4 +82,3 @@ Scenario: Return to dashboard
   When I use the browser back button
   Then I should be taken back to my dashboard
   And I should see a message telling me that the application has been processed
-
