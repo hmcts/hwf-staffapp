@@ -64,10 +64,18 @@ class PersonalDetailsPage < BasePage
     next_page
   end
 
-  def submit_all_personal_details
+  def submit_all_personal_details_ni
     full_name
     valid_dob
     valid_ni
+    content.status_single.click
+    next_page
+  end
+
+  def submit_all_personal_details_ho
+    full_name
+    valid_dob
+    valid_ho
     content.status_single.click
     next_page
   end

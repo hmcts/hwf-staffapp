@@ -37,7 +37,8 @@ class EvidenceCheckSelector
   end
 
   def flagged?
-    EvidenceCheckFlag.exists?(ni_number: @application.applicant.ni_number, active: true)
+    registration_number = @application.applicant.ni_number || @application.applicant.ho_number
+    EvidenceCheckFlag.exists?(reg_number: registration_number, active: true)
   end
 
   def check_every_other_refund
@@ -71,11 +72,17 @@ class EvidenceCheckSelector
 
   def pending_evidence_check_for_with_user?
     applicant = @application.applicant
-    return false if applicant.ni_number.blank?
-
-    applications = Application.with_evidence_check_for_ni_number(applicant.ni_number).
+    return false if applicant.ni_number.blank? && applicant.ho_number.blank?
+    prefix = pending_evidence_prefix(applicant)
+    applications = Application.send("with_evidence_check_for_#{prefix}_number", @number).
                    where.not(id: @application.id)
     applications.present?
+  end
+
+  def pending_evidence_prefix(applicant)
+    prefix = applicant.ni_number ? 'ni' : 'ho'
+    @number = applicant.send("#{prefix}_number")
+    prefix
   end
 
   def skip_ev_check?

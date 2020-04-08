@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EvidenceCheckFlag, type: :model do
   subject(:ecf) { build :evidence_check_flag }
 
-  it { expect(ecf).to validate_presence_of(:ni_number) }
+  it { expect(ecf).to validate_presence_of(:reg_number) }
 
   describe 'validations' do
     subject { ecf.valid? }

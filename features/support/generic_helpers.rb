@@ -162,6 +162,10 @@ def suspected_fraud_guide_page
   @suspected_fraud_guide_page ||= SuspectedFraudGuidePage.new
 end
 
+def ho_evidence_check_page
+  @ho_evidence_check_page ||= HoEvidenceCheckPage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
@@ -186,7 +190,7 @@ def complete_processing
 end
 
 def eligable_application
-  personal_details_page.submit_all_personal_details
+  personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_yes
@@ -216,7 +220,7 @@ end
 
 def part_payment_application
   dashboard_page.process_application
-  personal_details_page.submit_all_personal_details
+  personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
@@ -225,9 +229,23 @@ def part_payment_application
   complete_and_back_to_start
 end
 
-def waiting_evidence_application
+def waiting_evidence_application_ni
   dashboard_page.process_application
-  personal_details_page.submit_all_personal_details
+  personal_details_page.submit_all_personal_details_ni
+  application_details_page.submit_as_refund_case
+  savings_investments_page.submit_less_than
+  benefits_page.submit_benefits_no
+  incomes_page.submit_incomes_no_50
+  complete_processing
+  back_to_start
+end
+
+def ho_application
+  dashboard_page.process_application
+  personal_details_page.submit_all_personal_details_ho
+end
+
+def refund_application
   application_details_page.submit_as_refund_case
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no

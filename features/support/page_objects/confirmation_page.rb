@@ -15,7 +15,7 @@ class ConfirmationPage < BasePage
 
   def go_to_confirmation_page
     start_application
-    personal_details_page.submit_all_personal_details
+    personal_details_page.submit_all_personal_details_ni
     application_details_page.submit_fee_600
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes

@@ -129,7 +129,7 @@ def evidene_check
 end
 
 def create_flag_check(ni_number)
-  EvidenceCheckFlag.create(ni_number: ni_number, active: true, count: 1)
+  EvidenceCheckFlag.create(reg_number: ni_number, active: true, count: 1)
 end
 
 def fill_application_date_over_limit

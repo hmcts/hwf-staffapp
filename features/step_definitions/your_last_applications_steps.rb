@@ -1,5 +1,5 @@
 Given("I fill in personal details of the application") do
-  personal_details_page.submit_all_personal_details
+  personal_details_page.submit_all_personal_details_ni
 end
 
 Given("I fill in the application details") do
