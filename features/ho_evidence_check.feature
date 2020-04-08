@@ -1,4 +1,4 @@
-Feature: Home office - evidence check
+Feature: Evidence check on home office number
 
   Background: Applicant with home office number
     Given the applicant has a home office number
