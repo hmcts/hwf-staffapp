@@ -213,6 +213,11 @@ def multiple_applications
   ineligable_application
 end
 
+def complete_and_back_to_start
+  complete_processing
+  back_to_start
+end
+
 def part_payment_application
   dashboard_page.process_application
   personal_details_page.submit_all_personal_details_ni
@@ -221,8 +226,7 @@ def part_payment_application
   benefits_page.submit_benefits_no
   incomes_page.submit_incomes_no
   incomes_page.submit_incomes_1200
-  complete_processing
-  back_to_start
+  complete_and_back_to_start
 end
 
 def waiting_evidence_application_ni
@@ -247,8 +251,7 @@ def refund_application
   benefits_page.submit_benefits_no
   incomes_page.submit_incomes_no
   incomes_page.submit_incomes_50
-  complete_processing
-  back_to_start
+  complete_and_back_to_start
 end
 
 def reference_prefix
