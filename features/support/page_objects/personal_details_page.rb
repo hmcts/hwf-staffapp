@@ -68,7 +68,6 @@ class PersonalDetailsPage < BasePage
     full_name
     valid_dob
     valid_ni
-    valid_ho
     content.status_single.click
     next_page
   end
