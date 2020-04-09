@@ -219,7 +219,8 @@ def part_payment_application
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_no_1200
+  incomes_page.submit_incomes_no
+  incomes_page.submit_incomes_1200
   complete_processing
   back_to_start
 end
@@ -244,7 +245,8 @@ def refund_application
   application_details_page.submit_as_refund_case
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_no_50
+  incomes_page.submit_incomes_no
+  incomes_page.submit_incomes_50
   complete_processing
   back_to_start
 end
