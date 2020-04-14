@@ -235,9 +235,9 @@ def waiting_evidence_application_ni
   application_details_page.submit_as_refund_case
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_no_50
-  complete_processing
-  back_to_start
+  incomes_page.submit_incomes_no
+  incomes_page.submit_incomes_50
+  complete_and_back_to_start
 end
 
 def ho_application
