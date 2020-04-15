@@ -112,7 +112,6 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = @part_no_ec_none_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,3,true,part,300.45,0.0,paper"
-        # binding.pry
         expect(export).to include(row)
       end
     end
