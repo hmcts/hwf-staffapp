@@ -6,30 +6,16 @@ When("I am signed in on the guide page") do
   expect(guide_page).to be_displayed
 end
 
-Then("I click on how to guide") do
-  guide_page.content.how_to_guide.click
-  expect(current_url).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
+Then("I can view how to guide") do
+  expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
-Then("I am not within the network or connected to vpn") do
-  expect(forbidden_page).to have_error_403
+When("I can view key control checks guide") do
+  expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/10/help-with-fees-key-control-checks.pdf'
 end
 
-Then("I should see you are accessing the intranet from outside the MoJ network") do
-  expect(forbidden_page).to have_header
-end
-
-When("I click on key control checks") do
-  guide_page.content.key_control_checks.click
-end
-
-When("I should be taken to the key control checks guide") do
-  expect(current_url).to end_with '/documents/2017/10/help-with-fees-key-control-checks.pdf'
-end
-
-When("I click on staff guidance") do
-  guide_page.content.staff_guidance.click
-  expect(current_url).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
+When("I can view staff guidance") do
+  expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
 end
 
 When("I click on process application") do
@@ -68,8 +54,8 @@ Then("I should be taken to the appeals guide") do
   expect(appeals_guide_page).to have_header
 end
 
-When("I click on fraud awareness") do
-  guide_page.content.fraud_awareness.click
+Then("I can view fraud awareness guide") do
+  expect(guide_page.content.fraud_awareness['href']).to end_with '/documents/2018/05/help-with-fees-fraud-awareness-pdf.pdf'
 end
 
 When("I click on suspected fraud") do
