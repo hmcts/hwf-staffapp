@@ -29,7 +29,8 @@ When("I change my answer to no") do
 end
 
 Then("I should see that my new answer is displayed in the benefit summary") do
-  incomes_page.submit_incomes_no_50
+  incomes_page.submit_incomes_no
+  incomes_page.submit_incomes_50
   expect(application_page.content.summary_section[3]).to have_answer_no
 end
 

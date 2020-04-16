@@ -7,6 +7,6 @@ When("I successfully submit my required paper evidence details") do
 end
 
 Then("I should be taken to the summary page") do
-  expect(current_path).to include 'summary'
+  expect(summary_page).to be_displayed
   expect(summary_page.content).to have_header
 end
