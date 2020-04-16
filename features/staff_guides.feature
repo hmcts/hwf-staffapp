@@ -10,21 +10,15 @@ Feature: Staff guides
 
     Scenario: How to guide
       And I am signed in on the guide page
-      When I click on how to guide
-      But I am not within the network or connected to vpn
-      Then I should see you are accessing the intranet from outside the MoJ network
+      Then I can view how to guide
 
     Scenario: Key control checks
       And I am signed in on the guide page
-      When I click on key control checks
-      But I am not within the network or connected to vpn
-      Then I should see you are accessing the intranet from outside the MoJ network
+      Then I can view key control checks guide
 
     Scenario: Staff guidance
       And I am signed in on the guide page
-      When I click on staff guidance
-      But I am not within the network or connected to vpn
-      Then I should see you are accessing the intranet from outside the MoJ network
+      Then I can view staff guidance
     
     Scenario: Process application
       And I am signed in on the guide page
@@ -48,9 +42,7 @@ Feature: Staff guides
     
     Scenario: Fraud awareness
       And I am signed in on the guide page
-      When I click on fraud awareness
-      But I am not within the network or connected to vpn
-      Then I should see you are accessing the intranet from outside the MoJ network
+      Then I can view fraud awareness guide
 
     Scenario: Suspected fraud
       And I am signed in on the guide page
