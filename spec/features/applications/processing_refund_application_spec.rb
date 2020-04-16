@@ -288,7 +288,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         choose 'No'
         click_button 'Next'
 
-        expect(page).to have_content "In question 10, does the applicant financially support any children?"
+        expect(page).to have_content "In questions 10 and 11, does the applicant financially support any children?"
         choose 'No'
         fill_in 'application_income', with: 1000
         click_button 'Next'
@@ -340,7 +340,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         choose 'No'
         click_button 'Next'
 
-        expect(page).to have_content "In question 10, does the applicant financially support any children?"
+        expect(page).to have_content "In questions 10 and 11, does the applicant financially support any children?"
         choose 'No'
         fill_in 'application_income', with: 1000
         click_button 'Next'

@@ -315,6 +315,7 @@ en-GB:
         full_name: Full name
         date_of_birth: Date of birth
         ni_number: National Insurance number
+        ho_number: Home Office reference number
         status: Status
       views/overview/details:
         fee: Fee
@@ -386,6 +387,8 @@ en-GB:
         last_name_hint: 'First 3 letters only'
         full_name: Full name
         ni_number: 'National Insurance number'
+        ho_number: Home Office reference number
+        ho_number_hint: Where provided
         date_of_birth: 'Date of birth'
         day_date_of_birth: 'Day'
         month_date_of_birth: 'Month'
@@ -442,10 +445,10 @@ en-GB:
         benefits_false: 'No'
         benefits_true: 'Yes'
       forms/application/income:
-        dependents: In question 10, does the applicant financially support any children?
+        dependents: In questions 10 and 11, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
-        children: Number of children
+        children: Number of children (add number given in questions 10 and 11 together)
         income: Total monthly income
       forms/application/summary:
         passed: '✓ Passed'

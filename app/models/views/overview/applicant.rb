@@ -3,13 +3,14 @@ module Views
     class Applicant
 
       delegate(:full_name, to: :applicant)
+      delegate(:ho_number, to: :applicant)
 
       def initialize(application)
         @application = application
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'ni_number', 'status']
+        ['full_name', 'date_of_birth', 'ni_number', 'ho_number', 'status']
       end
 
       def ni_number

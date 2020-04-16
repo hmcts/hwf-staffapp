@@ -1,4 +1,6 @@
 class BenefitsPage < BasePage
+  set_url '/applications/1/incomes'
+
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits the applicant is receiving'
     element :benefit_question, '.govuk-label', text: 'Is the applicant receiving one of these benefits?'

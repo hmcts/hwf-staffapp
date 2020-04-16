@@ -63,6 +63,15 @@
         = f.text_field :ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
+        = f.label :ho_number, class: 'govuk-label'
+          =t('ho_number', scope: @form.i18n_scope)
+          span.hint =t('ho_number_hint', scope: @form.i18n_scope)
+          - if @form.errors[:ho_number].present?
+            span.govuk-error-message
+              = f.label :ho_number, @form.errors[:ho_number].join(', '), class: 'error'
+        = f.text_field :ho_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend Select the applicant's marital status
           - if @form.errors[:married].present?
@@ -101,7 +110,11 @@
           li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
+
         p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
+        h2.govuk-heading-m Home Office reference number
+        p A Home Office reference number may be provided if the applicant is subject to immigration control
+        p An applicant can find their Home Office reference number on any correspondence received from the Home Office.
         h2.govuk-heading-m Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
         p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'

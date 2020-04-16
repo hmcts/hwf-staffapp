@@ -22,7 +22,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def go_to_application_details_page
-    personal_details_page.submit_all_personal_details
+    personal_details_page.submit_all_personal_details_ni
   end
 
   def date_application_received

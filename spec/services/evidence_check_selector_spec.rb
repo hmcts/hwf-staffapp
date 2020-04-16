@@ -160,7 +160,7 @@ describe EvidenceCheckSelector do
       context 'when the application is flagged for failed evidence check' do
         let(:applicant) { create :applicant_with_all_details }
         let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-        before { create :evidence_check_flag, ni_number: applicant.ni_number }
+        before { create :evidence_check_flag, reg_number: applicant.ni_number }
 
         it { is_expected.to be_a(EvidenceCheck) }
 
@@ -185,7 +185,28 @@ describe EvidenceCheckSelector do
           evidence_check
         end
 
-        it 'never selects the application for evidence_check' do
+        it 'selects the application for evidence_check' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
+
+      context 'for a application with existing check and same ho_number' do
+        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:application_old) do
+          create(:application, :income_type,
+                 state: 1,
+                 applicant: applicant_old)
+        end
+        let(:applicant_old) { create(:applicant, ho_number: 'L123456') }
+
+        let(:application) { create(:application, :income_type, applicant: applicant) }
+        let(:applicant) { create(:applicant, ho_number: 'L123456') }
+
+        before do
+          evidence_check
+        end
+
+        it 'selects the application for evidence_check' do
           is_expected.to be_a(EvidenceCheck)
         end
       end
