@@ -417,7 +417,6 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    redcarpet (3.5.0)
     request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.0)
@@ -607,7 +606,6 @@ DEPENDENCIES
   rails-controller-testing
   rails-i18n (~> 4.0.0)
   rails_12factor
-  redcarpet
   rest-client
   rspec-rails (~> 3.4)
   rspec_junit_formatter (~> 0.4.1)

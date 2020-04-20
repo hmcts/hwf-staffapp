@@ -48,7 +48,6 @@ gem 'jbuilder', '~> 2.2'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # template language
-gem 'redcarpet'
 gem 'slim-rails', '3.1.1'
 
 # Use ActiveModel has_secure_password
