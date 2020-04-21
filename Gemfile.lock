@@ -344,6 +344,8 @@ GEM
       activerecord (>= 4.2)
       request_store (~> 1.1)
     parallel (1.19.1)
+    parallel_tests (2.32.0)
+      parallel
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
     parser (2.7.0.4)
@@ -593,6 +595,7 @@ DEPENDENCIES
   logstasher!
   nokogiri
   paper_trail
+  parallel_tests
   paranoia (~> 2.0)
   pg (= 0.20)
   pg_search

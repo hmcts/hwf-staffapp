@@ -11,7 +11,7 @@ development:
 
 test: &test
   <<: *default
-  database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_test') %>
+  database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_test') %><%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *default

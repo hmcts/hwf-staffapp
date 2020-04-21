@@ -91,6 +91,7 @@ group :development, :test do
   gem 'pry-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'rspec-rails', '~> 4.0'
+  gem 'parallel_tests'
   gem 'spring'
   # in browser debugging
   gem 'better_errors'
