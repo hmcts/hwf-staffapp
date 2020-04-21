@@ -15,6 +15,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
 
+  let(:digital) { create :office, name: 'Digital' }
   let(:jurisdiction1) { create :jurisdiction }
   let(:jurisdiction2) { create :jurisdiction }
   let(:business_entity1) { create :business_entity, be_code: 'abc134', jurisdiction: jurisdiction1 }
@@ -58,9 +59,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
         it 'contains data for distinct business entities' do
           application1 = create(:application_full_remission, :with_office, :processed_state, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
           application2 = create(:application_full_remission, :with_office, :processed_state, business_entity_id: business_entity2.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
+          application3 = create(:application_full_remission, :processed_state, office: digital, business_entity_id: business_entity2.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
 
           is_expected.not_to include(application1.reference)
           is_expected.to include(application2.reference)
+          is_expected.not_to include(application3.reference)
         end
       end
 
@@ -70,9 +73,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
         it 'contains data for distinct business entities' do
           application1 = create(:application_full_remission, :with_office, :processed_state, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
           application2 = create(:application_full_remission, :with_office, :processed_state, business_entity_id: business_entity2.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
+          application3 = create(:application_full_remission, :processed_state, office: digital, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
 
           is_expected.to include(application1.reference)
           is_expected.not_to include(application2.reference)
+          is_expected.not_to include(application3.reference)
         end
       end
 
@@ -82,9 +87,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
         it 'contains data for distinct business entities' do
           application1 = create(:application_full_remission, :with_office, :processed_state, :refund, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
           application2 = create(:application_full_remission, :with_office, :processed_state, fee: 500, business_entity_id: business_entity2.id, decision: 'full', decision_date: start_date + 10.seconds)
+          application3 = create(:application_full_remission, :processed_state, :refund, office: digital, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
 
           is_expected.to include(application1.reference)
           is_expected.not_to include(application2.reference)
+          is_expected.not_to include(application3.reference)
         end
       end
 
@@ -95,9 +102,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
           it 'contains data for distinct business entities' do
             application1 = create(:application_full_remission, :with_office, :processed_state, :income_type, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
             application2 = create(:application_full_remission, :with_office, :processed_state, :benefit_type, fee: 500, business_entity_id: business_entity2.id, decision: 'full', decision_date: start_date + 10.seconds)
+            application3 = create(:application_full_remission, :processed_state, :benefit_type, office: digital, fee: 500, business_entity_id: business_entity2.id, decision: 'full', decision_date: start_date + 10.seconds)
 
             is_expected.not_to include(application1.reference)
             is_expected.to include(application2.reference)
+            is_expected.not_to include(application3.reference)
           end
         end
 
@@ -107,9 +116,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
           it 'contains data for distinct business entities' do
             application1 = create(:application_full_remission, :with_office, :processed_state, :income_type, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
             application2 = create(:application_full_remission, :with_office, :processed_state, :benefit_type, fee: 500, business_entity_id: business_entity2.id, decision: 'full', decision_date: start_date + 10.seconds)
+            application3 = create(:application_full_remission, :processed_state, :income_type, office: digital, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
 
             is_expected.to include(application1.reference)
             is_expected.not_to include(application2.reference)
+            is_expected.not_to include(application3.reference)
           end
         end
       end
@@ -129,11 +140,13 @@ RSpec.describe FinanceTransactionalReportBuilder do
           application2 = create(:application_full_remission, :with_office, :processed_state, :benefit_type, fee: 500, business_entity_id: business_entity2.id, decision: 'full', decision_date: start_date + 10.seconds)
           application3 = create(:application_full_remission, :with_office, :processed_state, :income_type, :refund, fee: 500, business_entity_id: business_entity3.id, decision: 'full', decision_date: start_date + 10.seconds)
           application4 = create(:application_full_remission, :with_office, :processed_state, :benefit_type, fee: 500, business_entity_id: business_entity4.id, decision: 'full', decision_date: start_date + 10.seconds)
+          application5 = create(:application_full_remission, :processed_state, :income_type, :refund, office: digital, fee: 500, business_entity_id: business_entity3.id, decision: 'full', decision_date: start_date + 10.seconds)
 
           is_expected.not_to include(application1.reference)
           is_expected.not_to include(application2.reference)
           is_expected.to include(application3.reference)
           is_expected.not_to include(application4.reference)
+          is_expected.not_to include(application5.reference)
         end
       end
     end

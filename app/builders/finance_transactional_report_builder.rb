@@ -75,6 +75,7 @@ class FinanceTransactionalReportBuilder
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).
       where(state: Application.states[:processed]).
+      where("offices.name NOT IN ('Digital')").
       order(Arel.sql('decision_date::timestamp::date ASC')).
       order(Arel.sql('business_entities.be_code ASC'))
   end
