@@ -1,9 +1,11 @@
 class FinanceTransactionalReportBuilder
   require 'csv'
 
+
   CSV_FIELDS = {
     month_year: 'Month-Year',
     entity_code: 'BEC',
+    sop_code: 'SOP',
     office_name: 'Office Name',
     jurisdiction_name: 'Jurisdiction Name',
     remission_amount: 'Remission Amount',

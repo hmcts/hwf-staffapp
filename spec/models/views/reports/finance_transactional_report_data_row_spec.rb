@@ -10,6 +10,7 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
   describe 'attributes' do
     it { is_expected.to respond_to :month_year }
     it { is_expected.to respond_to :entity_code }
+    it { is_expected.to respond_to :sop_code }
     it { is_expected.to respond_to :office_name }
     it { is_expected.to respond_to :jurisdiction_name }
     it { is_expected.to respond_to :remission_amount }
@@ -29,6 +30,10 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
 
     it 'sets the entity_code' do
       expect(data.entity_code).to eq(application.business_entity.be_code)
+    end
+
+    it 'sets the sop_code' do
+      expect(data.sop_code).to eq(application.business_entity.sop_code)
     end
 
     it 'sets the office_name' do
