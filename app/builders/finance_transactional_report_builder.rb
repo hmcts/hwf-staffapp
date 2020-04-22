@@ -1,7 +1,6 @@
 class FinanceTransactionalReportBuilder
   require 'csv'
 
-
   CSV_FIELDS = {
     month_year: 'Month-Year',
     entity_code: 'BEC',
@@ -70,9 +69,7 @@ class FinanceTransactionalReportBuilder
 
   def report_default_query
     Application.
-      includes(:detail).
-      includes(:office).
-      includes(:business_entity).
+      includes(:detail, :office, :business_entity).
       includes(business_entity: :jurisdiction).
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).

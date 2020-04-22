@@ -88,7 +88,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
   describe 'data returned should only include proccesed applications' do
     subject { data.total_count }
 
-    let(:digital) { create :office, name: 'Digital'}
+    let(:digital) { create :office, name: 'Digital' }
     let(:digital_business_entity) { create :business_entity, office: digital }
     let(:wrong_business_entity) { create :business_entity }
     let(:failed_application) { create :application_no_remission, :processed_state, decision: 'full', decision_type: 'override', application_type: 'none', business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now }
