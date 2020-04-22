@@ -30,6 +30,8 @@
     p
       a href='#ni-number' National Insurance number
     p
+      a href='#ho-number' Home Office reference number
+    p
       a href='#status' Status
     p
       a href='#refunds' Refunds
@@ -59,6 +61,8 @@
 
     p As you process an application for help with fees, you'll see prompts and explanations on the right hand side of the screen. You can also return to this page if you need more help.
 
+    p If you need more information than is in this guide, see the #{link_to 'Staff guidance ', 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf', target: '_blank'}
+
     p The service has a link to the Department for Work and Pensions and can check whether applicants are receiving benefits.
 
     p When you’ve entered all the information from the form you’ll get a result about whether the applicant is eligible for help with fees.
@@ -84,8 +88,8 @@
       li or are on a low income
 
     h3.govuk-heading-l id="before-start" Before you start
-    h4.govuk-heading-m Check the statement of truth has been signed
-    p Unsigned forms must be returned to the applicant.
+    h4.govuk-heading-m Check the statement of truth has been signed and the form has been completed. We have introduced a free text box for appellants to fill in if they are applying on the basis of income but have declared £0 income. It asks them how they support themselves and aims to reduce incorrectly completed income statements.
+    p Unsigned or incomplete forms must be returned to the applicant.
     h4.govuk-heading-m Legal Aid
     p If the applicant is getting Legal Aid, check if they're eligible to apply for help with fees.
 
@@ -119,10 +123,6 @@
           td.govuk-table__cell Yes
         tr.govuk-table__row
           td.govuk-table__cell Scottish Legal Aid (all types)
-          td.govuk-table__cell Employment Tribunal and Employment Appeal Tribunal
-          td.govuk-table__cell Yes
-        tr.govuk-table__row
-          td.govuk-table__cell Scottish Legal Aid (all types)
           td.govuk-table__cell UK Supreme Court
           td.govuk-table__cell No
         tr.govuk-table__row
@@ -136,15 +136,20 @@
     ul.govuk-list.govuk-list--bullet
       li sole traders; this is someone trading as an individual
       li companies applying to the Gambling Appeals Tribunal; companies applying to this tribunal should use separate forms and guidance for help with fees
-      li charities and not for profit organisations making a case to the UK Supreme Court
+      li charities and not for profit organisations making a case to the UK Supreme Court only
+
+    p Outside Help with Fees companies applying to the Gambling Appeals Tribunal; can apply for fee remission using separate forms and guidance.
+    p In other areas, those not able to apply for Help with Fees could apply for an exceptional fee remission under the Lord Chancellor’s Exceptional Power. See page 23 on the #{link_to 'staff guidance', 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf', target: '_blank'}
+
+
     h4.govuk-heading-m Check the applicant is not one of the following:
     ul.govuk-list.govuk-list--bullet
       li on the list of #{link_to 'vexatious litigants', 'http://www.gov.uk/guidance/vexatious-litigants', target: '_blank'} banned from starting court proceedings without permission
 
       li bound by a #{link_to 'general civil restraint order (CRO)', 'http://www.gov.uk/guidance/general-civil-restraint-orders-in-force', target: '_blank'} to stop them from bringing certain cases to court
       li bound by an #{link_to 'extended civil restraint order (CRO)', 'http://www.gov.uk/guidance/extended-civil-restraint-orders-in-force', target: '_blank'} to stop them making applications in certain courts or make further court claims
-      li bound by a restrictions of proceedings order (RPO) that limits the cases that can be brought by the applicant
-      li someone other than the person who must pay the fee; third parties may not apply for help with fees unless they're acting as a litigation friend, parent or guardian
+      li someone other than the person who must pay the fee; third parties may not apply for help with fees unless they're acting as a litigation friend, parent or guardian. If they are, they declare the applicant’s financial details but they provide their own contact details and signature.
+
     h4.govuk-heading-m Check the fee:
     ul.govuk-list.govuk-list--bullet
       li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
@@ -153,7 +158,7 @@
     p If the applicant is not eligible to apply for any of the reasons above, return their application with a letter to say why it cannot be accepted.
     h4.govuk-heading-m The most common reasons applications can’t be processed:
     ul.govuk-list.govuk-list--bullet
-      li statement of truth in question 13 must be signed
+      li statement of truth must be signed
       li the application form is incomplete
       li the applicant is receiving legal aid
       li the applicant is a vexatious litigant or bound by an order that means they’re not eligible to apply
@@ -174,7 +179,7 @@
       li You’ll see the outcome of the application together with the reference number on the final page. Enter the application reference number into the case management system as usual
 
     h3.govuk-heading-l id="outside-uk" People applying from outside the UK
-    p You can accept applications from people living outside the UK if their case is being dealt with by a court or tribunal in the UK.
+    p You can accept applications from people living outside the UK if their case is being dealt with by a court or tribunal in the UK. The only exception is those outside the UK bringing an appeal in the First-tier Tribunal (Immigration & Asylum Chamber).
 
     p You can still accept an application from someone who has ‘no recourse to public funds’ specified on their visa. They will be assessed in the same way as any other foreign national or non-resident UK citizen.
 
@@ -192,26 +197,10 @@
       li check answer to question 9
       li if 'No', continue to process without NI number
       li if 'Yes', don't process and contact applicant by phone to ask for their NI number
-    p If you're unable to contact the applicant by phone, you should return the application and ask them to provide their National Insurance number or a letter confirming that they're receiving benefits.
-    p
-    h4.govuk-heading-m Draft letter to use if an applicant hasn't provided their National Insurance number
-    .panel
-      p Dear NAME
-      p We have received your application for help with fees and need some more information from you.
-      p Please provide a letter from the Department for Work and Pensions confirming that you are receiving one of the benefits below.
-      ul.govuk-list.govuk-list--bullet
-        li income-based Jobseeker’s Allowance (JSA)
-        li income-related Employment and Support Allowance (ESA)
-        li Income Support
-        li Universal Credit (and you’re earning less than £6,000 a year)
-        li State Pension (with Guarantee Credit)
-        li Scottish Legal Aid
-      p The letter must be dated within the last 3 months. If you're applying for a refund, the letter needs to be dated within 3 months from when you paid the fee.
-      p Send this letter to us with your application for help with fees.
-      p: strong If you receive benefits with your partner
-      p You need to provide a letter from the Department for Work and Pensions confirming the joint benefit received. If the benefit is in your partner’s name, you should include an official letter confirming your address is the same as your partner’s. Send these letters to us with your application for help with fees.
-      p Yours sincerely,
-      p NAME
+    p If you're unable to contact the applicant by phone, you should return the application and ask them to provide their National Insurance number, a letter confirming that they're receiving benefits or to apply on the basis of their income
+
+    h3.govuk-heading-l id="ho-number" Home Office reference number
+    p To allow those under immigration control who don’t have a National Insurance number to apply online on the basis of their income, we are now asking for a Home Office reference number instead. This is not compulsory on the paper form, but you should enter it here if the application provides one.
 
     h3.govuk-heading-l id="status" Status
     p There are some exceptions to the standard definition of 'single' for someone without a partner who relies on their own income, for example when the case involves:
@@ -359,6 +348,13 @@
     h4.govuk-heading-m Accepting benefits letters
     p You can accept a letter provided by the applicant to show they’re receiving benefits, even when the online benefits check result is negative. This may be necessary when the applicant is receiving a joint benefit for example.
 
+    h4.govuk-heading-m Children
+    p Appellants are asked how many children they (and their partner) are financially responsible for. This is now split into two questions on the form – those that live with them, and those that do not but are financially supported by them.
+
+    p The children need to be under 16 or between 16-19, single, living at home and in full-time education (not including studying for a degree or other higher education qualification).
+
+    p Add those two numbers together and enter it on the application.
+
     h3.govuk-heading-l id="income" Total monthly income
     p The service will calculate whether the applicant is eligible for help based on how much they earn, whether there are any dependent children and if they’re part of a couple.
     h4.govuk-heading-m If the applicant is part of a couple:
@@ -462,7 +458,6 @@
       li Any pension paid under the Naval, Military and Air forces etc (Disablement and Death) service Pension Order 2006
       li Severe Disablement Allowance
       li Short Term Benefit Advances (STBAs)
-      li Student Loans
       li Universal Credit Advances
       li Widowed Parent’s Allowance
 
@@ -471,20 +466,8 @@
     p You'll see a 'delete application' link at the bottom of each 'processed application' summary page. Use this link to delete duplicate applications or if there are any other errors.
     p Deleting incorrect or duplicate applications means that the financial information recorded by the system is accurate.
 
-    h3.govuk-heading-l id="jost-emails"
-      |Jurisdictional support emails
-    p Use these contact details if you have questions for a jurisdictional and operation support team (JOST).
-    ul.govuk-list.govuk-list--bullet
-      li Civil and Family (including the RCJ): <a href="mailto:civil%26familybusinesssupport@hmcts.gsi.gov.uk">civil&familybusinesssupport@hmcts.gsi.gov.uk</a>
-      li Magistrates: Please ask your Delivery Manager for details
-      li Court of Protection: <a href="mailto:james.batey@hmcts.gsi.gov.uk">james.batey@hmcts.gsi.gov.uk</a>
-      li Probate services: <a href="mailto:nisha.patel@hmcts.gsi.gov.uk">nisha.patel@hmcts.gsi.gov.uk</a>
-      li Employment and employment appeal tribunal: <a href="mailto:EmploymentJurisdictionalSupportTeamInbox@hmcts.gsi.gov.uk">EmploymentJurisdictionalSupportTeamInbox@hmcts.gsi.gov.uk</a>
-      li Gender Recognition Panel: <a href="mailto:nisha.patel@hmcts.gsi.gov.uk">nisha.patel@hmcts.gsi.gov.uk</a>
-      li Gambling Appeals tribunal: <a href="mailto:nisha.patel@hmcts.gsi.gov.uk">nisha.patel@hmcts.gsi.gov.uk</a>
-      li First-tier Tribunal (Residential Property Chamber): <a href="mailto:nisha.patel@hmcts.gsi.gov.uk">nisha.patel@hmcts.gsi.gov.uk</a>
-      li Social Entitlement, HESC and War Pensions Tribunals: <a href="mailto:jostsscs@hmcts.gsi.gov.uk">jostsscs@hmcts.gsi.gov.uk</a>
-      li Immigration and Asylum and Tax Tribunals: <a href="mailto:rfc@hmcts.gsi.gov.uk">rfc@hmcts.gsi.gov.uk</a>
+    h3.govuk-heading-l id="further-support" Further support
+    p If you need further support check the #{link_to 'Staff Guidance', 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf' } in the first instance then approach your Jurisdictional and Operational Support Team (JOST) for guidance. If your problem is with the Help with Fees application itself, or your query cannot be answered by JOST, contact helpwithfees.support@digital.justice.gov.uk
 
 .govuk-grid-row
   .govuk-grid-column-full
