@@ -36,17 +36,17 @@
     h3.govuk-heading-l.util_mt-medium id="intro" Introduction
 
     p You only need to check paper evidence when an application is marked for an evidence check. The statement of truth signed by the applicant is legally binding.
-    p See more about #{link_to 'what to do if you suspect fraud', guide_suspected_fraud_path }
+    p See more about what to do if you suspect fraud . If you need more information than is in this guide, see the #{ link_to 'Staff guidance', 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf' }.
     p Evidence checks are a way for HMCTS to make sure that applicants are providing accurate information about their income.
-    p If an application is marked for an evidence check, write to the applicant and ask them to send evidence of their income. You’ll be provided with a letter to use.
+    p If an application is marked for an evidence check, write to the applicant and ask them to send evidence of their income. You’ll be provided with a letter to use which you can edit to make it more relevant to their income sources Note the letter will give a deadline to provide the evidence. This is not a statutory deadline, though until the party provides the information their court case cannot continue.
     p You won't be able to finish processing the application until you've received the evidence.
 
 
     h3.govuk-heading-l id="before-start" Before you start
     h4.govuk-heading-m When you receive the evidence:
     ul.govuk-list.govuk-list--bullet
-      li check the name on the evidence matches the name on the application
-      li check the evidence is dated within 3 months of receiving the application
+      li check the name on the evidence, and any address, matches the name/address on the application
+      li check the evidence is dated within 3 months of receiving the application or is the most recent you can get (eg SA302 tax calculation for those self-employed)
       li for refunds the evidence must cover the date the fee was paid (can be up to 3 months before the fee was paid)
 
     h3.govuk-heading-l id="problems-evidence" Problems with the evidence
@@ -54,17 +54,28 @@
     ol.govuk-list.govuk-list--number
       li the name on the evidence doesn't match the name of the applicant
       li the evidence is out of date
-      li the applicant has not provided all evidence required
-    p In all of these cases, you should return the evidence to the applicant and tell them why it can't be accepted. If they still require help with fees they'll need to apply again.
+      li the applicant has not provided all the evidence required
     p If a couple is receiving a shared benefit but the benefits letter doesn't state the applicant’s name the applicant must provide additional evidence to show they live at the same address as their partner.
+
+    p In these cases, you should:
+    ul.govuk-list.govuk-list--bullet
+      li select the application from the list ‘Waiting for evidence’
+      li press ‘Start now’ under ‘Process evidence’ and
+      li select ‘no’, there is a problem with the evidence and press ‘next’
+      li select all the rejection reasons that apply and press ‘next’
+      li check the summary screen and press ‘complete’ if correct
+      li send the application back with the template covering letter provided.
+
+    p If they still require help with fees they'll need to apply again.
 
     .panel
       h3.govuk-heading-l.util_mt-0 id="what-to-do" What to do
 
-      h4.govuk-heading-m To process evidence:
+      h4.govuk-heading-m To process acceptable evidence:
       ul.govuk-list.govuk-list--bullet
-        li select the application from the list ‘Waiting for evidence’
-        li select 'Process evidence'
+        li select the application from the list 'Waiting for evidence'
+        li press 'Start now' under 'Process evidence'
+        li select 'yes' indicating the evidence is ready to process
         li calculate the applicant's total monthly income from the evidence received (not the application form)
         li enter the total in the field on the screen
         li get the result and follow the next steps to process the application
@@ -73,18 +84,24 @@
       h4.govuk-heading-m Returning evidence
       p You should not return evidence to the applicant unless they ask for it and provide a stamped addressed envelope. Before returning evidence, make a photocopy and store it with the application.
 
-      h4.govuk-heading-m When no evidence is received after 14 calendar days:
+      h4.govuk-heading-m When no evidence is received or the party indicates they are not continuing with the case or you need to delete the case:
       ul.govuk-list.govuk-list--bullet
-        li select the application from the list 'Waiting for evidence'
-        li click 'What to do if the evidence can't be processed' and 'Return application'
-        li a letter to the applicant will be generated for you to copy and paste
-        li send this letter and the application back to the applicant
-        li the application will be removed from the list 'Waiting for evidence'
+        li search and then click on the relevant application.
+        li click 'What to do if the evidence hasn’t arrived'
+        li read the information provided and check that the date for filing evidence has definitely passed.
+        li if the date has passed click 'Return application'
+        li select one of the three options that is most relevant: - 'Not arrived or arrived too late', 'Citizen not proceeding' or 'Staff error'
+      ol.govuk-list.govuk-list--number
+        li if you selected ‘Not arrived or arrived too late’, click ‘Next’, If applicable, use the template letter to send the application and all documents back to the applicant, click ‘Finish’
+        li if you selected ‘Citizen not proceeding’, click ‘Next’, If applicable, use the template letter to send the application and all documents back to the applicant, click ‘Finish’
+        li if you selected ‘Staff error’, you must explain the staff error in the text box provided. You will not be able to click next until a reason is entered into the text box. When the staff error has been entered click ‘Next’, you will see a page confirming the process is complete, click ‘Finish’
+
+      p This process will remove the case from the ‘waiting for evidence’ list.
 
     h3.govuk-heading-l id="calculate" How to calculate total monthly income
     h4.govuk-heading-m You need to:
     ul.govuk-list.govuk-list--bullet
-      li add up all the income from payslips and evidence <br>(before tax and National Insurance)
+      li add up all the income from payslips (before tax and National Insurance are removed) and other evidence
       li include their partner’s income (if they have one)
       li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income')}
       li check the total against the bank statements
@@ -117,7 +134,7 @@
           td.govuk-table__cell
             p Employed: Applicants should provide their most recent payslip which should be no more than 6 weeks old.
 
-            p Self employed:  Applicants should provide their most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation.
+            p Self employed: Applicants should provide their most recent SA302,  HMRC Self Assessment Tax Calculation, or, if not available, their latest self assessment tax return.
 
             p If a self-employed applicant doesn’t have either of these documents, they will need to provide bank statements that show income for the previous tax year.
         tr.govuk-table__row
@@ -126,7 +143,7 @@
             p Working Tax Credit
             p Child Tax Credit
           td.govuk-table__cell
-            p A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that the applicant is receiving Child Benefit, Working Tax Credit or Child Tax Credit.
+            p A letter from HM Revenue and Customs (HMRC) or a screenshot of their online accountdated in the last 3 months confirming that the applicant is receiving Child Benefit, Working Tax Credit or Child Tax Credit.
 
             p In some cases an applicant may not have a Child Benefit Award Notice dated within the last three months. If this is the case, check their bank statements for evidence of money coming in.
         tr.govuk-table__row
@@ -136,7 +153,7 @@
             p Document(s) showing the payment amounts and how often they are made. This can be one of the following:
             ul
               li sealed court order
-              li Child Support Agency Assessment
+              li Child Maintenance Service Assessment
               li signed voluntary agreement or letter of agreement signed by both parties
         tr.govuk-table__row
           th.govuk-table__header scope="row"
@@ -144,12 +161,12 @@
             p Contribution-based Employment and Support Allowance (ESA)
             p Universal Credit
           td.govuk-table__cell
-            p A letter from the Department for Work and Pensions (DWP) dated in the last 3 months confirming how much is being received and how often.
+            p A letter from the Department for Work and Pensions (DWP) dated in the last 3 months confirming how much is being received and how often. This could be a screenshot of an online account.
         tr.govuk-table__row
           th.govuk-table__header scope="row"
             p Any other benefits
           td.govuk-table__cell
-            p A letter dated in the last 3 months confirming how much is being received and how often.
+            p A letter dated in the last 3 months confirming how much is being received and how often. This could be a screenshot of an online account.
 
             p Note that the #{link_to '6 eligible benefits', guide_process_application_path(anchor: 'benefits') } and the #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income') } shouldn’t be included as income.
         tr.govuk-table__row
