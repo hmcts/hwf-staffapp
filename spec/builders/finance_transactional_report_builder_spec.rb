@@ -50,7 +50,8 @@ RSpec.describe FinanceTransactionalReportBuilder do
       application = create(:application_full_remission, :with_office, :with_business_entity, :processed_state, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
       jurisdiction_name = application.business_entity.jurisdiction.name
       office_name = application.office.name
-      line = "01-2018,SD123,00009,#{office_name},#{jurisdiction_name},,false,full,income,1,AB001-20-1,05/01/2018,500.0"
+      reference = application.reference
+      line = "01-2018,SD123,00009,#{office_name},#{jurisdiction_name},,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
       is_expected.to include(line)
     end
 
