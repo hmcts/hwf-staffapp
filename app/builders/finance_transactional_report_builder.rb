@@ -4,6 +4,7 @@ class FinanceTransactionalReportBuilder
   CSV_FIELDS = {
     month_year: 'Month-Year',
     entity_code: 'BEC',
+    sop_code: 'SOP',
     office_name: 'Office Name',
     jurisdiction_name: 'Jurisdiction Name',
     remission_amount: 'Remission Amount',
@@ -68,13 +69,12 @@ class FinanceTransactionalReportBuilder
 
   def report_default_query
     Application.
-      includes(:detail).
-      includes(:office).
-      includes(:business_entity).
+      includes(:detail, :office, :business_entity).
       includes(business_entity: :jurisdiction).
       where(decision: ['part', 'full']).
       where(decision_date: @date_from..@date_to).
       where(state: Application.states[:processed]).
+      where("offices.name NOT IN ('Digital')").
       order(Arel.sql('decision_date::timestamp::date ASC')).
       order(Arel.sql('business_entities.be_code ASC'))
   end
