@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
          :invitable,
          :registerable,
          :confirmable,
-         :timeoutable
+         :timeoutable,
+         :session_limitable
 
   scope :active, -> { where('current_sign_in_at >= ?', inactivate_date) }
   scope :inactive, (lambda do
