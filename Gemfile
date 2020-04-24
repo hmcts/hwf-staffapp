@@ -126,9 +126,6 @@ group :test do
   gem 'webmock'
 end
 
-# heroku deployment
-gem 'rails_12factor', group: :production
-
 gem 'chartkick', '~> 3.3.0'
 gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
