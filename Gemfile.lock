@@ -491,13 +491,13 @@ GEM
     site_prism (2.17.1)
       addressable (~> 2.4)
       capybara (>= 2.15, < 3.6)
-    slim (3.0.9)
+    slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
-      tilt (>= 1.3.3, < 2.1)
-    slim-rails (3.1.1)
+      tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
       actionpack (>= 3.1)
       railties (>= 3.1)
-      slim (~> 3.0)
+      slim (>= 3.0, < 5.0)
     spring (2.1.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
@@ -613,7 +613,7 @@ DEPENDENCIES
   sentry-raven
   shoulda-matchers
   site_prism (~> 2.9)
-  slim-rails (= 3.1.1)
+  slim-rails (~> 3.2)
   spring
   terminal-notifier-guard
   timecop
