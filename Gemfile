@@ -117,7 +117,6 @@ group :test do
   gem 'geckodriver-helper', '~> 0.0'
   gem 'launchy'
   gem 'poltergeist', '1.15.0'
-  gem 'pry'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'selenium-webdriver', '~> 3.10'

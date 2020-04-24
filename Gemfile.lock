@@ -586,7 +586,6 @@ DEPENDENCIES
   pg (~> 1.2)
   pg_search
   poltergeist (= 1.15.0)
-  pry
   pry-rails
   puma (~> 4.3)
   pundit (~> 2.1)
