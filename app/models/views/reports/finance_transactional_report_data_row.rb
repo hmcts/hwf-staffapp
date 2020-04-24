@@ -4,6 +4,7 @@ module Views
 
       attr_accessor :month_year
       attr_accessor :entity_code
+      attr_accessor :sop_code
       attr_accessor :office_name
       attr_accessor :jurisdiction_name
       attr_accessor :remission_amount
@@ -34,6 +35,7 @@ module Views
 
       def assign_office_attrs(app)
         @entity_code = app.business_entity.be_code
+        @sop_code = app.business_entity.sop_code
         @office_name = app.office.name
       end
 
