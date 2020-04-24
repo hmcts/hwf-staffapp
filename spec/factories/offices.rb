@@ -4,7 +4,7 @@ FactoryBot.define do
       jurisdictions_count { 2 }
     end
 
-    sequence(:name) { |n| "#{Faker::Company.name} #{n}" }
+    sequence(:name) { |n| "#{Faker::Company.name.delete("[,']")} #{n}" }
     sequence(:entity_code) { |n| "#{Faker::Commerce.color.split('').sample(2).join.upcase}#{n.to_s.rjust(3, '0')}" }
 
     jurisdictions { build_list :jurisdiction, jurisdictions_count }

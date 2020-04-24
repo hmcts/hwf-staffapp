@@ -88,6 +88,8 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
   describe 'data returned should only include proccesed applications' do
     subject { data.total_count }
 
+    let(:digital) { create :office, name: 'Digital' }
+    let(:digital_business_entity) { create :business_entity, office: digital }
     let(:wrong_business_entity) { create :business_entity }
     let(:failed_application) { create :application_no_remission, :processed_state, decision: 'full', decision_type: 'override', application_type: 'none', business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now }
 
@@ -104,6 +106,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       create :application_full_remission, :waiting_for_evidence_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_full_remission, :waiting_for_part_payment_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_part_remission, :processed_state, business_entity: digital_business_entity, office: business_entity.office, decision_date: Time.zone.now
     end
 
     it { is_expected.to eq 9 }
