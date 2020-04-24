@@ -18,6 +18,10 @@ When("I can view staff guidance") do
   expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
 end
 
+When("I can view the COVID 19 guidance") do
+  expect(guide_page.content.covid_guidance['href']).to end_with '/documents/2020/04/covid-19-guidance-for-help-with-fees-process.pdf'
+end
+
 When("I click on process application") do
   guide_page.content.process_application.click
 end

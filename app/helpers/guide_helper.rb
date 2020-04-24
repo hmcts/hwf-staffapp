@@ -14,4 +14,8 @@ module GuideHelper
   def fraud_awareness_url
     'https://intranet.justice.gov.uk/documents/2018/05/help-with-fees-fraud-awareness-pdf.pdf'
   end
+
+  def covid19_guidance_url
+    'https://intranet.justice.gov.uk/documents/2020/04/covid-19-guidance-for-help-with-fees-process.pdf'
+  end
 end

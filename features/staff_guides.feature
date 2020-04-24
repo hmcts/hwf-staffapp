@@ -16,6 +16,10 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view key control checks guide
 
+    Scenario: COVID 19 guidance
+      And I am signed in on the guide page
+      Then I can view the COVID 19 guidance
+
     Scenario: Staff guidance
       And I am signed in on the guide page
       Then I can view staff guidance
