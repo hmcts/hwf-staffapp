@@ -83,7 +83,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    backports (3.17.0)
+    backports (3.17.1)
     bcrypt (3.1.13)
     better_errors (2.6.0)
       coderay (>= 1.0.0)
@@ -151,7 +151,7 @@ GEM
       cucumber-tag_expressions (~> 1.1.0)
       gherkin (~> 5.0)
     cucumber-expressions (6.0.1)
-    cucumber-rails (1.8.0)
+    cucumber-rails (2.0.0)
       capybara (>= 2.12, < 4)
       cucumber (>= 3.0.2, < 4)
       mime-types (>= 2.0, < 4)
@@ -561,7 +561,7 @@ DEPENDENCIES
   codeclimate-test-reporter (= 0.6.0)
   coffee-rails (~> 5.0.0)
   config
-  cucumber-rails (~> 1.5)
+  cucumber-rails (~> 2.0)
   database_cleaner
   date_validator
   delayed_job_active_record
