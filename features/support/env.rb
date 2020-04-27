@@ -4,13 +4,8 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-require 'cucumber/rails'
-require 'capybara/dsl'
 require 'capybara/poltergeist'
-require 'capybara-screenshot/cucumber'
-require 'rest-client'
-require 'selenium-webdriver'
-
+require 'cucumber/rails'
 require_relative './page_objects/base_page'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }

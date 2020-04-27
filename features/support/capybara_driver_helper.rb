@@ -13,22 +13,16 @@ end
 
 Capybara.register_driver :saucelabs do |app|
   browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
-
   Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
 end
 
 Capybara.register_driver :firefox do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
-  profile['browser.download.dir'] = DownloadHelpers::PATH.to_s
-  profile['browser.download.folderList'] = 2
-  profile['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
-  profile['browser.cache.disk.enable'] = false
-  profile['browser.cache.memory.enable'] = false
   Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
 end
 
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome, url: ENV.fetch('SELENIUM_URL', 'http://localhost:4444/wd/hub'))
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
 if ENV.key?('CIRCLE_ARTIFACTS')
