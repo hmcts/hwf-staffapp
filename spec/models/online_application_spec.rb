@@ -106,12 +106,12 @@ RSpec.describe OnlineApplication, type: :model do
 
   describe 'income kind' do
     before do
-      online_application.income_kind  = { applicant: ['Wages'], partner: ['Child benefits'] }
+      online_application.income_kind = { applicant: ['Wages'], partner: ['Child benefits'] }
       online_application.save
     end
 
     it 'stores serialized hash' do
-      expect(online_application.reload.income_kind).to eql({ applicant: ['Wages'], partner: ['Child benefits'] })
+      expect(online_application.reload.income_kind).to eql(applicant: ['Wages'], partner: ['Child benefits'])
     end
   end
 end
