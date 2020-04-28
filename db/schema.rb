@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_094157) do
+ActiveRecord::Schema.define(version: 2020_04_28_065811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_094157) do
     t.decimal "income_min_threshold"
     t.decimal "income_max_threshold"
     t.string "medium"
+    t.string "income_kind"
     t.index ["business_entity_id"], name: "index_applications_on_business_entity_id"
     t.index ["created_at"], name: "index_applications_on_created_at"
     t.index ["decision_cost"], name: "index_applications_on_decision_cost"
