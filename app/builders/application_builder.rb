@@ -47,7 +47,8 @@ class ApplicationBuilder
 
   def online_application_attributes(online_application)
     fields = [
-      :benefits, :reference, :income, :income_min_threshold_exceeded, :income_max_threshold_exceeded
+      :benefits, :reference, :income, :income_kind,
+      :income_min_threshold_exceeded, :income_max_threshold_exceeded
     ]
 
     prepare_attributes(fields, online_application).merge(dependent_attributes(online_application))

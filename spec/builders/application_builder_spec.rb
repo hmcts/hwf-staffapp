@@ -68,7 +68,10 @@ RSpec.describe ApplicationBuilder do
       end
     end
 
-    let(:online_application) { build_stubbed(:online_application_with_all_details, :with_reference, :completed, :with_fee_manager_approval) }
+    let(:online_application) {
+      build_stubbed(:online_application_with_all_details,
+                    :with_reference, :completed, :with_fee_manager_approval, income_kind: { applicant: ['Wages'] })
+    }
 
     describe 'builds and returns non persisted Application' do
       it { is_expected.to be_a(Application) }
@@ -102,6 +105,10 @@ RSpec.describe ApplicationBuilder do
 
       it 'sets the current max_thresholds' do
         expect(built_application.saving.max_threshold).to eql(Settings.savings_threshold.maximum)
+      end
+
+      it 'has the income_kind stored' do
+        expect(built_application.income_kind).to eql(applicant: ['Wages'])
       end
 
       [:benefits, :income].each do |column|
