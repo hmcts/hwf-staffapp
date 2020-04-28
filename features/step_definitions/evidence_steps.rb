@@ -127,8 +127,8 @@ end
 Then("I should see the evidence details on the summary page") do
   expect(current_path).to end_with '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
-  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to eq 'Ready to process Yes ChangeReady to process'
-  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to eq 'Income £500 ChangeIncome'
+  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to eq 'Ready to process Yes Change Ready to process'
+  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to eq 'Income £500 Change Income'
 end
 
 When("I complete processing") do

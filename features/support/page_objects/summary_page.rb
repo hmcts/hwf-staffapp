@@ -10,7 +10,7 @@ class SummaryPage < BasePage
       elements :list_row, '.govuk-summary-list__row'
       element :evidence_reason, '.govuk-summary-list__row', text: 'Reason Not arrived or too late'
       element :evidence_incorrect_reason_category, '.govuk-summary-list__row', text: 'Incorrect reason category Requested sources not provided, Wrong type provided, Unreadable or illegible, Pages missing, Cannot identify applicant, Wrong date range Change'
-      element :change_benefits, 'a', text: 'ChangeBenefits declared in application'
+      element :change_benefits, 'a', text: 'Change Benefits declared in application'
     end
   end
 
