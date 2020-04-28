@@ -68,10 +68,10 @@ gem "paper_trail"
 # Google tag Manager
 gem 'gtm_on_rails'
 
-gem 'nokogiri'
 gem 'chartkick', '~> 3.3.0'
 gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
+gem 'nokogiri'
 gem 'pg_search'
 gem 'rest-client'
 gem 'virtus'
@@ -86,13 +86,10 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'pry-rails'
-  gem 'parallel_tests'
-  gem 'rspec-rails', '~> 4.0'
   gem 'listen', '~> 3.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0'
+  gem 'parallel_tests'
+  gem 'pry-rails'
+  gem 'rspec-rails', '~> 4.0'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'climate_control'
@@ -102,6 +99,8 @@ group :development, :test do
   gem 'jasmine'
   gem 'rubocop', '~> 0.69.0', require: false
   gem 'rubocop-rspec', '1.30.1', require: false
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
 end
 
