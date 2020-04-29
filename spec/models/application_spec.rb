@@ -134,4 +134,13 @@ RSpec.describe Application, type: :model do
       end
     end
   end
+
+  describe 'income kind' do
+    let(:application) { create :application, income_kind: { applicant: ['Wages'], partner: ['Child benefits'] } }
+
+    it 'stores serialized hash' do
+      expect(application.income_kind).to eql(applicant: ['Wages'], partner: ['Child benefits'])
+    end
+  end
+
 end
