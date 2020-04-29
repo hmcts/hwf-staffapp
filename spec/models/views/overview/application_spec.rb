@@ -309,7 +309,7 @@ RSpec.describe Views::Overview::Application do
     end
 
     describe 'no income_kind' do
-      let(:income_kind) { {} }
+      let(:income_kind) { nil }
 
       context 'applicant' do
         subject { view.income_kind_applicant }

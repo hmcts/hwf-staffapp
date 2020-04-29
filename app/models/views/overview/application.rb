@@ -28,12 +28,12 @@ module Views
       end
 
       def income_kind_applicant
-        return if @application.income_kind[:applicant].blank?
+        return if @application.income_kind.nil? || @application.income_kind[:applicant].blank?
         @application.income_kind[:applicant].join(', ')
       end
 
       def income_kind_partner
-        return if @application.income_kind[:partner].blank?
+        return if @application.income_kind.nil? || @application.income_kind[:partner].blank?
         @application.income_kind[:partner].join(', ')
       end
 
