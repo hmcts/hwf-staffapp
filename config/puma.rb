@@ -16,8 +16,14 @@ port        ENV.fetch("PORT") { 3000 }
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
 
+# Rails creates the pids directory before puma runs, but puma doesn't do it itself.
+# That causes `bundle exec puma` or `rake jasmine:ci` to throw "Errno::ENOENT" exceptions
+# when the pids directory is missing, so we make sure it's always there.
+pids_dir = "tmp/pids"
+Dir.mkdir(pids_dir) unless File.exist?(pids_dir)
+
 # Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+pidfile ENV.fetch("PIDFILE") { "#{pids_dir}/server.pid" }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
