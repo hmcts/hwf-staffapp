@@ -40,12 +40,12 @@ true)
             ;;
         *)
             echo "running app"
-            bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -c config/puma.rb -E ${RAILS_ENV:-production}
             ;;
         esac
     ;;
 *)
-    case ${DOCKER_STATE} in
+case ${DOCKER_STATE} in
     migrate)
         echo "running migrate"
         bundle exec rake db:migrate
@@ -79,7 +79,7 @@ true)
             ;;
         *)
             echo "running app"
-            bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -c config/puma.rb -E ${RAILS_ENV:-production}
             ;;
         esac
     ;;
