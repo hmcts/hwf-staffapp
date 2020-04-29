@@ -77,7 +77,7 @@ Scenario: Return to dashboard
   And I complete processing
   Then I should be taken back to my dashboard
 
-Scenario: Return to dashboard
+Scenario: Application has been processed
   And I have successfully processed the evidence
   When I use the browser back button
   Then I should be taken back to my dashboard

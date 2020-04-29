@@ -26,7 +26,7 @@ class EvidencePage < BasePage
     next_page
     fill_in 'Total monthly income from evidence', with: '500'
     next_page
-    click_link('Next')
-    complete_processing
+    click_link 'Next'
+    click_link 'Complete processing'
   end
 end

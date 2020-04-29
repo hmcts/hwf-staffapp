@@ -3,7 +3,6 @@ class SummaryPage < BasePage
 
   section :content, '#content' do
     element :header, 'h1', text: 'Check details'
-    element :complete_processing_button, 'input[value="Complete processing"]'
     sections :summary_section, 'dl' do
       element :personal_details_header, 'h2', text: 'Personal details'
       element :evidence_header, 'h2', text: 'Evidence'

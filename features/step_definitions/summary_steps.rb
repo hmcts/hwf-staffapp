@@ -12,7 +12,7 @@ Given("I am on the summary page") do
 end
 
 When("I successfully submit my application") do
-  complete_processing
+  click_on 'Complete processing'
 end
 
 Then("I should be taken to the confirmation page") do
