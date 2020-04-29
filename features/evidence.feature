@@ -80,4 +80,4 @@ Scenario: Return to dashboard
 Scenario: You cannot edit any details
   And I have successfully processed the evidence
   When I try and change the processed evidence
-  And I should see a message telling me that the application has been processed
+  Then I should see a message telling me that the application has been processed
