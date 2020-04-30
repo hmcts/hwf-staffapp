@@ -1,4 +1,6 @@
 class OnlineApplication < ActiveRecord::Base
+  serialize :income_kind
+
   belongs_to :jurisdiction, optional: true
 
   validates :date_of_birth, :first_name, :last_name, :address,
