@@ -49,6 +49,7 @@ To run in a browser:
 $ DRIVER=chrome cucumber
 
 $ DRIVER=firefox cucumber
+Please note: Firefox with macOS 10.15 “Catalina”, please refer to [macOS notarization](https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html)
 
 ### Running cross browser and device tests using Sauce Labs
 
