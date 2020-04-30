@@ -118,6 +118,8 @@ end
 
 Given("I use the browser back button") do
   page.go_back
+  url = current_url
+  visit url
 end
 
 Given("I should see a message telling me that the application has been processed") do
