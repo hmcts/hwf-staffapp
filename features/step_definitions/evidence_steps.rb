@@ -116,9 +116,8 @@ Given("I have successfully processed the evidence") do
   evidence_page.processed_evidence
 end
 
-Given("I try and change the processed evidence") do
+Given("I use the browser back button") do
   page.go_back
-  evidence_page.content.change_income.click
 end
 
 Given("I should see a message telling me that the application has been processed") do
