@@ -27,6 +27,7 @@ FactoryBot.define do
     phone { '000 000 0000' }
     post_contact { 'true' }
     feedback_opt_in { true }
+    income_kind { { applicant: ["Wages"], partner: ["Child Benefit"] } }
 
     trait :et do
       form_name { 'ET1' }

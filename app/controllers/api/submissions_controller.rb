@@ -52,8 +52,9 @@ module Api
         :phone_contact,
         :phone,
         :post_contact,
-        :feedback_opt_in
-      )
+        :feedback_opt_in,
+        income_kind: { applicant: [], partner: [] }
+      ).to_h
     end
     # rubocop:enable MethodLength
 
