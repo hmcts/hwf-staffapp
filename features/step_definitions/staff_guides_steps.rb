@@ -31,11 +31,11 @@ Then("I should be taken to the process application guide") do
   expect(process_application_guide_page).to have_header
 end
 
-When("I click on evidance checks") do
+When("I click on evidence checks") do
   guide_page.content.evidence_checks.click
 end
 
-Then("I should be taken to the evidance checks guide") do
+Then("I should be taken to the evidence checks guide") do
   expect(current_url).to end_with '/guide/evidence_checks'
   expect(evidence_checks_guide_page).to have_header
 end
