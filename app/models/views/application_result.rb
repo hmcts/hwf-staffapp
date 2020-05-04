@@ -12,8 +12,19 @@ module Views
     end
 
     def amount_to_pay
-      if outcome_from.amount_to_pay.present?
+      if outcome_from.is_a?(PartPayment)
+        to_pay = amount_to_pay_for_part_payment
+        "£#{parse_amount_to_pay(to_pay)}"
+      elsif outcome_from.amount_to_pay.present?
         "£#{parse_amount_to_pay(outcome_from.amount_to_pay)}"
+      end
+    end
+
+    def amount_to_pay_for_part_payment
+      if @application.evidence_check
+        @application.evidence_check.amount_to_pay
+      else
+        @application.amount_to_pay
       end
     end
 
@@ -42,6 +53,8 @@ module Views
       case outcome_from
       when EvidenceCheck
         outcome_from.outcome
+      when PartPayment
+        outcome_from_application
       when Application
         outcome_from_application
       end
@@ -62,7 +75,7 @@ module Views
     end
 
     def outcome_from
-      @application.evidence_check || @application
+      @application.part_payment || @application.evidence_check || @application
     end
 
     def format_locale(suffix)
