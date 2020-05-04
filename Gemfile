@@ -55,7 +55,7 @@ gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
 gem 'puma', '~> 4.3'
 
 # Date validation
-gem 'date_validator'
+gem 'date_validator', '0.9'
 gem 'will_paginate'
 
 # Soft deletion
