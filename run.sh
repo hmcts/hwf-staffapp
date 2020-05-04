@@ -34,7 +34,7 @@ true)
             ;;
         *)
             echo "running app"
-            bundle exec puma -p ${UNICORN_PORT:-8080} -c config/puma.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
             ;;
         esac
     ;;
@@ -67,7 +67,7 @@ case ${DOCKER_STATE} in
             ;;
         *)
             echo "running app"
-            bundle exec puma -p ${UNICORN_PORT:-8080} -c config/puma.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
             ;;
         esac
     ;;
