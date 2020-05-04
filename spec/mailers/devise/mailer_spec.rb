@@ -14,9 +14,15 @@ RSpec.describe Devise::Mailer, type: :mailer do
       it { expect(mail.from).to eq(['no-reply@helpwithcourtfees.service.gov.uk']) }
     end
 
-    it 'renders the body' do
-      expect(mail.body.encoded).to have_content 'Hello Marco Polo Please confirm your new Help with Fees email address by clicking on the link below:'
+    it 'renders the user name' do
+      expect(mail.body.encoded).to have_content 'Hello Marco Polo'
     end
+
+    it 'renders the main body' do
+      expect(mail.body.encoded).to have_content 'Please confirm your new Help with Fees email address by clicking on the link below:'
+    end
+
+
 
     it 'renders the confirmation link' do
       doc = Nokogiri::HTML(mail.body.raw_source)
