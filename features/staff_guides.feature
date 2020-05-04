@@ -29,10 +29,10 @@ Feature: Staff guides
       When I click on process application
       Then I should be taken to the process application guide
 
-    Scenario: Evidance checks
+    Scenario: Evidence checks
       And I am signed in on the guide page
-      When I click on evidance checks
-      Then I should be taken to the evidance checks guide
+      When I click on evidence checks
+      Then I should be taken to the evidence checks guide
 
     Scenario: Part-payments
       And I am signed in on the guide page

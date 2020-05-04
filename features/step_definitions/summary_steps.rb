@@ -12,7 +12,7 @@ Given("I am on the summary page") do
 end
 
 When("I successfully submit my application") do
-  complete_processing
+  click_on 'Complete processing'
 end
 
 Then("I should be taken to the confirmation page") do
@@ -35,13 +35,13 @@ Then("I should see that my new answer is displayed in the benefit summary") do
 end
 
 Then("I should see that the savings amount is rounded to the nearest pound") do
-  expect(application_page.content.summary_section[2].text).to eq 'Savings and investments Less than £3,000 No ChangeLess than £3,000 Savings amount £10000 ChangeSavings amount'
+  expect(application_page.content.summary_section[2].text).to eq 'Savings and investments Less than £3,000 No Change Less than £3,000 Savings amount £10000 Change Savings amount'
 end
 
 Then("I should see the personal details") do
   expect(summary_page.content.summary_section[0]).to have_personal_details_header
-  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Full name Mr John Christopher Smith ChangeFull name'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Date of birth 10 February 1986 ChangeDate of birth'
-  expect(summary_page.content.summary_section[0].list_row[3].text).to eq 'National Insurance number JR 05 40 08 D ChangeNational Insurance number'
-  expect(summary_page.content.summary_section[0].list_row[4].text).to eq 'Status Single ChangeStatus'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Full name Mr John Christopher Smith Change Full name'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Date of birth 10 February 1986 Change Date of birth'
+  expect(summary_page.content.summary_section[0].list_row[3].text).to eq 'National Insurance number JR 05 40 08 D Change National Insurance number'
+  expect(summary_page.content.summary_section[0].list_row[4].text).to eq 'Status Single Change Status'
 end

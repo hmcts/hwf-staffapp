@@ -181,30 +181,22 @@ def go_to_finance_transactional_report_page
   reports_page.finance_transactional_report
 end
 
-def back_to_start
-  confirmation_page.back_to_start
-end
-
-def complete_processing
-  base_page.content.complete_processing_button.click
-end
-
 def eligable_application
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_yes
   paper_evidence_page.submit_evidence_yes
-  complete_processing
-  back_to_start
+  click_on 'Complete processing'
+  click_on 'Back to start'
 end
 
 def ineligable_application
   personal_details_page.submit_required_personal_details
   application_details_page.submit_fee_300
   savings_investments_page.submit_exact_amount
-  complete_processing
-  back_to_start
+  click_on 'Complete processing'
+  click_on 'Back to start'
 end
 
 def multiple_applications
@@ -214,8 +206,8 @@ def multiple_applications
 end
 
 def complete_and_back_to_start
-  complete_processing
-  back_to_start
+  click_on 'Complete processing'
+  click_on 'Back to start'
 end
 
 def part_payment_application

@@ -34,21 +34,22 @@ For UI feature testing, we use:
 
 To run the standard Cucumber test suite, use:
 
-$ cucumber features 
+$ bundle exec cucumber features 
 
 To run the all scenarios in a particular feature file:
 
-$ cucumber features/landing_page.feature  
+$ bundle exec cucumber features/landing_page.feature  
 
 To run a particular scenario using line number:
 
-$ cucumber features/landing_page.feature:10 
+$ bundle exec cucumber features/landing_page.feature:10 
 
 To run in a browser:
 
 $ DRIVER=chrome cucumber
 
 $ DRIVER=firefox cucumber
+Please note: Firefox with macOS 10.15 “Catalina”, please refer to [macOS notarization](https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html)
 
 ### Running cross browser and device tests using Sauce Labs
 
