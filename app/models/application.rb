@@ -1,6 +1,8 @@
 class Application < ActiveRecord::Base
   include PgSearch::Model
 
+  serialize :income_kind
+
   self.per_page = 25
 
   pg_search_scope :extended_search, against: [:reference], associated_against: {

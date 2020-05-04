@@ -49,7 +49,6 @@ gem 'sdoc', '~> 1.1', group: :doc
 
 # template language
 gem 'slim-rails', '~> 3.2'
-
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 
@@ -108,18 +107,16 @@ group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
-  gem 'chromedriver-helper', '~> 1.1'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
   gem 'cucumber-rails', '~> 2.0', require: false
   gem 'database_cleaner'
   gem 'faker'
-  gem 'geckodriver-helper', '~> 0.0'
   gem 'launchy'
-  gem 'poltergeist', '1.15.0'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter', '~> 0.4.1'
-  gem 'selenium-webdriver', '~> 3.10'
+  gem 'rubyzip'
   gem 'shoulda-matchers'
   gem 'site_prism', '~> 2.9'
+  gem 'webdrivers', '~> 4.3'
   gem 'webmock'
 end

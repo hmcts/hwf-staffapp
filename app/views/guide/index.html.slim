@@ -17,16 +17,21 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
       = image_tag("checklist.jpg", alt: 'Key Control Checks guide icon', class: 'guidence-icon')
 
   .govuk-grid-column-one-quarter.guide-cols
+    = link_to covid19_guidance_url
+      span COVID 19 guidance
+      = image_tag("icon-guidance.png", alt: 'Guidance for help with fees processing during COVID19')
+
+  .govuk-grid-column-one-quarter.guide-cols
     = link_to staff_guidance_url
       span Staff guidance
       = image_tag("icon-guidance.png", alt: 'Staff guidance guide icon')
 
+.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to guide_process_application_path
       span Process application
       = image_tag("icon-process.png", alt: 'Process application guide icon')
 
-.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to guide_evidence_checks_path
       span Evidence checks
@@ -41,12 +46,12 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
     = link_to guide_appeals_path
       span Appeals
       = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
-  .govuk-grid-column-one-quarter.guide-cols
-    = link_to fraud_awareness_url
-      span Fraud awareness
-      = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')
 .govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to guide_suspected_fraud_path
       span Suspected fraud
       = image_tag("icon-fraud.png", alt: 'Suspected fraud guide icon')
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to fraud_awareness_url
+      span Fraud awareness
+      = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')

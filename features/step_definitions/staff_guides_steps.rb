@@ -18,6 +18,10 @@ When("I can view staff guidance") do
   expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
 end
 
+When("I can view the COVID 19 guidance") do
+  expect(guide_page.content.covid_guidance['href']).to end_with '/documents/2020/04/covid-19-guidance-for-help-with-fees-process.pdf'
+end
+
 When("I click on process application") do
   guide_page.content.process_application.click
 end
@@ -27,11 +31,11 @@ Then("I should be taken to the process application guide") do
   expect(process_application_guide_page).to have_header
 end
 
-When("I click on evidance checks") do
+When("I click on evidence checks") do
   guide_page.content.evidence_checks.click
 end
 
-Then("I should be taken to the evidance checks guide") do
+Then("I should be taken to the evidence checks guide") do
   expect(current_url).to end_with '/guide/evidence_checks'
   expect(evidence_checks_guide_page).to have_header
 end

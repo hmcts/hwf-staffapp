@@ -16,6 +16,10 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view key control checks guide
 
+    Scenario: COVID 19 guidance
+      And I am signed in on the guide page
+      Then I can view the COVID 19 guidance
+
     Scenario: Staff guidance
       And I am signed in on the guide page
       Then I can view staff guidance
@@ -25,10 +29,10 @@ Feature: Staff guides
       When I click on process application
       Then I should be taken to the process application guide
 
-    Scenario: Evidance checks
+    Scenario: Evidence checks
       And I am signed in on the guide page
-      When I click on evidance checks
-      Then I should be taken to the evidance checks guide
+      When I click on evidence checks
+      Then I should be taken to the evidence checks guide
 
     Scenario: Part-payments
       And I am signed in on the guide page
