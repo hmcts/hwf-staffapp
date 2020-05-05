@@ -1,6 +1,7 @@
 # coding: utf-8
 
 module Views
+
   class ApplicationResult
 
     def initialize(application)
@@ -12,9 +13,10 @@ module Views
     end
 
     def amount_to_pay
-      if outcome_from.is_a?(PartPayment)
+      # Because we are outside the ActiveRecord::Base scope I can't use is_a?
+      if outcome_from.class.name.to_s == 'PartPayment'
         to_pay = amount_to_pay_for_part_payment
-        "£#{parse_amount_to_pay(to_pay)}"
+        "£#{parse_amount_to_pay(to_pay.to_i)}"
       elsif outcome_from.amount_to_pay.present?
         "£#{parse_amount_to_pay(outcome_from.amount_to_pay)}"
       end
