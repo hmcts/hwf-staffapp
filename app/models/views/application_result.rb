@@ -52,12 +52,12 @@ module Views
     private
 
     def outcome
-      case outcome_from
-      when EvidenceCheck
+      case outcome_from.class.name
+      when 'EvidenceCheck'
         outcome_from.outcome
-      when PartPayment
+      when 'PartPayment'
         outcome_from_application
-      when Application
+      when 'Application'
         outcome_from_application
       end
     end
