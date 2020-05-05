@@ -108,15 +108,15 @@ group :test do
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
-  gem 'cucumber-rails', '~> 2.0', require: false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
   gem 'rails-controller-testing'
-  gem 'rspec_junit_formatter', '~> 0.4.1'
+  gem 'rspec_junit_formatter'
   gem 'rubyzip'
   gem 'shoulda-matchers'
-  gem 'site_prism', '~> 2.9'
-  gem 'webdrivers', '~> 4.3'
+  gem 'site_prism'
+  gem 'webdrivers'
   gem 'webmock'
 end
