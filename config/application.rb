@@ -36,7 +36,8 @@ module FrStaffapp
     config.middleware.use(
       ApplicationInsights::Rack::TrackRequest,
       ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
-    )
+    ) if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
+
   end
   WillPaginate.per_page = 20
 end
