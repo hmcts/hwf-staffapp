@@ -48,6 +48,14 @@ class ApplicationDetailsPage < BasePage
     content.year_date_received.set date_fee_paid.year
   end
 
+  def submit_fee_100
+    fill_in('How much is the court or tribunal fee?', with: '100')
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    next_page
+  end
+
   def submit_fee_600
     fill_in('How much is the court or tribunal fee?', with: '600')
     content.jurisdiction.click
