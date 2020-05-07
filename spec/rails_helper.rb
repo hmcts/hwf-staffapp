@@ -95,6 +95,9 @@ RSpec.configure do |config|
 
   config.before(:all) do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
+  end
+
+  config.before(:each) do |example|
     stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
   end
 
