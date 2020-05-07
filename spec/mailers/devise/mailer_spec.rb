@@ -22,8 +22,6 @@ RSpec.describe Devise::Mailer, type: :mailer do
       expect(mail.body.encoded).to have_content 'Please confirm your new Help with Fees email address by clicking on the link below:'
     end
 
-
-
     it 'renders the confirmation link' do
       doc = Nokogiri::HTML(mail.body.raw_source)
       link = user_confirmation_url(confirmation_token: token)
