@@ -62,6 +62,10 @@ def reason_for_rejecting_evidence_page
   @reason_for_rejecting_evidence_page ||= ReasonForRejectingEvidencePage.new
 end
 
+def part_payment_page
+  @part_payment_page ||= PartPaymentPage.new
+end
+
 def summary_page
   @summary_page ||= SummaryPage.new
 end
@@ -212,12 +216,11 @@ end
 
 def part_payment_application
   dashboard_page.process_application
-  personal_details_page.submit_all_personal_details_ni
-  application_details_page.submit_fee_600
+  personal_details_page.submit_required_personal_details
+  application_details_page.submit_fee_100
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_no
-  incomes_page.submit_incomes_1200
+  incomes_page.submit_incomes_yes_3
   complete_and_back_to_start
 end
 

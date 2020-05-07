@@ -1,6 +1,7 @@
 # coding: utf-8
 
 module Views
+
   class ApplicationResult
 
     def initialize(application)
@@ -12,8 +13,20 @@ module Views
     end
 
     def amount_to_pay
-      if outcome_from.amount_to_pay.present?
+      # Because we are outside the ActiveRecord::Base scope I can't use is_a?
+      if outcome_from.class.name.to_s == 'PartPayment'
+        to_pay = amount_to_pay_for_part_payment
+        "£#{parse_amount_to_pay(to_pay.to_i)}"
+      elsif outcome_from.amount_to_pay.present?
         "£#{parse_amount_to_pay(outcome_from.amount_to_pay)}"
+      end
+    end
+
+    def amount_to_pay_for_part_payment
+      if @application.evidence_check
+        @application.evidence_check.amount_to_pay
+      else
+        @application.amount_to_pay
       end
     end
 
@@ -39,10 +52,12 @@ module Views
     private
 
     def outcome
-      case outcome_from
-      when EvidenceCheck
+      case outcome_from.class.name
+      when 'EvidenceCheck'
         outcome_from.outcome
-      when Application
+      when 'PartPayment'
+        outcome_from_application
+      when 'Application'
         outcome_from_application
       end
     end
@@ -62,7 +77,7 @@ module Views
     end
 
     def outcome_from
-      @application.evidence_check || @application
+      @application.part_payment || @application.evidence_check || @application
     end
 
     def format_locale(suffix)

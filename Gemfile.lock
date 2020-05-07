@@ -99,7 +99,6 @@ GEM
     ckeditor (5.1.0)
       orm_adapter (~> 0.5.0)
     climate_control (0.2.0)
-    cliver (0.3.2)
     codeclimate-test-reporter (0.6.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.2)
@@ -332,10 +331,6 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     phantomjs (2.1.1.0)
-    poltergeist (1.15.0)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -575,7 +570,6 @@ DEPENDENCIES
   paranoia (~> 2.0)
   pg (= 0.20)
   pg_search
-  poltergeist (= 1.15.0)
   pry
   pry-rails
   pundit (~> 1.0)
@@ -594,7 +588,6 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 5.1)
   sdoc (~> 0.4.0)
-  selenium-webdriver (~> 3.142)
   sentry-raven
   shoulda-matchers
   site_prism (~> 2.9)
