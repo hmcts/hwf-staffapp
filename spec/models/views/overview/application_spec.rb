@@ -287,4 +287,46 @@ RSpec.describe Views::Overview::Application do
       include_examples 'amount_to_pay examples'
     end
   end
+
+  describe '#income_kind' do
+    let(:income_kind) { { applicant: ['Wages', 'Benefits'], partner: ['Wages2', 'Benefits2'] } }
+    let(:application) { build_stubbed(:application, income_kind: income_kind) }
+
+    context 'applicant' do
+      subject { view.income_kind_applicant }
+
+      it 'formats the applicant income kind' do
+        is_expected.to eq 'Wages, Benefits'
+      end
+    end
+
+    context 'partner' do
+      subject { view.income_kind_partner }
+
+      it 'formats the applicant income kind' do
+        is_expected.to eq 'Wages2, Benefits2'
+      end
+    end
+
+    describe 'no income_kind' do
+      let(:income_kind) { nil }
+
+      context 'applicant' do
+        subject { view.income_kind_applicant }
+
+        it 'formats the applicant income kind' do
+          is_expected.to be_nil
+        end
+      end
+
+      context 'partner' do
+        subject { view.income_kind_partner }
+
+        it 'formats the applicant income kind' do
+          is_expected.to be_nil
+        end
+      end
+
+    end
+  end
 end
