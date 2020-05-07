@@ -251,7 +251,7 @@ describe ResolverService do
 
           it 'updates amount_to_pay' do
             complete
-            expect(evidence_check.reload.amount_to_pay).to eql(nil)
+            expect(evidence_check.reload.amount_to_pay).to be_nil
           end
 
         end
