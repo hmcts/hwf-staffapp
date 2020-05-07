@@ -27,6 +27,16 @@ module Views
         format_locale(['full', 'part'].include?(result).to_s)
       end
 
+      def income_kind_applicant
+        return if @application.income_kind.nil? || @application.income_kind[:applicant].blank?
+        @application.income_kind[:applicant].join(', ')
+      end
+
+      def income_kind_partner
+        return if @application.income_kind.nil? || @application.income_kind[:partner].blank?
+        @application.income_kind[:partner].join(', ')
+      end
+
       def savings_result
         format_locale(@application.saving.passed?.to_s)
       end

@@ -6,7 +6,7 @@ Given("I am on the incomes part of the application") do
 end
 
 When("I answer yes to does the applicant financially support any children") do
-  incomes_page.submit_incomes_yes
+  incomes_page.content.yes.click
 end
 
 When("I answer no to does the applicant financially support any children") do

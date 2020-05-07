@@ -4,7 +4,7 @@ end
 
 Then("I should be taken to that application") do
   expect(current_path).to include '/processed_applications/1'
-  header_text = processed_applications_page.content.processed_application_header.text
+  header_text = processed_applications_page.content.header.text
   expect(header_text).to eql "#{reference_prefix}-000001 - Processed application"
 end
 
