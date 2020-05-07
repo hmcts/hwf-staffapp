@@ -9,8 +9,6 @@ class ConfirmationPage < BasePage
     element :copy_ref, 'p', text: 'Copy the reference number into the case management system'
     element :can_be_issued, 'p', text: 'The applicant’s process can now be issued'
     element :see_guides, 'a', text: 'See the guides'
-    element :complete_processing_button, 'input[value="Complete processing"]'
-    element :back_to_start, '.govuk-button', text: 'Back to start'
   end
 
   def go_to_confirmation_page
@@ -20,10 +18,6 @@ class ConfirmationPage < BasePage
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes
     paper_evidence_page.submit_evidence_yes
-    complete_processing
-  end
-
-  def back_to_start
-    content.back_to_start.click
+    click_on 'Complete processing'
   end
 end

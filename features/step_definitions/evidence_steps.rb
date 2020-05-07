@@ -118,6 +118,8 @@ end
 
 Given("I use the browser back button") do
   page.go_back
+  url = current_url
+  visit url
 end
 
 Given("I should see a message telling me that the application has been processed") do
@@ -127,13 +129,13 @@ end
 Then("I should see the evidence details on the summary page") do
   expect(current_path).to end_with '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
-  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to eq 'Ready to process Yes ChangeReady to process'
-  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to eq 'Income £500 ChangeIncome'
+  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to eq 'Ready to process Yes Change Ready to process'
+  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to eq 'Income £500 Change Income'
 end
 
 When("I complete processing") do
-  complete_processing
-  back_to_start
+  click_on 'Complete processing'
+  click_on 'Back to start'
 end
 
 Then("I should see select from one of the problem options error message") do
