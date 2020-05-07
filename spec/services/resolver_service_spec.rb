@@ -248,12 +248,23 @@ describe ResolverService do
           let(:evidence_check) { create :evidence_check_full_outcome, application: application }
 
           include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 350
+
+          it 'updates amount_to_pay' do
+            complete
+            expect(evidence_check.reload.amount_to_pay).to eql(nil)
+          end
+
         end
 
         context 'for none outcome' do
           let(:evidence_check) { create :evidence_check_incorrect, application: application }
 
           include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 0
+
+          it 'updates amount_to_pay' do
+            complete
+            expect(evidence_check.reload.amount_to_pay).to eql(fee)
+          end
         end
 
       end
