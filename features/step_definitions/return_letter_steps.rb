@@ -41,7 +41,7 @@ end
 Then("I should see next steps information for not received") do
   expect(return_letter_page.content.evidence_next_steps).to have_header
   expect(return_letter_page.content.evidence_next_steps).to have_not_received_text
-  expect(return_letter_page.content.evidence_next_steps).to have_link
+  expect(return_letter_page.content.evidence_next_steps.root_element).to have_link
 end
 
 Then("I should see next steps information for evidence incorrect") do
@@ -53,7 +53,7 @@ end
 Then("I should see next steps information for citizen not proceeding") do
   expect(return_letter_page.content.evidence_next_steps).to have_header
   expect(return_letter_page.content.evidence_next_steps).to have_citizen_not_proceeding_text
-  expect(return_letter_page.content.evidence_next_steps).to have_link
+  expect(return_letter_page.content.evidence_next_steps.root_element).to have_link
 end
 
 Then("I should see no letter template") do

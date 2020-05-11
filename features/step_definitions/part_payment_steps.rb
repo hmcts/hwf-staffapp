@@ -24,8 +24,8 @@ Then("I can see that the applicant has paid £40 towards the fee") do
 end
 
 Then("I should see my reason on the part payments summary page") do
-  expect(summary_page.content.summary_section[0].list_row[1].text).to eq 'Part payment No Change Part payment'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to eq 'Reason No signature on cheque Change Reason'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Part payment No Change Part payment'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Reason No signature on cheque Change Reason'
 end
 
 Then("I can see that the applicant needs to make a new application") do
