@@ -101,7 +101,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     context 'when the evidence check returns none' do
       let(:outcome) { 'none' }
 
-      it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h2[@class="govuk-heading-l"]', text: '✗ Not eligible for help with fees') }
+      it { expect(page).to have_xpath('//div[contains(@class,"callout-none")]/h2[@class="govuk-heading-l"]', text: '✗   Not eligible for help with fees') }
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'

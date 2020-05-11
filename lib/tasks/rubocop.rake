@@ -1,8 +1,6 @@
 if ['development', 'test'].include? Rails.env
-  unless ENV['DOCKER_STATE'] == 'vagrant'
-    require 'rubocop/rake_task'
-    RuboCop::RakeTask.new
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
 
-    task(:default).prerequisites << task(:rubocop)
-  end
+  task(:default).prerequisites << task(:rubocop)
 end

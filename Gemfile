@@ -5,10 +5,10 @@ gem 'application_insights', '~> 0.5.6'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.3'
+gem 'rails', '~> 6.0'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
-gem 'pg', '0.20'
+gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 4.0.0'
 
@@ -26,7 +26,7 @@ gem 'devise-security', '~> 0.14.3'
 gem 'devise_invitable'
 
 # authorisation
-gem 'pundit', '~> 1.0'
+gem 'pundit', '~> 2.1'
 
 # background jobs and scheduling
 gem 'delayed_job_active_record'
@@ -34,9 +34,9 @@ gem 'delayed_job_active_record'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 2.7.2'
+gem 'uglifier', '~> 4.2'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2.1'
+gem 'coffee-rails', '~> 5.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -45,26 +45,17 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '~> 1.1', group: :doc
 
 # template language
-gem 'redcarpet'
-gem 'slim-rails', '3.1.1'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
-gem 'unicorn'
-gem 'unicorn-worker-killer'
+gem 'slim-rails', '~> 3.2'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'puma', '~> 4.3'
 
 # Date validation
-gem 'date_validator'
+gem 'date_validator', '0.9'
 gem 'will_paginate'
 
 # Soft deletion
@@ -76,6 +67,14 @@ gem "paper_trail"
 # Google tag Manager
 gem 'gtm_on_rails'
 
+gem 'chartkick', '~> 3.3.0'
+gem 'ckeditor', '~> 5.1'
+gem 'groupdate'
+gem 'nokogiri'
+gem 'pg_search'
+gem 'rest-client'
+gem 'virtus'
+
 group :development do
   # speed up local development via livereload
   gem 'guard-livereload'
@@ -84,25 +83,23 @@ group :development do
   gem 'web-console', '~> 3.7.0'
 end
 
-gem 'nokogiri'
-
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'pry-rails'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'rspec-rails', '~> 3.4'
-  gem 'spring'
-  # in browser debugging
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails', '5.0.2'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
+  gem 'listen', '~> 3.0'
+  gem 'parallel_tests'
+  gem 'pry-rails'
+  gem 'rspec-rails', '~> 4.0'
   gem 'rubocop', '~> 0.69.0', require: false
   gem 'rubocop-rspec', '1.30.1', require: false
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
 end
 
@@ -111,26 +108,15 @@ group :test do
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
-  gem 'cucumber-rails', '~> 1.5', require: false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
-  gem 'pry'
   gem 'rails-controller-testing'
-  gem 'rspec_junit_formatter', '~> 0.4.1'
+  gem 'rspec_junit_formatter'
   gem 'rubyzip'
   gem 'shoulda-matchers'
-  gem 'site_prism', '~> 2.9'
-  gem 'webdrivers', '~> 4.3'
+  gem 'site_prism'
+  gem 'webdrivers'
   gem 'webmock'
 end
-
-# heroku deployment
-gem 'rails_12factor', group: :production
-
-gem 'chartkick', '~> 3.3.0'
-gem 'ckeditor', '~> 5.1'
-gem 'groupdate'
-gem 'pg_search'
-gem 'rest-client'
-gem 'virtus'

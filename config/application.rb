@@ -8,6 +8,8 @@ require "active_record/railtie"
 require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
+# require "action_mailbox/engine"
+require "action_text/engine"
 require "action_view/railtie"
 # require "action_cable/engine"
 require "sprockets/railtie"
@@ -31,10 +33,13 @@ module FrStaffapp
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = 'en-GB'
 
-    config.middleware.use(
-      ApplicationInsights::Rack::TrackRequest,
-      ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
-    )
+    if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
+      config.middleware.use(
+        ApplicationInsights::Rack::TrackRequest,
+        ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
+      )
+    end
+
   end
   WillPaginate.per_page = 20
 end
