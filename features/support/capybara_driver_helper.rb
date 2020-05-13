@@ -2,6 +2,7 @@ Capybara.configure do |config|
   driver = ENV['DRIVER']&.to_sym || :headless
   config.default_driver = driver
   config.default_max_wait_time = 30
+  config.default_normalize_ws = true # ignore the new lines
   config.match = :prefer_exact
   config.exact = true
   config.visible_text_only = true

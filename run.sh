@@ -16,12 +16,6 @@ true)
         bundle exec rake db:migrate
         bundle exec rake db:seed
         ;;
-    vagrant)
-        echo "running vagrant"
-        bundle exec rake db:create
-        bundle exec rake db:migrate
-        bundle exec rake db:seed
-        ;;
     create)
         echo "running create"
         bundle exec rake db:create
@@ -40,12 +34,12 @@ true)
             ;;
         *)
             echo "running app"
-            bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
             ;;
         esac
     ;;
 *)
-    case ${DOCKER_STATE} in
+case ${DOCKER_STATE} in
     migrate)
         echo "running migrate"
         bundle exec rake db:migrate
@@ -55,12 +49,6 @@ true)
         bundle exec rake db:migrate
         bundle exec rake db:seed
         ;;
-    vagrant)
-        echo "running vagrant"
-        bundle exec rake db:create
-        bundle exec rake db:migrate
-        bundle exec rake db:seed
-        ;;
     create)
         echo "running create"
         bundle exec rake db:create
@@ -79,7 +67,7 @@ true)
             ;;
         *)
             echo "running app"
-            bundle exec unicorn -p ${UNICORN_PORT:-8080} -c config/unicorn.rb -E ${RAILS_ENV:-production}
+            bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
             ;;
         esac
     ;;

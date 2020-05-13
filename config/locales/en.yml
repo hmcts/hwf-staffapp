@@ -307,6 +307,8 @@ en-GB:
         paper_evidence: Correct evidence provided
         benefits_result: Benefits
         income_result: Income
+        income_kind_applicant: Income kind applicant
+        income_kind_partner: Income kind partner
         savings_result: Savings
         number_of_children: Number of children
         total_monthly_income: Total monthly income

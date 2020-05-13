@@ -31,12 +31,12 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       expect(page).to have_content 'Process evidence'
       expect(page).to have_content application1.applicant.full_name
       expect(page).to have_content "What to do if evidence hasn't arrived"
-      expect(page).to have_link 'Return application'
+      expect(page).to have_link 'Return application', visible: false
     end
 
     scenario 'when returning application' do
       click_link application1.reference
-      click_link 'Return application'
+      click_link 'Return application', visible: false
 
       expect(page).to have_content 'What is the problem?'
       choose 'Citizen not proceeding'

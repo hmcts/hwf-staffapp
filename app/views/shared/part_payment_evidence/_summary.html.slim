@@ -6,6 +6,7 @@ h1.govuk-heading-xl Check details
 =content_for(:edit)
 =build_section_with_defaults 'Personal details', @applicant
 =build_section_with_defaults 'Application details', @details
+=build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
 =build_section 'Result', @application_view, ['savings_result', 'income_result']
 = content_for :result
 

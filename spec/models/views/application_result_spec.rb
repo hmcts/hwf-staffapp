@@ -98,6 +98,18 @@ RSpec.describe Views::ApplicationResult do
 
       it { is_expected.to eq 'paid' }
     end
+
+    context 'when the application has a completed part-payment and evidence check' do
+      let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
+      let(:evidence) { build_stubbed :evidence_check, outcome: 'part', amount_to_pay: 123 }
+      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', evidence_check: evidence, amount_to_pay: 222 }
+
+      it { is_expected.to eq 'paid' }
+
+      it 'returns amount_to_pay' do
+        expect(view.amount_to_pay).to eql("£123")
+      end
+    end
   end
 
   describe '#savings' do
