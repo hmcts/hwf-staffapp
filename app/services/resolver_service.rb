@@ -60,7 +60,7 @@ class ResolverService
   end
 
   def complete_evidence_check(evidence_check)
-    evidence_check.update(completed_attributes)
+    update_evidence_check_attributes!(evidence_check)
 
     application_attributes = {}.tap do |attrs|
       if decide_part_payment(evidence_check)
@@ -70,6 +70,18 @@ class ResolverService
       end
     end
     evidence_check.application.update(application_attributes)
+  end
+
+  def update_evidence_check_attributes!(evidence_check)
+    attr_completed = completed_attributes
+    if evidence_check.outcome == 'none'
+      attr_completed.merge!(amount_to_pay_for_none_outcome(evidence_check))
+    end
+    evidence_check.update(attr_completed)
+  end
+
+  def amount_to_pay_for_none_outcome(evidence_check)
+    { amount_to_pay: evidence_check.application.detail.fee }
   end
 
   def complete_part_payment(part_payment)
