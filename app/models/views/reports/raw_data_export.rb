@@ -18,6 +18,7 @@ module Views
         refund: 'refund',
         emergency: 'emergency',
         income: 'income',
+        reg_number: 'ho/ni number',
         children: 'children',
         married: 'married',
         decision: 'decision',
@@ -65,6 +66,8 @@ module Views
           estimation_amount_to_pay(row)
         elsif attr == :final_amount_to_pay
           final_amount_to_pay(row)
+        elsif attr == :reg_number
+          reg_number(row)
         else
           row.send(attr)
         end
@@ -139,6 +142,12 @@ module Views
         return row.fee if row.try(:pp_outcome).present? && row.pp_outcome != 'part'
         ec_amount = row.evidence_check.try(:amount_to_pay)
         ec_amount || row.amount_to_pay
+      end
+
+      def reg_number(row)
+        return 'NI number' if row.applicant.ni_number.present?
+        return 'Home Office number' if row.applicant.ho_number.present?
+        'None'
       end
 
     end
