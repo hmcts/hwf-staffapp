@@ -66,7 +66,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
     before do
       @full_no_ec = create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, applicant: applicant3
+                                                                          amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, applicant: applicant3, income_min_threshold_exceeded: true
       @part_no_ec = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                           amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part
       @part_no_ec_return_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
@@ -80,7 +80,8 @@ RSpec.describe Views::Reports::RawDataExport do
       @none_no_ec = create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                         amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000
       @none_ec = create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                     amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3, income: 2000, evidence_check: evidence_check_none
+                                                                     amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3,
+                                                                     income: 2000, evidence_check: evidence_check_none, income_max_threshold_exceeded: true
     end
 
     it { is_expected.to eq 8 }
@@ -89,53 +90,30 @@ RSpec.describe Views::Reports::RawDataExport do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @full_no_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.24,0.0,300.24,income,ABC123,,false,false,10,None,1,true,full,0.0,300.24,paper"
+        row = "#{jurisdiction},SD123,300.24,0.0,300.24,income,ABC123,,false,false,10,under,None,1,true,full,0.0,300.24,paper"
         expect(export).to include(row)
       end
     end
-
-    # context 'ho/ni number' do
-    #   let(:export) { data.to_csv }
-
-    #   it 'Home Office is in the ho/ni column' do
-    #     jurisdiction = @none_no_ec.detail.jurisdiction.name
-    #     row = "#{jurisdiction},SD123,300.34,300.34,0.0,income,ABC123,,false,false,2000,Home Office number,3,true,none,300.34,0.0,paper"
-    #     expect(export).to include(row)
-    #   end
-
-    #   it 'NI number is in the ho/ni column' do
-    #     jurisdiction = @none_ec.detail.jurisdiction.name
-    #     row = "#{jurisdiction},SD123,300.34,0.0,300.34,income,ABC123,,false,false,2000,NI number,3,true,none,300.34,0.0,paper"
-    #     expect(export).to include(row)
-    #   end
-
-    #   it 'None is in the ho/ni column' do
-    #     jurisdiction = @full_no_ec.detail.jurisdiction.name
-    #     row = "#{jurisdiction},SD123,300.24,0.0,300.24,income,ABC123,,false,false,10,None,1,true,full,0.0,300.24,paper"
-    #     expect(export).to include(row)
-    #   end
-    # end
 
     context 'part_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @part_no_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,None,3,true,part,50.0,250.0,paper"
-        # binding.pry
+        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,50.0,250.0,paper"
         expect(export).to include(row)
       end
 
       it 'part payment outcome is "return"' do
         export = data.to_csv
         jurisdiction = @part_no_ec_return_pp.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,None,3,true,part,300.45,0.0,paper"
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
 
       it 'part payment outcome is "none"' do
         export = data.to_csv
         jurisdiction = @part_no_ec_none_pp.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,None,3,true,part,300.45,0.0,paper"
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
     end
@@ -144,7 +122,7 @@ RSpec.describe Views::Reports::RawDataExport do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @none_no_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.34,300.34,0.0,income,ABC123,,false,false,2000,Home Office number,3,true,none,300.34,0.0,paper"
+        row = "#{jurisdiction},SD123,300.34,300.34,0.0,income,ABC123,,false,false,2000,,Home Office number,3,true,none,300.34,0.0,paper"
         expect(export).to include(row)
       end
     end
@@ -153,7 +131,7 @@ RSpec.describe Views::Reports::RawDataExport do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @none_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.34,0.0,300.34,income,ABC123,,false,false,2000,NI number,3,true,none,300.34,0.0,paper"
+        row = "#{jurisdiction},SD123,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,NI number,3,true,none,300.34,0.0,paper"
         expect(export).to include(row)
       end
     end
@@ -162,7 +140,7 @@ RSpec.describe Views::Reports::RawDataExport do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @full_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,0.0,300.0,income,ABC123,,false,false,10,None,1,true,full,0.0,300.0,paper"
+        row = "#{jurisdiction},SD123,300.0,0.0,300.0,income,ABC123,,false,false,10,,None,1,true,full,0.0,300.0,paper"
         expect(export).to include(row)
       end
     end
@@ -171,7 +149,7 @@ RSpec.describe Views::Reports::RawDataExport do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         export = data.to_csv
         jurisdiction = @part_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,None,3,true,part,100.0,200.0,paper"
+        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,100.0,200.0,paper"
         expect(export).to include(row)
       end
     end
