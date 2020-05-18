@@ -23,7 +23,7 @@ Feature: Personal details page
       Then I should see that the applicant cannot be under 16 years old error message
 
     Scenario: Enter a home office reference number in the correct format
-      When I enter a home office reference number in a wrong format
+      When I enter a home office reference number in the wrong format
       Then I should see enter a home office reference number in the correct format error message
 
     Scenario: Successfully submit my required personal details

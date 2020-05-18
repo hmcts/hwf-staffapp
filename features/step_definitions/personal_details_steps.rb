@@ -32,7 +32,7 @@ Then("I should see that the applicant cannot be under 16 years old error message
   expect(personal_details_page.content).to have_dob_in_the_future_error
 end
 
-When("I enter a home office reference number in a wrong format") do
+When("I enter a home office reference number in the wrong format") do
   personal_details_page.invalid_ho
   next_page
 end
