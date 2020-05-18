@@ -32,6 +32,15 @@ Then("I should see that the applicant cannot be under 16 years old error message
   expect(personal_details_page.content).to have_dob_in_the_future_error
 end
 
+When("I enter a home office reference number in a wrong format") do
+  personal_details_page.invalid_ho
+  next_page
+end
+
+Then("I should see enter a home office reference number in the correct format error message") do
+  expect(personal_details_page.content).to have_invalid_ho_error
+end
+
 Then("I should see the invalid date of birth error message") do
   expect(personal_details_page.content).to have_invalid_date_of_birth_error
 end
