@@ -585,7 +585,7 @@ en-GB:
             dependents:
               inclusion: 'You must answer the dependent children question'
             children:
-              not_a_number: Choose number of children
+              not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
             income:
               blank: Enter the total monthly income
