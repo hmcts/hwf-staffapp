@@ -8,6 +8,8 @@ class IncomesPage < BasePage
     element :yes, '.govuk-label', text: 'Yes'
     element :number_of_children_label, '.govuk-label', text: 'Number of children(add number given in questions 10 and 11 together)'
     element :number_of_children_input, '#application_children'
+    element :number_of_children_error, '.error', text: 'Enter number of children'
+    element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
   end
 
   def go_to_incomes_page
