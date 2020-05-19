@@ -20,3 +20,15 @@ end
 When("I submit the total monthly income") do
   incomes_page.submit_incomes_1200
 end
+
+But("I do not fill in the number of children or total monthly income") do
+  next_page
+end
+
+Then("I should see enter number of children error message") do
+  expect(incomes_page.content).to have_number_of_children_error
+end
+
+And("I should see enter total monthly income error message") do
+  expect(incomes_page.content).to have_total_monthly_income_error
+end
