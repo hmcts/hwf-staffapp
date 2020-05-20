@@ -14,9 +14,22 @@ When("I answer no to does the applicant financially support any children") do
 end
 
 When("I submit the total number of children") do
-  fill_in 'Number of children (add number given in questions 10 and 11 together)', with: '2'
+  expect(incomes_page.content).to have_number_of_children_hint
+  fill_in 'Number of children', with: '2'
 end
 
 When("I submit the total monthly income") do
   incomes_page.submit_incomes_1200
+end
+
+But("I do not fill in the number of children or total monthly income") do
+  next_page
+end
+
+Then("I should see enter number of children error message") do
+  expect(incomes_page.content).to have_number_of_children_error
+end
+
+And("I should see enter total monthly income error message") do
+  expect(incomes_page.content).to have_total_monthly_income_error
 end
