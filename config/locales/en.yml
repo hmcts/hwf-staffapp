@@ -390,7 +390,7 @@ en-GB:
         full_name: Full name
         ni_number: 'National Insurance number'
         ho_number: Home Office reference number
-        ho_number_hint: Where provided
+        ho_number_hint: Where provided, example L123456 or L123456/1 for a family member
         date_of_birth: 'Date of birth'
         day_date_of_birth: 'Day'
         month_date_of_birth: 'Month'
@@ -450,7 +450,8 @@ en-GB:
         dependents: In questions 10 and 11, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
-        children: Number of children (add number given in questions 10 and 11 together)
+        children: Number of children
+        children_hint: Add number given in questions 10 and 11 together
         income: Total monthly income
       forms/application/summary:
         passed: '✓ Passed'
@@ -529,6 +530,8 @@ en-GB:
               not_a_date: 'Enter a valid date of birth'
             ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+            ho_number:
+              invalid: 'Enter a Home Office reference number in the correct format'
             married:
               inclusion: Select a marital status
         forms/application/detail:
@@ -585,7 +588,7 @@ en-GB:
             dependents:
               inclusion: 'You must answer the dependent children question'
             children:
-              not_a_number: Choose number of children
+              not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
             income:
               blank: Enter the total monthly income
