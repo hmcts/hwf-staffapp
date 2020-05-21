@@ -11,12 +11,13 @@ class PersonalDetailsPage < BasePage
     element :ni_hint, '.hint', text: 'Must be completed for benefits-based applications'
     element :application_ni_number, '#application_ni_number'
     element :ho_label, '.govuk-label', text: 'Home Office reference number'
-    element :ho_hint, '.hint', text: 'Where provided'
+    element :ho_hint, '.hint', text: 'Where provided, example L123456 or L123456/1 for a family member'
     element :application_ho_number, '#application_ho_number'
     element :last_name_error, '.error', text: 'Enter the applicant\'s last name'
     element :last_name_too_short_error, '.error', text: 'Last name is too short (minimum is 2 characters)'
     element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'
     element :dob_in_the_future_error, '.error', text: 'Applicant\'s date of birth cannot be in the future'
+    element :invalid_ho_error, '.error', text: 'Enter a Home Office reference number in the correct format'
     element :martial_status_error, '.error', text: 'Select a marital status'
     element :martial_status_legend, 'legend', text: 'Select the applicant\'s marital status'
     element :status_single, 'label', text: 'Single'
@@ -55,6 +56,10 @@ class PersonalDetailsPage < BasePage
 
   def valid_ho
     content.application_ho_number.set '1212-0001-0240-0490/01'
+  end
+
+  def invalid_ho
+    content.application_ho_number.set 'invalid'
   end
 
   def submit_required_personal_details

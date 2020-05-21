@@ -24,6 +24,7 @@
           .panel-indent.util_mt-0.util_mb-0#children-only
             .govuk-form-group
               = f.label :children, class: 'govuk-label'
+              span.govuk-hint = t('children_hint', scope: @form.i18n_scope)
               - if @form.errors[:children].present?
                 span.govuk-error-message
                   = f.label :children, @form.errors[:children].join(', '), class: 'error'
