@@ -12,7 +12,8 @@ module Forms
         year_date_received: Integer,
         form_name: String,
         emergency: Boolean,
-        emergency_reason: String }
+        emergency_reason: String,
+        benefits_override: Boolean }
     end
 
     define_attributes

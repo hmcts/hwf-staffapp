@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OnlineApplicationsController, type: :controller do
   let(:user) { create :user }
-  let(:online_application) { build_stubbed(:online_application) }
+  let(:online_application) { build_stubbed(:online_application, benefits: false) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
 
@@ -73,16 +73,6 @@ RSpec.describe OnlineApplicationsController, type: :controller do
             expect(response).to render_template(:edit)
           end
         end
-
-        context 'when it is a benefits based application' do
-          it 'redirects to homepage' do
-            expect(response).to redirect_to(root_path)
-          end
-
-          it 'sets the alert flash message' do
-            expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
-          end
-        end
       end
     end
   end
@@ -128,6 +118,14 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
           it 'redirects to the approval page' do
             expect(response).to redirect_to(approve_online_application_path(online_application))
+          end
+        end
+
+        context 'when it is benefit application' do
+          let(:online_application) { build_stubbed(:online_application, benefits: true) }
+
+          it 'redirects to the approval page' do
+            expect(response).to redirect_to(benefits_online_application_path(online_application))
           end
         end
       end
