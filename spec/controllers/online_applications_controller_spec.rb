@@ -81,12 +81,16 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:params) { {} }
     let(:form_save) { false }
     let(:fee) { 500 }
+    let(:dwp_state) { 'online' }
+    let(:monitor) { instance_double(DwpMonitor) }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:fee).and_return(fee)
       allow(online_application).to receive(:update).and_return(true)
+      allow(DwpMonitor).to receive(:new).and_return monitor
+      allow(monitor).to receive(:state).and_return dwp_state
 
       put :update, params: { id: id, online_application: params }
     end
@@ -124,8 +128,20 @@ RSpec.describe OnlineApplicationsController, type: :controller do
         context 'when it is benefit application' do
           let(:online_application) { build_stubbed(:online_application, benefits: true) }
 
-          it 'redirects to the approval page' do
-            expect(response).to redirect_to(benefits_online_application_path(online_application))
+          context 'dwp is down' do
+            let(:dwp_state) { 'offline' }
+
+            it 'redirects to the approval page' do
+              expect(response).to redirect_to(benefits_online_application_path(online_application))
+            end
+          end
+
+          context 'dwp is working' do
+            let(:dwp_state) { 'online' }
+
+            it 'renders the summary page' do
+              expect(response).to redirect_to(online_application_path(online_application))
+            end
           end
         end
       end

@@ -75,7 +75,7 @@ class OnlineApplicationsController < ApplicationController
   def decide_next_step
     if @form.fee < Settings.fee_approval_threshold
       reset_fee_manager_approval_fields
-      if online_application.benefits
+      if display_paper_evidence_page?
         redirect_to benefits_online_application_path(online_application)
       else
         redirect_to action: :show
@@ -83,6 +83,10 @@ class OnlineApplicationsController < ApplicationController
     else
       redirect_to action: :approve
     end
+  end
+
+  def display_paper_evidence_page?
+    online_application.benefits && DwpMonitor.new.state == 'offline'
   end
 
   def reset_fee_manager_approval_fields

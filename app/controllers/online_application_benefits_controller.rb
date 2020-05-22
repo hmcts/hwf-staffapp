@@ -7,7 +7,6 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
   end
 
   def update
-
     @form = Forms::OnlineApplication.new(online_application)
     @form.update_attributes(update_params)
 
