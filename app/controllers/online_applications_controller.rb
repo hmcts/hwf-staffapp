@@ -9,8 +9,6 @@ class OnlineApplicationsController < ApplicationController
   include SectionViewsHelper
 
   def edit
-    redirect_benefits_applications_when_dwp_is_offline
-
     @form = Forms::OnlineApplication.new(online_application)
     @form.enable_default_jurisdiction(current_user)
     assign_jurisdictions
@@ -77,7 +75,11 @@ class OnlineApplicationsController < ApplicationController
   def decide_next_step
     if @form.fee < Settings.fee_approval_threshold
       reset_fee_manager_approval_fields
-      redirect_to action: :show
+      if online_application.benefits
+        redirect_to benefits_online_application_path(online_application)
+      else
+        redirect_to action: :show
+      end
     else
       redirect_to action: :approve
     end
@@ -106,12 +108,5 @@ class OnlineApplicationsController < ApplicationController
 
   def assign_jurisdictions
     @jurisdictions ||= current_user.office.jurisdictions
-  end
-
-  def redirect_benefits_applications_when_dwp_is_offline
-    if online_application.benefits? && DwpMonitor.new.state == 'offline'
-      flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
-      redirect_to root_path
-    end
   end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
-  params_list = [:fee, :jurisdiction_id, :date_received, :day_date_received, :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason]
+  params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received, :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason]
 
   let(:online_application) { build_stubbed :online_application }
 
