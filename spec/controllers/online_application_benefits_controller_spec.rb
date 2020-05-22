@@ -25,7 +25,7 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    let(:params) { { "benefits_override": "#{benefits_override}" } }
+    let(:params) { { "benefits_override": benefits_override.to_s } }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
