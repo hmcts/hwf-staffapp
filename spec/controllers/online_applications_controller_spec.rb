@@ -216,6 +216,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(pass_fail_service)
       allow(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return benefit_override
       allow(benefit_override).to receive(:update)
+      allow(application).to receive(:update)
 
       post :complete, params: { id: id }
     end
@@ -257,13 +258,21 @@ RSpec.describe OnlineApplicationsController, type: :controller do
         it 'creates benefit overrides record' do
           expect(benefit_override).to have_received(:update).with(correct: true, completed_by: user)
         end
+
+        it 'update outcome of the application' do
+          expect(application).to have_received(:update).with(outcome: 'full')
+        end
       end
 
       context 'benefit override false' do
         let(:online_application) { build_stubbed(:online_application, benefits_override: false) }
 
-        it 'does not create benefit overrides record' do
+        it 'do not create benefit overrides record' do
           expect(benefit_override).not_to have_received(:update)
+        end
+
+        it 'do not update outcome' do
+          expect(application).not_to have_received(:update)
         end
       end
     end
