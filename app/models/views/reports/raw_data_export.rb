@@ -18,6 +18,8 @@ module Views
         refund: 'refund',
         emergency: 'emergency',
         income: 'income',
+        income_threshold: 'income_threshold exceeded',
+        reg_number: 'ho/ni number',
         children: 'children',
         married: 'married',
         decision: 'decision',
@@ -63,8 +65,8 @@ module Views
           estimated_decision_cost_calculation(row)
         elsif attr == :estimated_amount_to_pay
           estimation_amount_to_pay(row)
-        elsif attr == :final_amount_to_pay
-          final_amount_to_pay(row)
+        elsif [:reg_number, :income_threshold, :final_amount_to_pay].include?(attr)
+          send(attr, row)
         else
           row.send(attr)
         end
@@ -84,7 +86,8 @@ module Views
         Application.
           select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
                  'application_type', 'income', 'children', 'decision', 'amount_to_pay',
-                 'decision_cost', 'applicants.married').
+                 'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
+                 'income_max_threshold_exceeded').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
@@ -139,6 +142,17 @@ module Views
         return row.fee if row.try(:pp_outcome).present? && row.pp_outcome != 'part'
         ec_amount = row.evidence_check.try(:amount_to_pay)
         ec_amount || row.amount_to_pay
+      end
+
+      def reg_number(row)
+        return 'NI number' if row.applicant.ni_number.present?
+        return 'Home Office number' if row.applicant.ho_number.present?
+        'None'
+      end
+
+      def income_threshold(row)
+        return 'under' if row.income_min_threshold_exceeded
+        return 'over' if row.income_max_threshold_exceeded
       end
 
     end
