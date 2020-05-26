@@ -65,6 +65,7 @@ class OnlineApplicationsController < ApplicationController
     @benefit_override = BenefitOverride.find_or_initialize_by(application: application)
     return unless authorize @benefit_override, :create?
     @benefit_override.update(correct: true, completed_by: current_user)
+    application.update(outcome: 'full')
   end
 
   def authorize_online_application
