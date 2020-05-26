@@ -57,7 +57,14 @@ class OnlineApplicationsController < ApplicationController
   def process_application(application)
     SavingsPassFailService.new(application.saving).calculate!
     ApplicationCalculation.new(application).run
+    benefit_override(application) if online_application.benefits_override
     ResolverService.new(application, current_user).complete
+  end
+
+  def benefit_override(application)
+    @benefit_override = BenefitOverride.find_or_initialize_by(application: application)
+    return unless authorize @benefit_override, :create?
+    @benefit_override.update(correct: true, completed_by: current_user)
   end
 
   def authorize_online_application

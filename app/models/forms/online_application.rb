@@ -72,7 +72,8 @@ module Forms
         fee: fee,
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
-        form_name: form_name
+        form_name: form_name,
+        benefits_override: benefits_override
       }
     end
   end

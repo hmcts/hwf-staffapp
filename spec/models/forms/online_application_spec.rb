@@ -124,7 +124,8 @@ RSpec.describe Forms::OnlineApplication do
           date_received: Time.zone.yesterday,
           form_name: 'E45',
           emergency: true,
-          emergency_reason: 'SOME REASON'
+          emergency_reason: 'SOME REASON',
+          benefits_override: true
         }
       end
       let(:reloaded_application) do
@@ -133,7 +134,7 @@ RSpec.describe Forms::OnlineApplication do
       end
 
       describe 'the saved online application' do
-        [:fee, :jurisdiction_id, :date_received, :form_name, :emergency_reason].each do |key|
+        [:fee, :jurisdiction_id, :date_received, :form_name, :emergency_reason, :benefits_override].each do |key|
           it "has the correct :#{key}" do
             expect(reloaded_application.send(key)).to eql(params[key])
           end

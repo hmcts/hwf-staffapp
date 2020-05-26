@@ -201,11 +201,12 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   describe 'POST #complete' do
-    let(:application) { build_stubbed(:application) }
+    let(:application) { build_stubbed(:application, office: user.office) }
     let(:application_builder) { instance_double(ApplicationBuilder, build_from: application) }
     let(:application_calculation) { instance_double(ApplicationCalculation, run: nil) }
     let(:resolver_service) { instance_double(ResolverService, complete: nil) }
     let(:pass_fail_service) { instance_double(SavingsPassFailService, calculate!: nil) }
+    let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
@@ -213,6 +214,8 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(ApplicationCalculation).to receive(:new).with(application).and_return(application_calculation)
       allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
       allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(pass_fail_service)
+      allow(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return benefit_override
+      allow(benefit_override).to receive(:update)
 
       post :complete, params: { id: id }
     end
@@ -246,6 +249,22 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'redirects to the application confirmation page' do
         expect(response).to redirect_to(application_confirmation_path(application, 'digital'))
+      end
+
+      context 'benefit override true' do
+        let(:online_application) { build_stubbed(:online_application, benefits_override: true) }
+
+        it 'creates benefit overrides record' do
+          expect(benefit_override).to have_received(:update).with(correct: true, completed_by: user)
+        end
+      end
+
+      context 'benefit override false' do
+        let(:online_application) { build_stubbed(:online_application, benefits_override: false) }
+
+        it 'does not create benefit overrides record' do
+          expect(benefit_override).not_to have_received(:update)
+        end
       end
     end
   end
