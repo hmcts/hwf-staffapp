@@ -226,3 +226,16 @@ en-GB:
         <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
+    refund:
+      not_eligible_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your refund Help with Fees application.</p>
+        <p>The application has been processed and no remission has been granted meaning that you are not eligible for a refund of the fee paid.</p>
+        <p><strong>If you disagree with this decision</strong></p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>Remember to include your reference %{reference}.</p>
+        <h3 class='govuk-heading-m'>Useful link<h3/>
+        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>
