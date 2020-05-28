@@ -12,7 +12,11 @@
 
 
     #result.callout class="callout-#{@confirm.result}"
-      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+      - if @application.detail.refund? && @application.outcome.eql?('part')
+        h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(amount_to_refund(@application))}")
+      - else
+        h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+
 
     .util_mt-medium
       = build_section 'Result', @confirm, @confirm.all_fields
