@@ -1,6 +1,6 @@
 Feature: Processing part payments
 
-  Background: Processed application that rquires a part payment
+  Background: Processed refund application that requires a part payment
     Given I have processed an application that is a refund
     But requires a part payment
   
