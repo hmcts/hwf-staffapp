@@ -239,3 +239,13 @@ en-GB:
         <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
+      part_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your refund Help with Fees application.</p>
+        <p>The application has been processed and has received a partial remission of the Court/Tribunal fee in question for the amount of <strong>%{fee}</strong>. The amount to be refunded back to you is <strong>%{amount_refunded}</strong>.</p>
+        <p>The refund will now be processed in line with the Court/Tribunal procedures.</p>
+        <p><strong>What happens next</strong></p>
+        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the Court/Tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records. The refunded monies will be received within the next 10 working days.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>

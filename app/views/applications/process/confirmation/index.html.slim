@@ -37,7 +37,27 @@
 
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
-    -if @application.waiting_for_part_payment?
+    -if @application.detail.refund?
+      .confirmation-letter
+        - if @application.outcome.eql?('full')
+            = t('letters.refund.full_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              user_name: current_user.name)
+        - elsif @application.outcome.eql?('part')
+          = t('letters.refund.part_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              user_name: current_user.name,
+              fee: number_to_currency(@application.detail.fee, precision: 0),
+              amount_refunded: number_to_currency(amount_to_refund(@application)))
+        - else
+          = t('letters.refund.not_eligible_html',
+            reference: @application.reference,
+            full_name: @application.applicant.full_name,
+            user_name: current_user.name)
+
+    -elsif @application.waiting_for_part_payment?
       .confirmation-letter
         = t('letters.part-payment.send_part_payment_html',
             reference: @application.reference,
@@ -48,12 +68,6 @@
             children: @application.children,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
-    -if @application.detail.refund?
-      .confirmation-letter
-        = t('letters.refund.not_eligible_html',
-          reference: @application.reference,
-          full_name: @application.applicant.full_name,
-          user_name: current_user.name)
 
 
 
