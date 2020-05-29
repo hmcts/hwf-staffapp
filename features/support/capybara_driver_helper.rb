@@ -1,5 +1,5 @@
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :headless
+  driver = ENV['DRIVER']&.to_sym || :apparition
   config.default_driver = driver
   config.default_max_wait_time = 30
   config.default_normalize_ws = true # ignore the new lines

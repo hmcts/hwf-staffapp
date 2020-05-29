@@ -35,13 +35,13 @@ Then("I should see that my new answer is displayed in the benefit summary") do
 end
 
 Then("I should see that the savings amount is rounded to the nearest pound") do
-  expect(application_page.content.summary_section[2].text).to have_text 'Savings and investments Less than £3,000 No Change Less than £3,000 Savings amount £10000 Change Savings amount'
+  expect(application_page.content.summary_section[2].text).to have_content 'Savings and investments Less than £3,000 No Change Less than £3,000 Savings amount £10000 Change Savings amount'
 end
 
 Then("I should see the personal details") do
   expect(summary_page.content.summary_section[0]).to have_personal_details_header
-  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Full name Mr John Christopher Smith Change Full name'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Date of birth 10 February 1986 Change Date of birth'
-  expect(summary_page.content.summary_section[0].list_row[3].text).to have_text 'National Insurance number JR 05 40 08 D Change National Insurance number'
-  expect(summary_page.content.summary_section[0].list_row[4].text).to have_text 'Status Single Change Status'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_content 'Full name Mr John Christopher Smith Change Full name'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to have_content 'Date of birth 10 February 1986 Change Date of birth'
+  expect(summary_page.content.summary_section[0].list_row[3].text).to have_content 'National Insurance number JR 05 40 08 D Change National Insurance number'
+  expect(summary_page.content.summary_section[0].list_row[4].text).to have_content 'Status Single Change Status'
 end
