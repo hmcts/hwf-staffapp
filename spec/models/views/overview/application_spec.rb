@@ -326,7 +326,24 @@ RSpec.describe Views::Overview::Application do
           is_expected.to be_nil
         end
       end
-
     end
+
+    describe '#refund' do
+      subject { view.refund }
+      it { is_expected.to be(false) }
+
+      context 'it is refund' do
+        let(:application) { build_stubbed(:application, refund: true) }
+        it { is_expected.to be(true) }
+      end
+    end
+
+    describe '#amount_to_refund' do
+      let(:application) { build_stubbed(:application, amount_to_pay: 25, fee: 100) }
+      subject { view.amount_to_refund }
+
+      it { is_expected.to eql(75.to_f) }
+    end
+
   end
 end

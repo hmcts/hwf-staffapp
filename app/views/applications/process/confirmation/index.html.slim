@@ -12,25 +12,17 @@
 
 
     #result.callout class="callout-#{@confirm.result}"
-      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+      - if @application.detail.refund? && @application.outcome.eql?('part')
+        h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(amount_to_refund(@application))}")
+      - else
+        h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+
 
     .util_mt-medium
       = build_section 'Result', @confirm, @confirm.all_fields
 
 
     =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
-
-    -if @application.waiting_for_part_payment?
-      .confirmation-letter
-        = t('letters.part-payment.send_part_payment_html',
-            reference: @application.reference,
-            full_name: @application.applicant.full_name,
-            user_name: current_user.name,
-            part_payment_amount: number_to_currency(parse_amount_to_pay(@application.amount_to_pay), precision: 0),
-            total_income: number_to_currency(@application.income, precision: 0),
-            children: @application.children,
-            date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
-
 
     h2.govuk-heading-m Next steps
 
@@ -48,5 +40,39 @@
       p.govuk-body Write to the applicant and send back all the documents
 
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+    -if @application.detail.refund?
+      .confirmation-letter
+        - if @application.outcome.eql?('full')
+            = t('letters.refund.full_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              user_name: current_user.name)
+        - elsif @application.outcome.eql?('part')
+          = t('letters.refund.part_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              user_name: current_user.name,
+              fee: number_to_currency(@application.detail.fee, precision: 0),
+              amount_refunded: number_to_currency(amount_to_refund(@application)))
+        - else
+          = t('letters.refund.not_eligible_html',
+            reference: @application.reference,
+            full_name: @application.applicant.full_name,
+            user_name: current_user.name)
+
+    -elsif @application.waiting_for_part_payment?
+      .confirmation-letter
+        = t('letters.part-payment.send_part_payment_html',
+            reference: @application.reference,
+            full_name: @application.applicant.full_name,
+            user_name: current_user.name,
+            part_payment_amount: number_to_currency(parse_amount_to_pay(@application.amount_to_pay), precision: 0),
+            total_income: number_to_currency(@application.income, precision: 0),
+            children: @application.children,
+            date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+
+
+
 
     = link_to 'Back to start', root_path, class: 'govuk-button'

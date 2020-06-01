@@ -253,6 +253,7 @@ en-GB:
   remissions:
     full_html: '✓ Eligible for help with fees'
     part_html: 'The applicant must pay %{amount_to_pay} towards the fee'
+    part_refund_html: 'The amount to be refunded should be %{amount_to_pay}'
     paid_html: 'The applicant has paid %{amount_to_pay} towards the fee'
     none_html: '✗ &nbsp; Not eligible for help with fees'
     callout_html: 'Evidence of income needs to be checked'

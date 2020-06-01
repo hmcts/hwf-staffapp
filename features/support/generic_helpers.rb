@@ -214,14 +214,14 @@ def complete_and_back_to_start
   click_on 'Back to start'
 end
 
-def part_payment_application
+def part_payment_refund_application
   dashboard_page.process_application
   personal_details_page.submit_required_personal_details
-  application_details_page.submit_fee_100
+  application_details_page.submit_as_refund_case
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
   incomes_page.submit_incomes_yes_3
-  complete_and_back_to_start
+  click_on 'Complete processing'
 end
 
 def waiting_evidence_application_ni
