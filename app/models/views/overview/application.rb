@@ -54,6 +54,14 @@ module Views
         @application.application_type
       end
 
+      def refund
+        @application.detail.refund
+      end
+
+      def amount_to_refund
+        @application.detail.fee - @application.amount_to_pay
+      end
+
       def result
         @application.outcome
       end

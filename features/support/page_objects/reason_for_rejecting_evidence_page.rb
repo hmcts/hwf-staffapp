@@ -14,8 +14,8 @@ class ReasonForRejectingEvidencePage < BasePage
   def go_to_reason_for_rejecting_evidence_page
     waiting_evidence_application_ni
     waiting_evidence_application_ni
-    click_link("#{reference_prefix}-000002")
-    click_link('Start now')
+    click_link "#{reference_prefix}-000002"
+    click_on 'Start now'
     evidence_accuracy_page.content.problem_with_evidence.click
     next_page
   end

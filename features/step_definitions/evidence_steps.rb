@@ -6,11 +6,11 @@ And("there is an application waiting for evidence") do
 end
 
 And("I am on an application waiting for evidence") do
-  click_link "#{reference_prefix}-000002"
+  click_link("#{reference_prefix}-000002")
 end
 
 When("I click on start now to process the evidence") do
-  click_link('Start now')
+  click_on 'Start now'
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
@@ -44,7 +44,7 @@ Then("I should see the applicants income details") do
 end
 
 Then("I should see whether the applicant is eligible for help with fees") do
-  expect(evidence_page.content).to have_eligable_header
+  expect(evidence_page.content).to have_refund_header
 end
 
 Then("I should see the processing summmary") do
@@ -104,12 +104,12 @@ Then("I see that the applicant needs to make a payment towards the fee") do
 end
 
 Given("I have successfully submitted the evidence") do
-  click_link('Start now')
+  click_on 'Start now'
   evidence_accuracy_page.content.correct_evidence.click
   next_page
   fill_in 'Total monthly income from evidence', with: '500'
   next_page
-  click_link('Next')
+  click_on 'Next'
 end
 
 Given("I have successfully processed the evidence") do
@@ -118,8 +118,6 @@ end
 
 Given("I use the browser back button") do
   page.go_back
-  url = current_url
-  visit url
 end
 
 Given("I should see a message telling me that the application has been processed") do

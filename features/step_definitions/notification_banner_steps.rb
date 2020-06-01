@@ -11,18 +11,18 @@ end
 
 When("I check show on admin homepage") do
   edit_banner_page.content.show_message_checkbox.click
-  click_button 'Save changes'
+  click_on 'Save changes'
 end
 
 Then("I should see the notification on my homepage") do
   navigation_page.go_to_homepage
-  expect(edit_banner_page.content).to have_notification_banner
+  expect(edit_banner_page.content.notification_banner.text).to eq 'This is a test staff notification message'
 end
 
 When("I uncheck show on admin homepage") do
   navigation_page.navigation_link.edit_banner.click
   edit_banner_page.content.show_message_checkbox.click
-  click_button 'Save changes'
+  click_on 'Save changes'
 end
 
 Then("I should not see the notification on my homepage") do
