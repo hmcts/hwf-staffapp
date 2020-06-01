@@ -16,7 +16,7 @@ end
 
 Then("I should see the notification on my homepage") do
   navigation_page.go_to_homepage
-  expect(edit_banner_page.content).to have_notification_banner
+  expect(edit_banner_page.content.notification_banner.text).to eq 'This is a test staff notification message'
 end
 
 When("I uncheck show on admin homepage") do
