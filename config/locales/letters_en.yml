@@ -203,22 +203,25 @@ en-GB:
     part-payment:
       send_part_payment_html: |
         <p>Dear %{full_name}</p>
-        <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees. You are eligible for some money off and must make a part-payment of %{part_payment_amount} towards the fee.</p>
-        <p>We’ve calculated this as follows:</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We’ve received your application for help with fees. You’re eligible to get some money taken off the full fee of %{full_fee}.</p>
+        <p><strong>How we worked this out:</strong></p>
         <p>Your total monthly income: %{total_income}</p>
         <p>Number of children: %{children}</p>
-        <p>Amount to pay: %{part_payment_amount}</p>
-        <p><strong>How to pay</strong></p>
+        <p>Amount you need to pay: %{part_payment_amount}</p>
+        <p><strong>What you need to do</strong></p>
+        <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
+        <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for %{part_payment_amount}</li>
-          <li>by debit card over the phone</li>
-          <li>in person with a cheque, cash or debit card at the court counter</li>
+          <li>Calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
         </ul>
-        <p>Please make sure you pay <strong>%{part_payment_amount}</strong> by <strong>%{date_for_part_payment}</strong>.</p>
-        <p><strong>If you don’t agree with the amount you have to pay</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
-        <p>You must write your reference number <strong>%{reference}</strong> on any letters that you send.</p>
+        <p>If you don’t use a debit card or cheques, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
+        <p><strong>If you disagree with this decision</strong></p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. We will reply to you within 10 working days from receiving your application. </p>
+        <p>Remember to include your reference <strong>%{reference}</strong>.</p>
+        <h3 class='govuk-heading-m'>Useful link<h3/>
+        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
