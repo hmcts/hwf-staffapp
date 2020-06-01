@@ -1,6 +1,7 @@
 class EvidencePage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
+    element :refund_header, 'h2', text: 'The amount to be refunded should be £600'
     element :eligable_header, 'h2', text: '✓ Eligible for help with fees'
     element :not_eligable_header, 'h2', text: '✗ Not eligible for help with fees'
     element :part_payment, 'h2', text: 'The applicant must pay £205 towards the fee'
@@ -17,7 +18,7 @@ class EvidencePage < BasePage
     end
     element :processing_summary, 'h2', text: 'Processing summary'
     elements :table_row, '.govuk-table__row'
-    element :error_message, '.govuk-error-summary', text: 'There is a problem This application has been processed. You can’t edit any details.'
+    element :error_message, '.alert', text: 'This application has been processed. You can’t edit any details.'
   end
 
   def processed_evidence
