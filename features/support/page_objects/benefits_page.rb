@@ -4,6 +4,8 @@ class BenefitsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits the applicant is receiving'
     element :benefit_question, '.govuk-label', text: 'Is the applicant receiving one of these benefits?'
+    element :no, 'label', text: 'No', visible: false
+    element :yes, 'label', text: 'Yes', visible: false
   end
 
   def go_to_benefits_page
@@ -13,12 +15,12 @@ class BenefitsPage < BasePage
   end
 
   def submit_benefits_yes
-    choose 'Yes', visible: false
+    content.yes.click
     next_page
   end
 
   def submit_benefits_no
-    choose 'No', visible: false
+    content.no.click
     next_page
   end
 end
