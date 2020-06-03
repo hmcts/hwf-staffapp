@@ -4,8 +4,8 @@ class BenefitsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits the applicant is receiving'
     element :benefit_question, '.govuk-label', text: 'Is the applicant receiving one of these benefits?'
-    element :no, 'label', text: 'No'
-    element :yes, 'label', text: 'Yes'
+    element :no, 'label', text: 'No', visible: false
+    element :yes, 'label', text: 'Yes', visible: false
   end
 
   def go_to_benefits_page
