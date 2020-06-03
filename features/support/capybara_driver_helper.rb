@@ -7,16 +7,11 @@ Capybara.configure do |config|
   config.default_normalize_ws = true
   config.match = :prefer_exact
   config.exact = true
-  config.visible_text_only = true
 end
 
 Capybara.register_driver :headless do |app|
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
-end
-
-Capybara.register_driver :apparition do |app|
-  Capybara::Apparition::Driver.new(app)
 end
 
 Capybara.register_driver :chrome do |app|
