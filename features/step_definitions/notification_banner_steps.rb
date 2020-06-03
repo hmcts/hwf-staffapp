@@ -27,5 +27,5 @@ end
 
 Then("I should not see the notification on my homepage") do
   navigation_page.go_to_homepage
-  expect(edit_banner_page.content).to have_no_notification_banner
+  page.should have_no_content('This is a test staff notification message')
 end
