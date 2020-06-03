@@ -42,6 +42,14 @@ module Views
       format_locale(['full', 'part'].include?(result).to_s)
     end
 
+    def refund
+      @application.detail.refund?
+    end
+
+    def amount_to_refund
+      @application.detail.fee - @application.amount_to_pay
+    end
+
     def return_type
       {
         'evidence_check' => 'evidence',

@@ -55,6 +55,7 @@ class ResolverService
     if decide_evidence_check(application)
       :waiting_for_evidence
     elsif decide_part_payment(application)
+      return nil if application.detail.refund
       :waiting_for_part_payment
     end
   end

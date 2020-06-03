@@ -9,9 +9,10 @@ describe ResolverService do
   let(:fee) { 350 }
   let(:amount_to_pay) { nil }
   let(:existing_reference) { nil }
+  let(:refund) { false }
   let(:application) do
     create(:application, :uncompleted, :undecided,
-           fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference)
+           fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference, refund: refund)
   end
 
   describe '#complete' do
@@ -141,6 +142,25 @@ describe ResolverService do
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
+        end
+      end
+
+      context 'when the application is part payment but a refund too' do
+        let(:part_payment_decision) { true }
+        let(:refund) { true }
+
+        include_examples 'application reference and business_entity'
+
+        it 'stores the business entity used to generate the reference' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
+
+        it 'outcome is part paymet' do
+          expect(updated_application.outcome).to eql('part')
+        end
+
+        it 'state is processed' do
+          expect(updated_application.state).to eql('processed')
         end
       end
 

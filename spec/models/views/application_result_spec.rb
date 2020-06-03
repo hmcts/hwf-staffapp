@@ -109,6 +109,23 @@ RSpec.describe Views::ApplicationResult do
       it 'returns amount_to_pay' do
         expect(view.amount_to_pay).to eql("£123")
       end
+
+      it 'returns amount_to_refund' do
+        expect(view.amount_to_refund.to_i).to be(88)
+      end
+
+      it 'returns refund false' do
+        expect(view.refund).to be(false)
+      end
+
+      context 'refund' do
+        let(:application) { build_stubbed :application, refund: true }
+
+        it 'returns refund true' do
+          expect(view.refund).to be(true)
+        end
+      end
+
     end
   end
 
