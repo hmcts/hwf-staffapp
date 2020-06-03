@@ -7,6 +7,7 @@ Capybara.configure do |config|
   config.default_normalize_ws = true
   config.match = :prefer_exact
   config.exact = true
+  config.visible_text_only = true
 end
 
 Capybara.register_driver :headless do |app|
