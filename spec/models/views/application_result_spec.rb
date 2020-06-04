@@ -94,15 +94,19 @@ RSpec.describe Views::ApplicationResult do
 
     context 'when the application has a completed part-payment' do
       let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
-      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part' }
+      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', amount_to_pay: 200 }
 
       it { is_expected.to eq 'paid' }
+
+      it 'returns amount_to_refund based on evidence_check' do
+        expect(view.amount_to_refund.to_i).to be(110)
+      end
     end
 
     context 'when the application has a completed part-payment and evidence check' do
       let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
       let(:evidence) { build_stubbed :evidence_check, outcome: 'part', amount_to_pay: 123 }
-      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', evidence_check: evidence, amount_to_pay: 222 }
+      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', evidence_check: evidence, amount_to_pay: 222, fee: 310 }
 
       it { is_expected.to eq 'paid' }
 
@@ -110,8 +114,8 @@ RSpec.describe Views::ApplicationResult do
         expect(view.amount_to_pay).to eql("£123")
       end
 
-      it 'returns amount_to_refund' do
-        expect(view.amount_to_refund.to_i).to be(88)
+      it 'returns amount_to_refund based on evidence_check' do
+        expect(view.amount_to_refund.to_i).to be(187)
       end
 
       it 'returns refund false' do
