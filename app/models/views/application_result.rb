@@ -47,7 +47,7 @@ module Views
     end
 
     def amount_to_refund
-      @application.detail.fee - amount_to_pay_for_part_payment
+      @application.detail.fee - amount_to_pay_for_part_payment.to_f
     end
 
     def state
