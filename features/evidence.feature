@@ -76,6 +76,7 @@ Scenario: Return to dashboard
   When I have successfully submitted the evidence
   And I complete processing
   Then I should be taken back to my dashboard
+  And the application should have the status of processed
 
 Scenario: You cannot edit any details
   And I have successfully processed the evidence

@@ -143,3 +143,7 @@ end
 Then("I should see select from one of the problem options error message") do
   problem_with_evidence_page.content.header
 end
+
+Then("the application should have the status of processed") do
+  expect(evidence_page.content.table_row[1]).to have_text 'processed'
+end
