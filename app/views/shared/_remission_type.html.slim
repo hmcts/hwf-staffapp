@@ -1,6 +1,5 @@
 #result.callout class="callout-#{source.result}"
-
-  - if source.try(:refund) &&  source.try(:state) != 'waiting_for_evidence'
+  - if source.try(:refund)
     h2.govuk-heading-l =t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(source.amount_to_refund)}")
   - else
     h2.govuk-heading-l =t("remissions.#{source.result}_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)

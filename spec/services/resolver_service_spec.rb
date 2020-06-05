@@ -273,7 +273,6 @@ describe ResolverService do
             complete
             expect(evidence_check.reload.amount_to_pay).to be_nil
           end
-
         end
 
         context 'for none outcome' do
@@ -286,8 +285,24 @@ describe ResolverService do
             expect(evidence_check.reload.amount_to_pay).to eql(fee)
           end
         end
-
       end
+
+      context 'when the application is part payment but a refund too' do
+        let(:evidence_check) { create :evidence_check_part_outcome, application: application }
+        let(:part_payment_decision) { true }
+        let(:refund) { true }
+
+        it 'outcome is part paymet' do
+          complete
+          expect(evidence_check.outcome).to eql('part')
+        end
+
+        it 'state is processed' do
+          complete
+          expect(evidence_check.application.reload.state).to eql('processed')
+        end
+      end
+
     end
 
     context 'for PartPayment' do

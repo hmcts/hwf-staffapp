@@ -54,8 +54,7 @@ class ResolverService
   def application_state(application)
     if decide_evidence_check(application)
       :waiting_for_evidence
-    elsif decide_part_payment(application)
-      return nil if application.detail.refund
+    elsif decide_part_payment(application) && go_to_part_payment?(application)
       :waiting_for_part_payment
     end
   end
@@ -64,7 +63,7 @@ class ResolverService
     update_evidence_check_attributes!(evidence_check)
 
     application_attributes = {}.tap do |attrs|
-      if decide_part_payment(evidence_check)
+      if decide_part_payment(evidence_check) && go_to_part_payment?(evidence_check.application)
         attrs[:state] = :waiting_for_part_payment
       else
         attrs.merge!(decided_attributes(evidence_check))
@@ -112,5 +111,9 @@ class ResolverService
 
   def complete_because_discretion_applied?(application)
     application.detail.discretion_applied == false
+  end
+
+  def go_to_part_payment?(application)
+    !application.detail.refund
   end
 end
