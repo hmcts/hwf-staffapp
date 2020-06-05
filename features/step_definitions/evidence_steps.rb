@@ -44,7 +44,7 @@ Then("I should see the applicants income details") do
 end
 
 Then("I should see whether the applicant is eligible for help with fees") do
-  expect(evidence_page.content).to have_refund_header
+  expect(evidence_page.content).to have_full_refund_header
 end
 
 Then("I should see the processing summmary") do
@@ -77,8 +77,12 @@ When(/^I submit (\d+) as the income$/) do |income|
   next_page
 end
 
-Then("I see that the applicant is eligible for help with fees") do
-  expect(evidence_page.content).to have_eligable_header
+Then("I see the amount to be refunded should be £600") do
+  expect(evidence_page.content).to have_full_refund_header
+end
+
+Then("I see the amount to be refunded should be £395") do
+  expect(evidence_page.content).to have_partial_refund_header
 end
 
 Then("I see that the applicant is not eligible for help with fees") do
@@ -100,7 +104,7 @@ Then("I should see this question must be answered error message") do
 end
 
 Then("I see that the applicant needs to make a payment towards the fee") do
-  expect(evidence_page.content).to have_part_payment
+  expect(evidence_page.content).to have_refund_header
 end
 
 Given("I have successfully submitted the evidence") do

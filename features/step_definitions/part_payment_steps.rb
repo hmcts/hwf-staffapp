@@ -1,11 +1,11 @@
 Given("I have processed an application that is a refund") do
   sign_in_page.load_page
   sign_in_page.user_account
-  part_payment_refund_application
+  part_payment_application
 end
 
-But("requires a part payment") do
-  expect(confirmation_page.content.outcome_header.text).to have_text 'The amount to be refunded should be £560'
+But("the applicant must pay towards the fee") do
+  expect(confirmation_page.content.outcome_header.text).to have_text 'The applicant must pay £40 towards the fee'
   click_on 'Back to start'
 end
 
