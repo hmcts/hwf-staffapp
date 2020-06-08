@@ -23,43 +23,26 @@
 
 
     =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+    -if !@application.detail.refund?
+      h2.govuk-heading-m Next steps
 
-    h2.govuk-heading-m Next steps
-
-    -if @application.outcome.eql?('full')
-      p.govuk-body Write the reference number on the top right corner of the paper form
-      p.govuk-body Copy the reference number into the case management system
-      p.govuk-body The applicant’s process can now be issued
-    -elsif @application.outcome.eql?('part')
-      p.govuk-body Write to the applicant with details of how much they have to pay
-      p.govuk-body Store the application form in a secure location until you receive the part-payment
-      p.govuk-body Write the reference number on the top right corner of the paper form
-    -else
-      p.govuk-body Write the reference number on the top right corner of the paper form
-      p.govuk-body Copy the reference number into the case management system
-      p.govuk-body Write to the applicant and send back all the documents
+      -if @application.outcome.eql?('full')
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body The applicant’s process can now be issued
+      -elsif @application.outcome.eql?('part')
+        p.govuk-body Write to the applicant with details of how much they have to pay
+        p.govuk-body Store the application form in a secure location until you receive the part-payment
+        p.govuk-body Write the reference number on the top right corner of the paper form
+      -else
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body Write to the applicant and send back all the documents
 
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     -if @application.detail.refund?
-      .confirmation-letter
-        - if @application.outcome.eql?('full')
-            = t('letters.refund.full_html',
-              reference: @application.reference,
-              full_name: @application.applicant.full_name,
-              user_name: current_user.name)
-        - elsif @application.outcome.eql?('part')
-          = t('letters.refund.part_html',
-              reference: @application.reference,
-              full_name: @application.applicant.full_name,
-              user_name: current_user.name,
-              fee: number_to_currency(@application.detail.fee, precision: 0),
-              amount_refunded: number_to_currency(amount_to_refund(@application)))
-        - else
-          = t('letters.refund.not_eligible_html',
-            reference: @application.reference,
-            full_name: @application.applicant.full_name,
-            user_name: current_user.name)
+      = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
 
     -elsif @application.waiting_for_part_payment?
       .confirmation-letter

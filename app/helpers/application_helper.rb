@@ -9,7 +9,8 @@ module ApplicationHelper
   end
 
   def amount_to_refund(application)
-    application.detail.fee - application.amount_to_pay
+    amount_to_pay = application.evidence_check ? application.evidence_check.amount_to_pay : application.amount_to_pay
+    application.detail.fee - amount_to_pay
   end
 
 end
