@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Part payment application with evidence check', type: :feature do
+RSpec.feature 'Part payment application with evidence check for refund', type: :feature do
 
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -51,13 +51,13 @@ RSpec.feature 'Part payment application with evidence check', type: :feature do
     fill_in 'evidence_income', with: 3951
     click_button 'Next'
 
-    expect(page).to have_content 'The applicant must pay £1105 towards the fee'
+    expect(page).to have_content 'The amount to be refunded should be £3895'
     click_link 'Next'
 
     expect(page).to have_content 'Check details'
     click_button 'Complete processing'
 
-    expect(application.reload.state).to eql('waiting_for_part_payment')
+    expect(application.reload.state).to eql('processed')
   end
 
   def evidence_check_rendered?

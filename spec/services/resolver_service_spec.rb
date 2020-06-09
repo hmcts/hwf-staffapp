@@ -9,9 +9,10 @@ describe ResolverService do
   let(:fee) { 350 }
   let(:amount_to_pay) { nil }
   let(:existing_reference) { nil }
+  let(:refund) { false }
   let(:application) do
     create(:application, :uncompleted, :undecided,
-           fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference)
+           fee: fee, amount_to_pay: amount_to_pay, outcome: application_outcome, reference: existing_reference, refund: refund)
   end
 
   describe '#complete' do
@@ -144,6 +145,25 @@ describe ResolverService do
         end
       end
 
+      context 'when the application is part payment but a refund too' do
+        let(:part_payment_decision) { true }
+        let(:refund) { true }
+
+        include_examples 'application reference and business_entity'
+
+        it 'stores the business entity used to generate the reference' do
+          expect(updated_application.business_entity).to eql(business_entity)
+        end
+
+        it 'outcome is part paymet' do
+          expect(updated_application.outcome).to eql('part')
+        end
+
+        it 'state is processed' do
+          expect(updated_application.state).to eql('processed')
+        end
+      end
+
       context 'when the application has outcome and does not need evidence check or part payment' do
         context 'for a full outcome' do
           let(:application_outcome) { 'full' }
@@ -253,7 +273,6 @@ describe ResolverService do
             complete
             expect(evidence_check.reload.amount_to_pay).to be_nil
           end
-
         end
 
         context 'for none outcome' do
@@ -266,8 +285,24 @@ describe ResolverService do
             expect(evidence_check.reload.amount_to_pay).to eql(fee)
           end
         end
-
       end
+
+      context 'when the application is part payment but a refund too' do
+        let(:evidence_check) { create :evidence_check_part_outcome, application: application }
+        let(:part_payment_decision) { true }
+        let(:refund) { true }
+
+        it 'outcome is part paymet' do
+          complete
+          expect(evidence_check.outcome).to eql('part')
+        end
+
+        it 'state is processed' do
+          complete
+          expect(evidence_check.application.reload.state).to eql('processed')
+        end
+      end
+
     end
 
     context 'for PartPayment' do
