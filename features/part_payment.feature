@@ -2,7 +2,7 @@ Feature: Processing part payments
 
   Background: Processed refund application that requires a part payment
     Given I have processed an application that is a refund
-    But requires a part payment
+    But the applicant must pay towards the fee
   
   Scenario: Successfully process part payment
     And the payment is ready to process

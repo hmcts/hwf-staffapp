@@ -1,7 +1,7 @@
 class PaperEvidencePage < BasePage
   section :content, '#content' do
-    element :no, 'label', text: 'No'
-    element :yes, 'label', text: 'Yes, the applicant has provided paper evidence'
+    element :no, 'label', text: 'No', visible: false
+    element :yes, 'label', text: 'Yes, the applicant has provided paper evidence', visible: false
   end
 
   def go_to_paper_evidence_page

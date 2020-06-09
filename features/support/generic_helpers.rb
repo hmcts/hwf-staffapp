@@ -191,16 +191,16 @@ def eligable_application
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_yes
   paper_evidence_page.submit_evidence_yes
-  click_on 'Complete processing'
-  click_on 'Back to start'
+  click_on 'Complete processing', visible: false
+  click_on 'Back to start', visible: false
 end
 
 def ineligable_application
   personal_details_page.submit_required_personal_details
   application_details_page.submit_fee_300
   savings_investments_page.submit_exact_amount
-  click_on 'Complete processing'
-  click_on 'Back to start'
+  click_on 'Complete processing', visible: false
+  click_on 'Back to start', visible: false
 end
 
 def multiple_applications
@@ -210,18 +210,18 @@ def multiple_applications
 end
 
 def complete_and_back_to_start
-  click_on 'Complete processing'
-  click_on 'Back to start'
+  click_on 'Complete processing', visible: false
+  click_on 'Back to start', visible: false
 end
 
-def part_payment_refund_application
+def part_payment_application
   dashboard_page.process_application
   personal_details_page.submit_required_personal_details
-  application_details_page.submit_as_refund_case
+  application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
   benefits_page.submit_benefits_no
   incomes_page.submit_incomes_yes_3
-  click_on 'Complete processing'
+  click_on 'Complete processing', visible: false
 end
 
 def waiting_evidence_application_ni
