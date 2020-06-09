@@ -6,21 +6,24 @@
     .govuk-panel.govuk-panel--confirmation
       h1.govuk-panel__title Processing complete
 
-    - unless @confirmation.outcome == 'full'
-      = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
+    - if !@confirmation.application.detail.refund
+      - if @confirmation.outcome != 'full'
+        = render(partial: "confirmation_#{@confirmation.outcome}_remission", locals: { confirmation: @confirmation })
 
-    -if @confirmation.outcome == 'full'
-      h2.govuk-heading-m Next steps
-      p.govuk-body Write the reference number on the top right corner of the paper form
-      p.govuk-body Copy the reference number into the case management system
-      p.govuk-body The applicant’s process can now be issued
-    -elsif @confirmation.outcome == 'part'
-      h2.govuk-heading-m Next steps
-      p.govuk-body Write to the applicant with details of how much they have to pay
-      p.govuk-body Store the application form in a secure location until you receive the part-payment
-      p.govuk-body Write the reference number on the top right corner of the paper form
+      -if @confirmation.outcome == 'full'
+        h2.govuk-heading-m Next steps
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body The applicant’s process can now be issued
+      -elsif @confirmation.outcome == 'part'
+        h2.govuk-heading-m Next steps
+        p.govuk-body Write to the applicant with details of how much they have to pay
+        p.govuk-body Store the application form in a secure location until you receive the part-payment
+        p.govuk-body Write the reference number on the top right corner of the paper form
 
-    -if @confirmation.outcome != 'none'
-      p: strong = link_to 'See the guides', guide_path, target: 'blank'
+      -if @confirmation.outcome != 'none'
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
+    - else
+      = render(partial: 'shared/refund_template', locals: { application: @confirmation.application, outcome: @confirmation.outcome })
     = link_to 'Back to start', root_path, class: 'govuk-button'
