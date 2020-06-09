@@ -13,7 +13,7 @@ class NavigationPage < BasePage
   end
 
   def go_to_homepage
-    click_link 'Help with fees'
+    click_link 'Help with fees', visible: false
   end
 
   def sign_out
