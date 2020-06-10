@@ -12,6 +12,10 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view how to guide
 
+    Scenario: Training course
+      And I am signed in on the guide page
+      Then I can view the training course
+
     Scenario: Key control checks
       And I am signed in on the guide page
       Then I can view key control checks guide
