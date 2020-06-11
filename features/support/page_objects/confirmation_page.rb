@@ -18,6 +18,6 @@ class ConfirmationPage < BasePage
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes
     paper_evidence_page.submit_evidence_yes
-    click_on 'Complete processing'
+    click_on 'Complete processing', visible: false
   end
 end
