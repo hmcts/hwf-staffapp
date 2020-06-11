@@ -24,8 +24,9 @@
           reference: application.reference,
           full_name: application.applicant.full_name,
           user_name: current_user.name,
-          fee: number_to_currency(application.detail.fee, precision: 0),
-          amount_refunded: number_to_currency(amount_to_refund(application)))
+          fee: number_to_currency(application.detail.fee, precision: 2),
+          amount_refunded: number_to_currency(amount_to_refund(application),precision: 2),
+          decision_cost: number_to_currency(parse_amount_to_pay(application.amount_to_pay),precision: 2))
   - else
     h2.govuk-heading-m Next steps
     p.govuk-body Write the reference number on the top right corner of the paper form.
