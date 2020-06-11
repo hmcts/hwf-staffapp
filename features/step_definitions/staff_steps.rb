@@ -41,7 +41,7 @@ Then("I can see that the user is a reader") do
 end
 
 When("I click on add staff") do
-  click_on 'Add staff'
+  click_on 'Add staff', visible: false
 end
 
 Then("I am taken to the send invitation page") do
@@ -49,7 +49,7 @@ Then("I am taken to the send invitation page") do
 end
 
 When("I click on deleted staff") do
-  click_on 'Deleted staff'
+  click_on 'Deleted staff', visible: false
 end
 
 Then("I am taken to the deleted staff page") do
