@@ -6,18 +6,18 @@ end
 
 But("the applicant must pay towards the fee") do
   expect(confirmation_page.content.outcome_header.text).to have_text 'The applicant must pay £40 towards the fee'
-  click_on 'Back to start'
+  click_on 'Back to start', visible: false
 end
 
 And("the payment is ready to process") do
   click_link "#{reference_prefix}-000001"
-  click_on 'Start now'
+  click_on 'Start now', visible: false
   part_payment_page.ready_to_process_payment
 end
 
 And("the payment is not ready to process") do
   click_link "#{reference_prefix}-000001"
-  click_on 'Start now'
+  click_on 'Start now', visible: false
   part_payment_page.not_ready_to_process_payment
 end
 
@@ -39,8 +39,8 @@ Then("I can see that the applicant needs to make a new application") do
 end
 
 Then("processing is complete I should see a letter template") do
-  click_on 'Complete processing'
+  click_on 'Complete processing', visible: false
   expect(part_payment_page.content).to have_evidence_confirmation_letter
-  click_on 'Back to start'
+  click_on 'Back to start', visible: false
   expect(current_url).to end_with '/'
 end
