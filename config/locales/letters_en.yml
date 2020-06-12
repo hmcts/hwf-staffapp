@@ -106,44 +106,56 @@ en-GB:
     evidence:
       send_evidence_html: |
         <p>Dear %{full_name}</p>
-        <p><strong>Reference: %{reference}</strong></p>
-        <p>We've received your application for help with fees. We need more information from you before we can process your application.</p>
-        <p>Please send us copies of your documents by<strong> %{expiry_date}</strong>.</p>
-        <p>You must write your reference number<strong> %{reference}</strong> on all documents that you send.</p>
-        <p>If you're married or living with someone and sharing an income, then your partner must send copies of documents showing their income too.</p>
-        <div><strong>Bank statements</strong></div>
-        <p>Send a copy of your most recent bank statement for your main bank account.</p>
-        <p>If you're applying for a refund of a fee you've already paid, send a bank statement from the month you paid the fee.</p>
-        <p>Plus, you’ll need to send copies of all the following documents that apply to you. Remember to write the reference number %{reference} on everything you send.</p>
-        <div><strong>Wages</strong></div>
-        <ul class="govuk-list govuk-list--bullet">
-          <li><u>Employed</u>: your most recent payslip which should be no more than 6 weeks old.</li>
-          <li><u>Self employed</u>: your most recent tax return (Self Assessment) and HMRC Self Assessment Tax Calculation. If you don’t have either of these, you’ll need to send bank statements that show income for the previous tax year.</li>
-        </ul>
-        <div><strong>Child Benefit, Working Tax Credit and Child Tax Credit</strong></div>
-        <p>A letter from HM Revenue and Customs (HMRC) dated in the last 3 months confirming that you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit.</p>
-        <p>If you don’t have a Child Benefit Award Notice dated within the last three months then court staff will check your bank statements for evidence of money coming in.</p>
-        <div><strong>Child maintenance payments</strong></div>
-        <p>Document(s) showing the payment amounts and how often they are made. This can be one of the following:</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We've received your application for help with fees. Before we can start work on your application, we need more information about your income.</p>
+        <p>We need this information by<strong> %{expiry_date}</strong>.</p>
+        <h3 class='govuk-heading-m'>What you need to do</h3>
+        <ol class="govuk-list govuk-list--number">
+          <li>Check the list below and get a copy of all the documents that apply to you.</li>
+          <li>Make sure you can be clearly identified on every document.</li>
+          <li>Write your reference at the top of every document.</li>
+          <li>Send your documents to the address at the top of this letter.</li>
+        </ol>
+        <h3 class='govuk-heading-m'>Your documents</h3>
+        <p>We need copies of your documents, not originals. If a document is only online, you can take screenshots and print them.</p>
+        <h3 class='govuk-heading-m'>Bank statements</h3>
+        <p>If you haven’t paid the fee yet, send the most recent statements for all of your current accounts.</p>
+        <p>If you’ve already paid the fee, send statements for all of your current accounts dated in the month you paid the fee.</p>
+        <h3 class='govuk-heading-m'>Wages</h3>
+        <p>If you’re employed, send a payslip dated in the last 6 weeks.</p>
+        <p>If you’re self-employed, send your most recent self-assessment tax return and SA302 tax calculation. You can get this at www.gov.uk/sa302-tax-calculation. You can send bank statements for the last tax year if you don’t have either of these documents.</p>
+        <h3 class='govuk-heading-m'>Child maintenance</h3>
+        <p>You need to send documents showing how much you’re paid and how often, for example a:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>sealed court order</li>
-          <li>Child Support Agency Assessment</li>
-          <li>signed voluntary agreement or letter of agreement signed by both parties</li>
+          <li>child Support Agency Assessment</li>
+          <li>voluntary agreement or letter of agreement signed by both parties.</li>
         </ul>
-        <div><strong>Contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA), and Universal Credit</strong></div>
-        <p>A letter from the Department for Work and Pensions (DWP) dated in the last 3 months.</p>
-        <div><strong>Pensions (state, work, private)</strong></div>
-        <p>A letter or statement showing pension payments.</p>
-        <div><strong>Rent from anyone living with you or other properties you own</strong></div>
-        <p>A letter dated within the last month from the person paying money to confirm the arrangement and amount paid.</p>
-        <div><strong>Income received by any other means such as selling goods publicly or privately, including sales over the internet</strong></div>
-        <p>Official documentary evidence showing the amount of income received, by what method and how often. Note that money received from the sale of capital assets (e.g. family heirlooms), would normally be classified as ‘savings and investments’ rather than income.</p>
-        <div><strong>Prisoner’s income</strong></div>
-        <p>Prisoner Income and Expenditure Statement (PIES) showing earnings, spending, private cash and savings.</p>
-        <p>If you’re in a private prison, your statement needs to show earnings and private cash.</p>
-        <div><strong>Any other monthly income</strong></div>
-        <p>Documentation of any other income that you’re receiving. </p>
-        <p>Please send this letter back with the information about your income so we can match it to your application.</p>
+
+        <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
+        <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months.</p>
+        <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months.</p>
+        <p>We’ll check your bank statements if you don’t have a Child Benefit Award Notice dated in the last 3 months.</p>
+
+        <h3 class='govuk-heading-m'>Pensions</h3>
+        <p>You need to send a letter or statement showing your state, work and private pension payments.</p>
+
+        <h3 class='govuk-heading-m'>Rental income</h3>
+        <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must be dated in the last month.</p>
+
+        <h3 class='govuk-heading-m'>Income from selling goods</h3>
+        <p>You need to send official documents showing how much you’ve received from public or private sales by what method and how often. This doesn’t include the sale of family heirlooms and other capital assets.</p>
+        <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account.</p>
+
+        <h3 class='govuk-heading-m'>Prisoner’s income</h3>
+        <p>You need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+
+        <h3 class='govuk-heading-m'>Any other monthly income</h3>
+        <p>You must tell us about and send documents showing any other monthly income you receive.</p>
+        <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
+
+        <h3 class='govuk-heading-m'>What happens next</h3>
+        <p>Once we receive your documents, we’ll check them. We’ll let you know the outcome of your application within 5 - 10 working days.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       citizen_not_processing_html: |
@@ -191,22 +203,25 @@ en-GB:
     part-payment:
       send_part_payment_html: |
         <p>Dear %{full_name}</p>
-        <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees. You are eligible for some money off and must make a part-payment of %{part_payment_amount} towards the fee.</p>
-        <p>We’ve calculated this as follows:</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We’ve received your application for help with fees. You’re eligible to get some money taken off the full fee of %{full_fee}.</p>
+        <p><strong>How we worked this out:</strong></p>
         <p>Your total monthly income: %{total_income}</p>
         <p>Number of children: %{children}</p>
-        <p>Amount to pay: %{part_payment_amount}</p>
-        <p><strong>How to pay</strong></p>
+        <p>Amount you need to pay: %{part_payment_amount}</p>
+        <p><strong>What you need to do</strong></p>
+        <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
+        <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>by post with a cheque written out to ‘HM Courts and Tribunals Service’ for %{part_payment_amount}</li>
-          <li>by debit card over the phone</li>
-          <li>in person with a cheque, cash or debit card at the court counter</li>
+          <li>Calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
         </ul>
-        <p>Please make sure you pay <strong>%{part_payment_amount}</strong> by <strong>%{date_for_part_payment}</strong>.</p>
-        <p><strong>If you don’t agree with the amount you have to pay</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
-        <p>You must write your reference number <strong>%{reference}</strong> on any letters that you send.</p>
+        <p>If you don’t use a debit card or cheques, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
+        <p><strong>If you disagree with this decision</strong></p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. We will reply to you within 10 working days from receiving your application. </p>
+        <p>Remember to include your reference <strong>%{reference}</strong>.</p>
+        <h3 class='govuk-heading-m'>Useful link<h3/>
+        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
