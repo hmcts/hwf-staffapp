@@ -4,6 +4,7 @@ class GuidePage < BasePage
   section :content, '#content' do
     element :guide_header, 'h1', text: 'See the guides'
     element :how_to_guide, 'a', text: 'How to Guide'
+    element :training_course, 'a', text: 'HwF Training Course'
     element :key_control_checks, 'a', text: 'Key Control Checks'
     element :covid_guidance, 'a', text: 'COVID 19 guidance'
     element :staff_guidance, 'a', text: 'Staff guidance'
