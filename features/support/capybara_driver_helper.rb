@@ -1,18 +1,19 @@
+Selenium::WebDriver.logger.level = :error
+
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :headless
+  driver = ENV['DRIVER']&.to_sym || :apparition
   config.default_driver = driver
   config.default_max_wait_time = 30
-  config.default_normalize_ws = true # ignore the new lines
+  config.default_normalize_ws = true
   config.match = :prefer_exact
   config.exact = true
   config.visible_text_only = true
 end
 
 Capybara.register_driver :headless do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu']))
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu'])
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
-
-Capybara.javascript_driver = :chrome
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
@@ -42,6 +43,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
 end
 
 Capybara.always_include_port = true
+Capybara.javascript_driver = Capybara.default_driver
 Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME', 'localhost')}")
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless

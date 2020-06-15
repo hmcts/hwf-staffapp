@@ -6,6 +6,7 @@
 
 require 'cucumber/rails'
 require_relative './page_objects/base_page'
+require 'capybara/apparition'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 

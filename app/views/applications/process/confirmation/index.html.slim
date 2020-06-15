@@ -12,7 +12,11 @@
 
 
     #result.callout class="callout-#{@confirm.result}"
-      h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+      - if @application.detail.refund? && @application.outcome.eql?('part')
+        h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(amount_to_refund(@application))}")
+      - else
+        h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+
 
     .util_mt-medium
       = build_section 'Result', @confirm, @confirm.all_fields
@@ -20,33 +24,38 @@
 
     =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
 
-    -if @application.waiting_for_part_payment?
+    -if !@application.detail.refund?
+      h2.govuk-heading-m Next steps
+
+      -if @application.outcome.eql?('full')
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body The applicant’s process can now be issued
+      -elsif @application.outcome.eql?('part')
+        p.govuk-body Write the reference number on the top right corner of the paper form.
+        p.govuk-body Write to the applicant using the letter on this page.
+        p.govuk-body Store the application form in a secure location until you receive the part payment.
+      -else
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body Write to the applicant and send back all the documents
+
+    p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+    -if @application.detail.refund?
+      = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
+
+    -elsif @application.waiting_for_part_payment?
       .confirmation-letter
         = t('letters.part-payment.send_part_payment_html',
             reference: @application.reference,
             full_name: @application.applicant.full_name,
             user_name: current_user.name,
+            full_fee: number_to_currency(parse_amount_to_pay(@application.detail.fee), precision: 0),
             part_payment_amount: number_to_currency(parse_amount_to_pay(@application.amount_to_pay), precision: 0),
             total_income: number_to_currency(@application.income, precision: 0),
             children: @application.children,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
 
-
-    h2.govuk-heading-m Next steps
-
-    -if @application.outcome.eql?('full')
-      p.govuk-body Write the reference number on the top right corner of the paper form
-      p.govuk-body Copy the reference number into the case management system
-      p.govuk-body The applicant’s process can now be issued
-    -elsif @application.outcome.eql?('part')
-      p.govuk-body Write to the applicant with details of how much they have to pay
-      p.govuk-body Store the application form in a secure location until you receive the part-payment
-      p.govuk-body Write the reference number on the top right corner of the paper form
-    -else
-      p.govuk-body Write the reference number on the top right corner of the paper form
-      p.govuk-body Copy the reference number into the case management system
-      p.govuk-body Write to the applicant and send back all the documents
-
-    p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     = link_to 'Back to start', root_path, class: 'govuk-button'

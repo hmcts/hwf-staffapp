@@ -3,8 +3,8 @@ class ConfirmationPage < BasePage
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
     element :reference_number, '.reference-number'
     element :eligible, 'h2', text: '✓ Eligible for help with fees'
-
     element :next_steps_steps, 'h2', text: 'Next steps'
+    element :outcome_header, 'h2'
     element :write_ref, 'p', text: 'Write the reference number on the top right corner of the paper form'
     element :copy_ref, 'p', text: 'Copy the reference number into the case management system'
     element :can_be_issued, 'p', text: 'The applicant’s process can now be issued'
@@ -18,6 +18,6 @@ class ConfirmationPage < BasePage
     savings_investments_page.submit_less_than
     benefits_page.submit_benefits_yes
     paper_evidence_page.submit_evidence_yes
-    click_on 'Complete processing'
+    click_on 'Complete processing', visible: false
   end
 end

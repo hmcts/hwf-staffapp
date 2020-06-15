@@ -1,6 +1,5 @@
 class NavigationPage < BasePage
   section :navigation_link, '.govuk-header__content' do
-    element :help_with_fees_home, 'a', text: 'Help with fees'
     element :welcome_user, 'li', text: 'Welcome user'
     element :view_profile, 'a', text: 'View profile'
     element :view_office, 'a', text: 'View office'
@@ -14,7 +13,7 @@ class NavigationPage < BasePage
   end
 
   def go_to_homepage
-    navigation_link.help_with_fees_home.click
+    click_link 'Help with fees', visible: false
   end
 
   def sign_out

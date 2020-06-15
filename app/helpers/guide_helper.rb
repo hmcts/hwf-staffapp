@@ -3,6 +3,10 @@ module GuideHelper
     'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf'
   end
 
+  def training_course_url
+    'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
+  end
+
   def how_to_url
     'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-how-to-guide.pdf'
   end

@@ -27,5 +27,5 @@ And("I change the jurisdiction") do
 end
 
 When("I should see the jurisdiction has been updated") do
-  expect(staff_details_page.content.table_row[4].text).to eq "Main jurisdiction #{Jurisdiction.first.name}"
+  expect(staff_details_page.content.table_row[4].text).to have_text "Main jurisdiction #{Jurisdiction.first.name}"
 end
