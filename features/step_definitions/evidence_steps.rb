@@ -6,11 +6,11 @@ And("there is an application waiting for evidence") do
 end
 
 And("I am on an application waiting for evidence") do
-  click_link "#{reference_prefix}-000002"
+  click_link("#{reference_prefix}-000002")
 end
 
 When("I click on start now to process the evidence") do
-  click_link('Start now')
+  click_on 'Start now', visible: false
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
@@ -44,7 +44,7 @@ Then("I should see the applicants income details") do
 end
 
 Then("I should see whether the applicant is eligible for help with fees") do
-  expect(evidence_page.content).to have_eligable_header
+  expect(evidence_page.content).to have_full_refund_header
 end
 
 Then("I should see the processing summmary") do
@@ -77,8 +77,12 @@ When(/^I submit (\d+) as the income$/) do |income|
   next_page
 end
 
-Then("I see that the applicant is eligible for help with fees") do
-  expect(evidence_page.content).to have_eligable_header
+Then("I see the amount to be refunded should be £600") do
+  expect(evidence_page.content).to have_full_refund_header
+end
+
+Then("I see the amount to be refunded should be £395") do
+  expect(evidence_page.content).to have_partial_refund_header
 end
 
 Then("I see that the applicant is not eligible for help with fees") do
@@ -100,16 +104,16 @@ Then("I should see this question must be answered error message") do
 end
 
 Then("I see that the applicant needs to make a payment towards the fee") do
-  expect(evidence_page.content).to have_part_payment
+  expect(evidence_page.content).to have_refund_header
 end
 
 Given("I have successfully submitted the evidence") do
-  click_link('Start now')
+  click_on 'Start now', visible: false
   evidence_accuracy_page.content.correct_evidence.click
   next_page
   fill_in 'Total monthly income from evidence', with: '500'
   next_page
-  click_link('Next')
+  click_on 'Next', visible: false
 end
 
 Given("I have successfully processed the evidence") do
@@ -118,8 +122,6 @@ end
 
 Given("I use the browser back button") do
   page.go_back
-  url = current_url
-  visit url
 end
 
 Given("I should see a message telling me that the application has been processed") do
@@ -134,10 +136,14 @@ Then("I should see the evidence details on the summary page") do
 end
 
 When("I complete processing") do
-  click_on 'Complete processing'
-  click_on 'Back to start'
+  click_on 'Complete processing', visible: false
+  click_on 'Back to start', visible: false
 end
 
 Then("I should see select from one of the problem options error message") do
   problem_with_evidence_page.content.header
+end
+
+Then("the application should have the status of processed") do
+  expect(evidence_page.content.table_row[1]).to have_text 'processed'
 end

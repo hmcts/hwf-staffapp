@@ -4,6 +4,7 @@
      reference: confirmation.application.reference,
      user_name: current_user.name,
      part_payment_amount: "£#{confirmation.amount_to_pay}",
+     full_fee: number_to_currency(parse_amount_to_pay(confirmation.application.detail.fee), precision: 0),
      total_income: "£#{confirmation.income}",
      children: confirmation.application.children,
      date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]),

@@ -45,12 +45,12 @@ Scenario: Evidence error message
   When I click on next without making a selection
   Then I should see this question must be answered error message
 
-Scenario: Eligible income amount
+Scenario: Full refund
   And I am on an application waiting for evidence
   And I click on start now to process the evidence
   And I submit that the evidence is correct
   When I submit 500 as the income
-  Then I see that the applicant is eligible for help with fees
+  Then I see the amount to be refunded should be £600
 
 Scenario: Not eligible income amount
   And I am on an application waiting for evidence
@@ -59,12 +59,12 @@ Scenario: Not eligible income amount
   When I submit 2300 as the income
   Then I see that the applicant is not eligible for help with fees
 
-Scenario: Part payment income amount
+Scenario: Partial refund
   And I am on an application waiting for evidence
   And I click on start now to process the evidence
   And I submit that the evidence is correct
   When I submit 1500 as the income
-  Then I see that the applicant needs to make a payment towards the fee
+  Then I see the amount to be refunded should be £395
 
 Scenario: Check details
   And I am on an application waiting for evidence
@@ -76,6 +76,7 @@ Scenario: Return to dashboard
   When I have successfully submitted the evidence
   And I complete processing
   Then I should be taken back to my dashboard
+  And the application should have the status of processed
 
 Scenario: You cannot edit any details
   And I have successfully processed the evidence

@@ -1,5 +1,5 @@
 class IncomesPage < BasePage
-  set_url '/applications/1/incomes'
+  set_url_matcher '/applications/1/incomes'
 
   section :content, '#content' do
     element :header, 'h1', text: 'Income'

@@ -8,7 +8,7 @@ Given("I am on the confirmation page") do
 end
 
 When("I click on back to start") do
-  click_on 'Back to start'
+  click_on 'Back to start', visible: false
 end
 
 Then("I should be taken back to my dashboard") do
