@@ -77,11 +77,11 @@ When(/^I submit (\d+) as the income$/) do |income|
   next_page
 end
 
-Then("I see the amount to be refunded should be £600") do
+Then("I see the amount to be refunded should be £656.66") do
   expect(evidence_page.content).to have_full_refund_header
 end
 
-Then("I see the amount to be refunded should be £395") do
+Then("I see the amount to be refunded should be £451.66") do
   expect(evidence_page.content).to have_partial_refund_header
 end
 
