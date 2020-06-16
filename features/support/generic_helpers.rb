@@ -34,6 +34,10 @@ def application_page
   @application_page ||= ApplicationPage.new
 end
 
+def benefit_checker_page
+  @benefit_checker_page ||= BenefitCheckerPage.new
+end
+
 def processed_applications_page
   @processed_applications_page ||= ProcessedApplicationsPage.new
 end
@@ -251,4 +255,13 @@ end
 
 def reference_prefix
   "PA#{Time.zone.now.strftime('%y')}"
+end
+
+def user_signed_in_dwp_down
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'offline')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+    sign_in_page.user_account
+  end
 end
