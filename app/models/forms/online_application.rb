@@ -4,7 +4,7 @@ module Forms
     include DataFieldFormattable
 
     def self.permitted_attributes
-      { fee: Integer,
+      { fee: Decimal,
         jurisdiction_id: Integer,
         date_received: Date,
         day_date_received: Integer,
