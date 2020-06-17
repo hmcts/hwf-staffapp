@@ -12,7 +12,8 @@ module Forms
         year_date_received: Integer,
         form_name: String,
         emergency: Boolean,
-        emergency_reason: String }
+        emergency_reason: String,
+        benefits_override: Boolean }
     end
 
     define_attributes
@@ -71,7 +72,8 @@ module Forms
         fee: fee,
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
-        form_name: form_name
+        form_name: form_name,
+        benefits_override: benefits_override
       }
     end
   end

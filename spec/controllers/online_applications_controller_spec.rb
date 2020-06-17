@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OnlineApplicationsController, type: :controller do
   let(:user) { create :user }
-  let(:online_application) { build_stubbed(:online_application) }
+  let(:online_application) { build_stubbed(:online_application, benefits: false) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
 
@@ -73,16 +73,6 @@ RSpec.describe OnlineApplicationsController, type: :controller do
             expect(response).to render_template(:edit)
           end
         end
-
-        context 'when it is a benefits based application' do
-          it 'redirects to homepage' do
-            expect(response).to redirect_to(root_path)
-          end
-
-          it 'sets the alert flash message' do
-            expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
-          end
-        end
       end
     end
   end
@@ -91,12 +81,16 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:params) { {} }
     let(:form_save) { false }
     let(:fee) { 500 }
+    let(:dwp_state) { 'online' }
+    let(:monitor) { instance_double(DwpMonitor) }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:fee).and_return(fee)
       allow(online_application).to receive(:update).and_return(true)
+      allow(DwpMonitor).to receive(:new).and_return monitor
+      allow(monitor).to receive(:state).and_return dwp_state
 
       put :update, params: { id: id, online_application: params }
     end
@@ -128,6 +122,26 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
           it 'redirects to the approval page' do
             expect(response).to redirect_to(approve_online_application_path(online_application))
+          end
+        end
+
+        context 'when it is benefit application' do
+          let(:online_application) { build_stubbed(:online_application, benefits: true) }
+
+          context 'dwp is down' do
+            let(:dwp_state) { 'offline' }
+
+            it 'redirects to the approval page' do
+              expect(response).to redirect_to(benefits_online_application_path(online_application))
+            end
+          end
+
+          context 'dwp is working' do
+            let(:dwp_state) { 'online' }
+
+            it 'renders the summary page' do
+              expect(response).to redirect_to(online_application_path(online_application))
+            end
           end
         end
       end
@@ -187,11 +201,12 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   describe 'POST #complete' do
-    let(:application) { build_stubbed(:application) }
+    let(:application) { build_stubbed(:application, office: user.office) }
     let(:application_builder) { instance_double(ApplicationBuilder, build_from: application) }
     let(:application_calculation) { instance_double(ApplicationCalculation, run: nil) }
     let(:resolver_service) { instance_double(ResolverService, complete: nil) }
     let(:pass_fail_service) { instance_double(SavingsPassFailService, calculate!: nil) }
+    let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
@@ -199,6 +214,9 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(ApplicationCalculation).to receive(:new).with(application).and_return(application_calculation)
       allow(ResolverService).to receive(:new).with(application, user).and_return(resolver_service)
       allow(SavingsPassFailService).to receive(:new).with(application.saving).and_return(pass_fail_service)
+      allow(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return benefit_override
+      allow(benefit_override).to receive(:update)
+      allow(application).to receive(:update)
 
       post :complete, params: { id: id }
     end
@@ -232,6 +250,30 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
       it 'redirects to the application confirmation page' do
         expect(response).to redirect_to(application_confirmation_path(application, 'digital'))
+      end
+
+      context 'benefit override true' do
+        let(:online_application) { build_stubbed(:online_application, benefits_override: true) }
+
+        it 'creates benefit overrides record' do
+          expect(benefit_override).to have_received(:update).with(correct: true, completed_by: user)
+        end
+
+        it 'update outcome of the application' do
+          expect(application).to have_received(:update).with(outcome: 'full')
+        end
+      end
+
+      context 'benefit override false' do
+        let(:online_application) { build_stubbed(:online_application, benefits_override: false) }
+
+        it 'do not create benefit overrides record' do
+          expect(benefit_override).not_to have_received(:update)
+        end
+
+        it 'do not update outcome' do
+          expect(application).not_to have_received(:update)
+        end
       end
     end
   end

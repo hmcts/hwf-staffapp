@@ -1,0 +1,40 @@
+- content_for :page_title
+  = "Benefits - paper evidence"
+
+= form_for @form, as: :online_application, url: benefits_online_application_path(@online_application), method: :put, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl.util_mb-small Benefits
+
+      - if DwpMonitor.new.state == 'offline'
+      .page-error.util_mb-medium.govuk-error-summary__body
+        = t('.message')
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend = t('paper_evidence', scope: @form.i18n_scope)
+          - if @form.errors[:benefits_override].present?
+            span.govuk-error-message
+              = f.label :benefits_override, @form.errors[:benefits_override].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :benefits_override, 'false', { class: 'govuk-radios__input' }
+              = f.label t('benefits_override_false', scope: @form.i18n_scope), for: 'online_application_benefits_override_false', class: 'govuk-label govuk-radios__label'
+            .govuk-radios__item
+              = f.radio_button :benefits_override, 'true', { class: 'govuk-radios__input' }
+              = f.label t('benefits_override_true', scope: @form.i18n_scope), for: 'online_application_benefits_override_true', class: 'govuk-label govuk-radios__label'
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m Paper evidence
+        p You may need to check paper evidence to confirm the applicant is receiving benefits. This is usually an official letter.
+        h3.govuk-heading-s For example when:
+        ul.govuk-list.govuk-list--bullet
+          li the applicant hasn't provided their National Insurance number
+          li the applicant recently started receiving benefits but the Department for Work and Pensions is not up to date
+          li the applicant receives joint benefits and the benefit is in the applicant's partner's name
+        p If you’re processing applications at the counter, ask the applicant for paper evidence if any of the above situations applies to them.
+        p Otherwise you'll need to write to the applicant and ask them for paper evidence.
