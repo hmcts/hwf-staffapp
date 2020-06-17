@@ -4,8 +4,8 @@ class IncomesPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
     element :question, 'legend', text: 'In questions 10 and 11, does the applicant financially support any children?'
-    element :no, '.govuk-label', text: 'No'
-    element :yes, '.govuk-label', text: 'Yes'
+    element :no, '.govuk-label', text: 'No', visible: false
+    element :yes, '.govuk-label', text: 'Yes', visible: false
     element :number_of_children_hint, '.govuk-hint', text: 'Add number given in questions 10 and 11 together'
     element :number_of_children_error, '.error', text: 'Enter number of children'
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'

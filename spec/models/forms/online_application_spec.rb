@@ -119,7 +119,7 @@ RSpec.describe Forms::OnlineApplication do
     context 'when the params are correct' do
       let(:params) do
         {
-          fee: 100,
+          fee: 100.23,
           jurisdiction_id: jurisdiction.id,
           date_received: Time.zone.yesterday,
           form_name: 'E45',
