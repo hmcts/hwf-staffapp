@@ -10,7 +10,7 @@ And("I am on an application waiting for evidence") do
 end
 
 When("I click on start now to process the evidence") do
-  click_on 'Start now'
+  click_on 'Start now', visible: false
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
@@ -77,11 +77,11 @@ When(/^I submit (\d+) as the income$/) do |income|
   next_page
 end
 
-Then("I see the amount to be refunded should be £600") do
+Then("I see the amount to be refunded should be £656.66") do
   expect(evidence_page.content).to have_full_refund_header
 end
 
-Then("I see the amount to be refunded should be £395") do
+Then("I see the amount to be refunded should be £451.66") do
   expect(evidence_page.content).to have_partial_refund_header
 end
 
@@ -108,12 +108,12 @@ Then("I see that the applicant needs to make a payment towards the fee") do
 end
 
 Given("I have successfully submitted the evidence") do
-  click_on 'Start now'
+  click_on 'Start now', visible: false
   evidence_accuracy_page.content.correct_evidence.click
   next_page
   fill_in 'Total monthly income from evidence', with: '500'
   next_page
-  click_on 'Next'
+  click_on 'Next', visible: false
 end
 
 Given("I have successfully processed the evidence") do
@@ -136,8 +136,8 @@ Then("I should see the evidence details on the summary page") do
 end
 
 When("I complete processing") do
-  click_on 'Complete processing'
-  click_on 'Back to start'
+  click_on 'Complete processing', visible: false
+  click_on 'Back to start', visible: false
 end
 
 Then("I should see select from one of the problem options error message") do

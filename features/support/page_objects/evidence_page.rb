@@ -1,8 +1,8 @@
 class EvidencePage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
-    element :full_refund_header, 'h2', text: 'The amount to be refunded should be £600'
-    element :partial_refund_header, 'h2', text: 'The amount to be refunded should be £395'
+    element :full_refund_header, 'h2', text: 'The amount to be refunded should be £656.66'
+    element :partial_refund_header, 'h2', text: 'The amount to be refunded should be £451.66'
     element :eligable_header, 'h2', text: '✓ Eligible for help with fees'
     element :not_eligable_header, 'h2', text: '✗ Not eligible for help with fees'
     element :part_payment, 'h2', text: 'The applicant must pay £205 towards the fee'
@@ -24,12 +24,12 @@ class EvidencePage < BasePage
 
   def processed_evidence
     click_on "#{reference_prefix}-000002"
-    click_on 'Start now'
+    click_on 'Start now', visible: false
     evidence_accuracy_page.content.correct_evidence.click
     next_page
     fill_in 'Total monthly income from evidence', with: '500'
     next_page
-    click_on 'Next'
-    click_on 'Complete processing'
+    click_on 'Next', visible: false
+    click_on 'Complete processing', visible: false
   end
 end

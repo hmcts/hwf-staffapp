@@ -23,6 +23,7 @@
 
 
     =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+
     -if !@application.detail.refund?
       h2.govuk-heading-m Next steps
 
@@ -31,9 +32,9 @@
         p.govuk-body Copy the reference number into the case management system
         p.govuk-body The applicant’s process can now be issued
       -elsif @application.outcome.eql?('part')
-        p.govuk-body Write to the applicant with details of how much they have to pay
-        p.govuk-body Store the application form in a secure location until you receive the part-payment
-        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Write the reference number on the top right corner of the paper form.
+        p.govuk-body Write to the applicant using the letter on this page.
+        p.govuk-body Store the application form in a secure location until you receive the part payment.
       -else
         p.govuk-body Write the reference number on the top right corner of the paper form
         p.govuk-body Copy the reference number into the case management system
@@ -50,12 +51,11 @@
             reference: @application.reference,
             full_name: @application.applicant.full_name,
             user_name: current_user.name,
+            full_fee: number_to_currency(parse_amount_to_pay(@application.detail.fee), precision: 0),
             part_payment_amount: number_to_currency(parse_amount_to_pay(@application.amount_to_pay), precision: 0),
             total_income: number_to_currency(@application.income, precision: 0),
             children: @application.children,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
-
-
 
 
     = link_to 'Back to start', root_path, class: 'govuk-button'

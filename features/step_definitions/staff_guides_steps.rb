@@ -10,6 +10,10 @@ Then("I can view how to guide") do
   expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
+Then("I can view the training course") do
+  expect(guide_page.content.training_course['href']).to eq 'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
+end
+
 When("I can view key control checks guide") do
   expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/10/help-with-fees-key-control-checks.pdf'
 end
