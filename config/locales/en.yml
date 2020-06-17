@@ -162,7 +162,7 @@ en-GB:
   error_messages:
     benefit_check:
       dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
-      cannot_process_application: This is a benefits-based application which cannot be processed until the DWP checker is available
+      cannot_process_application: Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
     dwp_unavailable: You can’t check an applicant’s benefits. We’re investigating this issue.
     dwp_warning: You may not be able to check an applicant’s benefits. We’re investigating this issue.
@@ -278,6 +278,10 @@ en-GB:
         default: "Use the default DWP check to display message"
   offices:
     jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees.support@digital.justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
+
+  online_application_benefits:
+    edit:
+      message: Due to the benefits checker being down, you will only be able to process this application if you have paper evidence that the applicant is receiving benefits.
 
   activemodel:
     attributes:
@@ -496,6 +500,9 @@ en-GB:
         year_date_received: Year
         date_hint: For example, 04 10 2018
         date_received: Date received
+        benefits_override_false: 'No'
+        benefits_override_true: 'Yes, the applicant has provided paper evidence'
+        paper_evidence: Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?
 
       forms/fee_approval:
         first_name: Manager's first name
