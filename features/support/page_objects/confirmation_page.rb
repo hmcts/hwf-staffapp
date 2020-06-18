@@ -3,6 +3,8 @@ class ConfirmationPage < BasePage
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
     element :reference_number, '.reference-number'
     element :eligible, 'h2', text: '✓ Eligible for help with fees'
+    element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed (paper evidence checked)'
+    element :passed_benefits, '.govuk-summary-list__row', text: '✓ Passed (paper evidence checked)'
     element :next_steps_steps, 'h2', text: 'Next steps'
     element :outcome_header, 'h2'
     element :write_ref, 'p', text: 'Write the reference number on the top right corner of the paper form'
