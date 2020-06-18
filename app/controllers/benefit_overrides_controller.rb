@@ -44,7 +44,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def dwp_is_down
-    DwpMonitor.new.state == 'offline'
+    DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
   end
 
   def no_paper_evidence?
