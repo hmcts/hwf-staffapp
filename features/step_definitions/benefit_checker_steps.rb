@@ -14,7 +14,7 @@ Then("I should see a notification telling me that I can only process income-base
 end
 
 Then("applications where the applicant has provided paper evidence") do
-  expect(benefit_checker_page.content.dwp_down_warning[1]).to have_text 'You can only process income-based applications. Please wait until the DWP checker is available to process online benefits-based applications'
+  expect(benefit_checker_page.content.dwp_down_warning[1]).to have_text 'You can only process: income-based applications benefits-based applications if the applicant has provided paper evidence'
 end
 
 When("I start processing a paper application") do
