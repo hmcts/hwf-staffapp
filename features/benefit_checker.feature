@@ -4,8 +4,7 @@ Feature: Benefit checker
     Given I am signed in as a user and I see the benefit checker is down
 
   Scenario: Income based or paper evidence notification
-    Then I should see a notification telling me that I can only process income-based applications
-    And applications where the applicant has provided paper evidence
+    Then I should see a notification telling me that I can only process income-based applications or where the applicant has provided paper evidence
 
   Scenario: Paper evidence for an applicant receiving benefits
     When I start processing a paper application
