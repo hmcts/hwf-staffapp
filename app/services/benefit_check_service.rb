@@ -35,7 +35,7 @@ class BenefitCheckService
   rescue RestClient::BadRequest => e
     log_error JSON.parse(e.response)['error'], 'BadRequest'
   rescue Exceptions::UndeterminedDwpCheck
-    log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
+    log_error @response.to_json, 'Undetermined'
   rescue Errno::ECONNREFUSED
     log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Server unavailable'
   rescue StandardError => e

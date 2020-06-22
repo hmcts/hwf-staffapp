@@ -80,7 +80,7 @@ describe BenefitCheckService do
   end
 
   context 'called with invalid params' do
-    context 'when api_proxy returns undetermined' do
+    context 'when method returns undetermined' do
       let(:invalid_check) { create(:invalid_benefit_check) }
       before do
         dwp_api_response 'Undetermined'
@@ -93,6 +93,24 @@ describe BenefitCheckService do
 
       it 'returns fail' do
         expect(invalid_check.benefits_valid).to be false
+      end
+    end
+
+    context 'when the api returns undetermined' do
+      let(:user) { create(:user) }
+      let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+
+      before do
+        dwp_api_response 'Undetermined'
+        described_class.new(check)
+      end
+
+      it 'stores response as JSON in the message' do
+        expect(JSON.parse(check.error_message)['original_client_ref']).to eql('unique')
+      end
+
+      it 'returns fail' do
+        expect(check.benefits_valid).to be false
       end
     end
   end
