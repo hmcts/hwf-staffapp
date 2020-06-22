@@ -48,3 +48,23 @@ end
 Then("I should see that the applicant passes on benefits") do
   expect(confirmation_page.content).to have_passed_benefits
 end
+
+Given("the benefit checker is down") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'offline')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+    sign_in_page.admin_account
+  end
+  expect(sign_in_page).to have_welcome_user
+end
+
+When("an admin changes the DWP message to display DWP check is working message") do
+  navigation_page.navigation_link.dwp_message.click
+  dwp_message_page.check_online
+  click_on 'Help with fees'
+end
+
+Then("benefits and income based applications can be processed") do
+  expect(dashboard_page).to have_dwp_online_banner
+end

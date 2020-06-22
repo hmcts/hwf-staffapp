@@ -83,6 +83,8 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:fee) { 500 }
     let(:dwp_state) { 'online' }
     let(:monitor) { instance_double(DwpMonitor) }
+    let(:dwp_warning) { create :dwp_warning, check_state: dwp_warning_state }
+    let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
@@ -91,6 +93,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(online_application).to receive(:update).and_return(true)
       allow(DwpMonitor).to receive(:new).and_return monitor
       allow(monitor).to receive(:state).and_return dwp_state
+      allow(DwpWarning).to receive(:state).and_return dwp_warning_state
 
       put :update, params: { id: id, online_application: params }
     end
@@ -133,6 +136,30 @@ RSpec.describe OnlineApplicationsController, type: :controller do
 
             it 'redirects to the approval page' do
               expect(response).to redirect_to(benefits_online_application_path(online_application))
+            end
+
+            context 'when the DwpWarning is set to online' do
+              let(:dwp_warning_state) { DwpWarning::STATES[:online] }
+
+              it 'redirects to the approval page' do
+                expect(response).to redirect_to(online_application_path(online_application))
+              end
+            end
+
+            context 'when the DwpWarning is set to offline' do
+              let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+
+              it 'redirects to the approval page' do
+                expect(response).to redirect_to(benefits_online_application_path(online_application))
+              end
+            end
+
+            context 'when the DwpWarning is set to offline' do
+              let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
+
+              it 'redirects to the approval page' do
+                expect(response).to redirect_to(benefits_online_application_path(online_application))
+              end
             end
           end
 
