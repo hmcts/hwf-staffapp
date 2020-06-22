@@ -33,11 +33,14 @@ RSpec.describe BenefitOverridesController, type: :controller do
     let(:params) { { application_id: application.id, benefit_override: override_params } }
     let(:dwp_state) { 'online' }
     let(:monitor) { instance_double(DwpMonitor) }
+    let(:dwp_warning) { create :dwp_warning, check_state: dwp_warning_state }
+    let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
 
     before do
       allow(benefits_evidence_form).to receive(:update_attributes).with(override_params)
       allow(DwpMonitor).to receive(:new).and_return monitor
       allow(monitor).to receive(:state).and_return dwp_state
+      allow(DwpWarning).to receive(:state).and_return dwp_warning_state
       post_save
     end
 
@@ -65,6 +68,31 @@ RSpec.describe BenefitOverridesController, type: :controller do
           it 'Does not create save the form' do
             expect(benefits_evidence_form).not_to have_received(:save)
           end
+
+          context 'and DWP Warning is set to default_checker' do
+            let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
+
+            it 'redirects to the home page' do
+              expect(response).to redirect_to(root_path)
+            end
+          end
+
+          context 'and DWP Warning is set to online' do
+            let(:dwp_warning_state) { DwpWarning::STATES[:online] }
+
+            it 'redirects to the home page' do
+              expect(response).to redirect_to(application_summary_path(application))
+            end
+          end
+
+          context 'and DWP Warning is set to offline' do
+            let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+
+            it 'redirects to the home page' do
+              expect(response).to redirect_to(root_path)
+            end
+          end
+
         end
       end
     end

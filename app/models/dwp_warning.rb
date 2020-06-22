@@ -9,6 +9,11 @@ class DwpWarning < ActiveRecord::Base
     last.check_state == STATES[:default_checker]
   end
 
+  def self.state
+    return if last.blank?
+    last.check_state
+  end
+
   private
 
   def only_one_record_allowed

@@ -94,7 +94,8 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def display_paper_evidence_page?
-    online_application.benefits && DwpMonitor.new.state == 'offline'
+    return false if online_application.benefits == false
+    DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
   end
 
   def reset_fee_manager_approval_fields
