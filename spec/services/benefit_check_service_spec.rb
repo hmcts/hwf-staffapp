@@ -71,6 +71,10 @@ describe BenefitCheckService do
           expect(check.error_message).to eql("LSCBC210: Error in request parameter 'Surname'")
         end
 
+        it 'API response is empty' do
+          expect(check.api_response).to be_nil
+        end
+
         it 'returns fail' do
           expect(check.benefits_valid).to be false
         end
@@ -80,7 +84,10 @@ describe BenefitCheckService do
   end
 
   context 'called with invalid params' do
-    context 'when api_proxy returns undetermined' do
+    let(:api_response) { { "@xmlns" => "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check", "benefit_checker_status" => status, "confirmation_ref" => "T1426267181940", "original_client_ref" => "unique" } }
+    let(:status) { 'Undetermined' }
+
+    context 'when method returns undetermined' do
       let(:invalid_check) { create(:invalid_benefit_check) }
       before do
         dwp_api_response 'Undetermined'
@@ -93,6 +100,28 @@ describe BenefitCheckService do
 
       it 'returns fail' do
         expect(invalid_check.benefits_valid).to be false
+      end
+    end
+
+    context 'when the api returns undetermined' do
+      let(:user) { create(:user) }
+      let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+
+      before do
+        dwp_api_response status
+        described_class.new(check)
+      end
+
+      it 'saves our message' do
+        expect(check.error_message).to eql('The details you’ve entered are incorrect, check and try again')
+      end
+
+      it 'stores response as JSON in the api_response column' do
+        expect(JSON.parse(check.api_response)).to eql(api_response)
+      end
+
+      it 'returns fail' do
+        expect(check.benefits_valid).to be false
       end
     end
   end

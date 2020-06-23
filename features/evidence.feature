@@ -50,13 +50,13 @@ Scenario: Full refund
   And I click on start now to process the evidence
   And I submit that the evidence is correct
   When I submit 500 as the income
-  Then I see the amount to be refunded should be £600
+  Then I see the amount to be refunded should be £656.66
 
 Scenario: Not eligible income amount
   And I am on an application waiting for evidence
   And I click on start now to process the evidence
   And I submit that the evidence is correct
-  When I submit 2300 as the income
+  When I submit 2500 as the income
   Then I see that the applicant is not eligible for help with fees
 
 Scenario: Partial refund
@@ -64,7 +64,7 @@ Scenario: Partial refund
   And I click on start now to process the evidence
   And I submit that the evidence is correct
   When I submit 1500 as the income
-  Then I see the amount to be refunded should be £395
+  Then I see the amount to be refunded should be £451.66
 
 Scenario: Check details
   And I am on an application waiting for evidence

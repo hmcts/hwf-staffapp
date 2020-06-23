@@ -39,7 +39,10 @@ h1.visuallyhidden Help with fees - Staff application
         = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
           - if @state == 'offline'
             .dwp-down data-equalheight="true" data-heightgroup="1"
-              p.govuk-body-s =t('index.process.digital.dwp-down')
+              p.govuk-body-s =t('index.process.paper.dwp-down.heading')
+              ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
+                -t('index.process.paper.dwp-down.options').each do |option|
+                  li class="govuk-!-font-size-16" =option
           .flexi data-equalheight="true"
             h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
               | Process an online application
