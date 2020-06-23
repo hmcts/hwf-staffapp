@@ -34,6 +34,10 @@ def application_page
   @application_page ||= ApplicationPage.new
 end
 
+def benefit_checker_page
+  @benefit_checker_page ||= BenefitCheckerPage.new
+end
+
 def processed_applications_page
   @processed_applications_page ||= ProcessedApplicationsPage.new
 end

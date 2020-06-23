@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       post :complete
       get 'approve', to: 'online_applications#approve'
       put 'approve', to: 'online_applications#approve_save'
+      get 'benefits', to: 'online_application_benefits#edit'
+      put 'benefits', to: 'online_application_benefits#update'
     end
   end
 
