@@ -84,7 +84,7 @@ describe BenefitCheckService do
   end
 
   context 'called with invalid params' do
-    let(:api_response) { {"@xmlns"=>"https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check", "benefit_checker_status"=> status, "confirmation_ref"=>"T1426267181940", "original_client_ref"=>"unique"} }
+    let(:api_response) { { "@xmlns" => "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check", "benefit_checker_status" => status, "confirmation_ref" => "T1426267181940", "original_client_ref" => "unique" } }
     let(:status) { 'Undetermined' }
 
     context 'when method returns undetermined' do
