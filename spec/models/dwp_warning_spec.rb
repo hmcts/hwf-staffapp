@@ -22,4 +22,25 @@ RSpec.describe DwpWarning, type: :model do
       it { expect(DwpWarning.use_default_check?).to be_falsey }
     end
   end
+
+  describe '#state' do
+
+    context 'online' do
+      before { create :dwp_warning, check_state: DwpWarning::STATES[:online] }
+
+      it { expect(DwpWarning.state).to eql('online') }
+    end
+
+    context 'offline' do
+      before { create :dwp_warning, check_state: DwpWarning::STATES[:offline] }
+
+      it { expect(DwpWarning.state).to eql('offline') }
+    end
+
+    context 'default_checker' do
+      before { create :dwp_warning, check_state: DwpWarning::STATES[:default_checker] }
+
+      it { expect(DwpWarning.state).to eql('default_checker') }
+    end
+  end
 end
