@@ -9,9 +9,10 @@ end
 
 Then("I should see the applicants online personal details") do
   expect(page).to have_text 'Peter Smith'
-  expect(process_online_application_page.content).to have_court_fee
-  expect(process_online_application_page.content).to have_day_input
-  expect(process_online_application_page.content).to have_month_input
-  expect(process_online_application_page.content).to have_year_input
+  expect(process_online_application_page.content.group[0].input[0].value).to eq '450.0'
+  expect(process_online_application_page.content.group[2].input[0].value).to eq Time.zone.yesterday.day.to_s
+  expect(process_online_application_page.content.group[2].input[1].value).to eq Time.zone.yesterday.month.to_s
+  expect(process_online_application_page.content.group[2].input[2].value).to eq Time.zone.yesterday.year.to_s
+  expect(process_online_application_page.content.group[3].input[0].value).to eq 'ABC123'
   click_on 'Next'
 end
