@@ -8,10 +8,10 @@ module DwpSetup
 
   def build_dwp_checks_with_all_errors
     teardown
-    create_list :benefit_check, 12, :yes_result
-    create_list :benefit_check, 4, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
-    create_list :benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable'
-    create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
+    create_list :benefit_check, 6, :yes_result
+    create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
+    create_list :benefit_check, 1, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable'
+    create_list :benefit_check, 1, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
   end
 
   private

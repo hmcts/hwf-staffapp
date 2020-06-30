@@ -65,6 +65,7 @@ class BenefitCheckService
 
   def log_error(message, result)
     @check_item.error_message = message
+    @check_item.api_response = @response.to_json if @response
     @check_item.update!(dwp_result: result)
     LogStuff.log @check_item.class.name.titleize.humanize, message
   end
