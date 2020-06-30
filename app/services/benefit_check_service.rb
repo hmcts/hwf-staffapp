@@ -7,6 +7,7 @@ class BenefitCheckService
     begin
       validate_inputs
       check_remote_api
+      schedule_rerun? unless @check_item.benefits_valid
     rescue StandardError
       @check_item.benefits_valid = @result
       log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
@@ -68,5 +69,10 @@ class BenefitCheckService
     @check_item.api_response = @response.to_json if @response
     @check_item.update!(dwp_result: result)
     LogStuff.log @check_item.class.name.titleize.humanize, message
+  end
+
+  def schedule_rerun?
+    return unless Delayed::Job.last.blank? && DwpMonitor.new.state == 'offline'
+    BenefitCheckRerunJob.delay(run_at: 15.minutes.from_now).perform_later
   end
 end

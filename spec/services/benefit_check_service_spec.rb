@@ -125,4 +125,78 @@ describe BenefitCheckService do
       end
     end
   end
+
+  describe 'schedule rerun?' do
+    let(:bc_runner) { instance_double(BenefitCheckRunner) }
+    let(:benefit_checks) { class_double(BenefitCheck) }
+    let(:bc_runner_job) { class_double(BenefitCheckRerunJob) }
+    let(:time_now) { Time.now }
+    let(:time_to_run) { time_now + 15.minutes }
+    let(:user) { create(:user) }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+    let(:dwp_monitor) { instance_double('DwpMonitor') }
+    let(:dwp_state) { 'online' }
+    let(:job_from_queue) { nil }
+    let(:dwp_response) { 'No' }
+
+    before do
+      allow(BenefitCheckRunner).to receive(:new).and_return bc_runner
+      allow(bc_runner).to receive(:run)
+      allow(BenefitCheckRerunJob).to receive(:delay).and_return bc_runner_job
+      allow(bc_runner_job).to receive(:perform_later)
+      allow(dwp_monitor).to receive(:state).and_return(dwp_state)
+      allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
+      allow(Delayed::Job).to receive(:last).and_return(job_from_queue)
+
+
+      dwp_api_response dwp_response
+      Timecop.freeze(time_now) do
+        described_class.new(check)
+      end
+    end
+
+    context 'valid response should not try rerun' do
+      let(:dwp_response) { 'Yes' }
+
+      it { expect(dwp_monitor).not_to have_received(:state) }
+      it { expect(Delayed::Job).not_to have_received(:last) }
+    end
+
+    context 'failed response' do
+      context 'DWP is offline and no job in queue' do
+        let(:dwp_state) { 'offline' }
+
+        it 'schedule the rerun' do
+          expect(BenefitCheckRerunJob).to have_received(:delay).with(run_at: time_to_run)
+        end
+        it { expect(bc_runner_job).to have_received(:perform_later) }
+      end
+
+      context 'DWP is online and no job in queue' do
+        let(:dwp_state) { 'online' }
+
+        it 'no rerun' do
+          expect(BenefitCheckRerunJob).not_to have_received(:delay)
+        end
+      end
+
+      context 'DWP is offline and there is a job in a queue' do
+        let(:dwp_state) { 'offline' }
+        let(:job_from_queue) { 'job' }
+
+        it 'no rerun' do
+          expect(BenefitCheckRerunJob).not_to have_received(:delay)
+        end
+      end
+
+      context 'DWP is online and there is a job in a queue' do
+        let(:dwp_state) { 'online' }
+        let(:job_from_queue) { 'job' }
+
+        it 'no rerun' do
+          expect(BenefitCheckRerunJob).not_to have_received(:delay)
+        end
+      end
+    end
+  end
 end
