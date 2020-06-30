@@ -10,5 +10,6 @@ class ProcessOnlineApplicationPage < BasePage
       elements :jurisdiction, '.govuk-radios__item'
     end
     element :error, '.error', text: 'You must select a jurisdiction'
+    element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
   end
 end

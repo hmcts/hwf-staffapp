@@ -28,3 +28,8 @@ Feature: Benefit checker
     Given the benefit checker is down
     When an admin changes the DWP message to display DWP check is working message
     Then benefits and income based applications can be processed
+
+  Scenario: Processing an online application when the benefit checker is down
+    Given I have looked up an online application when the benefit checker is down
+    When I process the online application
+    Then I should see that the online applicant fails on benefits

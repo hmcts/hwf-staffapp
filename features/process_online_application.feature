@@ -1,4 +1,4 @@
-Feature: Online application
+Feature: Process an online application
 
   Scenario: Application details
     Given I have looked up an online application
@@ -18,5 +18,3 @@ Feature: Online application
     When I see the application details
     And I click next without selecting a jurisdiction
     Then I should see that I must select a jurisdiction error message
-    
-  
