@@ -130,7 +130,7 @@ describe BenefitCheckService do
     let(:bc_runner) { instance_double(BenefitCheckRunner) }
     let(:benefit_checks) { class_double(BenefitCheck) }
     let(:bc_runner_job) { class_double(BenefitCheckRerunJob) }
-    let(:time_now) { Time.now }
+    let(:time_now) { Time.zone.now }
     let(:time_to_run) { time_now + 15.minutes }
     let(:user) { create(:user) }
     let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
@@ -147,7 +147,6 @@ describe BenefitCheckService do
       allow(dwp_monitor).to receive(:state).and_return(dwp_state)
       allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
       allow(Delayed::Job).to receive(:last).and_return(job_from_queue)
-
 
       dwp_api_response dwp_response
       Timecop.freeze(time_now) do
