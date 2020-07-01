@@ -174,6 +174,10 @@ def ho_evidence_check_page
   @ho_evidence_check_page ||= HoEvidenceCheckPage.new
 end
 
+def process_online_application_page
+  @process_online_application_page ||= ProcessOnlineApplicationPage.new
+end
+
 def next_page
   base_page.content.next_button.click
 end
