@@ -1,6 +1,6 @@
 class FindApplicationPage < BasePage
   section :content, '#content' do
-    element :find_application_header, 'h2', text: 'Find an application'
+    element :find_application_header, 'h2', text: 'Find an application', visible: false
     element :search_button, 'input[value="Search"]', visible: false
     element :no_results_found_error, '.error', text: 'No results found', visible: false
     element :processed_by_another_office, '.error', text: 'This application has been processed by '
@@ -19,7 +19,7 @@ class FindApplicationPage < BasePage
         elements :result, 'tr'
       end
     end
-    element :completed_search_reference, '#completed_search_reference'
+    # element :completed_search_reference, '#completed_search_reference'
     element :pagination_info, '.pagination pagination-info'
     element :pagination, '.pagination'
     element :next_page, '.next_page', text: 'Next'
@@ -27,32 +27,32 @@ class FindApplicationPage < BasePage
   end
 
   def search_by_last_name
-    content.completed_search_reference.set 'Smith'
+    fill_in 'Search', with: 'Smith'
     content.search_button.click
   end
 
   def search_by_full_name
-    content.completed_search_reference.set 'John Christopher Smith'
+    fill_in 'Search', with: 'John Christopher Smith'
     content.search_button.click
   end
 
   def search_by_hwf_reference
-    content.completed_search_reference.set "#{reference_prefix}-000001"
+    fill_in 'Search', with: "#{reference_prefix}-000001"
     content.search_button.click
   end
 
   def search_case_number(case_number)
-    content.completed_search_reference.set case_number
+    fill_in 'Search', with: case_number
     content.search_button.click
   end
 
   def search_ni_number
-    content.completed_search_reference.set 'JR054008D'
+    fill_in 'Search', with: 'JR054008D'
     content.search_button.click
   end
 
   def search_invalid_reference
-    content.completed_search_reference.set 'invalid'
+    fill_in 'Search', with: 'invalid'
     content.search_button.click
   end
 
