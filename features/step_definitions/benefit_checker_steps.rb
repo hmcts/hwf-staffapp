@@ -9,6 +9,19 @@ Given("I am signed in as a user and I see the benefit checker is down") do
   expect(benefit_checker_page).to have_dwp_banner_offline
 end
 
+Given("I have looked up an online application when the benefit checker is down") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'offline')
+    DwpMonitor.stub(:new).and_return dwp
+    FactoryBot.create(:online_application, :with_reference, :completed)
+    sign_in_page.load_page
+    sign_in_page.user_account
+    reference = OnlineApplication.last.reference
+    fill_in 'Reference', with: reference
+    click_on 'Look up'
+  end
+end
+
 Then("I should see a notification telling me that I can only process income-based applications or where the applicant has provided paper evidence") do
   expect(benefit_checker_page.content.dwp_down_warning).to have_text 'You can only process: income-based applications benefits-based applications if the applicant has provided paper evidence'
 end
@@ -43,6 +56,10 @@ end
 
 Then("I should see that the applicant fails on benefits") do
   expect(confirmation_page.content).to have_failed_benefits
+end
+
+Then("I should see that the online applicant fails on benefits") do
+  expect(process_online_application_page.content).to have_failed_benefits
 end
 
 Then("I should see that the applicant passes on benefits") do
