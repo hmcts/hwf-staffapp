@@ -34,11 +34,19 @@ h2.govuk-heading-m Evidence check - requested, but not received
 
 h2.govuk-heading-m Processed application results in evidence check
 .confirmation-letter
-  = t('letters.evidence.send_evidence_html',
-      reference: '{AUTO: APPLICATION REFERENCE}',
-      full_name: '{AUTO: APPLICANTS NAME}',
-      user_name: '{AUTO: CURRENT USERS NAME}',
-      expiry_date: '{AUTO: DATE EVIDENCE DUE}')
+  =t('letters.evidence.send_evidence.header_html', reference: '{AUTO: APPLICATION REFERENCE}', full_name: '{AUTO: APPLICANTS NAME}',
+                                                  user_name: '{AUTO: CURRENT USERS NAME}',
+                                                  expiry_date: '{AUTO: DATE EVIDENCE DUE}')
+  =t('letters.evidence.send_evidence.wages_html')
+  =t('letters.evidence.send_evidence.child_maintenace_html')
+  =t('letters.evidence.send_evidence.benefits_and_credits_html')
+  =t('letters.evidence.send_evidence.pensions_html')
+  =t('letters.evidence.send_evidence.rental_html')
+  =t('letters.evidence.send_evidence.goods_selling_html')
+  =t('letters.evidence.send_evidence.prisoner_income_html')
+  =t('letters.evidence.send_evidence.other_monthly_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+  =t('letters.evidence.send_evidence.footer_html', user_name: '{AUTO: CURRENT USERS NAME}')
+
 
 h2.govuk-heading-m Part payment - requested, but not received
 .confirmation-letter
