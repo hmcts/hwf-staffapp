@@ -49,6 +49,8 @@
           =t('letters.evidence.send_evidence.pensions_html')
         - if display_evidence_section?(@application, 'rental')
           =t('letters.evidence.send_evidence.rental_html')
+        - if display_evidence_section?(@application, 'goods_selling') || display_evidence_section?(@application, 'prisoner_income') || display_evidence_section?(@application, 'other_monthly_income')
+          =t('letters.evidence.send_evidence.other_income_header_html')
         - if display_evidence_section?(@application, 'goods_selling')
           =t('letters.evidence.send_evidence.goods_selling_html')
         - if display_evidence_section?(@application, 'prisoner_income')

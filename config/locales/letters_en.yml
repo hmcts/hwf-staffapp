@@ -145,6 +145,9 @@ en-GB:
         rental_html: |
           <h3 class='govuk-heading-m'>Rental income</h3>
           <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must be dated in the last month.</p>
+        other_income_header_html: |
+          <h3 class='govuk-heading-m'>Other income</h3>
+          <p>If any of the following 'other income' types cover your circumstances please provide the appropriate evidence requested: </p>
         goods_selling_html: |
           <h3 class='govuk-heading-m'>Income from selling goods</h3>
           <p>You need to send official documents showing how much you’ve received from public or private sales by what method and how often. This doesn’t include the sale of family heirlooms and other capital assets.</p>
