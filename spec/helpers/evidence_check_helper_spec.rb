@@ -40,4 +40,61 @@ RSpec.describe EvidenceCheckHelper do
       end
     end
   end
+
+  describe 'display_evidence_section?' do
+    let(:application) { build :application, income_kind: income_kind }
+    let(:income_kind) { {} }
+
+    context 'No match for income kind' do
+      let(:income_kind) { { "applicant" => ['Wage'] } }
+      it { expect(display_evidence_section?(application, 'wages')).to be false }
+    end
+
+    context 'No match for section name' do
+      let(:income_kind) { { "applicant" => ['Wages'] } }
+      it { expect(display_evidence_section?(application, 'wage')).to be false }
+    end
+
+    context 'Wages' do
+      let(:income_kind) { { "applicant" => ['Wages'] } }
+      it { expect(display_evidence_section?(application, 'wages')).to be true }
+
+      context 'partner' do
+        let(:income_kind) { { "applicant" => ['Test'], "partner" => ['Wages'] } }
+        it { expect(display_evidence_section?(application, 'wages')).to be true }
+      end
+    end
+
+    context 'Maintenance payments' do
+      let(:income_kind) { { "applicant" => ['Maintenance payments'] } }
+      it { expect(display_evidence_section?(application, 'child_maintenace')).to be true }
+    end
+
+    ["Child Benefit", "Working Tax Credit", "Child Tax Credit", "Contribution-based Jobseekers Allowance (JSA)",
+     "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit"].each do |income_kind_value|
+      context income_kind_value.to_s do
+        let(:income_kind) { { "applicant" => [income_kind_value] } }
+        it { expect(display_evidence_section?(application, 'benefits_and_credits')).to be true }
+      end
+    end
+
+    context 'Pensions (state, work, private)' do
+      let(:income_kind) { { "applicant" => ["Pensions (state, work, private)"] } }
+      it { expect(display_evidence_section?(application, 'pensions')).to be true }
+    end
+
+    ["Rent from anyone living with you", "Rent from other properties you own"].each do |income_kind_value|
+      context income_kind_value.to_s do
+        let(:income_kind) { { "applicant" => [income_kind_value] } }
+        it { expect(display_evidence_section?(application, 'rental')).to be true }
+      end
+    end
+
+    context 'Other income' do
+      let(:income_kind) { { "applicant" => ["Other income"] } }
+      it { expect(display_evidence_section?(application, 'goods_selling')).to be true }
+      it { expect(display_evidence_section?(application, 'prisoner_income')).to be true }
+      it { expect(display_evidence_section?(application, 'other_monthly_income')).to be true }
+    end
+  end
 end
