@@ -32,5 +32,5 @@ Feature: User navigation
       Then I should not be able to navigate to the DWP warning message page
    
     Scenario: Sign out
-      When I click on sign out
+      When I sign out
       Then I am taken to the sign in page

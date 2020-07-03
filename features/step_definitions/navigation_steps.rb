@@ -1,7 +1,3 @@
-When("I click on sign out") do
-  navigation_page.sign_out
-end
-
 Then("I am taken to the sign in page") do
   expect(current_path).to end_with '/users/sign_in'
 end

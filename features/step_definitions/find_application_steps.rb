@@ -165,7 +165,7 @@ end
 Given("a user has processed an application") do
   start_application
   eligable_application
-  navigation_page.sign_out
+  click_link 'Sign out', visible: false
 end
 
 Given("I am signed in as a user from a different office") do
