@@ -19,7 +19,7 @@ When("I successfully submit a single reason") do
 end
 
 Then("I am taken to the summary page") do
-  expect(current_path).to end_with '/evidence/1/summary'
+  expect(current_path).to end_with '/summary'
 end
 
 Then("I should see my reasons for evidence on the summary page") do

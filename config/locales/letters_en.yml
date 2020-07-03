@@ -104,60 +104,66 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
     evidence:
-      send_evidence_html: |
-        <p>Dear %{full_name}</p>
-        <p><strong>Your reference: %{reference}</strong></p>
-        <p>We've received your application for help with fees. Before we can start work on your application, we need more information about your income.</p>
-        <p>We need this information by<strong> %{expiry_date}</strong>.</p>
-        <h3 class='govuk-heading-m'>What you need to do</h3>
-        <ol class="govuk-list govuk-list--number">
-          <li>Check the list below and get a copy of all the documents that apply to you.</li>
-          <li>Make sure you can be clearly identified on every document.</li>
-          <li>Write your reference at the top of every document.</li>
-          <li>Send your documents to the address at the top of this letter.</li>
-        </ol>
-        <h3 class='govuk-heading-m'>Your documents</h3>
-        <p>We need copies of your documents, not originals. If a document is only online, you can take screenshots and print them.</p>
-        <h3 class='govuk-heading-m'>Bank statements</h3>
-        <p>If you haven’t paid the fee yet, send the most recent statements for all of your current accounts.</p>
-        <p>If you’ve already paid the fee, send statements for all of your current accounts dated in the month you paid the fee.</p>
-        <h3 class='govuk-heading-m'>Wages</h3>
-        <p>If you’re employed, send a payslip dated in the last 6 weeks.</p>
-        <p>If you’re self-employed, send your most recent self-assessment tax return and SA302 tax calculation. You can get this at www.gov.uk/sa302-tax-calculation. You can send bank statements for the last tax year if you don’t have either of these documents.</p>
-        <h3 class='govuk-heading-m'>Child maintenance</h3>
-        <p>You need to send documents showing how much you’re paid and how often, for example a:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>sealed court order</li>
-          <li>child Support Agency Assessment</li>
-          <li>voluntary agreement or letter of agreement signed by both parties.</li>
-        </ul>
-
-        <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
-        <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months.</p>
-        <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months.</p>
-        <p>We’ll check your bank statements if you don’t have a Child Benefit Award Notice dated in the last 3 months.</p>
-
-        <h3 class='govuk-heading-m'>Pensions</h3>
-        <p>You need to send a letter or statement showing your state, work and private pension payments.</p>
-
-        <h3 class='govuk-heading-m'>Rental income</h3>
-        <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must be dated in the last month.</p>
-
-        <h3 class='govuk-heading-m'>Income from selling goods</h3>
-        <p>You need to send official documents showing how much you’ve received from public or private sales by what method and how often. This doesn’t include the sale of family heirlooms and other capital assets.</p>
-        <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account.</p>
-
-        <h3 class='govuk-heading-m'>Prisoner’s income</h3>
-        <p>You need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
-
-        <h3 class='govuk-heading-m'>Any other monthly income</h3>
-        <p>You must tell us about and send documents showing any other monthly income you receive.</p>
-        <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
-
-        <h3 class='govuk-heading-m'>What happens next</h3>
-        <p>Once we receive your documents, we’ll check them. We’ll let you know the outcome of your application within 5 - 10 working days.</p>
-        <p>Yours sincerely,</p>
-        <p>%{user_name}</p>
+      send_evidence:
+        header_html: |
+          <p>Dear %{full_name}</p>
+          <p><strong>Your reference: %{reference}</strong></p>
+          <p>We've received your application for help with fees. Before we can start work on your application, we need more information about your income.</p>
+          <p>We need this information by<strong> %{expiry_date}</strong>.</p>
+          <h3 class='govuk-heading-m'>What you need to do</h3>
+          <ol class="govuk-list govuk-list--number">
+            <li>Check the list below and get a copy of all the documents that apply to you.</li>
+            <li>Make sure you can be clearly identified on every document.</li>
+            <li>Write your reference at the top of every document.</li>
+            <li>Send your documents to the address at the top of this letter.</li>
+          </ol>
+          <h3 class='govuk-heading-m'>Your documents</h3>
+          <p>We need copies of your documents, not originals. If a document is only online, you can take screenshots and print them.</p>
+          <h3 class='govuk-heading-m'>Bank statements</h3>
+          <p>If you haven’t paid the fee yet, send the most recent statements for all of your current accounts.</p>
+          <p>If you’ve already paid the fee, send statements for all of your current accounts dated in the month you paid the fee.</p>
+        wages_html: |
+          <h3 class='govuk-heading-m'>Wages</h3>
+          <p>If you’re employed, send a payslip dated in the last 6 weeks.</p>
+          <p>If you’re self-employed, send your most recent self-assessment tax return and SA302 tax calculation. You can get this at www.gov.uk/sa302-tax-calculation. You can send bank statements for the last tax year if you don’t have either of these documents.</p>
+        child_maintenace_html: |
+          <h3 class='govuk-heading-m'>Child maintenance</h3>
+          <p>You need to send documents showing how much you’re paid and how often, for example a:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>sealed court order</li>
+            <li>child Support Agency Assessment</li>
+            <li>voluntary agreement or letter of agreement signed by both parties.</li>
+          </ul>
+        benefits_and_credits_html: |
+          <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
+          <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months.</p>
+          <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months.</p>
+          <p>We’ll check your bank statements if you don’t have a Child Benefit Award Notice dated in the last 3 months.</p>
+        pensions_html: |
+          <h3 class='govuk-heading-m'>Pensions</h3>
+          <p>You need to send a letter or statement showing your state, work and private pension payments.</p>
+        rental_html: |
+          <h3 class='govuk-heading-m'>Rental income</h3>
+          <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must be dated in the last month.</p>
+        other_income_header_html: |
+          <h3 class='govuk-heading-m'>Other income</h3>
+          <p>If any of the following 'other income' types cover your circumstances please provide the appropriate evidence requested: </p>
+        goods_selling_html: |
+          <h3 class='govuk-heading-m'>Income from selling goods</h3>
+          <p>You need to send official documents showing how much you’ve received from public or private sales by what method and how often. This doesn’t include the sale of family heirlooms and other capital assets.</p>
+          <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account.</p>
+        prisoner_income_html: |
+          <h3 class='govuk-heading-m'>Prisoner’s income</h3>
+          <p>You need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+        other_monthly_income_html: |
+          <h3 class='govuk-heading-m'>Any other monthly income</h3>
+          <p>You must tell us about and send documents showing any other monthly income you receive.</p>
+          <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
+        footer_html: |
+          <h3 class='govuk-heading-m'>What happens next</h3>
+          <p>Once we receive your documents, we’ll check them. We’ll let you know the outcome of your application within 5 - 10 working days.</p>
+          <p>Yours sincerely,</p>
+          <p>%{user_name}</p>
       citizen_not_processing_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
