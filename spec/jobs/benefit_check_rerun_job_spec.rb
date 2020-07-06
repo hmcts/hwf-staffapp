@@ -52,20 +52,6 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
           BenefitCheckRerunJob.perform_now
           expect(BenefitCheckRunner).to have_received(:new).with(benefit_check.application)
         end
-
-        it 'schedule another run' do
-          Timecop.freeze(time_to_run - 15.minutes.ago) do
-            BenefitCheckRerunJob.perform_now
-            expect(bc_runner_job).to have_received(:perform_later)
-          end
-        end
-
-        it 'scheduled interval is 15 minutes' do
-          Timecop.freeze(time_to_run - 15.minutes.ago) do
-            BenefitCheckRerunJob.perform_now
-            expect(BenefitCheckRerunJob).to have_received(:delay).with(run_at: 15.minutes.from_now)
-          end
-        end
       end
 
       context 'online' do
