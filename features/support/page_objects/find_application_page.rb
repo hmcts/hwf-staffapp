@@ -19,7 +19,6 @@ class FindApplicationPage < BasePage
         elements :result, 'tr'
       end
     end
-    # element :completed_search_reference, '#completed_search_reference'
     element :pagination_info, '.pagination pagination-info'
     element :pagination, '.pagination'
     element :next_page, '.next_page', text: 'Next'
