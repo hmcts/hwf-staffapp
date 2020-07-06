@@ -9,14 +9,9 @@ class NavigationPage < BasePage
     element :staff_guides, 'a', text: 'Staff Guides'
     element :letter_templates, 'a', text: 'Letter templates'
     element :feedback, 'a', text: 'Feedback'
-    element :sign_out, 'a', text: 'Sign out'
   end
 
   def go_to_homepage
     click_link 'Help with fees', visible: false
-  end
-
-  def sign_out
-    navigation_link.sign_out.click
   end
 end

@@ -30,6 +30,6 @@ class FeedbackPage < BasePage
     sign_in_page.user_account
     navigation_page.navigation_link.feedback.click
     submit_new_feedback
-    navigation_page.sign_out
+    click_link 'Sign out', visible: false
   end
 end
