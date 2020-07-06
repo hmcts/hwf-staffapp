@@ -113,7 +113,7 @@ Then("I should be able to send an email to help with fees support") do
 end
 
 When("I sign out") do
-  navigation_page.navigation_link.sign_out.click
+  click_link 'Sign out', visible: false
 end
 
 Then("I should be on sign in page") do
