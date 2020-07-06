@@ -29,7 +29,7 @@ gem 'devise_invitable'
 gem 'pundit', '~> 2.1'
 
 # background jobs and scheduling
-gem 'daemons'
+# gem 'daemons'
 gem 'delayed_job_active_record'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1'
