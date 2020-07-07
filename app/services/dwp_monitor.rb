@@ -36,10 +36,9 @@ class DwpMonitor
   end
 
   def bad_request_count
-    # i = 0
-    @checks.count do |a|
-      next if a[0] != 'BadRequest'
-      a[1].include?('LSCBC959')
+    @checks.count do |check|
+      next if check[0] != 'BadRequest'
+      check[1].include?('LSCBC959')
     end
   end
 end
