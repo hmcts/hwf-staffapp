@@ -35,7 +35,7 @@ en-GB:
         <p>Remember to include your reference %{reference}.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
         <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_evidence_generic_html: |
         <p>Dear %{full_name}</p>
@@ -62,7 +62,7 @@ en-GB:
         </ul>
         <h3 class='govuk-heading-m'>If you disagree</h3>
         <p>If you think you are eligible for help with your fees and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application, your evidence and any further evidence to support your application. We will reply to you within 10 working days from receiving your application. </p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
         <p>Dear %{full_name}</p>
@@ -169,7 +169,7 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers.</p>
         <p>If you still want to apply for Help with Fees, you will have to fill in a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
@@ -228,7 +228,7 @@ en-GB:
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
         <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
         <p>Dear %{full_name}</p>
@@ -282,4 +282,3 @@ en-GB:
         <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the Court/Tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records. The refunded monies will be received within the next 10 working days.</p>
         <p>From,</p>
         <p>%{user_name}</p>
-
