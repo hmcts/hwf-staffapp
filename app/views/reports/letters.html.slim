@@ -96,3 +96,28 @@ h2.govuk-heading-m Application rejected because benefits not received
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Application is not eligible for refund
+.confirmation-letter
+  = t('letters.refund.not_eligible_html',
+      reference: '{AUTO: APPLICATION REFERENCE}',
+      full_name: '{AUTO: APPLICANTS NAME}',
+      user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Application is eligible for partial refund
+.confirmation-letter
+  = t('letters.refund.part_html',
+      reference: '{AUTO: APPLICATION REFERENCE}',
+      full_name: '{AUTO: APPLICANTS NAME}',
+      user_name: '{AUTO: CURRENT USERS NAME}',
+      fee: '{AUTO: FEE AMOUNT}',
+      amount_refunded: '{AUTO: PARTIAL REMISSION AMOUNT}',
+      decision_cost: '{AUTO: REFUND AMOUNT}')
+
+h2.govuk-heading-m Application is eligible for full refund
+.confirmation-letter
+  = t('letters.refund.full_html',
+    reference: '{AUTO: APPLICATION REFERENCE}',
+    full_name: '{AUTO: APPLICANTS NAME}',
+    user_name: '{AUTO: CURRENT USERS NAME}')
+
