@@ -32,9 +32,9 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    fill_in 'Title', with: 'Mr', visible: false
-    fill_in 'First and middle names', with: 'John Christopher', visible: false
-    fill_in 'Last name', with: 'Smith', visible: false
+    find_field('Title').set('Mr')
+    find_field('First and middle names').set('John Christopher')
+    find_field('Last name').set('Smith')
   end
 
   def valid_dob
