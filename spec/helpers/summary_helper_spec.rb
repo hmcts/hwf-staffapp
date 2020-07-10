@@ -141,4 +141,31 @@ RSpec.describe SummaryHelper, type: :helper do
     end
   end
 
+  describe '#display_savings_failed_letter' do
+    let(:application) { instance_double(Application) }
+    let(:saving) { instance_double(Saving) }
+
+    before do
+      RSpec::Mocks.configuration.allow_message_expectations_on_nil
+      allow(application).to receive(:saving).and_return saving
+      allow(saving).to receive(:passed?).and_return passed
+    end
+
+    context 'failed savings' do
+      let(:passed) { false }
+      it { expect(helper.display_savings_failed_letter?(application)).to be true }
+    end
+
+    context 'passed savings' do
+      let(:passed) { true }
+      it { expect(helper.display_savings_failed_letter?(application)).to be false }
+    end
+
+    context 'no savings' do
+      let(:saving) { nil }
+      let(:passed) { nil }
+      it { expect(helper.display_savings_failed_letter?(application)).to be false }
+    end
+  end
+
 end
