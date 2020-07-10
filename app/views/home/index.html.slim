@@ -14,7 +14,7 @@ h1.visuallyhidden Help with fees - Staff application
   section aria-label="Process applications"
     - if policy(:application).new?
       .govuk-grid-column-one-half#process-application
-        - if @state == 'offline'
+        - if @dwp_state == 'offline'
           .dwp-down data-equalheight="true" data-heightgroup="1"
             p.govuk-body-s =t('index.process.paper.dwp-down.heading')
             ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
@@ -37,7 +37,7 @@ h1.visuallyhidden Help with fees - Staff application
 
       .govuk-grid-column-one-half#process-online-application
         = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-          - if @state == 'offline'
+          - if @dwp_state == 'offline'
             .dwp-down data-equalheight="true" data-heightgroup="1"
               p.govuk-body-s =t('index.process.paper.dwp-down.heading')
               ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
