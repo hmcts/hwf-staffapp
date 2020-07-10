@@ -11,7 +11,7 @@ RSpec.describe HomeController, type: :controller do
 
         before { sign_in staff }
 
-        subject { assigns(:state) }
+        subject { assigns(:dwp_state) }
 
         context 'when less than 25% of the last dwp_results are "400 Bad Request"' do
           before do
@@ -70,7 +70,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
+          expect(assigns(:dwp_state)).to be_a String
         end
 
         it "assigns last updated applications" do
@@ -187,7 +187,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
+          expect(assigns(:dwp_state)).to be_a String
         end
       end
     end
@@ -217,7 +217,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       it 'does assign the DwpMonitor state' do
-        expect(assigns(:state)).not_to be nil
+        expect(assigns(:dwp_state)).not_to be nil
       end
     end
   end
@@ -266,7 +266,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'assigns the DwpMonitor state' do
-          expect(assigns(:state)).to be_a String
+          expect(assigns(:dwp_state)).to be_a String
         end
       end
 
@@ -278,7 +278,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'does not assign the DwpMonitor state' do
-          expect(assigns(:state)).to be nil
+          expect(assigns(:dwp_state)).to be nil
         end
       end
 

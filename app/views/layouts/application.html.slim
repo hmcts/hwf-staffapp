@@ -9,13 +9,13 @@
 
 - content_for :content_override
   #wrapper.group
-    - if @state.present?
+    - if @dwp_state.present?
       .container
-        div class=("dwp-banner-#{@state}")
+        div class=("dwp-banner-#{@dwp_state}")
           p
             strong.dwp-tag DWP checker
             span
-              =render("shared/dwp/#{@state}")
+              =render("shared/dwp/#{@dwp_state}")
     .container
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]
