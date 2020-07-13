@@ -76,6 +76,22 @@ Given("the benefit checker is down") do
   expect(sign_in_page).to have_welcome_user
 end
 
+Given("I am not logged in and the benefit checker down") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'offline')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+  end
+end
+
+Given("I am not logged in and the benefit checker up") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'online')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+  end
+end
+
 When("an admin changes the DWP message to display DWP check is working message") do
   navigation_page.navigation_link.dwp_message.click
   dwp_message_page.check_online
@@ -84,4 +100,17 @@ end
 
 Then("benefits and income based applications can be processed") do
   expect(dashboard_page).to have_dwp_online_banner
+end
+
+Then("I have not signed in") do
+  expect(current_path).to eq '/'
+  expect(sign_in_page.content).to have_sign_in_alert
+end
+
+Then("I should see DWP checker is down") do
+  expect(benefit_checker_page).to have_dwp_banner_offline
+end
+
+Then("I should see DWP checker is up") do
+  expect(benefit_checker_page).to have_dwp_banner_online
 end
