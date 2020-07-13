@@ -24,5 +24,5 @@ end
 
 When("I submit the details of the staff error") do
   fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
-  next_page
+  click_on 'Next', visible: false
 end

@@ -19,13 +19,13 @@ class IncomesPage < BasePage
   end
 
   def submit_incomes_50
-    find_field('Total monthly income').set('50')
-    next_page
+    find_field('Total monthly income', visible: false).set('50')
+    click_on 'Next', visible: false
   end
 
   def submit_incomes_1200
-    find_field('Total monthly income').set('1200')
-    next_page
+    find_field('Total monthly income', visible: false).set('1200')
+    click_on 'Next', visible: false
   end
 
   def submit_incomes_no
@@ -34,8 +34,8 @@ class IncomesPage < BasePage
 
   def submit_incomes_yes_3
     content.yes.click
-    find_field('Number of children').set('3')
-    find_field('Total monthly income').set('1900')
-    next_page
+    find_field('Number of children', visible: false).set('3')
+    find_field('Total monthly income', visible: false).set('1900')
+    click_on 'Next', visible: false
   end
 end
