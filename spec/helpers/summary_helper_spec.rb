@@ -168,4 +168,38 @@ RSpec.describe SummaryHelper, type: :helper do
     end
   end
 
+  describe '#display_benefit_failed_letter' do
+    let(:application) { instance_double(Application) }
+    let(:benefit_check) { instance_double(BenefitCheck) }
+    let(:benefits) { true }
+    let(:benefits_valid) { true }
+
+    before do
+      RSpec::Mocks.configuration.allow_message_expectations_on_nil
+      allow(application).to receive(:benefits).and_return benefits
+      allow(application).to receive(:benefit_checks).and_return [benefit_check]
+      allow(benefit_check).to receive(:benefits_valid?).and_return benefits_valid
+    end
+
+    context 'application is not benefit based' do
+      let(:benefits) { false }
+      it { expect(helper.display_benefit_failed_letter?(application)).to be false }
+    end
+
+    context 'application has no benefit checks' do
+      let(:benefit_check) { nil }
+      it { expect(helper.display_benefit_failed_letter?(application)).to be false }
+    end
+
+    context 'application has valid benefit check' do
+      let(:benefits_valid) { true }
+      it { expect(helper.display_benefit_failed_letter?(application)).to be false }
+    end
+
+    context 'application has invalid benefit check' do
+      let(:benefits_valid) { false }
+      it { expect(helper.display_benefit_failed_letter?(application)).to be true }
+    end
+  end
+
 end
