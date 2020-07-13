@@ -40,6 +40,11 @@ module SummaryHelper
     application.detail.discretion_applied != false
   end
 
+  def display_savings_failed_letter?(application)
+    return false if application.saving.blank?
+    !application.saving.passed?
+  end
+
   private
 
   def all_fields_empty?(object, fields)

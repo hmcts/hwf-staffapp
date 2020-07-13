@@ -26,9 +26,9 @@ class EvidencePage < BasePage
     click_on "#{reference_prefix}-000002"
     click_on 'Start now', visible: false
     evidence_accuracy_page.content.correct_evidence.click
-    next_page
+    click_on 'Next', visible: false
     fill_in 'Total monthly income from evidence', with: '500'
-    next_page
+    click_on 'Next', visible: false
     click_on 'Next', visible: false
     click_on 'Complete processing', visible: false
   end
