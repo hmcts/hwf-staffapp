@@ -16,6 +16,6 @@ class ApprovePage < BasePage
   def submit_full_name
     content.first_name.set 'Mary'
     content.last_name.set 'Smith'
-    next_page
+    click_on 'Next', visible: false
   end
 end

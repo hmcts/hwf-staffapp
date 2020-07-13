@@ -25,7 +25,7 @@ end
 
 When("I submit a date that makes the applicant born in the future") do
   personal_details_page.in_the_future_dob
-  next_page
+  click_on 'Next', visible: false
 end
 
 Then("I should see that the applicant cannot be under 16 years old error message") do
@@ -34,7 +34,7 @@ end
 
 When("I enter a home office reference number in the wrong format") do
   personal_details_page.invalid_ho
-  next_page
+  click_on 'Next', visible: false
 end
 
 Then("I should see enter a home office reference number in the correct format error message") do
@@ -46,11 +46,11 @@ Then("I should see the invalid date of birth error message") do
 end
 
 When("I leave the date of birth blank") do
-  next_page
+  click_on 'Next', visible: false
 end
 
 When("I click on next without answering any questions") do
-  next_page
+  click_on 'Next', visible: false
 end
 
 Then("I should see that I must fill in my last name") do
@@ -67,7 +67,7 @@ end
 
 When("I fill in the form with a last name with one letter") do
   fill_in 'Last name', with: 'S'
-  next_page
+  click_on 'Next', visible: false
 end
 
 Then("I should see error message last name is too short") do

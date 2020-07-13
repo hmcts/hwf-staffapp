@@ -32,9 +32,9 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    fill_in 'Title', with: 'Mr', visible: false
-    fill_in 'First and middle names', with: 'John Christopher', visible: false
-    fill_in 'Last name', with: 'Smith', visible: false
+    find_field('Title').set('Mr')
+    find_field('First and middle names').set('John Christopher')
+    find_field('Last name').set('Smith')
   end
 
   def valid_dob
@@ -66,7 +66,7 @@ class PersonalDetailsPage < BasePage
     fill_in 'Last name', with: 'Smith'
     valid_dob
     content.status_single.click
-    next_page
+    click_on 'Next', visible: false
   end
 
   def submit_all_personal_details_ni
@@ -74,7 +74,7 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ni
     content.status_single.click
-    next_page
+    click_on 'Next', visible: false
   end
 
   def submit_all_personal_details_ho
@@ -82,6 +82,6 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ho
     content.status_single.click
-    next_page
+    click_on 'Next', visible: false
   end
 end
