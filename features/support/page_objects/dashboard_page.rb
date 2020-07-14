@@ -4,7 +4,7 @@ class DashboardPage < BasePage
   element :help_with_fees_home, 'a', text: 'Help with fees'
   section :content, '#content' do
     element :look_up_button, 'input[value="Look up"]'
-    element :start_now_button, 'input[value="Start now"]'
+    element :start_now_button, 'input[value="Start now"]', visible: false
     element :in_progress_header, 'h3', text: 'In progress'
     element :processed_applications, 'a', text: 'Processed applications'
     element :last_application, 'td', text: 'Smith'
