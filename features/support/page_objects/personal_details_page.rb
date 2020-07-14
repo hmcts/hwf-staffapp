@@ -63,7 +63,7 @@ class PersonalDetailsPage < BasePage
   end
 
   def submit_required_personal_details
-    fill_in 'Last name', with: 'Smith'
+    fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.status_single.click
     click_on 'Next', visible: false
