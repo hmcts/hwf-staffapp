@@ -62,8 +62,8 @@ en-GB:
           <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
         <h3 class='govuk-heading-m'>If you disagree</h3>
-        <p>If you think you are eligible for help with your fees and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application, your evidence and any further evidence to support your application. We will reply to you within 10 working days from receiving your application. </p>
-        <p>Yours sincerely,</p>
+        <p>If you think you are eligible for help with your fee and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application or note your Help with Fees reference on your letter, your evidence and any further evidence to support your application. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
         <p>Dear %{full_name}</p>
