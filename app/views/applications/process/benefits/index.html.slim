@@ -7,7 +7,7 @@
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl Benefits the applicant is receiving
 
-      -if @state=='offline'
+      -if @dwp_state=='offline'
         .page-error.util_mb-medium.govuk-error-summary__body
           = t('error_messages.benefit_check.dwp_unavailable')
 

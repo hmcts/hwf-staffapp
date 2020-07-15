@@ -4,6 +4,7 @@ module Users
 
     def new
       @notification = Notification.first
+      @dwp_state = dwp_checker_state
       super
     end
 
