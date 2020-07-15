@@ -26,11 +26,6 @@ Feature: My dashboard
     Then I should see the status of the DWP connection
 
   @wip @manual
-  Scenario: Search a valid reference
-    When I search for an application using valid reference number
-    Then I am taken to ....
-
-  @wip @manual
   Scenario: Search an invalid reference
     When I search for an application using invalid reference number
     Then I should see the reference number is not recognised error message
