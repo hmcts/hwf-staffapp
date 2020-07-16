@@ -55,7 +55,7 @@ end
 
 When("I click on return application") do
   evidence_page.content.evidence_can_not_be_processed.click
-  click_link('Return application')
+  click_link 'Return application', visible: false
 end
 
 Then("I should be taken to the problem with evidence page") do

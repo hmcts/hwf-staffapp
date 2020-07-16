@@ -12,7 +12,7 @@ class ProblemWithEvidencePage < BasePage
     waiting_evidence_application_ni
     click_link("#{reference_prefix}-000002")
     evidence_page.content.evidence_can_not_be_processed.click
-    click_link('Return application')
+    click_link 'Return application', visible: false
   end
 
   def submit_not_arrived_too_late

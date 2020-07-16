@@ -22,7 +22,7 @@ And("the payment is not ready to process") do
 end
 
 And("I open the processed part payment application") do
-  click_link "#{reference_prefix}-000001"
+  click_link "#{reference_prefix}-000001", visible: false
 end
 
 Then("I can see that the applicant has paid £40 towards the fee") do
