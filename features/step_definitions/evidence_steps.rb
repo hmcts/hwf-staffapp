@@ -100,7 +100,7 @@ Then("I should be taken to the reason for rejecting the evidence page") do
 end
 
 Then("I should see this question must be answered error message") do
-  expect(evidence_accuracy_page.content).to have_answer_question_error
+  expect(page).to have_text 'You need to say whether the evidence can be processed'
 end
 
 Then("I see that the applicant needs to make a payment towards the fee") do
@@ -125,7 +125,7 @@ Given("I use the browser back button") do
 end
 
 Given("I should see a message telling me that the application has been processed") do
-  expect(evidence_page.content).to have_error_message
+  expect(page).to have_text 'This application has been processed. You can’t edit any details.'
 end
 
 Then("I should see the evidence details on the summary page") do

@@ -19,7 +19,6 @@ class EvidencePage < BasePage
     end
     element :processing_summary, 'h2', text: 'Processing summary'
     elements :table_row, '.govuk-table__row'
-    element :error_message, '.alert', text: 'This application has been processed. You can’t edit any details.'
   end
 
   def processed_evidence
