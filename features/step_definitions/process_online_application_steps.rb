@@ -4,7 +4,7 @@ Given("I have looked up an online application") do
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up'
+  click_on 'Look up', visible: false
 end
 
 When("I see the application details") do
