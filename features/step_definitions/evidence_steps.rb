@@ -136,7 +136,7 @@ Then("I should see the evidence details on the summary page") do
 end
 
 When("I complete processing") do
-  click_on 'Complete processing', visible: false
+  complete_processing
   click_on 'Back to start', visible: false
 end
 

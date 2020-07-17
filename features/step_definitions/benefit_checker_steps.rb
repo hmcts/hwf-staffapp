@@ -45,13 +45,13 @@ end
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
   click_on 'Next', visible: false
-  click_on 'Complete processing', visible: false
+  complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
   benefit_checker_page.content.yes.click
   click_on 'Next', visible: false
-  click_on 'Complete processing', visible: false
+  complete_processing
 end
 
 Then("I should see that the applicant fails on benefits") do

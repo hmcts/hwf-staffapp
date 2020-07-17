@@ -38,7 +38,7 @@ end
 When("I process the online application") do
   process_online_application_page.content.group[1].jurisdiction[0].click
   click_on 'Next', visible: false
-  click_on 'Complete processing', visible: false
+  complete_processing
 end
 
 Then("I see the applicant is not eligible for help with fees") do

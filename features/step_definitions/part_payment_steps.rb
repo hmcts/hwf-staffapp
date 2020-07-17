@@ -39,7 +39,7 @@ Then("I can see that the applicant needs to make a new application") do
 end
 
 Then("processing is complete I should see a letter template") do
-  click_on 'Complete processing', visible: false
+  complete_processing
   expect(part_payment_page.content).to have_evidence_confirmation_letter
   click_on 'Back to start', visible: false
   expect(current_url).to end_with '/'
