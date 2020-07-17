@@ -59,7 +59,7 @@ When("I click on return application") do
 end
 
 Then("I should be taken to the problem with evidence page") do
-  expect(problem_with_evidence_page.content).to have_header
+  expect(page).to have_text 'What is the problem?'
 end
 
 When("I submit that the evidence is correct") do
@@ -141,7 +141,7 @@ When("I complete processing") do
 end
 
 Then("I should see select from one of the problem options error message") do
-  problem_with_evidence_page.content.header
+  expect(page).to have_text 'What is the problem?'
 end
 
 Then("the application should have the status of processed") do
