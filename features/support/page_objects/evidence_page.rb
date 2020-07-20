@@ -29,6 +29,6 @@ class EvidencePage < BasePage
     fill_in 'Total monthly income from evidence', with: '500'
     click_on 'Next', visible: false
     click_on 'Next', visible: false
-    click_on 'Complete processing', visible: false
+    complete_processing
   end
 end

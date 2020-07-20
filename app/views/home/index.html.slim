@@ -11,17 +11,20 @@ h1.visuallyhidden Help with fees - Staff application
   =render('shared/notifications')
 
 .govuk-grid-row.staff-panels
-  section aria-label="Process applications"
+  .govuk-grid-column-full#warning
+    - if @dwp_state == 'offline'
+      .dwp-down data-equalheight="true" data-heightgroup="1"
+        p.govuk-body-s =t('index.process.paper.dwp-down.heading')
+        ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
+          -t('index.process.paper.dwp-down.options').each do |option|
+            li class="govuk-!-font-size-16" =option
+
+.govuk-grid-row.staff-panels
+  section aria-label="Process a paper application"
     - if policy(:application).new?
       .govuk-grid-column-one-half#process-application
-        - if @dwp_state == 'offline'
-          .dwp-down data-equalheight="true" data-heightgroup="1"
-            p.govuk-body-s =t('index.process.paper.dwp-down.heading')
-            ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
-              -t('index.process.paper.dwp-down.options').each do |option|
-                li class="govuk-!-font-size-16" =option
         .flexi data-equalheight="true"
-          h2.govuk-heading-m Process application
+          h2.govuk-heading-m Process a paper application
 
           p.govuk-body You'll need:
           ul.govuk-list.govuk-list--bullet
@@ -37,12 +40,6 @@ h1.visuallyhidden Help with fees - Staff application
 
       .govuk-grid-column-one-half#process-online-application
         = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
-          - if @dwp_state == 'offline'
-            .dwp-down data-equalheight="true" data-heightgroup="1"
-              p.govuk-body-s =t('index.process.paper.dwp-down.heading')
-              ul.govuk-list.govuk-list--bullet class="govuk-!-font-size-16"
-                -t('index.process.paper.dwp-down.options').each do |option|
-                  li class="govuk-!-font-size-16" =option
           .flexi data-equalheight="true"
             h2.govuk-heading-m class="#{'error' if @online_search_form.errors[:reference].present?}"
               | Process an online application

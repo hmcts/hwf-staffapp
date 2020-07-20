@@ -38,7 +38,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
         visit home_index_url
 
         within '#process-application' do
-          expect(page).to have_text('Process application')
+          expect(page).to have_text('Process a paper application')
           click_button 'Start now'
         end
 

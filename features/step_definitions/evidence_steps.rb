@@ -6,7 +6,7 @@ And("there is an application waiting for evidence") do
 end
 
 And("I am on an application waiting for evidence") do
-  click_link("#{reference_prefix}-000002")
+  click_link "#{reference_prefix}-000002", visible: false
 end
 
 When("I click on start now to process the evidence") do
@@ -55,11 +55,11 @@ end
 
 When("I click on return application") do
   evidence_page.content.evidence_can_not_be_processed.click
-  click_link('Return application')
+  click_link 'Return application', visible: false
 end
 
 Then("I should be taken to the problem with evidence page") do
-  expect(problem_with_evidence_page.content).to have_header
+  expect(page).to have_text 'What is the problem?'
 end
 
 When("I submit that the evidence is correct") do
@@ -136,12 +136,12 @@ Then("I should see the evidence details on the summary page") do
 end
 
 When("I complete processing") do
-  click_on 'Complete processing', visible: false
+  complete_processing
   click_on 'Back to start', visible: false
 end
 
 Then("I should see select from one of the problem options error message") do
-  problem_with_evidence_page.content.header
+  expect(page).to have_text 'What is the problem?'
 end
 
 Then("the application should have the status of processed") do

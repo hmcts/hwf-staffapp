@@ -3,31 +3,31 @@ Then("I am taken to the sign in page") do
 end
 
 Then("I can view my profile") do
-  navigation_page.navigation_link.view_profile.click
+  click_link 'View profile', visible: false
   expect(profile_page.content).to have_header
   expect(profile_page).to be_displayed
 end
 
 Then("I can give feedback") do
-  navigation_page.navigation_link.feedback.click
+  click_link 'Feedback', visible: false
   expect(feedback_page.content).to have_user_feedback_header
   expect(current_url).to end_with '/feedback'
 end
 
 Then("I can view feedback received") do
-  navigation_page.navigation_link.feedback.click
+  click_link 'Feedback', visible: false
   expect(feedback_page.content).to have_admin_feedback_header
   expect(current_url).to end_with '/feedback/display'
 end
 
 Then("I can view staff guides") do
-  navigation_page.navigation_link.staff_guides.click
+  click_link 'Staff Guides', visible: false
   expect(guide_page.content).to have_guide_header
   expect(guide_page).to be_displayed
 end
 
 Then("I can view letter templates") do
-  navigation_page.navigation_link.letter_templates.click
+  click_link 'Letter templates', visible: false
   expect(letter_template_page.content).to have_header
   expect(letter_template_page).to be_displayed
 end
@@ -49,25 +49,25 @@ Then("I should not be able to navigate to the DWP warning message page") do
 end
 
 Then("I can view office details") do
-  navigation_page.navigation_link.view_office.click
+  click_link 'View office', visible: false
   expect(office_page.content).to have_header
   expect(office_page).to be_displayed
 end
 
 Then("I can view staff") do
-  navigation_page.navigation_link.view_staff.click
+  click_link 'View staff', visible: false
   expect(users_page.content).to have_header
   expect(users_page).to be_displayed
 end
 
 Then("I can edit banner") do
-  navigation_page.navigation_link.edit_banner.click
+  click_link 'Edit banner', visible: false
   expect(edit_banner_page.content).to have_header
   expect(edit_banner_page).to be_displayed
 end
 
 Then("I can view staff DWP warning message page") do
-  navigation_page.navigation_link.dwp_message.click
+  click_link 'DWP message', visible: false
   expect(dwp_message_page.content).to have_header
   expect(dwp_message_page).to be_displayed
 end

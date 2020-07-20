@@ -277,7 +277,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                     before { click_link 'Back to start' }
 
                     scenario 'the home page is shown' do
-                      expect(page).to have_text 'Process application'
+                      expect(page).to have_text 'Process a paper application'
                     end
                   end
                 end
