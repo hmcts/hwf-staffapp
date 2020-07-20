@@ -19,7 +19,7 @@ RSpec.feature 'Evidence check', type: :feature do
     visit  home_index_url
 
     within "#process-application" do
-      expect(page).to have_text('Process application')
+      expect(page).to have_text('Process a paper application')
       click_button "Start now"
     end
 
@@ -39,7 +39,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -59,7 +59,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -94,7 +94,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -118,7 +118,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -140,7 +140,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -162,7 +162,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 
@@ -181,7 +181,7 @@ RSpec.feature 'Evidence check', type: :feature do
       visit  home_index_url
 
       within "#process-application" do
-        expect(page).to have_text('Process application')
+        expect(page).to have_text('Process a paper application')
         click_button "Start now"
       end
 

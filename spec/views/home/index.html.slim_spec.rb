@@ -69,7 +69,7 @@ RSpec.describe "home/index.html.slim", type: :view do
       let(:application_new?) { true }
 
       it 'renders title' do
-        is_expected.to have_text 'Process application'
+        is_expected.to have_text 'Process a paper application'
       end
 
       context 'when the office has some jurisdictions assigned' do

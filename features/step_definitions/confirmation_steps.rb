@@ -12,6 +12,7 @@ When("I click on back to start") do
 end
 
 Then("I should be taken back to my dashboard") do
+  expect(page).to have_text 'Process an online application'
   expect(current_path).to eq '/'
 end
 

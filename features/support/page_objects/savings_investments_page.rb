@@ -1,8 +1,8 @@
 class SavingsInvestmentsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Savings and investments'
-    element :less_than, '.govuk-label', text: 'Less than £3,000', visible: false
-    element :more_than, '.govuk-label', text: 'More than £3,000', visible: false
+    element :less_than, 'label', text: 'Less than £3,000', visible: false
+    element :more_than, 'label', text: 'More than £3,000', visible: false
     element :savings_amount_label, 'label', text: 'How much do they have in savings and investments?'
     element :application_amount, '#application_amount'
   end
