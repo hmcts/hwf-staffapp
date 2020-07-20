@@ -5,8 +5,7 @@ end
 
 Then("I see that application under search results") do
   expect(find_application_page.content).to have_search_results_header
-  reference = "#{reference_prefix}-000001"
-  expect(find_application_page.content.search_results_group.found_application.text).to have_content reference
+  expect(find_application_page.content.search_results_group.found_application).to have_text "#{reference_prefix}-000001"
 end
 
 Then("I should see the result for that full name") do
