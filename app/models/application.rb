@@ -76,4 +76,9 @@ class Application < ActiveRecord::Base
     return 'details.fee asc' if sort_string == 'fee_asc'
     'details.fee desc'
   end
+
+  def payment_expires_at
+    days = Settings.part_payment.expires_in_days
+    Time.zone.today + days
+  end
 end

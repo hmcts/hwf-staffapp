@@ -32,9 +32,9 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    find_field('Title').set('Mr')
-    find_field('First and middle names').set('John Christopher')
-    find_field('Last name').set('Smith')
+    find_field('Title', visible: false).set('Mr')
+    find_field('First and middle names', visible: false).set('John Christopher')
+    find_field('Last name', visible: false).set('Smith')
   end
 
   def valid_dob
@@ -63,7 +63,7 @@ class PersonalDetailsPage < BasePage
   end
 
   def submit_required_personal_details
-    fill_in 'Last name', with: 'Smith'
+    fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.status_single.click
     click_on 'Next', visible: false
