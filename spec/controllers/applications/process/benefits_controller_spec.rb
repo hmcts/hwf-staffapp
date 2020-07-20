@@ -49,7 +49,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
       end
 
       describe '@status' do
-        subject { assigns(:state) }
+        subject { assigns(:dwp_state) }
 
         context 'when the dwp is up' do
           it { is_expected.to eql(dwp_state) }

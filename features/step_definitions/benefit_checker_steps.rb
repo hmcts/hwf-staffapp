@@ -31,6 +31,7 @@ When("I start processing a paper application") do
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
+  expect(benefits_page.content).to have_benefit_question
   benefits_page.submit_benefits_yes
 end
 
@@ -44,14 +45,14 @@ end
 
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
-  next_page
-  click_on 'Complete processing', visible: false
+  click_on 'Next', visible: false
+  complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
   benefit_checker_page.content.yes.click
-  next_page
-  click_on 'Complete processing', visible: false
+  click_on 'Next', visible: false
+  complete_processing
 end
 
 Then("I should see that the applicant fails on benefits") do
@@ -76,6 +77,22 @@ Given("the benefit checker is down") do
   expect(sign_in_page).to have_welcome_user
 end
 
+Given("I am not logged in and the benefit checker down") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'offline')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+  end
+end
+
+Given("I am not logged in and the benefit checker up") do
+  RSpec::Mocks.with_temporary_scope do
+    dwp = instance_double('DwpMonitor', state: 'online')
+    DwpMonitor.stub(:new).and_return dwp
+    sign_in_page.load_page
+  end
+end
+
 When("an admin changes the DWP message to display DWP check is working message") do
   navigation_page.navigation_link.dwp_message.click
   dwp_message_page.check_online
@@ -84,4 +101,17 @@ end
 
 Then("benefits and income based applications can be processed") do
   expect(dashboard_page).to have_dwp_online_banner
+end
+
+Then("I have not signed in") do
+  expect(current_path).to eq '/'
+  expect(sign_in_page.content).to have_sign_in_alert
+end
+
+Then("I should see DWP checker is down") do
+  expect(benefit_checker_page).to have_dwp_banner_offline
+end
+
+Then("I should see DWP checker is up") do
+  expect(benefit_checker_page).to have_dwp_banner_online
 end

@@ -1,8 +1,8 @@
 class SavingsInvestmentsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Savings and investments'
-    element :less_than, '.govuk-label', text: 'Less than £3,000', visible: false
-    element :more_than, '.govuk-label', text: 'More than £3,000', visible: false
+    element :less_than, 'label', text: 'Less than £3,000', visible: false
+    element :more_than, 'label', text: 'More than £3,000', visible: false
     element :savings_amount_label, 'label', text: 'How much do they have in savings and investments?'
     element :application_amount, '#application_amount'
   end
@@ -14,7 +14,7 @@ class SavingsInvestmentsPage < BasePage
 
   def submit_less_than
     content.less_than.click
-    next_page
+    click_button 'Next', visible: false
   end
 
   def submit_more_than
@@ -24,6 +24,6 @@ class SavingsInvestmentsPage < BasePage
   def submit_exact_amount
     content.more_than.click
     content.application_amount.set '10000.01'
-    next_page
+    click_button 'Next', visible: false
   end
 end

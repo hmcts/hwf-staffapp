@@ -19,17 +19,16 @@ class EvidencePage < BasePage
     end
     element :processing_summary, 'h2', text: 'Processing summary'
     elements :table_row, '.govuk-table__row'
-    element :error_message, '.alert', text: 'This application has been processed. You can’t edit any details.'
   end
 
   def processed_evidence
     click_on "#{reference_prefix}-000002"
     click_on 'Start now', visible: false
     evidence_accuracy_page.content.correct_evidence.click
-    next_page
-    fill_in 'Total monthly income from evidence', with: '500'
-    next_page
     click_on 'Next', visible: false
-    click_on 'Complete processing', visible: false
+    fill_in 'Total monthly income from evidence', with: '500'
+    click_on 'Next', visible: false
+    click_on 'Next', visible: false
+    complete_processing
   end
 end

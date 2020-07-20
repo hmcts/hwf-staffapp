@@ -22,7 +22,7 @@ And("the payment is not ready to process") do
 end
 
 And("I open the processed part payment application") do
-  click_link "#{reference_prefix}-000001"
+  click_link "#{reference_prefix}-000001", visible: false
 end
 
 Then("I can see that the applicant has paid £40 towards the fee") do
@@ -39,7 +39,7 @@ Then("I can see that the applicant needs to make a new application") do
 end
 
 Then("processing is complete I should see a letter template") do
-  click_on 'Complete processing', visible: false
+  complete_processing
   expect(part_payment_page.content).to have_evidence_confirmation_letter
   click_on 'Back to start', visible: false
   expect(current_url).to end_with '/'

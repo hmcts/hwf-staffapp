@@ -12,6 +12,7 @@ When("I click on back to start") do
 end
 
 Then("I should be taken back to my dashboard") do
+  expect(page).to have_text 'Process an online application'
   expect(current_path).to eq '/'
 end
 
@@ -38,7 +39,7 @@ Then("I should see the next steps") do
 end
 
 When("I can view the guides in a new window") do
-  new_window = window_opened_by { click_on 'See the guides' }
+  new_window = window_opened_by { click_link 'See the guides', visible: false }
   within_window new_window do
     expect(guide_page).to be_displayed
     expect(guide_page.content).to have_guide_header
