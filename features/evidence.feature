@@ -78,6 +78,7 @@ Scenario: Return to dashboard
   Then I should be taken back to my dashboard
   And the application should have the status of processed
 
+@wip
 Scenario: You cannot edit any details
   And I have successfully processed the evidence
   When I use the browser back button
