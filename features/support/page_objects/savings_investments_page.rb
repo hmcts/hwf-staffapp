@@ -14,7 +14,7 @@ class SavingsInvestmentsPage < BasePage
 
   def submit_less_than
     content.less_than.click
-    click_on 'Next', visible: false
+    click_button 'Next', visible: false
   end
 
   def submit_more_than
@@ -24,6 +24,6 @@ class SavingsInvestmentsPage < BasePage
   def submit_exact_amount
     content.more_than.click
     content.application_amount.set '10000.01'
-    click_on 'Next', visible: false
+    click_button 'Next', visible: false
   end
 end

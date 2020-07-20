@@ -25,14 +25,14 @@ end
 When("there is a single result for that full name") do
   expect(find_application_page.content).to have_search_results_header
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[0].text).to have_content 'John Christopher Smith'
+  expect(result[0]).to have_text 'John Christopher Smith'
 end
 
 Then("I should see a list of the results for that last name") do
   expect(find_application_page.content).to have_search_results_header
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[0].text).to have_content 'Smith'
-  expect(result[1].text).to have_content 'Smith'
+  expect(result[0]).to have_text 'Smith'
+  expect(result[1]).to have_text 'Smith'
 end
 
 And("that there is one result for my office") do
@@ -55,7 +55,7 @@ end
 Then("I should see there is a single result for that case number") do
   expect(find_application_page.content).to have_search_results_header
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[0].text).to have_content 'E71YX571'
+  expect(result[0]).to have_text 'E71YX571'
 end
 
 When("I search for an application using a national insurance number") do
@@ -64,7 +64,7 @@ end
 
 Then("I should see there is a single result for that national insurance number") do
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[0].text).to have_content 'John Christopher Smith'
+  expect(result[0]).to have_text 'John Christopher Smith'
 end
 
 Then("the national insurance number is not displayed in the list of results") do
@@ -95,7 +95,7 @@ end
 
 Then("I see that it is paginated by 20 results per page") do
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[25].text).to have_content '123…1516'
+  expect(result[25]).to have_text '123…1516'
 end
 
 And("I can navigate forward a page") do

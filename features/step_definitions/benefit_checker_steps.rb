@@ -31,6 +31,7 @@ When("I start processing a paper application") do
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
+  expect(benefits_page.content).to have_benefit_question
   benefits_page.submit_benefits_yes
 end
 

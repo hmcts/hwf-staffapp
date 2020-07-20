@@ -62,39 +62,48 @@ en-GB:
           <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
         <h3 class='govuk-heading-m'>If you disagree</h3>
-        <p>If you think you are eligible for help with your fees and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application, your evidence and any further evidence to support your application. We will reply to you within 10 working days from receiving your application. </p>
-        <p>Yours sincerely,</p>
+        <p>If you think you are eligible for help with your fee and have the evidence we asked for, you may resubmit your application in writing to the Delivery Manager. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons as to why you think you are eligible. You must enclose the original EX160 application or note your Help with Fees reference on your letter, your evidence and any further evidence to support your application. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
         <p>Dear %{full_name}</p>
-        <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your application for help with fees. Unfortunately you’re not eligible and will have to pay the full fee. This is because the Department for Work and Pensions did not confirm that you’re receiving one of these benefits:</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because the Department for Work and Pensions has no record of you receiving any of the benefits that make you automatically eligible for help with fees. See list of qualifying benefits below.</p>
+        <p>If you’ve started receiving any of these qualifying benefits in the last seven days, or you receive them with your partner, return your application or relevant paperwork with a letter from the Department for Work and Pensions confirming the benefit received. You and your partner (if applicable) must be clearly identifiable on all documents you send and there should be evidence that your partner shares your address.</p>
+        <p>Remember to write your reference %{reference} at the top of every document.</p>
+        <h3 class='govuk-heading-m'>List of qualifying benefits when applying for Help with Fees</h3>
+        <p>You will get automatic help with your fee if you’re receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>income-based Jobseeker’s Allowance (JSA)</li>
-          <li>income-related Employment and Support Allowance (ESA)</li>
+          <li><strong>income-based</strong> Jobseeker’s Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
-          <li>Universal Credit (and you earn less than £6,000 a year)</li>
-          <li>Pension Credit (guarantee credit)</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
           <li>Scottish Civil Legal Aid</li>
         </ul>
-        <p><strong>If this result is unexpected</strong></p>
-        <p>If you disagree with our decision, you can appeal to the Delivery Manager at the court or tribunal dealing with your fee.</p>
-        <p>If you’ve started receiving benefits in the last 7 days: the Department for Work and Pensions may not have up to date information for you.
-        If this is the case, return your application along with an official letter that confirms the benefits received.</p>
-        <p>If you receive benefits with your partner: return your application with a letter from the Department for Work and Pensions confirming the benefit received.
-        If the benefit is in your partner’s name, you should include a letter confirming your address is the same as your partner’s.</p>
-        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
-        <p>Check the name of the benefit: there are some benefits that are similarly named to the 6 qualifying benefits:</p>
+        <h3 class='govuk-heading-m'>Other benefits</h3>
+        <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below.  If you are receiving any other type of benefits you must declare them as part of your income in a fresh Help with Fees application. </p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>contribution-based Job Seekers Allowance</li>
-          <li>contribution-based Employment and Support Allowance</li>
-          <li>Pension Credit (savings credit)</li>
-          <li>Universal Credit and you earn over £6,000 a year (before tax and National Insurance)</li>
-          <li>Scottish Legal Aid Advice and Assistance</li>
-          <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
+         <li><strong>contribution-based</strong> Job Seekers Allowance</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+         <li>Scottish Legal Aid Advice and Assistance</li>
+         <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
         </ul>
-        <p>If you’re receiving one of these benefits, you may still be eligible if you're on a low income. You'll need to complete and submit a new application to get help with your fee.</p>
-        <p>Yours sincerely,</p>
+        <h3 class='govuk-heading-m'>What you need to do if you are paying the fee</h3>
+        <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
+        </ul>
+        <p>If you don’t use a debit card or cheques, call the court or tribunal on <strong>&lt;add phone number&gt;</strong>.</p>
+        <h3 class='govuk-heading-m'>If you disagree with this decision</h3>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Remember to include your reference, %{reference}.</p>
+        <h3 class='govuk-heading-m'>Useful link<h3/>
+        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_dwp_deceased_html: |
         <p>Dear %{full_name}</p>
