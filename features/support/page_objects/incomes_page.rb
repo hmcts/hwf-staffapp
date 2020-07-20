@@ -4,8 +4,7 @@ class IncomesPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
     element :question, 'legend', text: 'In questions 10 and 11, does the applicant financially support any children?'
-    element :no, 'label', text: 'No', visible: false
-    element :yes, 'label', text: 'Yes', visible: false
+    elements :radio, '.govuk-radios label'
     element :number_of_children_hint, '.govuk-hint', text: 'Add number given in questions 10 and 11 together'
     element :number_of_children_error, '.error', text: 'Enter number of children'
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
@@ -29,11 +28,11 @@ class IncomesPage < BasePage
   end
 
   def submit_incomes_no
-    content.no.click
+    incomes_page.content.radio[0].click
   end
 
   def submit_incomes_yes_3
-    content.yes.click
+    incomes_page.content.radio[1].click
     find_field('Number of children', visible: false).set('3')
     find_field('Total monthly income', visible: false).set('1900')
     click_on 'Next', visible: false
