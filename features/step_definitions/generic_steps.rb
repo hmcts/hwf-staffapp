@@ -9,7 +9,7 @@ Given("I am signed in as a user that has processed multiple applications") do
 end
 
 When("I click on next without making a selection") do
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I should see select from one of the options error message") do

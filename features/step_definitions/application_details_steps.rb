@@ -23,7 +23,7 @@ end
 
 When(/^I submit the form with a help with fees form number '(.+?)'$/) do |num|
   application_details_page.content.form_input.set num
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then(/^I should see you entered the help with fees form number error message$/) do
@@ -31,7 +31,7 @@ Then(/^I should see you entered the help with fees form number error message$/) 
 end
 
 When(/^I submit the form without a fee amount$/) do
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then(/^I should see enter a fee error message$/) do
@@ -44,7 +44,7 @@ end
 
 When(/^I submit the form with a fee £20,000 or over$/) do
   fill_in 'How much is the court or tribunal fee?', with: '20000'
-  click_on 'Next', visible: false
+  next_page
 end
 
 When("I submit the form with a fee £10,001 - £19,999") do

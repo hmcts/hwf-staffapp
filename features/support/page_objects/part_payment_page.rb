@@ -7,12 +7,12 @@ class PartPaymentPage < BasePage
 
   def ready_to_process_payment
     content.yes.click
-    click_on 'Next', visible: false
+    next_page
   end
 
   def not_ready_to_process_payment
     content.no.click
     fill_in 'Describe the problem with the part-payment', with: 'No signature on cheque'
-    click_on 'Next', visible: false
+    next_page
   end
 end

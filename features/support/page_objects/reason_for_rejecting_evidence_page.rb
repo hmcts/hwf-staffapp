@@ -17,6 +17,6 @@ class ReasonForRejectingEvidencePage < BasePage
     click_link "#{reference_prefix}-000002"
     click_on 'Start now', visible: false
     evidence_accuracy_page.content.problem_with_evidence.click
-    click_on 'Next', visible: false
+    next_page
   end
 end
