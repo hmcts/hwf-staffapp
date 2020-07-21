@@ -1,31 +1,13 @@
-Then("I am taken to my details") do
-  # steps need implementing - wip
-end
-
-Then("I am taken to the guide page") do
-  # steps need implementing - wip
-end
-
 Then("I should see the status of the DWP connection") do
   expect(dashboard_page.content).to have_dwp_restored
 end
 
 When("I search for an application using valid reference number") do
-  # steps need implementing - wip
   dashboard_page.search_valid_reference
 end
 
 When("I search for an application using invalid reference number") do
-  # steps need implementing - wip
   dashboard_page.search_invalid_reference
-end
-
-Then("I should see the reference number is not recognised error message") do
-  # steps need implementing - wip
-end
-
-Then("I am taken to the applicants personal details page") do
-  # steps need implementing - wip
 end
 
 When("I look up a valid hwf reference") do
