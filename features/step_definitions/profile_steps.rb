@@ -1,4 +1,3 @@
-# Are all of these tests passing
 Then("I am on the change details page") do
   click_link 'View profile'
   click_link 'Change details'
