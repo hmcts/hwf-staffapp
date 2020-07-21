@@ -1,4 +1,4 @@
-@manual @wip
+@wip @manual
 
 Feature: New password
 

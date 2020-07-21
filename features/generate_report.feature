@@ -24,7 +24,7 @@ Feature: Generate report page
       When I try and generate a report without entering dates
       Then I should see enter dates error message
 
-    @wip 
+    @wip @manual
     # download times out on travis
     Scenario: Successfully download finance transactional report
       Given I am on the finance transactional report page

@@ -1,4 +1,4 @@
-@manual @wip
+@wip @manual
 
 Feature: Manual regression tests
 
