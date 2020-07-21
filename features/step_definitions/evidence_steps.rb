@@ -113,11 +113,8 @@ Given("I have successfully submitted the evidence") do
   next_page
   fill_in 'Total monthly income from evidence', with: '500'
   next_page
+  expect(page).to have_text 'The amount to be refunded should be £656.66'
   next_page
-end
-
-Given("I have successfully processed the evidence") do
-  evidence_page.processed_evidence
 end
 
 Given("I use the browser back button") do
