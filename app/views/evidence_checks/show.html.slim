@@ -22,6 +22,7 @@
     - t('evidence_check.next_steps.steps').each do |step|
       p.govuk-body = step
 
+    p: strong = link_to 'See the guides', guide_path, target: 'blank'
     .confirmation-letter
 
       - if @application.income_kind.blank?
