@@ -39,6 +39,8 @@
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
 
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
         .confirmation-letter
           = t('letters.reject.reject_over_savings_html',
               reference: @application.reference,
@@ -53,6 +55,8 @@
         p.govuk-body Write to the applicant using the letter on this page.
         p.govuk-body Store the application form in a secure location.
 
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
         .confirmation-letter
           = t('letters.reject.reject_no_benefits_html',
               reference: @application.reference,
@@ -65,11 +69,10 @@
         p.govuk-body Write the reference number on the top right corner of the paper form
         p.govuk-body Copy the reference number into the case management system
         p.govuk-body Write to the applicant and send back all the documents
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
 
 
-
-    p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     -if @application.detail.refund?
       = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
