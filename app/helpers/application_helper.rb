@@ -13,4 +13,8 @@ module ApplicationHelper
     application.detail.fee - amount_to_pay
   end
 
+  def amount_to_pay(application)
+    application.evidence_check ? application.evidence_check.amount_to_pay : application.amount_to_pay
+  end
+
 end
