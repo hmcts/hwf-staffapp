@@ -1,4 +1,4 @@
-@manual @wip
+@wip @manual
 
 Feature: My user dashboard
 

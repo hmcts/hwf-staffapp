@@ -6,7 +6,7 @@ Given("I am on the incomes part of the application") do
 end
 
 When("I answer yes to does the applicant financially support any children") do
-  incomes_page.content.yes.click
+  incomes_page.content.radio[1].click
 end
 
 When("I answer no to does the applicant financially support any children") do
