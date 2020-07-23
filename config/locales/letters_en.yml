@@ -168,6 +168,7 @@ en-GB:
         other_monthly_income_html: |
           <h3 class='govuk-heading-m'>Any other monthly income</h3>
           <p>You must tell us about and send documents showing any other monthly income you receive.</p>
+          <p><strong>Please note:</strong> If you do have any other regular incomings you must provide evidence and/or an explanation of what these incomings are. If you (or your partner) do not have regular incomings, you need to explain how you support yourself.</p>
           <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>What happens next</h3>
