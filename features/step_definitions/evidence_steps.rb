@@ -111,7 +111,7 @@ Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
   evidence_accuracy_page.content.correct_evidence.click
   next_page
-  fill_in 'Total monthly income from evidence', with: '500'
+  find_field('Total monthly income from evidence', visible: false).set('500')
   next_page
   expect(page).to have_text 'The amount to be refunded should be £656.66'
   next_page
