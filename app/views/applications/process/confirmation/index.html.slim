@@ -78,6 +78,8 @@
       = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
 
     -elsif @application.waiting_for_part_payment?
+      p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
       .confirmation-letter
         = t('letters.part-payment.send_part_payment_html',
             reference: @application.reference,
@@ -88,6 +90,7 @@
             total_income: number_to_currency(@application.income, precision: 0),
             children: @application.children.to_i,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+
 
 
     = link_to 'Back to start', root_path, class: 'govuk-button'
