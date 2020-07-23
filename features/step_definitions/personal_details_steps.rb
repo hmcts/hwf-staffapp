@@ -3,8 +3,8 @@ Given("I have started an application") do
 end
 
 And("I am on the personal details part of the application") do
-  expect(current_path).to include 'personal_informations'
   expect(personal_details_page.content).to have_header
+  expect(current_path).to include 'personal_informations'
 end
 
 When("I successfully submit my required personal details") do
