@@ -16,7 +16,7 @@ class BenefitsPage < BasePage
 
   def submit_benefits_yes
     content.yes.click
-    next_page
+    click_button 'Next'
   end
 
   def submit_benefits_no
