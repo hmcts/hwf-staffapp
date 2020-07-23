@@ -31,10 +31,13 @@
         p.govuk-body Write the reference number on the top right corner of the paper form
         p.govuk-body Copy the reference number into the case management system
         p.govuk-body The applicant’s process can now be issued
+
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
       -elsif @application.outcome.eql?('part')
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
         p.govuk-body Store the application form in a secure location until you receive the part payment.
+
       -elsif display_savings_failed_letter?(@application)
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
