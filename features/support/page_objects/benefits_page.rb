@@ -16,11 +16,11 @@ class BenefitsPage < BasePage
 
   def submit_benefits_yes
     content.yes.click
-    click_on 'Next', visible: false
+    next_page
   end
 
   def submit_benefits_no
     content.no.click
-    click_on 'Next', visible: false
+    next_page
   end
 end

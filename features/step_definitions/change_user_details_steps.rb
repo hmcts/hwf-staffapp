@@ -4,20 +4,19 @@ When("I click on change details of a user") do
 end
 
 Then("I can change the user to a user, manager, admin, mi, reader") do
-  expect(change_user_details_page.content).to have_user_radio
-  expect(change_user_details_page.content).to have_manager_radio
-  expect(change_user_details_page.content).to have_admin_radio
-  expect(change_user_details_page.content).to have_mi_radio
-  expect(change_user_details_page.content).to have_reader_radio
+  expect(page).to have_text 'User'
+  expect(page).to have_text 'Manager'
+  expect(page).to have_text 'Admin'
+  expect(page).to have_text 'Mi'
+  expect(page).to have_text 'Reader'
 end
 
 Then("I can not change the users role") do
-  expect(change_user_details_page.content).to have_no_user_radio
-  expect(change_user_details_page.content).to have_no_manager_radio
-  expect(change_user_details_page.content).to have_no_admin_radio
-  expect(change_user_details_page.content).to have_no_mi_radio
-  expect(change_user_details_page.content).to have_no_reader_radio
-  expect(change_user_details_page.content).to have_role
+  expect(page).to have_no_text 'User'
+  expect(page).to have_no_text 'Admin'
+  expect(page).to have_no_text 'Mi'
+  expect(page).to have_no_text 'Reader'
+  expect(page).to have_text 'Manager'
 end
 
 And("I change the jurisdiction") do

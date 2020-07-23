@@ -13,11 +13,11 @@ class PaperEvidencePage < BasePage
 
   def submit_evidence_yes
     content.yes.click
-    click_on 'Next', visible: false
+    next_page
   end
 
   def submit_evidence_no
     content.no.click
-    click_on 'Next', visible: false
+    next_page
   end
 end

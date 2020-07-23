@@ -5,7 +5,7 @@ Feature: Generate report page
   Background: Signed in as admin
     Given I successfully sign in as admin
 
-    @wip 
+    @wip @manual
     # download times out on travis
     Scenario: Successfully download finance aggregated report
       Given I am on the finance aggregated report page
