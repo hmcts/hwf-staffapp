@@ -199,7 +199,6 @@ def go_to_finance_transactional_report_page
   reports_page.finance_transactional_report
 end
 
-
 def click_on_back_to_start
   base_page.content.wait_until_back_to_start_link_visible
   click_on 'Back to start', visible: false
