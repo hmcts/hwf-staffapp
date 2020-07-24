@@ -179,8 +179,9 @@ def process_online_application_page
 end
 
 def complete_processing
-  expect(page).to have_text "Check details"
-  base_page.content.complete_processing_button.click
+  if base_page.content.has_complete_processing_button?
+    base_page.content.complete_processing_button.click
+  end
 end
 
 def next_page
