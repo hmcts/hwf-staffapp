@@ -199,6 +199,12 @@ def go_to_finance_transactional_report_page
   reports_page.finance_transactional_report
 end
 
+
+def click_on_back_to_start
+  base_page.content.wait_until_back_to_start_link_visible
+  click_on 'Back to start', visible: false
+end
+
 def eligable_application
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
@@ -206,7 +212,7 @@ def eligable_application
   benefits_page.submit_benefits_yes
   paper_evidence_page.submit_evidence_yes
   complete_processing
-  click_on 'Back to start', visible: false
+  click_on_back_to_start
 end
 
 def ineligable_application
@@ -214,7 +220,7 @@ def ineligable_application
   application_details_page.submit_fee_300
   savings_investments_page.submit_exact_amount
   complete_processing
-  click_on 'Back to start', visible: false
+  click_on_back_to_start
 end
 
 def multiple_applications
@@ -225,7 +231,8 @@ end
 
 def complete_and_back_to_start
   complete_processing
-  click_on 'Back to start', visible: false
+  base_page.content.wait_until_back_to_start_link_visible
+  click_on_back_to_start
 end
 
 def part_payment_application
