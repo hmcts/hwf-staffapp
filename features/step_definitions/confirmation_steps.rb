@@ -39,7 +39,9 @@ Then("I should see the next steps") do
 end
 
 When("I can view the guides in a new window") do
-  new_window = window_opened_by { click_link 'See the guides', visible: false }
+  guides_link = page.find_link('See the guides')
+  expect(guides_link['target']).to eql('blank')
+  new_window = window_opened_by { click_on 'See the guides', visible: false }
   within_window new_window do
     expect(guide_page).to be_displayed
     expect(guide_page.content).to have_guide_header

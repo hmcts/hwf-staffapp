@@ -36,7 +36,7 @@ en-GB:
         <p>Remember to include your reference %{reference}.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
         <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       reject_evidence_generic_html: |
         <p>Dear %{full_name}</p>
@@ -166,8 +166,9 @@ en-GB:
           <h3 class='govuk-heading-m'>Prisoner’s income</h3>
           <p>You need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
         other_monthly_income_html: |
-          <h3 class='govuk-heading-m'>Any other monthly income</h3>
-          <p>You must tell us about and send documents showing any other monthly income you receive.</p>
+          <h3 class='govuk-heading-m'>Any other income</h3>
+          <p>You must tell us about and send documents showing any other regular income you receive.</p>
+          <p><strong>Please note:</strong> If you do have any other regular incomings you must provide evidence and/or an explanation of what these incomings are. If you (or your partner) do not have regular incomings, you need to explain how you support yourself.</p>
           <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>What happens next</h3>
@@ -179,7 +180,7 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>As you have explained that you no longer wish to proceed with your application for Help with Fees, we are returning this to you with the associated papers.</p>
         <p>If you still want to apply for Help with Fees, you will have to fill in a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
@@ -238,7 +239,7 @@ en-GB:
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
         <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
         <p>Dear %{full_name}</p>

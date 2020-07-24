@@ -66,7 +66,7 @@ class PersonalDetailsPage < BasePage
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.status_single.click
-    click_on 'Next', visible: false
+    next_page
   end
 
   def submit_all_personal_details_ni
@@ -74,7 +74,7 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ni
     content.status_single.click
-    click_on 'Next', visible: false
+    next_page
   end
 
   def submit_all_personal_details_ho
@@ -82,6 +82,6 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ho
     content.status_single.click
-    click_on 'Next', visible: false
+    next_page
   end
 end

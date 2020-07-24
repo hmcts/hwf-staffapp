@@ -182,6 +182,10 @@ def complete_processing
   base_page.content.complete_processing_button.click
 end
 
+def next_page
+  click_on 'Next', visible: false
+end
+
 def start_application
   sign_in_page.load_page
   sign_in_page.user_account

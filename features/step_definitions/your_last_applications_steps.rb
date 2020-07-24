@@ -16,7 +16,7 @@ end
 
 Then("I should see the personal details populated with information") do
   expect(personal_details_page.content.application_first_name['value']).to eq 'John Christopher'
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I should see the application details populated with information") do

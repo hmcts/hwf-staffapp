@@ -18,7 +18,7 @@ footer.govuk-footer role= "conteninfo"
         .govuk-grid-row
           div class='govuk-grid-column-two-thirds'
             p = t('footer.staff_guides.copy')
-            p = link_to t('footer.staff_guides.link'), guide_path
+            p = link_to t('footer.staff_guides.link'), guide_path, target: 'blank'
           div class='govuk-grid-column-one-third'
             = image_tag("footer-guides.png", alt: 'Guides')
 

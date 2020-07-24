@@ -13,7 +13,7 @@ end
 And("I submit how much they have") do
   expect(savings_investments_page.content).to have_savings_amount_label
   savings_investments_page.content.application_amount.set '10000.01'
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I should be taken to the benefits page") do

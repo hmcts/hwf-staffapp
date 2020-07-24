@@ -64,7 +64,7 @@ end
 
 When("I submit that the evidence is correct") do
   evidence_accuracy_page.content.correct_evidence.click
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I should be taken to the evidence income page") do
@@ -74,7 +74,7 @@ end
 
 When(/^I submit (\d+) as the income$/) do |income|
   fill_in 'Total monthly income from evidence', with: income
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I see the amount to be refunded should be £656.66") do
@@ -91,7 +91,7 @@ end
 
 When("I submit that there is a problem with evidence") do
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_on 'Next', visible: false
+  next_page
 end
 
 Then("I should be taken to the reason for rejecting the evidence page") do
@@ -110,14 +110,11 @@ end
 Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
   evidence_accuracy_page.content.correct_evidence.click
-  click_on 'Next', visible: false
-  fill_in 'Total monthly income from evidence', with: '500'
-  click_on 'Next', visible: false
-  click_on 'Next', visible: false
-end
-
-Given("I have successfully processed the evidence") do
-  evidence_page.processed_evidence
+  next_page
+  find_field('Total monthly income from evidence', visible: false).set('500')
+  next_page
+  expect(page).to have_text 'The amount to be refunded should be £656.66'
+  next_page
 end
 
 Given("I use the browser back button") do

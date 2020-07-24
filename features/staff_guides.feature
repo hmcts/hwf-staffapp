@@ -4,9 +4,7 @@ Feature: Staff guides
     Given I am on the Help with Fees staff application home page
 
     Scenario: See the guides
-      When I click on see the guides in the footer
-      Then I should be taken to the guide page
-      And I should not see you need to sign in error message
+      Then I can view guides by clicking on the link in the footer
 
     Scenario: How to guide
       And I am signed in on the guide page
