@@ -20,6 +20,7 @@ class BenefitsPage < BasePage
   end
 
   def submit_benefits_no
+    content.wait_until_no_visible
     content.no.click
     next_page
   end
