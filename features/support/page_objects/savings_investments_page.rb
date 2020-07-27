@@ -13,6 +13,7 @@ class SavingsInvestmentsPage < BasePage
   end
 
   def submit_less_than
+    content.wait_until_less_than_visible
     content.less_than.click
     next_page
   end
