@@ -14,7 +14,7 @@ class SavingsInvestmentsPage < BasePage
 
   def submit_less_than
     content.less_than.click
-    next_page
+    click_button 'Next', visible: false
   end
 
   def submit_more_than
