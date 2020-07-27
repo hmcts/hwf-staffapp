@@ -36,6 +36,7 @@ When("I start processing a paper application") do
 end
 
 When("I am on the benefits paper evidence page") do
+  benefit_checker_page.content.wait_until_paper_evidence_warning_visible
   expect(current_url).to end_with '/applications/1/benefit_override/paper_evidence'
 end
 
