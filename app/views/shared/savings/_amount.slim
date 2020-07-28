@@ -7,4 +7,4 @@
 
   .field-wrapper
     span.prefix £
-    = f.text_field :amount, { class: 'govuk-input' }
+    = f.text_field :amount, { class: 'govuk-input', type: "text", value: @form.amount.to_i }
