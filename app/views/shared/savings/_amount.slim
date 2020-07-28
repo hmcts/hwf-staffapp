@@ -2,6 +2,9 @@
   = f.label :amount, t('amount', scope: @form.i18n_scope), class: 'govuk-label'
   span#changed-name-error.govuk-error-message
     = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
+  span#amount-hint.govuk-hint
+    = t('amount_hint', scope: @form.i18n_scope)
+
   .field-wrapper
     span.prefix £
     = f.text_field :amount, { class: 'govuk-input' }
