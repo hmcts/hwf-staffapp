@@ -38,6 +38,7 @@ module Forms
       end
 
       def rounded_amount
+        return if amount.blank?
         amount.round
       end
 

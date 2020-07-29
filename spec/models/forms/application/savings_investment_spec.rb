@@ -170,6 +170,12 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
         it { expect(saving.amount.to_i).to be 11 }
       end
+
+      context 'no rounding for nil value' do
+        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: nil } }
+
+        it { expect(saving.amount.to_i).to be 0 }
+      end
     end
   end
 end
