@@ -35,6 +35,9 @@
               - if @form.errors[:income].present?
                 span.govuk-error-message
                   = f.label :income, @form.errors[:income].join(', '), class: 'error'
+              span#amount-hint.govuk-hint
+                = t('income_hint', scope: @form.i18n_scope)
+
               .field-wrapper
                 span.prefix £
                 = f.text_field :income

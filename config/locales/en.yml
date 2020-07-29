@@ -459,6 +459,7 @@ en-GB:
         children: Number of children
         children_hint: Add number given in questions 10 and 11 together
         income: Total monthly income
+        income_hint: Rounded to the nearest £
       forms/application/summary:
         passed: '✓ Passed'
         failed: '✗ Failed'
