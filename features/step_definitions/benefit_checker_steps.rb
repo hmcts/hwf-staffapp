@@ -27,6 +27,7 @@ Then("I should see a notification telling me that I can only process income-base
 end
 
 When("I start processing a paper application") do
+  expect(page).to have_text 'Process a paper application'
   dashboard_page.process_application
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
