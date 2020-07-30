@@ -7,6 +7,7 @@ end
 
 When("I answer yes to does the applicant financially support any children") do
   incomes_page.content.radio[1].click
+  expect(page).to have_text 'Rounded to the nearest £'
 end
 
 When("I answer no to does the applicant financially support any children") do
