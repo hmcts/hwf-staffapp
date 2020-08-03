@@ -22,6 +22,7 @@
 //modules
 //= require radio_checkbox_module
 //= require income
+//= require savings
 //= require evidence_confirmation
 //= require equal_height_boxes
 //= require cookies
