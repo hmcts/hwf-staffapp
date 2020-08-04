@@ -77,7 +77,7 @@ RSpec.describe HomeController, type: :controller do
           expect(assigns(:last_updated_applications)).to eq([])
         end
 
-        it "assigns last updated applications" do
+        it "assigns last dwp failed applications" do
           expect(assigns(:last_failed_dwp_applications)).to eq([])
         end
       end

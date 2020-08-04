@@ -9,7 +9,7 @@ RSpec.describe Query::LastDwpFailedApplications, type: :model do
 
     let(:application1) { create :application, :benefit_type, user: user, reference: 'ABC1' }
     let(:application2) { create :application, :benefit_type, user: user, reference: 'ABC2' }
-    let(:application3) { create :application_full_remission, :benefit_type, user: user, reference: 'ABC3'}
+    let(:application3) { create :application_full_remission, :benefit_type, user: user, reference: 'ABC3' }
     let(:application4) { create :application_full_remission, user: user, reference: 'ABC4' }
     let(:application5) { create :application, :benefit_type, user: user, reference: 'ABC5' }
     let(:application6) { create :application, :benefit_type, user: user, reference: 'ABC6' }
