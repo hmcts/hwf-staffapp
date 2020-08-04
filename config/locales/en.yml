@@ -29,6 +29,21 @@ en-GB:
         id: Id
       table:
         missing_reference: 'no reference number'
+  dwp_failed_applications:
+    dashboard:
+      heading: Process when DWP is back online
+      caption: Applications that failed due to DWP failure
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        status: Status
+        updated_at: Last updated
+        id: Id
+        ready_to_process: Ready to process?
+      table:
+        missing_reference: 'no reference number'
+        ready_link: 'Ready to process'
+        not_ready_link: 'Not ready to process'
 
   completed_applications:
     title: Completed

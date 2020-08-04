@@ -1,0 +1,29 @@
+- if list.present?
+  h3.govuk-heading-m.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
+    =t("#{type}.dashboard.heading")
+
+  - if list.present?
+    table *{class: "#{type} govuk-table"}
+      caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header =t("#{type}.dashboard.table_header.id")
+          th.govuk-table__header =t("#{type}.dashboard.table_header.status")
+          th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
+          th.govuk-table__header =t("#{type}.dashboard.table_header.updated_at")
+          th.govuk-table__header =t("#{type}.dashboard.table_header.ready_to_process")
+
+
+      tbody.govuk-table__body
+        - list.each do |record|
+          tr.govuk-table__row
+            td.govuk-table__cell =link_to record.id, application_personal_informations_path(record)
+            td.govuk-table__cell =record.state
+            td.govuk-table__cell =record.applicant.full_name
+            td.govuk-table__cell =record.updated_at
+            td.govuk-table__cell
+              - if DwpMonitor.new.state == 'online'
+                =link_to t("#{type}.dashboard.table.ready_link"), application_personal_informations_path(record), {class: 'blue-info-text'}
+              - else
+                span.red-warning-text = t("#{type}.dashboard.table.not_ready_link")
+
