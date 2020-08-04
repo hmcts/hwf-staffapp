@@ -18,4 +18,8 @@ module LoadApplications
     Query::LastUpdatedApplications.new(user).find(limit: 20)
   end
 
+  def self.load_users_last_dwp_failed_applications(user)
+    Query::LastDwpFailedApplications.new(user).find
+  end
+
 end

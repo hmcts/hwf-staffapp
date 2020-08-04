@@ -45,6 +45,11 @@ class HomeController < ApplicationController
 
   def load_users_last_applications
     @last_updated_applications ||= LoadApplications.load_users_last_applications(current_user)
+    load_users_last_failed_dwp_applications
+  end
+
+  def load_users_last_failed_dwp_applications
+    @last_failed_dwp_applications ||= LoadApplications.load_users_last_dwp_failed_applications(current_user)
   end
 
   def assign_waiting_for_evidence
