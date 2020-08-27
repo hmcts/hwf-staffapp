@@ -24,3 +24,9 @@ coverage/*
 
 # Ignore node_modules
 node_modules/
+
+# Ignore idea
+/.idea
+
+# Ignore generators
+.generators

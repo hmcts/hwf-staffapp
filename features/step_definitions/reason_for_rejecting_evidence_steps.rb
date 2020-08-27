@@ -1,5 +1,9 @@
 And("I am on reason for rejecting the evidence page") do
-  reason_for_rejecting_evidence_page.go_to_reason_for_rejecting_evidence_page
+  click_link "#{reference_prefix}-000001"
+  click_on 'Start now', visible: false
+  expect(evidence_accuracy_page.content).to have_header
+  evidence_accuracy_page.content.problem_with_evidence.click
+  click_on 'Next', visible: false
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
 

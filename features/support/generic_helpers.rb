@@ -178,6 +178,10 @@ def process_online_application_page
   @process_online_application_page ||= ProcessOnlineApplicationPage.new
 end
 
+def dwp_failed_applications_page
+  @dwp_failed_applications_page ||= DwpFailedApplicationsPage.new
+end
+
 def complete_processing
   if base_page.content.has_complete_processing_button?
     base_page.content.complete_processing_button.click
@@ -286,4 +290,34 @@ end
 
 def reference_prefix
   "PA#{Time.zone.now.strftime('%y')}"
+end
+
+def create_application_with_bad_request_result_with(user)
+  applicant = FactoryBot.create(:applicant_with_all_details)
+  application = FactoryBot.create(:application, applicant: applicant, ni_number: 'AB123456C', office: user.office, user: user)
+  FactoryBot.create(:benefit_check, :bad_request_result, application: application)
+  applicant
+end
+
+def sign_in_with_user
+  if @current_user.present?
+    sign_in_page.load_page
+    sign_in_page.sign_in_with @current_user.email, @current_user.password
+  else
+    sign_in_as_user
+  end
+end
+
+def stub_dwp_response_as_bad_request
+  stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+    to_return(body: '{"error": "LSCBC959: Service unavailable."}', status: BAD_REQUEST)
+end
+
+def create_online_application
+  FactoryBot.create(:online_application, :with_reference, :benefits, :completed)
+end
+
+def dwp_monitor_state_as(state)
+  dwp = instance_double('DwpMonitor', state: state)
+  DwpMonitor.stub(:new).and_return dwp
 end
