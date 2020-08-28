@@ -42,7 +42,10 @@ module Applications
       end
 
       def determine_override
-        if benefit_check_runner.can_override?
+        if application.failed_because_dwp_error?
+          flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
+          redirect_to root_url
+        elsif benefit_check_runner.can_override?
           redirect_to application_benefit_override_paper_evidence_path(application)
         else
           redirect_to application_summary_path(application)

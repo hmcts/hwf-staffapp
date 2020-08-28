@@ -69,12 +69,15 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
     let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
     let(:user_says_on_benefits) { false }
     let(:can_override) { false }
+    let(:dwp_error?) { false }
     let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil, can_override?: can_override) }
+
 
     before do
       allow(benefit_form).to receive(:update_attributes).with(expected_params)
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
+      allow(application).to receive(:failed_because_dwp_error?).and_return dwp_error?
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -94,6 +97,19 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
 
           it 'redirects to the benefits override page' do
             expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
+          end
+        end
+
+        context 'when the result is failed because of DWP failed response' do
+          let(:dwp_error?) { true }
+
+          it 'redirects to the home page' do
+            expect(response).to redirect_to(root_path)
+          end
+
+          it 'displays message' do
+            message = "Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available."
+            expect(flash['alert']).to eql(message)
           end
         end
 
