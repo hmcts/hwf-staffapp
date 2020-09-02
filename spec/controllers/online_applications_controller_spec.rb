@@ -234,6 +234,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:resolver_service) { instance_double(ResolverService, complete: nil) }
     let(:pass_fail_service) { instance_double(SavingsPassFailService, calculate!: nil) }
     let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
+    let(:dwp_error) { false }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
@@ -244,6 +245,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       allow(BenefitOverride).to receive(:find_or_initialize_by).with(application: application).and_return benefit_override
       allow(benefit_override).to receive(:update)
       allow(application).to receive(:update)
+      allow(application).to receive(:failed_because_dwp_error?).and_return(dwp_error)
 
       post :complete, params: { id: id }
     end
@@ -302,6 +304,37 @@ RSpec.describe OnlineApplicationsController, type: :controller do
           expect(application).not_to have_received(:update)
         end
       end
+
+      context 'benefit check with dwp error' do
+        let(:dwp_error) { true }
+        let(:online_application) { build_stubbed(:online_application, benefits_override: false) }
+
+        it 'redirects to homepage' do
+          expect(response).to redirect_to(root_path)
+        end
+
+        it 'displays error message' do
+          message = "Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available."
+          expect(flash[:alert]).to eql message
+        end
+
+        it 'do not run the resolver service' do
+          expect(resolver_service).not_to have_received(:complete)
+        end
+
+        it 'no updates to the application' do
+          expect(application).not_to have_received(:update)
+        end
+
+        context 'benefit overrides true' do
+          let(:online_application) { build_stubbed(:online_application, benefits_override: true) }
+
+          it 'do not run the resolver service' do
+            expect(response).to redirect_to(application_confirmation_path(application, 'digital'))
+          end
+        end
+      end
+
     end
   end
 

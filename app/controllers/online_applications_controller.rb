@@ -32,9 +32,12 @@ class OnlineApplicationsController < ApplicationController
 
   def complete
     application = ApplicationBuilder.new(current_user).build_from(online_application)
-    process_application(application)
-
-    redirect_to application_confirmation_path(application, 'digital')
+    if process_application(application) == false
+      flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
+      redirect_to_homepage
+    else
+      redirect_to application_confirmation_path(application, 'digital')
+    end
   end
 
   def approve
@@ -57,6 +60,7 @@ class OnlineApplicationsController < ApplicationController
   def process_application(application)
     SavingsPassFailService.new(application.saving).calculate!
     ApplicationCalculation.new(application).run
+    return false if stop_processing?(application)
     benefit_override(application) if online_application.benefits_override
     ResolverService.new(application, current_user).complete
   end
@@ -66,6 +70,10 @@ class OnlineApplicationsController < ApplicationController
     return unless authorize @benefit_override, :create?
     @benefit_override.update(correct: true, completed_by: current_user)
     application.update(outcome: 'full')
+  end
+
+  def stop_processing?(application)
+    application.failed_because_dwp_error? && !online_application.benefits_override
   end
 
   def authorize_online_application
