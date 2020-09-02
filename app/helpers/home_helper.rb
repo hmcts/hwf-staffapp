@@ -9,6 +9,12 @@ module HomeHelper
       processed_application_path(application)
     when "deleted"
       deleted_application_path(application)
+    when "created"
+      if application.online_application_id?
+        online_application_path(application.online_application)
+      else
+        application_personal_informations_path(application)
+      end
     end
   end
 
