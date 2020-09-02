@@ -26,7 +26,7 @@ class OnlineApplication < ActiveRecord::Base
   end
 
   def processed?
-    linked_application.present?
+    linked_application.present? && !linked_application.created?
   end
 
   def linked_application
