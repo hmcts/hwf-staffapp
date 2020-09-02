@@ -31,7 +31,8 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def complete
-    application = ApplicationBuilder.new(current_user).build_from(online_application)
+    application = linked_application
+
     if process_application(application) == false
       flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
       redirect_to_homepage
@@ -112,6 +113,10 @@ class OnlineApplicationsController < ApplicationController
 
   def online_application
     @online_application ||= OnlineApplication.find(params[:id])
+  end
+
+  def linked_application
+    online_application.linked_application || ApplicationBuilder.new(current_user).build_from(online_application)
   end
 
   def redirect_to_homepage
