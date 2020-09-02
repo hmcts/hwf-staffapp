@@ -84,6 +84,7 @@ class Application < ActiveRecord::Base
 
   def failed_because_dwp_error?
     return false if last_benefit_check.blank?
-    (last_benefit_check.dwp_result == 'BadRequest' && last_benefit_check.error_message.include?('LSCBC959: Service unavailable'))
+    last_benefit_check.dwp_result == 'BadRequest' &&
+      last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
   end
 end

@@ -1,20 +1,22 @@
 module HomeHelper
+
+  APPLICATION_STATE_LINKS = {
+    waiting_for_evidence: 'waiting_for_evidence_path',
+    waiting_for_part_payment: 'waiting_for_part_payment',
+    processed: 'processed_application_path',
+    deleted: 'deleted_application_path',
+    created: 'created_application_link'
+  }.freeze
+
   def path_for_application_based_on_state(application)
-    case application.state
-    when "waiting_for_evidence"
-      waiting_for_evidence_path(application)
-    when "waiting_for_part_payment"
-      waiting_for_part_payment(application)
-    when "processed"
-      processed_application_path(application)
-    when "deleted"
-      deleted_application_path(application)
-    when "created"
-      if application.online_application_id?
-        online_application_path(application.online_application)
-      else
-        application_personal_informations_path(application)
-      end
+    send(APPLICATION_STATE_LINKS.fetch(application.state.to_sym), application)
+  end
+
+  def created_application_link(application)
+    if application.online_application_id?
+      online_application_path(application.online_application)
+    else
+      application_personal_informations_path(application)
     end
   end
 
