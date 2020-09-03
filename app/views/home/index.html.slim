@@ -90,7 +90,7 @@ h1.visuallyhidden Help with fees - Staff application
     - if policy(:application).new?
       .govuk-grid-row
         .govuk-grid-column-full.table_data
-          = render('home/last_updated_dwp_failed_applications', type: :dwp_failed_applications, list: @last_failed_dwp_applications)
+          = render('home/dwp_failed_applications', type: :dwp_failed_applications, list: @last_failed_dwp_applications)
 
     .govuk-grid-row
       .govuk-grid-column-full

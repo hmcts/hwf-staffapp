@@ -33,17 +33,24 @@ en-GB:
     dashboard:
       heading: Process when DWP is back online
       caption: Applications that failed due to DWP failure
+      no_applications: No pending applications in the list
+    index:
+      title: Pending benefit applications
+      caption: Process when the DWP is back online
       table_header:
         reference: Reference
         applicant: Applicant
         status: Status
         updated_at: Last updated
+        processed_by: Process by
         id: Id
         ready_to_process: Ready to process?
       table:
         missing_reference: 'no reference number'
         ready_link: 'Ready to process'
         not_ready_link: 'Not ready to process'
+        no_applications: No pending applications in the list
+
 
   completed_applications:
     title: Completed
