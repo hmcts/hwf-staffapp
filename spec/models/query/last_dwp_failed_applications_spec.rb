@@ -2,17 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Query::LastDwpFailedApplications, type: :model do
   subject(:query) { described_class.new(user) }
-  let(:user) { create :user }
+  let(:user) { create :user, office: office1 }
+  let(:office1) { create :office }
+  let(:office2) { create :office }
 
   describe '#find' do
     subject { query.find }
 
-    let(:application1) { create :application, :benefit_type, user: user, reference: 'ABC1' }
-    let(:application2) { create :application, :benefit_type, user: user, reference: 'ABC2' }
-    let(:application3) { create :application_full_remission, :benefit_type, user: user, reference: 'ABC3' }
-    let(:application4) { create :application_full_remission, user: user, reference: 'ABC4' }
-    let(:application5) { create :application, :benefit_type, user: user, reference: 'ABC5' }
-    let(:application6) { create :application, :benefit_type, user: user, reference: 'ABC6' }
+    let(:application1) { create :application, :benefit_type, user: user, reference: 'ABC1', office: office1 }
+    let(:application2) { create :application, :benefit_type, user: user, reference: 'ABC2', office: office1 }
+    let(:application3) { create :application_full_remission, :benefit_type, user: user, reference: 'ABC3', office: office1 }
+    let(:application4) { create :application_full_remission, user: user, reference: 'ABC4', office: office1 }
+    let(:application5) { create :application, :benefit_type, user: user, reference: 'ABC5', office: office1 }
+    let(:application6) { create :application, :benefit_type, user: user, reference: 'ABC6', office: office1 }
 
     before do
       Timecop.freeze(3.months.ago + 1.day) do
@@ -41,6 +43,24 @@ RSpec.describe Query::LastDwpFailedApplications, type: :model do
 
     it "contains applications with failed dwp benefit checks only" do
       is_expected.to match_array([application5, application1])
+    end
+
+    context 'same office' do
+      let(:user2) { create :user, office: office1 }
+      subject(:query) { described_class.new(user2) }
+
+      it 'loads applciations for same office' do
+        expect(query.find).to match_array([application5, application1])
+      end
+    end
+
+    context 'difference office' do
+      let(:user2) { create :user, office: office2 }
+      subject(:query) { described_class.new(user2) }
+
+      it 'loads applciations for different office' do
+        expect(query.find).to match_array([])
+      end
     end
   end
 end

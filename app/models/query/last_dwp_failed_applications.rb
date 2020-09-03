@@ -5,7 +5,7 @@ module Query
     end
 
     def find
-      applications = @user.applications.where(benefits: true, state: 0).
+      applications = @user.office.applications.where(benefits: true, state: 0).
                      where('applications.created_at between ? AND ?', 3.months.ago, Time.zone.now)
       apps_with_failed_checks(applications)
     end
