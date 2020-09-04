@@ -1,6 +1,7 @@
 And("there is an application waiting for evidence") do
   user = FactoryBot.create(:user)
-  FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user)
+  @application = FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user)
+
   sign_in_page.load_page
   fill_in 'Email', with: user.email
   fill_in 'Password', with: 'password'
@@ -25,8 +26,8 @@ When("I click on what to do if the evidence cannot be processed") do
 end
 
 Then("I should see instructions with a deadline to submit the evidence") do
-  date_received = (Time.zone.now + 2.weeks).strftime("%Y-%m-%d")
-  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{date_received}"
+  expires_at = @application.evidence_check.expires_at.strftime("%Y-%m-%d")
+  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{expires_at}"
 end
 
 Then("I should see the applicants personal details") do
