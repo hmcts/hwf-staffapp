@@ -15,6 +15,10 @@ Capybara.register_driver :headless do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
+Capybara.register_driver :apparition do |app|
+  Capybara::Apparition::Driver.new(app, js_errors: false)
+end
+
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
