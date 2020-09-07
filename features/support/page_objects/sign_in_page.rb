@@ -48,6 +48,7 @@ class SignInPage < BasePage
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
+    user
   end
 
   def user_account
@@ -55,6 +56,7 @@ class SignInPage < BasePage
     content.user_email.set user.email
     content.user_password.set user.password
     sign_in
+    user
   end
 
   def admin_account

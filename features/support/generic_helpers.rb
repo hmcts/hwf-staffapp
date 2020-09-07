@@ -190,8 +190,7 @@ end
 
 def start_application
   sign_in_page.load_page
-  sign_in_page.user_account
-  dashboard_page.process_application
+  @current_user = sign_in_page.user_account
 end
 
 def go_to_finance_transactional_report_page
@@ -204,28 +203,26 @@ def click_on_back_to_start
   click_on 'Back to start', visible: false
 end
 
+# benefit application full outcome with paper evidence provided
 def eligable_application
-  personal_details_page.submit_all_personal_details_ni
-  application_details_page.submit_fee_600
-  savings_investments_page.submit_less_than
-  benefits_page.submit_benefits_yes
-  paper_evidence_page.submit_evidence_yes
-  complete_processing
-  click_on_back_to_start
+  applicant = FactoryBot.create(:applicant_with_all_details)
+  application = FactoryBot.create(:application, :processed_state, :benefit_type, fee: 600,
+    decision_cost: 600, user: @current_user, office: @current_user.office, outcome: 'full',
+    reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant)
+  FactoryBot.create(:benefit_override, correct: true, application: application)
 end
 
 def ineligable_application
-  personal_details_page.submit_required_personal_details
-  application_details_page.submit_fee_300
-  savings_investments_page.submit_exact_amount
-  complete_processing
-  click_on_back_to_start
+  application = FactoryBot.create(:application_no_remission, :processed_state, fee: 300,
+   decision_cost: 0, user: @current_user, office: @current_user.office,
+   reference: "#{reference_prefix}-000002", children: 0)
+  FactoryBot.create(:benefit_check, :yes_result, application: application)
 end
 
 def multiple_applications
   eligable_application
-  dashboard_page.process_application
   ineligable_application
+  click_on "Help with fees"
 end
 
 def complete_and_back_to_start
