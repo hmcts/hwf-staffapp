@@ -9,7 +9,7 @@ module Forms
           min_threshold_exceeded: Boolean,
           over_61: Boolean,
           max_threshold_exceeded: Boolean,
-          amount: Integer
+          amount: Decimal
         }
       end
 
@@ -33,8 +33,13 @@ module Forms
           over_61: over_61,
           max_threshold: Settings.savings_threshold.maximum,
           max_threshold_exceeded: max_threshold_exceeded,
-          amount: amount
+          amount: rounded_amount
         }
+      end
+
+      def rounded_amount
+        return if amount.blank?
+        amount.round
       end
 
       def maximum_threshold_array
