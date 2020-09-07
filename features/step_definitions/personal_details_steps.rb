@@ -1,5 +1,6 @@
 Given("I have started an application") do
   start_application
+  dashboard_page.process_application
 end
 
 And("I am on the personal details part of the application") do

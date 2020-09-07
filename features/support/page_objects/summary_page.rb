@@ -15,6 +15,7 @@ class SummaryPage < BasePage
 
   def go_to_summary_page_low_savings
     start_application
+    dashboard_page.process_application
     personal_details_page.submit_all_personal_details_ni
     application_details_page.submit_fee_600
     savings_investments_page.submit_less_than
@@ -24,6 +25,7 @@ class SummaryPage < BasePage
 
   def go_to_summary_page_high_savings
     start_application
+    dashboard_page.process_application
     personal_details_page.submit_all_personal_details_ni
     application_details_page.submit_fee_600
     savings_investments_page.submit_exact_amount
