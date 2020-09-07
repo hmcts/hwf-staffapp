@@ -208,16 +208,16 @@ def eligable_application
   applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600)
   application = FactoryBot.create(:application, :processed_state, :benefit_type,
-    decision_cost: 600, user: @current_user, office: @current_user.office, outcome: 'full',
-    reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
+                                  decision_cost: 600, user: @current_user, office: @current_user.office, outcome: 'full',
+                                  reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
   FactoryBot.create(:benefit_override, correct: true, application: application)
 end
 
 def ineligable_application
   applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith')
   application = FactoryBot.create(:application_no_remission, :processed_state, fee: 300,
-   decision_cost: 0, user: @current_user, office: @current_user.office,
-   reference: "#{reference_prefix}-000002", children: 0, applicant: applicant)
+                                                                               decision_cost: 0, user: @current_user, office: @current_user.office,
+                                                                               reference: "#{reference_prefix}-000002", children: 0, applicant: applicant)
   FactoryBot.create(:benefit_check, :yes_result, application: application)
 end
 
