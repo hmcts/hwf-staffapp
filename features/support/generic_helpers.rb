@@ -193,6 +193,26 @@ def start_application
   @current_user = sign_in_page.user_account
 end
 
+def sign_in_as_reader
+  sign_in_page.load_page
+  @current_user = sign_in_page.reader_account
+end
+
+def sign_in_as_admin
+  sign_in_page.load_page
+  @current_user = sign_in_page.admin_account
+end
+
+def sign_in_as_manager
+  sign_in_page.load_page
+  @current_user = sign_in_page.manager_account
+end
+
+def sign_in_as_user
+  sign_in_page.load_page
+  @current_user = sign_in_page.user_account
+end
+
 def go_to_finance_transactional_report_page
   visit(reports_page.url)
   reports_page.finance_transactional_report
@@ -244,14 +264,20 @@ def part_payment_application
 end
 
 def waiting_evidence_application_ni
-  dashboard_page.process_application
-  personal_details_page.submit_all_personal_details_ni
-  application_details_page.submit_as_refund_case
-  savings_investments_page.submit_less_than
-  benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_no
-  incomes_page.submit_incomes_50
-  complete_and_back_to_start
+  # dashboard_page.process_application
+  # personal_details_page.submit_all_personal_details_ni
+  # application_details_page.submit_as_refund_case
+  # savings_investments_page.submit_less_than
+  # benefits_page.submit_benefits_no
+  # incomes_page.submit_incomes_no
+  # incomes_page.submit_incomes_50
+  # complete_and_back_to_start
+  applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
+  FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
+                    decision_cost: 656.66, amount_to_pay: 0, user: @current_user, office: @current_user.office, outcome: 'full',
+                    reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
+  visit '/'
 end
 
 def ho_application

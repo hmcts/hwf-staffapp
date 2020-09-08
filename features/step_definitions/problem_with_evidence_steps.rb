@@ -1,6 +1,5 @@
 When("I am on the problem with evidence page") do
-  sign_in_page.load_page
-  sign_in_page.user_account
+  sign_in_as_user
   problem_with_evidence_page.go_to_problem_with_evidence_page
   expect(page).to have_text 'What is the problem?'
 end
