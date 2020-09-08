@@ -152,5 +152,30 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
       it { is_expected.to be false }
     end
+
+    describe 'amount is decimal number' do
+      before do
+        update_form
+        saving.reload
+      end
+
+      context 'rounds down' do
+        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.23 } }
+
+        it { expect(saving.amount.to_i).to be 10 }
+      end
+
+      context 'rounds up' do
+        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.55 } }
+
+        it { expect(saving.amount.to_i).to be 11 }
+      end
+
+      context 'no rounding for nil value' do
+        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: nil } }
+
+        it { expect(saving.amount.to_i).to be 0 }
+      end
+    end
   end
 end
