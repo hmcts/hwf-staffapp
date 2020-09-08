@@ -7,6 +7,7 @@ class ProblemWithEvidencePage < BasePage
   end
 
   def go_to_problem_with_evidence_page
+    dashboard_page.go_home
     click_link("#{reference_prefix}-000001")
     evidence_page.content.evidence_can_not_be_processed.click
     click_link 'Return application', visible: false

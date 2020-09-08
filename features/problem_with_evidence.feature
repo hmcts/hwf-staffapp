@@ -1,7 +1,9 @@
 Feature: Problem with evidence page
 
   Background: Problem with evidence page
-    Given I am on the problem with evidence page
+    Given I successfully sign in as a user
+    And I have evidence check application
+    And I am on the problem with evidence page
 
   Scenario: Return application when evidence has not arrived or too late
     When I submit the page with not arrived or too late
@@ -16,7 +18,7 @@ Feature: Problem with evidence page
     And I submit the details of the staff error
     Then I should be taken to the return letter page
     And on the processed application I can see that the reason for not being processed is staff error
-    
+
   Scenario: Problem with evidence error message
     When I click on next without making a selection
     Then I should see select from one of the problem options error message

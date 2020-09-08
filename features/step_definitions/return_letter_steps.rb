@@ -68,6 +68,6 @@ end
 
 And("on the processed application I can see that the reason for not being processed is staff error") do
   click_button('Finish')
-  click_link("#{reference_prefix}-000002")
+  click_link("#{reference_prefix}-000001")
   expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff error"'
 end

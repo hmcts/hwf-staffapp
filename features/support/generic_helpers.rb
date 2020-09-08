@@ -264,14 +264,6 @@ def part_payment_application
 end
 
 def waiting_evidence_application_ni
-  # dashboard_page.process_application
-  # personal_details_page.submit_all_personal_details_ni
-  # application_details_page.submit_as_refund_case
-  # savings_investments_page.submit_less_than
-  # benefits_page.submit_benefits_no
-  # incomes_page.submit_incomes_no
-  # incomes_page.submit_incomes_50
-  # complete_and_back_to_start
   applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
   FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
