@@ -254,13 +254,13 @@ def complete_and_back_to_start
 end
 
 def part_payment_application
-  dashboard_page.process_application
-  personal_details_page.submit_required_personal_details
-  application_details_page.submit_fee_600
-  savings_investments_page.submit_less_than
-  benefits_page.submit_benefits_no
-  incomes_page.submit_incomes_yes_3
-  complete_processing
+  applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600, refund: false)
+  application = FactoryBot.create(:application, :waiting_for_part_payment_state, :income_type,
+                                  decision_cost: nil, amount_to_pay: 40, user: @current_user, office: @current_user.office, outcome: 'part',
+                                  reference: "#{reference_prefix}-000001", children: 3, income: nil, applicant: applicant, detail: detail, dependents: true)
+  FactoryBot.create(:part_payment, application: application)
+  visit '/'
 end
 
 def waiting_evidence_application_ni

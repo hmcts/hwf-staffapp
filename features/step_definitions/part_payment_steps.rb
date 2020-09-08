@@ -1,12 +1,11 @@
-Given("I have processed an application that is a refund") do
-  sign_in_page.load_page
-  sign_in_page.user_account
+Given("I have processed an application that is a part payment") do
   part_payment_application
 end
 
 But("the applicant must pay towards the fee") do
-  expect(confirmation_page.content.outcome_header.text).to have_text 'The applicant must pay £40 towards the fee'
-  click_on 'Back to start', visible: false
+  click_link "#{reference_prefix}-000001", visible: false
+  expect(part_payment_page.content).to have_part_payment_fee
+  dashboard_page.go_home
 end
 
 And("the payment is ready to process") do
