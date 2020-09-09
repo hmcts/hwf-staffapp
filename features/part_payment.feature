@@ -3,7 +3,6 @@ Feature: Processing part payments
   Background: Processed refund application that requires a part payment
     Given I successfully sign in as a user
     And I have processed an application that is a part payment
-    But the applicant must pay towards the fee
 
   Scenario: Successfully process part payment
     And the payment is ready to process

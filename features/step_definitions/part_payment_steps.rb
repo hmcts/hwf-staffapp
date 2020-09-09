@@ -2,12 +2,6 @@ Given("I have processed an application that is a part payment") do
   part_payment_application
 end
 
-But("the applicant must pay towards the fee") do
-  click_link "#{reference_prefix}-000001", visible: false
-  expect(part_payment_page.content).to have_part_payment_fee
-  dashboard_page.go_home
-end
-
 And("the payment is ready to process") do
   click_link "#{reference_prefix}-000001"
   click_on 'Start now', visible: false

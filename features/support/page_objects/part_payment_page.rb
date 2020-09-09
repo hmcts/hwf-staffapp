@@ -12,6 +12,7 @@ class PartPaymentPage < BasePage
   end
 
   def not_ready_to_process_payment
+    content.wait_until_no_visible
     content.no.click
     fill_in 'Describe the problem with the part-payment', with: 'No signature on cheque'
     next_page
