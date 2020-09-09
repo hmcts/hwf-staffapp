@@ -12,26 +12,22 @@ When("I am redirected to the sign in page") do
 end
 
 When("I successfully sign in as a user") do
-  sign_in_page.load_page
-  sign_in_page.user_account
+  sign_in_as_user
   expect(sign_in_page).to have_welcome_user
 end
 
 When("I successfully sign in as a manager") do
-  sign_in_page.load_page
-  sign_in_page.manager_account
+  sign_in_as_manager
   expect(sign_in_page).to have_welcome_user
 end
 
 When("I successfully sign in as admin") do
-  sign_in_page.load_page
-  sign_in_page.admin_account
+  sign_in_as_admin
   expect(sign_in_page).to have_welcome_user
 end
 
 When("I successfully sign in read only user") do
-  sign_in_page.load_page
-  sign_in_page.reader_account
+  sign_in_as_reader
   expect(sign_in_page).to have_welcome_user
 end
 

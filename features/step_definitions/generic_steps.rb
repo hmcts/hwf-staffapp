@@ -23,3 +23,7 @@ end
 Then("I should see your changes have been saved message") do
   expect(base_page.content).to have_saved_alert
 end
+
+Given("I have evidence check application") do
+  waiting_evidence_application_ni
+end

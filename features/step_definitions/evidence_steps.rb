@@ -1,12 +1,15 @@
 And("there is an application waiting for evidence") do
+  user = FactoryBot.create(:user)
+  @application = FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user)
+
   sign_in_page.load_page
-  sign_in_page.user_account
-  waiting_evidence_application_ni
-  waiting_evidence_application_ni
+  fill_in 'Email', with: user.email
+  fill_in 'Password', with: 'password'
+  click_on 'Sign in'
 end
 
 And("I am on an application waiting for evidence") do
-  click_link "#{reference_prefix}-000002", visible: false
+  dashboard_page.content.waiting_for_evidence_application_link.click
 end
 
 When("I click on start now to process the evidence") do
@@ -23,8 +26,8 @@ When("I click on what to do if the evidence cannot be processed") do
 end
 
 Then("I should see instructions with a deadline to submit the evidence") do
-  date_received = (Time.zone.now + 2.weeks).strftime("%Y-%m-%d")
-  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{date_received}"
+  expires_at = @application.evidence_check.expires_at.strftime("%Y-%m-%d")
+  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{expires_at}"
 end
 
 Then("I should see the applicants personal details") do
@@ -81,7 +84,7 @@ Then("I see the amount to be refunded should be £656.66") do
   expect(evidence_page.content).to have_full_refund_header
 end
 
-Then("I see the amount to be refunded should be £451.66") do
+Then("I see the amount to be refunded should be £5") do
   expect(evidence_page.content).to have_partial_refund_header
 end
 
@@ -113,7 +116,7 @@ Given("I have successfully submitted the evidence") do
   next_page
   find_field('Total monthly income from evidence', visible: false).set('500')
   next_page
-  expect(page).to have_text 'The amount to be refunded should be £656.66'
+  expect(page).to have_text '✓ Eligible for help with fees'
   next_page
 end
 
