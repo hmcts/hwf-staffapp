@@ -8,6 +8,7 @@ require 'cucumber/rails'
 require_relative './page_objects/base_page'
 require 'capybara/apparition'
 require 'cucumber/rspec/doubles'
+require 'database_cleaner/active_record'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -62,4 +63,8 @@ Capybara.raise_server_errors = false
 
 Before do
   stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
+end
+
+Before do
+  DatabaseCleaner.clean
 end

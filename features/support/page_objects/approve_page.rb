@@ -9,6 +9,7 @@ class ApprovePage < BasePage
 
   def go_to_approve_page
     start_application
+    dashboard_page.process_application
     personal_details_page.submit_required_personal_details
     application_details_page.submit_fee_10001
   end

@@ -64,7 +64,7 @@ Scenario: Partial refund
   And I click on start now to process the evidence
   And I submit that the evidence is correct
   When I submit 1500 as the income
-  Then I see the amount to be refunded should be £451.66
+  Then I see the amount to be refunded should be £5
 
 Scenario: Check details
   And I am on an application waiting for evidence

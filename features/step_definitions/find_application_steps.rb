@@ -94,7 +94,7 @@ end
 
 Then("I see that it is paginated by 20 results per page") do
   result = find_application_page.content.search_results_group.found_application.result
-  expect(result[25]).to have_text '123…1516'
+  expect(result[25]).to have_text '1234Next'
 end
 
 And("I can navigate forward a page") do

@@ -76,9 +76,8 @@ Then("I should be taken to the suspected fraud guide") do
 end
 
 Then("I can view guides by clicking on the link in the footer") do
-  new_window = window_opened_by { base_page.footer.see_the_guides_link.click }
-  within_window new_window do
-    expect(page).to have_text 'See the guides'
-    expect(current_url).to end_with '/guide'
-  end
+  expect(page).to have_xpath('.//a[@href="/guide"][@target="blank"][contains(.,"See the guides")]')
+  visit '/guide'
+  expect(page).to have_text 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
+  expect(current_url).to end_with '/guide'
 end

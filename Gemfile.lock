@@ -158,6 +158,9 @@ GEM
     cucumber-tag_expressions (1.1.1)
     cucumber-wire (0.0.1)
     database_cleaner (1.8.5)
+    database_cleaner-active_record (1.8.0)
+      activerecord
+      database_cleaner (~> 1.8.0)
     date_validator (0.9.0)
       activemodel
       activesupport
@@ -560,7 +563,7 @@ DEPENDENCIES
   coffee-rails (~> 5.0.0)
   config
   cucumber-rails
-  database_cleaner
+  database_cleaner-active_record
   date_validator (= 0.9)
   delayed_job_active_record
   devise
