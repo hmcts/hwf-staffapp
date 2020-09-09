@@ -66,7 +66,7 @@ gem "paper_trail"
 # Google tag Manager
 gem 'gtm_on_rails'
 
-gem 'chartkick', '~> 3.3.0'
+gem 'chartkick', '~> 3.4.0'
 gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'nokogiri'

@@ -111,7 +111,7 @@ GEM
     capybara-webkit (1.15.1)
       capybara (>= 2.3, < 4.0)
       json
-    chartkick (3.3.1)
+    chartkick (3.4.0)
     childprocess (3.0.0)
     ckeditor (5.1.0)
       orm_adapter (~> 0.5.0)
@@ -558,7 +558,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   capybara-webkit
-  chartkick (~> 3.3.0)
+  chartkick (~> 3.4.0)
   ckeditor (~> 5.1)
   climate_control
   codeclimate-test-reporter (= 0.6.0)
