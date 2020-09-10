@@ -36,7 +36,7 @@ en-GB:
       no_applications: No pending applications in the list
     index:
       title: Pending benefit applications
-      caption: Process when the DWP is back online
+      caption: Process when DWP is back online
       table_header:
         reference: Reference
         applicant: Applicant
