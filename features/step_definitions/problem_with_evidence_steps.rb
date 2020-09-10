@@ -1,6 +1,7 @@
 When("I am on the problem with evidence page") do
   problem_with_evidence_page.go_to_problem_with_evidence_page
-  expect(page).to have_text 'What is the problem?'
+  problem_with_evidence_page.content.wait_until_header_visible
+  expect(problem_with_evidence_page.content).to have_header
 end
 
 Then("I should be taken to the return letter page") do
