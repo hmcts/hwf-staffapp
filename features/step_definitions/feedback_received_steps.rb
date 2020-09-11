@@ -4,7 +4,7 @@ end
 
 And("I am on the feedback received page") do
   navigation_page.navigation_link.feedback.click
-  expect(current_path).to end_with '/feedback/display'
+  expect(feedback_page).to have_current_path(%r{/feedback/display})
   expect(feedback_page.content).to have_admin_feedback_header
 end
 

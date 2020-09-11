@@ -1,9 +1,28 @@
 And("I have processed an application") do
-  confirmation_page.go_to_confirmation_page
+  start_application
+  dashboard_page.process_application
+
+  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  personal_details_page.submit_all_personal_details_ni
+
+  expect(application_details_page).to have_current_path(%r{/details})
+  application_details_page.submit_fee_600
+
+  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
+  savings_investments_page.submit_less_than
+
+  expect(benefits_page).to have_current_path(%r{/benefits})
+  benefits_page.submit_benefits_yes
+
+  expect(paper_evidence_page).to have_current_path(%r{/paper_evidence})
+  paper_evidence_page.submit_evidence_yes
+
+  expect(page).to have_current_path(%r{/summary})
+  complete_processing
 end
 
 Given("I am on the confirmation page") do
-  expect(current_path).to include 'confirmation'
+  expect(confirmation_page).to have_current_path(%r{/confirmation})
   expect(confirmation_page.content).to have_eligible
 end
 
@@ -13,7 +32,7 @@ end
 
 Then("I should be taken back to my dashboard") do
   expect(page).to have_text 'Process an online application'
-  expect(current_path).to eq '/'
+  expect(page).to have_current_path('/')
 end
 
 Then("I should see my processed application in your last applications") do

@@ -55,12 +55,6 @@ class FindApplicationPage < BasePage
     content.search_button.click
   end
 
-  def paginated_search_results
-    sign_in_page.load_page
-    sign_in_page.user_account_with_applications
-    find_application_page.search_case_number('JK123456A')
-  end
-
   def pagination_next_page
     content.next_page.click
   end

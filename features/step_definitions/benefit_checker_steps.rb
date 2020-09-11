@@ -104,7 +104,7 @@ Then("benefits and income based applications can be processed") do
 end
 
 Then("I have not signed in") do
-  expect(current_path).to eq '/'
+  expect(sign_in_page).to have_current_path('/')
   expect(sign_in_page.content).to have_sign_in_alert
 end
 

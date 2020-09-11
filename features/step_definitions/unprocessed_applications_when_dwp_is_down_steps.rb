@@ -135,7 +135,7 @@ When("I click on the 'Pending applications to be processed' link") do
 end
 
 Then("I should be redirected to home page") do
-  expect(current_path).to eq '/'
+  expect(page).to have_current_path('/')
   WebMock.reset!
 end
 
