@@ -1,12 +1,10 @@
 Given("I am signed in as a user and I see the benefit checker is down") do
   RSpec::Mocks.with_temporary_scope do
-    dwp = instance_double('DwpMonitor', state: 'offline')
-    DwpMonitor.stub(:new).and_return dwp
-    sign_in_page.load_page
-    sign_in_page.user_account
+    dwp_monitor_state_as("offline")
+    sign_in_with_user
+    expect(dashboard_page).to have_welcome_user
+    expect(dashboard_page).to have_dwp_offline_banner
   end
-  expect(sign_in_page).to have_welcome_user
-  expect(benefit_checker_page).to have_dwp_banner_offline
 end
 
 Given("I have looked up an online application when the benefit checker is down") do

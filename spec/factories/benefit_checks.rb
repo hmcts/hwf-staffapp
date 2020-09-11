@@ -23,5 +23,10 @@ FactoryBot.define do
     trait :error_result do
       dwp_result { 'Error' }
     end
+
+    trait :bad_request_result do
+      dwp_result { 'BadRequest' }
+      error_message { 'LSCBC959: Service unavailable.' }
+    end
   end
 end

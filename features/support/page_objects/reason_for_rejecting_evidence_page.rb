@@ -10,12 +10,4 @@ class ReasonForRejectingEvidencePage < BasePage
     element :wrong_date_range, '.govuk-label', text: 'Wrong date range'
     element :error, '.error', text: 'Please select from one of the options'
   end
-
-  def go_to_reason_for_rejecting_evidence_page
-    click_link "#{reference_prefix}-000001"
-    click_on 'Start now', visible: false
-    evidence_accuracy_page.content.wait_until_header_visible
-    evidence_accuracy_page.content.problem_with_evidence.click
-    next_page
-  end
 end
