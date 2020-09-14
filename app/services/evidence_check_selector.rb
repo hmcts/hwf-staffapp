@@ -89,7 +89,8 @@ class EvidenceCheckSelector
     @application.detail.emergency_reason.present? ||
       @application.outcome == 'none' ||
       @application.application_type != 'income' ||
-      @application.detail.discretion_applied == false
+      @application.detail.discretion_applied == false ||
+      @application.applicant.under_age?
   end
 
   def save_evidence_check(type)

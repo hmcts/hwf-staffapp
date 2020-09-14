@@ -15,9 +15,8 @@ class OnlineApplication < ActiveRecord::Base
     [title, first_name, last_name].compact.join(' ')
   end
 
-  # FIXME: This is here temporarily until we can refactor view models
   def applicant
-    self
+    Applicant.new(online_applicant_attributes)
   end
 
   # FIXME: This is here temporarily until we can refactor view models
@@ -32,4 +31,12 @@ class OnlineApplication < ActiveRecord::Base
   def linked_application
     Application.find_by(online_application: self)
   end
+
+  private
+
+  def online_applicant_attributes
+    fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married]
+    Hash[fields.map { |field| [field, send(field)] }]
+  end
+
 end

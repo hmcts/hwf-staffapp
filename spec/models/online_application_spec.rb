@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe OnlineApplication, type: :model do
-  subject(:online_application) { build :online_application }
+  subject(:online_application) { online_application }
+  let(:online_application) { build :online_application }
 
   it { is_expected.to validate_presence_of(:date_of_birth) }
   it { is_expected.to validate_presence_of(:first_name) }
@@ -120,6 +121,22 @@ RSpec.describe OnlineApplication, type: :model do
 
     it 'stores serialized hash' do
       expect(online_application.reload.income_kind).to eql(applicant: ['Wages'], partner: ['Child benefits'])
+    end
+  end
+
+  describe 'applicant' do
+    let(:online_application) { build :online_application, title: 'Mr', first_name: 'James', last_name: 'Grump' }
+
+    it 'is an Applicant model object' do
+      expect(online_application.applicant).to be_a_kind_of(Applicant)
+    end
+
+    it 'has correct data' do
+      expect(online_application.applicant.full_name).to eq('Mr James Grump')
+    end
+
+    it 'has methods related to applicant' do
+      expect(online_application.applicant.under_age?).to be false
     end
   end
 end

@@ -20,6 +20,10 @@ class Applicant < ActiveRecord::Base
     age >= 61
   end
 
+  def under_age?
+    age <= 15
+  end
+
   private
 
   def compare_months
