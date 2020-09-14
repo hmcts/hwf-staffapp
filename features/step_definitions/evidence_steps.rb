@@ -112,6 +112,7 @@ end
 
 Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
   click_on 'Next', visible: false
   expect(evidence_page).to have_current_path(%r{/income})
