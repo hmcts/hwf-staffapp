@@ -1,5 +1,5 @@
 Then("I am taken to the sign in page") do
-  expect(current_path).to end_with '/users/sign_in'
+  expect(page).to have_current_path(%r{/users/sign_in})
 end
 
 Then("I can view my profile") do

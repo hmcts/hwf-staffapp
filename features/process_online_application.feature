@@ -2,7 +2,7 @@ Feature: Process an online application
 
   Background: Looking up an online application
     Given I have looked up an online application
-    
+
   Scenario: Application details
     When I see the application details
     And I add a jurisdiction

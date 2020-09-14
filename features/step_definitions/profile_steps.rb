@@ -1,7 +1,7 @@
 Then("I am on the change details page") do
   click_link 'View profile'
   click_link 'Change details'
-  expect(current_path).to end_with '/edit'
+  expect(page).to have_current_path(%r{/edit})
 end
 
 When("I change my details") do
@@ -18,7 +18,7 @@ end
 And("I am on my profile page") do
   click_link 'View profile'
   expect(profile_page.content).to have_header
-  expect(current_path).to have_content '/users/'
+  expect(profile_page).to have_current_path(%r{/users/})
 end
 
 Then("I should see my details") do
@@ -35,9 +35,9 @@ When("I clink on change your password") do
 end
 
 Then("I am taken to change password page") do
-  expect(current_path).to end_with '/change_password'
+  expect(page).to have_current_path(%r{/change_password})
 end
 
 Then("I should be taken to the change details page") do
-  expect(current_path).to end_with '/edit'
+  expect(page).to have_current_path(%r{/edit})
 end

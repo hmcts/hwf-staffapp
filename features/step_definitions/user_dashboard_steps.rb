@@ -4,7 +4,7 @@ When("I click on waiting for evidence") do
 end
 
 Then("I should be taken to evidence checks page") do
-  expect(current_path).to include '/evidence_checks'
+  expect(page).to have_current_path(%r{/evidence_checks})
 end
 
 When("I click on waiting for part-payment") do
@@ -13,7 +13,7 @@ When("I click on waiting for part-payment") do
 end
 
 Then("I should be taken to part payments page") do
-  expect(current_path).to include '/part_payments'
+  expect(page).to have_current_path(%r{/part_payments})
 end
 
 When("I click on view profile") do

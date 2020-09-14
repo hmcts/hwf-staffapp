@@ -1,6 +1,6 @@
 Given(/^I am on the application details part of the application$/) do
   application_details_page.go_to_application_details_page
-  expect(current_path).to include 'details'
+  expect(application_details_page).to have_current_path(%r{/details})
   expect(application_details_page.content).to have_header
 end
 
@@ -9,7 +9,7 @@ When(/^I successfully submit my required application details$/) do
 end
 
 Then(/^I should be taken to savings and investments page$/) do
-  expect(current_path).to include 'savings_investments'
+  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
   expect(savings_investments_page.content).to have_header
 end
 

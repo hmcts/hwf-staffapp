@@ -45,7 +45,7 @@ When("I click on add staff") do
 end
 
 Then("I am taken to the send invitation page") do
-  expect(current_path).to eq '/users/invitation/new'
+  expect(page).to have_current_path(%r{/users/invitation/new})
 end
 
 When("I click on deleted staff") do
@@ -53,7 +53,7 @@ When("I click on deleted staff") do
 end
 
 Then("I am taken to the deleted staff page") do
-  expect(current_path).to eq '/users/deleted'
+  expect(page).to have_current_path(%r{/users/deleted})
 end
 
 Then("the office filter is disabled") do

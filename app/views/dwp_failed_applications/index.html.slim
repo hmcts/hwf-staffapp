@@ -1,0 +1,40 @@
+- content_for :page_title
+  = t("dwp_failed_applications_applications.index.title")
+
+.govuk-grid-row
+  .govuk-grid-column-full class= 'govuk-!-padding-top-7'
+    h1.govuk-heading-m.heading-icon-dwp_failed_applications =t("dwp_failed_applications.index.title")
+
+  .govuk-grid-column-full.table_data
+    - if @list.present?
+      table.govuk-table.tight.dwp_failed_applications
+        caption.govuk-table__caption =t("dwp_failed_applications.index.caption")
+        thead.govuk-table__head
+          tr.govuk-table__row
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.id")
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.status")
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.applicant")
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.updated_at")
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.processed_by")
+            th.govuk-table__header =t("dwp_failed_applications.index.table_header.ready_to_process")
+
+
+        tbody.govuk-table__body
+          - @list.each do |record|
+            tr.govuk-table__row
+              td.govuk-table__cell = link_to record.id, path_for_application_based_on_state(record)
+              td.govuk-table__cell =record.state
+              td.govuk-table__cell =record.applicant.full_name
+              td.govuk-table__cell =record.updated_at
+              td.govuk-table__cell =record.user.name
+              td.govuk-table__cell
+                - if DwpMonitor.new.state == 'online'
+                  =link_to t("dwp_failed_applications.index.table.ready_link"), path_for_application_based_on_state(record), {class: 'blue-info-text'}
+                - else
+                  span.red-warning-text = t("dwp_failed_applications.index.table.not_ready_link")
+
+
+    - else
+      p =t("dwp_failed_applications.index.no_applications")
+
+

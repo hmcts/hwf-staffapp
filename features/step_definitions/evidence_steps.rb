@@ -18,7 +18,7 @@ end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
   expect(evidence_accuracy_page.content).to have_header
-  expect(current_path).to end_with '/evidence/1/accuracy'
+  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
 end
 
 When("I click on what to do if the evidence cannot be processed") do
@@ -71,7 +71,7 @@ When("I submit that the evidence is correct") do
 end
 
 Then("I should be taken to the evidence income page") do
-  expect(current_path).to include '/evidence/1/income'
+  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
   expect(evidence_page.content).to have_header
 end
 
@@ -98,7 +98,7 @@ When("I submit that there is a problem with evidence") do
 end
 
 Then("I should be taken to the reason for rejecting the evidence page") do
-  expect(current_path).to end_with '/evidence/accuracy_incorrect_reason/1'
+  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/1})
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
 
@@ -113,11 +113,14 @@ end
 Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_on 'Next', visible: false
+  expect(evidence_page).to have_current_path(%r{/income})
   find_field('Total monthly income from evidence', visible: false).set('500')
-  next_page
+  click_on 'Next', visible: false
+  expect(evidence_page).to have_current_path(%r{/result})
   expect(page).to have_text '✓ Eligible for help with fees'
-  next_page
+  click_on 'Next', visible: false
+  expect(evidence_page).to have_current_path(%r{/summary})
 end
 
 Given("I use the browser back button") do
@@ -129,7 +132,6 @@ Given("I should see a message telling me that the application has been processed
 end
 
 Then("I should see the evidence details on the summary page") do
-  expect(current_path).to end_with '/evidence/1/summary'
   expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
   expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to have_text 'Ready to process Yes Change Ready to process'
   expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to have_text 'Income £500 Change Income'

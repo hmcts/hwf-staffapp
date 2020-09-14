@@ -81,4 +81,10 @@ class Application < ActiveRecord::Base
     days = Settings.part_payment.expires_in_days
     Time.zone.today + days
   end
+
+  def failed_because_dwp_error?
+    return false if last_benefit_check.blank?
+    last_benefit_check.dwp_result == 'BadRequest' &&
+      last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
+  end
 end

@@ -85,6 +85,14 @@ RSpec.describe OnlineApplication, type: :model do
 
       it { is_expected.to be false }
     end
+
+    context 'when application exists but it is still in created mode' do
+      let(:application) { create :application, online_application: online_application }
+      let(:online_application) { create :online_application, :completed, :with_reference }
+      before { application }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#linked_application' do

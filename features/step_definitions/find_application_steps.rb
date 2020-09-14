@@ -19,6 +19,7 @@ end
 
 When("I search for an application using a full name") do
   find_application_page.search_by_full_name
+  expect(find_application_page).to have_current_path(%r{/completed_search})
 end
 
 When("there is a single result for that full name") do
@@ -89,7 +90,11 @@ Then("I get the cannot be blank error message") do
 end
 
 Given("I have more than 20 search results") do
-  find_application_page.paginated_search_results
+  sign_in_page.load_page
+  sign_in_page.user_account_with_applications
+  expect(dashboard_page).to have_current_path('/')
+  find_application_page.search_case_number('JK123456A')
+  expect(find_application_page).to have_current_path(%r{/completed_search})
 end
 
 Then("I see that it is paginated by 20 results per page") do

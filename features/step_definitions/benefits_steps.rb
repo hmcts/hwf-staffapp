@@ -1,6 +1,6 @@
 Given("I am on the benfits part of the application") do
   benefits_page.go_to_benefits_page
-  expect(current_path).to end_with 'benefits'
+  expect(benefits_page).to have_current_path(%r{/benefits})
   expect(benefits_page.content).to have_header
 end
 
@@ -15,7 +15,7 @@ When("I answer no to the benefits question") do
 end
 
 Then("I should be asked about paper evidence") do
-  expect(current_path).to end_with 'benefit_override/paper_evidence'
+  expect(page).to have_current_path(%r{/benefit_override/paper_evidence})
 end
 
 Then("I should be taken to the incomes page") do

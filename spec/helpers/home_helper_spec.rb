@@ -25,6 +25,22 @@ RSpec.describe HomeHelper do
 
       it { expect(path_for_application_based_on_state(last_application)).to eql("/part_payments/#{part_payment.id}") }
     end
+
+    context 'dwp_failed' do
+      context 'online application' do
+        let(:online_application) { create(:online_application) }
+        let(:last_application) { create(:application, state: :created, online_application: online_application) }
+        before { last_application }
+
+        it { expect(path_for_application_based_on_state(last_application)).to eql("/online_applications/#{online_application.id}") }
+      end
+
+      context 'paper application' do
+        let(:last_application) { create(:application, state: :created) }
+
+        it { expect(path_for_application_based_on_state(last_application)).to eql("/applications/#{last_application.id}/personal_informations") }
+      end
+    end
   end
 
   describe '#sort_link_class' do
