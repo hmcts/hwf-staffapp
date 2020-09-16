@@ -55,7 +55,7 @@ class EvidenceCheckSelector
   end
 
   def position_matching_frequency?(position, frequency)
-    (position > 1) && (position % frequency).zero?
+    (position >= 1) && (position % frequency).zero?
   end
 
   def application_position(refund)

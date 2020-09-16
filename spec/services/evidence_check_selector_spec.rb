@@ -332,6 +332,19 @@ describe EvidenceCheckSelector do
         end
       end
 
+      context 'query all with singe existing application' do
+        let(:frequency) { 1 }
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+
+        before do
+          create :application, office: ccmcc_office
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
+
       context 'query only non refund applications' do
         before do
           create_list :application_full_remission, 4, office: ccmcc_office
