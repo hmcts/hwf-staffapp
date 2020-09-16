@@ -4,8 +4,8 @@ Given("I have started an application") do
 end
 
 And("I am on the personal details part of the application") do
-  expect(personal_details_page.content).to have_header
   expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  expect(personal_details_page.content).to have_header
 end
 
 When("I successfully submit my required personal details") do
