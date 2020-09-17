@@ -17,7 +17,7 @@ RSpec.describe IncomeCalculationRunner do
     end
 
     context 'when result is not nil' do
-      let(:result) { { outcome: 'part', amount_to_pay: 100, min_threshold: 1000, max_threshold: 5000 } }
+      let(:result) { { outcome: 'part', amount_to_pay: 100, min_threshold: 1000, max_threshold: 5000, income_max_threshold_exceeded: true } }
 
       it 'sets application type to income' do
         expect(application.application_type).to eql('income')
@@ -37,6 +37,10 @@ RSpec.describe IncomeCalculationRunner do
 
       it 'sets max_threshold as per result' do
         expect(application.income_max_threshold).to eq(5000)
+      end
+
+      it 'sets income_max_threshold_exceeded as per result' do
+        expect(application.income_max_threshold_exceeded).to be true
       end
     end
 
