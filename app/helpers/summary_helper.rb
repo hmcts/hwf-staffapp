@@ -36,21 +36,6 @@ module SummaryHelper
     end
   end
 
-  def display_savings?(application)
-    application.detail.discretion_applied != false
-  end
-
-  def display_savings_failed_letter?(application)
-    return false if application.saving.blank?
-    !application.saving.passed?
-  end
-
-  def display_benefit_failed_letter?(application)
-    checks = application.benefit_checks
-    return false if application.benefits != true || checks.blank?
-    !checks.last.benefits_valid?
-  end
-
   private
 
   def all_fields_empty?(object, fields)
