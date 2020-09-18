@@ -17,6 +17,12 @@ class IncomesPage < BasePage
     benefits_page.submit_benefits_no
   end
 
+  def submit_incomes_0
+    incomes_page.content.wait_until_question_visible
+    find_field('Total monthly income', visible: false).set('0')
+    next_page
+  end
+
   def submit_incomes_50
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('50')

@@ -1,3 +1,6 @@
+
+CCMCC_OFFICE_ENTITY_CODE = 'DH403'.freeze
+
 def base_page
   @base_page ||= BasePage.new
 end
@@ -215,6 +218,13 @@ end
 def sign_in_as_user
   sign_in_page.load_page
   @current_user = sign_in_page.user_account
+end
+
+def sign_in_as_ccmcc_office_user
+  ccmcc_office = FactoryBot.create(:office, entity_code: CCMCC_OFFICE_ENTITY_CODE)
+  user = FactoryBot.create(:user, office: ccmcc_office)
+  sign_in_page.load_page
+  @current_user = sign_in_page.sign_in_with user.email, user.password
 end
 
 def go_to_finance_transactional_report_page

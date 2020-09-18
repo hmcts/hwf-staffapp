@@ -55,7 +55,7 @@ class EvidenceCheckSelector
   end
 
   def position_matching_frequency?(position, frequency)
-    (position > 1) && (position % frequency).zero?
+    (position >= 1) && (position % frequency).zero?
   end
 
   def application_position(refund)
@@ -89,7 +89,8 @@ class EvidenceCheckSelector
     @application.detail.emergency_reason.present? ||
       @application.outcome == 'none' ||
       @application.application_type != 'income' ||
-      @application.detail.discretion_applied == false
+      @application.detail.discretion_applied == false ||
+      @application.applicant.under_age?
   end
 
   def save_evidence_check(type)

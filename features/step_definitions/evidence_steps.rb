@@ -76,11 +76,13 @@ Then("I should be taken to the evidence income page") do
 end
 
 When(/^I submit (\d+) as the income$/) do |income|
+  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
   fill_in 'Total monthly income from evidence', with: income
   next_page
 end
 
 Then("I see the amount to be refunded should be £656.66") do
+  expect(evidence_page).to have_current_path(%r{/evidence/1/result})
   expect(evidence_page.content).to have_full_refund_header
 end
 
@@ -112,6 +114,7 @@ end
 
 Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
   click_on 'Next', visible: false
   expect(evidence_page).to have_current_path(%r{/income})

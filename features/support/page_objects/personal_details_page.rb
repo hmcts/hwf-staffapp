@@ -43,6 +43,29 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
+  # rubocop:disable Metrics/AbcSize
+  def valid_dob_under_15
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day - 1
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 14
+  end
+
+  def valid_dob_exactly_15
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day + 1
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 16
+  end
+
+  def valid_dob_exactly_16
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 16
+  end
+  # rubocop:enable Metrics/AbcSize
+
   def in_the_future_dob
     tomorrow = Time.zone.tomorrow
     content.application_day_date_of_birth.set tomorrow.day
@@ -72,6 +95,30 @@ class PersonalDetailsPage < BasePage
   def submit_all_personal_details_ni
     full_name
     valid_dob
+    valid_ni
+    content.status_single.click
+    next_page
+  end
+
+  def submit_all_personal_details_ni_16
+    full_name
+    valid_dob_exactly_16
+    valid_ni
+    content.status_single.click
+    next_page
+  end
+
+  def submit_all_personal_details_ni_under_15
+    full_name
+    valid_dob_under_15
+    valid_ni
+    content.status_single.click
+    next_page
+  end
+
+  def submit_all_personal_details_ni_exactly_15
+    full_name
+    valid_dob_exactly_15
     valid_ni
     content.status_single.click
     next_page

@@ -30,3 +30,6 @@ node_modules/
 
 # Ignore generators
 .generators
+
+# Ignore binaries
+.DS_Store
