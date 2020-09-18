@@ -20,4 +20,13 @@ module ResultHelper
     !checks.last.benefits_valid?
   end
 
+  def income_value(application)
+    return number_to_currency(application.income, precision: 2) unless application.income.nil?
+    if application.income_min_threshold_exceeded == true &&
+       application.income_max_threshold_exceeded == true
+      income = number_to_currency(application.income_max_threshold, precision: 0)
+      return "#{income} or more"
+    end
+  end
+
 end

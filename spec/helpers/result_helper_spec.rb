@@ -86,4 +86,44 @@ RSpec.describe ResultHelper, type: :helper do
       it { expect(helper.display_income_failed_letter?(application)).to be false }
     end
   end
+
+  describe '#income_value' do
+    let(:application) {
+      instance_double(Application, income: income,
+                                   income_min_threshold_exceeded: income_min, income_max_threshold_exceeded: income_max,
+                                   income_max_threshold: 6065.to_f)
+    }
+    let(:income_min) { false }
+    let(:income_max) { false }
+
+    before do
+      RSpec::Mocks.configuration.allow_message_expectations_on_nil
+    end
+
+    context 'income is 0' do
+      let(:income) { 0 }
+      it { expect(helper.income_value(application)).to eq "£0.00" }
+    end
+
+    context 'income is a number' do
+      let(:income) { 10.52 }
+      it { expect(helper.income_value(application)).to eq '£10.52' }
+    end
+
+    context 'income threashold exceeded' do
+      let(:income) { nil }
+      let(:income_min) { true }
+      let(:income_max) { true }
+
+      it { expect(helper.income_value(application)).to eq '£6,065 or more' }
+    end
+
+    context 'max income threashold not exceeded' do
+      let(:income) { nil }
+      let(:income_min) { true }
+      let(:income_max) { false }
+
+      it { expect(helper.income_value(application)).to be nil }
+    end
+  end
 end
