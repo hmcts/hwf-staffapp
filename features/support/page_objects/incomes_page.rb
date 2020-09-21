@@ -17,6 +17,13 @@ class IncomesPage < BasePage
     benefits_page.submit_benefits_no
   end
 
+  def go_to_incomes_page_100
+    personal_details_page.submit_required_personal_details
+    application_details_page.submit_fee_100
+    savings_investments_page.submit_less_than
+    benefits_page.submit_benefits_no
+  end
+
   def submit_incomes_0
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('0')
@@ -32,6 +39,12 @@ class IncomesPage < BasePage
   def submit_incomes_1200
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('1200')
+    next_page
+  end
+
+  def submit_incomes(num)
+    incomes_page.content.wait_until_question_visible
+    find_field('Total monthly income', visible: false).set(num)
     next_page
   end
 

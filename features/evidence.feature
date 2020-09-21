@@ -42,7 +42,7 @@ Scenario: Submit problem with evidence
 Scenario: Evidence error message
   And I am on an application waiting for evidence
   And I click on start now to process the evidence
-  When I click on next without making a selection
+  When I click on next without making a selection on the evidence page
   Then I should see this question must be answered error message
 
 Scenario: Full refund

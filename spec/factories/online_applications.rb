@@ -74,6 +74,11 @@ FactoryBot.define do
       income { 450 }
     end
 
+    trait :income_6065 do
+      benefits { false }
+      income { 6065 }
+    end
+
     trait :et do
       form_name { 'ET1' }
       case_number { 'ET16/12345' }
