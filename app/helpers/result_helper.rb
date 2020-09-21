@@ -29,4 +29,12 @@ module ResultHelper
     end
   end
 
+  def saving_value(application)
+    if application.saving.max_threshold_exceeded
+      max_threshold = number_to_currency(application.saving.try(:max_threshold), precision: 0)
+      "#{max_threshold} or more"
+    else
+      number_to_currency(application.saving.try(:amount), precision: 2)
+    end
+  end
 end
