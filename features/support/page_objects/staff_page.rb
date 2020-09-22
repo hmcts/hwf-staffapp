@@ -10,9 +10,7 @@ class StaffPage < BasePage
   end
 
   def set_up_multiple_users
-    10.times do
-      [:reader, :user, :admin_user, :manager].each { |user| FactoryBot.create(user) }
-    end
+    [:reader, :user, :admin_user, :manager].each { |user| FactoryBot.create(user) }
   end
 
   def manager_on_staff_page
