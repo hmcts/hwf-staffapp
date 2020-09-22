@@ -12,6 +12,7 @@ end
 And("the payment is not ready to process") do
   click_link "#{reference_prefix}-000001"
   click_on 'Start now', visible: false
+  part_payment_page.content.wait_until_header_visible
   expect(page).to have_current_path(%r{/accuracy})
   part_payment_page.not_ready_to_process_payment
 end
