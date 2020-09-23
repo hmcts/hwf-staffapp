@@ -17,8 +17,8 @@ When("I click on start now to process the evidence") do
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
-  expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
 end
 
 When("I click on what to do if the evidence cannot be processed") do
@@ -102,6 +102,11 @@ end
 Then("I should be taken to the reason for rejecting the evidence page") do
   expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/1})
   expect(reason_for_rejecting_evidence_page.content).to have_header
+end
+
+When("I click on next without making a selection on the evidence page") do
+  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
+  next_page
 end
 
 Then("I should see this question must be answered error message") do

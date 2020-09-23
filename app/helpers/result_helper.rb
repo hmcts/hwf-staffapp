@@ -37,4 +37,5 @@ module ResultHelper
       number_to_currency(application.saving.try(:amount), precision: 2)
     end
   end
+
 end
