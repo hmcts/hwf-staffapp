@@ -53,6 +53,23 @@
               savings_threshold: number_to_currency(@application.saving.fee_threshold, precision: 2),
               savings_total: number_to_currency(@application.saving.amount, precision: 2))
 
+      -elsif display_income_failed_letter?(@application)
+        p.govuk-body Write the reference number on the top right corner of the paper form.
+        p.govuk-body Write to the applicant using the letter on this page.
+        p.govuk-body Store the application form in a secure location.
+
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+        .confirmation-letter
+          = t('letters.reject.reject_over_income_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              user_name: current_user.name,
+              fee_amount: number_to_currency(@application.detail.fee, precision: 2),
+              income_total: income_value(@application),
+              expiry_date: @application.payment_expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+
+
       -elsif display_benefit_failed_letter?(@application)
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
