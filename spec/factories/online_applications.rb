@@ -71,6 +71,15 @@ FactoryBot.define do
       form_name { 'ABC123' }
     end
 
+    trait :big_saving do
+      fee { 100 }
+      jurisdiction
+      date_received { Time.zone.yesterday }
+      form_name { 'AXEE122' }
+      min_threshold_exceeded { true }
+      max_threshold_exceeded { true }
+    end
+
     trait :threshold_exceeded do
       min_threshold_exceeded { true }
       amount { 3500 }

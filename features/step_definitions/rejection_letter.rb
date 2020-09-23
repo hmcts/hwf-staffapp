@@ -37,3 +37,21 @@ Given("I have an online application with children") do
   fill_in 'Reference', with: reference
   click_on 'Look up', visible: false
 end
+
+Given("I have an online application with big savings") do
+  FactoryBot.create(:online_application, :with_reference, :big_saving)
+  sign_in_page.load_page
+  sign_in_page.user_account
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+end
+
+Given("I have an online application with medium savings") do
+  FactoryBot.create(:online_application, :with_reference, :threshold_exceeded, :completed)
+  sign_in_page.load_page
+  sign_in_page.user_account
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+end
