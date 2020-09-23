@@ -46,8 +46,13 @@ describe EvidenceCheckFlaggingService do
       end
 
       context 'when there is no flag' do
-        it 'does not create a flag' do
-          expect { process_flag }.not_to change { EvidenceCheckFlag.count }
+        it 'create a flag' do
+          expect { process_flag }.to change { EvidenceCheckFlag.count }.by(1)
+        end
+
+        it 'set flag as inactive' do
+          process_flag
+          expect(EvidenceCheckFlag.last.active?).to be false
         end
       end
     end

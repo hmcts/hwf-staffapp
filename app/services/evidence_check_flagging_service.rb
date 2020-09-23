@@ -22,7 +22,7 @@ class EvidenceCheckFlaggingService
       end
       evidence_check_flag.save!
     else
-      EvidenceCheckFlag.create(reg_number: registration_number, count: 1) unless @evidence.correct
+      EvidenceCheckFlag.create(reg_number: registration_number, count: 1, active: !@evidence.correct)
     end
   end
 
