@@ -110,6 +110,7 @@ When("I click on next without making a selection on the evidence page") do
 end
 
 Then("I should see this question must be answered error message") do
+  evidence_accuracy_page.content.wait_until_header_visible
   expect(page).to have_text 'You need to say whether the evidence can be processed'
 end
 

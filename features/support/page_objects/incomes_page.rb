@@ -10,13 +10,6 @@ class IncomesPage < BasePage
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
   end
 
-  def go_to_incomes_page
-    personal_details_page.submit_required_personal_details
-    application_details_page.submit_fee_600
-    savings_investments_page.submit_less_than
-    benefits_page.submit_benefits_no
-  end
-
   def go_to_incomes_page_100
     personal_details_page.submit_required_personal_details
     application_details_page.submit_fee_100
