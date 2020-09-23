@@ -25,7 +25,7 @@ end
 
 When("I process that application") do
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 

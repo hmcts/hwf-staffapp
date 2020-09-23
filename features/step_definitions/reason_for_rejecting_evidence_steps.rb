@@ -17,12 +17,12 @@ When("I successfully submit multiple reasons") do
   reason_for_rejecting_evidence_page.content.pages_missing.click
   reason_for_rejecting_evidence_page.content.cannot_identify_applicant.click
   reason_for_rejecting_evidence_page.content.wrong_date_range.click
-  next_page
+  click_button('Next')
 end
 
 When("I successfully submit a single reason") do
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  next_page
+  click_button('Next')
 end
 
 Then("I am taken to the summary page") do

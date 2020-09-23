@@ -191,10 +191,6 @@ def complete_processing
   end
 end
 
-def next_page
-  click_on 'Next', visible: false
-end
-
 def start_application
   sign_in_page.load_page
   @current_user = sign_in_page.user_account
@@ -258,7 +254,6 @@ end
 def multiple_applications
   eligable_application
   ineligable_application
-  click_on "Help with fees"
 end
 
 def complete_and_back_to_start

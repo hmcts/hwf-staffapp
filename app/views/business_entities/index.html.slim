@@ -36,7 +36,7 @@ h1.govuk-heading-l Business entities for #{office.name}
                 =j.business_entity_sop_code
               td.govuk-table__cell
                 = j.business_entity_name
-              td.govuk-table__cell align="right"
+              td.govuk-table__cell
                 -case j.status
                   -when 'delete'
                     =link_to 'Deactivate', deactivate_office_business_entity_path(office, id: j.business_entity_id)
