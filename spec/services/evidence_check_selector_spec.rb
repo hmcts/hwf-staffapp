@@ -217,6 +217,28 @@ describe EvidenceCheckSelector do
         end
       end
 
+      context 'for a application with existing check and same ni_number with inactive flag' do
+        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:application_old) do
+          create(:application, :income_type,
+                 state: 1,
+                 applicant: applicant_old)
+        end
+        let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
+
+        let(:application) { create(:application, :income_type, applicant: applicant) }
+        let(:applicant) { create(:applicant, ni_number: 'SN123456D', date_of_birth: 20.years.ago) }
+
+        before do
+          create :evidence_check_flag, reg_number: applicant.ni_number, active: false
+          evidence_check
+        end
+
+        it 'selects the application for evidence_check' do
+          is_expected.not_to be_a(EvidenceCheck)
+        end
+      end
+
       context 'for a application with existing check and same ho_number' do
         let(:evidence_check) { create(:evidence_check, application: application_old) }
         let(:application_old) do
