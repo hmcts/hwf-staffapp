@@ -115,7 +115,7 @@ RSpec.describe ResultHelper, type: :helper do
       let(:income_min) { true }
       let(:income_max) { true }
 
-      it { expect(helper.income_value(application)).to eq '£6,065 or more' }
+      it { expect(helper.income_value(application)).to eq 'More than £6,065' }
     end
 
     context 'max income threashold not exceeded' do
