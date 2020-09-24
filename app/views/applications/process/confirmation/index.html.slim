@@ -51,7 +51,7 @@
               user_name: current_user.name,
               fee_amount: number_to_currency(@application.detail.fee, precision: 2),
               savings_threshold: number_to_currency(@application.saving.fee_threshold, precision: 2),
-              savings_total: number_to_currency(@application.saving.amount, precision: 2))
+              savings_total: saving_value(@application))
 
       -elsif display_income_failed_letter?(@application)
         p.govuk-body Write the reference number on the top right corner of the paper form.

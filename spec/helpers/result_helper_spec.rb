@@ -126,4 +126,34 @@ RSpec.describe ResultHelper, type: :helper do
       it { expect(helper.income_value(application)).to be nil }
     end
   end
+
+  describe '#saving_value' do
+    let(:saving) { instance_double(Saving, amount: amount, max_threshold_exceeded: saving_max, max_threshold: 16001) }
+    let(:application) { instance_double(Application, saving: saving) }
+    let(:saving_max) { false }
+    let(:amount) { nil }
+
+    before do
+      RSpec::Mocks.configuration.allow_message_expectations_on_nil
+    end
+
+    context 'amount is 0' do
+      let(:amount) { 0 }
+      it { expect(helper.saving_value(application)).to eq "£0.00" }
+    end
+
+    context 'saving threashold exceeded' do
+      let(:amount) { nil }
+      let(:saving_max) { true }
+
+      it { expect(helper.saving_value(application)).to eq '£16,001 or more' }
+    end
+
+    context 'saving max threashold not exceeded' do
+      let(:amount) { 3100 }
+      let(:saving_max) { false }
+
+      it { expect(helper.saving_value(application)).to eq "£3,100.00" }
+    end
+  end
 end
