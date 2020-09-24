@@ -1,5 +1,13 @@
 Given("I am on the incomes part of the application") do
-  incomes_page.go_to_incomes_page
+  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  personal_details_page.submit_required_personal_details
+  expect(application_details_page).to have_current_path(%r{/details})
+  application_details_page.submit_fee_600
+  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
+  savings_investments_page.submit_less_than
+  expect(benefits_page).to have_current_path(%r{/benefits})
+  benefits_page.submit_benefits_no
+  expect(incomes_page).to have_current_path(%r{/incomes})
   expect(incomes_page).to be_displayed
   expect(incomes_page.content).to have_header
   expect(incomes_page.content).to have_question
