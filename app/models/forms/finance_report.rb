@@ -16,12 +16,15 @@ module Forms
     attribute :refund, Boolean
     attribute :application_type, String
     attribute :jurisdiction_id, Integer
+    attribute :entity_code, String
 
     validates :date_to, :date_from, presence: true
 
     validates :date_to, date: {
       after: :date_from, allow_blank: true
     }
+
+    validates :entity_code, presence: true, unless: Proc.new { |form| form.entity_code.nil? }
 
     before_validation :format_dates
 

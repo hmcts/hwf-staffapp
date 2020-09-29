@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Report::FeesMechanicalDataController do
+RSpec.describe Report::AnalyticServicesDataController do
 
   let(:admin)     { create :admin_user }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
@@ -34,14 +34,23 @@ RSpec.describe Report::FeesMechanicalDataController do
 
         it { is_expected.to have_http_status(:success) }
 
-        it { is_expected.to render_template :fees_mechanical_data }
+        it { is_expected.to render_template :analytic_services_data }
       end
 
       context 'fees_mechanical builder' do
+        let(:dates) {
+          { day_date_from: '01',
+            month_date_from: '01',
+            year_date_from: '2015',
+            day_date_to: '31',
+            month_date_to: '12',
+            year_date_to: '2015',
+            entity_code: 'GL401' }
+        }
         it 'does something' do
-          allow(Views::Reports::FeesMechanicalDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::AnalyticServicesDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::FeesMechanicalDataExport).to have_received(:new)
+          expect(Views::Reports::AnalyticServicesDataExport).to have_received(:new).with(date_from, date_to, 'GL401')
         end
       end
 
@@ -51,7 +60,7 @@ RSpec.describe Report::FeesMechanicalDataController do
         it { is_expected.to have_http_status(:success) }
 
         it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('help-with-fees-fees_mechanical-extract-')
+          expect(response.headers['Content-Disposition']).to include('help-with-fees-analytic-services-extract-')
         end
 
         it 'sets the file type' do
