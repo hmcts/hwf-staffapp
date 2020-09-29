@@ -14,7 +14,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:ccmcc_data) }
     it { is_expected.not_to permit_action(:analytic_services_data) }
   end
 
@@ -27,7 +26,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:ccmcc_data) }
     it { is_expected.not_to permit_action(:analytic_services_data) }
   end
 
@@ -40,7 +38,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:ccmcc_data) }
     it { is_expected.not_to permit_action(:analytic_services_data) }
   end
 
@@ -53,7 +50,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
-    it { is_expected.to permit_action(:ccmcc_data) }
     it { is_expected.to permit_action(:analytic_services_data) }
   end
 
@@ -65,7 +61,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:graphs) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:ccmcc_data) }
     it { is_expected.not_to permit_action(:analytic_services_data) }
   end
 end
