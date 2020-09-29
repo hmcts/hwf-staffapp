@@ -23,10 +23,6 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
-  def ccmcc_data?
-    admin?
-  end
-
   def analytic_services_data?
     admin?
   end
