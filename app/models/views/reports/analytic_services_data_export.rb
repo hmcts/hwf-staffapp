@@ -5,7 +5,15 @@ module Views
 
       FM_OFFICE_CODE = 'IE413'.freeze
 
-      ENTITY_CODES = ['IE413', 'GE401', 'GE451', 'DH403', 'GE403']
+      ENTITY_CODES = ['IE413', 'GE401', 'GE451', 'DH403', 'GE403'].freeze
+
+      OFFICE_POSTFIX = {
+        'IE413' => 'fees',
+        'GE401' => 'birkenhead',
+        'GE451' => 'liverpool',
+        'DH403' => 'ccmcc',
+        'GE403' => 'st-helens'
+      }.freeze
 
       FIELDS = {
         reference: 'reference number',

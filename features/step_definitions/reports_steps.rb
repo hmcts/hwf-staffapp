@@ -58,20 +58,11 @@ Then("I should be taken to the raw data extract page") do
   expect(page).to have_current_path(%r{/reports/raw_data})
 end
 
-When("I click on ccmcc data extract") do
-  expect(reports_page.content).to have_ccmcc_data_extract_help
-  reports_page.ccmcc_data_extract
+When("I click on analytic services data extract") do
+  expect(reports_page.content).to have_analytical_services_data_extract_help
+  reports_page.analytical_services_data_extract
 end
 
-Then("I should be taken to the ccmcc data extract page") do
-  expect(page).to have_current_path(%r{/report/ccmcc_data})
-end
-
-When("I click on fees & mechanical data extract") do
-  expect(reports_page.content).to have_fees_mechanical_data_extract_help
-  reports_page.fees_mechanical_data_extract
-end
-
-Then("I should be taken to the fees & mechanical data extract page") do
-  expect(page).to have_current_path(%r{/report/fees_mechanical_data})
+Then("I should be taken to the analytic services data extract page") do
+  expect(page).to have_current_path(%r{/report/analytic_services_data})
 end

@@ -11,8 +11,10 @@ RSpec.describe Report::AnalyticServicesDataController do
       year_date_from: '2015',
       day_date_to: '31',
       month_date_to: '12',
-      year_date_to: '2015' }
+      year_date_to: '2015',
+      entity_code: entity_code }
   }
+  let(:entity_code) { 'GE401' }
 
   context 'as an admin' do
     before { sign_in admin }
@@ -45,12 +47,12 @@ RSpec.describe Report::AnalyticServicesDataController do
             day_date_to: '31',
             month_date_to: '12',
             year_date_to: '2015',
-            entity_code: 'GL401' }
+            entity_code: entity_code }
         }
         it 'does something' do
           allow(Views::Reports::AnalyticServicesDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::AnalyticServicesDataExport).to have_received(:new).with(date_from, date_to, 'GL401')
+          expect(Views::Reports::AnalyticServicesDataExport).to have_received(:new).with(date_from, date_to, 'GE401')
         end
       end
 
@@ -59,8 +61,18 @@ RSpec.describe Report::AnalyticServicesDataController do
 
         it { is_expected.to have_http_status(:success) }
 
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('help-with-fees-analytic-services-extract-')
+        context 'ccmcc office' do
+          let(:entity_code) { 'DH403' }
+          it 'sets the filename' do
+            expect(response.headers['Content-Disposition']).to include('help-with-fees-ccmcc-data-extract-')
+          end
+        end
+
+        context 'Birkenhead office' do
+          let(:entity_code) { 'GE401' }
+          it 'sets the filename' do
+            expect(response.headers['Content-Disposition']).to include('help-with-fees-birkenhead-data-extract-')
+          end
         end
 
         it 'sets the file type' do
