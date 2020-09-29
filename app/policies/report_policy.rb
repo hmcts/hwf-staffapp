@@ -27,7 +27,7 @@ class ReportPolicy < BasePolicy
     admin?
   end
 
-  def fees_mechanical_data?
+  def analytic_services_data?
     admin?
   end
 end
