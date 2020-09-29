@@ -38,41 +38,49 @@ class SignInPage < BasePage
     100.times do
       FactoryBot.create(:application, :processed_state, office: user.office, user: user)
     end
-    sign_in_with user.email, user.password
+    sign_in_with user
     user
   end
 
   def reader_account
     user = FactoryBot.create(:reader)
-    sign_in_with user.email, user.password
+    sign_in_with user
     user
   end
 
   def user_account
     user = FactoryBot.create(:user)
-    sign_in_with user.email, user.password
+    sign_in_with user
     user
   end
 
   def admin_account
     user = FactoryBot.create(:admin_user)
-    sign_in_with user.email, user.password
+    sign_in_with user
     user
   end
 
   def manager_account
     user = FactoryBot.create(:manager)
+    sign_in_with user
+    user
+  end
+
+  def mi_account
+    user = FactoryBot.create(:mi)
     sign_in_with user.email, user.password
     user
   end
 
   def invalid_credentials
-    sign_in_with 'invalid.com', 'password'
+    content.user_email.set 'invalid.com'
+    content.user_password.set 'password'
+    sign_in
   end
 
-  def sign_in_with(email, password)
-    content.user_email.set email
-    content.user_password.set password
+  def sign_in_with(user)
+    content.user_email.set user.email
+    content.user_password.set user.password
     sign_in
   end
 end

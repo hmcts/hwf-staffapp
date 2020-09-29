@@ -11,5 +11,11 @@ class ConfirmationPage < BasePage
     element :copy_ref, 'p', text: 'Copy the reference number into the case management system'
     element :can_be_issued, 'p', text: 'The applicant’s process can now be issued'
     element :see_guides, 'a', text: 'See the guides'
+    element :next, 'a', text: 'Next'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

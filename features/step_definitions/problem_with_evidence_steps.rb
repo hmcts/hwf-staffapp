@@ -23,5 +23,5 @@ end
 
 When("I submit the details of the staff error") do
   fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
-  click_button('Next')
+  problem_with_evidence_page.click_next
 end
