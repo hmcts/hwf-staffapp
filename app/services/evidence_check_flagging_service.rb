@@ -15,12 +15,7 @@ class EvidenceCheckFlaggingService
 
   def process_flag
     if evidence_check_flag
-      if @evidence.correct
-        evidence_check_flag.active = false
-      else
-        evidence_check_flag.increment(:count)
-      end
-      evidence_check_flag.save!
+      evidence_check_flag.update(active: !@evidence.correct, count: evidence_check_count)
     else
       EvidenceCheckFlag.create(reg_number: registration_number, count: 1, active: !@evidence.correct)
     end
@@ -34,5 +29,9 @@ class EvidenceCheckFlaggingService
 
   def registration_number
     @registration_number ||= @application.applicant.ni_number || @application.applicant.ho_number
+  end
+
+  def evidence_check_count
+    @evidence.correct ? evidence_check_flag.count : evidence_check_flag.count + 1
   end
 end

@@ -10,6 +10,7 @@ end
 
 And("I am on an application waiting for evidence") do
   dashboard_page.content.waiting_for_evidence_application_link.click
+  expect(page).to have_current_path(%r{/evidence})
 end
 
 When("I click on start now to process the evidence") do
@@ -51,12 +52,11 @@ Then("I should see whether the applicant is eligible for help with fees") do
 end
 
 Then("I should see the processing summmary") do
-  date_processed = Time.zone.now.strftime('%-d %B %Y')
   expect(evidence_page.content).to have_processing_summary
-  expect(evidence_page.content.text).to have_content date_processed
 end
 
 When("I click on return application") do
+  expect(page).to have_current_path(%r{/evidence})
   evidence_page.content.evidence_can_not_be_processed.click
   click_link 'Return application', visible: false
 end
@@ -76,7 +76,7 @@ Then("I should be taken to the evidence income page") do
 end
 
 When(/^I submit (\d+) as the income$/) do |income|
-  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
+  expect(page).to have_current_path(%r{/evidence/1/income})
   fill_in 'Total monthly income from evidence', with: income
   next_page
 end

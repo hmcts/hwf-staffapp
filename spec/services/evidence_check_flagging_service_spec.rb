@@ -73,6 +73,7 @@ describe EvidenceCheckFlaggingService do
       context 'when no flag exists' do
         it 'creates a new flag' do
           expect { process_flag }.to change { EvidenceCheckFlag.count }.by(1)
+          expect(EvidenceCheckFlag.last.active?).to be true
         end
       end
 

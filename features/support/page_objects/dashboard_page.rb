@@ -13,6 +13,7 @@ class DashboardPage < BasePage
     elements :last_application, '.govuk-table__row'
     element :last_application_link, 'a', text: '1'
     element :waiting_for_evidence_application_link, 'a', text: 'AB001-20-'
+    element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
     element :updated_applications, '.updated_applications', text: 'Mr John Christopher Smith'
     element :generate_reports_button, '.button', text: 'Generate reports'
     element :deleted_applications, 'a', text: 'Deleted applications'

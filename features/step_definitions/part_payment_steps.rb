@@ -4,7 +4,7 @@ end
 
 And("the payment is ready to process") do
   click_link "#{reference_prefix}-000001"
-  expect(part_payment_page).to have_current_path(%r{/part_payments})
+  expect(page).to have_current_path(%r{/part_payments})
   click_on 'Start now', visible: false
   expect(page).to have_current_path(%r{/accuracy})
   part_payment_page.ready_to_process_payment
