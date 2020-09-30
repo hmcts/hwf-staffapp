@@ -56,10 +56,14 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     # because it's 10th so random evidence check
     expect(page).to have_text("#{reference} - Waiting for evidence")
-    click_link 'Return application', visible: false
-    choose 'Citizen not proceeding'
+
+    click_link 'Start now'
+    choose 'No, there is a problem with the evidence and it needs to be returned'
     click_button 'Next'
-    click_button 'Finish'
+    check 'Requested sources not provided'
+    click_button 'Next'
+    click_button 'Complete processing'
+    click_link "Back to start"
 
     click_link 'Waiting for part-payment'
     expect(page).to have_text('There are no applications waiting for part-payment')

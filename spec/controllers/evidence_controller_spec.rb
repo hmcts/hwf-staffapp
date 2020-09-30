@@ -395,8 +395,8 @@ RSpec.describe EvidenceController, type: :controller do
         expect(response).to have_http_status(:redirect)
       end
 
-      it 'calls the evidence_check_flag' do
-        expect(evidence_check_flagging_service).to have_received(:process_flag)
+      it 'does not calls the evidence_check_flag' do
+        expect(evidence_check_flagging_service).not_to have_received(:process_flag)
       end
     end
   end

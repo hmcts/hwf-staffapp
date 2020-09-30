@@ -125,6 +125,19 @@ FactoryBot.define do
       decision_date { Time.zone.today }
     end
 
+    factory :application_full_remission_nino do
+      applicant_factory { :applicant_with_all_details }
+      applicant_traits { [:married] }
+      fee { 6000 }
+      benefits { false }
+      income { 1000 }
+      dependents { true }
+      children { 1 }
+      outcome { 'full' }
+      application_type { 'income' }
+      decision_date { Time.zone.today }
+    end
+
     factory :application_no_remission do
       applicant_factory { :applicant_with_all_details }
       fee { 410 }
