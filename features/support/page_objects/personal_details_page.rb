@@ -46,16 +46,16 @@ class PersonalDetailsPage < BasePage
   # rubocop:disable Metrics/AbcSize
   def valid_dob_under_15
     now = Time.zone.now
-    content.application_day_date_of_birth.set now.day - 1
+    content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
     content.application_year_date_of_birth.set now.year - 14
   end
 
   def valid_dob_exactly_15
     now = Time.zone.now
-    content.application_day_date_of_birth.set now.day + 1
+    content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
-    content.application_year_date_of_birth.set now.year - 16
+    content.application_year_date_of_birth.set now.year - 15
   end
 
   def valid_dob_exactly_16
