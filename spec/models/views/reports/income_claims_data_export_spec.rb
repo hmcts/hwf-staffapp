@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Views::Reports::AnalyticServicesDataExport do
+RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
   subject(:data) { described_class.new(start_date_params, end_date_params, office.entity_code) }
 

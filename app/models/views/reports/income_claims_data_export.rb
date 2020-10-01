@@ -1,6 +1,6 @@
 module Views
   module Reports
-    class AnalyticServicesDataExport
+    class IncomeClaimsDataExport
       require 'csv'
 
       FM_OFFICE_CODE = 'IE413'.freeze

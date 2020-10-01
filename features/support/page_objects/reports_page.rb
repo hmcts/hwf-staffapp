@@ -15,8 +15,8 @@ class ReportsPage < BasePage
     element :letters_help, 'dd', text: 'Display raw letters'
     element :raw_data_extract_link, 'a', text: 'Raw data extract'
     element :raw_data_extract_help, 'dd', text: 'Extract raw data by date for Analytical Services'
-    element :analytical_services_data_extract_link, 'a', text: 'Analytical Services data extract'
-    element :analytical_services_data_extract_help, 'dd', text: 'Extract Analytical Services data by date'
+    element :income_claims_data_extract_link, 'a', text: 'Income claims data by court'
+    element :income_claims_data_extract_help, 'dd', text: 'Extract income claims data by court and date'
   end
 
   def finance_aggregated_report
@@ -43,7 +43,7 @@ class ReportsPage < BasePage
     content.raw_data_extract_link.click
   end
 
-  def analytical_services_data_extract
-    content.analytical_services_data_extract_link.click
+  def income_claims_data_extract
+    content.income_claims_data_extract_link.click
   end
 end

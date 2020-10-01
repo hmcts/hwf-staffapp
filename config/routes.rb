@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
     put 'ccmcc_data' => 'ccmcc_data#data_export'
-    get 'analytic_services_data' => 'analytic_services_data#show'
-    put 'analytic_services_data' => 'analytic_services_data#data_export'
+    get 'income_claims_data' => 'income_claims_data#show'
+    put 'income_claims_data' => 'income_claims_data#data_export'
   end
 
   get '/applications/new' => 'applications/build#create'

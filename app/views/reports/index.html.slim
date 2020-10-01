@@ -26,7 +26,7 @@ dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key =link_to 'Raw data extract', reports_raw_data_path
       dd.govuk-summary-list__value Extract raw data by date for Analytical Services
-  - if policy(:report).analytic_services_data?
+  - if policy(:report).income_claims_data?
     .govuk-summary-list__row
-      dt.govuk-summary-list__key =link_to 'Analytical Services data extract', report_analytic_services_data_path
-      dd.govuk-summary-list__value Extract Analytical Services data by date
+      dt.govuk-summary-list__key =link_to 'Income claims data by court', report_income_claims_data_path
+      dd.govuk-summary-list__value Extract income claims data by court and date

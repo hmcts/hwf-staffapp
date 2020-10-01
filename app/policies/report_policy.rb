@@ -23,7 +23,7 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
-  def analytic_services_data?
+  def income_claims_data?
     admin?
   end
 end
