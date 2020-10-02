@@ -32,7 +32,7 @@ describe EvidenceCheckFlaggingService do
     subject(:process_flag) { described_class.new(evidence_check).process_flag }
 
     let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-    let(:applicant) { create :applicant_with_all_details }
+    let(:applicant) { create :applicant_with_all_details, ho_number: "" }
 
     context 'when the evidence check passed' do
       let(:evidence_check) { create :evidence_check_full_outcome, :completed, application: application }
@@ -87,7 +87,7 @@ describe EvidenceCheckFlaggingService do
       end
 
       context 'when a previous flag exists for ho number' do
-        let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: nil }
+        let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: "" }
         let(:flag) { create :evidence_check_flag, reg_number: applicant.ho_number }
 
         it 'increments the count on the existing flag' do

@@ -70,8 +70,12 @@ class EvidenceCheckSelector
   end
 
   def evidence_check_flag
-    registration_number = @application.applicant.ni_number || @application.applicant.ho_number
     @evidence_check_flag ||= EvidenceCheckFlag.where(reg_number: registration_number).last
+  end
+
+  def registration_number
+    return @application.applicant.ni_number if @application.applicant.ni_number.present?
+    @application.applicant.ho_number
   end
 
   def skip_ni_check_based_on_flag?

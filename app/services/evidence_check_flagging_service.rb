@@ -28,7 +28,8 @@ class EvidenceCheckFlaggingService
   end
 
   def registration_number
-    @registration_number ||= @application.applicant.ni_number || @application.applicant.ho_number
+    return @application.applicant.ni_number if @application.applicant.ni_number.present?
+    @application.applicant.ho_number
   end
 
   def evidence_check_count
