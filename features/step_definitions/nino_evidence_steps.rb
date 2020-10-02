@@ -154,3 +154,91 @@ When("Application D has correct evidence") do
   next_page
   complete_processing
 end
+
+Given("I create an application A that waits for evidence with the same ho_number") do
+  @user1 = FactoryBot.create(:user)
+  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L123456')
+  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, office: @user1.office, user: @user1, applicant: @applicant)
+end
+
+And("I create an Application B that has correct evidence with the same ho_number") do
+  @user2 = FactoryBot.create(:user)
+  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L123456')
+  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, applicant: @applicant, office: @user2.office, user: @user2)
+
+  sign_in_page.load_page
+  fill_in 'Email', with: @user2.email
+  fill_in 'Password', with: 'password'
+  click_on 'Sign in'
+  dashboard_page.content.waiting_for_evidence_application_link.click
+  click_on 'Start now', visible: false
+  expect(incomes_page).to have_current_path(%r{/accuracy})
+  evidence_accuracy_page.content.correct_evidence.click
+  next_page
+  expect(incomes_page).to have_current_path(%r{/income})
+  fill_in 'Total monthly income from evidence', with: 1000
+  next_page
+  next_page
+  complete_processing
+end
+
+When("I create Application C with the same ho_number") do
+  click_link 'Sign out', visible: false
+  @user3 = FactoryBot.create(:user)
+  fill_in 'Email', with: @user3.email
+  fill_in 'Password', with: 'password'
+  click_on 'Sign in'
+
+  FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  next_page
+  complete_processing
+end
+
+Then("I create Application D with the same ho_number") do
+  click_link 'Sign out', visible: false
+  sign_in_as_user
+  FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  next_page
+  complete_processing
+end
+
+And("I create an Application B and wrong evidence is provided with the same ho_number") do
+  @user2 = FactoryBot.create(:user)
+  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L123456')
+  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, applicant: @applicant, office: @user2.office, user: @user2)
+
+  sign_in_page.load_page
+  fill_in 'Email', with: @user2.email
+  fill_in 'Password', with: 'password'
+  click_on 'Sign in'
+  dashboard_page.content.waiting_for_evidence_application_link.click
+  click_on 'Start now', visible: false
+  expect(incomes_page).to have_current_path(%r{/accuracy})
+  evidence_accuracy_page.content.problem_with_evidence.click
+  next_page
+  expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
+  reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
+  next_page
+  complete_processing
+end
+
+Then("I create Application E with the same ho_number") do
+  click_link 'Sign out', visible: false
+  sign_in_as_user
+  FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  next_page
+  complete_processing
+end
