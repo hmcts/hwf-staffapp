@@ -1,6 +1,7 @@
 And("I am on reason for rejecting the evidence page") do
   click_link "#{reference_prefix}-000001"
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence})
+  expect(page).to have_text "Waiting for evidence"
+  expect(page).to have_current_path(%r{/evidence})
   click_on 'Start now', visible: false
   expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   expect(evidence_accuracy_page.content).to have_header
