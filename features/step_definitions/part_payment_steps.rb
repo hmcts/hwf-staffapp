@@ -3,9 +3,7 @@ Given("I have processed an application that is a part payment") do
 end
 
 And("the payment is ready to process") do
-  reference_link = "#{reference_prefix}-000001"
-  expect(page).to have_link(reference_link)
-  click_link reference_link
+  click_reference_link
   expect(part_payment_page).to have_current_path(%r{/part_payments})
   click_on 'Start now', visible: false
   expect(page).to have_current_path(%r{/accuracy})
@@ -13,9 +11,7 @@ And("the payment is ready to process") do
 end
 
 And("the payment is not ready to process") do
-  reference_link = "#{reference_prefix}-000001"
-  expect(page).to have_link(reference_link)
-  click_link reference_link
+  click_reference_link
   expect(part_payment_page).to have_current_path(%r{/part_payments})
   click_on 'Start now', visible: false
   expect(part_payment_page).to have_current_path(%r{/accuracy})
@@ -23,9 +19,7 @@ And("the payment is not ready to process") do
 end
 
 And("I open the processed part payment application") do
-  reference_link = "#{reference_prefix}-000001"
-  expect(page).to have_link(reference_link)
-  click_link reference_link, visible: false
+  click_reference_link
 end
 
 Then("I can see that the applicant has paid £40 towards the fee") do

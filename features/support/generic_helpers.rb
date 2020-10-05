@@ -326,3 +326,17 @@ def dwp_monitor_state_as(state)
   dwp = instance_double('DwpMonitor', state: state)
   DwpMonitor.stub(:new).and_return dwp
 end
+
+def click_reference_link
+  reference_link = "#{reference_prefix}-000001"
+  expect(page).to have_link(reference_link)
+  click_link reference_link
+end
+
+def go_to_problem_with_evidence_page
+  dashboard_page.go_home
+  click_reference_link
+  evidence_page.content.evidence_can_not_be_processed.click
+  click_link 'Return application', visible: false
+  expect(page).to have_current_path(%r{evidence/accuracy_failed_reason/[1-9]+})
+end
