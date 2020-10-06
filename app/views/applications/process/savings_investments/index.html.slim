@@ -11,7 +11,7 @@
         fieldset.govuk-fieldset
           legend.visuallyhidden Amount of savings
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
-          span#changed-name-error.govuk-error-message
+          span#changed-name-error_no_answer.govuk-error-message
             = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
           = f.hidden_field :min_threshold_exceeded, value: nil
           .govuk-radios.govuk-radios--small

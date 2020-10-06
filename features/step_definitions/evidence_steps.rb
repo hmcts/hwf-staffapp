@@ -67,7 +67,7 @@ end
 
 When("I submit that the evidence is correct") do
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_button('Next')
 end
 
 Then("I should be taken to the evidence income page") do
@@ -78,7 +78,7 @@ end
 When(/^I submit (\d+) as the income$/) do |income|
   expect(evidence_page).to have_current_path(%r{/evidence/1/income})
   fill_in 'Total monthly income from evidence', with: income
-  next_page
+  click_button('Next')
 end
 
 Then("I see the amount to be refunded should be £656.66") do
@@ -96,7 +96,7 @@ end
 
 When("I submit that there is a problem with evidence") do
   evidence_accuracy_page.content.problem_with_evidence.click
-  next_page
+  click_button('Next')
 end
 
 Then("I should be taken to the reason for rejecting the evidence page") do
@@ -106,7 +106,7 @@ end
 
 When("I click on next without making a selection on the evidence page") do
   expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
-  next_page
+  click_button('Next')
 end
 
 Then("I should see this question must be answered error message") do

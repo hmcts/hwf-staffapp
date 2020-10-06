@@ -17,7 +17,7 @@ And("I have processed an application") do
   expect(paper_evidence_page).to have_current_path(%r{/paper_evidence})
   paper_evidence_page.submit_evidence_yes
 
-  expect(page).to have_current_path(%r{/summary})
+  expect(summary_page).to have_current_path(%r{/summary})
   complete_processing
 end
 

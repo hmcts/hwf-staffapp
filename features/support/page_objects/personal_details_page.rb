@@ -89,7 +89,7 @@ class PersonalDetailsPage < BasePage
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 
   def submit_all_personal_details_ni
@@ -97,7 +97,7 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ni
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 
   def submit_all_personal_details_ni_16
@@ -105,7 +105,7 @@ class PersonalDetailsPage < BasePage
     valid_dob_exactly_16
     valid_ni
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 
   def submit_all_personal_details_ni_under_15
@@ -113,7 +113,7 @@ class PersonalDetailsPage < BasePage
     valid_dob_under_15
     valid_ni
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 
   def submit_all_personal_details_ni_exactly_15
@@ -121,7 +121,7 @@ class PersonalDetailsPage < BasePage
     valid_dob_exactly_15
     valid_ni
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 
   def submit_all_personal_details_ho
@@ -129,6 +129,6 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ho
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 end

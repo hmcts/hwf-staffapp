@@ -53,7 +53,7 @@ class ApplicationDetailsPage < BasePage
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    next_page
+    click_button('Next')
   end
 
   def submit_fee_600
@@ -62,7 +62,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    next_page
+    click_button('Next')
   end
 
   def submit_fee_6000
@@ -71,7 +71,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    next_page
+    click_button('Next')
   end
 
   def submit_as_refund_case
@@ -81,7 +81,7 @@ class ApplicationDetailsPage < BasePage
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
     refund_case_with_valid_date
-    next_page
+    click_button('Next')
   end
 
   def submit_fee_300
@@ -89,14 +89,14 @@ class ApplicationDetailsPage < BasePage
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    next_page
+    click_button('Next')
   end
 
   def submit_without_form_number
     fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
     date_application_received
-    next_page
+    click_button('Next')
   end
 
   def submit_fee_10001
@@ -105,7 +105,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    next_page
+    click_button('Next')
   end
 end
 # rubocop:enable Metrics/AbcSize

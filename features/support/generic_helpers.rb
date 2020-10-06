@@ -191,10 +191,6 @@ def complete_processing
   end
 end
 
-def next_page
-  click_on 'Next', visible: false
-end
-
 def start_application
   sign_in_page.load_page
   @current_user = sign_in_page.user_account
@@ -258,7 +254,6 @@ end
 def multiple_applications
   eligable_application
   ineligable_application
-  click_on "Help with fees"
 end
 
 def complete_and_back_to_start
@@ -330,4 +325,18 @@ end
 def dwp_monitor_state_as(state)
   dwp = instance_double('DwpMonitor', state: state)
   DwpMonitor.stub(:new).and_return dwp
+end
+
+def click_reference_link
+  reference_link = "#{reference_prefix}-000001"
+  expect(page).to have_link(reference_link)
+  click_link reference_link
+end
+
+def go_to_problem_with_evidence_page
+  dashboard_page.go_home
+  click_reference_link
+  evidence_page.content.evidence_can_not_be_processed.click
+  click_link 'Return application', visible: false
+  expect(page).to have_current_path(%r{evidence/accuracy_failed_reason/[1-9]+})
 end
