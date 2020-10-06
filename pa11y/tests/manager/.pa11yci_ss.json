@@ -1,0 +1,123 @@
+{
+  "defaults": {
+    "timeout": 30000,
+    "standard": "WCAG2AA",
+    "viewport": {
+      "width": 600,
+      "height": 500
+    }
+  },
+  "urls": [
+    {
+      "url": "http://127.0.0.1:3000",
+      "actions": [
+        "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
+        "set field #user_password to 987654321",
+        "click element .govuk-button",
+        "screen capture pa11y/screenshots/manager/home_page.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/personal_informations",
+      "actions": [
+        "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
+        "set field #user_password to 987654321",
+        "click element .govuk-button",
+        "navigate to http://127.0.0.1:3000/applications/36/personal_informations",
+        "screen capture pa11y/screenshots/manager/paper_app_pg1.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/details",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg2.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/savings_investments",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg3.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/benefits",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg4.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/incomes",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg5.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/summary",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg6.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/29/paper/confirmation",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/paper_app_pg7.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/processed_applications",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/proc_apps.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/processed_applications/29",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/proc_app_detail.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/online_applications/11/edit",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/online_app_edit.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/online_applications/11",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/online_app_end.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/37/digital/confirmation",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/online_app_conf.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/feedback",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/feedback_form.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/evidence_checks",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/evidence_checks.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/part_payments",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/part_payments.png"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/deleted_applications",
+      "actions": [
+        "screen capture pa11y/screenshots/manager/deleted_applications.png"
+      ]
+    }
+  ]
+}
+
+

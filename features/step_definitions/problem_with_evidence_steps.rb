@@ -1,5 +1,5 @@
 When("I am on the problem with evidence page") do
-  problem_with_evidence_page.go_to_problem_with_evidence_page
+  go_to_problem_with_evidence_page
   problem_with_evidence_page.content.wait_until_header_visible
   expect(problem_with_evidence_page.content).to have_header
 end
@@ -23,5 +23,5 @@ end
 
 When("I submit the details of the staff error") do
   fill_in 'Please add details of the staff error', with: 'These are the details of the staff error'
-  next_page
+  click_button('Next')
 end

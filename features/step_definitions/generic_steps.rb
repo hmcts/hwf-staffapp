@@ -1,15 +1,19 @@
 Given("I am signed in as a user that has processed an application") do
   start_application
+  expect(dashboard_page).to have_current_path('/')
   eligable_application
 end
 
 Given("I am signed in as a user that has processed multiple applications") do
   start_application
+  expect(dashboard_page).to have_current_path('/')
   multiple_applications
+  click_on "Help with fees"
+  expect(dashboard_page).to have_welcome_user
 end
 
 When("I click on next without making a selection") do
-  next_page
+  click_button('Next')
 end
 
 Then("I should see select from one of the options error message") do

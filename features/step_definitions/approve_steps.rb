@@ -14,7 +14,7 @@ Then("I am taken to the savings and investments page") do
 end
 
 When("I click on next without supplying a manager name") do
-  next_page
+  click_button('Next')
 end
 
 Then("I should see enter manager name error message") do

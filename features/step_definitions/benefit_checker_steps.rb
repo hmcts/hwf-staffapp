@@ -46,13 +46,13 @@ end
 
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
   benefit_checker_page.content.yes.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 

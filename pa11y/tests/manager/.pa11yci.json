@@ -1,0 +1,76 @@
+{
+  "defaults": {
+    "timeout": 30000,
+    "standard": "WCAG2AA",
+    "viewport": {
+      "width": 600,
+      "height": 500
+    }
+  },
+  "urls": [
+    {
+      "url": "http://127.0.0.1:3000",
+      "actions": [
+        "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
+        "set field #user_password to 987654321",
+        "click element .govuk-button"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/personal_informations",
+      "actions": [
+        "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
+        "set field #user_password to 987654321",
+        "click element .govuk-button",
+        "navigate to http://127.0.0.1:3000/applications/36/personal_informations"
+        ]
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/details"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/savings_investments"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/benefits"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/incomes"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/36/summary"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/29/paper/confirmation"
+    },
+    {
+      "url": "http://127.0.0.1:3000/processed_applications"
+    },
+    {
+      "url": "http://127.0.0.1:3000/processed_applications/29"
+    },
+    {
+      "url": "http://127.0.0.1:3000/online_applications/11/edit"
+    },
+    {
+      "url": "http://127.0.0.1:3000/online_applications/11"
+    },
+    {
+      "url": "http://127.0.0.1:3000/applications/37/digital/confirmation"
+    },
+    {
+      "url": "http://127.0.0.1:3000/feedback"
+    },
+    {
+      "url": "http://127.0.0.1:3000/evidence_checks"
+    },
+    {
+      "url": "http://127.0.0.1:3000/part_payments"
+    },
+    {
+      "url": "http://127.0.0.1:3000/deleted_applications"
+    }
+  ]
+}
+
+
