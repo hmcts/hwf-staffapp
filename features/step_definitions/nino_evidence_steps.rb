@@ -15,11 +15,11 @@ And("I create an Application B that has correct evidence") do
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  next_page
-  next_page
+  click_button('Next')
+  click_link('Next')
   complete_processing
 
 end
@@ -37,7 +37,7 @@ When("I create Application C") do
   click_on 'Look up', visible: false
 
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -53,10 +53,10 @@ When("I create an Application B and wrong evidence is provided") do
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.problem_with_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -89,7 +89,7 @@ Then("I create Application D") do
   fill_in 'Reference', with: reference
   click_on 'Look up', visible: false
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -103,11 +103,11 @@ When("Application C has correct evidence") do
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  next_page
-  next_page
+  click_button('Next')
+  click_link('Next')
   complete_processing
 end
 
@@ -119,7 +119,7 @@ Then("I create Application E") do
   fill_in 'Reference', with: reference
   click_on 'Look up', visible: false
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -133,10 +133,10 @@ When("Application A has failed evidence") do
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.problem_with_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -147,11 +147,11 @@ When("Application D has correct evidence") do
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  next_page
-  next_page
+  click_button('Next')
+  click_link('Next')
   complete_processing
 end
 
@@ -174,11 +174,11 @@ And("I create an Application B that has correct evidence with the same ho_number
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  next_page
-  next_page
+  click_button('Next')
+  click_link('Next')
   complete_processing
 end
 
@@ -195,7 +195,7 @@ When("I create Application C with the same ho_number") do
   click_on 'Look up', visible: false
 
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -207,7 +207,7 @@ Then("I create Application D with the same ho_number") do
   fill_in 'Reference', with: reference
   click_on 'Look up', visible: false
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -224,10 +224,10 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.problem_with_evidence.click
-  next_page
+  click_button('Next')
   expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -239,6 +239,6 @@ Then("I create Application E with the same ho_number") do
   fill_in 'Reference', with: reference
   click_on 'Look up', visible: false
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end

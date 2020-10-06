@@ -79,7 +79,7 @@ class ApplicationDetailsPage < BasePage
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    next_page
+    click_button('Next')
   end
 
   def submit_as_refund_case
