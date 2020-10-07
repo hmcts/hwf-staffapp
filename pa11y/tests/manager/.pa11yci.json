@@ -5,72 +5,511 @@
     "viewport": {
       "width": 600,
       "height": 500
-    }
+    },
+    "concurrency": 1
   },
   "urls": [
     {
-      "url": "http://127.0.0.1:3000",
+      "url": "127.0.0.1:3000/users/sign_in",
       "actions": [
-        "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
-        "set field #user_password to 987654321",
-        "click element .govuk-button"
+        "wait for element .govuk-button to be visible"
       ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/personal_informations",
+      "url": "127.0.0.1:3000/?info=dashboard-page",
       "actions": [
         "set field #user_email to bristol.manager@hmcts.gsi.gov.uk",
         "set field #user_password to 987654321",
         "click element .govuk-button",
-        "navigate to http://127.0.0.1:3000/applications/36/personal_informations"
-        ]
+        "wait for element #start-now to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/details"
+      "url": "127.0.0.1:3000/?info=paper_app_pg1",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "wait for element #application_title to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/savings_investments"
+      "url": "127.0.0.1:3000/?info=paper_app_pg2",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "wait for element #application_fee to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/benefits"
+      "url": "127.0.0.1:3000/?info=paper_app_pg3",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 100",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "wait for element #application_min_threshold_exceeded_false to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/incomes"
+      "url": "127.0.0.1:3000/?info=paper_app_pg4",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 100",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_false",
+        "click element .govuk-button",
+        "wait for element #application_benefits_false to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/36/summary"
+      "url": "127.0.0.1:3000/?info=paper_app_pg5",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 100",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_false",
+        "click element .govuk-button",
+        "check field #application_benefits_false",
+        "click element .govuk-button",
+        "wait for element #application_dependents_false to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/29/paper/confirmation"
+      "url": "127.0.0.1:3000/?info=paper_app_pg6",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 100",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_false",
+        "click element .govuk-button",
+        "check field #application_benefits_false",
+        "click element .govuk-button",
+        "check field #application_dependents_false",
+        "set field #application_income to 1000",
+        "click element .govuk-button",
+        "wait for element .govuk-button to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/processed_applications"
+      "url": "127.0.0.1:3000/?info=paper_app_pg7",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Waiting For",
+        "set field #application_last_name to Evidence",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 100",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_false",
+        "click element .govuk-button",
+        "check field #application_benefits_false",
+        "click element .govuk-button",
+        "check field #application_dependents_false",
+        "set field #application_income to 1000",
+        "click element .govuk-button",
+        "wait for element .govuk-button to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/processed_applications/29"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_list",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/online_applications/11/edit"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_instance",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/online_applications/11"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_accuracy",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/applications/37/digital/confirmation"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_yes_path_income",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_true",
+        "click element .govuk-button",
+        "wait for element #evidence_income to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/feedback"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_yes_path_result",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_true",
+        "click element .govuk-button",
+        "wait for element #evidence_income to be visible",
+        "set field #evidence_income to 1000",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/evidence_checks"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_yes_path_summary",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_true",
+        "click element .govuk-button",
+        "wait for element #evidence_income to be visible",
+        "set field #evidence_income to 1000",
+        "click element .govuk-button",
+        "wait for element #result to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/part_payments"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_no_path_reason",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_false",
+        "click element .govuk-button",
+        "wait for element #evidence_incorrect_reason_category_requested_source_not_provided to be visible"
+      ]
     },
     {
-      "url": "http://127.0.0.1:3000/deleted_applications"
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_no_path_summary",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_false",
+        "click element .govuk-button",
+        "wait for element #evidence_incorrect_reason_category_requested_source_not_provided to be visible",
+        "check field #evidence_incorrect_reason_category_requested_source_not_provided",
+        "check field #evidence_incorrect_reason_category_wrong_type_provided",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=waiting_for_evidence_no_path_complete_processing",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-evidence",
+        "wait for element .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-evidence to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_false",
+        "click element .govuk-button",
+        "wait for element #evidence_incorrect_reason_category_requested_source_not_provided to be visible",
+        "check field #evidence_incorrect_reason_category_requested_source_not_provided",
+        "check field #evidence_incorrect_reason_category_wrong_type_provided",
+        "click element .govuk-button",
+        "wait for element #result to be visible",
+        "click element .govuk-button.primary.large",
+        "wait for element .evidence-confirmation-letter to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=processed_applications_list",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #processed-applications",
+        "wait for element .govuk-heading-xl to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=processed_application_instance",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #processed-applications",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element td > a",
+        "wait for element .govuk-details__summary-text to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=deleting_application",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #processed-applications",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element td > a",
+        "wait for element .govuk-details__summary-text to be visible",
+        "click element .govuk-details__summary-text",
+        "set field #application_deleted_reason to test",
+        "click element .govuk-button",
+        "wait for element .govuk-error-summary to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=deleted_application_instance",
+      "actions": [
+        "wait for element #deleted-applications to be visible",
+        "click element #deleted-applications",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element td > a",
+        "wait for element #result to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=paper_app_part_payment_to_completion",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Part",
+        "set field #application_last_name to Payment",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 111",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_false",
+        "click element .govuk-button",
+        "check field #application_benefits_false",
+        "click element .govuk-button",
+        "check field #application_dependents_false",
+        "set field #application_income to 1110",
+        "click element .govuk-button",
+        "wait for element .govuk-button to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=part_payment_app_waiting_for_evidence_result",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #evidence_correct_true",
+        "click element .govuk-button",
+        "wait for element #evidence_income to be visible",
+        "set field #evidence_income to 1110",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=part_payment_app_waiting_for_evidence_complete_processing",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element td > a",
+        "wait for element #result to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element .govuk-button",
+        "wait for element #evidence_income to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible",
+        "click element .govuk-button.primary.large",
+        "wait for element .govuk-panel.govuk-panel--confirmation to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=waiting_for_part_payment_accuracy",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-part-payment",
+        "wait for .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-part_payment to be visible",
+        "click element td > a",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=waiting_for_part_payment_summary",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-part-payment",
+        "wait for .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-part_payment to be visible",
+        "click element td > a",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #part_payment_correct_true",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=waiting_for_part_payment_confirmation",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #waiting-for-part-payment",
+        "wait for .govuk-heading-m.heading-icon.util_mt-medium.util_mb-0.heading-icon-part_payment to be visible",
+        "click element td > a",
+        "wait for element .govuk-heading-xl to be visible",
+        "click element .govuk-button.util_mb-medium",
+        "wait for element .govuk-heading-xl to be visible",
+        "check field #part_payment_correct_true",
+        "click element .govuk-button",
+        "wait for element #result to be visible",
+        "click element .govuk-button.primary.large",
+        "wait for element .govuk-panel.govuk-panel--confirmation to be visible"
+      ]
+    },
+    {
+      "url": "127.0.0.1:3000/?info=paper_app_not_eligible_to_completion",
+      "actions": [
+        "wait for element #start-now to be visible",
+        "click element #start-now",
+        "set field #application_title to Mr",
+        "set field #application_first_name to Not",
+        "set field #application_last_name to Eligible",
+        "set field #application_day_date_of_birth to 01",
+        "set field #application_month_date_of_birth to 01",
+        "set field #application_year_date_of_birth to 1980",
+        "set field #application_ni_number to AB123456C",
+        "check field #application_married_false",
+        "click element .govuk-button",
+        "set field #application_fee to 111",
+        "check field #application_jurisdiction_id_1",
+        "set field #application_day_date_received to 01",
+        "set field #application_month_date_received to 10",
+        "set field #application_year_date_received to 2020",
+        "set field #application_form_name to C100",
+        "click element .govuk-button",
+        "check field #application_min_threshold_exceeded_true",
+        "set field #application_amount to 100000",
+        "click element .govuk-button",
+        "wait for element .govuk-button to be visible",
+        "click element .govuk-button",
+        "wait for element #result to be visible"
+      ]
     }
   ]
 }
-
-
