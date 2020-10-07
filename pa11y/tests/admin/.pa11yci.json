@@ -5,7 +5,8 @@
     "viewport": {
       "width": 1000,
       "height": 1000
-    }
+    },
+    "concurrency": 1
   },
  "urls": [
    {
@@ -19,9 +20,6 @@
    {
      "url": "http://127.0.0.1:3000/users/1",
      "actions": [
-       "set field #user_email to fee-remission@digital.justice.gov.uk",
-       "set field #user_password to 123456789",
-       "click element .govuk-button",
        "navigate to http://127.0.0.1:3000/users/1"
      ]
    },
