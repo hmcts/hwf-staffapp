@@ -199,6 +199,23 @@ When("I create Application C with the same ho_number") do
   complete_processing
 end
 
+When("I create Application C with the same ho_number and lowercase ho_number") do
+  click_link 'Sign out', visible: false
+  @user3 = FactoryBot.create(:user)
+  fill_in 'Email', with: @user3.email
+  fill_in 'Password', with: 'password'
+  click_on 'Sign in'
+
+  FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'l123456', ni_number: '')
+  reference = OnlineApplication.last.reference
+  fill_in 'Reference', with: reference
+  click_on 'Look up', visible: false
+
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  click_button('Next')
+  complete_processing
+end
+
 Then("I create Application D with the same ho_number") do
   click_link 'Sign out', visible: false
   sign_in_as_user

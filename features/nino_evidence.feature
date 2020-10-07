@@ -64,3 +64,15 @@ Feature: Evidence check will be called or not based off the NINO
     When Application D has correct evidence
     Then I create Application E with the same ho_number
     And evidence check is skipped
+
+  Scenario: One evidence reject after an evidence accept will mark subsequent applications for same ho number but lowercase
+    Given I create an application A that waits for evidence with the same ho_number
+    And I create an Application B that has correct evidence with the same ho_number
+    When I create Application C with the same ho_number and lowercase ho_number
+    And evidence check is skipped
+    When Application A has failed evidence
+    And I create Application D with the same ho_number
+    And evidence check is called
+    When Application D has correct evidence
+    Then I create Application E with the same ho_number
+    And evidence check is skipped
