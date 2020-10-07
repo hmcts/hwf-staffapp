@@ -29,7 +29,7 @@ module Forms
 
       define_attributes
 
-      before_validation :format_ni_number
+      before_validation :format_ni_number, :format_ho_number
       before_validation :strip_whitespace!
       before_validation :format_dob
 
@@ -37,6 +37,13 @@ module Forms
         unless ni_number.nil?
           ni_number.upcase!
           ni_number.delete!(' ')
+        end
+      end
+
+      def format_ho_number
+        unless ho_number.nil?
+          ho_number.upcase!
+          ho_number.delete!(' ')
         end
       end
 
