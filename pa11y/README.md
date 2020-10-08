@@ -42,6 +42,8 @@ pa11y-ci --config pa11y/tests/admin/.pa11yci.json
 (Screenshots can be useful to check whether the desired page is being tested. You may want to delete the screenshot 
 directory after testing to avoid clutter).
 #### Manager account:
+
+###### Work in progress: Issues surrounding the randomness of "Waiting for Evidence" means that 2 user journeys have been omitted for now (08/10/20) to be addressed at a later date.
 with screenshots:
 ```
 mkdir -p pa11y/screenshots/manager   

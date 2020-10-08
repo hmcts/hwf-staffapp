@@ -428,42 +428,6 @@
       ]
     },
     {
-      "url": "127.0.0.1:3000/?info=part_payment_app_waiting_for_evidence_result",
-      "actions": [
-        "wait for element #start-now to be visible",
-        "click element td > a",
-        "wait for element #result to be visible",
-        "click element .govuk-button.util_mb-medium",
-        "wait for element .govuk-heading-xl to be visible",
-        "check field #evidence_correct_true",
-        "click element .govuk-button",
-        "wait for element #evidence_income to be visible",
-        "set field #evidence_income to 1110",
-        "click element .govuk-button",
-        "wait for element #result to be visible",
-        "screen capture pa11y/screenshots/manager/part_payment_app_waiting_for_evidence_result.png"
-      ]
-    },
-    {
-      "url": "127.0.0.1:3000/?info=part_payment_app_waiting_for_evidence_complete_processing",
-      "actions": [
-        "wait for element #start-now to be visible",
-        "click element td > a",
-        "wait for element #result to be visible",
-        "click element .govuk-button.util_mb-medium",
-        "wait for element .govuk-heading-xl to be visible",
-        "click element .govuk-button",
-        "wait for element #evidence_income to be visible",
-        "click element .govuk-button",
-        "wait for element #result to be visible",
-        "click element .govuk-button",
-        "wait for element #result to be visible",
-        "click element .govuk-button.primary.large",
-        "wait for element .govuk-panel.govuk-panel--confirmation to be visible",
-        "screen capture pa11y/screenshots/manager/part_payment_app_waiting_for_evidence_complete_processing.png"
-      ]
-    },
-    {
       "url": "127.0.0.1:3000/?info=waiting_for_part_payment_accuracy",
       "actions": [
         "wait for element #start-now to be visible",
