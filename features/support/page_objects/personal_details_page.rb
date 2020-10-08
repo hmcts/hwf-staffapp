@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class PersonalDetailsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Personal details'
@@ -43,19 +44,19 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
-  def valid_dob_over
-    now = Time.zone.now
-    content.application_day_date_of_birth.set now.day
-    content.application_month_date_of_birth.set now.month
-    content.application_year_date_of_birth.set now.year - 65
-  end
-
   # rubocop:disable Metrics/AbcSize
   def valid_dob_under_15
     now = Time.zone.now
     content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
     content.application_year_date_of_birth.set now.year - 14
+  end
+
+  def valid_dob_over
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 65
   end
 
   def valid_dob_exactly_15
@@ -146,3 +147,4 @@ class PersonalDetailsPage < BasePage
     click_button('Next')
   end
 end
+# rubocop:enable Metrics/ClassLength
