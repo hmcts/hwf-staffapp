@@ -43,19 +43,26 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
+  def valid_dob_over
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 65
+  end
+
   # rubocop:disable Metrics/AbcSize
   def valid_dob_under_15
     now = Time.zone.now
-    content.application_day_date_of_birth.set now.day - 1
+    content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
     content.application_year_date_of_birth.set now.year - 14
   end
 
   def valid_dob_exactly_15
     now = Time.zone.now
-    content.application_day_date_of_birth.set now.day + 1
+    content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
-    content.application_year_date_of_birth.set now.year - 16
+    content.application_year_date_of_birth.set now.year - 15
   end
 
   def valid_dob_exactly_16
@@ -88,6 +95,13 @@ class PersonalDetailsPage < BasePage
   def submit_required_personal_details
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
+    content.status_single.click
+    click_button('Next')
+  end
+
+  def submit_required_personal_details_61
+    fill_in 'Last name', with: 'Smith', visible: false
+    valid_dob_over
     content.status_single.click
     click_button('Next')
   end
