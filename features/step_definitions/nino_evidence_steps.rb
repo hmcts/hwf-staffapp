@@ -11,6 +11,7 @@ And("I create an Application B that has correct evidence") do
   fill_in 'Email', with: @user2.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
@@ -49,6 +50,7 @@ When("I create an Application B and wrong evidence is provided") do
   fill_in 'Email', with: @user2.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
@@ -73,7 +75,7 @@ And("I close application A") do
   fill_in 'Email', with: @user1.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
-
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   evidence_page.content.evidence_can_not_be_processed.click
   click_link 'Return application', visible: false
@@ -98,6 +100,7 @@ When("Application C has correct evidence") do
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
@@ -142,6 +145,7 @@ end
 
 When("Application D has correct evidence") do
   dashboard_page.go_home
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
@@ -170,6 +174,7 @@ And("I create an Application B that has correct evidence with the same ho_number
   fill_in 'Email', with: @user2.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
@@ -237,6 +242,7 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
   fill_in 'Email', with: @user2.email
   fill_in 'Password', with: 'password'
   click_on 'Sign in'
+  dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})

@@ -11,6 +11,7 @@ class DashboardPage < BasePage
     element :in_progress_header, 'h3', text: 'In progress'
     element :processed_applications, 'a', text: 'Processed applications'
     elements :last_application, '.govuk-table__row'
+    element :last_application_header, 'h3', text: 'Your last applications'
     element :last_application_link, 'a', text: '1'
     element :waiting_for_evidence_application_link, 'a', text: 'AB001-20-'
     element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
