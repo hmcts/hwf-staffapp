@@ -72,7 +72,6 @@ class EvidenceController < ApplicationController
 
   def return_application
     if ResolverService.new(evidence, current_user).return
-      process_evidence_check_flag
       redirect_to root_path
     end
   end

@@ -19,7 +19,7 @@ end
 
 When("I search for an application using a full name") do
   find_application_page.search_by_full_name
-  expect(find_application_page).to have_current_path(%r{/completed_search})
+  expect(page).to have_current_path(%r{/completed_search})
 end
 
 When("there is a single result for that full name") do
