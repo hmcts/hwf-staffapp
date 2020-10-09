@@ -94,6 +94,15 @@ FactoryBot.define do
       income { 450 }
     end
 
+    trait :income1000 do
+      benefits { false }
+      income { 1000 }
+      fee { 6000 }
+      jurisdiction
+      date_received { Time.zone.yesterday }
+      form_name { 'ABC123' }
+    end
+
     trait :income_6065 do
       benefits { false }
       income { 6065 }

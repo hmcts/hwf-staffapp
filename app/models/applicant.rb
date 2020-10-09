@@ -1,7 +1,7 @@
 class Applicant < ActiveRecord::Base
   belongs_to :application, required: true
 
-  before_validation :format_ni_number
+  before_validation :format_ni_number, :format_ho_number
 
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
@@ -41,4 +41,12 @@ class Applicant < ActiveRecord::Base
   def format_ni_number
     ni_number.delete!(' ') && ni_number.upcase! unless ni_number.nil?
   end
+
+  def format_ho_number
+    unless ho_number.nil?
+      ho_number.upcase!
+      ho_number.delete!(' ')
+    end
+  end
+
 end
