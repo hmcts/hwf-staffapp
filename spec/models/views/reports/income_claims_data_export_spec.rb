@@ -147,6 +147,5 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         expect(export).to include(full_remission_row)
       end
     end
-
   end
 end
