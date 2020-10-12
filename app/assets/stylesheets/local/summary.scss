@@ -5,7 +5,7 @@ dl.govuk-summary-list {
   .summary-result {
     font-weight: bold;
     &.full, &.passed {
-      color: $turquoise;
+      color: $green;
     }
     &.part {
       color: $orange;
