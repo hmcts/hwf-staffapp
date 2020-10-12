@@ -84,7 +84,7 @@
   padding: 30px 15px;
   margin-bottom: 2em;
   color: #ffffff;
-  background-color: govuk-colour("orange");
+  background-color: $orange;
 
   &.blue {
     background-color: govuk-colour("blue");
@@ -107,7 +107,7 @@
     background-color: govuk-colour("turquoise");
   }
   &.callout-part, &.callout-evidence-check {
-    background: govuk-colour("orange");
+    background: $orange;
   }
   &.evidence-check-reference {
     background-color: govuk-colour("grey-1");

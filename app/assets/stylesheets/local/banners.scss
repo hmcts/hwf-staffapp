@@ -33,8 +33,8 @@
 
 .dwp-warning {
   padding: 10px 15px 0px 15px;
-  background-color: govuk-colour("orange");
-  border: 1px solid govuk-colour("orange");
+  background-color: $orange;
+  border: 1px solid $orange;
 }
 
 .dwp-warning p, .dwp-restored p {
