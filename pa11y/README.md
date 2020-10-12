@@ -17,6 +17,8 @@ webpages and highlights accessibility issues.
 
 ### Using Pa11y
 
+Install pa11y-ci using documentation at https://github.com/pa11y/pa11y-ci.
+
 For the hwf-staffapp, tests may be carried out using Admin credentials or Manager credentials
 (note: the webpages accessible to these accounts include the webpages accessible to User and Mi accounts).
 
@@ -40,6 +42,8 @@ pa11y-ci --config pa11y/tests/admin/.pa11yci.json
 (Screenshots can be useful to check whether the desired page is being tested. You may want to delete the screenshot 
 directory after testing to avoid clutter).
 #### Manager account:
+
+###### Work in progress: Issues surrounding the randomness of "Waiting for Evidence" means that 2 user journeys have been omitted for now (08/10/20) to be addressed at a later date.
 with screenshots:
 ```
 mkdir -p pa11y/screenshots/manager   
@@ -51,7 +55,13 @@ pa11y-ci --config pa11y/tests/manager/.pa11yci.json
 ```
 
 ### Issues
-Pa11y-ci tests have been temperamental in my experience so I recommend you run each pa11y-ci command twice over in succession.
+The following field inputs will need refactoring so that they are within 3 months of the current date:
+```
+"set field #application_day_date_received to 01",
+"set field #application_month_date_received to 10",
+"set field #application_year_date_received to 2020",
+```
+This set of field inputs appear 7 times in both manager/.pa11yci_ss.json and manager/.pa11yci.json files.
 (Daniel Bell Oct.2020)
 ### WCAG standards
 
