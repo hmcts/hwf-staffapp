@@ -104,7 +104,7 @@
     background-color: $govuk-error-colour;
   }
   &.received, &.yes, &.callout-full, &.callout-granted, &.callout-paid {
-    background-color: govuk-colour("turquoise");
+    background-color: govuk-colour("green");
   }
   &.callout-part, &.callout-evidence-check {
     background: govuk-colour("orange");
