@@ -13,7 +13,7 @@
             fieldset.govuk-fieldset
               legend.visuallyhidden Reasons for granting help with fees
               = f.label :value, class: 'govuk-label'
-              = f.label :value, @form.errors[:value].join(', '), class: 'error' if @form.errors[:value].present?
+              = f.label :value, @form.errors[:value].join(', '), class: 'govuk-error-message' if @form.errors[:value].present?
               = f.hidden_field :value, value: nil
               .govuk-radios.govuk-radios--small
                 - t('options', scope: @form.i18n_scope).each do |option|
