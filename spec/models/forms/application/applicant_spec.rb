@@ -311,6 +311,18 @@ RSpec.describe Forms::Application::Applicant do
 
           it { expect(created_applicant.valid?).to be false }
         end
+
+        context 'when passed in as lower case' do
+          before { personal_information[:ho_number] = 'l123456' }
+
+          it { expect(created_applicant.valid?).to be true }
+
+          it 'capitalize ho number before save' do
+            created_applicant.valid?
+            expect(created_applicant.ho_number).to eq('L123456')
+          end
+        end
+
       end
 
       describe 'format for multiple applicants' do

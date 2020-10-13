@@ -1,9 +1,19 @@
 module Views
   module Reports
-    class FeesMechanicalDataExport
+    class IncomeClaimsDataExport
       require 'csv'
 
       FM_OFFICE_CODE = 'IE413'.freeze
+
+      ENTITY_CODES = ['IE413', 'GE401', 'GE451', 'DH403', 'GE403'].freeze
+
+      OFFICE_POSTFIX = {
+        'IE413' => 'fees',
+        'GE401' => 'birkenhead',
+        'GE451' => 'liverpool',
+        'DH403' => 'ccmcc',
+        'GE403' => 'st-helens'
+      }.freeze
 
       FIELDS = {
         reference: 'reference number',
@@ -17,7 +27,7 @@ module Views
         name: 'processed by',
         ev_id: 'evidence check',
         check_type: 'evidence checked type',
-        checks_annotation: 'fees_mechanical annotations',
+        checks_annotation: 'evidence annotations',
         refund: 'refund',
         state: 'application state'
       }.freeze
@@ -25,9 +35,10 @@ module Views
       HEADERS = FIELDS.values
       ATTRIBUTES = FIELDS.keys
 
-      def initialize(start_date, end_date)
+      def initialize(start_date, end_date, entity_code)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
+        @entity_code = entity_code
       end
 
       def format_dates(date_attribute)
@@ -65,7 +76,7 @@ module Views
                  'evidence_checks.check_type', 'evidence_checks.checks_annotation',
                  'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
-          where("offices.entity_code = ?", fees_mechanical_code).where(application_type: 'income')
+          where("offices.entity_code = ?", enity_code).where(application_type: 'income')
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -88,8 +99,8 @@ module Views
         row.ev_id.blank? ? 'No' : 'Yes'
       end
 
-      def fees_mechanical_code
-        FM_OFFICE_CODE
+      def enity_code
+        @entity_code
       end
 
       def decision_cost_calculation(row)

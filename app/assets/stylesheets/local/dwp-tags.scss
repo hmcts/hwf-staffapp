@@ -45,11 +45,11 @@
 
   color: #fff;
   @if $state == online {
-    background-color: #00AD00;
+    background-color: #00703c;
   } @else if $state == offline {
-    background-color: #E00000;
+    background-color: #d4351c;
   } @else if $state == warning {
-    background-color: #B88A00;
+    background-color: #b58840;
   } @else if $state == maintenance {
     background-color: #E00000;
   }
