@@ -464,9 +464,9 @@ en-GB:
         amount: How much do they have in savings and investments?
         amount_hint: Rounded to the nearest £
         less_than: Less than £3,000
-        more_than: More than £3,000
+        more_than: £3,000 or more
         less_than_max: Less than £16,000
-        more_than_max: More than £16,000
+        more_than_max: £16,000 or more
         max_threshold_exceeded: In question 8, how much do they have?
         partner_over_61: "In question 8, is the applicant's partner 61 or over?"
         over_61_false: 'No'
