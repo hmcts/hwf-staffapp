@@ -6,6 +6,7 @@ RSpec.describe Forms::FinanceReport do
   let(:report) { described_class.new }
   let(:date_from) { Time.zone.today.-1.month }
   let(:date_to) { Time.zone.today }
+  let(:entity_code) { nil }
 
   describe 'validations' do
     before do
@@ -15,6 +16,7 @@ RSpec.describe Forms::FinanceReport do
       report.day_date_to = date_to.day
       report.month_date_to = date_to.month
       report.year_date_to = date_to.year
+      report.entity_code = entity_code
     end
 
     describe 'date_from' do
@@ -32,6 +34,16 @@ RSpec.describe Forms::FinanceReport do
 
       context 'when date_to is before date_from' do
         let(:date_to) { date_from - 1.year }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe 'entity_code' do
+      it { is_expected.to be_valid }
+
+      context 'when entity_code is empty string' do
+        let(:entity_code) { "" }
 
         it { is_expected.not_to be_valid }
       end

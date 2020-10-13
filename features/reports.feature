@@ -30,10 +30,6 @@ Feature: Reports page
       When I click on raw data extract
       Then I should be taken to the raw data extract page
 
-    Scenario: CCMCC data extract
-      When I click on ccmcc data extract
-      Then I should be taken to the ccmcc data extract page
-
-    Scenario: Fees & Mechanical data extract
-      When I click on fees & mechanical data extract
-      Then I should be taken to the fees & mechanical data extract page
+    Scenario: Income claims data extract
+      When I click on income claims data extract
+      Then I should be taken to the income claims data extract page

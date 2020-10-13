@@ -23,11 +23,7 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
-  def ccmcc_data?
-    admin?
-  end
-
-  def fees_mechanical_data?
+  def income_claims_data?
     admin?
   end
 end
