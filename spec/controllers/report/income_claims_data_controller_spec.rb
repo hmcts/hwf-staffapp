@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Report::FeesMechanicalDataController do
+RSpec.describe Report::IncomeClaimsDataController do
 
   let(:admin)     { create :admin_user }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
@@ -11,8 +11,10 @@ RSpec.describe Report::FeesMechanicalDataController do
       year_date_from: '2015',
       day_date_to: '31',
       month_date_to: '12',
-      year_date_to: '2015' }
+      year_date_to: '2015',
+      entity_code: entity_code }
   }
+  let(:entity_code) { 'GE401' }
 
   context 'as an admin' do
     before { sign_in admin }
@@ -34,14 +36,23 @@ RSpec.describe Report::FeesMechanicalDataController do
 
         it { is_expected.to have_http_status(:success) }
 
-        it { is_expected.to render_template :fees_mechanical_data }
+        it { is_expected.to render_template :income_claims_data }
       end
 
-      context 'fees_mechanical builder' do
+      context 'income claims builder' do
+        let(:dates) {
+          { day_date_from: '01',
+            month_date_from: '01',
+            year_date_from: '2015',
+            day_date_to: '31',
+            month_date_to: '12',
+            year_date_to: '2015',
+            entity_code: entity_code }
+        }
         it 'does something' do
-          allow(Views::Reports::FeesMechanicalDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::IncomeClaimsDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::FeesMechanicalDataExport).to have_received(:new)
+          expect(Views::Reports::IncomeClaimsDataExport).to have_received(:new).with(date_from, date_to, 'GE401')
         end
       end
 
@@ -50,8 +61,18 @@ RSpec.describe Report::FeesMechanicalDataController do
 
         it { is_expected.to have_http_status(:success) }
 
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('help-with-fees-fees_mechanical-extract-')
+        context 'ccmcc office' do
+          let(:entity_code) { 'DH403' }
+          it 'sets the filename' do
+            expect(response.headers['Content-Disposition']).to include('help-with-fees-ccmcc-data-extract-')
+          end
+        end
+
+        context 'Birkenhead office' do
+          let(:entity_code) { 'GE401' }
+          it 'sets the filename' do
+            expect(response.headers['Content-Disposition']).to include('help-with-fees-birkenhead-data-extract-')
+          end
         end
 
         it 'sets the file type' do
