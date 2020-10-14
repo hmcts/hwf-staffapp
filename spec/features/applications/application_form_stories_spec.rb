@@ -70,7 +70,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                 expect(page).to have_xpath('//h2', text: 'Savings and investments')
                 expect(page).to have_content('Less than £3,000 No')
                 expect(page).to have_content('Savings amount £3500')
-                expect(page).to have_no_content('More than £16,000')
+                expect(page).to have_no_content('£16,000 or more')
                 expect(page).to have_no_xpath('//h2', text: 'Benefits')
                 expect(page).to have_no_xpath('//h2', text: 'Income')
               end

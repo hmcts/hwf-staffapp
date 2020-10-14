@@ -4,6 +4,16 @@
 h1.govuk-heading-xl = header
 
 = form_for @form, url: path, method: :put, html: { autocomplete: 'off' } do |f|
+
+  - if courts
+    .govuk-form-group
+      = f.label :entity_code, t('entity_code', scope: @form.i18n_scope), class: 'govuk-label', for: "#{form_name}_entity_code"
+      - if @form.errors[:entity_code].present?
+        span.govuk-error-message
+          = f.label :entity_code, @form.errors[:entity_code].join(', '), class: 'error'
+      = f.collection_select :entity_code, income_claims_courts, :entity_code, :name, { class: 'govuk-select', prompt: 'Please select court' }
+
+
   .govuk-form-group
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend

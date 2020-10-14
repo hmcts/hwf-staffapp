@@ -83,7 +83,7 @@ class ReportsController < ApplicationController
   def form_params(form_name)
     params.require(form_name).
       permit(:day_date_from, :month_date_from, :year_date_from, :day_date_to,
-             :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id)
+             :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id, :entity_code)
   end
 
   def load_graph_data

@@ -26,11 +26,7 @@ dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key =link_to 'Raw data extract', reports_raw_data_path
       dd.govuk-summary-list__value Extract raw data by date for Analytical Services
-  - if policy(:report).ccmcc_data?
+  - if policy(:report).income_claims_data?
     .govuk-summary-list__row
-      dt.govuk-summary-list__key =link_to 'CCMCC data extract', report_ccmcc_data_path
-      dd.govuk-summary-list__value Extract CCMCC data by date for Analytical Services
-  - if policy(:report).fees_mechanical_data?
-    .govuk-summary-list__row
-      dt.govuk-summary-list__key =link_to 'Fees & Mechanical recording data extract', report_fees_mechanical_data_path
-      dd.govuk-summary-list__value Extract Fees & Mechanical recording data by date for Analytical Services
+      dt.govuk-summary-list__key =link_to 'Income claims data by court', report_income_claims_data_path
+      dd.govuk-summary-list__value Extract income claims data by court and date
