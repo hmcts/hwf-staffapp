@@ -28,4 +28,5 @@ module Applications
       end
     end
   end
+
 end
