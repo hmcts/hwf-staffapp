@@ -14,7 +14,7 @@ And("I submit how much they have") do
   expect(savings_investments_page.content).to have_savings_amount_label
   expect(page).to have_text 'Rounded to the nearest £'
   savings_investments_page.content.application_amount.set '10000.01'
-  click_button('Next')
+  savings_investments_page.click_next
 end
 
 Then("I should be taken to the benefits page") do

@@ -33,7 +33,7 @@ steps:
   displayName: 'DB load'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec cucumber --fail-fast --order random
+    bundle exec cucumber --fail-fast --order random --no-strict-flaky --retry 3
   displayName: 'cucumber'
 
 - script: |

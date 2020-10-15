@@ -1,6 +1,9 @@
 When("I search for an application using a valid hwf reference") do
   expect(find_application_page.content).to have_find_application_header
-  find_application_page.search_by_hwf_reference
+  find_application_page.content.wait_until_search_input_visible
+  find_application_page.content.search_input.set "#{reference_prefix}-000001"
+  find_application_page.content.search_button.click
+  expect(dashboard_page).to have_current_path(%r{/completed_search})
 end
 
 Then("I see that application under search results") do
@@ -14,11 +17,16 @@ Then("I should see the result for that full name") do
 end
 
 When("I search for an application using a last name") do
-  find_application_page.search_by_last_name
+  find_application_page.content.wait_until_search_input_visible
+  find_application_page.content.search_input.set 'Smith'
+  find_application_page.content.search_button.click
+  expect(page).to have_current_path(%r{/completed_search})
 end
 
 When("I search for an application using a full name") do
-  find_application_page.search_by_full_name
+  find_application_page.content.wait_until_search_input_visible
+  find_application_page.content.search_input.set 'John Christopher Smith'
+  find_application_page.content.search_button.click
   expect(page).to have_current_path(%r{/completed_search})
 end
 
@@ -113,9 +121,13 @@ And("I can navigate back a page") do
 end
 
 Given("I have a list of search results") do
-  start_application
-  multiple_applications
-  find_application_page.search_by_last_name
+  user = FactoryBot.create(:user)
+  create_multiple_applications(user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
+  fill_in 'Search', with: 'Smith'
+  dashboard_page.content.search_button.click
 end
 
 Then("I can sort by reference") do
@@ -167,13 +179,18 @@ Then("I can sort by completed") do
 end
 
 Given("a user has processed an application") do
-  start_application
-  eligable_application
+  user = FactoryBot.create(:user)
+  eligable_application(user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
   click_link 'Sign out', visible: false
+  expect(sign_in_page).to have_current_path(%r{/users/sign_in})
 end
 
 Given("I am signed in as a user from a different office") do
   sign_in_page.user_account
+  expect(dashboard_page).to have_current_path('/')
 end
 
 When("I search for the application processed by the different office") do
@@ -181,7 +198,7 @@ When("I search for the application processed by the different office") do
 end
 
 Then("I am told that the application has been processed by another office") do
-  find_application_page.content.processed_by_another_office
+  expect(find_application_page.content).to have_processed_by_another_office
 end
 
 Then("I am not able to view that application") do

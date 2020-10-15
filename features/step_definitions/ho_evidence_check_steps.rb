@@ -25,7 +25,11 @@ But("the second application will require evidence") do
   expect(ho_evidence_check_page.content.your_last_application[1].text).to have_content 'waiting_for_evidence Mr John Christopher Smith'
 end
 
-Given("and I process applications where the applicant has a home office number") do
+Given("I process applications where the applicant has a home office number") do
+  user = FactoryBot.create(:user)
   ho_applicant
-  refund_application
+  refund_application(user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
 end

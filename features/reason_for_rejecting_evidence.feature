@@ -1,8 +1,7 @@
 Feature: Reason for rejecting the evidence
 
   Background: Reason for rejecting the evidence page
-    Given I successfully sign in as a user
-    And I have evidence check application
+    Given I have evidence check application
     And I am on reason for rejecting the evidence page
 
   Scenario: Multiple reasons for rejecting the evidence
