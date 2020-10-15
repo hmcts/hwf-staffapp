@@ -3,14 +3,13 @@ And("there is an application waiting for evidence") do
   @application = FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user)
 
   sign_in_page.load_page
-  fill_in 'Email', with: user.email
-  fill_in 'Password', with: 'password'
-  click_on 'Sign in'
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
 end
 
 And("I am on an application waiting for evidence") do
   dashboard_page.content.waiting_for_evidence_application_link.click
-  expect(page).to have_current_path(%r{/evidence})
+  expect(page).to have_current_path(%r{/evidence/[0-9]+})
 end
 
 When("I click on start now to process the evidence") do
@@ -66,23 +65,24 @@ Then("I should be taken to the problem with evidence page") do
 end
 
 When("I submit that the evidence is correct") do
+  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
 end
 
 Then("I should be taken to the evidence income page") do
-  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
+  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+/income})
   expect(evidence_page.content).to have_header
 end
 
 When(/^I submit (\d+) as the income$/) do |income|
-  expect(page).to have_current_path(%r{/evidence/1/income})
+  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
   fill_in 'Total monthly income from evidence', with: income
-  click_button('Next')
+  evidence_page.click_next
 end
 
 Then("I see the amount to be refunded should be £656.66") do
-  expect(evidence_page).to have_current_path(%r{/evidence/1/result})
+  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+/result})
   expect(evidence_page.content).to have_full_refund_header
 end
 
@@ -95,18 +95,19 @@ Then("I see that the applicant is not eligible for help with fees") do
 end
 
 When("I submit that there is a problem with evidence") do
+  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
 end
 
 Then("I should be taken to the reason for rejecting the evidence page") do
-  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/1})
+  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/[0-9]+})
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
 
 When("I click on next without making a selection on the evidence page") do
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
-  click_button('Next')
+  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
+  evidence_accuracy_page.click_next
 end
 
 Then("I should see this question must be answered error message") do
@@ -122,13 +123,13 @@ Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
   expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_on 'Next', visible: false
+  evidence_accuracy_page.click_next
   expect(evidence_page).to have_current_path(%r{/income})
   find_field('Total monthly income from evidence', visible: false).set('500')
-  click_on 'Next', visible: false
-  expect(evidence_page).to have_current_path(%r{/result})
-  expect(page).to have_text '✓ Eligible for help with fees'
-  click_on 'Next', visible: false
+  evidence_page.click_next
+  expect(evidence_result_page).to have_current_path(%r{/result})
+  expect(evidence_result_page.content).to have_eligable_header
+  evidence_result_page.click_next
   expect(evidence_page).to have_current_path(%r{/summary})
 end
 

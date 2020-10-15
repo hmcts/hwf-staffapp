@@ -1,5 +1,9 @@
 Given("I have processed an application that is a part payment") do
-  part_payment_application
+  user = FactoryBot.create(:user)
+  part_payment_application(user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_welcome_user
 end
 
 And("the payment is ready to process") do
