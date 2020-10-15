@@ -1,11 +1,12 @@
 h3.govuk-heading-m.heading-icon.heading-icon-completed.util_mt-medium.util_mb-0
   = t('completed_applications.title')
 table.completed-applications
-  caption.visuallyhidden = t('completed_applications.caption')
   tbody
     tr
       td
-        = link_to(t('processed_applications.index.title'), processed_applications_path, class: 'processed-applications')
+        = link_to(t('processed_applications.index.title'), processed_applications_path, class: 'processed-applications',
+        id: 'processed-applications')
     tr
       td
-        = link_to(t('deleted_applications.index.title'), deleted_applications_path, class: 'deleted-applications')
+        = link_to(t('deleted_applications.index.title'), deleted_applications_path, class: 'deleted-applications',
+        id: 'deleted-applications')

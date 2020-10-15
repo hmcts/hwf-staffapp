@@ -14,10 +14,10 @@ And("I submit how much they have") do
   expect(savings_investments_page.content).to have_savings_amount_label
   expect(page).to have_text 'Rounded to the nearest £'
   savings_investments_page.content.application_amount.set '10000.01'
-  next_page
+  click_button('Next')
 end
 
 Then("I should be taken to the benefits page") do
-  expect(current_path).to include 'benefits'
+  expect(benefits_page).to have_current_path(%r{/benefits})
   expect(benefits_page.content).to have_header
 end

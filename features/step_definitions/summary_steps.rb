@@ -7,7 +7,7 @@ Given("I have completed an application with savings in pence") do
 end
 
 Given("I am on the summary page") do
-  expect(current_path).to include 'summary'
+  expect(summary_page).to have_current_path(%r{/summary})
   expect(summary_page.content).to have_header
 end
 
@@ -16,7 +16,7 @@ When("I successfully submit my application") do
 end
 
 Then("I should be taken to the confirmation page") do
-  expect(current_path).to include 'confirmation'
+  expect(confirmation_page).to have_current_path(%r{/confirmation})
   expect(confirmation_page.content).to have_eligible
 end
 

@@ -29,6 +29,28 @@ en-GB:
         id: Id
       table:
         missing_reference: 'no reference number'
+  dwp_failed_applications:
+    dashboard:
+      heading: Process when DWP is back online
+      caption: Applications that failed due to DWP failure
+      no_applications: No pending applications in the list
+    index:
+      title: Pending benefit applications
+      caption: Process when DWP is back online
+      table_header:
+        reference: Reference
+        applicant: Applicant
+        status: Status
+        updated_at: Last updated
+        processed_by: Process by
+        id: Id
+        ready_to_process: Ready to process?
+      table:
+        missing_reference: 'no reference number'
+        ready_link: 'Ready to process'
+        not_ready_link: 'Not ready to process'
+        no_applications: No pending applications in the list
+
 
   completed_applications:
     title: Completed
@@ -323,6 +345,7 @@ en-GB:
         date_of_birth: Date of birth
         ni_number: National Insurance number
         ho_number: Home Office reference number
+        under_age: 15 and under
         status: Status
       views/overview/details:
         fee: Fee
@@ -369,6 +392,7 @@ en-GB:
         application_type_income: Income
         jurisdiction: Jurisdiction
         be_code: Business entity code
+        entity_code: 'Court name'
       forms/report/finance_transactional_report:
         date_from: 'Date from'
         date_to: 'Date to'
@@ -405,6 +429,7 @@ en-GB:
         married_false: Single
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
+        under_age_true: 'Yes'
       forms/application/detail:
         fee: How much is the court or tribunal fee?
         jurisdiction_id: Jurisdiction
@@ -439,9 +464,9 @@ en-GB:
         amount: How much do they have in savings and investments?
         amount_hint: Rounded to the nearest £
         less_than: Less than £3,000
-        more_than: More than £3,000
+        more_than: £3,000 or more
         less_than_max: Less than £16,000
-        more_than_max: More than £16,000
+        more_than_max: £16,000 or more
         max_threshold_exceeded: In question 8, how much do they have?
         partner_over_61: "In question 8, is the applicant's partner 61 or over?"
         over_61_false: 'No'
@@ -520,6 +545,8 @@ en-GB:
               blank: 'Please enter an end date'
               after: 'Enter a date that is after the date from'
               not_a_date: 'Please enter a valid date'
+            entity_code:
+              blank: "Please select a court name"
         forms/report/finance_transactional_report:
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:

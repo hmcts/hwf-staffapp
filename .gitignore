@@ -24,3 +24,15 @@ coverage/*
 
 # Ignore node_modules
 node_modules/
+
+# Ignore idea
+/.idea
+
+# Ignore generators
+.generators
+
+# Ignore binaries
+.DS_Store
+
+# Ignore pa11y screenshots
+/pa11y/screenshots

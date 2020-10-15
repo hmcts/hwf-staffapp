@@ -41,6 +41,17 @@ FactoryBot.define do
       post_contact { true }
     end
 
+    trait :childandincome6065 do
+      fee { 100 }
+      jurisdiction
+      date_received { Time.zone.yesterday }
+      form_name { 'AXEE122' }
+      children { 4 }
+      benefits { false }
+      income_min_threshold_exceeded { true }
+      income_max_threshold_exceeded { true }
+    end
+
     trait :with_reference do
       sequence(:reference) { |n| "HWF-#{n.to_s.rjust(3, '0')}-#{SecureRandom.hex(3).upcase.chars.first(3).join}" }
       # reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
@@ -60,6 +71,15 @@ FactoryBot.define do
       form_name { 'ABC123' }
     end
 
+    trait :big_saving do
+      fee { 100 }
+      jurisdiction
+      date_received { Time.zone.yesterday }
+      form_name { 'AXEE122' }
+      min_threshold_exceeded { true }
+      max_threshold_exceeded { true }
+    end
+
     trait :threshold_exceeded do
       min_threshold_exceeded { true }
       amount { 3500 }
@@ -72,6 +92,20 @@ FactoryBot.define do
     trait :income do
       benefits { false }
       income { 450 }
+    end
+
+    trait :income1000 do
+      benefits { false }
+      income { 1000 }
+      fee { 6000 }
+      jurisdiction
+      date_received { Time.zone.yesterday }
+      form_name { 'ABC123' }
+    end
+
+    trait :income_6065 do
+      benefits { false }
+      income { 6065 }
     end
 
     trait :et do

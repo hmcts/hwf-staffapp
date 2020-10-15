@@ -13,11 +13,11 @@ class PaperEvidencePage < BasePage
 
   def submit_evidence_yes
     content.yes.click
-    next_page
+    click_button('Next')
   end
 
   def submit_evidence_no
     content.no.click
-    next_page
+    click_button('Next')
   end
 end

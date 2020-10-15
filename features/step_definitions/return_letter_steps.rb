@@ -1,16 +1,19 @@
 Then("I am on the return letter page after selecting not arrived or too late") do
-  problem_with_evidence_page.go_to_problem_with_evidence_page
+  go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_not_arrived_too_late
+  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
 end
 
 Then("I am on the return letter page after selecting citizen not proceeding") do
-  problem_with_evidence_page.go_to_problem_with_evidence_page
+  go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_not_proceeding
+  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
 end
 
 Then("I am on the return letter page after selecting staff error") do
-  problem_with_evidence_page.go_to_problem_with_evidence_page
+  go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_staff_error
+  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
 end
 
 Then("I should see evidence has not arrived or too late letter template") do
@@ -45,6 +48,7 @@ Then("I should see next steps information for evidence incorrect") do
 end
 
 Then("I should see next steps information for citizen not proceeding") do
+  expect(return_letter_page).to have_current_path(%r{/return_letter})
   expect(return_letter_page.content.evidence_next_steps).to have_header
   expect(return_letter_page.content.evidence_next_steps).to have_citizen_not_proceeding_text
   expect(return_letter_page.content.evidence_next_steps.root_element).to have_link
@@ -62,6 +66,6 @@ end
 
 And("on the processed application I can see that the reason for not being processed is staff error") do
   click_button('Finish')
-  click_link("#{reference_prefix}-000001")
+  click_reference_link
   expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff error"'
 end

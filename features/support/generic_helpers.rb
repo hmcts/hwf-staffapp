@@ -1,3 +1,6 @@
+
+CCMCC_OFFICE_ENTITY_CODE = 'DH403'.freeze
+
 def base_page
   @base_page ||= BasePage.new
 end
@@ -178,14 +181,14 @@ def process_online_application_page
   @process_online_application_page ||= ProcessOnlineApplicationPage.new
 end
 
+def dwp_failed_applications_page
+  @dwp_failed_applications_page ||= DwpFailedApplicationsPage.new
+end
+
 def complete_processing
   if base_page.content.has_complete_processing_button?
     base_page.content.complete_processing_button.click
   end
-end
-
-def next_page
-  click_on 'Next', visible: false
 end
 
 def start_application
@@ -211,6 +214,13 @@ end
 def sign_in_as_user
   sign_in_page.load_page
   @current_user = sign_in_page.user_account
+end
+
+def sign_in_as_ccmcc_office_user
+  ccmcc_office = FactoryBot.create(:office, entity_code: CCMCC_OFFICE_ENTITY_CODE)
+  user = FactoryBot.create(:user, office: ccmcc_office)
+  sign_in_page.load_page
+  @current_user = sign_in_page.sign_in_with user.email, user.password
 end
 
 def go_to_finance_transactional_report_page
@@ -244,7 +254,6 @@ end
 def multiple_applications
   eligable_application
   ineligable_application
-  click_on "Help with fees"
 end
 
 def complete_and_back_to_start
@@ -286,4 +295,48 @@ end
 
 def reference_prefix
   "PA#{Time.zone.now.strftime('%y')}"
+end
+
+def create_application_with_bad_request_result_with(user)
+  applicant = FactoryBot.create(:applicant_with_all_details)
+  application = FactoryBot.create(:application, applicant: applicant, ni_number: 'AB123456C', office: user.office, user: user)
+  FactoryBot.create(:benefit_check, :bad_request_result, application: application)
+  applicant
+end
+
+def sign_in_with_user
+  if @current_user.present?
+    sign_in_page.load_page
+    sign_in_page.sign_in_with @current_user.email, @current_user.password
+  else
+    sign_in_as_user
+  end
+end
+
+def stub_dwp_response_as_bad_request
+  stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+    to_return(body: '{"error": "LSCBC959: Service unavailable."}', status: BAD_REQUEST)
+end
+
+def create_online_application
+  FactoryBot.create(:online_application, :with_reference, :benefits, :completed)
+end
+
+def dwp_monitor_state_as(state)
+  dwp = instance_double('DwpMonitor', state: state)
+  DwpMonitor.stub(:new).and_return dwp
+end
+
+def click_reference_link
+  reference_link = "#{reference_prefix}-000001"
+  expect(page).to have_link(reference_link)
+  click_link reference_link
+end
+
+def go_to_problem_with_evidence_page
+  dashboard_page.go_home
+  click_reference_link
+  evidence_page.content.evidence_can_not_be_processed.click
+  click_link 'Return application', visible: false
+  expect(page).to have_current_path(%r{evidence/accuracy_failed_reason/[1-9]+})
 end

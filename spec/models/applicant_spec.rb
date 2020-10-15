@@ -76,6 +76,18 @@ RSpec.describe Applicant, type: :model do
     end
   end
 
+  context 'HO number' do
+    let(:ho_number) { 'l123456' }
+    let(:applicant) { build :applicant, application: application, ho_number: ho_number }
+
+    it { expect(applicant.valid?).to be true }
+
+    it 'capitalize ho number before save' do
+      applicant.valid?
+      expect(applicant.ho_number).to eq('L123456')
+    end
+  end
+
   describe '#age' do
     subject { applicant.age }
 
@@ -154,6 +166,37 @@ RSpec.describe Applicant, type: :model do
 
     context 'when the applicant is not over 61 years old' do
       let(:date_of_birth) { dob_under }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#under_age?' do
+    subject do
+      Timecop.freeze(current_time) do
+        applicant.under_age?
+      end
+    end
+
+    let(:current_time) { Time.zone.parse('2020-09-11') }
+    let(:dob_over) { Time.zone.parse('2004-9-10') }
+    let(:dob_under) { Time.zone.parse('2005-09-12') }
+    let(:applicant) { build :applicant, application: application, date_of_birth: date_of_birth }
+
+    context 'when the applicant is over 15 years old' do
+      let(:date_of_birth) { dob_over }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the applicant is not over 15 years old' do
+      let(:date_of_birth) { dob_under }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the applicant is exactly 16 years old' do
+      let(:date_of_birth) { Time.zone.parse('2004-09-11') }
 
       it { is_expected.to be false }
     end

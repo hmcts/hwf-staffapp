@@ -5,7 +5,7 @@ describe EvidenceCheckSelector do
 
   let(:current_time) { Time.zone.now }
   let(:expires_in_days) { 2 }
-
+  let(:applicant) { create :applicant_with_all_details }
   describe '#decide!' do
     subject(:decision) do
       Timecop.freeze(current_time) do
@@ -40,7 +40,7 @@ describe EvidenceCheckSelector do
     end
 
     describe 'should skip EV check' do
-      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income' }
+      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
       let(:detail) { build_stubbed :detail }
 
       before do
@@ -86,6 +86,33 @@ describe EvidenceCheckSelector do
         it do
           evidence_check_selector.decide!
           expect(application).not_to have_received(:create_evidence_check)
+        end
+      end
+
+      context 'if applicant is under 15' do
+        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
+        let(:applicant) { build :applicant_with_all_details, date_of_birth: dob }
+
+        context '15 years' do
+          let(:dob) { 15.years.ago }
+          it do
+            evidence_check_selector.decide!
+            expect(application).not_to have_received(:create_evidence_check)
+          end
+        end
+        context '16 years' do
+          let(:dob) { 16.years.ago }
+          it do
+            evidence_check_selector.decide!
+            expect(application).to have_received(:create_evidence_check)
+          end
+        end
+        context '14 years' do
+          let(:dob) { 14.years.ago }
+          it do
+            evidence_check_selector.decide!
+            expect(application).not_to have_received(:create_evidence_check)
+          end
         end
       end
     end
@@ -158,14 +185,28 @@ describe EvidenceCheckSelector do
       end
 
       context 'when the application is flagged for failed evidence check' do
-        let(:applicant) { create :applicant_with_all_details }
-        let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-        before { create :evidence_check_flag, reg_number: applicant.ni_number }
+        describe 'with ni_number' do
+          let(:applicant) { create :applicant_with_all_details }
+          let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
+          before { create :evidence_check_flag, reg_number: applicant.ni_number }
 
-        it { is_expected.to be_a(EvidenceCheck) }
+          it { is_expected.to be_a(EvidenceCheck) }
 
-        it 'sets the type to "flag"' do
-          expect(decision.check_type).to eql 'flag'
+          it 'sets the type to "flag"' do
+            expect(decision.check_type).to eql 'flag'
+          end
+        end
+
+        describe 'with ho_number' do
+          let(:applicant) { create :applicant_with_all_details, ni_number: '', ho_number: 'L123456' }
+          let(:application) { create :application_full_remission, reference: 'L123456', applicant: applicant }
+          before { create :evidence_check_flag, reg_number: applicant.ho_number }
+
+          it { is_expected.to be_a(EvidenceCheck) }
+
+          it 'sets the type to "flag"' do
+            expect(decision.check_type).to eql 'flag'
+          end
         end
       end
 
@@ -179,7 +220,7 @@ describe EvidenceCheckSelector do
         let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
 
         let(:application) { create(:application, :income_type, applicant: applicant) }
-        let(:applicant) { create(:applicant, ni_number: 'SN123456D') }
+        let(:applicant) { create(:applicant, ni_number: 'SN123456D', date_of_birth: 20.years.ago) }
 
         before do
           evidence_check
@@ -190,6 +231,28 @@ describe EvidenceCheckSelector do
         end
       end
 
+      context 'for a application with existing check and same ni_number with inactive flag' do
+        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:application_old) do
+          create(:application, :income_type,
+                 state: 1,
+                 applicant: applicant_old)
+        end
+        let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
+
+        let(:application) { create(:application, :income_type, applicant: applicant) }
+        let(:applicant) { create(:applicant, ni_number: 'SN123456D', date_of_birth: 20.years.ago) }
+
+        before do
+          create :evidence_check_flag, reg_number: applicant.ni_number, active: false
+          evidence_check
+        end
+
+        it 'selects the application for evidence_check' do
+          is_expected.not_to be_a(EvidenceCheck)
+        end
+      end
+
       context 'for a application with existing check and same ho_number' do
         let(:evidence_check) { create(:evidence_check, application: application_old) }
         let(:application_old) do
@@ -197,10 +260,10 @@ describe EvidenceCheckSelector do
                  state: 1,
                  applicant: applicant_old)
         end
-        let(:applicant_old) { create(:applicant, ho_number: 'L123456') }
+        let(:applicant_old) { create(:applicant, ho_number: 'L123456', ni_number: '') }
 
         let(:application) { create(:application, :income_type, applicant: applicant) }
-        let(:applicant) { create(:applicant, ho_number: 'L123456') }
+        let(:applicant) { create(:applicant, ho_number: 'L123456', ni_number: '', date_of_birth: 20.years.ago) }
 
         before do
           evidence_check
@@ -298,6 +361,19 @@ describe EvidenceCheckSelector do
           create :application_full_remission, :refund, office: ccmcc_office
           create :application, office: ccmcc_office
           create :application, office: digital_office
+        end
+
+        it 'creates evidence_check record for the application' do
+          is_expected.to be_a(EvidenceCheck)
+        end
+      end
+
+      context 'query all with singe existing application' do
+        let(:frequency) { 1 }
+        let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
+
+        before do
+          create :application, office: ccmcc_office
         end
 
         it 'creates evidence_check record for the application' do

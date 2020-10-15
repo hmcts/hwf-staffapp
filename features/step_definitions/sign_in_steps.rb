@@ -3,12 +3,12 @@ Given("I am on the Help with Fees staff application home page") do
 end
 
 When("I am not signed in") do
-  expect(current_path).to eq '/users/sign_in'
+  expect(sign_in_page).to have_current_path(%r{/users/sign_in})
   expect(sign_in_page.content).to have_sign_in_alert
 end
 
 When("I am redirected to the sign in page") do
-  expect(current_path).to eq '/users/sign_in'
+  expect(sign_in_page).to have_current_path(%r{/users/sign_in})
 end
 
 When("I successfully sign in as a user") do
@@ -77,7 +77,7 @@ When("I click on forgot your password") do
 end
 
 Then("I am taken to get a new password page") do
-  expect(current_path).to eq '/users/password/new'
+  expect(new_password_page).to have_current_path(%r{/users/password/new})
   expect(new_password_page.content).to have_header
 end
 

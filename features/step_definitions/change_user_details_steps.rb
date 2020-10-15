@@ -1,6 +1,8 @@
 When("I click on change details of a user") do
   click_link 'user'
+  expect(page).to have_current_path(%r{/users/[0-9]+})
   click_link 'Change details'
+  expect(page).to have_current_path(%r{/users/[0-9]+/edit})
 end
 
 Then("I can change the user to a user, manager, admin, mi, reader") do
@@ -15,6 +17,7 @@ And("I change the jurisdiction") do
   expect(change_user_details_page.content.radio[6].text).to have_content Jurisdiction.first.name
   change_user_details_page.content.radio[6].click
   click_button 'Save changes'
+  expect(page).to have_current_path(%r{/users/[0-9]+})
 end
 
 When("I should see the jurisdiction has been updated") do

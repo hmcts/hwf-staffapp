@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class PersonalDetailsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Personal details'
@@ -43,6 +44,36 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
+  # rubocop:disable Metrics/AbcSize
+  def valid_dob_under_15
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 14
+  end
+
+  def valid_dob_over
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 65
+  end
+
+  def valid_dob_exactly_15
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 15
+  end
+
+  def valid_dob_exactly_16
+    now = Time.zone.now
+    content.application_day_date_of_birth.set now.day
+    content.application_month_date_of_birth.set now.month
+    content.application_year_date_of_birth.set now.year - 16
+  end
+  # rubocop:enable Metrics/AbcSize
+
   def in_the_future_dob
     tomorrow = Time.zone.tomorrow
     content.application_day_date_of_birth.set tomorrow.day
@@ -66,7 +97,14 @@ class PersonalDetailsPage < BasePage
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.status_single.click
-    next_page
+    click_button('Next')
+  end
+
+  def submit_required_personal_details_61
+    fill_in 'Last name', with: 'Smith', visible: false
+    valid_dob_over
+    content.status_single.click
+    click_button('Next')
   end
 
   def submit_all_personal_details_ni
@@ -74,7 +112,31 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ni
     content.status_single.click
-    next_page
+    click_button('Next')
+  end
+
+  def submit_all_personal_details_ni_16
+    full_name
+    valid_dob_exactly_16
+    valid_ni
+    content.status_single.click
+    click_button('Next')
+  end
+
+  def submit_all_personal_details_ni_under_15
+    full_name
+    valid_dob_under_15
+    valid_ni
+    content.status_single.click
+    click_button('Next')
+  end
+
+  def submit_all_personal_details_ni_exactly_15
+    full_name
+    valid_dob_exactly_15
+    valid_ni
+    content.status_single.click
+    click_button('Next')
   end
 
   def submit_all_personal_details_ho
@@ -82,6 +144,7 @@ class PersonalDetailsPage < BasePage
     valid_dob
     valid_ho
     content.status_single.click
-    next_page
+    click_button('Next')
   end
 end
+# rubocop:enable Metrics/ClassLength

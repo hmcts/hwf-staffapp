@@ -54,7 +54,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     end
   end
 
-  context 'Check that every consecutive application with same NINO will be flagged until last one is closed' do
+  context 'Check that every consecutive application with same NINO will be flagged until evidence is provided' do
     let(:application1) { create :application, :waiting_for_evidence_state, applicant: applicant1, office: office }
     let(:application2) { create :application, :waiting_for_evidence_state, applicant: applicant2, office: office }
     let(:applicant1) { create :applicant_with_all_details, ni_number: 'AB123456D' }
@@ -100,8 +100,9 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+
+      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
 

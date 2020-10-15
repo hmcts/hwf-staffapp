@@ -10,7 +10,7 @@ When("I click on finance aggregated report") do
 end
 
 Then("I should be taken to finance aggregated report page") do
-  expect(current_path).to include '/reports/finance_report'
+  expect(page).to have_current_path(%r{/reports/finance_report})
 end
 
 When("I click on finance transactional report") do
@@ -19,7 +19,7 @@ When("I click on finance transactional report") do
 end
 
 Then("I should be taken to finance transactional report page") do
-  expect(current_path).to include '/reports/finance_transactional_report'
+  expect(page).to have_current_path(%r{/reports/finance_transactional_report})
 end
 
 When("I click on graphs") do
@@ -28,7 +28,7 @@ When("I click on graphs") do
 end
 
 Then("I should be taken to the graphs page") do
-  expect(current_path).to include '/reports/graphs'
+  expect(page).to have_current_path(%r{/reports/graphs})
 end
 
 When("I click on public submissions") do
@@ -37,7 +37,7 @@ When("I click on public submissions") do
 end
 
 Then("I should be taken to the public submissions page") do
-  expect(current_path).to include '/reports/public'
+  expect(page).to have_current_path(%r{/reports/public})
 end
 
 When("I click on letters") do
@@ -46,7 +46,7 @@ When("I click on letters") do
 end
 
 Then("I should be taken to the letters page") do
-  expect(current_path).to include '/letter_templates'
+  expect(page).to have_current_path(%r{/letter_templates})
 end
 
 When("I click on raw data extract") do
@@ -55,23 +55,14 @@ When("I click on raw data extract") do
 end
 
 Then("I should be taken to the raw data extract page") do
-  expect(current_path).to include '/reports/raw_data'
+  expect(page).to have_current_path(%r{/reports/raw_data})
 end
 
-When("I click on ccmcc data extract") do
-  expect(reports_page.content).to have_ccmcc_data_extract_help
-  reports_page.ccmcc_data_extract
+When("I click on income claims data extract") do
+  expect(reports_page.content).to have_income_claims_data_extract_help
+  reports_page.income_claims_data_extract
 end
 
-Then("I should be taken to the ccmcc data extract page") do
-  expect(current_path).to include '/report/ccmcc_data'
-end
-
-When("I click on fees & mechanical data extract") do
-  expect(reports_page.content).to have_fees_mechanical_data_extract_help
-  reports_page.fees_mechanical_data_extract
-end
-
-Then("I should be taken to the fees & mechanical data extract page") do
-  expect(current_path).to include '/report/fees_mechanical_data'
+Then("I should be taken to the income claims data extract page") do
+  expect(page).to have_current_path(%r{/report/income_claims_data})
 end

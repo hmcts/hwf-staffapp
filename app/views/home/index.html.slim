@@ -36,7 +36,7 @@ h1.visuallyhidden Help with fees - Staff application
           - else
             .govuk-form-group
               = form_tag(create_applications_path) do
-                = submit_tag 'Start now', class: 'govuk-button'
+                = submit_tag 'Start now', class: 'govuk-button', id: 'start-now'
 
       .govuk-grid-column-one-half#process-online-application
         = form_for(@online_search_form, as: :online_search, url: home_online_search_path) do |f|
@@ -49,9 +49,9 @@ h1.visuallyhidden Help with fees - Staff application
               - if @online_search_form.errors[:reference].present?
                 span.govuk-error-message
                   = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error'
-              span#reference-hint.govuk-hint
+              span#reference-hint_process.govuk-hint
                 = t('index.process.digital.hint')
-              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint' }
+              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint'}
             .govuk-form-group
               = f.submit 'Look up', class: 'govuk-button'
 
@@ -65,7 +65,7 @@ h1.visuallyhidden Help with fees - Staff application
           .govuk-grid-row
             .govuk-grid-column-full
               = f.label :reference, t('index.search.label'), class: 'govuk-label'
-              span#reference-hint.govuk-hint
+              span#reference-hint_find.govuk-hint
                 = t('index.search.hint')
               - if @completed_search_form.errors[:reference].present?
                 span.govuk-error-message
@@ -82,6 +82,12 @@ h1.visuallyhidden Help with fees - Staff application
       .govuk-grid-row
         .govuk-grid-column-full.table_data
           = render('home/search_results', type: :search_results, list: @search_results)
+
+    - if policy(:application).new? && @last_failed_dwp_applications.present?
+      .govuk-grid-row
+        .govuk-grid-column-full.table_data
+          = render('home/dwp_failed_applications', type: :dwp_failed_applications, list: @last_failed_dwp_applications)
+
     - if policy(:application).new?
       .govuk-grid-row
         .govuk-grid-column-full.table_data
@@ -93,14 +99,15 @@ h1.visuallyhidden Help with fees - Staff application
         h3.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
           =t("in_progress_applications.title")
         table.in-progress-applications
-          caption.visuallyhidden = t('in_progress_applications.caption')
           tbody
             tr
               td
-                = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence'
+                = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence',
+                        id: 'waiting-for-evidence'
             tr
               td
-                = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment'
+                = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment',
+                        id: 'waiting-for-part-payment'
     .govuk-grid-row
       .govuk-grid-column-full
         = render('home/processed_and_deleted_aplications')

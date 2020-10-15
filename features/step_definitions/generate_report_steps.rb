@@ -1,7 +1,7 @@
 Given("I am on the finance aggregated report page") do
   dashboard_page.generate_reports
   reports_page.finance_aggregated_report
-  expect(current_path).to include '/reports/finance_report'
+  expect(generate_report_page).to have_current_path(%r{/reports/finance_report})
   expect(generate_report_page.content).to have_aggregated_header
 end
 
@@ -36,7 +36,7 @@ end
 
 Given("I am on the finance transactional report page") do
   go_to_finance_transactional_report_page
-  expect(current_path).to include '/reports/finance_transactional_report'
+  expect(generate_report_page).to have_current_path(%r{/reports/finance_transactional_report})
   expect(generate_report_page.content).to have_transactional_header
 end
 

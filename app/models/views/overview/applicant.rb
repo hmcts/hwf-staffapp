@@ -10,7 +10,7 @@ module Views
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'ni_number', 'ho_number', 'status']
+        ['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status']
       end
 
       def ni_number
@@ -24,6 +24,12 @@ module Views
 
       def date_of_birth
         format_date applicant.date_of_birth
+      end
+
+      def under_age
+        return unless applicant.under_age?
+        locale_scope = 'activemodel.attributes.forms/application/applicant'
+        I18n.t("under_age_true", scope: locale_scope)
       end
 
       private

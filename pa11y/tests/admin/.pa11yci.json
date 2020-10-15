@@ -1,0 +1,99 @@
+{
+  "defaults": {
+    "timeout": 300000,
+    "standard": "WCAG2AA",
+    "viewport": {
+      "width": 1000,
+      "height": 1000
+    },
+    "concurrency": 1
+  },
+ "urls": [
+   {
+     "url": "http://127.0.0.1:3000",
+     "actions": [
+       "set field #user_email to fee-remission@digital.justice.gov.uk",
+       "set field #user_password to 123456789",
+       "click element .govuk-button"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/1",
+     "actions": [
+       "navigate to http://127.0.0.1:3000/users/1"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1"
+   },
+   {
+     "url": "http://127.0.0.1:3000/users"
+   },
+   {
+     "url": "http://127.0.0.1:3000/notifications/edit"
+   },
+   {
+     "url": "http://127.0.0.1:3000/dwp_warnings/edit"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide"
+   },
+   {
+     "url": "http://127.0.0.1:3000/feedback/display"
+   },
+   {
+     "url": "http://127.0.0.1:3000/letter_templates"
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/1/edit"
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/1/change_password"
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/edit"
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/business_entities"
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/business_entities/new?jurisdiction_id=1"
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/invitation/new"
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/graphs"
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports"
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/finance_report"
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/public"
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/raw_data"
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/deleted"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/process_application"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/part_payments"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/evidence_checks"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/appeals"
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/suspected_fraud"
+   }
+ ]
+}

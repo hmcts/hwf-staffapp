@@ -1,0 +1,177 @@
+{
+  "defaults": {
+    "timeout": 300000,
+    "standard": "WCAG2AA",
+    "viewport": {
+      "width": 1000,
+      "height": 1000
+    },
+    "concurrency": 1
+  },
+ "urls": [
+   {
+     "url": "http://127.0.0.1:3000",
+     "actions": [
+       "set field #user_email to fee-remission@digital.justice.gov.uk",
+       "set field #user_password to 123456789",
+       "click element .govuk-button",
+       "screen capture pa11y/screenshots/admin/home_page.png"
+     ]
+   },
+
+   {
+     "url": "http://127.0.0.1:3000/users/1",
+     "actions": [
+       "set field #user_email to fee-remission@digital.justice.gov.uk",
+       "set field #user_password to 123456789",
+       "click element .govuk-button",
+       "navigate to http://127.0.0.1:3000/users/1",
+       "screen capture pa11y/screenshots/admin/view_profile.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/view_office.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/view_staff.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/notifications/edit",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/edit_banner.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/dwp_warnings/edit",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/dwp_message.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/staff_guide.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/feedback/display",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/feedback.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/letter_templates",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/letter_templates.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/1/edit",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/edit_user.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/1/change_password",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/change_password.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/edit",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/offices_edit.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/business_entities",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/business_entities.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/offices/1/business_entities/new?jurisdiction_id=1",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/new_business_entity.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/invitation/new",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/user_invitation.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/graphs",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/reports_graphs.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/reports.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/finance_report",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/finance_report.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/public",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/public_application_stats.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/reports/raw_data",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/raw_data_report.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/users/deleted",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/user_deleted.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/process_application",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/process_app_guide.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/part_payments",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/part_payments_guide.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/evidence_checks",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/evidence_checks_guide.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/appeals",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/appeals_guide.png"
+     ]
+   },
+   {
+     "url": "http://127.0.0.1:3000/guide/suspected_fraud",
+     "actions": [
+       "screen capture pa11y/screenshots/admin/fraud_guide.png"
+     ]
+   }
+ ]
+}

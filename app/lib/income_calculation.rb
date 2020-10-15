@@ -2,6 +2,7 @@ class IncomeCalculation
   def initialize(application, income = nil)
     @application = application
     @income = income
+    @income_max_threshold_exceeded = false
     set_outcome(nil, nil)
   end
 
@@ -30,6 +31,7 @@ class IncomeCalculation
 
   def calculate_using_amount
     if can_applicant_pay_full_fee?
+      @income_max_threshold_exceeded = true
       set_outcome('none', @application.detail.fee)
     elsif applicants_maximum_contribution.zero?
       set_outcome('full', 0)
@@ -45,6 +47,7 @@ class IncomeCalculation
 
   def calculate_using_thresholds
     if max_threshold_exceeded
+      @income_max_threshold_exceeded = true
       set_outcome('none', @application.detail.fee)
     elsif min_threshold_exceeded == false
       set_outcome('full', 0)
@@ -69,7 +72,8 @@ class IncomeCalculation
       outcome: @outcome,
       amount_to_pay: @amount,
       min_threshold: thresholds.min_threshold,
-      max_threshold: thresholds.max_threshold
+      max_threshold: thresholds.max_threshold,
+      income_max_threshold_exceeded: @income_max_threshold_exceeded
     }
   end
 

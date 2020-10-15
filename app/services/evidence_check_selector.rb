@@ -36,11 +36,6 @@ class EvidenceCheckSelector
     end
   end
 
-  def flagged?
-    registration_number = @application.applicant.ni_number || @application.applicant.ho_number
-    EvidenceCheckFlag.exists?(reg_number: registration_number, active: true)
-  end
-
   def check_every_other_refund
     get_evidence_check(2, true)
   end
@@ -55,7 +50,7 @@ class EvidenceCheckSelector
   end
 
   def position_matching_frequency?(position, frequency)
-    (position > 1) && (position % frequency).zero?
+    (position >= 1) && (position % frequency).zero?
   end
 
   def application_position(refund)
@@ -70,9 +65,29 @@ class EvidenceCheckSelector
     @expires_in_days.days.from_now
   end
 
+  def flagged?
+    evidence_check_flag.present? && evidence_check_flag.active?
+  end
+
+  def evidence_check_flag
+    @evidence_check_flag ||= EvidenceCheckFlag.where(reg_number: registration_number).last
+  end
+
+  def registration_number
+    return @application.applicant.ni_number if @application.applicant.ni_number.present?
+    @application.applicant.ho_number
+  end
+
+  def skip_ni_check_based_on_flag?
+    return false if evidence_check_flag.blank?
+    !evidence_check_flag.active?
+  end
+
   def pending_evidence_check_for_with_user?
     applicant = @application.applicant
     return false if applicant.ni_number.blank? && applicant.ho_number.blank?
+    return false if skip_ni_check_based_on_flag?
+
     prefix = pending_evidence_prefix(applicant)
     applications = Application.send("with_evidence_check_for_#{prefix}_number", @number).
                    where.not(id: @application.id)
@@ -89,7 +104,8 @@ class EvidenceCheckSelector
     @application.detail.emergency_reason.present? ||
       @application.outcome == 'none' ||
       @application.application_type != 'income' ||
-      @application.detail.discretion_applied == false
+      @application.detail.discretion_applied == false ||
+      @application.applicant.under_age?
   end
 
   def save_evidence_check(type)

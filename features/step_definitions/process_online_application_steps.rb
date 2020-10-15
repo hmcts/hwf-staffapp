@@ -18,7 +18,7 @@ When("I see the application details") do
 end
 
 And("I click next without selecting a jurisdiction") do
-  next_page
+  click_button('Next')
 end
 
 Then("I should see that I must select a jurisdiction error message") do
@@ -27,17 +27,17 @@ end
 
 Then("I add a jurisdiction") do
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
 end
 
 Then("I should be taken to the check details page") do
   expect(process_online_application_page.content).to have_check_details_header
-  expect(current_path).to have_content '/online_applications'
+  expect(process_online_application_page).to have_current_path(%r{/online_applications})
 end
 
 When("I process the online application") do
   process_online_application_page.content.group[1].jurisdiction[0].click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -49,7 +49,7 @@ end
 
 And("back to start takes me to the homepage") do
   click_on 'Back to start', visible: false
-  expect(current_path).to eq '/'
+  expect(page).to have_current_path('/')
 end
 
 And("I can see my processed application") do

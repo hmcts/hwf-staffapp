@@ -1,12 +1,10 @@
 Given("I am signed in as a user and I see the benefit checker is down") do
   RSpec::Mocks.with_temporary_scope do
-    dwp = instance_double('DwpMonitor', state: 'offline')
-    DwpMonitor.stub(:new).and_return dwp
-    sign_in_page.load_page
-    sign_in_page.user_account
+    dwp_monitor_state_as("offline")
+    sign_in_with_user
+    expect(dashboard_page).to have_welcome_user
+    expect(dashboard_page).to have_dwp_offline_banner
   end
-  expect(sign_in_page).to have_welcome_user
-  expect(benefit_checker_page).to have_dwp_banner_offline
 end
 
 Given("I have looked up an online application when the benefit checker is down") do
@@ -32,6 +30,7 @@ When("I start processing a paper application") do
   personal_details_page.submit_all_personal_details_ni
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
+  expect(incomes_page).to have_current_path(%r{/benefits})
   expect(benefits_page.content).to have_benefit_question
   benefits_page.submit_benefits_yes
 end
@@ -47,13 +46,13 @@ end
 
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
   benefit_checker_page.content.yes.click
-  next_page
+  click_button('Next')
   complete_processing
 end
 
@@ -106,7 +105,7 @@ Then("benefits and income based applications can be processed") do
 end
 
 Then("I have not signed in") do
-  expect(current_path).to eq '/'
+  expect(sign_in_page).to have_current_path('/')
   expect(sign_in_page.content).to have_sign_in_alert
 end
 
