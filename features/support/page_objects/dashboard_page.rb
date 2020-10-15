@@ -21,6 +21,7 @@ class DashboardPage < BasePage
     element :online_search_reference, '#online_search_reference'
     element :process_when_back_online_heading, 'h3', text: 'Process when DWP is back online'
     element :pending_applications_link, 'a', class: 'dwp-failed-applications', text: 'Pending applications to be processed'
+    element :search_button, 'input[value="Search"]', visible: false
   end
 
   def look_up_reference(reference)
@@ -47,5 +48,10 @@ class DashboardPage < BasePage
 
   def go_to_pending_applications
     content.pending_applications_link.click
+  end
+
+  def click_look_up
+    content.wait_until_look_up_button_visible
+    content.look_up_button.click
   end
 end

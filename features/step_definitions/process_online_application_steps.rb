@@ -4,7 +4,7 @@ Given("I have looked up an online application") do
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  dashboard_page.click_look_up
 end
 
 When("I see the application details") do
@@ -18,7 +18,7 @@ When("I see the application details") do
 end
 
 And("I click next without selecting a jurisdiction") do
-  click_button('Next')
+  process_online_application_page.click_next
 end
 
 Then("I should see that I must select a jurisdiction error message") do
@@ -27,7 +27,7 @@ end
 
 Then("I add a jurisdiction") do
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
 end
 
 Then("I should be taken to the check details page") do
@@ -36,8 +36,10 @@ Then("I should be taken to the check details page") do
 end
 
 When("I process the online application") do
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
+  expect(page).to have_current_path(%r{/online_applications})
   complete_processing
 end
 

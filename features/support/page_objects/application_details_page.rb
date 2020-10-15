@@ -19,6 +19,7 @@ class ApplicationDetailsPage < BasePage
     element :fee_blank_error, '.error', text: 'Enter a court or tribunal fee'
     element :form_error_message, '.error', text: 'Enter a valid form number'
     element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
+    element :next, 'input[value="Next"]'
   end
 
   def go_to_application_details_page
@@ -30,14 +31,6 @@ class ApplicationDetailsPage < BasePage
     fill_in('Day', with: date_received.day)
     fill_in('Month', with: date_received.month)
     fill_in('Year', with: date_received.year)
-  end
-
-  def refund_case_date_after_application_received
-    content.refund_case.click
-    date_fee_paid = Time.zone.today - 1.month
-    content.day_date_received.set date_fee_paid.day
-    content.month_date_received.set date_fee_paid.month
-    content.year_date_received.set date_fee_paid.year
   end
 
   def refund_case_with_valid_date
@@ -53,7 +46,7 @@ class ApplicationDetailsPage < BasePage
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_600
@@ -62,7 +55,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_6000
@@ -71,15 +64,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
-  end
-
-  def submit_fee_5000
-    fill_in('How much is the court or tribunal fee?', with: '5000')
-    content.jurisdiction.click
-    date_application_received
-    content.form_input.set 'C100'
-    click_button('Next')
+    click_next
   end
 
   def submit_as_refund_case
@@ -89,22 +74,14 @@ class ApplicationDetailsPage < BasePage
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
     refund_case_with_valid_date
-    click_button('Next')
-  end
-
-  def submit_fee_300
-    fill_in('How much is the court or tribunal fee?', with: '300')
-    content.jurisdiction.click
-    date_application_received
-    content.form_input.set 'C100'
-    click_button('Next')
+    click_next
   end
 
   def submit_without_form_number
     fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
     date_application_received
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_10001
@@ -113,7 +90,12 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
+    click_next
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end
 # rubocop:enable Metrics/AbcSize

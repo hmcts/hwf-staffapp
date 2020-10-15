@@ -32,7 +32,7 @@ When("I submit the total monthly income") do
 end
 
 But("I do not fill in the number of children or total monthly income") do
-  click_button('Next')
+  incomes_page.click_next
 end
 
 Then("I should see enter number of children error message") do

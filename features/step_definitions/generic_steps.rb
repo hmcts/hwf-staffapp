@@ -1,15 +1,19 @@
 Given("I am signed in as a user that has processed an application") do
-  start_application
+  user = FactoryBot.create(:user)
+  eligable_application(user)
+  sign_in_page.load_page
+  expect(sign_in_page).to have_current_path(%r{users/sign_in})
+  sign_in_page.sign_in_with(user)
   expect(dashboard_page).to have_current_path('/')
-  eligable_application
 end
 
 Given("I am signed in as a user that has processed multiple applications") do
-  start_application
+  user = FactoryBot.create(:user)
+  create_multiple_applications(user)
+  sign_in_page.load_page
+  expect(sign_in_page).to have_current_path(%r{users/sign_in})
+  sign_in_page.sign_in_with(user)
   expect(dashboard_page).to have_current_path('/')
-  multiple_applications
-  click_on "Help with fees"
-  expect(dashboard_page).to have_welcome_user
 end
 
 When("I click on next without making a selection") do
@@ -29,5 +33,9 @@ Then("I should see your changes have been saved message") do
 end
 
 Given("I have evidence check application") do
-  waiting_evidence_application_ni
+  user = FactoryBot.create(:user)
+  waiting_evidence_application_ni(user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
 end

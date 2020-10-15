@@ -1,8 +1,7 @@
 Feature: Problem with evidence page
 
   Background: Problem with evidence page
-    Given I successfully sign in as a user
-    And I have evidence check application
+    Given I have evidence check application
     And I am on the problem with evidence page
 
   Scenario: Return application when evidence has not arrived or too late

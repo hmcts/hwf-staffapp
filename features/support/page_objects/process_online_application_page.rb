@@ -11,5 +11,11 @@ class ProcessOnlineApplicationPage < BasePage
     end
     element :error, '.error', text: 'You must select a jurisdiction'
     element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
+    element :next, 'input[value="Next"]'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

@@ -6,5 +6,6 @@ class ChangeUserDetailsPage < BasePage
     elements :radio, '.govuk-radios__item'
     element :reader_radio, '.govuk-radios__item', text: 'Reader'
     element :role, 'p', text: 'Manager'
+    element :county_radio, '.govuk-radios__item', text: 'County'
   end
 end
