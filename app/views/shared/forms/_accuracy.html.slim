@@ -1,6 +1,9 @@
 = form_for form, as: model, url: url, method: :post, html: { autocomplete: 'off', id: 'accuracy-form' } do |f|
   .govuk-form-group.group-level
     fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        h1.govuk-heading-xl class= "govuk-!-padding-top-7" = title
+
       span.govuk-error-message
         = f.label :correct, form.errors[:correct].join(', '), class: 'error' if form.errors[:correct].present?
       .govuk-radios.govuk-radios--small
