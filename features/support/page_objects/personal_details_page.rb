@@ -23,6 +23,7 @@ class PersonalDetailsPage < BasePage
     element :martial_status_legend, 'legend', text: 'Select the applicant\'s marital status'
     element :status_single, 'label', text: 'Single'
     element :status_married, 'label', text: 'Married or living with someone and sharing an income'
+    element :next, 'input[value="Next"]'
     section :guidance, '.guidance' do
       elements :guidance_header, 'h2'
       elements :guidance_text, 'p'
@@ -96,55 +97,67 @@ class PersonalDetailsPage < BasePage
   def submit_required_personal_details
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_required_personal_details_61
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob_over
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_all_personal_details_ni
     full_name
     valid_dob
     valid_ni
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_all_personal_details_ni_16
     full_name
     valid_dob_exactly_16
     valid_ni
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_all_personal_details_ni_under_15
     full_name
     valid_dob_under_15
     valid_ni
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_all_personal_details_ni_exactly_15
     full_name
     valid_dob_exactly_15
     valid_ni
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
   end
 
   def submit_all_personal_details_ho
     full_name
     valid_dob
     valid_ho
+    content.wait_until_status_single_visible
     content.status_single.click
-    click_button('Next')
+    click_next
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end
 # rubocop:enable Metrics/ClassLength

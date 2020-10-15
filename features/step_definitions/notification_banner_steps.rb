@@ -11,7 +11,6 @@ end
 
 When("I check show on admin homepage") do
   edit_banner_page.content.show_message_checkbox.click
-  click_on 'Save changes', visible: false
 end
 
 Then("I should see the notification on my homepage") do

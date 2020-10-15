@@ -1,5 +1,9 @@
-Given("I am on the benfits part of the application") do
-  benefits_page.go_to_benefits_page
+Given("I am on the benefits part of the application") do
+  personal_details_page.submit_required_personal_details
+  expect(application_details_page).to have_current_path(%r{/details})
+  application_details_page.submit_fee_600
+  expect(application_details_page).to have_current_path(%r{/savings_investments})
+  savings_investments_page.submit_less_than
   expect(benefits_page).to have_current_path(%r{/benefits})
   expect(benefits_page.content).to have_header
 end

@@ -11,17 +11,14 @@ Feature: My dashboard
     When I click on waiting for part-payment
     Then I should be taken to part payments page
 
-  @wip @manual
   Scenario: View profile
     When I click on view profile
     Then I am taken to my details
 
-  @wip @manual
   Scenario: Staff guides
     When I click on staff guides
     Then I am taken to the guide page
 
-  @wip @manual
   Scenario: DWP connection
     Then I should see the status of the DWP connection
 

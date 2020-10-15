@@ -9,5 +9,11 @@ class ReasonForRejectingEvidencePage < BasePage
     element :cannot_identify_applicant, '.govuk-label', text: 'Cannot identify applicant'
     element :wrong_date_range, '.govuk-label', text: 'Wrong date range'
     element :error, '.error', text: 'Please select from one of the options'
+    element :next, 'input[value="Next"]'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

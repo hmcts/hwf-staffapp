@@ -1,5 +1,5 @@
 Then("I should see the status of the DWP connection") do
-  expect(dashboard_page.content).to have_dwp_restored
+  expect(dashboard_page).to have_css('.dwp-tag')
 end
 
 When("I search for an application using valid reference number") do

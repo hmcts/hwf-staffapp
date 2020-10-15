@@ -17,19 +17,21 @@ Then("I should be taken to part payments page") do
 end
 
 When("I click on view profile") do
-  user_dashboard_page.view_profile.click
+  click_link 'View profile', visible: false
 end
 
 Then("I am taken to my details") do
-  # steps need implementing - wip
+  expect(profile_page).to be_displayed
+  expect(profile_page).to have_current_path(%r{/users/[0-9]+})
 end
 
 When("I click on staff guides") do
-  user_dashboard_page.staff_guides.click
+  click_link 'Staff Guides', visible: false
 end
 
 Then("I am taken to the guide page") do
-  # steps need implementing - wip
+  expect(guide_page).to be_displayed
+  expect(guide_page).to have_current_path(%r{/guide})
 end
 
 When("I search for an application using valid reference number") do
@@ -47,6 +49,7 @@ Then("I should see the reference number is not recognised error message") do
 end
 
 When("I start to process a new paper application") do
+  expect(dashboard_page).to have_current_path('/')
   dashboard_page.process_application
 end
 

@@ -2,6 +2,7 @@ class PaperEvidencePage < BasePage
   section :content, '#content' do
     element :no, 'label', text: 'No', visible: false
     element :yes, 'label', text: 'Yes, the applicant has provided paper evidence', visible: false
+    element :next, 'input[value="Next"]'
   end
 
   def go_to_paper_evidence_page
@@ -12,12 +13,19 @@ class PaperEvidencePage < BasePage
   end
 
   def submit_evidence_yes
+    content.wait_until_yes_visible
     content.yes.click
-    click_button('Next')
+    click_next
   end
 
   def submit_evidence_no
+    content.wait_until_no_visible
     content.no.click
-    click_button('Next')
+    click_next
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

@@ -14,13 +14,13 @@ And("I create an Application B that has correct evidence") do
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  click_button('Next')
-  click_link('Next')
+  evidence_income_page.click_next
+  evidence_result_page.click_next
   complete_processing
 
 end
@@ -35,10 +35,12 @@ When("I create Application C") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ni_number: 'AB123456D')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
 
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -53,12 +55,13 @@ When("I create an Application B and wrong evidence is provided") do
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_button('Next')
-  expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
+  evidence_accuracy_page.click_next
+  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  click_button('Next')
+  reason_for_rejecting_evidence_page.click_next
   complete_processing
 end
 
@@ -89,9 +92,12 @@ Then("I create Application D") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ni_number: 'AB123456D')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
+
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -104,13 +110,13 @@ When("Application C has correct evidence") do
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  click_button('Next')
-  click_link('Next')
+  evidence_income_page.click_next
+  evidence_result_page.click_next
   complete_processing
 end
 
@@ -120,9 +126,12 @@ Then("I create Application E") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ni_number: 'AB123456D')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
+
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -135,11 +144,12 @@ When("Application A has failed evidence") do
 
   click_on 'Start now', visible: false
   expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_button('Next')
-  expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/})
+  evidence_accuracy_page.click_next
+  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  click_button('Next')
+  reason_for_rejecting_evidence_page.click_next
   complete_processing
 end
 
@@ -149,13 +159,13 @@ When("Application D has correct evidence") do
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  click_button('Next')
-  click_link('Next')
+  evidence_income_page.click_next
+  evidence_result_page.click_next
   complete_processing
 end
 
@@ -177,13 +187,13 @@ And("I create an Application B that has correct evidence with the same ho_number
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   evidence_accuracy_page.content.correct_evidence.click
-  click_button('Next')
+  evidence_accuracy_page.click_next
   expect(incomes_page).to have_current_path(%r{/income})
   fill_in 'Total monthly income from evidence', with: 1000
-  click_button('Next')
-  click_link('Next')
+  evidence_income_page.click_next
+  evidence_result_page.click_next
   complete_processing
 end
 
@@ -197,10 +207,12 @@ When("I create Application C with the same ho_number") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
 
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -214,10 +226,12 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'l123456', ni_number: '')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
 
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -227,9 +241,11 @@ Then("I create Application D with the same ho_number") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
 
@@ -245,12 +261,13 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_button('Next')
-  expect(incomes_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
+  evidence_accuracy_page.click_next
+  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  click_button('Next')
+  reason_for_rejecting_evidence_page.click_next
   complete_processing
 end
 
@@ -260,8 +277,10 @@ Then("I create Application E with the same ho_number") do
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L123456', ni_number: '')
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.click_look_up
+  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
   complete_processing
 end
