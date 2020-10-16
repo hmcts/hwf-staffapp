@@ -3,9 +3,10 @@ Feature: Processing part payments
   Background: Processed refund application that requires a part payment
     Given I have processed an application that is a part payment
 
-  Scenario: Successfully ppart_payment_stepsrocess part payment
+  Scenario: Successfully process part payment
     And the payment is ready to process
     When I complete processing
+    And I click on back to start
     And I open the processed part payment application
     Then I can see that the applicant has paid £40 towards the fee
 

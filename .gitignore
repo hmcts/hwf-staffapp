@@ -35,4 +35,4 @@ node_modules/
 .DS_Store
 
 # Ignore pa11y screenshots
-/pa11y/screenshots
+/pa11y/screenshots/

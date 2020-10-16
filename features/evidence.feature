@@ -75,12 +75,15 @@ Scenario: Return to dashboard
   And I am on an application waiting for evidence
   When I have successfully submitted the evidence
   And I complete processing
+  And I click on back to start
   Then I should be taken back to my dashboard
   And the application should have the status of processed
 
-@wip
-Scenario: You cannot edit any details
-  And I have successfully processed the evidence
+  @wip
+Scenario: You cannot edit any details after completing a (successful) application
+  And I am on an application waiting for evidence
+  When I have successfully submitted the evidence
+  And I complete processing
   When I use the browser back button
   Then I should be taken back to my dashboard
   And I should see a message telling me that the application has been processed

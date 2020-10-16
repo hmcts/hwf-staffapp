@@ -1,5 +1,5 @@
 Given("I am on the savings and investments part of the application") do
-  savings_investments_page.go_to_savings_investment_page
+  go_to_savings_investment_page
 end
 
 When("I successfully submit less than £3000") do
