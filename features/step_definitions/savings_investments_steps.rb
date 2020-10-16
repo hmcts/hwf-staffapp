@@ -1,5 +1,5 @@
 Given("I am on the savings and investments part of the application") do
-  savings_investments_page.go_to_savings_investment_page
+  go_to_savings_investment_page
   expect(savings_investments_page).to have_current_path(%r{/savings_investments})
 end
 
