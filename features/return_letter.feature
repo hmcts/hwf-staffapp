@@ -1,8 +1,7 @@
 Feature: Return letter
 
   Background: Return letter
-    Given I successfully sign in as a user
-    And I have evidence check application
+    Given I have evidence check application
 
   Scenario: Not arrived or too late letter template
     And I am on the return letter page after selecting not arrived or too late

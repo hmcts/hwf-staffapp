@@ -2,6 +2,7 @@ class FindApplicationPage < BasePage
   section :content, '#content' do
     element :find_application_header, 'h2', text: 'Find an application', visible: false
     element :search_button, 'input[value="Search"]', visible: false
+    element :search_input, '#completed_search_reference'
     element :no_results_found_error, '.error', text: 'No results found', visible: false
     element :processed_by_another_office, '.error', text: 'This application has been processed by '
     element :cant_be_blank_error, '.error', text: 'Enter a search term'

@@ -31,7 +31,7 @@ When("I click on process application") do
 end
 
 Then("I should be taken to the process application guide") do
-  expect(current_url).to end_with '/guide/process_application'
+  expect(process_application_guide_page).to have_current_path(%r{/guide/process_application})
   expect(process_application_guide_page).to have_header
 end
 
@@ -40,7 +40,7 @@ When("I click on evidence checks") do
 end
 
 Then("I should be taken to the evidence checks guide") do
-  expect(current_url).to end_with '/guide/evidence_checks'
+  expect(evidence_checks_guide_page).to have_current_path(%r{/guide/evidence_checks})
   expect(evidence_checks_guide_page).to have_header
 end
 
@@ -49,7 +49,7 @@ When("I click on part-payments") do
 end
 
 Then("I should be taken to the part-payments guide") do
-  expect(current_url).to end_with '/guide/part_payments'
+  expect(part_payments_guide_page).to have_current_path(%r{/guide/part_payments})
   expect(part_payments_guide_page).to have_header
 end
 
@@ -58,7 +58,7 @@ When("I click on appeals") do
 end
 
 Then("I should be taken to the appeals guide") do
-  expect(current_url).to end_with '/guide/appeals'
+  expect(appeals_guide_page).to have_current_path(%r{/guide/appeals})
   expect(appeals_guide_page).to have_header
 end
 
@@ -71,7 +71,7 @@ When("I click on suspected fraud") do
 end
 
 Then("I should be taken to the suspected fraud guide") do
-  expect(current_url).to end_with '/guide/suspected_fraud'
+  expect(suspected_fraud_guide_page).to have_current_path(%r{/guide/suspected_fraud})
   expect(suspected_fraud_guide_page).to have_header
 end
 
@@ -79,5 +79,5 @@ Then("I can view guides by clicking on the link in the footer") do
   expect(page).to have_xpath('.//a[@href="/guide"][@target="blank"][contains(.,"See the guides")]')
   visit '/guide'
   expect(page).to have_text 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
-  expect(current_url).to end_with '/guide'
+  expect(page).to have_current_path('/guide')
 end

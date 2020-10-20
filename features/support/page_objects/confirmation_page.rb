@@ -22,5 +22,11 @@ class ConfirmationPage < BasePage
       element :update_application_button, 'input[value="Update application"]'
       element :other_reason_textbox, '.govuk-textarea'
     end
+    element :next, 'a', text: 'Next'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

@@ -1,8 +1,7 @@
 Feature: Processing part payments
 
   Background: Processed refund application that requires a part payment
-    Given I successfully sign in as a user
-    And I have processed an application that is a part payment
+    Given I have processed an application that is a part payment
 
   Scenario: Successfully ppart_payment_stepsrocess part payment
     And the payment is ready to process
