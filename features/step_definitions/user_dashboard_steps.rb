@@ -1,6 +1,6 @@
 When("I click on waiting for evidence") do
   expect(dashboard_page.content).to have_in_progress_header
-  click_link('Waiting for evidence')
+  dashboard_page.content.waiting_for_evidence.click
 end
 
 Then("I should be taken to evidence checks page") do
