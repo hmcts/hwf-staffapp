@@ -16,7 +16,7 @@ module Views
       end
 
       def benefits_passed?
-        if @application.decision_override.present?
+        if decision_overridden?
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         elsif benefits_have_been_overridden?
           convert_to_pass_fail(applicant_is_on_benefits)
@@ -44,7 +44,7 @@ module Views
       end
 
       def result
-        return 'granted' if @application.decision_override.present?
+        return 'granted' if decision_overridden?
         return 'callout' if @application.evidence_check.present?
         return 'full' if return_full?
         return 'none' if @application.outcome.nil?
@@ -91,6 +91,10 @@ module Views
 
       def benefits_have_been_overridden?
         application_type_is?('benefit') && benefit_overridden?
+      end
+
+      def decision_overridden?
+        @application.decision_override.present? && @application.decision_override.id
       end
     end
   end
