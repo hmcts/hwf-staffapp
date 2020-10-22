@@ -171,7 +171,7 @@ RSpec.describe ResultHelper, type: :helper do
     end
 
     context 'amount is nil' do
-      it { expect(helper.currency_format(0)).to eq "£0" }
+      it { expect(helper.currency_format(nil)).to be nil }
     end
   end
 end

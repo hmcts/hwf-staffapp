@@ -39,6 +39,7 @@ module ResultHelper
   end
 
   def currency_format(value)
+    return unless value
     number_to_currency(value, precision: 2).gsub('.00', '')
   end
 
