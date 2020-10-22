@@ -25,6 +25,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def application_details_digital_page
+  @application_details_digital_page ||= ApplicationDetailsDigitalPage.new
+end
+
 def approve_page
   @approve_page ||= ApprovePage.new
 end

@@ -18,3 +18,10 @@ Feature: Process an online application
     When I see the application details
     And I click next without selecting a jurisdiction
     Then I should see that I must select a jurisdiction error message
+
+  Scenario: Before you start and emergency content presence validation
+    Then I should see digital before you start advice
+    And I see that I should see digital check that the applicant is not
+    And I see digital check the fee
+    And I see digital Emergency advice
+    And I see digital examples of emergency cases
