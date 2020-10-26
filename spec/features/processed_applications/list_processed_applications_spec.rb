@@ -31,14 +31,14 @@ RSpec.feature 'List processed applications', type: :feature do
       expect(page).to have_content(application4.applicant.full_name)
     end
 
-    click_link 'Next page'
+    click_link 'Next'
 
     within 'table.processed-applications tbody' do
       expect(page).to have_content(application5.applicant.full_name)
       expect(page).to have_content(application2.applicant.full_name)
     end
 
-    click_link 'Previous page'
+    click_link 'Previous'
 
     within 'table.processed-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)
@@ -60,7 +60,7 @@ RSpec.feature 'List processed applications', type: :feature do
 
   scenario 'User displays detail of one processed part-payment application' do
     visit '/processed_applications'
-    click_link 'Next page'
+    click_link 'Next'
     click_link application5.reference
 
     expect(page).to have_content('Processed application')
@@ -72,7 +72,7 @@ RSpec.feature 'List processed applications', type: :feature do
 
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'
-      click_link 'Next page'
+      click_link 'Next'
       click_link application5.reference
 
       expect(page).to have_content('Processed application')
@@ -84,7 +84,7 @@ RSpec.feature 'List processed applications', type: :feature do
   context 'without evidence check' do
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'
-      click_link 'Next page'
+      click_link 'Next'
       click_link application5.reference
 
       expect(page).to have_content('Processed application')

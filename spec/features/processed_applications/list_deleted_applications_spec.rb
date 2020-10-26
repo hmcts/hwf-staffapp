@@ -37,14 +37,14 @@ RSpec.feature 'List deleted applications', type: :feature do
       expect(page).to have_content(application4.applicant.full_name)
     end
 
-    click_link 'Next page'
+    click_link 'Next'
 
     within 'table.deleted-applications tbody' do
       expect(page).to have_content(application2.applicant.full_name)
       expect(page).to have_content(application5.applicant.full_name)
     end
 
-    click_link 'Previous page'
+    click_link 'Previous'
 
     within 'table.deleted-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)
