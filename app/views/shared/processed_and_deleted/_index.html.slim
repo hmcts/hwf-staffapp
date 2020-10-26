@@ -40,16 +40,8 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
     - else
       p =t("#{state}_applications.index.no_applications")
 
-
+  .govuk-grid-column-full
     .pagination
-      .paginate.previous
-        - if previous_page
-          =link_to('Previous page', "/#{controller.controller_name}?page=#{previous_page}&per_page=#{per_page}")
-
-
-      .pages
-        | Page #{page} of #{total_pages}
-
-      .paginate.next
-        - if next_page
-          =link_to('Next page', "/#{controller.controller_name}?page=#{next_page}&per_page=#{per_page}")
+      p.govuk-body Page #{page} of #{total_pages}
+  .govuk-grid-column-full
+    = will_paginate @paginate, container: true

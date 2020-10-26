@@ -16,15 +16,16 @@
 }
 
 .pagination {
-  display: table;
-  float: left;
-  margin-top: 30px;
   @include core-19;
-  clear: both;
+  text-align: center;
 
   div {
     display: table-cell;
-    width: 33%;
+    width: 20%;
+  }
+
+  p.govuk-body {
+    margin-bottom: 0px;
   }
 
   .paginate {
@@ -33,6 +34,11 @@
       line-height: 40px;
       text-decoration: none;
     }
+  }
+
+  .paginate.last_page, .paginate.first_page {
+    display: table-cell;
+    width: 10%;
   }
   .previous {
     a {
@@ -107,3 +113,4 @@ table.search-results div.pagination {
 ul.pagination {
   padding-left: 0;
 }
+
