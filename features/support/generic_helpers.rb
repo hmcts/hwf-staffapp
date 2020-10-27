@@ -161,6 +161,10 @@ def evidence_result_page
   @evidence_result_page ||= EvidenceResultPage.new
 end
 
+def evidence_confirmation_page
+  @evidence_confirmation_page ||= EvidenceConfirmationPage.new
+end
+
 def forbidden_page
   @forbidden_page ||= ForbiddenPage.new
 end
