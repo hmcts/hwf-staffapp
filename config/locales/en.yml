@@ -614,6 +614,8 @@ en-GB:
               inclusion: Please confirm if the partner is 61 or over
             amount:
               blank: Please enter the amount of savings and investments
+              not_a_number: Value that you entered is not a number
+              greater_than_or_equal_to: Value must be greater than or equal to 3000
             max_threshold_exceeded:
               inclusion: Please answer the savings question
         forms/application/benefit:
