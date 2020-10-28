@@ -7,12 +7,12 @@ end
 
 Given("I click 15 per page") do
   processed_applications_page.select_fifteen_per_page
-  expect(processed_applications_page).to have_current_path(%r{per_page=15})
+  expect(processed_applications_page).to have_current_path(/per_page=15/)
 end
 
 When("I click on the number representing the last page") do
   processed_applications_page.click_last_page_number
-  expect(processed_applications_page).to have_current_path(%r{page=4})
+  expect(processed_applications_page).to have_current_path(/page=4/)
   expect(processed_applications_page.content.which_page.text).to eq 'Page 4 of 4'
 end
 
@@ -21,12 +21,12 @@ When("I click on the number representing the first page") do
 end
 
 Then("I should be on page 4") do
-  expect(processed_applications_page).to have_current_path(%r{page=4})
+  expect(processed_applications_page).to have_current_path(/page=4/)
   expect(processed_applications_page.content.which_page.text).to eq 'Page 4 of 4'
 end
 
 Then("I should be on page 1") do
-  expect(processed_applications_page).to have_current_path(%r{page=1})
+  expect(processed_applications_page).to have_current_path(/page=1/)
   expect(processed_applications_page.content.which_page.text).to eq 'Page 1 of 4'
 end
 
