@@ -6,9 +6,6 @@
     .govuk-panel.govuk-panel--confirmation
       h1.govuk-panel__title Processing complete
 
-    - if @result.callout == 'no'
-      = render('failed_letter')
-
     h2.govuk-heading-m Next steps
 
     -if @result.callout == 'yes'
@@ -19,5 +16,9 @@
       p.govuk-body post the letter and all the documents back to the applicant
 
     p: strong= link_to 'See the guides', guide_path, target: 'blank'
+
+    - if @result.callout == 'no'
+      = render('failed_letter')
+
 
     = link_to 'Back to start', root_path, class: 'govuk-button'
