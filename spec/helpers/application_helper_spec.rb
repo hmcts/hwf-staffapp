@@ -46,4 +46,24 @@ RSpec.describe ApplicationHelper do
       it { expect(helper.amount_to_pay(application).to_i).to be(30) }
     end
   end
+
+  describe 'amount_value' do
+
+    context 'is empty' do
+      let(:amount) { nil }
+      it { expect(helper.amount_value(amount)).to be nil }
+    end
+
+    context 'has a decimal point' do
+      let(:amount) { 100.5 }
+
+      it { expect(helper.amount_value(amount)).to eq(100) }
+    end
+
+    context 'is 0' do
+      let(:amount) { 0.0 }
+
+      it { expect(helper.amount_value(amount)).to be nil }
+    end
+  end
 end
