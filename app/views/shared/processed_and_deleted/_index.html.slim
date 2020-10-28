@@ -43,5 +43,5 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
   .govuk-grid-column-full
     .pagination
       p.govuk-body Page #{page} of #{total_pages}
-  .govuk-grid-column-full
+  .govuk-grid-column-full#processed_application_pagination
     = will_paginate @paginate, container: true
