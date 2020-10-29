@@ -58,11 +58,11 @@ Then("I am taken to the applicants personal details page") do
 end
 
 When("I look up a valid hwf reference") do
-  user_dashboard_page.look_up_valid_reference
+  dashboard_page.look_up_valid_reference
 end
 
 When("I look up a invalid hwf reference") do
-  user_dashboard_page.look_up_invalid_reference
+  dashboard_page.look_up_invalid_reference
 end
 
 When("I click on the reference number of an application that is waiting for evidence") do
@@ -93,6 +93,44 @@ When("I click on deleted applications") do
   # steps need implementing - wip
 end
 
-Then("I am taken to all deleted applicantions") do
+Then("I am taken to all deleted applications") do
   # steps need implementing - wip
+end
+
+When("I click on Tell us what you think") do
+  click_link 'Tell us what you think', visible: false
+end
+
+Then("I am taken to the feedback page") do
+  expect(feedback_page.content).to have_user_feedback_header
+  expect(page).to have_current_path('/feedback')
+end
+
+When("I click on Letter templates") do
+  click_link 'Letter templates', visible: false
+end
+
+Then("I am taken to the Letter templates") do
+  expect(letter_template_page).to have_current_path(%r{/letter_templates})
+  expect(letter_template_page).to be_displayed
+end
+
+Then("I am taken to the sign in page") do
+  expect(page).to have_current_path(%r{/users/sign_in})
+end
+
+Then("I should not be able to navigate to office details") do
+  expect(navigation_page.navigation_link).to have_no_view_office
+end
+
+Then("I should not be able to navigate to edit banner") do
+  expect(navigation_page.navigation_link).to have_no_edit_banner
+end
+
+Then("I should not be able to navigate to the staff page") do
+  expect(navigation_page.navigation_link).to have_no_view_staff
+end
+
+Then("I should not be able to navigate to the DWP warning message page") do
+  expect(navigation_page.navigation_link).to have_no_dwp_message
 end
