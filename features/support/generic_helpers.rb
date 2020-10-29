@@ -77,6 +77,10 @@ def part_payment_page
   @part_payment_page ||= PartPaymentPage.new
 end
 
+def part_payment_return_letter_page
+  @part_payment_return_letter_page ||= PartPaymentReturnLetterPage.new
+end
+
 def summary_page
   @summary_page ||= SummaryPage.new
 end
