@@ -139,7 +139,6 @@ end
 
 Then("I am taken to the waiting for evidence page") do
   expect(waiting_for_evidence_applications_page).to be_displayed
-  sleep 300
 end
 
 When("I click on the waiting for part payments link") do

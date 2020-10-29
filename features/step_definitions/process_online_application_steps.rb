@@ -5,7 +5,6 @@ Given("I have looked up an online application") do
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   dashboard_page.click_look_up
-  sleep 30000
 end
 
 When("I see the application details") do
