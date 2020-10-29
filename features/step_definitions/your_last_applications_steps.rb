@@ -19,10 +19,12 @@ When("I open my last application") do
 end
 
 Then("I should see the personal details populated with information") do
+  expect(personal_details_page).to have_current_path(%r{/personal_informations})
   expect(personal_details_page.content.application_first_name['value']).to eq 'John Christopher'
   personal_details_page.click_next
 end
 
 Then("I should see the application details populated with information") do
+  expect(application_details_page).to have_current_path(%r{/details})
   expect(application_details_page.content.form_input['value']).to eq 'C100'
 end
