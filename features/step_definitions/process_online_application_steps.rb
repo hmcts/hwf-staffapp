@@ -5,6 +5,7 @@ Given("I have looked up an online application") do
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   dashboard_page.click_look_up
+  sleep 30000
 end
 
 When("I see the application details") do
@@ -28,6 +29,9 @@ end
 
 Then("I add a jurisdiction") do
   process_online_application_page.content.group[1].jurisdiction[0].click
+end
+
+Then('I click next') do
   process_online_application_page.click_next
 end
 
@@ -87,4 +91,21 @@ Then("I see digital examples of emergency cases") do
   expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
   expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
   expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#emergency'
+end
+
+When("I click emergency checkbox") do
+  application_details_digital_page.content.emergency_case.click
+end
+
+When("I click next without entering a reason") do
+  process_online_application_page.click_next
+end
+
+Then("I should see a must enter an emergency reason error message") do
+  expect(application_details_digital_page.content).to have_emergency_case_error
+end
+
+When("I click next after entering a reason") do
+  application_details_digital_page.content.emergency_case_textbox.set 'emergency reason'
+  process_online_application_page.click_next
 end
