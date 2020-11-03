@@ -6,6 +6,10 @@ class SavingsInvestmentsPage < BasePage
     element :more_than, 'label', text: '£3,000 or more', visible: false
     element :savings_amount_label, 'label', text: 'How much do they have in savings and investments?'
     element :application_amount, '#application_amount'
+    element :blank_error, 'label', text: 'Please enter the amount of savings and investments'
+    element :inequality_error, 'label', text: 'Value must be greater than or equal to 3000'
+    element :non_numerical_error, 'label', text: 'The value that you entered is not a number'
+    element :no_answer_error, 'label', text: 'Please answer the savings question'
     element :next, 'input[value="Next"]'
   end
 
