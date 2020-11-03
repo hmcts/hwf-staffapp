@@ -67,6 +67,16 @@ class ApplicationDetailsPage < BasePage
     click_next
   end
 
+  def submit_as_refund_case_no_decimal
+    fill_in('How much is the court or tribunal fee?', with: '650', visible: false)
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_valid_date
+    click_next
+  end
+
   def submit_as_refund_case
     fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
     content.jurisdiction.click
