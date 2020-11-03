@@ -14,9 +14,7 @@ window.moj.Modules.SavingsModule = {
 
   roundIncomeValue: function(target) {
     var income = $(target.currentTarget).val()
-    if(isNaN(income)) {
-      $(target.currentTarget).val('Value is not a number');
-    } else {
+    if(!isNaN(income)) {
       $(target.currentTarget).val(Math.round(income));
     }
   },

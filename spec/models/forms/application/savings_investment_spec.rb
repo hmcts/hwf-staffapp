@@ -5,6 +5,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
   params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount]
 
+  let(:min_threshold) { Settings.savings_threshold.minimum }
+
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
       expect(described_class.permitted_attributes.keys).to match_array(params_list)
@@ -26,9 +28,15 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       describe 'when true' do
-        let(:hash) { { min_threshold_exceeded: true, amount: 123, over_61: false } }
+        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold, over_61: false } }
 
         it { is_expected.to be_valid }
+      end
+
+      describe 'when true' do
+        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold - 1, over_61: false } }
+
+        it { is_expected.not_to be_valid }
       end
 
       describe 'when something other than true of false' do
@@ -70,10 +78,22 @@ RSpec.describe Forms::Application::SavingsInvestment do
       let(:hash) { { min_threshold_exceeded: true, over_61: false, amount: amount } }
 
       describe 'amount' do
-        describe 'is set' do
-          let(:amount) { 345 }
+        describe 'is set above min_threshold' do
+          let(:amount) { min_threshold + 1 }
 
           it { is_expected.to be_valid }
+        end
+
+        describe 'is set equal to min_threshold' do
+          let(:amount) { min_threshold }
+
+          it { is_expected.to be_valid }
+        end
+
+        describe 'is set under min_threshold' do
+          let(:amount) { 345 }
+
+          it { is_expected.not_to be_valid }
         end
 
         describe 'is missing' do
