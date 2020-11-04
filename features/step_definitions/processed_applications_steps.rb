@@ -8,8 +8,3 @@ Then("I should be taken to that application") do
   header_text = processed_applications_page.content.header.text
   expect(header_text).to eql "#{reference_prefix}-000001 - Processed application"
 end
-
-Then("I am taken to all processed applications") do
-  expect(processed_applications_page).to have_current_path(%r{/processed_applications})
-  expect(processed_applications_page.content).to have_header
-end

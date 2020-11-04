@@ -1,4 +1,7 @@
 class ProcessedApplicationsPage < BasePage
+
+  set_url('/processed_applications')
+
   section :content, '#content' do
     element :header, 'h1'
     element :result, '#result'

@@ -49,6 +49,22 @@ def processed_applications_page
   @processed_applications_page ||= ProcessedApplicationsPage.new
 end
 
+def deleted_applications_page
+  @deleted_applications_page ||= DeletedApplicationsPage.new
+end
+
+def waiting_for_evidence_applications_page
+  @waiting_for_evidence_applications_page = WaitingForEvidenceApplicationsPage.new
+end
+
+def waiting_for_part_payment_applications_page
+  @waiting_for_part_payment_applications_page = WaitingForPartPaymentApplicationsPage.new
+end
+
+def processed_application_instance_page
+  @processed_application_instance_page ||= ProcessedApplicationInstancePage.new
+end
+
 def savings_investments_page
   @savings_investments_page ||= SavingsInvestmentsPage.new
 end

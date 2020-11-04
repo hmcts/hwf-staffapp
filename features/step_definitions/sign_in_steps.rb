@@ -1,5 +1,5 @@
 Given("I am on the Help with Fees staff application home page") do
-  sign_in_page.load_page
+  dashboard_page.load_page
 end
 
 When("I am not signed in") do

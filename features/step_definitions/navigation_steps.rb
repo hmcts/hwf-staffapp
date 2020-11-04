@@ -1,7 +1,3 @@
-Then("I am taken to the sign in page") do
-  expect(page).to have_current_path(%r{/users/sign_in})
-end
-
 Then("I can view my profile") do
   click_link 'View profile', visible: false
   expect(profile_page).to be_displayed
@@ -30,22 +26,6 @@ Then("I can view letter templates") do
   click_link 'Letter templates', visible: false
   expect(letter_template_page).to have_current_path(%r{/letter_templates})
   expect(letter_template_page).to be_displayed
-end
-
-Then("I should not be able to navigate to office details") do
-  expect(navigation_page.navigation_link).to have_no_view_office
-end
-
-Then("I should not be able to navigate to edit banner") do
-  expect(navigation_page.navigation_link).to have_no_edit_banner
-end
-
-Then("I should not be able to navigate to the staff page") do
-  expect(navigation_page.navigation_link).to have_no_view_staff
-end
-
-Then("I should not be able to navigate to the DWP warning message page") do
-  expect(navigation_page.navigation_link).to have_no_dwp_message
 end
 
 Then("I can view office details") do
