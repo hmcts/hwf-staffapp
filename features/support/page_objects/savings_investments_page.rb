@@ -13,11 +13,6 @@ class SavingsInvestmentsPage < BasePage
     element :next, 'input[value="Next"]'
   end
 
-  def go_to_savings_investment_page
-    personal_details_page.submit_required_personal_details
-    application_details_page.submit_fee_600
-  end
-
   def submit_less_than
     content.wait_until_less_than_visible
     content.less_than.click

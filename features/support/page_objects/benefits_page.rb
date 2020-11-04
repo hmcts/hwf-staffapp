@@ -9,12 +9,6 @@ class BenefitsPage < BasePage
     element :next, 'input[value="Next"]'
   end
 
-  def go_to_benefits_page
-    personal_details_page.submit_required_personal_details
-    application_details_page.submit_fee_600
-    savings_investments_page.submit_less_than
-  end
-
   def submit_benefits_yes
     content.wait_until_yes_visible
     content.yes.click

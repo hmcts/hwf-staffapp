@@ -149,7 +149,6 @@ end
 
 When("I complete processing") do
   complete_processing
-  click_on 'Back to start', visible: false
 end
 
 Then("I should see select from one of the problem options error message") do
