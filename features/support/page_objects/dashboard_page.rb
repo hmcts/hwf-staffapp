@@ -21,7 +21,6 @@ class DashboardPage < BasePage
     element :waiting_for_evidence, '#waiting-for-evidence'
     element :waiting_for_part_payment, '#waiting-for-part-payment'
     element :updated_applications, '.updated_applications', text: 'Mr John Christopher Smith'
-    element :generate_reports_button, '.button', text: 'Generate reports'
     element :deleted_applications, 'a', text: 'Deleted applications'
     element :online_search_reference, '#online_search_reference'
     element :process_when_back_online_heading, 'h3', text: 'Process when DWP is back online'
@@ -29,6 +28,11 @@ class DashboardPage < BasePage
     element :search_button, 'input[value="Search"]', visible: false
     element :online_search_reference_error, 'label', text: 'Reference number is not recognised'
     element :find_application_error, 'label', text: 'No results found'
+    element :total_graph, '#chart-1'
+    element :time_of_day_graph, '#chart-2'
+    element :view_offices, 'a', text: 'View offices'
+    element :generate_reports_button, '.button', text: 'Generate reports'
+    element :court_graphs, 'a', text: 'Court graphs'
   end
 
   def look_up_reference(reference)

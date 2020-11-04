@@ -129,6 +129,10 @@ def office_page
   @office_page ||= OfficePage.new
 end
 
+def offices_page
+  @offices_page ||= OfficesPage.new
+end
+
 def users_page
   @users_page ||= UsersPage.new
 end
@@ -219,6 +223,10 @@ end
 
 def dwp_failed_applications_page
   @dwp_failed_applications_page ||= DwpFailedApplicationsPage.new
+end
+
+def court_graphs_page
+  @court_graphs_page ||= CourtGraphsPage.new
 end
 
 def complete_processing
