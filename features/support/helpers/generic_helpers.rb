@@ -243,11 +243,6 @@ def sign_in_as_ccmcc_office_user
   sign_in_page.sign_in_with user
 end
 
-def go_to_finance_transactional_report_page
-  visit(reports_page.url)
-  reports_page.finance_transactional_report
-end
-
 def click_on_back_to_start
   base_page.content.wait_until_back_to_start_link_visible
   click_on 'Back to start', visible: false
@@ -339,12 +334,4 @@ def click_reference_link
   reference_link = "#{reference_prefix}-000001"
   expect(page).to have_link(reference_link)
   click_link reference_link
-end
-
-def go_to_problem_with_evidence_page
-  click_reference_link
-  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+})
-  evidence_page.content.evidence_can_not_be_processed.click
-  click_link 'Return application', visible: false
-  expect(page).to have_current_path(%r{/evidence/accuracy_failed_reason/[1-9]+})
 end

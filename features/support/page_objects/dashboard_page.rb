@@ -47,10 +47,6 @@ class DashboardPage < BasePage
     help_with_fees_home.click
   end
 
-  def go_to_pending_applications
-    content.pending_applications_link.click
-  end
-
   def click_look_up
     content.wait_until_look_up_button_visible
     content.look_up_button.click

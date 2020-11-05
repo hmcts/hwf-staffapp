@@ -6,6 +6,7 @@ Feature: Processing part payments
   Scenario: Successfully process part payment
     And the payment is ready to process
     When I complete processing
+    And I click on back to start
     And I open the processed part payment application
     Then I can see that the applicant has paid £40 towards the fee
 
