@@ -1,9 +1,9 @@
 Given("I have completed an application") do
-  summary_page.go_to_summary_page_low_savings
+  go_to_summary_page_low_savings
 end
 
 Given("I have completed an application with savings in pence") do
-  summary_page.go_to_summary_page_high_savings
+  go_to_summary_page_high_savings
 end
 
 Given("I am on the summary page") do
