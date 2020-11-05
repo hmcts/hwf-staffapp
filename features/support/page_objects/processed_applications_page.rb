@@ -2,12 +2,12 @@ class ProcessedApplicationsPage < BasePage
   section :content, '#content' do
     element :header, 'h1'
     element :result, '#result'
-    element :fifteen_per_page, 'a[href="/processed_applications?per_page=15"]'
+    element :fifteen_per_page, 'a', text: '15'
     element :which_page, '.govuk-body'
     section :pagination_navigation, '#processed_application_pagination' do
       element :last_page, 'a:nth-last-child(2)'
       element :first_page, 'a:nth-child(2)'
-      element :page_6_button, 'a[href="/processed_applications?page=6&per_page=15"]'
+      element :page_6_button, 'a', text: '6'
       element :next_page, '.next_page', text: 'Next'
       element :previous_page, '.previous_page', text: 'Previous'
     end
