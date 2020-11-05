@@ -4,9 +4,19 @@
 h1.govuk-heading-xl =t("#{state}_applications.index.title")
 
 .govuk-grid-row
-  .govuk-grid-column-full.table_data
-    - unless @applications.empty?
+
+  - unless @applications.empty?
+
+    .govuk-grid-column-full
       =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
+
+    .govuk-grid-column-full
+      .pagination
+        p.govuk-body Page #{page} of #{total_pages}
+    .govuk-grid-column-full#processed_application_pagination
+      = will_paginate @paginate, container: true
+
+    .govuk-grid-column-full.table_data
 
       table.govuk-table.tight.processed *{class: "#{state}-applications"}
         caption.visuallyhidden =t("#{state}_applications.index.title")
@@ -37,11 +47,12 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
               td.govuk-table__cell= application.other.html_safe
       = render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: true })
 
-    - else
-      p =t("#{state}_applications.index.no_applications")
+    .govuk-grid-column-full
+      .pagination
+        p.govuk-body Page #{page} of #{total_pages}
+    .govuk-grid-column-full#processed_application_pagination
+      = will_paginate @paginate, container: true
 
-  .govuk-grid-column-full
-    .pagination
-      p.govuk-body Page #{page} of #{total_pages}
-  .govuk-grid-column-full#processed_application_pagination
-    = will_paginate @paginate, container: true
+  - else
+    p =t("#{state}_applications.index.no_applications")
+

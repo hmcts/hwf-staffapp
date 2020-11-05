@@ -101,6 +101,11 @@ table.search-results div.pagination {
   margin-top: 0px !important;
 }
 
+ul.pagination.inline-list {
+  margin-top: 0 !important;
+  margin-bottom: 10px;
+}
+
 .pagination-info {
   float: right;
   margin-top: 23px;
@@ -114,3 +119,6 @@ ul.pagination {
   padding-left: 0;
 }
 
+#processed_application_pagination {
+  margin-bottom: 30px;
+}
