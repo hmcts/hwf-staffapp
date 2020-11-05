@@ -44,8 +44,6 @@ end
 Then("processing is complete I should see a letter template") do
   complete_processing
   expect(part_payment_page.content).to have_evidence_confirmation_letter
-  click_on 'Back to start', visible: false
-  expect(page).to have_current_path('/')
 end
 
 When("I go to the part payment application") do
@@ -72,5 +70,17 @@ And("I should see a letter template for no received part-payment") do
 end
 
 And("I should see a Back to start button") do
-  expect(part_payment_return_letter_page.content).to have_back_to_start
+  expect(part_payment_return_letter_page.content).to have_back_to_start_button
+end
+
+Then("I should see a Back to start link") do
+  expect(part_payment_page.content).to have_back_to_start_link
+end
+
+Then("I should see Next steps") do
+  expect(part_payment_return_letter_page.content).to have_next_steps_header
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_1
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_2
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_3
+  expect(part_payment_return_letter_page.content).to have_see_guides
 end

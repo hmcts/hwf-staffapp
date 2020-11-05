@@ -15,11 +15,14 @@ Feature: Processing part payments
     Then I should see my reason on the part payments summary page
     And I can see that the applicant needs to make a new application
     When processing is complete I should see a letter template
+    And I should see Next steps
+    And I should see a Back to start link
 
   Scenario: Part payment has not been received
     When I go to the part payment application
     And I click on What to do when a part payment has not been received
     And I click Return application
     Then I should see a Processing complete banner
+    And I should see Next steps
     And I should see a letter template for no received part-payment
     And I should see a Back to start button
