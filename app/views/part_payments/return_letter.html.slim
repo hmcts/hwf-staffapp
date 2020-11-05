@@ -6,6 +6,15 @@
     .govuk-panel.govuk-panel--confirmation
       h1.govuk-panel__title Processing complete
 
+  .govuk-grid-column-full
+    h2.govuk-heading-m Next steps
+
+    p.govuk-body Write to applicant using the template provided
+    p.govuk-body Add the reference to the letter
+    p.govuk-body Post the letter and all the documents back to the applicant
+
+    p: strong= link_to 'See the guides', guide_path, target: 'blank'
+
     .evidence-confirmation-letter
       =t('letters.part-payment.no_part_payment_received_html',
          reference: @application_view.reference,
