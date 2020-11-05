@@ -106,7 +106,7 @@ end
 
 Then("I am taken to the processed application") do
   expect(processed_application_instance_page.content).to have_header
-  expect(processed_application_instance_page).to have_current_path(%r{processed_applications/[0-9]+})
+  expect(processed_application_instance_page).to be_displayed
 end
 
 Then("I am taken to the application waiting for evidence") do
@@ -139,6 +139,7 @@ end
 
 Then("I am taken to the waiting for evidence page") do
   expect(waiting_for_evidence_applications_page).to be_displayed
+  sleep 300
 end
 
 When("I click on the waiting for part payments link") do

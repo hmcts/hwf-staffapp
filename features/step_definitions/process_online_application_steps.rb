@@ -8,6 +8,7 @@ Given("I have looked up an online application") do
 end
 
 When("I see the application details") do
+  expect(application_details_digital_page).to be_displayed
   expect(process_online_application_page.content).to have_application_details_header
   expect(process_online_application_page).to have_text 'Peter Smith'
   expect(process_online_application_page.content.group[0].input[0].value).to eq '450.0'

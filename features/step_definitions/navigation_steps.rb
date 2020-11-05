@@ -37,9 +37,9 @@ end
 
 Then("I can view staff") do
   click_link 'View staff', visible: false
-  expect(users_page).to have_current_path(%r{/users})
-  expect(users_page.content).to have_header
-  expect(users_page).to be_displayed
+  expect(staff_page).to be_displayed
+  expect(staff_page.content).to have_header
+  expect(staff_page).to be_displayed
 end
 
 Then("I can edit banner") do

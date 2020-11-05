@@ -133,10 +133,6 @@ def offices_page
   @offices_page ||= OfficesPage.new
 end
 
-def users_page
-  @users_page ||= UsersPage.new
-end
-
 def edit_banner_page
   @edit_banner_page ||= EditBannerPage.new
 end
@@ -173,10 +169,6 @@ def return_letter_page
   @return_letter_page ||= ReturnLetterPage.new
 end
 
-def evidence_income_page
-  @evidence_income_page ||= EvidenceIncomePage.new
-end
-
 def evidence_page
   @evidence_page ||= EvidencePage.new
 end
@@ -187,6 +179,10 @@ end
 
 def evidence_confirmation_page
   @evidence_confirmation_page ||= EvidenceConfirmationPage.new
+end
+
+def evidence_income_page
+  @evidence_income_page ||= EvidenceIncomePage.new
 end
 
 def forbidden_page

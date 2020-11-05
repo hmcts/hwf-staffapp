@@ -1,5 +1,4 @@
 class ProcessedApplicationsPage < BasePage
-
   set_url('/processed_applications')
 
   section :content, '#content' do

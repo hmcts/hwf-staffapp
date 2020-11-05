@@ -1,5 +1,4 @@
 class DashboardPage < BasePage
-
   set_url('/')
 
   element :welcome_user, 'span', text: 'Welcome user'

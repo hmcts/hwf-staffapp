@@ -1,4 +1,6 @@
 class ReasonForRejectingEvidencePage < BasePage
+  set_url_matcher %r{/evidence/accuracy_incorrect_reason/[0-9]+}
+
   section :content, '#content' do
     element :header, 'h1', text: 'What is the reason for rejecting the evidence?'
     element :hint, '.govuk-hint', text: 'Select all that apply.'
