@@ -8,9 +8,6 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
   - unless @applications.empty?
 
     .govuk-grid-column-full
-      =render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: false })
-
-    .govuk-grid-column-full
       .pagination
         p.govuk-body Page #{page} of #{total_pages}
     .govuk-grid-column-full#processed_application_pagination
@@ -45,7 +42,8 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
               td.govuk-table__cell.text-center= application.evidence_check?
               td.govuk-table__cell.text-center= application.part_payment?
               td.govuk-table__cell= application.other.html_safe
-      = render(partial: 'shared/processed_and_deleted/per_page_display', locals: { footer: true })
+
+      = link_to('Top of page', "#main-content", class:'anchor')
 
     .govuk-grid-column-full
       .pagination
