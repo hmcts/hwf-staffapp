@@ -36,8 +36,8 @@ RSpec.feature 'When part-payment applications are returned', type: :feature do
         expect(page).to have_link('Return application', visible: false)
         click_link 'Return application', visible: false
         expect(page).to have_content 'Processing complete'
-        expect(page).to have_button 'Finish'
-        click_button 'Finish'
+        expect(page).to have_button 'Back to start'
+        click_button 'Back to start'
         expect(page).to have_button 'Start now'
         click_link 'Waiting for part-payment'
         within '.waiting-for-part_payment' do
