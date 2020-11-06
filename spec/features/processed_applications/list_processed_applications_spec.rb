@@ -9,11 +9,14 @@ RSpec.feature 'List processed applications', type: :feature do
   let!(:application2) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-03') }
   let!(:application4) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-07') }
   let!(:application5) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-06') }
+
   before do
+    Settings.processed_deleted.per_page = 2
     create :application_part_remission
     create :part_payment, outcome: 'part', correct: true, application: application5
     login_as(user)
   end
+  after { Settings.processed_deleted.per_page = ENV['PROCESSED_DELETED_PER_PAGE'] }
 
   scenario 'User lists all processed applications with pagination and in correct order' do
     visit '/'
@@ -31,14 +34,18 @@ RSpec.feature 'List processed applications', type: :feature do
       expect(page).to have_content(application4.applicant.full_name)
     end
 
-    click_link 'Next'
+    within('#processed_application_pagination', match: :first) do
+      click_link 'Next'
+    end
 
     within 'table.processed-applications tbody' do
       expect(page).to have_content(application5.applicant.full_name)
       expect(page).to have_content(application2.applicant.full_name)
     end
 
-    click_link 'Previous'
+    within('#processed_application_pagination', match: :first) do
+      click_link 'Previous'
+    end
 
     within 'table.processed-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)
@@ -60,7 +67,11 @@ RSpec.feature 'List processed applications', type: :feature do
 
   scenario 'User displays detail of one processed part-payment application' do
     visit '/processed_applications'
-    click_link 'Next'
+
+    within('#processed_application_pagination', match: :first) do
+      click_link 'Next'
+    end
+
     click_link application5.reference
 
     expect(page).to have_content('Processed application')
@@ -72,7 +83,10 @@ RSpec.feature 'List processed applications', type: :feature do
 
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'
-      click_link 'Next'
+      within('#processed_application_pagination', match: :first) do
+        click_link 'Next'
+      end
+
       click_link application5.reference
 
       expect(page).to have_content('Processed application')
@@ -84,7 +98,10 @@ RSpec.feature 'List processed applications', type: :feature do
   context 'without evidence check' do
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'
-      click_link 'Next'
+      within('#processed_application_pagination', match: :first) do
+        click_link 'Next'
+      end
+
       click_link application5.reference
 
       expect(page).to have_content('Processed application')

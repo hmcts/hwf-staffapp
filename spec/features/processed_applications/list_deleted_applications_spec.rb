@@ -9,8 +9,10 @@ RSpec.feature 'List deleted applications', type: :feature do
   let(:user) { create :user }
 
   before do
+    Settings.processed_deleted.per_page = 2
     login_as(user)
   end
+  after { Settings.processed_deleted.per_page = ENV['PROCESSED_DELETED_PER_PAGE'] }
 
   let!(:application1) do
     create :application_full_remission, :deleted_state,
@@ -37,14 +39,18 @@ RSpec.feature 'List deleted applications', type: :feature do
       expect(page).to have_content(application4.applicant.full_name)
     end
 
-    click_link 'Next'
+    within('#processed_application_pagination', match: :first) do
+      click_link 'Next'
+    end
 
     within 'table.deleted-applications tbody' do
       expect(page).to have_content(application2.applicant.full_name)
       expect(page).to have_content(application5.applicant.full_name)
     end
 
-    click_link 'Previous'
+    within('#processed_application_pagination', match: :first) do
+      click_link 'Previous'
+    end
 
     within 'table.deleted-applications tbody' do
       expect(page).to have_content(application1.applicant.full_name)
