@@ -4,6 +4,7 @@ class ProcessedApplicationsPage < BasePage
   section :content, '#content' do
     element :header, 'h1'
     element :result, '#result'
+    element :deleted_notice, '.notice', text: 'The application has been deleted'
     element :which_page, '.govuk-body'
     section :pagination_navigation, '#processed_application_pagination' do
       element :last_page, 'a:nth-last-child(2)'
