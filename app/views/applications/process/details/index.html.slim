@@ -145,6 +145,8 @@
 
                 - if display_discretion_block?(@form)
                   fieldset.discretion_applied
+                -else
+                  fieldset.discretion_applied.start-hidden
                     = f.label :discretion_applied, class: 'govuk-label'
                     span.govuk-error-message
                       = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
