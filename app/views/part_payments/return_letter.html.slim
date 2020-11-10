@@ -1,15 +1,27 @@
 - content_for :page_title
   = "Processing complete"
 
-h1.govuk-heading-xl Processing complete
+.govuk-grid-row
+  .govuk-grid-column-full
+    .govuk-panel.govuk-panel--confirmation
+      h1.govuk-panel__title Processing complete
 
-.evidence-confirmation-letter
-  =t('letters.part-payment.no_part_payment_received_html',
-     reference: @application_view.reference,
-     full_name: @applicant.full_name,
-     user_name: current_user.name,
-     part_payment_amount: @application_view.amount_to_pay,
-     date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
+  .govuk-grid-column-full
+    h2.govuk-heading-m Next steps
 
-= form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Finish', class: 'govuk-button'
+    p.govuk-body Write to applicant using the template provided
+    p.govuk-body Add the reference to the letter
+    p.govuk-body Post the letter and all the documents back to the applicant
+
+    p: strong= link_to 'See the guides', guide_path, target: 'blank'
+
+    .evidence-confirmation-letter
+      =t('letters.part-payment.no_part_payment_received_html',
+         reference: @application_view.reference,
+         full_name: @applicant.full_name,
+         user_name: current_user.name,
+         part_payment_amount: @application_view.amount_to_pay,
+         date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
+
+    = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
+      = f.submit 'Back to start', class: 'govuk-button'

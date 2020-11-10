@@ -80,7 +80,7 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
     expect(dashboard_page.content).to have_pending_applications_link
-    dashboard_page.go_to_pending_applications
+    go_to_pending_applications
   end
 end
 
@@ -95,7 +95,7 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
     expect(dashboard_page.content).to have_pending_applications_link
-    dashboard_page.go_to_pending_applications
+    go_to_pending_applications
   end
 end
 
@@ -149,7 +149,7 @@ When("I complete processing the application") do
 end
 
 When("I click on the 'Pending applications to be processed' link") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 end
 
 Then("I should be redirected to home page") do
@@ -168,7 +168,7 @@ Then("I should see 'Process when DWP is back online' section") do
 end
 
 Then("On selecting the link I should see the paper-based application I was just processing in a list") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
@@ -178,7 +178,7 @@ Then("On selecting the link I should see the paper-based application I was just 
 end
 
 Then("On selecting the link I should see the online application I was just processing in a list") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 
   expect(dwp_failed_applications_page).to have_current_path(%r{/dwp_failed_applications})
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows

@@ -42,6 +42,15 @@ class SignInPage < BasePage
     user
   end
 
+  def user_account_with_50_applications
+    user = FactoryBot.create(:user)
+    50.times do
+      FactoryBot.create(:application, :processed_state, office: user.office, user: user)
+    end
+    sign_in_with user
+    user
+  end
+
   def reader_account
     user = FactoryBot.create(:reader)
     sign_in_with user

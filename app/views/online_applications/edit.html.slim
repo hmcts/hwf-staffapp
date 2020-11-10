@@ -115,15 +115,3 @@
         p
           a href="/guide/process_application#emergency" What to do if the application can’t be processed before the emergency application is heard
 
-
-        h3.govuk-heading-s In all cases, check the applicant is not:
-        ul.govuk-list.govuk-list--bullet
-          li receiving legal aid
-          li a vexatious litigant, or bound by an order
-          li a company, charity or not for profit organisation
-        p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'check-applicant-is-not'), target: 'blank'
-        h3.govuk-heading-s Check the fee:
-        ul.govuk-list.govuk-list--bullet
-          li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
-          li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
-        p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'check-the-fee'), target: 'blank'

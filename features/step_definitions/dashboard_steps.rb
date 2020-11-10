@@ -20,4 +20,5 @@ end
 
 When("I click on processed applications") do
   dashboard_page.content.processed_applications.click
+  expect(processed_applications_page).to have_current_path('/processed_applications')
 end

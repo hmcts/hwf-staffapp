@@ -1,5 +1,5 @@
 Given(/^I am on the application details part of the application$/) do
-  application_details_page.go_to_application_details_page
+  go_to_application_details_page
   expect(application_details_page).to have_current_path(%r{/details})
   expect(application_details_page.content).to have_header
 end
