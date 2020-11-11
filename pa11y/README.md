@@ -43,7 +43,8 @@ pa11y-ci --config pa11y/tests/admin/.pa11yci.json
 directory after testing to avoid clutter).
 #### Manager account:
 
-###### Work in progress: Issues surrounding the randomness of "Waiting for Evidence" means that 2 user journeys have been omitted for now (08/10/20) to be addressed at a later date.
+###### Work in progress: Issues surrounding the randomness of "Waiting for Evidence" means that 2 user journeys have been omitted for now (08/10/20) to be addressed at a later date. At the moment, there is a long set of actions that are performed with the "url": "127.0.0.1:3000/?info=making_a_waiting_for_evidence_application" that should generate at least one Waiting for evidence application. 
+
 with screenshots:
 ```
 mkdir -p pa11y/screenshots/manager   
