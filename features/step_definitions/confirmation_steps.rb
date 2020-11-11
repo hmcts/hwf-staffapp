@@ -24,7 +24,6 @@ end
 
 Given("I am on the confirmation page") do
   expect(confirmation_page).to have_current_path(%r{/confirmation})
-  expect(confirmation_page.content).to have_eligible
 end
 
 When("I click on back to start") do
