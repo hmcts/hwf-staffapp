@@ -12,7 +12,7 @@ module RefundValidatable
 
   def check_discretion
     return if discretion_applied.nil?
-    if refund && date_fee_paid >= max_refund_date
+    if refund && date_fee_paid > max_refund_date
       reset_discretion_values
     end
   end
