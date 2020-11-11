@@ -9,7 +9,7 @@ end
 
 And("I am on an application waiting for evidence") do
   dashboard_page.content.waiting_for_evidence_application_link.click
-  expect(page).to have_current_path(%r{/evidence/[0-9]+})
+  expect(waiting_for_evidence_applications_page).to have_current_path(%r{/evidence/[0-9]+})
 end
 
 When("I click on start now to process the evidence") do

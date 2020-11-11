@@ -1,5 +1,5 @@
 class DashboardPage < BasePage
-  set_url('/')
+  set_url '/'
 
   element :welcome_user, 'span', text: 'Welcome user'
   element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'

@@ -69,9 +69,9 @@ When("I start to process a new paper application") do
 end
 
 Given("I successfully sign in as a user who has an online application reference number") do
-    FactoryBot.create(:online_application, :with_reference, :completed)
-    sign_in_page.load_page
-    sign_in_page.user_account
+  FactoryBot.create(:online_application, :with_reference, :completed)
+  sign_in_page.load_page
+  sign_in_page.user_account
 end
 
 When("I look up an online application using a valid reference number") do
