@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/ClassLength
 class ApplicationDetailsPage < BasePage
   section :content, '#main-content' do
     element :header, 'h1', text: 'Application details'
@@ -50,7 +51,7 @@ class ApplicationDetailsPage < BasePage
 
   def refund_case_with_future_date
     content.refund_case.click
-    date_fee_paid = Time.zone.today - 1.months
+    date_fee_paid = Time.zone.today - 1.month
     content.day_date_received.set date_fee_paid.day
     content.month_date_received.set date_fee_paid.month
     content.year_date_received.set date_fee_paid.year
@@ -162,3 +163,4 @@ class ApplicationDetailsPage < BasePage
   end
 end
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/ClassLength

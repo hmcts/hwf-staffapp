@@ -64,15 +64,15 @@ Then("I should see the date fee paid") do
 end
 
 Then("I should see Delivery Manager discretion applied Yes") do
-  expect(summary_page.content.summary_section[1].text).to have_content %r{Delivery Manager discretion applied Yes}
+  expect(summary_page.content.summary_section[1].text).to have_content(/Delivery Manager discretion applied Yes/)
 end
 
 Then("I should see the Delivery Manager name") do
-  expect(summary_page.content.summary_section[1].text).to have_content %r{Delivery Manager name Test Name}
+  expect(summary_page.content.summary_section[1].text).to have_content(/Delivery Manager name Test Name/)
 end
 
 Then("I should see the Discretionary reason") do
-  expect(summary_page.content.summary_section[1].text).to have_content %r{Discretion reasons Test Reason}
+  expect(summary_page.content.summary_section[1].text).to have_content(/Discretion reasons Test Reason/)
 end
 
 When("I select No to Delivery Manager discretion applied? and submit form") do
@@ -85,7 +85,7 @@ Then("I am on the Check details page") do
 end
 
 Then("I should see Delivery Manager discretion applied No") do
-  expect(summary_page.content.summary_section[1]).to have_content %r{Delivery Manager discretion applied No}
+  expect(summary_page.content.summary_section[1]).to have_content(/Delivery Manager discretion applied No/)
 end
 
 When("I click Change date fee paid on check details page") do
@@ -108,9 +108,9 @@ When("I change the date fee paid to a valid date") do
 end
 
 Then("I should not see discretion information") do
-  expect(summary_page.content.summary_section[1].text).not_to have_content %r{Delivery Manager name Test Name}
-  expect(summary_page.content.summary_section[1].text).not_to have_content %r{Discretion reasons Test Reason}
-  expect(summary_page.content.summary_section[1].text).not_to have_content %r{Delivery Manager discretion applied}
+  expect(summary_page.content.summary_section[1].text).not_to have_content(/Delivery Manager name Test Name/)
+  expect(summary_page.content.summary_section[1].text).not_to have_content(/Discretion reasons Test Reason/)
+  expect(summary_page.content.summary_section[1].text).not_to have_content(/Delivery Manager discretion applied/)
 end
 
 Then("I see application is complete") do
