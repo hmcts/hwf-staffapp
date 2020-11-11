@@ -24,13 +24,13 @@ window.moj.Modules.RefundModule = {
     var received_day = $('input[id="application_day_date_received"]').val();
     var received_month = $('input[id="application_month_date_received"]').val();
     var received_year = $('input[id="application_year_date_received"]').val();
-    self.received_date = new Date(`${received_month} ${received_day} ${received_year}`)
+    self.received_date = new Date(received_month + '/' + received_day + '/' + received_year)
   },
 
   compareDates: function() {
     this.loadDateReceived();
     received_date.setMonth(received_date.getMonth() - 3)
-    self.date_paid = new Date(`${month} ${day} ${year}`)
+    self.date_paid = new Date(month + '/' + day + '/' + year)
 
     if(day.length < 1 || month.length < 1 || year.length < 1 || date_paid == 'Invalid Date'){
       // invalid date
