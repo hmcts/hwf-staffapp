@@ -245,13 +245,13 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content "You’re eligible to get some money taken off the full fee of £410." }
 
-        it { expect(page).to have_content "You need to pay £300.0 towards the fee by #{pay_by_date}." }
+        it { expect(page).to have_content "You need to pay £300 towards the fee by #{pay_by_date}." }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
         it { expect(page).to have_content(user.name) }
 
-        it { expect(page).to have_content(evidence.amount_to_pay) }
+        it { expect(page).to have_content(amount) }
       end
 
       context 'rejected' do

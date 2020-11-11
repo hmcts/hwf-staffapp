@@ -15,6 +15,7 @@ class DashboardPage < BasePage
     element :last_application_link, 'a', text: '1'
     element :waiting_for_evidence_application_link, 'a', text: 'AB001-20-'
     element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
+    element :waiting_for_evidence, '#waiting-for-evidence'
     element :updated_applications, '.updated_applications', text: 'Mr John Christopher Smith'
     element :generate_reports_button, '.button', text: 'Generate reports'
     element :deleted_applications, 'a', text: 'Deleted applications'
@@ -44,10 +45,6 @@ class DashboardPage < BasePage
 
   def go_home
     help_with_fees_home.click
-  end
-
-  def go_to_pending_applications
-    content.pending_applications_link.click
   end
 
   def click_look_up

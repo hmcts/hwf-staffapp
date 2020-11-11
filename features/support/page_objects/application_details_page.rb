@@ -22,10 +22,6 @@ class ApplicationDetailsPage < BasePage
     element :next, 'input[value="Next"]'
   end
 
-  def go_to_application_details_page
-    personal_details_page.submit_all_personal_details_ni
-  end
-
   def date_application_received
     date_received = Time.zone.today - 2.months
     fill_in('Day', with: date_received.day)
@@ -64,6 +60,16 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
+    click_next
+  end
+
+  def submit_as_refund_case_no_decimal
+    fill_in('How much is the court or tribunal fee?', with: '650', visible: false)
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_valid_date
     click_next
   end
 

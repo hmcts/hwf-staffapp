@@ -44,6 +44,43 @@ end
 Then("processing is complete I should see a letter template") do
   complete_processing
   expect(part_payment_page.content).to have_evidence_confirmation_letter
-  click_on 'Back to start', visible: false
-  expect(page).to have_current_path('/')
+end
+
+When("I go to the part payment application") do
+  click_reference_link
+  expect(part_payment_page).to have_current_path(/part_payments/)
+end
+
+And("I click on What to do when a part payment has not been received") do
+  part_payment_page.content.not_received.click
+  expect(part_payment_page.content).to have_return_application_button
+end
+
+And("I click Return application") do
+  part_payment_page.content.return_application_button.click
+  expect(part_payment_return_letter_page).to have_current_path(/return_letter$/)
+end
+
+Then("I should see a Processing complete banner") do
+  expect(part_payment_return_letter_page.content).to have_processing_complete_banner
+end
+
+And("I should see a letter template for no received part-payment") do
+  expect(part_payment_return_letter_page.content.letter_template).to have_explanation
+end
+
+And("I should see a Back to start button") do
+  expect(part_payment_return_letter_page.content).to have_back_to_start_button
+end
+
+Then("I should see a Back to start link") do
+  expect(part_payment_page.content).to have_back_to_start_link
+end
+
+Then("I should see Next steps") do
+  expect(part_payment_return_letter_page.content).to have_next_steps_header
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_1
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_2
+  expect(part_payment_return_letter_page.content).to have_next_steps_line_3
+  expect(part_payment_return_letter_page.content).to have_see_guides
 end

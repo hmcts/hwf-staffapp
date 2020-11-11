@@ -25,6 +25,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def application_details_digital_page
+  @application_details_digital_page ||= ApplicationDetailsDigitalPage.new
+end
+
 def approve_page
   @approve_page ||= ApprovePage.new
 end
@@ -71,6 +75,10 @@ end
 
 def part_payment_page
   @part_payment_page ||= PartPaymentPage.new
+end
+
+def part_payment_return_letter_page
+  @part_payment_return_letter_page ||= PartPaymentReturnLetterPage.new
 end
 
 def summary_page
@@ -157,6 +165,10 @@ def evidence_result_page
   @evidence_result_page ||= EvidenceResultPage.new
 end
 
+def evidence_confirmation_page
+  @evidence_confirmation_page ||= EvidenceConfirmationPage.new
+end
+
 def forbidden_page
   @forbidden_page ||= ForbiddenPage.new
 end
@@ -229,11 +241,6 @@ def sign_in_as_ccmcc_office_user
   user = FactoryBot.create(:user, office: ccmcc_office)
   sign_in_page.load_page
   sign_in_page.sign_in_with user
-end
-
-def go_to_finance_transactional_report_page
-  visit(reports_page.url)
-  reports_page.finance_transactional_report
 end
 
 def click_on_back_to_start
@@ -327,12 +334,4 @@ def click_reference_link
   reference_link = "#{reference_prefix}-000001"
   expect(page).to have_link(reference_link)
   click_link reference_link
-end
-
-def go_to_problem_with_evidence_page
-  click_reference_link
-  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+})
-  evidence_page.content.evidence_can_not_be_processed.click
-  click_link 'Return application', visible: false
-  expect(page).to have_current_path(%r{/evidence/accuracy_failed_reason/[1-9]+})
 end

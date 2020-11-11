@@ -102,9 +102,19 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a decision override exists' do
-      before { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+      let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: id) }
+      before { decision_override }
 
-      it { is_expected.to eq "✓ Passed (by manager's decision)" }
+      context 'but it is not saved' do
+        let(:id) { nil }
+        it { is_expected.not_to eq "✓ Passed (by manager's decision)" }
+      end
+
+      context 'and it is saved' do
+        let(:id) { 5 }
+        it { is_expected.to eq "✓ Passed (by manager's decision)" }
+      end
+
     end
   end
 
@@ -161,9 +171,18 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a decision override exists' do
-      before { build_stubbed(:decision_override, application: application, reason: 'foo bar') }
+      let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: id) }
+      before { decision_override }
 
-      it { is_expected.to eql 'granted' }
+      context 'but it is not saved' do
+        let(:id) { nil }
+        it { is_expected.to eql 'none' }
+      end
+
+      context 'and it is valid' do
+        let(:id) { 8 }
+        it { is_expected.to eql 'granted' }
+      end
     end
 
   end

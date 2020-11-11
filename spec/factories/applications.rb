@@ -112,6 +112,20 @@ FactoryBot.define do
       amount_to_pay { 100 }
     end
 
+    factory :application_part_refund do
+      applicant_factory { :applicant_with_all_details }
+      applicant_traits { [:married] }
+      fee { 410 }
+      benefits { false }
+      income { 2000 }
+      dependents { true }
+      children { 3 }
+      outcome { 'part' }
+      application_type { 'income' }
+      amount_to_pay { 100 }
+      refund { true }
+    end
+
     factory :application_full_remission do
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [:married] }

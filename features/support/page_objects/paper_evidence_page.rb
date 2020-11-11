@@ -5,13 +5,6 @@ class PaperEvidencePage < BasePage
     element :next, 'input[value="Next"]'
   end
 
-  def go_to_paper_evidence_page
-    personal_details_page.submit_all_personal_details_ni
-    application_details_page.submit_fee_600
-    savings_investments_page.submit_less_than
-    benefits_page.submit_benefits_yes
-  end
-
   def submit_evidence_yes
     content.wait_until_yes_visible
     content.yes.click
