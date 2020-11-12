@@ -9,6 +9,7 @@ class NavigationPage < BasePage
     element :staff_guides, 'a', text: 'Staff Guides'
     element :letter_templates, 'a', text: 'Letter templates'
     element :feedback, 'a', text: 'Feedback'
+    element :sign_out, 'a', text: 'Sign out'
     element :home_page, '.govuk-header__link.govuk-header__link--service-name'
   end
 

@@ -1,4 +1,6 @@
 class ReturnLetterPage < BasePage
+  set_url_matcher %r{/evidence/[0-9]+/return_letter}
+
   section :content, '#content' do
     element :header, 'h1', text: 'Processing complete'
     element :evidence_confirmation_letter, '.evidence-confirmation-letter'

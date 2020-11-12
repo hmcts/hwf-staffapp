@@ -1,4 +1,6 @@
 class EvidenceResultPage < BasePage
+  set_url_matcher %r{/evidence/[0-9]+/result}
+
   section :content, '#content' do
     element :header, 'h1', text: 'Income result'
     element :eligable_header, 'h2', text: '✓ Eligible for help with fees'

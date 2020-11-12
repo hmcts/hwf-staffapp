@@ -1,4 +1,6 @@
 class ApprovePage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/approve}
+
   section :content, '#content' do
     element :header, 'h1', text: 'Ask a manager'
     element :first_name, '#application_fee_manager_firstname'

@@ -1,6 +1,8 @@
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/ClassLength
 class ApplicationDetailsPage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/details}
+
   section :content, '#main-content' do
     element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'

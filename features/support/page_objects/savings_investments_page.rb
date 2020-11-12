@@ -1,4 +1,6 @@
 class SavingsInvestmentsPage < BasePage
+  set_url_matcher %r{applications/[0-9]+/savings_investments}
+
   element :help_with_fees_home, 'a', text: 'Help with fees'
   section :content, '#content' do
     element :header, 'h1', text: 'Savings and investments'

@@ -1,4 +1,6 @@
 class BenefitCheckerPage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/benefit_override/paper_evidence}
+
   element :dwp_banner_offline, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
   element :dwp_banner_online, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
   section :content, '#content' do
