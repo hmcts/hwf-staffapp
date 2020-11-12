@@ -6,7 +6,7 @@ Given("I am on the ask a manager page") do
   personal_details_page.submit_required_personal_details
   expect(application_details_page).to have_current_path(%r{/details})
   application_details_page.submit_fee_10001
-  expect(approve_page).to have_current_path(%r{/approve})
+  expect(approve_page).to be_displayed
 end
 
 When("I successfully submit a manager name") do

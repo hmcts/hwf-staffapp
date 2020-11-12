@@ -1,4 +1,6 @@
 class PaperEvidencePage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/benefit_override/paper_evidence}
+
   section :content, '#content' do
     element :no, 'label', text: 'No', visible: false
     element :yes, 'label', text: 'Yes, the applicant has provided paper evidence', visible: false
