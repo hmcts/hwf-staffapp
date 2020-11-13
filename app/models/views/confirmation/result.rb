@@ -11,12 +11,17 @@ module Views
       end
 
       def savings_passed?
+        passed = @application.saving.passed
+        return nil if passed.nil?
+        if decision_overridden? && passed == false
+          return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        end
         return nil if @application.detail.discretion_applied == false
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
       def benefits_passed?
-        if decision_overridden?
+        if decision_overridden? && @application.benefits
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         elsif benefits_have_been_overridden?
           convert_to_pass_fail(applicant_is_on_benefits)
@@ -39,8 +44,18 @@ module Views
       end
 
       def discretion_applied?
-        return if @application.detail.discretion_applied.nil?
-        convert_to_pass_fail(@application.detail.discretion_applied)
+        discretion_value = @application.detail.discretion_applied
+        return false if discretion_value.nil?
+
+        if decision_overridden?
+          return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        else
+          convert_to_pass_fail(@application.detail.discretion_applied)
+        end
+      end
+
+      def decision_overridden?
+        @application.decision_override.present? && @application.decision_override.id
       end
 
       def result
@@ -91,10 +106,6 @@ module Views
 
       def benefits_have_been_overridden?
         application_type_is?('benefit') && benefit_overridden?
-      end
-
-      def decision_overridden?
-        @application.decision_override.present? && @application.decision_override.id
       end
     end
   end
