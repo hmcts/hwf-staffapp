@@ -22,6 +22,8 @@ class ConfirmationPage < BasePage
     element :total_savings, 'p', text: /Your savings and investments total/
     element :max_savings, 'p', text: /Maximum amount of savings and investments allowed/
     element :part_payment_sentence, 'p', text: /The application has been processed for the fee of/
+    element :application_complete, 'h1', text: 'Application complete'
+    elements :summary_list_row, '.govuk-summary-list__row'
     section :override, '#override_panel' do
       element :no_reason_error, '.govuk-error-message', text: 'Please select a reason for granting help with fees'
       element :paper_evidence_option, '.govuk-radios__item', text: 'You\'ve received paper evidence that the applicant is receiving benefits'

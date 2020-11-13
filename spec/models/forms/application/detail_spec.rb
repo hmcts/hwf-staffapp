@@ -306,6 +306,36 @@ RSpec.describe Forms::Application::Detail do
                   expect(refund).not_to be_valid
                 end
               end
+
+              context 'date_fee_paid within limit and discretion reset' do
+                let(:date_fee_paid) { Time.zone.local(2014, 11, 15, 8, 0, 0) }
+
+                context 'discretion value set to nil' do
+                  it 'when discretion_applied false' do
+                    refund.discretion_applied = false
+                    refund.valid?
+                    expect(refund.discretion_applied).to be_nil
+                  end
+
+                  it 'when discretion_applied true' do
+                    refund.discretion_applied = true
+                    refund.valid?
+                    expect(refund.discretion_applied).to be_nil
+                  end
+
+                  context 'when discretion_applied true' do
+                    before {
+                      refund.discretion_applied = true
+                      refund.discretion_reason = 'Paperwork is fine'
+                      refund.discretion_manager_name = 'Thompson'
+                      refund.valid?
+                    }
+                    it { expect(refund.discretion_applied).to be_nil }
+                    it { expect(refund.discretion_manager_name).to be_nil }
+                    it { expect(refund.discretion_reason).to be_nil }
+                  end
+                end
+              end
             end
           end
         end

@@ -3,6 +3,7 @@ module Forms
     class Detail < ::FormObject
       include ActiveModel::Validations::Callbacks
       include DataFieldFormattable
+      include RefundValidatable
 
       TIME_LIMIT_FOR_PROBATE = 20
 
@@ -38,6 +39,7 @@ module Forms
       define_attributes
 
       before_validation :format_date_fields
+      after_validation :check_discretion
 
       validates :fee, presence: true,
                       numericality: { allow_blank: true, less_than: 20_000 }
@@ -85,15 +87,6 @@ module Forms
 
       def min_date
         3.months.ago.midnight
-      end
-
-      def max_refund_date
-        date_received - 3.months if date_received.present?
-      end
-
-      def validate_date_fee_paid?
-        refund? && (date_received.is_a?(Date) ||
-          date_received.is_a?(Time)) && @discretion_applied.nil?
       end
 
       def tomorrow

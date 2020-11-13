@@ -184,7 +184,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           click_button 'Next'
           expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
-          within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
             choose 'No'
           end
           click_button 'Next'
@@ -218,7 +218,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           click_button 'Next'
           expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
-          within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
             choose 'Yes'
           end
           click_button 'Next'
@@ -226,7 +226,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
           expect(page).to have_content("Enter Delivery Manager name")
           expect(page).to have_content("Enter Discretionary reason")
 
-          within(:xpath, './/fieldset[@class="discretion_applied"]') do
+          within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
             fill_in 'Delivery Manager name', with: 'Dan'
             fill_in 'Discretion reason', with: 'Looks legit'
           end
@@ -318,7 +318,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         click_button 'Next'
         expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
-        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           choose 'Yes'
         end
         click_button 'Next'
@@ -326,7 +326,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content("Enter Delivery Manager name")
         expect(page).to have_content("Enter Discretionary reason")
 
-        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           fill_in 'Delivery Manager name', with: 'Dan'
           fill_in 'Discretion reason', with: 'Looks legit'
         end
@@ -370,7 +370,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         click_button 'Next'
         expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
-        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           choose 'Yes'
         end
         click_button 'Next'
@@ -378,7 +378,7 @@ RSpec.feature 'Processing refund application with valid date received date', typ
         expect(page).to have_content("Enter Delivery Manager name")
         expect(page).to have_content("Enter Discretionary reason")
 
-        within(:xpath, './/fieldset[@class="discretion_applied"]') do
+        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           fill_in 'Delivery Manager name', with: 'Dan'
           fill_in 'Discretion reason', with: 'Looks legit'
         end
