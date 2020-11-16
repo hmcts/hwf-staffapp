@@ -32,6 +32,8 @@ class DashboardPage < BasePage
     element :view_offices, 'a', text: 'View offices'
     element :generate_reports_button, '.button', text: 'Generate reports'
     element :court_graphs, 'a', text: 'Court graphs'
+    element :process_a_paper_application_heading, 'h2', text: 'Process a paper application'
+    element :process_an_online_application_heading, 'h2', text: 'Process an online application'
   end
 
   def look_up_reference(reference)
