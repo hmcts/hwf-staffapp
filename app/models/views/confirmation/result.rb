@@ -34,13 +34,15 @@ module Views
         return unless application_type_is?('income')
         path = 'activemodel.attributes.views/confirmation/result'
 
-        income_evidence = I18n.t('income_evidence', scope: path)
-        return income_evidence if @application.waiting_for_evidence?
+        return I18n.t('income_evidence', scope: path) if @application.waiting_for_evidence?
 
-        part_payment = I18n.t('income_part', scope: path)
-        return part_payment if @application.waiting_for_part_payment?
+        return I18n.t('income_part', scope: path) if @application.waiting_for_part_payment?
 
-        convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+        if decision_overridden? && income_over_limit?
+          I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        else
+          convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+        end
       end
 
       def discretion_applied?
@@ -107,6 +109,11 @@ module Views
       def benefits_have_been_overridden?
         application_type_is?('benefit') && benefit_overridden?
       end
+
+      def income_over_limit?
+        @application.income_max_threshold_exceeded == true
+      end
+
     end
   end
 end

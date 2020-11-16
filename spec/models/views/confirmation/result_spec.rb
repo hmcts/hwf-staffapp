@@ -159,7 +159,11 @@ RSpec.describe Views::Confirmation::Result do
   describe '#income_passed?' do
     subject { view.income_passed? }
 
-    let(:application) { build_stubbed(:application, :income_type, state: state, outcome: outcome) }
+    let(:application) {
+      build_stubbed(:application, :income_type,
+                    state: state, outcome: outcome, income_max_threshold_exceeded: threshold_exceeded)
+    }
+    let(:threshold_exceeded) { nil }
 
     context 'when the application is a full remission' do
       let(:state) { 3 }
@@ -180,6 +184,20 @@ RSpec.describe Views::Confirmation::Result do
       let(:outcome) { 'none' }
 
       it { is_expected.to eq string_failed }
+    end
+
+    context 'decision_override' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: 5) }
+      before { decision_override }
+      let(:threshold_exceeded) { true }
+
+      context 'when the application is a non remission' do
+        let(:state) { 3 }
+        let(:outcome) { 'none' }
+
+        it { is_expected.to eq "✓ Passed (by manager's decision)" }
+      end
+
     end
   end
 
