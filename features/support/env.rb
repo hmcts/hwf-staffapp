@@ -9,6 +9,9 @@ require_relative './page_objects/base_page'
 require 'capybara/apparition'
 require 'cucumber/rspec/doubles'
 require 'database_cleaner/active_record'
+require 'capybara/cucumber'
+require 'capybara-screenshot/cucumber'
+require 'base64'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -67,4 +70,25 @@ end
 
 Before do
   DatabaseCleaner.clean
+end
+
+Capybara.register_driver :apparition do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara::Screenshot.autosave_on_failure = false
+Capybara::Screenshot.prune_strategy = :keep_last_run
+
+After do |scenario|
+  if scenario.failed?
+    add_screenshot
+  end
+end
+
+def add_screenshot
+  file_path = 'features/cucumber-report/screenshot.png'
+  page.driver.browser.save_screenshot(file_path)
+  image = open(file_path, 'rb', &:read)
+  encoded_image = Base64.encode64(image)
+  embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
 end

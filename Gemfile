@@ -119,4 +119,5 @@ group :test do
   gem 'site_prism'
   gem 'webdrivers'
   gem 'webmock'
+  gem 'report_builder'
 end
