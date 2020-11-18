@@ -14,3 +14,14 @@ Feature: Processed applications
       When I look at the result on the processed application page
       Then I should see the result for savings on the processed application page
       And I should see the result for benefits on the processed application page
+
+    Scenario: Delete a processed application (no reason)
+      When I click the Delete application details element
+      And I click Delete application button without providing a reason
+      Then I should see an Enter the reason error
+
+    Scenario: Delete a processed application (with reason)
+      When I click the Delete application details element
+      And I click Delete application button after providing a reason
+      Then I should be redirected to processed applications
+      And I should see a message saying that the application has been deleted

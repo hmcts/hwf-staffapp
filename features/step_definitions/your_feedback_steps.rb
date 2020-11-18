@@ -10,7 +10,7 @@ When("I successfully submit my feedback") do
 end
 
 Then("I should be taken to my dashboard") do
-  expect(page).to have_current_path('/')
+  expect(dashboard_page).to have_current_path('/')
 end
 
 Then("I should see your feedback has been recorded notification") do

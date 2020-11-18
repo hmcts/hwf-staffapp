@@ -1,4 +1,6 @@
 class ApplicationDetailsDigitalPage < BasePage
+  set_url_matcher %r{/online_applications/[0-9]+/edit}
+
   section :content, '#main-content' do
     element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
@@ -19,6 +21,8 @@ class ApplicationDetailsDigitalPage < BasePage
     element :form_error_message, '.error', text: 'Enter a valid form number'
     element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
     element :next, 'input[value="Next"]'
+    element :emergency_case_error, 'label', text: 'can\'t be blank'
+    element :emergency_case_textbox, '#online_application_emergency_reason'
     section :guidance, '.guidance' do
       elements :guidance_header, 'h2'
       elements :guidance_text, 'p'

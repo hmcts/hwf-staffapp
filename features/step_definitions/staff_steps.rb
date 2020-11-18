@@ -35,8 +35,8 @@ When("I filter by activity") do
 end
 
 Then("I see all the results for that activity") do
-  expect(users_page.content).to have_active_result
-  expect(users_page.content).to have_no_inactive_result
+  expect(staff_page.content).to have_active_result
+  expect(staff_page.content).to have_no_inactive_result
 end
 
 And("I change the member of staff to a reader") do
@@ -45,8 +45,8 @@ And("I change the member of staff to a reader") do
 end
 
 Then("I can see that the user is a reader") do
-  expect(users_page.content).to have_reader_role
-  expect(users_page).to have_content("User updated.")
+  expect(staff_page.content).to have_reader_role
+  expect(staff_page).to have_content("User updated.")
 end
 
 And("I change the jurisdiction") do

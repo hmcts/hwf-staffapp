@@ -1,6 +1,6 @@
-Feature: Processed applications
+Feature: Your last applications
 
-  Background: Processed applications page
+  Background: Start and abandon a paper application
     Given I successfully sign in as a user
     And I start to process a new paper application
     And I fill in personal details of the application

@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class PersonalDetailsPage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/personal_informations}
+
   section :content, '#content' do
     element :header, 'h1', text: 'Personal details'
     element :application_first_name, '#application_first_name'

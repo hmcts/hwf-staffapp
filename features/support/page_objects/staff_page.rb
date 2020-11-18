@@ -7,6 +7,9 @@ class StaffPage < BasePage
     element :activity_flag, 'td.govuk-table__cell:nth-child(6)', text: 'Active'
     elements :result_row, '.govuk-table__row'
     element :office_filter, '#office'
+    element :active_result, '.govuk-table__cell', text: 'Active'
+    element :inactive_result, '.govuk-table__cell', text: 'Inactive'
+    element :reader_role, '.govuk-table__cell', text: 'Reader'
   end
 
   def set_up_multiple_users
