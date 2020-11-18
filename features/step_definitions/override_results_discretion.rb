@@ -26,7 +26,7 @@ Then("I should see the applicant has been granted help with fees") do
   expect(confirmation_page.content).to have_granted_hwf
 end
 
-Given("I input low savings and no benefits but £{int} income and then complete processing") do |int|
+Given("I input low savings and no benefits but {int} income and then complete processing") do |int|
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
@@ -37,13 +37,6 @@ Given("I input low savings and no benefits but £{int} income and then complete 
   complete_processing
   expect(confirmation_page.content).to have_application_complete
 end
-#
-# When("I enter input as £{int}") do |int|
-#   incomes_page.submit_incomes_no
-#   incomes_page.submit_incomes(int)
-#   expect(incomes_page).to have_header
-#   complete_processing
-# end
 
 Given("I input low savings with benefits but no paper evidence and then complete processing") do
   savings_investments_page.submit_less_than
