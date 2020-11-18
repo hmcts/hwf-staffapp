@@ -17,6 +17,16 @@ module RefundValidatable
     end
   end
 
+  def check_refund_values
+    if date_fee_paid.present? && refund == false
+      clear_date_fee_paid
+    end
+  end
+
+  def clear_date_fee_paid
+    @date_fee_paid = nil
+  end
+
   def reset_discretion_values
     @discretion_applied = nil
     @discretion_manager_name = nil

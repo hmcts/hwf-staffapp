@@ -12,7 +12,7 @@ module Views
       def all_fields
         [
           'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-          'deceased_name', 'date_of_death', 'date_fee_paid', 'discretion_applied',
+          'deceased_name', 'date_of_death', 'fee_paid', 'date_fee_paid', 'discretion_applied',
           'discretion_manager_name', 'discretion_reason', 'emergency_reason'
         ]
       end
@@ -29,6 +29,11 @@ module Views
         define_method(method) do
           format_date(detail.public_send(method))
         end
+      end
+
+      def fee_paid
+        scope = 'activemodel.attributes.views/overview/details'
+        I18n.t(".fee_paid_#{detail.refund}", scope: scope)
       end
 
       def discretion_applied

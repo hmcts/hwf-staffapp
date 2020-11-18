@@ -40,6 +40,7 @@ module Forms
 
       before_validation :format_date_fields
       after_validation :check_discretion
+      after_validation :check_refund_values
 
       validates :fee, presence: true,
                       numericality: { allow_blank: true, less_than: 20_000 }
