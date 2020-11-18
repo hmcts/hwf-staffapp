@@ -1,8 +1,9 @@
 require 'report_builder'
 require 'date'
+require "active_support/all"
 
 at_exit do
-  current_time = Time.zone.now
+  current_time = Date.today # rubocop:disable Rails/Date
 
   ReportBuilder.configure do |config|
     config.input_path = 'features/cucumber-report/cucumber_report.json'
