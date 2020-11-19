@@ -36,3 +36,7 @@ node_modules/
 
 # Ignore pa11y screenshots
 /pa11y/screenshots
+
+# Ignore cucumber report results
+features/cucumber-report/cucumber_report.html
+features/cucumber-report/screenshot.png
