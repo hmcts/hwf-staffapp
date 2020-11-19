@@ -11,12 +11,17 @@ module Views
       end
 
       def savings_passed?
+        passed = @application.saving.passed
+        return nil if passed.nil?
+        if decision_overridden? && passed == false
+          return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        end
         return nil if @application.detail.discretion_applied == false
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
       def benefits_passed?
-        if decision_overridden?
+        if decision_overridden? && @application.benefits
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         elsif benefits_have_been_overridden?
           convert_to_pass_fail(applicant_is_on_benefits)
@@ -29,18 +34,30 @@ module Views
         return unless application_type_is?('income')
         path = 'activemodel.attributes.views/confirmation/result'
 
-        income_evidence = I18n.t('income_evidence', scope: path)
-        return income_evidence if @application.waiting_for_evidence?
+        return I18n.t('income_evidence', scope: path) if @application.waiting_for_evidence?
 
-        part_payment = I18n.t('income_part', scope: path)
-        return part_payment if @application.waiting_for_part_payment?
+        return I18n.t('income_part', scope: path) if @application.waiting_for_part_payment?
 
-        convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+        if decision_overridden? && income_over_limit?
+          I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        else
+          convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+        end
       end
 
       def discretion_applied?
-        return if @application.detail.discretion_applied.nil?
-        convert_to_pass_fail(@application.detail.discretion_applied)
+        discretion_value = @application.detail.discretion_applied
+        return false if discretion_value.nil?
+
+        if decision_overridden?
+          return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        else
+          convert_to_pass_fail(@application.detail.discretion_applied)
+        end
+      end
+
+      def decision_overridden?
+        @application.decision_override.present? && @application.decision_override.id
       end
 
       def result
@@ -93,9 +110,10 @@ module Views
         application_type_is?('benefit') && benefit_overridden?
       end
 
-      def decision_overridden?
-        @application.decision_override.present? && @application.decision_override.id
+      def income_over_limit?
+        @application.income_max_threshold_exceeded == true
       end
+
     end
   end
 end

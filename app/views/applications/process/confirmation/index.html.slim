@@ -24,7 +24,16 @@
 
     =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
 
-    -if !@application.detail.refund?
+    - if @confirm.decision_overridden?
+      h2.govuk-heading-m Next steps
+
+      p.govuk-body Write the reference number on the top right corner of the paper form
+      p.govuk-body Copy the reference number into the case management system
+      p.govuk-body Write to the applicant and send back all the documents
+      p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+
+    -elsif !@application.detail.refund?
       h2.govuk-heading-m Next steps
 
       -if @application.outcome.eql?('full')
@@ -94,7 +103,7 @@
 
 
 
-    -if @application.detail.refund?
+    -if @application.detail.refund? && !@confirm.decision_overridden?
       = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
 
     -elsif @application.waiting_for_part_payment?

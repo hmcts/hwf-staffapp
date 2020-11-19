@@ -18,7 +18,7 @@ When("I click on Grant help with fees") do
   confirmation_page.content.grant_hwf.click
 end
 
-When("Click Update application without selecting an option") do
+When("I click Update application without selecting an option") do
   confirmation_page.content.override.wait_until_update_application_button_visible
   confirmation_page.content.override.update_application_button.click
 end
