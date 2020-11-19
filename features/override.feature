@@ -3,10 +3,10 @@ Feature: Override
   Background: Signed in as user
     Given I successfully sign in as a user
     And I have completed an ineligible paper application
-    When I click on Grant help with fees
+    And I click on Grant help with fees
 
   Scenario: No reason given to override
-    Given Click Update application without selecting an option
+    Given I click Update application without selecting an option
     Then I should see an error telling me to select an option
     And The application should remain ineligible
     And I should not see a message telling me the application passed by manager's decision
