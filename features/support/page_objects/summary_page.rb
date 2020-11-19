@@ -1,4 +1,5 @@
 class SummaryPage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/summary}
 
   section :content, '#content' do
     element :header, 'h1', text: 'Check details'
