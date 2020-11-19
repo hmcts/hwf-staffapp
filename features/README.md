@@ -76,3 +76,25 @@ To open screenshot or html:
 $ open ./screenshot_cucumber_Start-now_2017-04-24-11-40-28.186.png
 
 $ open ./screenshot_cucumber_Start-now_2017-04-24-11-40-28.186.html
+
+### Creating an HTML report
+
+Creating an HTML report uses the report_builder gem so ensure that you have done a bundle install before continuing.
+
+To create a HTML report detailing the results of a cucumber test:
+
+Run the cucumber tests with the "report" profile:
+
+`$ cucumber -p report` or 
+
+`$ cucumber -p report features/address.feature` (eg for one feature)
+
+This will create a .json file in the ~/features/cucumber-report directory which details the results of the cucumber 
+tests. The file will be embedded with screenshots of any failed tests.
+
+To convert the .json into a .html file, execute:
+
+`$ ruby features/support/report_builder.rb`
+
+This will create the .html in the features/cucumber-report directory. Open in browser by right-clicking the file and 
+going to 'Open in Browser'. 
