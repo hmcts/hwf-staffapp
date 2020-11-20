@@ -222,6 +222,15 @@ RSpec.describe Forms::Application::Detail do
         let(:refund_status) { false }
 
         it { is_expected.to be_valid }
+        context 'with date fee paid' do
+          let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
+          it { is_expected.to be_valid }
+          it 'reset date' do
+            refund.valid?
+            expect(refund.date_fee_paid).to be nil
+          end
+
+        end
       end
 
       describe 'date fee paid' do

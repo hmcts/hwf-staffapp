@@ -357,6 +357,9 @@ en-GB:
         deceased_name: Name of the deceased
         date_of_death: Date of their death
         refund: This is a refund case
+        refund_request: Refund request
+        refund_request_true: 'Yes'
+        refund_request_false: 'No'
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
         discretion_applied: Delivery Manager discretion applied
