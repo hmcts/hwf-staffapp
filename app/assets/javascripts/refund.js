@@ -32,7 +32,7 @@ window.moj.Modules.RefundModule = {
     received_date.setMonth(received_date.getMonth() - 3)
     self.date_paid = new Date(month + '/' + day + '/' + year)
 
-    if(day.length < 1 || month.length < 1 || year.length < 1 || date_paid == 'Invalid Date'){
+    if(day.length < 1 || month.length < 1 || year.length < 4 || date_paid == 'Invalid Date'){
       // invalid date
     } else {
       this.toggleDiscretionBlock();
@@ -50,14 +50,7 @@ window.moj.Modules.RefundModule = {
   loadFeePaidDate: function() {
     self.day = $('input[id="application_day_date_fee_paid"]').val();
     self.month = $('input[id="application_month_date_fee_paid"]').val();
-    var year_value = $('input[id="application_year_date_fee_paid"]').val();
-
-    // if you pass just 2 digit for year Date() makes it full year
-    if(year_value.length == 2) {
-      self.year = 0;
-    } else {
-      self.year = year_value;
-    }
+    self.year = $('input[id="application_year_date_fee_paid"]').val();
 
     this.compareDates();
   },
