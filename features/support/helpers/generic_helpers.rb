@@ -25,6 +25,10 @@ def application_details_page
   @application_details_page ||= ApplicationDetailsPage.new
 end
 
+def application_details_digital_page
+  @application_details_digital_page ||= ApplicationDetailsDigitalPage.new
+end
+
 def approve_page
   @approve_page ||= ApprovePage.new
 end
@@ -43,6 +47,22 @@ end
 
 def processed_applications_page
   @processed_applications_page ||= ProcessedApplicationsPage.new
+end
+
+def deleted_applications_page
+  @deleted_applications_page ||= DeletedApplicationsPage.new
+end
+
+def waiting_for_evidence_applications_page
+  @waiting_for_evidence_applications_page = WaitingForEvidenceApplicationsPage.new
+end
+
+def waiting_for_part_payment_applications_page
+  @waiting_for_part_payment_applications_page = WaitingForPartPaymentApplicationsPage.new
+end
+
+def processed_application_instance_page
+  @processed_application_instance_page ||= ProcessedApplicationInstancePage.new
 end
 
 def savings_investments_page
@@ -71,6 +91,10 @@ end
 
 def part_payment_page
   @part_payment_page ||= PartPaymentPage.new
+end
+
+def part_payment_return_letter_page
+  @part_payment_return_letter_page ||= PartPaymentReturnLetterPage.new
 end
 
 def summary_page
@@ -105,8 +129,8 @@ def office_page
   @office_page ||= OfficePage.new
 end
 
-def users_page
-  @users_page ||= UsersPage.new
+def offices_page
+  @offices_page ||= OfficesPage.new
 end
 
 def edit_banner_page
@@ -149,6 +173,18 @@ def evidence_page
   @evidence_page ||= EvidencePage.new
 end
 
+def evidence_result_page
+  @evidence_result_page ||= EvidenceResultPage.new
+end
+
+def evidence_confirmation_page
+  @evidence_confirmation_page ||= EvidenceConfirmationPage.new
+end
+
+def evidence_income_page
+  @evidence_income_page ||= EvidenceIncomePage.new
+end
+
 def forbidden_page
   @forbidden_page ||= ForbiddenPage.new
 end
@@ -185,6 +221,10 @@ def dwp_failed_applications_page
   @dwp_failed_applications_page ||= DwpFailedApplicationsPage.new
 end
 
+def court_graphs_page
+  @court_graphs_page ||= CourtGraphsPage.new
+end
+
 def complete_processing
   if base_page.content.has_complete_processing_button?
     base_page.content.complete_processing_button.click
@@ -193,39 +233,34 @@ end
 
 def start_application
   sign_in_page.load_page
-  @current_user = sign_in_page.user_account
+  sign_in_page.user_account
 end
 
 def sign_in_as_reader
   sign_in_page.load_page
-  @current_user = sign_in_page.reader_account
+  sign_in_page.reader_account
 end
 
 def sign_in_as_admin
   sign_in_page.load_page
-  @current_user = sign_in_page.admin_account
+  sign_in_page.admin_account
 end
 
 def sign_in_as_manager
   sign_in_page.load_page
-  @current_user = sign_in_page.manager_account
+  sign_in_page.manager_account
 end
 
 def sign_in_as_user
   sign_in_page.load_page
-  @current_user = sign_in_page.user_account
+  sign_in_page.user_account
 end
 
 def sign_in_as_ccmcc_office_user
   ccmcc_office = FactoryBot.create(:office, entity_code: CCMCC_OFFICE_ENTITY_CODE)
   user = FactoryBot.create(:user, office: ccmcc_office)
   sign_in_page.load_page
-  @current_user = sign_in_page.sign_in_with user.email, user.password
-end
-
-def go_to_finance_transactional_report_page
-  visit(reports_page.url)
-  reports_page.finance_transactional_report
+  sign_in_page.sign_in_with user
 end
 
 def click_on_back_to_start
@@ -234,26 +269,26 @@ def click_on_back_to_start
 end
 
 # benefit application full outcome with paper evidence provided
-def eligable_application
+def eligable_application(user)
   applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600)
   application = FactoryBot.create(:application, :processed_state, :benefit_type,
-                                  decision_cost: 600, user: @current_user, office: @current_user.office, outcome: 'full',
+                                  decision_cost: 600, user: user, office: user.office, outcome: 'full',
                                   reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
   FactoryBot.create(:benefit_override, correct: true, application: application)
 end
 
-def ineligable_application
+def ineligable_application(user)
   applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith')
   application = FactoryBot.create(:application_no_remission, :processed_state, fee: 300,
-                                                                               decision_cost: 0, user: @current_user, office: @current_user.office,
+                                                                               decision_cost: 0, user: user, office: user.office,
                                                                                reference: "#{reference_prefix}-000002", children: 0, applicant: applicant)
   FactoryBot.create(:benefit_check, :yes_result, application: application)
 end
 
-def multiple_applications
-  eligable_application
-  ineligable_application
+def create_multiple_applications(user)
+  eligable_application(user)
+  ineligable_application(user)
 end
 
 def complete_and_back_to_start
@@ -262,35 +297,32 @@ def complete_and_back_to_start
   click_on_back_to_start
 end
 
-def part_payment_application
+def part_payment_application(user)
   applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600, refund: false)
   application = FactoryBot.create(:application, :waiting_for_part_payment_state, :income_type,
-                                  decision_cost: nil, amount_to_pay: 40, user: @current_user, office: @current_user.office, outcome: 'part',
+                                  decision_cost: nil, amount_to_pay: 40, user: user, office: user.office, outcome: 'part',
                                   reference: "#{reference_prefix}-000001", children: 3, income: nil, applicant: applicant, detail: detail, dependents: true)
   FactoryBot.create(:part_payment, application: application)
-  visit '/'
 end
 
-def waiting_evidence_application_ni
+def waiting_evidence_application_ni(user)
   applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
   FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
-                    decision_cost: 656.66, amount_to_pay: 0, user: @current_user, office: @current_user.office, outcome: 'full',
+                    decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
                     reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
-  visit '/'
 end
 
 def ho_applicant
   @applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ho_number: '1212-0001-0240-0490/01')
 end
 
-def refund_application
+def refund_application(user)
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
   FactoryBot.create(:application, :processed_state, :income_type, benefits: false,
-                                                                  decision_cost: 656.66, amount_to_pay: 0, user: @current_user, office: @current_user.office, outcome: 'full',
+                                                                  decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
                                                                   reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: @applicant, detail: detail)
-  visit '/'
 end
 
 def reference_prefix
@@ -302,15 +334,6 @@ def create_application_with_bad_request_result_with(user)
   application = FactoryBot.create(:application, applicant: applicant, ni_number: 'AB123456C', office: user.office, user: user)
   FactoryBot.create(:benefit_check, :bad_request_result, application: application)
   applicant
-end
-
-def sign_in_with_user
-  if @current_user.present?
-    sign_in_page.load_page
-    sign_in_page.sign_in_with @current_user.email, @current_user.password
-  else
-    sign_in_as_user
-  end
 end
 
 def stub_dwp_response_as_bad_request
@@ -331,12 +354,4 @@ def click_reference_link
   reference_link = "#{reference_prefix}-000001"
   expect(page).to have_link(reference_link)
   click_link reference_link
-end
-
-def go_to_problem_with_evidence_page
-  dashboard_page.go_home
-  click_reference_link
-  evidence_page.content.evidence_can_not_be_processed.click
-  click_link 'Return application', visible: false
-  expect(page).to have_current_path(%r{evidence/accuracy_failed_reason/[1-9]+})
 end

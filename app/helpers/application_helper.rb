@@ -17,4 +17,8 @@ module ApplicationHelper
     application.evidence_check ? application.evidence_check.amount_to_pay : application.amount_to_pay
   end
 
+  def amount_value(value)
+    return value.to_i if value.to_i.positive?
+    nil
+  end
 end

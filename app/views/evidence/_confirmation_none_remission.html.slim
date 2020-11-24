@@ -13,7 +13,7 @@
          reference: confirmation.application.reference,
          full_name: confirmation.application.applicant.full_name,
          user_name: current_user.name,
-         fee_amount: number_to_currency(confirmation.application.amount_to_pay, precision: 0, unit: '£'),
+         fee_amount: currency_format(confirmation.application.amount_to_pay),
          expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
   -else
     p.govuk-text
@@ -29,7 +29,7 @@
          reference: confirmation.application.reference,
          full_name: confirmation.application.applicant.full_name,
          user_name: current_user.name,
-         income_total: number_to_currency(confirmation.application.evidence_check.income, precision: 0, unit: '£'),
-         fee_amount: number_to_currency(confirmation.application.evidence_check.amount_to_pay, precision: 0, unit: '£'),
+         income_total: currency_format(confirmation.application.evidence_check.income),
+         fee_amount: currency_format(confirmation.application.evidence_check.amount_to_pay),
          expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 

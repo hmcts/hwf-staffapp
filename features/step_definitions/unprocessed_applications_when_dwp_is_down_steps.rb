@@ -18,18 +18,28 @@ end
 
 Given("I am a staff member and I process an online benefit application") do
   create_online_application
-  sign_in_with_user
-  dashboard_page.look_up_reference(OnlineApplication.last.reference)
+  user = FactoryBot.create(:user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
+  expect(dashboard_page).to have_current_path('/')
+  reference = OnlineApplication.last.reference
+  dashboard_page.content.online_search_reference.set reference
+  expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
+  dashboard_page.content.look_up_button.click
 end
 
 Given("I'm on the Check details page") do
+  expect(application_details_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
   application_details_page.content.jurisdiction.click
   click_button 'Next', visible: false
+  expect(summary_page).to have_current_path(%r{/online_applications/[0-9]+})
   expect(summary_page.content).to have_header
 end
 
 Given("I am a staff member and I process a paper-based benefit application") do
-  sign_in_with_user
+  user = FactoryBot.create(:user)
+  sign_in_page.load_page
+  sign_in_page.sign_in_with(user)
   expect(dashboard_page).to have_welcome_user
   dashboard_page.process_application
 end
@@ -50,7 +60,9 @@ Given("I am a staff member at the home page") do
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('online')
 
-    sign_in_with_user
+    user = @current_user || FactoryBot.create(:user)
+    sign_in_page.load_page
+    sign_in_page.sign_in_with(user)
 
     expect(dashboard_page).to have_welcome_user
     expect(dashboard_page).to have_dwp_online_banner
@@ -61,13 +73,14 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('online')
 
-    sign_in_with_user
+    sign_in_page.load_page
+    sign_in_page.sign_in_with(@current_user)
     expect(dashboard_page).to have_welcome_user
     expect(dashboard_page).to have_dwp_online_banner
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
     expect(dashboard_page.content).to have_pending_applications_link
-    dashboard_page.go_to_pending_applications
+    go_to_pending_applications
   end
 end
 
@@ -75,13 +88,14 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('offline')
 
-    sign_in_with_user
+    sign_in_page.load_page
+    sign_in_page.sign_in_with(@current_user)
     expect(dashboard_page).to have_welcome_user
     expect(dashboard_page).to have_dwp_offline_banner
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
     expect(dashboard_page.content).to have_pending_applications_link
-    dashboard_page.go_to_pending_applications
+    go_to_pending_applications
   end
 end
 
@@ -121,17 +135,21 @@ When("I complete processing the application") do
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('online')
 
+    expect(page).to have_current_path(%r{/applications/[0-9]+/personal_informations})
     click_button 'Next', visible: false
+    expect(application_details_page).to have_current_path(%r{/applications/[0-9]+/details})
     application_details_page.content.jurisdiction.click
     click_button 'Next', visible: false
+    expect(page).to have_current_path(%r{/applications/[0-9]+/savings_investments})
     click_button 'Next', visible: false
+    expect(summary_page).to have_current_path(%r{/applications/[0-9]+/summary})
     expect(summary_page.content).to have_header
     complete_processing
   end
 end
 
 When("I click on the 'Pending applications to be processed' link") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 end
 
 Then("I should be redirected to home page") do
@@ -150,7 +168,7 @@ Then("I should see 'Process when DWP is back online' section") do
 end
 
 Then("On selecting the link I should see the paper-based application I was just processing in a list") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
@@ -160,8 +178,9 @@ Then("On selecting the link I should see the paper-based application I was just 
 end
 
 Then("On selecting the link I should see the online application I was just processing in a list") do
-  dashboard_page.go_to_pending_applications
+  go_to_pending_applications
 
+  expect(dwp_failed_applications_page).to have_current_path(%r{/dwp_failed_applications})
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
   expect(dwp_failed_applications_rows[0]).to have_content('created')
@@ -210,6 +229,7 @@ Then("the 'Id' should still be selectable as a link") do
 end
 
 Then("I should only see the application for my office in the pending list") do
+  expect(dwp_failed_applications_page).to have_current_path(%r{/dwp_failed_applications})
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
 
   expect(dwp_failed_applications_rows.size).to eq(1)

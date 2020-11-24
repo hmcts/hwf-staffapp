@@ -407,6 +407,8 @@ GEM
       ffi (~> 1.0)
     rdoc (6.2.1)
     regexp_parser (1.7.0)
+    report_builder (1.9)
+      json (>= 2.3.0)
     request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.0)
@@ -597,6 +599,7 @@ DEPENDENCIES
   rails (~> 6.0)
   rails-controller-testing
   rails-i18n (~> 4.0.0)
+  report_builder
   rest-client
   rspec-rails (~> 4.0)
   rspec_junit_formatter

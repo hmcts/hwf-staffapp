@@ -1,5 +1,8 @@
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/ClassLength
 class ApplicationDetailsPage < BasePage
+  set_url_matcher %r{/applications/[0-9]+/details}
+
   section :content, '#main-content' do
     element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
@@ -19,10 +22,18 @@ class ApplicationDetailsPage < BasePage
     element :fee_blank_error, '.error', text: 'Enter a court or tribunal fee'
     element :form_error_message, '.error', text: 'Enter a valid form number'
     element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
-  end
-
-  def go_to_application_details_page
-    personal_details_page.submit_all_personal_details_ni
+    element :next, 'input[value="Next"]'
+    element :delivery_manager_error, 'label', text: 'This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application'
+    section :refund_section, '#refund-only' do
+      element :delivery_manager_question, 'label', text: 'Delivery Manager discretion applied?'
+      element :future_refund_date_error, 'label', text: 'This date can’t be after the application was received'
+      element :no_answer, '.govuk-label', text: 'No'
+      element :yes_answer, '.govuk-label', text: 'Yes'
+      element :delivery_manager_name_error, 'label', text: 'Enter Delivery Manager name'
+      element :delivery_manager_reason_error, 'label', text: 'Enter Discretionary reason'
+      element :delivery_manager_name_input, '#application_discretion_manager_name'
+      element :discretion_reason_input, '#application_discretion_reason'
+    end
   end
 
   def date_application_received
@@ -30,14 +41,6 @@ class ApplicationDetailsPage < BasePage
     fill_in('Day', with: date_received.day)
     fill_in('Month', with: date_received.month)
     fill_in('Year', with: date_received.year)
-  end
-
-  def refund_case_date_after_application_received
-    content.refund_case.click
-    date_fee_paid = Time.zone.today - 1.month
-    content.day_date_received.set date_fee_paid.day
-    content.month_date_received.set date_fee_paid.month
-    content.year_date_received.set date_fee_paid.year
   end
 
   def refund_case_with_valid_date
@@ -48,12 +51,28 @@ class ApplicationDetailsPage < BasePage
     content.year_date_received.set date_fee_paid.year
   end
 
+  def refund_case_with_future_date
+    content.refund_case.click
+    date_fee_paid = Time.zone.today - 1.month
+    content.day_date_received.set date_fee_paid.day
+    content.month_date_received.set date_fee_paid.month
+    content.year_date_received.set date_fee_paid.year
+  end
+
+  def refund_case_with_date_too_late
+    content.refund_case.click
+    date_fee_paid = Time.zone.today - 10.months
+    content.day_date_received.set date_fee_paid.day
+    content.month_date_received.set date_fee_paid.month
+    content.year_date_received.set date_fee_paid.year
+  end
+
   def submit_fee_100
     fill_in('How much is the court or tribunal fee?', with: '100')
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_600
@@ -62,7 +81,7 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_6000
@@ -71,15 +90,17 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
+    click_next
   end
 
-  def submit_fee_5000
-    fill_in('How much is the court or tribunal fee?', with: '5000')
+  def submit_as_refund_case_no_decimal
+    fill_in('How much is the court or tribunal fee?', with: '650', visible: false)
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    click_button('Next')
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_valid_date
+    click_next
   end
 
   def submit_as_refund_case
@@ -89,22 +110,34 @@ class ApplicationDetailsPage < BasePage
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
     refund_case_with_valid_date
-    click_button('Next')
+    click_next
   end
 
-  def submit_fee_300
-    fill_in('How much is the court or tribunal fee?', with: '300')
+  def submit_as_refund_case_date_too_late
+    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
     content.jurisdiction.click
     date_application_received
     content.form_input.set 'C100'
-    click_button('Next')
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_date_too_late
+    click_next
+  end
+
+  def submit_as_refund_case_future_date
+    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_future_date
+    click_next
   end
 
   def submit_without_form_number
     fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
     date_application_received
-    click_button('Next')
+    click_next
   end
 
   def submit_fee_10001
@@ -113,7 +146,23 @@ class ApplicationDetailsPage < BasePage
     date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
-    click_button('Next')
+    click_next
+  end
+
+  def submit_fee_600_blank_refund_date
+    fill_in('How much is the court or tribunal fee?', with: '600')
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571')
+    content.refund_case.click
+    click_next
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/ClassLength

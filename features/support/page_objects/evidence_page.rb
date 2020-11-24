@@ -20,5 +20,12 @@ class EvidencePage < BasePage
     end
     element :processing_summary, 'h2', text: 'Processing summary'
     elements :table_row, '.govuk-table__row'
+    element :next, 'input[value="Next"]'
+    element :return_application, 'a[href*="/evidence/accuracy_failed_reason"]'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

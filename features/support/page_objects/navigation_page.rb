@@ -9,9 +9,12 @@ class NavigationPage < BasePage
     element :staff_guides, 'a', text: 'Staff Guides'
     element :letter_templates, 'a', text: 'Letter templates'
     element :feedback, 'a', text: 'Feedback'
+    element :sign_out, 'a', text: 'Sign out'
+    element :home_page, '.govuk-header__link.govuk-header__link--service-name'
   end
 
   def go_to_homepage
-    click_link 'Help with fees', visible: false
+    navigation_link.wait_until_home_page_visible
+    navigation_link.home_page.click
   end
 end

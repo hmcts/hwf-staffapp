@@ -357,6 +357,9 @@ en-GB:
         deceased_name: Name of the deceased
         date_of_death: Date of their death
         refund: This is a refund case
+        refund_request: Refund request
+        refund_request_true: 'Yes'
+        refund_request_false: 'No'
         date_fee_paid: Date fee paid
         emergency_reason: Reason for emergency
         discretion_applied: Delivery Manager discretion applied
@@ -614,6 +617,8 @@ en-GB:
               inclusion: Please confirm if the partner is 61 or over
             amount:
               blank: Please enter the amount of savings and investments
+              not_a_number: The value that you entered is not a number
+              greater_than_or_equal_to: Value must be greater than or equal to 3000
             max_threshold_exceeded:
               inclusion: Please answer the savings question
         forms/application/benefit:

@@ -1,4 +1,6 @@
 class ReasonForRejectingEvidencePage < BasePage
+  set_url_matcher %r{/evidence/accuracy_incorrect_reason/[0-9]+}
+
   section :content, '#content' do
     element :header, 'h1', text: 'What is the reason for rejecting the evidence?'
     element :hint, '.govuk-hint', text: 'Select all that apply.'
@@ -9,5 +11,11 @@ class ReasonForRejectingEvidencePage < BasePage
     element :cannot_identify_applicant, '.govuk-label', text: 'Cannot identify applicant'
     element :wrong_date_range, '.govuk-label', text: 'Wrong date range'
     element :error, '.error', text: 'Please select from one of the options'
+    element :next, 'input[value="Next"]'
+  end
+
+  def click_next
+    content.wait_until_next_visible
+    content.next.click
   end
 end

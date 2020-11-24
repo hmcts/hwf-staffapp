@@ -6,7 +6,7 @@ And("I am on reason for rejecting the evidence page") do
   expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.problem_with_evidence.click
-  click_on 'Next', visible: false
+  evidence_accuracy_page.click_next
   expect(evidence_accuracy_page).to have_current_path(%r{/accuracy_incorrect_reason})
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
@@ -18,12 +18,12 @@ When("I successfully submit multiple reasons") do
   reason_for_rejecting_evidence_page.content.pages_missing.click
   reason_for_rejecting_evidence_page.content.cannot_identify_applicant.click
   reason_for_rejecting_evidence_page.content.wrong_date_range.click
-  click_button('Next')
+  reason_for_rejecting_evidence_page.click_next
 end
 
 When("I successfully submit a single reason") do
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
-  click_button('Next')
+  reason_for_rejecting_evidence_page.click_next
 end
 
 Then("I am taken to the summary page") do

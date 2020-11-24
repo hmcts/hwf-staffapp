@@ -3,7 +3,7 @@ Feature: Rejection letter based off income / Savings
   Scenario: Paper application with income over £10000
     Given I process a paper application with high income
     When I enter input as £10000
-    Then the rejection letter should state "Your income total: £10,000.00"
+    Then the rejection letter should state "Your income total: £10,000"
 
   Scenario: Online application with income over £6065
     Given I have an online application with high income
@@ -23,4 +23,4 @@ Feature: Rejection letter based off income / Savings
   Scenario: Online application with saving over £3500
     Given I have an online application with medium savings
     When I process that application
-    Then the rejection letter should state "Your savings and investments total: £3,500.00"
+    Then the rejection letter should state "Your savings and investments total: £3,500"

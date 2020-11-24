@@ -4,10 +4,11 @@ Given("I have looked up an online application") do
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
-  click_on 'Look up', visible: false
+  dashboard_page.click_look_up
 end
 
 When("I see the application details") do
+  expect(application_details_digital_page).to be_displayed
   expect(process_online_application_page.content).to have_application_details_header
   expect(process_online_application_page).to have_text 'Peter Smith'
   expect(process_online_application_page.content.group[0].input[0].value).to eq '450.0'
@@ -18,7 +19,7 @@ When("I see the application details") do
 end
 
 And("I click next without selecting a jurisdiction") do
-  click_button('Next')
+  process_online_application_page.click_next
 end
 
 Then("I should see that I must select a jurisdiction error message") do
@@ -27,7 +28,10 @@ end
 
 Then("I add a jurisdiction") do
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+end
+
+Then('I click next') do
+  process_online_application_page.click_next
 end
 
 Then("I should be taken to the check details page") do
@@ -36,8 +40,10 @@ Then("I should be taken to the check details page") do
 end
 
 When("I process the online application") do
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
-  click_button('Next')
+  process_online_application_page.click_next
+  expect(page).to have_current_path(%r{/online_applications})
   complete_processing
 end
 
@@ -54,4 +60,51 @@ end
 
 And("I can see my processed application") do
   expect(process_online_application_page.content.last_application[1].text).to have_content 'processed Peter Smith'
+end
+
+Then("I should see digital before you start advice") do
+  expect(application_details_digital_page.content.guidance.guidance_header[0].text).to eq 'Before you start'
+end
+
+Then("I see that I should see digital check that the applicant is not") do
+  expect(application_details_digital_page.content.guidance.guidance_sub_heading[0].text).to eq 'In all cases, check the applicant is not:'
+  expect(application_details_digital_page.content.guidance.guidance_list[0].text).to have_text 'receiving legal aid a vexatious litigant, or bound by an order a company, charity or not for profit organisation'
+  expect(application_details_digital_page.content.guidance.guidance_text[0].text).to eq 'What to do if the applicant is one of these'
+  expect(application_details_digital_page.content.guidance.guidance_link[0]['href']).to end_with '/guide/process_application#check-applicant-is-not'
+end
+
+Then("I see digital check the fee") do
+  expect(application_details_digital_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
+  expect(application_details_digital_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) or possession claim online (PCOL) services is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
+  expect(application_details_digital_page.content.guidance.guidance_text[1].text).to eq 'What to do if the fee is one of these'
+  expect(application_details_digital_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#check-the-fee'
+end
+
+Then("I see digital Emergency advice") do
+  expect(application_details_digital_page.content.guidance.guidance_header[1].text).to eq 'Emergency cases'
+  expect(application_details_digital_page.content.guidance.guidance_text[2].text).to eq 'An emergency case is one where delay risks harm to the applicant or to the applicant’s case.'
+end
+
+Then("I see digital examples of emergency cases") do
+  expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Example of emergency cases:'
+  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
+  expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
+  expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#emergency'
+end
+
+When("I click emergency checkbox") do
+  application_details_digital_page.content.emergency_case.click
+end
+
+When("I click next without entering a reason") do
+  process_online_application_page.click_next
+end
+
+Then("I should see a must enter an emergency reason error message") do
+  expect(application_details_digital_page.content).to have_emergency_case_error
+end
+
+When("I click next after entering a reason") do
+  application_details_digital_page.content.emergency_case_textbox.set 'emergency reason'
+  process_online_application_page.click_next
 end

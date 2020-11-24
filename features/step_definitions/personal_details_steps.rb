@@ -1,6 +1,8 @@
 Given("I have started an application") do
   start_application
+  expect(dashboard_page).to have_current_path('/')
   dashboard_page.process_application
+  expect(personal_details_page).to have_current_path(%r{/personal_informations})
 end
 
 And("I am on the personal details part of the application") do
@@ -26,7 +28,7 @@ end
 
 When("I submit a date that makes the applicant born in the future") do
   personal_details_page.in_the_future_dob
-  click_button('Next')
+  personal_details_page.click_next
 end
 
 Then("I should see that the applicant cannot be under 16 years old error message") do
@@ -35,7 +37,7 @@ end
 
 When("I enter a home office reference number in the wrong format") do
   personal_details_page.invalid_ho
-  click_button('Next')
+  personal_details_page.click_next
 end
 
 Then("I should see enter a home office reference number in the correct format error message") do
@@ -47,11 +49,11 @@ Then("I should see the invalid date of birth error message") do
 end
 
 When("I leave the date of birth blank") do
-  click_button('Next')
+  personal_details_page.click_next
 end
 
 When("I click on next without answering any questions") do
-  click_button('Next')
+  personal_details_page.click_next
 end
 
 Then("I should see that I must fill in my last name") do
@@ -68,7 +70,7 @@ end
 
 When("I fill in the form with a last name with one letter") do
   fill_in 'Last name', with: 'S'
-  click_button('Next')
+  personal_details_page.click_next
 end
 
 Then("I should see error message last name is too short") do
@@ -84,14 +86,14 @@ Then("I see that I should check that the applicant is not") do
   expect(personal_details_page.content.guidance.guidance_sub_heading[0].text).to eq 'Check the applicant is not:'
   expect(personal_details_page.content.guidance.guidance_list[0].text).to have_text 'receiving legal aid a vexatious litigant, or bound by an order a company, charity or not for profit organisation'
   expect(personal_details_page.content.guidance.guidance_text[1].text).to eq 'What to do if the applicant is one of these'
-  expect(personal_details_page.content.guidance.guidance_link[0]['href']).to end_with '/guide/process_application#not-eligible'
+  expect(personal_details_page.content.guidance.guidance_link[0]['href']).to end_with '/guide/process_application#check-applicant-is-not'
 end
 
 Then("I see that I should check the fee") do
   expect(personal_details_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
   expect(personal_details_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) or possession claim online (PCOL) services is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
   expect(personal_details_page.content.guidance.guidance_text[2].text).to eq 'What to do if the fee is one of these'
-  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#not-eligible'
+  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#check-the-fee'
 end
 
 Then("I see that I should look for a national insurance number") do

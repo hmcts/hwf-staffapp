@@ -51,7 +51,7 @@ h1.visuallyhidden Help with fees - Staff application
                   = f.label :reference, @online_search_form.errors[:reference].join('').html_safe, class: 'error'
               span#reference-hint_process.govuk-hint
                 = t('index.process.digital.hint')
-              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off', 'aria-describedby': 'reference-hint'}
+              = f.text_field :reference, { class: 'govuk-input govuk-!-width-one-half', autocomplete: 'off' }
             .govuk-form-group
               = f.submit 'Look up', class: 'govuk-button'
 

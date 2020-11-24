@@ -75,6 +75,7 @@ Scenario: Return to dashboard
   And I am on an application waiting for evidence
   When I have successfully submitted the evidence
   And I complete processing
+  And I click on back to start
   Then I should be taken back to my dashboard
   And the application should have the status of processed
 

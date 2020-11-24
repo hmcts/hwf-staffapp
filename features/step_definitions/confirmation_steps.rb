@@ -1,5 +1,6 @@
 And("I have processed an application") do
   start_application
+  expect(dashboard_page).to have_current_path('/')
   dashboard_page.process_application
 
   expect(personal_details_page).to have_current_path(%r{/personal_informations})
@@ -23,7 +24,6 @@ end
 
 Given("I am on the confirmation page") do
   expect(confirmation_page).to have_current_path(%r{/confirmation})
-  expect(confirmation_page.content).to have_eligible
 end
 
 When("I click on back to start") do

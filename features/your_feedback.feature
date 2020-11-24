@@ -1,13 +1,21 @@
 Feature: Your feedback page
 
-Background: Your feedback page
-  Given I successfully sign in as a user
-  And I am on your feedback page
+  Background: Your feedback page
+    Given I successfully sign in as a user
+    And I am on your feedback page
 
-Scenario: Urgent question
-  Then I can email if I have an urgent question or something isn't working
-  
-Scenario: Your feedback
-  When I successfully submit my feedback
-  Then I should be taken to my dashboard
-  And I should see your feedback has been recorded notification
+  Scenario: Urgent question
+    Then I can email if I have an urgent question or something isn't working
+
+  Scenario: Your feedback
+    When I successfully submit my feedback
+    Then I should be taken to my dashboard
+    And I should see your feedback has been recorded notification
+
+  @wip @manual
+  Scenario: Empty feedback form
+    When I click Send feedback
+    Then I should see a what is your experience error
+    And I should see an improvement ideas error
+    And I should see a rating error
+    And I should see a do you need any help error

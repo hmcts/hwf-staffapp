@@ -6,6 +6,7 @@ Feature: Process an online application
   Scenario: Application details
     When I see the application details
     And I add a jurisdiction
+    And I click next
     Then I should be taken to the check details page
 
   Scenario: Complete processing
@@ -18,3 +19,24 @@ Feature: Process an online application
     When I see the application details
     And I click next without selecting a jurisdiction
     Then I should see that I must select a jurisdiction error message
+
+  Scenario: Before you start and emergency content presence validation
+    Then I should see digital before you start advice
+    And I see that I should see digital check that the applicant is not
+    And I see digital check the fee
+    And I see digital Emergency advice
+    And I see digital examples of emergency cases
+
+  Scenario: Select emergency but don't enter a reason
+    When I see the application details
+    And I add a jurisdiction
+    And I click emergency checkbox
+    And I click next without entering a reason
+    Then I should see a must enter an emergency reason error message
+
+  Scenario: Select emergency and enter a reason
+    When I see the application details
+    And I add a jurisdiction
+    And I click emergency checkbox
+    And I click next after entering a reason
+    Then I should be taken to the check details page

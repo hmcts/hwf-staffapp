@@ -1,5 +1,5 @@
 Given("I am on the Help with Fees staff application home page") do
-  sign_in_page.load_page
+  dashboard_page.load_page
 end
 
 When("I am not signed in") do
@@ -13,22 +13,32 @@ end
 
 When("I successfully sign in as a user") do
   sign_in_as_user
-  expect(sign_in_page).to have_welcome_user
+  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page).to have_welcome_user
 end
 
 When("I successfully sign in as a manager") do
   sign_in_as_manager
-  expect(sign_in_page).to have_welcome_user
+  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page).to have_welcome_user
 end
 
 When("I successfully sign in as admin") do
   sign_in_as_admin
-  expect(sign_in_page).to have_welcome_user
+  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page).to have_welcome_user
 end
 
 When("I successfully sign in read only user") do
   sign_in_as_reader
-  expect(sign_in_page).to have_welcome_user
+  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page).to have_welcome_user
+end
+
+When("I successfully sign in as mi") do
+  sign_in_as_mi
+  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page).to have_welcome_user
 end
 
 Then("I am taken to my read only user dashboard") do
@@ -113,6 +123,7 @@ When("I sign out") do
 end
 
 Then("I should be on sign in page") do
+  expect(sign_in_page).to have_current_path(%r{/users/sign_in})
   expect(sign_in_page.content).to have_sign_in_title
 end
 

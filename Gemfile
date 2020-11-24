@@ -113,6 +113,7 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'rails-controller-testing'
+  gem 'report_builder'
   gem 'rspec_junit_formatter'
   gem 'rubyzip'
   gem 'shoulda-matchers'

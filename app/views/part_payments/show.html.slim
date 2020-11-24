@@ -1,4 +1,29 @@
-=render(partial: 'shared/part_payment_evidence/show', locals: { source: @part_payment, type: 'part-payment' })
+- content_for :page_title
+  = "#{@part_payment.application.reference} - Waiting for part-payment"
+
+h1.govuk-heading-xl #{@part_payment.application.reference} - Waiting for part-payment
+
+- if Pundit.policy(current_user, @part_payment).update?
+  .panel
+    h2.govuk-heading-m Process part-payment
+    = link_to 'Start now', send("accuracy_part_payment_path", @part_payment), class: 'govuk-button util_mb-medium'
+    details.govuk-details data-module="govuk-details"
+      summary.govuk-details__summary
+        span.govuk-details__summary-text What to do when a part payment has not been received
+      .govuk-details__text
+        | Part-payment needs to arrive by <strong>#{@part_payment.expires_at.to_s(:gov_uk_long)}</strong> for this application. If you’re unable to process part-payment, choose ‘Return application’ to remove it from ‘Waiting for part-payment' and return everything to the applicant.
+      .govuk-details__text
+        = link_to 'Return application', send("return_letter_part_payment_path", @part_payment), class: 'govuk-button'
+
+=build_section_with_defaults 'Personal details', @applicant
+=build_section_with_defaults 'Application details', @details
+=build_section 'Benefits', @application_view, ['benefits']
+=build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
+=build_section 'Result', @application_view, ['benefits_result', 'savings_result', 'income_result']
+
+=render(partial: 'shared/remission_type', locals: { source: @application_view })
+
+=render(partial: 'shared/processed_summary', locals: { source: @processing_details })
 
 - content_for(:javascripts)
   javascript:

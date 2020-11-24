@@ -21,21 +21,26 @@ module ResultHelper
   end
 
   def income_value(application)
-    return number_to_currency(application.income, precision: 2) unless application.income.nil?
+    return currency_format(application.income) unless application.income.nil?
     if application.income_min_threshold_exceeded == true &&
        application.income_max_threshold_exceeded == true
-      income = number_to_currency(application.income_max_threshold, precision: 0)
+      income = currency_format(application.income_max_threshold)
       return "More than #{income}"
     end
   end
 
   def saving_value(application)
     if application.saving.max_threshold_exceeded
-      max_threshold = number_to_currency(application.saving.try(:max_threshold), precision: 0)
+      max_threshold = currency_format(application.saving.try(:max_threshold))
       "#{max_threshold} or more"
     else
-      number_to_currency(application.saving.try(:amount), precision: 2)
+      currency_format(application.saving.try(:amount))
     end
+  end
+
+  def currency_format(value)
+    return unless value
+    number_to_currency(value, precision: 2).gsub('.00', '')
   end
 
 end

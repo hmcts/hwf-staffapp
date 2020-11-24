@@ -102,7 +102,7 @@ RSpec.describe ResultHelper, type: :helper do
 
     context 'income is 0' do
       let(:income) { 0 }
-      it { expect(helper.income_value(application)).to eq "£0.00" }
+      it { expect(helper.income_value(application)).to eq "£0" }
     end
 
     context 'income is a number' do
@@ -139,7 +139,7 @@ RSpec.describe ResultHelper, type: :helper do
 
     context 'amount is 0' do
       let(:amount) { 0 }
-      it { expect(helper.saving_value(application)).to eq "£0.00" }
+      it { expect(helper.saving_value(application)).to eq "£0" }
     end
 
     context 'saving threashold exceeded' do
@@ -153,7 +153,25 @@ RSpec.describe ResultHelper, type: :helper do
       let(:amount) { 3100 }
       let(:saving_max) { false }
 
-      it { expect(helper.saving_value(application)).to eq "£3,100.00" }
+      it { expect(helper.saving_value(application)).to eq "£3,100" }
+    end
+  end
+
+  describe '#currency_format' do
+    context 'amount is 110' do
+      it { expect(helper.currency_format(110)).to eq "£110" }
+    end
+
+    context 'amount is 110.5' do
+      it { expect(helper.currency_format(110.5)).to eq "£110.50" }
+    end
+
+    context 'amount is 0' do
+      it { expect(helper.currency_format(0)).to eq "£0" }
+    end
+
+    context 'amount is nil' do
+      it { expect(helper.currency_format(nil)).to be nil }
     end
   end
 end
