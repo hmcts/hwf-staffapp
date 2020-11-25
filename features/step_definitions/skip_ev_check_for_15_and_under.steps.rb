@@ -50,7 +50,6 @@ Then("the application will not skip the evidence check") do
   expect(evidence_page.content.evidence_summary[0].summary_row[2]).to have_text 'Income Waiting for evidence'
 end
 
-# rubocop:disable MethodLength
 # rubocop:disable Metrics/AbcSize
 def complete_application
   expect(application_details_page.content).to have_header
@@ -64,5 +63,4 @@ def complete_application
   incomes_page.submit_incomes_0
   expect(summary_page.content).to have_header
 end
-# rubocop:enable MethodLength
 # rubocop:enable Metrics/AbcSize
