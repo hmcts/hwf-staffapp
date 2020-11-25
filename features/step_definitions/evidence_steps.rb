@@ -4,12 +4,12 @@ And("there is an application waiting for evidence") do
 
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 And("I am on an application waiting for evidence") do
   dashboard_page.content.waiting_for_evidence_application_link.click
-  expect(waiting_for_evidence_applications_page).to have_current_path(%r{/evidence/[0-9]+})
+  expect(waiting_for_evidence_applications_page.content).to have_header
 end
 
 When("I click on start now to process the evidence") do
@@ -17,7 +17,6 @@ When("I click on start now to process the evidence") do
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/1/accuracy})
   expect(evidence_accuracy_page.content).to have_header
 end
 
@@ -55,7 +54,7 @@ Then("I should see the processing summmary") do
 end
 
 When("I click on return application") do
-  expect(page).to have_current_path(%r{/evidence})
+  expect(evidence_page.content).to have_waiting_for_evidence_instance_header
   evidence_page.content.evidence_can_not_be_processed.click
   click_link 'Return application', visible: false
 end
@@ -65,25 +64,24 @@ Then("I should be taken to the problem with evidence page") do
 end
 
 When("I submit that the evidence is correct") do
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
 end
 
 Then("I should be taken to the evidence income page") do
-  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+/income})
   expect(evidence_page.content).to have_header
 end
 
 When(/^I submit (\d+) as the income$/) do |income|
-  expect(evidence_page).to have_current_path(%r{/evidence/1/income})
+  expect(evidence_page.content).to have_header
   fill_in 'Total monthly income from evidence', with: income
   evidence_page.click_next
 end
 
 Then("I see the amount to be refunded should be £656.66") do
-  expect(evidence_page).to have_current_path(%r{/evidence/[0-9]+/result})
-  expect(evidence_page.content).to have_full_refund_header
+  expect(evidence_result_page.content).to have_header
+  expect(evidence_result_page.content).to have_eligable_header
 end
 
 Then("I see the amount to be refunded should be £5") do
@@ -95,18 +93,17 @@ Then("I see that the applicant is not eligible for help with fees") do
 end
 
 When("I submit that there is a problem with evidence") do
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.problem_with_evidence.click
   evidence_accuracy_page.click_next
 end
 
 Then("I should be taken to the reason for rejecting the evidence page") do
-  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/[0-9]+})
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
 
 When("I click on next without making a selection on the evidence page") do
-  expect(evidence_accuracy_page).to have_current_path(%r{/evidence/[0-9]+/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.click_next
 end
 
@@ -121,16 +118,16 @@ end
 
 Given("I have successfully submitted the evidence") do
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
-  expect(evidence_page).to have_current_path(%r{/income})
+  expect(evidence_income_page.content).to have_header
   find_field('Total monthly income from evidence', visible: false).set('500')
   evidence_page.click_next
-  expect(evidence_result_page).to have_current_path(%r{/result})
+  expect(evidence_result_page.content).to have_header
   expect(evidence_result_page.content).to have_eligable_header
   evidence_result_page.click_next
-  expect(evidence_page).to have_current_path(%r{/summary})
+  expect(summary_page.content).to have_header
 end
 
 Given("I use the browser back button") do

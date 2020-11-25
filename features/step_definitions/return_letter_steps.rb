@@ -1,19 +1,19 @@
 Then("I am on the return letter page after selecting not arrived or too late") do
   go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_not_arrived_too_late
-  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
+  expect(return_letter_page.content).to have_header
 end
 
 Then("I am on the return letter page after selecting citizen not proceeding") do
   go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_not_proceeding
-  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
+  expect(return_letter_page.content).to have_header
 end
 
 Then("I am on the return letter page after selecting staff error") do
   go_to_problem_with_evidence_page
   problem_with_evidence_page.submit_staff_error
-  expect(page).to have_current_path(%r{evidence/[1-9]+/return_letter})
+  expect(return_letter_page.content).to have_header
 end
 
 Then("I should see evidence has not arrived or too late letter template") do
@@ -48,7 +48,7 @@ Then("I should see next steps information for evidence incorrect") do
 end
 
 Then("I should see next steps information for citizen not proceeding") do
-  expect(return_letter_page).to have_current_path(%r{/return_letter})
+  expect(return_letter_page.content).to have_header
   expect(return_letter_page.content.evidence_next_steps).to have_header
   expect(return_letter_page.content.evidence_next_steps).to have_citizen_not_proceeding_text
   expect(return_letter_page.content.evidence_next_steps.root_element).to have_link

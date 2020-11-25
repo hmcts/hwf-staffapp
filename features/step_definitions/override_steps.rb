@@ -1,14 +1,14 @@
 Given("I have completed an ineligible paper application") do
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
-  expect(personal_details_page).to have_current_path(/personal_informations/)
+  expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni
-  expect(application_details_page).to have_current_path(/details/)
+  expect(application_details_page.content).to have_header
   application_details_page.submit_fee_100
-  expect(savings_investments_page).to have_current_path(/savings_investments/)
+  expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_more_than
   savings_investments_page.submit_exact_amount
-  expect(summary_page).to have_current_path(/summary/)
+  expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_ineligible
 end

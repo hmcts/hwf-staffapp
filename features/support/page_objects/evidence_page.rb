@@ -22,6 +22,9 @@ class EvidencePage < BasePage
     elements :table_row, '.govuk-table__row'
     element :next, 'input[value="Next"]'
     element :return_application, 'a[href*="/evidence/accuracy_failed_reason"]'
+    element :waiting_for_evidence_instance_header, 'h1', text: /Waiting for evidence$/
+    element :start_now_button, 'a', text: 'Start now'
+    element :application_complete, 'h1', text: 'Application complete'
   end
 
   def click_next

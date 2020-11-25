@@ -1,7 +1,7 @@
 Then("I am on the change details page") do
-  click_link 'View profile'
-  click_link 'Change details'
-  expect(page).to have_current_path(%r{/edit})
+  navigation_page.navigation_link.view_profile.click
+  profile_page.content.change_details_link.click
+  expect(change_user_details_page.content).to have_header
 end
 
 When("I change my details") do
@@ -16,28 +16,6 @@ Then("I can see my profile has been changed") do
 end
 
 And("I am on my profile page") do
-  click_link 'View profile'
+  navigation_page.navigation_link.view_profile.click
   expect(profile_page.content).to have_header
-  expect(profile_page).to have_current_path(%r{/users/})
-end
-
-Then("I should see my details") do
-  expect(profile_page.content).to have_full_name
-  expect(profile_page.content).to have_email
-  expect(profile_page.content).to have_role
-  expect(profile_page.content).to have_office
-  expect(profile_page.content).to have_jurisdiction
-  expect(profile_page.content).to have_last_logged_in
-end
-
-When("I clink on change your password") do
-  click_link 'Change your password'
-end
-
-Then("I am taken to change password page") do
-  expect(page).to have_current_path(%r{/change_password})
-end
-
-Then("I should be taken to the change details page") do
-  expect(page).to have_current_path(%r{/edit})
 end

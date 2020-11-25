@@ -3,8 +3,7 @@ When("I click on view profile") do
 end
 
 Then("I am taken to my details") do
-  expect(profile_page).to be_displayed
-  expect(profile_page).to have_current_path(%r{/users/[0-9]+})
+  expect(profile_page.content).to have_header
 end
 
 When("I click on staff guides") do
@@ -12,8 +11,7 @@ When("I click on staff guides") do
 end
 
 Then("I am taken to the staff guides page") do
-  expect(guide_page).to be_displayed
-  expect(guide_page).to have_current_path(%r{/guide})
+  expect(guide_page.content).to have_guide_header
 end
 
 When("I click on feedback") do
@@ -21,8 +19,7 @@ When("I click on feedback") do
 end
 
 Then("I am taken to the feedback page") do
-  expect(feedback_page).to be_displayed
-  expect(feedback_page).to have_current_path(%r{/feedback})
+  expect(feedback_page.content).to have_user_feedback_header
 end
 
 When("I click on letter templates") do
@@ -30,8 +27,7 @@ When("I click on letter templates") do
 end
 
 Then("I am taken to the letter templates page") do
-  expect(letter_template_page).to be_displayed
-  expect(letter_template_page).to have_current_path(%r{/letter_templates})
+  expect(letter_template_page.content).to have_header
 end
 
 When("I click on sign out") do
@@ -64,7 +60,7 @@ Then("I should see the status of the DWP connection") do
 end
 
 When("I start to process a new paper application") do
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
 end
 
@@ -110,11 +106,11 @@ Then("I am taken to the processed application") do
 end
 
 Then("I am taken to the application waiting for evidence") do
-  expect(page).to have_current_path(%r{/evidence/[0-9]+})
+  expect(evidence_page.content).to have_waiting_for_evidence_instance_header
 end
 
 Then("I am taken to the application waiting for part-payment") do
-  expect(page).to have_current_path(%r{/part_payments/[0-9]+})
+  expect(part_payment_page.content).to have_waiting_for_part_payment_instance_heading
 end
 
 Given("I am signed in as a user that has processed an application that is waiting for evidence") do

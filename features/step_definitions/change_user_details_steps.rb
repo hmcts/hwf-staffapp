@@ -1,8 +1,8 @@
 When("I click on change details of a user") do
   click_link 'user'
-  expect(page).to have_current_path(%r{/users/[0-9]+})
-  click_link 'Change details'
-  expect(page).to have_current_path(%r{/users/[0-9]+/edit})
+  expect(staff_details_page.content).to have_header
+  staff_details_page.content.change_details_link.click
+  expect(change_user_details_page.content).to have_header
 end
 
 Then("I can change the user to a user, manager, admin, mi, reader") do

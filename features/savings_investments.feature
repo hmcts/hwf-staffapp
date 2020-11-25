@@ -11,7 +11,7 @@ Feature: Savings and investments page
     Scenario: Successfully submit more than £3000
       When I click on more than £3000
       And I submit how much they have
-      Then I should be taken to the summary page
+      Then I am on the summary page
 
     Scenario: I press Next without selecting either radio button
       When I click next without selecting a savings and investments option
