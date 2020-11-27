@@ -105,7 +105,7 @@ module Views
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
-          CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000+'
+          CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
                WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
                WHEN savings.max_threshold_exceeded = FALSE THEN '0 - 2,999'
                WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
