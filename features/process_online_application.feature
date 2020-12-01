@@ -9,6 +9,7 @@ Feature: Process an online application
     And I click next
     Then I should be taken to the check details page
 
+    @smoke
   Scenario: Complete processing
     When I process the online application
     Then I see the applicant is not eligible for help with fees

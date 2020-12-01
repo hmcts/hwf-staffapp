@@ -1,5 +1,6 @@
 Feature: Summary page
 
+  @smoke
     Scenario: Successfully submit my application
       Given I have completed an application
       And I am on the summary page

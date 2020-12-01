@@ -181,6 +181,11 @@ en-GB:
       heading: Staff guides
       copy: How to process an application, deal with spot checks, part payments, appeals, and fraud.
       link: See the guides
+    support_links:
+      heading: Support links
+      accessibility:
+        title: Accessibility statement for Help with Fees (staff service)
+        heading: Accessibility statement for Help with Fees (staff service)
   error_messages:
     benefit_check:
       dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
