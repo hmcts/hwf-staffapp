@@ -5,4 +5,6 @@ class GuideController < ApplicationController
   respond_to :md
 
   def index; end
+
+  def accessibility_statement; end
 end
