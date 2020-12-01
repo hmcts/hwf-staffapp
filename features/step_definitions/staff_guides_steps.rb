@@ -75,3 +75,11 @@ Then("I can view guides by clicking on the link in the footer") do
   visit '/guide'
   expect(page).to have_text 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
 end
+
+When("I click on the accessibility link in the footer") do
+  sign_in_page.footer.accessibility_statement_link.click
+end
+
+Then("I am on the accessibility statement page") do
+  expect(page).to have_content 'Accessibility statement for Help with Fees (staff service)'
+end
