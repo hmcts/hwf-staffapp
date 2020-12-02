@@ -6,7 +6,6 @@ end
 
 Then("I should be taken to the return letter page") do
   expect(return_letter_page.content).to have_header
-  expect(return_letter_page).to have_current_path(%r{/evidence/1/return_letter})
 end
 
 When("I submit the page with not arrived or too late") do

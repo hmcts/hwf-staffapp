@@ -21,7 +21,7 @@ Given("I am a staff member and I process an online benefit application") do
   user = FactoryBot.create(:user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   reference = OnlineApplication.last.reference
   dashboard_page.content.online_search_reference.set reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -29,10 +29,9 @@ Given("I am a staff member and I process an online benefit application") do
 end
 
 Given("I'm on the Check details page") do
-  expect(application_details_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(application_details_page.content).to have_header
   application_details_page.content.jurisdiction.click
   click_button 'Next', visible: false
-  expect(summary_page).to have_current_path(%r{/online_applications/[0-9]+})
   expect(summary_page.content).to have_header
 end
 
@@ -135,14 +134,13 @@ When("I complete processing the application") do
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('online')
 
-    expect(page).to have_current_path(%r{/applications/[0-9]+/personal_informations})
-    click_button 'Next', visible: false
-    expect(application_details_page).to have_current_path(%r{/applications/[0-9]+/details})
+    expect(personal_details_page.content).to have_header
+    personal_details_page.click_next
+    expect(application_details_page.content).to have_header
     application_details_page.content.jurisdiction.click
-    click_button 'Next', visible: false
-    expect(page).to have_current_path(%r{/applications/[0-9]+/savings_investments})
-    click_button 'Next', visible: false
-    expect(summary_page).to have_current_path(%r{/applications/[0-9]+/summary})
+    application_details_page.click_next
+    expect(savings_investments_page.content).to have_header
+    application_details_page.click_next
     expect(summary_page.content).to have_header
     complete_processing
   end
@@ -153,7 +151,7 @@ When("I click on the 'Pending applications to be processed' link") do
 end
 
 Then("I should be redirected to home page") do
-  expect(page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   WebMock.reset!
 end
 
@@ -179,8 +177,7 @@ end
 
 Then("On selecting the link I should see the online application I was just processing in a list") do
   go_to_pending_applications
-
-  expect(dwp_failed_applications_page).to have_current_path(%r{/dwp_failed_applications})
+  expect(dwp_failed_applications_page.content).to have_page_header
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
   expect(dwp_failed_applications_rows[0]).to have_content('created')
@@ -229,7 +226,7 @@ Then("the 'Id' should still be selectable as a link") do
 end
 
 Then("I should only see the application for my office in the pending list") do
-  expect(dwp_failed_applications_page).to have_current_path(%r{/dwp_failed_applications})
+  expect(dwp_failed_applications_page.content).to have_page_header
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
 
   expect(dwp_failed_applications_rows.size).to eq(1)

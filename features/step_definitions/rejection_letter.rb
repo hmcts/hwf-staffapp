@@ -1,22 +1,22 @@
 Given("I process a paper application with high income") do
   start_application
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
-  expect(application_details_page).to have_current_path(%r{/applications/[0-9]+/personal_informations})
+  expect(personal_details_page.content).to have_header
   personal_details_page.submit_required_personal_details
-  expect(application_details_page).to have_current_path(%r{/applications/[0-9]+/details})
+  expect(application_details_page.content).to have_header
   application_details_page.submit_fee_100
-  expect(savings_investments_page).to have_current_path(%r{/applications/[0-9]+/savings_investments})
+  expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
-  expect(benefits_page).to have_current_path(%r{/applications/[0-9]+/benefits})
+  expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
-  expect(incomes_page).to have_current_path(%r{/applications/[0-9]+/incomes})
+  expect(incomes_page.content).to have_header
   incomes_page.submit_incomes_no
 end
 
 When("I enter input as £{int}") do |int|
   incomes_page.submit_incomes(int)
-  expect(incomes_page).to have_current_path(%r{applications/[0-9]+/summary})
+  expect(summary_page.content).to have_header
   complete_processing
 end
 
@@ -34,7 +34,7 @@ Given("I have an online application with high income") do
 end
 
 When("I process that application") do
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing

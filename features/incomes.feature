@@ -8,12 +8,12 @@ Feature: Incomes page
       When I answer yes to does the applicant financially support any children
       And I submit the total number of children
       And I submit the total monthly income
-      Then I should be taken to the summary page
+      Then I am on the summary page
 
     Scenario: No the applicant does not financially support children
       When I answer no to does the applicant financially support any children
       And I submit the total monthly income
-      Then I should be taken to the summary page
+      Then I am on the summary page
 
     Scenario: Enter number of children and total monthly income
       When I answer yes to does the applicant financially support any children

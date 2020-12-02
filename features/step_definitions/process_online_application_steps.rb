@@ -36,14 +36,13 @@ end
 
 Then("I should be taken to the check details page") do
   expect(process_online_application_page.content).to have_check_details_header
-  expect(process_online_application_page).to have_current_path(%r{/online_applications})
 end
 
 When("I process the online application") do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
-  expect(page).to have_current_path(%r{/online_applications})
+  expect(process_online_application_page.content).to have_check_details_header
   complete_processing
 end
 
@@ -54,8 +53,8 @@ Then("I see the applicant is not eligible for help with fees") do
 end
 
 And("back to start takes me to the homepage") do
-  click_on 'Back to start', visible: false
-  expect(page).to have_current_path('/')
+  process_online_application_page.content.back_to_start_button.click
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 And("I can see my processed application") do

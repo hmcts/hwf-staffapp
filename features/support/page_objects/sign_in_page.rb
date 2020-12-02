@@ -28,6 +28,9 @@ class SignInPage < BasePage
       element :email_support, 'a', text: 'Email support'
     end
   end
+  section :footer, '.govuk-footer' do
+    element :accessibility_statement_link, 'a', text: 'Accessibility statement'
+  end
 
   def sign_in
     content.sign_in_button.click

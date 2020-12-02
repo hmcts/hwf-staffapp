@@ -47,16 +47,16 @@ When("I submit after providing Delivery Manager name or Discretion reason") do
 end
 
 When("I process application through to Check details page") do
-  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
+  expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
 
-  expect(benefits_page).to have_current_path(%r{/benefits})
+  expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_yes
 
-  expect(paper_evidence_page).to have_current_path(%r{/paper_evidence})
+  expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
 
-  expect(summary_page).to have_current_path(%r{/summary})
+  expect(summary_page.content).to have_header
 end
 
 Then("I should see the date fee paid") do

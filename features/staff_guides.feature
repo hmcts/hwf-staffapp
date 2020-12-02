@@ -54,3 +54,7 @@ Feature: Staff guides
       And I am signed in on the guide page
       When I click on suspected fraud
       Then I should be taken to the suspected fraud guide
+
+    Scenario: Accessibility statement footer
+      When I click on the accessibility link in the footer
+      Then I am on the accessibility statement page

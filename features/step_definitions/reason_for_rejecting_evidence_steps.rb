@@ -1,13 +1,10 @@
 And("I am on reason for rejecting the evidence page") do
   click_reference_link
-  expect(page).to have_text "Waiting for evidence"
-  expect(page).to have_current_path(%r{/evidence})
-  click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_page.content).to have_waiting_for_evidence_instance_header
+  evidence_page.content.start_now_button.click
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.problem_with_evidence.click
   evidence_accuracy_page.click_next
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy_incorrect_reason})
   expect(reason_for_rejecting_evidence_page.content).to have_header
 end
 
@@ -27,7 +24,7 @@ When("I successfully submit a single reason") do
 end
 
 Then("I am taken to the summary page") do
-  expect(page).to have_current_path(%r{/summary})
+  expect(summary_page.content).to have_header
 end
 
 Then("I should see my reasons for evidence on the summary page") do

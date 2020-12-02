@@ -31,7 +31,6 @@ When("I click on process application") do
 end
 
 Then("I should be taken to the process application guide") do
-  expect(process_application_guide_page).to have_current_path(%r{/guide/process_application})
   expect(process_application_guide_page).to have_header
 end
 
@@ -40,7 +39,6 @@ When("I click on evidence checks") do
 end
 
 Then("I should be taken to the evidence checks guide") do
-  expect(evidence_checks_guide_page).to have_current_path(%r{/guide/evidence_checks})
   expect(evidence_checks_guide_page).to have_header
 end
 
@@ -49,7 +47,6 @@ When("I click on part-payments") do
 end
 
 Then("I should be taken to the part-payments guide") do
-  expect(part_payments_guide_page).to have_current_path(%r{/guide/part_payments})
   expect(part_payments_guide_page).to have_header
 end
 
@@ -58,7 +55,6 @@ When("I click on appeals") do
 end
 
 Then("I should be taken to the appeals guide") do
-  expect(appeals_guide_page).to have_current_path(%r{/guide/appeals})
   expect(appeals_guide_page).to have_header
 end
 
@@ -71,7 +67,6 @@ When("I click on suspected fraud") do
 end
 
 Then("I should be taken to the suspected fraud guide") do
-  expect(suspected_fraud_guide_page).to have_current_path(%r{/guide/suspected_fraud})
   expect(suspected_fraud_guide_page).to have_header
 end
 
@@ -79,5 +74,12 @@ Then("I can view guides by clicking on the link in the footer") do
   expect(page).to have_xpath('.//a[@href="/guide"][@target="blank"][contains(.,"See the guides")]')
   visit '/guide'
   expect(page).to have_text 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
-  expect(page).to have_current_path('/guide')
+end
+
+When("I click on the accessibility link in the footer") do
+  sign_in_page.footer.accessibility_statement_link.click
+end
+
+Then("I am on the accessibility statement page") do
+  expect(page).to have_content 'Accessibility statement for Help with Fees (staff service)'
 end

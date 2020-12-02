@@ -2,18 +2,18 @@ Given("I am signed in as a user that has processed an application") do
   user = FactoryBot.create(:user)
   eligable_application(user)
   sign_in_page.load_page
-  expect(sign_in_page).to have_current_path(%r{users/sign_in})
+  expect(sign_in_page.content).to have_sign_in_title
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 Given("I am signed in as a user that has processed multiple applications") do
   user = FactoryBot.create(:user)
   create_multiple_applications(user)
   sign_in_page.load_page
-  expect(sign_in_page).to have_current_path(%r{users/sign_in})
+  expect(sign_in_page.content).to have_sign_in_title
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 When("I click on next without making a selection") do
@@ -37,5 +37,5 @@ Given("I have evidence check application") do
   waiting_evidence_application_ni(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end

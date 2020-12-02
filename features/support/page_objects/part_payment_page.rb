@@ -14,6 +14,8 @@ class PartPaymentPage < BasePage
     element :next_steps_line_2, 'p', text: 'Add the reference to the letter'
     element :next_steps_line_3, 'p', text: 'Post the letter and all the documents back to the applicant'
     element :see_guides, 'a', text: 'See the guides'
+    element :waiting_for_part_payment_instance_heading, 'h1', text: /Waiting for part-payment$/
+    element :start_now_button, 'a', text: 'Start now'
   end
 
   def ready_to_process_payment

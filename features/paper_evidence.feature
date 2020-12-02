@@ -6,4 +6,4 @@ Feature: Paper evidence page
 
     Scenario: Successfully submit my required paper evidence details
       When I successfully submit my required paper evidence details
-      Then I should be taken to the summary page
+      Then I am on the summary page
