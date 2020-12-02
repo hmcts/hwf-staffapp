@@ -171,13 +171,13 @@ end
 
 Given("I create an application A that waits for evidence with the same ho_number") do
   @user1 = FactoryBot.create(:user)
-  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L123456')
+  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L1234567')
   @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, office: @user1.office, user: @user1, applicant: @applicant)
 end
 
 And("I create an Application B that has correct evidence with the same ho_number") do
   @user2 = FactoryBot.create(:user)
-  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L123456')
+  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L1234567')
   @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, applicant: @applicant, office: @user2.office, user: @user2)
 
   sign_in_page.load_page
