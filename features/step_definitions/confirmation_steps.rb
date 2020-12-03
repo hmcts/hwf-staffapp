@@ -1,29 +1,29 @@
 And("I have processed an application") do
   start_application
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
 
-  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni
 
-  expect(application_details_page).to have_current_path(%r{/details})
+  expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
 
-  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
+  expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
 
-  expect(benefits_page).to have_current_path(%r{/benefits})
+  expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_yes
 
-  expect(paper_evidence_page).to have_current_path(%r{/paper_evidence})
+  expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
 
-  expect(summary_page).to have_current_path(%r{/summary})
+  expect(summary_page.content).to have_header
   complete_processing
 end
 
 Given("I am on the confirmation page") do
-  expect(confirmation_page).to have_current_path(%r{/confirmation})
+  expect(confirmation_page.content).to have_reference_number_is
 end
 
 When("I click on back to start") do
@@ -31,8 +31,7 @@ When("I click on back to start") do
 end
 
 Then("I should be taken back to my dashboard") do
-  expect(page).to have_text 'Process an online application'
-  expect(page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 Then("I should see my processed application in your last applications") do

@@ -1,16 +1,13 @@
 Given("I am on the incomes part of the application") do
-  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  expect(personal_details_page.content).to have_header
   personal_details_page.submit_required_personal_details
-  expect(application_details_page).to have_current_path(%r{/details})
+  expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
-  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
+  expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
-  expect(benefits_page).to have_current_path(%r{/benefits})
+  expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
-  expect(incomes_page).to have_current_path(%r{/incomes})
-  expect(incomes_page).to be_displayed
   expect(incomes_page.content).to have_header
-  expect(incomes_page.content).to have_question
 end
 
 When("I answer yes to does the applicant financially support any children") do

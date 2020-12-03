@@ -14,10 +14,10 @@ And("I create an Application B that has correct evidence") do
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
-  expect(incomes_page).to have_current_path(%r{/income})
+  expect(incomes_page.content).to have_header
   fill_in 'Total monthly income from evidence', with: 1000
   evidence_income_page.click_next
   evidence_result_page.click_next
@@ -37,8 +37,7 @@ When("I create Application C") do
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
-
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -55,11 +54,11 @@ When("I create an Application B and wrong evidence is provided") do
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
   evidence_accuracy_page.click_next
-  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
+  expect(reason_for_rejecting_evidence_page.content).to have_header
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
   reason_for_rejecting_evidence_page.click_next
   complete_processing
@@ -94,8 +93,7 @@ Then("I create Application D") do
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
-
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -110,10 +108,10 @@ When("Application C has correct evidence") do
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
-  expect(incomes_page).to have_current_path(%r{/income})
+  expect(incomes_page.content).to have_header
   fill_in 'Total monthly income from evidence', with: 1000
   evidence_income_page.click_next
   evidence_result_page.click_next
@@ -129,7 +127,7 @@ Then("I create Application E") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
 
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -143,11 +141,11 @@ When("Application A has failed evidence") do
   dashboard_page.content.waiting_for_evidence_application_link.click
 
   click_on 'Start now', visible: false
-  expect(incomes_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
   evidence_accuracy_page.click_next
-  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/})
+  expect(reason_for_rejecting_evidence_page.content).to have_header
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
   reason_for_rejecting_evidence_page.click_next
   complete_processing
@@ -159,10 +157,10 @@ When("Application D has correct evidence") do
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
-  expect(incomes_page).to have_current_path(%r{/income})
+  expect(incomes_page.content).to have_header
   fill_in 'Total monthly income from evidence', with: 1000
   evidence_income_page.click_next
   evidence_result_page.click_next
@@ -187,10 +185,10 @@ And("I create an Application B that has correct evidence with the same ho_number
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
-  expect(incomes_page).to have_current_path(%r{/income})
+  expect(incomes_page.content).to have_header
   fill_in 'Total monthly income from evidence', with: 1000
   evidence_income_page.click_next
   evidence_result_page.click_next
@@ -210,7 +208,7 @@ When("I create Application C with the same ho_number") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
 
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -229,7 +227,7 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
 
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -243,7 +241,7 @@ Then("I create Application D with the same ho_number") do
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing
@@ -261,11 +259,11 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   click_on 'Start now', visible: false
-  expect(evidence_accuracy_page).to have_current_path(%r{/accuracy})
+  expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
   evidence_accuracy_page.click_next
-  expect(reason_for_rejecting_evidence_page).to have_current_path(%r{/evidence/accuracy_incorrect_reason/2})
+  expect(reason_for_rejecting_evidence_page.content).to have_header
   reason_for_rejecting_evidence_page.content.requested_sources_not_provided.click
   reason_for_rejecting_evidence_page.click_next
   complete_processing
@@ -279,7 +277,7 @@ Then("I create Application E with the same ho_number") do
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
-  expect(process_online_application_page).to have_current_path(%r{/online_applications/[0-9]+/edit})
+  expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
   process_online_application_page.click_next
   complete_processing

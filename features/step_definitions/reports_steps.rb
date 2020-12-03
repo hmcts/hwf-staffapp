@@ -10,7 +10,7 @@ When("I click on finance aggregated report") do
 end
 
 Then("I should be taken to finance aggregated report page") do
-  expect(page).to have_current_path(%r{/reports/finance_report})
+  expect(generate_report_page.content).to have_aggregated_header
 end
 
 When("I click on finance transactional report") do
@@ -19,7 +19,7 @@ When("I click on finance transactional report") do
 end
 
 Then("I should be taken to finance transactional report page") do
-  expect(page).to have_current_path(%r{/reports/finance_transactional_report})
+  expect(generate_report_page.content).to have_transactional_header
 end
 
 When("I click on graphs") do
@@ -28,7 +28,7 @@ When("I click on graphs") do
 end
 
 Then("I should be taken to the graphs page") do
-  expect(page).to have_current_path(%r{/reports/graphs})
+  expect(generate_report_page.content).to have_chart_one
 end
 
 When("I click on public submissions") do
@@ -37,7 +37,7 @@ When("I click on public submissions") do
 end
 
 Then("I should be taken to the public submissions page") do
-  expect(page).to have_current_path(%r{/reports/public})
+  expect(generate_report_page.content).to have_public_application_stats_header
 end
 
 When("I click on letters") do
@@ -46,7 +46,7 @@ When("I click on letters") do
 end
 
 Then("I should be taken to the letters page") do
-  expect(page).to have_current_path(%r{/letter_templates})
+  expect(letter_template_page.content).to have_header
 end
 
 When("I click on raw data extract") do
@@ -55,7 +55,7 @@ When("I click on raw data extract") do
 end
 
 Then("I should be taken to the raw data extract page") do
-  expect(page).to have_current_path(%r{/reports/raw_data})
+  expect(generate_report_page.content).to have_raw_data_extract_header
 end
 
 When("I click on income claims data extract") do
@@ -64,5 +64,5 @@ When("I click on income claims data extract") do
 end
 
 Then("I should be taken to the income claims data extract page") do
-  expect(page).to have_current_path(%r{/report/income_claims_data})
+  expect(generate_report_page.content).to have_income_claims_data_header
 end

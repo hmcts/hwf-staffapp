@@ -4,6 +4,7 @@ class BenefitCheckerPage < BasePage
   element :dwp_banner_offline, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
   element :dwp_banner_online, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
   section :content, '#content' do
+    element :header, 'h1', text: 'Benefits'
     element :dwp_down_warning, '.dwp-down'
     element :paper_evidence_warning, '.page-error', text: 'You will only be able to process this application if you have paper evidence that the applicant is receiving benefits'
     element :no, 'label', text: 'No'

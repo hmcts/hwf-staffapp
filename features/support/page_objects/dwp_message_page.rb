@@ -8,6 +8,7 @@ class DwpMessagePage < BasePage
     element :default_message, 'label', text: 'Use the default DWP check to display message'
     element :selected, 'input[checked="checked"][name="dwp_warning[check_state]"]', visible: false
     element :save_changes, 'input[value="Save changes"]'
+    element :successfully_saved, '.notice', text: 'Your changes have been saved.'
   end
 
   def check_offline
