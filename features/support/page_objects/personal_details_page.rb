@@ -92,8 +92,10 @@ class PersonalDetailsPage < BasePage
     content.application_ho_number.set '1212-0001-0240-0490/01'
   end
 
-  def invalid_ho
-    content.application_ho_number.set 'invalid'
+  def invalid_hos
+    content.application_ho_number.set 'L123456'
+    click_next
+    content.application_ho_number.set 'L12345678/1'
   end
 
   def submit_required_personal_details

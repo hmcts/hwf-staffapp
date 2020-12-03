@@ -36,7 +36,7 @@ Then("I should see that the applicant cannot be under 16 years old error message
 end
 
 When("I enter a home office reference number in the wrong format") do
-  personal_details_page.invalid_ho
+  personal_details_page.invalid_hos
   personal_details_page.click_next
 end
 
