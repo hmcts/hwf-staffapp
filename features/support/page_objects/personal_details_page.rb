@@ -14,7 +14,7 @@ class PersonalDetailsPage < BasePage
     element :ni_hint, '.hint', text: 'Must be completed for benefits-based applications'
     element :application_ni_number, '#application_ni_number'
     element :ho_label, '.govuk-label', text: 'Home Office reference number'
-    element :ho_hint, '.hint', text: 'Where provided, example L123456 or L123456/1 for a family member'
+    element :ho_hint, '.hint', text: 'Where provided, example L1234567 or L1234567/1 for a family member'
     element :application_ho_number, '#application_ho_number'
     element :last_name_error, '.error', text: 'Enter the applicant\'s last name'
     element :last_name_too_short_error, '.error', text: 'Last name is too short (minimum is 2 characters)'
@@ -92,8 +92,10 @@ class PersonalDetailsPage < BasePage
     content.application_ho_number.set '1212-0001-0240-0490/01'
   end
 
-  def invalid_ho
-    content.application_ho_number.set 'invalid'
+  def invalid_hos
+    content.application_ho_number.set 'L123456'
+    click_next
+    content.application_ho_number.set 'L12345678/1'
   end
 
   def submit_required_personal_details
