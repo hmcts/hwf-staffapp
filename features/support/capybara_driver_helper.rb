@@ -34,9 +34,8 @@ end
 
 Capybara.register_driver :saucelabs do |app|
   browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
-  Capybara::Selenium::Driver.new(app, browser: :remote,  url: Settings.saucelabs.url, desired_capabilities: browser)
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
 end
-
 
 if ENV.key?('CIRCLE_ARTIFACTS')
   Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
@@ -53,5 +52,3 @@ Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
   ENV['CAPYBARA_SERVER_PORT'] == 'random'
-
-

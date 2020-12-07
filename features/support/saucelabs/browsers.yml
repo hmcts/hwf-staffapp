@@ -24,11 +24,3 @@ saucelabs:
       name: WIN_FIREFOX_LATEST
       platform: Windows 10
       version: latest
-    firefox_win_previous:
-      browserName: firefox
-      name: WIN_FIREFOX_PREVIOUS
-      platform: Windows 8.1
-      version: latest-1
-
-
-
