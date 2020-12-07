@@ -216,7 +216,7 @@ RSpec.describe Forms::Application::Applicant do
           year_date_of_birth: '1980',
           married: true,
           ni_number: 'AB123456A',
-          ho_number: 'L654321'
+          ho_number: 'L6543210'
         }
       end
 
@@ -241,7 +241,7 @@ RSpec.describe Forms::Application::Applicant do
       end
 
       it 'saves the correct ho_number' do
-        expect(applicant.ho_number).to eq 'L654321'
+        expect(applicant.ho_number).to eq 'L6543210'
       end
     end
 
@@ -283,13 +283,13 @@ RSpec.describe Forms::Application::Applicant do
     end
 
     context 'when NI not provided' do
-      before { personal_information[:ho_number] = 'L123456' }
+      before { personal_information[:ho_number] = 'L1234561' }
 
       it { expect(created_applicant.valid?).to be true }
 
       describe 'format for single applicant' do
         context 'invalid only numbers' do
-          before { personal_information[:ho_number] = '1234567' }
+          before { personal_information[:ho_number] = '12345678' }
 
           it { expect(created_applicant.valid?).to be false }
         end
@@ -301,25 +301,25 @@ RSpec.describe Forms::Application::Applicant do
         end
 
         context 'invalid too short' do
-          before { personal_information[:ho_number] = 'L12345' }
+          before { personal_information[:ho_number] = 'L123456' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'invalid letter not at the begining' do
-          before { personal_information[:ho_number] = '12L345' }
+          before { personal_information[:ho_number] = '12L3456' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'when passed in as lower case' do
-          before { personal_information[:ho_number] = 'l123456' }
+          before { personal_information[:ho_number] = 'l1234567' }
 
           it { expect(created_applicant.valid?).to be true }
 
           it 'capitalize ho number before save' do
             created_applicant.valid?
-            expect(created_applicant.ho_number).to eq('L123456')
+            expect(created_applicant.ho_number).to eq('L1234567')
           end
         end
 
@@ -339,37 +339,37 @@ RSpec.describe Forms::Application::Applicant do
         end
 
         context 'invalid too short' do
-          before { personal_information[:ho_number] = 'L12345/1' }
+          before { personal_information[:ho_number] = 'L123456/1' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'invalid letter not at the begining' do
-          before { personal_information[:ho_number] = '12L345/1' }
+          before { personal_information[:ho_number] = '12L3456/1' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'invalid no number after slash' do
-          before { personal_information[:ho_number] = 'L123456/' }
+          before { personal_information[:ho_number] = 'L1234567/' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'invalid number and letters after slash' do
-          before { personal_information[:ho_number] = 'L123456/1a' }
+          before { personal_information[:ho_number] = 'L1234567/1a' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'invalid letters after slash' do
-          before { personal_information[:ho_number] = 'L123456/a' }
+          before { personal_information[:ho_number] = 'L1234567/a' }
 
           it { expect(created_applicant.valid?).to be false }
         end
 
         context 'valid numbers only after slash' do
-          before { personal_information[:ho_number] = 'L123456/20' }
+          before { personal_information[:ho_number] = 'L1234567/20' }
 
           it { expect(created_applicant.valid?).to be true }
         end

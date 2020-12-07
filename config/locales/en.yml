@@ -427,7 +427,7 @@ en-GB:
         full_name: Full name
         ni_number: 'National Insurance number'
         ho_number: Home Office reference number
-        ho_number_hint: Where provided, example L123456 or L123456/1 for a family member
+        ho_number_hint: Where provided, example L1234567 or L1234567/1 for a family member
         date_of_birth: 'Date of birth'
         day_date_of_birth: 'Day'
         month_date_of_birth: 'Month'
