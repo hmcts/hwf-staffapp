@@ -70,8 +70,8 @@ Wait for 'Sauce Connect is up, you may start your tests.'
 
 [Add the tag '@saucelabs' to a scenario/s that you want to run.]
 
-To run Sauce Labs feature using specific browser:
-$ DRIVER=saucelabs SAUCELABS_BROWSER=ie11_win10 cucumber --tags @saucelabs
+To run Sauce Labs feature using a specific browser:
+$ DRIVER=saucelabs SAUCELABS_BROWSER=chrome_win_latest cucumber --tags @saucelabs
 
 To run Sauce Labs feature on all devices and browsers:
 $ bin/run_saucelabs
