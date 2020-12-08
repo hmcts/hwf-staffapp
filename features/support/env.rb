@@ -102,6 +102,3 @@ Before do
   DatabaseCleaner.clean
 end
 
-Capybara.register_driver :apparition do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
