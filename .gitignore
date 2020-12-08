@@ -16,6 +16,9 @@
 /log/*.json
 /tmp
 
+# Ignore asdf config file
+.tool-versions
+
 # coverage files
 coverage
 coverage/*
