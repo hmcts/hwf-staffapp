@@ -10,6 +10,10 @@ Then("I can view how to guide") do
   expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
+Then("I can view the Job Cards") do
+  expect(guide_page.content.job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/'
+end
+
 Then("I can view the training course") do
   expect(guide_page.content.training_course['href']).to eq 'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
 end
@@ -84,8 +88,9 @@ Then("I should be taken to the guide page") do
   expect(guide_page.content).to have_guide_header
 end
 
-Then("I will see Job Cards link") do
+Then("I will see a Job Cards link") do
   expect(guide_page.content).to have_job_cards
+  expect(guide_page.content.job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/'
 end
 
 Then("I can view guides by clicking on the link in the footer") do
