@@ -30,7 +30,7 @@ class SignInPage < BasePage
   end
   section :footer, '.govuk-footer' do
     element :accessibility_statement_link, 'a', text: 'Accessibility statement'
-    element :see_the_guides,"a[href='/guide']"
+    element :see_the_guides, 'a[href="/guide"]'
   end
 
   def sign_in
