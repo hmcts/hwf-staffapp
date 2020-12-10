@@ -70,6 +70,24 @@ Then("I should be taken to the suspected fraud guide") do
   expect(suspected_fraud_guide_page).to have_header
 end
 
+Then("I can view Staff guides link on footer") do
+  expect(sign_in_page.footer).to have_see_the_guides
+end
+
+When("I click on Staff guides link") do
+  sign_in_page.footer.see_the_guides.click
+end
+
+Then("I should be taken to the guide page") do
+  guide_page.load_page
+  expect(guide_page).to be_displayed
+  expect(guide_page.content).to have_guide_header
+end
+
+Then("I will see Job Cards link") do
+  expect(guide_page.content).to have_job_cards
+end
+
 Then("I can view guides by clicking on the link in the footer") do
   expect(page).to have_xpath('.//a[@href="/guide"][@target="blank"][contains(.,"See the guides")]')
   visit '/guide'

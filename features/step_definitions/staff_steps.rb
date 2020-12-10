@@ -77,3 +77,4 @@ end
 Then("the office filter is disabled") do
   expect(staff_page.content.office_filter).to be_disabled
 end
+
