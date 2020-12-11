@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resource :dwp_warnings, only: [:edit, :update]
 
   post 'api/submissions' => 'api/submissions#create'
+  get 'api/auth/callback' => 'api/hmrc#callback'
+  get 'api/token' => 'api/hmrc#get_token'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'

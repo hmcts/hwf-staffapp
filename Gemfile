@@ -81,6 +81,9 @@ group :development do
   gem 'rack-livereload'
   gem 'terminal-notifier-guard'
   gem 'web-console', '~> 3.7.0'
+  gem 'oauth2'
+  gem 'httparty'
+  gem 'rotp'
 end
 
 group :development, :test do
