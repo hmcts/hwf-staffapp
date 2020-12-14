@@ -14,5 +14,7 @@ class GuidePage < BasePage
     element :appeals, 'a', text: 'Appeals'
     element :fraud_awareness, 'a', text: 'Fraud awareness'
     element :suspected_fraud, 'a', text: 'Suspected fraud'
+    element :job_cards, 'a', text: 'Job Cards'
+    element :guide_body, 'p', text: 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
   end
 end

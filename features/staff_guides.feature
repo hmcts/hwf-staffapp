@@ -6,6 +6,16 @@ Feature: Staff guides
     Scenario: See the guides
       Then I can view guides by clicking on the link in the footer
 
+  Scenario: Verify Job Cards on staff app guides page
+    Then I can view Staff guides link on footer
+    When I click on Staff guides link
+    Then I should be taken to the guide page
+    And I will see a Job Cards link
+
+    Scenario: Verify Job Cards as a signed-in user
+      And I am signed in on the guide page
+      Then I can view the Job Cards
+
     Scenario: How to guide
       And I am signed in on the guide page
       Then I can view how to guide
@@ -25,7 +35,7 @@ Feature: Staff guides
     Scenario: Staff guidance
       And I am signed in on the guide page
       Then I can view staff guidance
-    
+
     Scenario: Process application
       And I am signed in on the guide page
       When I click on process application
@@ -40,12 +50,12 @@ Feature: Staff guides
       And I am signed in on the guide page
       When I click on part-payments
       Then I should be taken to the part-payments guide
-    
+
     Scenario: Appeals
       And I am signed in on the guide page
       When I click on appeals
       Then I should be taken to the appeals guide
-    
+
     Scenario: Fraud awareness
       And I am signed in on the guide page
       Then I can view fraud awareness guide
