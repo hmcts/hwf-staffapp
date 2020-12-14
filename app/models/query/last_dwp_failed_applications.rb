@@ -5,12 +5,12 @@ module Query
     end
 
     def find
-      unless @user.admin?
+      if @user.admin?
+        dwp_faild_for_admin
+      else
         applications = @user.office.applications.where(benefits: true, state: 0).
                        where('applications.created_at between ? AND ?', 3.months.ago, Time.zone.now)
         apps_with_failed_checks(applications)
-      else
-        dwp_faild_for_admin
       end
     end
 
@@ -28,7 +28,8 @@ module Query
     def dwp_faild_for_admin
       Application.joins(:benefit_checks).
         where('applications.created_at between ? AND ?', 3.months.ago, Time.zone.now).
-        where('benefit_checks.dwp_result = ? AND benefit_checks.error_message = ?', 'BadRequest', 'LSCBC959: Service unavailable.')
+        where('benefit_checks.dwp_result = ? AND benefit_checks.error_message = ?',
+              'BadRequest', 'LSCBC959: Service unavailable.')
     end
   end
 end
