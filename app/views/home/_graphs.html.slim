@@ -2,10 +2,15 @@
   section aria-label="Graphs"
 
     h2.govuk-heading-m Total
-    = column_chart @total_type_count, { library: { title: 'All time responses by type', width: '200px' } }
+    = column_chart @total_type_count, { library: { title: 'All time responses by type', width: '200px',
+            colors: ["#1d70b8"], vAxis: { textStyle: { color:'#111111' } }, hAxis: { textStyle: { color:'#111111' } },
+            tooltip: { textStyle: { color: "#111111" } } } }
 
     h2.govuk-heading-m Time of day
-    = column_chart @time_of_day_count, { library: { title: 'Checks by time of day', width: '200px' } }
+    = column_chart @time_of_day_count, { library: { title: 'Checks by time of day', width: '200px',
+            colors: ["#1d70b8"], vAxis: { textStyle: { color:'#111111' } }, hAxis: { textStyle: { color:'#111111' } },
+            tooltip: { textStyle: { color: "#111111" } } } }
+
 
     h2.govuk-heading-m 5 day benefit check/court graphs
     =link_to 'Court graphs', graphs_report_path
