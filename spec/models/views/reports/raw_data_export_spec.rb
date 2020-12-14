@@ -156,11 +156,12 @@ RSpec.describe Views::Reports::RawDataExport do
   end
 
   describe 'savings values' do
+    let(:date_fee_paid) { '' }
     subject { data.total_count }
     let(:application_no_remission) {
       create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                           amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000,
-                                                          date_received: date_received
+                                                          date_received: date_received, date_fee_paid: date_fee_paid
     }
     let(:applicant1) { create :applicant_with_all_details, married: true, ho_number: 'L123456', ni_number: nil, date_of_birth: '25/11/2000' }
     let(:savings_under_3_no_max) {
@@ -174,12 +175,13 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'more then 16' do
       let(:date_received) { '10/11/2020' }
+      let(:date_fee_paid) { '10/10/2020' }
       let(:min_threshold) { true }
       let(:max_threshold) { true }
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"16,000 or more\",,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,\"16,000 or more\",,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
         expect(export).to include(row)
       end
     end
@@ -191,7 +193,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"3,000 - 15,999\",,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,\"3,000 - 15,999\",,JK123456A,,25/11/2000,10/11/2020,,"
         expect(export).to include(row)
       end
     end

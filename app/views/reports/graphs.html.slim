@@ -5,4 +5,6 @@
     - @report_data.each do |data|
       .util_mb-large
         h2.heading-large #{data[:name]} R1
-        = column_chart data[:benefit_checks], colors: ['#dc3912', '#109618', '#ff9900', '#dd4477', '#990099', '#3366cc', '#0099c6'], library: { isStacked: true, title: 'Checks made by date (last 7 days)', vAxis: { format: '#' } }
+        = column_chart data[:benefit_checks], library: { isStacked: true, title: 'Checks made by date (last 7 days)',
+                colors: ["#1d70b8"], vAxis: { textStyle: { color:'#111111' } }, hAxis: { textStyle: { color:'#111111' },
+                        tooltip: { textStyle: { color: "#111111" } } } }
