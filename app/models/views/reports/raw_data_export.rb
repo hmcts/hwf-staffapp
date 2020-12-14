@@ -34,6 +34,7 @@ module Views
         postcode: 'postcode',
         date_of_birth: 'date of birth',
         date_received: 'date received',
+        date_fee_paid: 'date paid',
         date_submitted_online: 'date submitted online'
       }.freeze
 
@@ -117,6 +118,7 @@ module Views
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
           details.date_received AS date_received,
+          details.date_fee_paid AS date_fee_paid,
           oa.created_at AS date_submitted_online
         COLUMNS
       end
