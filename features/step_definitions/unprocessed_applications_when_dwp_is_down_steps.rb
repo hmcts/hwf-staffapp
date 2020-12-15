@@ -242,3 +242,24 @@ end
 Then("there should be no link 'Pending applications to be processed'") do
   expect(dashboard_page.content).to have_no_pending_applications_link
 end
+
+Given("I am logged in as an an admin and there is an application pending") do
+  @current_user = FactoryBot.create(:admin)
+  @applicant = create_application_with_bad_request_result_with(@current_user)
+  RSpec::Mocks.with_temporary_scope do
+    dwp_monitor_state_as('online')
+
+    user = @current_user
+    sign_in_page.load_page
+    sign_in_page.sign_in_with(user)
+
+    expect(dashboard_page).to have_welcome_user
+    expect(dashboard_page).to have_dwp_online_banner
+  end
+end
+
+Then("I should see one application pending") do
+  dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
+  expect(dwp_failed_applications_rows.size).to eq(1)
+  expect(dwp_failed_applications_rows[0]).to have_content("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
+end
