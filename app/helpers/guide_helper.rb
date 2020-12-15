@@ -24,6 +24,6 @@ module GuideHelper
   end
 
   def job_cards_url
-    'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/'
+    'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
   end
 end
