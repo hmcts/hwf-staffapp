@@ -63,8 +63,8 @@ Feature: Unprocessed applications when DWP is down
     And I am a staff member at the 'Pending benefit applications' page with the DWP checker online
     Then I should only see the application for my office in the pending list
 
-  Scenario: Logged in as an admin during DWP outage and can view pending application
-    Given I am logged in as an an admin and there is an application pending
+  Scenario: Logged in as an admin after DWP outage and can view pending application
+    Given I am logged in as an admin and there is an application pending
     And there is a heading 'Process when DWP is back online'
     And I see a link 'Pending applications to be processed' under the heading
     When I click on the 'Pending applications to be processed' link

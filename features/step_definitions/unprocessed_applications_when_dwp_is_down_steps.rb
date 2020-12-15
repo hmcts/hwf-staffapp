@@ -243,7 +243,7 @@ Then("there should be no link 'Pending applications to be processed'") do
   expect(dashboard_page.content).to have_no_pending_applications_link
 end
 
-Given("I am logged in as an an admin and there is an application pending") do
+Given("I am logged in as an admin and there is an application pending") do
   @current_user = FactoryBot.create(:admin)
   @applicant = create_application_with_bad_request_result_with(@current_user)
   RSpec::Mocks.with_temporary_scope do
