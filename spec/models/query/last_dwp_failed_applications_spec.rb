@@ -40,7 +40,7 @@ RSpec.describe Query::LastDwpFailedApplications, type: :model do
       create :benefit_check, :yes_result, application: application2
       create :benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application3
       application4
-      application7
+      create :benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application7
     end
 
     it "contains applications with failed dwp benefit checks only" do

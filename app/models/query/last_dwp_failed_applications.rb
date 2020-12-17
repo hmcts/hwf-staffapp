@@ -27,7 +27,7 @@ module Query
 
     def dwp_faild_for_admin
       Application.joins(:benefit_checks).
-        where('applications.created_at between ? AND ?', 3.months.ago, Time.zone.now).
+        where('applications.created_at between ? AND ? AND applications.state = ?', 3.months.ago, Time.zone.now, 0).
         where('benefit_checks.dwp_result = ? AND benefit_checks.error_message = ?',
               'BadRequest', 'LSCBC959: Service unavailable.')
     end
