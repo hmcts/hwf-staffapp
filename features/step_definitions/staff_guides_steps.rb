@@ -11,7 +11,7 @@ Then("I can view how to guide") do
 end
 
 Then("I can view the Job Cards") do
-  expect(guide_page.content.job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/'
+  expect(guide_page.content.job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view the training course") do
@@ -90,7 +90,7 @@ end
 
 Then("I will see a Job Cards link") do
   expect(guide_page.content).to have_job_cards
-  expect(guide_page.content.job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/'
+  expect(guide_page.content.job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view guides by clicking on the link in the footer") do
