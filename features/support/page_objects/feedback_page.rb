@@ -14,6 +14,11 @@ class FeedbackPage < BasePage
     element :table_headers, '.govuk-table__row', text: 'User name Experience so far Ideas for improvement Rating score Help needed Office Created'
     element :user, 'a', text: 'user'
     elements :cell_item, '.govuk-table__cell'
+    element  :error_summary, '.govuk-error-summary'
+    element  :error_summary_title, 'h2', text: '1 error prevented your feedback from being saved:'
+    element :error_summary_list, 'li', text: 'How would you rate this service? Please select a rating'
+    element :rating_error, '.govuk-error-message span.error', text: 'Please select a rating'
+
   end
 
   def submit_new_feedback
