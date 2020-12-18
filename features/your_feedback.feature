@@ -12,6 +12,11 @@ Feature: Your feedback page
     Then I should be taken to my dashboard
     And I should see your feedback has been recorded notification
 
+  Scenario: Error Message for empty feedback form
+    When I click on Send feedback
+    Then I should see an error summary message
+    And I should see a rating error
+
   @wip @manual
   Scenario: Empty feedback form
     When I click Send feedback
@@ -19,3 +24,5 @@ Feature: Your feedback page
     And I should see an improvement ideas error
     And I should see a rating error
     And I should see a do you need any help error
+    
+    

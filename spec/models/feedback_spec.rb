@@ -18,6 +18,11 @@ RSpec.describe Feedback, type: :model do
       feedback.office = nil
       expect(feedback).to be_invalid
     end
+
+    it 'requires a rating' do
+      feedback.rating = nil
+      expect(feedback).to be_invalid
+    end
   end
 
   context 'when the user of the feedback' do

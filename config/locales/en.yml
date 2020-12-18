@@ -759,6 +759,10 @@ en-GB:
           attributes:
             application:
               required: "can't be blank"
+        feedback:
+          attributes:
+            rating:
+              blank: "Please select a rating"
 
     attributes:
       user:
