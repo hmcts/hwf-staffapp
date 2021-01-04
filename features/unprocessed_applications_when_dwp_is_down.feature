@@ -44,7 +44,7 @@ Feature: Unprocessed applications when DWP is down
     Then I should be on the page 'Pending benefit applications'
     And I should see subheading 'Process when DWP is back online'
     And I see a table view of pending applications
-    And I should see all the pending application columns
+    And I should see all the pending application columns for non-admin
 
   Scenario: When there are no applications on the pending list
     Given There are no applications pending
@@ -71,5 +71,5 @@ Feature: Unprocessed applications when DWP is down
     Then I should be on the page 'Pending benefit applications'
     And I should see subheading 'Process when DWP is back online'
     And I see a table view of pending applications
-    And I should see all the pending application columns
+    And I should see all the pending application columns for admin
     And I should see one application pending

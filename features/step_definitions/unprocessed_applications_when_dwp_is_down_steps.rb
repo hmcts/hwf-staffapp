@@ -206,14 +206,25 @@ Then("I see a table view of pending applications") do
   expect(dwp_failed_applications_page.table_rows.size).to eq(1)
 end
 
-Then("I should see all the pending application columns") do
+Then("I should see all the pending application columns for non-admin") do
   column_headings = dwp_failed_applications_page.table_heading
   expect(column_headings[0].text).to eq('Id')
   expect(column_headings[1].text).to eq('Status')
   expect(column_headings[2].text).to eq('Applicant')
   expect(column_headings[3].text).to eq('Last updated')
   expect(column_headings[4].text).to eq('Process by')
-  expect(column_headings[5].text).to eq('Ready to process?')
+  expect(column_headings[6].text).to eq('Ready to process?')
+end
+
+Then("I should see all the pending application columns for admin") do
+  column_headings = dwp_failed_applications_page.table_heading
+  expect(column_headings[0].text).to eq('Id')
+  expect(column_headings[1].text).to eq('Status')
+  expect(column_headings[2].text).to eq('Applicant')
+  expect(column_headings[3].text).to eq('Last updated')
+  expect(column_headings[4].text).to eq('Process by')
+  expect(column_headings[5].text).to eq('Office')
+  expect(column_headings[6].text).to eq('Ready to process?')
 end
 
 Then("I should see 'Not ready to process' in red text") do
