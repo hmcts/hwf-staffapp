@@ -206,14 +206,25 @@ Then("I see a table view of pending applications") do
   expect(dwp_failed_applications_page.table_rows.size).to eq(1)
 end
 
-Then("I should see all the pending application columns") do
+Then("I should see all the pending application columns for non-admin") do
   column_headings = dwp_failed_applications_page.table_heading
   expect(column_headings[0].text).to eq('Id')
   expect(column_headings[1].text).to eq('Status')
   expect(column_headings[2].text).to eq('Applicant')
   expect(column_headings[3].text).to eq('Last updated')
   expect(column_headings[4].text).to eq('Process by')
-  expect(column_headings[5].text).to eq('Ready to process?')
+  expect(column_headings[6].text).to eq('Ready to process?')
+end
+
+Then("I should see all the pending application columns for admin") do
+  column_headings = dwp_failed_applications_page.table_heading
+  expect(column_headings[0].text).to eq('Id')
+  expect(column_headings[1].text).to eq('Status')
+  expect(column_headings[2].text).to eq('Applicant')
+  expect(column_headings[3].text).to eq('Last updated')
+  expect(column_headings[4].text).to eq('Process by')
+  expect(column_headings[5].text).to eq('Office')
+  expect(column_headings[6].text).to eq('Ready to process?')
 end
 
 Then("I should see 'Not ready to process' in red text") do
@@ -241,4 +252,25 @@ end
 
 Then("there should be no link 'Pending applications to be processed'") do
   expect(dashboard_page.content).to have_no_pending_applications_link
+end
+
+Given("I am logged in as an admin and there is an application pending") do
+  @current_user = FactoryBot.create(:admin)
+  @applicant = create_application_with_bad_request_result_with(@current_user)
+  RSpec::Mocks.with_temporary_scope do
+    dwp_monitor_state_as('online')
+
+    user = @current_user
+    sign_in_page.load_page
+    sign_in_page.sign_in_with(user)
+
+    expect(dashboard_page).to have_welcome_user
+    expect(dashboard_page).to have_dwp_online_banner
+  end
+end
+
+Then("I should see one application pending") do
+  dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
+  expect(dwp_failed_applications_rows.size).to eq(1)
+  expect(dwp_failed_applications_rows[0]).to have_content("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
 end
