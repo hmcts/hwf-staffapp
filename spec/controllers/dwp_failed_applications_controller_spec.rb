@@ -27,5 +27,22 @@ RSpec.describe DwpFailedApplicationsController do
         expect(assigns(:list)).to eql(['waiting apps'])
       end
     end
+
+    describe 'authorize' do
+      context 'admin' do
+        let(:user) { create :staff, office: office, role: 'admin' }
+
+        it 'does not redirect' do
+          expect(response).to have_http_status(200)
+        end
+      end
+      context 'mi' do
+        let(:user) { create :staff, office: office, role: 'mi' }
+
+        it 'redirect request' do
+          expect(response).to have_http_status(302)
+        end
+      end
+    end
   end
 end

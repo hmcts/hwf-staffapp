@@ -15,7 +15,7 @@ class DashboardPage < BasePage
     elements :last_application, '.govuk-table__row'
     element :last_application_header, 'h3', text: 'Your last applications'
     element :last_application_link, 'a', text: '1'
-    element :waiting_for_evidence_application_link, 'a', text: 'AB001-20-'
+    element :waiting_for_evidence_application_link, 'a', text: "AB001-#{Time.zone.now.strftime('%y')}-"
     element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
     element :waiting_for_evidence, '#waiting-for-evidence'
     element :waiting_for_part_payment, '#waiting-for-part-payment'
