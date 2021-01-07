@@ -17,7 +17,7 @@ Capybara.register_driver :headless do |app|
 end
 
 Capybara.register_driver :apparition do |app|
-  Capybara::Apparition::Driver.new(app, js_errors: false, timeout: 60)
+  Capybara::Apparition::Driver.new(app, js_errors: false)
 end
 
 Capybara.register_driver :chrome do |app|
