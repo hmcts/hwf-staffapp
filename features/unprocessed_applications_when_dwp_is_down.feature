@@ -44,7 +44,7 @@ Feature: Unprocessed applications when DWP is down
     Then I should be on the page 'Pending benefit applications'
     And I should see subheading 'Process when DWP is back online'
     And I see a table view of pending applications
-    And I should see all the pending application columns
+    And I should see all the pending application columns for non-admin
 
   Scenario: When there are no applications on the pending list
     Given There are no applications pending
@@ -62,3 +62,14 @@ Feature: Unprocessed applications when DWP is down
     Given There are 2 applications that have been submitted and pending for different offices
     And I am a staff member at the 'Pending benefit applications' page with the DWP checker online
     Then I should only see the application for my office in the pending list
+
+  Scenario: Logged in as an admin after DWP outage and can view pending application
+    Given I am logged in as an admin and there is an application pending
+    And there is a heading 'Process when DWP is back online'
+    And I see a link 'Pending applications to be processed' under the heading
+    When I click on the 'Pending applications to be processed' link
+    Then I should be on the page 'Pending benefit applications'
+    And I should see subheading 'Process when DWP is back online'
+    And I see a table view of pending applications
+    And I should see all the pending application columns for admin
+    And I should see one application pending

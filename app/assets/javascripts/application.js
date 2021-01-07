@@ -31,3 +31,5 @@
 //= require data_layer_push
 //= require gtm_track_timestamps
 //= require error_class_loader
+//= require refund
+

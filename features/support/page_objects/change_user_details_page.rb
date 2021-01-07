@@ -7,5 +7,6 @@ class ChangeUserDetailsPage < BasePage
     element :reader_radio, '.govuk-radios__item', text: 'Reader'
     element :role, 'p', text: 'Manager'
     element :county_radio, '.govuk-radios__item', text: 'County'
+    element :save_changes_button, 'input[value="Save changes"]'
   end
 end

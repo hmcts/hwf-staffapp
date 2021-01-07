@@ -2,8 +2,9 @@ When("I search for an application using a valid hwf reference") do
   expect(find_application_page.content).to have_find_application_header
   find_application_page.content.wait_until_search_input_visible
   find_application_page.content.search_input.set "#{reference_prefix}-000001"
+  expect(dashboard_page.content).not_to have_search_results_heading
   find_application_page.content.search_button.click
-  expect(dashboard_page).to have_current_path(%r{/completed_search})
+  expect(dashboard_page.content).to have_search_results_heading
 end
 
 Then("I see that application under search results") do
@@ -19,15 +20,17 @@ end
 When("I search for an application using a last name") do
   find_application_page.content.wait_until_search_input_visible
   find_application_page.content.search_input.set 'Smith'
+  expect(dashboard_page.content).not_to have_search_results_heading
   find_application_page.content.search_button.click
-  expect(page).to have_current_path(%r{/completed_search})
+  expect(dashboard_page.content).to have_search_results_heading
 end
 
 When("I search for an application using a full name") do
   find_application_page.content.wait_until_search_input_visible
   find_application_page.content.search_input.set 'John Christopher Smith'
+  expect(dashboard_page.content).not_to have_search_results_heading
   find_application_page.content.search_button.click
-  expect(page).to have_current_path(%r{/completed_search})
+  expect(dashboard_page.content).to have_search_results_heading
 end
 
 When("there is a single result for that full name") do
@@ -100,9 +103,10 @@ end
 Given("I have more than 20 search results") do
   sign_in_page.load_page
   sign_in_page.user_account_with_applications
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
+  expect(dashboard_page.content).not_to have_search_results_heading
   find_application_page.search_case_number('JK123456A')
-  expect(find_application_page).to have_current_path(%r{/completed_search})
+  expect(dashboard_page.content).to have_search_results_heading
 end
 
 Then("I see that it is paginated by 20 results per page") do
@@ -125,7 +129,7 @@ Given("I have a list of search results") do
   create_multiple_applications(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   fill_in 'Search', with: 'Smith'
   dashboard_page.content.search_button.click
 end
@@ -183,14 +187,14 @@ Given("a user has processed an application") do
   eligable_application(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_current_path('/')
-  click_link 'Sign out', visible: false
-  expect(sign_in_page).to have_current_path(%r{/users/sign_in})
+  expect(dashboard_page.content).to have_find_an_application_heading
+  navigation_page.navigation_link.sign_out.click
+  expect(sign_in_page.content).to have_sign_in_title
 end
 
 Given("I am signed in as a user from a different office") do
   sign_in_page.user_account
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
 end
 
 When("I search for the application processed by the different office") do

@@ -53,18 +53,25 @@ Please note: Firefox with macOS 10.15 “Catalina”, please refer to [macOS not
 
 ### Running cross browser and device tests using Sauce Labs
 
-Replace 'SAUCE_USERNAME' and 'SAUCE_ACCESS_KEY' in hwf-publicapp/.env.test with your account details
+Replace 'SAUCE_USERNAME' and 'SAUCE_ACCESS_KEY' in hwf-staffapp/.env.test with your account details
 
 Run tunnel:
-$ ~/sc-4.4.7-osx/bin/sc -u <SAUCE_USERNAME> -k <SAUCE_ACCESS_KEY> --se-port 4449
+Go to your Terminal
+
+Go to the path where you've downloaded Sauce connect folder
+Example: cd Downloads/sc-4.6.2-osx 
+
+Run below command 
+$ bin/sc -u <SAUCE_USERNAME> -k <SAUCE_ACCESS_KEY> --se-port 4449
+
 Replace <SAUCE_USERNAME> and <SAUCE_ACCESS_KEY> with your account details
 
 Wait for 'Sauce Connect is up, you may start your tests.'
 
 [Add the tag '@saucelabs' to a scenario/s that you want to run.]
 
-To run Sauce Labs feature using specific browser:
-$ DRIVER=saucelabs SAUCELABS_BROWSER=ie11_win7 cucumber --tags @saucelabs
+To run Sauce Labs feature using a specific browser:
+$ DRIVER=saucelabs SAUCELABS_BROWSER=chrome_win_latest cucumber --tags @saucelabs
 
 To run Sauce Labs feature on all devices and browsers:
 $ bin/run_saucelabs
@@ -76,3 +83,28 @@ To open screenshot or html:
 $ open ./screenshot_cucumber_Start-now_2017-04-24-11-40-28.186.png
 
 $ open ./screenshot_cucumber_Start-now_2017-04-24-11-40-28.186.html
+
+### Creating an HTML report
+
+Creating an HTML report uses the report_builder gem so ensure that you have done a bundle install before continuing.
+
+To create a HTML report detailing the results of a cucumber test:
+
+Run the cucumber tests with the "report" profile:
+
+`$ cucumber -p report` or 
+
+`$ cucumber -p report features/address.feature` (eg for one feature)
+
+This will create a .json file in the ~/features/cucumber-report directory which details the results of the cucumber 
+tests. The file will be embedded with screenshots of any failed tests.
+
+To convert the .json into a .html file, execute:
+
+`$ ruby features/support/report_builder.rb`
+
+This will create the .html in the features/cucumber-report directory. Open in browser by right-clicking the file and 
+going to 'Open in Browser'. 
+
+Running smoke tests
+$ bundle exec cucumber --tags @smoke

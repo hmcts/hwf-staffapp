@@ -10,6 +10,10 @@ Then("I can view how to guide") do
   expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
+Then("I can view the Job Cards") do
+  expect(guide_page.content.job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/job-cards/'
+end
+
 Then("I can view the training course") do
   expect(guide_page.content.training_course['href']).to eq 'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
 end
@@ -31,7 +35,6 @@ When("I click on process application") do
 end
 
 Then("I should be taken to the process application guide") do
-  expect(process_application_guide_page).to have_current_path(%r{/guide/process_application})
   expect(process_application_guide_page).to have_header
 end
 
@@ -40,7 +43,6 @@ When("I click on evidence checks") do
 end
 
 Then("I should be taken to the evidence checks guide") do
-  expect(evidence_checks_guide_page).to have_current_path(%r{/guide/evidence_checks})
   expect(evidence_checks_guide_page).to have_header
 end
 
@@ -49,7 +51,6 @@ When("I click on part-payments") do
 end
 
 Then("I should be taken to the part-payments guide") do
-  expect(part_payments_guide_page).to have_current_path(%r{/guide/part_payments})
   expect(part_payments_guide_page).to have_header
 end
 
@@ -58,7 +59,6 @@ When("I click on appeals") do
 end
 
 Then("I should be taken to the appeals guide") do
-  expect(appeals_guide_page).to have_current_path(%r{/guide/appeals})
   expect(appeals_guide_page).to have_header
 end
 
@@ -71,13 +71,38 @@ When("I click on suspected fraud") do
 end
 
 Then("I should be taken to the suspected fraud guide") do
-  expect(suspected_fraud_guide_page).to have_current_path(%r{/guide/suspected_fraud})
   expect(suspected_fraud_guide_page).to have_header
+end
+
+Then("I can view Staff guides link on footer") do
+  expect(sign_in_page.footer).to have_see_the_guides
+end
+
+When("I click on Staff guides link") do
+  sign_in_page.footer.see_the_guides.click
+end
+
+Then("I should be taken to the guide page") do
+  guide_page.load_page
+  expect(guide_page).to be_displayed
+  expect(guide_page.content).to have_guide_header
+end
+
+Then("I will see a Job Cards link") do
+  expect(guide_page.content).to have_job_cards
+  expect(guide_page.content.job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view guides by clicking on the link in the footer") do
   expect(page).to have_xpath('.//a[@href="/guide"][@target="blank"][contains(.,"See the guides")]')
   visit '/guide'
   expect(page).to have_text 'How to process an application, deal with evidence checks, part-payments, appeals, and fraud.'
-  expect(page).to have_current_path('/guide')
+end
+
+When("I click on the accessibility link in the footer") do
+  sign_in_page.footer.accessibility_statement_link.click
+end
+
+Then("I am on the accessibility statement page") do
+  expect(page).to have_content 'Accessibility statement for Help with Fees (staff service)'
 end

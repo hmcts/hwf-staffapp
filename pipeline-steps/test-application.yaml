@@ -33,11 +33,15 @@ steps:
   displayName: 'DB load'
 
 - script: |
-    bundle exec cucumber --fail-fast --order random --no-strict-flaky --retry 3
+    bundle exec rake parallel:create
+  displayName: 'Parallel DB load'
+
+- script: |
+    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
   displayName: 'cucumber'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --fail-fast --format documentation --format RspecJunitFormatter --out test-rspec.xml
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
   displayName: 'rspec'
 
 - script: |

@@ -2,6 +2,9 @@ class GenerateReportPage < BasePage
   section :content, '#content' do
     element :aggregated_header, 'h1', text: 'Generate finance aggregated report'
     element :transactional_header, 'h1', text: 'Generate finance transactional report'
+    element :public_application_stats_header, 'h1', text: 'Public application stats'
+    element :raw_data_extract_header, 'h1', text: 'Raw data extract'
+    element :income_claims_data_header, 'h1', text: 'Income claims data by court'
     element :generate_report_button, 'input[value="Generate report"]'
     element :date_from_label, 'label', text: 'Date From'
     elements :date_hint, '.hint', text: 'Use this format DD/MM/YYYY'
@@ -23,6 +26,7 @@ class GenerateReportPage < BasePage
     element :benefit_label, '.govuk-label', text: 'Benefit'
     element :income_label, '.govuk-label', text: 'Income'
     element :refund, '.govuk-label', text: 'Refund'
+    element :chart_one, '#chart-1'
   end
 
   def generate_report

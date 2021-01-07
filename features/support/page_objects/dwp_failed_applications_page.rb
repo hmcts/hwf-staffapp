@@ -1,4 +1,6 @@
 class DwpFailedApplicationsPage < BasePage
+  set_url '/dwp_failed_applications'
+
   section :content, '#content' do
     element :page_header, 'H1', class: 'heading-icon-dwp_failed_applications', text: 'Pending benefit applications'
     element :sub_heading, 'caption', class: 'govuk-table__caption', text: 'Process when DWP is back online'

@@ -34,6 +34,7 @@ module Views
         postcode: 'postcode',
         date_of_birth: 'date of birth',
         date_received: 'date received',
+        date_fee_paid: 'date paid',
         date_submitted_online: 'date submitted online'
       }.freeze
 
@@ -105,9 +106,11 @@ module Views
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
-          CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000+'
+          CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
                WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
                WHEN savings.max_threshold_exceeded = FALSE THEN '0 - 2,999'
+               WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
+               WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
                ELSE ''
           END AS capital,
           savings.amount AS savings_amount,
@@ -115,6 +118,7 @@ module Views
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
           details.date_received AS date_received,
+          details.date_fee_paid AS date_fee_paid,
           oa.created_at AS date_submitted_online
         COLUMNS
       end

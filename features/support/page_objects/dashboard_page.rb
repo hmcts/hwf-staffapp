@@ -1,4 +1,6 @@
 class DashboardPage < BasePage
+  set_url '/'
+
   element :welcome_user, 'span', text: 'Welcome user'
   element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
   element :dwp_online_banner, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
@@ -13,16 +15,27 @@ class DashboardPage < BasePage
     elements :last_application, '.govuk-table__row'
     element :last_application_header, 'h3', text: 'Your last applications'
     element :last_application_link, 'a', text: '1'
-    element :waiting_for_evidence_application_link, 'a', text: 'AB001-20-'
+    element :waiting_for_evidence_application_link, 'a', text: "AB001-#{Time.zone.now.strftime('%y')}-"
     element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
     element :waiting_for_evidence, '#waiting-for-evidence'
+    element :waiting_for_part_payment, '#waiting-for-part-payment'
     element :updated_applications, '.updated_applications', text: 'Mr John Christopher Smith'
-    element :generate_reports_button, '.button', text: 'Generate reports'
     element :deleted_applications, 'a', text: 'Deleted applications'
     element :online_search_reference, '#online_search_reference'
     element :process_when_back_online_heading, 'h3', text: 'Process when DWP is back online'
     element :pending_applications_link, 'a', class: 'dwp-failed-applications', text: 'Pending applications to be processed'
     element :search_button, 'input[value="Search"]', visible: false
+    element :online_search_reference_error, 'label', text: 'Reference number is not recognised'
+    element :find_application_error, 'label', text: 'No results found'
+    element :total_graph, '#chart-1'
+    element :time_of_day_graph, '#chart-2'
+    element :view_offices, 'a', text: 'View offices'
+    element :generate_reports_button, '.button', text: 'Generate reports'
+    element :court_graphs, 'a', text: 'Court graphs'
+    element :process_a_paper_application_heading, 'h2', text: 'Process a paper application'
+    element :process_an_online_application_heading, 'h2', text: 'Process an online application'
+    element :find_an_application_heading, 'h2', text: 'Find an application'
+    element :search_results_heading, 'h3', text: 'Search results'
   end
 
   def look_up_reference(reference)

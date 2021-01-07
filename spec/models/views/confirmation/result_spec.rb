@@ -38,23 +38,56 @@ RSpec.describe Views::Confirmation::Result do
     context "when discretion is nil" do
       let(:detail) { build_stubbed(:detail, discretion_applied: nil) }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
 
   end
 
   describe '#savings_passed?' do
     subject { view.savings_passed? }
-    [true, false].each do |value|
-      context "when threshold_exceeded is #{value}" do
-        before do
-          allow(application).to receive(:saving).and_return(saving)
-          allow(saving).to receive(:passed?).and_return(!value)
-        end
 
-        it { is_expected.to eq I18n.t((!value).to_s, scope: scope) }
+    context "is true " do
+      before do
+        allow(application).to receive(:saving).and_return(saving)
+        allow(saving).to receive(:passed?).and_return(true)
+        allow(saving).to receive(:passed).and_return(true)
+      end
+
+      it { is_expected.to eq I18n.t(true.to_s, scope: scope) }
+
+      context 'override exists' do
+        let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: 5) }
+        let(:application) { build_stubbed(:application, :benefit_type) }
+
+        before { decision_override }
+
+        it { is_expected.to eq I18n.t(true.to_s, scope: scope) }
       end
     end
+
+    context "is false" do
+      before do
+        allow(application).to receive(:saving).and_return(saving)
+        allow(saving).to receive(:passed?).and_return(false)
+        allow(saving).to receive(:passed).and_return(false)
+      end
+
+      it { is_expected.to eq I18n.t(false.to_s, scope: scope) }
+    end
+
+    context 'and there is no saving' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: 5) }
+      let(:application) { build_stubbed(:application, :income_type, benefits: nil) }
+
+      before do
+        allow(application).to receive(:saving).and_return(saving)
+        allow(saving).to receive(:passed).and_return(nil)
+        decision_override
+      end
+
+      it { is_expected.to be nil }
+    end
+
   end
 
   describe '#benefits_passed?' do
@@ -115,13 +148,22 @@ RSpec.describe Views::Confirmation::Result do
         it { is_expected.to eq "✓ Passed (by manager's decision)" }
       end
 
+      context 'but there is no benefit' do
+        let(:application) { build_stubbed(:application, :income_type, benefits: nil) }
+        let(:id) { 5 }
+        it { is_expected.to be nil }
+      end
     end
   end
 
   describe '#income_passed?' do
     subject { view.income_passed? }
 
-    let(:application) { build_stubbed(:application, :income_type, state: state, outcome: outcome) }
+    let(:application) {
+      build_stubbed(:application, :income_type,
+                    state: state, outcome: outcome, income_max_threshold_exceeded: threshold_exceeded)
+    }
+    let(:threshold_exceeded) { nil }
 
     context 'when the application is a full remission' do
       let(:state) { 3 }
@@ -142,6 +184,20 @@ RSpec.describe Views::Confirmation::Result do
       let(:outcome) { 'none' }
 
       it { is_expected.to eq string_failed }
+    end
+
+    context 'decision_override' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: 5) }
+      before { decision_override }
+      let(:threshold_exceeded) { true }
+
+      context 'when the application is a non remission' do
+        let(:state) { 3 }
+        let(:outcome) { 'none' }
+
+        it { is_expected.to eq "✓ Passed (by manager's decision)" }
+      end
+
     end
   end
 

@@ -2,7 +2,7 @@ class SignInPage < BasePage
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  set_url '/'
+  set_url '/users/sign_in'
 
   element :welcome_user, 'span', text: 'Welcome user'
   section :content, '#content' do
@@ -27,6 +27,10 @@ class SignInPage < BasePage
       element :technical_issues, 'p', text: 'Having technical issues'
       element :email_support, 'a', text: 'Email support'
     end
+  end
+  section :footer, '.govuk-footer' do
+    element :accessibility_statement_link, 'a', text: 'Accessibility statement'
+    element :see_the_guides, 'a[href="/guide"]'
   end
 
   def sign_in

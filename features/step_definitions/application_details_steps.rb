@@ -1,6 +1,5 @@
 Given(/^I am on the application details part of the application$/) do
   go_to_application_details_page
-  expect(application_details_page).to have_current_path(%r{/details})
   expect(application_details_page.content).to have_header
 end
 
@@ -9,7 +8,6 @@ When(/^I successfully submit my required application details$/) do
 end
 
 Then(/^I should be taken to savings and investments page$/) do
-  expect(savings_investments_page).to have_current_path(%r{/savings_investments})
   expect(savings_investments_page.content).to have_header
 end
 
@@ -27,7 +25,6 @@ When(/^I submit the form with a help with fees form number '(.+?)'$/) do |num|
 end
 
 Then(/^I should see you entered the help with fees form number error message$/) do
-  expect(page).to have_current_path(%r{/details})
   expect(application_details_page.content).to have_invalid_form_number_message
 end
 
@@ -53,6 +50,5 @@ When("I submit the form with a fee £10,001 - £19,999") do
 end
 
 Then("I should be taken to ask a manager page") do
-  expect(approve_page).to have_current_path(%r{/approve})
   expect(approve_page.content).to have_header
 end

@@ -1,0 +1,2 @@
+--format documentation
+--format RspecJunitFormatter --out test-rspec.xml

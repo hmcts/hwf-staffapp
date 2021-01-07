@@ -22,4 +22,8 @@ module GuideHelper
   def covid19_guidance_url
     'https://intranet.justice.gov.uk/documents/2020/04/covid-19-guidance-for-help-with-fees-process.pdf'
   end
+
+  def job_cards_url
+    'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
+  end
 end

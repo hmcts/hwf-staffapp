@@ -1,23 +1,21 @@
 Given("I am admin on the staff page") do
   staff_page.set_up_multiple_users
   sign_in_page.load_page
-  expect(sign_in_page).to have_current_path('/users/sign_in')
+  expect(sign_in_page.content).to have_sign_in_title
   sign_in_page.admin_account
-  expect(sign_in_page).to have_current_path('/')
-  click_link 'View staff'
-  expect(staff_page).to be_displayed
-  expect(staff_page).to have_current_path('/users')
+  expect(dashboard_page.content).to have_find_an_application_heading
+  navigation_page.navigation_link.view_staff.click
+  expect(staff_page.content).to have_header
 end
 
 Given("I am manager on the staff page") do
   staff_page.set_up_multiple_users
   sign_in_page.load_page
-  expect(sign_in_page).to have_current_path('/users/sign_in')
+  expect(sign_in_page.content).to have_sign_in_title
   sign_in_page.manager_account
   expect(change_user_details_page.content).to have_header
-  click_link 'View staff'
-  expect(staff_page).to be_displayed
-  expect(staff_page).to have_current_path('/users')
+  navigation_page.navigation_link.view_staff.click
+  expect(staff_page.content).to have_header
 end
 
 When("I filter by office") do
@@ -35,8 +33,8 @@ When("I filter by activity") do
 end
 
 Then("I see all the results for that activity") do
-  expect(users_page.content).to have_active_result
-  expect(users_page.content).to have_no_inactive_result
+  expect(staff_page.content).to have_active_result
+  expect(staff_page.content).to have_no_inactive_result
 end
 
 And("I change the member of staff to a reader") do
@@ -45,15 +43,15 @@ And("I change the member of staff to a reader") do
 end
 
 Then("I can see that the user is a reader") do
-  expect(users_page.content).to have_reader_role
-  expect(users_page).to have_content("User updated.")
+  expect(staff_page.content).to have_reader_role
+  expect(staff_page).to have_content("User updated.")
 end
 
 And("I change the jurisdiction") do
   expect(change_user_details_page.content.radio[6].text).to have_content Jurisdiction.first.name
   change_user_details_page.content.radio[6].click
-  click_button 'Save changes'
-  expect(page).to have_current_path(%r{/users/[0-9]+})
+  change_user_details_page.content.save_changes_button.click
+  expect(staff_details_page.content).to have_header
 end
 
 Then("I should see the jurisdiction has been updated") do
@@ -65,7 +63,7 @@ When("I click on add staff") do
 end
 
 Then("I am taken to the send invitation page") do
-  expect(page).to have_current_path(%r{/users/invitation/new})
+  expect(page).to have_content 'Send invitation'
 end
 
 When("I click on deleted staff") do
@@ -73,7 +71,7 @@ When("I click on deleted staff") do
 end
 
 Then("I am taken to the deleted staff page") do
-  expect(page).to have_current_path(%r{/users/deleted})
+  expect(page).to have_text 'Deleted staff'
 end
 
 Then("the office filter is disabled") do

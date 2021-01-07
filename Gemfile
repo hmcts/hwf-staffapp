@@ -51,7 +51,7 @@ gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 gem 'slim-rails', '~> 3.2'
 
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 5.0.4'
 
 # Date validation
 gem 'date_validator', '0.9'
@@ -66,7 +66,7 @@ gem "paper_trail"
 # Google tag Manager
 gem 'gtm_on_rails'
 
-gem 'chartkick', '~> 3.3.0'
+gem 'chartkick', '~> 3.4.0'
 gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'nokogiri'
@@ -113,6 +113,7 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'rails-controller-testing'
+  gem 'report_builder'
   gem 'rspec_junit_formatter'
   gem 'rubyzip'
   gem 'shoulda-matchers'

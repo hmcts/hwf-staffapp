@@ -6,7 +6,7 @@ module Forms
       MAXIMUM_AGE = 120
       # rubocop:disable MutableConstant
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-      HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{6}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}.freeze
+      HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{7}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}.freeze
       # rubocop:enable MutableConstant
       include ActiveModel::Validations::Callbacks
 

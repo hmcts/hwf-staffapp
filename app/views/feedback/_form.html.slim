@@ -1,69 +1,80 @@
 = form_for @feedback, url: feedback_create_path do |f|
 
   - if @feedback.errors.any?
-    #error_explanation
-      h3.govuk-heading-m = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
-      ul
-        - @feedback.errors.full_messages.each do |message|
-          li = message
+    .govuk-error-summary aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary"
+      h2.govuk-error-summary__title#error-summary-title
+        = "#{pluralize(@feedback.errors.count, "error")} prevented your feedback from being saved:"
+
+      .govuk-error-summary__body
+        ul.govuk-list.govuk-error-summary__list
+          - @feedback.errors.full_messages.each do |message|
+            li = message
 
   hr
+  .govuk-fieldset
+    .govuk-form-group
+      = f.label :experience, class: 'govuk-label'
+      = f.text_area :experience, rows: 3, class: 'govuk-textarea'
 
-  .govuk-form-group
-    = f.label :experience, class: 'govuk-label'
-    = f.text_area :experience, rows: 3, class: 'govuk-textarea'
+    .govuk-form-group
+      = f.label :ideas, class: 'govuk-label'
+      = f.text_area :ideas, rows: 3, class: 'govuk-textarea'
 
-  .govuk-form-group
-    = f.label :ideas, class: 'govuk-label'
-    = f.text_area :ideas, rows: 3, class: 'govuk-textarea'
+    .govuk-form-group.group-level class="#{'govuk-form-group--error' if @feedback.errors.messages[:rating].present?}"
+      fieldset.fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend
+          =t('rating', scope: 'activerecord.attributes.feedback')
+        - if @feedback.errors.messages[:rating].present?
+            span.govuk-error-message
+              span.error = @feedback.errors.messages[:rating].join(', ')
+        .govuk-radios.govuk-radios--small
+          .govuk-radios__item
+            = f.radio_button :rating, 1, class: 'govuk-radios__input'
+            = f.label :rating_1, class: 'govuk-label govuk-radios__label'
+              | 1 - very poor
+          .govuk-radios__item
+            = f.radio_button :rating, 2, class: 'govuk-radios__input'
+            = f.label :rating_2, class: 'govuk-label govuk-radios__label'
+              |2
+          .govuk-radios__item
+            = f.radio_button :rating, 3, class: 'govuk-radios__input'
+            = f.label :rating_3, class: 'govuk-label govuk-radios__label'
+              |3
+          .govuk-radios__item
+            = f.radio_button :rating, 4, class: 'govuk-radios__input'
+            = f.label :rating_4, class: 'govuk-label govuk-radios__label'
+              |4
+          .govuk-radios__item
+            = f.radio_button :rating, 5, class: 'govuk-radios__input'
+            = f.label :rating_5, class: 'govuk-label govuk-radios__label'
+              |5 - very good
 
-  .govuk-form-group
-    = f.label :rating, class: 'govuk-label'
-    .govuk-radios.govuk-radios--small
-      .govuk-radios__item
-        = f.radio_button :rating, 1, class: 'govuk-radios__input'
-        = f.label :rating_1, class: 'govuk-label govuk-radios__label'
-          | 1 - very poor
-      .govuk-radios__item
-        = f.radio_button :rating, 2, class: 'govuk-radios__input'
-        = f.label :rating_2, class: 'govuk-label govuk-radios__label'
-          |2
-      .govuk-radios__item
-        = f.radio_button :rating, 3, class: 'govuk-radios__input'
-        = f.label :rating_3, class: 'govuk-label govuk-radios__label'
-          |3
-      .govuk-radios__item
-        = f.radio_button :rating, 4, class: 'govuk-radios__input'
-        = f.label :rating_4, class: 'govuk-label govuk-radios__label'
-          |4
-      .govuk-radios__item
-        = f.radio_button :rating, 5, class: 'govuk-radios__input'
-        = f.label :rating_5, class: 'govuk-label govuk-radios__label'
-          |5 - very good
+  .govuk-form-group.group-level
+    fieldset.fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend
+        =t('help', scope: 'activerecord.attributes.feedback')
+      .govuk-radios.govuk-radios--small
+        .govuk-radios__item
+          = radio_button_tag 'help_score', 1, '', class: 'govuk-radios__input'
+          = label_tag 'help_score_1', class: 'govuk-label govuk-radios__label'
+            = t('feedback.rating_1')
+        .govuk-radios__item
+          = radio_button_tag 'help_score', 2, '', class: 'govuk-radios__input'
+          = label_tag 'help_score_2', class: 'govuk-label govuk-radios__label'
+            = t('feedback.rating_2')
+        .govuk-radios__item
+          = radio_button_tag 'help_score', 3, '', class: 'govuk-radios__input'
+          = label_tag 'help_score_3', class: 'govuk-label govuk-radios__label'
+            = t('feedback.rating_3')
+        .govuk-radios__item
+          = radio_button_tag 'help_score', 4, '', class: 'govuk-radios__input', value: false
+          = label_tag 'help_score_4', class: 'govuk-label govuk-radios__label'
+            = t('feedback.rating_4')
 
-  .govuk-form-group
-    = f.label :help, class: 'govuk-label'
-    .govuk-radios.govuk-radios--small
-      .govuk-radios__item
-        = radio_button_tag 'help_score', 1, '', class: 'govuk-radios__input'
-        = label_tag 'help_score_1', class: 'govuk-label govuk-radios__label'
-          = t('feedback.rating_1')
-      .govuk-radios__item
-        = radio_button_tag 'help_score', 2, '', class: 'govuk-radios__input'
-        = label_tag 'help_score_2', class: 'govuk-label govuk-radios__label'
-          = t('feedback.rating_2')
-      .govuk-radios__item
-        = radio_button_tag 'help_score', 3, '', class: 'govuk-radios__input'
-        = label_tag 'help_score_3', class: 'govuk-label govuk-radios__label'
-          = t('feedback.rating_3')
-      .govuk-radios__item
-        = radio_button_tag 'help_score', 4, '', class: 'govuk-radios__input', value: false
-        = label_tag 'help_score_4', class: 'govuk-label govuk-radios__label'
-          = t('feedback.rating_4')
+        .panel-indent#extra-help
+          .govuk-form-group
+            / .govuk-label.inline Please enter details
+            = f.label 'help', class: 'govuk-label'
+            = text_field_tag 'feedback[help]', '' , class: 'govuk-input govuk-!-width-one-quarter'
 
-      .panel-indent#extra-help
-        .govuk-form-group
-          .govuk-label.inline Please enter details
-          = text_field_tag 'feedback[help]', '' , class: 'govuk-input govuk-!-width-one-quarter'
-
-  = f.submit 'Send feedback', class: 'govuk-button'
+    = f.submit 'Send feedback', class: 'govuk-button'

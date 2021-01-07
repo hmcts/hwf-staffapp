@@ -4,11 +4,6 @@ saucelabs:
   url: <%= "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub" %>
   browser: <%= ENV['SAUCELABS_BROWSER'] || 'chrome_win_latest' %>
   browsers:
-    ie11_win10:
-      browserName: internet explorer
-      name: IE11_Win10
-      platform: Windows 10
-      version: '11'
     edge_latest:
       browserName: MicrosoftEdge
       name: IEEdge_LATEST

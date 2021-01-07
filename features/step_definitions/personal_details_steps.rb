@@ -1,12 +1,11 @@
 Given("I have started an application") do
   start_application
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
-  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  expect(personal_details_page.content).to have_header
 end
 
 And("I am on the personal details part of the application") do
-  expect(personal_details_page).to have_current_path(%r{/personal_informations})
   expect(personal_details_page.content).to have_header
 end
 
@@ -22,7 +21,6 @@ When("I successfully submit my required personal details") do
 end
 
 Then("I should be taken to the application details page") do
-  expect(application_details_page).to have_current_path(%r{/details})
   expect(application_details_page.content).to have_header
 end
 
@@ -36,7 +34,7 @@ Then("I should see that the applicant cannot be under 16 years old error message
 end
 
 When("I enter a home office reference number in the wrong format") do
-  personal_details_page.invalid_ho
+  personal_details_page.invalid_hos
   personal_details_page.click_next
 end
 

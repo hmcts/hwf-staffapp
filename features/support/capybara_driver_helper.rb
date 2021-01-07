@@ -1,3 +1,4 @@
+
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
@@ -11,12 +12,12 @@ Capybara.configure do |config|
 end
 
 Capybara.register_driver :headless do |app|
-  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu'])
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
 Capybara.register_driver :apparition do |app|
-  Capybara::Apparition::Driver.new(app, js_errors: false)
+  Capybara::Apparition::Driver.new(app, js_errors: false, timeout: 60)
 end
 
 Capybara.register_driver :chrome do |app|
@@ -51,4 +52,4 @@ Capybara.javascript_driver = Capybara.default_driver
 Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME', 'localhost')}")
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
-  ENV['CAPYBARA_SERVER_PORT'] == 'random'
+    ENV['CAPYBARA_SERVER_PORT'] == 'random'

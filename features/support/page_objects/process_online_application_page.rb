@@ -10,8 +10,10 @@ class ProcessOnlineApplicationPage < BasePage
       elements :jurisdiction, '.govuk-radios__item'
     end
     element :error, '.error', text: 'You must select a jurisdiction'
+    element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
     element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
     element :next, 'input[value="Next"]'
+    element :back_to_start_button, 'a', text: 'Back to start'
   end
 
   def click_next

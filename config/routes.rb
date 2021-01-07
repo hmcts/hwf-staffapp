@@ -128,6 +128,8 @@ Rails.application.routes.draw do
   post 'home/online_search'
   get 'home/completed_search'
 
+  get 'accessibility_statement' => 'guide#accessibility_statement'
+
   ['400', '404', '500', '503'].each do |error|
     get "static/#{error}" => "static##{error}"
   end

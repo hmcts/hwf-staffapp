@@ -77,14 +77,14 @@ RSpec.describe Applicant, type: :model do
   end
 
   context 'HO number' do
-    let(:ho_number) { 'l123456' }
+    let(:ho_number) { 'l1234567' }
     let(:applicant) { build :applicant, application: application, ho_number: ho_number }
 
     it { expect(applicant.valid?).to be true }
 
     it 'capitalize ho number before save' do
       applicant.valid?
-      expect(applicant.ho_number).to eq('L123456')
+      expect(applicant.ho_number).to eq('L1234567')
     end
   end
 

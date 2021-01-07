@@ -1,12 +1,12 @@
 Given("I am on the ask a manager page") do
   start_application
-  expect(dashboard_page).to have_current_path('/')
+  expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
-  expect(personal_details_page).to have_current_path(%r{/personal_informations})
+  expect(personal_details_page.content).to have_header
   personal_details_page.submit_required_personal_details
-  expect(application_details_page).to have_current_path(%r{/details})
+  expect(application_details_page.content).to have_header
   application_details_page.submit_fee_10001
-  expect(approve_page).to have_current_path(%r{/approve})
+  expect(approve_page.content).to have_header
 end
 
 When("I successfully submit a manager name") do
@@ -17,8 +17,7 @@ When("I successfully submit a manager name") do
 end
 
 Then("I am taken to the savings and investments page") do
-  expect(page).to have_current_path(%r{/savings_investments})
-  expect(page).to have_content("Savings and investments")
+  expect(savings_investments_page.content).to have_header
 end
 
 When("I click on next without supplying a manager name") do
@@ -40,15 +39,15 @@ end
 Then("I should see enter manager name error message") do
   expect(approve_page.content).to have_error_first_name
   expect(approve_page.content).to have_error_last_name
-  expect(page).to have_current_path(%r{/approve})
+  expect(approve_page.content).to have_header
 end
 
 Then("I should see enter manager first name error message") do
   expect(approve_page.content).to have_error_last_name
-  expect(page).to have_current_path(%r{/approve})
+  expect(approve_page.content).to have_header
 end
 
 Then("I should see enter manager last name error message") do
   expect(approve_page.content).to have_error_first_name
-  expect(page).to have_current_path(%r{/approve})
+  expect(approve_page.content).to have_header
 end

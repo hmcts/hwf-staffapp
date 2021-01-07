@@ -49,6 +49,22 @@ def processed_applications_page
   @processed_applications_page ||= ProcessedApplicationsPage.new
 end
 
+def deleted_applications_page
+  @deleted_applications_page ||= DeletedApplicationsPage.new
+end
+
+def waiting_for_evidence_applications_page
+  @waiting_for_evidence_applications_page = WaitingForEvidenceApplicationsPage.new
+end
+
+def waiting_for_part_payment_applications_page
+  @waiting_for_part_payment_applications_page = WaitingForPartPaymentApplicationsPage.new
+end
+
+def processed_application_instance_page
+  @processed_application_instance_page ||= ProcessedApplicationInstancePage.new
+end
+
 def savings_investments_page
   @savings_investments_page ||= SavingsInvestmentsPage.new
 end
@@ -113,8 +129,8 @@ def office_page
   @office_page ||= OfficePage.new
 end
 
-def users_page
-  @users_page ||= UsersPage.new
+def offices_page
+  @offices_page ||= OfficesPage.new
 end
 
 def edit_banner_page
@@ -153,10 +169,6 @@ def return_letter_page
   @return_letter_page ||= ReturnLetterPage.new
 end
 
-def evidence_income_page
-  @evidence_income_page ||= EvidenceIncomePage.new
-end
-
 def evidence_page
   @evidence_page ||= EvidencePage.new
 end
@@ -167,6 +179,10 @@ end
 
 def evidence_confirmation_page
   @evidence_confirmation_page ||= EvidenceConfirmationPage.new
+end
+
+def evidence_income_page
+  @evidence_income_page ||= EvidenceIncomePage.new
 end
 
 def forbidden_page
@@ -203,6 +219,10 @@ end
 
 def dwp_failed_applications_page
   @dwp_failed_applications_page ||= DwpFailedApplicationsPage.new
+end
+
+def court_graphs_page
+  @court_graphs_page ||= CourtGraphsPage.new
 end
 
 def complete_processing
