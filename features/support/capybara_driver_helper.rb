@@ -52,4 +52,4 @@ Capybara.javascript_driver = Capybara.default_driver
 Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME', 'localhost')}")
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
-   ENV['CAPYBARA_SERVER_PORT'] == 'random'
+  ENV['CAPYBARA_SERVER_PORT'] == 'random'
