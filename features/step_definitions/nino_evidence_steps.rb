@@ -82,7 +82,7 @@ And("I close application A") do
   evidence_page.content.evidence_can_not_be_processed.click
   click_link 'Return application', visible: false
   problem_with_evidence_page.submit_not_arrived_too_late
-  click_on 'Finish'
+  click_on 'Back to start'
 end
 
 Then("I create Application D") do
