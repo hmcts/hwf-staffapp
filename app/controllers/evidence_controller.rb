@@ -72,7 +72,10 @@ class EvidenceController < ApplicationController
 
   def return_application
     if ResolverService.new(evidence, current_user).return
-      redirect_to root_path
+      back_to_start_or_list
+    else
+      flash[:alert] = t('error_messages.evidence.cannot_be_saved')
+      redirect_to return_letter_evidence_path
     end
   end
 
@@ -133,5 +136,9 @@ class EvidenceController < ApplicationController
       flash[:alert] = I18n.t('application_redirect.processed')
       redirect_to root_path
     end
+  end
+
+  def back_to_start_or_list
+    redirect_to params[:back_to_list].present? ? evidence_checks_path : root_path
   end
 end

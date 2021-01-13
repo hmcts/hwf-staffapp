@@ -1,12 +1,14 @@
 - content_for :page_title
   = "Processing complete"
 
-h1.govuk-heading-xl Processing complete
-
+.govuk-grid-row
+  .govuk-grid-column-full
+    .govuk-panel.govuk-panel--confirmation
+      h1.govuk-panel__title Processing complete
 
 - if citizen_not_proceeding(@evidence)
   .evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
-    h2.govuk-heading-l Next steps
+    h2.govuk-heading-m Next steps
     p.govuk-text
       | Write to the applicant using the letter on this page and send back all the documents.
     p.govuk-text
@@ -21,7 +23,7 @@ h1.govuk-heading-xl Processing complete
 
 - elsif evidence_not_received(@evidence)
   .evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
-    h2.govuk-heading-l Next steps
+    h2.govuk-heading-m Next steps
     p.govuk-text
       | Write to the applicant using the letter on this page and send back all the documents.
     p.govuk-text
@@ -37,4 +39,6 @@ h1.govuk-heading-xl Processing complete
 
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Finish', class: 'govuk-button'
+  = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
+  = f.submit 'Back to list', class: 'govuk-button govuk-button--secondary', name: 'back_to_list'
+
