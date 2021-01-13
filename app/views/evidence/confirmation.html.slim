@@ -28,4 +28,5 @@
 
     - else
       = render(partial: 'shared/refund_template', locals: { application: @confirmation.application, outcome: @confirmation.outcome })
-    = link_to 'Back to start', root_path, class: 'govuk-button'
+    = link_to 'Back to start', root_path, class: 'govuk-button govuk-!-margin-right-1', id: 'back-to-start'
+    = link_to 'Back to list', evidence_checks_path, class: 'govuk-button govuk-button--secondary', id: 'back-to-evidence-list'
