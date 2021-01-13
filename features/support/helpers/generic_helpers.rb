@@ -265,7 +265,12 @@ end
 
 def click_on_back_to_start
   base_page.content.wait_until_back_to_start_link_visible
-  click_on 'Back to start', visible: false
+  base_page.content.back_to_start_link.click
+end
+
+def click_on_back_to_list
+  base_page.content.wait_until_back_to_list_link_visible
+  base_page.content.back_to_list_link.click
 end
 
 # benefit application full outcome with paper evidence provided

@@ -27,7 +27,11 @@ Given("I am on the confirmation page") do
 end
 
 When("I click on back to start") do
-  click_on 'Back to start', visible: false
+  click_on_back_to_start
+end
+
+When("I click on back to list") do
+  click_on_back_to_list
 end
 
 Then("I should be taken back to my dashboard") do

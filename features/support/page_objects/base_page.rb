@@ -4,6 +4,7 @@ class BasePage < SitePrism::Page
     element :select_from_list_error, '.error', text: 'Select a reason or reasons why you are rejecting the evidence'
     element :saved_alert, '.govuk-error-summary', text: 'Your changes have been saved.'
     element :back_to_start_link, 'a.govuk-button', text: 'Back to start'
+    element :back_to_list_link, 'a.govuk-button', text: 'Back to list'
   end
   section :footer, '.govuk-footer__navigation' do
     element :see_the_guides_link, 'a', text: 'See the guides'

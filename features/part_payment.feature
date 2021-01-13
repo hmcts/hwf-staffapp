@@ -26,3 +26,9 @@ Feature: Processing part payments
     And I should see Next steps
     And I should see a letter template for no received part-payment
     And I should see a Back to start button
+
+  Scenario: Verify back to list button
+    Given the payment is ready to process
+    When I complete processing
+    And I click on back to list
+    Then I am taken to the waiting for part payments page
