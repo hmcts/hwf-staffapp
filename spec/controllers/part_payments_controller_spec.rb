@@ -193,33 +193,47 @@ RSpec.describe PartPaymentsController, type: :controller do
 
     before do
       allow(ResolverService).to receive(:new).with(part_payment, user).and_return resolver
-
-      post :return_application, params: { id: part_payment }
     end
 
-    context 'when no error generated' do
+    context 'when back to start param is present' do
+      before { post :return_application, params: { id: part_payment.id, back_to_start: 'Back to start' } }
+
+      context 'when no error generated' do
+        it 'returns the correct status code' do
+          expect(response).to have_http_status(302)
+        end
+
+        it 'renders the dashboard page' do
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context 'when ResolverService returns an error' do
+        let(:resolver_result) { false }
+
+        it 'returns the correct status code' do
+          expect(response).to have_http_status(302)
+        end
+
+        it 'renders the correct template' do
+          expect(response).to redirect_to(return_letter_part_payment_path)
+        end
+
+        it 'returns an appropriate error in the flash message' do
+          expect(flash[:alert]).to eql('This return could not be processed')
+        end
+      end
+    end
+
+    context 'when back to list param is present' do
+      before { post :return_application, params: { id: part_payment.id, back_to_list: 'Back to list' } }
+
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)
       end
 
-      it 'renders the correct template' do
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
-    context 'when ResolverService returns an error' do
-      let(:resolver_result) { false }
-
-      it 'returns the correct status code' do
-        expect(response).to have_http_status(302)
-      end
-
-      it 'renders the correct template' do
-        expect(response).to redirect_to(return_letter_part_payment_path)
-      end
-
-      it 'returns an appropriate error in the flash message' do
-        expect(flash[:alert]).to eql('This return could not be processed')
+      it 'renders the part payments page' do
+        expect(response).to redirect_to(part_payments_path)
       end
     end
   end

@@ -60,12 +60,20 @@ Then("I should see no letter template") do
   expect(return_letter_page.content).not_to have_content('Yours sincerely')
 end
 
-When("I click on finish") do
-  click_button('Finish')
+When("I click on Back to start") do
+  click_button('Back to start')
+end
+
+When("I click on Back to list") do
+  click_button('Back to list')
 end
 
 And("on the processed application I can see that the reason for not being processed is staff error") do
-  click_button('Finish')
+  click_button('Back to start')
   click_reference_link
   expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff error"'
+end
+
+Then("I should see there are no applications waiting for evidence") do
+  expect(waiting_for_evidence_applications_page.content).to have_no_applications
 end

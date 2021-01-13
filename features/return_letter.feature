@@ -17,7 +17,13 @@ Feature: Return letter
     When I am on the return letter page after selecting staff error
     And I should see no letter template
 
-  Scenario: Finish
+  Scenario: Back to start
     When I am on the return letter page after selecting citizen not proceeding
-    And I click on finish
+    And I click on Back to start
     Then I should be taken back to my dashboard
+
+  Scenario: Back to list
+    When I am on the return letter page after selecting citizen not proceeding
+    And I click on Back to list
+    Then I am taken to the waiting for evidence page
+    And I should see there are no applications waiting for evidence
