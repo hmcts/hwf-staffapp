@@ -134,7 +134,7 @@ When("I click on the waiting for evidence link") do
 end
 
 Then("I am taken to the waiting for evidence page") do
-  expect(waiting_for_evidence_applications_page).to be_displayed
+  expect(waiting_for_evidence_applications_page.content).to have_header
 end
 
 When("I click on the waiting for part payments link") do
@@ -142,7 +142,7 @@ When("I click on the waiting for part payments link") do
 end
 
 Then("I am taken to the waiting for part payments page") do
-  expect(waiting_for_part_payment_applications_page).to be_displayed
+  expect(waiting_for_part_payment_applications_page.content).to have_header
 end
 
 When("I click on processed applications") do

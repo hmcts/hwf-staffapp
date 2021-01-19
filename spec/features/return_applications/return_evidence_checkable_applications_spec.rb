@@ -42,7 +42,7 @@ RSpec.feature 'When evidence checkable applications are returned', type: :featur
       choose 'Citizen not proceeding'
       click_button 'Next'
       expect(page).to have_content 'Processing complete'
-      click_button 'Finish'
+      click_button 'Back to start'
       expect(page).to have_button 'Start now'
       expect(page).to have_no_content application1.reference
     end

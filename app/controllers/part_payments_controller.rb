@@ -56,7 +56,7 @@ class PartPaymentsController < ApplicationController
 
   def return_application
     if ResolverService.new(part_payment, current_user).return
-      redirect_to root_path
+      back_to_start_or_list
     else
       flash[:alert] = t('error_messages.part_payment.cannot_be_saved')
       redirect_to return_letter_part_payment_path
@@ -83,5 +83,9 @@ class PartPaymentsController < ApplicationController
 
   def accuracy_params
     params.require(:part_payment).permit(*Forms::Accuracy.permitted_attributes).to_h
+  end
+
+  def back_to_start_or_list
+    redirect_to params[:back_to_list].present? ? part_payments_path : root_path
   end
 end

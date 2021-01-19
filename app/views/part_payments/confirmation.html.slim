@@ -20,5 +20,6 @@
     - if @result.callout == 'no'
       = render('failed_letter')
 
-
-    = link_to 'Back to start', root_path, class: 'govuk-button'
+    = link_to 'Back to start', root_path, class: 'govuk-button govuk-!-margin-right-1', id: 'back-to-start'
+    = link_to 'Back to list', part_payments_path, class: 'govuk-button govuk-button--secondary',
+            id: 'back-to-part-payments-list'
