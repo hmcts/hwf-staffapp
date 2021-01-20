@@ -20,6 +20,4 @@ def build_related_for_application(scope, method, application, evaluator)
     scope.send(method, evaluator.detail_factory,
                *evaluator.detail_traits, overrides)
   end
-
 end
-
