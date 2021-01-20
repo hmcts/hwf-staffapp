@@ -21,9 +21,5 @@ def build_related_for_application(scope, method, application, evaluator)
                *evaluator.detail_traits, overrides)
   end
 
-  build_saving(application, method, scope)
 end
 
-def build_saving(application, method, scope)
-  application.saving ||= scope.send(method, :saving)
-end
