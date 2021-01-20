@@ -22,6 +22,7 @@
 # coverage files
 coverage
 coverage/*
+test-rspec.xml
 
 /.vagrant/*
 
