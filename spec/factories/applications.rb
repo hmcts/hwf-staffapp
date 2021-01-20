@@ -187,12 +187,12 @@ FactoryBot.define do
     end
 
     after(:build) do |application, evaluator|
-      build_related_for_application(self, :build, application, evaluator)
+      build_related_for_application(scope: self, method: :build, application: application, evaluator: evaluator, stub: false)
     end
 
     after(:stub) do |application, evaluator|
       around_stub(application) do
-        build_related_for_application(self, :build_stubbed, application, evaluator)
+        build_related_for_application(scope: self, method: :build_stubbed, application: application, evaluator: evaluator, stub: true)
       end
     end
   end

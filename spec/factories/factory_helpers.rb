@@ -5,7 +5,13 @@ def around_stub(obj)
   obj.id = id
 end
 
-def build_related_for_application(scope, method, application, evaluator)
+# rubocop:disable Metrics/AbcSize
+def build_related_for_application(options)
+  scope = options[:scope]
+  method = options[:method]
+  application = options[:application]
+  evaluator = options[:evaluator]
+
   application.applicant ||= scope.send(method,
                                        evaluator.applicant_factory, *evaluator.applicant_traits,
                                        application: application, ni_number: evaluator.ni_number)
@@ -20,4 +26,11 @@ def build_related_for_application(scope, method, application, evaluator)
     scope.send(method, evaluator.detail_factory,
                *evaluator.detail_traits, overrides)
   end
+
+  build_saving(application, method, scope) unless options[:stub]
+end
+# rubocop:enable Metrics/AbcSize
+
+def build_saving(application, method, scope)
+  application.saving ||= scope.send(method, :saving)
 end
