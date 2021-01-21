@@ -87,7 +87,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'byebug'
   gem 'climate_control'
-  gem 'factory_bot_rails', '5.0.2'
+  gem 'factory_bot_rails', '5.2.0'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'jasmine'
@@ -96,7 +96,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0'
   gem 'rubocop', '~> 0.69.0', require: false
-  gem 'rubocop-rspec', '1.30.1', require: false
+  gem 'rubocop-rspec', '1.31.0', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
