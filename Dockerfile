@@ -1,5 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby-nodejs-onbuild:2.6.6
-# FROM phusion/passenger-customizable:1.0.12
+FROM phusion/passenger-ruby26
 # https://hub.docker.com/r/phusion/passenger-customizable/tags?page=1&ordering=last_updated
 
 # Adding argument support for ping.json
@@ -24,13 +23,23 @@ RUN apt-get update -q && \
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
 
+RUN mkdir /etc/service/app
+WORKDIR /etc/service/app
+
+#ONBUILD
+COPY Gemfile /etc/service/app
+#ONBUILD
+COPY Gemfile.lock /etc/service/app
+
+# RUN ruby -v
 RUN gem install bundler -v 2.2.5
+RUN bundle update --bundler
+RUN bundle install
 RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
 RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
 
 # running app as a servive
 ENV PHUSION true
-RUN mkdir /etc/service/app
+
 COPY run.sh /etc/service/app/run
 RUN chmod +x /etc/service/app/run
-
