@@ -1,4 +1,5 @@
-FROM employmenttribunal.azurecr.io/ruby-nodejs-onbuild:2.6.6
+FROM phusion/passenger-customizable:1.0.12
+# https://hub.docker.com/r/phusion/passenger-customizable/tags?page=1&ordering=last_updated
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
