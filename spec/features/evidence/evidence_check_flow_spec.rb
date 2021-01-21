@@ -215,7 +215,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
   context 'when on "Evidence confirmation" page' do
     before { visit confirmation_evidence_path(id: evidence.id) }
-
+    let(:outcome) { 'full' }
     it { expect(page).to have_content 'Processing complete' }
 
     context 'when the reference_date is passed' do
