@@ -9,4 +9,13 @@ class ApplicationMailer < ActionMailer::Base
       format.text { render plain: t('email.dwp_alert_notification.message') }
     end
   end
+
+  def power_bi_export
+    to = 'petr.zaparka@hmcts.net'
+    attachments['export.zip'] = File.read('export.zip')
+    mail(:to => to,
+         :subject => "Please see the export attached") do |format|
+      format.text { render plain: 'test' }
+    end
+  end
 end
