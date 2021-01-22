@@ -608,7 +608,7 @@ en-GB:
               after_or_equal_to: The date of death must have been in the last 20 years
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
-              too_long: "is too long, it needs to be less than 500 characters"
+              too_long: Enter the reason using less than 500 characters
             discretion_manager_name:
               blank: Enter Delivery Manager name
             discretion_reason:
@@ -701,7 +701,8 @@ en-GB:
               before: This date can't be in the future
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
-              too_long: "is too long, it needs to be less than 500 characters"
+              too_long: Enter the reason using less than 500 characters
+              blank: Enter reason for emergency
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
