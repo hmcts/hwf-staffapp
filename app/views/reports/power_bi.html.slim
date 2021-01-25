@@ -1,0 +1,10 @@
+- content_for :page_title
+  = "Power BI export"
+
+h1.govuk-heading-xl = "Power BI export"
+
+= form_for @form, url: reports_power_bi_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+ .govuk-form-group.group-level
+    = f.submit 'Generate report', class: 'govuk-button'
+

@@ -3,19 +3,26 @@ module Views
     class PowerBiExport
       require 'csv'
       require 'zip'
+      attr_reader :zipfile_path
 
-      def csv_export_to_zip
-        csv_file_name = "#{Time.zone.today.to_s(:db)}-power-bi.csv"
-        Zip::File.open('export.zip', Zip::File::CREATE) do |zipfile|
-          zipfile.get_output_stream(csv_file_name) { |f| f.write to_csv }
-        end
+      def initialize
+        @csv_data = to_csv
+        @zipfile_path = 'tmp/export.zip'
+        generate_file
       end
 
       def tidy_up
-        File.delete('export.zip')
+        File.delete(zipfile_path)
       end
 
       private
+
+      def generate_file
+        csv_file_name = "#{Time.zone.today.to_s(:db)}-power-bi.csv"
+        Zip::File.open(zipfile_path, Zip::File::CREATE) do |zipfile|
+          zipfile.get_output_stream(csv_file_name) { |f| f.write @csv_data }
+        end
+      end
 
       def to_csv
         CSV.generate do |csv|

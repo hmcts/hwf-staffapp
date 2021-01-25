@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'letter_templates' => 'reports#letters'
   get 'reports/raw_data' => 'reports#raw_data'
   put 'reports/raw_data' => 'reports#raw_data_export'
+  get 'reports/power_bi' => 'reports#power_bi'
+  put 'reports/power_bi' => 'reports#power_bi_export'
 
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
