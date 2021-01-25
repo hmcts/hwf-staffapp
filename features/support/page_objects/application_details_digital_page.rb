@@ -21,7 +21,7 @@ class ApplicationDetailsDigitalPage < BasePage
     element :form_error_message, '.error', text: 'Enter a valid form number'
     element :invalid_form_number_message, '.error', text: 'You entered the help with fees form number. Enter the number on the court or tribunal form.'
     element :next, 'input[value="Next"]'
-    element :emergency_case_error, 'label', text: 'can\'t be blank'
+    element :emergency_case_error, 'label', text: 'Enter reason for emergency'
     element :emergency_case_textbox, '#online_application_emergency_reason'
     section :guidance, '.guidance' do
       elements :guidance_header, 'h2'
