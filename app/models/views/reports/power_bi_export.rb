@@ -84,7 +84,7 @@ module Views
               AND pp1.id > pp.id
           )
           WHERE a.created_at < date_trunc(\'MONTH\',now()) AND
-              a.created_at >= (date_trunc(\'MONTH\',now()) - INTERVAL \'25  months\')
+              a.created_at >= (date_trunc(\'MONTH\',now()) - INTERVAL \'12 months\')
           ORDER by a.created_at DESC'
       end
       # rubocop:enable Metrics/MethodLength
