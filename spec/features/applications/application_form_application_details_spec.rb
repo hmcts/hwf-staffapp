@@ -13,7 +13,7 @@ RSpec.feature 'Completing the application details page of an application form', 
 
   before do
     dwp_api_response 'Yes'
-    Capybara.current_driver = :webkit
+    # Capybara.current_driver = :webkit
   end
 
   after { Capybara.use_default_driver }

@@ -17,7 +17,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
 
   context 'when the application', js: true do
     before do
-      Capybara.current_driver = :webkit
+      # Capybara.current_driver = :webkit
       dwp_api_response 'Yes'
 
       login_as user

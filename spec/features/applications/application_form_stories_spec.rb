@@ -14,7 +14,7 @@ RSpec.feature 'Completing the application details', type: :feature do
   let(:date_received) { Time.zone.yesterday }
 
   before do
-    Capybara.current_driver = :webkit
+    # Capybara.current_driver = :webkit
   end
 
   after { Capybara.use_default_driver }

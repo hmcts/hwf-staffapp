@@ -10,7 +10,7 @@ RSpec.feature 'Confirmation page', type: :feature do
 
   context 'as a signed in user', js: true do
     before do
-      Capybara.current_driver = :webkit
+      # Capybara.current_driver = :webkit
       dwp_api_response 'Yes'
       login_as user
     end

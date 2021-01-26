@@ -10,7 +10,7 @@ RSpec.feature 'savings and investments partner over 61 checkbox', type: :feature
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   before do
-    Capybara.current_driver = :webkit
+    # Capybara.current_driver = :webkit
   end
 
   after { Capybara.use_default_driver }
