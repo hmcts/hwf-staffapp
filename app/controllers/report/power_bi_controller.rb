@@ -3,7 +3,6 @@ module Report
 
     def show
       authorize :report, :power_bi?
-      @form = Forms::FinanceReport.new
       render 'reports/power_bi'
     end
 
