@@ -34,12 +34,13 @@ module Views
       end
 
       def assign_office_attrs(app)
-        @entity_code = app.business_entity.be_code
-        @sop_code = app.business_entity.sop_code
+        @entity_code = app.business_entity.try(:be_code)
+        @sop_code = app.business_entity.try(:sop_code)
         @office_name = app.office.name
       end
 
       def assign_jurisdiction_attrs(app)
+        return if app.business_entity.blank?
         @jurisdiction_name = app.business_entity.jurisdiction.name
       end
 
