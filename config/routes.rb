@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post 'api/submissions' => 'api/submissions#create'
   get 'api/auth/callback' => 'api/hmrc#callback'
   get 'api/token' => 'api/hmrc#get_token'
+  get 'api/hello' => 'api/hmrc#hello'
+  get 'api/test' => 'api/hmrc#test'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'
