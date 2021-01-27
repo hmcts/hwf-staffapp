@@ -71,8 +71,8 @@ gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'nokogiri'
 gem 'pg_search'
-gem 'rubyzip'
 gem 'rest-client'
+gem 'rubyzip'
 gem 'virtus'
 
 group :development do
