@@ -53,6 +53,19 @@ RSpec.describe Forms::OnlineApplication do
     end
   end
 
+  describe '#enable_default_jurisdiction' do
+    let(:jurisdiction) { create :jurisdiction }
+    let(:user) { create :staff, jurisdiction: jurisdiction }
+
+    before { form.jurisdiction_id = 1001 }
+
+    context 'when the form has a jurisdiction already' do
+      before { form.enable_default_jurisdiction(user) }
+
+      it { expect(form.jurisdiction_id).to eq 1001 }
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_numericality_of(:fee).is_less_than(20_000) }

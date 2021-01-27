@@ -40,6 +40,7 @@ module Forms
     end
 
     def enable_default_jurisdiction(user)
+      return if jurisdiction_id.present?
       self.jurisdiction_id = user.jurisdiction_id
     end
 
