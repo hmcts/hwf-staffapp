@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data]
+  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data, :power_bi]
 
   def index
     authorize :report

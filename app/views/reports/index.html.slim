@@ -30,3 +30,7 @@ dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key =link_to 'Income claims data by court', report_income_claims_data_path
       dd.govuk-summary-list__value Extract income claims data by court and date
+  - if policy(:report).power_bi?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =link_to 'Power BI export', report_power_bi_path
+      dd.govuk-summary-list__value Data export for Power BI software
