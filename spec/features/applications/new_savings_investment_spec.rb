@@ -9,12 +9,6 @@ RSpec.feature 'savings and investments partner over 61 checkbox', type: :feature
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
-  before do
-    # Capybara.current_driver = :webkit
-  end
-
-  after { Capybara.use_default_driver }
-
   context 'as a signed in user with default jurisdiction', js: true do
     before do
       login_as user

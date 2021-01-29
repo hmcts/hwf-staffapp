@@ -10,12 +10,9 @@ RSpec.feature 'Confirmation page', type: :feature do
 
   context 'as a signed in user', js: true do
     before do
-      # Capybara.current_driver = :webkit
       dwp_api_response 'Yes'
       login_as user
     end
-
-    after { Capybara.use_default_driver }
 
     context 'by default' do
       let(:application) { create(:application, :confirm, office: office) }
@@ -82,7 +79,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(application) }
 
       scenario 'the income label displays correctly' do
-        expect(page).to have_content '✗ Not eligible for help with fees'
+        expect(page).to have_content '✗   Not eligible for help with fees'
       end
 
       scenario 'the grant help with fees form is rendered' do
@@ -96,7 +93,7 @@ RSpec.feature 'Confirmation page', type: :feature do
       before { visit application_confirmation_path(application) }
 
       scenario 'the income label displays correctly' do
-        expect(page).to have_content '✗ Not eligible for help with fees'
+        expect(page).to have_content '✗   Not eligible for help with fees'
       end
 
       scenario 'the grant help with fees form is rendered' do

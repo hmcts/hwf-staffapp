@@ -13,12 +13,6 @@ RSpec.feature 'Completing the application details', type: :feature do
   let(:dob) { Time.zone.today - 25.years }
   let(:date_received) { Time.zone.yesterday }
 
-  before do
-    # Capybara.current_driver = :webkit
-  end
-
-  after { Capybara.use_default_driver }
-
   context 'as a signed in user with default jurisdiction', js: true do
     before { login_as user }
 
@@ -68,8 +62,8 @@ RSpec.feature 'Completing the application details', type: :feature do
               scenario 'the summary page is shown with correct display' do
                 expect(page).to have_xpath('//h1', text: 'Check details')
                 expect(page).to have_xpath('//h2', text: 'Savings and investments')
-                expect(page).to have_content('Less than £3,000 No')
-                expect(page).to have_content('Savings amount £3500')
+                expect(page).to have_content('Less than £3,000No')
+                expect(page).to have_content('Savings amount£3500')
                 expect(page).to have_no_content('£16,000 or more')
                 expect(page).to have_no_xpath('//h2', text: 'Benefits')
                 expect(page).to have_no_xpath('//h2', text: 'Income')

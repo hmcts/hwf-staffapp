@@ -12,8 +12,10 @@ ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+require 'capybara/rspec'
 require 'webmock/rspec'
-require 'webdrivers'
+require 'capybara/apparition'
+
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -91,23 +93,11 @@ RSpec.configure do |config|
     stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
   end
 
-  # Capybara::Webkit.configure do |config|
-  #   config.allow_url('http://www.gstatic.com/charts/loader.js')
-  #   config.block_unknown_urls
-  # end
-
-  Capybara.register_driver :headless_chrome do |app|
-    Capybara::Selenium::Driver.load_selenium
-    browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |opts|
-      opts.args << '--headless'
-      opts.args << '--disable-gpu' if Gem.win_platform?
-      # Workaround https://bugs.chromium.org/p/chromedriver/issues/detail?id=2650&q=load&sort=-id&colspec=ID%20Status%20Pri%20Owner%20Summary
-      opts.args << '--disable-site-isolation-trials'
-    end
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  Capybara.configure do |config|
+    config.ignore_hidden_elements = false
   end
 
-  Capybara.javascript_driver = :headless_chrome
+  Capybara.javascript_driver = :apparition
   Capybara.raise_server_errors = false
 
   config.before(:each) do
