@@ -26,4 +26,9 @@ class ReportPolicy < BasePolicy
   def income_claims_data?
     admin?
   end
+
+  def power_bi?
+    admin?
+  end
+
 end
