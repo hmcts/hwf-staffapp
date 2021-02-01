@@ -17,12 +17,9 @@ RSpec.feature 'Confirmation page for remission', type: :feature do
 
   context 'as a signed in user', js: true do
     before do
-      Capybara.current_driver = :webkit
       dwp_api_response 'Yes'
       login_as user
     end
-
-    after { Capybara.use_default_driver }
 
     context 'who has part remission' do
       let(:part_remission_copy) do
