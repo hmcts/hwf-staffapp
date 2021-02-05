@@ -73,7 +73,7 @@ module Views
                   TO_DATE(to_char(created_at,\'Mon-YYYY\'), \'Mon-yyyy\') AS parsed_month_year
                   FROM applications
                   WHERE created_at < date_trunc(\'MONTH\',now()) AND
-                      created_at >= (date_trunc(\'MONTH\',now()) - INTERVAL \'25  months\')
+                      created_at >= (date_trunc(\'MONTH\',now()) - INTERVAL \'12 months\')
               ) distinct_created_at
           ) dca ON dca.month_year = TO_CHAR(a.created_at :: DATE, \'Mon-yyyy\')
           LEFT JOIN details d ON d.application_id = a.id
