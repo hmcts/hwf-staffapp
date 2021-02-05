@@ -1,4 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby-nodejs-onbuild:2.6.6
+FROM phusion/passenger-ruby26
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
