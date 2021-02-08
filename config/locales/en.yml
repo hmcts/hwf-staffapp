@@ -45,11 +45,12 @@ en-GB:
         processed_by: Process by
         id: Id
         ready_to_process: Ready to process?
+        office: Office
       table:
         missing_reference: 'no reference number'
         ready_link: 'Ready to process'
         not_ready_link: 'Not ready to process'
-        no_applications: No pending applications in the list
+      no_applications: No pending applications in the list
 
 
   completed_applications:
