@@ -32,7 +32,10 @@ RSpec.describe Query::LastDwpFailedApplications, type: :model do
       end
 
       Timecop.freeze(1.hour.ago) do
+        # duplicating the call so we can test for duplication in final query
         create :benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', application: application1
+        create :benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', application: application1
+        create :benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application2
         create :benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application2
       end
 
