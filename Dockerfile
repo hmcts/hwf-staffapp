@@ -32,6 +32,7 @@ RUN bundle install --without test development
 
 # running app as a servive
 ENV PHUSION true
+
 COPY . /home/app
 RUN npm install
 RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
