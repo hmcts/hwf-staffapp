@@ -25,8 +25,8 @@ steps:
   displayName: 'PG role setup'
 
 - script: |
-    bundle exec rubocop --fail-fast
-  displayName: 'rubocop'
+    env
+  displayName: 'env list'
 
 - script: |
     bundle exec rake db:create db:schema:load
