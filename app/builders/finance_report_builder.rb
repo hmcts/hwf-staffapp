@@ -4,7 +4,6 @@ class FinanceReportBuilder
   FIELDS = {
     office: 'office',
     jurisdiction: 'jurisdiction',
-    be_code: 'BEC',
     sop_code: 'SOP code',
     total_count: 'Total successful quantity',
     total_sum: 'Total successful amount',
@@ -82,7 +81,7 @@ class FinanceReportBuilder
 
   def filtered_query(list)
     return list if @filters.blank?
-    list = list.where(be_code: be_code_filter) if be_code_filter
+    list = list.where(sop_code: sop_code_filter) if sop_code_filter
     list = list.where(jurisdiction_id: jurisdiction_filter) if jurisdiction_filter
     list = list.where('applications.application_type = ?', app_type_filter) if app_type_filter
 
@@ -93,8 +92,8 @@ class FinanceReportBuilder
     list
   end
 
-  def be_code_filter
-    @filters[:be_code]
+  def sop_code_filter
+    @filters[:sop_code]
   end
 
   def jurisdiction_filter

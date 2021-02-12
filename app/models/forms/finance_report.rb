@@ -12,7 +12,7 @@ module Forms
     attribute :day_date_to, Integer
     attribute :month_date_to, Integer
     attribute :year_date_to, Integer
-    attribute :be_code, String
+    attribute :sop_code, String
     attribute :refund, Boolean
     attribute :application_type, String
     attribute :jurisdiction_id, Integer
