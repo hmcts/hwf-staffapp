@@ -48,7 +48,7 @@ end
 
 Then("I can filter by business entity code") do
   expect(generate_report_page.content).to have_filter_header
-  fill_in('Business entity code', with: 'Test code')
+  fill_in('SOP code', with: 'Test code')
 end
 
 Then("I can filter by jurisdiction") do
