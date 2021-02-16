@@ -402,7 +402,7 @@ en-GB:
         application_type_benefit: Benefit
         application_type_income: Income
         jurisdiction: Jurisdiction
-        be_code: Business entity code
+        sop_code: SOP code
         entity_code: 'Court name'
       forms/report/finance_transactional_report:
         date_from: 'Date from'
@@ -419,7 +419,7 @@ en-GB:
         application_type_income: Income
         refund: Refund
         jurisdiction: Jurisdiction
-        be_code: Business entity code
+        sop_code: SOP code
 
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'

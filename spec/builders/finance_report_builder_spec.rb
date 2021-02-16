@@ -6,10 +6,10 @@ RSpec.describe FinanceReportBuilder do
   let(:user) { create :user }
   let(:jurisdiction1) { create :jurisdiction }
   let(:jurisdiction2) { create :jurisdiction }
-  let(:business_entity) { create :business_entity, be_code: 'abc134', jurisdiction: jurisdiction1 }
-  let(:business_entity2) { create :business_entity, be_code: 'efg142', jurisdiction: jurisdiction2 }
-  let(:business_entity3) { create :business_entity, be_code: 'hjk122', jurisdiction: jurisdiction1 }
-  let(:business_entity4) { create :business_entity, be_code: 'mop345', jurisdiction: jurisdiction2 }
+  let(:business_entity) { create :business_entity, sop_code: 'abc134', jurisdiction: jurisdiction1 }
+  let(:business_entity2) { create :business_entity, sop_code: 'efg142', jurisdiction: jurisdiction2 }
+  let(:business_entity3) { create :business_entity, sop_code: 'hjk122', jurisdiction: jurisdiction1 }
+  let(:business_entity4) { create :business_entity, sop_code: 'mop345', jurisdiction: jurisdiction2 }
   let(:excluded_office) { create :office, name: 'Digital' }
   let(:excluded_business_entity) { create :business_entity, office: excluded_office }
   let(:current_time) { Time.zone.parse('2016-02-02 15:50:10') }
@@ -53,7 +53,7 @@ RSpec.describe FinanceReportBuilder do
       it 'contains data for distinct business entities' do
         create_list :application_full_remission, 2, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
 
-        is_expected.to include(business_entity.be_code)
+        is_expected.to include(business_entity.sop_code)
       end
     end
 
@@ -72,15 +72,15 @@ RSpec.describe FinanceReportBuilder do
         is_expected.not_to include('Digital')
       end
 
-      context 'be_code' do
-        let(:filters) { { be_code: business_entity2.be_code } }
+      context 'sop_code' do
+        let(:filters) { { sop_code: business_entity2.sop_code } }
 
         it 'contains data for distinct business entities' do
           create_list :application_full_remission, 2, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
           create_list :application_full_remission, 2, :processed_state, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity2
 
-          is_expected.to include(business_entity2.be_code)
-          is_expected.not_to include(business_entity.be_code)
+          is_expected.to include(business_entity2.sop_code)
+          is_expected.not_to include(business_entity.sop_code)
         end
       end
 
@@ -91,8 +91,8 @@ RSpec.describe FinanceReportBuilder do
           create_list :application_full_remission, 2, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
           create_list :application_full_remission, 2, :processed_state, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity2
 
-          is_expected.to include(business_entity.be_code)
-          is_expected.not_to include(business_entity2.be_code)
+          is_expected.to include(business_entity.sop_code)
+          is_expected.not_to include(business_entity2.sop_code)
         end
       end
 
@@ -103,8 +103,8 @@ RSpec.describe FinanceReportBuilder do
           create_list :application_full_remission, 2, :refund, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
           create_list :application_full_remission, 2, :processed_state, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity2
 
-          is_expected.to include(business_entity.be_code)
-          is_expected.not_to include(business_entity2.be_code)
+          is_expected.to include(business_entity.sop_code)
+          is_expected.not_to include(business_entity2.sop_code)
         end
       end
 
@@ -116,8 +116,8 @@ RSpec.describe FinanceReportBuilder do
             create_list :application_full_remission, 2, :processed_state, :benefit_type, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
             create_list :application_full_remission, 2, :processed_state, :income_type, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity2
 
-            is_expected.not_to include(business_entity.be_code)
-            is_expected.to include(business_entity2.be_code)
+            is_expected.not_to include(business_entity.sop_code)
+            is_expected.to include(business_entity2.sop_code)
           end
         end
 
@@ -128,8 +128,8 @@ RSpec.describe FinanceReportBuilder do
             create_list :application_full_remission, 2, :processed_state, :benefit_type, fee: 500, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity
             create_list :application_full_remission, 2, :processed_state, :income_type, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity2
 
-            is_expected.to include(business_entity.be_code)
-            is_expected.not_to include(business_entity2.be_code)
+            is_expected.to include(business_entity.sop_code)
+            is_expected.not_to include(business_entity2.sop_code)
           end
         end
       end
@@ -143,10 +143,10 @@ RSpec.describe FinanceReportBuilder do
           create_list :application_full_remission, 2, :processed_state, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity3
           create_list :application_full_remission, 2, :refund, :benefit_type, :processed_state, fee: 600, decision: 'full', decision_date: Time.zone.parse('2015-12-01'), business_entity: business_entity4
 
-          is_expected.not_to include(business_entity.be_code)
-          is_expected.to include(business_entity2.be_code)
-          is_expected.not_to include(business_entity3.be_code)
-          is_expected.not_to include(business_entity4.be_code)
+          is_expected.not_to include(business_entity.sop_code)
+          is_expected.to include(business_entity2.sop_code)
+          is_expected.not_to include(business_entity3.sop_code)
+          is_expected.not_to include(business_entity4.sop_code)
         end
       end
 

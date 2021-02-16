@@ -3,7 +3,6 @@ class FinanceTransactionalReportBuilder
 
   CSV_FIELDS = {
     month_year: 'Month-Year',
-    entity_code: 'BEC',
     sop_code: 'SOP',
     office_name: 'Office Name',
     jurisdiction_name: 'Jurisdiction Name',
@@ -76,11 +75,11 @@ class FinanceTransactionalReportBuilder
       where(state: Application.states[:processed]).
       where("offices.name NOT IN ('Digital')").
       order(Arel.sql('decision_date::timestamp::date ASC')).
-      order(Arel.sql('business_entities.be_code ASC'))
+      order(Arel.sql('business_entities.sop_code ASC'))
   end
 
   def filtered_query(list)
-    list = list.where(business_entity_id: be_code_filter) if be_code_filter
+    list = list.where(business_entity_id: sop_code_filter) if sop_code_filter
     list = list.where('details.refund = true') if refund_filter
     list = list.where(application_type: app_type_filter) if app_type_filter
     if jurisdiction_filter
@@ -89,9 +88,9 @@ class FinanceTransactionalReportBuilder
     list
   end
 
-  def be_code_filter
-    if @filters[:be_code]
-      BusinessEntity.where(be_code: @filters[:be_code]).map(&:id)
+  def sop_code_filter
+    if @filters[:sop_code]
+      BusinessEntity.where(sop_code: @filters[:sop_code]).map(&:id)
     end
   end
 

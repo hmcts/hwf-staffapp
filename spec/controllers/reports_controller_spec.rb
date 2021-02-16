@@ -82,7 +82,7 @@ RSpec.describe ReportsController, type: :controller do
       context 'filters' do
 
         context 'with filters' do
-          let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
+          let(:filters) { { sop_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
@@ -160,7 +160,7 @@ RSpec.describe ReportsController, type: :controller do
 
       context 'filters' do
         context 'with filters' do
-          let(:filters) { { be_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
+          let(:filters) { { sop_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
