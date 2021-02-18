@@ -108,3 +108,8 @@ going to 'Open in Browser'.
 
 Running smoke tests
 $ bundle exec cucumber --tags @smoke
+
+### Brakeman
+
+[Brakeman](https://github.com/presidentbeef/brakeman) is a static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
+
