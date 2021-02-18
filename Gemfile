@@ -96,8 +96,8 @@ group :development, :test do
   gem 'parallel_tests'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0'
-  gem 'rubocop', '~> 0.69.0', require: false
-  gem 'rubocop-rspec', '1.31.0', require: false
+  gem 'rubocop', '~> 1.10.0', require: false
+  gem 'rubocop-rspec', '~> 1.31.0', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
@@ -108,7 +108,8 @@ group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
-  gem 'cucumber-rails', require: false
+  gem 'cucumber', '~> 3.1.2', require: false
+  gem 'cucumber-rails', '~> 2.0.0', require: false
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
