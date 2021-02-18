@@ -74,6 +74,7 @@ gem 'pg_search'
 gem 'rest-client'
 gem 'rubyzip'
 gem 'virtus'
+gem 'uuid', '>= 2.3.9'
 
 group :development do
   # speed up local development via livereload

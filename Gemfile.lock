@@ -322,6 +322,8 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.4)
+    macaddr (1.7.2)
+      systemu (~> 2.6.5)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
@@ -541,6 +543,7 @@ GEM
       sprockets (>= 3.0.0)
     sys-uname (1.2.2)
       ffi (~> 1.1)
+    systemu (2.6.5)
     temple (0.8.2)
     terminal-notifier-guard (1.7.0)
     thor (1.1.0)
@@ -555,6 +558,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (2.0.0)
+    uuid (2.3.9)
+      macaddr (~> 1.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -660,6 +665,7 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   uglifier (~> 4.2)
+  uuid (>= 2.3.9)
   virtus
   web-console (~> 3.7.0)
   webdrivers
