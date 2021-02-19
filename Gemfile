@@ -97,6 +97,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0'
   gem 'rubocop', '~> 1.10.0', require: false
+  gem 'rubocop-rails'
   gem 'rubocop-rspec', '~> 1.31.0', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
