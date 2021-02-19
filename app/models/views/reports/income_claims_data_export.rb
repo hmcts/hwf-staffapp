@@ -81,13 +81,14 @@ module Views
 
       # rubocop:disable Metrics/MethodLength
       def process_row(row, attr)
-        if attr == :ev_id
+        case attr
+        when :ev_id
           ev_check(row)
-        elsif attr == :amount_to_pay
+        when :amount_to_pay
           row.amount_to_pay.to_f
-        elsif attr == :estimated_cost
+        when :estimated_cost
           decision_cost_calculation(row)
-        elsif attr == :final_amount_to_pay
+        when :final_amount_to_pay
           final_amount_to_pay(row)
         else
           row.send(attr)
