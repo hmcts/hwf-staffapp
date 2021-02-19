@@ -13,7 +13,7 @@ module SummaryHelper
 
   def build_section(summary_text, object, fields, link_attributes = {})
     unless all_fields_empty?(object, fields)
-      content_tag(:dl, class: 'govuk-summary-list') do
+      tag.dl(class: 'govuk-summary-list') do
         content = build_header(summary_text)
         fields.each do |row|
           content << build_data_row(object, row, link_attributes)
@@ -25,7 +25,7 @@ module SummaryHelper
 
   def build_section_with_custom_links(summary_text, object, fields, _link_attributes = {})
     unless all_fields_empty?(object, fields)
-      content_tag(:dl, class: 'govuk-summary-list') do
+      tag.dl(class: 'govuk-summary-list') do
         content = build_header(summary_text)
         fields.each do |row|
           row[:link_attributes] = {} if row[:link_attributes].blank?
@@ -45,19 +45,19 @@ module SummaryHelper
   end
 
   def build_header(summary_name)
-    content_tag(:div, class: 'govuk-summary-list__row') do
-      content_tag(:h2, summary_name.to_s, class: 'govuk-heading-m')
+    tag.div(class: 'govuk-summary-list__row') do
+      tag.h2(summary_name.to_s, class: 'govuk-heading-m')
     end
   end
 
   def build_link(link_attributes, label = '')
     if link_attributes[:url].present?
       link_class = 'govuk-summary-list__actions'
-      content_tag(:dd, class: link_class) do
+      tag.dd(class: link_class) do
         link_to(link_attributes[:url],
                 class: 'govuk-link',
                 data: { section_name: link_attributes[:section_name] }) do
-          raw(format("Change%s", content_tag(:span, label.to_s, class: 'govuk-visually-hidden')))
+          raw(format("Change%s", tag.span(label.to_s, class: 'govuk-visually-hidden')))
         end
       end
     end
@@ -68,11 +68,11 @@ module SummaryHelper
     label = single_or_plural_label(object, field, value)
 
     if value.present?
-      rows = content_tag(:dt, label, class: 'govuk-summary-list__key')
-      rows << content_tag(:dd, value, class: value_style(value))
+      rows = tag.dt(label, class: 'govuk-summary-list__key')
+      rows << tag.dd(value, class: value_style(value))
       rows << build_link(link_attributes, label)
 
-      content_tag(:div, class: 'govuk-summary-list__row') do
+      tag.div(class: 'govuk-summary-list__row') do
         rows
       end
     end

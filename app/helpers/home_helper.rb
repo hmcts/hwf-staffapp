@@ -22,8 +22,8 @@ module HomeHelper
 
   def formatted_results_count(results)
     # I'm doing this manualy because will_paginate doesn't support the count with delimiter
-    content_tag(:b, number_with_delimiter(results.total_entries)) +
-      content_tag(:span, " result".pluralize(results.total_entries))
+    tag.b(number_with_delimiter(results.total_entries)) +
+      tag.span(" result".pluralize(results.total_entries))
   end
 
   def sort_link_helper(column)

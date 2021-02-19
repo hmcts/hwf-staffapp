@@ -19,7 +19,7 @@ class UserFilters
   private
 
   def office(value)
-    @users = @users.where('office_id = ?', value)
+    @users = @users.where(office_id: value)
   end
 
   def activity(value)

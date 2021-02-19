@@ -262,6 +262,39 @@ Naming/VariableNumber:
 Lint/MissingSuper:
   Enabled: false
 
-require: rubocop-rspec
+Rails/FilePath:
+  Exclude:
+    - spec/routing/**/*
 
+# ---------------
+# HttpPositionalArguments is rails 5 only
+# https://github.com/bbatsov/rubocop/issues/3629
+# ---------------
+Rails/HttpPositionalArguments:
+  Enabled: false
 
+Rails/Delegate:
+  Exclude:
+    - 'features/**/*'
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/ActiveRecordAliases:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+require:
+  - rubocop-rspec
+  - rubocop-rails

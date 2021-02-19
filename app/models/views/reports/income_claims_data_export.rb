@@ -76,7 +76,7 @@ module Views
                  'evidence_checks.check_type', 'evidence_checks.checks_annotation',
                  'details.refund', 'applications.state').
           joins(:office, :user, :detail).where(created_at: @date_from..@date_to).
-          where("offices.entity_code = ?", enity_code).where(application_type: 'income')
+          where(offices: { entity_code: enity_code }).where(application_type: 'income')
       end
 
       # rubocop:disable Metrics/MethodLength
