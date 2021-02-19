@@ -131,13 +131,13 @@ Style/DateTime:
   Enabled: false
 
 # Prefer sensible naming to comments everywhere.
-Documentation:
+Style/Documentation:
   Description: Document classes and non-namespace modules.
   Enabled: false
 
 # Would enforce do_y if x over if x / do y / end. As with GuardClause above,
 # this enforces code organisation that doesn't necesarily make things clearer.
-IfUnlessModifier:
+Style/IfUnlessModifier:
   Enabled: false
 
 # Allow safe assignment in conditions.
@@ -221,7 +221,7 @@ RSpec/MultipleExpectations:
 RSpec/EmptyLineAfterSubject:
   Enabled: false
 
-FactoryBot/AttributeDefinedStatically:
+RSpec/FactoryBot/AttributeDefinedStatically:
   Enabled: false
 
 RSpec/ReceiveCounts:
@@ -235,10 +235,10 @@ RSpec/LetBeforeExamples:
 
 RSpec/HooksBeforeExamples:
   Enabled: false
-Capybara/FeatureMethods:
+RSpec/Capybara/FeatureMethods:
   Enabled: false
 
-Capybara/CurrentPathExpectation:
+RSpec/Capybara/CurrentPathExpectation:
   Enabled: false
 
 RSpec/ExpectInHook:
@@ -250,10 +250,10 @@ RSpec/OverwritingSetup:
 RSpec/InstanceVariable:
   Enabled: false
 
-FactoryBot/CreateList:
+RSpec/FactoryBot/CreateList:
   Enabled: false
 
-Rspec/Rails/HttpStatus:
+RSpec/Rails/HttpStatus:
   Enabled: false
 
 Naming/VariableNumber:

@@ -22,7 +22,7 @@ RSpec.describe FinanceReportBuilder do
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
 
-  let(:filters) {}
+  let(:filters) { nil }
 
   describe '#to_csv' do
     context 'no filters' do
