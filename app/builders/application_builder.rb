@@ -87,6 +87,6 @@ class ApplicationBuilder
   end
 
   def prepare_attributes(fields, online_application)
-    Hash[fields.map { |field| [field, online_application.send(field)] }]
+    fields.map { |field| [field, online_application.send(field)] }.to_h
   end
 end

@@ -43,7 +43,7 @@ if ENV.key?('CIRCLE_ARTIFACTS')
 end
 
 Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
-  title = scenario.name.tr(' ', '-').gsub(%r{/^.*\/cucumber\//}, '')
+  title = scenario.name.tr(' ', '-').gsub(%r{/^.*/cucumber//}, '')
   "screenshot_cucumber_#{title}"
 end
 

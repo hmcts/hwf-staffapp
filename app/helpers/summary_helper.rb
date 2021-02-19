@@ -51,18 +51,16 @@ module SummaryHelper
   end
 
   def build_link(link_attributes, label = '')
-    # rubocop:disable Rails/OutputSafety
     if link_attributes[:url].present?
       link_class = 'govuk-summary-list__actions'
       content_tag(:dd, class: link_class) do
         link_to(link_attributes[:url],
                 class: 'govuk-link',
                 data: { section_name: link_attributes[:section_name] }) do
-          raw("Change" + content_tag(:span, label.to_s, class: 'govuk-visually-hidden'))
+          raw(format("Change%s", content_tag(:span, label.to_s, class: 'govuk-visually-hidden')))
         end
       end
     end
-    # rubocop:enable Rails/OutputSafety
   end
 
   def build_data_row(object, field, link_attributes = {})
