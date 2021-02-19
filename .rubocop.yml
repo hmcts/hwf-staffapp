@@ -259,6 +259,9 @@ RSpec/Rails/HttpStatus:
 Naming/VariableNumber:
   Enabled: false
 
+Lint/MissingSuper:
+  Enabled: false
+
 require: rubocop-rspec
 
 

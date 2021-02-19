@@ -1,5 +1,5 @@
 class DecisionDateAndCostMigration
-  def run! # rubocop:disable AbcSize
+  def run! # rubocop:disable Metrics/AbcSize
     # the order of these migration sqls is important
     ActiveRecord::Base.connection.execute(decision_date_part_payment)
     ActiveRecord::Base.connection.execute(decision_date_evidence_check)

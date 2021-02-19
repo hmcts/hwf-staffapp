@@ -7,7 +7,7 @@ module Forms
 
       TIME_LIMIT_FOR_PROBATE = 20
 
-      # rubocop:disable MethodLength
+      # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         { fee: Decimal,
           jurisdiction_id: Integer,
@@ -34,7 +34,7 @@ module Forms
           discretion_manager_name: String,
           discretion_reason: String }
       end
-      # rubocop:enable MethodLength
+      # rubocop:enable Metrics/MethodLength
 
       define_attributes
 
