@@ -105,7 +105,7 @@ RSpec.describe ApplicationSearch do
 
     let(:reference) { 'HWF-123-ABC' }
     let(:application) { create(:application, :processed_state, reference: reference, office: user.office) }
-    let(:pagination_params) { { 'sort_to': 'DESC', 'sort_by': 'last_name', 'page': 1 } }
+    let(:pagination_params) { { sort_to: 'DESC', sort_by: 'last_name', page: 1 } }
 
     before do
       application

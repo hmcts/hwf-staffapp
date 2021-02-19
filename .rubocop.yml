@@ -2,8 +2,9 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.5
-  TargetRailsVersion: 4.2
+  TargetRubyVersion: 2.7
+
+  NewCops: enable
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
   # generated code and copy-and-pasted snipets from READMEs.
@@ -21,12 +22,9 @@ AllCops:
     - 'script/cucumber'
     - 'lib/log_stuff.rb'
 
-Rails:
-  Enabled: true
-
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 120 characters.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
@@ -55,17 +53,13 @@ RSpec/DescribeClass:
     - spec/support/**/*
     - spec/views/**/*
 
-Rails/FilePath:
-  Exclude:
-    - spec/routing/**/*
-
 # private/protected/public
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
 
 # Just indent parameters by two spaces. It's less volatile if methods change,
 # and there's less busy work lining things up.
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Style/ClassAndModuleChildren:
@@ -102,7 +96,7 @@ Layout/EmptyLinesAroundBlockBody:
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
-Layout/LeadingBlankLines:
+Layout/LeadingEmptyLines:
   Enabled: false
 
 # We have a mixture at the moment, so don't enforce anything.
@@ -167,35 +161,9 @@ Metrics/BlockLength:
     - 'config/**/*'
     - 'lib/tasks/**/*'
 
-# ---------------
-# HttpPositionalArguments is rails 5 only
-# https://github.com/bbatsov/rubocop/issues/3629
-# ---------------
-Rails/HttpPositionalArguments:
-  Enabled: false
-
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*'
-
-Rails/Delegate:
-  Exclude:
-    - 'features/**/*'
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-Rails/InverseOf:
-  Enabled: false
-
-Rails/ActiveRecordAliases:
-  Enabled: false
-
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
-
-Rails/LexicallyScopedActionFilter:
-  Enabled: false
 
 Style/WordArray:
   EnforcedStyle: brackets
@@ -250,9 +218,6 @@ RSpec/EmptyLineAfterHook:
 RSpec/MultipleExpectations:
   Enabled: false
 
-Rails/HttpStatus:
-  Enabled: false
-
 RSpec/EmptyLineAfterSubject:
   Enabled: false
 
@@ -288,4 +253,12 @@ RSpec/InstanceVariable:
 FactoryBot/CreateList:
   Enabled: false
 
+Rspec/Rails/HttpStatus:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
 require: rubocop-rspec
+
+
