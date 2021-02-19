@@ -50,7 +50,7 @@ module Views
         return false if discretion_value.nil?
 
         if decision_overridden?
-          return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+          I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         else
           convert_to_pass_fail(@application.detail.discretion_applied)
         end
