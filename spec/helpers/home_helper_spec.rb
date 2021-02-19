@@ -44,33 +44,28 @@ RSpec.describe HomeHelper do
   end
 
   describe '#sort_link_class' do
-    before { @sort_by = 'first_name' }
-    it { expect(sort_link_class('name')).to eql 'sort_arrows' }
-    it { expect(sort_link_class('first_name')).to eql 'sort_arrow_desc' }
+    it { expect(sort_link_class('name', 'first_name')).to eql 'sort_arrows' }
+    it { expect(sort_link_class('first_name', 'first_name')).to eql 'sort_arrow_desc' }
 
     describe 'with correct sort_direction' do
-      before { @sort_to = 'desc' }
-      it { expect(sort_link_class('first_name')).to eql 'sort_arrow_asc' }
+      it { expect(sort_link_class('first_name', 'first_name', 'desc')).to eql 'sort_arrow_asc' }
       it do
-        @sort_to = 'asc'
-        expect(sort_link_class('first_name')).to eql 'sort_arrow_desc'
+        expect(sort_link_class('first_name', 'first_name', 'asc')).to eql 'sort_arrow_desc'
       end
     end
   end
 
   describe '#sort_link_helper' do
     it "replacing the sort direction if the sort param match" do
-      @sort_to = 'desc'
-      @sort_by = 'first_name'
       new_link = 'http://localhost:3000/home/completed_search?completed_search&reference=Philip&commit=Search&sort_by=first_name&sort_to=asc#new_completed_search'
-      expect(sort_link_helper('first_name')).to eql(new_link)
+      expect(sort_link_helper('first_name', 'first_name', 'desc')).to eql(new_link)
     end
 
     it "no replacing the sort direction" do
       @sort_to = 'asc'
       @sort_by = 'first_name'
       new_link = 'http://localhost:3000/home/completed_search?completed_search&reference=Philip&commit=Search&sort_by=last_name&sort_to=asc#new_completed_search'
-      expect(sort_link_helper('last_name')).to eql(new_link)
+      expect(sort_link_helper('last_name', 'first_name', 'asc')).to eql(new_link)
     end
   end
 end

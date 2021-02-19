@@ -50,6 +50,7 @@ module SummaryHelper
     end
   end
 
+  # rubocop:disable Rails/OutputSafety
   def build_link(link_attributes, label = '')
     if link_attributes[:url].present?
       link_class = 'govuk-summary-list__actions'
@@ -62,6 +63,7 @@ module SummaryHelper
       end
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def build_data_row(object, field, link_attributes = {})
     value = object.send(field)
