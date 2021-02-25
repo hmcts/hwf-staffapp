@@ -13,12 +13,23 @@ Rails.application.routes.draw do
   get 'api/incomes' => 'api/hmrc#incomes'
   get 'api/incomes/paye' => 'api/hmrc#income_paye'
   get 'api/incomes/sa' => 'api/hmrc#income_sa'
+  get 'api/incomes/sa/summary' => 'api/hmrc#sa_summary'
+  get 'api/incomes/sa/self' => 'api/hmrc#sa_self'
+  get 'api/incomes/sa/trust' => 'api/hmrc#sa_trust'
+  get 'api/incomes/sa/properties' => 'api/hmrc#sa_properties'
+  get 'api/incomes/sa/foreign' => 'api/hmrc#sa_foreign'
+  get 'api/incomes/sa/dividends' => 'api/hmrc#sa_dividends'
   get 'api/employments' => 'api/hmrc#employments'
   get 'api/employment/paye' => 'api/hmrc#employment_paye'
   get 'api/benefits_and_credits' => 'api/hmrc#benefits_and_credits'
   get 'api/benefits_and_credits/work' => 'api/hmrc#benefits_work'
   get 'api/benefits_and_credits/child' => 'api/hmrc#benefits_child'
   get 'api/new/paye' => 'api/hmrc#create_paye'
+  get 'api/new/benefits' => 'api/hmrc#create_benefits'
+  get 'api/new/employment' => 'api/hmrc#create_employment'
+  get 'api/new/sa' => 'api/hmrc#create_sa'
+  get 'api/new/contact' => 'api/hmrc#create_contact'
+  get 'api/details/address' => 'api/hmrc#details_address'
 
 
 
