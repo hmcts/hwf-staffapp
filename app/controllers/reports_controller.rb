@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data]
+  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :raw_data, :power_bi]
 
   def index
     authorize :report
@@ -83,7 +83,7 @@ class ReportsController < ApplicationController
   def form_params(form_name)
     params.require(form_name).
       permit(:day_date_from, :month_date_from, :year_date_from, :day_date_to,
-             :month_date_to, :year_date_to, :be_code, :refund, :application_type, :jurisdiction_id, :entity_code)
+             :month_date_to, :year_date_to, :sop_code, :refund, :application_type, :jurisdiction_id, :entity_code)
   end
 
   def load_graph_data
@@ -110,7 +110,7 @@ class ReportsController < ApplicationController
   def filters(form_params)
     filters = {}
 
-    ['be_code', 'refund', 'application_type', 'jurisdiction_id'].each do |key|
+    ['sop_code', 'refund', 'application_type', 'jurisdiction_id'].each do |key|
       filters[key.to_sym] = form_params[key] if form_params[key].present?
     end
     filters

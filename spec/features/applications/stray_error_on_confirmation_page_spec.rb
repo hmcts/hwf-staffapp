@@ -13,10 +13,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
 
   before do
     WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
-    Capybara.current_driver = :webkit
   end
-
-  after { Capybara.use_default_driver }
 
   context 'as a user who completes the form', js: true do
     before do

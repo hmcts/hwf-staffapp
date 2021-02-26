@@ -37,6 +37,7 @@ module Applications
         elsif benefits && no_benefits_paper_evidence?
           redirect_to application_benefit_override_paper_evidence_path(application)
         else
+          reset_benefit_override
           redirect_to application_incomes_path(application)
         end
       end
@@ -56,6 +57,11 @@ module Applications
         if application.detail.refund?
           !BenefitCheckRunner.new(application).benefit_check_date_valid?
         end
+      end
+
+      def reset_benefit_override
+        return unless application.benefit_override
+        application.benefit_override.destroy
       end
     end
   end

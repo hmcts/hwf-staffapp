@@ -12,7 +12,9 @@ ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+require 'capybara/rspec'
 require 'webmock/rspec'
+require 'capybara/apparition'
 
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -73,17 +75,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
-  # RSpec Rails can automatically mix in different behaviours to your tests
-  # based on their file location, for example enabling you to call `get` and
-  # `post` in specs under `spec/controllers`.
-  #
-  # You can disable this behaviour by removing the line below, and instead
-  # explicitly tag your specs with their type, e.g.:
-  #
-  #     RSpec.describe UsersController, type: :controller do
-  #       # ...
-  #     end
-  #
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
@@ -95,19 +86,18 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js'])
+    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js', 'chromedriver.storage.googleapis.com'])
   end
 
   config.before(:each) do |example|
     stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
   end
 
-  Capybara::Webkit.configure do |config|
-    config.allow_url('http://www.gstatic.com/charts/loader.js')
-    config.block_unknown_urls
+  Capybara.configure do |config|
+    config.ignore_hidden_elements = false
   end
 
-  Capybara.javascript_driver = :webkit
+  Capybara.javascript_driver = :apparition
   Capybara.raise_server_errors = false
 
   config.before(:each) do

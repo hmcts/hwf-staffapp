@@ -72,6 +72,7 @@ gem 'groupdate'
 gem 'nokogiri'
 gem 'pg_search'
 gem 'rest-client'
+gem 'rubyzip'
 gem 'virtus'
 
 group :development do
@@ -106,7 +107,6 @@ group :test do
   gem 'apparition'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
@@ -115,7 +115,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'report_builder'
   gem 'rspec_junit_formatter'
-  gem 'rubyzip'
   gem 'shoulda-matchers'
   gem 'site_prism'
   gem 'webdrivers'

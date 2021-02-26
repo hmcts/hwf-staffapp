@@ -18,10 +18,10 @@ RSpec.describe FinanceTransactionalReportBuilder do
   let(:digital) { create :office, name: 'Digital' }
   let(:jurisdiction1) { create :jurisdiction }
   let(:jurisdiction2) { create :jurisdiction }
-  let(:business_entity1) { create :business_entity, be_code: 'abc134', jurisdiction: jurisdiction1 }
-  let(:business_entity2) { create :business_entity, be_code: 'efg142', jurisdiction: jurisdiction2 }
-  let(:business_entity3) { create :business_entity, be_code: 'hjk122', jurisdiction: jurisdiction1 }
-  let(:business_entity4) { create :business_entity, be_code: 'mop345', jurisdiction: jurisdiction2 }
+  let(:business_entity1) { create :business_entity, sop_code: 'abc134', jurisdiction: jurisdiction1 }
+  let(:business_entity2) { create :business_entity, sop_code: 'efg142', jurisdiction: jurisdiction2 }
+  let(:business_entity3) { create :business_entity, sop_code: 'hjk122', jurisdiction: jurisdiction1 }
+  let(:business_entity4) { create :business_entity, sop_code: 'mop345', jurisdiction: jurisdiction2 }
 
   describe '#to_csv' do
     subject do
@@ -43,7 +43,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
     end
 
     it 'contains headers' do
-      is_expected.to include('Month-Year,BEC,SOP,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount')
+      is_expected.to include('Month-Year,SOP,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount')
     end
 
     it 'contains the transactional data' do
@@ -51,13 +51,13 @@ RSpec.describe FinanceTransactionalReportBuilder do
       jurisdiction_name = application.business_entity.jurisdiction.name
       office_name = application.office.name
       reference = application.reference
-      line = "01-2018,SD123,00009,#{office_name},#{jurisdiction_name},,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
+      line = "01-2018,00009,#{office_name},#{jurisdiction_name},,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
       is_expected.to include(line)
     end
 
     context 'filters' do
-      context 'be_code' do
-        let(:filters) { { be_code: business_entity2.be_code } }
+      context 'sop_code' do
+        let(:filters) { { sop_code: business_entity2.sop_code } }
 
         it 'contains data for distinct business entities' do
           application1 = create(:application_full_remission, :with_office, :processed_state, business_entity_id: business_entity1.id, fee: 500, decision: 'full', decision_date: start_date + 10.seconds)
@@ -134,7 +134,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
             application_type: 'income',
             refund: '1',
             jurisdiction_id: jurisdiction1.id,
-            be_code: business_entity3.be_code
+            sop_code: business_entity3.sop_code
           }
         }
 

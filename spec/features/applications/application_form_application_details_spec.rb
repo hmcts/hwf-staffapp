@@ -13,10 +13,7 @@ RSpec.feature 'Completing the application details page of an application form', 
 
   before do
     dwp_api_response 'Yes'
-    Capybara.current_driver = :webkit
   end
-
-  after { Capybara.use_default_driver }
 
   context 'as a signed in user with default jurisdiction', js: true do
     before do
@@ -39,8 +36,8 @@ RSpec.feature 'Completing the application details page of an application form', 
 
     context 'before expanding optional fields' do
       it 'are hidden' do
-        expect(page).not_to have_xpath('//input[@id="application_deceased_name"]')
-        expect(page).not_to have_xpath('//input[@id="application_day_date_fee_paid"]')
+        expect(page.find(:xpath, '//input[@id="application_deceased_name"]').visible?).to be false
+        expect(page.find(:xpath, '//input[@id="application_day_date_fee_paid"]').visible?).to be false
       end
 
       context 'expanding probate' do

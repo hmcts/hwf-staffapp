@@ -1,4 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby-nodejs-onbuild:2.6.6
+FROM phusion/passenger-ruby26
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -15,19 +15,27 @@ ENV APP_BUILD_TAG ${APP_BUILD_TAG}
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -q && \
-    apt-get install -qy tzdata --no-install-recommends && apt-get clean && \
+    apt-get install -qy tzdata npm --no-install-recommends && apt-get clean && \
     rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
     truncate -s 0 /var/log/*log
 
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
 
-RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
-RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
+RUN mkdir -p /etc/service/app
+WORKDIR /etc/service/app
+
+COPY Gemfile /etc/service/app
+COPY Gemfile.lock /etc/service/app
+RUN bundle install --without test development
 
 # running app as a servive
 ENV PHUSION true
-RUN mkdir /etc/service/app
+COPY . /etc/service/app
+RUN npm install
+RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
+RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
+
 COPY run.sh /etc/service/app/run
 RUN chmod +x /etc/service/app/run
 

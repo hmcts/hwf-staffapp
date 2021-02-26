@@ -45,11 +45,12 @@ en-GB:
         processed_by: Process by
         id: Id
         ready_to_process: Ready to process?
+        office: Office
       table:
         missing_reference: 'no reference number'
         ready_link: 'Ready to process'
         not_ready_link: 'Not ready to process'
-        no_applications: No pending applications in the list
+      no_applications: No pending applications in the list
 
 
   completed_applications:
@@ -401,7 +402,7 @@ en-GB:
         application_type_benefit: Benefit
         application_type_income: Income
         jurisdiction: Jurisdiction
-        be_code: Business entity code
+        sop_code: SOP code
         entity_code: 'Court name'
       forms/report/finance_transactional_report:
         date_from: 'Date from'
@@ -418,7 +419,7 @@ en-GB:
         application_type_income: Income
         refund: Refund
         jurisdiction: Jurisdiction
-        be_code: Business entity code
+        sop_code: SOP code
 
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
