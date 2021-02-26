@@ -33,7 +33,7 @@ steps:
   displayName: 'DB load'
 
 - script: |
-    bundle exec rake parallel:create
+    bundle exec rake parallel:setup
   displayName: 'Parallel DB load'
 
 - script: |

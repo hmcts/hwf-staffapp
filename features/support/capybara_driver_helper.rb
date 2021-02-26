@@ -13,7 +13,7 @@ Capybara.configure do |config|
 end
 
 Capybara.register_driver :headless do |app|
-  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage'])
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage', 'window-size=1200,1100'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
