@@ -40,4 +40,3 @@ RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_
 COPY run.sh /home/app/run
 RUN chmod +x /home/app/run
 CMD ["./run"]
-

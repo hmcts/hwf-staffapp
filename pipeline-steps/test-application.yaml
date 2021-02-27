@@ -36,13 +36,13 @@ steps:
     bundle exec rake parallel:create
   displayName: 'Parallel DB load'
 
-# - script: |
-#     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
-#   displayName: 'cucumber'
+- script: |
+    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
+  displayName: 'cucumber'
 
-# - script: |
-#     DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec RAILS_ENV=test
-#   displayName: 'rspec'
+- script: |
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec RAILS_ENV=test
+  displayName: 'rspec'
 
 - script: |
     bundle exec rake jasmine:ci
