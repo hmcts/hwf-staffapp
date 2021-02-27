@@ -27,6 +27,7 @@ WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
+RUN gem install bundler -v 2.2.8
 RUN bundle install --without test development
 
 # running app as a servive
@@ -38,4 +39,5 @@ RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_
 
 COPY run.sh /home/app/run
 RUN chmod +x /home/app/run
+CMD ["./run"]
 
