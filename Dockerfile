@@ -22,20 +22,21 @@ RUN apt-get update -q && \
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
 
-RUN mkdir -p /etc/service/app
-WORKDIR /etc/service/app
+RUN mkdir -p /home/app
+WORKDIR /home/app
 
-COPY Gemfile /etc/service/app
-COPY Gemfile.lock /etc/service/app
+COPY Gemfile /home/app
+COPY Gemfile.lock /home/app
+RUN gem install bundler -v 2.2.8
 RUN bundle install --without test development
 
 # running app as a servive
 ENV PHUSION true
-COPY . /etc/service/app
+COPY . /home/app
 RUN npm install
 RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
 RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
 
-COPY run.sh /etc/service/app/run
-RUN chmod +x /etc/service/app/run
-
+COPY run.sh /home/app/run
+RUN chmod +x /home/app/run
+CMD ["./run"]
