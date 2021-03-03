@@ -131,8 +131,8 @@ module Api
               "correlationId" => UUID.new.generate},
         query: {
           matchId: match_id,
-          fromDate: '2019-01-01',
-          toDate: '2019-03-31'
+          fromDate: '2019-04-01',
+          toDate: '2019-04-28'
         },
         debug_output: STDOUT
       )
@@ -152,7 +152,8 @@ module Api
               "correlationId": UUID.new.generate},
         query: {
           matchId: match_id,
-          fromTaxYear: '2019-20'
+          fromTaxYear: '2019-20',
+          toTaxYear: '2019-20'
         },
         debug_output: STDOUT
       )
@@ -173,7 +174,7 @@ module Api
               "correlationId": UUID.new.generate},
         query: {
           matchId: match_id,
-          fromTaxYear: '2018-19',
+          fromTaxYear: '2019-20',
           toTaxYear: '2019-20'
         },
         debug_output: STDOUT
@@ -340,7 +341,7 @@ module Api
         query: {
           matchId: match_id,
           fromDate: '2018-02-02',
-          toDate: '2018-10-01'
+          toDate: '2018-04-01'
         },
         debug_output: STDOUT
       )
@@ -351,7 +352,6 @@ module Api
     # works but empty - don't know how to create test data for this
     # api/details/address
     def details_address
-      # /individuals/benefits-and-credits/child-tax-credit?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromDate,toDate}
       party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/details/addresses",
         headers: {
               "Content-Type": "application/json",
@@ -417,7 +417,7 @@ module Api
           query:  {
             useCase: 'HMCTS-C4',
             startDate: '2019-04-01',
-            endDate: '2019-04-30'
+            endDate: '2019-04-28'
           },
           body: { "paye": [
     {
@@ -497,12 +497,12 @@ module Api
         query: {
           "useCase" => 'HMCTS-C2-child-tax-credit',
           startDate: '2018-02-02',
-          endDate: '2018-10-01',
+          endDate: '2018-04-01',
         },
         body: {
         "applications": [
     {
-      "id": 72105654,
+      "id": 7210565654,
       "awards": [
         {
           "totalEntitlement": 18765.23,
@@ -523,14 +523,14 @@ module Api
               "startDate": "2018-01-01",
               "endDate": "2018-05-01",
               "frequency": 7,
-              "tcType": "ETC",
+              "tcType": "ICC",
               "amount": 76.34
             },
             {
               "startDate": "2018-06-01",
               "endDate": "2018-10-01",
               "frequency": 7,
-              "tcType": "ETC",
+              "tcType": "ICC",
               "amount": 76.34
             }
           ]
@@ -551,7 +551,7 @@ module Api
          "Authorization" => access_token
         },
         query: {
-          useCase: 'HMCTS-C2',
+          useCase: 'HMCTS-C4',
           startYear: '2019',
           endYear: '2020',
         },
@@ -664,11 +664,11 @@ module Api
     end
 
     def access_token
-      'Bearer fdc762b23dfa3df0e487cb3a8ebeb196'
+
     end
 
     def match_id
-      '4f06f48b-ddb9-4acc-8307-89f0cf006339'
+      'c97a8e37-e825-40e5-b6c5-ed4773eb8eb4'
     end
 
 
