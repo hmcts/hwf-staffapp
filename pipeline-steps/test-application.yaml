@@ -41,7 +41,7 @@ steps:
   displayName: 'cucumber'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rake spec RAILS_ENV=test
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
   displayName: 'rspec'
 
 - script: |
