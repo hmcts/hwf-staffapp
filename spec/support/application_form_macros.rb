@@ -12,7 +12,7 @@ module ApplicationFormMacros
 
   def complete_personal_information(application)
     applicant = application.applicant
-    fill_in 'Last name', with: applicant.last_name, id: 'application_last_name'
+    fill_in 'Last name', with: applicant.last_name, id: 'application_last_name', wait: true
     fill_in_dob(applicant.date_of_birth)
     fill_in 'application_ni_number', with: applicant.ni_number if applicant.ni_number.present?
     if applicant.married
@@ -24,7 +24,7 @@ module ApplicationFormMacros
 
   def complete_application_details(application)
     detail = application.detail
-    fill_in 'application_fee', with: 300
+    fill_in 'application_fee', with: 300, wait: true
     find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
     date_received = Time.zone.yesterday
     fill_in 'application_day_date_received', with: date_received.day
