@@ -109,8 +109,8 @@ group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'codeclimate-test-reporter', '0.6.0', require: nil
-  gem 'cucumber', '~> 3.1.2', require: false
-  gem 'cucumber-rails', '~> 2.0.0', require: false
+  gem 'cucumber', '~> 5.3.0', require: false
+  gem 'cucumber-rails', '~> 2.2.0', require: false
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
