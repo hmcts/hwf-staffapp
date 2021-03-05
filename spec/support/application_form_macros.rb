@@ -12,7 +12,7 @@ module ApplicationFormMacros
 
   def complete_personal_information(application)
     applicant = application.applicant
-    fill_in 'application_last_name', with: applicant.last_name
+    fill_in 'Last name', with: applicant.last_name, id: 'application_last_name'
     fill_in_dob(applicant.date_of_birth)
     fill_in 'application_ni_number', with: applicant.ni_number if applicant.ni_number.present?
     if applicant.married
@@ -39,8 +39,8 @@ module ApplicationFormMacros
   end
 
   def fill_in_dob(dob)
-    fill_in 'application_day_date_of_birth', with: dob.day
-    fill_in 'application_month_date_of_birth', with: dob.month
-    fill_in 'application_year_date_of_birth', with: dob.year
+    fill_in 'Day', with: dob.day, id: 'application_day_date_of_birth'
+    fill_in 'Month', with: dob.month, id: 'application_month_date_of_birth'
+    fill_in 'Year', with: dob.year, id: 'application_year_date_of_birth'
   end
 end
