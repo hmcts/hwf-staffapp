@@ -4,7 +4,7 @@ Selenium::WebDriver.logger.level = :error
 Capybara.configure do |config|
   driver = ENV['DRIVER']&.to_sym || :headless
   config.default_driver = driver
-  config.default_max_wait_time = 30
+  config.default_max_wait_time = 10
   config.default_normalize_ws = true
   config.match = :prefer_exact
   config.exact = true
