@@ -1,3 +1,4 @@
+require 'webdrivers'
 
 Selenium::WebDriver.logger.level = :error
 
@@ -12,7 +13,7 @@ Capybara.configure do |config|
 end
 
 Capybara.register_driver :headless do |app|
-  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage'])
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage', 'window-size=1200,1100'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
@@ -53,3 +54,5 @@ Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
   ENV['CAPYBARA_SERVER_PORT'] == 'random'
+
+Webdrivers.install_dir = File.expand_path('~/.webdrivers/' + ENV['TEST_ENV_NUMBER'].to_s)
