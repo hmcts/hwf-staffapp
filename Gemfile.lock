@@ -348,8 +348,8 @@ GEM
     paper_trail (10.3.1)
       activerecord (>= 4.2)
       request_store (~> 1.1)
-    parallel (1.19.1)
-    parallel_tests (2.32.0)
+    parallel (1.20.1)
+    parallel_tests (3.5.0)
       parallel
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
