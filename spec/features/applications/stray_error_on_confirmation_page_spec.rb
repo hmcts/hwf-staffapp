@@ -21,7 +21,7 @@ RSpec.feature 'Stray error on the confirmation page', type: :feature do
 
       start_new_application
 
-      fill_in 'application_last_name', with: 'Smith'
+      fill_in 'application_last_name', with: 'Smith', wait: true
       fill_in 'application_day_date_of_birth', with: dob.day
       fill_in 'application_month_date_of_birth', with: dob.month
       fill_in 'application_year_date_of_birth', with: dob.year

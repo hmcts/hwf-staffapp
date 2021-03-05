@@ -127,7 +127,7 @@ RSpec.feature 'Completing the application details', type: :feature do
 
                   context 'after completing income page' do
                     before do
-                      fill_in 'application_children', with: 2
+                      fill_in 'application_children', with: 2, wait: true
                       fill_in 'application_income', with: 1750
                       click_button 'Next'
                     end
@@ -246,7 +246,7 @@ RSpec.feature 'Completing the application details', type: :feature do
                   context 'and changes the threshold to exceeded' do
                     before do
                       choose :application_min_threshold_exceeded_true
-                      fill_in :application_amount, with: 3500
+                      fill_in :application_amount, with: 3500, wait: true
                       click_button 'Next'
                     end
 

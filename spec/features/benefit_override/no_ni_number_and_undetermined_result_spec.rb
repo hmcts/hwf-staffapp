@@ -7,7 +7,7 @@ def personal_details_without_ni_number
   login_as user
   start_new_application
 
-  fill_in 'application_last_name', with: 'Smith'
+  fill_in 'application_last_name', with: 'Smith', wait: true
   fill_in 'application_day_date_of_birth', with: dob
   fill_in 'application_month_date_of_birth', with: dob
   fill_in 'application_year_date_of_birth', with: dob
@@ -16,7 +16,7 @@ def personal_details_without_ni_number
 end
 
 def application_details
-  fill_in 'application_fee', with: 410
+  fill_in 'application_fee', with: 410, wait: true
   find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
   date_received = Time.zone.today
   fill_in 'application_day_date_received', with: date_received.day

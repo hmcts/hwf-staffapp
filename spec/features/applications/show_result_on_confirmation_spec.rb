@@ -20,7 +20,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       login_as user
 
       start_new_application
-      fill_in 'Last name', with: 'Smith', id: 'application_last_name'
+      fill_in 'Last name', with: 'Smith', id: 'application_last_name', wait: true
       fill_in 'Day', with: dob.day, id: 'application_day_date_of_birth'
       fill_in 'Month', with: dob.month, id: 'application_month_date_of_birth'
       fill_in 'Year', with: dob.year, id: 'application_year_date_of_birth'
