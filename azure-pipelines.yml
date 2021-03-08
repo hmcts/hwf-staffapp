@@ -54,7 +54,7 @@ jobs:
     - template: ./pipeline-steps/add-dependencies.yaml
     - template: ./pipeline-steps/test-application.yaml
     - template: ./pipeline-steps/publish-tests.yaml
-    - template: ./pipeline-steps/test-rerun.yaml
+    # - template: ./pipeline-steps/test-rerun.yaml
 
   - job: BuildAndPushImageCI
     dependsOn: TestApplication
