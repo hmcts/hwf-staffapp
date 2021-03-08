@@ -41,7 +41,7 @@ steps:
 #   displayName: 'rspec'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec spec/features/
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
     DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
   displayName: 'rspec'
 
