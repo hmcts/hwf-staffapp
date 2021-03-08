@@ -18,8 +18,10 @@ module EvidenceCheckHelper
   end
 
   def income_increase?(application)
-    if application.income.try(:positive?) && application.evidence_check.income.try(:positive?)
-      return true if application.income < application.evidence_check.income
+    if application.income.try(:positive?) &&
+       application.evidence_check.income.try(:positive?) &&
+       (application.income < application.evidence_check.income)
+      return true
     end
     false
   end

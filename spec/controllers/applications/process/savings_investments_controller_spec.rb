@@ -40,7 +40,7 @@ RSpec.describe Applications::Process::SavingsInvestmentsController, type: :contr
   end
 
   describe 'PUT #savings_investments_save' do
-    let(:expected_params) { { 'min_threshold_exceeded': 'false' } }
+    let(:expected_params) { { min_threshold_exceeded: 'false' } }
 
     before do
       allow(savings_investments_form).to receive(:update_attributes).with(expected_params)

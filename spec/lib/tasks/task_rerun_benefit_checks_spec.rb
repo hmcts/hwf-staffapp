@@ -15,7 +15,7 @@ describe "#rerun_benefit_checks:perform_job" do
   context 'no errors' do
     before {
       allow(BenefitCheckRerunJob).to receive(:perform_now)
-      Rake.application.rake_require('rerun_benefit_checks', [Rails.root.to_s + '/lib/tasks/'])
+      Rake.application.rake_require('rerun_benefit_checks', [Rails.root.join('lib/tasks/')])
       Rake::Task["rerun_benefit_checks:perform_job"].invoke
       Rake::Task["rerun_benefit_checks:perform_job"].reenable
     }
@@ -53,7 +53,7 @@ describe "#rerun_benefit_checks:perform_job" do
 
     before do
       allow(BenefitCheckRerunJob).to receive(:perform_now).and_raise(exception)
-      Rake.application.rake_require('rerun_benefit_checks', [Rails.root.to_s + '/lib/tasks/'])
+      Rake.application.rake_require('rerun_benefit_checks', [Rails.root.join('lib/tasks/')])
       Rake::Task["rerun_benefit_checks:perform_job"].invoke
       Rake::Task["rerun_benefit_checks:perform_job"].reenable
     end

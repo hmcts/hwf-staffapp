@@ -83,7 +83,7 @@ class FinanceReportBuilder
     return list if @filters.blank?
     list = list.where(sop_code: sop_code_filter) if sop_code_filter
     list = list.where(jurisdiction_id: jurisdiction_filter) if jurisdiction_filter
-    list = list.where('applications.application_type = ?', app_type_filter) if app_type_filter
+    list = list.where(applications: { application_type: app_type_filter }) if app_type_filter
 
     if refund_filter
       list = list.joins('LEFT JOIN details ON applications.id = details.application_id').

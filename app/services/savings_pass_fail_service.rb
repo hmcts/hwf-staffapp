@@ -14,11 +14,7 @@ class SavingsPassFailService
   private
 
   def calculate_pass_fail
-    if below_minimum_threshold? || above_61_below_max? || amount_is_valid?
-      true
-    else
-      false
-    end
+    below_minimum_threshold? || above_61_below_max? || amount_is_valid?
   end
 
   def set_application_outcome_to_none

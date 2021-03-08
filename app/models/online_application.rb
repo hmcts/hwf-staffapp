@@ -36,7 +36,7 @@ class OnlineApplication < ActiveRecord::Base
 
   def online_applicant_attributes
     fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married]
-    Hash[fields.map { |field| [field, send(field)] }]
+    fields.index_with { |field| send(field) }.to_h
   end
 
 end

@@ -5,7 +5,7 @@ module ApplicationHelper
 
   def parse_amount_to_pay(amount_to_pay)
     return unless amount_to_pay
-    amount_to_pay % 1 != 0 ? amount_to_pay : amount_to_pay.to_i
+    (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
   end
 
   def amount_to_refund(application)

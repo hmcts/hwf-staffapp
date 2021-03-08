@@ -2,22 +2,9 @@ module Views
   module Reports
     class FinanceReportDataRow
 
-      attr_accessor :office
-      attr_accessor :jurisdiction
-      attr_accessor :be_code
-      attr_accessor :sop_code
-      attr_accessor :total_count
-      attr_accessor :total_sum
-      attr_accessor :full_count
-      attr_accessor :full_sum
-      attr_accessor :part_count
-      attr_accessor :part_sum
-      attr_accessor :benefit_count
-      attr_accessor :benefit_sum
-      attr_accessor :income_count
-      attr_accessor :income_sum
-      attr_accessor :none_count
-      attr_accessor :none_sum
+      attr_accessor :office, :jurisdiction, :be_code, :sop_code, :total_count, :total_sum,
+                    :full_count, :full_sum, :part_count, :part_sum, :benefit_count,
+                    :benefit_sum, :income_count, :income_sum, :none_count, :none_sum
 
       def initialize(business_entity, date_from, date_to)
         @business_entity = business_entity

@@ -4,13 +4,13 @@ module Forms
 
       MINIMUM_AGE = 16
       MAXIMUM_AGE = 120
-      # rubocop:disable MutableConstant
+      # rubocop:disable Style/MutableConstant
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
       HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{7}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}.freeze
-      # rubocop:enable MutableConstant
+      # rubocop:enable Style/MutableConstant
       include ActiveModel::Validations::Callbacks
 
-      # rubocop:disable MethodLength
+      # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
           last_name: String,
@@ -25,7 +25,7 @@ module Forms
           first_name: String
         }
       end
-      # rubocop:enable MethodLength
+      # rubocop:enable Metrics/MethodLength
 
       define_attributes
 
