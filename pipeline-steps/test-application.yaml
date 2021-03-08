@@ -48,7 +48,7 @@ steps:
     DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
   displayName: 'rspec rerun'
   condition: failed()
-  dependsOn: 'rspec'
+  # dependsOn: 'rspec'
 
 - script: |
     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
