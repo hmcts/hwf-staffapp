@@ -1,20 +1,20 @@
 require 'rails_helper'
 
+module Forms
+  class FormTestClass < FormObject
+    def self.permitted_attributes
+      { id: Integer, fee: Integer }
+    end
+
+    define_attributes
+  end
+end
+
 RSpec.describe FormObject do
   subject(:form) { Forms::FormTestClass.new(object_or_hash) }
 
   describe '.permitted_attributes' do
     it { expect(described_class.permitted_attributes).to eq({}) }
-  end
-
-  module Forms
-    class FormTestClass < FormObject
-      def self.permitted_attributes
-        { id: Integer, fee: Integer }
-      end
-
-      define_attributes
-    end
   end
 
   params_list = Forms::FormTestClass.permitted_attributes.keys

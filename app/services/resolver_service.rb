@@ -2,6 +2,7 @@ class ResolverService
   include ResolverServiceAttribute
 
   class UndefinedOutcome < StandardError; end
+
   class NotDeletable < StandardError; end
 
   def initialize(object, user)

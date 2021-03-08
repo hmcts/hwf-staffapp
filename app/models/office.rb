@@ -16,7 +16,7 @@ class Office < ActiveRecord::Base
 
   def business_entities
     BusinessEntity.where(office_id: id).
-      where('valid_to IS NULL').
+      where(valid_to: nil).
       order(:jurisdiction_id)
   end
 end

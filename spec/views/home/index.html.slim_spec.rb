@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "home/index.html.slim", type: :view do
-  module DwpMaintenanceHelper
-    def dwp_maintenance?; end
-  end
+module DwpMaintenanceHelper
+  def dwp_maintenance?; end
+end
 
+RSpec.describe "home/index.html.slim", type: :view do
   subject { rendered }
 
   let(:office) { create :office }

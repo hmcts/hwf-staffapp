@@ -153,6 +153,7 @@ end
 Then("I should be redirected to home page") do
   expect(dashboard_page.content).to have_find_an_application_heading
   WebMock.reset!
+  WebMock.allow_net_connect!(net_http_connect_on_start: true, allow_localhost: true)
 end
 
 Then("I should see a message that the DWP Checker is not available") do

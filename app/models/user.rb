@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   scope :sorted_by_email, -> { all.order(:email) }
 
-  scope :by_office, ->(office_id) { where('office_id = ?', office_id) }
+  scope :by_office, ->(office_id) { where(office_id: office_id) }
   email_regex = /\A([^@\s]+)@(((justice|hmcourts-service|hmcts)\.gsi|digital\.justice|justice)\.gov\.uk|hmcts\.net)\z/i
 
   validates :role, :name, presence: true

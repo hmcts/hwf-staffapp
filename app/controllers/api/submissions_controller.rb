@@ -19,7 +19,7 @@ module Api
 
     private
 
-    # rubocop:disable MethodLength
+    # rubocop:disable Metrics/MethodLength
     def public_app_params
       params.require(:online_application).permit(
         :married,
@@ -56,7 +56,7 @@ module Api
         income_kind: { applicant: [], partner: [] }
       ).to_h
     end
-    # rubocop:enable MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def authenticate
       authenticate_or_request_with_http_token do |token, _options|

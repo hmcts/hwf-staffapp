@@ -83,7 +83,7 @@ class FinanceTransactionalReportBuilder
     list = list.where('details.refund = true') if refund_filter
     list = list.where(application_type: app_type_filter) if app_type_filter
     if jurisdiction_filter
-      list = list.where('business_entities.jurisdiction_id = ?', jurisdiction_filter)
+      list = list.where(business_entities: { jurisdiction_id: jurisdiction_filter })
     end
     list
   end

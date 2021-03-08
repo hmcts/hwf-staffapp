@@ -1,5 +1,5 @@
 class Applicant < ActiveRecord::Base
-  belongs_to :application, required: true
+  belongs_to :application, optional: false
 
   before_validation :format_ni_number, :format_ho_number
 

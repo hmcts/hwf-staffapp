@@ -1,4 +1,5 @@
 module ProcessedViewsHelper
+  # rubocop:disable Rails/HelperInstanceVariable
   def assign_views
     @application = application
     @applicant = Views::Overview::Applicant.new(application)
@@ -7,6 +8,7 @@ module ProcessedViewsHelper
     @result = Views::ApplicationResult.new(application)
     @processing_details = Views::ProcessedData.new(application)
   end
+  # rubocop:enable Rails/HelperInstanceVariable
 
   def paginate(query)
     if per_page_is_all?
@@ -28,9 +30,11 @@ module ProcessedViewsHelper
     params[:page].try(:to_i) || 1
   end
 
+  # rubocop:disable Rails/HelperInstanceVariable
   def total_pages
     per_page_is_all? ? 1 : @paginate.total_pages
   end
+  # rubocop:enable Rails/HelperInstanceVariable
 
   def per_page
     params[:per_page].try(:to_i) || Settings.processed_deleted.per_page

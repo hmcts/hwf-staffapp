@@ -87,7 +87,7 @@ Rails.application.configure do
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
-  config.logstasher.logger_path = STDOUT
+  config.logstasher.logger_path = $stdout
   config.logstasher.source = 'logstasher'
 
   # Use a different logger for distributed setups.

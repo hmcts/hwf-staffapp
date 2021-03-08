@@ -12,8 +12,8 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
               = t("#{type}.table_header.#{header_key}")
         - else
           - search_table_headers.each do |header_key|
-            th class="#{sort_link_class(header_key)} govuk-table__header"
-              = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key)
+            th class="#{sort_link_class(header_key, @sort_by, @sort_to)} govuk-table__header"
+              = link_to t("#{type}.table_header.#{header_key}"), sort_link_helper(header_key, @sort_by, @sort_to)
 
     tbody.govuk-table__body
       - list.each do |record|
