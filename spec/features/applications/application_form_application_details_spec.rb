@@ -36,7 +36,7 @@ RSpec.feature 'Completing the application details page of an application form', 
 
     context 'before expanding optional fields' do
       it 'are hidden' do
-        expect(page.find(:xpath, '//input[@id="application_deceased_name"]').visible?).to be true
+        expect(page.find(:xpath, '//input[@id="application_deceased_name"]').visible?).to be false
         expect(page.find(:xpath, '//input[@id="application_day_date_fee_paid"]').visible?).to be false
       end
 
