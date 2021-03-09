@@ -37,13 +37,18 @@ steps:
   displayName: 'Parallel DB load'
 
 - script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec spec/features/applications/application_form_application_details_spec.rb:38
+    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec spec/features/applications/application_form_application_details_spec.rb:47
   displayName: 'rspec'
 
-- script: |
-    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
-  displayName: 'cucumber'
+# - script: |
+#     DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
+#     DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
+#   displayName: 'rspec'
+
+# - script: |
+#     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
+#   displayName: 'cucumber'
 
 - script: |
     bundle exec rake jasmine:ci
