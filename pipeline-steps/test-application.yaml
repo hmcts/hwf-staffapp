@@ -38,12 +38,8 @@ steps:
 
 - script: |
     DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
-  displayName: 'rspec'
-
-- script: |
     DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
-  displayName: 'rspec rerun'
-  condition: failed() 
+  displayName: 'rspec'
 
 - script: |
     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
