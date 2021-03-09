@@ -4,11 +4,11 @@ module Applications
       before_action :authorize_application_update
 
       def index
-        if !application.benefits?
+        if application.benefits?
+          redirect_to application_summary_path(application)
+        else
           @form = Forms::Application::Income.new(application)
           render :index
-        else
-          redirect_to application_summary_path(application)
         end
       end
 

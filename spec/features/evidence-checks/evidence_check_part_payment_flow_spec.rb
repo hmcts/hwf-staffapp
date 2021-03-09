@@ -61,6 +61,6 @@ RSpec.feature 'Part payment application with evidence check for refund', type: :
   end
 
   def evidence_check_rendered?
-    (%r{\/evidence_checks\/#{application.evidence_check.id}} =~ page.current_url) != nil
+    (%r{/evidence_checks/#{application.evidence_check.id}} =~ page.current_url) != nil
   end
 end

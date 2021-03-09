@@ -342,6 +342,10 @@ def create_application_with_bad_request_result_with(user)
 end
 
 def stub_dwp_response_as_bad_request
+  selenium_url = URI.parse ENV.fetch('SELENIUM_URL', 'http://localhost:4444/wd/hub')
+  app_host_url = URI.parse Capybara.app_host
+
+  WebMock.disable_net_connect!(allow_localhost: true, allow: [selenium_url.host, app_host_url.host, 'ondemand.saucelabs.com', 'chromedriver.storage.googleapis.com'])
   stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
     to_return(body: '{"error": "LSCBC959: Service unavailable."}', status: BAD_REQUEST)
 end

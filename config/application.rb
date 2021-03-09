@@ -30,7 +30,7 @@ module FrStaffapp
     # the framework and any gems in your application.
     config.autoload_paths << Rails.root.join('lib')
 
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
     config.i18n.default_locale = 'en-GB'
 
     if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?

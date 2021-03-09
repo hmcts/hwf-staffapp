@@ -31,7 +31,7 @@ module Views
     end
 
     def parse_amount_to_pay(amount_to_pay)
-      amount_to_pay % 1 != 0 ? amount_to_pay : amount_to_pay.to_i
+      (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
     end
 
     def savings
@@ -67,9 +67,7 @@ module Views
       case outcome_from.class.name
       when 'EvidenceCheck'
         outcome_from.outcome
-      when 'PartPayment'
-        outcome_from_application
-      when 'Application'
+      when 'PartPayment', 'Application'
         outcome_from_application
       end
     end

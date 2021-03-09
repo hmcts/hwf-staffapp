@@ -1,5 +1,9 @@
 require 'rails_helper'
 
+class MockRelation < Array
+  def paginate(_options); end
+end
+
 RSpec.describe DeletedApplicationsController, type: :controller do
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
@@ -32,10 +36,6 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     let(:query) { instance_double(Query::DeletedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
-
-    class MockRelation < Array
-      def paginate(_options); end
-    end
 
     before do
       allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)

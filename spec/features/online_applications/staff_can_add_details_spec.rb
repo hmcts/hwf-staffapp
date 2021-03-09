@@ -37,7 +37,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   end
 
   def when_they_fill_in_all_required_fields
-    fill_in :online_application_fee, with: '200'
+    fill_in :online_application_fee, with: '200', wait: true
     choose "online_application_jurisdiction_id_#{jurisdictions.first.id}"
     fill_in :online_application_day_date_received, with: '8'
     fill_in :online_application_month_date_received, with: '10'

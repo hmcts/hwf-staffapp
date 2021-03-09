@@ -5,17 +5,17 @@ class BenefitCheck < ActiveRecord::Base
 
   scope :by_office, lambda { |office_id|
     joins(:application).
-      where('applications.office_id = ?', office_id)
+      where(applications: { office_id: office_id })
   }
 
   scope :non_digital, lambda {
     joins(:application).joins('LEFT JOIN offices ON applications.office_id = offices.id').
-      where('offices.name != ?', 'Digital')
+      where.not(offices: { name: 'Digital' })
   }
 
   scope :by_office_grouped_by_type, lambda { |office_id|
     joins(:application).
-      where('applications.office_id = ?', office_id).
+      where(applications: { office_id: office_id }).
       group(:dwp_result).
       order(Arel.sql('length(dwp_result)'))
   }

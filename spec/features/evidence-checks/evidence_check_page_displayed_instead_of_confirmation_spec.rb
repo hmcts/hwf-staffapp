@@ -54,6 +54,6 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
   end
 
   def evidence_check_rendered?
-    (%r{\/evidence_checks\/#{application.evidence_check.id}} =~ page.current_url) != nil
+    (%r{/evidence_checks/#{application.evidence_check.id}} =~ page.current_url) != nil
   end
 end

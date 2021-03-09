@@ -28,33 +28,29 @@ variables:
 
 resources:
   containers:
-  # - container: my_container
-  #   image: ubuntu:16.04
+
   - container: postgres
     image: postgres:9.6
     env: { POSTGRES_HOST_AUTH_METHOD: trust }
     ports:
     - 5432:5432
-
 jobs:
   - job: TestApplication
 
     pool:
       vmImage: 'Ubuntu-16.04'
-    # container: my_container
-
+    
     services:
       postgres: postgres
     variables:
-      rubyVersion: '= 2.6.6'
-      bundlerVersion: '1.17.3'
+      rubyVersion: '= 2.7.2'
+      bundlerVersion: '2.2.8'
       aptDependencies: 'qtbase5-dev xvfb libqtwebkit-dev postgresql-client libpq-dev'
 
     steps:
     - template: ./pipeline-steps/add-dependencies.yaml
     - template: ./pipeline-steps/test-application.yaml
     - template: ./pipeline-steps/publish-tests.yaml
-
 
   - job: BuildAndPushImageCI
     dependsOn: TestApplication

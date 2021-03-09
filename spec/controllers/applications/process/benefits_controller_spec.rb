@@ -65,7 +65,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
   end
 
   describe 'PUT #benefits_save' do
-    let(:expected_params) { { 'benefits': 'false' } }
+    let(:expected_params) { { benefits: 'false' } }
     let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
     let(:user_says_on_benefits) { false }
     let(:can_override) { false }

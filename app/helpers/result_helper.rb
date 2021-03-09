@@ -25,7 +25,7 @@ module ResultHelper
     if application.income_min_threshold_exceeded == true &&
        application.income_max_threshold_exceeded == true
       income = currency_format(application.income_max_threshold)
-      return "More than #{income}"
+      "More than #{income}"
     end
   end
 

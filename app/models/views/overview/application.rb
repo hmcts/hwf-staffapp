@@ -95,7 +95,7 @@ module Views
       private
 
       def parse_amount_to_pay(amount_to_pay)
-        amount_to_pay % 1 != 0 ? amount_to_pay : amount_to_pay.to_i
+        (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
       end
 
       def format_threshold_income

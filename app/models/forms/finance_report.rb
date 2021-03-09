@@ -29,7 +29,7 @@ module Forms
     before_validation :format_dates
 
     def i18n_scope
-      "activemodel.attributes.forms/finance_report".to_sym
+      :"activemodel.attributes.forms/finance_report"
     end
 
     def start_date

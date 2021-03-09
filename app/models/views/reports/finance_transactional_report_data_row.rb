@@ -2,19 +2,8 @@ module Views
   module Reports
     class FinanceTransactionalReportDataRow
 
-      attr_accessor :month_year
-      attr_accessor :entity_code
-      attr_accessor :sop_code
-      attr_accessor :office_name
-      attr_accessor :jurisdiction_name
-      attr_accessor :remission_amount
-      attr_accessor :refund
-      attr_accessor :decision
-      attr_accessor :application_type
-      attr_accessor :application_id
-      attr_accessor :reference
-      attr_accessor :decision_date
-      attr_accessor :fee
+      attr_accessor :month_year, :entity_code, :sop_code, :office_name, :jurisdiction_name, :remission_amount,
+                    :refund, :decision, :application_type, :application_id, :reference, :decision_date, :fee
 
       def initialize(app)
         @month_year = app.decision_date.strftime("%m-%Y")

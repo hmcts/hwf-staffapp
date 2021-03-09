@@ -2,7 +2,7 @@ require 'rails_helper'
 
 def personal_details_page
   dob = Time.zone.today - 25.years
-  fill_in 'application_last_name', with: 'Hirani'
+  fill_in 'application_last_name', with: 'Hirani', wait: true
   fill_in 'application_day_date_of_birth', with: dob.day
   fill_in 'application_month_date_of_birth', with: dob.month
   fill_in 'application_year_date_of_birth', with: dob.year
@@ -13,7 +13,7 @@ end
 
 def application_details
   date_received = Time.zone.today
-  fill_in 'application_fee', with: 410
+  fill_in 'application_fee', with: 410, wait: true
   find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
   fill_in 'application_day_date_received', with: date_received.day
   fill_in 'application_month_date_received', with: date_received.month

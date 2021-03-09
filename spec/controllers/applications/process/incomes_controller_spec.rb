@@ -46,7 +46,7 @@ RSpec.describe Applications::Process::IncomesController, type: :controller do
   end
 
   describe 'PUT #income_save' do
-    let(:expected_params) { { 'dependents': 'false' } }
+    let(:expected_params) { { dependents: 'false' } }
 
     before do
       allow(income_form).to receive(:update_attributes).with(expected_params)

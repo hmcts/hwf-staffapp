@@ -34,13 +34,13 @@ class Application < ActiveRecord::Base
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
-      joins(:applicant).where('applicants.ni_number = ?', ni_number)
+      joins(:applicant).where(applicants: { ni_number: ni_number })
   end)
 
   scope :with_evidence_check_for_ho_number, (lambda do |ho_number|
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
-      joins(:applicant).where('applicants.ho_number = ?', ho_number)
+      joins(:applicant).where(applicants: { ho_number: ho_number })
   end)
 
   scope :except_created, -> { where.not(state: 0) }

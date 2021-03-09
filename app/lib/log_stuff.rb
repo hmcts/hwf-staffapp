@@ -29,7 +29,7 @@ class LogStuff
 
       msg = yield
       event = build_event(*args, msg)
-      LogStasher.logger << event.to_json + "\n"
+      LogStasher.logger << "#{event.to_json} \n"
     else
       return unless Rails.logger.send("#{severity}?")
       Rails.logger.send(severity, &block)
@@ -67,9 +67,9 @@ class LogStuff
   ['fatal', 'error', 'warn', 'info', 'debug'].each do |severity|
     # rubocop:disable Security/Eval
     eval <<-MULTILINE, nil, __FILE__, __LINE__ + 1
-      def self.#{severity}(*args, &block)
-        self.log(:#{severity}, *args, &block )
-      end
+      def self.#{severity}(*args, &block)                 # def fatal(*args, &block)
+        self.log(:#{severity}, *args, &block )            #   self.log('fatal', *args, &block)
+      end                                                 # end
     MULTILINE
     # rubocop:enable Security/Eval
   end

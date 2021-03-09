@@ -1,5 +1,9 @@
 require 'rails_helper'
 
+class MockRelation < Array
+  def paginate(_options); end
+end
+
 RSpec.describe ProcessedApplicationsController, type: :controller do
   let(:user) { create(:user) }
 
@@ -33,12 +37,8 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     let(:query) { instance_double(Query::ProcessedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
-    let(:sort_hash) {}
-    let(:sort) {}
-
-    class MockRelation < Array
-      def paginate(_options); end
-    end
+    let(:sort_hash) { nil }
+    let(:sort) { nil }
 
     before do
       allow(Query::ProcessedApplications).to receive(:new).with(user).and_return(query)

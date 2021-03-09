@@ -47,7 +47,6 @@ class PersonalDetailsPage < BasePage
     content.application_year_date_of_birth.set '1986'
   end
 
-  # rubocop:disable Metrics/AbcSize
   def valid_dob_under_15
     now = Time.zone.now
     content.application_day_date_of_birth.set now.day
@@ -75,7 +74,6 @@ class PersonalDetailsPage < BasePage
     content.application_month_date_of_birth.set now.month
     content.application_year_date_of_birth.set now.year - 16
   end
-  # rubocop:enable Metrics/AbcSize
 
   def in_the_future_dob
     tomorrow = Time.zone.tomorrow

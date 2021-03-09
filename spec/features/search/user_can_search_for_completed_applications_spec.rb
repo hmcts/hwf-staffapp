@@ -119,7 +119,7 @@ RSpec.feature 'User can search for online application', type: :feature do
     expect(page).to have_text(result_application.reference)
   end
 
-  # rubocop:disable AbcSize
+  # rubocop:disable Metrics/AbcSize
   def then_have_all_the_columns_populated_correctly(result_application)
     within(:xpath, './/table[@class="search-results govuk-table"]') do
       expect(find(:xpath, './/tr[1]/td[1]').text).to eq(result_application.reference)
@@ -132,5 +132,5 @@ RSpec.feature 'User can search for online application', type: :feature do
       expect(find(:xpath, './/tr[1]/td[8]').text).to eq(result_application.decision_date.strftime('%d/%m/%Y'))
     end
   end
-  # rubocop:enable AbcSize
+  # rubocop:enable Metrics/AbcSize
 end
