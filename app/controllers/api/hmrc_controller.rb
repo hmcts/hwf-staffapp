@@ -11,7 +11,7 @@ module Api
 
     # works
     def get_token
-      party = HTTParty.post('https://test-api.service.hmrc.gov.uk/oauth/token',
+      party = HTTParty.post("#{api_url}/oauth/token",
         headers: {"content-type"=> "application/x-www-form-urlencoded"},
         body: { client_secret: @client_secret, client_id: @client_id, grant_type: 'client_credentials'})
 
@@ -21,7 +21,7 @@ module Api
     # works
     # api/new/user
     def create_user
-      party = HTTParty.post('https://test-api.service.hmrc.gov.uk/create-test-user/individuals',
+      party = HTTParty.post("#{api_url}/create-test-user/individuals",
         headers: { "Content-Type"=> "application/json",
           "Accept" => "application/vnd.hmrc.1.0+json",
           "Authorization" => access_token },
@@ -34,12 +34,12 @@ module Api
     # works
     # api/match_user
     def match_user
-      party = HTTParty.post('https://test-api.service.hmrc.gov.uk/individuals/matching',
+      party = HTTParty.post("#{api_url}/individuals/matching",
         headers: { "Content-Type": "application/json",
          "correlationId" => UUID.new.generate,
          "Accept" => "application/vnd.hmrc.2.0+json",
          "Authorization" => access_token },
-        body: {"firstName": "Mercer","lastName": "Draper","nino": "RC729233D","dateOfBirth": "1962-03-28"}.to_json,
+        body: {"firstName": "Petr","lastName": "Zaparka","nino": "SL786036A","dateOfBirth": "1982-05-09"}.to_json,
         debug_output: STDOUT
       )
 
@@ -49,7 +49,7 @@ module Api
     # works
     # api/links
     def matching_links
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/matching/#{match_id}",
+      party = HTTParty.get("#{api_url}/individuals/matching/#{match_id}",
         headers: {
           "Content-Type": "application/json",
           "Accept" => "application/vnd.hmrc.2.0+json",
@@ -63,7 +63,7 @@ module Api
     # works
     # api/employments
     def employments
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/employments",
+      party = HTTParty.get("#{api_url}/individuals/employments",
         headers: {
           "Content-Type": "application/json",
           "Accept" => "application/vnd.hmrc.2.0+json",
@@ -83,7 +83,7 @@ module Api
     # from date and end date has to match exactly
     def employment_paye
       # individuals/employments/paye?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromDate,toDate}
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/employments/paye",
+      party = HTTParty.get("#{api_url}/individuals/employments/paye",
         headers: {
           "Content-Type": "application/json",
           "Accept" => "application/vnd.hmrc.2.0+json",
@@ -104,7 +104,7 @@ module Api
     # api/incomes
     # works
     def incomes
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/",
+      party = HTTParty.get("#{api_url}/individuals/income/",
         headers: {
               "Content-Type": "application/json",
               "Accept" => "application/vnd.hmrc.2.0+json",
@@ -123,7 +123,7 @@ module Api
     # api/incomes/paye
     def income_paye
       # /individuals/income/paye?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromDate,toDate}"
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/paye",
+      party = HTTParty.get("#{api_url}/individuals/income/paye",
         headers: {
               "Content-Type": "application/json",
               "Accept" => "application/vnd.hmrc.2.0+json",
@@ -144,7 +144,7 @@ module Api
     # api/incomes/sa
     def income_sa
       # /individuals/income/sa?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromTaxYear,toTaxYear}
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa",
+      party = HTTParty.get("#{api_url}/individuals/income/sa",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -152,7 +152,7 @@ module Api
               "correlationId": UUID.new.generate},
         query: {
           matchId: match_id,
-          fromTaxYear: '2019-20',
+          fromTaxYear: '2018-19',
           toTaxYear: '2019-20'
         },
         debug_output: STDOUT
@@ -166,7 +166,7 @@ module Api
     # api/incomes/sa/summary
     def sa_summary
       # /individuals/income/sa/summary?matchId=38b1e003-f07e-47f7-bd2a-53c6e7033ed7{&fromTaxYear,toTaxYear}
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/summary",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/summary",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -187,7 +187,7 @@ module Api
     # api/incomes/sa/self
     def sa_self
       # /individuals/income/sa/self-employments
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/self-employments",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/self-employments",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -208,7 +208,7 @@ module Api
     # api/incomes/sa/trust
     def sa_trust
       # /individuals/income/sa/trust
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/trusts",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/trusts",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -229,7 +229,7 @@ module Api
     # api/incomes/sa/properties
     def sa_properties
       # /individuals/income/sa/trust
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/uk-properties",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/uk-properties",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -250,7 +250,7 @@ module Api
     # api/incomes/sa/foreign
     def sa_foreign
       # /individuals/income/sa/foreign
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/foreign",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/foreign",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -271,7 +271,7 @@ module Api
     # api/incomes/sa/dividends
     def sa_dividends
       # /individuals/income/sa/interests-and-dividends
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/income/sa/interests-and-dividends",
+      party = HTTParty.get("#{api_url}/individuals/income/sa/interests-and-dividends",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.2.0+json",
@@ -292,7 +292,7 @@ module Api
     # api/benefits_and_credits
     def benefits_and_credits
       # /individuals/benefits-and-credits/?matchId=27e51b22-9e56-4767-a952-1ff4173427f7
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/benefits-and-credits/",
+      party = HTTParty.get("#{api_url}/individuals/benefits-and-credits/",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.1.0+json",
@@ -311,7 +311,7 @@ module Api
     # api/benefits_and_credits/work
     def benefits_work
       # /individuals/benefits-and-credits/working-tax-credit?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromDate,toDate
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/benefits-and-credits/working-tax-credit",
+      party = HTTParty.get("#{api_url}/individuals/benefits-and-credits/working-tax-credit",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.1.0+json",
@@ -332,7 +332,7 @@ module Api
     # api/benefits_and_credits/child
     def benefits_child
       # /individuals/benefits-and-credits/child-tax-credit?matchId=27e51b22-9e56-4767-a952-1ff4173427f7{&fromDate,toDate}
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/benefits-and-credits/child-tax-credit",
+      party = HTTParty.get("#{api_url}/individuals/benefits-and-credits/child-tax-credit",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.1.0+json",
@@ -352,7 +352,7 @@ module Api
     # works but empty - don't know how to create test data for this
     # api/details/address
     def details_address
-      party = HTTParty.get("https://test-api.service.hmrc.gov.uk/individuals/details/addresses",
+      party = HTTParty.get("#{api_url}/individuals/details/addresses",
         headers: {
               "Content-Type": "application/json",
               "Accept": "application/vnd.hmrc.1.0+json",
@@ -664,11 +664,16 @@ module Api
     end
 
     def access_token
-
+      "Bearer "
     end
 
     def match_id
-      'c97a8e37-e825-40e5-b6c5-ed4773eb8eb4'
+      '886fb49d-49d4-43cf-9895-06234f0c79c4'
+    end
+
+    def api_url
+      'https://api.service.hmrc.gov.uk'
+      # https://test-api.service.hmrc.gov.uk
     end
 
 
