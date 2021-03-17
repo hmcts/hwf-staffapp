@@ -52,20 +52,21 @@
 
       = f.submit 'Next', :class => 'govuk-button'
 
-      details.govuk-body
-        summary
-          span.summary.primary Our calculation is based on this information
+      details.govuk-details
+        summary.govuk-details__summary
+          span.govuk-details__summary-text Our calculation is based on this information
 
-        dl.govuk-summary-list class="govuk-!-margin-top-3"
-          .govuk-summary-list__row
-            dt.govuk-summary-list__key Age
-            dd.govuk-summary-list__value #{@application.applicant.age} years old
-          .govuk-summary-list__row
-            dt.govuk-summary-list__key Fee
-            dd.govuk-summary-list__value = number_to_currency(@application.detail.fee, precision: 2, unit: '£')
-          .govuk-summary-list__row
-            dt.govuk-summary-list__key Status
-            dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
+        div.govuk-details__text class="govuk-!-margin-top-3"
+          dl.govuk-summary-list
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Age
+              dd.govuk-summary-list__value #{@application.applicant.age} years old
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Fee
+              dd.govuk-summary-list__value = number_to_currency(@application.detail.fee, precision: 2, unit: '£')
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Status
+              dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
 
 
 
