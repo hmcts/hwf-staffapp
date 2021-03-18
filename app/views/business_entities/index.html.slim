@@ -18,8 +18,7 @@ h1.govuk-heading-l Business entities for #{office.name}
       caption.visuallyhidden.govuk-table__caption Table of business entities for #{office.name}
       thead.govuk-table__head
         tr.govuk-table__row
-          th.govuk-table__header scope='col' Jurisdiction
-          th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.be_code')
+          th.govuk-table__header scope='col' Jurisdiction          
           th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.sop_code')
           th.govuk-table__header scope='col' =t('activerecord.attributes.business_entity.name')
           th.govuk-table__header scope='col' Actions
@@ -30,8 +29,6 @@ h1.govuk-heading-l Business entities for #{office.name}
             tr.govuk-table__row
               td.govuk-table__cell
                 =j.jurisdiction_name
-              td.govuk-table__cell
-                =j.business_entity_code
               td.govuk-table__cell
                 =j.business_entity_sop_code
               td.govuk-table__cell
