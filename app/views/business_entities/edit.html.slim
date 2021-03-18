@@ -4,7 +4,6 @@
 h1.govuk-heading-l Edit business entity
 
 = form_for [office, business_entity], method: :put do |f|
-  = f.hidden_field :be_code
   .govuk-form-group.group-level
     = f.label :sop_code, class: 'govuk-label'
     span.govuk-error-message
