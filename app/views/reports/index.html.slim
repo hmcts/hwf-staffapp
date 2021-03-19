@@ -34,3 +34,7 @@ dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key =link_to 'Power BI export', report_power_bi_path
       dd.govuk-summary-list__value Data export for Power BI software
+  - if policy(:report).power_bi?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =link_to 'Applications by court', report_ocmc_path
+      dd.govuk-summary-list__value Extract all applications by court and date
