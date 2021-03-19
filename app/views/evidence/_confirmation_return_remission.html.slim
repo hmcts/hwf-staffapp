@@ -6,5 +6,4 @@
      part_payment_amount: "£#{confirmation.amount_to_pay}",
      total_income: "£#{confirmation.income}",
      children: confirmation.application.children,
-     date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long])
-     )
+     date_for_part_payment: confirmation.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))

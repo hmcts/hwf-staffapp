@@ -29,6 +29,10 @@ steps:
   displayName: 'rubocop'
 
 - script: |
+    bundle exec brakeman
+  displayName: 'brakeman'
+
+- script: |
     bundle exec rake db:create db:schema:load
   displayName: 'DB load'
 
