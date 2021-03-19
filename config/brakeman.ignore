@@ -1,0 +1,66 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "1886b206291e66e87177a6eb7f8d98074ffad480183eb43ab39d24ccbf19359e",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/reference_generator.rb",
+      "line": 30,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Application.select(\"max(cast(replace(reference,'#{reference_prefix}','') as integer)) AS sequence\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ReferenceGenerator",
+        "method": "last_reference"
+      },
+      "user_input": "reference_prefix",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9d7522f85aac5dd468349c052337ccd309ff2af78a8b4c05318db71f9fd70b6d",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/helpers/common_scopes.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "group_by_day(\"#{name.pluralize.underscore}.created_at\", :format => \"%d %b %y\").where(\"#{name.pluralize.underscore}.created_at > ?\", (Time.zone.today - 6.days))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CommonScopes",
+        "method": "s(:self).included"
+      },
+      "user_input": "name.pluralize.underscore",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "b4128f7cce99da0eb9e8c21e4d1a2264acfa60a4bea2442e3a5ff90fc0d99f74",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/users/invitations_controller.rb",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:user).permit(:email, :role, :name, :office_id)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Users::InvitationsController",
+        "method": "invite_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "note": ""
+    }
+  ],
+  "updated": "2021-03-19 09:31:41 +0000",
+  "brakeman_version": "5.0.0"
+}
