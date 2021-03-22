@@ -25,4 +25,3 @@ Rails.application.config.assets.precompile += ['govuk-fonts/*']
 Rails.application.config.assets.precompile += ['images/*']
 Rails.application.config.assets.precompile += ['accessible-autocomplete/dist/accessible-autocomplete.min.js']
 Rails.application.config.assets.precompile += ['accessible-autocomplete/dist/accessible-autocomplete.min.css']
-

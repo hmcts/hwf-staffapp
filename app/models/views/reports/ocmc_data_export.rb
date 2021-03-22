@@ -48,7 +48,8 @@ module Views
         applications.amount_to_pay as \"Applicant pays estimate\",
         CASE WHEN ec.id IS NULL THEN applications.amount_to_pay ELSE ec.amount_to_pay END as \"Applicant pays\",
         details.fee - applications.amount_to_pay as \"Departmental cost estimate\",
-        CASE WHEN ec.id IS NULL THEN details.fee - applications.amount_to_pay ELSE details.fee - ec.amount_to_pay END as \"Departmental cost\",
+        CASE WHEN ec.id IS NULL THEN details.fee - applications.amount_to_pay ELSE details.fee - ec.amount_to_pay
+          END as \"Departmental cost\",
         CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
         CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
         CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS \"Evidence checked?\",
@@ -68,7 +69,8 @@ module Views
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
-        WHERE applications.office_id = #{@office_id} AND applications.created_at between '#{@date_from.to_s(:db)}' AND '#{@date_to.to_s(:db)}'
+        WHERE applications.office_id = #{@office_id}
+        AND applications.created_at between '#{@date_from.to_s(:db)}' AND '#{@date_to.to_s(:db)}'
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength

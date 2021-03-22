@@ -20,19 +20,19 @@ module Report
     private
 
     def extract_ocmc_data
-      Views::Reports::OcmcDataExport.new(date_from(report_params), date_to(report_params), entity_code).to_csv
+      Views::Reports::OcmcDataExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
     end
 
     def authorise_ocmc_data
       authorize :report, :ocmc_report?
     end
 
-    def entity_code
+    def court_id
       report_params[:entity_code]
     end
 
     def export_file_prefix
-      "help-with-fees-#{entity_code}-applications-by-court-extract"
+      "help-with-fees-#{court_id}-applications-by-court-extract"
     end
 
   end
