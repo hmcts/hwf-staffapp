@@ -83,3 +83,8 @@
 .start-hidden {
   display: none;
 }
+
+// Autocomplete plugin override
+.autocomplete__wrapper {
+  width: 400px;
+}
