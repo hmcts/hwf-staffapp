@@ -27,6 +27,10 @@ class ReportPolicy < BasePolicy
     admin?
   end
 
+  def ocmc_report?
+    admin?
+  end
+
   def power_bi?
     admin?
   end

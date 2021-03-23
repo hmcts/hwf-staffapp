@@ -16,6 +16,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
+    it { is_expected.not_to permit_action(:ocmc_report) }
   end
 
   context 'for reader' do
@@ -29,6 +30,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
+    it { is_expected.not_to permit_action(:ocmc_report) }
   end
 
   context 'for manager' do
@@ -42,6 +44,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
+    it { is_expected.not_to permit_action(:ocmc_report) }
   end
 
   context 'for admin' do
@@ -54,6 +57,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
     it { is_expected.to permit_action(:income_claims_data) }
+    it { is_expected.to permit_action(:ocmc_report) }
   end
 
   context 'for an mi' do
@@ -66,5 +70,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
+    it { is_expected.not_to permit_action(:ocmc_report) }
   end
 end

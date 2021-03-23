@@ -18,6 +18,7 @@ $govuk-fonts-path: 'govuk-frontend/assets/fonts/';
 $govuk-images-path: 'govuk-frontend/assets/images/';
 
 @import "govuk-frontend/all";
+@import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
 /*local*/
 @import 'local/layout';
