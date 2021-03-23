@@ -3,12 +3,15 @@ require 'rake'
 # rubocop:disable RSpec/DescribeClass
 describe "#rerun_benefit_checks:perform_job" do
   let(:dwp_monitor) { instance_double('DwpMonitor') }
+  let(:app_insight) { instance_double('ApplicationInsights::TelemetryClient', flush: '') }
 
   before do
     allow(dwp_monitor).to receive(:state).and_return(dwp_state)
     allow(DwpMonitor).to receive(:new).and_return(dwp_monitor)
     allow(Rails.logger).to receive(:info)
     allow(Rails.logger).to receive(:error)
+    allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
+    allow(app_insight).to receive(:track_event)
     Rake::Task.define_task(:environment)
   end
 
@@ -25,7 +28,7 @@ describe "#rerun_benefit_checks:perform_job" do
       it 'will not rerun checks' do
         expect(BenefitCheckRerunJob).not_to have_received(:perform_now)
       end
-      it { expect(Rails.logger).to have_received(:info).with("Rake task rerun_benefit_checks - no rerun needed") }
+      it { expect(app_insight).to have_received(:track_event).with("Rake task rerun_benefit_checks - no rerun needed") }
     end
 
     context 'DWPMonitor is offline' do
@@ -34,7 +37,7 @@ describe "#rerun_benefit_checks:perform_job" do
       it 'will rerun checks' do
         expect(BenefitCheckRerunJob).to have_received(:perform_now)
       end
-      it { expect(Rails.logger).to have_received(:info).with("Rake task rerun_benefit_checks - rerun was triggered") }
+      it { expect(app_insight).to have_received(:track_event).with("Rake task rerun_benefit_checks - rerun was triggered") }
     end
 
     context 'DWPMonitor is warning' do
@@ -43,7 +46,7 @@ describe "#rerun_benefit_checks:perform_job" do
       it 'will rerun checks' do
         expect(BenefitCheckRerunJob).not_to have_received(:perform_now)
       end
-      it { expect(Rails.logger).to have_received(:info).with("Rake task rerun_benefit_checks - no rerun needed") }
+      it { expect(app_insight).to have_received(:track_event).with("Rake task rerun_benefit_checks - no rerun needed") }
     end
   end
 
