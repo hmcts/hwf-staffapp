@@ -30,6 +30,8 @@ You will also need to install govuk-frontend library
 ```
 npm install --save govuk-frontend
 ```
+Mimemagic gem has a dependency so you need to install this on your machine first
+```brew install shared-mime-info.```
 
 #### Creating initial user
 There is a rake task that takes email, password and role
