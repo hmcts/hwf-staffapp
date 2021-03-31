@@ -29,7 +29,9 @@ gem 'devise-security', '~> 0.15.0'
 gem 'pundit', '~> 2.1'
 
 # background jobs and scheduling
+gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1'
 # Use Uglifier as compressor for JavaScript assets
