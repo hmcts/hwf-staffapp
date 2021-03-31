@@ -15,6 +15,13 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## Delayed jobs for BenefitChecks
+We need to keep an eye on the results of DWP checks. When the API is down the service will disable
+benefit related applications. Then we re-run failed checks in 10 minutes intervals to see if the
+API is back again. We are not using standard CRON table because Kubernetes have a bug. So we are using
+delayed job that has the schedule in DB table. To set it up (if there is no record in DB) run this in rails console:
+```BenefitCheckRerunJob.delay(cron: '*/10 * * * *').perform_now```
+
 ## Pre-requisites
 To run the headless tests you will need to install quicktime for capybara-webkit:
 ```

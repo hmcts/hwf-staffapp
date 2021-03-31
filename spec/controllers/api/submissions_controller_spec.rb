@@ -30,40 +30,6 @@ RSpec.describe Api::SubmissionsController, type: :controller do
 
         it { is_expected.to be false }
       end
-
-      describe 'when email provided' do
-        subject(:addressed_to) { ActionMailer::Base.deliveries.first.to }
-
-        let(:submitted) { attributes_for :public_app_submission, :email_contact }
-
-        it { is_expected.to eq ['foo@bar.com'] }
-      end
-
-      describe 'when email provided and refund is true' do
-        subject(:addressed_to) { ActionMailer::Base.deliveries.first.subject }
-
-        let(:submitted) { attributes_for :public_app_submission, :email_contact, :refund }
-
-        it { is_expected.to eq I18n.t('email.refund.subject') }
-      end
-
-      describe 'when email provided and it is an ET application' do
-        subject(:addressed_to) { ActionMailer::Base.deliveries.first.subject }
-
-        let(:submitted) { attributes_for :public_app_submission, :email_contact, :et }
-
-        it { is_expected.to eq I18n.t('email.et.subject') }
-      end
-
-      describe 'when email not provided' do
-        subject(:action_mailer_count) { ActionMailer::Base.deliveries.count }
-
-        let(:submitted) { attributes_for :public_app_submission }
-
-        it 'does not create an email' do
-          expect(action_mailer_count).to eq 0
-        end
-      end
     end
 
     describe 'when sent the incorrect authentication header' do

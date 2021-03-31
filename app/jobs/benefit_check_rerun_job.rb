@@ -2,6 +2,7 @@ class BenefitCheckRerunJob < ApplicationJob
   queue_as :default
 
   def perform(*_args)
+    log_task_run
     return unless should_it_run?
     rerun_failed_benefit_checks
   end
@@ -24,5 +25,11 @@ class BenefitCheckRerunJob < ApplicationJob
 
   def should_it_run?
     DwpMonitor.new.state == 'offline'
+  end
+
+  def log_task_run
+    tc = ApplicationInsights::TelemetryClient.new ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
+    tc.track_event("Running rerun_benefit_checks #{Time.zone.now.to_s(:db)}")
+    tc.flush
   end
 end

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-
+  # paranoia gem
   acts_as_paranoid
 
   belongs_to :office
