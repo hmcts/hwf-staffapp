@@ -30,7 +30,7 @@
               td.govuk-table__cell =record.user.name
               td.govuk-table__cell =record.office.name if current_user.admin?
               td.govuk-table__cell
-                - if DwpMonitor.new.state == 'online'
+                - if @ready_to_process
                   =link_to t("dwp_failed_applications.index.table.ready_link"), path_for_application_based_on_state(record), {class: 'blue-info-text'}
                 - else
                   span.red-warning-text = t("dwp_failed_applications.index.table.not_ready_link")
