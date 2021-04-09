@@ -39,11 +39,11 @@ jobs:
 
     pool:
       vmImage: 'Ubuntu-16.04'
-    
+
     services:
       postgres: postgres
     variables:
-      rubyVersion: '= 2.7.2'
+      rubyVersion: '= 2.7.3'
       bundlerVersion: '2.2.8'
       aptDependencies: 'qtbase5-dev xvfb libqtwebkit-dev postgresql-client libpq-dev'
 
