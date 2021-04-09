@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby27
+FROM ruby:2.7-buster
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
