@@ -111,7 +111,7 @@ en-GB:
       missing_details_html: |
         There’s a problem with the applicant’s surname, date of birth or National Insurance number.
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
-      technical_error: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
+      technical_error: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
 
   evidence:
@@ -189,7 +189,7 @@ en-GB:
         heading: Accessibility statement for Help with Fees (staff service)
   error_messages:
     benefit_check:
-      dwp_unavailable: "You will only be able to process this application if you have paper evidence that the applicant is receiving benefits"
+      dwp_unavailable: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
       cannot_process_application: Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
     dwp_unavailable: You can’t check an applicant’s benefits. We’re investigating this issue.
@@ -217,7 +217,7 @@ en-GB:
           heading: "You can only process:"
           options:
             - "income-based applications"
-            - "benefits-based applications if the applicant has provided paper evidence"
+            - "benefits-based applications if the applicant has provided supporting evidence"
       digital:
         dwp-down: "You can only process income-based applications. Please wait until the DWP checker is available to process online benefits-based applications"
         hint: For example, HWF-MPA-XQE
@@ -311,7 +311,7 @@ en-GB:
 
   online_application_benefits:
     edit:
-      message: Due to the benefits checker being down, you will only be able to process this application if you have paper evidence that the applicant is receiving benefits.
+      message: Due to the benefits checker being down, you will only be able to process this application if you have supporting evidence that the applicant is receiving benefits.
 
   activemodel:
     attributes:
@@ -514,9 +514,9 @@ en-GB:
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
-        evidence: 'Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?'
+        evidence: 'Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?'
         evidence_false: 'No'
-        evidence_true: 'Yes, the applicant has provided paper evidence'
+        evidence_true: 'Yes, the applicant has provided supporting evidence'
         correct: 'Is the evidence for the correct applicant and dated within 3 months of the fee being paid?'
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
@@ -539,7 +539,7 @@ en-GB:
         date_hint: For example, 04 10 2018
         date_received: Date received
         benefits_override_false: 'No'
-        benefits_override_true: 'Yes, the applicant has provided paper evidence'
+        benefits_override_true: 'Yes, the applicant has provided supporting evidence'
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?
 
       forms/fee_approval:

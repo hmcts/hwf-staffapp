@@ -6,9 +6,9 @@ class BenefitCheckerPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits'
     element :dwp_down_warning, '.dwp-down'
-    element :paper_evidence_warning, '.page-error', text: 'You will only be able to process this application if you have paper evidence that the applicant is receiving benefits'
+    element :paper_evidence_warning, '.page-error', text: 'You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits'
     element :no, 'label', text: 'No'
-    element :yes, 'label', text: 'Yes, the applicant has provided paper evidence'
+    element :yes, 'label', text: 'Yes, the applicant has provided supporting evidence'
     element :next, 'input[value="Next"]'
   end
 
