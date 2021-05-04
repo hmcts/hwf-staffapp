@@ -422,7 +422,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rdoc (6.2.1)
+    rdoc (6.3.1)
     regexp_parser (2.0.3)
     report_builder (1.9)
       json (>= 2.3.0)
