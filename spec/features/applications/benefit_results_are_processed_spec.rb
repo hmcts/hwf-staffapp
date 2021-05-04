@@ -68,7 +68,7 @@ RSpec.feature 'Benefit results are processed', type: :feature do
 
         scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h1', text: 'Benefits')
-          expect(page).to have_content('You will only be able to process this application if you have paper evidence that the applicant is receiving benefits')
+          expect(page).to have_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
         end
       end
 
@@ -94,7 +94,7 @@ RSpec.feature 'Benefit results are processed', type: :feature do
 
         scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h1', text: 'Benefits')
-          expect(page).to have_content('You will only be able to process this application if you have paper evidence that the applicant is receiving benefits')
+          expect(page).to have_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
         end
       end
     end
