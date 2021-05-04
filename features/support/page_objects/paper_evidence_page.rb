@@ -4,7 +4,7 @@ class PaperEvidencePage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits'
     element :no, 'label', text: 'No', visible: false
-    element :yes, 'label', text: 'Yes, the applicant has provided paper evidence', visible: false
+    element :yes, 'label', text: 'Yes, the applicant has provided supporting evidence', visible: false
     element :next, 'input[value="Next"]'
   end
 

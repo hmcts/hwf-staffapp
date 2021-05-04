@@ -81,9 +81,9 @@ def fill_benefits(benefits)
 end
 
 def fill_benefit_evidence(benefits_options)
-  expect(page).to have_text 'Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?'
+  expect(page).to have_text 'Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?'
   if benefits_options[:paper_provided]
-    choose 'Yes, the applicant has provided paper evidence'
+    choose 'Yes, the applicant has provided supporting evidence'
   else
     choose 'benefit_override_evidence_false'
   end
