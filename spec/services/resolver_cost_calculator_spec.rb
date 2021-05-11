@@ -4,7 +4,7 @@ RSpec.describe ResolverCostCalculator, type: :service do
   subject(:calculator) { described_class.new(source) }
 
   describe '#cost' do
-    subject { calculator.cost }
+    subject { calculator.cost.to_i }
 
     let(:detail) { build_stubbed(:detail, fee: 950) }
     let(:application) { build_stubbed(:application_full_remission, detail: detail) }
@@ -21,6 +21,32 @@ RSpec.describe ResolverCostCalculator, type: :service do
       context 'for full outcome' do
         it 'equals the full fee' do
           is_expected.to eq 950
+        end
+      end
+    end
+
+    context 'for refund Application' do
+      let(:source) { application }
+
+      context 'for none outcome' do
+        let(:application) { build_stubbed(:application_full_remission, :refund, amount_to_pay: 100) }
+
+        it { is_expected.to eq 410 }
+      end
+
+      context 'for part outcome' do
+        let(:application) { build_stubbed(:application_part_refund, amount_to_pay: 100) }
+
+        it 'equals the full fee' do
+          is_expected.to eq 310
+        end
+      end
+
+      context 'for full outcome' do
+        let(:application) { build_stubbed(:application_no_remission, :refund, amount_to_pay: 100) }
+
+        it 'equals the fee - amount_to_pay' do
+          is_expected.to eq 0
         end
       end
     end
