@@ -767,6 +767,11 @@ en-GB:
           attributes:
             rating:
               blank: "Please select a rating"
+        hmrc_check:
+          attributes:
+            application:
+              blank: "can't be blank"
+
 
     attributes:
       user:

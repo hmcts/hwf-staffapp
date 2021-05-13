@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_093124) do
+ActiveRecord::Schema.define(version: 2021_05_13_125307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,21 @@ ActiveRecord::Schema.define(version: 2021_03_30_093124) do
     t.datetime "updated_at", null: false
     t.index ["office_id"], name: "index_feedbacks_on_office_id"
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
+
+  create_table "hmrc_checks", force: :cascade do |t|
+    t.integer "application_id", null: false
+    t.integer "user_id"
+    t.string "ni_number"
+    t.string "date_of_birth"
+    t.text "address"
+    t.text "employment"
+    t.text "income"
+    t.text "tax_credit"
+    t.string "error_response"
+    t.string "request_params"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "jurisdictions", id: :serial, force: :cascade do |t|
