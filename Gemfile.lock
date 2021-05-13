@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/hmcts/hwf_hmrc_api.git
+  revision: 84efedbb233ca080157daf4f15a3f5c5152b10dc
+  tag: v0.0.7
+  specs:
+    hwf_hmrc_api (0.1.0)
+      httparty (~> 0.18.1)
+      rotp (~> 6.2.0)
+      uuid (~> 2.3.9)
+
+GIT
   remote: https://github.com/ministryofjustice/azure_env_secrets.git
   revision: b72195789c350839d8a7f492eb2938c5101d5400
   tag: v0.1.3
@@ -295,6 +305,9 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
+    httparty (0.18.1)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -321,6 +334,8 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.4)
+    macaddr (1.7.2)
+      systemu (~> 2.6.5)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
@@ -335,6 +350,7 @@ GEM
     msgpack (1.3.3)
     multi_json (1.15.0)
     multi_test (0.1.2)
+    multi_xml (0.6.0)
     multipart-post (2.1.1)
     nenv (0.3.0)
     netrc (0.11.0)
@@ -437,6 +453,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.5)
+    rotp (6.2.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -530,6 +547,7 @@ GEM
       sprockets (>= 3.0.0)
     sys-uname (1.2.2)
       ffi (~> 1.1)
+    systemu (2.6.5)
     temple (0.8.2)
     terminal-notifier-guard (1.7.0)
     thor (1.1.0)
@@ -544,6 +562,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (2.0.0)
+    uuid (2.3.9)
+      macaddr (~> 1.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -609,6 +629,7 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   guard-rubocop
+  hwf_hmrc_api!
   jasmine
   jbuilder (~> 2.2)
   jquery-rails
