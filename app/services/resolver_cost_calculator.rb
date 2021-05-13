@@ -11,7 +11,7 @@ class ResolverCostCalculator
   private
 
   def incurred_cost
-    if @source.is_a?(PartPayment)
+    if @source.is_a?(PartPayment) || part_refund?
       fee - amount_to_pay
     else
       fee
@@ -28,5 +28,9 @@ class ResolverCostCalculator
     else
       @application.try(:amount_to_pay) || 0
     end
+  end
+
+  def part_refund?
+    @application.detail.refund && @source.outcome == 'part'
   end
 end
