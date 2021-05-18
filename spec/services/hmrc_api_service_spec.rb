@@ -54,5 +54,67 @@ describe HmrcApiService do
         expect(hmrc_api).to have_received(:match_user).with(applicant_info)
       end
     end
+
+    context "Get data for" do
+      before {
+        allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+        allow(hmrc_api).to receive(:match_user)
+      }
+
+      it "income" do
+        allow(hmrc_api).to receive(:paye)
+        service.income('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:paye).with('2020-02-28', '2020-03-30')
+      end
+
+      it "address" do
+        allow(hmrc_api).to receive(:addresses)
+        service.address('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:addresses).with('2020-02-28', '2020-03-30')
+      end
+
+      it "employment" do
+        allow(hmrc_api).to receive(:employments)
+        service.employment('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:employments).with('2020-02-28', '2020-03-30')
+      end
+
+      it "tax_credit" do
+        allow(hmrc_api).to receive(:working_tax_credits)
+        service.tax_credit('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:working_tax_credits).with('2020-02-28', '2020-03-30')
+      end
+    end
+
+    context "Store data for" do
+      before {
+        allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+        allow(hmrc_api).to receive(:match_user)
+      }
+
+      it "income" do
+        allow(hmrc_api).to receive(:paye).and_return({ startDate: "2019-01-01" })
+        service.income('2020-02-28', '2020-03-30')
+        expect(service.hmrc_check.income[:startDate]).to eq "2019-01-01"
+      end
+
+      it "address" do
+        allow(hmrc_api).to receive(:addresses).and_return({ endDate: "2019-01-01" })
+        service.address('2020-02-28', '2020-03-30')
+        expect(service.hmrc_check.address[:endDate]).to eq "2019-01-01"
+      end
+
+      it "employment" do
+        allow(hmrc_api).to receive(:employments).and_return({ startDate: "2019-01-02" })
+        service.employment('2020-02-28', '2020-03-30')
+        expect(service.hmrc_check.employment[:startDate]).to eq "2019-01-02"
+      end
+
+      it "tax_credit" do
+        allow(hmrc_api).to receive(:working_tax_credits).and_return({ endDate: "2019-01-02" })
+        service.tax_credit('2020-02-28', '2020-03-30')
+        expect(service.hmrc_check.tax_credit[:endDate]).to eq "2019-01-02"
+      end
+    end
   end
 end

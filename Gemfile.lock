@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 84efedbb233ca080157daf4f15a3f5c5152b10dc
-  tag: v0.0.7
+  revision: b62b4c257abea2da359d57d66a7351f7ecacb18e
+  tag: v0.0.8
   specs:
     hwf_hmrc_api (0.1.0)
       httparty (~> 0.18.1)
