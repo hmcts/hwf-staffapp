@@ -13,14 +13,16 @@ describe HmrcApiService do
            last_name: 'Conners'
   }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
+  let(:hmrc_api_authentication) { instance_double(HwfHmrcApi::Authentication, access_token: 1, expires_in: 1) }
 
   describe "HMRC API gem" do
     before do
       ENV['HMRC_SECRET'] = 'secret'
       ENV['HMRC_TTP_SECRET'] = 'base32secret3232'
       ENV['HMRC_CLIENT_ID'] = '12345'
-
+      allow(hmrc_api).to receive(:authentication).and_return hmrc_api_authentication
     end
+
     context 'ENV variables' do
       it "without token" do
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
@@ -29,12 +31,60 @@ describe HmrcApiService do
         expect(HwfHmrcApi).to have_received(:new).with({ hmrc_secret: "secret", totp_secret: "base32secret3232", client_id: "12345" })
       end
 
-      # it "with token" do
-      #   allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
-      #   allow(hmrc_api).to receive(:match_user)
-      #   service
-      #   expect(HwfHmrcApi).to have_received(:new).with({:hmrc_secret=>"secret", :totp_secret=>"base32secret3232", :client_id=>"12345"})
-      # end
+      context 'stored token' do
+        before {
+          allow(HmrcToken).to receive(:last).and_return hmrc_token
+          allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+          allow(hmrc_api).to receive(:match_user)
+        }
+        let(:expires_in) { Time.zone.parse('01-02-2021 10:50') }
+        let(:hmrc_token) { HmrcToken.create(access_token: '123456', expires_in: expires_in) }
+
+        it "expired" do
+          allow(hmrc_token).to receive(:expired?).and_return true
+          service
+          expect(HwfHmrcApi).to have_received(:new).with({ hmrc_secret: "secret", totp_secret: "base32secret3232", client_id: "12345" })
+        end
+
+        it "valid" do
+          allow(hmrc_token).to receive(:expired?).and_return false
+          service
+          expect(HwfHmrcApi).to have_received(:new).with({
+                                                           hmrc_secret: "secret",
+                                                           totp_secret: "base32secret3232",
+                                                           client_id: "12345",
+                                                           access_token: '123456',
+                                                           expires_in: expires_in
+                                                         })
+        end
+
+        context 'update token in DB' do
+          context 'token changed' do
+            before do
+              allow(hmrc_token).to receive(:expired?).and_return false
+              allow(hmrc_api_authentication).to receive(:access_token).and_return '111333'
+              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              service
+            end
+
+            it { expect(HmrcToken.last.access_token).to eq '111333' }
+            it { expect(HmrcToken.last.expires_in).to eq Time.zone.parse('01-03-2021 10:50') }
+          end
+
+          context 'token changed' do
+            before do
+              allow(hmrc_token).to receive(:expired?).and_return false
+              allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
+              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              service
+            end
+
+            it { expect(HmrcToken.last.access_token).to eq '123456' }
+            it { expect(HmrcToken.last.expires_in).to eq expires_in }
+          end
+
+        end
+      end
     end
 
     context 'match_user' do

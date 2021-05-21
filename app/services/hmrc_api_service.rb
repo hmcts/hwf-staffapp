@@ -36,6 +36,7 @@ class HmrcApiService
   def hmrc_api_innitialize
     @hwf = HwfHmrcApi.new(hmrc_api_attributes)
     @hwf.match_user(user_params)
+    update_hmrc_token(@hwf.authentication.access_token, @hwf.authentication.expires_in)
   end
 
   def hmrc_check
@@ -55,7 +56,7 @@ class HmrcApiService
       hmrc_secret: ENV['HMRC_SECRET'],
       totp_secret: ENV['HMRC_TTP_SECRET'],
       client_id: ENV['HMRC_CLIENT_ID']
-    }
+    }.merge(hmrc_api_credentials)
   end
 
   def user_params
@@ -68,8 +69,19 @@ class HmrcApiService
     }
   end
 
-  def applicant; end
+  # load / store access_token and expires_in values
+  def hmrc_api_credentials
+    hrmc_token = HmrcToken.last
+    return {} if hrmc_token.nil? || hrmc_token.expired?
+    { access_token: hrmc_token.access_token, expires_in: hrmc_token.expires_in }
+  end
 
-  # load / store access_token and expires_at values
-  def hmrc_api_credentials; end
+  def update_hmrc_token(access_token, expires_in)
+    hmrc_token = HmrcToken.last || HmrcToken.new
+    return if hmrc_token.access_token == access_token
+
+    hmrc_token.access_token = access_token
+    hmrc_token.expires_in = expires_in
+    hmrc_token.save
+  end
 end
