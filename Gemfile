@@ -66,6 +66,9 @@ gem "paranoia", "~> 2.0"
 # tracking model changes
 gem "paper_trail"
 
+# encrypting stored data
+gem 'simple_encryptable'
+
 # Google tag Manager
 gem 'gtm_on_rails'
 
