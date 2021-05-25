@@ -4,7 +4,7 @@ module GuideHelper
   end
 
   def training_course_url
-    'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
+    'https://mydevelopment.org.uk/mod/scorm/view.php?id=20170'
   end
 
   def how_to_url
