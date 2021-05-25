@@ -15,7 +15,7 @@ Then("I can view the Job Cards") do
 end
 
 Then("I can view the training course") do
-  expect(guide_page.content.training_course['href']).to eq 'https://rise.articulate.com/share/GcGp9iZ04MHyNte5WUue7ukH4dwXlfwK'
+  expect(guide_page.content.training_course['href']).to eq 'https://mydevelopment.org.uk/mod/scorm/view.php?id=20170'
 end
 
 When("I can view key control checks guide") do
