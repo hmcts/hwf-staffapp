@@ -8,9 +8,10 @@ gem 'dotenv-rails', groups: [:development, :test] # this has to be here because 
 gem 'rails', '~> 6.0'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
+gem 'i18n', '~> 1.8', '>= 1.8.10'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
-gem 'rails-i18n', '~> 4.0.0'
+gem 'rails-i18n', '~> 6.0'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'ministryofjustice/azure_env_secrets', tag: 'v0.1.3'
