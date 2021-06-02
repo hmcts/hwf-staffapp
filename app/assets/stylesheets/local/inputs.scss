@@ -5,7 +5,7 @@ input[type=text]{
 }
 .input-disabled {
   border-color: $govuk-border-colour;
-  background-color: govuk-colour("grey-4");
+  background-color: $grey-4;
 }
 
 input.decoy {
@@ -124,4 +124,11 @@ fieldset {
 
 .second-button {
   margin-left: govuk-spacing(1);
+}
+
+// removing hover shadow on radio
+.govuk-radios--small {
+  .govuk-radios__item:hover .govuk-radios__input:not(:disabled) + .govuk-radios__label:before {
+   box-shadow: none;
+  }
 }

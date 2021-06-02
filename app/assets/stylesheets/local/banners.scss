@@ -4,7 +4,7 @@
   text-align: center;
 
   &.result {
-    background-color: govuk-colour("grey-1");
+    background-color: $grey-1;
     color: govuk-colour("white");
   }
 
