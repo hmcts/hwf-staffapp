@@ -30,5 +30,5 @@
                   = f.label :reason, @form.errors[:reason].join(', '), class: 'govuk-error-message' if @form.errors[:reason].present?
                   = f.text_area :reason, rows: 3, class: 'govuk-textarea'
 
-          = f.submit 'Update application', :class => 'govuk-button'
+          = f.submit 'Update application', :class => 'govuk-button govuk-!-margin-top-1'
 
