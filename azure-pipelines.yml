@@ -38,7 +38,7 @@ jobs:
   - job: TestApplication
 
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'Ubuntu-18.04'
 
     services:
       postgres: postgres
@@ -71,7 +71,7 @@ jobs:
     dependsOn: TestApplication
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'Ubuntu-18.04'
 
     steps:
     - template: ./pipeline-steps/docker-build-release.yaml
@@ -86,7 +86,7 @@ jobs:
     dependsOn: TestApplication
     condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'Ubuntu-18.04'
 
     steps:
     - template: ./pipeline-steps/docker-build-manual.yaml
