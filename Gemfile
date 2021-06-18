@@ -82,6 +82,10 @@ gem 'rest-client'
 gem 'rubyzip'
 gem 'virtus'
 
+# GovUK Notify
+gem 'govuk_notify_rails'
+
+
 group :development do
   # speed up local development via livereload
   gem 'guard-livereload'
