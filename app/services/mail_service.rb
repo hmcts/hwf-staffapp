@@ -1,6 +1,6 @@
 class MailService
 
-  def initialize(data_source)
+  def initialize(data_source, locale = 'en')
     @data_source = data_source
   end
 
