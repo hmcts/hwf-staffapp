@@ -12,9 +12,8 @@ RSpec.describe MailService do
     let(:et_email) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
 
     before do
-      allow(PublicMailer).to receive(:submission_confirmation_refund).with(source_data).and_return(refund_email)
-      allow(PublicMailer).to receive(:submission_confirmation).with(source_data).and_return(non_refund_email)
-      allow(PublicMailer).to receive(:submission_confirmation_et).with(source_data).and_return(et_email)
+      allow(NotifyMailer).to receive(:submission_confirmation_refund).with(source_data).and_return(refund_email)
+      allow(NotifyMailer).to receive(:submission_confirmation).with(source_data).and_return(non_refund_email)
     end
 
     describe 'when initialised with nil' do
@@ -54,14 +53,6 @@ RSpec.describe MailService do
 
         it 'delivers the e-mail later' do
           expect(non_refund_email).to have_received(:deliver_later)
-        end
-      end
-
-      context 'for et application' do
-        let(:source_data) { build :online_application, :with_email, :et }
-
-        it 'delivers the e-mail later' do
-          expect(et_email).to have_received(:deliver_later)
         end
       end
     end

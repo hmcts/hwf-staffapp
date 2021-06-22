@@ -21,16 +21,10 @@ class MailService
   end
 
   def email_template
-    if data_source_et?
-      PublicMailer.submission_confirmation_et(@data_source)
-    elsif @data_source.refund?
-      PublicMailer.submission_confirmation_refund(@data_source)
+    if @data_source.refund?
+      NotifyMailer.submission_confirmation_refund(@data_source)
     else
-      PublicMailer.submission_confirmation(@data_source)
+      NotifyMailer.submission_confirmation(@data_source)
     end
-  end
-
-  def data_source_et?
-    @data_source.form_name.present? && !(@data_source.form_name =~ /^ET/).nil?
   end
 end

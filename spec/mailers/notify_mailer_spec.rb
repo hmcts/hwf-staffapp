@@ -13,7 +13,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: '234567',
-                                                        application_submitted_date: DateTime.parse('1 June 2021'),
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -23,7 +23,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: 'FGDH122',
-                                                        application_submitted_date: DateTime.parse('1 June 2021'),
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -39,7 +39,7 @@ RSpec.describe NotifyMailer, type: :mailer do
     it 'has the right keys' do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
-                                                        application_submitted_date: DateTime.parse('1 June 2021'),
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end

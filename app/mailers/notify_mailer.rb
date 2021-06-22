@@ -7,7 +7,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(
       application_reference_code: application.reference,
       form_name_case_number: form_name_or_case_number,
-      application_submitted_date: application.date_received,
+      application_submitted_date: Time.zone.today.to_s(:db),
       applicant_name: application.full_name
     )
 
@@ -19,7 +19,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       application_reference_code: application.reference,
-      application_submitted_date: application.date_received,
+      application_submitted_date: Time.zone.today.to_s(:db),
       applicant_name: application.full_name
     )
 
