@@ -1,11 +1,12 @@
 class NotifyMailer < GovukNotifyRails::Mailer
 
   def submission_confirmation(application)
+    @application = application
     set_template(template(:english, :completed_application))
 
     set_personalisation(
       application_reference_code: application.reference,
-      enter_details_here: 'Forn name?',
+      form_name_case_number: form_name_or_case_number,
       application_submitted_date: application.date_received,
       applicant_name: application.full_name
     )
@@ -29,5 +30,9 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
   def template(language, method_name)
     GOVUK_NOTIFY_TEMPLATES.dig(language || :english, method_name)
+  end
+
+  def form_name_or_case_number
+    @application.form_name.presence || @application.case_number
   end
 end
