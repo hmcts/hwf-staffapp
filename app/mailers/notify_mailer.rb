@@ -1,8 +1,8 @@
 class NotifyMailer < GovukNotifyRails::Mailer
 
-  def submission_confirmation(application)
+  def submission_confirmation(application, locale)
     @application = application
-    set_template(template(:english, :completed_application))
+    set_template(template(locale, :completed_application))
 
     set_personalisation(
       application_reference_code: application.reference,
@@ -14,8 +14,8 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: application.email_address)
   end
 
-  def submission_confirmation_refund(application)
-    set_template(template(:english, :completed_application_refund))
+  def submission_confirmation_refund(application, locale)
+    set_template(template(locale, :completed_application_refund))
 
     set_personalisation(
       application_reference_code: application.reference,
@@ -28,11 +28,15 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
   private
 
-  def template(language, method_name)
-    GOVUK_NOTIFY_TEMPLATES.dig(language || :english, method_name)
+  def template(locale, method_name)
+    GOVUK_NOTIFY_TEMPLATES.dig(language(locale), method_name)
   end
 
   def form_name_or_case_number
     @application.form_name.presence || @application.case_number
+  end
+
+  def language(locale)
+    locale == 'cy' ? :welsh : :english
   end
 end

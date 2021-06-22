@@ -4,7 +4,7 @@ RSpec.describe NotifyMailer, type: :mailer do
   let(:application) { build :online_application_with_all_details, :with_reference, date_received: DateTime.parse('1 June 2021') }
 
   describe '#submission_confirmation' do
-    let(:mail) { described_class.submission_confirmation(application) }
+    let(:mail) { described_class.submission_confirmation(application, 'en') }
 
     it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_TEMPLATE_ID']
 
@@ -29,10 +29,16 @@ RSpec.describe NotifyMailer, type: :mailer do
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
+
+    context 'welsh' do
+      let(:mail) { described_class.submission_confirmation(application, 'cy') }
+      it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_CY_TEMPLATE_ID']
+    end
+
   end
 
   describe '#submission_confirmation_refund' do
-    let(:mail) { described_class.submission_confirmation_refund(application) }
+    let(:mail) { described_class.submission_confirmation_refund(application, 'en') }
 
     it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_REFUND_TEMPLATE_ID']
 
@@ -45,5 +51,10 @@ RSpec.describe NotifyMailer, type: :mailer do
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
+
+    context 'welsh' do
+      let(:mail) { described_class.submission_confirmation_refund(application, 'cy') }
+      it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_CY_REFUND_TEMPLATE_ID']
+    end
   end
 end

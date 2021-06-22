@@ -2,6 +2,7 @@ class MailService
 
   def initialize(data_source, locale = 'en')
     @data_source = data_source
+    @locale = locale
   end
 
   def send_public_confirmation
@@ -22,9 +23,9 @@ class MailService
 
   def email_template
     if @data_source.refund?
-      NotifyMailer.submission_confirmation_refund(@data_source)
+      NotifyMailer.submission_confirmation_refund(@data_source, @locale)
     else
-      NotifyMailer.submission_confirmation(@data_source)
+      NotifyMailer.submission_confirmation(@data_source, @locale)
     end
   end
 end
