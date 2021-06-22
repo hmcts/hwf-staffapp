@@ -25,6 +25,10 @@ variables:
   application.name: 'hwf-staff'
   azure.subscription.endpoint: 'hmcts-pet'
   manual.branch.prefix: 'master'
+  notify_completed_template_id: 'template'
+  notify_completed_refund_template_id: 'template'
+  notify_completed_cy_template_id: 'template'
+  notify_completed_cy_refund_template_id: 'template'
 
 resources:
   containers:
