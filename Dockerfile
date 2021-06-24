@@ -11,6 +11,10 @@ ENV APPVERSION ${APPVERSION}
 ENV APP_BUILD_DATE ${APP_BUILD_DATE}
 ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 ENV APP_BUILD_TAG ${APP_BUILD_TAG}
+ENV NOTIFY_COMPLETED_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_REFUND_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_CY_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_CY_REFUND_TEMPLATE_ID replace_this_at_build_time
 
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
