@@ -33,7 +33,9 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def form_name_or_case_number
-    @application.form_name.presence || @application.case_number
+    number = @application.form_name.presence || @application.case_number
+    # this looks like empty string but it's not
+    number.presence ? number : ' '
   end
 
   def language(locale)

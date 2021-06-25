@@ -28,6 +28,17 @@ RSpec.describe NotifyMailer, type: :mailer do
                                                       })
     end
 
+    it 'when case and form number is empty' do
+      application.form_name = ''
+      application.case_number = ''
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        application_reference_code: application.reference,
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        applicant_name: 'Peter Smith',
+                                                        form_name_case_number: ' '
+                                                      })
+    end
+
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
 
     context 'welsh' do
