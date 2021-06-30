@@ -3,12 +3,13 @@ require 'rails_helper'
 RSpec.describe Api::SubmissionsController, type: :controller do
   let(:auth_token) { 'my-big-secret' }
   let(:submitted) { attributes_for :public_app_submission }
+  let(:locale) { 'en' }
 
   describe 'POST #create' do
     before do
       allow(Settings.submission).to receive(:token).and_return('my-big-secret')
       controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(auth_token)
-      post :create, params: { online_application: submitted }
+      post :create, params: { online_application: submitted, locale: locale }
     end
 
     describe 'when sent the correct authentication header' do
@@ -39,6 +40,7 @@ RSpec.describe Api::SubmissionsController, type: :controller do
 
       it { is_expected.to have_http_status(:unauthorized) }
     end
+
   end
 
   describe 'POST create' do
@@ -82,5 +84,27 @@ RSpec.describe Api::SubmissionsController, type: :controller do
       post :create, params: { online_application: submitted }
       expect(OnlineApplicationBuilder).to have_received(:new).with(approved_params)
     end
+
+    context 'mailer' do
+      let(:online_application) { instance_double(OnlineApplication, save: true, reference: 'ref124') }
+      let(:mailer_service) { instance_double(MailService, send_public_confirmation: true) }
+      before do
+        allow(OnlineApplicationBuilder).to receive(:new).and_return online_application_builder
+        allow(MailService).to receive(:new).and_return mailer_service
+        allow(mailer_service).to receive(:send_public_confirmation)
+      end
+
+      it 'en local' do
+        post :create, params: { online_application: submitted, locale: 'en' }
+        expect(MailService).to have_received(:new).with(online_application, 'en')
+      end
+
+      it 'cy local' do
+        post :create, params: { online_application: submitted, locale: 'cy' }
+        expect(MailService).to have_received(:new).with(online_application, 'cy')
+      end
+    end
+
   end
+
 end
