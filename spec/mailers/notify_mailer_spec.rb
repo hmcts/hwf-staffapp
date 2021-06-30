@@ -53,11 +53,34 @@ RSpec.describe NotifyMailer, type: :mailer do
 
     it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_REFUND_TEMPLATE_ID']
 
-    it 'has the right keys' do
+    it 'has the right keys with form_name' do
+      application.form_name = ''
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        application_reference_code: application.reference,
+                                                        form_name_case_number: '234567',
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        applicant_name: 'Peter Smith'
+                                                      })
+    end
+
+    it 'has the right keys with case number' do
+      application.form_name = 'FGDH122'
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        application_reference_code: application.reference,
+                                                        form_name_case_number: 'FGDH122',
+                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        applicant_name: 'Peter Smith'
+                                                      })
+    end
+
+    it 'when case and form number is empty' do
+      application.form_name = ''
+      application.case_number = ''
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         application_submitted_date: Time.zone.today.to_s(:db),
-                                                        applicant_name: 'Peter Smith'
+                                                        applicant_name: 'Peter Smith',
+                                                        form_name_case_number: ' '
                                                       })
     end
 

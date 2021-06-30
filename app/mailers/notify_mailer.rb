@@ -15,12 +15,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def submission_confirmation_refund(application, locale)
+    @application = application
     set_template(template(locale, :completed_application_refund))
 
     set_personalisation(
       application_reference_code: application.reference,
       application_submitted_date: Time.zone.today.to_s(:db),
-      applicant_name: application.full_name
+      applicant_name: application.full_name,
+      form_name_case_number: form_name_or_case_number
     )
 
     mail(to: application.email_address)
