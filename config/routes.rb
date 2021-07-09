@@ -138,7 +138,6 @@ Rails.application.routes.draw do
     get "/#{error}" => "static##{error}"
   end
 
-
   get 'users/deleted' => 'users#deleted', as: 'deleted_users'
   patch 'users/:id/restore' => 'users#restore', as: 'restore_user'
   patch 'users/:id/invite' => 'users#invite', as: 'invite_user'
