@@ -39,6 +39,7 @@ module FrStaffapp
         ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
       )
     end
+    config.exceptions_app = self.routes
 
   end
   WillPaginate.per_page = 20

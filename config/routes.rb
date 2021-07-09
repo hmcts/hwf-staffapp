@@ -134,9 +134,10 @@ Rails.application.routes.draw do
 
   get 'accessibility_statement' => 'guide#accessibility_statement'
 
-  ['400', '404', '500', '503'].each do |error|
-    get "static/#{error}" => "static##{error}"
+  ['400', '404', '422', '500', '503'].each do |error|
+    get "/#{error}" => "static##{error}"
   end
+
 
   get 'users/deleted' => 'users#deleted', as: 'deleted_users'
   patch 'users/:id/restore' => 'users#restore', as: 'restore_user'
