@@ -27,7 +27,7 @@ Then("I should see the result for benefits on the confirmation page") do
 end
 
 When("I see benefit summary") do
-  expect(application_page.content.summary_section[3]).to have_benefits_header
+  expect(application_page.content).to have_benefits_header
 end
 
 Then("I should see declared benefits in this application") do
