@@ -65,11 +65,11 @@ When("I create an Application B and wrong evidence is provided") do
 end
 
 And("evidence check is skipped") do
-  expect(process_online_application_page.content.summary_row[2]).to have_text 'Income ✓ Passed'
+  expect(process_online_application_page.content.summary_row[1]).to have_text 'Income ✓ Passed'
 end
 
 And("evidence check is called") do
-  expect(process_online_application_page.content.summary_row[2]).to have_text 'Income Waiting for evidence'
+  expect(process_online_application_page.content.summary_row[1]).to have_text 'Income Waiting for evidence'
 end
 
 And("I close application A") do

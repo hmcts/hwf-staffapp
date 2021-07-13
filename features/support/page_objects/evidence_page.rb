@@ -13,9 +13,9 @@ class EvidencePage < BasePage
     element :benefits, 'h2', text: 'Benefits'
     element :income, 'h2', text: 'Income'
     element :result, 'h2', text: 'Result'
+    element :personal_details, 'h2', text: 'Personal details'
+    element :application_details, 'h2', text: 'Application details'
     sections :evidence_summary, '.govuk-summary-list' do
-      element :personal_details, 'h2', text: 'Personal details'
-      element :application_details, 'h2', text: 'Application details'
       elements :summary_row, '.govuk-summary-list__row'
     end
     element :processing_summary, 'h2', text: 'Processing summary'

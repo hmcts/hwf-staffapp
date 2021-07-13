@@ -30,19 +30,19 @@ Then("I should see instructions with a deadline to submit the evidence") do
 end
 
 Then("I should see the applicants personal details") do
-  expect(evidence_page.content.evidence_summary[0]).to have_personal_details
+  expect(evidence_page.content).to have_personal_details
 end
 
 Then("I should see the application details") do
-  expect(evidence_page.content.evidence_summary[1]).to have_application_details
+  expect(evidence_page.content).to have_application_details
 end
 
 Then("I should see the applicants benefit details") do
-  expect(evidence_page.content.evidence_summary[2]).to have_benefits
+  expect(evidence_page.content).to have_benefits
 end
 
 Then("I should see the applicants income details") do
-  expect(evidence_page.content.evidence_summary[3]).to have_income
+  expect(evidence_page.content).to have_income
 end
 
 Then("I should see whether the applicant is eligible for help with fees") do
@@ -139,9 +139,9 @@ Given("I should see a message telling me that the application has been processed
 end
 
 Then("I should see the evidence details on the summary page") do
-  expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to eq 'Evidence'
-  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to have_text 'Ready to process Yes Change Ready to process'
-  expect(evidence_page.content.evidence_summary[0].summary_row[2].text).to have_text 'Income £500 Change Income'
+  expect(evidence_page.content.evidence_summary[0].text).to have_text 'Evidence'
+  expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to have_text 'Ready to process Yes Change Ready to process'
+  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to have_text 'Income £500 Change Income'
 end
 
 When("I complete processing") do

@@ -48,8 +48,8 @@ end
 
 Then("I see the applicant is not eligible for help with fees") do
   expect(process_online_application_page.content).to have_not_eligible_header
-  expect(process_online_application_page.content.summary_row[1]).to have_text 'Savings and investments ✓ Passed'
-  expect(process_online_application_page.content.summary_row[2]).to have_text 'Benefits ✗ Failed'
+  expect(process_online_application_page.content.summary_row[0]).to have_text 'Savings and investments ✓ Passed'
+  expect(process_online_application_page.content.summary_row[1]).to have_text 'Benefits ✗ Failed'
 end
 
 And("back to start takes me to the homepage") do
