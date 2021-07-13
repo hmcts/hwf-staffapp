@@ -10,12 +10,12 @@ class EvidencePage < BasePage
     element :evidence_can_not_be_processed, 'summary.govuk-details__summary', text: "What to do if evidence hasn't arrived"
     element :evidence_deadline, '.govuk-details__text'
     element :change_income, 'a', text: 'Change Income'
+    element :benefits, 'h2', text: 'Benefits'
+    element :income, 'h2', text: 'Income'
+    element :result, 'h2', text: 'Result'
+    element :personal_details, 'h2', text: 'Personal details'
+    element :application_details, 'h2', text: 'Application details'
     sections :evidence_summary, '.govuk-summary-list' do
-      element :personal_details, 'h2', text: 'Personal details'
-      element :application_details, 'h2', text: 'Application details'
-      element :benefits, 'h2', text: 'Benefits'
-      element :income, 'h2', text: 'Income'
-      element :result, 'h2', text: 'Result'
       elements :summary_row, '.govuk-summary-list__row'
     end
     element :processing_summary, 'h2', text: 'Processing summary'

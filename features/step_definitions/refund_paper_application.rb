@@ -118,8 +118,8 @@ Then("I see application is complete") do
 end
 
 Then("I see Delivery Manager Discretion as Failed") do
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Delivery Manager Discretion'
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content 'Delivery Manager Discretion'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content '✗ Failed'
 end
 
 When("I select Yes to Delivery Manager discretion applied? and enter name and reason") do

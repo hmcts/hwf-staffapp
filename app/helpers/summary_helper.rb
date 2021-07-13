@@ -13,14 +13,21 @@ module SummaryHelper
 
   def build_section(summary_text, object, fields, link_attributes = {})
     unless all_fields_empty?(object, fields)
-      tag.dl(class: 'govuk-summary-list') do
-        content = build_header(summary_text)
-        fields.each do |row|
-          content << build_data_row(object, row, link_attributes)
-        end
-        content
+      section = build_header(summary_text)
+      section << tag.dl(class: 'govuk-summary-list') do
+        section_rows(object, fields, link_attributes)
       end
+      section
     end
+  end
+
+  def section_rows(object, fields, link_attributes = {})
+    content = []
+    fields.each do |row|
+      c_row = build_data_row(object, row, link_attributes)
+      content << c_row if c_row
+    end
+    safe_join(content)
   end
 
   def build_section_with_custom_links(summary_text, object, fields, _link_attributes = {})
@@ -45,9 +52,7 @@ module SummaryHelper
   end
 
   def build_header(summary_name)
-    tag.div(class: 'govuk-summary-list__row') do
-      tag.h2(summary_name.to_s, class: 'govuk-heading-m')
-    end
+    tag.h2(summary_name.to_s, class: 'govuk-heading-m')
   end
 
   # rubocop:disable Rails/OutputSafety

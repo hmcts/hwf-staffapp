@@ -187,8 +187,8 @@ Then("On selecting the link I should see the online application I was just proce
 end
 
 Then("I should be on the result page with the application status set to processed") do
-  expect(evidence_page.content.evidence_summary[0]).to have_result
-  expect(evidence_page.content.evidence_summary[0].summary_row[1]).to have_text 'Savings and investments ✗ Failed'
+  expect(evidence_page.content).to have_result
+  expect(evidence_page.content.evidence_summary[0].summary_row[0]).to have_text 'Savings and investments ✗ Failed'
 end
 
 Then("I should be on the page 'Pending benefit applications'") do

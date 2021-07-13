@@ -27,7 +27,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
     context 'when called with minimal data' do
       it 'returns the correct html' do
-        expected = '<dl class="govuk-summary-list"><div class="govuk-summary-list__row"><h2 class="govuk-heading-m">section name</h2></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
+        expected = '<h2 class="govuk-heading-m">section name</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
         expect(helper.build_section_with_defaults('section name', view)).to eq(expected)
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
       context 'when requested fields contain some data' do
         it 'returns only the populated field' do
-          expected = '<dl class="govuk-summary-list"><div class="govuk-summary-list__row"><h2 class="govuk-heading-m">section name</h2></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
+          expected = '<h2 class="govuk-heading-m">section name</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
           expect(helper.build_section('section name', view, ['fee', 'form_name', 'date_received'])).to eq(expected)
         end
       end
@@ -56,7 +56,7 @@ RSpec.describe SummaryHelper, type: :helper do
       let(:view) { instance_double(Views::Overview::Details, fee: '£310') }
 
       it 'returns the correct html' do
-        expected = '<dl class="govuk-summary-list"><div class="govuk-summary-list__row"><h2 class="govuk-heading-m">section name</h2></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
+        expected = '<h2 class="govuk-heading-m">section name</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
         expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
       end
 
@@ -65,12 +65,12 @@ RSpec.describe SummaryHelper, type: :helper do
         let(:url) { 'URL' }
 
         it 'returns the correct html' do
-          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">section name</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url}\">Change<span class=\"govuk-visually-hidden\">Fee</span></a></dd></div></dl>"
+          expected = "<h2 class=\"govuk-heading-m\">section name</h2><dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url}\">Change<span class=\"govuk-visually-hidden\">Fee</span></a></dd></div></dl>"
           expect(helper.build_section('section name', view, ['fee'], title: title, url: url)).to eq(expected)
         end
 
         it 'returns the correct html with data attribute' do
-          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">section name</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" data-section-name=\"#{title}\" href=\"#{url}\">Change<span class=\"govuk-visually-hidden\">Fee</span></a></dd></div></dl>"
+          expected = "<h2 class=\"govuk-heading-m\">section name</h2><dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Fee</dt><dd class=\"govuk-summary-list__value\">£310</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" data-section-name=\"#{title}\" href=\"#{url}\">Change<span class=\"govuk-visually-hidden\">Fee</span></a></dd></div></dl>"
           expect(helper.build_section('section name', view, ['fee'], title: title, url: url, section_name: title)).to eq(expected)
         end
       end
@@ -79,7 +79,7 @@ RSpec.describe SummaryHelper, type: :helper do
         let(:view) { instance_double(Views::Overview::Details, fee: 'WA123456A') }
 
         it 'returns the correct html' do
-          expected = '<dl class="govuk-summary-list"><div class="govuk-summary-list__row"><h2 class="govuk-heading-m">section name</h2></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">WA123456A</dd></div></dl>'
+          expected = '<h2 class="govuk-heading-m">section name</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">WA123456A</dd></div></dl>'
           expect(helper.build_section('section name', view, ['fee'])).to eq(expected)
         end
       end
@@ -95,7 +95,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
     context 'when called with list of attributes' do
       it 'returns the correct html' do
-        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Correct</span></a></dd></div>"
+        expected = "<dl class=\"govuk-summary-list\"><h2 class=\"govuk-heading-m\">Evidence</h2><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Correct</span></a></dd></div>"
         expected += "<div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Income</dt><dd class=\"govuk-summary-list__value\">£2990</dd><dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url2}\">Change<span class=\"govuk-visually-hidden\">Income</span></a></dd></div></dl>"
         expect(helper.build_section_with_custom_links('Evidence', view, [row1, row2])).to eq(expected)
       end
@@ -107,7 +107,7 @@ RSpec.describe SummaryHelper, type: :helper do
       context 'incorrect reason category plural header' do
         let(:view) { instance_double(Views::Evidence, incorrect_reason_category: 'test1, test2') }
         it 'when there are multiple values' do
-          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reasons</dt><dd class=\"govuk-summary-list__value\">test1, test2</dd>"
+          expected = "<dl class=\"govuk-summary-list\"><h2 class=\"govuk-heading-m\">Evidence</h2><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reasons</dt><dd class=\"govuk-summary-list__value\">test1, test2</dd>"
           expected += "<dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Reasons</span></a></dd></div></dl>"
           expect(helper.build_section_with_custom_links('Evidence', view, [row1])).to eq(expected)
         end
@@ -116,7 +116,7 @@ RSpec.describe SummaryHelper, type: :helper do
       context 'incorrect reason category singular header' do
         let(:view) { instance_double(Views::Evidence, incorrect_reason_category: 'test1') }
         it 'when there is one value' do
-          expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reason</dt><dd class=\"govuk-summary-list__value\">test1</dd>"
+          expected = "<dl class=\"govuk-summary-list\"><h2 class=\"govuk-heading-m\">Evidence</h2><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Reason</dt><dd class=\"govuk-summary-list__value\">test1</dd>"
           expected += "<dd class=\"govuk-summary-list__actions\"><a class=\"govuk-link\" href=\"#{url1}\">Change<span class=\"govuk-visually-hidden\">Reason</span></a></dd></div></dl>"
           expect(helper.build_section_with_custom_links('Evidence', view, [row1])).to eq(expected)
         end
@@ -130,12 +130,12 @@ RSpec.describe SummaryHelper, type: :helper do
       end
 
       it 'missing url' do
-        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
+        expected = "<dl class=\"govuk-summary-list\"><h2 class=\"govuk-heading-m\">Evidence</h2><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
         expect(helper.build_section_with_custom_links('Evidence', view, [{ key: 'correct', link_attributes: {} }])).to eq(expected)
       end
 
       it 'missing link_attributes' do
-        expected = "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><h2 class=\"govuk-heading-m\">Evidence</h2></div><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
+        expected = "<dl class=\"govuk-summary-list\"><h2 class=\"govuk-heading-m\">Evidence</h2><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Correct</dt><dd class=\"govuk-summary-list__value\">Yes</dd></div></dl>"
         expect(helper.build_section_with_custom_links('Evidence', view, [{ key: 'correct' }])).to eq(expected)
       end
     end

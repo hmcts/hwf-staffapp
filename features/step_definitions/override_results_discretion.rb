@@ -58,35 +58,34 @@ Given("I should not see a confirmation letter") do
 end
 
 Then("The results should show the application passed saving and investments by manager's discretion") do
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Savings and investments'
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✓ Passed (by manager\'s decision)'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content 'Savings and investments'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content '✓ Passed (by manager\'s decision)'
 end
 
 Then("The results should show the application passed income by manager's discretion") do
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content 'Income'
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content '✓ Passed (by manager\'s decision)'
-
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Income'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✓ Passed (by manager\'s decision)'
 end
 
 Then("The results should show the application passed benefits by manager's discretion") do
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content 'Benefits'
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content '✓ Passed (by manager\'s decision)'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Benefits'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✓ Passed (by manager\'s decision)'
 end
 
 Then("I should see that the application fails because of saving and investments") do
   expect(confirmation_page.content).to have_ineligible
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Savings and investments'
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content 'Savings and investments'
+  expect(confirmation_page.content.summary_list_row[0].text).to have_content '✗ Failed'
 end
 
 Then("I should see that the application fails because of income") do
   expect(confirmation_page.content).to have_ineligible
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content 'Income'
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content '✗ Failed'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Income'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed'
 end
 
 Then("I should see that the application fails because of benefits") do
   expect(confirmation_page.content).to have_ineligible
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content 'Benefits'
-  expect(confirmation_page.content.summary_list_row[2].text).to have_content '✗ Failed (paper evidence checked)'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Benefits'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed (paper evidence checked)'
 end

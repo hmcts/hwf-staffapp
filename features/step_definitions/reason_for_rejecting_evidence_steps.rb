@@ -28,13 +28,13 @@ Then("I am taken to the summary page") do
 end
 
 Then("I should see my reasons for evidence on the summary page") do
-  expect(summary_page.content.summary_section[0]).to have_evidence_header
-  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Ready to process No Change Ready to process'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Reasons Requested sources not provided, Wrong type provided, Unreadable or illegible, Pages missing, Cannot identify applicant, Wrong date range Change Reasons'
+  expect(summary_page.content).to have_evidence_header
+  expect(summary_page.content.summary_section[0].list_row[0].text).to have_text 'Ready to process No Change Ready to process'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Reasons Requested sources not provided, Wrong type provided, Unreadable or illegible, Pages missing, Cannot identify applicant, Wrong date range Change Reasons'
 end
 
 Then("I should see my reason for evidence on the summary page") do
-  expect(summary_page.content.summary_section[0]).to have_evidence_header
-  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Ready to process No Change Ready to process'
-  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Reason Requested sources not provided Change Reason'
+  expect(summary_page.content).to have_evidence_header
+  expect(summary_page.content.summary_section[0].list_row[0].text).to have_text 'Ready to process No Change Ready to process'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Reason Requested sources not provided Change Reason'
 end
