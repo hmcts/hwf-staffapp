@@ -209,7 +209,7 @@ en-GB:
     evidence:
       cannot_be_saved: 'This return could not be processed'
     summary:
-      validation: 'There was an issue creating the new record. Please click "Complete processing" again to retry. If the problem still occurs please email helpwithfees.support@digital.justice.gov.uk'
+      validation: 'There was an issue creating the new record. Please click "Complete processing" again to retry. If the problem still occurs please email helpwithfees@justice.gov.uk'
   index:
     process:
       paper:
@@ -307,7 +307,7 @@ en-GB:
         online: "Display DWP check is working message"
         default: "Use the default DWP check to display message"
   offices:
-    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees.support@digital.justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
+    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
 
   online_application_benefits:
     edit:

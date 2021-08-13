@@ -1,7 +1,7 @@
 mail:
   from: no-reply@helpwithcourtfees.service.gov.uk
   reply_to: enquiries@helpwithcourtfees.dsd.io
-  tech_support: helpwithfees.support@digital.justice.gov.uk
+  tech_support: helpwithfees@justice.gov.uk
   feedback: helpwithfees.feedback@digital.justice.gov.uk
   et:
     england_wales: ETHelpwithfees@hmcts.gsi.gov.uk
