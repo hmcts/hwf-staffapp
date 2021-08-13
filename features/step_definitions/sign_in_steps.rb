@@ -108,7 +108,7 @@ When("I see having technical issues") do
 end
 
 Then("I should be able to send an email to help with fees support") do
-  mailto = 'mailto:helpwithfees.support@digital.justice.gov.uk'
+  mailto = 'mailto:helpwithfees@justice.gov.uk'
   expect(sign_in_page.content.guidance.email_support['href']).to eq mailto
 end
 
