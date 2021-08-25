@@ -25,6 +25,19 @@ describe PartPaymentBuilder do
       end
     end
 
+    context 'when application is a part payment but is not decided' do
+      let(:application) { create :application_part_remission }
+      let(:part_payment) { create :part_payment, application: application }
+
+      before do
+        part_payment
+      end
+
+      it 'sets expiration on the payment' do
+        expect(part_payment_builder.decide!).to be_a PartPayment
+      end
+    end
+
     context 'for non-applicable application types' do
       describe 'full remission' do
         let(:application) { create :application_full_remission }
