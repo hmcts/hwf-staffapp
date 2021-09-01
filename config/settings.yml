@@ -25,10 +25,10 @@ savings_threshold:
 processed_deleted:
   per_page: <%= ENV['PROCESSED_DELETED_PER_PAGE'] || 50 %>
 income:
-  min_threshold_base: 1085
-  max_threshold_base: 5085
-  per_child_increment: 245
-  married_supplement: 160
+  min_threshold_base: 1170
+  max_threshold_base: 5170
+  per_child_increment: 265
+  married_supplement: 175
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
 fee_approval_threshold: 10000.01

@@ -11,7 +11,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 0 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 1085
+        is_expected.to eq 1170
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 2 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 1575
+        is_expected.to eq 1700
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 0 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 1245
+        is_expected.to eq 1345
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { nil }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 1245
+        is_expected.to eq 1345
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 2 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 1735
+        is_expected.to eq 1875
       end
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 0 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 5085
+        is_expected.to eq 5170
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { nil }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 5085
+        is_expected.to eq 5170
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 2 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 5575
+        is_expected.to eq 5700
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 0 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 5245
+        is_expected.to eq 5345
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe IncomeThresholds do
       let(:children) { 2 }
 
       it 'calculates the right minimum threshold' do
-        is_expected.to eq 5735
+        is_expected.to eq 5875
       end
     end
   end
