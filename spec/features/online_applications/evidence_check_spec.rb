@@ -91,6 +91,7 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
 
     fill_in 'evidence_income', with: '1359'
     click_button 'Next'
-    expect(page).to have_text('The applicant must pay £135 towards the fee')
+
+    expect(page).to have_text('The applicant must pay £90 towards the fee')
   end
 end

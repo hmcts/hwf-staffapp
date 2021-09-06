@@ -1,4 +1,4 @@
-module CalculatorTestData # rubocop:disable Metrics/ModuleLength
+module CalculatorTestData
 
   module_function
 
@@ -24,9 +24,7 @@ module CalculatorTestData # rubocop:disable Metrics/ModuleLength
       { id: 17, fee: '2000', married_status: false, children: '2', income: '5700', remit: '0', they_pay: '2000', type: 'none' },
       { id: 18, fee: '125', married_status: false, children: '2', income: '2175', remit: '0', they_pay: '125', type: 'none' },
       { id: 19, fee: '1500', married_status: false, children: '2', income: '5700', remit: '0', they_pay: '1500', type: 'none' },
-      { id: 20, fee: '300', married_status: false, children: '2', income: '5730', remit: '0', they_pay: '300', type: 'none' },
-
-
+      { id: 20, fee: '300', married_status: false, children: '2', income: '5730', remit: '0', they_pay: '300', type: 'none' }
 
       # { id: 1, fee: '100', married_status: true, children: '0', income: '100', remit: '100', they_pay: '0', type: 'full' },
       # { id: 2, fee: '100', married_status: true, children: '0', income: '1200', remit: '100', they_pay: '0', type: 'full' },

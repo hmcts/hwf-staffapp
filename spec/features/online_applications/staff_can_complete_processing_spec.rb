@@ -103,7 +103,7 @@ RSpec.feature 'Staff can complete processing of an online application', type: :f
 
   def then_they_get_part_payment_income_outcome
     expect(page).to have_content('IncomeWaiting for part-payment')
-    expect(page).to have_content('The applicant must pay £105 towards the fee')
+    expect(page).to have_content('The applicant must pay £65 towards the fee')
   end
 
   def then_they_get_successful_income_outcome
