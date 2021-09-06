@@ -32,7 +32,7 @@ Feature: Currency format
     And I am on an application waiting for evidence
     And I click on start now to process the evidence
     And I submit that the evidence is correct
-    And I submit 2000 as the income
+    And I submit 2200 as the income
     And I click next on the income result page
     When I click complete processing
     Then I should be on the evidence confirmation page
@@ -50,7 +50,7 @@ Feature: Currency format
     And I am on an application waiting for evidence
     And I click on start now to process the evidence
     And I submit that the evidence is correct
-    And I submit 2000 as the income
+    And I submit 2200 as the income
     And I click next on the income result page
     When I click complete processing
     Then I should be on the evidence confirmation page
