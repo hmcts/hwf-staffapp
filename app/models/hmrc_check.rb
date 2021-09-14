@@ -1,5 +1,5 @@
 class HmrcCheck < ActiveRecord::Base
-  belongs_to :application, optional: false
+  belongs_to :evidence_check, optional: false
 
   serialize :address
   serialize :employment
