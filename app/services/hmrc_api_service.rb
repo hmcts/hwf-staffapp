@@ -40,7 +40,7 @@ class HmrcApiService
   end
 
   def hmrc_check
-    @hmrc_check ||= HmrcCheck.new
+    @hmrc_check ||= HmrcCheck.new(evidence_check: application.evidence_check)
   end
 
   private

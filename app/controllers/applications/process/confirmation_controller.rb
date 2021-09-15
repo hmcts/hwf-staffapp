@@ -7,10 +7,21 @@ module Applications
 
       def index
         if application.evidence_check.present?
-          redirect_to(evidence_check_path(application.evidence_check.id))
+          redirect_to hmrc_or_paper_path
         else
           @confirm = Views::Confirmation::Result.new(application)
           @form = Forms::Application::DecisionOverride.new(application)
+        end
+      end
+
+      private
+
+      def hmrc_or_paper_path
+        evidence_id = application.evidence_check.id
+        if application.evidence_check.income_check_type != 'hmrc'
+          evidence_check_path(evidence_id)
+        else
+          new_evidence_check_hmrc_path(evidence_id)
         end
       end
     end
