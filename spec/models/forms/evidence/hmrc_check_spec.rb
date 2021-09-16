@@ -31,6 +31,11 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     end
 
     context 'from_date' do
+      it "has correct format" do
+        form.valid?
+        expect(form.from_date).to eql('2012-01-21')
+      end
+
       context 'year is not valid' do
         let(:from_date_year) { '' }
 
@@ -69,6 +74,11 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     end
 
     context 'to_date' do
+      it "has correct format" do
+        form.valid?
+        expect(form.to_date).to eql('2021-05-21')
+      end
+
       context 'year is not valid' do
         let(:to_date_year) { '' }
 

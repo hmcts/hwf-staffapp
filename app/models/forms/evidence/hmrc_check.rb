@@ -20,6 +20,14 @@ module Forms
 
       before_validation :format_dates
 
+      def from_date
+        @from_date.strftime("%Y-%m-%d")
+      end
+
+      def to_date
+        @to_date.strftime("%Y-%m-%d")
+      end
+
       private
 
       def format_dates
@@ -46,7 +54,7 @@ module Forms
       def concat_to_date
         return nil if to_date_day.blank? || to_date_month.blank? ||
                       to_date_year.blank?
-        "#{to_date_day}-#{to_date_month}-#{to_date_year}"
+        "#{to_date_year}-#{to_date_month}-#{to_date_day}"
       end
 
     end
