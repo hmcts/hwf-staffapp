@@ -3,14 +3,16 @@ require 'rails_helper'
 RSpec.describe Forms::Evidence::HmrcCheck do
   subject(:form) { described_class.new(EvidenceCheck.new) }
 
-  let(:params) {{
-    "from_date_day"=>from_date_day,
-    "from_date_month"=>from_date_month,
-    "from_date_year"=>from_date_year,
-    "to_date_day"=>to_date_day,
-    "to_date_month"=>to_date_month,
-    "to_date_year"=>to_date_year
-  }}
+  let(:params) {
+    {
+      "from_date_day" => from_date_day,
+      "from_date_month" => from_date_month,
+      "from_date_year" => from_date_year,
+      "to_date_day" => to_date_day,
+      "to_date_month" => to_date_month,
+      "to_date_year" => to_date_year
+    }
+  }
 
   let(:from_date_day) { '21' }
   let(:from_date_month) { '1' }

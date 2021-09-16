@@ -18,10 +18,10 @@ module Applications
 
       def hmrc_or_paper_path
         evidence_id = application.evidence_check.id
-        if application.evidence_check.income_check_type != 'hmrc'
-          evidence_check_path(evidence_id)
-        else
+        if application.evidence_check.income_check_type == 'hmrc'
           new_evidence_check_hmrc_path(evidence_id)
+        else
+          evidence_check_path(evidence_id)
         end
       end
     end

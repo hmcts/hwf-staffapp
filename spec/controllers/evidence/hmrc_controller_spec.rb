@@ -55,14 +55,16 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       let(:form) { instance_double(Forms::Evidence::HmrcCheck) }
       let(:api_service) { instance_double(HmrcApiService) }
 
-      let(:dates) {{
-        "from_date_day"=>'1',
-        "from_date_month"=>'2',
-        "from_date_year"=>'2000',
-        "to_date_day"=>'1',
-        "to_date_month"=>'2',
-        "to_date_year"=>'2001'
-      }}
+      let(:dates) {
+        {
+          "from_date_day" => '1',
+          "from_date_month" => '2',
+          "from_date_year" => '2000',
+          "to_date_day" => '1',
+          "to_date_month" => '2',
+          "to_date_year" => '2001'
+        }
+      }
       let(:valid) { false }
       let(:post_call) { post :create, params: { evidence_check_id: evidence.id, hmrc_check: dates } }
 
