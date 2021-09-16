@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 describe HmrcApiService do
-  subject(:service) { described_class.new(application) }
+  subject(:service) { described_class.new(evidence_check.application) }
   let(:application) { create :application_part_remission, applicant: applicant }
+  let(:evidence_check) { create :evidence_check, application: application }
   let(:applicant) {
     create :applicant,
            date_of_birth: DateTime.new(1968, 2, 28),
@@ -141,6 +142,18 @@ describe HmrcApiService do
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
         allow(hmrc_api).to receive(:match_user)
       }
+
+      context 'metadata' do
+        it 'ni_number' do
+          expect(service.hmrc_check.ni_number).to eql('AB123456C')
+        end
+        it 'date_of_birth' do
+          expect(service.hmrc_check.date_of_birth).to eql('28/02/1968')
+        end
+        it 'user_id' do
+          expect(service.hmrc_check.user_id).to eql(application.user_id)
+        end
+      end
 
       it "income" do
         allow(hmrc_api).to receive(:paye).and_return({ startDate: "2019-01-01" })
