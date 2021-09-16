@@ -1,12 +1,14 @@
 - content_for :page_title
-  = "#{@evidence.application.reference} - For HMRC checking"
+  = "#{@evidence.application.reference} - For HMRC income checking"
 
 
 = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_index_path(@evidence), method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC checking
+      h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
+      #with-hint-hint.govuk-hint
+        | Submit for HMRC income check for the date range below
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -56,3 +58,9 @@
 
 
 
+    details.govuk-details data-module="govuk-details"
+      summary.govuk-details__summary
+        span.govuk-details__summary-text Do not select this application for HMRC income checking
+      .govuk-details__text You can choose to process this application using paper based evidence.
+      .govuk-details__text
+        = link_to 'Next', send("evidence_accuracy_failed_reason_path",2), class: 'govuk-button'
