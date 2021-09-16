@@ -3,16 +3,17 @@ module Evidence
 
     def new
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(evidence)
+      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
     end
 
     def create
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(evidence)
+      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
       @form.update_attributes(hmrc_params)
 
       if @form.valid?
         hmrc_service_call
+        render html: 'good'
       else
         render :new
       end
@@ -30,10 +31,9 @@ module Evidence
 
     def hmrc_service_call
       hmrc_service = HmrcApiService.new(evidence.application)
-      hmrc_service.income
+      hmrc_service.income(@form.from_date, @form.to_date)
       @hmrc_service = hmrc_service.hmrc_check
     end
-
   end
 
 end
