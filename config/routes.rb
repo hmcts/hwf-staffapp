@@ -83,7 +83,9 @@ Rails.application.routes.draw do
     resources :accuracy_incorrect_reason, only: [:show, :update]
   end
 
-  resources :evidence_checks, only: [:index, :show]
+  resources :evidence_checks, only: [:index, :show] do
+    resources :hmrc, module: 'evidence'
+  end
 
   resources :part_payments, only: [:index, :show] do
     member do
