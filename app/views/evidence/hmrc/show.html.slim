@@ -1,0 +1,46 @@
+- content_for :page_title
+  = "#{@evidence.application.reference} - For HMRC income checking"
+
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
+
+  .govuk-grid-column-full.table_data
+
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m Application Income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Number of children
+          td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Total monthly income
+          td.govuk-table__cell scope="col" #{income_value(@evidence.application)}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Income kind applicant
+          td.govuk-table__cell scope="col" TBD
+
+
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m HMRC checked income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" PAYE Income
+          td.govuk-table__cell scope="col" #{currency_format(@hmrc_check.income['income'].first['taxablePay'])}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Property income
+          td.govuk-table__cell scope="col" None
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Foreign income
+          td.govuk-table__cell scope="col" None
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Savings and Investments income
+          td.govuk-table__cell scope="col" None
+
+
