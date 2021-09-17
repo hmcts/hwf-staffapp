@@ -2,6 +2,7 @@ class HmrcApiService
 
   def initialize(application)
     @application = application
+    hmrc_check_initialize
     hmrc_api_innitialize
   end
 
@@ -40,14 +41,14 @@ class HmrcApiService
   end
 
   def hmrc_check
-    @hmrc_check ||= HmrcCheck.new
+    @hmrc_check ||= HmrcCheck.new(evidence_check: @application.evidence_check)
   end
 
   private
 
   def store_response_data(type, data)
-    hmrc_check.send("#{type}=", data)
-    hmrc_check.save
+    @hmrc_check.send("#{type}=", data)
+    @hmrc_check.save
   end
 
   # TODO: whitelist credentials from logs
@@ -84,4 +85,13 @@ class HmrcApiService
     hmrc_token.expires_in = expires_in
     hmrc_token.save
   end
+
+  def hmrc_check_initialize
+    hmrc_check
+    @hmrc_check.ni_number = @application.applicant.ni_number
+    @hmrc_check.date_of_birth = @application.applicant.date_of_birth
+    @hmrc_check.user_id = @application.user_id
+    @hmrc_check.save
+  end
+
 end

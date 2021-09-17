@@ -315,6 +315,15 @@ en-GB:
 
   activemodel:
     attributes:
+      forms/evidence/hmrc_check:
+        from_date: 'From date:'
+        from_date_day: Day
+        from_date_month: Month
+        from_date_year: Year
+        to_date: 'To date:'
+        to_date_day: Day
+        to_date_month: Month
+        to_date_year: Year
       forms/evidence/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:

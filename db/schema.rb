@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_093146) do
+ActiveRecord::Schema.define(version: 2021_09_14_124940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_093146) do
     t.string "incorrect_reason_category"
     t.string "staff_error_details"
     t.string "checks_annotation"
+    t.string "income_check_type"
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
   end
 
@@ -224,7 +225,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_093146) do
   end
 
   create_table "hmrc_checks", force: :cascade do |t|
-    t.integer "application_id", null: false
+    t.integer "evidence_check_id", null: false
     t.integer "user_id"
     t.string "ni_number"
     t.string "date_of_birth"

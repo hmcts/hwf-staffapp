@@ -4,7 +4,7 @@ FactoryBot.define do
     employment { { startDate: Faker::Date.in_date_period, endDate: Faker::Date.in_date_period } }
     income { { taxReturns: [{ taxYear: "2018-19", summary: [{ totalIncome: Faker::Number.decimal(l_digits: 2) }] }] } }
     tax_credit { { id: Faker::Number.number(digits: 10), awards: [{ payProfCalcDate: Faker::Date.in_date_period }] } }
-    application
+    evidence_check
     ni_number { 'SN789456C' }
     date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
   end
