@@ -434,5 +434,54 @@ describe EvidenceCheckSelector do
         end
       end
     end
+
+    context 'HMRC check applies' do
+      let(:application) { create :application_full_remission, office: office, applicant: applicant }
+      before do
+        ev_stub = instance_double(EvidenceCheckFlag, active?: true)
+        allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
+      end
+
+      context 'single applicant' do
+        let(:applicant) { create :applicant_with_all_details, married: false }
+
+        context 'office match' do
+          let(:office) { create :office, entity_code: 'dig' }
+
+          it 'is hmrc checked' do
+            expect(decision.income_check_type).to eql 'hmrc'
+          end
+        end
+
+        context 'office does not match' do
+          let(:office) { create :office, entity_code: 'dig01' }
+
+          it 'is paper checked' do
+            expect(decision.income_check_type).to eql 'paper'
+          end
+        end
+      end
+
+      context 'married applicant' do
+        let(:applicant) { create :applicant_with_all_details, married: true }
+
+        context 'office match' do
+          let(:office) { create :office, entity_code: 'dig' }
+
+          it 'is paper checked' do
+            expect(decision.income_check_type).to eql 'paper'
+          end
+        end
+
+        context 'office does not match' do
+          let(:office) { create :office, entity_code: 'dig01' }
+
+          it 'is paper checked' do
+            expect(decision.income_check_type).to eql 'paper'
+          end
+        end
+      end
+    end
+
   end
 end

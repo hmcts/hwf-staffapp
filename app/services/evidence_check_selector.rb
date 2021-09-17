@@ -111,7 +111,17 @@ class EvidenceCheckSelector
   def save_evidence_check(type)
     ev_check_attributes = { expires_at: expires_at, check_type: type }
     ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
+    ev_check_attributes.merge!(income_check_type: income_check_type)
     @application.create_evidence_check(ev_check_attributes)
+  end
+
+  def income_check_type
+    return 'hmrc' if hmrc_office_match? && !@application.applicant.married
+    'paper'
+  end
+
+  def hmrc_office_match?
+    @application.office.try(:entity_code) == 'dig'
   end
 
   def ccmcc_evidence_rules_check

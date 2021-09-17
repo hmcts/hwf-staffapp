@@ -1,0 +1,67 @@
+- content_for :page_title
+  = "#{@evidence.application.reference} - For HMRC income checking"
+
+
+= form_for @form, as: :hmrc_check, url: evidence_check_hmrc_index_path(@evidence), method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
+      #with-hint-hint.govuk-hint
+        | Submit for HMRC income check for the date range below
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            =t('from_date', scope: @form.i18n_scope)
+        - if @form.errors[:from_date].present?
+          span.govuk-error-message
+            = f.label :from_date, @form.errors[:from_date].join(', '), class: 'error'
+        .govuk-date-input class="#{'error_dates' if @form.errors[:from_date].present?}"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-day
+              = f.label :from_date_day, class: 'govuk-label'
+              = f.text_field :from_date_day, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-month
+              = f.label :from_date_month, class: 'govuk-label'
+              = f.text_field :from_date_month, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-year
+              = f.label :from_date_year, class: 'govuk-label'
+              = f.text_field :from_date_year, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            =t('to_date', scope: @form.i18n_scope)
+        - if @form.errors[:to_date].present?
+          span.govuk-error-message
+            = f.label :to_date, @form.errors[:to_date].join(', '), class: 'error'
+        .govuk-date-input class="#{'error_dates' if @form.errors[:to_date].present?}"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-day
+              = f.label :to_date_day, class: 'govuk-label'
+              = f.text_field :to_date_day, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-month
+              = f.label :to_date_month, class: 'govuk-label'
+              = f.text_field :to_date_month, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-year
+              = f.label :to_date_year, class: 'govuk-label'
+              = f.text_field :to_date_year, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+
+
+      = f.submit 'Submit', class: 'govuk-button'
+
+
+
+    details.govuk-details data-module="govuk-details"
+      summary.govuk-details__summary
+        span.govuk-details__summary-text Do not select this application for HMRC income checking
+      .govuk-details__text You can choose to process this application using paper based evidence.
+      .govuk-details__text
+
+        = link_to 'Next', send("evidence_check_path",@evidence), class: 'govuk-button'
