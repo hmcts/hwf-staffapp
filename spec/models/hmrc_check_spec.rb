@@ -47,5 +47,36 @@ RSpec.describe HmrcCheck, type: :model do
 
       it { expect(hmrc_check.tax_credit[0][:awards][0][:payProfCalcDate]).to eql("2020-11-18") }
     end
+
+    context 'total income' do
+      before {
+        hmrc_check.income = [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04, "inPayPeriod2" => 13000.38, "inPayPeriod3" => 14000.34, "inPayPeriod4" => 15000.69 } }]
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.total_income).to be 54001.45 }
+
+      describe 'without data present' do
+        it 'empty hash' do
+          hmrc_check.update(income: [{ "grossEarningsForNics" => {} }])
+          expect(hmrc_check.total_income).to be 0
+        end
+
+        it 'no key present' do
+          hmrc_check.update(income: [{ "grossEarningsFor" => {} }])
+          expect(hmrc_check.total_income).to be 0
+        end
+
+        it 'income empty array' do
+          hmrc_check.update(income: [])
+          expect(hmrc_check.total_income).to be 0
+        end
+
+        it 'income nil' do
+          hmrc_check.update(income: nil)
+          expect(hmrc_check.total_income).to be 0
+        end
+      end
+    end
   end
 end

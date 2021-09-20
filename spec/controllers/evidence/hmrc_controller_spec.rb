@@ -142,6 +142,24 @@ RSpec.describe Evidence::HmrcController, type: :controller do
               expect(response).to render_template('new')
             end
           end
+
+          context 'fail - timeout' do
+            let(:errors) { instance_double(ActiveModel::Errors) }
+            before do
+              allow(api_service).to receive(:income).and_raise(Net::ReadTimeout.new('Error message'))
+              allow(form).to receive(:errors).and_return errors
+              allow(errors).to receive(:add)
+              post_call
+            end
+
+            it 'add error' do
+              expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed due to respone time exceeded')
+            end
+
+            it 'render new template' do
+              expect(response).to render_template('new')
+            end
+          end
         end
       end
     end
@@ -157,22 +175,50 @@ RSpec.describe Evidence::HmrcController, type: :controller do
     end
 
     context 'as a signed in user' do
-      before do
-        allow(HmrcCheck).to receive(:find).and_return hmrc_check
-        sign_in user
-        get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+      context 'success' do
+        before do
+          allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(hmrc_check).to receive(:total_income).and_return 100
+          sign_in user
+          get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+        end
+
+        it 'returns the correct status code' do
+          expect(response).to have_http_status(200)
+        end
+
+        it 'renders the correct template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'load check' do
+          expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
       end
 
-      it 'returns the correct status code' do
-        expect(response).to have_http_status(200)
-      end
+      context 'data issue' do
+        let(:errors) { instance_double(ActiveModel::Errors) }
+        before do
+          allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(hmrc_check).to receive(:total_income).and_return 0
+          allow(hmrc_check).to receive(:errors).and_return errors
+          allow(errors).to receive(:add)
+          sign_in user
+          get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+        end
 
-      it 'renders the correct template' do
-        expect(response).to render_template('show')
-      end
+        it 'add error message' do
+          message = "There might be an issue with HMRC data. Please contact technical support."
+          expect(errors).to have_received(:add).with(:income_calculation, message)
+        end
 
-      it 'load check' do
-        expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        it 'renders the correct template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'load check' do
+          expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
       end
     end
   end

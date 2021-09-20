@@ -1,13 +1,21 @@
 - content_for :page_title
   = "#{@evidence.application.reference} - For HMRC income checking"
 
+- if @hmrc_check.errors.any?
+  .govuk-error-summary aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary"
+    h2.govuk-error-summary__title#error-summary-title
+      = "There might be a problem"
+
+    .govuk-error-summary__body
+      ul.govuk-list.govuk-error-summary__list
+        - @hmrc_check.errors.full_messages.each do |message|
+          li = message
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
 
   .govuk-grid-column-full.table_data
-
     table.govuk-table
       caption.govuk-table__caption.govuk-table__caption--m Application Income
       thead.govuk-table__head
@@ -29,7 +37,7 @@
       thead.govuk-table__head
         tr.govuk-table__row
           th.govuk-table__header scope="col" PAYE Income
-          td.govuk-table__cell scope="col" #{currency_format(@hmrc_check.income['income'].first['taxablePay'])}
+          td.govuk-table__cell scope="col" #{total_income(@hmrc_check)}
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Property income
