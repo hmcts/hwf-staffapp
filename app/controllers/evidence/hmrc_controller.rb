@@ -21,6 +21,7 @@ module Evidence
 
     def show
       authorize evidence
+      check_hmrc_data
       render :show
     end
 
@@ -41,10 +42,20 @@ module Evidence
     rescue HwfHmrcApiError => e
       @form.errors.add(:request, e.message)
       false
+    rescue Net::ReadTimeout
+      message = "HMRC income checking failed due to respone time exceeded"
+      @form.errors.add(:timout, message)
+      false
     end
 
     def load_hmrc_check
       @hmrc_check = HmrcCheck.find(params[:id])
+    end
+
+    def check_hmrc_data
+      return if @hmrc_check.total_income != 0
+      message = "There might be an issue with HMRC data. Please contact technical support."
+      @hmrc_check.errors.add(:income_calculation, message)
     end
 
   end

@@ -5,4 +5,12 @@ class HmrcCheck < ActiveRecord::Base
   serialize :employment
   serialize :income
   serialize :tax_credit
+
+  def total_income
+    income.sum do |i|
+      i['grossEarningsForNics'].values.sum
+    end
+  rescue NoMethodError
+    0
+  end
 end
