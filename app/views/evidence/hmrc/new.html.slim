@@ -11,6 +11,9 @@
         | Submit for HMRC income check for the date range below
 
       .govuk-form-group.group-level
+        - if @form.errors[:request].present?
+        span.govuk-error-message
+          = @form.errors[:request].join(', ')
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend
             =t('from_date', scope: @form.i18n_scope)

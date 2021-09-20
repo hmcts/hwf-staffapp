@@ -47,8 +47,9 @@ class HmrcApiService
   private
 
   def store_response_data(type, data)
-    @hmrc_check.send("#{type}=", data)
+    @hmrc_check.send("#{type}=", data.send("[]", type))
     @hmrc_check.save
+    raise HwfHmrcApiError, "NO RESULT - No record found" if data.send("[]", type).blank?
   end
 
   # TODO: whitelist credentials from logs

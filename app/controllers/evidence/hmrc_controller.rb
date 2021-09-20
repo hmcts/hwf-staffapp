@@ -12,8 +12,7 @@ module Evidence
       @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
       @form.update_attributes(hmrc_params)
 
-      if @form.valid?
-        hmrc_service_call
+      if @form.valid? && hmrc_service_call
         redirect_to evidence_check_hmrc_path(evidence, @hmrc_check)
       else
         render :new
@@ -39,6 +38,9 @@ module Evidence
       hmrc_service = HmrcApiService.new(evidence.application)
       hmrc_service.income(@form.from_date, @form.to_date)
       @hmrc_check = hmrc_service.hmrc_check
+    rescue HwfHmrcApiError => e
+      @form.errors.add(:request, e.message)
+      return false
     end
 
     def load_hmrc_check

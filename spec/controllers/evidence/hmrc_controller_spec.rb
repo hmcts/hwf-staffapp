@@ -97,15 +97,17 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           allow(HmrcApiService).to receive(:new).and_return api_service
           allow(api_service).to receive(:income)
           allow(api_service).to receive(:hmrc_check).and_return hmrc_check
-          post_call
         end
 
         it 'validate' do
+          post_call
           expect(form).to have_received(:valid?)
         end
 
         describe 'service call' do
           context 'success' do
+            before { post_call }
+
             it "calls service with application" do
               expect(HmrcApiService).to have_received(:new).with(application)
             end
@@ -124,8 +126,20 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           end
 
           context 'fail' do
-            it 'render new page again' do
-              expect(Forms::Evidence::HmrcCheck).to have_received(:new)
+            let(:errors) { instance_double(ActiveModel::Errors) }
+            before do
+              allow(api_service).to receive(:income).and_raise(HwfHmrcApiError.new('Error message'))
+              allow(form).to receive(:errors).and_return errors
+              allow(errors).to receive(:add)
+              post_call
+            end
+
+            it 'add error' do
+              expect(errors).to have_received(:add).with(:request, 'Error message')
+            end
+
+            it 'render new template' do
+              expect(response).to render_template('new')
             end
           end
         end
