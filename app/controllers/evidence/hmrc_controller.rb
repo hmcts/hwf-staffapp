@@ -40,7 +40,7 @@ module Evidence
       @hmrc_check = hmrc_service.hmrc_check
     rescue HwfHmrcApiError => e
       @form.errors.add(:request, e.message)
-      return false
+      false
     end
 
     def load_hmrc_check
