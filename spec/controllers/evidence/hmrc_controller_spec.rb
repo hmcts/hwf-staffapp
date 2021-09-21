@@ -153,7 +153,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
             end
 
             it 'add error' do
-              expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed due to respone time exceeded')
+              expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form for HMRC income checking')
             end
 
             it 'render new template' do

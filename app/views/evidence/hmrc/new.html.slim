@@ -10,16 +10,15 @@
       ul.govuk-list.govuk-error-summary__list
         - @form.errors.values.each do |message|
           li = message.first
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
+    #with-hint-hint.govuk-hint
+      | Submit for HMRC income check for the date range below
 
-    .govuk-form-group.govuk-form-group--error
+    .govuk-form-group class="#{'govuk-form-group--error' if @form.errors[:timout].present?}"
       = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_index_path(@evidence), method: :post, html: { autocomplete: 'off' } do |f|
-
-        h1.govuk-heading-xl #{@evidence.application.reference} - For HMRC income checking
-        #with-hint-hint.govuk-hint
-          | Submit for HMRC income check for the date range below
-
         .govuk-form-group.group-level
           fieldset.govuk-fieldset
             legend.govuk-fieldset__legend
