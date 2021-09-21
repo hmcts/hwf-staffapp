@@ -11,7 +11,7 @@ RSpec.describe StaticController, type: :controller do
   end
 
   context '404' do
-    before { get '404' }
+    before { get 'not_found' }
 
     it 'renders 404 static page' do
       expect(response).to render_template 'static/404'
