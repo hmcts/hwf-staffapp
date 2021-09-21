@@ -43,7 +43,7 @@ module Evidence
       @form.errors.add(:request, e.message)
       false
     rescue Net::ReadTimeout
-      message = "HMRC income checking failed due to respone time exceeded"
+      message = "HMRC income checking failed. Submit this form for HMRC income checking"
       @form.errors.add(:timout, message)
       false
     end
