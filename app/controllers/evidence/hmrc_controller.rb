@@ -5,6 +5,7 @@ module Evidence
     def new
       authorize evidence
       @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
+      load_default_date_range
     end
 
     def create
@@ -58,5 +59,17 @@ module Evidence
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
+    # rubocop:disable Metrics/AbcSize
+    def load_default_date_range
+      created = @evidence.application.created_at.to_date
+      last_month = created - 1.month
+      @form.from_date_day = last_month.beginning_of_month.day
+      @form.from_date_month = last_month.month
+      @form.from_date_year = last_month.year
+      @form.to_date_day = last_month.end_of_month.day
+      @form.to_date_month = last_month.month
+      @form.to_date_year = last_month.year
+    end
+    # rubocop:enable Metrics/AbcSize
   end
 end

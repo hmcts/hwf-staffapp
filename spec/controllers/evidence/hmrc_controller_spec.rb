@@ -4,7 +4,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
   let(:applicant) { create :applicant_with_all_details }
-  let(:application) { create :application, office: office, applicant: applicant }
+  let(:application) { create :application, office: office, applicant: applicant, created_at: '15.3.2021' }
   let(:evidence) { create :evidence_check, application_id: application.id }
   let(:hmrc_check) { create :hmrc_check, evidence_check: evidence }
 
@@ -26,19 +26,43 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       before do
         sign_in user
         allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form
-        get :new, params: { evidence_check_id: evidence.id }
+        allow(form).to receive(:from_date_day=)
+        allow(form).to receive(:from_date_month=)
+        allow(form).to receive(:from_date_year=)
+        allow(form).to receive(:to_date_day=)
+        allow(form).to receive(:to_date_month=)
+        allow(form).to receive(:to_date_year=)
       end
 
       it 'returns the correct status code' do
+        get :new, params: { evidence_check_id: evidence.id }
         expect(response).to have_http_status(200)
       end
 
       it 'renders the correct template' do
+        get :new, params: { evidence_check_id: evidence.id }
         expect(response).to render_template('new')
       end
 
       it 'load form' do
+        get :new, params: { evidence_check_id: evidence.id }
         expect(Forms::Evidence::HmrcCheck).to have_received(:new)
+      end
+
+      describe 'default date range' do
+        # let(:application) { create :application, created_at: '15.3.2021' }
+        # let(:evidence) { create :evidence_check, application: application }
+        # subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
+        before do
+          get :new, params: { evidence_check_id: evidence.id }
+        end
+
+        it { expect(form).to have_received(:from_date_day=).with 1 }
+        it { expect(form).to have_received(:from_date_month=).with 2 }
+        it { expect(form).to have_received(:from_date_year=).with 2021 }
+        it { expect(form).to have_received(:to_date_day=).with 28 }
+        it { expect(form).to have_received(:to_date_month=).with 2 }
+        it { expect(form).to have_received(:to_date_year=).with 2021 }
       end
     end
   end
