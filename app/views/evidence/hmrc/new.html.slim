@@ -17,7 +17,7 @@
     #with-hint-hint.govuk-hint
       | Submit for HMRC income check for the date range below
 
-    .govuk-form-group class="#{'govuk-form-group--error' if @form.errors[:timout].present?}"
+    .govuk-form-group class="#{'govuk-form-group--error' if @form.errors[:timeout].present? || error_highlight?(@form)}"
       = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_index_path(@evidence), method: :post, html: { autocomplete: 'off' } do |f|
         .govuk-form-group.group-level
           fieldset.govuk-fieldset
@@ -26,7 +26,7 @@
           - if @form.errors[:from_date].present?
             span.govuk-error-message
               = f.label :from_date, @form.errors[:from_date].join(', '), class: 'error'
-          .govuk-date-input class="#{'error_dates' if @form.errors[:from_date].present?}"
+          .govuk-date-input class="#{'error_dates' if @form.errors[:from_date].present? || error_highlight?(@form)}"
             .govuk-date-input__item
               .govuk-form-group.govuk-form-group-day
                 = f.label :from_date_day, class: 'govuk-label'
@@ -47,7 +47,7 @@
           - if @form.errors[:to_date].present?
             span.govuk-error-message
               = f.label :to_date, @form.errors[:to_date].join(', '), class: 'error'
-          .govuk-date-input class="#{'error_dates' if @form.errors[:to_date].present?}"
+          .govuk-date-input class="#{'error_dates' if @form.errors[:to_date].present? || error_highlight?(@form)}"
             .govuk-date-input__item
               .govuk-form-group.govuk-form-group-day
                 = f.label :to_date_day, class: 'govuk-label'

@@ -1,16 +1,15 @@
 module Evidence
   class HmrcController < ApplicationController
     before_action :load_hmrc_check, only: :show
+    before_action :load_form, only: [:new, :create]
 
     def new
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
       load_default_date_range
     end
 
     def create
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
       @form.update_attributes(hmrc_params)
 
       if @form.valid? && hmrc_service_call
@@ -51,6 +50,11 @@ module Evidence
 
     def load_hmrc_check
       @hmrc_check = HmrcCheck.find(params[:id])
+    end
+
+    def load_form
+      check = HmrcCheck.new(evidence_check: evidence)
+      @form = Forms::Evidence::HmrcCheck.new(check)
     end
 
     def check_hmrc_data
