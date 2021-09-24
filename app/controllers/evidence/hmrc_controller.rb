@@ -1,15 +1,15 @@
 module Evidence
   class HmrcController < ApplicationController
     before_action :load_hmrc_check, only: :show
+    before_action :load_form, only: [:new, :create]
 
     def new
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
+      load_default_date_range
     end
 
     def create
       authorize evidence
-      @form = Forms::Evidence::HmrcCheck.new(HmrcCheck.new)
       @form.update_attributes(hmrc_params)
 
       if @form.valid? && hmrc_service_call
@@ -52,11 +52,28 @@ module Evidence
       @hmrc_check = HmrcCheck.find(params[:id])
     end
 
+    def load_form
+      check = HmrcCheck.new(evidence_check: evidence)
+      @form = Forms::Evidence::HmrcCheck.new(check)
+    end
+
     def check_hmrc_data
       return if @hmrc_check.total_income != 0
       message = "There might be an issue with HMRC data. Please contact technical support."
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
+    # rubocop:disable Metrics/AbcSize
+    def load_default_date_range
+      created = @evidence.application.created_at.to_date
+      last_month = created - 1.month
+      @form.from_date_day = last_month.beginning_of_month.day
+      @form.from_date_month = last_month.month
+      @form.from_date_year = last_month.year
+      @form.to_date_day = last_month.end_of_month.day
+      @form.to_date_month = last_month.month
+      @form.to_date_year = last_month.year
+    end
+    # rubocop:enable Metrics/AbcSize
   end
 end

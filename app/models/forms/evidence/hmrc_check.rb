@@ -18,7 +18,7 @@ module Forms
 
       define_attributes
 
-      before_validation :format_dates
+      before_validation :format_dates, :validate_range, :validate_range_against_submission
 
       def from_date
         @from_date.strftime("%Y-%m-%d")
@@ -55,6 +55,28 @@ module Forms
         return nil if to_date_day.blank? || to_date_month.blank? ||
                       to_date_year.blank?
         "#{to_date_year}-#{to_date_month}-#{to_date_day}"
+      end
+
+      def validate_range
+        return if errors.any?
+        return if (@from_date + 1.month) - 1.day == @to_date
+        errors.add(:date_range, "Enter a calendar month date range")
+      end
+
+      def validate_range_against_submission
+        return if errors.any?
+        created = @object.evidence_check.application.created_at.to_date
+        last_month = created - 1.month
+        return if @from_date == last_month.beginning_of_month
+        message = range_message(last_month)
+        errors.add(:date_range, message)
+      end
+
+      def range_message(month)
+        start_month = month.beginning_of_month.strftime('%d/%m/%Y')
+        end_month = month.end_of_month.strftime('%d/%m/%Y')
+        range = "#{start_month} - #{end_month}"
+        "Enter a calendar month date range prior to the application submission date: #{range}"
       end
 
     end
