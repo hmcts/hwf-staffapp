@@ -125,7 +125,7 @@ RSpec.describe Views::Overview::Application do
         let(:max_exceeded) { nil }
 
         it 'returns correct below threshold text' do
-          is_expected.to eql('Less than £1,735')
+          is_expected.to eql('Less than £1,875')
         end
       end
 
@@ -134,7 +134,7 @@ RSpec.describe Views::Overview::Application do
         let(:max_exceeded) { true }
 
         it 'returns correct above threshold text' do
-          is_expected.to eql('More than £5,735')
+          is_expected.to eql('More than £5,875')
         end
       end
     end

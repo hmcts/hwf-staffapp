@@ -2,7 +2,7 @@ class EvidencePage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
     element :full_refund_header, 'h2', text: '✓ Eligible for help with fees'
-    element :partial_refund_header, 'h2', text: 'The applicant must pay £5 towards the fee'
+    element :partial_refund_header, 'h2', text: 'The applicant must pay £45 towards the fee'
     element :eligable_header, 'h2', text: '✓ Eligible for help with fees'
     element :not_eligable_header, 'h2', text: '✗ Not eligible for help with fees'
     element :waiting_for_evidence_header, 'h2', text: 'Evidence of income needs to be checked'
