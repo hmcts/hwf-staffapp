@@ -1,6 +1,6 @@
 module Evidence
   class HmrcController < ApplicationController
-    before_action :load_hmrc_check, only: :show
+    before_action :load_hmrc_check, only: [:show, :update]
     before_action :load_form, only: [:new, :create]
 
     def new
@@ -20,9 +20,20 @@ module Evidence
     end
 
     def show
+      load_form
       authorize evidence
       check_hmrc_data
       render :show
+    end
+
+    def update
+      @form = Forms::Evidence::HmrcCheck.new(@hmrc_check)
+      authorize evidence
+      if hmrc_params['additional_income'] == 'false'
+        redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
+      else
+        render :show
+      end
     end
 
     private

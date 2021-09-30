@@ -5,6 +5,7 @@ class HmrcCheck < ActiveRecord::Base
   serialize :employment
   serialize :income
   serialize :tax_credit
+  serialize :request_params
 
   def total_income
     income.sum do |i|

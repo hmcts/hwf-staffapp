@@ -12,13 +12,15 @@ module Forms
           to_date: Date,
           to_date_day: Integer,
           to_date_month: Integer,
-          to_date_year: Integer
+          to_date_year: Integer,
+          additional_income: Boolean
         }
       end
 
       define_attributes
 
-      before_validation :format_dates, :validate_range, :validate_range_against_submission
+      before_validation :format_dates
+      # , :validate_range, :validate_range_against_submission
 
       def from_date
         @from_date.strftime("%Y-%m-%d")

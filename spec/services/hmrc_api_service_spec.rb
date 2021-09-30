@@ -177,10 +177,23 @@ describe HmrcApiService do
         end
       end
 
-      it "income" do
-        allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
-        service.income('2020-02-28', '2020-03-30')
-        expect(service.hmrc_check.income[0][:paymentDate]).to eq "2019-01-01"
+      context 'income' do
+        before do
+          allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
+          service.income('2020-02-28', '2020-03-30')
+        end
+
+        it 'query' do
+          expect(service.hmrc_check.income[0][:paymentDate]).to eq "2019-01-01"
+        end
+
+        it 'request_params from' do
+          expect(service.hmrc_check.request_params[:date_range][:from]).to eql('2020-02-28')
+        end
+
+        it 'request_params to' do
+          expect(service.hmrc_check.request_params[:date_range][:to]).to eql('2020-03-30')
+        end
       end
 
       it "address" do
