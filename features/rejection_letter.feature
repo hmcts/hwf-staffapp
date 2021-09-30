@@ -10,10 +10,10 @@ Feature: Rejection letter based off income / Savings
     When I process that application
     Then the rejection letter should state "Your income total: £6,065"
 
-  Scenario: Online application with income over £6065 and 4 children
+  Scenario: Online application with income over £6230 and 4 children
     Given I have an online application with children
     When I process that application
-    Then the rejection letter should state "Your income total: More than £6,065"
+    Then the rejection letter should state "Your income total: More than £6,230"
 
   Scenario: Online application with saving over £16000
     Given I have an online application with big savings

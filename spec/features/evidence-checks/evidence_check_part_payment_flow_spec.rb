@@ -51,7 +51,7 @@ RSpec.feature 'Part payment application with evidence check for refund', type: :
     fill_in 'evidence_income', with: 3951
     click_button 'Next'
 
-    expect(page).to have_content 'The amount to be refunded should be £3895'
+    expect(page).to have_content 'The amount to be refunded should be £3965'
     click_link 'Next'
 
     expect(page).to have_content 'Check details'

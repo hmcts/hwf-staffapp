@@ -63,7 +63,7 @@ Feature: Waiting for evidence
     And I am on an application waiting for evidence
     And I click on start now to process the evidence
     And I submit that the evidence is correct
-    When I submit 1500 as the income
+    When I submit 1700 as the income
     Then I see the amount to be refunded should be £5
 
   Scenario: Check details

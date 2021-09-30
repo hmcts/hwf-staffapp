@@ -19,7 +19,7 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :application_part_remission, income: nil, income_min_threshold_exceeded: false }
 
           it 'results in full remission' do
-            is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 1980, max_threshold: 5980, income_max_threshold_exceeded: false)
+            is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 2140, max_threshold: 6140, income_max_threshold_exceeded: false)
           end
         end
 
@@ -27,7 +27,7 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :application_part_remission, fee: 333, income: nil, income_max_threshold_exceeded: true }
 
           it 'results in no remission' do
-            is_expected.to eql(outcome: 'none', amount_to_pay: 333, min_threshold: 1980, max_threshold: 5980, income_max_threshold_exceeded: true)
+            is_expected.to eql(outcome: 'none', amount_to_pay: 333, min_threshold: 2140, max_threshold: 6140, income_max_threshold_exceeded: true)
           end
         end
       end
@@ -37,15 +37,15 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :single_applicant_under_61, income: 100, fee: 100, benefits: false }
 
           it 'results in full remission' do
-            is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 1330, max_threshold: 5330, income_max_threshold_exceeded: false)
+            is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 1435, max_threshold: 5435, income_max_threshold_exceeded: false)
           end
         end
 
         context 'is below threshold with partial payment' do
-          let(:application) { build :single_applicant_under_61, income: 1900, fee: 100, benefits: false, children: 3 }
+          let(:application) { build :single_applicant_under_61, income: 1715, fee: 100, benefits: false, children: 2 }
 
           it 'results in part remission' do
-            is_expected.to eql(outcome: 'part', amount_to_pay: 40, min_threshold: 1820, max_threshold: 5820, income_max_threshold_exceeded: false)
+            is_expected.to eql(outcome: 'part', amount_to_pay: 5, min_threshold: 1700, max_threshold: 5700, income_max_threshold_exceeded: false)
           end
         end
 
@@ -53,7 +53,7 @@ RSpec.describe IncomeCalculation do
           let(:application) { build :single_applicant_under_61, income: 5000, fee: 100, benefits: false }
 
           it 'results in no remission' do
-            is_expected.to eql(outcome: 'none', amount_to_pay: 100, min_threshold: 1330, max_threshold: 5330, income_max_threshold_exceeded: true)
+            is_expected.to eql(outcome: 'none', amount_to_pay: 100, min_threshold: 1435, max_threshold: 5435, income_max_threshold_exceeded: true)
           end
         end
 
