@@ -9,7 +9,6 @@ module Evidence
       render :show
     end
 
-
     private
 
     def evidence

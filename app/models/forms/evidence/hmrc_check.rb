@@ -3,6 +3,7 @@ module Forms
     class HmrcCheck < ::FormObject
       include ActiveModel::Validations::Callbacks
 
+      # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
           from_date: Date,
@@ -16,6 +17,7 @@ module Forms
           additional_income: Boolean
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       define_attributes
 

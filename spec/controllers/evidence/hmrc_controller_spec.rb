@@ -257,7 +257,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
     context 'as a signed in user' do
       context 'no additional_income' do
-        let(:put_params) {{ hmrc_check: {"additional_income"=>"false"}, evidence_check_id: evidence.id, id: hmrc_check.id }}
+        let(:put_params) { { hmrc_check: { "additional_income" => "false" }, evidence_check_id: evidence.id, id: hmrc_check.id } }
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
           sign_in user
