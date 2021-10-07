@@ -3,6 +3,7 @@ module Forms
     class HmrcCheck < ::FormObject
       include ActiveModel::Validations::Callbacks
 
+      # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
           from_date: Date,
@@ -12,13 +13,15 @@ module Forms
           to_date: Date,
           to_date_day: Integer,
           to_date_month: Integer,
-          to_date_year: Integer
+          to_date_year: Integer,
+          additional_income: Boolean
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       define_attributes
 
-      before_validation :format_dates, :validate_range, :validate_range_against_submission
+      before_validation :format_dates, :validate_range
 
       def from_date
         @from_date.strftime("%Y-%m-%d")
@@ -61,22 +64,6 @@ module Forms
         return if errors.any?
         return if (@from_date + 1.month) - 1.day == @to_date
         errors.add(:date_range, "Enter a calendar month date range")
-      end
-
-      def validate_range_against_submission
-        return if errors.any?
-        created = @object.evidence_check.application.created_at.to_date
-        last_month = created - 1.month
-        return if @from_date == last_month.beginning_of_month
-        message = range_message(last_month)
-        errors.add(:date_range, message)
-      end
-
-      def range_message(month)
-        start_month = month.beginning_of_month.strftime('%d/%m/%Y')
-        end_month = month.end_of_month.strftime('%d/%m/%Y')
-        range = "#{start_month} - #{end_month}"
-        "Enter a calendar month date range prior to the application submission date: #{range}"
       end
 
     end

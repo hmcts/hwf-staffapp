@@ -6,4 +6,10 @@ module HmrcCheckHelper
   def error_highlight?(form)
     form.errors[:date_range].present?
   end
+
+  def hmrc_check_date_range(hmrc_check)
+    from = hmrc_check.request_params[:date_range][:from]
+    to = hmrc_check.request_params[:date_range][:to]
+    "#{from} to #{to}"
+  end
 end

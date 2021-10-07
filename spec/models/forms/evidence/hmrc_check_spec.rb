@@ -70,22 +70,6 @@ RSpec.describe Forms::Evidence::HmrcCheck do
           it { is_expected.to be false }
         end
       end
-
-      context 'last month' do
-        let(:from_date_day) { '1' }
-        let(:from_date_month) { '9' }
-        let(:from_date_year) { '2021' }
-        let(:to_date_day) { '30' }
-        let(:to_date_month) { '9' }
-        let(:to_date_year) { '2021' }
-
-        it { is_expected.to be false }
-        it 'message with correct range' do
-          form.valid?
-          message = 'Enter a calendar month date range prior to the application submission date: 01/02/2021 - 28/02/2021'
-          expect(form.errors[:date_range]).to eq [message]
-        end
-      end
     end
 
     context 'from_date' do

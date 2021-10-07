@@ -9,6 +9,7 @@ class HmrcApiService
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def income(from, to)
+    store_request(from, to)
     data = @hwf.paye(from, to)
     store_response_data('income', data)
   end
@@ -92,6 +93,11 @@ class HmrcApiService
     @hmrc_check.ni_number = @application.applicant.ni_number
     @hmrc_check.date_of_birth = @application.applicant.date_of_birth
     @hmrc_check.user_id = @application.user_id
+    @hmrc_check.save
+  end
+
+  def store_request(from, to)
+    @hmrc_check.request_params = { date_range: { from: from, to: to } }
     @hmrc_check.save
   end
 

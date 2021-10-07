@@ -48,6 +48,16 @@ RSpec.describe HmrcCheck, type: :model do
       it { expect(hmrc_check.tax_credit[0][:awards][0][:payProfCalcDate]).to eql("2020-11-18") }
     end
 
+    context 'request_params' do
+      before {
+        hmrc_check.request_params = { date_range: { from: "2020-11-17", to: "2020-11-18" } }
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.request_params[:date_range][:from]).to eql("2020-11-17") }
+      it { expect(hmrc_check.request_params[:date_range][:to]).to eql("2020-11-18") }
+    end
+
     context 'total income' do
       before {
         hmrc_check.income = [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04, "inPayPeriod2" => 13000.38, "inPayPeriod3" => 14000.34, "inPayPeriod4" => 15000.69 } }]
