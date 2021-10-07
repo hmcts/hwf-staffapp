@@ -29,14 +29,10 @@ module Evidence
     def update
       @form = Forms::Evidence::HmrcCheck.new(@hmrc_check)
       authorize evidence
-      if hmrc_params['additional_income'] == 'false'
+      if redirect_to_summary?
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
-        if @hmrc_check.update(additional_income: hmrc_params['additional_income_amount'])
-          redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
-        else
-          render :show
-        end
+        render :show
       end
     end
 
@@ -90,5 +86,10 @@ module Evidence
       @form.to_date_year = last_month.year
     end
     # rubocop:enable Metrics/AbcSize
+
+    def redirect_to_summary?
+      return true if hmrc_params['additional_income'] == 'false'
+      @hmrc_check.update(additional_income: hmrc_params['additional_income_amount'])
+    end
   end
 end

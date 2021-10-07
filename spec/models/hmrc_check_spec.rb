@@ -118,6 +118,5 @@ RSpec.describe HmrcCheck, type: :model do
       end
     end
 
-
   end
 end
