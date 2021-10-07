@@ -12,7 +12,9 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       "from_date_year" => from_date_year,
       "to_date_day" => to_date_day,
       "to_date_month" => to_date_month,
-      "to_date_year" => to_date_year
+      "to_date_year" => to_date_year,
+      "additional_income_amount" => additional_income_amount,
+      "additional_income" => additional_income
     }
   }
 
@@ -22,6 +24,8 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   let(:to_date_day) { '28' }
   let(:to_date_month) { '2' }
   let(:to_date_year) { '2021' }
+  let(:additional_income_amount) { 1 }
+  let(:additional_income) { false }
 
   describe 'validation' do
     before do
@@ -157,6 +161,5 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
     end
-
   end
 end

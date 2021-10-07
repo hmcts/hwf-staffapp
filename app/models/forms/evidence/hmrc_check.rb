@@ -14,7 +14,8 @@ module Forms
           to_date_day: Integer,
           to_date_month: Integer,
           to_date_year: Integer,
-          additional_income: Boolean
+          additional_income: Boolean,
+          additional_income_amount: Integer
         }
       end
       # rubocop:enable Metrics/MethodLength

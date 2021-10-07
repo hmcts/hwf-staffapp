@@ -246,6 +246,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       end
     end
   end
+
   describe 'PUT #edit' do
     context 'as a signed out user' do
       before { put :update, params: { evidence_check_id: evidence.id, id: hmrc_check.id } }
@@ -271,30 +272,35 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         end
       end
 
-      # context 'data issue' do
-      #   let(:errors) { instance_double(ActiveModel::Errors) }
-      #   before do
-      #     allow(HmrcCheck).to receive(:find).and_return hmrc_check
-      #     allow(hmrc_check).to receive(:total_income).and_return 0
-      #     allow(hmrc_check).to receive(:errors).and_return errors
-      #     allow(errors).to receive(:add)
-      #     sign_in user
-      #     put :edit, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
-      #   end
+      context 'additional_income' do
+        let(:amount) { '1' }
+        let(:income_params) { { "additional_income" => "true", "additional_income_amount" => amount } }
+        let(:put_params) { { hmrc_check: income_params, evidence_check_id: evidence.id, id: hmrc_check.id } }
+        let(:update_return) { true }
+        before do
+          sign_in user
+          allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(hmrc_check).to receive(:update).and_return update_return
+          put :update, params: put_params
+        end
 
-      #   it 'add error message' do
-      #     message = "There might be an issue with HMRC data. Please contact technical support."
-      #     expect(errors).to have_received(:add).with(:income_calculation, message)
-      #   end
+        context 'valid amount' do
+          it { expect(response).to redirect_to(evidence_check_hmrc_summary_path(evidence, hmrc_check)) }
+          it 'updates amount' do
+            expect(hmrc_check).to have_received(:update).with(additional_income: '1')
+          end
+        end
 
-      #   it 'renders the correct template' do
-      #     expect(response).to render_template('show')
-      #   end
+        context 'invalid amount' do
+          let(:update_return) { false }
+          let(:amount) { 'asd' }
+          it { expect(response).to render_template('show') }
+        end
 
-      #   it 'load check' do
-      #     expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
-      #   end
-      # end
+        it 'load check' do
+          expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
+      end
     end
   end
 

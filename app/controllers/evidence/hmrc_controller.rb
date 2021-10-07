@@ -32,7 +32,11 @@ module Evidence
       if hmrc_params['additional_income'] == 'false'
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
-        render :show
+        if @hmrc_check.update(additional_income: hmrc_params['additional_income_amount'])
+          redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
+        else
+          render :show
+        end
       end
     end
 

@@ -65,8 +65,20 @@
               = f.radio_button :additional_income, 'false', { class: 'govuk-radios__input show-hide-section' }
               = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_additional_income_false'
             .govuk-radios__item
-              = f.radio_button :additional_income, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'children', show: 'true' } }
-              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_additional_income_true'
+              = f.radio_button :additional_income, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'additional-income', show: 'true' } }
+              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'hmrc_check_additional_income_true'
+      #additional-income-only.start-hidden
+        .govuk-form-group.panel-indent.util-mt-0
+          = f.label :additional_income_amount, t('additional_income_amount', scope: @form.i18n_scope), class: 'govuk-label'
+          span#changed-name-error_no_number.govuk-error-message
+            = f.label :additional_income_amount, @form.errors[:additional_income_amount].join(', '), class: 'error' if @form.errors[:additional_income_amount].present?
+          span#amount-hint.govuk-hint
+            = t('additional_income_amount_hint', scope: @form.i18n_scope)
+
+          .field-wrapper
+            span.prefix £
+            = f.text_field :additional_income_amount, { class: 'govuk-input', type: "text", value: @form.additional_income_amount }
+
 
       .govuk-form-group.group-level
         = f.submit 'Next', class: 'govuk-button'

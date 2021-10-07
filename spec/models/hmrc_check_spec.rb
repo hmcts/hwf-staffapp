@@ -88,5 +88,36 @@ RSpec.describe HmrcCheck, type: :model do
         end
       end
     end
+
+    context 'additional_income' do
+      before { hmrc_check.additional_income = additional_income }
+      subject(:valid?) { hmrc_check.valid? }
+
+      context 'not a number' do
+        let(:additional_income) { 'a' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'smaler then 0' do
+        let(:additional_income) { '-1' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'greater then 0' do
+        let(:additional_income) { '1' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'empty' do
+        let(:additional_income) { nil }
+
+        it { is_expected.to be true }
+      end
+    end
+
+
   end
 end

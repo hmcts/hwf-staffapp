@@ -326,6 +326,8 @@ en-GB:
         to_date_year: Year
         income_false: 'No, there is no additional income for this application'
         income_true: 'Yes, there is additional income for this application'
+        additional_income_amount: 'For example Child Benefit. Enter the total additional income for the date range.'
+        additional_income_amount_hint: 'Rounded to the nearest £'
       forms/evidence/income:
         income: Total monthly income from evidence
       views/overview/savings_and_investments:
