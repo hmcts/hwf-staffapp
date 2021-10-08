@@ -88,7 +88,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           "from_date_year" => '2000',
           "to_date_day" => '1',
           "to_date_month" => '2',
-          "to_date_year" => '2001'
+          "to_date_year" => '2001',
+          "additional_income" => nil
         }
       }
       let(:valid) { false }
@@ -287,7 +288,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         context 'valid amount' do
           it { expect(response).to redirect_to(evidence_check_hmrc_summary_path(evidence, hmrc_check)) }
           it 'updates amount' do
-            expect(hmrc_check).to have_received(:update).with(additional_income: '1')
+            expect(hmrc_check).to have_received(:update).with(additional_income: 1)
           end
         end
 
