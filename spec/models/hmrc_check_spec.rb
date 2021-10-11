@@ -101,7 +101,7 @@ RSpec.describe HmrcCheck, type: :model do
 
       describe 'without hmrc_income' do
         it 'empty hash' do
-          hmrc_check.update(income: [{ "grossEarningsForNics" => {"inPayPeriod1"=>''} }])
+          hmrc_check.update(income: [{ "grossEarningsForNics" => { "inPayPeriod1" => '' } }])
           expect(hmrc_check.total_income).to be 200
         end
       end

@@ -17,7 +17,7 @@ class HmrcCheck < ActiveRecord::Base
     sum = income.sum do |i|
       i['grossEarningsForNics'].values.sum
     end
-    (sum.is_a? Numeric) ? sum : 0
+    sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
     0
   end
