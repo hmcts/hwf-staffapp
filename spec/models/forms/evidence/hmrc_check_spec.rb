@@ -189,6 +189,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     it 'additional_income' do
       form.additional_income_amount = 123
+      form.additional_income = true
       form.save
       expect(hmrc_check.additional_income).to eq 123
     end
