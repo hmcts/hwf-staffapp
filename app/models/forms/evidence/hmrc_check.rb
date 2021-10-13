@@ -14,14 +14,18 @@ module Forms
           to_date_day: Integer,
           to_date_month: Integer,
           to_date_year: Integer,
-          additional_income: Boolean
+          additional_income: Boolean,
+          additional_income_amount: Integer
         }
       end
       # rubocop:enable Metrics/MethodLength
 
       define_attributes
 
-      before_validation :format_dates, :validate_range
+      before_validation :format_dates, unless: :income_step?
+      validate :validate_range, unless: :income_step?
+      validate :additional_income_check
+      validates :additional_income_amount, numericality: { greater_than_or_equal_to: 0 }, if: :income_step?
 
       def from_date
         @from_date.strftime("%Y-%m-%d")
@@ -32,6 +36,14 @@ module Forms
       end
 
       private
+
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        { additional_income: additional_income_amount }
+      end
 
       def format_dates
         begin
@@ -66,6 +78,16 @@ module Forms
         errors.add(:date_range, "Enter a calendar month date range")
       end
 
+      def additional_income_check
+        return unless income_step?
+        return unless additional_income_amount.nil?
+        errors.add(:additional_income_amount, "Can't be empty")
+      end
+
+      def income_step?
+        return false if additional_income.nil?
+        true
+      end
     end
   end
 end

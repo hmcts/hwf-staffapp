@@ -3,6 +3,14 @@ module HmrcCheckHelper
     number_to_currency(hmrc_check.total_income, precision: 2).gsub('.00', '')
   end
 
+  def additional_income(hmrc_check)
+    number_to_currency(hmrc_check.additional_income, precision: 2).gsub('.00', '')
+  end
+
+  def hmrc_income(hmrc_check)
+    number_to_currency(hmrc_check.hmrc_income, precision: 2).gsub('.00', '')
+  end
+
   def error_highlight?(form)
     form.errors[:date_range].present?
   end

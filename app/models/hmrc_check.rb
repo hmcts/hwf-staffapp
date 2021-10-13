@@ -7,11 +7,18 @@ class HmrcCheck < ActiveRecord::Base
   serialize :tax_credit
   serialize :request_params
 
+  validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+
   def total_income
-    income.sum do |i|
+    hmrc_income + additional_income
+  end
+
+  def hmrc_income
+    sum = income.sum do |i|
       i['grossEarningsForNics'].values.sum
     end
-  rescue NoMethodError
+    sum.is_a?(Numeric) ? sum : 0
+  rescue NoMethodError, TypeError
     0
   end
 end

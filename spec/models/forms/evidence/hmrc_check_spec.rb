@@ -12,7 +12,9 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       "from_date_year" => from_date_year,
       "to_date_day" => to_date_day,
       "to_date_month" => to_date_month,
-      "to_date_year" => to_date_year
+      "to_date_year" => to_date_year,
+      "additional_income_amount" => additional_income_amount,
+      "additional_income" => additional_income
     }
   }
 
@@ -22,6 +24,8 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   let(:to_date_day) { '28' }
   let(:to_date_month) { '2' }
   let(:to_date_year) { '2021' }
+  let(:additional_income_amount) { 1 }
+  let(:additional_income) { nil }
 
   describe 'validation' do
     before do
@@ -32,6 +36,26 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     context 'when the from date and to date is valid' do
       it { is_expected.to be true }
+    end
+
+    context 'when the additional_income is' do
+      describe 'false' do
+        let(:additional_income) { false }
+        let(:from_date_day) { '' }
+        it { is_expected.to be true }
+      end
+
+      describe 'true' do
+        let(:additional_income) { true }
+        let(:from_date_day) { '' }
+        it { is_expected.to be true }
+      end
+
+      describe 'nil' do
+        let(:additional_income) { nil }
+        let(:from_date_day) { '' }
+        it { is_expected.to be false }
+      end
     end
 
     describe 'month range' do
@@ -157,6 +181,17 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
     end
+  end
 
+  context 'store' do
+    subject(:form) { described_class.new(hmrc_check) }
+    let(:hmrc_check) { HmrcCheck.create(evidence_check: evidence) }
+
+    it 'additional_income' do
+      form.additional_income_amount = 123
+      form.additional_income = true
+      form.save
+      expect(hmrc_check.additional_income).to eq 123
+    end
   end
 end
