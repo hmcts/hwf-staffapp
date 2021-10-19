@@ -89,7 +89,7 @@ end
 
 Then("I see that I should check the fee") do
   expect(personal_details_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
-  expect(personal_details_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) or possession claim online (PCOL) services is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
+  expect(personal_details_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
   expect(personal_details_page.content.guidance.guidance_text[2].text).to eq 'What to do if the fee is one of these'
   expect(personal_details_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#check-the-fee'
 end
