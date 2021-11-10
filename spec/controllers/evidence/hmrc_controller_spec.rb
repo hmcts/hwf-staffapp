@@ -51,7 +51,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
       describe 'default date range from day recevied' do
         let(:application) { create :application, office: office, applicant: applicant, created_at: '9.10.2021', detail: detail }
-        let(:detail) { create :complete_detail, date_received: '15.8.2021'}
+        let(:detail) { create :complete_detail, date_received: '15.8.2021' }
         let(:evidence) { create :evidence_check, application_id: application.id }
         before do
           detail
