@@ -49,19 +49,20 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         expect(Forms::Evidence::HmrcCheck).to have_received(:new)
       end
 
-      describe 'default date range' do
-        # let(:application) { create :application, created_at: '15.3.2021' }
-        # let(:evidence) { create :evidence_check, application: application }
-        # subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
+      describe 'default date range from day recevied' do
+        let(:application) { create :application, office: office, applicant: applicant, created_at: '9.10.2021', detail: detail }
+        let(:detail) { create :complete_detail, date_received: '15.8.2021'}
+        let(:evidence) { create :evidence_check, application_id: application.id }
         before do
+          detail
           get :new, params: { evidence_check_id: evidence.id }
         end
 
         it { expect(form).to have_received(:from_date_day=).with 1 }
-        it { expect(form).to have_received(:from_date_month=).with 2 }
+        it { expect(form).to have_received(:from_date_month=).with 7 }
         it { expect(form).to have_received(:from_date_year=).with 2021 }
-        it { expect(form).to have_received(:to_date_day=).with 28 }
-        it { expect(form).to have_received(:to_date_month=).with 2 }
+        it { expect(form).to have_received(:to_date_day=).with 31 }
+        it { expect(form).to have_received(:to_date_month=).with 7 }
         it { expect(form).to have_received(:to_date_year=).with 2021 }
       end
     end

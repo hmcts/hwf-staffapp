@@ -76,8 +76,8 @@ module Evidence
 
     # rubocop:disable Metrics/AbcSize
     def load_default_date_range
-      created = @evidence.application.created_at.to_date
-      last_month = created - 1.month
+      received = @evidence.application.detail.date_received.to_date
+      last_month = received - 1.month
       @form.from_date_day = last_month.beginning_of_month.day
       @form.from_date_month = last_month.month
       @form.from_date_year = last_month.year
