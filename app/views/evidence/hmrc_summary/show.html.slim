@@ -1,0 +1,54 @@
+- content_for :page_title
+  = "Check income details"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl Check income details
+
+  .govuk-grid-column-full.table_data
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m Application Income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Number of children
+          td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Total monthly income
+          td.govuk-table__cell scope="col" #{income_value(@evidence.application)}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Income kind applicant
+          td.govuk-table__cell scope="col" TBD
+
+
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m HMRC checked income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          td.govuk-table__cell class="govuk-!-width-one-half" scope="col" For the date range #{hmrc_check_date_range(@hmrc_check)}
+          td.govuk-table__cell class="govuk-!-width-one-quarter" scope="col" &nbsp;
+          td.govuk-table__cell class="govuk-!-width-one-quarter" scope="col" &nbsp;
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" HMRC checked income total
+          td.govuk-table__cell scope="col" #{hmrc_income(@hmrc_check)}
+          td.govuk-table__cell scope="col" &nbsp;
+
+
+        tr.govuk-table__row
+          td.govuk-table__cell scope="col" PAYE income, Self-employment income for the tax year 2020-21, Working Tax Credit, Child Tax Credit
+          td.govuk-table__cell scope="col" &nbsp;
+          td.govuk-table__cell scope="col" &nbsp;
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Additional income
+          td.govuk-table__cell scope="col" #{additional_income(@hmrc_check)}
+          td.govuk-table__cell scope="col" Change
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Checked income total
+          td.govuk-table__cell scope="col" #{total_income(@hmrc_check)}
+          td.govuk-table__cell scope="col" &nbsp;
+
+

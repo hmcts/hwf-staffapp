@@ -28,6 +28,23 @@ RSpec.describe Applications::Process::ConfirmationController, type: :controller 
     it 'assigns confirm' do
       expect(assigns(:confirm)).to be_a_kind_of(Views::Confirmation::Result)
     end
+
+    context 'evidence check' do
+      let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office) }
+
+      it 'redirects to the evidence check summary page' do
+        expect(response).to redirect_to(evidence_check_path(application.evidence_check.id))
+      end
+
+      context 'hmrc income check' do
+        let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office, evidence_check: evidence_check) }
+        let(:evidence_check) { build_stubbed(:evidence_check, income_check_type: 'hmrc') }
+
+        it 'redirects to the evidence check summary page' do
+          expect(response).to redirect_to(new_evidence_check_hmrc_path(application.evidence_check.id))
+        end
+      end
+    end
   end
 
 end

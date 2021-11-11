@@ -1,0 +1,84 @@
+- content_for :page_title
+  = "#{@evidence.application.reference} - HMRC income checked"
+
+- if @hmrc_check.errors.any?
+  .govuk-error-summary aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary"
+    h2.govuk-error-summary__title#error-summary-title
+      = "There might be a problem"
+
+    .govuk-error-summary__body
+      ul.govuk-list.govuk-error-summary__list
+        - @hmrc_check.errors.full_messages.each do |message|
+          li = message
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl #{@evidence.application.reference} - HMRC income checked
+
+  .govuk-grid-column-full.table_data
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m Application Income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Number of children
+          td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Total monthly income
+          td.govuk-table__cell scope="col" #{income_value(@evidence.application)}
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" Income kind applicant
+          td.govuk-table__cell scope="col" TBD
+
+
+    table.govuk-table
+      caption.govuk-table__caption.govuk-table__caption--m HMRC checked income
+      thead.govuk-table__head
+        tr.govuk-table__row
+          td.govuk-table__cell scope="col" For the date range #{hmrc_check_date_range(@hmrc_check)}
+          td.govuk-table__cell scope="col"
+
+        tr.govuk-table__row
+          th.govuk-table__header scope="col" HMRC checked income total
+          td.govuk-table__cell scope="col"
+
+        tr.govuk-table__row
+          td.govuk-table__cell scope="col" PAYE income, Self-employment income for the tax year 2020-21, Working Tax Credit, Child Tax Credit
+          td.govuk-table__cell scope="col" &nbsp;
+
+        tr.govuk-table__row
+          td.govuk-table__cell scope="col" HMRC check also shows property income, foreign income and savings and investments income for the tax year 2020-21
+          td.govuk-table__cell scope="col" &nbsp;
+
+  .govuk-grid-column-full
+    = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_path(@evidence, @hmrc_check), method: :put, html: { autocomplete: 'off' } do |f|
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+            h2.govuk-fieldset__heading Is there any additional income for this application?
+          - if @form.errors[:additional_income].present?
+            span.govuk-error-message
+              = f.label :additional_income, @form.errors[:additional_income].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :additional_income, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_additional_income_false'
+            .govuk-radios__item
+              = f.radio_button :additional_income, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'additional-income', show: 'true' } }
+              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'hmrc_check_additional_income_true'
+      #additional-income-only.start-hidden
+        .govuk-form-group.group-level class="#{ @form.errors[:additional_income_amount].blank? ? 'panel-indent' : 'govuk-form-group--error' }"
+          = f.label :additional_income_amount, t('additional_income_amount', scope: @form.i18n_scope), class: 'govuk-label'
+          span#changed-name-error_no_number.govuk-error-message
+            = f.label :additional_income_amount, @form.errors[:additional_income_amount].join(', '), class: 'error' if @form.errors[:additional_income_amount].present?
+          span#amount-hint.govuk-hint
+            = t('additional_income_amount_hint', scope: @form.i18n_scope)
+
+          .field-wrapper
+            span.prefix £
+            = f.text_field :additional_income_amount, { class: 'govuk-input', type: "text", value: @form.additional_income_amount }
+
+
+      .govuk-form-group.group-level
+        = f.submit 'Next', class: 'govuk-button'
