@@ -79,7 +79,6 @@ en-GB:
           <li>Income Support</li>
           <li>Universal Credit (<strong>and you earn less than £6,000</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
-          <li>Scottish Civil Legal Aid</li>
         </ul>
         <h3 class='govuk-heading-m'>Other benefits</h3>
         <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below.  If you are receiving any other type of benefits you must declare them as part of your income in a fresh Help with Fees application. </p>
@@ -88,8 +87,6 @@ en-GB:
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
-         <li>Scottish Legal Aid Advice and Assistance</li>
-         <li>Scottish Legal Aid Advice by Way of Representation (ABWOR)</li>
         </ul>
         <h3 class='govuk-heading-m'>What you need to do if you are paying the fee</h3>
         <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
