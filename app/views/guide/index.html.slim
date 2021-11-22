@@ -28,11 +28,6 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to covid19_guidance_url
-      span COVID 19 guidance
-      = image_tag("icon-guidance.png", alt: 'Guidance for help with fees processing during COVID19')
-
-  .govuk-grid-column-one-quarter.guide-cols
     = link_to staff_guidance_url
       span Staff guidance
       = image_tag("icon-guidance.png", alt: 'Staff guidance guide icon')
@@ -47,12 +42,12 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
       span Evidence checks
       = image_tag("icon-evidence.png", alt: 'Evidence checks guide icon')
 
-.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to guide_part_payments_path
       span Part-payments
       = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
 
+.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to guide_appeals_path
       span Appeals
