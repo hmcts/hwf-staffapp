@@ -4,6 +4,7 @@ class HmrcCheck < ActiveRecord::Base
   serialize :address
   serialize :employment
   serialize :income
+  serialize :sa_income
   serialize :tax_credit
   serialize :request_params
 

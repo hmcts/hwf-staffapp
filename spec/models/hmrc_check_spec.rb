@@ -39,6 +39,16 @@ RSpec.describe HmrcCheck, type: :model do
       it { expect(hmrc_check.income[:taxReturns][0][:taxYear]).to eql("2018-19") }
     end
 
+    context 'sa_income' do
+      before {
+        hmrc_check.sa_income = { taxReturns: [{ taxYear: "2018-19", summary: [{ totalIncome: 100.99 }] }] }
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.sa_income[:taxReturns][0][:taxYear]).to eql("2018-19") }
+      it { expect(hmrc_check.sa_income[:taxReturns][0][:summary][0][:totalIncome]).to eql(100.99) }
+    end
+
     context 'tax_credit' do
       before {
         hmrc_check.tax_credit = [{ id: 7210565654, awards: [{ payProfCalcDate: "2020-11-18" }] }]
