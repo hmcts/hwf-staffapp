@@ -15,8 +15,21 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def hmrc_income
+    paye_income + sa_summary
+  end
+
+  def paye_income
     sum = income.sum do |i|
       i['grossEarningsForNics'].values.sum
+    end
+    sum.is_a?(Numeric) ? sum : 0
+  rescue NoMethodError, TypeError
+    0
+  end
+
+  def sa_summary
+    sum = sa_income.sum do |i|
+      i['summary'].first['totalIncome']
     end
     sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
