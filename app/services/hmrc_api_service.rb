@@ -9,9 +9,25 @@ class HmrcApiService
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def income(from, to)
+    paye_income(from, to)
+    sa_income(from)
+  end
+
+  def paye_income(from, to)
     store_request(from, to)
     data = @hwf.paye(from, to)
     store_response_data('income', data)
+  end
+
+  # from_tax_year format: YYYY-YY
+  def sa_income(from)
+    # from = '2018-19'
+    # to = '2019-20'
+    # to = from if to.blank?
+    tax_year = tax_from_date(from)
+    data = @hwf.sa_summary(tax_year, tax_year)['taxReturns']
+    @hmrc_check.sa_income = data
+    @hmrc_check.save
   end
 
   # from_date format: YYYY-MM-DD
@@ -99,6 +115,12 @@ class HmrcApiService
   def store_request(from, to)
     @hmrc_check.request_params = { date_range: { from: from, to: to } }
     @hmrc_check.save
+  end
+
+  def tax_from_date(from)
+    year = from.to_date.year
+    last_year = (year - 1)
+    "#{last_year}-#{year.to_s.last(2)}"
   end
 
 end

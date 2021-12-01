@@ -86,10 +86,10 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         {
           "from_date_day" => '1',
           "from_date_month" => '2',
-          "from_date_year" => '2000',
+          "from_date_year" => '2020',
           "to_date_day" => '1',
           "to_date_month" => '2',
-          "to_date_year" => '2001',
+          "to_date_year" => '2021',
           "additional_income" => nil
         }
       }
@@ -118,8 +118,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       context 'valid' do
         let(:valid) { true }
         before do
-          allow(form).to receive(:from_date).and_return '2001-01-03'
-          allow(form).to receive(:to_date).and_return '2002-01-03'
+          allow(form).to receive(:from_date).and_return '2021-01-03'
+          allow(form).to receive(:to_date).and_return '2022-01-03'
           allow(HmrcApiService).to receive(:new).and_return api_service
           allow(api_service).to receive(:income)
           allow(api_service).to receive(:hmrc_check).and_return hmrc_check
@@ -139,7 +139,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
             end
 
             it "load income" do
-              expect(api_service).to have_received(:income).with('2001-01-03', '2002-01-03')
+              expect(api_service).to have_received(:income).with('2021-01-03', '2022-01-03')
             end
 
             it "load hmrc_check" do

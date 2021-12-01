@@ -112,10 +112,20 @@ describe HmrcApiService do
         allow(hmrc_api).to receive(:match_user)
       }
 
-      it "income" do
-        allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
-        service.income('2020-02-28', '2020-03-30')
-        expect(hmrc_api).to have_received(:paye).with('2020-02-28', '2020-03-30')
+      context 'income' do
+        it "paye" do
+          allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
+          allow(hmrc_api).to receive(:sa_summary).and_return('taxReturns' => [])
+          service.income('2020-02-28', '2020-03-30')
+          expect(hmrc_api).to have_received(:paye).with('2020-02-28', '2020-03-30')
+        end
+
+        it "sa_income" do
+          allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
+          allow(hmrc_api).to receive(:sa_summary).and_return('taxReturns' => [{ "taxYear" => "2018-19", "summary" => [{ "totalIncome" => 100.99 }] }])
+          service.income('2020-02-28', '2020-03-30')
+          expect(hmrc_api).to have_received(:sa_summary).with('2019-20', '2019-20')
+        end
       end
 
       it "address" do
@@ -180,10 +190,11 @@ describe HmrcApiService do
       context 'income' do
         before do
           allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
+          allow(hmrc_api).to receive(:sa_summary).and_return('taxReturns' => [{ "taxYear" => "2018-19", "summary" => [{ "totalIncome" => 100.99 }] }])
           service.income('2020-02-28', '2020-03-30')
         end
 
-        it 'query' do
+        it 'paye result' do
           expect(service.hmrc_check.income[0][:paymentDate]).to eq "2019-01-01"
         end
 
@@ -193,6 +204,10 @@ describe HmrcApiService do
 
         it 'request_params to' do
           expect(service.hmrc_check.request_params[:date_range][:to]).to eql('2020-03-30')
+        end
+
+        it 'sa_income' do
+          expect(service.hmrc_check.sa_income[0]['taxYear']).to eql('2018-19')
         end
       end
 

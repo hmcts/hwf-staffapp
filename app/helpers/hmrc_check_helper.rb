@@ -22,7 +22,7 @@ module HmrcCheckHelper
   end
 
   def sa_income_present?(hmrc_check)
-    hmrc_check.sa_summary > 0
+    hmrc_check.sa_summary.positive?
   end
 
 end
