@@ -35,4 +35,9 @@ class HmrcCheck < ActiveRecord::Base
   rescue NoMethodError, TypeError
     0
   end
+
+  def sa_tax_year
+    return nil if sa_income.blank?
+    sa_income.first['taxYear']
+  end
 end

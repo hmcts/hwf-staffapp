@@ -20,4 +20,9 @@ module HmrcCheckHelper
     to = hmrc_check.request_params[:date_range][:to]
     "#{from} to #{to}"
   end
+
+  def sa_income_present?(hmrc_check)
+    hmrc_check.sa_summary > 0
+  end
+
 end

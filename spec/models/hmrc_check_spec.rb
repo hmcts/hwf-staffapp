@@ -36,17 +36,25 @@ RSpec.describe HmrcCheck, type: :model do
         hmrc_check.save
       }
 
-      it { expect(hmrc_check.income[0]['grossEarningsForNics']['inPayPeriod1']).to eql(100.99) }
+      it { expect(hmrc_check.income[0]['grossEarningsForNics']['inPayPeriod1']).to be(100.99) }
     end
 
     context 'sa_income' do
       before {
-        hmrc_check.sa_income = [ {"taxYear"=>"2018-19", "summary"=>[{"totalIncome"=>100.99}]} ]
+        hmrc_check.sa_income = [{ "taxYear" => "2018-19", "summary" => [{ "totalIncome" => 100.99 }] }]
         hmrc_check.save
       }
 
-      it { expect(hmrc_check.sa_income[0]['taxYear']).to eql("2018-19") }
-      it { expect(hmrc_check.sa_income[0]['summary'][0]['totalIncome']).to eql(100.99) }
+      it { expect(hmrc_check.sa_income[0]['summary'][0]['totalIncome']).to be(100.99) }
+    end
+
+    context 'sa_tax_year' do
+      before {
+        hmrc_check.sa_income = [{ "taxYear" => "2018-19", "summary" => [{ "totalIncome" => 100.99 }] }]
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.sa_tax_year).to eql("2018-19") }
     end
 
     context 'tax_credit' do
@@ -106,7 +114,7 @@ RSpec.describe HmrcCheck, type: :model do
       context 'with sa_income' do
         it 'from summary' do
 
-          hmrc_check.sa_income = [{"taxYear"=>"2018-19", "summary"=>[{"totalIncome"=>100.99}]}]
+          hmrc_check.sa_income = [{ "taxYear" => "2018-19", "summary" => [{ "totalIncome" => 100.99 }] }]
           expect(hmrc_check.hmrc_income).to be 54102.439999999995
         end
       end
