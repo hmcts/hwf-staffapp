@@ -46,6 +46,36 @@ RSpec.describe HmrcCheck, type: :model do
       }
 
       it { expect(hmrc_check.tax_credit[0][:awards][0][:payProfCalcDate]).to eql("2020-11-18") }
+      describe 'getters' do
+        before {
+          hmrc_check.tax_credit = { child: ['child test'], work: ['work test'] }
+          hmrc_check.save
+        }
+        context 'value present' do
+          it { expect(hmrc_check.child_tax_credit).to eql ['child test'] }
+          it { expect(hmrc_check.work_tax_credit).to eql ['work test'] }
+        end
+
+        context 'value missing' do
+          before {
+            hmrc_check.tax_credit = { child: nil, work: nil }
+            hmrc_check.save
+          }
+
+          it { expect(hmrc_check.child_tax_credit).to be nil }
+          it { expect(hmrc_check.work_tax_credit).to be nil }
+        end
+
+        context 'not initialized' do
+          before {
+            hmrc_check.tax_credit = nil
+            hmrc_check.save
+          }
+
+          it { expect(hmrc_check.child_tax_credit).to be nil }
+          it { expect(hmrc_check.work_tax_credit).to be nil }
+        end
+      end
     end
 
     context 'request_params' do
@@ -136,5 +166,77 @@ RSpec.describe HmrcCheck, type: :model do
       end
     end
 
+    context 'child_tax_credit_income' do
+      before {
+        child_income = [
+          { "payProfCalcDate" => "2020-08-18",
+            "totalEntitlement" => 18765.23,
+            "childTaxCredit" => {
+              "childCareAmount" => 930.98,
+              "ctcChildAmount" => 730.49,
+              "familyAmount" => 100.49,
+              "babyAmount" => 100, "paidYTD" => 8976.34
+            },
+            "payments" => [
+              { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 7, "tcType" => "ICC", "amount" => 76.34 },
+              { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 7, "tcType" => "ICC", "amount" => 56.24 }
+            ] },
+          { "payProfCalcDate" => "2020-09-18",
+            "totalEntitlement" => 18765.23,
+            "childTaxCredit" => {
+              "childCareAmount" => 930.98,
+              "ctcChildAmount" => 730.49,
+              "familyAmount" => 100.49,
+              "babyAmount" => 100, "paidYTD" => 8976.34
+            },
+            "payments" => [
+              { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 7, "tcType" => "ICC", "amount" => 70.34 },
+              { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 7, "tcType" => "ICC", "amount" => 50.24 }
+            ] }
+        ]
+
+        hmrc_check.tax_credit = { child: child_income, work: nil }
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.child_tax_credit_income).to eq 253.16 }
+      it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
+
+    end
+
+    context 'work_tax_credit_income' do
+      before {
+        work_income = [
+          { payProfCalcDate: "1996-08-01",
+            totalEntitlement: 18765.23,
+            workingTaxCredit: {
+              amount: 930.98,
+              paidYTD: 8976.34
+            },
+            "payments" => [
+              { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 7, "tcType" => "ICC", "amount" => 86.34 },
+              { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 7, "tcType" => "ICC", "amount" => 56.24 }
+            ] },
+          { payProfCalcDate: "1996-08-01",
+            totalEntitlement: 18765.23,
+            workingTaxCredit: {
+              amount: 930.98,
+              paidYTD: 8976.34
+            },
+            "payments" => [
+              { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 7, "tcType" => "ICC", "amount" => 50.34 },
+              { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 7, "tcType" => "ICC", "amount" => 55.24 }
+            ] }
+        ]
+
+        hmrc_check.tax_credit = { child: nil, work: work_income }
+        hmrc_check.save
+      }
+
+      it { expect(hmrc_check.work_tax_credit_income).to eq 248.16 }
+      it { expect(hmrc_check.child_tax_credit_income).to eq 0 }
+    end
+
   end
+
 end
