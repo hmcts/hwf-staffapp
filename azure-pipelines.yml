@@ -48,8 +48,8 @@ jobs:
     services:
       postgres: postgres
     variables:
-      rubyVersion: '= 2.7.4'
-      bundlerVersion: '2.2.21'
+      rubyVersion: '= 2.7.5'
+      bundlerVersion: '2.2.24'
       aptDependencies: 'qtbase5-dev xvfb libqtwebkit-dev postgresql-client libpq-dev'
 
     steps:
