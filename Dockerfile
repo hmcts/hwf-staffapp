@@ -31,7 +31,7 @@ WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
-RUN gem install bundler -v 2.2.8
+RUN gem install bundler -v 2.2.24
 RUN bundle install --without test development
 
 # running app as a servive
