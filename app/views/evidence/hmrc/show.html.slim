@@ -33,23 +33,19 @@
 
 
     table.govuk-table
-      caption.govuk-table__caption.govuk-table__caption--m HMRC checked income
+      caption.govuk-table__caption.govuk-table__caption--m.visuallyhidden HMRC checked income
       thead.govuk-table__head
         tr.govuk-table__row
+          td.govuk-table__header scope="col" HMRC checked income
+          td.govuk-table__cell scope="col" #{hmrc_income(@hmrc_check)}
+        tr.govuk-table__row
           td.govuk-table__cell scope="col" For the date range #{hmrc_check_date_range(@hmrc_check)}
-          td.govuk-table__cell scope="col"
-
-        tr.govuk-table__row
-          th.govuk-table__header scope="col" HMRC checked income total
-          td.govuk-table__cell scope="col"
-
-        tr.govuk-table__row
-          td.govuk-table__cell scope="col" PAYE income, Self-employment income for the tax year 2020-21, Working Tax Credit, Child Tax Credit
           td.govuk-table__cell scope="col" &nbsp;
 
         tr.govuk-table__row
-          td.govuk-table__cell scope="col" HMRC check also shows property income, foreign income and savings and investments income for the tax year 2020-21
+          td.govuk-table__cell scope="col" PAYE income, Working Tax Credit, Child Tax Credit
           td.govuk-table__cell scope="col" &nbsp;
+
 
   .govuk-grid-column-full
     = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_path(@evidence, @hmrc_check), method: :put, html: { autocomplete: 'off' } do |f|
