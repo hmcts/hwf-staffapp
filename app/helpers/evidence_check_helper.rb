@@ -32,8 +32,6 @@ module EvidenceCheckHelper
     (SECTION_TO_INCOME_KIND_MAPPING[section_name] & list).present?
   end
 
-  private
-
   def income_kind_list(application)
     return nil if application.income_kind.blank?
     list = application.income_kind['applicant']
