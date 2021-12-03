@@ -14,7 +14,7 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def hmrc_income
-    paye_income
+    paye_income + child_tax_credit_income + work_tax_credit_income
   end
 
   def paye_income

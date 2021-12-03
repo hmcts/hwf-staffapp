@@ -118,6 +118,14 @@ RSpec.describe HmrcCheck, type: :model do
           expect(hmrc_check.hmrc_income).to be 0
         end
       end
+
+      context 'with tax credit' do
+        before do
+          hmrc_check.tax_credit = { child: [{ "payments" => [{ "amount" => 10 }] }], work: [{ "payments" => [{ "amount" => 10 }] }] }
+          hmrc_check.save
+        end
+        it { expect(hmrc_check.hmrc_income.to_f).to be 54021.45 }
+      end
     end
 
     context 'total income' do
