@@ -12,7 +12,7 @@
         tr.govuk-table__row
           th.govuk-table__header scope="col" Ready to process
           td.govuk-table__cell scope="col" Yes
-          td.govuk-table__cell scope="col" Change
+          td.govuk-table__cell scope="col"=link_to 'Change', new_evidence_check_hmrc_path(@evidence)
 
     table.govuk-table
       caption.govuk-table__caption.govuk-table__caption--m Application Income
