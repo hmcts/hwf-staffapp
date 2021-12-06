@@ -59,7 +59,7 @@
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
               = f.radio_button :additional_income, 'false', { class: 'govuk-radios__input show-hide-section' }
-              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_additional_income_false'
+              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'hmrc_check_additional_income_false'
             .govuk-radios__item
               = f.radio_button :additional_income, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'additional-income', show: 'true' } }
               = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'hmrc_check_additional_income_true'
