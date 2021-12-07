@@ -22,4 +22,8 @@ module HmrcCheckHelper
     to = Date.parse(to).strftime("%d/%m/%y")
     "#{from} to #{to}"
   end
+
+  def hmrc_income_kind_list(application)
+    income_kind_list(application).try(:join, ', ')
+  end
 end
