@@ -247,4 +247,30 @@ RSpec.describe HmrcCheck, type: :model do
 
   end
 
+  describe 'calculate_evidence_income!' do
+    subject(:hmrc_check) { described_class.new(evidence_check: evidence_check) }
+    let(:evidence_check) { create :evidence_check, income: nil, application: application }
+    let(:application) { create :single_applicant_under_61 }
+
+    context 'no income data' do
+      before { hmrc_check.calculate_evidence_income! }
+      it { expect(evidence_check.income).to be_nil }
+    end
+
+    context 'income present' do
+      let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }] }
+      subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income ) }
+
+      before { hmrc_check.calculate_evidence_income! }
+      it { expect(evidence_check.income).to eq(12000) }
+      it { expect(evidence_check.outcome).to eq('none') }
+      it { expect(evidence_check.amount_to_pay).to eq(310) }
+
+      context 'full payment' do
+        let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 100.04 } }] }
+        it { expect(evidence_check.outcome).to eq('full') }
+        it { expect(evidence_check.amount_to_pay).to eq(0) }
+      end
+    end
+  end
 end

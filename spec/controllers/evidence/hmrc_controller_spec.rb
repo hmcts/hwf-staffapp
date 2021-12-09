@@ -287,6 +287,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           sign_in user
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
           allow(hmrc_check).to receive(:update).and_return update_return
+          allow(hmrc_check).to receive(:calculate_evidence_income!)
           put :update, params: put_params
         end
 
@@ -294,6 +295,10 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           it { expect(response).to redirect_to(evidence_check_hmrc_summary_path(evidence, hmrc_check)) }
           it 'updates amount' do
             expect(hmrc_check).to have_received(:update).with(additional_income: 1)
+          end
+
+          it 'trigger calculate_evidence_income' do
+            expect(hmrc_check).to have_received(:calculate_evidence_income!)
           end
 
           describe 'reset the value if the answer is no' do
@@ -308,6 +313,11 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           let(:update_return) { false }
           let(:amount) { 'asd' }
           it { expect(response).to render_template('show') }
+
+          it 'do not trigger calculate_evidence_income' do
+            expect(hmrc_check).not_to have_received(:calculate_evidence_income!)
+          end
+
         end
 
         it 'load check' do

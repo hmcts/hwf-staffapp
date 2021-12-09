@@ -30,6 +30,7 @@ module Evidence
       @form = Forms::Evidence::HmrcCheck.new(@hmrc_check)
       authorize evidence
       if redirect_to_summary?
+        @hmrc_check.calculate_evidence_income!
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
         render :show

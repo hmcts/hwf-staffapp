@@ -42,6 +42,11 @@ class HmrcCheck < ActiveRecord::Base
     tax_credit_income_calculation(work_tax_credit)
   end
 
+  def calculate_evidence_income!
+    return if total_income <= 0
+    update_evidence
+  end
+
   private
 
   def tax_credit_income_calculation(income_source)
@@ -53,5 +58,20 @@ class HmrcCheck < ActiveRecord::Base
     sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
     0
+  end
+
+  def update_evidence
+    result = income_calculation
+
+    evidence_params = {
+      income: total_income.round,
+      outcome: result[:outcome],
+      amount_to_pay: result[:amount_to_pay]
+    }
+    evidence_check.update(evidence_params)
+  end
+
+  def income_calculation
+    IncomeCalculation.new(evidence_check.application, total_income.to_i).calculate
   end
 end
