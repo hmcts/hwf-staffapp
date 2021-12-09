@@ -1,11 +1,20 @@
 module Evidence
   class HmrcSummaryController < ApplicationController
-    before_action :hmrc_check, only: [:show]
-    before_action :evidence, only: [:show]
+    before_action :authorize_access
+
 
     def show
-      authorize evidence
+      @form = Forms::Evidence::HmrcCheck.new(hmrc_check)
 
+      render :show
+    end
+
+    def complete
+      ResolverService.new(evidence, current_user).complete
+      # process_evidence_check_flag
+      redirect_to confirmation_evidence_path(evidence)
+    rescue UndefinedOutcome
+      flash[:alert] = "Undefined evidence check outcome, please contact support"
       render :show
     end
 
@@ -17,6 +26,10 @@ module Evidence
 
     def hmrc_check
       @hmrc_check ||= HmrcCheck.find(params[:id])
+    end
+
+    def authorize_access
+      authorize evidence
     end
   end
 end

@@ -85,7 +85,10 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: [:index, :show] do
     resources :hmrc, module: 'evidence'
-    resources :hmrc_summary, module: 'evidence', only: :show
+    resources :hmrc_summary, module: 'evidence', only: :show do
+      post :complete
+    end
+
   end
 
   resources :part_payments, only: [:index, :show] do

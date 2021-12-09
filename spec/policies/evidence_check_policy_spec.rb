@@ -15,11 +15,13 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
 
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:update) }
+      it { is_expected.to permit_action(:complete) }
     end
 
     context 'when the application does not belong to their office' do
       it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:complete) }
     end
   end
 
@@ -31,11 +33,13 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
 
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:update) }
+      it { is_expected.to permit_action(:complete) }
     end
 
     context 'when the application does not belong to their office' do
       it { is_expected.not_to permit_action(:show) }
       it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:complete) }
     end
   end
 
@@ -44,6 +48,7 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
 
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:complete) }
   end
 
   context 'for an mi' do
@@ -51,6 +56,7 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
 
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:complete) }
   end
 
   context 'for a reader' do
@@ -58,12 +64,14 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
 
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:complete) }
 
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:reader, office: office) }
 
       it { is_expected.to permit_action(:show) }
       it { is_expected.not_to permit_action(:update) }
+      it { is_expected.not_to permit_action(:complete) }
     end
 
   end
