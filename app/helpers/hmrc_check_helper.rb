@@ -18,6 +18,12 @@ module HmrcCheckHelper
   def hmrc_check_date_range(hmrc_check)
     from = hmrc_check.request_params[:date_range][:from]
     to = hmrc_check.request_params[:date_range][:to]
+    from = Date.parse(from).strftime("%d/%m/%y")
+    to = Date.parse(to).strftime("%d/%m/%y")
     "#{from} to #{to}"
+  end
+
+  def hmrc_income_kind_list(application)
+    income_kind_list(application).try(:join, ', ')
   end
 end

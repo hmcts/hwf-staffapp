@@ -60,12 +60,15 @@ module Evidence
     end
 
     def load_hmrc_check
-      @hmrc_check = HmrcCheck.find(params[:id])
+      return if params[:id].blank?
+      @hmrc_check ||= HmrcCheck.find(params[:id])
     end
 
     def load_form
-      check = HmrcCheck.new(evidence_check: evidence)
+      check = load_hmrc_check || HmrcCheck.new(evidence_check: evidence)
       @form = Forms::Evidence::HmrcCheck.new(check)
+      @form.additional_income = check.additional_income.positive?
+      @form.additional_income_amount = check.additional_income
     end
 
     def check_hmrc_data
@@ -88,10 +91,17 @@ module Evidence
     # rubocop:enable Metrics/AbcSize
 
     def redirect_to_summary?
-      return true if hmrc_params['additional_income'] == 'false'
       @form.additional_income = hmrc_params['additional_income']
-      @form.additional_income_amount = hmrc_params['additional_income_amount']
+      @form.additional_income_amount = additional_income_amount
       @form.save
+    end
+
+    def additional_income_amount
+      if hmrc_params['additional_income'] == 'false'
+        0
+      else
+        hmrc_params['additional_income_amount']
+      end
     end
   end
 end

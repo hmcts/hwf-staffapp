@@ -32,6 +32,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         allow(form).to receive(:to_date_day=)
         allow(form).to receive(:to_date_month=)
         allow(form).to receive(:to_date_year=)
+        allow(form).to receive(:additional_income=)
+        allow(form).to receive(:additional_income_amount=)
       end
 
       it 'returns the correct status code' do
@@ -101,6 +103,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form
         allow(form).to receive(:update_attributes)
         allow(form).to receive(:valid?).and_return valid
+        allow(form).to receive(:additional_income=)
+        allow(form).to receive(:additional_income_amount=)
       end
 
       it 'update params' do
@@ -249,7 +253,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
     end
   end
 
-  describe 'PUT #edit' do
+  describe 'PUT #update' do
     context 'as a signed out user' do
       before { put :update, params: { evidence_check_id: evidence.id, id: hmrc_check.id } }
 
@@ -290,6 +294,13 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           it { expect(response).to redirect_to(evidence_check_hmrc_summary_path(evidence, hmrc_check)) }
           it 'updates amount' do
             expect(hmrc_check).to have_received(:update).with(additional_income: 1)
+          end
+
+          describe 'reset the value if the answer is no' do
+            let(:income_params) { { "additional_income" => "false", "additional_income_amount" => 5 } }
+            it 'updates amount' do
+              expect(hmrc_check).to have_received(:update).with(additional_income: 0)
+            end
           end
         end
 

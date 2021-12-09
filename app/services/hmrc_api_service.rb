@@ -10,6 +10,11 @@ class HmrcApiService
   # to_date format: YYYY-MM-DD
   def income(from, to)
     store_request(from, to)
+    paye(from, to)
+    tax_credit(from, to)
+  end
+
+  def paye(from, to)
     data = @hwf.paye(from, to)
     store_response_data('income', data)
   end
@@ -31,8 +36,10 @@ class HmrcApiService
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def tax_credit(from, to)
-    data = @hwf.working_tax_credits(from, to)
-    store_response_data('tax_credit', data)
+    child = @hwf.child_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
+    work = @hwf.working_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
+    @hmrc_check.tax_credit = { child: child, work: work }
+    @hmrc_check.save
   end
 
   def hmrc_api_innitialize
