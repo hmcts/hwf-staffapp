@@ -85,10 +85,10 @@ Rails.application.routes.draw do
 
   resources :evidence_checks, only: [:index, :show] do
     resources :hmrc, module: 'evidence'
-    resources :hmrc_summary, module: 'evidence', only: :show do
-      post :complete
+    scope module: 'evidence' do
+      get ':id/show', to: 'hmrc_summary#show', as: :hmrc_summary
+      post ':id/complete', to: 'hmrc_summary#complete', as: :hmrc_complete
     end
-
   end
 
   resources :part_payments, only: [:index, :show] do

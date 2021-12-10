@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::HmrcSummaryController, type: :controller do
-  class UndefinedOutcome < StandardError; end
+  class ResolverService::UndefinedOutcome < StandardError; end
 
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
@@ -51,7 +51,7 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
 
   describe 'POST #complete' do
     context 'as a signed out user' do
-      before { post :complete, params: { evidence_check_id: evidence.id, hmrc_summary_id: hmrc_check.id } }
+      before { post :complete, params: { evidence_check_id: evidence.id, id: hmrc_check.id } }
 
       it { expect(response).to have_http_status(:redirect) }
 
@@ -69,7 +69,7 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
 
       context 'success' do
         before do
-          post :complete, params: { evidence_check_id: evidence.id, hmrc_summary_id: hmrc_check.id }
+          post :complete, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
         end
 
         it 'load evidence' do
@@ -81,8 +81,8 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
 
       context 'fail' do
         before {
-          allow(resolver).to receive(:complete).and_raise(UndefinedOutcome)
-          post :complete, params: { evidence_check_id: evidence.id, hmrc_summary_id: hmrc_check.id }
+          allow(resolver).to receive(:complete).and_raise(ResolverService::UndefinedOutcome)
+          post :complete, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
         }
 
         it 'render show tamplate with' do

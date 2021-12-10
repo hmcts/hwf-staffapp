@@ -57,5 +57,5 @@
           td.govuk-table__cell scope="col" &nbsp;
 
     .govuk-form-group.group-level
-      = form_for @hmrc_check, url: evidence_check_hmrc_summary_complete_path(@evidence, @hmrc_check), method: :post, html: { autocomplete: 'off' } do |f|
+      = form_for @hmrc_check, url: evidence_check_hmrc_complete_path(@evidence, @hmrc_check), method: :post, html: { autocomplete: 'off' } do |f|
         = f.submit 'Complete processing', class: 'govuk-button'
