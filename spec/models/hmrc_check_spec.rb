@@ -259,7 +259,7 @@ RSpec.describe HmrcCheck, type: :model do
 
     context 'income present' do
       let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }] }
-      subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income ) }
+      subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income) }
 
       before { hmrc_check.calculate_evidence_income! }
       it { expect(evidence_check.income).to eq(12000) }

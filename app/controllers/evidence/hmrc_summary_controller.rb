@@ -2,7 +2,6 @@ module Evidence
   class HmrcSummaryController < ApplicationController
     before_action :authorize_access
 
-
     def show
       @form = Forms::Evidence::HmrcCheck.new(hmrc_check)
 

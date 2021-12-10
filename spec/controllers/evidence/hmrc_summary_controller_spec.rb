@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::HmrcSummaryController, type: :controller do
-  class ResolverService::UndefinedOutcome < StandardError; end
 
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
