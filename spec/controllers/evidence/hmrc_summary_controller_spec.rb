@@ -59,10 +59,15 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
 
     context 'as a signed in user' do
       let(:resolver) { instance_double('ResolverService') }
+      let(:flag_service) { instance_double('EvidenceCheckFlaggingService') }
+
       before do
         allow(HmrcCheck).to receive(:find).and_return hmrc_check
         allow(ResolverService).to receive(:new).and_return resolver
+        allow(EvidenceCheckFlaggingService).to receive(:new).and_return flag_service
         allow(resolver).to receive(:complete)
+        allow(flag_service).to receive(:process_flag)
+        allow(flag_service).to receive(:can_be_flagged?).and_return true
         sign_in user
       end
 
@@ -75,7 +80,16 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
           expect(EvidenceCheck).to have_received(:find).with(evidence.id.to_s)
         end
 
-        it { expect(response).to redirect_to(confirmation_evidence_path(evidence)) }
+        it { expect(response).to render_template(:complete) }
+        it { expect(flag_service).to have_received(:process_flag) }
+      end
+
+      context 'can not be flagged' do
+        before do
+          allow(flag_service).to receive(:can_be_flagged?).and_return false
+          post :complete, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+        end
+        it { expect(flag_service).not_to have_received(:process_flag) }
       end
 
       context 'fail' do

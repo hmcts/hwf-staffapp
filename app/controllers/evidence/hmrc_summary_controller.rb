@@ -10,9 +10,10 @@ module Evidence
 
     def complete
       ResolverService.new(evidence, current_user).complete
+      @application = evidence.application
 
-      # process_evidence_check_flag
-      redirect_to confirmation_evidence_path(evidence)
+      process_evidence_check_flag
+      render :complete
     rescue ResolverService::UndefinedOutcome
       load_form
       flash[:alert] = "Undefined evidence check outcome, please contact support"
@@ -36,5 +37,11 @@ module Evidence
     def load_form
       @form = Forms::Evidence::HmrcCheck.new(hmrc_check)
     end
+
+    def process_evidence_check_flag
+      flag_service = EvidenceCheckFlaggingService.new(evidence)
+      flag_service.process_flag if flag_service.can_be_flagged?
+    end
+
   end
 end
