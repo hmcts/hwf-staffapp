@@ -68,6 +68,7 @@ module Evidence
     def load_form
       check = load_hmrc_check || HmrcCheck.new(evidence_check: evidence)
       @form = Forms::Evidence::HmrcCheck.new(check)
+      @application_view = Views::Overview::Application.new(evidence.application)
       @form.additional_income = check.additional_income.positive?
       @form.additional_income_amount = check.additional_income
     end

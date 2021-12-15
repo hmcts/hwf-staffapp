@@ -4,7 +4,7 @@ module Evidence
 
     def show
       @form = Forms::Evidence::HmrcCheck.new(hmrc_check)
-
+      @application_view = Views::Overview::Application.new(evidence.application)
       render :show
     end
 

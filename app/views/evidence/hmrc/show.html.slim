@@ -20,22 +20,22 @@
       caption.govuk-table__caption.govuk-table__caption--m Application Income
       thead.govuk-table__head
         tr.govuk-table__row
-          th.govuk-table__header scope="col" Number of children
+          th.govuk-table__header scope="col" class="govuk-!-width-one-half" Number of children
           td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Total monthly income
-          td.govuk-table__cell scope="col" #{income_value(@evidence.application)}
+          td.govuk-table__cell scope="col" #{@application_view.total_monthly_income}
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Income kind applicant
-          td.govuk-table__cell scope="col" #{hmrc_income_kind_list(@evidence.application)}
+          td.govuk-table__cell scope="col" #{@application_view.income_kind_applicant}
 
     table.govuk-table
       caption.govuk-table__caption.govuk-table__caption--m.visuallyhidden HMRC checked income
       thead.govuk-table__head
         tr.govuk-table__row
-          td.govuk-table__header scope="col" HMRC checked income
+          td.govuk-table__header scope="col" class="govuk-!-width-one-half"  HMRC checked income
           td.govuk-table__cell scope="col" #{hmrc_income(@hmrc_check)}
         tr.govuk-table__row
           td.govuk-table__cell scope="col" For the date range #{hmrc_check_date_range(@hmrc_check)}
