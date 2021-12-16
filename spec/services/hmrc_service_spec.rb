@@ -16,9 +16,7 @@ describe HmrcService do
            last_name: 'Conners'
   }
 
-
   let(:api_service) { instance_double(HmrcApiService) }
-
 
   describe "call" do
     before {
