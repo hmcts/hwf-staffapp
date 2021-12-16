@@ -138,56 +138,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           context 'success' do
             before { post_call }
 
-            it "calls service with application" do
-              expect(HmrcApiService).to have_received(:new).with(application)
-            end
-
-            it "load income" do
-              expect(api_service).to have_received(:income).with('2001-01-03', '2002-01-03')
-            end
-
-            it "load hmrc_check" do
-              expect(api_service).to have_received(:hmrc_check)
-            end
-
             it "redirects to show page" do
               expect(response).to redirect_to(evidence_check_hmrc_path(evidence, hmrc_check))
-            end
-          end
-
-          context 'fail' do
-            let(:errors) { instance_double(ActiveModel::Errors) }
-            before do
-              allow(api_service).to receive(:income).and_raise(HwfHmrcApiError.new('Error message'))
-              allow(form).to receive(:errors).and_return errors
-              allow(errors).to receive(:add)
-              post_call
-            end
-
-            it 'add error' do
-              expect(errors).to have_received(:add).with(:request, 'Error message')
-            end
-
-            it 'render new template' do
-              expect(response).to render_template('new')
-            end
-          end
-
-          context 'fail - timeout' do
-            let(:errors) { instance_double(ActiveModel::Errors) }
-            before do
-              allow(api_service).to receive(:income).and_raise(Net::ReadTimeout.new('Error message'))
-              allow(form).to receive(:errors).and_return errors
-              allow(errors).to receive(:add)
-              post_call
-            end
-
-            it 'add error' do
-              expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form for HMRC income checking')
-            end
-
-            it 'render new template' do
-              expect(response).to render_template('new')
             end
           end
         end
