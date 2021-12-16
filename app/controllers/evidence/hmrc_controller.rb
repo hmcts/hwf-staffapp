@@ -1,7 +1,7 @@
 module Evidence
   class HmrcController < ApplicationController
     before_action :load_hmrc_check, only: [:show, :update]
-    before_action :load_form, only: [:new, :create]
+    before_action :load_form, except: :update
 
     def new
       authorize evidence
@@ -20,7 +20,6 @@ module Evidence
     end
 
     def show
-      load_form
       authorize evidence
       check_hmrc_data
       render :show
@@ -29,7 +28,7 @@ module Evidence
     def update
       @form = Forms::Evidence::HmrcCheck.new(@hmrc_check)
       authorize evidence
-      if redirect_to_summary?
+      if additional_income_updated?
         @hmrc_check.calculate_evidence_income!
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
@@ -43,34 +42,31 @@ module Evidence
       @evidence ||= EvidenceCheck.find(params[:evidence_check_id])
     end
 
-    def hmrc_params
-      params.require(:hmrc_check).permit(*Forms::Evidence::HmrcCheck.permitted_attributes).to_h
-    end
-
-    def hmrc_service_call
-      hmrc_service = HmrcApiService.new(evidence.application)
-      hmrc_service.income(@form.from_date, @form.to_date)
-      @hmrc_check = hmrc_service.hmrc_check
-    rescue HwfHmrcApiError => e
-      @form.errors.add(:request, e.message)
-      false
-    rescue Net::ReadTimeout
-      message = "HMRC income checking failed. Submit this form for HMRC income checking"
-      @form.errors.add(:timout, message)
-      false
-    end
-
     def load_hmrc_check
       return if params[:id].blank?
       @hmrc_check ||= HmrcCheck.find(params[:id])
     end
 
+    def hmrc_params
+      params.require(:hmrc_check).permit(*Forms::Evidence::HmrcCheck.permitted_attributes).to_h
+    end
+
+    def hmrc_service_call
+      hmrc_service.call
+      @form = hmrc_service.form
+      @hmrc_check = hmrc_service.hmrc_check
+    end
+
+    def hmrc_service
+      @hmrc_service ||= HmrcService.new(evidence.application, @form)
+    end
+
     def load_form
       check = load_hmrc_check || HmrcCheck.new(evidence_check: evidence)
       @form = Forms::Evidence::HmrcCheck.new(check)
-      @application_view = Views::Overview::Application.new(evidence.application)
       @form.additional_income = check.additional_income.positive?
       @form.additional_income_amount = check.additional_income
+      @application_view = Views::Overview::Application.new(evidence.application)
     end
 
     def check_hmrc_data
@@ -79,31 +75,12 @@ module Evidence
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def load_default_date_range
-      received = @evidence.application.detail.date_received.to_date
-      last_month = received - 1.month
-      @form.from_date_day = last_month.beginning_of_month.day
-      @form.from_date_month = last_month.month
-      @form.from_date_year = last_month.year
-      @form.to_date_day = last_month.end_of_month.day
-      @form.to_date_month = last_month.month
-      @form.to_date_year = last_month.year
-    end
-    # rubocop:enable Metrics/AbcSize
-
-    def redirect_to_summary?
-      @form.additional_income = hmrc_params['additional_income']
-      @form.additional_income_amount = additional_income_amount
-      @form.save
+      @form = hmrc_service.load_form_default_data_range
     end
 
-    def additional_income_amount
-      if hmrc_params['additional_income'] == 'false'
-        0
-      else
-        hmrc_params['additional_income_amount']
-      end
+    def additional_income_updated?
+      hmrc_service.update_additional_income(hmrc_params)
     end
   end
 end
