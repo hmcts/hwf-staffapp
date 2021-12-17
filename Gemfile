@@ -16,7 +16,7 @@ gem 'rails-i18n', '~> 6.0'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'ministryofjustice/azure_env_secrets', tag: 'v0.1.3'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.0.9'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.1.1'
 
 # configuration
 gem 'config'
@@ -116,7 +116,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'apparition'
+  gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4d54af835d531dbcd2b86e7b2c77f85f34'
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'

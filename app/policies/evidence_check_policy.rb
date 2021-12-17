@@ -14,4 +14,8 @@ class EvidenceCheckPolicy < BasePolicy
   def update?
     staff_or_manager? && same_application_office?
   end
+
+  def complete?
+    staff_or_manager? && same_application_office?
+  end
 end

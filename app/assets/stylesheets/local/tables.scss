@@ -113,3 +113,10 @@ table.search-results.govuk-table {
     position: absolute;
   }
 }
+
+table tr td.change-link {
+  text-align: right;
+  a {
+    margin-right: 20px;
+  }
+}

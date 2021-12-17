@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 0c52d4694b4281903ba149a128e4cea74cdcf7b9
-  tag: v0.0.9
+  revision: a87dc6c92d9d103ead443a2df88c18a884734eb7
+  tag: v0.1.1
   specs:
     hwf_hmrc_api (0.1.0)
       httparty (~> 0.18.1)
@@ -24,6 +24,15 @@ GIT
       activesupport (>= 3.0)
       logstash-event (~> 1.2.0)
       request_store
+
+GIT
+  remote: https://github.com/twalpole/apparition.git
+  revision: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
+  ref: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
+  specs:
+    apparition (0.6.0)
+      capybara (~> 3.13, < 4)
+      websocket-driver (>= 0.6.5)
 
 GEM
   remote: https://rubygems.org/
@@ -85,9 +94,6 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    apparition (0.6.0)
-      capybara (~> 3.13, < 4)
-      websocket-driver (>= 0.6.5)
     application_insights (0.5.6)
     ast (2.4.2)
     axiom-types (0.1.1)
@@ -603,7 +609,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  apparition
+  apparition!
   application_insights (~> 0.5.6)
   azure_env_secrets!
   better_errors
@@ -687,4 +693,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   2.2.24
+   2.2.32

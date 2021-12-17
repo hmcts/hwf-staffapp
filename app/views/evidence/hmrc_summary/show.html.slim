@@ -10,33 +10,32 @@
       caption.govuk-table__caption.govuk-table__caption--m Income check
       thead.govuk-table__head
         tr.govuk-table__row
-          th.govuk-table__header scope="col" Ready to process
+          th.govuk-table__header scope="col" class="govuk-!-width-one-half" Ready to process
           td.govuk-table__cell scope="col" Yes
-          td.govuk-table__cell scope="col"=link_to 'Change', new_evidence_check_hmrc_path(@evidence)
+          td.govuk-table__cell.change-link scope="col"=link_to 'Change', new_evidence_check_hmrc_path(@evidence)
 
     table.govuk-table
       caption.govuk-table__caption.govuk-table__caption--m Application Income
       thead.govuk-table__head
         tr.govuk-table__row
-          th.govuk-table__header scope="col" Number of children
+          th.govuk-table__header scope="col" class="govuk-!-width-one-half"  Number of children
           td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Total monthly income
-          td.govuk-table__cell scope="col" #{income_value(@evidence.application)}
+          td.govuk-table__cell scope="col" #{@application_view.total_monthly_income}
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Income kind applicant
-          td.govuk-table__cell scope="col" #{hmrc_income_kind_list(@evidence.application)}
-
+          td.govuk-table__cell scope="col" #{@application_view.income_kind_applicant}
 
     table.govuk-table
       caption.govuk-table__caption.govuk-table__caption--m.visuallyhidden HMRC checked income
       thead.govuk-table__head
         tr.govuk-table__row
-          td.govuk-table__header scope="col" HMRC checked income
+          td.govuk-table__header scope="col" class="govuk-!-width-one-half" HMRC checked income
           td.govuk-table__cell scope="col" #{hmrc_income(@hmrc_check)}
-          td.govuk-table__cell class="govuk-!-width-one-quarter" scope="col" &nbsp;
+          td.govuk-table__cell scope="col" &nbsp;
         tr.govuk-table__row
           td.govuk-table__cell scope="col" For the date range #{hmrc_check_date_range(@hmrc_check)}
           td.govuk-table__cell scope="col" &nbsp;
@@ -50,11 +49,13 @@
         tr.govuk-table__row
           th.govuk-table__header scope="col" Additional income
           td.govuk-table__cell scope="col" #{additional_income(@hmrc_check)}
-          td.govuk-table__cell scope="col"=link_to 'Change', evidence_check_hmrc_path(@evidence, @hmrc_check)
+          td.govuk-table__cell.change-link scope="col"=link_to 'Change', evidence_check_hmrc_path(@evidence, @hmrc_check)
 
         tr.govuk-table__row
           th.govuk-table__header scope="col" Checked income total
           td.govuk-table__cell scope="col" #{total_income(@hmrc_check)}
           td.govuk-table__cell scope="col" &nbsp;
 
-
+    .govuk-form-group.group-level
+      = form_for @hmrc_check, url: evidence_check_hmrc_complete_path(@evidence, @hmrc_check), method: :post, html: { autocomplete: 'off' } do |f|
+        = f.submit 'Complete processing', class: 'govuk-button'
