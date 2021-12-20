@@ -1,6 +1,7 @@
 - content_for :page_title
   = "#{@evidence.application.reference} - HMRC income checked"
 
+= link_to "Back", new_evidence_check_hmrc_path(@evidence), class: 'govuk-back-link'
 - if @hmrc_check.errors.any?
   .govuk-error-summary aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary"
     h2.govuk-error-summary__title#error-summary-title
