@@ -20,7 +20,7 @@ class EvidenceCheck < ActiveRecord::Base
   end
 
   def hmrc?
-    self.income_check_type == 'hmrc'
+    income_check_type == 'hmrc'
   end
 
   def hmrc_check

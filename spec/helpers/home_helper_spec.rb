@@ -9,14 +9,30 @@ RSpec.describe HomeHelper do
   end
 
   describe '#path_for_application_based_on_state' do
-    let(:evidence_check) { create(:evidence_check, application: last_application) }
+    let(:evidence_check) { create(:evidence_check, application: last_application, income_check_type: check_type) }
     let(:part_payment) { create(:part_payment, application: last_application) }
+    let(:check_type) { nil }
 
     context 'waiting_for_evidence' do
-      let(:last_application) { create(:application, :waiting_for_evidence_state) }
-      before { evidence_check }
+      context 'standard' do
+        let(:last_application) { create(:application, :waiting_for_evidence_state) }
+        before { evidence_check }
 
-      it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence/#{evidence_check.id}") }
+        it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence/#{evidence_check.id}") }
+      end
+
+      context 'hmrc check type' do
+        let(:check_type) { 'hmrc' }
+        let(:last_application) { create(:application, :waiting_for_evidence_state) }
+        before { evidence_check }
+
+        it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
+        context 'with hmrc data' do
+          before { hmrc_check }
+          let(:hmrc_check) { create :hmrc_check, evidence_check: evidence_check }
+          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
+        end
+      end
     end
 
     context 'waiting_for_part_payment' do

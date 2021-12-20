@@ -9,12 +9,10 @@ module HomeHelper
   }.freeze
 
   def path_for_application_based_on_state(application)
-    if application.state.to_sym == :waiting_for_evidence
-      return hmrc_evidence_check_link(application) if application.evidence_check.hmrc?
-      send(APPLICATION_STATE_LINKS.fetch(application.state.to_sym), application)
-    else
-      send(APPLICATION_STATE_LINKS.fetch(application.state.to_sym), application)
+    if application.state.to_sym == :waiting_for_evidence && application.evidence_check.hmrc?
+      return hmrc_evidence_check_link(application)
     end
+    send(APPLICATION_STATE_LINKS.fetch(application.state.to_sym), application)
   end
 
   def created_application_link(application)
@@ -63,17 +61,20 @@ module HomeHelper
     if record.failed_because_dwp_error?
       message = 'DWP'
       custom_class = ' red-warning-text'
-    elsif record.state  == 'waiting_for_evidence' && record.try(:evidence_check).try(:hmrc?)
+    elsif record.state == 'waiting_for_evidence' && record.try(:evidence_check).try(:hmrc?)
       message = 'waiting_for_evidence hmrc'
     else
       message = record.state
     end
 
+    td_line_state(message, custom_class)
+  end
+
+  def td_line_state(message, custom_class = '')
     tag.td(class: "govuk-table__cell#{custom_class}") do
       message
     end
   end
-
 
   private
 

@@ -436,7 +436,7 @@ describe EvidenceCheckSelector do
     end
 
     context 'HMRC check applies' do
-      let(:application) { create :application_full_remission, office: office, applicant: applicant }
+      let(:application) { create :application_full_remission, office: office, applicant: applicant, medium: 'digital' }
       before do
         ev_stub = instance_double(EvidenceCheckFlag, active?: true)
         allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
@@ -450,6 +450,11 @@ describe EvidenceCheckSelector do
 
           it 'is hmrc checked' do
             expect(decision.income_check_type).to eql 'hmrc'
+          end
+
+          context 'is not digital applicaiton' do
+            let(:application) { create :application_full_remission, office: office, applicant: applicant, medium: 'paper' }
+            it { expect(decision.income_check_type).not_to eql 'hmrc' }
           end
         end
 
