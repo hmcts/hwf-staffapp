@@ -90,6 +90,11 @@ Feature: User dashboard and navigation
     When I click on the reference number of one of my last applications
     Then I am taken to the hmrc check page
 
+  Scenario: Waiting for evidence page with hmrc check application
+    Given I am signed in as a user that has processed an application that is a waiting for hmrc evidence
+    When I click on the evidence check list link
+    Then I am taken to the hmrc check page
+
   Scenario: Waiting for evidence page
     Given I successfully sign in as a user
     When I click on the waiting for evidence link

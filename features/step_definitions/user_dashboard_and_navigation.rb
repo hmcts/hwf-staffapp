@@ -145,6 +145,10 @@ When("I click on the waiting for evidence link") do
   dashboard_page.content.waiting_for_evidence.click
 end
 
+When("I click on the evidence check list link") do
+  waiting_for_evidence_applications_page.content.waiting_for_evidence_application_link.click
+end
+
 Then("I am taken to the waiting for evidence page") do
   expect(waiting_for_evidence_applications_page.content).to have_header
 end
