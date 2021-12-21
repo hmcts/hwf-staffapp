@@ -185,6 +185,10 @@ def evidence_income_page
   @evidence_income_page ||= EvidenceIncomePage.new
 end
 
+def hmrc_income_check_page
+  @hmrc_income_check_page ||= HmrcIncomeCheckPage.new
+end
+
 def forbidden_page
   @forbidden_page ||= ForbiddenPage.new
 end
@@ -317,6 +321,12 @@ def waiting_evidence_application_ni(user)
   FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
                     decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
                     reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
+end
+
+def waiting_hmrc_evidence_application(user)
+  applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application = FactoryBot.create(:application, :waiting_for_evidence_state, applicant: applicant, user: user, office: user.office)
+  application.evidence_check.update(income_check_type: 'hmrc')
 end
 
 def ho_applicant
