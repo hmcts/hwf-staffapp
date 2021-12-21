@@ -116,7 +116,7 @@ class EvidenceCheckSelector
   end
 
   def income_check_type
-    return 'hmrc' if hmrc_office_match? && !@application.applicant.married
+    return 'hmrc' if hmrc_office_match? && !@application.applicant.married && @application.digital?
     'paper'
   end
 

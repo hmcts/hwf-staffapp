@@ -87,4 +87,8 @@ class Application < ActiveRecord::Base
     last_benefit_check.dwp_result == 'BadRequest' &&
       last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
   end
+
+  def digital?
+    medium == 'digital'
+  end
 end

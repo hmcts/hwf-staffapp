@@ -22,10 +22,7 @@ h3.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
           - else
             td.govuk-table__cell = link_to record.reference, path_for_application_based_on_state(record)
             td.govuk-table__cell =record.id
-          - if record.failed_because_dwp_error?
-            td.govuk-table__cell.red-warning-text DWP pending
-          - else
-            td.govuk-table__cell =record.state
+          = state_value(record)
           td.govuk-table__cell =record.applicant.full_name
           td.govuk-table__cell =record.updated_at
 - else

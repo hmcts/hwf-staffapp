@@ -4,7 +4,6 @@
 div
   h1.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
     =t("#{type}.dashboard.heading")
-
 - if list.present?
   table *{class: "govuk-table waiting-for-#{type}"}
     caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
@@ -17,7 +16,7 @@ div
     tbody.govuk-table__body
       - list.each do |record|
         tr.govuk-table__row
-          td.govuk-table__cell =link_to(record.reference, send(start_path, record.evidence_or_part_payment))
+          td.govuk-table__cell =link_to(record.reference, path_for_application_based_on_state(record.application))
           td.govuk-table__cell =record.applicant
           td.govuk-table__cell =record.processed_by
           td.govuk-table__cell =record.processed_on

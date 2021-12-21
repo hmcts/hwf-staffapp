@@ -29,4 +29,29 @@ describe EvidenceCheck, type: :model do
     end
   end
 
+  describe 'hmrc check' do
+    subject(:evidence_check) { described_class.new(income_check_type: check_type) }
+    context 'is hmrc checked' do
+      let(:check_type) { 'hmrc' }
+      it { expect(evidence_check.hmrc?).to be_truthy }
+    end
+
+    context 'is hmrc checked' do
+      let(:check_type) { 'test' }
+      it { expect(evidence_check.hmrc?).to be_falsey }
+    end
+
+    describe 'return last hmrc check' do
+      let(:evidence_check) { create(:evidence_check) }
+      let(:hmrc_check_1) { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
+      let(:hmrc_check_2) { create(:hmrc_check, evidence_check: evidence_check) }
+
+      before {
+        hmrc_check_1
+        hmrc_check_2
+      }
+      it { expect(evidence_check.hmrc_check).to eq(hmrc_check_2) }
+      it { expect(evidence_check.hmrc_checks).to eq([hmrc_check_1, hmrc_check_2]) }
+    end
+  end
 end

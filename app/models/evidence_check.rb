@@ -18,4 +18,12 @@ class EvidenceCheck < ActiveRecord::Base
     self.staff_error_details = nil
     save
   end
+
+  def hmrc?
+    income_check_type == 'hmrc'
+  end
+
+  def hmrc_check
+    hmrc_checks.order('created_at asc').last
+  end
 end
