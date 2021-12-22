@@ -39,7 +39,7 @@ class HmrcService
   private
 
   def api_call
-    hmrc_service = HmrcApiService.new(@application)
+    hmrc_service = HmrcApiService.new(@application, @form.user_id)
     hmrc_service.income(@form.from_date, @form.to_date)
     @hmrc_check = hmrc_service.hmrc_check
   end

@@ -14,7 +14,8 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       "to_date_month" => to_date_month,
       "to_date_year" => to_date_year,
       "additional_income_amount" => additional_income_amount,
-      "additional_income" => additional_income
+      "additional_income" => additional_income,
+      "user_id" => 256
     }
   }
 

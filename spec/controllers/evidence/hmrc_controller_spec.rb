@@ -6,7 +6,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
   let(:applicant) { create :applicant_with_all_details }
   let(:application) { create :application, office: office, applicant: applicant, created_at: '15.3.2021' }
   let(:evidence) { create :evidence_check, application_id: application.id }
-  let(:hmrc_check) { create :hmrc_check, evidence_check: evidence }
+  let(:hmrc_check) { create :hmrc_check, evidence_check: evidence, user: user }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
@@ -34,6 +34,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         allow(form).to receive(:to_date_year=)
         allow(form).to receive(:additional_income=)
         allow(form).to receive(:additional_income_amount=)
+        allow(form).to receive(:user_id=)
       end
 
       it 'returns the correct status code' do
@@ -66,6 +67,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         it { expect(form).to have_received(:to_date_day=).with 31 }
         it { expect(form).to have_received(:to_date_month=).with 7 }
         it { expect(form).to have_received(:to_date_year=).with 2021 }
+        it { expect(form).to have_received(:user_id=).with user.id }
       end
     end
   end
@@ -105,6 +107,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         allow(form).to receive(:valid?).and_return valid
         allow(form).to receive(:additional_income=)
         allow(form).to receive(:additional_income_amount=)
+        allow(form).to receive(:user_id=)
       end
 
       it 'update params' do
@@ -121,17 +124,48 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
       context 'valid' do
         let(:valid) { true }
+        let(:valid_check) { true }
         before do
           allow(form).to receive(:from_date).and_return '2001-01-03'
           allow(form).to receive(:to_date).and_return '2002-01-03'
+          allow(form).to receive(:user_id).and_return 569
           allow(HmrcApiService).to receive(:new).and_return api_service
           allow(api_service).to receive(:income)
           allow(api_service).to receive(:hmrc_check).and_return hmrc_check
+          allow(hmrc_check).to receive(:valid?).and_return valid_check
         end
 
-        it 'validate' do
+        it 'validate form' do
           post_call
           expect(form).to have_received(:valid?)
+        end
+
+        it 'validate hmrc_check' do
+          post_call
+          expect(hmrc_check).to have_received(:valid?)
+        end
+
+        context 'hmrc_check not valid' do
+          let(:errors) { instance_double('ActiveModel::Errors', full_messages: ['not good']) }
+          let(:form_errors) { instance_double('ActiveModel::Errors') }
+          let(:valid_check) { false }
+
+          before do
+            allow(hmrc_check).to receive(:errors).and_return errors
+            allow(form).to receive(:errors).and_return form_errors
+            allow(form_errors).to receive(:add)
+          end
+
+          it 'render form again' do
+            post_call
+            expect(response).to render_template :new
+          end
+
+          it 'pass error mesage to form' do
+            post_call
+            expect(form_errors).to have_received(:add).with(:hmrc_check, 'not good')
+          end
+
         end
 
         describe 'service call' do

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 describe HmrcApiService do
-  subject(:service) { described_class.new(evidence_check.application) }
+  subject(:service) { described_class.new(evidence_check.application, processing_user.id) }
   let(:application) { create :application_part_remission, applicant: applicant }
+  let(:processing_user) { create :user }
   let(:evidence_check) { create :evidence_check, application: application }
   let(:applicant) {
     create :applicant,
@@ -180,8 +181,8 @@ describe HmrcApiService do
         it 'date_of_birth' do
           expect(service.hmrc_check.date_of_birth).to eql('28/02/1968')
         end
-        it 'user_id' do
-          expect(service.hmrc_check.user_id).to eql(application.user_id)
+        it 'user_id from initializer' do
+          expect(service.hmrc_check.user_id).to eql(processing_user.id)
         end
       end
 

@@ -55,6 +55,15 @@ module Evidence
       hmrc_service.call
       @form = hmrc_service.form
       @hmrc_check = hmrc_service.hmrc_check
+      return true if @hmrc_check.valid?
+      add_hmrc_check_error_message
+
+      return false
+    end
+
+    def add_hmrc_check_error_message
+      message = @hmrc_check.errors.full_messages.join(', ')
+      @form.errors.add(:hmrc_check, "#{message}")
     end
 
     def hmrc_service
@@ -64,6 +73,7 @@ module Evidence
     def load_form
       check = load_hmrc_check || HmrcCheck.new(evidence_check: evidence)
       @form = Forms::Evidence::HmrcCheck.new(check)
+      @form.user_id = current_user.id
       @form.additional_income = check.additional_income.positive?
       @form.additional_income_amount = check.additional_income
       @application_view = Views::Overview::Application.new(evidence.application)
