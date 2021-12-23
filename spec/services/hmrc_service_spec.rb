@@ -63,7 +63,7 @@ describe HmrcService do
       end
 
       it 'add error' do
-        expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form for HMRC income checking')
+        expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form again for HMRC income checking')
       end
     end
 

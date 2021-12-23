@@ -53,7 +53,7 @@ class HmrcService
   end
 
   def process_timeout_error
-    message = "HMRC income checking failed. Submit this form for HMRC income checking"
+    message = "HMRC income checking failed. Submit this form again for HMRC income checking"
     @form.errors.add(:timout, message)
   end
 

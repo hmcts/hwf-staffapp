@@ -71,5 +71,5 @@
         span.govuk-details__summary-text Do not select this application for HMRC income checking
       .govuk-details__text You can choose to process this application using paper based evidence.
       .govuk-details__text
-
-        = link_to 'Next', send("evidence_check_path",@evidence), class: 'govuk-button'
+        = form_for :hmrc_check, url: evidence_check_hmrc_skip_path(@evidence), method: :put, html: { autocomplete: 'off' } do |f|
+          = f.submit 'Next', class: 'govuk-button'

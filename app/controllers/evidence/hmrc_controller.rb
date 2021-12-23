@@ -58,12 +58,12 @@ module Evidence
       return true if @hmrc_check.valid?
       add_hmrc_check_error_message
 
-      return false
+      false
     end
 
     def add_hmrc_check_error_message
       message = @hmrc_check.errors.full_messages.join(', ')
-      @form.errors.add(:hmrc_check, "#{message}")
+      @form.errors.add(:hmrc_check, message.to_s)
     end
 
     def hmrc_service
