@@ -130,6 +130,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           allow(form).to receive(:to_date).and_return '2002-01-03'
           allow(form).to receive(:user_id).and_return 569
           allow(HmrcApiService).to receive(:new).and_return api_service
+          allow(api_service).to receive(:match_user).and_return api_service
           allow(api_service).to receive(:income)
           allow(api_service).to receive(:hmrc_check).and_return hmrc_check
           allow(hmrc_check).to receive(:valid?).and_return valid_check
@@ -152,6 +153,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
           before do
             allow(hmrc_check).to receive(:errors).and_return errors
+            allow(hmrc_check).to receive(:update)
             allow(form).to receive(:errors).and_return form_errors
             allow(form_errors).to receive(:add)
           end
@@ -162,10 +164,10 @@ RSpec.describe Evidence::HmrcController, type: :controller do
           end
 
           it 'pass error mesage to form' do
+            allow(api_service).to receive(:match_user).and_raise(HwfHmrcApiError)
             post_call
             expect(form_errors).to have_received(:add).with(:hmrc_check, 'not good')
           end
-
         end
 
         describe 'service call' do
