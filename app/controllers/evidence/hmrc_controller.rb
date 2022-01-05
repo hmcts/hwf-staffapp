@@ -52,11 +52,14 @@ module Evidence
     end
 
     def hmrc_service_call
-      hmrc_service.call
-      @form = hmrc_service.form
-      @hmrc_check = hmrc_service.hmrc_check
-      return true if @hmrc_check.valid?
-      add_hmrc_check_error_message
+      if hmrc_service.call
+        @form = hmrc_service.form
+        @hmrc_check = hmrc_service.hmrc_check
+        return true if @hmrc_check.valid?
+      else
+        @hmrc_check = hmrc_service.hmrc_check
+        add_hmrc_check_error_message
+      end
 
       false
     end

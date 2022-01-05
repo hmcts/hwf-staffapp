@@ -17,18 +17,25 @@ describe HmrcService do
   }
 
   let(:api_service) { instance_double(HmrcApiService) }
+  let(:hmrc_check) { instance_double(HmrcCheck) }
 
   describe "call" do
     before {
       allow(HmrcApiService).to receive(:new).and_return api_service
+      allow(api_service).to receive(:match_user).and_return api_service
       allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form
       allow(api_service).to receive(:income)
-      allow(api_service).to receive(:hmrc_check)
+      allow(api_service).to receive(:hmrc_check).and_return hmrc_check
+      allow(hmrc_check).to receive(:update)
       service.call
     }
 
     it "calls service with application" do
       expect(HmrcApiService).to have_received(:new).with(application, 256)
+    end
+
+    it "calls match_user" do
+      expect(api_service).to have_received(:match_user)
     end
 
     it "load income" do
@@ -51,6 +58,11 @@ describe HmrcService do
       it 'add error' do
         expect(errors).to have_received(:add).with(:request, 'Error message')
       end
+
+      it 'saves the error' do
+        expect(hmrc_check).to have_received(:update).with({ error_response: 'Error message' })
+      end
+
     end
 
     context 'fail - timeout' do
@@ -65,6 +77,10 @@ describe HmrcService do
       it 'add error' do
         expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form again for HMRC income checking')
       end
+
+      it 'saves the error' do
+        expect(hmrc_check).to have_received(:update).with({ error_response: 'Net::ReadTimeout - Timeout error' })
+      end
     end
 
     context 'fail - MESSAGE_THROTTLED_OUT' do
@@ -78,6 +94,24 @@ describe HmrcService do
 
       it 'add error' do
         expect(errors).to have_received(:add).with(:request, 'HMRC checking is currently unavailable please try again later. (429)')
+      end
+
+      it 'saves the error' do
+        expect(hmrc_check).to have_received(:update).with({ error_response: 'MESSAGE_THROTTLED_OUT' })
+      end
+    end
+
+    context 'no hmrc_check' do
+      let(:errors) { instance_double(ActiveModel::Errors) }
+      before do
+        allow(api_service).to receive(:income).and_raise(HwfHmrcApiError.new('MESSAGE_THROTTLED_OUT'))
+        allow(form).to receive(:errors).and_return errors
+        allow(errors).to receive(:add)
+        allow(api_service).to receive(:hmrc_check).and_return nil
+      end
+
+      it 'add error' do
+        expect { service.call }.not_to raise_error
       end
     end
 

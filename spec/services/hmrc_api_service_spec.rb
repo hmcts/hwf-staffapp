@@ -29,7 +29,7 @@ describe HmrcApiService do
       it "without token" do
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
         allow(hmrc_api).to receive(:match_user)
-        service
+        service.match_user
         expect(HwfHmrcApi).to have_received(:new).with({ hmrc_secret: "secret", totp_secret: "base32secret3232", client_id: "12345" })
       end
 
@@ -44,13 +44,13 @@ describe HmrcApiService do
 
         it "expired" do
           allow(hmrc_token).to receive(:expired?).and_return true
-          service
+          service.match_user
           expect(HwfHmrcApi).to have_received(:new).with({ hmrc_secret: "secret", totp_secret: "base32secret3232", client_id: "12345" })
         end
 
         it "valid" do
           allow(hmrc_token).to receive(:expired?).and_return false
-          service
+          service.match_user
           expect(HwfHmrcApi).to have_received(:new).with({
                                                            hmrc_secret: "secret",
                                                            totp_secret: "base32secret3232",
@@ -66,7 +66,7 @@ describe HmrcApiService do
               allow(hmrc_token).to receive(:expired?).and_return false
               allow(hmrc_api_authentication).to receive(:access_token).and_return '111333'
               allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
-              service
+              service.match_user
             end
 
             it { expect(HmrcToken.last.access_token).to eq '111333' }
@@ -78,7 +78,7 @@ describe HmrcApiService do
               allow(hmrc_token).to receive(:expired?).and_return false
               allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
               allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
-              service
+              service.match_user
             end
 
             it { expect(HmrcToken.last.access_token).to eq '123456' }
@@ -102,7 +102,7 @@ describe HmrcApiService do
       it "applicant params" do
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
         allow(hmrc_api).to receive(:match_user)
-        service
+        service.match_user
         expect(hmrc_api).to have_received(:match_user).with(applicant_info)
       end
     end
@@ -111,6 +111,7 @@ describe HmrcApiService do
       before {
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
         allow(hmrc_api).to receive(:match_user)
+        service.match_user
       }
 
       context "income" do
@@ -172,6 +173,7 @@ describe HmrcApiService do
       before {
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
         allow(hmrc_api).to receive(:match_user)
+        service.match_user
       }
 
       context 'metadata' do
