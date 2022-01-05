@@ -4,6 +4,9 @@ class HmrcApiService
     @application = application
     @user_id = user_id
     hmrc_check_initialize
+  end
+
+  def match_user
     hmrc_api_innitialize
   end
 

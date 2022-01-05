@@ -39,12 +39,14 @@ class HmrcService
   private
 
   def api_call
-    hmrc_service = HmrcApiService.new(@application, @form.user_id)
-    hmrc_service.income(@form.from_date, @form.to_date)
-    @hmrc_check = hmrc_service.hmrc_check
+    @hmrc_service = HmrcApiService.new(@application, @form.user_id)
+    @hmrc_service.match_user
+    @hmrc_service.income(@form.from_date, @form.to_date)
+    @hmrc_check = @hmrc_service.hmrc_check
   end
 
   def process_standard_error(error)
+    store_error(error)
     message = error.message
     if message.include?('MESSAGE_THROTTLED_OUT')
       message = "HMRC checking is currently unavailable please try again later. (429)"
@@ -53,6 +55,7 @@ class HmrcService
   end
 
   def process_timeout_error
+    store_error('Net::ReadTimeout - Timeout error')
     message = "HMRC income checking failed. Submit this form again for HMRC income checking"
     @form.errors.add(:timout, message)
   end
@@ -63,6 +66,12 @@ class HmrcService
     else
       hmrc_params['additional_income_amount']
     end
+  end
+
+  def store_error(error)
+    @hmrc_check = @hmrc_service.hmrc_check
+    return unless @hmrc_check
+    @hmrc_check.update(error_response: error.to_s)
   end
 
 end
