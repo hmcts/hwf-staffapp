@@ -7,7 +7,7 @@ describe HmrcService do
   let(:application) { create :application_part_remission, applicant: applicant }
   let(:evidence_check) { create :evidence_check, application: application }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
-  let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to') }
+  let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to', user_id: 256) }
   let(:applicant) {
     create :applicant,
            date_of_birth: DateTime.new(1968, 2, 28),
@@ -28,7 +28,7 @@ describe HmrcService do
     }
 
     it "calls service with application" do
-      expect(HmrcApiService).to have_received(:new).with(application)
+      expect(HmrcApiService).to have_received(:new).with(application, 256)
     end
 
     it "load income" do
@@ -63,7 +63,7 @@ describe HmrcService do
       end
 
       it 'add error' do
-        expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form for HMRC income checking')
+        expect(errors).to have_received(:add).with(:timout, 'HMRC income checking failed. Submit this form again for HMRC income checking')
       end
     end
 

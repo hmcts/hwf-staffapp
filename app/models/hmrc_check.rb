@@ -1,5 +1,6 @@
 class HmrcCheck < ActiveRecord::Base
   belongs_to :evidence_check, optional: false
+  belongs_to :user
 
   serialize :address
   serialize :employment
@@ -8,6 +9,7 @@ class HmrcCheck < ActiveRecord::Base
   serialize :request_params
 
   validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :user_id, presence: true
 
   def total_income
     hmrc_income + additional_income

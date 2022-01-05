@@ -27,6 +27,21 @@ describe CompletedApplicationRedirect do
       let!(:evidence) { create :evidence_check, application: application }
 
       it { is_expected.to eql evidence_path(evidence) }
+      describe 'hmrc evidence check' do
+        let(:evidence) { create :evidence_check, application: application, income_check_type: 'hmrc' }
+        let(:hmrc_check) { create :hmrc_check, evidence_check: evidence, income: income }
+        before { hmrc_check }
+
+        context 'no income' do
+          let(:income) { nil }
+          it { is_expected.to eql new_evidence_check_hmrc_path(evidence) }
+        end
+
+        context 'posivite income' do
+          let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }] }
+          it { is_expected.to eql evidence_check_hmrc_path(evidence, hmrc_check) }
+        end
+      end
     end
 
     describe 'when initialised with a deleted application' do

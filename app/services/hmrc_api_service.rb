@@ -1,7 +1,8 @@
 class HmrcApiService
 
-  def initialize(application)
+  def initialize(application, user_id)
     @application = application
+    @user_id = user_id
     hmrc_check_initialize
     hmrc_api_innitialize
   end
@@ -99,7 +100,7 @@ class HmrcApiService
     hmrc_check
     @hmrc_check.ni_number = @application.applicant.ni_number
     @hmrc_check.date_of_birth = @application.applicant.date_of_birth
-    @hmrc_check.user_id = @application.user_id
+    @hmrc_check.user_id = @user_id
     @hmrc_check.save
   end
 

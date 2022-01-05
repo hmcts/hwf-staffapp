@@ -39,7 +39,7 @@ class HmrcService
   private
 
   def api_call
-    hmrc_service = HmrcApiService.new(@application)
+    hmrc_service = HmrcApiService.new(@application, @form.user_id)
     hmrc_service.income(@form.from_date, @form.to_date)
     @hmrc_check = hmrc_service.hmrc_check
   end
@@ -53,7 +53,7 @@ class HmrcService
   end
 
   def process_timeout_error
-    message = "HMRC income checking failed. Submit this form for HMRC income checking"
+    message = "HMRC income checking failed. Submit this form again for HMRC income checking"
     @form.errors.add(:timout, message)
   end
 

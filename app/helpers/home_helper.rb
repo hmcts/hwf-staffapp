@@ -95,7 +95,7 @@ module HomeHelper
   def hmrc_evidence_check_link(application)
     evidence_check = application.evidence_check
 
-    if evidence_check.hmrc_check
+    if evidence_check.hmrc_check.try(:total_income).try(:positive?)
       evidence_check_hmrc_path(evidence_check, evidence_check.hmrc_check)
     else
       new_evidence_check_hmrc_path(evidence_check)

@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe HmrcCheck, type: :model do
   describe 'serialized attributes' do
-    subject(:hmrc_check) { described_class.new(evidence_check: evidence_check) }
+    subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, user: user) }
     let(:evidence_check) { create :evidence_check }
+    let(:user) { create :user }
 
     context 'address' do
       before {
