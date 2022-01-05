@@ -465,6 +465,15 @@ describe EvidenceCheckSelector do
             expect(decision.income_check_type).to eql 'paper'
           end
         end
+
+        context 'setting does not match' do
+          let(:office) { create :office, entity_code: 'dig' }
+          before { Settings.evidence_check.hmrc.office_entity_code = 'dug' }
+
+          it 'is paper checked' do
+            expect(decision.income_check_type).to eql 'paper'
+          end
+        end
       end
 
       context 'married applicant' do
