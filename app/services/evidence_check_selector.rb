@@ -121,7 +121,7 @@ class EvidenceCheckSelector
   end
 
   def hmrc_office_match?
-    @application.office.try(:entity_code) == 'dig'
+    @application.office.try(:entity_code) == Settings.evidence_check.hmrc.office_entity_code
   end
 
   def ccmcc_evidence_rules_check
