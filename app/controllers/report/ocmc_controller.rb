@@ -20,7 +20,11 @@ module Report
     private
 
     def extract_ocmc_data
-      Views::Reports::OcmcDataExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
+      if ocmcc_court?
+        Views::Reports::HmrcOcmcDataExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
+      else
+        Views::Reports::OcmcDataExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
+      end
     end
 
     def authorise_ocmc_data
@@ -29,6 +33,10 @@ module Report
 
     def court_id
       report_params[:entity_code]
+    end
+
+    def ocmcc_court?
+      Office.find(court_id).entity_code == Settings.evidence_check.hmrc.office_entity_code
     end
 
     def export_file_prefix
