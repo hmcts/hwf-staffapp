@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module Views
   module Reports
     class HmrcOcmcDataExport
@@ -65,13 +66,17 @@ module Views
         applications.decision as \"Decision\",
         applications.amount_to_pay as \"Applicant pays estimate\",
         applications.income_kind as \"Declared income sources\",
+        ec.check_type as \"DB evidence check type\",
+        ec.income_check_type as \"DB income check type\",
         CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NumberRule'
-           WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NIDuplicate'
-           WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' then 'HMRC NumberRule'
-           WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
-           WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
-           WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
-             ELSE ''
+         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NIFlag'
+         WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NIDuplicate'
+         WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' then 'HMRC NumberRule'
+         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' then 'HMRC NIFlag'
+         WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
+         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
+         WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
+           ELSE ''
         END AS \"Evidence check type\",
         CASE WHEN hc.id IS NULL then ''
            WHEN hc.id IS NOT NULL AND hc.error_response IS NULL then 'Yes'
@@ -90,7 +95,8 @@ module Views
         END as \"HMRC total income\",
         CASE WHEN hc.additional_income IS NULL then NULL
            WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
-           WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'hmrc' AND hc.additional_income > 0 then hc.additional_income
+           WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
+            AND hc.additional_income > 0 then hc.additional_income
            ELSE NULL
         END as \"Additional income\",
         CASE WHEN hc.id IS NULL then NULL
@@ -108,7 +114,7 @@ module Views
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         WHERE applications.office_id = #{@office_id}
         AND applications.created_at between '#{@date_from.to_s(:db)}' AND '#{@date_to.to_s(:db)}'
-        AND applications.state != 0 ORDER BY applications.created_at DESC;";
+        AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -126,7 +132,7 @@ module Views
         applicant = income_kind_hash[:applicant].join(',')
         partner = income_kind_hash[:partner].try(:join, ',')
         [applicant, partner].reject(&:blank?).join(", ")
-      rescue TypeError => e
+      rescue TypeError
         ""
       end
 
@@ -134,7 +140,7 @@ module Views
         paye = hmrc_income(row['HMRC total income'])
         tax_credits = tax_credit(row['tax_credit'])
         total = paye + tax_credits
-        total > 0 ? total : ''
+        total.positive? ? total : ''
       end
 
       def hmrc_income(value)
@@ -153,3 +159,4 @@ module Views
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
