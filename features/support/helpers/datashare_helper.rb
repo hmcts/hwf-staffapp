@@ -24,6 +24,14 @@ def hmrc_high_income
   allow(hmrc_api).to receive(:paye).and_return({'income' => [{ "grossEarningsForNics" => { "inPayPeriod1" => 7000 } }]})
 end
 
-# def working_tax_credit(hmrc_api)
-#   allow(hmrc_api).to receive(:tax_credit).and_return('work_tax_credit_income' => [{ "grossEarningsForNics" => { "inPayPeriod1" => 70000 } }])
-# end
+def hmrc_working_tax_credits
+  hmrc_api = stub_hmrc_api
+  allow(hmrc_api).to receive(:paye).and_return({'income' => [{ "grossEarningsForNics" => { "inPayPeriod1" => 2000 } }]})
+  allow(hmrc_api).to receive(:working_tax_credits).and_return([{ "awards" => ['work test'] }])
+end
+
+def hmrc_child_tax_credits
+  hmrc_api = stub_hmrc_api
+  allow(hmrc_api).to receive(:paye).and_return({'income' => [{ "grossEarningsForNics" => { "inPayPeriod1" => 1900 } }]})
+  allow(hmrc_api).to receive(:child_tax_credits).and_return([{ "awards" => ['child test'] }])
+end

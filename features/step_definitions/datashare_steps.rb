@@ -50,5 +50,17 @@ end
 Given(/^I fill in the form details for an applicant with working tax credit$/) do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
+  hmrc_working_tax_credits
+  click_button('Next')
+end
+
+Then(/^I should see the result for that application$/) do
+  expect(datashare_evidence_page.content).to have_text('Application complete')
+end
+
+Given(/^I fill in the form details for an applicant with child tax credit$/) do
+  expect(process_online_application_page.content).to have_application_details_header
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  hmrc_child_tax_credits
   click_button('Next')
 end
