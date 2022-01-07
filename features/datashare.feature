@@ -1,7 +1,7 @@
 Feature: Datashare income checking
 
   Background: Signed in as a user
-    Given I successfully sign in as a user who has an online application reference number
+    Given I successfully sign in as a user who has an online application that will be hmrc checked
     And I look up an online application using a valid reference number
 
   Scenario: Processing a full refund application

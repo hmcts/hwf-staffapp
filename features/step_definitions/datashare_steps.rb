@@ -1,7 +1,7 @@
 Given(/^I fill in the form details for a low income user$/) do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
-  low_income
+  hmrc_low_income
   click_button('Next')
 end
 
@@ -11,7 +11,7 @@ When(/^I press complete processing$/) do
 end
 
 And(/^I check the income for the correct month$/) do
-  expect(datashare_evidence_page.content).to have_checked_header
+  expect(datashare_evidence_page.content).to have_checking_header
   click_button('Submit')
 end
 
@@ -28,6 +28,7 @@ end
 Given(/^I fill in the form details for a medium income user$/) do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
+  hmrc_medium_income
   click_button('Next')
 end
 
@@ -38,6 +39,7 @@ end
 Given(/^I fill in the form details for a higher income user$/) do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
+  hmrc_high_income
   click_button('Next')
 end
 

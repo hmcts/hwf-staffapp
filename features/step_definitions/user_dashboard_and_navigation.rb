@@ -70,6 +70,14 @@ Given("I successfully sign in as a user who has an online application reference 
   sign_in_page.user_account
 end
 
+Given("I successfully sign in as a user who has an online application that will be hmrc checked") do
+  online = FactoryBot.create(:online_application, :with_reference, :income, :completed)
+  applicant = FactoryBot.create(:applicant, ni_number: online.ni_number)
+  FactoryBot.create(:application, :waiting_for_evidence_state, applicant: applicant)
+  sign_in_page.load_page
+  sign_in_page.hmrc_user_account
+end
+
 When("I look up an online application using a valid reference number") do
   reference = OnlineApplication.last.reference
   dashboard_page.content.online_search_reference.set reference

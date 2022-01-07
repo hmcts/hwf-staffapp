@@ -4,7 +4,7 @@ class DatashareEvidencePage < BasePage
     element :checked_header, 'h1', text: 'HMRC income checked'
     element :check_income_details_header, 'h1', text: 'Check income details'
     element :application_complete_header, 'h1', text: 'Application complete'
-    element :not_eligible_header, 'h2', text: '✗ Not eligible for help with fees'
+    element :not_eligible_header, 'p', text: 'You need to pay the full fee amount'
 
 
     def click_submit
@@ -25,12 +25,6 @@ class DatashareEvidencePage < BasePage
     def click_complete_processing
       content.wait_until_complete_processing_visible
       content.complete_processing_click
-    end
-
-    def fill_in_low_income
-      {
-        low_income: result[:low_income]
-      }
     end
   end
 end
