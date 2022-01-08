@@ -20,12 +20,7 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def paye_income
-    sum = income.sum do |i|
-      i['grossEarningsForNics'].values.sum
-    end
-    sum.is_a?(Numeric) ? sum : 0
-  rescue NoMethodError, TypeError
-    0
+    HmrcIncomeParser.paye(income)
   end
 
   def work_tax_credit
@@ -52,14 +47,7 @@ class HmrcCheck < ActiveRecord::Base
   private
 
   def tax_credit_income_calculation(income_source)
-    sum = income_source.sum do |i|
-      i['payments'].sum do |payment|
-        BigDecimal(payment['amount'].to_s)
-      end
-    end
-    sum.is_a?(Numeric) ? sum : 0
-  rescue NoMethodError, TypeError
-    0
+    HmrcIncomeParser.tax_credit(income_source)
   end
 
   def update_evidence
