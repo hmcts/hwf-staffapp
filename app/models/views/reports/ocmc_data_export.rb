@@ -14,6 +14,7 @@ module Views
       end
 
       def to_csv
+        return "no resutls" unless data.first
         CSV.generate do |csv|
           csv << data.first.keys
           data.each do |row|

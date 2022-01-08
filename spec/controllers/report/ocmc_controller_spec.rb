@@ -14,7 +14,9 @@ RSpec.describe Report::OcmcController do
       year_date_to: '2015',
       entity_code: entity_code }
   }
-  let(:entity_code) { 'GE401' }
+  let(:entity_code) { office.id }
+  let(:office) { create :office, entity_code: 'GE401' }
+  let(:hmrc_office) { create :office, entity_code: Settings.evidence_check.hmrc.office_entity_code }
 
   context 'as an admin' do
     before { sign_in admin }
@@ -47,15 +49,25 @@ RSpec.describe Report::OcmcController do
             day_date_to: '31',
             month_date_to: '12',
             year_date_to: '2015',
-            entity_code: entity_code }
+            entity_code: office.id }
         }
         it 'does something' do
           allow(Views::Reports::OcmcDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::OcmcDataExport).to have_received(:new).with(date_from, date_to, 'GE401')
+          expect(Views::Reports::OcmcDataExport).to have_received(:new).with(date_from, date_to, office.id.to_s)
         end
       end
 
+      context 'HMRC export with valid data - both from and to dates' do
+        let(:entity_code) { hmrc_office.id }
+        before {
+          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
+          put :data_export, params: { forms_finance_report: dates }
+        }
+
+        it { is_expected.to have_http_status(:success) }
+
+      end
       context 'with valid data - both from and to dates' do
         before {
           allow(Views::Reports::OcmcDataExport).to receive(:new).and_return([])
@@ -65,16 +77,8 @@ RSpec.describe Report::OcmcController do
         it { is_expected.to have_http_status(:success) }
 
         context 'ccmcc office' do
-          let(:entity_code) { 'DH403' }
           it 'sets the filename' do
-            expect(response.headers['Content-Disposition']).to include('help-with-fees-DH403-applications-by-court-extract-')
-          end
-        end
-
-        context 'Birkenhead office' do
-          let(:entity_code) { 'GE401' }
-          it 'sets the filename' do
-            expect(response.headers['Content-Disposition']).to include('help-with-fees-GE401-applications-by-court-extract-')
+            expect(response.headers['Content-Disposition']).to include("help-with-fees-#{entity_code}-applications-by-court-extract-")
           end
         end
 
