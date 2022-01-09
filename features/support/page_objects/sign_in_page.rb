@@ -68,7 +68,7 @@ class SignInPage < BasePage
   end
 
   def hmrc_user_account
-    office = FactoryBot.create(:office, entity_code:  Settings.evidence_check.hmrc.office_entity_code)
+    office = FactoryBot.create(:office, entity_code: Settings.evidence_check.hmrc.office_entity_code)
     user = FactoryBot.create(:user, office: office)
     sign_in_with user
     user

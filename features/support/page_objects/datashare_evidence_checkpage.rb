@@ -6,7 +6,6 @@ class DatashareEvidencePage < BasePage
     element :application_complete_header, 'h1', text: 'Application complete'
     element :not_eligible_header, 'p', text: 'You need to pay the full fee amount'
 
-
     def click_submit
       content.wait_until_submit_visible
       content.submit.click
