@@ -62,7 +62,7 @@ class SignInPage < BasePage
   end
 
   def user_account
-    user = FactoryBot.create(:user, office: 1)
+    user = FactoryBot.create(:user)
     sign_in_with user
     user
   end
