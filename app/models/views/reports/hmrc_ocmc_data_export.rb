@@ -129,6 +129,7 @@ module Views
       def income_kind(value)
         return unless value
         income_kind_hash = YAML.parse(value).to_ruby
+        return if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
         partner = income_kind_hash[:partner].try(:join, ',')
         [applicant, partner].reject(&:blank?).join(", ")
