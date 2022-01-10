@@ -51,7 +51,7 @@ def add_screenshot
   page.driver.browser.save_screenshot(file_path)
   image = open(file_path, 'rb', &:read)
   encoded_image = Base64.encode64(image)
-  embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
+  attach(encoded_image, 'image/png;base64')
 end
 
 def add_browser_logs
@@ -63,7 +63,7 @@ def add_browser_logs
   # Remove warnings and info messages
   logs.reject! { |line| ['WARNING', 'INFO'].include?(line.first) }
   logs.any? == true
-  embed(current_time.strftime("%d/%m/%Y %H:%M" + "\n") + ( "Current URL: " + current_url + "\n") + logs.join("\n"), 'text/plain', 'BROWSER ERROR')
+  attach(current_time.strftime("%d/%m/%Y %H:%M" + "\n") + ( "Current URL: " + current_url + "\n") + logs.join("\n"), 'text/plain')
 end
 
 
