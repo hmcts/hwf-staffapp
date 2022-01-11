@@ -39,6 +39,7 @@ module Views
         "SELECT
         offices.name AS \"Office\",
         applications.reference as \"HwF reference number\",
+        applications.created_at as \"Created at\",
         details.fee as \"Fee\",
         applications.application_type as \"Application type\",
         details.form_name as \"Form\",
