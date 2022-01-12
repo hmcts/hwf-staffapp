@@ -21,14 +21,14 @@ FactoryBot.define do
       date_of_birth { Time.zone.today - 65.years }
     end
 
-    after(:build) do |applicant|
-      applicant.application ||= build(:application, applicant: applicant)
-    end
+    # after(:build) do |applicant|
+    #   applicant.application ||= build(:application, applicant: applicant)
+    # end
 
-    after(:stub) do |applicant|
-      around_stub(applicant) do
-        applicant.application ||= build_stubbed(:application, applicant: applicant)
-      end
-    end
+    # after(:stub) do |applicant|
+    #   around_stub(applicant) do
+    #     applicant.application ||= build_stubbed(:application, applicant: applicant)
+    #   end
+    # end
   end
 end
