@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 2022_01_13_100051) do
 
   create_table "hmrc_calls", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "call_params"
-    t.integer "hrmc_check_id", null: false
+    t.integer "hmrc_check_id", null: false
     t.string "endpoint_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -16,6 +16,8 @@ describe HmrcApiService do
   }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:hmrc_api_authentication) { instance_double(HwfHmrcApi::Authentication, access_token: 1, expires_in: 1) }
+  let(:hmrc_call) { instance_double(HmrcCall, id: correlation_id) }
+  let(:correlation_id) { '692f8ec9-0bd3-4f5d-ac54-3e21c94abec6' }
 
   describe "HMRC API gem" do
     before do
@@ -101,9 +103,21 @@ describe HmrcApiService do
 
       it "applicant params" do
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+        allow(HmrcCall).to receive(:create).and_return hmrc_call
         allow(hmrc_api).to receive(:match_user)
         service.match_user
-        expect(hmrc_api).to have_received(:match_user).with(applicant_info)
+        expect(hmrc_api).to have_received(:match_user).with(applicant_info, correlation_id)
+      end
+
+      context 'hmrc_call' do
+        before do
+          allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+          allow(hmrc_api).to receive(:match_user)
+          service.match_user
+        end
+
+        it { expect(HmrcCall.last.endpoint_name).to eq('match_user') }
+        it { expect(HmrcCall.last.call_params).to eq(applicant_info) }
       end
     end
 
@@ -119,36 +133,39 @@ describe HmrcApiService do
           allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
           allow(hmrc_api).to receive(:child_tax_credits).and_return([{ "awards" => ['child test'] }])
           allow(hmrc_api).to receive(:working_tax_credits).and_return([{ "awards" => ['work test'] }])
+          allow(HmrcCall).to receive(:create).and_return hmrc_call
         end
 
         it 'paye' do
           service.income('2020-02-28', '2020-03-30')
-          expect(hmrc_api).to have_received(:paye).with('2020-02-28', '2020-03-30')
+          expect(hmrc_api).to have_received(:paye).with('2020-02-28', '2020-03-30', correlation_id)
         end
 
         context 'tax_credit' do
           it "child_tax_credit" do
             service.tax_credit('2020-02-28', '2020-03-30')
-            expect(hmrc_api).to have_received(:child_tax_credits).with('2020-02-28', '2020-03-30')
+            expect(hmrc_api).to have_received(:child_tax_credits).with('2020-02-28', '2020-03-30', correlation_id)
           end
 
           it "work_tax_credit" do
             service.tax_credit('2020-02-28', '2020-03-30')
-            expect(hmrc_api).to have_received(:working_tax_credits).with('2020-02-28', '2020-03-30')
+            expect(hmrc_api).to have_received(:working_tax_credits).with('2020-02-28', '2020-03-30', correlation_id)
           end
         end
       end
 
       it "address" do
+        allow(HmrcCall).to receive(:create).and_return hmrc_call
         allow(hmrc_api).to receive(:addresses).and_return('address' => [{ endDate: "2019-01-01" }])
         service.address('2020-02-28', '2020-03-30')
-        expect(hmrc_api).to have_received(:addresses).with('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:addresses).with('2020-02-28', '2020-03-30', correlation_id)
       end
 
       it "employment" do
+        allow(HmrcCall).to receive(:create).and_return hmrc_call
         allow(hmrc_api).to receive(:employments).and_return('employment' => [{ startDate: "2019-01-02" }])
         service.employment('2020-02-28', '2020-03-30')
-        expect(hmrc_api).to have_received(:employments).with('2020-02-28', '2020-03-30')
+        expect(hmrc_api).to have_received(:employments).with('2020-02-28', '2020-03-30', correlation_id)
       end
 
       context 'no results' do
@@ -193,7 +210,7 @@ describe HmrcApiService do
           allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
           allow(hmrc_api).to receive(:child_tax_credits).and_return([{ "awards" => ['child test'] }])
           allow(hmrc_api).to receive(:working_tax_credits).and_return([{ "awards" => ['work test'] }])
-
+          allow(HmrcCall).to receive(:create).and_return hmrc_call
           service.income('2020-02-28', '2020-03-30')
         end
 
@@ -216,6 +233,10 @@ describe HmrcApiService do
 
           it "work" do
             expect(service.hmrc_check.work_tax_credit[0]).to eq 'work test'
+          end
+
+          it "hmrc_call" do
+            expect(HmrcCall).to have_received(:create).exactly(3).times
           end
         end
       end
