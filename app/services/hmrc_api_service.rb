@@ -19,36 +19,36 @@ class HmrcApiService
   end
 
   def paye(from, to)
-    data = @hwf.paye(from, to)
+    data = @hwf.paye(from, to, uuid)
     store_response_data('income', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def address(from, to)
-    data = @hwf.addresses(from, to)
+    data = @hwf.addresses(from, to, uuid)
     store_response_data('address', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def employment(from, to)
-    data = @hwf.employments(from, to)
+    data = @hwf.employments(from, to, uuid)
     store_response_data('employment', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def tax_credit(from, to)
-    child = @hwf.child_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
-    work = @hwf.working_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
+    child = @hwf.child_tax_credits(from, to, uuid).try(:[], 0).try(:[], 'awards')
+    work = @hwf.working_tax_credits(from, to, uuid).try(:[], 0).try(:[], 'awards')
     @hmrc_check.tax_credit = { child: child, work: work }
     @hmrc_check.save
   end
 
   def hmrc_api_innitialize
     @hwf = HwfHmrcApi.new(hmrc_api_attributes)
-    @hwf.match_user(user_params)
+    @hwf.match_user(user_params, uuid)
     update_hmrc_token(@hwf.authentication.access_token, @hwf.authentication.expires_in)
   end
 
@@ -110,6 +110,10 @@ class HmrcApiService
   def store_request(from, to)
     @hmrc_check.request_params = { date_range: { from: from, to: to } }
     @hmrc_check.save
+  end
+
+  def uuid
+    SecureRandom.uuid
   end
 
 end
