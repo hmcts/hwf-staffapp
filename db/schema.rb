@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_090515) do
+ActiveRecord::Schema.define(version: 2022_01_13_100051) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "tablefunc"
 
@@ -224,6 +225,14 @@ ActiveRecord::Schema.define(version: 2021_10_12_090515) do
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
+  create_table "hmrc_calls", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "call_params"
+    t.integer "hmrc_check_id", null: false
+    t.string "endpoint_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "hmrc_checks", force: :cascade do |t|
     t.integer "evidence_check_id", null: false
     t.integer "user_id"
@@ -239,6 +248,7 @@ ActiveRecord::Schema.define(version: 2021_10_12_090515) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "purged_at"
     t.integer "additional_income", default: 0
+    t.string "sa_income"
   end
 
   create_table "hmrc_tokens", force: :cascade do |t|

@@ -18,37 +18,53 @@ class HmrcApiService
     tax_credit(from, to)
   end
 
+  # from_date format: YYYY-MM-DD
+  # to_date format: YYYY-MM-DD
   def paye(from, to)
-    data = @hwf.paye(from, to)
+    id = hmrc_call({ from: from, to: to }, :paye)
+    data = @hwf.paye(from, to, id)
     store_response_data('income', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def address(from, to)
-    data = @hwf.addresses(from, to)
+    id = hmrc_call({ from: from, to: to }, :address)
+    data = @hwf.addresses(from, to, id)
     store_response_data('address', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def employment(from, to)
-    data = @hwf.employments(from, to)
+    id = hmrc_call({ from: from, to: to }, :employment)
+    data = @hwf.employments(from, to, id)
     store_response_data('employment', data)
   end
 
   # from_date format: YYYY-MM-DD
   # to_date format: YYYY-MM-DD
   def tax_credit(from, to)
-    child = @hwf.child_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
-    work = @hwf.working_tax_credits(from, to).try(:[], 0).try(:[], 'awards')
+    child = child_tax_credit(from, to)
+    work = work_tax_credit(from, to)
     @hmrc_check.tax_credit = { child: child, work: work }
     @hmrc_check.save
   end
 
+  def child_tax_credit(from, to)
+    id = hmrc_call({ from: from, to: to }, :child_tax_credits)
+    @hwf.child_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+  end
+
+  def work_tax_credit(from, to)
+    id = hmrc_call({ from: from, to: to }, :working_tax_credits)
+    @hwf.working_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+  end
+
   def hmrc_api_innitialize
     @hwf = HwfHmrcApi.new(hmrc_api_attributes)
-    @hwf.match_user(user_params)
+    id = hmrc_call(user_params, :match_user)
+    @hwf.match_user(user_params, id)
     update_hmrc_token(@hwf.authentication.access_token, @hwf.authentication.expires_in)
   end
 
@@ -110,6 +126,15 @@ class HmrcApiService
   def store_request(from, to)
     @hmrc_check.request_params = { date_range: { from: from, to: to } }
     @hmrc_check.save
+  end
+
+  def uuid
+    SecureRandom.uuid
+  end
+
+  def hmrc_call(call_params, endpoint)
+    call = HmrcCall.create(call_params: call_params, endpoint_name: endpoint, hmrc_check: @hmrc_check)
+    call.id
   end
 
 end
