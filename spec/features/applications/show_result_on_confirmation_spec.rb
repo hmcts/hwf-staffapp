@@ -30,22 +30,6 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
       click_button 'Next'
     end
 
-    context 'exceeds the savings threshold' do
-      before do
-        application_details_step
-        choose :application_min_threshold_exceeded_true
-        fill_in :application_amount, with: 3500
-        click_button 'Next'
-      end
-
-      scenario 'the summary page shows the benefit data' do
-        expect(page).to have_xpath('//h1', text: 'Check details')
-        expect(page).to have_xpath('//h2', text: 'Savings and investments')
-        expect(page).to have_no_xpath('//h2', text: 'Income')
-        expect(page).to have_no_xpath('//h2', text: 'Benefits')
-      end
-    end
-
     context 'has wrong DOB' do
       before do
         application_details_step
@@ -71,6 +55,7 @@ RSpec.feature 'The result is shown on the confirmation page', type: :feature do
         click_button 'Next'
         click_button 'Next'
         click_button 'Next'
+
         expect(page).to have_content('Date of birth22 July 1995')
       end
     end
