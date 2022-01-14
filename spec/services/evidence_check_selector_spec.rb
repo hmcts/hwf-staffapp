@@ -5,24 +5,25 @@ describe EvidenceCheckSelector do
 
   let(:current_time) { Time.zone.now }
   let(:expires_in_days) { 2 }
-  let(:applicant) { create :applicant_with_all_details, application: application }
+  let(:applicant) { create :applicant_with_all_details }
   describe '#decide!' do
     subject(:decision) do
       Timecop.freeze(current_time) do
         evidence_check_selector.decide!
       end
+
+      application.evidence_check
     end
 
     context 'for a benefit application' do
-      let(:application) { create :application, :income_type, refund: true, benefits: false }
+      let(:application) { create :application }
 
       before do
-        # create :application, :income_type, refund: true, benefits: false, applicant: applicant
+        create_list :application, 9
       end
 
       it 'never selects the application for evidence_check' do
-        binding.pry
-        expect(decision).to be nil
+        is_expected.to be nil
       end
     end
 
