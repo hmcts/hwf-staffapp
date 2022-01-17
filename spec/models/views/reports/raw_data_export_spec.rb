@@ -36,7 +36,7 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: Time.zone.now } }
     before do
       # include these
-      create_list :application_full_remission, 7, :processed_state, shared_parameters
+      create_list :application_full_remission, 1, :processed_state, shared_parameters
       create :application_full_remission, :processed_state, alternative_parameters
       create :application_part_remission, :processed_state, shared_parameters
       create :application_no_remission, :processed_state, shared_parameters
@@ -48,11 +48,10 @@ RSpec.describe Views::Reports::RawDataExport do
       create :application_full_remission, :deleted_state, shared_parameters
     end
 
-    it { is_expected.to eq 10 }
+    it { is_expected.to eq 4 }
   end
 
   describe 'cost estimations' do
-    subject { data.total_count }
     let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
     let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
     let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34 }
@@ -64,32 +63,51 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant2) { create :applicant_with_all_details, married: true, ni_number: 'SN123456C', ho_number: nil }
     let(:applicant3) { create :applicant_with_all_details, married: true, ni_number: nil, ho_number: nil }
 
-    before do
-      @full_no_ec = create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, applicant: applicant3, income_min_threshold_exceeded: true
-      @part_no_ec = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                          amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part
-      @part_no_ec_return_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                                    amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return
-      @part_no_ec_none_pp = create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                                  amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none
-      @full_ec = create :application_full_remission, :processed_state, evidence_check: evidence_check_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                       amount_to_pay: 0, decision_cost: 300, fee: 300
-      @part_ec = create :application_part_remission, :processed_state, evidence_check: evidence_check_part, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                       amount_to_pay: 50, decision_cost: 200, fee: 300
-      @none_no_ec = create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                        amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000
-      @none_ec = create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                     amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3,
-                                                                     income: 2000, evidence_check: evidence_check_none, income_max_threshold_exceeded: true
-    end
+    let(:full_no_ec) {
+      create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, applicant: applicant3, income_min_threshold_exceeded: true
+    }
 
-    it { is_expected.to eq 8 }
+    let(:part_no_ec) {
+      create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part
+    }
 
+    let(:part_no_ec_return_pp) {
+      create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return
+    }
+
+    let(:part_no_ec_none_pp) {
+      create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none
+    }
+
+    let(:full_ec) {
+      create :application_full_remission, :processed_state, evidence_check: evidence_check_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 0, decision_cost: 300, fee: 300
+    }
+
+    let(:part_ec) {
+      create :application_part_remission, :processed_state, evidence_check: evidence_check_part, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                            amount_to_pay: 50, decision_cost: 200, fee: 300
+    }
+
+    let(:none_no_ec) {
+      create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                          amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000
+    }
+
+    let(:none_ec) {
+      create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                          amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3,
+                                                          income: 2000, evidence_check: evidence_check_none, income_max_threshold_exceeded: true
+    }
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        full_no_ec
         export = data.to_csv
-        jurisdiction = @full_no_ec.detail.jurisdiction.name
+        jurisdiction = full_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.24,0.0,300.24,income,ABC123,,false,false,10,under,None,1,true,full,0.0,300.24,paper"
         expect(export).to include(row)
       end
@@ -97,22 +115,25 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'part_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        part_no_ec
         export = data.to_csv
-        jurisdiction = @part_no_ec.detail.jurisdiction.name
+        jurisdiction = part_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,50.0,250.0,paper"
         expect(export).to include(row)
       end
 
       it 'part payment outcome is "return"' do
+        part_no_ec_return_pp
         export = data.to_csv
-        jurisdiction = @part_no_ec_return_pp.detail.jurisdiction.name
+        jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
 
       it 'part payment outcome is "none"' do
+        part_no_ec_none_pp
         export = data.to_csv
-        jurisdiction = @part_no_ec_none_pp.detail.jurisdiction.name
+        jurisdiction = part_no_ec_none_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
@@ -120,8 +141,9 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'no_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        none_no_ec
         export = data.to_csv
-        jurisdiction = @none_no_ec.detail.jurisdiction.name
+        jurisdiction = none_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.34,300.34,0.0,income,ABC123,,false,false,2000,,Home Office number,3,true,none,300.34,0.0,paper"
         expect(export).to include(row)
       end
@@ -129,8 +151,9 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'no_remission with evidence check' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        none_ec
         export = data.to_csv
-        jurisdiction = @none_ec.detail.jurisdiction.name
+        jurisdiction = none_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,NI number,3,true,none,300.34,0.0,paper"
         expect(export).to include(row)
       end
@@ -138,8 +161,9 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'full_remission with evidence check' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        full_ec
         export = data.to_csv
-        jurisdiction = @full_ec.detail.jurisdiction.name
+        jurisdiction = full_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,0.0,300.0,income,ABC123,,false,false,10,,None,1,true,full,0.0,300.0,paper"
         expect(export).to include(row)
       end
@@ -147,8 +171,9 @@ RSpec.describe Views::Reports::RawDataExport do
 
     context 'part_remission with evidence check' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
+        part_ec
         export = data.to_csv
-        jurisdiction = @part_ec.detail.jurisdiction.name
+        jurisdiction = part_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,100.0,200.0,paper"
         expect(export).to include(row)
       end
