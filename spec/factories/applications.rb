@@ -67,6 +67,7 @@ FactoryBot.define do
 
     trait :confirm do
       benefits { false }
+      reference { generate(:reference_number) }
       outcome { 'full' }
       application_type { 'income' }
     end
@@ -129,6 +130,7 @@ FactoryBot.define do
     factory :application_full_remission do
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [:married] }
+      reference { generate(:reference_number) }
       fee { 410 }
       benefits { false }
       income { 10 }

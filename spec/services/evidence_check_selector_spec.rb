@@ -440,6 +440,7 @@ describe EvidenceCheckSelector do
       before do
         ev_stub = instance_double(EvidenceCheckFlag, active?: true)
         allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
+        Settings.evidence_check.hmrc.office_entity_code = 'dig'
       end
 
       context 'single applicant' do

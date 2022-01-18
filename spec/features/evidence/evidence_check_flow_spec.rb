@@ -257,6 +257,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'rejected' do
         let(:outcome) { 'none' }
         let(:income) { 2000 }
+        let(:amount) { 300 }
         let(:paid_by) { evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]) }
 
         it { expect(page).to have_content 'This is because you have more than the maximum amount of income allowed.' }
@@ -265,9 +266,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content(user.name) }
 
-        it { expect(page).to have_content(evidence.amount_to_pay) }
-
-        it { expect(page).to have_content "You need to pay the full fee amount of by #{paid_by}." }
+        it { expect(page).to have_content "You need to pay the full fee amount of £300 by #{paid_by}." }
 
         it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
 

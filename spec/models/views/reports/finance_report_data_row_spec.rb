@@ -95,9 +95,10 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
 
     before do
       # include these
-      create_list :application_full_remission, 7, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_part_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :decision_override, application: failed_application
+      create :application_full_remission, :processed_state, application_type: nil, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
 
       # and exclude the following
       create :application_no_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
@@ -109,11 +110,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       create :application_part_remission, :processed_state, business_entity: digital_business_entity, office: business_entity.office, decision_date: Time.zone.now
     end
 
-    it { is_expected.to eq 9 }
+    it { is_expected.to eq 4 }
 
-    context 'missing application_type' do
-      before { create :application_full_remission, :processed_state, application_type: nil, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now }
-      it { is_expected.to eq 10 }
-    end
   end
 end
