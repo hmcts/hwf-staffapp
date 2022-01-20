@@ -7,6 +7,7 @@ FactoryBot.define do
     evidence_check
     ni_number { 'SN789456C' }
     date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
+    request_params { { date_range: { from: "1/2/2021", to: "1/3/2021" } } }
     user
   end
 end

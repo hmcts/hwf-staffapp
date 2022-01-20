@@ -48,7 +48,7 @@ class HmrcCheck < ActiveRecord::Base
   private
 
   def tax_credit_income_calculation(income_source)
-    HmrcIncomeParser.tax_credit(income_source)
+    HmrcIncomeParser.tax_credit(income_source, request_params[:date_range])
   end
 
   def update_evidence

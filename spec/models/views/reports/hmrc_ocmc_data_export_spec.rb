@@ -42,10 +42,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
                office: office, evidence_check: evidence_check, income_kind: income_kind
       }
       let(:evidence_check) { create(:evidence_check) }
-      let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago, income: paye_income, tax_credit: tax_credit) }
+      let(:hmrc_check) {
+        create(:hmrc_check, evidence_check: evidence_check,
+                            created_at: 1.day.ago, income: paye_income, tax_credit: tax_credit, request_params: date_range)
+      }
       let(:income_kind) { {} }
       let(:tax_credit) { {} }
       let(:paye_income) { {} }
+      let(:date_range) { { date_range: { from: "1/2/2021", to: "1/3/2021" } } }
 
       before { hmrc_check }
 
@@ -63,11 +67,11 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           { child: [{ "payProfCalcDate" => "2020-08-18",
                       "totalEntitlement" => 18765.23,
                       "childTaxCredit" => { "childCareAmount" => 930.98, "ctcChildAmount" => 730.49, "familyAmount" => 100.49, "babyAmount" => 100, "paidYTD" => 8976.34 },
-                      "payments" => [{ "amount" => 76.34 }] }],
+                      "payments" => [{ "startDate" => "2021-06-24", "endDate" => "2022-03-31", "frequency" => 1, "amount" => 7634 }] }],
             work: [{ "payProfCalcDate" => "2020-08-18",
                      "totalEntitlement" => 18765.23,
                      "workingTaxCredit" => { "amount" => 930.98, "paidYTD" => 8976.34 },
-                     "payments" => [{ "amount" => 6.34 }] }] }
+                     "payments" => [{ "startDate" => "2021-06-24", "endDate" => "2022-03-31", "frequency" => 1, "amount" => 634 }] }] }
         }
         it "calculates correct value" do
           data_row = data[3]

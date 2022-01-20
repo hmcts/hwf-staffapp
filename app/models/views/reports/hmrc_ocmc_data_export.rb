@@ -105,6 +105,7 @@ module Views
            WHEN ec.income_check_type = 'hmrc' AND ec.completed_at IS NOT NULL then ec.income
            ELSE NULL
         END as \"Income processed\",
+        hc.request_params as \"HMRC request date range\",
         hc.tax_credit
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -140,7 +141,7 @@ module Views
 
       def hmrc_total_income(row)
         paye = hmrc_income(row['HMRC total income'])
-        tax_credits = tax_credit(row['tax_credit'])
+        tax_credits = tax_credit(row['tax_credit'], row['HMRC request date range'])
         total = paye + tax_credits
         total.positive? ? total : ''
       end
@@ -151,12 +152,19 @@ module Views
         HmrcIncomeParser.paye(income_hash)
       end
 
-      def tax_credit(value)
+      def tax_credit(value, date_range)
         return 0 if value.blank?
+        date_formatted = date_range
         tax_credit_hash = YAML.parse(value).to_ruby
-        work = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :work))
-        child = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :child))
+        work = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :work), date_formatted)
+        child = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :child), date_formatted)
         work + child
+      end
+
+      def date_formatted(date_range)
+        return nil if value.blank?
+        request_params_hash = YAML.parse(date_range).to_ruby
+        request_params_hash[:date_range]
       end
     end
   end
