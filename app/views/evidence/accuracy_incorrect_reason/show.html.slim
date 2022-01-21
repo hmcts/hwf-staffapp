@@ -8,7 +8,7 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           h1.govuk-heading-xl class= "govuk-!-padding-top-7" What is the reason for rejecting the evidence?
 
-        span#how-contacted-conditional-hint.govuk-hint Select all that apply.
+        div#how-contacted-conditional-hint.govuk-hint Select all that apply.
 
         - if @form.errors[:incorrect_reason_category].present?
           span.govuk-error-message

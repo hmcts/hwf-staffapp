@@ -1,7 +1,7 @@
-footer.govuk-footer role= "contentinfo"
+footer.govuk-footer role="contentinfo"
   .govuk-width-container
     .govuk-footer__navigation
-      .govuk-footer__section
+      .govuk-footer__section.govuk-grid-column-one-half
         h2.govuk-footer__heading.govuk-heading-m
           = t('footer.contact_us.heading')
         h3.govuk-heading-s
@@ -12,7 +12,7 @@ footer.govuk-footer role= "contentinfo"
         p = link_to t('footer.contact_us.tell_us_what_you_think'), current_user ? feedback_path : "mailto:#{Settings.mail.feedback}"
 
       // GUIDES
-      .govuk-footer__section class="govuk-!-width-one-third"
+      .govuk-footer__section.govuk-grid-column-one-half
         h2.govuk-footer__heading.govuk-heading-m
           = t('footer.staff_guides.heading')
         .govuk-grid-row

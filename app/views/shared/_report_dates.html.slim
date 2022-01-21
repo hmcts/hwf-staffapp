@@ -18,7 +18,7 @@ h1.govuk-heading-xl = header
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend
         = t('date_from', scope: @form.i18n_scope)
-      span.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+      div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
       - if @form.errors[:date_from].present?
         span.govuk-error-message
           = f.label :date_from, @form.errors[:date_from].join(', '), class: 'error'
@@ -40,7 +40,7 @@ h1.govuk-heading-xl = header
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend
         = t('date_to', scope: @form.i18n_scope)
-      span.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+      div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
       - if @form.errors[:date_to].present?
         span.govuk-error-message
           = f.label :date_to, @form.errors[:date_to].join(', '), class: 'error'
