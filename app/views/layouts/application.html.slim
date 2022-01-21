@@ -34,10 +34,10 @@
 
 - content_for :proposition_header
   a.govuk-header__link.govuk-header__link--service-name href="/" = Rails.application.config.app_title
-  button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
-  nav
+  nav.govuk-header__navigation
+    button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
     - if user_signed_in?
-      ul#navigation.govuk-header__navigation aria-label="Top Level Navigation"
+      ul#navigation.govuk-header__navigation-list aria-label="Top Level Navigation"
         li.govuk-header__navigation-item
           span Welcome #{current_user.name}
         li.govuk-header__navigation-item
@@ -61,7 +61,7 @@
         li.govuk-header__navigation-item
           = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
     - else
-      ul#navigation.govuk-header__navigation
+      ul#navigation.govuk-header__navigation-list
         li.govuk-header__navigation-item
           = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-header__link'}
 

@@ -24,7 +24,7 @@
           .panel-indent.util_mt-0.util_mb-0#children-only
             .govuk-form-group
               = f.label :children, class: 'govuk-label'
-              span.govuk-hint = t('children_hint', scope: @form.i18n_scope)
+              div.govuk-hint = t('children_hint', scope: @form.i18n_scope)
               - if @form.errors[:children].present?
                 span.govuk-error-message
                   = f.label :children, @form.errors[:children].join(', '), class: 'error'
@@ -35,7 +35,7 @@
               - if @form.errors[:income].present?
                 span.govuk-error-message
                   = f.label :income, @form.errors[:income].join(', '), class: 'error'
-              span#amount-hint.govuk-hint
+              div#amount-hint.govuk-hint
                 = t('income_hint', scope: @form.i18n_scope)
 
               .field-wrapper
