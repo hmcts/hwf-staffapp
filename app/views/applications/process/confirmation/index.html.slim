@@ -15,7 +15,7 @@
       - if @application.detail.refund? && @application.outcome.eql?('part')
         h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(amount_to_refund(@application))}")
       - else
-        h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@application.amount_to_pay)}")
+        h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@confirm.amount_to_pay)}")
 
 
     .util_mt-medium
@@ -36,13 +36,13 @@
     -elsif !@application.detail.refund?
       h2.govuk-heading-m Next steps
 
-      -if @application.outcome.eql?('full')
+      -if @confirm.outcome.eql?('full')
         p.govuk-body Write the reference number on the top right corner of the paper form
         p.govuk-body Copy the reference number into the case management system
         p.govuk-body The applicant’s process can now be issued
 
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
-      -elsif @application.outcome.eql?('part')
+      -elsif @confirm.outcome.eql?('part')
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
         p.govuk-body Store the application form in a secure location until you receive the part payment.
@@ -115,7 +115,7 @@
             full_name: @application.applicant.full_name,
             user_name: current_user.name,
             full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
-            part_payment_amount: currency_format(parse_amount_to_pay(@application.amount_to_pay)),
+            part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
             total_income: currency_format(@application.income),
             children: @application.children.to_i,
             date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))

@@ -13,7 +13,9 @@ module Evidence
       @application = evidence.application
 
       process_evidence_check_flag
-      render :complete
+      @confirm = Views::Confirmation::Result.new(@application)
+      @form = Forms::Application::DecisionOverride.new(@application)
+      render 'applications/process/confirmation/index'
     rescue ResolverService::UndefinedOutcome
       load_form
       flash[:alert] = "Undefined evidence check outcome, please contact support"

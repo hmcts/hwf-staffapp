@@ -60,12 +60,28 @@ module Views
         @application.decision_override.present? && @application.decision_override.id
       end
 
+      def amount_to_pay
+        if @application.evidence_check && !@application.waiting_for_evidence?
+          @application.evidence_check.amount_to_pay
+        else
+          @application.amount_to_pay
+        end
+      end
+
       def result
         return 'granted' if decision_overridden?
-        return 'callout' if @application.evidence_check.present?
+        return 'callout' if @application.waiting_for_evidence?
         return 'full' if return_full?
         return 'none' if @application.outcome.nil?
-        ['full', 'part', 'none'].include?(@application.outcome) ? @application.outcome : 'error'
+        ['full', 'part', 'none'].include?(outcome) ? outcome : 'error'
+      end
+
+      def outcome
+        if @application.evidence_check && !@application.waiting_for_evidence?
+          @application.evidence_check.outcome
+        else
+          @application.outcome
+        end
       end
 
       private

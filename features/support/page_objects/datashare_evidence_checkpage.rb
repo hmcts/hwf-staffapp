@@ -4,7 +4,7 @@ class DatashareEvidencePage < BasePage
     element :checked_header, 'h1', text: 'HMRC income checked'
     element :check_income_details_header, 'h1', text: 'Check income details'
     element :application_complete_header, 'h1', text: 'Application complete'
-    element :not_eligible_header, 'p', text: 'You need to pay the full fee amount'
+    element :not_eligible_header, 'h2', text: 'Not eligible for help with fees'
 
     def click_submit
       content.wait_until_submit_visible
