@@ -48,6 +48,7 @@ class HmrcCheck < ActiveRecord::Base
   private
 
   def tax_credit_income_calculation(income_source)
+    return 0 if request_params.blank?
     HmrcIncomeParser.tax_credit(income_source, request_params[:date_range])
   end
 
