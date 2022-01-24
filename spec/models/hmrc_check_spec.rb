@@ -248,6 +248,11 @@ RSpec.describe HmrcCheck, type: :model do
 
       it { expect(hmrc_check.work_tax_credit_income).to eq 248.16 }
       it { expect(hmrc_check.child_tax_credit_income).to eq 0 }
+      context 'no date range' do
+        let(:date_range) { nil }
+        it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
+        it { expect(hmrc_check.child_tax_credit_income).to eq 0 }
+      end
     end
 
   end

@@ -87,6 +87,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             data_row = data[3]
             expect(data_row).to include('120.04')
           end
+
+          context 'no date' do
+            let(:date_range) { nil }
+            it "calculates correct value" do
+              data_row = data[3]
+              expect(data_row).to include('120.04')
+            end
+          end
         end
       end
 
