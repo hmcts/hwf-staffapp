@@ -10,7 +10,11 @@ module ResultHelper
   end
 
   def display_income_failed_letter?(application)
-    return false if application.income_max_threshold_exceeded.nil?
+    if application.evidence_check
+      return income_increase?(application)
+    elsif application.income_max_threshold_exceeded.nil?
+      return false
+    end
     application.income_max_threshold_exceeded
   end
 
@@ -21,6 +25,8 @@ module ResultHelper
   end
 
   def income_value(application)
+    return currency_format(application.evidence_check.income) if application.evidence_check&.income&.positive?
+
     return currency_format(application.income) unless application.income.nil?
     if application.income_min_threshold_exceeded == true &&
        application.income_max_threshold_exceeded == true

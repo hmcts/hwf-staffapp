@@ -83,7 +83,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       click_button 'Next'
       click_link 'Next'
       click_button 'Complete processing'
-      expect(page).to have_content('Processing complete')
+
+      expect(page).to have_content('Application complete')
 
       visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do

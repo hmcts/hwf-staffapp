@@ -80,8 +80,14 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
           expect(EvidenceCheck).to have_received(:find).with(evidence.id.to_s)
         end
 
-        it { expect(response).to render_template(:complete) }
         it { expect(flag_service).to have_received(:process_flag) }
+        it 'renders the correct template' do
+          expect(response).to render_template('applications/process/confirmation/index')
+        end
+
+        it { expect(assigns(:application)).to eql(evidence.application) }
+        it { expect(assigns(:confirm)).to be_an_instance_of(Views::Confirmation::Result) }
+        it { expect(assigns(:form)).to be_an_instance_of(Forms::Application::DecisionOverride) }
       end
 
       context 'can not be flagged' do

@@ -76,7 +76,7 @@
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
               income_total: income_value(@application),
-              expiry_date: @application.payment_expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+              expiry_date: @confirm.expires_at)
 
 
       -elsif display_benefit_failed_letter?(@application)
@@ -92,7 +92,7 @@
               full_name: @application.applicant.full_name,
               user_name: current_user.name,
               amount_to_pay: currency_format(@application.detail.fee),
-              date_for_part_payment: @application.payment_expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+              date_for_part_payment: @confirm.expires_at)
 
       -else
         p.govuk-body Write the reference number on the top right corner of the paper form
@@ -118,8 +118,10 @@
             part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
             total_income: currency_format(@application.income),
             children: @application.children.to_i,
-            date_for_part_payment: @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long]))
+            date_for_part_payment: @confirm.expires_at)
 
 
 
     = link_to 'Back to start', root_path, class: 'govuk-button'
+    - if @application.evidence_check && !@application.waiting_for_evidence?
+      = link_to 'Back to list', evidence_checks_path, class: 'govuk-button govuk-button--secondary', id: 'back-to-evidence-list'

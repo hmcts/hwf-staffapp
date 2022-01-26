@@ -128,7 +128,10 @@ class EvidenceController < ApplicationController
   end
 
   def evidence_confirmation
-    @confirmation = evidence
+    @application = evidence.application
+    @confirm = Views::Confirmation::Result.new(@application)
+    @form = Forms::Application::DecisionOverride.new(@application)
+    render 'applications/process/confirmation/index'
   end
 
   def only_non_processed_applications
