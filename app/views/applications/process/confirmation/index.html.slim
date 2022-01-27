@@ -104,7 +104,7 @@
 
 
     -if @application.detail.refund? && !@confirm.decision_overridden?
-      = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @application.outcome })
+      = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @confirm.outcome })
 
     -elsif @application.waiting_for_part_payment?
       p: strong = link_to 'See the guides', guide_path, target: 'blank'
