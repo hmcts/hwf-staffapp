@@ -321,12 +321,12 @@ RSpec.describe EvidenceController, type: :controller do
       end
 
       it 'renders the correct template' do
-        expect(response).to render_template('confirmation')
+        expect(response).to render_template('applications/process/confirmation/index')
       end
 
-      it 'assigns the evidence check as confirmation' do
-        expect(assigns(:confirmation)).to eql(evidence)
-      end
+      it { expect(assigns(:application)).to eql(evidence.application) }
+      it { expect(assigns(:confirm)).to be_an_instance_of(Views::Confirmation::Result) }
+      it { expect(assigns(:form)).to be_an_instance_of(Forms::Application::DecisionOverride) }
 
       context 'processed evidence' do
         let(:evidence) { create :evidence_check, :completed, application_id: application.id }
@@ -336,7 +336,7 @@ RSpec.describe EvidenceController, type: :controller do
         end
 
         it 'renders the correct template' do
-          expect(response).to render_template('confirmation')
+          expect(response).to render_template('applications/process/confirmation/index')
         end
       end
     end

@@ -8,10 +8,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:application) { create :application_full_remission, user: user, office: office }
+  let(:application) { create :application_full_remission, user: user, office: office, state: state }
   let(:outcome) { nil }
   let(:amount) { nil }
   let(:income) { nil }
+  let(:state) { 3 }
   let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount, income: income }
 
   before { login_as user }
@@ -152,7 +153,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       it 'clicking the Complete processing button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
-        expect(page).to have_content('Processing complete')
+        expect(page).to have_content('Application complete')
       end
     end
 
@@ -177,7 +178,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
         end
 
         it 'redirects to the confirmation page' do
-          expect(page).to have_content('Processing complete')
+          expect(page).to have_content('Application complete')
         end
       end
     end
@@ -198,7 +199,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       it 'clicking the Next button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
-        expect(page).to have_content('Processing complete')
+        expect(page).to have_content('Application complete')
       end
     end
 
@@ -214,9 +215,12 @@ RSpec.feature 'Evidence check flow', type: :feature do
   end
 
   context 'when on "Evidence confirmation" page' do
-    before { visit confirmation_evidence_path(id: evidence.id) }
+    before {
+      create :part_payment, application: evidence.application
+      visit confirmation_evidence_path(id: evidence.id)
+    }
     let(:outcome) { 'full' }
-    it { expect(page).to have_content 'Processing complete' }
+    it { expect(page).to have_content 'Eligible for help with fees' }
 
     context 'when the reference_date is passed' do
       let(:outcome) { 'full' }
@@ -241,7 +245,8 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'part' do
         let(:outcome) { 'part' }
         let(:amount) { 300 }
-        let(:pay_by_date) { evidence.expires_at.strftime('%-d %B %Y') }
+        let(:pay_by_date) { application.part_payment.expires_at.strftime('%-d %B %Y') }
+        let(:state) { 2 }
 
         it { expect(page).to have_content "You’re eligible to get some money taken off the full fee of £410." }
 
@@ -257,7 +262,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
       context 'rejected' do
         let(:outcome) { 'none' }
         let(:income) { 2000 }
-        let(:amount) { 300 }
+        let(:amount) { application.detail.fee.to_i }
         let(:paid_by) { evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]) }
 
         it { expect(page).to have_content 'This is because you have more than the maximum amount of income allowed.' }
@@ -266,7 +271,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
         it { expect(page).to have_content(user.name) }
 
-        it { expect(page).to have_content "You need to pay the full fee amount of £300 by #{paid_by}." }
+        it { expect(page).to have_content "You need to pay the full fee amount of £#{amount} by #{paid_by}." }
 
         it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
 

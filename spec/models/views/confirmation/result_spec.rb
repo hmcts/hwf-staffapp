@@ -203,11 +203,23 @@ RSpec.describe Views::Confirmation::Result do
 
   describe '#result' do
     subject { view.result }
+    let(:application) {
+      build_stubbed(:application, :income_type, state: state, outcome: outcome)
+    }
+    let(:state) { 3 }
+    let(:outcome) { 'none' }
 
     context 'when an application has an evidence_check' do
-      before { build_stubbed(:evidence_check, application: application) }
+      before { build_stubbed(:evidence_check, application: application, outcome: 'full') }
 
-      it { is_expected.to eql 'callout' }
+      it { is_expected.to eql 'full' }
+
+      context 'and is in waiting for evidence state' do
+        let(:state) { 1 }
+        let(:outcome) { 'none' }
+
+        it { is_expected.to eql 'callout' }
+      end
     end
 
     context 'when an application has had benefits overridden' do
@@ -240,6 +252,33 @@ RSpec.describe Views::Confirmation::Result do
         it { is_expected.to eql 'granted' }
       end
     end
+  end
 
+  describe "#expires_at" do
+    subject {
+      Timecop.freeze(Date.new(2022, 1, 8)) {
+        view.expires_at
+      }
+    }
+    before { Settings.part_payment.expires_in_days = 1 }
+
+    context 'application' do
+      it { is_expected.to eql('9 January 2022') }
+    end
+
+    context 'evidence_check' do
+      let(:evidence_check) { build :evidence_check, expires_at: '10 January 2022' }
+      let(:application) { build :application, state: :processed, evidence_check: evidence_check }
+
+      it { is_expected.to eql('10 January 2022') }
+    end
+
+    context 'part_payment' do
+      let(:evidence_check) { build :evidence_check, expires_at: '10 January 2022' }
+      let(:part_payment) { build :part_payment, expires_at: '11 January 2022' }
+      let(:application) { build :application, state: :waiting_for_part_payment, evidence_check: evidence_check, part_payment: part_payment }
+
+      it { is_expected.to eql('11 January 2022') }
+    end
   end
 end
