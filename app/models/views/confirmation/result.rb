@@ -41,7 +41,7 @@ module Views
         if decision_overridden? && income_over_limit?
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         else
-          convert_to_pass_fail(['full', 'part'].include?(@application.outcome).to_s)
+          convert_to_pass_fail(['full', 'part'].include?(outcome).to_s)
         end
       end
 
@@ -60,12 +60,38 @@ module Views
         @application.decision_override.present? && @application.decision_override.id
       end
 
+      def amount_to_pay
+        if @application.evidence_check && !@application.waiting_for_evidence?
+          @application.evidence_check.amount_to_pay
+        else
+          @application.amount_to_pay
+        end
+      end
+
       def result
         return 'granted' if decision_overridden?
-        return 'callout' if @application.evidence_check.present?
+        return 'callout' if @application.waiting_for_evidence?
         return 'full' if return_full?
         return 'none' if @application.outcome.nil?
-        ['full', 'part', 'none'].include?(@application.outcome) ? @application.outcome : 'error'
+        ['full', 'part', 'none'].include?(outcome) ? outcome : 'error'
+      end
+
+      def outcome
+        if @application.evidence_check && !@application.waiting_for_evidence?
+          @application.evidence_check.outcome
+        else
+          @application.outcome
+        end
+      end
+
+      def expires_at
+        if @application.waiting_for_part_payment?
+          @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+        elsif @application.evidence_check && @application.processed?
+          @application.evidence_check.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+        else
+          @application.payment_expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
+        end
       end
 
       private
