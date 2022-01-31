@@ -28,6 +28,7 @@ module HmrcIncomeParser
 
   def self.format_amount(amount)
     return 0 if amount.blank?
+    return amount.to_d if amount.include?('.')
     size = amount.length
     amount.insert(size - 2, '.').to_d
   end
