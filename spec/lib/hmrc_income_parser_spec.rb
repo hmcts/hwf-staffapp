@@ -13,6 +13,9 @@ RSpec.describe HmrcIncomeParser do
 
   describe 'tax_credit' do
     let(:request_range) { { from: "2021-12-01", to: "2021-12-31" } }
+    let(:amount_one) { 7634 }
+    let(:amount_two) { 5624 }
+
     let(:tax_credit_hash) {
       [
         { "payProfCalcDate" => "2020-08-18",
@@ -24,8 +27,8 @@ RSpec.describe HmrcIncomeParser do
             "babyAmount" => 100, "paidYTD" => 897634
           },
           "payments" => [
-            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "tcType" => "ICC", "amount" => 7634 },
-            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "tcType" => "ICC", "amount" => 5624 }
+            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "tcType" => "ICC", "amount" => amount_one },
+            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "tcType" => "ICC", "amount" => amount_two }
           ] },
         { "payProfCalcDate" => "2020-09-18",
           "totalEntitlement" => 1876523,
@@ -44,6 +47,12 @@ RSpec.describe HmrcIncomeParser do
 
     it "returns income" do
       expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(253.16)
+    end
+
+    context 'decimal point present' do
+      let(:amount_one) { 76.34 }
+      let(:amount_two) { 5624 }
+      it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(253.16) }
     end
 
     describe 'frequency' do
