@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
   end
 
   def show_maintenance_page(config = Rails.application.config)
-    # return if !config.maintenance_enabled || config.maintenance_allowed_ips.include?(request.remote_ip)
+    return if !config.maintenance_enabled || config.maintenance_allowed_ips.include?(request.remote_ip)
 
     render 'static/maintenance', status: :service_unavailable
   end
