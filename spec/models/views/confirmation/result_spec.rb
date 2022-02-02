@@ -281,4 +281,22 @@ RSpec.describe Views::Confirmation::Result do
       it { is_expected.to eql('11 January 2022') }
     end
   end
+
+  describe "#income" do
+    subject { view.income }
+    let(:app_income) { 1200 }
+    let(:ev_income) { 1400 }
+
+    let(:application) {
+      build_stubbed(:application, :income_type, income: app_income)
+    }
+
+    it { is_expected.to eql app_income }
+
+    context 'evidence_check' do
+      let(:application) { build_stubbed(:application, :income_type, income: app_income, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: ev_income) }
+      it { is_expected.to eql ev_income }
+    end
+  end
 end

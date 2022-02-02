@@ -116,7 +116,7 @@
             user_name: current_user.name,
             full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
             part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
-            total_income: currency_format(@application.income),
+            total_income: currency_format(@confirm.income),
             children: @application.children.to_i,
             date_for_part_payment: @confirm.expires_at)
 
