@@ -94,6 +94,11 @@ module Views
         end
       end
 
+      def income
+        return @application.evidence_check.income if @application.evidence_check.try(:income).try(:positive?)
+        @application.income
+      end
+
       private
 
       def convert_to_pass_fail(input)
