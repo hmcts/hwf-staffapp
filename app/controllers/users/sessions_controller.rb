@@ -3,7 +3,6 @@ module Users
     skip_after_action :verify_authorized
 
     def new
-      asd
       @notification = Notification.first
       @dwp_state = dwp_checker_state
       super
