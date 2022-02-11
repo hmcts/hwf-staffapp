@@ -63,6 +63,23 @@ RSpec.describe OnlineApplicationSearch do
       end
     end
 
+    context 'when an application has a dwp pending check' do
+      let(:reference) { existing_reference }
+      let(:application) { build_stubbed(:application, reference: online_application.reference, office: user.office) }
+
+      before do
+        allow(Application).to receive(:find_by).with(reference: online_application.reference).and_return(application)
+        allow(application).to receive(:failed_because_dwp_error?).and_return true
+        service.online
+      end
+
+      it { is_expected.to eql online_application_url }
+
+      it 'sets the correct error message' do
+        expect(service.error_message).to be_nil
+      end
+    end
+
     context 'when an application has been processed by a different office' do
       let(:office) { create :office }
       let(:reference) { existing_reference }
