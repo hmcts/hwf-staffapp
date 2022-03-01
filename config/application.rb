@@ -41,7 +41,7 @@ module FrStaffapp
     end
     config.exceptions_app = routes
 
-    config.maintenance_enabled = ENV.fetch('MAINTENANCE_ENABLED_TEST', 'false').downcase == 'true'
+    config.maintenance_enabled = ENV.fetch('MAINTENANCE_ENABLED', 'false').downcase == 'true'
     config.maintenance_allowed_ips = ENV.fetch('MAINTENANCE_ALLOWED_IPS', '').split(',').map(&:strip)
     config.maintenance_end = ENV.fetch('MAINTENANCE_END', nil)
 
