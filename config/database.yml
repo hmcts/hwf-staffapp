@@ -18,7 +18,7 @@ production:
   host: <%= ENV['DB_HOST'] || 'localhost' %>
   port: <%= ENV['DB_PORT'] || '5432' %>
   username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  password: '<%= ENV['DB_PASSWORD'] %>'
   database: <%= ENV['DB_NAME'] || 'fr-staffapp' %>
   pool: 15
 cucumber:
