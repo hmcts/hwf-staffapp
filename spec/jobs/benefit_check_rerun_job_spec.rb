@@ -4,8 +4,9 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
   describe 'Re run benefit checks' do
     let(:application) { create :application, :benefit_type }
     let(:benefit_check) {
-      create :benefit_check, application: application, dwp_result: dwp_result, error_message: 'LSCBC959: Service unavailable.'
+      create :benefit_check, application: application, dwp_result: dwp_result, error_message: dwp_message
     }
+    let(:dwp_message) { 'LSCBC959: Service unavailable.' }
 
     context 'when DWP monitor status is' do
       let(:bc_runner) { instance_double(BenefitCheckRunner) }
@@ -24,7 +25,8 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
         let(:dwp_result) { 'BadRequest' }
         before do
           create_list :benefit_check, 2, :yes_result
-          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
+          create :benefit_check, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.'
+          create :benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
           create_list :benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.'
           create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
           Timecop.freeze(4.days.ago) do
@@ -56,9 +58,11 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
 
       context 'online' do
         let(:dwp_result) { 'Yes' }
+        let(:dwp_message) { '' }
         before { benefit_check }
 
         it 'for affected application' do
+
           BenefitCheckRerunJob.perform_now
           expect(bc_runner).not_to have_received(:run)
         end

@@ -1,5 +1,9 @@
 class BenefitCheckRerunJob < ApplicationJob
   queue_as :default
+  DWP_ERROR_MESSAGES = ['500 Internal Server Error',
+                        'Server broke connection',
+                        'LSCBC959: Service unavailable.',
+                        'The benefits checker is not available at the moment. Please check again later.'].freeze
 
   def perform(*_args)
     log_task_run
@@ -17,8 +21,7 @@ class BenefitCheckRerunJob < ApplicationJob
   end
 
   def load_failed_checks
-    BenefitCheck.where(error_message: ['500 Internal Server Error',
-                                       'Server broke connection', 'LSCBC959: Service unavailable.'],
+    BenefitCheck.where(error_message: DWP_ERROR_MESSAGES,
                        created_at: 3.days.ago..Time.zone.now).
       select('distinct(application_id)').limit(10)
   end
@@ -32,4 +35,5 @@ class BenefitCheckRerunJob < ApplicationJob
     tc.track_event("Running rerun_benefit_checks #{Time.zone.now.to_s(:db)}")
     tc.flush
   end
+
 end
