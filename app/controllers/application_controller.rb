@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_action :show_maintenance_page
 
   include Pundit
   before_action :authenticate_user!
@@ -65,5 +66,13 @@ class ApplicationController < ActionController::Base
 
   def track_office_id
     add_datalayer_event('Office id', office_id: current_user.office_id)
+  end
+
+  def show_maintenance_page(config = Rails.application.config)
+    return if !config.maintenance_enabled ||
+              config.maintenance_allowed_ips.include?(request.remote_ip) ||
+              params['controller'] == 'api/submissions'
+
+    render 'static/maintenance', status: :ok
   end
 end
