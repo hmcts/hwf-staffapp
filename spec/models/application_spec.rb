@@ -164,6 +164,13 @@ RSpec.describe Application, type: :model do
       it { expect(application.failed_because_dwp_error?).to be true }
     end
 
+    context 'failed response dwp down as Server unavailable' do
+      before do
+        create :benefit_check, application: application, benefits_valid: false, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.'
+      end
+      it { expect(application.failed_because_dwp_error?).to be true }
+    end
+
     context 'failed response dwp down in past' do
       before do
         create :benefit_check, application: application, benefits_valid: false, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.'
