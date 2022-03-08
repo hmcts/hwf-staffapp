@@ -37,8 +37,19 @@ class DwpMonitor
 
   def bad_request_count
     @checks.count do |check|
-      next if check[0] != 'BadRequest'
-      check[1].include?('LSCBC959')
+      next if check[0] != 'BadRequest' && check[0] != 'Server unavailable' && check[1].blank?
+      matching_error_message?(check[1]).blank? ? nil : true
     end
   end
+
+  def dwp_message(message)
+    message.nil? ? '' : message
+  end
+
+  def matching_error_message?(check)
+    ['LSCBC959', 'The benefits checker is not available at the moment'].select do |message|
+      dwp_message(check).include?(message)
+    end
+  end
+
 end

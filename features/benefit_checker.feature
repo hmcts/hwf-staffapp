@@ -15,7 +15,7 @@ Feature: Benefit checker
     When I start processing a paper application
     And I am on the benefits paper evidence page
     And the applicant has not provided the correct paper evidence
-    Then I should see that the applicant fails on benefits
+    Then I should see a message that the DWP Checker is not available
 
   Scenario: The applicant has provided the correct paper evidence
     Given I am signed in as a user and I see the benefit checker is down
