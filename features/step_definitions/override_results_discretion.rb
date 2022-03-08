@@ -41,6 +41,7 @@ end
 Given("I input low savings with benefits but no paper evidence and then complete processing") do
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header
+  stub_dwp_response_as_bad_request
   benefits_page.submit_benefits_yes
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_no

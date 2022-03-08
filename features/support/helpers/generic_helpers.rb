@@ -356,12 +356,19 @@ def create_application_with_bad_request_result_with(user)
 end
 
 def stub_dwp_response_as_bad_request
-  selenium_url = URI.parse ENV.fetch('SELENIUM_URL', 'http://localhost:4444/wd/hub')
-  app_host_url = URI.parse Capybara.app_host
+  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_raise(RestClient::ServerBrokeConnection.new("Request Timeout"))
+end
 
-  WebMock.disable_net_connect!(allow_localhost: true, allow: [selenium_url.host, app_host_url.host, 'ondemand.saucelabs.com', 'chromedriver.storage.googleapis.com'])
-  stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
-    to_return(body: '{"error": "LSCBC959: Service unavailable."}', status: BAD_REQUEST)
+def stub_dwp_response_as_dwp_down_request
+  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_raise(RestClient::BadRequest.new({ error: "LSCBC959: Service unavailable." }.to_json))
+end
+
+def stub_dwp_response_as_ok_request
+  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "Yes", confirmation_ref: 1234 }.to_json)
+end
+
+def stub_dwp_response_as_not_eligible_request
+  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "No", confirmation_ref: 1234 }.to_json)
 end
 
 def create_online_application

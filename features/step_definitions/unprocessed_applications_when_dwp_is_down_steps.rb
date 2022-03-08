@@ -107,12 +107,12 @@ Given("I see a link 'Pending applications to be processed' under the heading") d
 end
 
 When("I press Complete processing and the DWP response is 'LSCBC959: Service unavailable'") do
-  stub_dwp_response_as_bad_request
+  stub_dwp_response_as_dwp_down_request
   complete_processing
 end
 
 When("I press 'Next' and the DWP response is 'LSCBC959: Service unavailable'") do
-  stub_dwp_response_as_bad_request
+  stub_dwp_response_as_dwp_down_request
   benefits_page.click_button 'Next'
 end
 

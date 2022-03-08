@@ -37,8 +37,10 @@ When("I start processing a paper application") do
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
+  dwp_monitor_state_as('offline')
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_benefit_question
+  stub_dwp_response_as_bad_request
   benefits_page.submit_benefits_yes
 end
 
@@ -54,8 +56,6 @@ end
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
   benefit_checker_page.click_next
-  expect(summary_page.content).to have_header
-  complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
