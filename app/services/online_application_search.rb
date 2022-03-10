@@ -30,7 +30,7 @@ class OnlineApplicationSearch
   end
 
   def application_exists_and_user_can_access
-    if application_exists && user_can_access
+    if application_exists && user_can_access && !@application.failed_because_dwp_error?
       redirect_data = CompletedApplicationRedirect.new(@application)
       @error_message = I18n.t(:processed_html, scope: scope, application_path: redirect_data.path)
     end
