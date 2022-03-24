@@ -92,21 +92,21 @@ RSpec.describe HmrcCheck, type: :model do
 
     context 'hmrc income' do
       before {
-        hmrc_check.income = [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04, "inPayPeriod2" => 13000.38, "inPayPeriod3" => 14000.34, "inPayPeriod4" => 15000.69 } }]
+        hmrc_check.income = [{ "taxablePay" => 1440.98, "employeePensionContribs" => { "paid" => 6.99 } }]
         hmrc_check.additional_income = 200
         hmrc_check.save
       }
 
-      it { expect(hmrc_check.hmrc_income).to be 54001.45 }
+      it { expect(hmrc_check.hmrc_income).to be 1447.97 }
 
       describe 'without data present' do
         it 'empty hash' do
-          hmrc_check.update(income: [{ "grossEarningsForNics" => {} }])
+          hmrc_check.update(income: [{ "taxablePay" => {} }])
           expect(hmrc_check.hmrc_income).to be 0
         end
 
         it 'no key present' do
-          hmrc_check.update(income: [{ "grossEarningsFor" => {} }])
+          hmrc_check.update(income: [{ "taxablePay" => {} }])
           expect(hmrc_check.hmrc_income).to be 0
         end
 
@@ -124,18 +124,18 @@ RSpec.describe HmrcCheck, type: :model do
       context 'with tax credit' do
         before do
           hmrc_check.tax_credit = {
-            child: [{ "payments" => [{ "amount" => 1000, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
-            work: [{ "payments" => [{ "amount" => 1000, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+            child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+            work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
           }
           hmrc_check.save
         end
-        it { expect(hmrc_check.hmrc_income.to_f).to be 54021.45 }
+        it { expect(hmrc_check.hmrc_income.to_f).to be 1467.97 }
       end
     end
 
     context 'total income' do
       before {
-        hmrc_check.income = [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }]
+        hmrc_check.income = [{ "taxablePay" => 12000.04 }]
         hmrc_check.additional_income = 200
         hmrc_check.save
       }
@@ -144,7 +144,7 @@ RSpec.describe HmrcCheck, type: :model do
 
       describe 'without hmrc_income' do
         it 'empty hash' do
-          hmrc_check.update(income: [{ "grossEarningsForNics" => { "inPayPeriod1" => '' } }])
+          hmrc_check.update(income: [{ "taxablePay" => '' }])
           expect(hmrc_check.total_income).to be 200
         end
       end
@@ -269,7 +269,7 @@ RSpec.describe HmrcCheck, type: :model do
     end
 
     context 'income present' do
-      let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }] }
+      let(:income) { [{ "taxablePay" => 12000.04 }] }
       subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
 
       before { hmrc_check.calculate_evidence_income! }
@@ -278,7 +278,7 @@ RSpec.describe HmrcCheck, type: :model do
       it { expect(evidence_check.amount_to_pay).to eq(310) }
 
       context 'full payment' do
-        let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 100.04 } }] }
+        let(:income) { [{ "taxablePay" => 100.04 }] }
         it { expect(evidence_check.outcome).to eq('full') }
         it { expect(evidence_check.amount_to_pay).to eq(0) }
       end

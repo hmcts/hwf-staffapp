@@ -38,7 +38,7 @@ describe CompletedApplicationRedirect do
         end
 
         context 'posivite income' do
-          let(:income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }] }
+          let(:income) { [{ "taxablePay" => 12000.04 }] }
           it { is_expected.to eql evidence_check_hmrc_path(evidence, hmrc_check) }
         end
       end

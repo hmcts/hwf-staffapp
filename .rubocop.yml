@@ -256,6 +256,9 @@ RSpec/FactoryBot/CreateList:
 RSpec/Rails/HttpStatus:
   Enabled: false
 
+RSpec/RepeatedExample:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 
