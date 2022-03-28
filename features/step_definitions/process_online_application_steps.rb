@@ -85,11 +85,9 @@ Then("I see digital Emergency advice") do
   expect(application_details_digital_page.content.guidance.guidance_text[2].text).to eq 'An emergency case is one where delay risks harm to the applicant or to the applicant’s case.'
 end
 
-Then("I see digital examples of emergency cases") do
+Then("I see Remember for the case details") do
   expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Remember:'
-  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
-  expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
-  expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#emergency'
+  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'to enter the correct form number the application relates to to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case. You will also need to enter the appropriate date for refund and probate cases when prompted'
 end
 
 When("I click emergency checkbox") do
