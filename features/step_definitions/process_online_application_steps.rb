@@ -75,7 +75,7 @@ end
 
 Then("I see digital check the fee") do
   expect(application_details_digital_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
-  expect(application_details_digital_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL)'
+  expect(application_details_digital_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
   expect(application_details_digital_page.content.guidance.guidance_text[1].text).to eq 'What to do if the fee is one of these'
   expect(application_details_digital_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#check-the-fee'
 end
@@ -86,7 +86,7 @@ Then("I see digital Emergency advice") do
 end
 
 Then("I see digital examples of emergency cases") do
-  expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Example of emergency cases:'
+  expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Remember:'
   expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
   expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
   expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#emergency'
