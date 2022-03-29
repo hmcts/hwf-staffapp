@@ -91,8 +91,8 @@ Then("I see digital Emergency advice") do
 end
 
 Then("I see digital examples of emergency cases") do
-  expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Example of emergency cases:'
-  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
+  expect(application_details_digital_page.content.guidance.guidance_sub_heading[3].text).to eq 'Example of emergency cases:'
+  expect(application_details_digital_page.content.guidance.guidance_list[3].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
   expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
   expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#emergency'
 end
