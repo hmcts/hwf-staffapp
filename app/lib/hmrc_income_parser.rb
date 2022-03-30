@@ -2,7 +2,8 @@ module HmrcIncomeParser
 
   def self.paye(paye_hash)
     sum = paye_hash.sum do |i|
-      i['grossEarningsForNics'].values.sum
+      taxable = i['taxablePay']
+      taxable + pension(i)
     end
     sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
@@ -54,5 +55,10 @@ module HmrcIncomeParser
       list << day
     end
     list
+  end
+
+  def self.pension(paye_hash)
+    return 0 unless paye_hash.key?('employeePensionContribs')
+    paye_hash['employeePensionContribs']["paid"] || 0
   end
 end

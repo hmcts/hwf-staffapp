@@ -54,7 +54,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       before { hmrc_check }
 
       context 'paye income' do
-        let(:paye_income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 120.04 } }] }
+        let(:paye_income) { [{ "taxablePay" => 120.04 }] }
         it "calculates correct value" do
           data_row = data[3]
           expect(data_row).to include('120.04')
@@ -62,7 +62,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       context 'paye and tax credit income' do
-        let(:paye_income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 120.04 } }] }
+        let(:paye_income) { [{ "taxablePay" => 120.04 }] }
         let(:tax_credit) {
           { child: [{ "payProfCalcDate" => "2020-08-18",
                       "totalEntitlement" => 18765.23,
@@ -79,7 +79,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         end
 
         context 'no fail from tax_credit' do
-          let(:paye_income) { [{ "grossEarningsForNics" => { "inPayPeriod1" => 120.04 } }] }
+          let(:paye_income) { [{ "taxablePay" => 120.04 }] }
           let(:tax_credit) {
             { child: nil, work: [] }
           }

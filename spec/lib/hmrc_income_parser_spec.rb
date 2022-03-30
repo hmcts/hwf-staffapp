@@ -3,11 +3,33 @@ require 'rails_helper'
 RSpec.describe HmrcIncomeParser do
   describe 'paye' do
     let(:paye_hash) {
-      [{ "grossEarningsForNics" => { "inPayPeriod1" => 12000.04, "inPayPeriod2" => 13000.38, "inPayPeriod3" => 14000.34, "inPayPeriod4" => 15000.69 } }]
+      [{ "taxablePay" => 144.98, "employeePensionContribs" => { "paidYTD" => 737.17, "notPaidYTD" => 0, "paid" => 6.99, "notPaid" => 0 },
+         "grossEarningsForNics" => { "inPayPeriod1" => 12000.04 } }]
     }
 
     it "returns income" do
-      expect(described_class.paye(paye_hash)).to eq(54001.45)
+      expect(described_class.paye(paye_hash)).to eq(151.97)
+    end
+
+    context 'missing pension' do
+      let(:paye_hash) {
+        [{ "taxablePay" => 144.98 }]
+      }
+
+      it "returns income" do
+        expect(described_class.paye(paye_hash)).to eq(144.98)
+      end
+    end
+
+    context 'multiple incomes' do
+      let(:paye_hash) {
+        [{ "taxablePay" => 144.98, "employeePensionContribs" => { "paid" => 6.99 } },
+         { "taxablePay" => 144.98, "employeePensionContribs" => { "paid" => 6.99 } }]
+      }
+
+      it "returns income" do
+        expect(described_class.paye(paye_hash)).to eq(303.94)
+      end
     end
   end
 
