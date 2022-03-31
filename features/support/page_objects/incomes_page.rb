@@ -13,7 +13,7 @@ class IncomesPage < BasePage
 
   def submit_incomes_0
     incomes_page.content.wait_until_question_visible
-    find_field('Total monthly income', visible: false).set('0')
+    find_field('Total monthly income', visible: false).set('0.5')
     click_next
   end
 
