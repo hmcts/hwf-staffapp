@@ -58,10 +58,11 @@ jobs:
     - template: ./pipeline-steps/publish-tests.yaml
 
   - job: BuildAndPushImageCI
+
     dependsOn: TestApplication
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/tags/')), ne(variables['Build.Reason'], 'Manual'))
     pool:
-      name: hmcts-pet
+      vmImage: 'Ubuntu-18.04'
 
     steps:
     - template: ./pipeline-steps/docker-build.yaml
@@ -69,7 +70,6 @@ jobs:
         azureContainerRegistry: $(azure.container.registry)
         azureSubscriptionEndpoint: $(azure.subscription.endpoint)
         applicationName: $(application.name)
-
 
   - job: BuildAndPushImageRelease
 
