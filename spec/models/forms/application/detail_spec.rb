@@ -60,6 +60,7 @@ RSpec.describe Forms::Application::Detail do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
     it { is_expected.to validate_numericality_of(:fee).is_less_than(20_000) }
+    it { is_expected.to validate_numericality_of(:fee).is_greater_than(0) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
 
     context 'when fee is blank' do
