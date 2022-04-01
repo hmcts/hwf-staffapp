@@ -95,9 +95,13 @@
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'check-applicant-is-not'), target: 'blank'
         h3.govuk-heading-s Check the fee:
         ul.govuk-list.govuk-list--bullet
-          li was not processed through the money claim online (MCOL) or possession claim online (PCOL) services
+          li was not processed through the money claim online (MCOL)
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'check-the-fee'), target: 'blank'
+
+        h3.govuk-heading-s Remember:
+        ul.govuk-list.govuk-list--bullet
+          li to complete the form number the application relates to. You may need to amend the entry to reflect the correct form number entered by the applicant
 
         h2.govuk-heading-m Emergency cases
 
