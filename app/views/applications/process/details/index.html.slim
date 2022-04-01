@@ -191,15 +191,15 @@
 
     aside.govuk-grid-column-one-third
       .guidance
+        h3.govuk-heading-s Remember:
+        ul.govuk-list.govuk-list--bullet
+          li to enter the correct form number the application relates to
+          li to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case. You will also need to enter the appropriate date for refund and probate cases when prompted
         h2.govuk-heading-m Refunds
         h3.govuk-heading-s Check the refund:
         ul.govuk-list.govuk-list--bullet
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
-        h3.govuk-heading-s Remember:
-        ul.govuk-list.govuk-list--bullet
-          li to enter the correct form number the application relates to. For online applications ensure you amend the entry to reflect the correct form number
-          li to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case
         p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
         h3.govuk-heading-m Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
