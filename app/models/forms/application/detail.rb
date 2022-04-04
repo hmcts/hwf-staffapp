@@ -44,6 +44,8 @@ module Forms
 
       validates :fee, presence: true,
                       numericality: { allow_blank: true, less_than: 20_000 }
+      validates :fee, presence: true,
+                      numericality: { allow_blank: true, greater_than: 0 }
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
