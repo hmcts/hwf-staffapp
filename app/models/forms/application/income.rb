@@ -12,8 +12,7 @@ module Forms
       define_attributes
 
       validates :income, presence: true
-      validates :income, presence: true,
-                         numericality: { allow_blank: true, greater_than: 0 }
+      validates :income, numericality: { allow_blank: true }
 
       validates :dependents, inclusion: { in: [true, false] }
       validates :children, numericality: { greater_than: 0, only_integer: true }, if: :dependents?
