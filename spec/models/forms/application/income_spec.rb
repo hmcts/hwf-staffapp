@@ -18,7 +18,7 @@ RSpec.describe Forms::Application::Income do
       let(:hash) { { income: 500, dependents: true, children: 1 } }
 
       it { is_expected.to validate_presence_of(:income) }
-      it { is_expected.to validate_numericality_of(:income).is_greater_than(0) }
+      it { is_expected.to validate_numericality_of(:income) }
     end
 
     describe 'dependents' do
