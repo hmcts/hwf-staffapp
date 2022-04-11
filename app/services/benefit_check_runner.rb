@@ -13,9 +13,8 @@ class BenefitCheckRunner
   def run
     if can_run? && should_run?
       BenefitCheckService.new(benefit_check)
-
       @application.update(application_type: 'benefit', outcome: benefit_check.outcome)
-    elsif @application.outcome.blank? && previous_check.present? && !previous_check.outcome.nil?
+    elsif load_previous_check?
       @application.update(outcome: previous_check.outcome)
     elsif @application.outcome.blank?
       @application.update(outcome: 'none')
@@ -99,4 +98,9 @@ class BenefitCheckRunner
     result = benefit_check.dwp_result.downcase
     ['no', 'server unavailable', 'undetermined', 'unspecified error'].include?(result)
   end
+
+  def load_previous_check?
+    @application.outcome.blank? && previous_check.present? && !previous_check.outcome.nil?
+  end
+
 end
