@@ -188,6 +188,24 @@ RSpec.describe BenefitCheckRunner do
         end
       end
     end
+
+    context 'when there is a benefit_check' do
+      let(:existing_benefit_check) do
+            create :benefit_check,
+                   :yes_result,
+                   application: application,
+                   last_name: applicant.last_name,
+                   date_of_birth: applicant.date_of_birth,
+                   ni_number: applicant.ni_number,
+                   date_to_check: detail.date_received
+      end
+
+      it 'sets outcome to last banefit check' do
+        run
+        expect(application.reload.outcome).to eql('full')
+      end
+    end
+
   end
 
   describe '#can_override?' do
