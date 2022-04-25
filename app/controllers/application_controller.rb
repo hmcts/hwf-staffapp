@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def add_datalayer_event(name, data)
-    event = GtmOnRails::DataLayer::Event.new(name, data)
+    event = GtmOnRails::DataLayer::Event.new(name, **data)
     data_layer.push(event)
   end
 
