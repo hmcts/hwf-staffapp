@@ -193,7 +193,7 @@ en-GB:
       cannot_process_application: Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.
     dwp_maintenance: "The DWP checker will be unavailable from 9pm on Friday 22 April 2016 until 7am Monday 25 April 2016 for essential maintenance to be completed."
     dwp_unavailable: You can’t check an applicant’s benefits. We’re investigating this issue.
-    dwp_warning: You may not be able to check an applicant's benefits status. If you receive an error message, please try again later.
+    dwp_warning: You may not be able to check an applicant’s benefits status. If you receive an error message, please try again later.
     dwp_restored: You can process benefits and income based applications.
     create_be_exists: "A business entity record for %{jurisdiction} already exists in %{office}"
     manager_cant_invite_admin: 'You cannot create an admin account'
