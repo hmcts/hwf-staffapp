@@ -22,6 +22,9 @@ API is back again. We are not using standard CRON table because Kubernetes have 
 delayed job that has the schedule in DB table. To set it up (if there is no record in DB) run this in rails console:
 ```BenefitCheckRerunJob.delay(cron: '*/10 * * * *').perform_now```
 
+## Delayed jobs for DWP offline notification
+```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now ```
+
 ## Pre-requisites
 To run the headless tests you will need to install quicktime for capybara-webkit:
 ```
