@@ -104,7 +104,8 @@ class OnlineApplicationsController < ApplicationController
 
   def display_paper_evidence_page?
     return false if online_application.benefits == false
-    DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
+    return true if DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
+    online_benefit_check
   end
 
   def reset_fee_manager_approval_fields
@@ -134,5 +135,10 @@ class OnlineApplicationsController < ApplicationController
 
   def assign_jurisdictions
     @jurisdictions ||= current_user.office.jurisdictions
+  end
+
+  def online_benefit_check
+    OnlineBenefitCheckRunner.new(online_application).run
+    !online_application.last_benefit_check.try(:benefits_valid)
   end
 end
