@@ -1,13 +1,8 @@
-class OnlineBenefitCheckRunner
+class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
   def initialize(online_application)
     @online_application = online_application
-  end
-
-  def can_run?
-    @online_application.last_name.present? &&
-      @online_application.date_of_birth.present? &&
-      @online_application.ni_number.present? &&
-      benefit_check_date.present?
+    @date_data = online_application
+    @applicant = online_application
   end
 
   def run
@@ -17,7 +12,10 @@ class OnlineBenefitCheckRunner
   end
 
   def benefit_check_date_valid?
-    benefit_check_date > Time.zone.now - 3.months
+    true
+    # based on "paper" application logic online applications dont't take
+    # notice of benefit_check data validity
+    # benefit_check_date > Time.zone.now - 3.months
   end
 
   private
@@ -32,21 +30,6 @@ class OnlineBenefitCheckRunner
       our_api_token: generate_api_token,
       parameter_hash: build_hash
     )
-  end
-
-  def benefit_check_date
-    if @online_application.date_fee_paid.present?
-      @online_application.date_fee_paid
-    elsif @online_application.date_received.present?
-      @online_application.date_received
-    end
-  end
-
-  def build_hash
-    Base64.encode64 [@online_application.last_name,
-                     @online_application.date_of_birth,
-                     @online_application.ni_number,
-                     benefit_check_date].to_s
   end
 
   def generate_api_token

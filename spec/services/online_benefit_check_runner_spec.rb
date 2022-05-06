@@ -89,25 +89,26 @@ RSpec.describe OnlineBenefitCheckRunner do
       end
     end
 
-    context 'outside 3 months' do
-      context 'date_received' do
-        let(:date_fee_paid) { nil }
-        let(:date_received) { 4.month.ago }
-        it {
-          expect(BenefitCheckService).not_to receive(:new)
-          service.run
-        }
-      end
+    # This is not needed for online applications
+    # context 'outside 3 months' do
+    #   context 'date_received' do
+    #     let(:date_fee_paid) { nil }
+    #     let(:date_received) { 4.month.ago }
+    #     it {
+    #       expect(BenefitCheckService).not_to receive(:new)
+    #       service.run
+    #     }
+    #   end
 
-      context 'date_fee_paid' do
-        let(:date_fee_paid) { 3.month.ago - 3.day }
-        let(:date_received) { nil }
-        it {
-          expect(BenefitCheckService).not_to receive(:new)
-          service.run
-        }
-      end
-    end
+    #   context 'date_fee_paid' do
+    #     let(:date_fee_paid) { 3.month.ago - 3.day }
+    #     let(:date_received) { nil }
+    #     it {
+    #       expect(BenefitCheckService).not_to receive(:new)
+    #       service.run
+    #     }
+    #   end
+    # end
   end
 
   describe 'online benefit check' do

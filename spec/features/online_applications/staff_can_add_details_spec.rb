@@ -11,6 +11,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
   let(:current_time) { Time.zone.parse('10/10/2015') }
 
   before do
+    dwp_api_response 'Yes'
     login_as user
   end
 
