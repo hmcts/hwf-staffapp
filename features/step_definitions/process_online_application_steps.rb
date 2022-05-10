@@ -113,3 +113,7 @@ When("I click next after entering a reason") do
   application_details_digital_page.content.emergency_case_textbox.set 'emergency reason'
   process_online_application_page.click_next
 end
+
+When('Benefit Check is ok') do
+  stub_dwp_response_as_ok_request
+end

@@ -1,6 +1,5 @@
 class BaseBenefitCheckRunner
-  attr_reader :date_data
-  attr_reader :applicant
+  attr_reader :date_data, :applicant
 
   def can_run?
     @applicant.last_name.present? &&
@@ -8,7 +7,6 @@ class BaseBenefitCheckRunner
       @applicant.ni_number.present? &&
       benefit_check_date.present?
   end
-
 
   private
 
@@ -26,6 +24,5 @@ class BaseBenefitCheckRunner
                      @applicant.ni_number,
                      benefit_check_date].to_s
   end
-
 
 end

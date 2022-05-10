@@ -55,6 +55,10 @@ Given("I answer 'Yes' to 'Is the applicant receiving one of these benefits?' que
   benefits_page.content.yes.click
 end
 
+Given('I answer no and press Next') do
+  paper_evidence_page.submit_evidence_no
+end
+
 Given("I am a staff member at the home page") do
   RSpec::Mocks.with_temporary_scope do
     dwp_monitor_state_as('online')
@@ -164,6 +168,11 @@ end
 Then("I should see 'Process when DWP is back online' section") do
   expect(dashboard_page.content).to have_process_when_back_online_heading
   expect(dashboard_page.content).to have_pending_applications_link
+end
+
+Then("I should not see 'Process when DWP is back online' section") do
+  expect(dashboard_page.content).not_to have_process_when_back_online_heading
+  expect(dashboard_page.content).not_to have_pending_applications_link
 end
 
 Then("On selecting the link I should see the paper-based application I was just processing in a list") do
