@@ -41,9 +41,9 @@ end
 When("I process the online application") do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
+  stub_dwp_response_as_not_eligible_request
   process_online_application_page.click_next
   expect(process_online_application_page.content).to have_check_details_header
-  stub_dwp_response_as_not_eligible_request
   complete_processing
 end
 

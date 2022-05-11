@@ -12,7 +12,6 @@ Feature: Process an online application
 
     @smoke
   Scenario: Complete processing
-    When Benefit Check is ok
     And I process the online application
     Then I see the applicant is not eligible for help with fees
     And back to start takes me to the homepage
