@@ -56,7 +56,7 @@ h1.visuallyhidden Help with fees - Staff application
               = f.submit 'Look up', class: 'govuk-button'
 
 .govuk-grid-row
-  .govuk-grid-column-one-half
+  .govuk-grid-column
     = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get, html: { role: 'search' }) do |f|
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--s
@@ -71,9 +71,9 @@ h1.visuallyhidden Help with fees - Staff application
                 span.govuk-error-message
                   = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error'
 
-            .govuk-grid-column-three-quarters
+            .govuk-grid-column-one-half
               = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
-            .govuk-grid-column-one-quarter
+            .govuk-grid-column-one-half
               = f.submit 'Search', class: 'govuk-button search-button'
 
     - if policy(:application).index?
