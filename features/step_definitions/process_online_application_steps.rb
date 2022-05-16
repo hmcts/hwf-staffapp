@@ -43,6 +43,8 @@ When("I process the online application") do
   process_online_application_page.content.group[1].jurisdiction[0].click
   stub_dwp_response_as_not_eligible_request
   process_online_application_page.click_next
+  benefit_checker_page.content.no.click
+  benefit_checker_page.click_next
   expect(process_online_application_page.content).to have_check_details_header
   complete_processing
 end

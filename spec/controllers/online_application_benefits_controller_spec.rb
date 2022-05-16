@@ -6,9 +6,11 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
   let(:id) { online_application.id }
+  let(:benefit_check) { nil }
 
   before do
     allow(OnlineApplication).to receive(:find).with(online_application.id.to_s).and_return(online_application)
+    allow(online_application).to receive(:last_benefit_check).and_return(benefit_check)
     allow(OnlineApplication).to receive(:find).with('non-existent').and_raise(ActiveRecord::RecordNotFound)
     allow(Forms::OnlineApplication).to receive(:new).with(online_application).and_return(form)
     sign_in user
@@ -56,6 +58,18 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
 
         it 'sets the alert flash message' do
           expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+        end
+
+        context 'benefit check was "No" not an error' do
+          let(:benefit_check) { build_stubbed(:online_benefit_check, dwp_result: 'No') }
+
+          it { expect(response).to redirect_to(online_application_path(online_application)) }
+        end
+
+        context 'benefit check was an error' do
+          let(:benefit_check) { build_stubbed(:online_benefit_check, dwp_result: 'BadRequest') }
+
+          it { expect(response).to redirect_to(root_path) }
         end
       end
     end

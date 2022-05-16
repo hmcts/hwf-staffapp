@@ -141,6 +141,6 @@ class OnlineApplicationsController < ApplicationController
     OnlineBenefitCheckRunner.new(online_application).run
     last_benefit_check = online_application.last_benefit_check
     return false unless last_benefit_check
-    last_benefit_check.dwp_result.present? && last_benefit_check.error_message.blank?
+    last_benefit_check.benefits_valid?
   end
 end
