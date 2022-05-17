@@ -5,11 +5,11 @@ gem 'application_insights', '~> 0.5.6'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.4.8'
+gem 'rails', '~> 6.0.5'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
 gem 'i18n', '~> 1.8', '>= 1.8.10'
-gem 'parser', '>= 3.0.3.1'
+gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
 gem 'rails-i18n', '~> 6.0'
