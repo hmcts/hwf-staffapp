@@ -41,9 +41,11 @@ end
 When("I process the online application") do
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.group[1].jurisdiction[0].click
-  process_online_application_page.click_next
-  expect(process_online_application_page.content).to have_check_details_header
   stub_dwp_response_as_not_eligible_request
+  process_online_application_page.click_next
+  benefit_checker_page.content.no.click
+  benefit_checker_page.click_next
+  expect(process_online_application_page.content).to have_check_details_header
   complete_processing
 end
 
@@ -112,4 +114,8 @@ end
 When("I click next after entering a reason") do
   application_details_digital_page.content.emergency_case_textbox.set 'emergency reason'
   process_online_application_page.click_next
+end
+
+When('Benefit Check is ok') do
+  stub_dwp_response_as_ok_request
 end

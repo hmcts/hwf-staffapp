@@ -1,6 +1,8 @@
-class BenefitCheckRunner
+class BenefitCheckRunner < BaseBenefitCheckRunner
   def initialize(application)
     @application = application
+    @date_data = @application.detail
+    @applicant = @application.applicant
   end
 
   def can_run?
@@ -36,10 +38,6 @@ class BenefitCheckRunner
     @application.applicant
   end
 
-  def detail
-    @application.detail
-  end
-
   def should_run?
     benefit_check_date_valid? && (previous_check.nil? || !same_as_before? || was_error?)
   end
@@ -72,21 +70,6 @@ class BenefitCheckRunner
       our_api_token: generate_api_token,
       parameter_hash: build_hash
     )
-  end
-
-  def benefit_check_date
-    if detail.date_fee_paid.present?
-      detail.date_fee_paid
-    elsif detail.date_received.present?
-      detail.date_received
-    end
-  end
-
-  def build_hash
-    Base64.encode64 [applicant.last_name,
-                     applicant.date_of_birth,
-                     applicant.ni_number,
-                     benefit_check_date].to_s
   end
 
   def generate_api_token

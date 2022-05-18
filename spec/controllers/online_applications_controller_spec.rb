@@ -85,15 +85,22 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:monitor) { instance_double(DwpMonitor) }
     let(:dwp_warning) { create :dwp_warning, check_state: dwp_warning_state }
     let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
+    let(:online_bc_runner) { instance_double(OnlineBenefitCheckRunner) }
+    let(:online_bc) { instance_double(OnlineBenefitCheck, benefits_valid?: benefits_valid) }
+    let(:benefits_valid) { true }
 
     before do
       allow(form).to receive(:update_attributes).with(params)
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:fee).and_return(fee)
       allow(online_application).to receive(:update).and_return(true)
+
       allow(DwpMonitor).to receive(:new).and_return monitor
       allow(monitor).to receive(:state).and_return dwp_state
       allow(DwpWarning).to receive(:state).and_return dwp_warning_state
+      allow(OnlineBenefitCheckRunner).to receive(:new).and_return online_bc_runner
+      allow(online_bc_runner).to receive(:run)
+      allow(online_application).to receive(:last_benefit_check).and_return(online_bc)
 
       put :update, params: { id: id, online_application: params }
     end
@@ -141,8 +148,33 @@ RSpec.describe OnlineApplicationsController, type: :controller do
             context 'when the DwpWarning is set to online' do
               let(:dwp_warning_state) { DwpWarning::STATES[:online] }
 
-              it 'redirects to the approval page' do
-                expect(response).to redirect_to(online_application_path(online_application))
+              context 'run benefit check' do
+                it 'does something' do
+                  expect(online_bc_runner).to have_received(:run)
+                end
+
+                context 'benefit check is sucessfull' do
+                  let(:benefits_valid) { true }
+
+                  it 'redirects to the approval page' do
+                    expect(response).to redirect_to(online_application_path(online_application))
+                  end
+                end
+
+                context 'benefit check is not sucessfull' do
+                  let(:benefits_valid) { false }
+
+                  it 'redirects to the approval page' do
+                    expect(response).to redirect_to(benefits_online_application_path(online_application))
+                  end
+                end
+
+                context 'benefit check is nil' do
+                  let(:benefits_valid) { nil }
+                  it 'redirects to the approval page' do
+                    expect(response).to redirect_to(benefits_online_application_path(online_application))
+                  end
+                end
               end
             end
 

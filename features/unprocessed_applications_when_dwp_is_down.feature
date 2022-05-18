@@ -2,12 +2,13 @@ Feature: Unprocessed applications when DWP is down
 
   Scenario: Processing an online application when DWP Checker Service fails
     Given I am a staff member and I process an online benefit application
-    And I'm on the Check details page
-    When I press Complete processing and the DWP response is 'LSCBC959: Service unavailable'
+    When I add a jurisdiction
+    And I click next
+    Then I should be asked about paper evidence
+    When I answer no and press Next
     Then I should be redirected to home page
     And I should see a message that the DWP Checker is not available
-    And I should see 'Process when DWP is back online' section
-    And On selecting the link I should see the online application I was just processing in a list
+    And I should not see 'Process when DWP is back online' section
 
   Scenario: Processing a paper-based benefit application when DWP Checker Service fails
     Given I am a staff member and I process a paper-based benefit application

@@ -2,6 +2,7 @@ class OnlineApplication < ActiveRecord::Base
   serialize :income_kind
 
   belongs_to :jurisdiction, optional: true
+  has_many :online_benefit_checks, dependent: :destroy
 
   validates :date_of_birth, :first_name, :last_name, :address,
             :postcode, presence: true
@@ -30,6 +31,10 @@ class OnlineApplication < ActiveRecord::Base
 
   def linked_application
     Application.find_by(online_application: self)
+  end
+
+  def last_benefit_check
+    online_benefit_checks.where.not(benefits_valid: nil, dwp_result: nil).order(:id).last
   end
 
   private
