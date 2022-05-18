@@ -6,10 +6,10 @@ class SignInPage < BasePage
 
   element :welcome_user, 'span', text: 'Welcome user'
   section :content, '#content' do
-    element :generate_reports, 'h3', text: 'Generate reports'
-    element :view_offices, 'h3', text: 'View offices'
-    element :your_last_applications, 'h3', text: 'Your last applications'
-    element :in_progress_applications, 'h3', text: 'In progress'
+    element :generate_reports, 'h2', text: 'Generate reports'
+    element :view_offices, 'h2', text: 'View offices'
+    element :your_last_applications, 'h2', text: 'Your last applications'
+    element :in_progress_applications, 'h2', text: 'In progress'
     element :completed_applications, 'h3', text: 'Completed'
     element :user_email, '#user_email'
     element :user_password, '#user_password'

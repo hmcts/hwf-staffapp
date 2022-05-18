@@ -10,10 +10,10 @@ class DashboardPage < BasePage
     element :alert_text, '.alert'
     element :look_up_button, 'input[value="Look up"]'
     element :start_now_button, 'input[value="Start now"]', visible: false
-    element :in_progress_header, 'h3', text: 'In progress'
+    element :in_progress_header, 'h2', text: 'In progress'
     element :processed_applications, 'a', text: 'Processed applications'
     elements :last_application, '.govuk-table__row'
-    element :last_application_header, 'h3', text: 'Your last applications'
+    element :last_application_header, 'h2', text: 'Your last applications'
     element :last_application_link, 'a', text: '1'
     element :waiting_for_evidence_application_link, 'a', text: "AB001-#{Time.zone.now.strftime('%y')}-"
     element :waiting_for_evidence_application_link2, 'a', text: 'HWF-'
@@ -34,7 +34,7 @@ class DashboardPage < BasePage
     element :court_graphs, 'a', text: 'Court graphs'
     element :process_a_paper_application_heading, 'h2', text: 'Process a paper application'
     element :process_an_online_application_heading, 'h2', text: 'Process an online application'
-    element :find_an_application_heading, 'h2', text: 'Find an application'
+    element :find_an_application_heading, 'h1', text: 'Find an application'
     element :search_results_heading, 'h3', text: 'Search results'
   end
 
