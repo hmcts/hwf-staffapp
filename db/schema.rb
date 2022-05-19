@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_141700) do
+ActiveRecord::Schema.define(version: 2022_05_19_083023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 2022_05_03_141700) do
     t.string "our_api_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "api_response"
     t.index ["online_application_id"], name: "index_online_benefit_checks_on_online_application_id"
   end
 
