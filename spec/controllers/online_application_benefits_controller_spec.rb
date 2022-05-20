@@ -7,6 +7,7 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
   let(:form) { double }
   let(:id) { online_application.id }
   let(:benefit_check) { nil }
+  let(:dwp_down) { false }
 
   before do
     allow(OnlineApplication).to receive(:find).with(online_application.id.to_s).and_return(online_application)
@@ -34,6 +35,7 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:benefits_override).and_return(benefits_override)
       allow(online_application).to receive(:update).and_return(true)
+      allow(online_application).to receive(:failed_because_dwp_error?).and_return(dwp_down)
 
       put :update, params: { id: id, online_application: params }
     end
@@ -49,7 +51,8 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
         end
       end
 
-      context 'when the paper evidence was not provided' do
+      context 'when the benefit fails on DWP' do
+        let(:dwp_down) { true }
         let(:benefits_override) { false }
 
         it 'redirects to the home page' do
@@ -59,19 +62,14 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
         it 'sets the alert flash message' do
           expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
         end
-
-        context 'benefit check was "No" not an error' do
-          let(:benefit_check) { build_stubbed(:online_benefit_check, dwp_result: 'No') }
-
-          it { expect(response).to redirect_to(online_application_path(online_application)) }
-        end
-
-        context 'benefit check was an error' do
-          let(:benefit_check) { build_stubbed(:online_benefit_check, dwp_result: 'BadRequest') }
-
-          it { expect(response).to redirect_to(root_path) }
-        end
       end
+
+      context 'benefit check was "No" not an error' do
+        let(:dwp_down) { false }
+        let(:benefits_override) { false }
+        it { expect(response).to redirect_to(online_application_path(online_application)) }
+      end
+
     end
   end
 

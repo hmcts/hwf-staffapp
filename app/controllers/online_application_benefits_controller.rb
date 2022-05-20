@@ -19,16 +19,11 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
   private
 
   def decide_redirection
-    if @form.benefits_override || last_benefit_check_result_is_no
-      redirect_to online_application_path(online_application)
-    else
+    if online_application.failed_because_dwp_error?
       flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
       redirect_to root_url
+    else
+      redirect_to online_application_path(online_application)
     end
-  end
-
-  def last_benefit_check_result_is_no
-    return false if online_application.last_benefit_check.blank?
-    online_application.last_benefit_check.dwp_result == 'No'
   end
 end
