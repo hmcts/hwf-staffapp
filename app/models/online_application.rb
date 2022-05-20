@@ -37,6 +37,22 @@ class OnlineApplication < ActiveRecord::Base
     online_benefit_checks.where.not(benefits_valid: nil, dwp_result: nil).order(:id).last
   end
 
+  def failed_because_dwp_error?
+    return false if last_benefit_check.blank?
+    bad_request? || benefit_check_unavailable?
+  end
+
+  def bad_request?
+    last_benefit_check.dwp_result == 'BadRequest' &&
+      last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
+  end
+
+  def benefit_check_unavailable?
+    return false if last_benefit_check.error_message.blank?
+    last_benefit_check.dwp_result == 'Server unavailable' &&
+      last_benefit_check.error_message.include?('The benefits checker is not available at the moment')
+  end
+
   private
 
   def online_applicant_attributes
