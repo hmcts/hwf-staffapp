@@ -2,8 +2,6 @@
 - content_for :page_title
   = "Staff application"
 
-h1.visuallyhidden Help with fees - Staff application
-
 - if dwp_maintenance?
   =render("shared/dwp/maintenance")
 
@@ -55,12 +53,12 @@ h1.visuallyhidden Help with fees - Staff application
             .govuk-form-group
               = f.submit 'Look up', class: 'govuk-button'
 
-.govuk-grid-row
+.govuk-grid-row.application-section
   .govuk-grid-column
     = form_for(@completed_search_form, as: :completed_search, url: home_completed_search_path(anchor: 'new_completed_search'), method: :get, html: { role: 'search' }) do |f|
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-          h2 = t('search_form.label')
+          h1 = t('search_form.label')
         .govuk-form-group
           .govuk-grid-row
             .govuk-grid-column-full
@@ -96,7 +94,7 @@ h1.visuallyhidden Help with fees - Staff application
     .govuk-grid-row
       .govuk-grid-column-full
 
-        h3.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
+        h2.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
           =t("in_progress_applications.title")
         table.in-progress-applications
           tbody
@@ -118,13 +116,13 @@ h1.visuallyhidden Help with fees - Staff application
       - if policy(:report).index?
         .govuk-grid-column-one-half
           .panel
-            h3.govuk-heading-m.util_mt-0 Generate reports
+            h2.govuk-heading-m.util_mt-0 Generate reports
             p Export national finance reports related to Help with fees applications and download monthly summary data.
             = link_to 'Generate reports', reports_path, class: 'button util_mb-0'
       - if policy(:office).index?
         .govuk-grid-column-one-half
           .panel
-            h3.govuk-heading-m.util_mt-0 View offices
+            h2.govuk-heading-m.util_mt-0 View offices
             p View all the offices in England and Wales that process Help with fees applications, and update BEC codes.
             = link_to 'View offices', offices_path
 
