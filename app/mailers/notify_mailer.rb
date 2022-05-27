@@ -28,6 +28,15 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: application.email_address)
   end
 
+  def password_reset(user, reset_link)
+    set_template(ENV['NOTIFY_PASSWORD_RESET_TEMPLATE_ID'])
+    set_personalisation(
+      name: user.name,
+      password_link: reset_link
+    )
+    mail(to: 'petr.zaparka@hmcts.net')
+  end
+
   private
 
   def template(locale, method_name)

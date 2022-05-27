@@ -2,6 +2,21 @@ require 'rails_helper'
 
 RSpec.describe NotifyMailer, type: :mailer do
   let(:application) { build :online_application_with_all_details, :with_reference, date_received: DateTime.parse('1 June 2021') }
+  let(:user) { build :user, name: 'John Jones' }
+
+  describe '#submission_confirmation' do
+    let(:mail) { described_class.password_reset(user, 'http://reset_link') }
+
+    it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_PASSWORD_RESET_TEMPLATE_ID']
+
+    it 'has the right values' do
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        name: 'John Jones',
+                                                        password_link: 'http://reset_link'
+                                                      })
+    end
+
+  end
 
   describe '#submission_confirmation' do
     let(:mail) { described_class.submission_confirmation(application, 'en') }

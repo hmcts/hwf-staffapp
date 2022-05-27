@@ -18,6 +18,8 @@ en-GB:
       timeout: "Your session expired. Please sign in again to continue."
       unauthenticated: "You need to sign in before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
+      email_not_found: 'Email adress was not found.'
+      not_sent: 'Something went wrong. Password reset email was not sent, please contact technical support.'
     mailer:
       confirmation_instructions:
         subject: "Please confirm your Help with Fees staff email"
