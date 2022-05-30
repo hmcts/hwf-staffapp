@@ -26,8 +26,8 @@
           - if @form.errors[:from_date].present?
             span.govuk-error-message
               = f.label :from_date, @form.errors[:from_date].join(', '), class: 'error'
-          p.govuk-body ="#{@form.from_date_day} / #{@form.from_date_month} / #{@form.from_date_year}"
-          .govuk-date-input.visuallyhidden class="#{'error_dates' if @form.errors[:from_date].present? || error_highlight?(@form)}"
+
+          .govuk-date-input class="#{'error_dates' if @form.errors[:from_date].present? || error_highlight?(@form)}"
             .govuk-date-input__item
               .govuk-form-group.govuk-form-group-day
                 = f.label :from_date_day, class: 'govuk-label'
@@ -48,8 +48,8 @@
           - if @form.errors[:to_date].present?
             span.govuk-error-message
               = f.label :to_date, @form.errors[:to_date].join(', '), class: 'error'
-          p.govuk-body ="#{@form.to_date_day} / #{@form.to_date_month} / #{@form.to_date_year}"
-          .govuk-date-input.visuallyhidden class="#{'error_dates' if @form.errors[:to_date].present? || error_highlight?(@form)}"
+
+          .govuk-date-input class="#{'error_dates' if @form.errors[:to_date].present? || error_highlight?(@form)}"
             .govuk-date-input__item
               .govuk-form-group.govuk-form-group-day
                 = f.label :to_date_day, class: 'govuk-label'
