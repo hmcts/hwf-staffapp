@@ -17,7 +17,7 @@ module Users
     def send_notification_and_redirect
       notify = NotifyMailer.password_reset(user, reset_link)
 
-      if notify.deliver
+      if send_email(notify)
         flash[:notice] = I18n.t('.devise.passwords.send_instructions')
         respond_with({}, location: after_sending_reset_password_instructions_path_for(:user))
       else
@@ -41,6 +41,12 @@ module Users
 
     def reset_link
       edit_user_password_url(reset_password_token: @token)
+    end
+
+    def send_email(notify)
+      notify.deliver
+    rescue StandardError
+      return false
     end
 
   end

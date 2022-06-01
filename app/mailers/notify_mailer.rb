@@ -34,7 +34,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
       name: user.name,
       password_link: reset_link
     )
-    mail(to: 'petr.zaparka@hmcts.net')
+    mail(to: user.email)
   end
 
   private
