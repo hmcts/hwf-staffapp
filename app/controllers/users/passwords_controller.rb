@@ -46,7 +46,7 @@ module Users
     def send_email(notify)
       notify.deliver
     rescue StandardError
-      return false
+      false
     end
 
   end
