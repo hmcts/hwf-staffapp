@@ -171,7 +171,7 @@ describe BusinessEntityService do
 
       it 'the business_entity has no error messages' do
         service.persist!
-        expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
+        expect(service.business_entity.errors.messages).to eq(name: ["can't be blank"])
       end
 
       it 'return false' do
@@ -212,7 +212,7 @@ describe BusinessEntityService do
 
         it 'the business_entity has the error messages' do
           service.persist!
-          expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
+          expect(service.business_entity.errors.messages).to eq(name: ["can't be blank"])
         end
       end
 
