@@ -3,8 +3,7 @@ module Views
     class PublicSubmissionData
 
       def initialize
-        @applications = Application.joins(:office).
-                        where.not(online_application_id: nil, completed_at: nil)
+        @applications = Application.joins(:office).where.not(online_application_id: nil).where.not(completed_at: nil)
       end
 
       def submission_all_time_total
