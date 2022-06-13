@@ -43,7 +43,7 @@ RSpec.describe Applications::Process::SavingsInvestmentsController, type: :contr
     let(:expected_params) { { min_threshold_exceeded: 'false' } }
 
     before do
-      allow(savings_investments_form).to receive(:update_attributes).with(expected_params)
+      allow(savings_investments_form).to receive(:update).with(expected_params)
       allow(savings_investments_form).to receive(:save).and_return(form_save)
       allow(savings_pass_fail_service).to receive(:calculate!).and_return(form_save)
       post :create, params: { application_id: application.id, application: expected_params }

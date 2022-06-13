@@ -30,7 +30,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
   describe 'validation' do
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     subject { form.valid? }

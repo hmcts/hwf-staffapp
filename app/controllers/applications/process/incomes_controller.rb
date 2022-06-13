@@ -14,7 +14,7 @@ module Applications
 
       def create
         @form = Forms::Application::Income.new(application)
-        @form.update_attributes(form_params(:income))
+        @form.update(form_params(:income))
 
         if @form.save
           IncomeCalculationRunner.new(application).run

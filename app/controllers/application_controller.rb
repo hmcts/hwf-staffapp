@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :show_maintenance_page
 
-  include Pundit
+  include Pundit::Authorization
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
   before_action :track_office_id, if: :user_signed_in?

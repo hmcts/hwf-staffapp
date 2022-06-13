@@ -22,7 +22,7 @@ class EvidenceController < ApplicationController
 
   def accuracy_save
     @form = Forms::Evidence::Accuracy.new(evidence)
-    @form.update_attributes(accuracy_params)
+    @form.update(accuracy_params)
 
     if @form.save
       redirect_after_accuracy_save
@@ -37,7 +37,7 @@ class EvidenceController < ApplicationController
 
   def income_save
     @form = Forms::Evidence::Income.new(evidence)
-    @form.update_attributes(income_params)
+    @form.update(income_params)
 
     if @form.save
       redirect_to result_evidence_path

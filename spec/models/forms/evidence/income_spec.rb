@@ -17,7 +17,7 @@ RSpec.describe Forms::Evidence::Income do
 
   describe 'validation' do
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     subject { form.valid? }
@@ -63,7 +63,7 @@ RSpec.describe Forms::Evidence::Income do
 
     before do
       allow(IncomeCalculation).to receive(:new).with(evidence.application, 500).and_return(income_calculator)
-      evidence.update_attributes(params)
+      evidence.update(params)
     end
 
     it 'saves the income on the evidence in the correct format' do

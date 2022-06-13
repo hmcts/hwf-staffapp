@@ -7,7 +7,7 @@ module Applications
       def update
         @form = Forms::Application::DecisionOverride.new(decision_override)
 
-        @form.update_attributes(build_override_params)
+        @form.update(build_override_params)
 
         if @form.valid? && OverrideDecisionService.new(application, @form).set!
           redirect_to(application_confirmation_path(application))

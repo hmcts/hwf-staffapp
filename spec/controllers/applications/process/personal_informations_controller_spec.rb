@@ -37,7 +37,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
     let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: 'false' } }
 
     before do
-      allow(personal_information_form).to receive(:update_attributes).with(expected_params)
+      allow(personal_information_form).to receive(:update).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
 
       post :create, params: { application_id: application.id, application: expected_params }

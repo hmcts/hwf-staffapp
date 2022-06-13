@@ -56,7 +56,7 @@ RSpec.describe ReferenceGenerator, type: :service do
       context 'when there are two business entities for the same jurisdiction' do
         before do
           create :business_entity, office: office, jurisdiction: jurisdiction, be_code: 'CB975', sop_code: '123456789'
-          business_entity.update_attributes(valid_to: Time.zone.now)
+          business_entity.update(valid_to: Time.zone.now)
         end
 
         it 'it no-longer makes a difference' do

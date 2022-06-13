@@ -49,7 +49,7 @@ RSpec.describe Applications::Process::IncomesController, type: :controller do
     let(:expected_params) { { dependents: 'false' } }
 
     before do
-      allow(income_form).to receive(:update_attributes).with(expected_params)
+      allow(income_form).to receive(:update).with(expected_params)
       allow(income_form).to receive(:save).and_return(form_save)
 
       post :create, params: { application_id: application.id, application: expected_params }

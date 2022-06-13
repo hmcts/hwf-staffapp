@@ -9,7 +9,7 @@ module Applications
 
       def create
         @form = Forms::Application::Applicant.new(application.applicant)
-        @form.update_attributes(form_params(:applicant))
+        @form.update(form_params(:applicant))
 
         if @form.save
           redirect_to application_details_path

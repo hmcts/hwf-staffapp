@@ -20,7 +20,7 @@ class ProcessedApplicationsController < ApplicationController
 
   def update
     @form = Forms::Application::Delete.new(application)
-    @form.update_attributes(delete_params)
+    @form.update(delete_params)
     authorize application
     save_and_respond_on_update
   end

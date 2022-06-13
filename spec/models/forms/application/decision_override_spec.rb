@@ -17,7 +17,7 @@ RSpec.describe Forms::Application::DecisionOverride do
   context 'validation' do
     subject { form.valid? }
 
-    before { form.update_attributes(params) }
+    before { form.update(params) }
 
     context 'user_id' do
       let(:user_id) { nil }
@@ -116,7 +116,7 @@ RSpec.describe Forms::Application::DecisionOverride do
     let(:override) { create :decision_override }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for an invalid form' do

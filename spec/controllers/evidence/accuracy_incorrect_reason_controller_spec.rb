@@ -56,7 +56,7 @@ RSpec.describe Evidence::AccuracyIncorrectReasonController, type: :controller do
 
       before do
         allow(Forms::Evidence::Accuracy).to receive(:new).with(evidence).and_return(form)
-        allow(form).to receive(:update_attributes).with(formatted_params)
+        allow(form).to receive(:update).with(formatted_params)
         allow(form).to receive(:save).and_return(form_save)
         allow(form).to receive(:errors).and_return(errors)
         allow(errors).to receive(:add)

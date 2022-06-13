@@ -15,7 +15,7 @@ module Applications
 
       def create
         @form = Forms::Application::Benefit.new(application)
-        @form.update_attributes(form_params(:benefits))
+        @form.update(form_params(:benefits))
 
         if @form.save
           benefit_check_and_redirect(@form.benefits)

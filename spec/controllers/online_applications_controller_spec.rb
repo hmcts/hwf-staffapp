@@ -90,7 +90,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:benefits_valid) { true }
 
     before do
-      allow(form).to receive(:update_attributes).with(params)
+      allow(form).to receive(:update).with(params)
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:fee).and_return(fee)
       allow(online_application).to receive(:update).and_return(true)
@@ -417,7 +417,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       let(:params) { { fee_manager_firstname: 'Jane', fee_manager_lastname: 'Doe' } }
 
       before do
-        allow(form).to receive(:update_attributes).with(params)
+        allow(form).to receive(:update).with(params)
         allow(form).to receive(:save).and_return(form_save)
 
         put :approve_save, params: { id: online_application.id, online_application: params }

@@ -43,10 +43,10 @@ RSpec.describe FormObject do
     end
   end
 
-  describe '#update_attributes' do
+  describe '#update' do
     let(:params) { { fee: 10 } }
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     it 'updates the attributes on the form' do

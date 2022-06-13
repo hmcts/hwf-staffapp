@@ -21,7 +21,7 @@ RSpec.describe ApplicationFormRepository do
   describe '#process details' do
     before do
       allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
-      allow(application_details_form).to receive(:update_attributes).with(form_params)
+      allow(application_details_form).to receive(:update).with(form_params)
       allow(application_details_form).to receive(:save).and_return saved
     end
 

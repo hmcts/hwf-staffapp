@@ -149,7 +149,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     let(:resolver) { instance_double(ResolverService, delete: true) }
 
     before do
-      allow(delete_form).to receive(:update_attributes).with(expected_params)
+      allow(delete_form).to receive(:update).with(expected_params)
       allow(delete_form).to receive(:save).and_return(form_save)
       allow(ResolverService).to receive(:new).with(application1, user).and_return(resolver)
 

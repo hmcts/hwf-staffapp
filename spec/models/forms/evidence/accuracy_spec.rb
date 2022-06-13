@@ -15,7 +15,7 @@ RSpec.describe Forms::Evidence::Accuracy do
     let(:evidence) { create :evidence_check }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for a valid form when the evidence is correct' do

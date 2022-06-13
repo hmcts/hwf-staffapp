@@ -108,7 +108,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
       let(:params) { { fee_manager_firstname: 'Jane', fee_manager_lastname: 'Doe' } }
 
       before do
-        allow(form).to receive(:update_attributes).with(params)
+        allow(form).to receive(:update).with(params)
         allow(form).to receive(:save).and_return(form_save)
 
         put :approve_save, params: { application_id: application.id, application: params }

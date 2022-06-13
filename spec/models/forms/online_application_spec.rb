@@ -122,7 +122,7 @@ RSpec.describe Forms::OnlineApplication do
 
   describe '#save' do
     subject do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

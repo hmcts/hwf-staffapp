@@ -17,7 +17,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     let(:application) { create :single_applicant_under_61 }
 
     before do
-      savings_investment_form.update_attributes(hash)
+      savings_investment_form.update(hash)
     end
 
     describe 'min_threshold_exceeded' do
@@ -139,7 +139,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     subject(:form) { described_class.new(saving) }
 
     subject(:update_form) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

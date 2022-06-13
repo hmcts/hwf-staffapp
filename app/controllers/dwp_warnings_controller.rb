@@ -8,7 +8,7 @@ class DwpWarningsController < ApplicationController
     authorize dwp_warning
 
     notice_message =
-      if dwp_warning.update_attributes(notification_params)
+      if dwp_warning.update(notification_params)
         'Your changes have been saved.'
       else
         'Your changes have not been saved.'

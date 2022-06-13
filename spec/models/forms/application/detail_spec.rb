@@ -415,7 +415,7 @@ RSpec.describe Forms::Application::Detail do
     subject(:form) { described_class.new(detail) }
 
     subject(:update_form) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

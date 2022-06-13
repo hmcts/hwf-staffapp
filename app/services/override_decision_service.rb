@@ -14,7 +14,7 @@ class OverrideDecisionService
   private
 
   def update_application
-    @application.update_attributes(
+    @application.update(
       decision: 'full',
       decision_type: 'override',
       decision_cost: @application.detail.fee

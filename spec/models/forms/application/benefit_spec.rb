@@ -41,7 +41,7 @@ RSpec.describe Forms::Application::Benefit do
     subject(:form) { described_class.new(application) }
 
     subject(:form_update) do
-      form.update_attributes(attributes)
+      form.update(attributes)
       form.save
     end
 

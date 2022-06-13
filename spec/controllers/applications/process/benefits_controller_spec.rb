@@ -74,7 +74,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
     let(:benefit_override) { nil }
 
     before do
-      allow(benefit_form).to receive(:update_attributes).with(expected_params)
+      allow(benefit_form).to receive(:update).with(expected_params)
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
       allow(application).to receive(:failed_because_dwp_error?).and_return dwp_error?
