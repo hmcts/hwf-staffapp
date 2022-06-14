@@ -4,13 +4,6 @@ shared_examples_for 'Pundit denies access to' do |view|
 
   describe "GET ##{view}" do
 
-    subject do
-      lambda {
-        bypass_rescue
-        get view
-      }
-    end
-
     context 'they are not signed in' do
       before { get view }
 
@@ -24,13 +17,19 @@ shared_examples_for 'Pundit denies access to' do |view|
     context 'as a user' do
       before { sign_in user }
 
-      it { is_expected.to raise_error(Pundit::NotAuthorizedError) }
+      it {
+        bypass_rescue
+        expect { get view }.to raise_error(Pundit::NotAuthorizedError)
+      }
     end
 
     context 'as a manager' do
       before { sign_in manager }
 
-      it { is_expected.to raise_error(Pundit::NotAuthorizedError) }
+      it {
+        bypass_rescue
+        expect { get view }.to raise_error(Pundit::NotAuthorizedError)
+      }
     end
   end
 end
