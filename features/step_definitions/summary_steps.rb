@@ -44,3 +44,29 @@ Then("I should see the personal details") do
   expect(summary_page.content.summary_section[0].list_row[2].text).to have_content 'National Insurance number JR 05 40 08 D Change National Insurance number'
   expect(summary_page.content.summary_section[0].list_row[3].text).to have_content 'Status Single Change Status'
 end
+
+When('I click on change Date of Birth') do
+  summary_page.content.summary_section[0].change_dob.click
+end
+
+Then('I should see that my new answer is displayed in the personal details summary') do
+  expect(summary_page.content.summary_section[0].list_row[0].text).to have_content 'Full name Mrs Jean Jones Change Full name'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_content 'Date of birth 11 March 1983 Change Date of birth'
+end
+
+When('I click on change date received') do
+  summary_page.content.summary_section[1].change_date_received.click
+end
+
+Then('I should see that my new answer is displayed in the application details summary') do
+  date_of_death = (Time.zone.today - 1.month).strftime("%d %B %Y")
+  date_received = Time.zone.today.strftime("%d %B %Y")
+  date_fee_paid = Time.zone.yesterday.strftime("%d %B %Y")
+
+  expect(summary_page.content.summary_section[1].list_row[2].text).to have_content "Date received #{date_received} Change Date received"
+  expect(summary_page.content.summary_section[1].list_row[5].text).to have_content "Name of the deceased John Doe Change Name of the deceased"
+  expect(summary_page.content.summary_section[1].list_row[6].text).to have_content "Date of their death #{date_of_death} Change Date of their death"
+  expect(summary_page.content.summary_section[1].list_row[7].text).to have_content "Refund request Yes Change Refund request"
+  expect(summary_page.content.summary_section[1].list_row[8].text).to have_content "Date fee paid #{date_fee_paid} Change Date fee paid"
+end
+

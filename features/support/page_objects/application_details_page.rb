@@ -34,6 +34,13 @@ class ApplicationDetailsPage < BasePage
       element :delivery_manager_name_input, '#application_discretion_manager_name'
       element :discretion_reason_input, '#application_discretion_reason'
     end
+    element :probate_case, '.govuk-label', text: 'This is a probate case'
+    section :probate_section, '#probate-only' do
+      element :day_date_of_death, '#application_day_date_of_death'
+      element :month_date_of_death, '#application_month_date_of_death'
+      element :year_date_of_death, '#application_year_date_of_death'
+      element :deceased_name, '#application_deceased_name'
+    end
   end
 
   def date_application_received
@@ -65,6 +72,16 @@ class ApplicationDetailsPage < BasePage
     content.day_date_received.set date_fee_paid.day
     content.month_date_received.set date_fee_paid.month
     content.year_date_received.set date_fee_paid.year
+  end
+
+  def fill_in_probate
+    content.probate_case.click
+    date_of_death = Time.zone.today - 1.month
+
+    content.probate_section.day_date_of_death.set date_of_death.day
+    content.probate_section.month_date_of_death.set date_of_death.month
+    content.probate_section.year_date_of_death.set date_of_death.year
+    content.probate_section.deceased_name.set 'John Doe'
   end
 
   def submit_fee_100
