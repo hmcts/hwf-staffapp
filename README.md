@@ -26,17 +26,7 @@ delayed job that has the schedule in DB table. To set it up (if there is no reco
 ```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now ```
 
 ## Pre-requisites
-To run the headless tests you will need to install quicktime for capybara-webkit:
-```
-brew install qt
-```
-You will need to run the following to enable capybara-webkit in ubuntu environments:
-```
-sudo apt-get install qt5-default libqt5webkit5-dev
-sudo apt-get install xvfb
-```
-
-You will also need to install govuk-frontend library
+You will need to install govuk-frontend library
 ```
 npm install --save govuk-frontend
 ```
