@@ -284,7 +284,7 @@ RSpec.describe HmrcCheck, type: :model do
       end
     end
 
-    context 'hmrc total income lower then aplication income' do
+    context 'hmrc total income lower than aplication income' do
       let(:income) { [{ "taxablePay" => 1200.04 }] }
       let(:application) { create :single_applicant_under_61, income: 15000 }
       let(:additional_income) { 0 }
@@ -302,7 +302,7 @@ RSpec.describe HmrcCheck, type: :model do
         it { expect(evidence_check.amount_to_pay).to eq(0) }
       end
 
-      context 'hmrc income + additional income higher then app income' do
+      context 'hmrc income + additional income higher than app income' do
         let(:income) { [{ "taxablePay" => 100.04 }] }
         let(:additional_income) { 21 }
         let(:application) { create :single_applicant_under_61, income: 120 }
@@ -311,7 +311,7 @@ RSpec.describe HmrcCheck, type: :model do
         it { expect(evidence_check.amount_to_pay).to eq(0) }
       end
 
-      context 'hmrc income + additional income lowe then app income' do
+      context 'hmrc income + additional income lower than app income' do
         let(:income) { [{ "taxablePay" => 100.04 }] }
         let(:additional_income) { 11 }
         let(:application) { create :single_applicant_under_61, income: 120 }
