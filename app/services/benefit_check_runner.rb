@@ -29,7 +29,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
 
   def benefit_check_date_valid?
     return true if @application.online_application
-    benefit_check_date > Time.zone.now - 3.months
+    benefit_check_date > 3.months.ago
   end
 
   private

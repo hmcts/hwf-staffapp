@@ -41,7 +41,7 @@ RSpec.describe Views::Reports::RawDataExport do
       create :application_part_remission, :processed_state, shared_parameters
       create :application_no_remission, :processed_state, shared_parameters
       # and exclude the following
-      create :application_full_remission, :processed_state, business_entity: business_entity, decision_date: Time.zone.now - 2.months
+      create :application_full_remission, :processed_state, business_entity: business_entity, decision_date: 2.months.ago
       create :application_full_remission, :processed_state, ignore_these_parameters
       create :application_full_remission, :waiting_for_evidence_state, shared_parameters
       create :application_full_remission, :waiting_for_part_payment_state, shared_parameters

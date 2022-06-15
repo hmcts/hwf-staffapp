@@ -30,7 +30,7 @@ RSpec.shared_examples 'runs benefit check record' do
 
     describe 'has date_to_check set' do
       context 'when date_fee_paid is set on detail' do
-        let(:detail) { create :detail, date_fee_paid: Time.zone.now - 1.month }
+        let(:detail) { create :detail, date_fee_paid: 1.month.ago }
 
         it 'equals the date_fee_paid' do
           expect(benefit_check.date_to_check).to eql(detail.date_fee_paid)
@@ -38,7 +38,7 @@ RSpec.shared_examples 'runs benefit check record' do
       end
 
       context 'when date_fee_paid is not set but date_received is set on detail' do
-        let(:detail) { create :detail, date_received: Time.zone.now - 1.month }
+        let(:detail) { create :detail, date_received: 1.month.ago }
 
         it 'equals the date_received' do
           expect(benefit_check.date_to_check).to eql(detail.date_received)

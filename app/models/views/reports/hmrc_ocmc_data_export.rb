@@ -134,7 +134,7 @@ module Views
         return if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
         partner = income_kind_hash[:partner].try(:join, ',')
-        [applicant, partner].reject(&:blank?).join(", ")
+        [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         ""
       end

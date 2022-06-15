@@ -19,7 +19,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
   let(:part_remission) {
     create :application_part_remission, :waiting_for_evidence_state, :income_type,
-           office: office, created_at: Time.zone.now - 5.days, evidence_check: evidence_check_part, decision_cost: 309.7
+           office: office, created_at: 5.days.ago, evidence_check: evidence_check_part, decision_cost: 309.7
   }
   let(:full_remission) {
     create :application_full_remission, :processed_state, :income_type,
@@ -77,12 +77,12 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
     it "only relevant applications" do
       # include
-      create :application_part_remission, :income_type, office: office, created_at: Time.zone.now - 5.days
+      create :application_part_remission, :income_type, office: office, created_at: 5.days.ago
       # exclude
       create :application_full_remission, :processed_state, :benefit_type, office: office
       create :application_full_remission, :processed_state, :income_type, office: digital_office
       create :application_full_remission, :waiting_for_evidence_state, :income_type, office: digital_office
-      create :application_full_remission, :processed_state, :income_type, office: office, created_at: Time.zone.now - 2.months
+      create :application_full_remission, :processed_state, :income_type, office: office, created_at: 2.months.ago
       expect(data.total_count).to eq 1
     end
 

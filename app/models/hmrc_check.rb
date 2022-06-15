@@ -10,7 +10,6 @@ class HmrcCheck < ActiveRecord::Base
   serialize :request_params
 
   validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validates :user_id, presence: true
 
   def total_income
     hmrc_income + additional_income

@@ -28,10 +28,10 @@ FactoryBot.define do
     factory :online_application_with_all_details do
       children { 2 }
       refund { true }
-      date_fee_paid { Time.zone.now - 2.months }
+      date_fee_paid { 2.months.ago }
       probate { true }
       deceased_name { 'Some Deceased' }
-      date_of_death { Time.zone.now - 3.months }
+      date_of_death { 3.months.ago }
       case_number { '234567' }
       form_name { 'FGDH122' }
       email_contact { true }
@@ -126,7 +126,7 @@ FactoryBot.define do
 
     trait :with_refund do
       refund { true }
-      date_fee_paid { Time.zone.now - 2.months }
+      date_fee_paid { 2.months.ago }
     end
 
     trait :with_fee_manager_approval do

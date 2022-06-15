@@ -6,7 +6,7 @@ class BusinessEntity < ActiveRecord::Base
     joins(:office).where.not("offices.name IN ('Digital', 'HMCTS HQ Team ')")
   }
 
-  validates :office, :jurisdiction, :sop_code, :name, :valid_from, presence: true
+  validates :sop_code, :name, :valid_from, presence: true
   validates :sop_code, uniqueness: { scope: [:office_id, :name] }
 
   validates :valid_to, date: {

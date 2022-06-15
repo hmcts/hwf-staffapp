@@ -125,8 +125,8 @@ RSpec.feature 'User profile', type: :feature do
         expect(page).to have_xpath(".//tr[1]/td[contains(.,'Jim Halpert')]")
 
         # removing modal test because it was not reliable so testing for js params intestead
-        page.find(:xpath,'.//a[contains(.,"Remove staff member")]')
-        page.find(:xpath,'.//a[@data-confirm="Are you sure?"][contains(.,"Remove staff member")]')
+        page.find(:xpath, './/a[contains(.,"Remove staff member")]')
+        page.find(:xpath, './/a[@data-confirm="Are you sure?"][contains(.,"Remove staff member")]')
         click_link "Remove staff member"
       end
 

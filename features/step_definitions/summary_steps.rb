@@ -69,4 +69,3 @@ Then('I should see that my new answer is displayed in the application details su
   expect(summary_page.content.summary_section[1].list_row[7].text).to have_content "Refund request Yes Change Refund request"
   expect(summary_page.content.summary_section[1].list_row[8].text).to have_content "Date fee paid #{date_fee_paid} Change Date fee paid"
 end
-
