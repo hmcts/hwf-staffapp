@@ -56,7 +56,7 @@ class HmrcCheck < ActiveRecord::Base
     result = income_calculation
 
     evidence_params = {
-      income: total_income.round,
+      income: income_for_calculation,
       outcome: result[:outcome],
       amount_to_pay: result[:amount_to_pay]
     }
@@ -64,6 +64,15 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def income_calculation
-    IncomeCalculation.new(evidence_check.application, total_income.to_i).calculate
+    IncomeCalculation.new(evidence_check.application, income_for_calculation).calculate
+  end
+
+  def income_for_calculation
+    return total_income.to_i if application.income.to_i < total_income.to_i
+    application.income.to_i
+  end
+
+  def application
+    evidence_check.application
   end
 end
