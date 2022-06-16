@@ -59,7 +59,7 @@ gem 'slim-rails', '~> 3.2'
 gem 'puma', '~> 5.6.4'
 
 # Date validation
-gem 'date_validator', '0.9'
+gem 'date_validator', '0.12'
 gem 'will_paginate'
 
 # Soft deletion

@@ -621,20 +621,20 @@ en-GB:
             date_received:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: The application must have been made in the last 3 months
-              before: This date can't be in the future
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
-              before_or_equal_to: This date can’t be after the application was received
+              date_after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
+              date_before_or_equal_to: This date can’t be after the application was received
             date_of_death:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              before: This date can't be in the future
-              after_or_equal_to: The date of death must have been in the last 20 years
+              date_before: This date can't be in the future
+              date_after_or_equal_to: The date of death must have been in the last 20 years
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -726,8 +726,8 @@ en-GB:
             date_received:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: The application must have been made in the last 3 months
-              before: This date can't be in the future
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
