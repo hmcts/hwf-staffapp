@@ -102,7 +102,6 @@ group :development, :test do
   gem 'factory_bot_rails', '5.2.0'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'jasmine'
   gem 'listen', '~> 3.0'
   gem 'parallel_tests'
   gem 'pry-rails'
