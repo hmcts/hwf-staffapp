@@ -85,7 +85,7 @@ class OnlineApplicationSearch
   end
 
   def set_error_and_return_nil(i18n_key, i18n_params = {})
-    @error_message = I18n.t(i18n_key, { scope: scope }.merge(i18n_params))
+    @error_message = I18n.t(i18n_key, **{ scope: scope }.merge(i18n_params))
     nil
   end
 end
