@@ -5,14 +5,14 @@ gem 'application_insights', '~> 0.5.6'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.6'
+gem 'rails', '~> 7.0.3'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
-gem 'i18n', '~> 1.8', '>= 1.8.10'
+gem 'i18n','>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
-gem 'rails-i18n', '~> 6.0'
+gem 'rails-i18n', '~> 7.0.3'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'ministryofjustice/azure_env_secrets', tag: 'v0.1.3'
@@ -63,7 +63,7 @@ gem 'date_validator', '0.12'
 gem 'will_paginate'
 
 # Soft deletion
-gem "paranoia", "~> 2.0"
+gem "paranoia"
 
 # tracking model changes
 gem "paper_trail"
@@ -91,7 +91,7 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'terminal-notifier-guard'
-  gem 'web-console', '~> 3.7.0'
+  gem 'web-console'
 end
 
 group :development, :test do
@@ -99,16 +99,16 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'byebug'
   gem 'climate_control'
-  gem 'factory_bot_rails', '5.2.0'
+  gem 'factory_bot_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'listen', '~> 3.0'
+  gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 4.0'
-  gem 'rubocop', '~> 1.10.0', require: false
+  gem 'rspec-rails'
+  gem 'rubocop', require: false
   gem 'rubocop-rails'
-  gem 'rubocop-rspec', '~> 1.31.0', require: false
+  gem 'rubocop-rspec', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
@@ -119,9 +119,9 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter', '0.6.0', require: nil
-  gem 'cucumber', '~> 5.3.0', require: false
-  gem 'cucumber-rails', '~> 2.2.0', require: false
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'cucumber', require: false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
