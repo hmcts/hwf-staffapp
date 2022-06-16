@@ -44,7 +44,7 @@ class ProcessedApplicationsController < ApplicationController
   def save_and_respond_on_update
     if @form.save
       ResolverService.new(application, current_user).delete
-      flash[:notice] = 'The application has been deleted'
+      flash[:notice] = I18n.t('processed_applications.notice.deleted')
       redirect_to(action: :index)
     else
       assign_views

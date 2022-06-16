@@ -33,7 +33,7 @@ class OfficesController < ApplicationController
     @office = Office.new(office_params)
     authorize @office
 
-    flash[:notice] = 'Office was successfully created' if @office.save
+    flash[:notice] = I18n.t('offices.notice.created') if @office.save
 
     respond_with(@office)
   end
@@ -44,7 +44,7 @@ class OfficesController < ApplicationController
     office.assign_attributes(office_params)
 
     if office.save
-      flash[:notice] = 'Office was successfully updated'
+      flash[:notice] = I18n.t('offices.notice.updated')
 
       redirect_to update_redirect_path
     else

@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   }
   validates :role, inclusion: {
     in: ROLES,
-    message: "%{value} is not a valid role",
+    message: I18n.t('role.inclusions'),
     allow_nil: true
   }
   validate :jurisdiction_is_valid

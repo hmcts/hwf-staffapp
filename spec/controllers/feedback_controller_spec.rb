@@ -65,6 +65,11 @@ RSpec.describe FeedbackController, type: :controller do
           post :create, params: { feedback: feedback_attributes }
         }.to change(Feedback, :count).by(1)
       end
+
+      it 'display message' do
+        post :create, params: { feedback: feedback_attributes }
+        expect(flash[:notice]).to eql 'Your feedback has been recorded'
+      end
     end
   end
 

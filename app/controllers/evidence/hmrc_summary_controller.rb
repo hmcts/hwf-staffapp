@@ -18,7 +18,7 @@ module Evidence
       render 'applications/process/confirmation/index'
     rescue ResolverService::UndefinedOutcome
       load_form
-      flash[:alert] = "Undefined evidence check outcome, please contact support"
+      flash[:alert] = I18n.t('hmrc_summary.alert')
       render :show
     end
 

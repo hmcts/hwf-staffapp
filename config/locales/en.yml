@@ -71,6 +71,9 @@ en-GB:
       part_payment: Part-payment
       emergency: Emergency
       other: Other
+    notice:
+      deleted: 'The application has been deleted'
+
     index:
       title: Processed applications
       no_applications: There are no processed applications for your office.
@@ -229,6 +232,9 @@ en-GB:
     rating_2: 'I used an accessibility tool such as a screen reader'
     rating_3: 'I needed other kind of help'
     rating_4: 'Other'
+    notice:
+      recorded: 'Your feedback has been recorded'
+
   unauthorized:
     flash: You don’t have permission to do this
     manage:
@@ -306,12 +312,20 @@ en-GB:
         offline: "Display DWP check is down message"
         online: "Display DWP check is working message"
         default: "Use the default DWP check to display message"
-  offices:
-    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
+
 
   online_application_benefits:
     edit:
       message: Due to the benefits checker being down, you will only be able to process this application if you have supporting evidence that the applicant is receiving benefits.
+
+  hmrc_summary:
+    alert: "Undefined evidence check outcome, please contact support"
+
+  offices:
+    notice:
+      created: 'Office was successfully created'
+      updated: 'Office was successfully updated'
+    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
 
   activemodel:
     attributes:
@@ -572,6 +586,7 @@ en-GB:
             entity_code:
               blank: "Please select a court name"
         forms/report/finance_transactional_report:
+          date_range_length: "The date range can't be longer than 2 years"
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:
             date_from:
@@ -746,6 +761,8 @@ en-GB:
               too_short: Your password must be at least %{count} characters
             password_confirmation:
               confirmation: Your password must match the one you entered above
+            role:
+              inclusion: '%{value} is not a valid role'
         office:
           attributes:
             name:
@@ -841,3 +858,5 @@ en-GB:
         roles: Roles
       form_jurisdiction:
         main_jurisdiction: Main jurisdiction
+    notice:
+      updated: 'User updated.'

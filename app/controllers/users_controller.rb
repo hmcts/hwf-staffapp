@@ -72,7 +72,7 @@ class UsersController < ApplicationController
   end
 
   def flash_notices_for_update(update_successful)
-    flash[:notice] = 'User updated.' if update_successful
+    flash[:notice] = I18n.t('users.notice.updated') if update_successful
     flash[:notice] += " #{email_confiration_message}" if new_email?
     flash[:notice] = user_transfer_notice if UserManagement.new(current_user, @user).transferred?
   end

@@ -22,7 +22,7 @@ class FeedbackController < ApplicationController
     authorize @feedback
 
     if @feedback.save
-      flash[:notice] = 'Your feedback has been recorded'
+      flash[:notice] = I18n.t('feedback.notice.recorded')
       redirect_to root_path
     else
       respond_with(@feedback)
