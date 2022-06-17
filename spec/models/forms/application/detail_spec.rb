@@ -29,7 +29,7 @@ RSpec.describe Forms::Application::Detail do
       end
 
       it 'saves the values to instance variable' do
-        expect(form.date_received.to_s).to eq('01/02/2019')
+        expect(form.date_received.to_fs(:default)).to eq('01/02/2019')
       end
     end
   end
