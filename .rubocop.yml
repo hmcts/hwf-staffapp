@@ -218,6 +218,9 @@ RSpec/EmptyLineAfterHook:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/EmptyLineAfterSubject:
   Enabled: false
 

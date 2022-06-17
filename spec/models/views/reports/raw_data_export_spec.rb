@@ -247,7 +247,7 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
-    context 'under 3000' do
+    context 'under 3000 max_threshold false' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { false }
       let(:max_threshold) { false }
