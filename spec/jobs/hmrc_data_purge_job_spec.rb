@@ -43,8 +43,8 @@ RSpec.describe HmrcDataPurgeJob, type: :job do
         it { expect(hmrc_check_2.date_of_birth).not_to be_nil }
         it { expect(hmrc_check_2.ni_number).not_to be_nil }
         it { expect(hmrc_check_2.evidence_check_id).not_to be_nil }
-        it { expect(hmrc_check_2.purged_at.to_s(:db)).to eq(Time.zone.now.to_s(:db)) }
-        it { expect(app_insight).to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_2.id} at #{Time.zone.now.to_s(:db)}") }
+        it { expect(hmrc_check_2.purged_at.to_fs(:db)).to eq(Time.zone.now.to_fs(:db)) }
+        it { expect(app_insight).to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_2.id} at #{Time.zone.now.to_fs(:db)}") }
 
         it { expect(hmrc_check_3.address).to be_nil }
         it { expect(hmrc_check_3.income).to be_nil }
@@ -53,8 +53,8 @@ RSpec.describe HmrcDataPurgeJob, type: :job do
         it { expect(hmrc_check_3.date_of_birth).not_to be_nil }
         it { expect(hmrc_check_3.ni_number).not_to be_nil }
         it { expect(hmrc_check_3.evidence_check_id).not_to be_nil }
-        it { expect(hmrc_check_3.purged_at.to_s(:db)).to eq(Time.zone.now.to_s(:db)) }
-        it { expect(app_insight).to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_3.id} at #{Time.zone.now.to_s(:db)}") }
+        it { expect(hmrc_check_3.purged_at.to_fs(:db)).to eq(Time.zone.now.to_fs(:db)) }
+        it { expect(app_insight).to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_3.id} at #{Time.zone.now.to_fs(:db)}") }
       end
 
       context 'left alone' do
@@ -66,14 +66,14 @@ RSpec.describe HmrcDataPurgeJob, type: :job do
         it { expect(hmrc_check_1.date_of_birth).not_to be_nil }
         it { expect(hmrc_check_1.ni_number).not_to be_nil }
         it { expect(hmrc_check_1.evidence_check_id).not_to be_nil }
-        it { expect(app_insight).not_to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_1.id} at #{Time.zone.now.to_s(:db)}") }
+        it { expect(app_insight).not_to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_1.id} at #{Time.zone.now.to_fs(:db)}") }
 
         # Do not purge already purged data
         it { expect(hmrc_check_4.purged_at).to eq Date.parse('1/1/2018') }
         it { expect(hmrc_check_4.date_of_birth).not_to be_nil }
         it { expect(hmrc_check_4.ni_number).not_to be_nil }
         it { expect(hmrc_check_4.evidence_check_id).not_to be_nil }
-        it { expect(app_insight).not_to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_4.id} at #{Time.zone.now.to_s(:db)}") }
+        it { expect(app_insight).not_to have_received(:track_event).with("Purging HMRC data check id:#{hmrc_check_4.id} at #{Time.zone.now.to_fs(:db)}") }
       end
     end
   end

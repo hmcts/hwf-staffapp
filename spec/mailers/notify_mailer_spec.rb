@@ -28,7 +28,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: '234567',
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -38,7 +38,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: 'FGDH122',
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -48,7 +48,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       application.case_number = ''
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith',
                                                         form_name_case_number: ' '
                                                       })
@@ -73,7 +73,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: '234567',
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -83,7 +83,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
                                                         form_name_case_number: 'FGDH122',
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith'
                                                       })
     end
@@ -93,7 +93,7 @@ RSpec.describe NotifyMailer, type: :mailer do
       application.case_number = ''
       expect(mail.govuk_notify_personalisation).to eq({
                                                         application_reference_code: application.reference,
-                                                        application_submitted_date: Time.zone.today.to_s(:db),
+                                                        application_submitted_date: Time.zone.today.to_fs(:db),
                                                         applicant_name: 'Peter Smith',
                                                         form_name_case_number: ' '
                                                       })

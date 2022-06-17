@@ -16,22 +16,22 @@ RSpec.describe DwpReportStatusJob, type: :job do
     context 'offline' do
       let(:dwp_monitor) { instance_double(DwpMonitor, state: 'offline') }
       it { expect(mailer).to have_received(:deliver_now) }
-      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_s(:db)}") }
-      it { expect(app_insight).to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_s(:db)}") }
+      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_fs(:db)}") }
+      it { expect(app_insight).to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_fs(:db)}") }
     end
 
     context 'online' do
       let(:dwp_monitor) { instance_double(DwpMonitor, state: 'online') }
       it { expect(mailer).not_to have_received(:deliver_now) }
-      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_s(:db)}") }
-      it { expect(app_insight).not_to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_s(:db)}") }
+      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_fs(:db)}") }
+      it { expect(app_insight).not_to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_fs(:db)}") }
     end
 
     context 'warning' do
       let(:dwp_monitor) { instance_double(DwpMonitor, state: 'warning') }
       it { expect(mailer).not_to have_received(:deliver_now) }
-      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_s(:db)}") }
-      it { expect(app_insight).not_to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_s(:db)}") }
+      it { expect(app_insight).to have_received(:track_event).with("Running DWP status check at #{Time.zone.now.to_fs(:db)}") }
+      it { expect(app_insight).not_to have_received(:track_event).with("Sending DWP status is offline notication at #{Time.zone.now.to_fs(:db)}") }
     end
 
   end

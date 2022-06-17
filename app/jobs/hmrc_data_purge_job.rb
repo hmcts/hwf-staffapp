@@ -21,13 +21,13 @@ class HmrcDataPurgeJob < ApplicationJob
 
   def log_task_run
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Running HMRC purge data script#{Time.zone.now.to_s(:db)}")
+    tc.track_event("Running HMRC purge data script#{Time.zone.now.to_fs(:db)}")
     tc.flush
   end
 
   def log_purge_item(hmrc_check_id)
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Purging HMRC data check id:#{hmrc_check_id} at #{Time.zone.now.to_s(:db)}")
+    tc.track_event("Purging HMRC data check id:#{hmrc_check_id} at #{Time.zone.now.to_fs(:db)}")
     tc.flush
   end
 

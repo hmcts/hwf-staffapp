@@ -18,10 +18,10 @@ module Forms
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
       validates :over_61, inclusion: { in: [true, false] }, if: :min_threshold_exceeded?
       validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
-      validates :amount, presence: true,
-                         numericality: { greater_than_or_equal_to: Settings.savings_threshold.minimum,
-                                         allow_blank: true },
-                         if: :amount_required?
+      # validates :amount, presence: true,
+      #                    numericality: { greater_than_or_equal_to: Settings.savings_threshold.minimum,
+      #                                    allow_blank: true },
+      #                    if: :amount_required?
 
       private
 
