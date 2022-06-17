@@ -22,8 +22,8 @@ active_job:
 analytics:
   id: <%= ENV['GTM_ID'] || 'GTM-KZZ8ZMV' %>
 savings_threshold:
-  minimum: 3000
-  maximum: 16000
+  minimum_value: 3000
+  maximum_value: 16000
 processed_deleted:
   per_page: <%= ENV['PROCESSED_DELETED_PER_PAGE'] || 50 %>
 income:

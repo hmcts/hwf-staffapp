@@ -18,10 +18,10 @@ module Forms
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
       validates :over_61, inclusion: { in: [true, false] }, if: :min_threshold_exceeded?
       validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
-      # validates :amount, presence: true,
-      #                    numericality: { greater_than_or_equal_to: Settings.savings_threshold.minimum,
-      #                                    allow_blank: true },
-      #                    if: :amount_required?
+      validates :amount, presence: true,
+                         numericality: { greater_than_or_equal_to: Settings.savings_threshold.minimum_value,
+                                         allow_blank: true },
+                         if: :amount_required?
 
       private
 
@@ -31,10 +31,10 @@ module Forms
 
       def fields_to_update
         {
-          min_threshold: Settings.savings_threshold.minimum,
+          min_threshold: Settings.savings_threshold.minimum_value,
           min_threshold_exceeded: min_threshold_exceeded,
           over_61: over_61,
-          max_threshold: Settings.savings_threshold.maximum,
+          max_threshold: Settings.savings_threshold.maximum_value,
           max_threshold_exceeded: max_threshold_exceeded,
           amount: rounded_amount
         }

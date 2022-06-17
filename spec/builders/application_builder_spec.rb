@@ -100,11 +100,11 @@ RSpec.describe ApplicationBuilder do
       end
 
       it 'sets the current min_thresholds' do
-        expect(built_application.saving.min_threshold).to eql(Settings.savings_threshold.minimum)
+        expect(built_application.saving.min_threshold).to eql(Settings.savings_threshold.minimum_value)
       end
 
       it 'sets the current max_thresholds' do
-        expect(built_application.saving.max_threshold).to eql(Settings.savings_threshold.maximum)
+        expect(built_application.saving.max_threshold).to eql(Settings.savings_threshold.maximum_value)
       end
 
       it 'has the income_kind stored' do

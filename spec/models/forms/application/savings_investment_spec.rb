@@ -5,7 +5,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
   params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount]
 
-  let(:min_threshold) { Settings.savings_threshold.minimum }
+  let(:min_threshold) { Settings.savings_threshold.minimum_value }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -163,8 +163,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
     end
 
     context 'sets the thresholds from the settings file' do
-      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum }
-      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum }
+      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum_value }
+      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum_value }
     end
 
     context 'when attributes are incorrect' do
