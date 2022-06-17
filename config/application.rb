@@ -29,7 +29,7 @@ module FrStaffapp
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.eager_load_paths << Rails.root.join("lib")
 
     ##### FROM RAILS 6.0 #####
     # Settings in config/environments/* take precedence over those specified here.
@@ -54,6 +54,8 @@ module FrStaffapp
     config.maintenance_end = ENV.fetch('MAINTENANCE_END', nil)
 
     #####
+
+    config.active_record.legacy_connection_handling = false
 
   end
   WillPaginate.per_page = 20
