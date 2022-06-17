@@ -8,7 +8,7 @@ gem 'dotenv-rails', groups: [:development, :test] # this has to be here because 
 gem 'rails', '~> 7.0.3'
 gem 'sentry-raven'
 # Use postgresql as the database for Active Record
-gem 'i18n','>= 1.10'
+gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'

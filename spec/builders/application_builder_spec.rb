@@ -56,7 +56,7 @@ RSpec.describe ApplicationBuilder do
       end
 
       it 'does not have reference set' do
-        expect(build_result.reference).to be nil
+        expect(build_result.reference).to be_nil
       end
     end
   end
@@ -163,11 +163,11 @@ RSpec.describe ApplicationBuilder do
         let(:online_application) { build_stubbed(:online_application_with_all_details, children: nil, ho_number: 'L123456') }
 
         it 'has the dependents flag not to be set' do
-          expect(built_application.dependents).to be nil
+          expect(built_application.dependents).to be_nil
         end
 
         it 'has the children number set as nil' do
-          expect(built_application.children).to be nil
+          expect(built_application.children).to be_nil
         end
       end
 

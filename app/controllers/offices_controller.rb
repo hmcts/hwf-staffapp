@@ -26,7 +26,7 @@ class OfficesController < ApplicationController
   def edit
     authorize office
 
-    @becs = @office.business_entities.map { |be| [be.jurisdiction_id, be.code] }.to_h
+    @becs = @office.business_entities.to_h { |be| [be.jurisdiction_id, be.code] }
   end
 
   def create

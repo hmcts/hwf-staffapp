@@ -35,17 +35,17 @@ RSpec.describe Application, type: :model do
       let(:ni_number) { 'SN123456C' }
 
       it "matching NI number" do
-        list = Application.with_evidence_check_for_ni_number(ni_number)
+        list = described_class.with_evidence_check_for_ni_number(ni_number)
         expect(list).to eq([application])
       end
 
       it "not matching NI number" do
-        list = Application.with_evidence_check_for_ni_number('SN123456D')
+        list = described_class.with_evidence_check_for_ni_number('SN123456D')
         expect(list).to eq([])
       end
 
       context 'missing evidence_check record' do
-        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        let(:list) { described_class.with_evidence_check_for_ni_number(ni_number) }
         it 'when there is no ev check' do
           application.evidence_check.destroy
           expect(list).to eq([])
@@ -59,12 +59,12 @@ RSpec.describe Application, type: :model do
       let(:ni_number) { 'SN123456C' }
 
       context 'matching NI number' do
-        let(:list) { Application.with_evidence_check_for_ni_number(ni_number) }
+        let(:list) { described_class.with_evidence_check_for_ni_number(ni_number) }
         it { expect(list).to eq([]) }
       end
 
       context 'not matching NI number' do
-        let(:list) { Application.with_evidence_check_for_ni_number('SN123456D') }
+        let(:list) { described_class.with_evidence_check_for_ni_number('SN123456D') }
         it { expect(list).to eq([]) }
       end
     end
@@ -77,17 +77,17 @@ RSpec.describe Application, type: :model do
       let(:ho_number) { 'L123456' }
 
       it "matching HO number" do
-        list = Application.with_evidence_check_for_ho_number(ho_number)
+        list = described_class.with_evidence_check_for_ho_number(ho_number)
         expect(list).to eq([application])
       end
 
       it "not matching HO number" do
-        list = Application.with_evidence_check_for_ho_number('L654321')
+        list = described_class.with_evidence_check_for_ho_number('L654321')
         expect(list).to eq([])
       end
 
       context 'missing evidence_check record' do
-        let(:list) { Application.with_evidence_check_for_ho_number(ho_number) }
+        let(:list) { described_class.with_evidence_check_for_ho_number(ho_number) }
         it 'when there is no ev check' do
           application.evidence_check.destroy
           expect(list).to eq([])
@@ -101,12 +101,12 @@ RSpec.describe Application, type: :model do
       let(:ho_number) { 'L123456' }
 
       context 'matching NI number' do
-        let(:list) { Application.with_evidence_check_for_ho_number(ho_number) }
+        let(:list) { described_class.with_evidence_check_for_ho_number(ho_number) }
         it { expect(list).to eq([]) }
       end
 
       context 'not matching NI number' do
-        let(:list) { Application.with_evidence_check_for_ho_number('L654321') }
+        let(:list) { described_class.with_evidence_check_for_ho_number('L654321') }
         it { expect(list).to eq([]) }
       end
     end

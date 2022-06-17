@@ -389,7 +389,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   context 'fee approval' do
-    let(:form) { instance_double('Forms::FeeApproval') }
+    let(:form) { instance_double(Forms::FeeApproval) }
 
     before do
       allow(Forms::FeeApproval).to receive(:new).with(online_application).and_return(form)

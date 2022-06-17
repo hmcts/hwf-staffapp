@@ -17,7 +17,7 @@ module Views
       def to_csv
         return "no results" unless data.first
         CSV.generate do |csv|
-          csv << data.first.keys - ['tax_credit']
+          csv << (data.first.keys - ['tax_credit'])
           data.each do |row|
             csv << process_row(row).values
           end

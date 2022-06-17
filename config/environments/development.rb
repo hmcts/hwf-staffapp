@@ -77,7 +77,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.after_initialize do
-    sending_host = ENV['SENDING_HOST'] || 'localhost'
+    sending_host = ENV.fetch('SENDING_HOST', 'localhost')
     ActionMailer::Base.delivery_method = :sendmail
     ActionMailer::Base.default from: Settings.mail.from
     ActionMailer::Base.default reply_to: Settings.mail.reply_to
@@ -86,8 +86,8 @@ Rails.application.configure do
       address: 'smtp.sendgrid.net',
       port: '587',
       authentication: :plain,
-      user_name: ENV['SENDGRID_USERNAME'],
-      password: ENV['SENDGRID_PASSWORD'],
+      user_name: ENV.fetch('SENDGRID_USERNAME', nil),
+      password: ENV.fetch('SENDGRID_PASSWORD', nil),
       domain: 'feeremissions.dsd.io',
       enable_starttls_auto: true
     }

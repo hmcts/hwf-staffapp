@@ -23,7 +23,7 @@ describe EvidenceCheckSelector do
       end
 
       it 'never selects the application for evidence_check' do
-        is_expected.to be nil
+        is_expected.to be_nil
       end
     end
 
@@ -35,12 +35,12 @@ describe EvidenceCheckSelector do
       end
 
       it 'never selects the application for evidence_check' do
-        is_expected.to be nil
+        is_expected.to be_nil
       end
     end
 
     describe 'should skip EV check' do
-      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
+      let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant }
       let(:detail) { build_stubbed :detail }
 
       before do
@@ -72,7 +72,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if no remissions is granted' do
-        let(:application) { instance_spy 'Application', outcome: 'none', application_type: 'income' }
+        let(:application) { instance_spy Application, outcome: 'none', application_type: 'income' }
 
         it do
           evidence_check_selector.decide!
@@ -81,7 +81,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if it is benefit application' do
-        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'benefit' }
+        let(:application) { instance_spy Application, outcome: 'full', application_type: 'benefit' }
 
         it do
           evidence_check_selector.decide!
@@ -90,7 +90,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if applicant is under 15' do
-        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
+        let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant }
         let(:applicant) { build :applicant_with_all_details, date_of_birth: dob }
 
         context '15 years' do
@@ -138,7 +138,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not saves the ccmcc check type' do
-            expect(decision.checks_annotation).to be nil
+            expect(decision.checks_annotation).to be_nil
           end
         end
 
@@ -149,7 +149,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not create evidence_check record for the application' do
-            is_expected.to be nil
+            is_expected.to be_nil
           end
         end
       end
@@ -179,7 +179,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not create evidence_check record for the application' do
-            is_expected.to be nil
+            is_expected.to be_nil
           end
         end
       end

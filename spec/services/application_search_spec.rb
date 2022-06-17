@@ -61,6 +61,7 @@ RSpec.describe ApplicationSearch do
           let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
           it { expect(service_completed).to be_nil }
+
           it 'return error about different office processing this application' do
             service_completed
             expect(service.error_message).to eq("This application has been processed by ACDC Office")
@@ -71,14 +72,14 @@ RSpec.describe ApplicationSearch do
       context 'when the application has not yet been completed' do
         let(:application) { create(:application, :uncompleted, reference: reference) }
 
-        it { expect(service_completed).to be nil }
+        it { expect(service_completed).to be_nil }
       end
     end
 
     context 'when there is no application with the given reference' do
       let(:reference) { wrong_reference }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         service_completed
@@ -89,7 +90,7 @@ RSpec.describe ApplicationSearch do
     context 'when the search is empty' do
       let(:reference) { '' }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         service_completed

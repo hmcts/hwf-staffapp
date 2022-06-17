@@ -7,7 +7,7 @@ RSpec.describe 'users/invitations/new', type: :view do
     assign(:offices, Office.all)
   end
   context 'as an admin' do
-    let(:admin) { FactoryBot.create :admin_user }
+    let(:admin) { create :admin_user }
     before do
       assign(:user, User.new)
       assign(:roles, User::ROLES)
@@ -28,7 +28,7 @@ RSpec.describe 'users/invitations/new', type: :view do
   end
 
   context 'as a manager' do
-    let(:manager) { FactoryBot.create :manager }
+    let(:manager) { create :manager }
 
     before do
       assign(:user, User.new)
@@ -45,6 +45,7 @@ RSpec.describe 'users/invitations/new', type: :view do
     it 'does not render the office name' do
       expect(rendered).not_to include(manager.office.name)
     end
+
     describe 'adds a hidden field for office id' do
       it { expect(rendered).not_to have_xpath("//select[@name='user[office_id]']") }
       it { expect(rendered).to have_xpath("//input[@name='user[office_id]' and @value='#{manager.office.id}']", visible: false) }

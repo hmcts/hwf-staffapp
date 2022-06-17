@@ -4,9 +4,9 @@ RSpec.describe Applications::Process::SavingsInvestmentsController, type: :contr
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
 
-  let(:savings_investments_form) { instance_double('Forms::Application::SavingsInvestment') }
-  let(:personal_information_form) { instance_double('Forms::Application::Applicant') }
-  let(:savings_pass_fail_service) { instance_double('SavingsPassFailService') }
+  let(:savings_investments_form) { instance_double(Forms::Application::SavingsInvestment) }
+  let(:personal_information_form) { instance_double(Forms::Application::Applicant) }
+  let(:savings_pass_fail_service) { instance_double(SavingsPassFailService) }
 
   before do
     sign_in user

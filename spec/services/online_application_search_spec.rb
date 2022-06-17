@@ -23,7 +23,7 @@ RSpec.describe OnlineApplicationSearch do
     end
 
     context 'when reference is nil' do
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when an online_application exists' do
@@ -56,7 +56,7 @@ RSpec.describe OnlineApplicationSearch do
         service.online
       end
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include('view application')
@@ -90,7 +90,7 @@ RSpec.describe OnlineApplicationSearch do
         service.online
       end
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to include(office.name)
@@ -102,7 +102,7 @@ RSpec.describe OnlineApplicationSearch do
 
       before { service.online }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to eq 'Reference number is not recognised'
@@ -118,7 +118,7 @@ RSpec.describe OnlineApplicationSearch do
         service.online
       end
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
 
       it 'sets the correct error message' do
         expect(service.error_message).to eq(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))

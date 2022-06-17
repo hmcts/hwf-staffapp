@@ -7,7 +7,7 @@ RSpec.describe NotifyMailer, type: :mailer do
   describe '#submission_confirmation' do
     let(:mail) { described_class.password_reset(user, 'http://reset_link') }
 
-    it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_PASSWORD_RESET_TEMPLATE_ID']
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil)
 
     it 'has the right values' do
       expect(mail.govuk_notify_personalisation).to eq({
@@ -21,7 +21,7 @@ RSpec.describe NotifyMailer, type: :mailer do
   describe '#submission_confirmation' do
     let(:mail) { described_class.submission_confirmation(application, 'en') }
 
-    it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_TEMPLATE_ID']
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_TEMPLATE_ID', nil)
 
     it 'has the right keys with form_name' do
       application.form_name = ''
@@ -58,7 +58,7 @@ RSpec.describe NotifyMailer, type: :mailer do
 
     context 'welsh' do
       let(:mail) { described_class.submission_confirmation(application, 'cy') }
-      it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_CY_TEMPLATE_ID']
+      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_TEMPLATE_ID', nil)
     end
 
   end
@@ -66,7 +66,7 @@ RSpec.describe NotifyMailer, type: :mailer do
   describe '#submission_confirmation_refund' do
     let(:mail) { described_class.submission_confirmation_refund(application, 'en') }
 
-    it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_REFUND_TEMPLATE_ID']
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_REFUND_TEMPLATE_ID', nil)
 
     it 'has the right keys with form_name' do
       application.form_name = ''
@@ -103,7 +103,7 @@ RSpec.describe NotifyMailer, type: :mailer do
 
     context 'welsh' do
       let(:mail) { described_class.submission_confirmation_refund(application, 'cy') }
-      it_behaves_like 'a Notify mail', template_id: ENV['NOTIFY_COMPLETED_CY_REFUND_TEMPLATE_ID']
+      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_REFUND_TEMPLATE_ID', nil)
     end
   end
 end

@@ -48,11 +48,11 @@ RSpec.describe IncomeCalculationRunner do
       let(:result) { nil }
 
       it 'does not set application type' do
-        expect(application.application_type).to be nil
+        expect(application.application_type).to be_nil
       end
 
       it 'does not set application outcome' do
-        expect(application.outcome).to be nil
+        expect(application.outcome).to be_nil
       end
     end
 

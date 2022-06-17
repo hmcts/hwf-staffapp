@@ -29,7 +29,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def password_reset(user, reset_link)
-    set_template(ENV['NOTIFY_PASSWORD_RESET_TEMPLATE_ID'])
+    set_template(ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil))
     set_personalisation(
       name: user.name,
       password_link: reset_link

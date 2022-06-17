@@ -44,7 +44,7 @@ RSpec.describe Applicant, type: :model do
       context 'when nil' do
         let(:ni_number) { nil }
 
-        it { is_expected.to be nil }
+        it { is_expected.to be_nil }
       end
     end
   end

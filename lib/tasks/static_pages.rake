@@ -18,13 +18,11 @@ namespace :static_pages do
 
     pages.each do |route, output|
       puts "Generating #{output}..."
-      outpath = Rails.root.join('public', output)
+      outpath = Rails.public_path.join(output)
       resp = app.get(route)
       if resp == 200
         File.delete(outpath) if File.exist?(outpath)
-        File.open(outpath, 'w') do |f|
-          f.write(app.response.body.sub!('http://www.example.com', ''))
-        end
+        File.write(outpath, app.response.body.sub!('http://www.example.com', ''))
       else
         puts "Error generating #{output}!"
       end

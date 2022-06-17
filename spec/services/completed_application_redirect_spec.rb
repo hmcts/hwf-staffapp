@@ -27,6 +27,7 @@ describe CompletedApplicationRedirect do
       let!(:evidence) { create :evidence_check, application: application }
 
       it { is_expected.to eql evidence_path(evidence) }
+
       describe 'hmrc evidence check' do
         let(:evidence) { create :evidence_check, application: application, income_check_type: 'hmrc' }
         let(:hmrc_check) { create :hmrc_check, evidence_check: evidence, income: income }

@@ -356,19 +356,19 @@ def create_application_with_bad_request_result_with(user)
 end
 
 def stub_dwp_response_as_bad_request
-  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_raise(RestClient::ServerBrokeConnection.new("Request Timeout"))
+  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_raise(RestClient::ServerBrokeConnection.new("Request Timeout"))
 end
 
 def stub_dwp_response_as_dwp_down_request
-  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_raise(RestClient::BadRequest.new({ error: "LSCBC959: Service unavailable." }.to_json))
+  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_raise(RestClient::BadRequest.new({ error: "LSCBC959: Service unavailable." }.to_json))
 end
 
 def stub_dwp_response_as_ok_request
-  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "Yes", confirmation_ref: 1234 }.to_json)
+  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "Yes", confirmation_ref: 1234 }.to_json)
 end
 
 def stub_dwp_response_as_not_eligible_request
-  RestClient.stub(:post).with("#{ENV['DWP_API_PROXY']}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "No", confirmation_ref: 1234 }.to_json)
+  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "No", confirmation_ref: 1234 }.to_json)
 end
 
 def create_online_application

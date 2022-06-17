@@ -41,6 +41,7 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
         it 'load hmrc_check' do
           expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
         end
+
         it 'load evidence' do
           expect(EvidenceCheck).to have_received(:find).with(evidence.id.to_s)
         end
@@ -58,8 +59,8 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
     end
 
     context 'as a signed in user' do
-      let(:resolver) { instance_double('ResolverService') }
-      let(:flag_service) { instance_double('EvidenceCheckFlaggingService') }
+      let(:resolver) { instance_double(ResolverService) }
+      let(:flag_service) { instance_double(EvidenceCheckFlaggingService) }
 
       before do
         allow(HmrcCheck).to receive(:find).and_return hmrc_check
@@ -81,6 +82,7 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
         end
 
         it { expect(flag_service).to have_received(:process_flag) }
+
         it 'renders the correct template' do
           expect(response).to render_template('applications/process/confirmation/index')
         end

@@ -44,7 +44,7 @@ describe BenefitCheckService do
       context 'simulating a 500 error' do
 
         before do
-          stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+          stub_request(:post, "#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks").
             to_return(status: 500, body: '', headers: {})
           described_class.new(check)
         end
@@ -62,7 +62,7 @@ describe BenefitCheckService do
         let(:message) { { error: "LSCBC210: Error in request parameter 'Surname'" }.to_json }
 
         before do
-          stub_request(:post, "#{ENV['DWP_API_PROXY']}/api/benefit_checks").
+          stub_request(:post, "#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks").
             to_return(status: 400, body: message, headers: {})
           described_class.new(check)
         end

@@ -81,11 +81,11 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
     let(:application) { create(:application_full_remission, :with_office, :processed_state, fee: 500, decision: 'full', decision_date: Time.zone.parse('2018-12-01')) }
 
     it 'sets the entity_code' do
-      expect(data.entity_code).to be nil
+      expect(data.entity_code).to be_nil
     end
 
     it 'sets the sop_code' do
-      expect(data.sop_code).to be nil
+      expect(data.sop_code).to be_nil
     end
 
     it 'sets the office_name' do
@@ -93,7 +93,7 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
     end
 
     it 'sets the jurisdiction_name' do
-      expect(data.jurisdiction_name).to be nil
+      expect(data.jurisdiction_name).to be_nil
     end
   end
 end

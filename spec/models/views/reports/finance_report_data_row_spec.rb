@@ -80,7 +80,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       describe "sets the #{attr}" do
         subject { data.send(attr) }
 
-        it { is_expected.to eq nil }
+        it { is_expected.to be_nil }
       end
     end
   end

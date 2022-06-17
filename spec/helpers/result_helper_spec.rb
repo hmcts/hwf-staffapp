@@ -145,7 +145,7 @@ RSpec.describe ResultHelper, type: :helper do
       let(:income_min) { true }
       let(:income_max) { false }
 
-      it { expect(helper.income_value(application)).to be nil }
+      it { expect(helper.income_value(application)).to be_nil }
     end
 
     context 'evidence_check' do
@@ -219,7 +219,7 @@ RSpec.describe ResultHelper, type: :helper do
     end
 
     context 'amount is nil' do
-      it { expect(helper.currency_format(nil)).to be nil }
+      it { expect(helper.currency_format(nil)).to be_nil }
     end
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe ApplicationFormRepository do
     { last_name: 'Name', date_of_birth: '20/01/2980', married: false }
   end
   let(:application_details_form) do
-    instance_double('Forms::Application::Detail',
+    instance_double(Forms::Application::Detail,
                     errors: errors, discretion_applied: discretion_applied, fee: fee)
   end
 
@@ -29,7 +29,7 @@ RSpec.describe ApplicationFormRepository do
       let(:discretion_applied) { false }
 
       context 'udpate application' do
-        let(:application) { instance_spy('Application') }
+        let(:application) { instance_spy(Application) }
         it "set the outcome" do
           repository.process(:detail)
           expect(application).to have_received(:update).with(outcome: "none", application_type: 'none')

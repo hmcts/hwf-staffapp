@@ -31,7 +31,7 @@ class BenefitCheckRerunJob < ApplicationJob
   end
 
   def log_task_run
-    tc = ApplicationInsights::TelemetryClient.new ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
+    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
     tc.track_event("Running rerun_benefit_checks #{Time.zone.now.to_s(:db)}")
     tc.flush
   end

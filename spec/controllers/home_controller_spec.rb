@@ -86,7 +86,7 @@ RSpec.describe HomeController, type: :controller do
         let(:application) { build_stubbed :application }
 
         before do
-          query = instance_double('Query::LastUpdatedApplications')
+          query = instance_double(Query::LastUpdatedApplications)
           allow(Query::LastUpdatedApplications).to receive(:new).and_return query
           allow(query).to receive(:find).with(limit: 20).and_return [application]
           sign_in staff
@@ -221,7 +221,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       it 'does assign the DwpMonitor state' do
-        expect(assigns(:dwp_state)).not_to be nil
+        expect(assigns(:dwp_state)).not_to be_nil
       end
     end
   end
@@ -282,7 +282,7 @@ RSpec.describe HomeController, type: :controller do
         end
 
         it 'does not assign the DwpMonitor state' do
-          expect(assigns(:dwp_state)).to be nil
+          expect(assigns(:dwp_state)).to be_nil
         end
       end
 

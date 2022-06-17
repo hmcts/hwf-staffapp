@@ -37,7 +37,7 @@ RSpec.describe Report::PowerBiController do
 
     describe 'PUT #power_bi_export' do
       subject { response }
-      let(:power_bi_export_class) { instance_double('Views::Reports::PowerBiExport') }
+      let(:power_bi_export_class) { instance_double(Views::Reports::PowerBiExport) }
       let(:temp_file) { Tempfile.new('foo') }
 
       before {

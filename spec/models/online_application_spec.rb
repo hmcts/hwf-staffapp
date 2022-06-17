@@ -109,7 +109,7 @@ RSpec.describe OnlineApplication, type: :model do
     context 'when no application exists that is linked to this online_application' do
       let(:online_application) { create :online_application, :completed, :with_reference }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
   end
 

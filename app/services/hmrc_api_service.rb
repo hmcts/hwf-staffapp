@@ -83,9 +83,9 @@ class HmrcApiService
   # TODO: whitelist credentials from logs
   def hmrc_api_attributes
     {
-      hmrc_secret: ENV['HMRC_SECRET'],
-      totp_secret: ENV['HMRC_TTP_SECRET'],
-      client_id: ENV['HMRC_CLIENT_ID']
+      hmrc_secret: ENV.fetch('HMRC_SECRET', nil),
+      totp_secret: ENV.fetch('HMRC_TTP_SECRET', nil),
+      client_id: ENV.fetch('HMRC_CLIENT_ID', nil)
     }.merge(hmrc_api_credentials)
   end
 

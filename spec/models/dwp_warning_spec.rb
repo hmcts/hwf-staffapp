@@ -8,18 +8,18 @@ RSpec.describe DwpWarning, type: :model do
   end
 
   describe 'Use default check?' do
-    it { expect(DwpWarning.use_default_check?).to be_truthy }
+    it { expect(described_class.use_default_check?).to be_truthy }
 
     context 'online' do
       before { create :dwp_warning, check_state: DwpWarning::STATES[:online] }
 
-      it { expect(DwpWarning.use_default_check?).to be_falsey }
+      it { expect(described_class.use_default_check?).to be_falsey }
     end
 
     context 'offline' do
       before { create :dwp_warning, check_state: DwpWarning::STATES[:offline] }
 
-      it { expect(DwpWarning.use_default_check?).to be_falsey }
+      it { expect(described_class.use_default_check?).to be_falsey }
     end
   end
 
@@ -28,19 +28,19 @@ RSpec.describe DwpWarning, type: :model do
     context 'online' do
       before { create :dwp_warning, check_state: DwpWarning::STATES[:online] }
 
-      it { expect(DwpWarning.state).to eql('online') }
+      it { expect(described_class.state).to eql('online') }
     end
 
     context 'offline' do
       before { create :dwp_warning, check_state: DwpWarning::STATES[:offline] }
 
-      it { expect(DwpWarning.state).to eql('offline') }
+      it { expect(described_class.state).to eql('offline') }
     end
 
     context 'default_checker' do
       before { create :dwp_warning, check_state: DwpWarning::STATES[:default_checker] }
 
-      it { expect(DwpWarning.state).to eql('default_checker') }
+      it { expect(described_class.state).to eql('default_checker') }
     end
   end
 end

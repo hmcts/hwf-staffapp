@@ -12,7 +12,7 @@ RSpec.describe Detail, type: :model do
       let(:detail) { described_class.new(emergency_reason: '') }
 
       it 'is set to nil if the string is empty' do
-        expect(detail.emergency_reason).to be nil
+        expect(detail.emergency_reason).to be_nil
       end
     end
   end

@@ -5,7 +5,7 @@ RSpec.describe FlashMessageHelper, type: :helper do
   it { expect(helper).to be_a described_class }
 
   describe '#format_managers_combined_contacts' do
-    context ' when not expected to start a sentence' do
+    context 'when not expected to start a sentence' do
       subject { helper.format_managers_combined_contacts(managers) }
 
       context 'when passed a collection of Users' do
@@ -17,7 +17,7 @@ RSpec.describe FlashMessageHelper, type: :helper do
 
       context 'when passed no users' do
         let(:managers) { [] }
-        it 'returns a  string' do
+        it 'returns a string' do
           is_expected.to eql('a manager')
         end
       end

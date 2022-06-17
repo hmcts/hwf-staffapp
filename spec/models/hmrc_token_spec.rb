@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HmrcToken, type: :model do
-  subject(:token) { HmrcToken.new(access_token: '123456', expires_in: expires_in) }
+  subject(:token) { described_class.new(access_token: '123456', expires_in: expires_in) }
   let(:expires_in) { Time.zone.parse('01-02-2021 10:55') }
 
   context 'expired?' do

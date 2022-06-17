@@ -79,9 +79,9 @@ RSpec.describe IncomeCalculation do
                 end
                 it { expect(calculated[:outcome]).to eql(src[:type]) }
                 it { expect(calculated[:amount_to_pay].to_f).to eql(src[:they_pay].to_f) }
-                it { expect(calculated[:min_threshold]).not_to be nil }
-                it { expect(calculated[:max_threshold]).not_to be nil }
-                it { expect(calculated[:income_max_threshold_exceeded]).not_to be nil }
+                it { expect(calculated[:min_threshold]).not_to be_nil }
+                it { expect(calculated[:max_threshold]).not_to be_nil }
+                it { expect(calculated[:income_max_threshold_exceeded]).not_to be_nil }
               end
             end
           end
@@ -90,13 +90,13 @@ RSpec.describe IncomeCalculation do
         context 'when children attribute value is nil' do
           before { application.children = nil }
 
-          it { is_expected.not_to be nil }
+          it { is_expected.not_to be_nil }
         end
 
         context 'when data for calculation is missing' do
           before { application.detail.fee = nil }
 
-          it { is_expected.to be nil }
+          it { is_expected.to be_nil }
         end
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe IncomeCalculation do
         let(:income) { nil }
         before { application.detail.fee = nil }
 
-        it { is_expected.to be nil }
+        it { is_expected.to be_nil }
       end
     end
   end

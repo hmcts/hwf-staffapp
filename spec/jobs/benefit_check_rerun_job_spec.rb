@@ -11,13 +11,13 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
     context 'when DWP monitor status is' do
       let(:bc_runner) { instance_double(BenefitCheckRunner) }
       let(:benefit_checks) { class_double(BenefitCheck) }
-      let(:bc_runner_job) { class_double(BenefitCheckRerunJob) }
+      let(:bc_runner_job) { class_double(described_class) }
       let(:time_to_run) { 15.minutes.from_now }
 
       before do
         allow(BenefitCheckRunner).to receive(:new).and_return bc_runner
         allow(bc_runner).to receive(:run)
-        allow(BenefitCheckRerunJob).to receive(:delay).and_return bc_runner_job
+        allow(described_class).to receive(:delay).and_return bc_runner_job
         allow(bc_runner_job).to receive(:perform_later)
       end
 
@@ -35,7 +35,7 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
         end
 
         it 'with BadRequest results' do
-          BenefitCheckRerunJob.perform_now
+          described_class.perform_now
           expect(bc_runner).to have_received(:run).exactly(6).times
         end
 
@@ -46,12 +46,12 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
         before { benefit_check }
 
         it 'for affected application' do
-          BenefitCheckRerunJob.perform_now
+          described_class.perform_now
           expect(bc_runner).to have_received(:run)
         end
 
         it 'load the application from benefit check' do
-          BenefitCheckRerunJob.perform_now
+          described_class.perform_now
           expect(BenefitCheckRunner).to have_received(:new).with(benefit_check.application)
         end
       end
@@ -63,13 +63,13 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
 
         it 'for affected application' do
 
-          BenefitCheckRerunJob.perform_now
+          described_class.perform_now
           expect(bc_runner).not_to have_received(:run)
         end
 
         it 'does not schedule another run' do
           Timecop.freeze(time_to_run - 15.minutes.ago) do
-            BenefitCheckRerunJob.perform_now
+            described_class.perform_now
             expect(bc_runner_job).not_to have_received(:perform_later)
           end
         end
@@ -79,13 +79,13 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
         before { build_dwp_checks_with_bad_requests(3, 2) }
 
         it 'for affected application' do
-          BenefitCheckRerunJob.perform_now
+          described_class.perform_now
           expect(bc_runner).not_to have_received(:run)
         end
 
         it 'does not schedule another run' do
           Timecop.freeze(time_to_run - 15.minutes.ago) do
-            BenefitCheckRerunJob.perform_now
+            described_class.perform_now
             expect(bc_runner_job).not_to have_received(:perform_later)
           end
         end

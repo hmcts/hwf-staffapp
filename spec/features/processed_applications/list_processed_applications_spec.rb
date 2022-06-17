@@ -16,7 +16,7 @@ RSpec.feature 'List processed applications', type: :feature do
     create :part_payment, outcome: 'part', correct: true, application: application5
     login_as(user)
   end
-  after { Settings.processed_deleted.per_page = ENV['PROCESSED_DELETED_PER_PAGE'] }
+  after { Settings.processed_deleted.per_page = ENV.fetch('PROCESSED_DELETED_PER_PAGE', nil) }
 
   scenario 'User lists all processed applications with pagination and in correct order' do
     visit '/'

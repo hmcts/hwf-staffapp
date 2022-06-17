@@ -48,6 +48,7 @@ RSpec.describe HmrcCheck, type: :model do
       }
 
       it { expect(hmrc_check.tax_credit[0][:awards][0][:payProfCalcDate]).to eql("2020-11-18") }
+
       describe 'getters' do
         before {
           hmrc_check.tax_credit = { child: ['child test'], work: ['work test'] }
@@ -64,8 +65,8 @@ RSpec.describe HmrcCheck, type: :model do
             hmrc_check.save
           }
 
-          it { expect(hmrc_check.child_tax_credit).to be nil }
-          it { expect(hmrc_check.work_tax_credit).to be nil }
+          it { expect(hmrc_check.child_tax_credit).to be_nil }
+          it { expect(hmrc_check.work_tax_credit).to be_nil }
         end
 
         context 'not initialized' do
@@ -74,8 +75,8 @@ RSpec.describe HmrcCheck, type: :model do
             hmrc_check.save
           }
 
-          it { expect(hmrc_check.child_tax_credit).to be nil }
-          it { expect(hmrc_check.work_tax_credit).to be nil }
+          it { expect(hmrc_check.child_tax_credit).to be_nil }
+          it { expect(hmrc_check.work_tax_credit).to be_nil }
         end
       end
     end
@@ -248,6 +249,7 @@ RSpec.describe HmrcCheck, type: :model do
 
       it { expect(hmrc_check.work_tax_credit_income).to eq 248.16 }
       it { expect(hmrc_check.child_tax_credit_income).to eq 0 }
+
       context 'no date range' do
         let(:date_range) { nil }
         it { expect(hmrc_check.work_tax_credit_income).to eq 0 }

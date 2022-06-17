@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Applications::Process::BenefitsController, type: :controller do
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
-  let(:benefit_form) { instance_double('Forms::Application::Benefit') }
-  let(:dwp_monitor) { instance_double('DwpMonitor') }
+  let(:benefit_form) { instance_double(Forms::Application::Benefit) }
+  let(:dwp_monitor) { instance_double(DwpMonitor) }
   let(:dwp_state) { 'online' }
 
   before do
@@ -96,7 +96,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
 
         context 'when the result can be overridden' do
           let(:can_override) { true }
-          let(:benefit_override) { instance_double('BenefitOverride') }
+          let(:benefit_override) { instance_double(BenefitOverride) }
 
           it 'redirects to the benefits override page' do
             expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
@@ -148,7 +148,7 @@ RSpec.describe Applications::Process::BenefitsController, type: :controller do
         end
 
         context "it checks existing benefit override" do
-          let(:benefit_override) { instance_double('BenefitOverride') }
+          let(:benefit_override) { instance_double(BenefitOverride) }
           it 'destroy benefit_override if exist' do
             expect(benefit_override).to have_received(:destroy)
           end

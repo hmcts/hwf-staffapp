@@ -41,13 +41,13 @@ RSpec.describe Views::Overview::Benefits do
     end
 
     context 'when no benefit_override exists' do
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when user selected "no" to on benefits' do
       let(:application) { build_stubbed :application, benefits: false }
 
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
   end
 end

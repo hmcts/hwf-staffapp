@@ -56,7 +56,7 @@ RSpec.describe Forms::Accuracy do
       end
 
       it 'keeps the incorrect reason empty' do
-        expect(evidence.incorrect_reason).to be nil
+        expect(evidence.incorrect_reason).to be_nil
       end
     end
 

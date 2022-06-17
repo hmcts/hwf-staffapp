@@ -197,9 +197,11 @@ describe HmrcApiService do
         it 'ni_number' do
           expect(service.hmrc_check.ni_number).to eql('AB123456C')
         end
+
         it 'date_of_birth' do
           expect(service.hmrc_check.date_of_birth).to eql('28/02/1968')
         end
+
         it 'user_id from initializer' do
           expect(service.hmrc_check.user_id).to eql(processing_user.id)
         end

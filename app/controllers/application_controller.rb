@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   def set_cache_headers
     response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = 3.hours.ago.to_formatted_s(:rfc822)
+    response.headers['Expires'] = 3.hours.ago.to_fs(:rfc822)
   end
 
   def dwp_checker_state

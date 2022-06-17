@@ -52,7 +52,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -84,7 +84,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -107,20 +107,20 @@ Rails.application.configure do
   config.logstasher.source = 'logstasher'
 
   config.after_initialize do
-    smtp_domain = ENV['SMTP_DOMAIN'] || 'localhost'
+    smtp_domain = ENV.fetch('SMTP_DOMAIN', 'localhost')
 
     ActionMailer::Base.default_url_options = {
       host: smtp_domain,
-      protocol: ENV['SMTP_PROTOCOL'] || 'http'
+      protocol: ENV.fetch('SMTP_PROTOCOL', 'http')
     }
     ActionMailer::Base.default from: Settings.mail.from
     ActionMailer::Base.default reply_to: Settings.mail.reply_to
     ActionMailer::Base.smtp_settings = {
-      address: ENV['SMTP_HOSTNAME'] || 'localhost',
-      port: ENV['SMTP_PORT'] || 587,
+      address: ENV.fetch('SMTP_HOSTNAME', 'localhost'),
+      port: ENV.fetch('SMTP_PORT', 587),
       domain: smtp_domain,
-      user_name: ENV['SMTP_USERNAME'] || '',
-      password: ENV['SMTP_PASSWORD'] || '',
+      user_name: ENV.fetch('SMTP_USERNAME', ''),
+      password: ENV.fetch('SMTP_PASSWORD', ''),
       authentication: :login,
       enable_starttls_auto: true
     }

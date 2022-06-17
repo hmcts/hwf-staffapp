@@ -43,7 +43,7 @@ describe PartPaymentBuilder do
         let(:application) { create :application_full_remission }
 
         it 'does not create a payment record' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
 
@@ -51,7 +51,7 @@ describe PartPaymentBuilder do
         let(:application) { create :application_no_remission }
 
         it 'does not create a payment record' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
 
@@ -66,7 +66,7 @@ describe PartPaymentBuilder do
             before { allow(application.evidence_check).to receive(:completed_at).and_return(nil) }
 
             it 'does not create a payment record' do
-              is_expected.to be nil
+              is_expected.to be_nil
             end
           end
 

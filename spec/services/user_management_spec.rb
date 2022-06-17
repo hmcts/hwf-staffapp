@@ -73,7 +73,7 @@ RSpec.describe UserManagement do
       it { expect(check.admin_manager_or_user_themselves?).to be true }
     end
 
-    context 'current_user is staff member ' do
+    context 'current_user is staff member' do
       let(:current_user) { create :user }
       let(:check) { described_class.new(current_user, current_user) }
 

@@ -5,7 +5,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
   let(:detail) { build_stubbed(:detail) }
 
-  let(:personal_information_form) { instance_double('Forms::Application::Applicant') }
+  let(:personal_information_form) { instance_double(Forms::Application::Applicant) }
 
   before do
     sign_in user
