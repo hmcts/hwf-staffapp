@@ -98,7 +98,7 @@ Rails.application.configure do
   config.assets.prefix = '/assets'
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
 
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
