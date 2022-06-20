@@ -88,7 +88,7 @@ gem 'govuk_notify_rails'
 
 group :development do
   # speed up local development via livereload
-  gem 'guard-livereload'
+  # gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'terminal-notifier-guard'
   gem 'web-console'

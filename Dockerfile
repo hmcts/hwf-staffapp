@@ -1,4 +1,4 @@
-FROM ruby:2.7-buster
+FROM ruby:3.1-buster
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
