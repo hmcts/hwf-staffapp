@@ -55,36 +55,27 @@ RSpec.describe FormObject do
   end
 
   describe '#save' do
-    before do
-      allow(form).to receive(:valid?).and_return(valid)
-      allow(form).to receive(:persist!)
-    end
-
     subject(:form_save) { form.save }
 
     context 'when the form is valid' do
       let(:valid) { true }
 
-      it 'method #persist! is called' do
-        form_save
-
-        expect(form).to have_received(:persist!)
-      end
-
-      it { is_expected.to be true }
+      it { expect { form_save }.to raise_error NotImplementedError }
     end
 
+    # rubocop:disable RSpec/SubjectStub
     context 'when the form is not valid' do
+      before do
+        allow(form).to receive(:valid?).and_return(valid)
+      end
+
       let(:valid) { false }
 
-      it 'does not call #persist!' do
-        form_save
-
-        expect(form).not_to have_received(:persist!)
-      end
+      it { expect { form_save }.not_to raise_error }
 
       it { is_expected.to be false }
     end
+    # rubocop:enable RSpec/SubjectStub
   end
 
   describe '#i18n_scope' do

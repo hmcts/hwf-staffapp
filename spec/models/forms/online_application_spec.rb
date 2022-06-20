@@ -53,7 +53,7 @@ RSpec.describe Forms::OnlineApplication do
     end
   end
 
-  describe '#enable_default_jurisdiction' do
+  describe '#enable_default_jurisdiction for user' do
     let(:jurisdiction) { create :jurisdiction }
     let(:user) { create :staff, jurisdiction: jurisdiction }
 

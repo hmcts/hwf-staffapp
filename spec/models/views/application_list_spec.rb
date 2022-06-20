@@ -115,14 +115,6 @@ RSpec.describe Views::ApplicationList do
           is_expected.to eql '✓'
         end
       end
-
-      context 'when emergency reason is set' do
-        let(:emergency_reason) { 'some reason' }
-
-        it 'returns Yes' do
-          is_expected.to eql '✓'
-        end
-      end
     end
 
     describe '#@evidence_or_part_payment' do

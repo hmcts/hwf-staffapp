@@ -230,7 +230,7 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to eq 'part' }
     end
 
-    context 'when the application is a full remission' do
+    context 'when the application is a no remission' do
       let(:outcome) { 'none' }
 
       it { is_expected.to eq 'none' }

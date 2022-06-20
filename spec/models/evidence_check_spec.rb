@@ -31,12 +31,13 @@ describe EvidenceCheck, type: :model do
 
   describe 'hmrc check' do
     subject(:evidence_check) { described_class.new(income_check_type: check_type) }
+
     context 'is hmrc checked' do
       let(:check_type) { 'hmrc' }
       it { expect(evidence_check.hmrc?).to be_truthy }
     end
 
-    context 'is hmrc checked' do
+    context 'is not hmrc checked' do
       let(:check_type) { 'test' }
       it { expect(evidence_check.hmrc?).to be_falsey }
     end
