@@ -24,9 +24,9 @@ steps:
     psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
   displayName: 'PG role setup'
 
-- script: |
-    bundle exec rubocop --fail-fast
-  displayName: 'rubocop'
+# - script: |
+#     bundle exec rubocop --fail-fast
+#   displayName: 'rubocop'
 
 - script: |
     bundle exec brakeman
