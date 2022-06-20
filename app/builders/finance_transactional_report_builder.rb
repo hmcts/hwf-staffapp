@@ -36,21 +36,29 @@ class FinanceTransactionalReportBuilder
       csv << CSV_FIELDS.values
 
       generate.each do |row|
-        csv << CSV_FIELDS.keys.map { |attr| row.send(attr) }
+        csv << CSV_FIELDS.keys.map { |attr| process_row(row, attr) }
       end
+    end
+  end
+
+  def process_row(row, attr)
+    if attr == :decision_date
+      row.send(attr).to_fs(:default) if row.send(attr).present?
+    else
+      row.send(attr)
     end
   end
 
   private
 
   def meta_data
-    period_selected = "#{@date_from.to_date}-#{@date_to.to_date}"
+    period_selected = "#{@date_from.to_date.to_fs(:default)}-#{@date_to.to_date.to_fs(:default)}"
     run = Time.zone.now
     [
       ['Report Title:', 'Finance Transactional Report'],
       ['Criteria:', 'Date status changed to "successful"'],
       ['Period Selected:', period_selected],
-      ['Run:', run]
+      ['Run:', run.to_fs(:default)]
     ]
   end
 

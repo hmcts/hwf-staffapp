@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'feedback/new.html.slim', type: :view do
+RSpec.describe 'feedback/new', type: :view do
   let(:user)          { create :user }
   let(:feedback)      { build :feedback }
 

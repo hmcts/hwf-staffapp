@@ -47,13 +47,13 @@ class FinanceReportBuilder
   private
 
   def meta_data
-    period_selected = "#{@date_from.to_date}-#{@date_to.to_date}"
+    period_selected = "#{@date_from.to_date.to_fs(:default)}-#{@date_to.to_date.to_fs(:default)}"
     run = Time.zone.now
     [
       ['Report Title:', 'Remissions Granted Report'],
       ['Criteria:', 'Date status changed to "successful"'],
       ['Period Selected:', period_selected],
-      ['Run:', run]
+      ['Run:', run.to_fs(:default)]
     ]
   end
 

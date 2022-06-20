@@ -199,7 +199,7 @@ describe HmrcApiService do
         end
 
         it 'date_of_birth' do
-          expect(service.hmrc_check.date_of_birth).to eql('28/02/1968')
+          expect(service.hmrc_check.date_of_birth).to eql('1968-02-28')
         end
 
         it 'user_id from initializer' do

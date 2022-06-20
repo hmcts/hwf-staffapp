@@ -56,6 +56,7 @@ module FrStaffapp
     #####
 
     config.active_record.legacy_connection_handling = false
+    config.active_support.remove_deprecated_time_with_zone_name = true
 
   end
   WillPaginate.per_page = 20
