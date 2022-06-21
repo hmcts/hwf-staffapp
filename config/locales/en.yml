@@ -116,7 +116,11 @@ en-GB:
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
       technical_error: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
-
+  shared:
+    forms:
+      approve:
+        fee_manager_first_name: Fee manager first name
+        fee_manager_last_name: Fee manager last name
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and covers the correct time period'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
