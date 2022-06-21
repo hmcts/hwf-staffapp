@@ -26,6 +26,7 @@ RUN apt-get update -q && \
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
 
+RUN mkdir -p /tmp/pids/
 RUN mkdir -p /home/app
 WORKDIR /home/app
 
