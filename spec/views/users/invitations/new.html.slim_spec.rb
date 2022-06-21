@@ -48,7 +48,7 @@ RSpec.describe 'users/invitations/new', type: :view do
 
     describe 'adds a hidden field for office id' do
       it { expect(rendered).not_to have_xpath("//select[@name='user[office_id]']") }
-      it { expect(rendered).to have_xpath("//input[@name='user[office_id]' and @value='#{manager.office.id}']", visible: false) }
+      it { expect(rendered).to have_xpath("//input[@name='user[office_id]' and @value='#{manager.office.id}']") }
     end
   end
 end

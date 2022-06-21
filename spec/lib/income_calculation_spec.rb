@@ -57,9 +57,6 @@ RSpec.describe IncomeCalculation do
           end
         end
 
-      end
-
-      context 'when the application has income set' do
         it 'uses the income from the application' do
           calculated
           expect(application).to have_received(:income).at_least(1).times

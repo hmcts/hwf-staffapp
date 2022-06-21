@@ -76,7 +76,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    describe 'GET #show' do
+    describe 'GET #show for non admins' do
       it 'shows user details' do
         get :show, params: { id: user_not_on_admins_team.to_param }
         expect(assigns(:user)).to eq(user_not_on_admins_team)

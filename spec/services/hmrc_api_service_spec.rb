@@ -63,7 +63,7 @@ describe HmrcApiService do
         end
 
         context 'update token in DB' do
-          context 'token changed' do
+          context 'token did not changed' do
             before do
               allow(hmrc_token).to receive(:expired?).and_return false
               allow(hmrc_api_authentication).to receive(:access_token).and_return '111333'
@@ -77,7 +77,7 @@ describe HmrcApiService do
 
           context 'token changed' do
             before do
-              allow(hmrc_token).to receive(:expired?).and_return false
+              allow(hmrc_token).to receive(:expired?).and_return true
               allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
               allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
               service.match_user

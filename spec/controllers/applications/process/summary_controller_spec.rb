@@ -137,7 +137,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
       end
 
       context 'processed_state' do
-        let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
+        let(:application) { build_stubbed(:application, :processed_state, office: user.office) }
 
         it do
           post :create, params: { application_id: application.id }

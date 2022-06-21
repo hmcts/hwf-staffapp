@@ -186,7 +186,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
               end
             end
 
-            context 'when the DwpWarning is set to offline' do
+            context 'when the DwpWarning is set to default' do
               let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
 
               it 'redirects to the approval page' do

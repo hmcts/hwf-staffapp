@@ -56,7 +56,7 @@ RSpec.describe SavingsPassFailService do
       context 'when the savings have exceeded the minimum threshold' do
         let(:min_threshold_exceeded) { true }
 
-        context 'when the savings have not exceeded the maximum threshold' do
+        context 'when the savings have exceeded the maximum threshold' do
           let(:max_threshold_exceeded) { true }
 
           it { is_expected.to be false }

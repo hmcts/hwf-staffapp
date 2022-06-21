@@ -52,6 +52,8 @@ RSpec/DescribeClass:
   Exclude:
     - spec/support/**/*
     - spec/views/**/*
+RSpec/FilePath:
+  Enabled: false
 
 # private/protected/public
 Layout/AccessModifierIndentation:
