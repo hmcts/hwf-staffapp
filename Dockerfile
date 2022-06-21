@@ -26,14 +26,16 @@ RUN apt-get update -q && \
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
 
-RUN mkdir -p /tmp/pids/
 RUN mkdir -p /home/app
 WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
 RUN gem install bundler -v 2.3.10
-RUN bundle install --without test development
+
+RUN bundle config set --local without 'test development'
+RUN bundle config set force_ruby_platform true
+RUN bundle install
 
 # running app as a servive
 ENV PHUSION true
