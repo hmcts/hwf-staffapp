@@ -9,7 +9,7 @@ module Applications
 
       def create
         @form = Forms::Application::SavingsInvestment.new(application.saving)
-        @form.update_attributes(form_params(:savings_investments))
+        @form.update(form_params(:savings_investments))
 
         if @form.save
           SavingsPassFailService.new(application.saving).calculate!

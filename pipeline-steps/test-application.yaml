@@ -48,7 +48,3 @@ steps:
 - script: |
     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
   displayName: 'cucumber'
-
-- script: |
-    bundle exec rake jasmine:ci
-  displayName: 'jasmine'

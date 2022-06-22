@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Applications::Process::IncomesController, type: :controller do
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
-  let(:income_form) { instance_double('Forms::Application::Income') }
+  let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
 
   before do
@@ -49,7 +49,7 @@ RSpec.describe Applications::Process::IncomesController, type: :controller do
     let(:expected_params) { { dependents: 'false' } }
 
     before do
-      allow(income_form).to receive(:update_attributes).with(expected_params)
+      allow(income_form).to receive(:update).with(expected_params)
       allow(income_form).to receive(:save).and_return(form_save)
 
       post :create, params: { application_id: application.id, application: expected_params }

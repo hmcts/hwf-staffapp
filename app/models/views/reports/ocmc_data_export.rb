@@ -71,7 +71,7 @@ module Views
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         WHERE applications.office_id = #{@office_id}
-        AND applications.created_at between '#{@date_from.to_s(:db)}' AND '#{@date_to.to_s(:db)}'
+        AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength

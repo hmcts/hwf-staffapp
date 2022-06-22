@@ -92,7 +92,7 @@ RSpec.describe PartPaymentsController, type: :controller do
     let(:expected_form_params) { { correct: 'true', incorrect_reason: 'reason' } }
 
     before do
-      allow(accuracy_form).to receive(:update_attributes).with(expected_form_params)
+      allow(accuracy_form).to receive(:update).with(expected_form_params)
       allow(accuracy_form).to receive(:save).and_return(form_save)
 
       post :accuracy_save, params: { id: part_payment.id, part_payment: expected_form_params }

@@ -31,7 +31,7 @@ RSpec.describe OnlineApplicationBenefitsController, type: :controller do
     let(:params) { { benefits_override: benefits_override.to_s } }
 
     before do
-      allow(form).to receive(:update_attributes).with(params)
+      allow(form).to receive(:update).with(params)
       allow(form).to receive(:save).and_return(form_save)
       allow(form).to receive(:benefits_override).and_return(benefits_override)
       allow(online_application).to receive(:update).and_return(true)

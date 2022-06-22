@@ -10,7 +10,7 @@ RSpec.describe HealthStatusController, type: :controller do
     end
 
     it 'returns JSON' do
-      expect(response.content_type).to eq('application/json')
+      expect(response.content_type).to eq('application/json; charset=utf-8')
     end
 
     describe 'renders correct json' do
@@ -55,7 +55,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'returns JSON' do
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
 
       it 'completes with status code 200' do
@@ -77,7 +77,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'returns JSON' do
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
 
       it 'completes with error status code 500' do
@@ -103,7 +103,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'returns JSON' do
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
 
       it 'completes with error status code 500' do

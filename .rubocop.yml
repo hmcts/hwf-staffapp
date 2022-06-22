@@ -52,6 +52,8 @@ RSpec/DescribeClass:
   Exclude:
     - spec/support/**/*
     - spec/views/**/*
+RSpec/FilePath:
+  Enabled: false
 
 # private/protected/public
 Layout/AccessModifierIndentation:
@@ -216,6 +218,9 @@ RSpec/EmptyLineAfterHook:
   Enabled: false
 
 RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
 RSpec/EmptyLineAfterSubject:

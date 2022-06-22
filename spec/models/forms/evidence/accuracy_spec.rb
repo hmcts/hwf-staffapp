@@ -15,7 +15,7 @@ RSpec.describe Forms::Evidence::Accuracy do
     let(:evidence) { create :evidence_check }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for a valid form when the evidence is correct' do
@@ -29,7 +29,7 @@ RSpec.describe Forms::Evidence::Accuracy do
       before { form_save && evidence.reload }
 
       it 'keeps the outcome empty' do
-        expect(evidence.outcome).to be nil
+        expect(evidence.outcome).to be_nil
       end
 
       it 'keeps the incorrect reason category empty' do
@@ -37,7 +37,7 @@ RSpec.describe Forms::Evidence::Accuracy do
       end
 
       it 'keeps the incorrect reason nil' do
-        expect(evidence.incorrect_reason).to be nil
+        expect(evidence.incorrect_reason).to be_nil
       end
 
     end

@@ -16,7 +16,7 @@ RSpec.describe Forms::BenefitsEvidence do
   describe 'validations' do
     subject { form.valid? }
 
-    before { form.update_attributes(params) }
+    before { form.update(params) }
 
     context 'for attribute "evidence"' do
       let(:params) { { evidence: evidence } }
@@ -50,7 +50,7 @@ RSpec.describe Forms::BenefitsEvidence do
     let(:updated_application) { subject && application.reload }
     let(:updated_benefit_override) { subject && benefit_override.reload }
 
-    before { form.update_attributes(params) }
+    before { form.update(params) }
 
     context 'for an invalid form' do
       let(:params) { { correct: nil } }

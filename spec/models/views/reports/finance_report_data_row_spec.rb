@@ -80,7 +80,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
       describe "sets the #{attr}" do
         subject { data.send(attr) }
 
-        it { is_expected.to eq nil }
+        it { is_expected.to be_nil }
       end
     end
   end
@@ -102,8 +102,8 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
 
       # and exclude the following
       create :application_no_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now - 2.months
-      create :application_full_remission, :processed_state, business_entity: wrong_business_entity, office: wrong_business_entity.office, decision_date: Time.zone.now - 2.months
+      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: 2.months.ago
+      create :application_full_remission, :processed_state, business_entity: wrong_business_entity, office: wrong_business_entity.office, decision_date: 2.months.ago
       create :application_full_remission, :waiting_for_evidence_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_full_remission, :waiting_for_part_payment_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
       create :application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now

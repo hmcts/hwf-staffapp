@@ -18,7 +18,7 @@ RSpec.describe Forms::PartPayment::Accuracy do
     let(:part_payment) { create :part_payment }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for a valid form when the part payment is correct' do

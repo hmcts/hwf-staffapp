@@ -45,7 +45,7 @@ RSpec.describe Views::Evidence do
     context 'when income is not set' do
       let(:income) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
   end
 end

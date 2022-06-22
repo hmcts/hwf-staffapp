@@ -63,7 +63,7 @@ describe HmrcApiService do
         end
 
         context 'update token in DB' do
-          context 'token changed' do
+          context 'token did not changed' do
             before do
               allow(hmrc_token).to receive(:expired?).and_return false
               allow(hmrc_api_authentication).to receive(:access_token).and_return '111333'
@@ -77,7 +77,7 @@ describe HmrcApiService do
 
           context 'token changed' do
             before do
-              allow(hmrc_token).to receive(:expired?).and_return false
+              allow(hmrc_token).to receive(:expired?).and_return true
               allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
               allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
               service.match_user
@@ -197,9 +197,11 @@ describe HmrcApiService do
         it 'ni_number' do
           expect(service.hmrc_check.ni_number).to eql('AB123456C')
         end
+
         it 'date_of_birth' do
-          expect(service.hmrc_check.date_of_birth).to eql('28/02/1968')
+          expect(service.hmrc_check.date_of_birth).to eql('1968-02-28')
         end
+
         it 'user_id from initializer' do
           expect(service.hmrc_check.user_id).to eql(processing_user.id)
         end

@@ -35,7 +35,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def process_benefit_evidence
-    @form.update_attributes(allowed_params)
+    @form.update(allowed_params)
     if @form.save
       redirect_to application_summary_path(application)
     else

@@ -115,3 +115,22 @@ Then("I see that I should check the status of the applicant") do
   expect(personal_details_page.content.guidance.guidance_link[3]['href']).to end_with '/guide/process_application#status'
   expect(personal_details_page.content.guidance.guidance_link[4]['href']).to end_with '/guide'
 end
+
+Then("I am on the personal details page") do
+  expect(personal_details_page).to be_displayed
+end
+
+Then('I change the personal data') do
+  find_field('Title', visible: false).set('Mrs')
+  find_field('First and middle names', visible: false).set('Jean')
+  find_field('Last name', visible: false).set('Jones')
+
+  personal_details_page.content.application_day_date_of_birth.set '11'
+  personal_details_page.content.application_month_date_of_birth.set '03'
+  personal_details_page.content.application_year_date_of_birth.set '1983'
+  personal_details_page.click_next
+  personal_details_page.click_next
+  personal_details_page.click_next
+  personal_details_page.click_next
+  paper_evidence_page.submit_evidence_yes
+end

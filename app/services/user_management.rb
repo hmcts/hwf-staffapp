@@ -22,7 +22,7 @@ class UserManagement
   end
 
   def manager_cant_escalate_to_admin?(role)
-    @current_user.admin? || manages_user? && role != 'admin'
+    @current_user.admin? || (manages_user? && role != 'admin')
   end
 
   private

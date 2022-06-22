@@ -6,7 +6,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
   let(:detail) { build_stubbed(:detail) }
 
-  let(:application_details_form) { instance_double('Forms::Application::Detail') }
+  let(:application_details_form) { instance_double(Forms::Application::Detail) }
 
   before do
     sign_in user
@@ -41,7 +41,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
   describe 'POST #create' do
     let(:success) { true }
     let(:app_form) do
-      instance_double('ApplicationFormRepository',
+      instance_double(ApplicationFormRepository,
                       success?: success,
                       process: application_details_form)
     end
@@ -108,7 +108,7 @@ RSpec.describe Applications::Process::DetailsController, type: :controller do
       let(:params) { { fee_manager_firstname: 'Jane', fee_manager_lastname: 'Doe' } }
 
       before do
-        allow(form).to receive(:update_attributes).with(params)
+        allow(form).to receive(:update).with(params)
         allow(form).to receive(:save).and_return(form_save)
 
         put :approve_save, params: { application_id: application.id, application: params }

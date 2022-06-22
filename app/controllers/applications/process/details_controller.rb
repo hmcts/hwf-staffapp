@@ -27,7 +27,7 @@ module Applications
 
       def approve_save
         @form = Forms::FeeApproval.new(application.detail)
-        @form.update_attributes(update_approve_params)
+        @form.update(update_approve_params)
 
         if @form.save
           redirect_to DetailsRouter.new(application).savings_or_summary

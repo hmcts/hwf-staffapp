@@ -52,7 +52,7 @@ RSpec.describe Views::ApplicationList do
         let(:completed_by) { nil }
 
         it 'returns nil' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe Views::ApplicationList do
         let(:completed_at) { nil }
 
         it 'returns nil' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
     end
@@ -115,20 +115,12 @@ RSpec.describe Views::ApplicationList do
           is_expected.to eql '✓'
         end
       end
-
-      context 'when emergency reason is set' do
-        let(:emergency_reason) { 'some reason' }
-
-        it 'returns Yes' do
-          is_expected.to eql '✓'
-        end
-      end
     end
 
     describe '#@evidence_or_part_payment' do
       subject { view.evidence_or_part_payment }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
     describe '#part_payment?' do
@@ -268,7 +260,7 @@ RSpec.describe Views::ApplicationList do
         let(:completed_by) { nil }
 
         it 'returns nil' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
     end
@@ -286,7 +278,7 @@ RSpec.describe Views::ApplicationList do
         let(:completed_at) { nil }
 
         it 'returns nil' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
     end

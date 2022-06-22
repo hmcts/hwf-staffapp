@@ -4,11 +4,9 @@ class UpdateMissingBusinessEntities
     Application.
       joins(:detail).
       where(business_entity_id: nil).
-      where.not(
-        reference: nil,
-        office_id: nil,
-        'details.jurisdiction_id': nil
-      )
+      where.not(reference: nil).
+      where.not(office_id: nil).
+      where.not('details.jurisdiction_id': nil)
   end
 
   def self.up!

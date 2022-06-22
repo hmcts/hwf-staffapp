@@ -50,7 +50,7 @@ RSpec.describe OnlineBenefitCheckRunner do
         end
       end
 
-      describe 'date_fee_paid' do
+      describe 'date_received' do
         context 'empty' do
           let(:date_fee_paid) { nil }
           let(:date_received) { nil }

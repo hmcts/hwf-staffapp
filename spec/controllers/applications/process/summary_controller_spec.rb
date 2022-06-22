@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Applications::Process::SummaryController, type: :controller do
   let(:user)          { create :user }
   let(:application) { build_stubbed(:application, office: user.office) }
-  let(:income_form) { instance_double('Forms::Application::Income') }
+  let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
 
   before do
@@ -137,7 +137,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
       end
 
       context 'processed_state' do
-        let(:application) { build_stubbed(:application, :waiting_for_part_payment_state, office: user.office) }
+        let(:application) { build_stubbed(:application, :processed_state, office: user.office) }
 
         it do
           post :create, params: { application_id: application.id }

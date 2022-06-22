@@ -16,7 +16,7 @@ class OnlineApplicationsController < ApplicationController
 
   def update
     @form = Forms::OnlineApplication.new(online_application)
-    @form.update_attributes(update_params)
+    @form.update(update_params)
 
     if @form.save
       decide_next_step
@@ -47,7 +47,7 @@ class OnlineApplicationsController < ApplicationController
 
   def approve_save
     @form = Forms::FeeApproval.new(online_application)
-    @form.update_attributes(update_approve_params)
+    @form.update(update_approve_params)
 
     if @form.save
       redirect_to action: :show

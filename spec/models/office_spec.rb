@@ -31,12 +31,12 @@ RSpec.describe Office, type: :model do
   end
 
   describe 'managers' do
-    let(:office)      { FactoryBot.create :office }
+    let(:office)      { create :office }
 
     it 'returns a list of user in the manager role' do
       User.delete_all
-      FactoryBot.create_list :user, 3, office: office
-      FactoryBot.create :manager, office: office
+      create_list :user, 3, office: office
+      create :manager, office: office
       expect(office.managers.count).to eq 1
     end
   end
@@ -51,7 +51,7 @@ RSpec.describe Office, type: :model do
     end
 
     context 'after "deleting" one' do
-      before { office.business_entities.first.update_attributes(valid_to: Time.zone.now + 1.day) }
+      before { office.business_entities.first.update(valid_to: 1.day.from_now) }
 
       it { is_expected.to eq 1 }
     end

@@ -61,6 +61,7 @@ module Views
         end
       end
 
+      # rubocop:disable Metrics/MethodLength
       def process_row(row, attr)
         if attr == :estimated_cost
           estimated_decision_cost_calculation(row)
@@ -68,10 +69,14 @@ module Views
           estimation_amount_to_pay(row)
         elsif [:reg_number, :income_threshold, :final_amount_to_pay].include?(attr)
           send(attr, row)
+        elsif [:date_received, :date_fee_paid, :date_of_birth,
+               :date_submitted_online].include?(attr)
+          row.send(attr).to_fs(:default) if row.send(attr).present?
         else
           row.send(attr)
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def total_count
         data.size

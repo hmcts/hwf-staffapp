@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe FeeThreshold do
-  context '#band' do
+  describe '#band' do
     context 'when nil is supplied' do
       it 'returns nil' do
-        expect(described_class.new(nil).band).to eq nil
+        expect(described_class.new(nil).band).to be_nil
       end
     end
 

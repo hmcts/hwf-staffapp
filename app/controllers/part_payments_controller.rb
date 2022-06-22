@@ -25,7 +25,7 @@ class PartPaymentsController < ApplicationController
 
   def accuracy_save
     @form = Forms::PartPayment::Accuracy.new(part_payment)
-    @form.update_attributes(accuracy_params)
+    @form.update(accuracy_params)
 
     if @form.save
       redirect_to(summary_part_payment_path(part_payment))

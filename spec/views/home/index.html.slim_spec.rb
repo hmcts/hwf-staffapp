@@ -4,7 +4,7 @@ module DwpMaintenanceHelper
   def dwp_maintenance?; end
 end
 
-RSpec.describe "home/index.html.slim", type: :view do
+RSpec.describe "home/index", type: :view do
   subject { rendered }
 
   let(:office) { create :office }

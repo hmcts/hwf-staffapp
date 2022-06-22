@@ -54,19 +54,19 @@ RSpec.describe Views::OfficeBusinessEntityState do
     describe '#business_entity_id' do
       subject { view.business_entity_id }
 
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
 
     describe '#business_entity_code' do
       subject { view.business_entity_code }
 
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
 
     describe '#business_entity_name' do
       subject { view.business_entity_name }
 
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
   end
 

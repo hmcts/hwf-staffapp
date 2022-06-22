@@ -37,7 +37,7 @@ RSpec.describe BenefitOverridesController, type: :controller do
     let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
 
     before do
-      allow(benefits_evidence_form).to receive(:update_attributes).with(override_params)
+      allow(benefits_evidence_form).to receive(:update).with(override_params)
       allow(DwpMonitor).to receive(:new).and_return monitor
       allow(monitor).to receive(:state).and_return dwp_state
       allow(DwpWarning).to receive(:state).and_return dwp_warning_state

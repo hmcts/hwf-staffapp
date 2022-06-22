@@ -31,7 +31,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
       ccmcc_check_rules.clean_annotation_data
     end
 
-    it { expect(ccmcc_check_rules.check_type).to be nil }
+    it { expect(ccmcc_check_rules.check_type).to be_nil }
   end
 
   context 'ccmcc application' do
@@ -130,7 +130,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
           it 'check query_type' do
             ccmcc_check_rules.rule_applies?
-            expect(ccmcc_check_rules.query_type).to be nil
+            expect(ccmcc_check_rules.query_type).to be_nil
           end
         end
 
@@ -202,7 +202,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
 
       it 'check query_type' do
         ccmcc_check_rules.rule_applies?
-        expect(ccmcc_check_rules.query_type).to be nil
+        expect(ccmcc_check_rules.query_type).to be_nil
       end
 
       it 'has the frequency of 10 - as 10 percent' do

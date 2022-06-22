@@ -23,7 +23,7 @@ describe EvidenceCheckSelector do
       end
 
       it 'never selects the application for evidence_check' do
-        is_expected.to be nil
+        is_expected.to be_nil
       end
     end
 
@@ -35,22 +35,16 @@ describe EvidenceCheckSelector do
       end
 
       it 'never selects the application for evidence_check' do
-        is_expected.to be nil
+        is_expected.to be_nil
       end
     end
 
-    describe 'should skip EV check' do
-      let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
+    describe 'should skipp EV check' do
+      let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant }
       let(:detail) { build_stubbed :detail }
 
       before do
-        allow(evidence_check_selector).to receive(:evidence_check_type).and_return 'test'
         allow(application).to receive(:detail).and_return detail
-      end
-
-      it "creates EV check" do
-        evidence_check_selector.decide!
-        expect(application).to have_received(:create_evidence_check)
       end
 
       context 'if it is emergency' do
@@ -62,7 +56,7 @@ describe EvidenceCheckSelector do
         end
       end
 
-      context 'if it is benefit application' do
+      context 'if it is expired refund application' do
         let(:detail) { build_stubbed :detail, :out_of_time_refund, discretion_applied: false }
 
         it do
@@ -72,7 +66,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if no remissions is granted' do
-        let(:application) { instance_spy 'Application', outcome: 'none', application_type: 'income' }
+        let(:application) { instance_spy Application, outcome: 'none', application_type: 'income' }
 
         it do
           evidence_check_selector.decide!
@@ -81,7 +75,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if it is benefit application' do
-        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'benefit' }
+        let(:application) { instance_spy Application, outcome: 'full', application_type: 'benefit' }
 
         it do
           evidence_check_selector.decide!
@@ -90,8 +84,10 @@ describe EvidenceCheckSelector do
       end
 
       context 'if applicant is under 15' do
-        let(:application) { instance_spy 'Application', outcome: 'full', application_type: 'income', applicant: applicant }
+        let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant, id: 2 }
         let(:applicant) { build :applicant_with_all_details, date_of_birth: dob }
+        let(:evidence_check_flag) { instance_double(EvidenceCheckFlag, active?: true) }
+        before { allow(EvidenceCheckFlag).to receive(:where).and_return([evidence_check_flag]) }
 
         context '15 years' do
           let(:dob) { 15.years.ago }
@@ -102,6 +98,7 @@ describe EvidenceCheckSelector do
         end
         context '16 years' do
           let(:dob) { 16.years.ago }
+
           it do
             evidence_check_selector.decide!
             expect(application).to have_received(:create_evidence_check)
@@ -138,7 +135,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not saves the ccmcc check type' do
-            expect(decision.checks_annotation).to be nil
+            expect(decision.checks_annotation).to be_nil
           end
         end
 
@@ -149,7 +146,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not create evidence_check record for the application' do
-            is_expected.to be nil
+            is_expected.to be_nil
           end
         end
       end
@@ -179,7 +176,7 @@ describe EvidenceCheckSelector do
           end
 
           it 'does not create evidence_check record for the application' do
-            is_expected.to be nil
+            is_expected.to be_nil
           end
         end
       end

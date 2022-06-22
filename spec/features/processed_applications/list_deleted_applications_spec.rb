@@ -12,7 +12,7 @@ RSpec.feature 'List deleted applications', type: :feature do
     Settings.processed_deleted.per_page = 2
     login_as(user)
   end
-  after { Settings.processed_deleted.per_page = ENV['PROCESSED_DELETED_PER_PAGE'] }
+  after { Settings.processed_deleted.per_page = ENV.fetch('PROCESSED_DELETED_PER_PAGE', nil) }
 
   let!(:application1) do
     create :application_full_remission, :deleted_state,

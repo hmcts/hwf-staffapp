@@ -41,7 +41,7 @@ RSpec.describe Forms::Application::Benefit do
     subject(:form) { described_class.new(application) }
 
     subject(:form_update) do
-      form.update_attributes(attributes)
+      form.update(attributes)
       form.save
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Forms::Application::Benefit do
           end
 
           it 'sets dependents to nil' do
-            expect(application.dependents).to be nil
+            expect(application.dependents).to be_nil
           end
 
           context 'when benefit check has been done already' do
@@ -87,7 +87,7 @@ RSpec.describe Forms::Application::Benefit do
 
           context 'when benefit check has not been done' do
             it 'keeps outcome unchanged' do
-              expect(application.outcome).to be nil
+              expect(application.outcome).to be_nil
             end
           end
         end

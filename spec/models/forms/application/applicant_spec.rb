@@ -198,7 +198,7 @@ RSpec.describe Forms::Application::Applicant do
     subject(:form) { described_class.new(applicant) }
 
     subject(:form_save) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

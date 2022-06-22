@@ -17,7 +17,7 @@ module Views
       def to_csv
         return "no results" unless data.first
         CSV.generate do |csv|
-          csv << data.first.keys - ['tax_credit']
+          csv << (data.first.keys - ['tax_credit'])
           data.each do |row|
             csv << process_row(row).values
           end
@@ -115,7 +115,7 @@ module Views
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         WHERE applications.office_id = #{@office_id}
-        AND applications.created_at between '#{@date_from.to_s(:db)}' AND '#{@date_to.to_s(:db)}'
+        AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength
@@ -134,7 +134,7 @@ module Views
         return if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
         partner = income_kind_hash[:partner].try(:join, ',')
-        [applicant, partner].reject(&:blank?).join(", ")
+        [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         ""
       end

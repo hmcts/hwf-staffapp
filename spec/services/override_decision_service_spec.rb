@@ -8,7 +8,7 @@ RSpec.describe OverrideDecisionService, type: :service do
   let(:form) { Forms::Application::DecisionOverride.new(decision_override) }
 
   before do
-    form.update_attributes(
+    form.update(
       created_by_id: user.id,
       value: 'other',
       reason: 'foo reason bar'

@@ -29,7 +29,7 @@ RSpec.describe Forms::Application::Detail do
       end
 
       it 'saves the values to instance variable' do
-        expect(form.date_received.to_s).to eq('01/02/2019')
+        expect(form.date_received.to_fs(:default)).to eq('01/02/2019')
       end
     end
   end
@@ -223,12 +223,14 @@ RSpec.describe Forms::Application::Detail do
         let(:refund_status) { false }
 
         it { is_expected.to be_valid }
+
         context 'with date fee paid' do
           let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
           it { is_expected.to be_valid }
+
           it 'reset date' do
             refund.valid?
-            expect(refund.date_fee_paid).to be nil
+            expect(refund.date_fee_paid).to be_nil
           end
 
         end
@@ -386,7 +388,7 @@ RSpec.describe Forms::Application::Detail do
         end
 
         it 'passes if emergency unchecked' do
-          expect(reason.valid?).to eq true
+          expect(reason.valid?).to be true
         end
       end
 
@@ -397,7 +399,7 @@ RSpec.describe Forms::Application::Detail do
         end
 
         it 'the reason is not filled in' do
-          expect(reason.valid?).not_to eq true
+          expect(reason.valid?).not_to be true
         end
       end
 
@@ -405,7 +407,7 @@ RSpec.describe Forms::Application::Detail do
         before { reason.emergency_reason = ('a' * 500).concat('1') }
 
         it 'is not valid' do
-          expect(reason.valid?).to eq false
+          expect(reason.valid?).to be false
         end
       end
     end
@@ -415,7 +417,7 @@ RSpec.describe Forms::Application::Detail do
     subject(:form) { described_class.new(detail) }
 
     subject(:update_form) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

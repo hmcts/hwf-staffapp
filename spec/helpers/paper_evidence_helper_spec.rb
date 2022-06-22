@@ -6,7 +6,7 @@ RSpec.describe PaperEvidenceHelper, type: :helper do
 
   let(:application) { build_stubbed :application, detail: detail }
   let(:detail) { build_stubbed :detail, discretion_applied: nil }
-  let(:benefit_check_runner) { instance_double('BenefitCheckRunner') }
+  let(:benefit_check_runner) { instance_double(BenefitCheckRunner) }
 
   before do
     allow(BenefitCheckRunner).to receive(:new).and_return benefit_check_runner

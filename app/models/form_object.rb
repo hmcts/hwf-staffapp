@@ -8,7 +8,7 @@ class FormObject
     super(attrs)
   end
 
-  def update_attributes(params)
+  def update(params)
     params.each do |name, value|
       public_send("#{name}=", value)
     end

@@ -5,8 +5,13 @@
 # and maximum; this matches the default thread size of Active Record.
 #
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS", max_threads_count)
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
+
+# Specifies the `worker_timeout` threshold that Puma will use to wait before
+# terminating a worker in development environments.
+#
+worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
@@ -16,14 +21,10 @@ port ENV.fetch("PORT", 3000)
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
 
-# Rails creates the pids directory before puma runs, but puma doesn't do it itself.
-# That causes `bundle exec puma` or `rake jasmine:ci` to throw "Errno::ENOENT" exceptions
-# when the pids directory is missing, so we make sure it's always there.
+# Specifies the `pidfile` that Puma will use.
 pids_dir = "tmp/pids"
 Dir.mkdir(pids_dir) unless File.exist?(pids_dir)
-
-# Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE", "#{pids_dir}/server.pid")
+pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together

@@ -26,14 +26,14 @@ class OfficesController < ApplicationController
   def edit
     authorize office
 
-    @becs = @office.business_entities.map { |be| [be.jurisdiction_id, be.code] }.to_h
+    @becs = @office.business_entities.to_h { |be| [be.jurisdiction_id, be.code] }
   end
 
   def create
     @office = Office.new(office_params)
     authorize @office
 
-    flash[:notice] = 'Office was successfully created' if @office.save
+    flash[:notice] = I18n.t('offices.notice.created') if @office.save
 
     respond_with(@office)
   end
@@ -44,7 +44,7 @@ class OfficesController < ApplicationController
     office.assign_attributes(office_params)
 
     if office.save
-      flash[:notice] = 'Office was successfully updated'
+      flash[:notice] = I18n.t('offices.notice.updated')
 
       redirect_to update_redirect_path
     else

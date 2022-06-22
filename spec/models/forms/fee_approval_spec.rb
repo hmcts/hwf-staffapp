@@ -22,7 +22,7 @@ RSpec.describe Forms::FeeApproval do
     subject(:form_save) { form.save }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for an invalid form' do

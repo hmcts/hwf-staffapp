@@ -28,7 +28,7 @@ RSpec.describe Forms::OnlineApplication do
       let(:emergency_reason) { nil }
 
       it 'keeps the emergency field nil' do
-        expect(form.emergency).to be nil
+        expect(form.emergency).to be_nil
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe Forms::OnlineApplication do
     context 'when the user has no default jurisdiction' do
       let(:jurisdiction) { nil }
 
-      it { is_expected.to eq nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when the user has a default jurisdiction' do
@@ -53,7 +53,7 @@ RSpec.describe Forms::OnlineApplication do
     end
   end
 
-  describe '#enable_default_jurisdiction' do
+  describe '#enable_default_jurisdiction for user' do
     let(:jurisdiction) { create :jurisdiction }
     let(:user) { create :staff, jurisdiction: jurisdiction }
 
@@ -122,7 +122,7 @@ RSpec.describe Forms::OnlineApplication do
 
   describe '#save' do
     subject do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 
@@ -163,7 +163,7 @@ RSpec.describe Forms::OnlineApplication do
         end
 
         it 'clears the emergency reason' do
-          expect(reloaded_application.emergency_reason).to be nil
+          expect(reloaded_application.emergency_reason).to be_nil
         end
       end
     end

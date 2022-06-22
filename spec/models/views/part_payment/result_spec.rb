@@ -46,7 +46,7 @@ RSpec.describe Views::PartPayment::Result do
     context 'when the part_payment does not have an incorrect_reason' do
       let(:reason) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
   end
 

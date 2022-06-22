@@ -44,7 +44,7 @@ RSpec.describe Applicant, type: :model do
       context 'when nil' do
         let(:ni_number) { nil }
 
-        it { is_expected.to be nil }
+        it { is_expected.to be_nil }
       end
     end
   end
@@ -92,7 +92,7 @@ RSpec.describe Applicant, type: :model do
     subject { applicant.age }
 
     context 'when applicant is earlier in the year' do
-      before { applicant.date_of_birth = (Time.zone.now - 3.months) - 17.years }
+      before { applicant.date_of_birth = 3.months.ago - 17.years }
 
       it 'returns the correct value' do
         is_expected.to eq 17
@@ -100,7 +100,7 @@ RSpec.describe Applicant, type: :model do
     end
 
     context 'when applicants birthday is later in the year' do
-      before { applicant.date_of_birth = (Time.zone.now + 3.months) - 17.years }
+      before { applicant.date_of_birth = 3.months.from_now - 17.years }
 
       it 'returns the correct value' do
         is_expected.to eq 16

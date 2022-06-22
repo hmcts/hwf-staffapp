@@ -7,7 +7,7 @@ class NotificationsController < ApplicationController
     authorize notification
 
     notice_message =
-      if notification.update_attributes(notification_params)
+      if notification.update(notification_params)
         'Your changes have been saved.'
       else
         'Your changes have not been saved.'

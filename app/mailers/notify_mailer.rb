@@ -7,7 +7,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(
       application_reference_code: application.reference,
       form_name_case_number: form_name_or_case_number,
-      application_submitted_date: Time.zone.today.to_s(:db),
+      application_submitted_date: Time.zone.today.to_fs(:db),
       applicant_name: application.full_name
     )
 
@@ -20,7 +20,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       application_reference_code: application.reference,
-      application_submitted_date: Time.zone.today.to_s(:db),
+      application_submitted_date: Time.zone.today.to_fs(:db),
       applicant_name: application.full_name,
       form_name_case_number: form_name_or_case_number
     )
@@ -29,7 +29,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def password_reset(user, reset_link)
-    set_template(ENV['NOTIFY_PASSWORD_RESET_TEMPLATE_ID'])
+    set_template(ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil))
     set_personalisation(
       name: user.name,
       password_link: reset_link

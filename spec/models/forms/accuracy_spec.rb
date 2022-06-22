@@ -15,7 +15,7 @@ RSpec.describe Forms::Accuracy do
 
   describe 'validations' do
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     subject { form.valid? }
@@ -35,7 +35,7 @@ RSpec.describe Forms::Accuracy do
     let(:evidence) { create :evidence_check }
 
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     context 'for an invalid form' do
@@ -56,7 +56,7 @@ RSpec.describe Forms::Accuracy do
       end
 
       it 'keeps the incorrect reason empty' do
-        expect(evidence.incorrect_reason).to be nil
+        expect(evidence.incorrect_reason).to be_nil
       end
     end
 

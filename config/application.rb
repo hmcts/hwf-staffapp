@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
@@ -12,7 +12,6 @@ require "action_mailer/railtie"
 require "action_text/engine"
 require "action_view/railtie"
 # require "action_cable/engine"
-require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -24,6 +23,15 @@ module FrStaffapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    config.eager_load_paths << Rails.root.join("lib")
+
+    ##### FROM RAILS 6.0 #####
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -44,6 +52,11 @@ module FrStaffapp
     config.maintenance_enabled = ENV.fetch('MAINTENANCE_ENABLED', 'false').downcase == 'true'
     config.maintenance_allowed_ips = ENV.fetch('MAINTENANCE_ALLOWED_IPS', '').split(',').map(&:strip)
     config.maintenance_end = ENV.fetch('MAINTENANCE_END', nil)
+
+    #####
+
+    config.active_record.legacy_connection_handling = false
+    config.active_support.remove_deprecated_time_with_zone_name = true
 
   end
   WillPaginate.per_page = 20

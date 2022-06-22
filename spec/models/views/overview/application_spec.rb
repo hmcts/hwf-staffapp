@@ -89,7 +89,7 @@ RSpec.describe Views::Overview::Application do
     context 'for an income type application' do
       let(:application) { build_stubbed(:application, :income_type) }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe Views::Overview::Application do
     context 'when income or thresholds are not set' do
       let(:income) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when income is set' do
@@ -148,13 +148,13 @@ RSpec.describe Views::Overview::Application do
     context 'when evidence check is empty' do
       let(:evidence_check) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when evidence check has nil income' do
       let(:evidence_check) { build_stubbed(:evidence_check, income: nil) }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
     context 'when evidence check is 123' do
@@ -178,7 +178,7 @@ RSpec.describe Views::Overview::Application do
     context 'when the number of children is not set' do
       let(:children) { nil }
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
   end
@@ -230,7 +230,7 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to eq 'part' }
     end
 
-    context 'when the application is a full remission' do
+    context 'when the application is a no remission' do
       let(:outcome) { 'none' }
 
       it { is_expected.to eq 'none' }
@@ -269,7 +269,7 @@ RSpec.describe Views::Overview::Application do
         let(:amount) { nil }
 
         it 'returns nil' do
-          is_expected.to be nil
+          is_expected.to be_nil
         end
       end
     end

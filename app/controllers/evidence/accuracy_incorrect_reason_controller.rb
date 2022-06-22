@@ -33,7 +33,7 @@ module Evidence
     end
 
     def save_accuracy_reasons_category
-      @form.update_attributes(incorrect_reason_category: category_params)
+      @form.update(incorrect_reason_category: category_params)
       @form.save
     end
 

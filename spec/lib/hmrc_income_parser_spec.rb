@@ -97,6 +97,7 @@ RSpec.describe HmrcIncomeParser do
       context '7' do
         let(:frequency) { 7 }
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1726.85) }
+
         context 'different frequency per payment' do
           let(:tax_credit_hash) {
             [

@@ -73,6 +73,7 @@ RSpec.describe HomeHelper do
 
     describe 'with correct sort_direction' do
       it { expect(sort_link_class('first_name', 'first_name', 'desc')).to eql 'sort_arrow_asc' }
+
       it do
         expect(sort_link_class('first_name', 'first_name', 'asc')).to eql 'sort_arrow_desc'
       end

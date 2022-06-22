@@ -20,7 +20,7 @@ module Report
       Raven.tags_context(task: "power_bi_export") do
         Raven.capture_message(e.message)
       end
-      Rails.logger.debug "Error in power_bi export task: #{e.message}"
+      Rails.logger.debug { "Error in power_bi export task: #{e.message}" }
     end
 
   end

@@ -91,7 +91,7 @@ describe BusinessEntityService do
       end
 
       it 'has no ID' do
-        expect(build_update.id).to be nil
+        expect(build_update.id).to be_nil
       end
     end
 
@@ -144,7 +144,7 @@ describe BusinessEntityService do
     end
 
     it 'has no valid_to' do
-      expect(build_deactivate.valid_to).not_to be nil
+      expect(build_deactivate.valid_to).not_to be_nil
     end
   end
 
@@ -171,7 +171,7 @@ describe BusinessEntityService do
 
       it 'the business_entity has no error messages' do
         service.persist!
-        expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
+        expect(service.business_entity.errors.messages).to eq(name: ["can't be blank"])
       end
 
       it 'return false' do
@@ -194,7 +194,7 @@ describe BusinessEntityService do
         it 'sets the valid_to date of the existing business_entity' do
           service.persist!
           business_entity.reload
-          expect(business_entity.valid_to).not_to eq nil
+          expect(business_entity.valid_to).not_to be_nil
         end
 
         it 'the business_entity has no error messages' do
@@ -212,7 +212,7 @@ describe BusinessEntityService do
 
         it 'the business_entity has the error messages' do
           service.persist!
-          expect(service.business_entity.errors.messages).to eql(name: ["can't be blank"])
+          expect(service.business_entity.errors.messages).to eq(name: ["can't be blank"])
         end
       end
 
@@ -231,11 +231,11 @@ describe BusinessEntityService do
       end
 
       it 'sets the valid_to date of the existing business_entity' do
-        expect(business_entity.valid_to).not_to eq nil
+        expect(business_entity.valid_to).not_to be_nil
       end
 
       it 'sets the current office and jurisdiction business_entity to nil' do
-        expect(BusinessEntity.current_for(office, jurisdiction)).to be nil
+        expect(BusinessEntity.current_for(office, jurisdiction)).to be_nil
       end
 
       it 'the business_entity has no error messages' do

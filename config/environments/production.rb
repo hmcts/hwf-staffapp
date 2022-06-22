@@ -1,3 +1,5 @@
+require "active_support/core_ext/integer/time"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -22,26 +24,18 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
 
-  # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.assets.prefix = '/assets'
-
-  # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
-
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
-  config.assets.digest = true
-
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
+  # config.asset_host = "http://assets.example.com"
 
   # Specifies the header that your server uses for sending files.
-  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
+  # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -53,8 +47,8 @@ Rails.application.configure do
     redirect: { exclude: ->(request) { /ping|submissions/.match?(request.path) } }
   }
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
+  # Include generic and useful information about system operation, but avoid logging too much
+  # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
@@ -79,45 +73,54 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  # Send deprecation notices to registered listeners.
-  config.active_support.deprecation = :notify
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Use a different logger for distributed setups.
+  # require "syslog/logger"
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new($stdout)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
+
+  #### FROM RAILS 6.0
+
+  # Disable Rails's static asset server (Apache or nginx will already do this).
+  config.assets.prefix = '/assets'
+
+  # Compress JavaScripts and CSS.
+  config.assets.js_compressor = Uglifier.new(harmony: true)
+
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
   config.logstasher.log_level = Logger::INFO
   config.logstasher.logger_path = $stdout
   config.logstasher.source = 'logstasher'
 
-  # Use a different logger for distributed setups.
-  # require 'syslog/logger'
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
-  # if ENV["RAILS_LOG_TO_STDOUT"].present?
-  #   logger           = ActiveSupport::Logger.new(STDOUT)
-  #   logger.formatter = config.log_formatter
-  #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  # end
-
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
-
   config.after_initialize do
-    smtp_domain = ENV['SMTP_DOMAIN'] || 'localhost'
+    smtp_domain = ENV.fetch('SMTP_DOMAIN', 'localhost')
 
     ActionMailer::Base.default_url_options = {
       host: smtp_domain,
-      protocol: ENV['SMTP_PROTOCOL'] || 'http'
+      protocol: ENV.fetch('SMTP_PROTOCOL', 'http')
     }
     ActionMailer::Base.default from: Settings.mail.from
     ActionMailer::Base.default reply_to: Settings.mail.reply_to
     ActionMailer::Base.smtp_settings = {
-      address: ENV['SMTP_HOSTNAME'] || 'localhost',
-      port: ENV['SMTP_PORT'] || 587,
+      address: ENV.fetch('SMTP_HOSTNAME', 'localhost'),
+      port: ENV.fetch('SMTP_PORT', 587),
       domain: smtp_domain,
-      user_name: ENV['SMTP_USERNAME'] || '',
-      password: ENV['SMTP_PASSWORD'] || '',
+      user_name: ENV.fetch('SMTP_USERNAME', ''),
+      password: ENV.fetch('SMTP_PASSWORD', ''),
       authentication: :login,
       enable_starttls_auto: true
     }
@@ -127,24 +130,6 @@ Rails.application.configure do
     config.ssl_verification = Settings.sentry.ssl_verification == true
   end
 
-  # Inserts middleware to perform automatic connection switching.
-  # The `database_selector` hash is used to pass options to the DatabaseSelector
-  # middleware. The `delay` is used to determine how long to wait after a write
-  # to send a subsequent read to the primary.
-  #
-  # The `database_resolver` class is used by the middleware to determine which
-  # database is appropriate to use based on the time delay.
-  #
-  # The `database_resolver_context` class is used by the middleware to set
-  # timestamps for the last write to the primary. The resolver uses the context
-  # class timestamps to determine how long to wait before reading from the
-  # replica.
-  #
-  # By default Rails will store a last write timestamp in the session. The
-  # DatabaseSelector middleware is designed as such you can define your own
-  # strategy for connection switching and pass that into the middleware through
-  # these configuration options.
-  # config.active_record.database_selector = { delay: 2.seconds }
-  # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
-  # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  #####
+
 end

@@ -2,7 +2,7 @@ class HmrcToken < ActiveRecord::Base
   include SimpleEncryptable
 
   before_create :only_one_record_allowed
-  attr_encryptable :access_token, secret: ENV['HMRC_SECRET'], salt: ENV['HMRC_CLIENT_ID']
+  attr_encryptable :access_token, secret: ENV.fetch('HMRC_SECRET', nil), salt: ENV.fetch('HMRC_CLIENT_ID', nil)
 
   def expired?
     return true if expires_in.blank?

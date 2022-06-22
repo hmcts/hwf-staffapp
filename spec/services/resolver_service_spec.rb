@@ -67,10 +67,10 @@ describe ResolverService do
         end
       else
         describe 'keeps the application undecided' do
-          it { expect(updated_application.decision).to be nil }
-          it { expect(updated_application.decision_type).to be nil }
-          it { expect(updated_application.decision_date).to be nil }
-          it { expect(updated_application.decision_cost).to be nil }
+          it { expect(updated_application.decision).to be_nil }
+          it { expect(updated_application.decision_type).to be_nil }
+          it { expect(updated_application.decision_date).to be_nil }
+          it { expect(updated_application.decision_cost).to be_nil }
         end
       end
     end

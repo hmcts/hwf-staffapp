@@ -30,7 +30,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
   describe 'validation' do
     before do
-      form.update_attributes(params)
+      form.update(params)
     end
 
     subject { form.valid? }
@@ -109,7 +109,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
 
-      context 'month is not valid' do
+      context 'month is blank' do
         let(:from_date_month) { '' }
 
         it { is_expected.to be false }
@@ -121,13 +121,13 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
 
-      context 'day is not valid' do
+      context 'day is blank' do
         let(:from_date_day) { '' }
 
         it { is_expected.to be false }
       end
 
-      context 'day is not valid' do
+      context 'day is nil' do
         let(:from_date_day) { nil }
 
         it { is_expected.to be false }
@@ -152,7 +152,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
 
-      context 'month is not valid' do
+      context 'month is blank' do
         let(:to_date_month) { '' }
 
         it { is_expected.to be false }
@@ -164,13 +164,13 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
 
-      context 'day is not valid' do
+      context 'day is blank' do
         let(:to_date_day) { '' }
 
         it { is_expected.to be false }
       end
 
-      context 'day is not valid' do
+      context 'day is nil' do
         let(:to_date_day) { nil }
 
         it { is_expected.to be false }

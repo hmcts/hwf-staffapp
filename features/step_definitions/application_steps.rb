@@ -39,3 +39,13 @@ Then("I have provided the correct evidence") do
   expect(application_page.content.summary_section[3]).to have_evidence_question
   expect(application_page.content.summary_section[3]).to have_answer_yes
 end
+
+Then('I should not see income details section') do
+  expect(application_page.content.summary_section[4]).to be_nil
+end
+
+Then('I should see income details section') do
+  expect(application_page.content.summary_section[4]).to have_income_question_children
+  expect(application_page.content.summary_section[4]).to have_income_question_number_of_children
+  expect(application_page.content.summary_section[4]).to have_income_question_total
+end

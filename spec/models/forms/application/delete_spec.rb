@@ -19,7 +19,7 @@ RSpec.describe Forms::Application::Delete do
 
   describe '#save' do
     subject(:form_save) do
-      form.update_attributes(attributes)
+      form.update(attributes)
       form.save
     end
 

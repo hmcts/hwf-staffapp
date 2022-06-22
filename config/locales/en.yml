@@ -71,6 +71,9 @@ en-GB:
       part_payment: Part-payment
       emergency: Emergency
       other: Other
+    notice:
+      deleted: 'The application has been deleted'
+
     index:
       title: Processed applications
       no_applications: There are no processed applications for your office.
@@ -113,7 +116,11 @@ en-GB:
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
       technical_error: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
-
+  shared:
+    forms:
+      approve:
+        fee_manager_first_name: Fee manager first name
+        fee_manager_last_name: Fee manager last name
   evidence:
     correct: 'Yes, the evidence is for the correct applicant and covers the correct time period'
     incorrect: 'No, there is a problem with the evidence and it needs to be returned'
@@ -229,6 +236,9 @@ en-GB:
     rating_2: 'I used an accessibility tool such as a screen reader'
     rating_3: 'I needed other kind of help'
     rating_4: 'Other'
+    notice:
+      recorded: 'Your feedback has been recorded'
+
   unauthorized:
     flash: You don’t have permission to do this
     manage:
@@ -306,12 +316,20 @@ en-GB:
         offline: "Display DWP check is down message"
         online: "Display DWP check is working message"
         default: "Use the default DWP check to display message"
-  offices:
-    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
+
 
   online_application_benefits:
     edit:
       message: Due to the benefits checker being down, you will only be able to process this application if you have supporting evidence that the applicant is receiving benefits.
+
+  hmrc_summary:
+    alert: "Undefined evidence check outcome, please contact support"
+
+  offices:
+    notice:
+      created: 'Office was successfully created'
+      updated: 'Office was successfully updated'
+    jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
 
   activemodel:
     attributes:
@@ -572,6 +590,7 @@ en-GB:
             entity_code:
               blank: "Please select a court name"
         forms/report/finance_transactional_report:
+          date_range_length: "The date range can't be longer than 2 years"
           date_hint: Enter the date in this format DD/MM/YYYY
           attributes:
             date_from:
@@ -606,20 +625,20 @@ en-GB:
             date_received:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: The application must have been made in the last 3 months
-              before: This date can't be in the future
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
-              before_or_equal_to: This date can’t be after the application was received
+              date_after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
+              date_before_or_equal_to: This date can’t be after the application was received
             date_of_death:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              before: This date can't be in the future
-              after_or_equal_to: The date of death must have been in the last 20 years
+              date_before: This date can't be in the future
+              date_after_or_equal_to: The date of death must have been in the last 20 years
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -711,8 +730,8 @@ en-GB:
             date_received:
               blank: Enter the date
               not_a_date: Enter the date in this format DD/MM/YYYY
-              after_or_equal_to: The application must have been made in the last 3 months
-              before: This date can't be in the future
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -746,6 +765,8 @@ en-GB:
               too_short: Your password must be at least %{count} characters
             password_confirmation:
               confirmation: Your password must match the one you entered above
+            role:
+              inclusion: '%{value} is not a valid role'
         office:
           attributes:
             name:
@@ -841,3 +862,5 @@ en-GB:
         roles: Roles
       form_jurisdiction:
         main_jurisdiction: Main jurisdiction
+    notice:
+      updated: 'User updated.'

@@ -7,7 +7,7 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
 
   def update
     @form = Forms::OnlineApplication.new(online_application)
-    @form.update_attributes(update_params)
+    @form.update(update_params)
 
     if @form.save
       decide_redirection

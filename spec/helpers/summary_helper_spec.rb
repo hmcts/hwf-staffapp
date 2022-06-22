@@ -40,7 +40,7 @@ RSpec.describe SummaryHelper, type: :helper do
 
       context 'when requested fields all contain nil data' do
         it 'returns nothing' do
-          expect(helper.build_section('section name', view, ['form_name', 'date_received'])).to be nil
+          expect(helper.build_section('section name', view, ['form_name', 'date_received'])).to be_nil
         end
       end
 

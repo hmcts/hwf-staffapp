@@ -10,7 +10,7 @@ module Evidence
 
     def create
       authorize evidence
-      @form.update_attributes(hmrc_params.merge(additional_income: nil))
+      @form.update(hmrc_params.merge(additional_income: nil))
 
       if @form.valid? && hmrc_service_call
         redirect_to evidence_check_hmrc_path(evidence, @hmrc_check)

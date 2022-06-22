@@ -84,7 +84,7 @@ RSpec.describe Forms::Application::Income do
     subject(:form) { described_class.new(application) }
 
     subject(:update_form) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 

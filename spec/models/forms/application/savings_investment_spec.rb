@@ -5,7 +5,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
   params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount]
 
-  let(:min_threshold) { Settings.savings_threshold.minimum }
+  let(:min_threshold) { Settings.savings_threshold.minimum_value }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -17,7 +17,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     let(:application) { create :single_applicant_under_61 }
 
     before do
-      savings_investment_form.update_attributes(hash)
+      savings_investment_form.update(hash)
     end
 
     describe 'min_threshold_exceeded' do
@@ -33,7 +33,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
         it { is_expected.to be_valid }
       end
 
-      describe 'when true' do
+      describe 'when true and under min threshold' do
         let(:hash) { { min_threshold_exceeded: true, amount: min_threshold - 1, over_61: false } }
 
         it { is_expected.not_to be_valid }
@@ -120,7 +120,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
           it { is_expected.to be_valid }
         end
 
-        describe 'is true' do
+        describe 'is false' do
           let(:max_threshold) { false }
 
           it { is_expected.to be_valid }
@@ -139,7 +139,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     subject(:form) { described_class.new(saving) }
 
     subject(:update_form) do
-      form.update_attributes(params)
+      form.update(params)
       form.save
     end
 
@@ -163,8 +163,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
     end
 
     context 'sets the thresholds from the settings file' do
-      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum }
-      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum }
+      it { expect(saving.min_threshold).to eql Settings.savings_threshold.minimum_value }
+      it { expect(saving.max_threshold).to eql Settings.savings_threshold.maximum_value }
     end
 
     context 'when attributes are incorrect' do

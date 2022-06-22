@@ -46,7 +46,7 @@ RSpec.describe Views::Confirmation::Result do
   describe '#savings_passed?' do
     subject { view.savings_passed? }
 
-    context "is true " do
+    context "is true" do
       before do
         allow(application).to receive(:saving).and_return(saving)
         allow(saving).to receive(:passed?).and_return(true)
@@ -85,7 +85,7 @@ RSpec.describe Views::Confirmation::Result do
         decision_override
       end
 
-      it { is_expected.to be nil }
+      it { is_expected.to be_nil }
     end
 
   end
@@ -151,7 +151,7 @@ RSpec.describe Views::Confirmation::Result do
       context 'but there is no benefit' do
         let(:application) { build_stubbed(:application, :income_type, benefits: nil) }
         let(:id) { 5 }
-        it { is_expected.to be nil }
+        it { is_expected.to be_nil }
       end
     end
   end

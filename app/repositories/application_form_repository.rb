@@ -27,7 +27,7 @@ class ApplicationFormRepository
   end
 
   def update_form_attributes_and_save
-    @form.update_attributes(form_params)
+    @form.update(form_params)
     @success = @form.save
   end
 

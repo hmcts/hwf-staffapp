@@ -20,6 +20,7 @@ RSpec.describe HwfReferenceGenerator, type: :service do
       end
     end
 
+    # rubocop:disable RSpec/SubjectStub
     context 'when the generated reference number already exists' do
       before do
         create(:online_application, reference: 'hwf-collision')
@@ -40,5 +41,6 @@ RSpec.describe HwfReferenceGenerator, type: :service do
         expect(attributes[:reference]).to eql('HWF-HAF-HWA')
       end
     end
+    # rubocop:enable RSpec/SubjectStub
   end
 end

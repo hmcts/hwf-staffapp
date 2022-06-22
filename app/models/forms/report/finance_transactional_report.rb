@@ -23,13 +23,13 @@ module Forms
       validates :date_to, date: {
         after: :date_from, allow_blank: true,
         before: proc { |obj| obj.date_from + 2.years },
-        message: "The date range can't be longer than 2 years"
+        message: I18n.t("activemodel.errors.models.forms/report/finance_transactional_report.date_range_length")
       }, if: :date_from
 
       before_validation :format_dates
 
       def i18n_scope
-        :"activemodel.attributes.forms/report/finance_transactional_report"
+        :'activemodel.attributes.forms/report/finance_transactional_report'
       end
 
       def start_date

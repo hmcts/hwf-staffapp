@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :public_app_submission, class: OpenStruct do
+  factory :public_app_submission, class: 'Struct' do
 
     to_create { |instance| instance.as_json['table'] }
 

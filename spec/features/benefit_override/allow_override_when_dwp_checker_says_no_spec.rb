@@ -71,14 +71,20 @@ RSpec.feature 'Allow override when DWP checker says "NO"', type: :feature do
         end
       end
     end
+  end
 
-    context 'when the user does not provide supporting evidence' do
-      describe 'when displaying the summary' do
-        scenario 'shows the benefits result as passed' do
-          expect(page).to have_content 'Check details'
-          expect(page).to have_xpath('//dt[contains(@class,"govuk-summary-list__key")][text()="Correct evidence provided"]/following-sibling::*[1][text()="Yes"]')
-        end
+  context 'when the user does not provide supporting evidence' do
+    before do
+      choose 'benefit_override_evidence_false'
+      click_button 'Next'
+    end
+
+    describe 'when displaying the summary' do
+      scenario 'shows the benefits result as failed' do
+        expect(page).to have_content 'Check details'
+        expect(page).to have_xpath('//dt[contains(@class,"govuk-summary-list__key")][text()="Correct evidence provided"]/following-sibling::*[1][text()="No"]')
       end
     end
   end
+
 end

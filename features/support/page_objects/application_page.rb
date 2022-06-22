@@ -13,6 +13,9 @@ class ApplicationPage < BasePage
       element :benefits_passed, '.govuk-summary-list__value', text: '✓ Passed (paper evidence checked)'
       element :answer_yes, '.govuk-summary-list__value', text: 'Yes'
       element :answer_no, '.govuk-summary-list__value', text: 'No'
+      element :income_question_children, '.govuk-summary-list__key', text: 'Applicant has children'
+      element :income_question_number_of_children, '.govuk-summary-list__key', text: 'Number of children'
+      element :income_question_total, '.govuk-summary-list__key', text: 'Total monthly income'
     end
   end
 end

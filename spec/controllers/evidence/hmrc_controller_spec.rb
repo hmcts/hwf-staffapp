@@ -103,7 +103,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       before do
         sign_in user
         allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form
-        allow(form).to receive(:update_attributes)
+        allow(form).to receive(:update)
         allow(form).to receive(:valid?).and_return valid
         allow(form).to receive(:additional_income=)
         allow(form).to receive(:additional_income_amount=)
@@ -112,7 +112,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
       it 'update params' do
         post_call
-        expect(form).to have_received(:update_attributes).with(dates)
+        expect(form).to have_received(:update).with(dates)
       end
 
       context 'not valid' do
@@ -147,8 +147,8 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         end
 
         context 'hmrc_check not valid' do
-          let(:errors) { instance_double('ActiveModel::Errors', full_messages: ['not good']) }
-          let(:form_errors) { instance_double('ActiveModel::Errors') }
+          let(:errors) { instance_double(ActiveModel::Errors, full_messages: ['not good']) }
+          let(:form_errors) { instance_double(ActiveModel::Errors) }
           let(:valid_check) { false }
 
           before do
@@ -281,6 +281,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
 
         context 'valid amount' do
           it { expect(response).to redirect_to(evidence_check_hmrc_summary_path(evidence, hmrc_check)) }
+
           it 'updates amount' do
             expect(hmrc_check).to have_received(:update).with(additional_income: 1)
           end
