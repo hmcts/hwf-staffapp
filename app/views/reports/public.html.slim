@@ -69,7 +69,7 @@ h1.govuk-heading-xl Public application stats
               -@data.submission_total_time_taken.each do |court|
                 tr.govuk-table__row
                   td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =court[1][0...-7]
+                  td.govuk-table__cell =preformat_average_time(court[1])
 
   .govuk-grid-column-one-half
     .util_pt-medium
@@ -86,4 +86,4 @@ h1.govuk-heading-xl Public application stats
               -@data.submission_seven_day_time_taken.each do |court|
                 tr.govuk-table__row
                   td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =court[1][0...-7]
+                  td.govuk-table__cell =preformat_average_time(court[1])
