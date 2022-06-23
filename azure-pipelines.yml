@@ -50,7 +50,7 @@ jobs:
     variables:
       rubyVersion: '= 3.1.2'
       bundlerVersion: '2.3.10'
-      aptDependencies: 'qtbase5-dev xvfb libqtwebkit-dev postgresql-client libpq-dev'
+      aptDependencies: 'xvfb postgresql-client libpq-dev'
 
     steps:
     - template: ./pipeline-steps/add-dependencies.yaml
