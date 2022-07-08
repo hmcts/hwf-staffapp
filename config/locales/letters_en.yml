@@ -12,8 +12,8 @@ en-GB:
         <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
-        <p>You must write your reference number<strong> %{reference}</strong> on any letters that you send.</p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       reject_over_income_html: |
@@ -32,10 +32,10 @@ en-GB:
         </ul>
         <p>If you don’t use a debit card or cheques, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
         <h3 class='govuk-heading-m'>If you disagree with this decision<h3/>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
-        <p>Remember to include your reference %{reference}.</p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       reject_evidence_generic_html: |
@@ -69,8 +69,8 @@ en-GB:
         <p>Dear %{full_name}</p>
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because the Department for Work and Pensions has no record of you receiving any of the benefits that make you automatically eligible for help with fees. See list of qualifying benefits below.</p>
-        <p>If you’ve started receiving any of these qualifying benefits in the last seven days, or you receive them with your partner, return your application or relevant paperwork with a letter from the Department for Work and Pensions confirming the benefit received. You and your partner (if applicable) must be clearly identifiable on all documents you send and there should be evidence that your partner shares your address.</p>
-        <p>Remember to write your reference %{reference} at the top of every document.</p>
+        <p>If you’ve started receiving any of these qualifying benefits in the last seven days, or you receive them with your partner, return your application or relevant paperwork with a full breakdown letter from the Department for Work and Pensions dated within the last 3 months, confirming the benefit received. You and your partner (if applicable) must be clearly identifiable on all documents you send and there should be evidence that your partner shares your address. If you applied for Help with Fees using an online reference number, this number is no longer valid, you will need to provide a new Help with Fees reference to court alongside your evidence.</p>
+        <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>List of qualifying benefits when applying for Help with Fees</h3>
         <p>You will get automatic help with your fee if you’re receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -80,8 +80,8 @@ en-GB:
           <li>Universal Credit (<strong>and you earn less than £6,000</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
         </ul>
-        <h3 class='govuk-heading-m'>Other benefits</h3>
-        <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below.  If you are receiving any other type of benefits you must declare them as part of your income in a fresh Help with Fees application. </p>
+        <h3 class='govuk-heading-m'>Other benefits or low income</h3>
+        <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below. If you are receiving any other type of benefits, you must declare them as part of your income in a fresh Help with Fees application. Remember some parts of your benefit award may be excluded and do not need declaring for example housing element of Universal Credit.</p>
         <ul class="govuk-list govuk-list--bullet">
          <li><strong>contribution-based</strong> Job Seekers Allowance</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
@@ -97,9 +97,10 @@ en-GB:
         </ul>
         <p>If you don’t use a debit card or cheques, call the court or tribunal on <strong>&lt;add phone number&gt;</strong>.</p>
         <h3 class='govuk-heading-m'>If you disagree with this decision</h3>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Remember to include your reference, %{reference}.</p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p> You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
     evidence:
@@ -112,19 +113,20 @@ en-GB:
           <h3 class='govuk-heading-m'>What you need to do</h3>
           <ol class="govuk-list govuk-list--number">
             <li>Check the list below and get a copy of all the documents that apply to you.</li>
-            <li>Make sure you can be clearly identified on every document.</li>
+            <li>Make sure your name and address are clearly identified on every document.</li>
             <li>Write your reference at the top of every document.</li>
             <li>Send your documents to the address at the top of this letter.</li>
           </ol>
           <h3 class='govuk-heading-m'>Your documents</h3>
           <p>We need copies of your documents, not originals. If a document is only online, you can take screenshots and print them.</p>
           <h3 class='govuk-heading-m'>Bank statements</h3>
-          <p>If you haven’t paid the fee yet, send the most recent statements for all of your current accounts.</p>
-          <p>If you’ve already paid the fee, send statements for all of your current accounts dated in the month you paid the fee.</p>
+          <p>If you haven’t paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which received any income during the full calendar month before the Help with Fees application was made.</p>
+          <p>If you are self-employed, you will need to identify transactions that are either income or business expenditure on your statement. You will also need to identify any transfers between your accounts to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
+          <p>If you’ve already paid the fee, send bank statements for all your accounts including any business accounts for the full calendar month before you paid the fee.</p>
         wages_html: |
           <h3 class='govuk-heading-m'>Wages</h3>
-          <p>If you’re employed, send a payslip dated in the last 6 weeks.</p>
-          <p>If you’re self-employed, send your most recent self-assessment tax return and SA302 tax calculation. You can get this at www.gov.uk/sa302-tax-calculation. You can send bank statements for the last tax year if you don’t have either of these documents.</p>
+          <p>If you’re employed, send your pay slips covering the last full calendar month. If you have already paid the fee, your pay slips will need to cover the full calendar month before you paid.</p>
+
         child_maintenace_html: |
           <h3 class='govuk-heading-m'>Child maintenance</h3>
           <p>You need to send documents showing how much you’re paid and how often, for example a:</p>
@@ -135,8 +137,9 @@ en-GB:
           </ul>
         benefits_and_credits_html: |
           <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
-          <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months.</p>
-          <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months.</p>
+          <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months and include your name and address.</p>
+          <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months and include your name and address.</p>
+          <p>If you’re receiving Universal Credits and are earning more than £6,000 per year, you will need to provide a breakdown of your Universal Credit statement covering the assessment period alongside your pay slips. Your statement must include your name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments. </p>
           <p>We’ll check your bank statements if you don’t have a Child Benefit Award Notice dated in the last 3 months.</p>
         pensions_html: |
           <h3 class='govuk-heading-m'>Pensions</h3>
@@ -158,7 +161,7 @@ en-GB:
           <h3 class='govuk-heading-m'>Any other income</h3>
           <p>You must tell us about and send documents showing any other regular income you receive.</p>
           <p><strong>Please note:</strong> If you do have any other regular incomings you must provide evidence and/or an explanation of what these incomings are. If you (or your partner) do not have regular incomings, you need to explain how you support yourself.</p>
-          <p>Remember to write your reference <strong>%{reference}</strong> at the top of every document.</p>
+          <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>What happens next</h3>
           <p>Once we receive your documents, we’ll check them. We’ll let you know the outcome of your application within 5 - 10 working days.</p>
@@ -227,7 +230,7 @@ en-GB:
         <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. We will reply to you within 10 working days from receiving your application. </p>
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
@@ -242,7 +245,7 @@ en-GB:
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your part-payment towards your fee. However we are unable to accept it because:</p>
-        <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT)</p>
+        <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT/OUT OF DATE/INCORRECT PAYEE DETAILS)</p>
         <p>Unfortunately we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
@@ -254,10 +257,10 @@ en-GB:
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed and no remission has been granted meaning that you are not eligible for a refund of the fee paid.</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
-        <p>Remember to include your reference %{reference}.</p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the Court/Tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       part_html: |
@@ -265,20 +268,20 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed for the fee of <strong>%{fee}</strong>. The amount that was required to be paid towards this fee was <strong>%{amount_to_pay}</strong>. Therefore, the amount to be refunded back to you is <strong>%{amount_refunded}</strong>.</<p>
-        <p>The refund will now be processed in line with the Court/Tribunal procedures.</p>
+        <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
-        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the Court/Tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records.</p>
+        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the court/tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records.</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       full_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
-        <p>The application has been processed and has received a full remission of the Court/Tribunal fee in question.</p>
-        <p>The refund will now be processed in line with the Court/Tribunal procedures.</p>
+        <p>The application has been processed and has received a full remission of the court/tribunal fee in question.</p>
+        <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
-        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the Court/Tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records. The refunded monies will be received within the next 10 working days.</p>
+        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the court/tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records. The refunded monies will be received within the next 10 working days.</p>
         <p>From,</p>
         <p>%{user_name}</p>
