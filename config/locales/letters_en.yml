@@ -230,7 +230,7 @@ en-GB:
         <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. We will reply to you within 10 working days from receiving your application. </p>
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
@@ -260,7 +260,7 @@ en-GB:
         <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You should provide evidence to support your application for the Delivery Manager to consider. If you have applied using an online reference, this is no longer valid and you will need to submit a new online Help with Fees reference using the same information you originally applied with, together with your appeal. You must be clearly identifiable on all documents you send. We will reply to you within 10 working days from receiving your application.</p>
         <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://courttribunalfinder.service.gov.uk/search/" target="_blank" title"Find the right court or tribunal">https://courttribunalfinder.service.gov.uk/search/</a>.</p>
+        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       part_html: |
