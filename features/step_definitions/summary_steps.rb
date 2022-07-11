@@ -59,9 +59,9 @@ When('I click on change date received') do
 end
 
 Then('I should see that my new answer is displayed in the application details summary') do
-  date_of_death = (Time.zone.today - 1.month).strftime("%d %B %Y")
-  date_received = Time.zone.today.strftime("%d %B %Y")
-  date_fee_paid = Time.zone.yesterday.strftime("%d %B %Y")
+  date_of_death = (Time.zone.today - 1.month).strftime("%-d %B %Y")
+  date_received = Time.zone.today.strftime("%-d %B %Y")
+  date_fee_paid = Time.zone.yesterday.strftime("%-d %B %Y")
 
   expect(summary_page.content.summary_section[1].list_row[2].text).to have_content "Date received #{date_received} Change Date received"
   expect(summary_page.content.summary_section[1].list_row[5].text).to have_content "Name of the deceased John Doe Change Name of the deceased"
