@@ -8,8 +8,8 @@
 
     .govuk-error-summary__body
       ul.govuk-list.govuk-error-summary__list
-        - @form.errors.values.each do |message|
-          li = message.first
+        - @form.errors.full_messages.each do |message|
+          li = message
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
