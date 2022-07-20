@@ -19,6 +19,9 @@
 # Ignore asdf config file
 .tool-versions
 
+# Ignore debugger file
+.byebug_history
+
 # coverage files
 coverage
 coverage/*
