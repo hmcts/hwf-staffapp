@@ -1,5 +1,6 @@
 class ProcessedApplicationsController < ApplicationController
   include ProcessedViewsHelper
+  include FilterApplicationHelper
 
   def index
     authorize :application
@@ -53,6 +54,7 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def query_object
-    Query::ProcessedApplications.new(current_user).find
+    Query::ProcessedApplications.new(current_user).find(filter)
   end
+
 end

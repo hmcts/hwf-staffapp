@@ -7,7 +7,7 @@ module Query
 
     def find(filter = {})
       list = @user.office.applications.processed.joins(:detail).order(@sort)
-      list = list.where(details: filter) if filter.key?(:jurisdiction_id)
+      list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
       list
     end
 
