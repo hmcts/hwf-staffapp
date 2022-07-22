@@ -36,7 +36,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     let(:query) { instance_double(Query::DeletedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
-    let(:filter) {{ jurisdiction_id: '' }}
+    let(:filter) { { jurisdiction_id: '' } }
 
     before do
       allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)
@@ -97,9 +97,9 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     end
 
     context 'when the filter is set' do
-      let(:filter) {{ jurisdiction_id: '2' }}
+      let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(query).to have_received(:find).with({"jurisdiction_id"=>"2"})
+        expect(query).to have_received(:find).with({ "jurisdiction_id" => "2" })
       }
     end
 

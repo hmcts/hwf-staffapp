@@ -82,7 +82,12 @@ FactoryBot.define do
     trait :waiting_for_evidence_state do
       reference { generate(:reference_number) }
       state { :waiting_for_evidence }
-      association :evidence_check, factory: :evidence_check
+      after(:create) do |application|
+        create(
+          :evidence_check,
+          application: application
+        )
+      end
     end
 
     trait :waiting_for_part_payment_state do

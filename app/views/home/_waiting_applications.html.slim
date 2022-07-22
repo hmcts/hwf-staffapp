@@ -1,9 +1,18 @@
 - content_for :page_title
   = t("#{type}.dashboard.heading")
 
-div
-  h1.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-#{type}"}
-    =t("#{type}.dashboard.heading")
+h1.govuk-heading-xl =t("#{type}.dashboard.heading")
+
+.govuk-grid-row
+  = form_for :filter_applications, method: :get do |f|
+    .govuk-grid-column-one-third
+      .govuk-form-group
+        = f.label :jurisdiction_id, class: 'govuk-label'
+        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction}
+        = f.submit 'Filter', class: 'govuk-button govuk-!-margin-top-1'
+
+
+
 - if list.present?
   table *{class: "govuk-table waiting-for-#{type}"}
     caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")

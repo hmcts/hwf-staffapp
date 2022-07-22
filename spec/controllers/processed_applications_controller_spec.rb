@@ -39,7 +39,7 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     let(:per_page) { nil }
     let(:sort_hash) { nil }
     let(:sort) { nil }
-    let(:filter) {{ jurisdiction_id: '' }}
+    let(:filter) { { jurisdiction_id: '' } }
 
     before do
       allow(Query::ProcessedApplications).to receive(:new).with(user).and_return(query)
@@ -99,9 +99,9 @@ RSpec.describe ProcessedApplicationsController, type: :controller do
     end
 
     context 'when the filter is set' do
-      let(:filter) {{ jurisdiction_id: '2' }}
+      let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(query).to have_received(:find).with({"jurisdiction_id"=>"2"})
+        expect(query).to have_received(:find).with({ "jurisdiction_id" => "2" })
       }
     end
 
