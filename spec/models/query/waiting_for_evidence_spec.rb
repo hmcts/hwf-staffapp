@@ -36,6 +36,5 @@ RSpec.describe Query::WaitingForEvidence, type: :model do
         it { is_expected.to eq([application2, application1]) }
       end
     end
-
   end
 end

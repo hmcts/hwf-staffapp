@@ -14,6 +14,7 @@ RSpec.describe PartPaymentsController, type: :controller do
   let(:application_result) { double }
   let(:accuracy_form) { double }
   let(:part_payment_result) { double }
+  let(:filter) { { jurisdiction_id: '' } }
 
   before do
     sign_in user
@@ -30,8 +31,8 @@ RSpec.describe PartPaymentsController, type: :controller do
 
   describe 'GET #index' do
     before do
-      allow(LoadApplications).to receive(:waiting_for_part_payment).with(user).and_return ['waiting apps']
-      get :index
+      allow(LoadApplications).to receive(:waiting_for_part_payment).with(user, filter).and_return ['waiting apps']
+      get :index, params: { filter_applications: filter }
     end
 
     it 'returns the correct status code' do
@@ -47,6 +48,14 @@ RSpec.describe PartPaymentsController, type: :controller do
         expect(assigns(:waiting_for_part_payment)).to eql(['waiting apps'])
       end
     end
+
+    context 'filter' do
+      let(:filter) { { jurisdiction_id: '2' } }
+      it {
+        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(user, filter)
+      }
+    end
+
   end
 
   describe 'GET #show' do

@@ -4,9 +4,11 @@ module Query
       @user = user
     end
 
-    def find
-      @user.office.applications.waiting_for_part_payment.order(:completed_at).
-        includes(:part_payment, :user, :applicant)
+    def find(filter = {})
+      list = @user.office.applications.waiting_for_part_payment.order(:completed_at).
+             includes(:part_payment, :user, :applicant)
+      list = list.joins(:detail).where(details: filter) if filter && filter[:jurisdiction_id].present?
+      list
     end
   end
 end

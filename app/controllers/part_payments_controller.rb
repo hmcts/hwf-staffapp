@@ -7,9 +7,10 @@ class PartPaymentsController < ApplicationController
   end
 
   include SectionViewsHelper
+  include FilterApplicationHelper
 
   def index
-    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user)
+    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user, filter)
   end
 
   def show
