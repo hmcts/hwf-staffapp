@@ -36,6 +36,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
     let(:query) { instance_double(Query::DeletedApplications, find: scope) }
     let(:page) { nil }
     let(:per_page) { nil }
+    let(:filter) {{ jurisdiction_id: '' }}
 
     before do
       allow(Query::DeletedApplications).to receive(:new).with(user).and_return(query)
@@ -44,7 +45,7 @@ RSpec.describe DeletedApplicationsController, type: :controller do
       allow(Views::ApplicationList).to receive(:new).with(application1).and_return(view1)
       allow(Views::ApplicationList).to receive(:new).with(application2).and_return(view2)
 
-      get :index, params: { page: page, per_page: per_page }
+      get :index, params: { page: page, per_page: per_page, filter_applications: filter }
     end
 
     it 'returns the correct status code' do
@@ -94,6 +95,14 @@ RSpec.describe DeletedApplicationsController, type: :controller do
         expect(relation).to have_received(:paginate).with(page: 0, per_page: 0)
       end
     end
+
+    context 'when the filter is set' do
+      let(:filter) {{ jurisdiction_id: '2' }}
+      it {
+        expect(query).to have_received(:find).with({"jurisdiction_id"=>"2"})
+      }
+    end
+
   end
 
   describe 'GET #show' do

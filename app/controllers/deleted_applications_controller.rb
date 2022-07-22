@@ -1,5 +1,6 @@
 class DeletedApplicationsController < ApplicationController
   include ProcessedViewsHelper
+  include FilterApplicationHelper
 
   def index
     authorize :application
@@ -24,6 +25,6 @@ class DeletedApplicationsController < ApplicationController
   end
 
   def paginated_applications
-    @paginate ||= paginate(policy_scope(Query::DeletedApplications.new(current_user).find))
+    @paginate ||= paginate(policy_scope(Query::DeletedApplications.new(current_user).find(filter)))
   end
 end

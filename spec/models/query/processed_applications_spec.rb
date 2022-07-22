@@ -22,10 +22,12 @@ RSpec.describe Query::ProcessedApplications, type: :model do
     context 'jurisdiction' do
       subject { query.find(jurisdiction_id: jurisdiction.id) }
       it { is_expected.to eq([application2]) }
+
       context 'empty jurisdiction value' do
         subject { query.find(jurisdiction_id: '') }
         it { is_expected.to eq([application3, application2]) }
       end
+
       context 'nil filter' do
         subject { query.find(nil) }
         it { is_expected.to eq([application3, application2]) }
