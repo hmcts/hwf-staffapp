@@ -1,4 +1,4 @@
-Given("I have completed an ineligible paper application") do
+Given("I have completed an ineligible paper application - savings too high") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
   expect(personal_details_page.content).to have_header
@@ -56,7 +56,7 @@ Then("The application should become eligible") do
   expect(confirmation_page.content).to have_granted_hwf
 end
 
-When("Click Update application") do
+When("I Click Update application") do
   confirmation_page.content.override.wait_until_update_application_button_visible
   confirmation_page.content.override.update_application_button.click
 end
@@ -72,4 +72,35 @@ end
 
 Then("I should not see a message telling me the application passed by manager's decision") do
   expect(confirmation_page.content).not_to have_passed_by_manager
+end
+
+Given ("I have completed an ineligible paper application - income too high") do
+  expect(dashboard_page.content).to have_find_an_application_heading
+  dashboard_page.process_application
+  expect(personal_details_page.content).to have_header
+  personal_details_page.submit_all_personal_details_ni
+  expect(application_details_page.content).to have_header
+  application_details_page.submit_fee_100
+  expect(savings_investments_page.content).to have_header
+  savings_investments_page.submit_less_than
+  benefits_page.submit_benefits_no
+  incomes_page.submit_incomes_no
+  incomes_page.submit_incomes_2000
+  expect(summary_page.content).to have_header
+  complete_processing
+  expect(confirmation_page.content).to have_ineligible
+end
+
+And ("I check the delivery manager option") do
+  confirmation_page.content.override.wait_until_other_option_visible
+  confirmation_page.content.override.delivery_manager_option.click
+end
+
+And ("I check the DWP option") do
+  confirmation_page.content.override.wait_until_other_option_visible
+  confirmation_page.content.override.delivery_manager_option.click
+end
+
+And ("I should not be able to grant help with fees") do
+  expect(confirmation_page.content).not_to have_grant_hwf
 end

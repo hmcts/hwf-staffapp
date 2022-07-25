@@ -2,7 +2,7 @@ Feature: Currency format
 
   Scenario: Letter - ineligible and no evidence check
     Given I successfully sign in as a user
-    When I have completed an ineligible paper application
+    When I have completed an ineligible paper application - savings too high
     Then I should be on the paper application confirmation page
     And I should see amount to pay is an integer amount
     And I should see maximum amount of savings and investments allowed is an integer amount
