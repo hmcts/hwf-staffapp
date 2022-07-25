@@ -35,4 +35,8 @@ class ReportPolicy < BasePolicy
     admin?
   end
 
+  def hmrc_purged?
+    admin_or_mi?
+  end
+
 end
