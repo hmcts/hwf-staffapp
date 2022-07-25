@@ -1,0 +1,10 @@
+- content_for :page_title
+  = "HMRC data purging history"
+
+h1.govuk-heading-xl = "HMRC data purging history"
+
+= form_with url: report_hmrc_path, method: :put, html: { autocomplete: 'off' } do |f|
+
+ .govuk-form-group.group-level
+    = f.submit 'Generate report', class: 'govuk-button'
+
