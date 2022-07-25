@@ -74,7 +74,7 @@ Then("I should not see a message telling me the application passed by manager's 
   expect(confirmation_page.content).not_to have_passed_by_manager
 end
 
-Given ("I have completed an ineligible paper application - income too high") do
+Given("I have completed an ineligible paper application - income too high") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
   expect(personal_details_page.content).to have_header
@@ -91,16 +91,16 @@ Given ("I have completed an ineligible paper application - income too high") do
   expect(confirmation_page.content).to have_ineligible
 end
 
-And ("I check the delivery manager option") do
+And("I check the delivery manager option") do
   confirmation_page.content.override.wait_until_other_option_visible
   confirmation_page.content.override.delivery_manager_option.click
 end
 
-And ("I check the DWP option") do
+And("I check the DWP option") do
   confirmation_page.content.override.wait_until_other_option_visible
   confirmation_page.content.override.delivery_manager_option.click
 end
 
-And ("I should not be able to grant help with fees") do
+And("I should not be able to grant help with fees") do
   expect(confirmation_page.content).not_to have_grant_hwf
 end
