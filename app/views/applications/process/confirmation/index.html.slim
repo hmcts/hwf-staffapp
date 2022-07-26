@@ -21,8 +21,8 @@
     .util_mt-medium
       = build_section 'Result', @confirm, @confirm.all_fields
 
-
-    =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+    - if @confirm.allow_override?
+      =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
 
     - if @confirm.decision_overridden?
       h2.govuk-heading-m Next steps
