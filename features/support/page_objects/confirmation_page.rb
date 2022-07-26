@@ -32,6 +32,7 @@ class ConfirmationPage < BasePage
       element :update_application_button, 'input[value="Update application"]'
       element :other_reason_textbox, '.govuk-textarea'
       element :delivery_manager_option, '.govuk-radios__item', text: 'Your delivery manager has allowed discretion with this application'
+      element :dwp_option, '.govuk-radios__item', text: 'You want to check if the applicant is receiving benefits using the DWP checker (and it was unavailable when the application was first processed)'
     end
   end
 

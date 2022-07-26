@@ -9,13 +9,6 @@ Feature: Override results Discretionary pass
     Then I should see a confirmation letter
     And I should see that the application fails because of saving and investments
 
-  Scenario: High savings - after granting hwf
-    Given I submit a high savings amount and complete processing
-    When I grant help with fees by choosing delivery manager discretion
-    Then I should see the applicant has been granted help with fees
-    And The results should show the application passed saving and investments by manager's discretion
-    And I should not see a confirmation letter
-
   Scenario: High income - before granting hwf
     When I input low savings and no benefits but 5000 income and then complete processing
     Then I should see a confirmation letter

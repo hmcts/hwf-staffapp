@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module Views
   module Confirmation
     class Result < Views::Overview::Base
@@ -18,6 +19,11 @@ module Views
         end
         return nil if @application.detail.discretion_applied == false
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
+      end
+
+      def allow_override?
+        return false if @application.saving.passed == false && @application.online_application_id.blank?
+        true
       end
 
       def benefits_passed?
@@ -148,3 +154,4 @@ module Views
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
