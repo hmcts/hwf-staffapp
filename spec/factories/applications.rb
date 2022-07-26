@@ -82,12 +82,7 @@ FactoryBot.define do
     trait :waiting_for_evidence_state do
       reference { generate(:reference_number) }
       state { :waiting_for_evidence }
-      after(:create) do |application|
-        create(
-          :evidence_check,
-          application: application
-        )
-      end
+      association :evidence_check, factory: :evidence_check
     end
 
     trait :waiting_for_part_payment_state do
@@ -103,6 +98,10 @@ FactoryBot.define do
       deleted_reason { 'I did not like it' }
       deleted_at { Time.zone.now }
       association :deleted_by, factory: :user
+    end
+
+    trait :applicant_full_detail do
+      applicant_factory { :applicant_with_all_details }
     end
 
     factory :application_part_remission do

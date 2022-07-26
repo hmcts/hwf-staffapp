@@ -51,14 +51,14 @@ RSpec.describe Report::HmrcController do
 
       it { is_expected.to have_http_status(:success) }
 
-      it 'generate report' do
+      it 'report for year date range' do
         date_from = Time.zone.parse('2019-03-01 0:00:00')
         date_to = Time.zone.parse('2020-03-01 10:20:30')
 
         expect(Views::Reports::HmrcPurgedExport).to have_received(:new).with(date_from, date_to)
       end
 
-      it 'generate report' do
+      it 'generate report to csv' do
         expect(hmrc_export_class).to have_received(:to_csv)
       end
 

@@ -20,7 +20,7 @@ module Report
 
     def hmrc_purged_data
       @date_from = 1.year.ago.beginning_of_day
-      @date_to = Time.now
+      @date_to = Time.zone.now
       Views::Reports::HmrcPurgedExport.new(@date_from, @date_to).to_csv
     end
 
@@ -30,9 +30,9 @@ module Report
 
     def build_and_send_data
       send_data hmrc_purged_data,
-          filename: "help-with-fees-#{@date_from}-#{@date_to}-hmrc-data-purged-history.csv",
-          type: 'text/csv',
-          disposition: 'attachment'
+                filename: "help-with-fees-#{@date_from.to_date}-to-#{@date_to.to_date}-hmrc-data-purged-history.csv",
+                type: 'text/csv',
+                disposition: 'attachment'
     end
 
   end
