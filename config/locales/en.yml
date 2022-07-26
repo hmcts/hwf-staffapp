@@ -71,6 +71,8 @@ en-GB:
       part_payment: Part-payment
       emergency: Emergency
       other: Other
+      paper_application: Paper application
+      evidence: Evidence
     notice:
       deleted: 'The application has been deleted'
 

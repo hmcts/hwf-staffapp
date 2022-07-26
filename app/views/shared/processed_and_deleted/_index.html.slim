@@ -4,6 +4,12 @@
 h1.govuk-heading-xl =t("#{state}_applications.index.title")
 
 .govuk-grid-row
+  = form_for :filter_applications, method: :get do |f|
+    .govuk-grid-column-one-third
+      .govuk-form-group
+        = f.label :jurisdiction_id, class: 'govuk-label'
+        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction}
+        = f.submit 'Filter', class: 'govuk-button govuk-!-margin-top-1'
 
   - unless @applications.empty?
 
@@ -52,5 +58,6 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
       = will_paginate @paginate, container: true
 
   - else
-    p =t("#{state}_applications.index.no_applications")
+    .govuk-grid-column-two-third
+      p =t("#{state}_applications.index.no_applications")
 

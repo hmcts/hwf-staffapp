@@ -30,7 +30,7 @@ RSpec.describe Applications::Process::ConfirmationController, type: :controller 
     end
 
     context 'evidence check' do
-      let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office) }
+      let(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
 
       it 'redirects to the evidence check summary page' do
         expect(response).to redirect_to(evidence_check_path(application.evidence_check.id))

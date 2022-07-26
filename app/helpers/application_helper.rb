@@ -21,4 +21,9 @@ module ApplicationHelper
     return value.to_i if value.to_i.positive?
     nil
   end
+
+  def selected_jurisdiction
+    return nil unless params['filter_applications']
+    params['filter_applications']["jurisdiction_id"]
+  end
 end

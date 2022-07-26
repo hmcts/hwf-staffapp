@@ -5,8 +5,10 @@ module Query
       @sort = sort || { decision_date: :desc }
     end
 
-    def find
-      @user.office.applications.processed.joins(:detail).order(@sort)
+    def find(filter = {})
+      list = @user.office.applications.processed.joins(:detail).order(@sort)
+      list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
+      list
     end
 
     def search(reference)
