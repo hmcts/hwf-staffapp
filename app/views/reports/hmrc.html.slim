@@ -3,6 +3,30 @@
 
 h1.govuk-heading-xl = "HMRC data purging history"
 
+h2.govuk-heading-m Report fields
+ul.govuk-list.govuk-list--bullet
+  li Date created - Date when HMRC data were received
+  li Date purged - Date when HMRC data were purged from our database
+  li HWF reference - Reference number of application HMRC data were requested for
+  li Applicant's name - First and last name of applicant data were requested for
+  li Applicant's DOB - Date of birth of applicant data were requested for
+  li Applicant's NI number - National Insurance of applicant data were requested for
+  li Date range HMRC data requested for - 1 month period for which HMRC data were requested for
+  li PAYE data - Value present  / empty
+  li Child Tax Credit - Value present / empty
+  li Work Tax Credit - Value present / empty
+
+h3.govuk-heading-m Values "present" and "empty" explained
+p.govuk-body
+  b "present"
+  | &nbsp; a field in our database contains data we received from HMRC
+p.govuk-body
+  b "empty"
+  | &nbsp; a field in our database does not contain HMRC data
+
+
+
+
 = form_with url: report_hmrc_path, method: :put, html: { autocomplete: 'off' } do |f|
 
  .govuk-form-group.group-level
