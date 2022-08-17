@@ -24,20 +24,21 @@ module Views
 
       private
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def process_row(row)
         line = []
         line << row[0] # 'hmrc_checks.created_at',
+        line << row[3] # office
+        line << row[4] # be code
+        line << row[5] # user
         line << row[1] # purged_at
         line << row[2] # reference
-        line << "#{row[3]} #{row[4]}" # name
-        line << row[5] # dob
-        line << row[6] # ni number
+        line << row[6] # dob
         line << date_range(row[7]) # date range
         line << hmrc_data(row)
         line.flatten
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def hmrc_data(row)
         hmrc = []
@@ -68,7 +69,7 @@ module Views
       end
 
       def keys
-        ['Date created', 'Date purged', 'HWF reference', 'Applicant name', 'Applicant DOB', 'Applicant NI number',
+        ['Date created', 'Office', 'BE code', 'Staff member', 'Date purged', 'HWF reference', 'Applicant DOB',
          'Date range HMRC data requested for', 'PAYE data', 'Child Tax Credit', 'Work Tax Credit']
       end
 
@@ -79,10 +80,11 @@ module Views
       def build_data
         HmrcCheck.where('hmrc_checks.created_at between ? AND ?', @date_from, @date_to).
           order('hmrc_checks.created_at asc').includes(evidence_check: [:application]).
-          includes(evidence_check: [application: [:applicant]]).
+          includes(evidence_check: [application: [:applicant, :office, :user, :business_entity]]).
           pluck('hmrc_checks.created_at', 'hmrc_checks.purged_at', 'applications.reference',
-                'applicants.first_name', 'applicants.last_name', 'hmrc_checks.date_of_birth',
-                'hmrc_checks.ni_number', 'hmrc_checks.request_params', 'hmrc_checks.income', 'hmrc_checks.tax_credit')
+                'offices.name', 'business_entities.sop_code', 'users.name',
+                'hmrc_checks.date_of_birth', 'hmrc_checks.request_params', 'hmrc_checks.income',
+                'hmrc_checks.tax_credit')
       end
 
     end

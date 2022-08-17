@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :evidence_check do
-    association :application, :confirm, :applicant_full_detail
+    association :application, :confirm, :applicant_full_detail, :with_office
     expires_at { rand(3..7).days.from_now }
     incorrect_reason { nil }
     outcome { nil }
