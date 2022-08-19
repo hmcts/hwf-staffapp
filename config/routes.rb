@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     put 'power_bi' => 'power_bi#data_export'
     get 'ocmc' => 'ocmc#show'
     put 'ocmc' => 'ocmc#data_export'
+    get 'hmrc' => 'hmrc#show'
+    put 'hmrc' => 'hmrc#data_export'
   end
 
   get '/applications/new' => 'applications/build#create'
