@@ -27,6 +27,7 @@ class PersonalDataPurge
       hmrc_check_purge!(application)
       benefit_check_purge!(application)
       online_benefit_check_purge!(application)
+      application_purge!(application)
     end
 
     # deceased_name, date_of_death, case_number, ho_number, ni_number, title, first_name, last_name
@@ -38,6 +39,10 @@ class PersonalDataPurge
   def log_data_purge
     # audit_table_save
     # insights log
+  end
+
+  def application_purge!(application)
+    application.update(purged: true)
   end
 
 
@@ -55,7 +60,7 @@ class PersonalDataPurge
     online_application = application.online_application
     return unless online_application
 
-    online_application.update(case_number: PURGE_STRING, date_of_death: PURGE_STRING,
+    online_application.update(purged: true, case_number: PURGE_STRING, date_of_death: PURGE_STRING,
       deceased_name: PURGE_STRING, title: PURGE_STRING, first_name: PURGE_STRING,
       last_name: PURGE_STRING, ni_number: PURGE_STRING, ho_number: PURGE_STRING,
       phone: PURGE_STRING, email_address: PURGE_STRING, address: PURGE_STRING, date_of_death: nil)

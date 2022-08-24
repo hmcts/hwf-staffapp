@@ -37,6 +37,8 @@ RSpec.describe PersonalDataPurge do
       application1
       purge
     }
+    it { expect(application1.reload.purged).to be true }
+    it { expect(online_application.reload.purged).to be true }
 
     context 'applicant' do
       let(:applicant) { application1.applicant }
