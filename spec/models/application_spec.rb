@@ -28,6 +28,8 @@ RSpec.describe Application, type: :model do
   it { is_expected.to have_one(:benefit_override).dependent(:destroy) }
   it { is_expected.to have_one(:decision_override).dependent(:destroy) }
 
+  it { expect(application.purged).to be false }
+
   describe 'with_evidence_check_for_ni_number' do
     context 'pending evidence check' do
       let(:application) { create(:application, :waiting_for_evidence_state, applicant: applicant) }
