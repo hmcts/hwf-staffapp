@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :application do
     transient do
       ni_number { nil }
-      applicant_factory { :applicant }
+      applicant_factory { :applicant_with_all_details }
       applicant_traits { [] }
       detail_traits { [] }
       detail_factory { :complete_detail }
