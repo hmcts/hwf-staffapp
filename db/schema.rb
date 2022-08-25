@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_24_093644) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_25_124832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -106,6 +106,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_093644) do
     t.index ["reference"], name: "index_applications_on_reference", unique: true
     t.index ["state"], name: "index_applications_on_state"
     t.index ["user_id"], name: "index_applications_on_user_id"
+  end
+
+  create_table "audit_personal_data_purges", force: :cascade do |t|
+    t.date "purged_date"
+    t.string "application_reference_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "benefit_checks", id: :serial, force: :cascade do |t|
