@@ -34,6 +34,7 @@ RSpec.describe PersonalDataPurge do
                            completed_at: 8.years.ago
     }
     let(:online_application) { create :online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2] }
+    let(:audit_data) { AuditPersonalDataPurge.last }
 
     before {
       application1
@@ -41,6 +42,8 @@ RSpec.describe PersonalDataPurge do
     }
     it { expect(application1.reload.purged).to be true }
     it { expect(online_application.reload.purged).to be true }
+    it { expect(audit_data.purged_date.to_s).to eq Time.zone.today.to_s }
+    it { expect(audit_data.application_reference_number).to eq application1.reference }
 
     context 'applicant' do
       let(:applicant) { application1.applicant }

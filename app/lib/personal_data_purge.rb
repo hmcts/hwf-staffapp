@@ -1,5 +1,4 @@
 class PersonalDataPurge
-  # completed_at < 7.year.ago
   attr_reader :applications_to_purge
 
   PURGE_STRING = 'data purged'.freeze
@@ -9,7 +8,9 @@ class PersonalDataPurge
   end
 
   def purge!
+    app_insights_log
     purge_personal_data
+    app_insights_log_end
   end
 
   private
@@ -26,14 +27,8 @@ class PersonalDataPurge
       hmrc_check_purge!(application)
       benefit_check_purge!(application)
       application_purge!(application)
+      log_data_purge(application)
     end
-
-    log_data_purge
-  end
-
-  def log_data_purge
-    # audit_table_save
-    # insights log
   end
 
   def application_purge!(application)
@@ -84,5 +79,23 @@ class PersonalDataPurge
     online_benefit_checks.update_all(parameter_hash: nil, our_api_token: nil, last_name: nil, ni_number: nil)
   end
   # rubocop:enable Rails/SkipsModelValidations
+
+  # Logging
+  def log_data_purge(application)
+    AuditPersonalDataPurge.create(purged_date: Time.zone.today, application_reference_number: application.reference)
+  end
+
+  def app_insights_log
+    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
+    tc.track_event("Running Personal data purge script: #{Time.zone.now.to_fs(:db)}")
+    tc.flush
+  end
+
+  def app_insights_log_end
+    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
+    tc.track_event("Finished personal data purge script: #{Time.zone.now.to_fs(:db)},
+      applications affected: #{@applications_to_purge.count}")
+    tc.flush
+  end
 
 end
