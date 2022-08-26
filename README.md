@@ -23,10 +23,16 @@ delayed job that has the schedule in DB table. To set it up (if there is no reco
 ```BenefitCheckRerunJob.delay(cron: '*/10 * * * *').perform_now```
 
 ## Delayed jobs for DWP offline notification
+Runs every 5 minutes
 ```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
 
 ## Delayed jobs for HMRC data purge
-```HmrcDataPurgeJob.delay(cron: '*/10 * * * *').perform_now```
+Runs 10 minutes past midnight
+```HmrcDataPurgeJob.delay(cron: '10 0 * * *').perform_now```
+
+## Delayed jobs for Personal data purge
+Runs every day at 1am
+```PersonalDataPurgeJob.delay(cron: '0 1 * * *').perform_now```
 
 ## Pre-requisites
 You will need to install govuk-frontend library

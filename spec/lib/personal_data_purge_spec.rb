@@ -10,7 +10,6 @@ RSpec.describe PersonalDataPurge do
   let(:online_benefit_check1) { build :online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1' }
   let(:online_benefit_check2) { build :online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2' }
 
-
   describe 'purge data' do
     subject(:purge) { purge_object.purge! }
     let(:application1) {
