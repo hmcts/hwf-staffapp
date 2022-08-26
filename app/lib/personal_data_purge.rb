@@ -3,21 +3,15 @@ class PersonalDataPurge
 
   PURGE_STRING = 'data purged'.freeze
 
-  def initialize
-    load_applications
+  def initialize(applications_to_purge)
+    @applications_to_purge = applications_to_purge
   end
 
   def purge!
-    app_insights_log
     purge_personal_data
-    app_insights_log_end
   end
 
   private
-
-  def load_applications
-    @applications_to_purge ||= Application.where('completed_at < ?', Settings.personal_data_purge.years_ago.years.ago)
-  end
 
   def purge_personal_data
     @applications_to_purge.each do |application|
@@ -58,7 +52,7 @@ class PersonalDataPurge
   end
 
   # rubocop:disable Rails/SkipsModelValidations
-  # Update_all skips validations but following changes are not affecting any vailation
+  # Update_all skips validations but following changes are not affecting any validation
   # in those models.
 
   def hmrc_check_purge!(application)
@@ -83,19 +77,6 @@ class PersonalDataPurge
   # Logging
   def log_data_purge(application)
     AuditPersonalDataPurge.create(purged_date: Time.zone.today, application_reference_number: application.reference)
-  end
-
-  def app_insights_log
-    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Running Personal data purge script: #{Time.zone.now.to_fs(:db)}")
-    tc.flush
-  end
-
-  def app_insights_log_end
-    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Finished personal data purge script: #{Time.zone.now.to_fs(:db)},
-      applications affected: #{@applications_to_purge.count}")
-    tc.flush
   end
 
 end

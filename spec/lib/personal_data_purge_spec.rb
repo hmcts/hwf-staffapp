@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PersonalDataPurge do
-  subject(:purge_object) { described_class.new }
+  subject(:purge_object) { described_class.new([application1]) }
   describe 'settings for data range' do
     it { expect(Settings.personal_data_purge.years_ago).to be(7) }
   end
@@ -10,21 +10,6 @@ RSpec.describe PersonalDataPurge do
   let(:online_benefit_check1) { build :online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1' }
   let(:online_benefit_check2) { build :online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2' }
 
-  describe 'load data' do
-    let(:application1) { create :application }
-    let(:application2) { create :application }
-    let(:application3) { create :application, :deleted_state }
-
-    before do
-      Timecop.freeze(7.years.ago) do
-        application1
-        application3
-      end
-      application2
-    end
-
-    it { expect(purge_object.applications_to_purge).to eq([application1, application3]) }
-  end
 
   describe 'purge data' do
     subject(:purge) { purge_object.purge! }
@@ -37,7 +22,6 @@ RSpec.describe PersonalDataPurge do
     let(:audit_data) { AuditPersonalDataPurge.last }
 
     before {
-      application1
       purge
     }
     it { expect(application1.reload.purged).to be true }
