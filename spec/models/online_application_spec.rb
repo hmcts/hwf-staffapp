@@ -23,6 +23,8 @@ RSpec.describe OnlineApplication, type: :model do
 
   it { is_expected.to validate_uniqueness_of(:reference) }
 
+  it { expect(online_application.purged).to be false }
+
   describe '#ni_number validation' do
     context 'ho_number and ni_number is empty' do
       before { online_application.ni_number = nil }

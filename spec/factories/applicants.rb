@@ -13,6 +13,10 @@ FactoryBot.define do
       married { true }
     end
 
+    trait :ho_number do
+      ho_number { 'L1234567/1' }
+    end
+
     trait :under_61 do
       date_of_birth { Time.zone.today - 60.years }
     end
