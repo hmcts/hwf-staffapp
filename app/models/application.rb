@@ -1,4 +1,7 @@
 class Application < ActiveRecord::Base
+  # paranoia gem
+  acts_as_paranoid column: :purged, sentinel_value: false
+
   include PgSearch::Model
 
   serialize :income_kind
