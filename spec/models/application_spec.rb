@@ -183,4 +183,18 @@ RSpec.describe Application, type: :model do
 
   end
 
+  describe 'purged application' do
+    it {
+      create :application, purged: true
+      expect(described_class.count).to eq 0
+    }
+  end
+
+  describe 'not purged application' do
+    it {
+      create :application, purged: false
+      expect(described_class.count).to eq 1
+    }
+  end
+
 end
