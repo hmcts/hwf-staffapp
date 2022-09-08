@@ -1,4 +1,6 @@
 class OnlineApplication < ActiveRecord::Base
+  acts_as_paranoid column: :purged, sentinel_value: false
+
   serialize :income_kind
 
   belongs_to :jurisdiction, optional: true

@@ -141,4 +141,18 @@ RSpec.describe OnlineApplication, type: :model do
       expect(online_application.applicant.under_age?).to be false
     end
   end
+
+  describe 'purged application' do
+    it {
+      create :online_application, purged: true
+      expect(described_class.count).to eq 0
+    }
+  end
+
+  describe 'not purged application' do
+    it {
+      create :online_application, purged: false
+      expect(described_class.count).to eq 1
+    }
+  end
 end
