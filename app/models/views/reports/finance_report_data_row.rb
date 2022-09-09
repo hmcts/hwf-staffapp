@@ -46,7 +46,7 @@ module Views
 
         sum_data = collection.sum(:decision_cost)
         sum_data.each do |type|
-          try("#{type[0]}_sum=", type[1].to_s('F'))
+          try("#{type[0]}_sum=", type[1].to_fs('F'))
         end
       end
 

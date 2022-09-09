@@ -23,7 +23,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Specifies the `pidfile` that Puma will use.
 pids_dir = "tmp/pids"
-Dir.mkdir(pids_dir) unless File.exist?(pids_dir)
+FileUtils.mkdir_p(pids_dir)
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Specifies the number of `workers` to boot in clustered mode.

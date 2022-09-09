@@ -59,7 +59,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with status code 200' do
-        expect(response.status).to eq 200
+        expect(response).to have_http_status 200
       end
     end
 
@@ -81,7 +81,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eq 500
+        expect(response).to have_http_status 500
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eq 500
+        expect(response).to have_http_status 500
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe HealthStatusController, type: :controller do
       }
 
       it 'completes successfully' do
-        expect(response.status).to eq 200
+        expect(response).to have_http_status 200
       end
     end
 
@@ -160,7 +160,7 @@ RSpec.describe HealthStatusController, type: :controller do
       end
 
       it 'completes with error status code 500' do
-        expect(response.status).to eq 500
+        expect(response).to have_http_status 500
       end
     end
   end
