@@ -87,6 +87,18 @@ describe HmrcApiService do
             it { expect(HmrcToken.last.expires_in).to eq expires_in }
           end
 
+          context 'token raises an encription error' do
+            before do
+              allow(hmrc_token).to receive(:expired?).and_raise ActiveSupport::MessageEncryptor::InvalidMessage
+              allow(hmrc_token).to receive(:destroy).and_return true
+              allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
+              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              service.match_user
+            end
+
+            it { expect(hmrc_token).to have_received(:destroy) }
+          end
+
         end
       end
     end
