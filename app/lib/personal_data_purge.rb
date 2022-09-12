@@ -11,13 +11,20 @@ class PersonalDataPurge
     purge_personal_data
   end
 
+  def purge_online_only!
+    @applications_to_purge.each do |online_application|
+      online_application_purge!(online_application)
+      log_data_purge(online_application)
+    end
+  end
+
   private
 
   def purge_personal_data
     @applications_to_purge.each do |application|
       applicant_purge!(application)
       detail_purge!(application)
-      online_application_purge!(application)
+      online_application_purge!(application.online_application)
       hmrc_check_purge!(application)
       benefit_check_purge!(application)
       application_purge!(application)
@@ -39,8 +46,7 @@ class PersonalDataPurge
     detail.update(case_number: nil, date_of_death: nil, deceased_name: nil)
   end
 
-  def online_application_purge!(application)
-    online_application = application.online_application
+  def online_application_purge!(online_application)
     return unless online_application
     online_benefit_check_purge!(online_application)
 
