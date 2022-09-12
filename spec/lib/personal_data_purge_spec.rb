@@ -10,6 +10,31 @@ RSpec.describe PersonalDataPurge do
   let(:online_benefit_check1) { build :online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1' }
   let(:online_benefit_check2) { build :online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2' }
 
+  describe 'purge online_application only' do
+    subject(:purge_object) { described_class.new([online_application]) }
+    let(:online_application) { create :online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2] }
+    before {
+      purge_object.purge_online_only!
+    }
+
+    it { expect(online_application.reload.purged).to be true }
+
+    context 'online_benefit_checks' do
+      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
+      it {
+        online_benefit_check1.reload
+        values = keys.map { |key| online_benefit_check1[key] }
+        expect(values).to eq [nil, nil, nil, nil]
+      }
+
+      it {
+        online_benefit_check2.reload
+        values = keys.map { |key| online_benefit_check2[key] }
+        expect(values).to eq [nil, nil, nil, nil]
+      }
+    end
+  end
+
   describe 'purge data' do
     subject(:purge) { purge_object.purge! }
     let(:application1) {
