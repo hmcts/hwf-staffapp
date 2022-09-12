@@ -21,7 +21,7 @@ namespace :static_pages do
       outpath = Rails.public_path.join(output)
       resp = app.get(route)
       if resp == 200
-        File.delete(outpath) if File.exist?(outpath)
+        FileUtils.rm_f(outpath)
         File.write(outpath, app.response.body.sub!('http://www.example.com', ''))
       else
         puts "Error generating #{output}!"

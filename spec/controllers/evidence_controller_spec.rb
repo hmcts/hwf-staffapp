@@ -207,7 +207,7 @@ RSpec.describe EvidenceController, type: :controller do
         end
 
         it 'returns the correct status code' do
-          expect(response.status).to eq 302
+          expect(response).to have_http_status 302
         end
       end
 
@@ -294,7 +294,7 @@ RSpec.describe EvidenceController, type: :controller do
       end
 
       it 'returns the correct status code' do
-        expect(response.status).to eq 302
+        expect(response).to have_http_status 302
       end
 
       it { expect(evidence_check_flagging_service).to have_received(:process_flag) }
