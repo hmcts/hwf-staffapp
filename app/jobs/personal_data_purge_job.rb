@@ -14,7 +14,7 @@ class PersonalDataPurgeJob < ApplicationJob
   end
 
   def old_personal_data
-    @applications ||= Application.where('completed_at < ?', Settings.personal_data_purge.years_ago.years.ago)
+    @applications ||= Application.where('created_at < ?', Settings.personal_data_purge.years_ago.years.ago)
   end
 
   def app_insights_log

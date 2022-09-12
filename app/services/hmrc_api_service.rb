@@ -110,12 +110,18 @@ class HmrcApiService
   end
 
   def update_hmrc_token(access_token, expires_in)
-    hmrc_token = HmrcToken.last || HmrcToken.new
-    return if hmrc_token.access_token == access_token
+    @hmrc_token = HmrcToken.last || HmrcToken.new
+    return if @hmrc_token.access_token == access_token
+    store_hmrc_token(access_token, expires_in)
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
+    HmrcToken.last.destroy
+    store_hmrc_token(access_token, expires_in)
+  end
 
-    hmrc_token.access_token = access_token
-    hmrc_token.expires_in = expires_in
-    hmrc_token.save
+  def store_hmrc_token(access_token, expires_in)
+    @hmrc_token.access_token = access_token
+    @hmrc_token.expires_in = expires_in
+    @hmrc_token.save
   end
 
   def hmrc_check_initialize

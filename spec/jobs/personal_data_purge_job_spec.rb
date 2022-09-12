@@ -6,6 +6,7 @@ RSpec.describe PersonalDataPurgeJob, type: :job do
     let(:application1) { create :application }
     let(:application2) { create :application }
     let(:application3) { create :application, :deleted_state }
+    let(:application4) { create :application, :deleted_state, completed_at: 8.years.ago }
     let(:purge_class) { instance_double(PersonalDataPurge) }
     let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
@@ -19,6 +20,7 @@ RSpec.describe PersonalDataPurgeJob, type: :job do
         application1
         application3
       end
+      application4
       application2
       described_class.perform_now
     end
