@@ -423,6 +423,7 @@ en-GB:
         form_name: Form
         full_name: Applicant
       forms/finance_report:
+        refund: 'Refund'
         date_from: 'Date from'
         day_date_from: 'Day'
         month_date_from: 'Month'
