@@ -33,7 +33,7 @@ class PersonalDataPurge
   end
 
   def application_purge!(application)
-    application.update(purged: true)
+    application.update(purged: true, purged_at: Time.zone.now)
   end
 
   def applicant_purge!(application)
@@ -50,7 +50,7 @@ class PersonalDataPurge
     return unless online_application
     online_benefit_check_purge!(online_application)
 
-    online_application.update(purged: true, case_number: PURGE_STRING,
+    online_application.update(purged: true, purged_at: Time.zone.now, case_number: PURGE_STRING,
                               deceased_name: PURGE_STRING, title: PURGE_STRING, first_name: PURGE_STRING,
                               last_name: PURGE_STRING, ni_number: PURGE_STRING, ho_number: PURGE_STRING,
                               phone: PURGE_STRING, email_address: PURGE_STRING, address: PURGE_STRING,

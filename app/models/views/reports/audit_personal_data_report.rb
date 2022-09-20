@@ -25,9 +25,9 @@ module Views
       private
 
       def process_row(row)
-        row.enum_for(:each_with_index).map { |record, index|
-          (index == 1) ? record : (record || 'purged')
-        }
+        row.enum_for(:each_with_index).map do |record, index|
+          index == 1 ? record : (record || 'purged')
+        end
       end
 
       def keys
@@ -41,7 +41,7 @@ module Views
 
       def build_data
         Application.with_deleted.where(purged: true).where('applications.purged_at between ? AND ?', @date_from,
-                                            @date_to).
+                                                           @date_to).order('applications.purged_at ASC').
           includes(:detail, :applicant, :online_application).
           pluck('applications.updated_at', 'applications.reference',
                 'details.deceased_name', 'details.case_number', 'applicants.ho_number', 'applicants.ni_number',

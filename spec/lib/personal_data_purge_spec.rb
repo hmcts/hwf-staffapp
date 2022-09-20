@@ -49,7 +49,9 @@ RSpec.describe PersonalDataPurge do
       purge
     }
     it { expect(application1.reload.purged).to be true }
+    it { expect(application1.reload.purged_at.to_s).to eq Time.zone.today.to_s }
     it { expect(online_application.reload.purged).to be true }
+    it { expect(online_application.reload.purged_at.to_s).to eq Time.zone.today.to_s }
     it { expect(audit_data.purged_date.to_s).to eq Time.zone.today.to_s }
     it { expect(audit_data.application_reference_number).to eq application1.reference }
 
