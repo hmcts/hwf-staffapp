@@ -7,7 +7,6 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
   let(:from_date) { { day: date_from.day, month: date_from.month, year: date_from.year } }
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
 
-
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
