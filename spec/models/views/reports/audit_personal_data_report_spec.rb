@@ -12,7 +12,7 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
 
   let(:application1) { create :application, :confirm }
   let(:application2) { create :application, :confirm }
-  let(:application3) { create :application, :confirm }
+  let(:application3) { create :application, :confirm, reference: '' }
   let(:application4) { create :online_application, :with_reference, convert_to_application: true, purged: true }
 
   describe 'to_csv' do
@@ -47,9 +47,9 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
       let(:detail) { application3.detail }
 
       let(:expected_line) {
-        [application3.updated_at, application3.reference, 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged']
+        "#{application3.updated_at},\"\",purged,purged,purged,purged,purged,purged,purged,purged,purged,purged"
       }
-      it { expect(data[1]).to eq expected_line.join(',') }
+      it { expect(data[1]).to eq expected_line }
     end
 
     context 'purged data line 2' do
