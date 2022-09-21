@@ -15,7 +15,6 @@ class EvidenceCheckSelector
   private
 
   def evidence_check_type
-    return 'hmrc'
     if evidence_check?
       'random'
     elsif flagged?
