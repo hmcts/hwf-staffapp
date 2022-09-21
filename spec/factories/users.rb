@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user, aliases: [:staff] do
     role { 'user' }
-    sequence(:email) { a = "user_#{Random.rand(1000)}@digital.justice.gov.uk"; puts "mail: #{a}"}
+    sequence(:email) { "#{Random.rand(10000)}user_#{Random.rand(10000)}@digital.justice.gov.uk" }
     password { 'password' }
     name { 'user' }
     association :office
