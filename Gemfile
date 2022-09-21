@@ -132,4 +132,5 @@ group :test do
   gem 'site_prism'
   gem 'webdrivers'
   gem 'webmock'
+  gem "test-prof", "~> 1.0"
 end

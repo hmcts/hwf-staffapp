@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :jurisdiction do
-    sequence(:name)   { |n| "#{Faker::Company.name.delete(',')}#{n}" }
-    sequence(:abbr)   { |n| "#{Faker::Hacker.abbreviation} #{n}" }
+    sequence(:name)   { "#{Faker::Company.name.delete(',')}#{Random.rand(1000)}" }
+    sequence(:abbr)   { "#{Faker::Hacker.abbreviation} #{Random.rand(1000)}" }
     active { true }
     factory :invalid_jurisdiction do
       name { nil }

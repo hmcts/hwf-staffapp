@@ -1,9 +1,10 @@
 require 'rails_helper'
+require 'test_prof/recipes/rspec/let_it_be'
 
 RSpec.describe HmrcDataPurgeJob, type: :job do
   describe 'purge old hmrc checks' do
-    let(:application) { create :application }
-    let(:evidence_check) { create :evidence_check, application: application }
+    let_it_be(:application, freeze: true) { create :application }
+    let_it_be(:evidence_check, freeze: true) { create :evidence_check, application: application }
     let(:hmrc_check_1) { create :hmrc_check, evidence_check: evidence_check }
     let(:hmrc_check_2) { create :hmrc_check, evidence_check: evidence_check }
     let(:hmrc_check_3) { create :hmrc_check, evidence_check: evidence_check }
@@ -28,6 +29,7 @@ RSpec.describe HmrcDataPurgeJob, type: :job do
         Timecop.freeze(7.months.ago) do
           hmrc_check_4
         end
+
         described_class.perform_now
         hmrc_check_1.reload
         hmrc_check_2.reload
