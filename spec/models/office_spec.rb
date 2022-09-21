@@ -44,7 +44,9 @@ RSpec.describe Office, type: :model do
   describe 'business_entities' do
     subject { office.business_entities.count }
 
-    let(:office) { create :office }
+    let(:office) { create :office, business_entities: [be1, be2] }
+    let(:be1) { create :business_entity }
+    let(:be2) { create :business_entity }
 
     context 'before editing' do
       it { is_expected.to eq 2 }

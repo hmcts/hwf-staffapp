@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe BusinessEntitiesController, type: :controller do
   let!(:office) { create :office }
   let(:admin) { create :admin, office: office }
+  let(:jurisdiction) { create :jurisdiction }
 
   describe 'GET #index' do
     subject { response }
@@ -23,7 +24,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'GET #new' do
     subject { response }
 
-    let(:business_entity) { office.business_entities.first }
+    let(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
     let(:jurisdiction) { create :jurisdiction }
 
     before { sign_in admin }
@@ -89,7 +90,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'GET #edit' do
     subject { response }
 
-    let(:business_entity) { office.business_entities.first }
+    let(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
 
     before do
       sign_in admin
@@ -108,7 +109,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'PUT #update' do
     subject { response }
 
-    let(:business_entity) { office.business_entities.first }
+    let(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
     let(:params) { { name: 'Digital - Family', be_code: 'code', sop_code: code } }
 
     before do
@@ -136,7 +137,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'GET #deactivate' do
     subject { response }
 
-    let(:business_entity) { office.business_entities.first }
+    let(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
 
     before do
       sign_in admin
@@ -155,7 +156,7 @@ RSpec.describe BusinessEntitiesController, type: :controller do
   describe 'POST #confirm_deactivate' do
     subject { response }
 
-    let(:business_entity) { office.business_entities.first }
+    let(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
 
     before do
       sign_in admin

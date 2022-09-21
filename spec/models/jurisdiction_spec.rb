@@ -9,10 +9,10 @@ RSpec.describe Jurisdiction, type: :model do
   describe '.available_for_office' do
     subject { described_class.available_for_office(office) }
 
-    # The office factory creates BusinessEntity automatically, so we don't have to create it manually.
-    let!(:office) { create :office, jurisdictions: [jurisdiction2] }
+    let!(:office) { create :office, jurisdictions: [jurisdiction2], business_entities: [business_entity] }
     let(:jurisdiction1) { create :jurisdiction }
     let!(:jurisdiction2) { create :jurisdiction }
+    let(:business_entity) { create :business_entity, jurisdiction: jurisdiction2 }
 
     it 'includes jurisdictions which have business entity present' do
       is_expected.to eq([jurisdiction2])
