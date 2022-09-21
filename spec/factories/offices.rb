@@ -15,7 +15,7 @@ FactoryBot.define do
 
     after(:create) do |office, _|
       office.jurisdictions.each do |jurisdiction|
-        create(:business_entity, office: office, jurisdiction: jurisdiction)
+        build(:business_entity, office: office, jurisdiction: jurisdiction)
       end
     end
   end
