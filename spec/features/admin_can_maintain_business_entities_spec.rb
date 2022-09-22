@@ -81,8 +81,9 @@ RSpec.feature 'Business entity management:', type: :feature do
       context 'by adding' do
         let(:office_jurisdiction) { office.jurisdictions.last }
         before do
-          within(:xpath,"//tr[contains(.,'#{office_jurisdiction.name}')]"){ click_link 'Add' }
-          # click_link 'Add'
+          within(:xpath, "//tr[contains(.,'#{office_jurisdiction.name}')]") do
+            click_link 'Add'
+          end
           fill_in 'business_entity_name', with: new_description
           fill_in 'business_entity_sop_code', with: new_sop_code
           click_button 'Create business entity'
@@ -93,8 +94,8 @@ RSpec.feature 'Business entity management:', type: :feature do
           expect(page).to have_content new_sop_code
         end
 
-        scenario 'no more jurisdictions can be added' do
-          expect(page).to have_no_xpath('//a', text: 'Add')
+        scenario 'only 4 jurisdictions can be added now' do
+          expect(page).to have_xpath('//a', text: 'Add', count: 4)
         end
       end
 
@@ -105,7 +106,7 @@ RSpec.feature 'Business entity management:', type: :feature do
         end
 
         scenario 'an additional jurisdictions can be added' do
-          expect(page).to have_xpath('//a', text: 'Add', count: 2)
+          expect(page).to have_xpath('//a', text: 'Add', count: 6)
         end
 
         scenario 'no more jurisdictions can be deactivated' do

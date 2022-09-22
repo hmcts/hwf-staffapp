@@ -58,8 +58,8 @@ RSpec.describe BusinessEntity, type: :model do
       create :business_entity, office: digital
     end
 
-    let!(:bristol) { create(:office, name: 'Bristol') }
-    let!(:business_entity) { create :business_entity, office: bristol }
+    let!(:bristol) { create(:office, name: 'Bristol', business_entities: [business_entity]) }
+    let(:business_entity) { create :business_entity }
 
     describe 'non_digital' do
       describe 'excludes HQ business entities' do

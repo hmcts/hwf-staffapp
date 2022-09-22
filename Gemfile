@@ -130,7 +130,7 @@ group :test do
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
   gem 'site_prism'
+  gem "test-prof", "~> 1.0"
   gem 'webdrivers'
   gem 'webmock'
-  gem "test-prof", "~> 1.0"
 end
