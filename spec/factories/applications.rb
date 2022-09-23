@@ -47,6 +47,10 @@ FactoryBot.define do
       association :office
     end
 
+    trait :with_reference do
+      reference { generate(:reference_number) }
+    end
+
     trait :uncompleted do
       completed_by_id { nil }
       completed_at { nil }

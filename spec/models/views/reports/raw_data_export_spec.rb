@@ -52,20 +52,28 @@ RSpec.describe Views::Reports::RawDataExport do
   end
 
   describe 'cost estimations' do
-    let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100 }
-    let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
-    let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34 }
+    let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100, application: part_ec }
+    let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0, application: full_ec }
+    let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34, application: none_ec }
     let(:part_payment_none) { create :part_payment_none_outcome }
     let(:part_payment_return) { create :part_payment_return_outcome }
     let(:part_payment_part) { create :part_payment_part_outcome }
 
-    let(:applicant1) { create :applicant_with_all_details, married: true, ho_number: 'L123456', ni_number: nil }
-    let(:applicant2) { create :applicant_with_all_details, married: true, ni_number: 'SN123456C', ho_number: nil }
-    let(:applicant3) { create :applicant_with_all_details, married: true, ni_number: nil, ho_number: nil }
+    let(:applicant1) { none_no_ec.applicant }
+    let(:applicant2) { none_ec.applicant }
+    let(:applicant3) { full_no_ec.applicant }
 
+    before {
+      evidence_check_part
+      evidence_check_full
+      evidence_check_none
+      applicant1.update(married: true, ho_number: 'L123456', ni_number: nil)
+      applicant2.update(married: true, ni_number: 'SN123456C', ho_number: nil)
+      applicant3.update(married: true, ni_number: nil, ho_number: nil)
+    }
     let(:full_no_ec) {
-      create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                            amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, applicant: applicant3, income_min_threshold_exceeded: true
+      create :application_full_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                             amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, income_min_threshold_exceeded: true
     }
 
     let(:part_no_ec) {
@@ -84,24 +92,24 @@ RSpec.describe Views::Reports::RawDataExport do
     }
 
     let(:full_ec) {
-      create :application_full_remission, :processed_state, evidence_check: evidence_check_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create :application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                             amount_to_pay: 0, decision_cost: 300, fee: 300
     }
 
     let(:part_ec) {
-      create :application_part_remission, :processed_state, evidence_check: evidence_check_part, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create :application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                             amount_to_pay: 50, decision_cost: 200, fee: 300
     }
 
     let(:none_no_ec) {
-      create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                          amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000
+      create :application_no_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                           amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, children: 3, income: 2000
     }
 
     let(:none_ec) {
-      create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                          amount_to_pay: 0, decision_cost: 0, fee: 300.34, applicant: applicant2, children: 3,
-                                                          income: 2000, evidence_check: evidence_check_none, income_max_threshold_exceeded: true
+      create :application_no_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                           amount_to_pay: 0, decision_cost: 0, fee: 300.34, children: 3,
+                                                                           income: 2000, income_max_threshold_exceeded: true
     }
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
@@ -184,11 +192,13 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:date_fee_paid) { '' }
     subject { data.total_count }
     let(:application_no_remission) {
-      create :application_no_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                          amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, applicant: applicant1, children: 3, income: 2000,
-                                                          date_received: date_received, date_fee_paid: date_fee_paid
+      create :application_no_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+                                                                           amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, children: 3, income: 2000,
+                                                                           date_received: date_received, date_fee_paid: date_fee_paid
     }
-    let(:applicant1) { create :applicant_with_all_details, married: true, ho_number: 'L123456', ni_number: nil, date_of_birth: '25/11/2000' }
+    let(:applicant1) {
+      application_no_remission.applicant
+    }
     let(:savings_under_3_no_max) {
       create :saving_blank, application: application_no_remission,
                             min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold
@@ -196,6 +206,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
     before do
       savings_under_3_no_max
+      applicant1.update(married: true, ho_number: 'L123456', ni_number: nil, date_of_birth: '25/11/2000')
     end
 
     context 'more then 16' do
