@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     put 'ocmc' => 'ocmc#data_export'
     get 'hmrc' => 'hmrc#show'
     put 'hmrc' => 'hmrc#data_export'
+    get 'purge_audit' => 'purge_audit#show'
+    put 'purge_audit' => 'purge_audit#data_export'
   end
 
   get '/applications/new' => 'applications/build#create'

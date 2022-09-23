@@ -39,4 +39,8 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
+  def purge_audit?
+    admin_or_mi?
+  end
+
 end
