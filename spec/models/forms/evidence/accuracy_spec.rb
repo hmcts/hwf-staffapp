@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Forms::Evidence::Accuracy do
   subject(:form) { described_class.new(evidence) }
-
-  let(:evidence) { build_stubbed :evidence_check }
+  let(:application) { create :application }
+  let(:evidence) { build_stubbed :evidence_check, application: application }
 
   it 'inherits features of Forms::Accuracy' do
     expect(form).to be_a(Forms::Accuracy)
@@ -12,7 +12,7 @@ RSpec.describe Forms::Evidence::Accuracy do
   describe '#save' do
     subject(:form_save) { form.save }
 
-    let(:evidence) { create :evidence_check }
+    let(:evidence) { create :evidence_check, application: application }
 
     before do
       form.update(params)

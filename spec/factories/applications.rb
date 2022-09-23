@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :application do
     transient do
       ni_number { nil }
+      ho_number { nil }
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [] }
       detail_traits { [] }
@@ -22,9 +23,21 @@ FactoryBot.define do
     children { 1 }
     income { 500 }
     threshold_exceeded { false }
-    user
-    association :completed_by, factory: :user
+    association :user
+    completed_by { user }
     completed_at { Time.zone.today }
+
+    trait :applicant_full do
+      applicant { association :applicant_with_all_details,
+                  application: instance, ni_number: ni_number,
+                  ho_number: ho_number }
+    end
+
+    trait :waiting_for_evidence_state do
+      reference { generate(:reference_number) }
+      state { :waiting_for_evidence }
+      evidence_check { association :evidence_check, application: instance }
+    end
 
     trait :with_business_entity do
       association :business_entity
@@ -79,12 +92,6 @@ FactoryBot.define do
       state { :processed }
     end
 
-    trait :waiting_for_evidence_state do
-      reference { generate(:reference_number) }
-      state { :waiting_for_evidence }
-      association :evidence_check, factory: :evidence_check
-    end
-
     trait :waiting_for_part_payment_state do
       reference { generate(:reference_number) }
       state { :waiting_for_part_payment }
@@ -100,9 +107,9 @@ FactoryBot.define do
       association :deleted_by, factory: :user
     end
 
-    trait :applicant_full_detail do
-      applicant_factory { :applicant_with_all_details }
-    end
+    # trait :applicant_full_detail do
+    #   applicant_factory { :applicant_with_all_details }
+    # end
 
     factory :application_part_remission do
       applicant_factory { :applicant_with_all_details }

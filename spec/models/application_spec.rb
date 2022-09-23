@@ -2,11 +2,11 @@ require 'rails_helper'
 require 'support/calculator_test_data'
 
 RSpec.describe Application, type: :model do
-  subject(:application) { described_class.create(user_id: user.id, reference: attributes[:reference], applicant: applicant, detail: detail) }
+  subject(:application) { described_class.create(user: user, applicant: applicant, reference: attributes[:reference], detail: detail) }
 
   let(:user) { create :user }
   let(:attributes) { attributes_for :application }
-  let(:applicant) { create(:applicant) }
+  let(:applicant) { build :applicant }
   let(:detail) { create(:detail) }
 
   it { is_expected.to belong_to(:user) }
@@ -32,8 +32,7 @@ RSpec.describe Application, type: :model do
 
   describe 'with_evidence_check_for_ni_number' do
     context 'pending evidence check' do
-      let(:application) { create(:application, :waiting_for_evidence_state, applicant: applicant) }
-      let(:applicant) { create(:applicant, ni_number: ni_number) }
+      let(:application) { create(:application, :waiting_for_evidence_state, :applicant_full, ni_number: ni_number, user: user) }
       let(:ni_number) { 'SN123456C' }
 
       it "matching NI number" do
@@ -74,7 +73,7 @@ RSpec.describe Application, type: :model do
 
   describe 'with_evidence_check_for_ho_number' do
     context 'pending evidence check' do
-      let(:application) { create(:application, :waiting_for_evidence_state, applicant: applicant) }
+      let(:application) { create(:application, :waiting_for_evidence_state, :applicant_full, ho_number: ho_number) }
       let(:applicant) { create(:applicant, ho_number: ho_number) }
       let(:ho_number) { 'L123456' }
 
