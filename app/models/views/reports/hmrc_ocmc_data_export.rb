@@ -154,15 +154,15 @@ module Views
 
       def tax_credit(value, date_range)
         return 0 if value.blank?
-        date_formatted = date_range
+        date = date_formatted(date_range)
         tax_credit_hash = YAML.parse(value).to_ruby
-        work = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :work), date_formatted)
-        child = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :child), date_formatted)
+        work = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :work), date)
+        child = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :child), date)
         work + child
       end
 
       def date_formatted(date_range)
-        return nil if value.blank?
+        return nil if date_range.blank?
         request_params_hash = YAML.parse(date_range).to_ruby
         request_params_hash[:date_range]
       end
