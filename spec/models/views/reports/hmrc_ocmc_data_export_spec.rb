@@ -49,7 +49,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:income_kind) { {} }
       let(:tax_credit) { {} }
       let(:paye_income) { {} }
-      let(:date_range) { { date_range: { from: "1/2/2021", to: "1/3/2021" } } }
+      let(:date_range) { { date_range: { from: "1/7/2022", to: "31/7/2022" } } }
 
       before { hmrc_check }
 
@@ -64,18 +64,37 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'paye and tax credit income' do
         let(:paye_income) { [{ "taxablePay" => 120.04 }] }
         let(:tax_credit) {
-          { child: [{ "payProfCalcDate" => "2020-08-18",
-                      "totalEntitlement" => 18765.23,
-                      "childTaxCredit" => { "childCareAmount" => 930.98, "ctcChildAmount" => 730.49, "familyAmount" => 100.49, "babyAmount" => 100, "paidYTD" => 8976.34 },
-                      "payments" => [{ "startDate" => "2021-06-24", "endDate" => "2022-03-31", "frequency" => 1, "amount" => 7634 }] }],
-            work: [{ "payProfCalcDate" => "2020-08-18",
-                     "totalEntitlement" => 18765.23,
-                     "workingTaxCredit" => { "amount" => 930.98, "paidYTD" => 8976.34 },
-                     "payments" => [{ "startDate" => "2021-06-24", "endDate" => "2022-03-31", "frequency" => 1, "amount" => 634 }] }] }
+          {
+            child:
+            [
+              { "payProfCalcDate" => "2022-07-30",
+                "totalEntitlement" => 7432.23,
+                "childTaxCredit" => { "childCareAmount" => 1310.41, "ctcChildAmount" => 5321.05, "familyAmount" => 547.5, "babyAmount" => 0, "paidYTD" => 2634.71 },
+                "payments" =>
+               [{ "startDate" => "2022-07-05", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
+                { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
+                { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 147.74 },
+                { "startDate" => "2022-04-26", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.17 },
+                { "startDate" => "2022-05-10", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.2 }] }
+            ],
+            work:
+             [
+               { "payProfCalcDate" => "2022-07-30",
+                 "totalEntitlement" => 7432.23,
+                 "childTaxCredit" => { "childCareAmount" => 1310.41, "ctcChildAmount" => 5321.05, "familyAmount" => 547.5, "babyAmount" => 0, "paidYTD" => 2634.71 },
+                 "payments" =>
+                [{ "startDate" => "2022-07-05", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
+                 { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
+                 { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 147.74 },
+                 { "startDate" => "2022-04-26", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.17 },
+                 { "startDate" => "2022-05-10", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.2 }] }
+             ]
+          }
         }
+
         it "calculates correct value" do
           data_row = data[3]
-          expect(data_row).to include('202.72')
+          expect(data_row).to include('6098.56')
         end
 
         context 'no fail from tax_credit' do
