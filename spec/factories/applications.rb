@@ -3,8 +3,10 @@ FactoryBot.define do
 
   factory :application do
     transient do
-      ni_number { nil }
+      ni_number { "AB123#{Random.rand(9)}#{Random.rand(9)}#{Random.rand(9)}C" }
       ho_number { nil }
+      date_of_birth { 20.years.ago }
+      married { false }
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [] }
       detail_traits { [] }
@@ -30,7 +32,9 @@ FactoryBot.define do
     trait :applicant_full do
       applicant { association :applicant_with_all_details,
                   application: instance, ni_number: ni_number,
-                  ho_number: ho_number }
+                  ho_number: ho_number,
+                  date_of_birth: date_of_birth,
+                  married: married }
     end
 
     trait :waiting_for_evidence_state do

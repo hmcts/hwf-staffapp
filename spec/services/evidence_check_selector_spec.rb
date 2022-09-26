@@ -5,7 +5,8 @@ describe EvidenceCheckSelector do
 
   let(:current_time) { Time.zone.now }
   let(:expires_in_days) { 2 }
-  let(:applicant) { create :applicant_with_all_details }
+  let(:applicant) { application.applicant }
+
   describe '#decide!' do
     subject(:decision) do
       Timecop.freeze(current_time) do
@@ -16,7 +17,7 @@ describe EvidenceCheckSelector do
     end
 
     context 'for a benefit application' do
-      let(:application) { create :application }
+      let(:application) { create :application, :applicant_full }
 
       before do
         create_list :application, 9
@@ -40,7 +41,7 @@ describe EvidenceCheckSelector do
     end
 
     describe 'should skipp EV check' do
-      let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant }
+      let(:application) { instance_spy Application, :applicant_full, outcome: 'full', application_type: 'income' }
       let(:detail) { build_stubbed :detail }
 
       before do
@@ -183,9 +184,8 @@ describe EvidenceCheckSelector do
 
       context 'when the application is flagged for failed evidence check' do
         describe 'with ni_number' do
-          let(:applicant) { create :applicant_with_all_details }
-          let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-          before { create :evidence_check_flag, reg_number: applicant.ni_number }
+          let(:application) { create :application_full_remission, :applicant_full, ni_number: 'SN123456D', reference: 'XY55-22-3' }
+          before { create :evidence_check_flag, reg_number: 'SN123456D' }
 
           it { is_expected.to be_a(EvidenceCheck) }
 
@@ -195,8 +195,7 @@ describe EvidenceCheckSelector do
         end
 
         describe 'with ho_number' do
-          let(:applicant) { create :applicant_with_all_details, ni_number: '', ho_number: 'L123456' }
-          let(:application) { create :application_full_remission, reference: 'L123456', applicant: applicant }
+          let(:application) { create :application_full_remission, :applicant_full, reference: 'L123456', ni_number: '', ho_number: 'L123456' }
           before { create :evidence_check_flag, reg_number: applicant.ho_number }
 
           it { is_expected.to be_a(EvidenceCheck) }
@@ -208,16 +207,17 @@ describe EvidenceCheckSelector do
       end
 
       context 'for a application with existing check and same ni_number' do
-        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:evidence_check) { application_old.evidence_check }
         let(:application_old) do
-          create(:application, :income_type,
-                 state: 1,
-                 applicant: applicant_old)
+          create(:application, :income_type, :applicant_full, :waiting_for_evidence_state,
+                 ni_number: 'SN123456D')
         end
-        let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
+        let(:applicant_old) { application_old.applicant }
 
-        let(:application) { create(:application, :income_type, applicant: applicant) }
-        let(:applicant) { create(:applicant, ni_number: 'SN123456D', date_of_birth: 20.years.ago) }
+        let(:application) {
+          create(:application, :income_type, :applicant_full,
+                 ni_number: 'SN123456D', date_of_birth: 20.years.ago)
+        }
 
         before do
           evidence_check
@@ -229,16 +229,17 @@ describe EvidenceCheckSelector do
       end
 
       context 'for a application with existing check and same ni_number with inactive flag' do
-        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:evidence_check) { application_old.evidence_check }
         let(:application_old) do
-          create(:application, :income_type,
-                 state: 1,
-                 applicant: applicant_old)
+          create(:application, :income_type, :applicant_full, :waiting_for_evidence_state,
+                 ni_number: 'SN123456D')
         end
-        let(:applicant_old) { create(:applicant, ni_number: 'SN123456D') }
+        let(:applicant_old) { application_old.applicant }
 
-        let(:application) { create(:application, :income_type, applicant: applicant) }
-        let(:applicant) { create(:applicant, ni_number: 'SN123456D', date_of_birth: 20.years.ago) }
+        let(:application) {
+          create(:application, :income_type, :applicant_full,
+                 ni_number: 'SN123456D', date_of_birth: 20.years.ago)
+        }
 
         before do
           create :evidence_check_flag, reg_number: applicant.ni_number, active: false
@@ -251,16 +252,17 @@ describe EvidenceCheckSelector do
       end
 
       context 'for a application with existing check and same ho_number' do
-        let(:evidence_check) { create(:evidence_check, application: application_old) }
+        let(:evidence_check) { application_old.evidence_check }
         let(:application_old) do
-          create(:application, :income_type,
-                 state: 1,
-                 applicant: applicant_old)
+          create(:application, :income_type, :waiting_for_evidence_state, :applicant_full,
+                 ho_number: 'L123456', date_of_birth: 20.years.ago, ni_number: '')
         end
-        let(:applicant_old) { create(:applicant, ho_number: 'L123456', ni_number: '') }
+        let(:applicant_old) { application_old.applicant }
 
-        let(:application) { create(:application, :income_type, applicant: applicant) }
-        let(:applicant) { create(:applicant, ho_number: 'L123456', ni_number: '', date_of_birth: 20.years.ago) }
+        let(:application) {
+          create(:application, :income_type, :applicant_full,
+                 ho_number: 'L123456', date_of_birth: 20.years.ago, ni_number: '')
+        }
 
         before do
           evidence_check
@@ -273,11 +275,9 @@ describe EvidenceCheckSelector do
 
       context "when applicant's ni number is empty" do
         it 'skips the ni_exist evidence check' do
-          applicant = create(:applicant, ni_number: '')
-          application = applicant.application
+          application = create(:application, :applicant_full, ni_number: '')
 
-          application_old = create(:application, :income_type, :waiting_for_evidence_state, applicant: applicant)
-          create(:evidence_check, application: application_old)
+          create(:application, :income_type, :waiting_for_evidence_state, :applicant_full, ni_number: '')
 
           decision = described_class.new(application, expires_in_days).decide!
 
@@ -433,7 +433,7 @@ describe EvidenceCheckSelector do
     end
 
     context 'HMRC check applies' do
-      let(:application) { create :application_full_remission, office: office, applicant: applicant, medium: 'digital' }
+      let(:application) { create :application_full_remission, :applicant_full, married: married, office: office, medium: 'digital' }
       before do
         ev_stub = instance_double(EvidenceCheckFlag, active?: true)
         allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
@@ -441,7 +441,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'single applicant' do
-        let(:applicant) { create :applicant_with_all_details, married: false }
+        let(:married) { false }
 
         context 'office match' do
           let(:office) { create :office, entity_code: 'dig' }
@@ -451,7 +451,7 @@ describe EvidenceCheckSelector do
           end
 
           context 'is not digital applicaiton' do
-            let(:application) { create :application_full_remission, office: office, applicant: applicant, medium: 'paper' }
+            let(:application) { create :application_full_remission, :applicant_full, office: office, medium: 'paper' }
             it { expect(decision.income_check_type).not_to eql 'hmrc' }
           end
         end
@@ -475,7 +475,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'married applicant' do
-        let(:applicant) { create :applicant_with_all_details, married: true }
+        let(:married) { true }
 
         context 'office match' do
           let(:office) { create :office, entity_code: 'dig' }

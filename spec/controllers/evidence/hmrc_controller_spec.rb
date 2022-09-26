@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Evidence::HmrcController, type: :controller do
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:applicant) { create :applicant_with_all_details }
-  let(:application) { create :application, office: office, applicant: applicant, created_at: '15.3.2021' }
-  let(:evidence) { create :evidence_check, application_id: application.id }
+  let(:applicant) { application.applicant }
+  let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office, created_at: '15.3.2021' }
+  let(:evidence) { application.evidence_check }
   let(:hmrc_check) { create :hmrc_check, evidence_check: evidence, user: user }
 
   before do
@@ -53,9 +53,11 @@ RSpec.describe Evidence::HmrcController, type: :controller do
       end
 
       describe 'default date range from day recevied' do
-        let(:application) { create :application, office: office, applicant: applicant, created_at: '9.10.2021', detail: detail }
+        let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office, created_at: '9.10.2021', detail: detail }
         let(:detail) { create :complete_detail, date_received: '15.8.2021' }
-        let(:evidence) { create :evidence_check, application_id: application.id }
+        let(:evidence) { application.evidence_check }
+        let(:applicant) { application.applicant }
+
         before do
           detail
           get :new, params: { evidence_check_id: evidence.id }

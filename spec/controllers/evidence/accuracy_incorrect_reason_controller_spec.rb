@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Evidence::AccuracyIncorrectReasonController, type: :controller do
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:applicant) { create :applicant_with_all_details }
-  let(:application) { create :application, office: office, applicant: applicant }
-  let(:evidence) { create :evidence_check, application_id: application.id }
+  let(:applicant) { application.applicant }
+  let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office }
+  let(:evidence) { application.evidence_check }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)

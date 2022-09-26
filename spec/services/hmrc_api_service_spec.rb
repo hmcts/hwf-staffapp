@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe HmrcApiService do
   subject(:service) { described_class.new(evidence_check.application, processing_user.id) }
-  let(:application) { create :application_part_remission, applicant: applicant }
+  let(:application) { create :application_part_remission }
   let(:processing_user) { create :user }
   let(:evidence_check) { create :evidence_check, application: application }
   let(:applicant) {
@@ -12,7 +12,8 @@ describe HmrcApiService do
            date_of_birth: DateTime.new(1968, 2, 28),
            ni_number: 'AB123456C',
            first_name: 'Jimmy',
-           last_name: 'Conners'
+           last_name: 'Conners',
+           application: application
   }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:hmrc_api_authentication) { instance_double(HwfHmrcApi::Authentication, access_token: 1, expires_in: 1) }
@@ -21,6 +22,7 @@ describe HmrcApiService do
 
   describe "HMRC API gem" do
     before do
+      applicant
       ENV['HMRC_SECRET'] = 'secret'
       ENV['HMRC_TTP_SECRET'] = 'base32secret3232'
       ENV['HMRC_CLIENT_ID'] = '12345'
