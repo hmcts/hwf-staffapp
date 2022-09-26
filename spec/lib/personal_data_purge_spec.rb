@@ -37,6 +37,9 @@ RSpec.describe PersonalDataPurge do
 
   describe 'purge data' do
     subject(:purge) { purge_object.purge! }
+    # rubocop:disable Lint/EmptyBlock
+    let(:hmrc_checks) {}
+    # rubocop:enable Lint/EmptyBlock
     let(:application1) {
       create :application, applicant_traits: [:ho_number],
                            benefit_checks: [benefit_check1, benefit_check2], detail_traits: [:probate], online_application: online_application,
@@ -46,6 +49,7 @@ RSpec.describe PersonalDataPurge do
     let(:audit_data) { AuditPersonalDataPurge.last }
 
     before {
+      hmrc_checks
       purge
     }
     it { expect(application1.reload.purged).to be true }
@@ -123,12 +127,19 @@ RSpec.describe PersonalDataPurge do
     end
 
     context 'hmrc_check' do
-      let(:hmrc_check1) { create :hmrc_check }
-      let(:hmrc_check2) { create :hmrc_check }
-      let(:evidence_check) { create :evidence_check, hmrc_checks: [hmrc_check1, hmrc_check2] }
-      let(:application1) { create :application, evidence_check: evidence_check, completed_at: 8.years.ago }
-
+      let(:hmrc_check1) { create :hmrc_check, evidence_check: application1.evidence_check }
+      let(:hmrc_check2) { create :hmrc_check, evidence_check: application1.evidence_check }
+      let(:evidence_check) { application1.evidence_check }
+      let(:application1) {
+        create :application, :waiting_for_evidence_state, completed_at: 8.years.ago
+      }
+      let(:user) { create :user }
       let(:keys) { [:address, :ni_number] }
+      let(:hmrc_checks) {
+        hmrc_check1
+        hmrc_check2
+      }
+
       it {
         hmrc_check1.reload
         values = keys.map { |key| hmrc_check1[key] }

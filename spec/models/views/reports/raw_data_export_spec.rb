@@ -126,7 +126,7 @@ RSpec.describe Views::Reports::RawDataExport do
         part_no_ec
         export = data.to_csv
         jurisdiction = part_no_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,50.0,250.0,paper"
+        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,NI number,3,true,part,50.0,250.0,paper"
         expect(export).to include(row)
       end
 
@@ -134,7 +134,7 @@ RSpec.describe Views::Reports::RawDataExport do
         part_no_ec_return_pp
         export = data.to_csv
         jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
 
@@ -142,7 +142,7 @@ RSpec.describe Views::Reports::RawDataExport do
         part_no_ec_none_pp
         export = data.to_csv
         jurisdiction = part_no_ec_none_pp.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,None,3,true,part,300.45,0.0,paper"
+        row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,part,300.45,0.0,paper"
         expect(export).to include(row)
       end
     end
@@ -172,7 +172,7 @@ RSpec.describe Views::Reports::RawDataExport do
         full_ec
         export = data.to_csv
         jurisdiction = full_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,0.0,300.0,income,ABC123,,false,false,10,,None,1,true,full,0.0,300.0,paper"
+        row = "#{jurisdiction},SD123,300.0,0.0,300.0,income,ABC123,,false,false,10,,NI number,1,true,full,0.0,300.0,paper"
         expect(export).to include(row)
       end
     end
@@ -182,7 +182,7 @@ RSpec.describe Views::Reports::RawDataExport do
         part_ec
         export = data.to_csv
         jurisdiction = part_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,None,3,true,part,100.0,200.0,paper"
+        row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,NI number,3,true,part,100.0,200.0,paper"
         expect(export).to include(row)
       end
     end

@@ -7,8 +7,8 @@ RSpec.feature 'User can search for online application', type: :feature do
 
   let(:office) { create :office }
   let(:user) { create :staff, office: office }
-  let(:applicant) { create :applicant_with_all_details }
-  let(:application_processed) { create(:application_full_remission, :processed_state, office: office, applicant: applicant) }
+  let(:applicant) { application_processed.applicant }
+  let(:application_processed) { create(:application_full_remission, :processed_state, :applicant_full, office: office ) }
   let(:application_deleted) { create(:application_full_remission, :deleted_state, office: office) }
 
   let(:application_evidence_check) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }

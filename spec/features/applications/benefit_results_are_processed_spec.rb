@@ -9,8 +9,8 @@ RSpec.feature 'Benefit results are processed', type: :feature do
 
   let(:office) { create(:office) }
   let(:user) { create :user, office: office }
-  let(:applicant) { create :applicant_with_all_details, ni_number: ni_number }
-  let(:application) { create :application, office: office, user_id: user.id, applicant: applicant, benefits: true }
+  let(:applicant) { application.applicant }
+  let(:application) { create :application, :applicant_full, ni_number: ni_number, office: office, user: user, benefits: true }
 
   let(:dwp_result) { nil }
   let(:dwp_status) { 200 }
