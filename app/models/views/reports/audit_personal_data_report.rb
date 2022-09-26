@@ -43,7 +43,7 @@ module Views
         Application.with_deleted.where(purged: true).where('applications.purged_at between ? AND ?', @date_from,
                                                            @date_to).order('applications.purged_at ASC').
           includes(:detail, :applicant, :online_application).
-          pluck('applications.updated_at', 'applications.reference',
+          pluck('applications.purged_at', 'applications.reference',
                 'details.deceased_name', 'details.case_number', 'applicants.ho_number', 'applicants.ni_number',
                 'applicants.title', 'applicants.first_name', 'applicants.last_name',
                 'online_applications.email_address', 'online_applications.email_address', 'online_applications.phone')

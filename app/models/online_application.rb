@@ -31,7 +31,8 @@ class OnlineApplication < ActiveRecord::Base
     linked_application.present? && !linked_application.created?
   end
 
-  def linked_application
+  def linked_application(switch = '')
+    return Application.with_deleted.find_by(online_application: self) if switch == :with_purged
     Application.find_by(online_application: self)
   end
 

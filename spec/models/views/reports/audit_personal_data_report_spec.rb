@@ -16,7 +16,6 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
   let(:application4) { create :online_application, :with_reference, convert_to_application: true, purged: true }
 
   describe 'to_csv' do
-
     subject(:data) { audit_export.to_csv.split("\n") }
     before {
       Timecop.freeze(Date.parse('1/1/2020')) {
@@ -47,7 +46,7 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
       let(:detail) { application3.detail }
 
       let(:expected_line) {
-        "#{application3.updated_at},\"\",purged,purged,purged,purged,purged,purged,purged,purged,purged,purged"
+        "#{application3.purged_at},\"\",purged,purged,purged,purged,purged,purged,purged,purged,purged,purged"
       }
       it { expect(data[1]).to eq expected_line }
     end
@@ -57,7 +56,8 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
       let(:detail) { application4.detail }
 
       let(:expected_line) {
-        [application4.updated_at, application4.reference, 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged']
+        application = application4.linked_application(:with_purged)
+        [application.purged_at, application.reference, 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged', 'purged']
       }
       it { expect(data[2]).to eq expected_line.join(',') }
     end

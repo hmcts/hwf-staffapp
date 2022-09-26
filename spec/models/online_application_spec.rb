@@ -100,7 +100,7 @@ RSpec.describe OnlineApplication, type: :model do
 
   describe '#linked_application' do
 
-    subject { online_application.linked_application }
+    subject(:linked_application) { online_application.linked_application }
 
     context 'when an application exists that is linked to this online_application' do
       let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
@@ -112,6 +112,20 @@ RSpec.describe OnlineApplication, type: :model do
       let(:online_application) { create :online_application, :completed, :with_reference }
 
       it { is_expected.to be_nil }
+    end
+
+    context 'when linked application is "purged"' do
+      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+
+      it "returns nil" do
+        linked_application.update(purged: true)
+        expect(online_application.linked_application).to be_nil
+      end
+
+      it "returns purged application" do
+        linked_application.update(purged: true)
+        expect(online_application.linked_application(:with_purged)).not_to be_nil
+      end
     end
   end
 
