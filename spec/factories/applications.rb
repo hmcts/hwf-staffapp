@@ -30,11 +30,13 @@ FactoryBot.define do
     completed_at { Time.zone.today }
 
     trait :applicant_full do
-      applicant { association :applicant_with_all_details,
-                  application: instance, ni_number: ni_number,
-                  ho_number: ho_number,
-                  date_of_birth: date_of_birth,
-                  married: married }
+      applicant {
+        association :applicant_with_all_details,
+                    application: instance, ni_number: ni_number,
+                    ho_number: ho_number,
+                    date_of_birth: date_of_birth,
+                    married: married
+      }
     end
 
     trait :waiting_for_evidence_state do

@@ -12,7 +12,7 @@ RSpec.describe Views::Overview::Applicant do
   end
 
   describe '#ni_number' do
-    it { expect(view.ni_number.gsub(' ','')).to eql application.applicant.ni_number }
+    it { expect(view.ni_number.gsub(' ', '')).to eql application.applicant.ni_number }
   end
 
   describe '#ho_number' do
