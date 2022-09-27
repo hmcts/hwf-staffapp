@@ -11,7 +11,6 @@ RSpec.describe Evidence::HmrcSummaryController, type: :controller do
 
   let(:hmrc_check) { create :hmrc_check, evidence_check: evidence }
 
-
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)
   end
