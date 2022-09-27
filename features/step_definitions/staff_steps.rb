@@ -48,14 +48,18 @@ Then("I can see that the user is a reader") do
 end
 
 And("I change the jurisdiction") do
-  expect(change_user_details_page.content.radio[6].text).to have_content Jurisdiction.first.name
+  user = User.find(current_path.match('\d+').to_s)
+  jurisdiction = user.office.jurisdictions.first
+  expect(change_user_details_page.content.radio[6].text).to have_content jurisdiction.name
   change_user_details_page.content.radio[6].click
   change_user_details_page.content.save_changes_button.click
   expect(staff_details_page.content).to have_header
 end
 
 Then("I should see the jurisdiction has been updated") do
-  expect(staff_details_page.content.table_row[4].text).to have_text "Main jurisdiction #{Jurisdiction.first.name}"
+  user = User.find(current_path.match('\d+').to_s)
+  jurisdiction = user.office.jurisdictions.first
+  expect(staff_details_page.content.table_row[4].text).to have_text "Main jurisdiction #{jurisdiction.name}"
 end
 
 When("I click on add staff") do

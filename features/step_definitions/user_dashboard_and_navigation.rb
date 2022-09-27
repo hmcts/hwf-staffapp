@@ -71,9 +71,9 @@ Given("I successfully sign in as a user who has an online application reference 
 end
 
 Given("I successfully sign in as a user who has an online application that will be hmrc checked") do
-  online = FactoryBot.create(:online_application, :with_reference, :income, :completed)
-  applicant = FactoryBot.create(:applicant, ni_number: online.ni_number)
-  FactoryBot.create(:application, :waiting_for_evidence_state, applicant: applicant)
+  ni_number = "AB123#{Random.rand(9)}#{Random.rand(9)}#{Random.rand(9)}C"
+  FactoryBot.create(:online_application, :with_reference, :income, :completed, ni_number: ni_number)
+  FactoryBot.create(:application, :waiting_for_evidence_state, :applicant_full, ni_number: ni_number)
   sign_in_page.load_page
   sign_in_page.hmrc_user_account
 end
