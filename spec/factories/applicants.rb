@@ -5,7 +5,7 @@ FactoryBot.define do
       first_name { Faker::Name.first_name }
       last_name { Faker::Name.last_name }
       date_of_birth { Time.zone.today - 20.years }
-      ni_number { 'AB123456C' }
+      ni_number { "AB123#{Random.rand(9)}#{Random.rand(9)}#{Random.rand(9)}C" }
       married { false }
     end
 
@@ -25,14 +25,14 @@ FactoryBot.define do
       date_of_birth { Time.zone.today - 65.years }
     end
 
-    after(:build) do |applicant|
-      applicant.application ||= build(:application, applicant: applicant)
-    end
+    # after(:build) do |applicant|
+    #   applicant.application ||= build(:application, applicant: applicant)
+    # end
 
-    after(:stub) do |applicant|
-      around_stub(applicant) do
-        applicant.application ||= build_stubbed(:application, applicant: applicant)
-      end
-    end
+    # after(:stub) do |applicant|
+    #   around_stub(applicant) do
+    #     applicant.application ||= build_stubbed(:application, applicant: applicant)
+    #   end
+    # end
   end
 end

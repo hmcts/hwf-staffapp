@@ -4,7 +4,7 @@ RSpec.feature 'Business entity management around SOP and BEC switchover', type: 
   let(:admin) { create :admin_user, office: office }
 
   let(:office) { create :office }
-  let(:business_entity) { office.business_entities.first }
+  let(:business_entity) { create :business_entity, office: office }
 
   before do
     login_as admin

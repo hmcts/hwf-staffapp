@@ -169,14 +169,17 @@ end
 
 Given("I create an application A that waits for evidence with the same ho_number") do
   @user1 = FactoryBot.create(:user)
-  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L1234567')
-  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, office: @user1.office, user: @user1, applicant: @applicant)
+  @application = FactoryBot.create(:application_full_remission_nino,
+                                   :waiting_for_evidence_state, :applicant_full, office: @user1.office, user: @user1, ni_number: '', ho_number: 'L1234567')
+  @applicant = @application.applicant
+
 end
 
 And("I create an Application B that has correct evidence with the same ho_number") do
   @user2 = FactoryBot.create(:user)
-  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L1234567')
-  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, applicant: @applicant, office: @user2.office, user: @user2)
+  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, :applicant_full,
+                                   office: @user2.office, user: @user2, ni_number: '', ho_number: 'L1234567')
+  @applicant = @application.applicant
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email
@@ -249,8 +252,9 @@ end
 
 And("I create an Application B and wrong evidence is provided with the same ho_number") do
   @user2 = FactoryBot.create(:user)
-  @applicant = FactoryBot.create(:applicant_with_all_details, ni_number: '', ho_number: 'L1234567')
-  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state, applicant: @applicant, office: @user2.office, user: @user2)
+  @application = FactoryBot.create(:application_full_remission_nino, :waiting_for_evidence_state,
+                                   :applicant_full, ni_number: '', ho_number: 'L1234567', office: @user2.office, user: @user2)
+  @applicant = @application.applicant
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email

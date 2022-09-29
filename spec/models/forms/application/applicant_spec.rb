@@ -202,7 +202,8 @@ RSpec.describe Forms::Application::Applicant do
       form.save
     end
 
-    let(:applicant) { create :applicant }
+    let(:applicant) { application.applicant }
+    let(:application) { create :application, :applicant_full }
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }

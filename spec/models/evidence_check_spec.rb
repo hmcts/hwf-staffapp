@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 describe EvidenceCheck, type: :model do
+  let(:application) { create :application }
+
   it { is_expected.to validate_presence_of(:application) }
 
   it { is_expected.to validate_presence_of(:expires_at) }
 
   describe 'clear reason' do
-    let(:check_with_reason) { create(:evidence_check_incorrect) }
+    let(:check_with_reason) { create(:evidence_check_incorrect, application: application) }
 
     it 'clear values stored in incorrect_reason' do
       check_with_reason.clear_incorrect_reason!
@@ -43,7 +45,7 @@ describe EvidenceCheck, type: :model do
     end
 
     describe 'return last hmrc check' do
-      let(:evidence_check) { create(:evidence_check) }
+      let(:evidence_check) { create(:evidence_check, application: application) }
       let(:hmrc_check_1) { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
       let(:hmrc_check_2) { create(:hmrc_check, evidence_check: evidence_check) }
 

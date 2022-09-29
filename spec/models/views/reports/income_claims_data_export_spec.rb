@@ -18,16 +18,16 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
   }
 
   let(:part_remission) {
-    create :application_part_remission, :waiting_for_evidence_state, :income_type,
-           office: office, created_at: 5.days.ago, evidence_check: evidence_check_part, decision_cost: 309.7
+    create :application_part_remission, :income_type, state: 1,
+                                                      office: office, created_at: 5.days.ago, decision_cost: 309.7
   }
   let(:full_remission) {
     create :application_full_remission, :processed_state, :income_type,
-           office: office, decision_cost: 410, evidence_check: evidence_check_full
+           office: office, decision_cost: 410
   }
   let(:no_remission) {
     create :application_no_remission, :processed_state, :income_type, fee: 410.74,
-                                                                      office: office, decision_cost: 0, evidence_check: evidence_check_none
+                                                                      office: office, decision_cost: 0
   }
 
   let(:part_remission_none) {
@@ -45,9 +45,9 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
                                                                         office: office, decision_cost: 190.35, part_payment: part_payment_part, amount_to_pay: 220
   }
 
-  let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100.3 }
-  let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0 }
-  let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34 }
+  let(:evidence_check_part) { create :evidence_check_part_outcome, amount_to_pay: 100.3, application: part_remission }
+  let(:evidence_check_full) { create :evidence_check_full_outcome, amount_to_pay: 0, application: full_remission }
+  let(:evidence_check_none) { create :evidence_check_incorrect, amount_to_pay: 300.34, application: no_remission }
   let(:part_payment_none) { create :part_payment_none_outcome }
   let(:part_payment_return) { create :part_payment_return_outcome }
   let(:part_payment_part) { create :part_payment_part_outcome }
@@ -74,7 +74,6 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
   end
 
   describe 'data returned should only include income applications for office that matched the entity_code' do
-
     it "only relevant applications" do
       # include
       create :application_part_remission, :income_type, office: office, created_at: 5.days.ago
@@ -88,7 +87,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
     context 'part_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
-        part_remission
+        evidence_check_part
         export = data.to_csv
         reference = part_remission.reference
         created_at = part_remission.created_at
@@ -127,7 +126,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
     context 'full_remission' do
       it 'estimated_cost is the fee and decision_cost is present' do
-        full_remission
+        evidence_check_full
         export = data.to_csv
         reference = full_remission.reference
         created_at = full_remission.created_at
@@ -138,7 +137,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
     context 'no_remission' do
       it 'estimated_cost is the fee and decision_cost is present' do
-        no_remission
+        evidence_check_none
         export = data.to_csv
         reference = no_remission.reference
         created_at = no_remission.created_at

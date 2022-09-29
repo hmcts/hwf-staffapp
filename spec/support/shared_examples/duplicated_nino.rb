@@ -1,6 +1,6 @@
 RSpec.shared_examples "duplicated NINO for failed DWP" do
-  let(:applicant_with_nino) { create :applicant, ni_number: 'SN123456C' }
-  let(:application_waiting_for_evc) { create :application, :waiting_for_evidence_state, applicant: applicant_with_nino }
+  let(:applicant_with_nino) { application_waiting_for_evc.applicant }
+  let(:application_waiting_for_evc) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'SN123456C' }
 
   before { application_waiting_for_evc }
 
@@ -20,8 +20,8 @@ RSpec.shared_examples "duplicated NINO for failed DWP" do
 end
 
 RSpec.shared_examples "duplicated NINO for successfull DWP" do
-  let(:applicant_with_nino) { create :applicant, ni_number: 'SN123456C' }
-  let(:application_waiting_for_evc) { create :application, :waiting_for_evidence_state, applicant: applicant_with_nino }
+  let(:applicant_with_nino) { application_waiting_for_evc.applicant }
+  let(:application_waiting_for_evc) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'SN123456C' }
 
   before { application_waiting_for_evc }
 

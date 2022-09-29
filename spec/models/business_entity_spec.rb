@@ -52,20 +52,22 @@ RSpec.describe BusinessEntity, type: :model do
 
   context 'scopes' do
     before do
-      create(:office, name: 'HMCTS HQ Team ')
-      create(:office, name: 'Digital')
+      hmcts = create(:office, name: 'HMCTS HQ Team ')
+      create :business_entity, office: hmcts
+      digital = create(:office, name: 'Digital')
+      create :business_entity, office: digital
     end
 
-    let!(:bristol) { create(:office, name: 'Bristol') }
+    let!(:bristol) { create(:office, name: 'Bristol', business_entities: [business_entity]) }
+    let(:business_entity) { create :business_entity }
 
     describe 'non_digital' do
       describe 'excludes HQ business entities' do
-        # each office gets 2 business_entities by default
-        it { expect(described_class.count).to eq 6 }
-        it { expect(described_class.exclude_hq_teams.count).to eq 2 }
+        it { expect(described_class.count).to eq 3 }
+        it { expect(described_class.exclude_hq_teams.count).to eq 1 }
       end
 
-      it 'has the two bristol business entities' do
+      it 'has the bristol business entity' do
         all_codes = described_class.exclude_hq_teams.all.map(&:code)
         expect(all_codes).to match_array bristol.business_entities.map(&:code)
       end

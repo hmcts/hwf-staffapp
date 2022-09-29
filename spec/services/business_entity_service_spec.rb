@@ -8,6 +8,7 @@ describe BusinessEntityService do
   let!(:office) { create :office }
   let!(:jurisdiction) { office.jurisdictions[0] }
   let(:service) { described_class.new(office, jurisdiction) }
+  let(:old_business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
 
   describe 'when initialized with the correct variables' do
     it { is_expected.to be_a_kind_of described_class }
@@ -55,10 +56,12 @@ describe BusinessEntityService do
     let(:params) { { name: name, be_code: be_code, sop_code: sop_code } }
     let(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
+    before { old_business_entity }
+
     describe 'when sent new be_code' do
       let(:name) { 'test-jurisdiction' }
-      let(:be_code) { business_entity.be_code.reverse }
-      let(:sop_code) { business_entity.sop_code }
+      let(:be_code) { old_business_entity.be_code.reverse }
+      let(:sop_code) { old_business_entity.sop_code }
 
       it { is_expected.to be_a_kind_of BusinessEntity }
 
@@ -77,8 +80,8 @@ describe BusinessEntityService do
 
     describe 'when sent new sop_code' do
       let(:name) { 'test-jurisdiction' }
-      let(:be_code) { business_entity.be_code }
-      let(:sop_code) { business_entity.sop_code.reverse }
+      let(:be_code) { old_business_entity.be_code }
+      let(:sop_code) { old_business_entity.sop_code.reverse }
 
       it { is_expected.to be_a_kind_of BusinessEntity }
 
@@ -131,6 +134,8 @@ describe BusinessEntityService do
   end
 
   describe '#build_deactivate' do
+    before { old_business_entity }
+
     subject(:build_deactivate) { service.build_deactivate }
 
     it { is_expected.to be_a_kind_of BusinessEntity }
@@ -151,7 +156,7 @@ describe BusinessEntityService do
   describe '#persist!' do
     subject(:persist) { service.persist! }
 
-    let!(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
+    let(:business_entity) { BusinessEntity.current_for(office, jurisdiction) }
 
     context 'when persisting a new object' do
       before { service.build_new(name: 'Test', sop_code: '123456789') }
@@ -181,7 +186,10 @@ describe BusinessEntityService do
 
     context 'when persisting an update' do
       context 'that changes the code' do
-        before { service.build_update(name: 'Test', sop_code: '987654321') }
+        before {
+          old_business_entity
+          service.build_update(name: 'Test', sop_code: '987654321')
+        }
 
         it 'creates a new business_entity' do
           expect { persist }.to change { BusinessEntity.count }.by 1
@@ -193,8 +201,8 @@ describe BusinessEntityService do
 
         it 'sets the valid_to date of the existing business_entity' do
           service.persist!
-          business_entity.reload
-          expect(business_entity.valid_to).not_to be_nil
+          old_business_entity.reload
+          expect(old_business_entity.valid_to).not_to be_nil
         end
 
         it 'the business_entity has no error messages' do
@@ -204,7 +212,10 @@ describe BusinessEntityService do
       end
 
       context 'invalid data' do
-        before { service.build_update(name: '', sop_code: '987654321') }
+        before {
+          old_business_entity
+          service.build_update(name: '', sop_code: '987654321')
+        }
 
         it 'return false if fails to persist' do
           expect(service.persist!).to be_falsey
@@ -225,13 +236,14 @@ describe BusinessEntityService do
 
     context 'when persisting a deactivation' do
       before do
+        old_business_entity
         service.build_deactivate
         service.persist!
-        business_entity.reload
+        old_business_entity.reload
       end
 
       it 'sets the valid_to date of the existing business_entity' do
-        expect(business_entity.valid_to).not_to be_nil
+        expect(service.business_entity.valid_to).not_to be_nil
       end
 
       it 'sets the current office and jurisdiction business_entity to nil' do

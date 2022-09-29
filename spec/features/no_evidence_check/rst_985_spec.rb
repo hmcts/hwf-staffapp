@@ -55,10 +55,10 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   end
 
   context 'Check that every consecutive application with same NINO will be flagged until evidence is provided' do
-    let(:application1) { create :application, :waiting_for_evidence_state, applicant: applicant1, office: office }
-    let(:application2) { create :application, :waiting_for_evidence_state, applicant: applicant2, office: office }
-    let(:applicant1) { create :applicant_with_all_details, ni_number: 'AB123456D' }
-    let(:applicant2) { create :applicant_with_all_details, ni_number: 'AB123456D' }
+    let(:application1) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office }
+    let(:application2) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office }
+    let(:applicant1) { application1.applicant }
+    let(:applicant2) { application2.applicant }
 
     before do
       application1

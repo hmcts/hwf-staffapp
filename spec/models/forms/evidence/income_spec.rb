@@ -6,6 +6,7 @@ RSpec.describe Forms::Evidence::Income do
   params_list = [:income]
 
   let(:evidence) { build_stubbed :evidence_check }
+  let(:application) { create :application }
   let(:income) { '500' }
   let(:params) { { income: income } }
 
@@ -56,7 +57,7 @@ RSpec.describe Forms::Evidence::Income do
   describe '#save' do
     subject(:form_save) { form.save }
 
-    let(:evidence) { create :evidence_check }
+    let(:evidence) { create :evidence_check, application: application }
     let(:params) { { income: '500.5' } }
     let(:income_calculation_result) { { outcome: 'part', amount_to_pay: 100, min_threshold: 1000, max_threshold: 5000 } }
     let(:income_calculator) { instance_double(IncomeCalculation, calculate: income_calculation_result) }

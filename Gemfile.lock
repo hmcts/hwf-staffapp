@@ -459,8 +459,6 @@ GEM
     rdoc (6.4.0)
       psych (>= 4.0.0)
     regexp_parser (2.5.0)
-    report_builder (1.9)
-      json (>= 2.3.0)
     request_store (1.5.1)
       rack (>= 1.4)
     responders (3.0.1)
@@ -578,6 +576,7 @@ GEM
     systemu (2.6.5)
     temple (0.8.2)
     terminal-notifier-guard (1.7.0)
+    test-prof (1.0.10)
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.11)
@@ -681,7 +680,6 @@ DEPENDENCIES
   rails (~> 7.0.4)
   rails-controller-testing
   rails-i18n (~> 7.0.3)
-  report_builder
   rest-client
   rspec-rails
   rspec_junit_formatter
@@ -699,6 +697,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0)
   terminal-notifier-guard
+  test-prof (~> 1.0)
   timecop
   uglifier (~> 4.2)
   virtus

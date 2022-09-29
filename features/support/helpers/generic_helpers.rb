@@ -283,19 +283,20 @@ end
 
 # benefit application full outcome with paper evidence provided
 def eligable_application(user)
-  applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
-  detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600)
   application = FactoryBot.create(:application, :processed_state, :benefit_type,
                                   decision_cost: 600, user: user, office: user.office, outcome: 'full',
-                                  reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
+                                  reference: "#{reference_prefix}-000001", children: nil, income: nil)
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.detail.update(case_number: 'E71YX571', fee: 600)
+
   FactoryBot.create(:benefit_override, correct: true, application: application)
 end
 
 def ineligable_application(user)
-  applicant = FactoryBot.create(:applicant_with_all_details, first_name: 'John Christopher', last_name: 'Smith')
   application = FactoryBot.create(:application_no_remission, :processed_state, fee: 300,
                                                                                decision_cost: 0, user: user, office: user.office,
-                                                                               reference: "#{reference_prefix}-000002", children: 0, applicant: applicant)
+                                                                               reference: "#{reference_prefix}-000002", children: 0)
+  application.applicant.update(first_name: 'John Christopher', last_name: 'Smith')
   FactoryBot.create(:benefit_check, :yes_result, application: application)
 end
 
@@ -311,30 +312,34 @@ def complete_and_back_to_start
 end
 
 def part_payment_application(user)
-  applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
-  detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 600, refund: false)
   application = FactoryBot.create(:application, :waiting_for_part_payment_state, :income_type,
                                   decision_cost: nil, amount_to_pay: 40, user: user, office: user.office, outcome: 'part',
-                                  reference: "#{reference_prefix}-000001", children: 3, income: nil, applicant: applicant, detail: detail, dependents: true)
+                                  reference: "#{reference_prefix}-000001", children: 3, income: nil, dependents: true)
+
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.detail.update(case_number: 'E71YX571', fee: 600, refund: false)
+
   FactoryBot.create(:part_payment, application: application)
 end
 
 def waiting_evidence_application_ni(user)
-  applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
-  detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
-  FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
-                    decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
-                    reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: applicant, detail: detail)
+  application = FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
+                                  decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
+                                  reference: "#{reference_prefix}-000001", children: nil, income: nil)
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.detail.update(case_number: 'E71YX571', fee: 656.66, refund: true)
 end
 
 def waiting_hmrc_evidence_application(user)
-  applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
-  application = FactoryBot.create(:application, :waiting_for_evidence_state, applicant: applicant, user: user, office: user.office)
+  application = FactoryBot.create(:application, :waiting_for_evidence_state, user: user, office: user.office)
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
   application.evidence_check.update(income_check_type: 'hmrc')
 end
 
 def ho_applicant
-  @applicant = FactoryBot.create(:applicant_with_all_details, title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ho_number: '1212-0001-0240-0490/01')
+  application = FactoryBot.create(:application)
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ho_number: '1212-0001-0240-0490/01')
+  @applicant = application.applicant
 end
 
 def refund_application(user)
@@ -349,10 +354,9 @@ def reference_prefix
 end
 
 def create_application_with_bad_request_result_with(user)
-  applicant = FactoryBot.create(:applicant_with_all_details)
-  application = FactoryBot.create(:application, applicant: applicant, ni_number: 'AB123456C', office: user.office, user: user)
+  application = FactoryBot.create(:application, :applicant_full, ni_number: 'AB123456C', office: user.office, user: user)
   FactoryBot.create(:benefit_check, :bad_request_result, application: application)
-  applicant
+  application.applicant
 end
 
 def stub_dwp_response_as_bad_request

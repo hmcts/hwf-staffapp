@@ -38,6 +38,7 @@ module EvidenceCheckHelper
     if application.income_kind.key?('partner')
       list += application.income_kind.try(:[], 'partner')
     end
+
     list
   end
 

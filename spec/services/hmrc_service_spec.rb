@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe HmrcService do
   subject(:service) { described_class.new(application, form) }
-  let(:application) { create :application_part_remission, applicant: applicant }
+  let(:application) { create :application_part_remission }
   let(:evidence_check) { create :evidence_check, application: application }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to', user_id: 256) }
@@ -13,7 +13,8 @@ describe HmrcService do
            date_of_birth: DateTime.new(1968, 2, 28),
            ni_number: 'AB123456C',
            first_name: 'Jimmy',
-           last_name: 'Conners'
+           last_name: 'Conners',
+           application: application
   }
 
   let(:api_service) { instance_double(HmrcApiService) }
@@ -21,6 +22,7 @@ describe HmrcService do
 
   describe "call" do
     before {
+      applicant
       allow(HmrcApiService).to receive(:new).and_return api_service
       allow(api_service).to receive(:match_user).and_return api_service
       allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form

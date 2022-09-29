@@ -51,7 +51,8 @@ RSpec.describe FinanceTransactionalReportBuilder do
       jurisdiction_name = application.business_entity.jurisdiction.name
       office_name = application.office.name
       reference = application.reference
-      line = "01-2018,00009,#{office_name},#{jurisdiction_name},,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
+      sop_code = application.business_entity.sop_code
+      line = "01-2018,#{sop_code},#{office_name},#{jurisdiction_name},,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
       is_expected.to include(line)
     end
 

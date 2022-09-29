@@ -21,8 +21,8 @@ RSpec.describe ApplicationSearch do
 
       context 'when the application has been processed in the same office' do
         context 'when waiting for evidence' do
-          let(:evidence_check) { create(:evidence_check) }
-          let(:application) { create(:application, :waiting_for_evidence_state, reference: reference, office: user.office, evidence_check: evidence_check) }
+          let(:evidence_check) { application.evidence_check }
+          let(:application) { create(:application, :waiting_for_evidence_state, reference: reference, office: user.office) }
 
           it 'returns the application' do
             expect(service_completed).to eq([application])

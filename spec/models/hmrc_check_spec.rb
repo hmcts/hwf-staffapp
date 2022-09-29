@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe HmrcCheck, type: :model do
   describe 'serialized attributes' do
     subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, user: user, request_params: date_range) }
-    let(:evidence_check) { create :evidence_check }
+    let(:evidence_check) { create :evidence_check, application: application }
+    let(:application) { create :application }
     let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
     let(:user) { create :user }
 

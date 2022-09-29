@@ -126,10 +126,10 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'rails-controller-testing'
-  gem 'report_builder'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
   gem 'site_prism'
+  gem "test-prof", "~> 1.0"
   gem 'webdrivers'
   gem 'webmock'
 end

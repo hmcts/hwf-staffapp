@@ -3,26 +3,28 @@ require 'rails_helper'
 describe EvidenceCheckFlaggingService do
   let(:current_time) { Time.zone.now }
   let(:expires_in_days) { 2 }
+  let(:applicant) { application.applicant }
+  let(:ho_number) { nil }
+  let(:ni_number) { "AB123#{Random.rand(9)}#{Random.rand(9)}#{Random.rand(9)}C" }
 
   describe '#can_be_flagged?' do
     subject { described_class.new(application).can_be_flagged? }
 
-    let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
+    let(:application) { create :application_full_remission, :applicant_full, ni_number: ni_number, ho_number: ho_number, reference: 'XY55-22-3' }
 
     context 'when the applicant has no ni_number' do
-      let(:applicant) { create :applicant_with_all_details, ni_number: nil }
+      let(:ni_number) { nil }
 
       it { is_expected.to be false }
     end
 
     context 'when the applicant has an ni_number' do
-      let(:applicant) { create :applicant_with_all_details }
-
       it { is_expected.to be true }
     end
 
     context 'when the applicant has an ho_number' do
-      let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: nil }
+      let(:ni_number) { nil }
+      let(:ho_number) { 'L123456' }
 
       it { is_expected.to be true }
     end
@@ -31,8 +33,8 @@ describe EvidenceCheckFlaggingService do
   describe '#process_flag' do
     subject(:process_flag) { described_class.new(evidence_check).process_flag }
 
-    let(:application) { create :application_full_remission, reference: 'XY55-22-3', applicant: applicant }
-    let(:applicant) { create :applicant_with_all_details, ho_number: "" }
+    let(:application) { create :application_full_remission, :applicant_full, ni_number: ni_number, ho_number: ho_number, reference: 'XY55-22-3' }
+    let(:ho_number) { "" }
 
     context 'when the evidence check passed' do
       let(:evidence_check) { create :evidence_check_full_outcome, :completed, application: application }
@@ -87,7 +89,8 @@ describe EvidenceCheckFlaggingService do
       end
 
       context 'when a previous flag exists for ho number' do
-        let(:applicant) { create :applicant_with_all_details, ho_number: 'L123456', ni_number: "" }
+        let(:ho_number) { 'L123456' }
+        let(:ni_number) { '' }
         let(:flag) { create :evidence_check_flag, reg_number: applicant.ho_number }
 
         it 'increments the count on the existing flag' do
