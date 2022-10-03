@@ -12,6 +12,11 @@ require 'database_cleaner/active_record'
 require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 require 'base64'
+# require "webmock/cucumber"
+require 'webmock'
+include WebMock::API
+
+
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -101,4 +106,6 @@ end
 Before do
   DatabaseCleaner.clean
 end
+
+# WebMock.disable_net_connect!(:allow_localhost => true)
 
