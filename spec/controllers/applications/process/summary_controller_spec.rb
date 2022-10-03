@@ -107,7 +107,7 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
       end
 
       it 'catch exception and notify sentry' do
-        allow(Raven).to receive(:capture_exception).with(exception, extra: { application_id: application.id })
+        allow(Sentry).to receive(:capture_message).with(exception.message, extra: { application_id: application.id })
         post_summary_save
       end
     end

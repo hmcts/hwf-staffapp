@@ -9,8 +9,9 @@ module Report
     def data_export
       build_and_send_data
     rescue StandardError => e
-      Raven.tags_context(task: "hmrc_purged_export") do
-        Raven.capture_message(e.message)
+      Sentry.with_scope do |scope|
+        scope.set_tags(task: "hmrc_purged_export")
+        Sentry.capture_message(e.message)
       end
       Rails.logger.debug { "Error in hmrc_purged_export export task: #{e.message}" }
       render 'reports/hmrc'
