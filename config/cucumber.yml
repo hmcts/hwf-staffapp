@@ -4,7 +4,7 @@ rerun_opts = rerun.to_s.strip.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'pr
 std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags 'not @wip'"
 create_json_opts = "--format json --out features/cucumber-report/cucumber_report.json"
 %>
-default: <%= std_opts %> features
+default: <%= std_opts %> --publish
 saucelabs: -t @saucelabs -t "not @fail"
 wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip'
