@@ -70,3 +70,11 @@ Run the cucumber features in parallel
 ```
 CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
 ```
+
+#### Cucumber test report
+Cucumber report is enabled now. At the end of the test run you should see a link to a website.
+When you run tests in parallel it will generate report per process so if you want to see one report only you should
+run test directly without parallel functionality.
+
+
+
