@@ -44,6 +44,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:evidence_check) { create(:evidence_check, application: application2) }
       let(:hmrc_check) {
         create(:hmrc_check, evidence_check: evidence_check,
+                            created_at: 2.days.ago, income: nil, tax_credit: nil, request_params: date_range)
+        create(:hmrc_check, evidence_check: evidence_check,
                             created_at: 1.day.ago, income: paye_income, tax_credit: tax_credit, request_params: date_range)
       }
       let(:income_kind) { {} }
@@ -95,6 +97,11 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         it "calculates correct value" do
           data_row = data[3]
           expect(data_row).to include('6098.56')
+        end
+
+        it 'displays formatted date range' do
+          data_row = data[3]
+          expect(data_row).to include('1/7/2022 - 31/7/2022')
         end
 
         context 'no fail from tax_credit' do
