@@ -69,53 +69,58 @@ module Views
         applications.income_kind as \"Declared income sources\",
         ec.check_type as \"DB evidence check type\",
         ec.income_check_type as \"DB income check type\",
-        CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NumberRule'
-         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NIFlag'
-         WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.id IS NULL then 'Manual NIDuplicate'
+        CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NumberRule'
+         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIFlag'
+         WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIDuplicate'
          WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' then 'HMRC NumberRule'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' then 'HMRC NIFlag'
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
-         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
-         WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.id IS NOT NULL then 'ManualAfterHMRC'
+         WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
+         WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
            ELSE ''
         END AS \"Evidence check type\",
-        CASE WHEN hc.id IS NULL then ''
-           WHEN hc.id IS NOT NULL AND hc.error_response IS NULL then 'Yes'
-           WHEN hc.id IS NOT NULL AND hc.error_response IS NOT NULL then 'No'
+        CASE WHEN hc_id IS NULL then ''
+           WHEN hc_id IS NOT NULL AND error_response IS NULL then 'Yes'
+           WHEN hc_id IS NOT NULL AND error_response IS NOT NULL then 'No'
            ELSE ''
         END AS \"HMRC response?\",
-        hc.error_response as \"HMRC errors\",
-        CASE WHEN hc.id IS NULL then ''
-           WHEN hc.id IS NOT NULL AND ec.completed_at IS NOT NULL then 'Yes'
-           WHEN hc.id IS NOT NULL AND ec.completed_at IS NULL then 'No'
+        error_response as \"HMRC errors\",
+        CASE WHEN hc_id IS NULL then ''
+           WHEN hc_id IS NOT NULL AND ec.completed_at IS NOT NULL then 'Yes'
+           WHEN hc_id IS NOT NULL AND ec.completed_at IS NULL then 'No'
            ELSE ''
         END AS \"Complete processing?\",
-        CASE WHEN hc.income IS NULL then ''
-           WHEN hc.income IS NOT NULL then hc.income
+        CASE WHEN hc_income IS NULL then ''
+           WHEN hc_income IS NOT NULL then hc_income
            ELSE ''
         END as \"HMRC total income\",
-        CASE WHEN hc.additional_income IS NULL then NULL
-           WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
-           WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
-            AND hc.additional_income > 0 then hc.additional_income
+        CASE WHEN additional_income IS NULL then NULL
+           WHEN additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
+           WHEN additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
+            AND additional_income > 0 then additional_income
            ELSE NULL
         END as \"Additional income\",
-        CASE WHEN hc.id IS NULL then NULL
+        CASE WHEN hc_id IS NULL then NULL
            WHEN ec.income_check_type = 'paper' AND ec.completed_at IS NOT NULL then NULL
            WHEN ec.income_check_type = 'hmrc' AND ec.completed_at IS NOT NULL then ec.income
            ELSE NULL
         END as \"Income processed\",
-        hc.request_params as \"HMRC request date range\",
-        hc.tax_credit
+        request_params as \"HMRC request date range\",
+        tax_credit
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
-        LEFT JOIN hmrc_checks hc ON ec.id = hc.evidence_check_id
+        LEFT JOIN (
+         SELECT id as \"hc_id\", income as \"hc_income\", request_params, tax_credit, additional_income,
+            error_response, evidence_check_id, created_at, row_number() over
+            (partition by evidence_check_id order by created_at desc)
+            as row_number from hmrc_checks) hc ON ec.id = hc.evidence_check_id
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         WHERE applications.office_id = #{@office_id}
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
+        AND (row_number = 1 OR row_number IS NULL)
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength
@@ -124,6 +129,7 @@ module Views
         csv_row = row
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC total income'] = hmrc_total_income(row)
+        csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['tax_credit'] = ''
         csv_row
       end
@@ -165,6 +171,13 @@ module Views
         return nil if date_range.blank?
         request_params_hash = YAML.parse(date_range).to_ruby
         request_params_hash[:date_range]
+      end
+
+      def hmrc_date_range(date_range)
+        return unless date_formatted(date_range)
+        from = date_formatted(date_range)[:from]
+        to = date_formatted(date_range)[:to]
+        "#{from} - #{to}"
       end
     end
   end
