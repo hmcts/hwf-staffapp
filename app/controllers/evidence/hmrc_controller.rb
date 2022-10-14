@@ -84,7 +84,7 @@ module Evidence
 
     def check_hmrc_data
       return if @hmrc_check.total_income != 0
-      message = "There might be an issue with HMRC data. Please contact technical support."
+      message = I18n.t('hmrc_summary.no_income')
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
