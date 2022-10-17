@@ -10,19 +10,23 @@ module Evidence
 
     def complete
       ResolverService.new(evidence, current_user).complete
-      @application = evidence.application
-
-      process_evidence_check_flag
-      @confirm = Views::Confirmation::Result.new(@application)
-      @form = Forms::Application::DecisionOverride.new(@application)
+      complete_view_load
       render 'applications/process/confirmation/index'
     rescue ResolverService::UndefinedOutcome
-      load_form
+      @hmrc_check = evidence.hmrc_check
+      @application_view = Views::Overview::Application.new(evidence.application)
       flash.now[:alert] = I18n.t('hmrc_summary.alert')
-      render :show
+      render 'evidence/hmrc_summary/show'
     end
 
     private
+
+    def complete_view_load
+      @application = evidence.application
+      process_evidence_check_flag
+      @confirm = Views::Confirmation::Result.new(@application)
+      @form = Forms::Application::DecisionOverride.new(@application)
+    end
 
     def evidence
       @evidence ||= EvidenceCheck.find(params[:evidence_check_id])
