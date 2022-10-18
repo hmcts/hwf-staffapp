@@ -40,6 +40,7 @@ describe HmrcService do
       expect(form).to have_received(:to_date_month=).with(4)
       expect(form).to have_received(:to_date_year=).with(2021)
     end
+
     context 'refund applicaiton' do
       let(:application) { create :application_part_remission, date_received: '4/5/2021', refund: true, date_fee_paid: '4/4/2021' }
       it 'loads dates one month before submitting' do
