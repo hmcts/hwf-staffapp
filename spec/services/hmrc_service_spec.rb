@@ -20,6 +20,39 @@ describe HmrcService do
   let(:api_service) { instance_double(HmrcApiService) }
   let(:hmrc_check) { instance_double(HmrcCheck) }
 
+  describe 'load_form_default_data_range' do
+    let(:application) { create :application_part_remission, date_received: '4/5/2021', refund: false }
+    before {
+      allow(form).to receive(:from_date_day=)
+      allow(form).to receive(:from_date_month=)
+      allow(form).to receive(:from_date_year=)
+      allow(form).to receive(:to_date_day=)
+      allow(form).to receive(:to_date_month=)
+      allow(form).to receive(:to_date_year=)
+      service.load_form_default_data_range
+    }
+
+    it 'loads dates one month before submitting' do
+      expect(form).to have_received(:from_date_day=).with(1)
+      expect(form).to have_received(:from_date_month=).with(4)
+      expect(form).to have_received(:from_date_year=).with(2021)
+      expect(form).to have_received(:to_date_day=).with(30)
+      expect(form).to have_received(:to_date_month=).with(4)
+      expect(form).to have_received(:to_date_year=).with(2021)
+    end
+    context 'refund applicaiton' do
+      let(:application) { create :application_part_remission, date_received: '4/5/2021', refund: true, date_fee_paid: '4/4/2021' }
+      it 'loads dates one month before submitting' do
+        expect(form).to have_received(:from_date_day=).with(1)
+        expect(form).to have_received(:from_date_month=).with(3)
+        expect(form).to have_received(:from_date_year=).with(2021)
+        expect(form).to have_received(:to_date_day=).with(31)
+        expect(form).to have_received(:to_date_month=).with(3)
+        expect(form).to have_received(:to_date_year=).with(2021)
+      end
+    end
+  end
+
   describe "call" do
     before {
       applicant

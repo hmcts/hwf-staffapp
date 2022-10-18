@@ -18,8 +18,7 @@ class HmrcService
 
   # rubocop:disable Metrics/AbcSize
   def load_form_default_data_range
-    received = @application.detail.date_received.to_date
-    last_month = received - 1.month
+    last_month = load_date_based_on_type - 1.month
     @form.from_date_day = last_month.beginning_of_month.day
     @form.from_date_month = last_month.month
     @form.from_date_year = last_month.year
@@ -29,6 +28,11 @@ class HmrcService
     @form
   end
   # rubocop:enable Metrics/AbcSize
+
+  def load_date_based_on_type
+    return @application.detail.date_fee_paid.to_date if @application.detail.refund
+    @application.detail.date_received.to_date
+  end
 
   def update_additional_income(hmrc_params)
     @form.additional_income = hmrc_params['additional_income']
