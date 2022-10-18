@@ -21,15 +21,15 @@
       caption.govuk-table__caption.govuk-table__caption--m Application Income
       thead.govuk-table__head
         tr.govuk-table__row
-          th.govuk-table__header scope="col" class="govuk-!-width-one-half" Number of children
+          th.govuk-table__header scope="col" class="govuk-!-width-one-half" Number of children declared
           td.govuk-table__cell scope="col" #{@evidence.application.children || 0}
 
         tr.govuk-table__row
-          th.govuk-table__header scope="col" Total monthly income
+          th.govuk-table__header scope="col" Total monthly income declared
           td.govuk-table__cell scope="col" #{@application_view.total_monthly_income}
 
         tr.govuk-table__row
-          th.govuk-table__header scope="col" Income kind applicant
+          th.govuk-table__header scope="col" Income kind applicant declared
           td.govuk-table__cell scope="col" #{@application_view.income_kind_applicant}
 
     table.govuk-table
