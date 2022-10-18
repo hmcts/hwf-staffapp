@@ -326,6 +326,7 @@ en-GB:
 
   hmrc_summary:
     alert: "Undefined evidence check outcome, please contact support"
+    no_income: No income recorded for this applicant by HMRC for the selected period.
 
   offices:
     notice:

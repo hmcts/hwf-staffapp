@@ -228,7 +228,7 @@ RSpec.describe Evidence::HmrcController, type: :controller do
         end
 
         it 'add error message' do
-          message = "There might be an issue with HMRC data. Please contact technical support."
+          message = "No income recorded for this applicant by HMRC for the selected period."
           expect(errors).to have_received(:add).with(:income_calculation, message)
         end
 
