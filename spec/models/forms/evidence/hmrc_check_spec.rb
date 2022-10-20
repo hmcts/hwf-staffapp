@@ -215,6 +215,16 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         expect(form.additional_income).to be true
       end
     end
+
+    context 'don not ovrride existing value' do
+      let(:children) { 2 }
+
+      it 'additional_income' do
+        form.additional_income_amount = 10
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 10
+      end
+    end
   end
 
   context 'store' do
