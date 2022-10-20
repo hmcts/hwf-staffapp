@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Forms::Evidence::HmrcCheck do
   subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-  let(:application) { create :application, created_at: '15.3.2021' }
-  let(:evidence) { create :evidence_check, application: application }
-
+  let(:application) { build :application, created_at: '15.3.2021', children: children }
+  let(:evidence) { build :evidence_check, application: application }
+  let(:children) { 0 }
   let(:params) {
     {
       "from_date_day" => from_date_day,
@@ -180,6 +180,39 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         let(:to_date_day) { 'dd' }
 
         it { is_expected.to be false }
+      end
+    end
+  end
+
+  context 'load_additional_income_from_benefits' do
+    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
+    context '1 child' do
+      let(:children) { 1 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 87
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '2 child' do
+      let(:children) { 2 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 145
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '8 child' do
+      let(:children) { 8 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 375
+        expect(form.additional_income).to be true
       end
     end
   end

@@ -36,6 +36,21 @@ module Forms
         @to_date.strftime("%Y-%m-%d")
       end
 
+      def load_additional_income_from_benefits
+        if child_benefits_per_month > 0
+          self.additional_income = true
+          self.additional_income_amount = child_benefits_per_month
+        end
+      end
+
+      def child_benefits_per_month
+        children = @object.evidence_check.application.children
+        return if children.zero?
+        children = (children > 7) ? 7 : children
+
+        Settings.child_benefits_per_month[children]
+      end
+
       private
 
       def persist!
