@@ -22,6 +22,7 @@ module HmrcIncomeParser
   end
 
   def self.tax_credit_amount(payment, request_range)
+    return 0 if cost_of_living_credit(payment, request_range)
     amount = format_amount(payment['amount'].to_s)
     multiplier = multiplier_per_frequency(payment, request_range)
     multiplier * amount
@@ -60,5 +61,15 @@ module HmrcIncomeParser
   def self.pension(paye_hash)
     return 0 unless paye_hash.key?('employeePensionContribs')
     paye_hash['employeePensionContribs']["paid"] || 0
+  end
+
+  # RST-4697 for more info
+  def self.cost_of_living_credit(payment, request_range)
+    if request_range[:from] == "2022-09-01" && request_range[:to] == "2022-09-30"
+      return true if payment['amount'].to_i == 326
+    elsif request_range[:from] == "2022-11-01" && request_range[:to] == "2022-11-30"
+      return true if payment['amount'].to_i == 324
+    end
+    false
   end
 end

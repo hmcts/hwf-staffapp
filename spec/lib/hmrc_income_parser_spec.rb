@@ -77,6 +77,41 @@ RSpec.describe HmrcIncomeParser do
       it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(253.16) }
     end
 
+    context 'cost of living credits' do
+      let(:tax_credit_hash) {
+        [
+          {
+            "payments" => [
+              { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "tcType" => "ICC", "amount" => 65.27 },
+              { "startDate" => "2022-09-01", "endDate" => "2022-09-10", "frequency" => 1, "tcType" => "ICC", "amount" => 326.00 }
+            ]
+          }
+        ]
+      }
+
+      context 'September' do
+        let(:request_range) { { from: "2022-09-01", to: "2022-09-30" } }
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(65.27) }
+      end
+
+      context 'November' do
+        let(:tax_credit_hash) {
+          [
+            {
+              "payments" => [
+                { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "tcType" => "ICC", "amount" => 65.27 },
+                { "startDate" => "2022-11-01", "endDate" => "2022-11-20", "frequency" => 1, "tcType" => "ICC", "amount" => 324.00 }
+              ]
+            }
+          ]
+        }
+
+        let(:request_range) { { from: "2022-11-01", to: "2022-11-30" } }
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(65.27) }
+      end
+
+    end
+
     describe 'frequency' do
       let(:tax_credit_hash) {
         [
