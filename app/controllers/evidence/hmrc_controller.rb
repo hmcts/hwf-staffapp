@@ -22,6 +22,7 @@ module Evidence
     def show
       authorize evidence
       check_hmrc_data
+      prepulated_additional_income
       render :show
     end
 
@@ -94,6 +95,10 @@ module Evidence
 
     def additional_income_updated?
       hmrc_service.update_additional_income(hmrc_params)
+    end
+
+    def prepulated_additional_income
+      @form.load_additional_income_from_benefits
     end
   end
 end
