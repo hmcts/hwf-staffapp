@@ -126,10 +126,4 @@ Rails.application.configure do
     }
   end
 
-  Raven.configure do |config|
-    config.ssl_verification = Settings.sentry.ssl_verification == true
-  end
-
-  #####
-
 end

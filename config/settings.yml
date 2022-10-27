@@ -44,5 +44,6 @@ reference:
 fee_approval_threshold: 10000.01
 sentry:
   ssl_verification: <%= ENV['SENTRY_SSL_VERIFICATION'] %>
+  dsn: <%= ENV['SENTRY_DSN'] %>
 personal_data_purge:
   years_ago: 7
