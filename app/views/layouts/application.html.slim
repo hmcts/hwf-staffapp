@@ -34,8 +34,9 @@
 
 - content_for :proposition_header
   a.govuk-header__link.govuk-header__service-name href="/" = Rails.application.config.app_title
-  nav.govuk-header__navigation
-    button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
+
+  nav.govuk-header__navigation aria-label="Menu"
+    button.govuk-header__menu-button.js-header-toggle type="button" aria-controls="navigation" aria-label="Show or hide menu" hidden="hidden" Menu
     - if user_signed_in?
       ul#navigation.govuk-header__navigation-list aria-label="Top Level Navigation"
         li.govuk-header__navigation-item
