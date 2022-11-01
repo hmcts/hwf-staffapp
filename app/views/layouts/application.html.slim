@@ -33,7 +33,7 @@
         = yield
 
 - content_for :proposition_header
-  a.govuk-header__link.govuk-header__link--service-name href="/" = Rails.application.config.app_title
+  a.govuk-header__link.govuk-header__service-name href="/" = Rails.application.config.app_title
   nav.govuk-header__navigation
     button.govuk-header__menu-button.js-header-toggle type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" Menu
     - if user_signed_in?
