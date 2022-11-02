@@ -10,7 +10,7 @@ class NavigationPage < BasePage
     element :letter_templates, 'a', text: 'Letter templates'
     element :feedback, 'a', text: 'Feedback'
     element :sign_out, 'a', text: 'Sign out'
-    element :home_page, '.govuk-header__link.govuk-header__link--service-name'
+    element :home_page, '.govuk-header__link.govuk-header__service-name'
   end
 
   def go_to_homepage
