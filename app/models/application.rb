@@ -62,7 +62,9 @@ class Application < ActiveRecord::Base
   validates :reference, uniqueness: true, allow_blank: true
 
   def last_benefit_check
-    benefit_checks.where.not(benefits_valid: nil).where.not(dwp_result: nil).order(:id).last
+    benefit_checks.select do |benefit|
+      !benefit.benefits_valid.nil? && !benefit.dwp_result.nil?
+    end.max_by(&:id)
   end
 
   def self.sort_received(sort_string)
