@@ -58,7 +58,7 @@ module HomeHelper
   end
 
   def state_value(record)
-    if record.failed_because_dwp_error?
+    if dwp_failed(record)
       message = 'DWP'
       custom_class = ' red-warning-text'
     elsif record.state == 'waiting_for_evidence' && record.try(:evidence_check).try(:hmrc?)
@@ -68,6 +68,10 @@ module HomeHelper
     end
 
     td_line_state(message, custom_class)
+  end
+
+  def dwp_failed(record)
+    record.benefit_checks&.last&.dwp_error?
   end
 
   def td_line_state(message, custom_class = '')
