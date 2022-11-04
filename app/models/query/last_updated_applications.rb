@@ -5,7 +5,7 @@ module Query
     end
 
     def find(limit: nil)
-      @user.applications.order(updated_at: :desc).limit(limit)
+      @user.applications.includes(:benefit_checks).order(updated_at: :desc).limit(limit)
     end
   end
 end

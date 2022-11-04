@@ -23,4 +23,19 @@ class BenefitCheck < ActiveRecord::Base
   def outcome
     dwp_result == 'Yes' ? 'full' : 'none'
   end
+
+  def dwp_error?
+    bad_request? || benefit_check_unavailable?
+  end
+
+  def bad_request?
+    dwp_result == 'BadRequest' &&
+      error_message.include?('LSCBC959: Service unavailable')
+  end
+
+  def benefit_check_unavailable?
+    return false if error_message.blank?
+    dwp_result == 'Server unavailable' &&
+      error_message.include?('The benefits checker is not available at the moment')
+  end
 end
