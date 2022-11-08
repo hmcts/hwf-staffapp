@@ -91,6 +91,9 @@ Rails.application.configure do
       domain: 'feeremissions.dsd.io',
       enable_starttls_auto: true
     }
+    # debugging N+1 queries
+    # Bullet.enable = true
+    # Bullet.rails_logger = true
   end
 
 end

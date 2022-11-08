@@ -5,7 +5,9 @@ module Query
     end
 
     def find(filter = {})
-      list = @user.office.applications.deleted.order(deleted_at: :desc)
+      list = @user.office.applications.deleted.
+             includes(:evidence_check, :applicant, :part_payment, :detail, :online_application, :decision_override).
+             order(deleted_at: :desc)
       list = list.joins(:detail).where(details: filter) if filter && filter[:jurisdiction_id].present?
       list
     end
