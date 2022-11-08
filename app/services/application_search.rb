@@ -34,13 +34,25 @@ class ApplicationSearch
 
   def search_query
     if reference_number?(@query)
-      result = Application.where(reference: @query).except_created
+      result = Application.where(reference: @query).includes(:applicant, :evidence_check, :detail).except_created
       processed_by_check(result)
     elsif name_search?(@query)
-      Application.name_search(@query).except_created.given_office_only(@current_user.office_id)
+      name_search_query
     else
-      Application.extended_search(@query).except_created.given_office_only(@current_user.office_id)
+      extended_search
     end
+  end
+
+  def extended_search
+    Application.extended_search(@query).
+      includes(:applicant, :evidence_check, :detail).
+      except_created.given_office_only(@current_user.office_id)
+  end
+
+  def name_search_query
+    Application.name_search(@query).
+      includes(:applicant, :evidence_check, :detail).
+      except_created.given_office_only(@current_user.office_id)
   end
 
   def name_search?(query)
