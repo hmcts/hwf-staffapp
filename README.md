@@ -15,6 +15,10 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## N+1 queries debugging
+There is a gem called Bullet. If you want to check N+1 queries in development mode, you can uncomment
+Bullet related lines in development.rb
+
 ## Delayed jobs for BenefitChecks
 We need to keep an eye on the results of DWP checks. When the API is down the service will disable
 benefit related applications. Then we re-run failed checks in 10 minutes intervals to see if the

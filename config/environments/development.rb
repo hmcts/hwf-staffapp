@@ -92,7 +92,7 @@ Rails.application.configure do
       enable_starttls_auto: true
     }
     # debugging N+1 queries
-    # Bullet.enable = false
+    # Bullet.enable = true
     # Bullet.rails_logger = true
   end
 
