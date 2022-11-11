@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
+
 RSpec.feature 'Staff can complete processing of an online application' do
   include Warden::Test::Helpers
   Warden.test_mode!
@@ -111,3 +114,4 @@ RSpec.feature 'Staff can complete processing of an online application' do
     expect(page).to have_content('Eligible for help with fees')
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

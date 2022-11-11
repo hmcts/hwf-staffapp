@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 # I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
 
 RSpec.feature 'Manager has to setup their preferences' do
 
@@ -55,3 +56,4 @@ RSpec.feature 'Manager has to setup their preferences' do
     expect(page.current_path).to eql "/users/#{@manager.id}/edit"
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

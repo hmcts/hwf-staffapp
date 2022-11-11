@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
+
 RSpec.feature 'Staff can search for online application' do
 
   include Warden::Test::Helpers
@@ -64,3 +67,4 @@ RSpec.feature 'Staff can search for online application' do
     expect(page).to have_content 'You must select a jurisdiction'
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

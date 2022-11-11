@@ -147,9 +147,11 @@ RSpec.feature 'Evidence check flow' do
         ]
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation('Not eligible for help with fees', expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       it 'clicking the Complete processing button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
@@ -166,9 +168,11 @@ RSpec.feature 'Evidence check flow' do
         ]
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation("The applicant must pay £43.33 towards the fee", expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       context 'clicking the Complete processing button' do
         before { click_link_or_button 'Complete processing' }
@@ -193,9 +197,11 @@ RSpec.feature 'Evidence check flow' do
 
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation('Eligible for help with fees', expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       it 'clicking the Next button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
