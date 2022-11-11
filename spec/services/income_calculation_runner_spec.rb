@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe IncomeCalculationRunner do
   subject(:runner) { described_class.new(application) }
 
-  let(:application) { create :application, application_type: nil, outcome: nil }
+  let(:application) { create(:application, application_type: nil, outcome: nil) }
 
   describe '#run' do
     let(:calculation) { instance_double(IncomeCalculation, calculate: result) }

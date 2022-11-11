@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ApplicationBuilder do
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
   let(:application_builder) { described_class.new(user) }
   let(:entity_code) { user.office.entity_code }
   let(:current_time) { Time.zone.now }

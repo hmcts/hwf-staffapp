@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Report::HmrcController do
 
   context 'mi user' do
-    let(:user) { create :user }
+    let(:user) { create(:user) }
     before { sign_in user }
 
     describe 'GET #hmrc' do
@@ -22,7 +22,7 @@ RSpec.describe Report::HmrcController do
   end
 
   context 'admin' do
-    let(:admin) { create :admin_user }
+    let(:admin) { create(:admin_user) }
     before { sign_in admin }
 
     describe 'GET #hmrc' do

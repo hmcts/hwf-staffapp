@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Views::Reports::FinanceReportDataRow do
   subject(:data) { described_class.new(business_entity, start_date, end_date) }
 
-  let(:business_entity) { create :business_entity }
+  let(:business_entity) { create(:business_entity) }
   let(:start_date) { Time.zone.today.-1.month }
   let(:end_date) { Time.zone.today.+1.month }
 
@@ -88,26 +88,26 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
   describe 'data returned should only include proccesed applications' do
     subject { data.total_count }
 
-    let(:digital) { create :office, name: 'Digital' }
-    let(:digital_business_entity) { create :business_entity, office: digital }
-    let(:wrong_business_entity) { create :business_entity }
-    let(:failed_application) { create :application_no_remission, :processed_state, decision: 'full', decision_type: 'override', application_type: 'none', business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now }
+    let(:digital) { create(:office, name: 'Digital') }
+    let(:digital_business_entity) { create(:business_entity, office: digital) }
+    let(:wrong_business_entity) { create(:business_entity) }
+    let(:failed_application) { create(:application_no_remission, :processed_state, decision: 'full', decision_type: 'override', application_type: 'none', business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now) }
 
     before do
       # include these
-      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_part_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :decision_override, application: failed_application
-      create :application_full_remission, :processed_state, application_type: nil, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create(:application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:application_part_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:decision_override, application: failed_application)
+      create(:application_full_remission, :processed_state, application_type: nil, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
 
       # and exclude the following
-      create :application_no_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: 2.months.ago
-      create :application_full_remission, :processed_state, business_entity: wrong_business_entity, office: wrong_business_entity.office, decision_date: 2.months.ago
-      create :application_full_remission, :waiting_for_evidence_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_full_remission, :waiting_for_part_payment_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now
-      create :application_part_remission, :processed_state, business_entity: digital_business_entity, office: business_entity.office, decision_date: Time.zone.now
+      create(:application_no_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:application_full_remission, :processed_state, business_entity: business_entity, office: business_entity.office, decision_date: 2.months.ago)
+      create(:application_full_remission, :processed_state, business_entity: wrong_business_entity, office: wrong_business_entity.office, decision_date: 2.months.ago)
+      create(:application_full_remission, :waiting_for_evidence_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:application_full_remission, :waiting_for_part_payment_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:application_full_remission, :deleted_state, business_entity: business_entity, office: business_entity.office, decision_date: Time.zone.now)
+      create(:application_part_remission, :processed_state, business_entity: digital_business_entity, office: business_entity.office, decision_date: Time.zone.now)
     end
 
     it { is_expected.to eq 4 }

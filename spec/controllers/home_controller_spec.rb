@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
-  let(:staff)   { create :staff }
-  let(:manager) { create :manager }
-  let(:admin)   { create :admin_user }
+RSpec.describe HomeController do
+  let(:staff)   { create(:staff) }
+  let(:manager) { create(:manager) }
+  let(:admin)   { create(:admin_user) }
 
   describe 'GET #index' do
     context 'when the user is authenticated' do
@@ -83,7 +83,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       context 'as a user with applications' do
-        let(:application) { build_stubbed :application }
+        let(:application) { build_stubbed(:application) }
 
         before do
           query = instance_double(Query::LastUpdatedApplications)
@@ -102,7 +102,7 @@ RSpec.describe HomeController, type: :controller do
       context 'as an admin' do
         before do
           Office.delete_all
-          create_list :benefit_check, 2, user_id: manager.id
+          create_list(:benefit_check, 2, user_id: manager.id)
           sign_in admin
           get :index
         end
@@ -114,7 +114,7 @@ RSpec.describe HomeController, type: :controller do
 
     context 'as a manager' do
       before do
-        create_list :benefit_check, 2, user_id: manager.id
+        create_list(:benefit_check, 2, user_id: manager.id)
         sign_in manager
         get :index
       end

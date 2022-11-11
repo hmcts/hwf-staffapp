@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::HmrcSkipsController, type: :controller do
+RSpec.describe Evidence::HmrcSkipsController do
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
-  let(:evidence) { create :evidence_check, income_check_type: 'hmrc', application: application }
-  let(:application) { create :application, user: user, office: office }
+  let(:user) { create(:user, office: office) }
+  let(:evidence) { create(:evidence_check, income_check_type: 'hmrc', application: application) }
+  let(:application) { create(:application, user: user, office: office) }
 
   describe 'PUT #update' do
     context 'as a signed out user' do
@@ -16,7 +16,7 @@ RSpec.describe Evidence::HmrcSkipsController, type: :controller do
       end
 
       context 'fail' do
-        let(:evidence) { build :evidence_check, application: application, expires_at: nil, id: 123 }
+        let(:evidence) { build(:evidence_check, application: application, expires_at: nil, id: 123) }
         before {
           allow(EvidenceCheck).to receive(:find).and_return evidence
           put :update, params: { evidence_check_id: 123 }

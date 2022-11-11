@@ -88,7 +88,7 @@ RSpec.describe Forms::Application::Income do
       form.save
     end
 
-    let(:application) { create :application }
+    let(:application) { create(:application) }
 
     context 'when attributes are correct' do
       let(:params) { { income: 500, dependents: true, children: 2 } }

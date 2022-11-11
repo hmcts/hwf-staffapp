@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PartPaymentsController, type: :routing do
+RSpec.describe PartPaymentsController do
   describe 'routing' do
     it 'routes to #show' do
       expect(get: '/part_payments/1').to route_to('part_payments#show', id: '1')

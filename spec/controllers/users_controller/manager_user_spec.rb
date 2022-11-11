@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe UsersController do
   render_views
 
-  let(:manager)           { create :manager }
-  let(:user_on_my_team)   { create :user, office: manager.office }
-  let(:user_not_my_team)  { create :user }
+  let(:manager)           { create(:manager) }
+  let(:user_on_my_team)   { create(:user, office: manager.office) }
+  let(:user_not_my_team)  { create(:user) }
 
   context 'manager' do
 
@@ -13,8 +13,8 @@ RSpec.describe UsersController, type: :controller do
       User.delete_all
       Office.delete_all
       Jurisdiction.delete_all
-      create_list :user, 2, office: manager.office
-      create_list :user, 2, office: create(:office)
+      create_list(:user, 2, office: manager.office)
+      create_list(:user, 2, office: create(:office))
       sign_in manager
     end
 
@@ -30,7 +30,7 @@ RSpec.describe UsersController, type: :controller do
 
       describe 'does not show admins assigned to their office' do
         before do
-          create :admin_user, office: manager.office
+          create(:admin_user, office: manager.office)
           get :index
         end
 

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe BenefitOverridesController, type: :controller do
+RSpec.describe BenefitOverridesController do
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
-  let(:application) { build_stubbed :application, office: office }
+  let(:application) { build_stubbed(:application, office: office) }
   let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
   let(:benefits_evidence_form) { double }
 
@@ -33,7 +33,7 @@ RSpec.describe BenefitOverridesController, type: :controller do
     let(:params) { { application_id: application.id, benefit_override: override_params } }
     let(:dwp_state) { 'online' }
     let(:monitor) { instance_double(DwpMonitor) }
-    let(:dwp_warning) { create :dwp_warning, check_state: dwp_warning_state }
+    let(:dwp_warning) { create(:dwp_warning, check_state: dwp_warning_state) }
     let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
 
     before do

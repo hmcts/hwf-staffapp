@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe User, type: :model do
+describe User do
 
-  let(:user)          { build :user }
-  let(:manager)       { build :manager }
-  let(:admin_user)    { build :admin_user }
-  let(:mi)            { build :mi }
-  let(:reader)        { build :reader }
+  let(:user)          { build(:user) }
+  let(:manager)       { build(:manager) }
+  let(:admin_user)    { build(:admin_user) }
+  let(:mi)            { build(:mi) }
+  let(:reader)        { build(:reader) }
 
   it { is_expected.to have_many(:applications) }
 
@@ -24,7 +24,7 @@ describe User, type: :model do
       before do
         described_class.delete_all
         create(:user, office: office1)
-        create_list :user, 3, office: office2
+        create_list(:user, 3, office: office2)
       end
 
       describe 'filters users by office' do

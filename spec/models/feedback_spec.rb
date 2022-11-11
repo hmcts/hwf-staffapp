@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Feedback, type: :model do
+RSpec.describe Feedback do
 
-  let(:feedback) { create :feedback }
+  let(:feedback) { create(:feedback) }
 
   it 'passes factory build' do
     expect(feedback).to be_valid
@@ -26,8 +26,8 @@ RSpec.describe Feedback, type: :model do
   end
 
   context 'when the user of the feedback' do
-    let(:user)  { create :user }
-    let(:office) { create :office }
+    let(:user)  { create(:user) }
+    let(:office) { create(:office) }
 
     before do
       feedback.user = user

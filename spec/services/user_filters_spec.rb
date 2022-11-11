@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe UserFilters do
   before do
-    create_list :active_user, 2
-    create :inactive_user
+    create_list(:active_user, 2)
+    create(:inactive_user)
   end
 
   let(:filters) { { office: '', activity: 'active' } }

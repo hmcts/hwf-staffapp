@@ -5,8 +5,8 @@ RSpec.describe Forms::Application::DecisionOverride do
 
   params_list = [:value, :reason, :created_by_id]
 
-  let(:override) { build_stubbed :decision_override }
-  let(:user) { create :staff }
+  let(:override) { build_stubbed(:decision_override) }
+  let(:user) { create(:staff) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -77,7 +77,7 @@ RSpec.describe Forms::Application::DecisionOverride do
 
     context 'when the form was instantiated with an application' do
       let(:outcome) { 'none' }
-      let(:application) { create :application_no_remission, :processed_state, application_type: type, outcome: outcome }
+      let(:application) { create(:application_no_remission, :processed_state, application_type: type, outcome: outcome) }
       let(:form) { described_class.new(application) }
 
       context 'that was income based' do
@@ -113,7 +113,7 @@ RSpec.describe Forms::Application::DecisionOverride do
   describe '#save' do
     subject(:save_form) { form.save }
 
-    let(:override) { create :decision_override }
+    let(:override) { create(:decision_override) }
 
     before do
       form.update(params)

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'users/invitations/new', type: :view do
+RSpec.describe 'users/invitations/new' do
 
   before do
-    create_list :office, 2
+    create_list(:office, 2)
     assign(:offices, Office.all)
   end
   context 'as an admin' do
-    let(:admin) { create :admin_user }
+    let(:admin) { create(:admin_user) }
     before do
       assign(:user, User.new)
       assign(:roles, User::ROLES)
@@ -28,7 +28,7 @@ RSpec.describe 'users/invitations/new', type: :view do
   end
 
   context 'as a manager' do
-    let(:manager) { create :manager }
+    let(:manager) { create(:manager) }
 
     before do
       assign(:user, User.new)

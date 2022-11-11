@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::SummaryController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::SummaryController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
@@ -32,31 +32,31 @@ RSpec.describe Applications::Process::SummaryController, type: :controller do
       end
 
       it 'assigns applicant' do
-        expect(assigns(:applicant)).to be_a_kind_of(Views::Overview::Applicant)
+        expect(assigns(:applicant)).to be_a(Views::Overview::Applicant)
       end
 
       it 'assigns details' do
-        expect(assigns(:details)).to be_a_kind_of(Views::Overview::Details)
+        expect(assigns(:details)).to be_a(Views::Overview::Details)
       end
 
       it 'assigns savings' do
-        expect(assigns(:savings)).to be_a_kind_of(Views::Overview::SavingsAndInvestments)
+        expect(assigns(:savings)).to be_a(Views::Overview::SavingsAndInvestments)
       end
 
       it 'assigns benefits' do
-        expect(assigns(:benefits)).to be_a_kind_of(Views::Overview::Benefits)
+        expect(assigns(:benefits)).to be_a(Views::Overview::Benefits)
       end
 
       it 'assigns income' do
-        expect(assigns(:income)).to be_a_kind_of(Views::Overview::Income)
+        expect(assigns(:income)).to be_a(Views::Overview::Income)
       end
     end
   end
 
   describe 'POST #summary_save' do
     let(:current_time) { Time.zone.now }
-    let(:user) { create :user }
-    let(:application) { create :application_full_remission, office: user.office }
+    let(:user) { create(:user) }
+    let(:application) { create(:application_full_remission, office: user.office) }
     let(:resolver) { instance_double(ResolverService, complete: nil) }
 
     context 'success' do

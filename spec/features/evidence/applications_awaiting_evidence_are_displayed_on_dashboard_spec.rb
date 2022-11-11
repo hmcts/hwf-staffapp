@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-RSpec.feature 'Applications awaiting evidence are displayed on dashboard', type: :feature do
+RSpec.feature 'Applications awaiting evidence are displayed on dashboard' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
-  let(:user) { create :user, office: office }
-  let(:deleted_user) { create :deleted_user, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
+  let(:deleted_user) { create(:deleted_user, office: office) }
 
-  let(:application1) { create :application_full_remission, :waiting_for_evidence_state, office: office }
-  let(:application2) { create :application_full_remission, :waiting_for_evidence_state, office: office }
-  let(:other_application) { create :application_full_remission, :waiting_for_evidence_state }
-  let(:application3) { create :application_full_remission, :waiting_for_evidence_state, office: office, user: deleted_user }
+  let(:application1) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
+  let(:application2) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
+  let(:other_application) { create(:application_full_remission, :waiting_for_evidence_state) }
+  let(:application3) { create(:application_full_remission, :waiting_for_evidence_state, office: office, user: deleted_user) }
 
   before do
-    create :evidence_check, application: application1
-    create :evidence_check, application: application2
-    create :evidence_check, application: other_application
-    create :evidence_check, application: application3
+    create(:evidence_check, application: application1)
+    create(:evidence_check, application: application2)
+    create(:evidence_check, application: other_application)
+    create(:evidence_check, application: application3)
 
     login_as user
   end

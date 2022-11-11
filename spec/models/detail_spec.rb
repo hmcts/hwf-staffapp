@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Detail, type: :model do
+RSpec.describe Detail do
   it { is_expected.to validate_presence_of(:application) }
 
   describe 'before validation' do

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe HmrcCheck, type: :model do
+RSpec.describe HmrcCheck do
   describe 'serialized attributes' do
     subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, user: user, request_params: date_range) }
-    let(:evidence_check) { create :evidence_check, application: application }
-    let(:application) { create :application }
+    let(:evidence_check) { create(:evidence_check, application: application) }
+    let(:application) { create(:application) }
     let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
-    let(:user) { create :user }
+    let(:user) { create(:user) }
 
     context 'address' do
       before {
@@ -262,8 +262,8 @@ RSpec.describe HmrcCheck, type: :model do
 
   describe 'calculate_evidence_income!' do
     subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, request_params: date_range) }
-    let(:evidence_check) { create :evidence_check, income: nil, application: application }
-    let(:application) { create :single_applicant_under_61 }
+    let(:evidence_check) { create(:evidence_check, income: nil, application: application) }
+    let(:application) { create(:single_applicant_under_61) }
     let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
 
     context 'no income data' do
@@ -289,7 +289,7 @@ RSpec.describe HmrcCheck, type: :model do
 
     context 'hmrc total income lower than aplication income' do
       let(:income) { [{ "taxablePay" => 1200.04 }] }
-      let(:application) { create :single_applicant_under_61, income: 15000 }
+      let(:application) { create(:single_applicant_under_61, income: 15000) }
       let(:additional_income) { 0 }
       subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range, additional_income: additional_income) }
 
@@ -300,7 +300,7 @@ RSpec.describe HmrcCheck, type: :model do
 
       context 'full payment' do
         let(:income) { [{ "taxablePay" => 100.04 }] }
-        let(:application) { create :single_applicant_under_61, income: 120 }
+        let(:application) { create(:single_applicant_under_61, income: 120) }
         it { expect(evidence_check.outcome).to eq('full') }
         it { expect(evidence_check.amount_to_pay).to eq(0) }
       end
@@ -308,7 +308,7 @@ RSpec.describe HmrcCheck, type: :model do
       context 'hmrc income + additional income higher than app income' do
         let(:income) { [{ "taxablePay" => 100.04 }] }
         let(:additional_income) { 21 }
-        let(:application) { create :single_applicant_under_61, income: 120 }
+        let(:application) { create(:single_applicant_under_61, income: 120) }
 
         it { expect(evidence_check.income).to eq(121) }
         it { expect(evidence_check.amount_to_pay).to eq(0) }
@@ -317,7 +317,7 @@ RSpec.describe HmrcCheck, type: :model do
       context 'hmrc income + additional income lower than app income' do
         let(:income) { [{ "taxablePay" => 100.04 }] }
         let(:additional_income) { 11 }
-        let(:application) { create :single_applicant_under_61, income: 120 }
+        let(:application) { create(:single_applicant_under_61, income: 120) }
 
         it { expect(evidence_check.income).to eq(120) }
         it { expect(evidence_check.amount_to_pay).to eq(0) }

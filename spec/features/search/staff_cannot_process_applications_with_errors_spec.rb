@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'Staff are prevented from processing online applications', type: :feature do
+RSpec.feature 'Staff are prevented from processing online applications' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :staff }
-  let!(:online_application) { create :online_application, :with_reference, :invalid_income }
+  let(:user) { create(:staff) }
+  let!(:online_application) { create(:online_application, :with_reference, :invalid_income) }
 
   before do
     login_as user

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'users/deleted', type: :view do
-  let!(:user) { create :user, deleted_at: Time.zone.now }
+RSpec.describe 'users/deleted' do
+  let!(:user) { create(:user, deleted_at: Time.zone.now) }
 
   describe 'when viewed' do
     context 'as an admin' do
-      let(:admin) { create :admin_user }
+      let(:admin) { create(:admin_user) }
       before do
         create_list(:user, 2, deleted_at: Time.zone.now)
         assign(:users, User.only_deleted)

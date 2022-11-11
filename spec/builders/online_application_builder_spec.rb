@@ -5,7 +5,7 @@ require 'rails_helper'
 describe OnlineApplicationBuilder do
 
   let(:current_time) { Time.zone.now }
-  let(:submission) { attributes_for :public_app_submission }
+  let(:submission) { attributes_for(:public_app_submission) }
 
   describe '#build' do
     subject(:build_submission) { described_class.new(submission).build }

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::HmrcSummaryController, type: :controller do
+RSpec.describe Evidence::HmrcSummaryController do
 
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
+  let(:user) { create(:user, office: office) }
 
   let(:applicant) { application.applicant }
-  let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office, created_at: '15.3.2021' }
+  let(:application) { create(:application, :applicant_full, :waiting_for_evidence_state, office: office, created_at: '15.3.2021') }
   let(:evidence) { application.evidence_check }
 
-  let(:hmrc_check) { create :hmrc_check, evidence_check: evidence }
+  let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence) }
 
   before do
     allow(EvidenceCheck).to receive(:find).with(evidence.id.to_s).and_return(evidence)

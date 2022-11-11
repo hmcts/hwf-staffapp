@@ -4,11 +4,11 @@ module DwpMaintenanceHelper
   def dwp_maintenance?; end
 end
 
-RSpec.describe "home/index", type: :view do
+RSpec.describe "home/index" do
   subject { rendered }
 
-  let(:office) { create :office }
-  let(:user) { create :user, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
 
   let(:dwp_maintenance) { false }
   let(:application_new?) { false }
@@ -79,7 +79,7 @@ RSpec.describe "home/index", type: :view do
       end
 
       context 'when the office has no jurisdictions assigned' do
-        let(:office) { create :office, jurisdictions: [] }
+        let(:office) { create(:office, jurisdictions: []) }
 
         it 'renders the message that manager has to first assign jurisdictions' do
           is_expected.to have_text 'Please ask your manager to assign jurisdictions to your office.'

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe HmrcDataPurgeJob, type: :job do
+RSpec.describe HmrcDataPurgeJob do
   describe 'purge old hmrc checks' do
 
-    let(:application) { create :application }
-    let(:evidence_check) { create :evidence_check, application: application }
-    let(:hmrc_check_1) { create :hmrc_check, evidence_check: evidence_check }
-    let(:hmrc_check_2) { create :hmrc_check, evidence_check: evidence_check }
-    let(:hmrc_check_3) { create :hmrc_check, evidence_check: evidence_check }
-    let(:hmrc_check_4) { create :hmrc_check, evidence_check: evidence_check, purged_at: Date.parse('1/1/2018') }
+    let(:application) { create(:application) }
+    let(:evidence_check) { create(:evidence_check, application: application) }
+    let(:hmrc_check_1) { create(:hmrc_check, evidence_check: evidence_check) }
+    let(:hmrc_check_2) { create(:hmrc_check, evidence_check: evidence_check) }
+    let(:hmrc_check_3) { create(:hmrc_check, evidence_check: evidence_check) }
+    let(:hmrc_check_4) { create(:hmrc_check, evidence_check: evidence_check, purged_at: Date.parse('1/1/2018')) }
 
     context "Hmrc check list for last six months" do
       let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "offices/index", type: :view do
+RSpec.describe "offices/index" do
   subject { rendered }
 
   let(:offices) { create_list(:office, 2) }

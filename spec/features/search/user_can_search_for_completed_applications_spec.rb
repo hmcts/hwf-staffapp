@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature 'User can search for online application', type: :feature do
+RSpec.feature 'User can search for online application' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
-  let(:user) { create :staff, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:staff, office: office) }
   let(:applicant) { application_processed.applicant }
   let(:application_processed) { create(:application_full_remission, :processed_state, :applicant_full, office: office) }
   let(:application_deleted) { create(:application_full_remission, :deleted_state, office: office) }

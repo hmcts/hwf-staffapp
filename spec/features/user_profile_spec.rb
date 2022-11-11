@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'User profile', type: :feature do
+RSpec.feature 'User profile' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, name: 'Jim Halpert', office: office }
-  let(:another_user) { create :user, office: create(:office) }
-  let(:manager) { create :manager, office: office }
-  let(:office) { create :office }
+  let(:user) { create(:user, name: 'Jim Halpert', office: office) }
+  let(:another_user) { create(:user, office: create(:office)) }
+  let(:manager) { create(:manager, office: office) }
+  let(:office) { create(:office) }
 
   context 'as a user' do
 

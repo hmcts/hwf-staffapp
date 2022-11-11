@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe ApplicationFormRepository do
   subject(:repository) { described_class.new(application, form_params) }
 
-  let(:application) { build_stubbed :application, detail: detail }
-  let(:detail) { build_stubbed :detail }
+  let(:application) { build_stubbed(:application, detail: detail) }
+  let(:detail) { build_stubbed(:detail) }
   let(:form_params) do
     { last_name: 'Name', date_of_birth: '20/01/2980', married: false }
   end

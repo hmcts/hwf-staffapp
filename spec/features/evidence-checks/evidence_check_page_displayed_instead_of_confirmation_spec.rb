@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-RSpec.feature 'Evidence check page displayed instead of confirmation', type: :feature do
+RSpec.feature 'Evidence check page displayed instead of confirmation' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdiction) { create :jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:user) { create :user, office: office }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:user) { create(:user, office: office) }
 
   before do
     login_as user
   end
 
-  let(:application) { create :application_full_remission, office: office, jurisdiction: jurisdiction }
+  let(:application) { create(:application_full_remission, office: office, jurisdiction: jurisdiction) }
 
   context '1 in 10 spot check' do
     scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
-      create_list :application_full_remission, 9
+      create_list(:application_full_remission, 9)
 
       visit application_summary_path(application)
 
@@ -30,10 +30,10 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
   end
 
   context '1 in 2 spotcheck refund application' do
-    let(:application) { create :application_full_remission, :refund, office: office, jurisdiction: jurisdiction }
+    let(:application) { create(:application_full_remission, :refund, office: office, jurisdiction: jurisdiction) }
 
     scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
 
       visit application_summary_path(application)
 
@@ -46,7 +46,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation', type: :fe
   end
 
   scenario 'User tries to display confirmation page directly and is redirected to evidence check' do
-    create :evidence_check, application: application
+    create(:evidence_check, application: application)
 
     visit application_confirmation_path(application.id)
 

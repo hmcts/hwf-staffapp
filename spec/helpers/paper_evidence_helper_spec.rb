@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe PaperEvidenceHelper, type: :helper do
+RSpec.describe PaperEvidenceHelper do
 
   subject(:template) { helper.error_message_partial(application) }
 
-  let(:application) { build_stubbed :application, detail: detail }
-  let(:detail) { build_stubbed :detail, discretion_applied: nil }
+  let(:application) { build_stubbed(:application, detail: detail) }
+  let(:detail) { build_stubbed(:detail, discretion_applied: nil) }
   let(:benefit_check_runner) { instance_double(BenefitCheckRunner) }
 
   before do
@@ -22,7 +22,7 @@ RSpec.describe PaperEvidenceHelper, type: :helper do
       end
 
       context 'discretion granted' do
-        let(:detail) { build_stubbed :detail, discretion_applied: true }
+        let(:detail) { build_stubbed(:detail, discretion_applied: true) }
 
         it "when result was no return nil" do
           allow(helper).to receive(:last_benefit_check_result).and_return 'no'
@@ -36,7 +36,7 @@ RSpec.describe PaperEvidenceHelper, type: :helper do
       end
 
       context 'discretion denied' do
-        let(:detail) { build_stubbed :detail, discretion_applied: false }
+        let(:detail) { build_stubbed(:detail, discretion_applied: false) }
 
         it "return nil" do
           allow(helper).to receive(:last_benefit_check_result).and_return 'no'

@@ -5,7 +5,7 @@ RSpec.describe Forms::OnlineApplication do
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received, :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason]
 
-  let(:online_application) { build_stubbed :online_application }
+  let(:online_application) { build_stubbed(:online_application) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -14,7 +14,7 @@ RSpec.describe Forms::OnlineApplication do
   end
 
   describe '#initialize' do
-    let(:online_application) { build_stubbed :online_application, emergency_reason: emergency_reason }
+    let(:online_application) { build_stubbed(:online_application, emergency_reason: emergency_reason) }
 
     context 'when the online application has emergency reason' do
       let(:emergency_reason) { 'REASON' }
@@ -36,7 +36,7 @@ RSpec.describe Forms::OnlineApplication do
   describe '#enable_default_jurisdiction' do
     subject { form.jurisdiction_id }
 
-    let(:user) { create :staff, jurisdiction: jurisdiction }
+    let(:user) { create(:staff, jurisdiction: jurisdiction) }
 
     before { form.enable_default_jurisdiction(user) }
 
@@ -47,15 +47,15 @@ RSpec.describe Forms::OnlineApplication do
     end
 
     context 'when the user has a default jurisdiction' do
-      let(:jurisdiction) { create :jurisdiction }
+      let(:jurisdiction) { create(:jurisdiction) }
 
       it { is_expected.to eq jurisdiction.id }
     end
   end
 
   describe '#enable_default_jurisdiction for user' do
-    let(:jurisdiction) { create :jurisdiction }
-    let(:user) { create :staff, jurisdiction: jurisdiction }
+    let(:jurisdiction) { create(:jurisdiction) }
+    let(:user) { create(:staff, jurisdiction: jurisdiction) }
 
     before { form.jurisdiction_id = 1001 }
 
@@ -73,7 +73,7 @@ RSpec.describe Forms::OnlineApplication do
     it { is_expected.to validate_length_of(:emergency_reason).is_at_most(500) }
 
     describe 'date_received' do
-      let(:online_application) { build_stubbed :online_application, :completed }
+      let(:online_application) { build_stubbed(:online_application, :completed) }
 
       include_examples 'date_received validation'
     end
@@ -97,7 +97,7 @@ RSpec.describe Forms::OnlineApplication do
     end
 
     describe 'form_name' do
-      let(:online_application) { build_stubbed :online_application, :completed, form_name: form_name }
+      let(:online_application) { build_stubbed(:online_application, :completed, form_name: form_name) }
 
       context 'EX160' do
         let(:form_name) { 'EX160' }
@@ -126,8 +126,8 @@ RSpec.describe Forms::OnlineApplication do
       form.save
     end
 
-    let(:online_application) { create :online_application }
-    let(:jurisdiction) { create :jurisdiction }
+    let(:online_application) { create(:online_application) }
+    let(:jurisdiction) { create(:jurisdiction) }
 
     context 'when the params are correct' do
       let(:params) do
@@ -157,7 +157,7 @@ RSpec.describe Forms::OnlineApplication do
       it { is_expected.to be true }
 
       describe 'when emergency is false but emergency_reason had been set' do
-        let(:online_application) { create :online_application, emergency_reason: 'SOME REASON' }
+        let(:online_application) { create(:online_application, emergency_reason: 'SOME REASON') }
         before do
           params[:emergency] = false
         end

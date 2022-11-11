@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.feature 'List processed applications', type: :feature do
+RSpec.feature 'List processed applications' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
-  let!(:application1) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-10') }
-  let!(:application2) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-03') }
-  let!(:application4) { create :application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-07') }
-  let!(:application5) { create :application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-06') }
+  let(:user) { create(:user) }
+  let!(:application1) { create(:application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-10')) }
+  let!(:application2) { create(:application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-03')) }
+  let!(:application4) { create(:application_full_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-07')) }
+  let!(:application5) { create(:application_part_remission, :processed_state, office: user.office, decision_date: Time.zone.parse('2016-01-06')) }
 
   before do
     Settings.processed_deleted.per_page = 2
-    create :application_part_remission
-    create :part_payment, outcome: 'part', correct: true, application: application5
+    create(:application_part_remission)
+    create(:part_payment, outcome: 'part', correct: true, application: application5)
     login_as(user)
   end
   after { Settings.processed_deleted.per_page = ENV.fetch('PROCESSED_DELETED_PER_PAGE', nil) }
@@ -79,7 +79,7 @@ RSpec.feature 'List processed applications', type: :feature do
   end
 
   context 'with evidence check' do
-    before { create :evidence_check_full_outcome, application: application5 }
+    before { create(:evidence_check_full_outcome, application: application5) }
 
     scenario 'contains income from evidence check and from application' do
       visit '/processed_applications'

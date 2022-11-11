@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe BenefitCheckRerunJob, type: :job do
+RSpec.describe BenefitCheckRerunJob do
   describe 'Re run benefit checks' do
-    let(:application) { create :application, :benefit_type }
+    let(:application) { create(:application, :benefit_type) }
     let(:benefit_check) {
-      create :benefit_check, application: application, dwp_result: dwp_result, error_message: dwp_message
+      create(:benefit_check, application: application, dwp_result: dwp_result, error_message: dwp_message)
     }
     let(:dwp_message) { 'LSCBC959: Service unavailable.' }
 
@@ -24,13 +24,13 @@ RSpec.describe BenefitCheckRerunJob, type: :job do
       context 'loading latest benefit checks' do
         let(:dwp_result) { 'BadRequest' }
         before do
-          create_list :benefit_check, 2, :yes_result
-          create :benefit_check, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.'
-          create :benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection'
-          create_list :benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.'
-          create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
+          create_list(:benefit_check, 2, :yes_result)
+          create(:benefit_check, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.')
+          create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection')
+          create_list(:benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.')
+          create_list(:benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           Timecop.freeze(4.days.ago) do
-            create_list :benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error'
+            create_list(:benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           end
         end
 

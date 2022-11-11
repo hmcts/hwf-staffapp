@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ReportsController, type: :controller do
-  let(:admin)     { create :admin_user }
+RSpec.describe ReportsController do
+  let(:admin)     { create(:admin_user) }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
   let(:date_to) { { day: "31", month: "12", year: "2015" } }
   let(:dates) {
@@ -41,7 +41,7 @@ RSpec.describe ReportsController, type: :controller do
       describe 'assigns form object' do
         subject { assigns(:form) }
 
-        it { is_expected.to be_a_kind_of Forms::FinanceReport }
+        it { is_expected.to be_a Forms::FinanceReport }
       end
     end
 
@@ -129,7 +129,7 @@ RSpec.describe ReportsController, type: :controller do
       describe 'assigns form object' do
         subject { assigns(:form) }
 
-        it { is_expected.to be_a_kind_of Forms::Report::FinanceTransactionalReport }
+        it { is_expected.to be_a Forms::Report::FinanceTransactionalReport }
       end
     end
 
@@ -241,7 +241,7 @@ RSpec.describe ReportsController, type: :controller do
       describe 'assigns form object' do
         subject { assigns(:form) }
 
-        it { is_expected.to be_a_kind_of Forms::FinanceReport }
+        it { is_expected.to be_a Forms::FinanceReport }
       end
     end
 

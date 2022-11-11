@@ -3,6 +3,13 @@ module Evidence
     before_action :load_hmrc_check, only: [:show, :update]
     before_action :load_form, except: :update
 
+    def show
+      authorize evidence
+      check_hmrc_data
+      prepulated_additional_income
+      render :show
+    end
+
     def new
       authorize evidence
       load_default_date_range
@@ -17,13 +24,6 @@ module Evidence
       else
         render :new
       end
-    end
-
-    def show
-      authorize evidence
-      check_hmrc_data
-      prepulated_additional_income
-      render :show
     end
 
     def update

@@ -9,16 +9,16 @@ RSpec.describe Views::Reports::HmrcPurgedExport do
 
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
-  let(:application1) { create :application, :with_office, :with_reference }
-  let(:application2) { create :application, :with_office, :with_reference }
+  let(:application1) { create(:application, :with_office, :with_reference) }
+  let(:application2) { create(:application, :with_office, :with_reference) }
   describe 'to_csv' do
-    let(:evidence_check1) { create :evidence_check, application: application1 }
-    let(:evidence_check2) { create :evidence_check, application: application2 }
-    let(:hmrc_check1) { create :hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123451', date_of_birth: '01/01/1980', request_params: { date_range: { from: "1/2/2018", to: "1/3/2018" } } }
-    let(:hmrc_check2) { create :hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123452', date_of_birth: '01/02/1981', request_params: { date_range: { from: "1/2/2019", to: "1/3/2019" } } }
-    let(:hmrc_check3) { create :hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123453', date_of_birth: '01/03/1982', request_params: { date_range: { from: "1/2/2020", to: "1/3/2020" } } }
-    let(:hmrc_check4) { create :hmrc_check, evidence_check: evidence_check2, ni_number: 'SN123454', date_of_birth: '01/04/1983', request_params: { date_range: { from: "1/2/2021", to: "1/3/2021" } } }
-    let(:hmrc_check5) { create :hmrc_check, evidence_check: evidence_check2, ni_number: 'SN123455', date_of_birth: '01/05/1984', request_params: { date_range: { from: "1/2/2022", to: "1/3/2022" } } }
+    let(:evidence_check1) { create(:evidence_check, application: application1) }
+    let(:evidence_check2) { create(:evidence_check, application: application2) }
+    let(:hmrc_check1) { create(:hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123451', date_of_birth: '01/01/1980', request_params: { date_range: { from: "1/2/2018", to: "1/3/2018" } }) }
+    let(:hmrc_check2) { create(:hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123452', date_of_birth: '01/02/1981', request_params: { date_range: { from: "1/2/2019", to: "1/3/2019" } }) }
+    let(:hmrc_check3) { create(:hmrc_check, evidence_check: evidence_check1, ni_number: 'SN123453', date_of_birth: '01/03/1982', request_params: { date_range: { from: "1/2/2020", to: "1/3/2020" } }) }
+    let(:hmrc_check4) { create(:hmrc_check, evidence_check: evidence_check2, ni_number: 'SN123454', date_of_birth: '01/04/1983', request_params: { date_range: { from: "1/2/2021", to: "1/3/2021" } }) }
+    let(:hmrc_check5) { create(:hmrc_check, evidence_check: evidence_check2, ni_number: 'SN123455', date_of_birth: '01/05/1984', request_params: { date_range: { from: "1/2/2022", to: "1/3/2022" } }) }
 
     subject(:data) { hmrc_export.to_csv.split("\n") }
 
@@ -63,8 +63,8 @@ RSpec.describe Views::Reports::HmrcPurgedExport do
       }
       let(:evidence_check3) { create(:evidence_check, application: application3) }
       let(:business_entity) { create(:business_entity, sop_code: 'SOP123') }
-      let(:hmrc_check3) { create :hmrc_check, evidence_check: evidence_check3, ni_number: 'SN123453', date_of_birth: '01/03/1982', request_params: nil, tax_credit: nil, income: nil }
-      let(:application3) { create :application, :with_office, :with_reference }
+      let(:hmrc_check3) { create(:hmrc_check, evidence_check: evidence_check3, ni_number: 'SN123453', date_of_birth: '01/03/1982', request_params: nil, tax_credit: nil, income: nil) }
+      let(:application3) { create(:application, :with_office, :with_reference) }
       let(:user) { application3.user }
       let(:office) { application3.office }
       let(:expected_line) { "2021-01-04 00:00:00 UTC,#{office.name},SOP123,#{user.name},,#{application3.reference},01/03/1982,,empty,empty,empty" }

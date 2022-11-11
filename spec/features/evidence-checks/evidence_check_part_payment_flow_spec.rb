@@ -1,28 +1,28 @@
 require 'rails_helper'
 
-RSpec.feature 'Part payment application with evidence check for refund', type: :feature do
+RSpec.feature 'Part payment application with evidence check for refund' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdiction) { create :jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:user) { create :user, office: office }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:user) { create(:user, office: office) }
 
   before do
     login_as user
   end
 
   let(:application) do
-    create :application_part_remission, :refund,
+    create(:application_part_remission, :refund,
            office: office, jurisdiction: jurisdiction,
            fee: 5000,
            income: 3083,
-           children: 2
+           children: 2)
   end
 
   scenario 'Is marked as waiting for payment after providing evidence' do
-    create_list :application_full_remission, 1, :refund
+    create_list(:application_full_remission, 1, :refund)
 
     visit application_summary_path(application)
 

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature 'User management,', type: :feature do
+RSpec.feature 'User management,' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:admin_user)    { create :admin_user }
-  let!(:offices)      { create :office, name: 'Bristol' }
+  let(:admin_user)    { create(:admin_user) }
+  let!(:offices)      { create(:office, name: 'Bristol') }
 
   context 'Admin user' do
     scenario 'invites a user' do
@@ -43,7 +43,7 @@ RSpec.feature 'User management,', type: :feature do
     end
 
     context 'when inviting user that has been deleted' do
-      let!(:deleted_user) { create :deleted_user }
+      let!(:deleted_user) { create(:deleted_user) }
 
       before do
         login_as(admin_user, scope: :user)

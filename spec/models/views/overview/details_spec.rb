@@ -83,8 +83,8 @@ RSpec.describe Views::Overview::Details do
     end
 
     context 'application' do
-      let(:application) { build_stubbed :application, detail: detail }
-      let(:detail) { build_stubbed :detail, discretion_applied: true }
+      let(:application) { build_stubbed(:application, detail: detail) }
+      let(:detail) { build_stubbed(:detail, discretion_applied: true) }
 
       it "return nil" do
         expect(view.discretion_applied).to eql('Yes')

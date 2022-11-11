@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Admin can manage message info', type: :feature do
+RSpec.feature 'Admin can manage message info' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:office) { create :office }
-  let(:admin) { create :admin_user, office: office }
-  let(:manager) { create :manager, office: office }
+  let!(:office) { create(:office) }
+  let(:admin) { create(:admin_user, office: office) }
+  let(:manager) { create(:manager, office: office) }
 
   context 'admin' do
     before { login_as admin }
@@ -26,7 +26,7 @@ RSpec.feature 'Admin can manage message info', type: :feature do
 
   context 'manager' do
     before do
-      create :notification, message: 'This is message from admin, hear, hear.', show: true
+      create(:notification, message: 'This is message from admin, hear, hear.', show: true)
       login_as manager
     end
 
@@ -39,7 +39,7 @@ RSpec.feature 'Admin can manage message info', type: :feature do
 
   context 'before log in' do
     before do
-      create :notification, message: 'This is message from admin, hear, hear.', show: true
+      create(:notification, message: 'This is message from admin, hear, hear.', show: true)
     end
 
     scenario 'can view the message' do

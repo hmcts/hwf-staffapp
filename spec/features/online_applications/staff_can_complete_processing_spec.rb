@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.feature 'Staff can complete processing of an online application', type: :feature do
+RSpec.feature 'Staff can complete processing of an online application' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:threshold_exceeded) { create :online_application, :with_reference, :threshold_exceeded, :completed, jurisdiction: user.office.jurisdictions.first }
-  let(:benefit_based) { create :online_application, :with_reference, :benefits, :completed, jurisdiction: user.office.jurisdictions.first }
-  let(:income_based_none) { create :online_application, :with_reference, :income, :completed, income: 5000, jurisdiction: user.office.jurisdictions.first }
-  let(:income_based_part) { create :online_application, :with_reference, :income, :completed, income: 1300, jurisdiction: user.office.jurisdictions.first }
-  let(:income_based_full) { create :online_application, :with_reference, :income, :completed, income: 600, jurisdiction: user.office.jurisdictions.first }
+  let(:threshold_exceeded) { create(:online_application, :with_reference, :threshold_exceeded, :completed, jurisdiction: user.office.jurisdictions.first) }
+  let(:benefit_based) { create(:online_application, :with_reference, :benefits, :completed, jurisdiction: user.office.jurisdictions.first) }
+  let(:income_based_none) { create(:online_application, :with_reference, :income, :completed, income: 5000, jurisdiction: user.office.jurisdictions.first) }
+  let(:income_based_part) { create(:online_application, :with_reference, :income, :completed, income: 1300, jurisdiction: user.office.jurisdictions.first) }
+  let(:income_based_full) { create(:online_application, :with_reference, :income, :completed, income: 600, jurisdiction: user.office.jurisdictions.first) }
 
-  let(:user) { create :staff }
+  let(:user) { create(:staff) }
 
   before do
     login_as user

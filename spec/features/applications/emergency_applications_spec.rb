@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'Emergency application', type: :feature do
+RSpec.feature 'Emergency application' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:jurisdictions) { create_list :jurisdiction, 3 }
+  let!(:jurisdictions) { create_list(:jurisdiction, 3) }
   let!(:office)        { create(:office, jurisdictions: jurisdictions) }
   let!(:user)          { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
   let(:reason)         { 'A really good reason' }
@@ -42,7 +42,7 @@ RSpec.feature 'Emergency application', type: :feature do
   end
 
   context 'when on application summary page' do
-    let(:application) { create :application_full_remission, office: office, emergency_reason: reason }
+    let(:application) { create(:application_full_remission, office: office, emergency_reason: reason) }
 
     before { visit application_summary_path(application) }
 

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is not evidence check when income is above threshold', type: :feature do
+RSpec.feature 'Application is not evidence check when income is above threshold' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user, office: office, jurisdiction: jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:jurisdiction) { create :jurisdiction }
+  let(:user) { create(:user, office: office, jurisdiction: jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:jurisdiction) { create(:jurisdiction) }
 
   before do
     login_as user
@@ -15,7 +15,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
 
   context 'Always apply EV check for application with same NINO' do
 
-    let(:application) { create :application_full_remission }
+    let(:application) { create(:application_full_remission) }
 
     scenario 'Check that evidence check is on for 2nd and 3rd application with same NINO' do
       start_new_application
@@ -55,8 +55,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   end
 
   context 'Check that every consecutive application with same NINO will be flagged until evidence is provided' do
-    let(:application1) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office }
-    let(:application2) { create :application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office }
+    let(:application1) { create(:application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office) }
+    let(:application2) { create(:application, :waiting_for_evidence_state, :applicant_full, ni_number: 'AB123456D', office: office) }
     let(:applicant1) { application1.applicant }
     let(:applicant2) { application2.applicant }
 
@@ -108,10 +108,10 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   end
 
   context 'Duplicate NINO not included in 1 in 2 count for Refund application' do
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'Create duplicate NINO and verify it is not included in 1 in 2 count' do

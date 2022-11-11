@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe EvidenceChecksController, type: :controller do
-  let(:office) { create :office }
-  let(:user) { create :staff, office: office }
+RSpec.describe EvidenceChecksController do
+  let(:office) { create(:office) }
+  let(:user) { create(:staff, office: office) }
   let(:filter) { { jurisdiction_id: '' } }
 
   before do

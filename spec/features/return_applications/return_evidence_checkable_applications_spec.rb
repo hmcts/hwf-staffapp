@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.feature 'When evidence checkable applications are returned', type: :feature do
+RSpec.feature 'When evidence checkable applications are returned' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
-  let(:user) { create :user, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
 
-  let(:application1) { create :application_full_remission, :waiting_for_evidence_state, office: office }
-  let(:application2) { create :application_full_remission, :waiting_for_evidence_state, office: office }
+  let(:application1) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
+  let(:application2) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
   before do
-    create :evidence_check, application: application1
-    create :evidence_check, application: application2
+    create(:evidence_check, application: application1)
+    create(:evidence_check, application: application2)
     login_as user
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ResultHelper, type: :helper do
+RSpec.describe ResultHelper do
 
   describe '#display_savings_failed_letter' do
     let(:application) { instance_double(Application) }
@@ -64,7 +64,7 @@ RSpec.describe ResultHelper, type: :helper do
   end
 
   describe '#display_income_failed_letter' do
-    let(:application) { build :application }
+    let(:application) { build(:application) }
 
     before do
       RSpec::Mocks.configuration.allow_message_expectations_on_nil
@@ -88,20 +88,20 @@ RSpec.describe ResultHelper, type: :helper do
 
     context 'evidence_check higher amount' do
       let(:income_max_threshold_exceeded) { nil }
-      let(:application) { build :application, evidence_check: evidence, income: 100 }
+      let(:application) { build(:application, evidence_check: evidence, income: 100) }
 
       context 'higher amount' do
-        let(:evidence) { build :evidence_check, income: 105 }
+        let(:evidence) { build(:evidence_check, income: 105) }
 
         it { expect(helper.display_income_failed_letter?(application)).to be true }
       end
       context 'lower amount' do
-        let(:evidence) { build :evidence_check, income: 80 }
+        let(:evidence) { build(:evidence_check, income: 80) }
 
         it { expect(helper.display_income_failed_letter?(application)).to be false }
       end
       context 'no amount' do
-        let(:evidence) { build :evidence_check, income: nil }
+        let(:evidence) { build(:evidence_check, income: nil) }
 
         it { expect(helper.display_income_failed_letter?(application)).to be false }
       end
@@ -111,9 +111,9 @@ RSpec.describe ResultHelper, type: :helper do
 
   describe '#income_value' do
     let(:application) {
-      build :application, income: income,
+      build(:application, income: income,
                           income_min_threshold_exceeded: income_min, income_max_threshold_exceeded: income_max,
-                          income_max_threshold: 6065.to_f
+                          income_max_threshold: 6065.to_f)
     }
     let(:income_min) { false }
     let(:income_max) { false }
@@ -150,10 +150,10 @@ RSpec.describe ResultHelper, type: :helper do
 
     context 'evidence_check' do
       let(:application) {
-        build :application, income: income, income_min_threshold_exceeded: income_min,
-                            income_max_threshold_exceeded: income_max, income_max_threshold: 6065.to_f, evidence_check: evidence
+        build(:application, income: income, income_min_threshold_exceeded: income_min,
+                            income_max_threshold_exceeded: income_max, income_max_threshold: 6065.to_f, evidence_check: evidence)
       }
-      let(:evidence) { build :evidence_check, income: 1234 }
+      let(:evidence) { build(:evidence_check, income: 1234) }
       let(:income_min) { true }
       let(:income_max) { false }
       let(:income) { 500 }
@@ -163,10 +163,10 @@ RSpec.describe ResultHelper, type: :helper do
 
     context 'evidence_check without income' do
       let(:application) {
-        build :application, income: income, income_min_threshold_exceeded: income_min,
-                            income_max_threshold_exceeded: income_max, income_max_threshold: 6065.to_f, evidence_check: evidence
+        build(:application, income: income, income_min_threshold_exceeded: income_min,
+                            income_max_threshold_exceeded: income_max, income_max_threshold: 6065.to_f, evidence_check: evidence)
       }
-      let(:evidence) { build :evidence_check, income: nil }
+      let(:evidence) { build(:evidence_check, income: nil) }
       let(:income_min) { true }
       let(:income_max) { false }
       let(:income) { 500 }

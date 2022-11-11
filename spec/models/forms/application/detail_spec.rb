@@ -11,7 +11,7 @@ RSpec.describe Forms::Application::Detail do
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason]
 
-  let(:detail) { attributes_for :detail }
+  let(:detail) { attributes_for(:detail) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -46,7 +46,7 @@ RSpec.describe Forms::Application::Detail do
   end
 
   describe 'when a Hash is passed in' do
-    let(:detail) { attributes_for :complete_detail }
+    let(:detail) { attributes_for(:complete_detail) }
 
     params_list.each do |attr_name|
       next if attr_name.to_s =~ /day|month|year|emergency/
@@ -422,7 +422,7 @@ RSpec.describe Forms::Application::Detail do
     end
 
     let(:jurisdiction) { create(:jurisdiction) }
-    let(:detail) { create :detail }
+    let(:detail) { create(:detail) }
 
     context 'when attributes are correct' do
       let(:attributes) { attributes_for(:complete_detail, :probate, :refund, :emergency) }

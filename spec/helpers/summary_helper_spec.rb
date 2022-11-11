@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SummaryHelper, type: :helper do
+RSpec.describe SummaryHelper do
 
   let(:fee_label) { 'Fee' }
 

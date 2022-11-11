@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'Business entity management:', type: :feature do
+RSpec.feature 'Business entity management:' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:office) { create :office, business_entities: [business_entity] }
-  let(:admin) { create :admin_user, office: office }
-  let(:manager) { create :manager, office: office }
-  let(:business_entity) { create :business_entity }
+  let!(:office) { create(:office, business_entities: [business_entity]) }
+  let(:admin) { create(:admin_user, office: office) }
+  let(:manager) { create(:manager, office: office) }
+  let(:business_entity) { create(:business_entity) }
 
   before do
     OfficeJurisdiction.where(jurisdiction_id: office.jurisdictions.last.id).delete_all
@@ -110,7 +110,7 @@ RSpec.feature 'Business entity management:', type: :feature do
         end
 
         scenario 'no more jurisdictions can be deactivated' do
-          expect(page).to have_no_xpath('//a', text: 'Deactivate')
+          expect(page).not_to have_xpath('//a', text: 'Deactivate')
         end
       end
     end

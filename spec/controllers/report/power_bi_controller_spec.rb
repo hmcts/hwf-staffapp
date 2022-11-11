@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Report::PowerBiController do
 
   context 'mi user' do
-    let(:mi) { create :mi }
+    let(:mi) { create(:mi) }
     before { sign_in mi }
 
     describe 'GET #power_bi' do
@@ -22,7 +22,7 @@ RSpec.describe Report::PowerBiController do
   end
 
   context 'admin' do
-    let(:admin) { create :admin_user }
+    let(:admin) { create(:admin_user) }
     before { sign_in admin }
 
     describe 'GET #power_bi' do

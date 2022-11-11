@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::PersonalInformationsController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::PersonalInformationsController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
   let(:detail) { build_stubbed(:detail) }
 
@@ -65,7 +65,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   end
 
   context 'after an application is processed' do
-    let!(:application) { create :application, :processed_state, office: user.office }
+    let!(:application) { create(:application, :processed_state, office: user.office) }
 
     describe 'when accessing the personal_details view' do
       before { get :index, params: { application_id: application.id } }
@@ -83,7 +83,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   end
 
   context 'after an application is deleted' do
-    let!(:application) { create :application, :deleted_state, office: user.office }
+    let!(:application) { create(:application, :deleted_state, office: user.office) }
 
     describe 'when accessing the personal_details view' do
       before { get :index, params: { application_id: application.id } }
@@ -101,8 +101,8 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   end
 
   context 'when an application is awaiting evidence' do
-    let!(:application) { create :application, :waiting_for_evidence_state, office: user.office }
-    let!(:evidence) { create :evidence_check, application: application }
+    let!(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
+    let!(:evidence) { create(:evidence_check, application: application) }
 
     describe 'when accessing the personal_details view' do
       before { get :index, params: { application_id: application.id } }
@@ -120,7 +120,7 @@ RSpec.describe Applications::Process::PersonalInformationsController, type: :con
   end
 
   context 'when an application is part_payment' do
-    let(:application) { create :application, :waiting_for_part_payment_state, office: user.office }
+    let(:application) { create(:application, :waiting_for_part_payment_state, office: user.office) }
     let!(:part_payment) { create(:part_payment, application: application) }
 
     describe 'when accessing the personal_details view' do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Report::IncomeClaimsDataController do
 
-  let(:admin)     { create :admin_user }
+  let(:admin)     { create(:admin_user) }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
   let(:date_to) { { day: "31", month: "12", year: "2015" } }
   let(:dates) {

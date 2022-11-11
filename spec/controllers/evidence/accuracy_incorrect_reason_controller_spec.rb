@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::AccuracyIncorrectReasonController, type: :controller do
+RSpec.describe Evidence::AccuracyIncorrectReasonController do
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
+  let(:user) { create(:user, office: office) }
   let(:applicant) { application.applicant }
-  let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office }
+  let(:application) { create(:application, :applicant_full, :waiting_for_evidence_state, office: office) }
   let(:evidence) { application.evidence_check }
 
   before do

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'When showing offices, managers', type: :feature do
+RSpec.feature 'When showing offices, managers' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdictions) { create_list :jurisdiction, 3 }
+  let(:jurisdictions) { create_list(:jurisdiction, 3) }
   let(:office) { create(:office, jurisdictions: jurisdictions) }
   let(:manager) { create(:manager, jurisdiction_id: jurisdictions[1].id, office: office) }
-  let(:office2) { create :office }
+  let(:office2) { create(:office) }
 
   scenario 'can view their own office' do
     login_as(manager)

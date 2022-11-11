@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'feedback/index', type: :view do
-  let(:admin) { create :admin_user }
+RSpec.describe 'feedback/index' do
+  let(:admin) { create(:admin_user) }
 
   before do
     assign(:feedback, create_list(:feedback, 2, user: admin, office: admin.office))

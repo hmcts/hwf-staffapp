@@ -18,13 +18,13 @@ RSpec.describe Views::PartPayment::Result do
     subject { view.part_payment }
 
     context 'when the payment is correct' do
-      let(:part_payment) { build_stubbed :part_payment, application: application, correct: true }
+      let(:part_payment) { build_stubbed(:part_payment, application: application, correct: true) }
 
       it { is_expected.to eql(string_passed) }
     end
 
     context 'when the part_payment is not correct' do
-      let(:part_payment) { build_stubbed :part_payment, application: application, correct: false }
+      let(:part_payment) { build_stubbed(:part_payment, application: application, correct: false) }
 
       it { is_expected.to eql(string_failed) }
     end
@@ -33,7 +33,7 @@ RSpec.describe Views::PartPayment::Result do
   describe '#reason' do
     subject { view.reason }
 
-    let(:part_payment) { build_stubbed :part_payment, application: application, incorrect_reason: reason }
+    let(:part_payment) { build_stubbed(:part_payment, application: application, incorrect_reason: reason) }
 
     context 'when the part_payment has an incorrect_reason' do
       let(:reason) { 'REASON' }
@@ -54,13 +54,13 @@ RSpec.describe Views::PartPayment::Result do
     subject { view.callout }
 
     context 'when the part_payment is correct' do
-      let(:part_payment) { build_stubbed :part_payment, application: application, correct: true }
+      let(:part_payment) { build_stubbed(:part_payment, application: application, correct: true) }
 
       it { is_expected.to eql('yes') }
     end
 
     context 'when the part_payment is not correct' do
-      let(:part_payment) { build_stubbed :part_payment, application: application, correct: false }
+      let(:part_payment) { build_stubbed(:part_payment, application: application, correct: false) }
 
       it { is_expected.to eql('no') }
     end

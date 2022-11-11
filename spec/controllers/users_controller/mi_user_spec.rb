@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe UsersController do
   render_views
 
-  let(:jurisdictions) { create_list :jurisdiction, 3 }
-  let(:user)          { create :mi, jurisdiction: jurisdictions[0], office: create(:office, jurisdictions: jurisdictions) }
-  let(:test_user)     { create :user }
+  let(:jurisdictions) { create_list(:jurisdiction, 3) }
+  let(:user)          { create(:mi, jurisdiction: jurisdictions[0], office: create(:office, jurisdictions: jurisdictions)) }
+  let(:test_user)     { create(:user) }
 
   context 'mi user' do
 
@@ -83,8 +83,8 @@ RSpec.describe UsersController, type: :controller do
 
       context 'when trying to update their own profile' do
         new_name = 'Updated Name'
-        let(:new_office) { create :office }
-        let(:new_jurisdiction) { create :jurisdiction }
+        let(:new_office) { create(:office) }
+        let(:new_jurisdiction) { create(:jurisdiction) }
         before do
           params = { name: new_name, office_id: new_office.id, jurisdiction_id: new_jurisdiction.id }
           post :update, params: { id: user.id, user: params }

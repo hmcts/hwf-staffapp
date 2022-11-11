@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe Views::OfficeBusinessEntityState do
   subject(:view) { described_class.new(office, jurisdiction) }
 
-  let(:office) { create :office }
-  let(:jurisdiction) { create :jurisdiction }
-  let!(:business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
+  let(:office) { create(:office) }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let!(:business_entity) { create(:business_entity, office: office, jurisdiction: jurisdiction) }
 
   it { is_expected.to respond_to(:jurisdiction_id) }
   it { is_expected.to respond_to(:jurisdiction_name) }
@@ -79,10 +79,10 @@ RSpec.describe Views::OfficeBusinessEntityState do
     end
 
     context 'when a business_entity object exists' do
-      before { create :business_entity, office: office, jurisdiction: jurisdiction }
+      before { create(:business_entity, office: office, jurisdiction: jurisdiction) }
 
       context 'it is currently in use by the office' do
-        before { create :office_jurisdiction, office: office, jurisdiction: jurisdiction }
+        before { create(:office_jurisdiction, office: office, jurisdiction: jurisdiction) }
 
         it { is_expected.to eq 'edit' }
       end
@@ -106,10 +106,10 @@ RSpec.describe Views::OfficeBusinessEntityState do
     end
 
     context 'when a business_entity object exists' do
-      before { create :business_entity, office: office, jurisdiction: jurisdiction }
+      before { create(:business_entity, office: office, jurisdiction: jurisdiction) }
 
       context 'it is currently in use by the office' do
-        before { create :office_jurisdiction, office: office, jurisdiction: jurisdiction }
+        before { create(:office_jurisdiction, office: office, jurisdiction: jurisdiction) }
 
         it { is_expected.to eq 1 }
       end

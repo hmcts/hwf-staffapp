@@ -1,7 +1,7 @@
 
 RSpec.describe Report::PurgeAuditController do
-  let(:admin) { create :admin_user }
-  let(:user) { create :user }
+  let(:admin) { create(:admin_user) }
+  let(:user) { create(:user) }
 
   describe '#show' do
     subject { response }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe OnlineApplicationBenefitsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe OnlineApplicationBenefitsController do
+  let(:user) { create(:user) }
   let(:online_application) { build_stubbed(:online_application, benefits: false) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }

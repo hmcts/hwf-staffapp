@@ -9,14 +9,14 @@ RSpec.describe SavingsPassFailService do
   let(:amount) { nil }
   let(:over_61) { false }
 
-  let!(:application) { create :application, fee: fee }
+  let!(:application) { create(:application, fee: fee) }
   let!(:saving) do
-    create :saving,
+    create(:saving,
            min_threshold_exceeded: min_threshold_exceeded,
            max_threshold_exceeded: max_threshold_exceeded,
            amount: amount,
            over_61: over_61,
-           application: application
+           application: application)
   end
 
   it { is_expected.to be_a described_class }

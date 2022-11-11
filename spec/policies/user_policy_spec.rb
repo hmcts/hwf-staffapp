@@ -306,17 +306,17 @@ RSpec.describe UserPolicy, type: :policy do
     describe '#resolve' do
       subject(:resolve) { described_class.new(user, User).resolve }
 
-      let(:office) { create :office }
-      let(:other_office) { create :office }
+      let(:office) { create(:office) }
+      let(:other_office) { create(:office) }
 
-      let!(:user1) { create :user, office: office }
-      let!(:user2) { create :manager, office: office }
-      let!(:user3) { create :admin, office: office }
-      let!(:user4) { create :user, office: other_office }
-      let!(:user5) { create :manager, office: other_office }
-      let!(:user6) { create :admin, office: other_office }
-      let!(:user7) { create :reader, office: office }
-      let!(:user8) { create :reader, office: other_office }
+      let!(:user1) { create(:user, office: office) }
+      let!(:user2) { create(:manager, office: office) }
+      let!(:user3) { create(:admin, office: office) }
+      let!(:user4) { create(:user, office: other_office) }
+      let!(:user5) { create(:manager, office: other_office) }
+      let!(:user6) { create(:admin, office: other_office) }
+      let!(:user7) { create(:reader, office: office) }
+      let!(:user8) { create(:reader, office: other_office) }
 
       context 'for staff' do
         let(:user) { create(:staff, office: office) }

@@ -1,6 +1,6 @@
 shared_examples_for 'Pundit denies access to' do |view|
-  let(:manager)   { create :manager }
-  let(:user)      { create :user }
+  let(:manager)   { create(:manager) }
+  let(:user)      { create(:user) }
 
   describe "GET ##{view}" do
 

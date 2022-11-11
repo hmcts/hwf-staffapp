@@ -8,6 +8,10 @@ class OnlineApplicationsController < ApplicationController
 
   include SectionViewsHelper
 
+  def show
+    build_sections
+  end
+
   def edit
     @form = Forms::OnlineApplication.new(online_application)
     @form.enable_default_jurisdiction(current_user)
@@ -24,10 +28,6 @@ class OnlineApplicationsController < ApplicationController
       assign_jurisdictions
       render :edit
     end
-  end
-
-  def show
-    build_sections
   end
 
   def complete

@@ -8,18 +8,18 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
   let(:office_id) { office.id }
 
-  let(:office) { create :office }
+  let(:office) { create(:office) }
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
   describe 'to_csv' do
-    let(:application1) { create :application, :processed_state, office: office, income_kind: {} }
-    let(:application2) { create :application, :waiting_for_evidence_state, office: office }
-    let(:application3) { create :application, :waiting_for_part_payment_state, office: office }
-    let(:application4) { create :application, :deleted_state, office: office }
-    let(:application5) { create :application, office: office }
-    let(:application6) { create :application, :processed_state, office: office }
-    let(:application7) { create :application, :processed_state }
+    let(:application1) { create(:application, :processed_state, office: office, income_kind: {}) }
+    let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
+    let(:application3) { create(:application, :waiting_for_part_payment_state, office: office) }
+    let(:application4) { create(:application, :deleted_state, office: office) }
+    let(:application5) { create(:application, office: office) }
+    let(:application6) { create(:application, :processed_state, office: office) }
+    let(:application7) { create(:application, :processed_state) }
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
     before do
@@ -38,8 +38,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
     context 'data fields' do
       let(:application2) {
-        create :application, :waiting_for_evidence_state,
-               office: office, income_kind: income_kind
+        create(:application, :waiting_for_evidence_state,
+               office: office, income_kind: income_kind)
       }
       let(:evidence_check) { create(:evidence_check, application: application2) }
       let(:hmrc_check) {

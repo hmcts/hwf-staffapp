@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'User list shows emails', type: :feature do
+RSpec.feature 'User list shows emails' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:admin) { create :admin_user }
+  let(:admin) { create(:admin_user) }
   let(:emails) do
-    5.times { create :user, office: create(:office) }
+    5.times { create(:user, office: create(:office)) }
     User.pluck(:email) - [admin.email]
   end
 

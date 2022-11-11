@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe IncomeCalculation do
   subject(:calculation) { described_class.new(application, income) }
 
-  let(:application) { build :application_part_remission }
+  let(:application) { build(:application_part_remission) }
 
   describe '.calculate' do
     subject(:calculated) { calculation.calculate }
@@ -16,7 +16,7 @@ RSpec.describe IncomeCalculation do
 
       context 'when the application has income thresholds set but not income' do
         context 'when the minimum income threshold has not been exceeded' do
-          let(:application) { build :application_part_remission, income: nil, income_min_threshold_exceeded: false }
+          let(:application) { build(:application_part_remission, income: nil, income_min_threshold_exceeded: false) }
 
           it 'results in full remission' do
             is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 2140, max_threshold: 6140, income_max_threshold_exceeded: false)
@@ -24,7 +24,7 @@ RSpec.describe IncomeCalculation do
         end
 
         context 'when the maximum income threshold has been exceeded' do
-          let(:application) { build :application_part_remission, fee: 333, income: nil, income_max_threshold_exceeded: true }
+          let(:application) { build(:application_part_remission, fee: 333, income: nil, income_max_threshold_exceeded: true) }
 
           it 'results in no remission' do
             is_expected.to eql(outcome: 'none', amount_to_pay: 333, min_threshold: 2140, max_threshold: 6140, income_max_threshold_exceeded: true)
@@ -34,7 +34,7 @@ RSpec.describe IncomeCalculation do
 
       context 'when the application has income set' do
         context 'is below threshold' do
-          let(:application) { build :single_applicant_under_61, income: 100, fee: 100, benefits: false }
+          let(:application) { build(:single_applicant_under_61, income: 100, fee: 100, benefits: false) }
 
           it 'results in full remission' do
             is_expected.to eql(outcome: 'full', amount_to_pay: 0, min_threshold: 1435, max_threshold: 5435, income_max_threshold_exceeded: false)
@@ -42,7 +42,7 @@ RSpec.describe IncomeCalculation do
         end
 
         context 'is below threshold with partial payment' do
-          let(:application) { build :single_applicant_under_61, income: 1715, fee: 100, benefits: false, children: 2 }
+          let(:application) { build(:single_applicant_under_61, income: 1715, fee: 100, benefits: false, children: 2) }
 
           it 'results in part remission' do
             is_expected.to eql(outcome: 'part', amount_to_pay: 5, min_threshold: 1700, max_threshold: 5700, income_max_threshold_exceeded: false)
@@ -50,7 +50,7 @@ RSpec.describe IncomeCalculation do
         end
 
         context 'is below threshold but can pay' do
-          let(:application) { build :single_applicant_under_61, income: 5000, fee: 100, benefits: false }
+          let(:application) { build(:single_applicant_under_61, income: 5000, fee: 100, benefits: false) }
 
           it 'results in no remission' do
             is_expected.to eql(outcome: 'none', amount_to_pay: 100, min_threshold: 1435, max_threshold: 5435, income_max_threshold_exceeded: true)
@@ -65,7 +65,7 @@ RSpec.describe IncomeCalculation do
         context 'when data for calculation is present' do
           describe 'for known scenarios' do
             CalculatorTestData.seed_data.each do |src|
-              describe "scenario \##{src[:id]} passes" do
+              describe "scenario ##{src[:id]} passes" do
                 before do
                   application.tap do |a|
                     a.detail.fee = src[:fee]

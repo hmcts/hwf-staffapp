@@ -19,7 +19,7 @@ RSpec.describe FormObject do
 
   params_list = Forms::FormTestClass.permitted_attributes.keys
 
-  let(:application) { create :detail }
+  let(:application) { create(:detail) }
   let(:object_or_hash) { application }
 
   describe '#initialize' do

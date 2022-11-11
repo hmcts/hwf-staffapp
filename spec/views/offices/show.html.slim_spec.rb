@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "offices/show", type: :view do
+RSpec.describe "offices/show" do
   subject { rendered }
 
   let(:office_name) { 'My office' }

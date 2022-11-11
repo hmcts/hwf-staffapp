@@ -5,7 +5,7 @@ RSpec.describe Forms::Application::Delete do
 
   params_list = [:deleted_reason]
 
-  let(:application) { create :application }
+  let(:application) { create(:application) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -24,7 +24,7 @@ RSpec.describe Forms::Application::Delete do
     end
 
     let(:attributes) { { deleted_reason: reason } }
-    let(:application) { create :application, deleted_reason: nil }
+    let(:application) { create(:application, deleted_reason: nil) }
 
     context 'when the attributes are correct' do
       let(:reason) { 'SOME REASON' }

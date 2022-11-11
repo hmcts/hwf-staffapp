@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Views::ApplicationList do
-  let(:user) { build :user }
+  let(:user) { build(:user) }
   let(:applicant) { build(:applicant) }
   let(:detail) { build(:detail, date_received: '2015-10-01') }
   let(:override) { nil }
@@ -172,7 +172,7 @@ RSpec.describe Views::ApplicationList do
       end
 
       context 'when the decision was overridden' do
-        let(:override)  { build :decision_override }
+        let(:override)  { build(:decision_override) }
 
         it 'returns Granted' do
           is_expected.to eql 'Granted'
@@ -194,7 +194,7 @@ RSpec.describe Views::ApplicationList do
   context 'when initialized with an application that was converted from an online_application' do
     subject(:view) { described_class.new(application) }
 
-    let!(:online_application) { create :online_application, :completed, :with_reference }
+    let!(:online_application) { create(:online_application, :completed, :with_reference) }
     let(:application) { build(:application, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at, online_application: online_application) }
 
     describe '#paper_application?' do
@@ -207,8 +207,8 @@ RSpec.describe Views::ApplicationList do
   context 'when initialized with an evidence_check' do
     subject(:view) { described_class.new(evidence_check) }
 
-    let(:application) { build :application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at }
-    let(:evidence_check) { build :evidence_check, application: application }
+    let(:application) { build(:application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at) }
+    let(:evidence_check) { build(:evidence_check, application: application) }
 
     describe '#evidence_check?' do
       subject { view.evidence_check? }
@@ -220,8 +220,8 @@ RSpec.describe Views::ApplicationList do
   context 'when initialized with a part-payment' do
     subject(:view) { described_class.new(part_payment) }
 
-    let(:application) { build :application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at }
-    let(:part_payment) { build :part_payment, application: application }
+    let(:application) { build(:application_part_remission, :waiting_for_part_payment_state, applicant: applicant, detail: detail, completed_by: completed_by, completed_at: completed_at) }
+    let(:part_payment) { build(:part_payment, application: application) }
 
     describe '#id' do
       it 'returns the application id' do

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Staff can search for online application', type: :feature do
+RSpec.feature 'Staff can search for online application' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdictions) { create_list :jurisdiction, 4 }
-  let(:office) { create :office, jurisdictions: jurisdictions }
-  let(:user) { create :staff, office: office }
+  let(:jurisdictions) { create_list(:jurisdiction, 4) }
+  let(:office) { create(:office, jurisdictions: jurisdictions) }
+  let(:user) { create(:staff, office: office) }
   let(:current_time) { Time.zone.parse('10/10/2015') }
 
   before do
@@ -15,7 +15,7 @@ RSpec.feature 'Staff can search for online application', type: :feature do
     login_as user
   end
 
-  let(:online_application) { create :online_application, :with_reference }
+  let(:online_application) { create(:online_application, :with_reference) }
 
   scenario 'User fills in all required fields and the application is saved' do
     Timecop.freeze(current_time) do

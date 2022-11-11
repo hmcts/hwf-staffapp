@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DwpReportStatusJob, type: :job do
+RSpec.describe DwpReportStatusJob do
   describe 'check DWP status' do
     let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
     let(:mailer) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }

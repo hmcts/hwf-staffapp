@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe UsersController do
   render_views
 
-  let(:admin_user)              { create :admin_user }
-  let(:user_on_admins_team)     { create :user, name: 'Bob', office: admin_user.office }
-  let(:user_not_on_admins_team) { create :user }
+  let(:admin_user)              { create(:admin_user) }
+  let(:user_on_admins_team)     { create(:user, name: 'Bob', office: admin_user.office) }
+  let(:user_not_on_admins_team) { create(:user) }
 
   context 'admin user' do
     before do
       User.delete_all
       Office.delete_all
       Jurisdiction.delete_all
-      create_list :user, 3, office: admin_user.office
-      create_list :user, 3
+      create_list(:user, 3, office: admin_user.office)
+      create_list(:user, 3)
       sign_in admin_user
     end
 
@@ -168,7 +168,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'PATCH #restore' do
-      let(:deleted_user) { create :user, deleted_at: Time.zone.now }
+      let(:deleted_user) { create(:user, deleted_at: Time.zone.now) }
 
       before do
         patch :restore, params: { id: deleted_user.to_param }

@@ -5,7 +5,7 @@ RSpec.describe OnlineApplicationSearch do
 
   include Rails.application.routes.url_helpers
   let(:reference) { nil }
-  let(:user) { create :staff }
+  let(:user) { create(:staff) }
 
   it { is_expected.to respond_to :error_message }
 
@@ -81,7 +81,7 @@ RSpec.describe OnlineApplicationSearch do
     end
 
     context 'when an application has been processed by a different office' do
-      let(:office) { create :office }
+      let(:office) { create(:office) }
       let(:reference) { existing_reference }
       let(:application) { build_stubbed(:application, reference: online_application.reference, office: office) }
 

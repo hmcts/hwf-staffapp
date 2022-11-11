@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::PartPayment::Accuracy do
   subject(:form) { described_class.new(part_payment) }
 
-  let(:part_payment) { build_stubbed :part_payment }
+  let(:part_payment) { build_stubbed(:part_payment) }
 
   it 'inherits features of Forms::Accuracy' do
     expect(form).to be_a(Forms::Accuracy)
@@ -15,7 +15,7 @@ RSpec.describe Forms::PartPayment::Accuracy do
       part_payment.reload.outcome
     end
 
-    let(:part_payment) { create :part_payment }
+    let(:part_payment) { create(:part_payment) }
 
     before do
       form.update(params)

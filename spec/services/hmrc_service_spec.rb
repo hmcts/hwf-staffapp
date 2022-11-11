@@ -4,24 +4,24 @@ require 'rails_helper'
 
 describe HmrcService do
   subject(:service) { described_class.new(application, form) }
-  let(:application) { create :application_part_remission }
-  let(:evidence_check) { create :evidence_check, application: application }
+  let(:application) { create(:application_part_remission) }
+  let(:evidence_check) { create(:evidence_check, application: application) }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to', user_id: 256) }
   let(:applicant) {
-    create :applicant,
+    create(:applicant,
            date_of_birth: DateTime.new(1968, 2, 28),
            ni_number: 'AB123456C',
            first_name: 'Jimmy',
            last_name: 'Conners',
-           application: application
+           application: application)
   }
 
   let(:api_service) { instance_double(HmrcApiService) }
   let(:hmrc_check) { instance_double(HmrcCheck) }
 
   describe 'load_form_default_data_range' do
-    let(:application) { create :application_part_remission, date_received: '4/5/2021', refund: false }
+    let(:application) { create(:application_part_remission, date_received: '4/5/2021', refund: false) }
     before {
       allow(form).to receive(:from_date_day=)
       allow(form).to receive(:from_date_month=)
@@ -42,7 +42,7 @@ describe HmrcService do
     end
 
     context 'refund applicaiton' do
-      let(:application) { create :application_part_remission, date_received: '4/5/2021', refund: true, date_fee_paid: '4/4/2021' }
+      let(:application) { create(:application_part_remission, date_received: '4/5/2021', refund: true, date_fee_paid: '4/4/2021') }
       it 'loads dates one month before submitting' do
         expect(form).to have_received(:from_date_day=).with(1)
         expect(form).to have_received(:from_date_month=).with(3)

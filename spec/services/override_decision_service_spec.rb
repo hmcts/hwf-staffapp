@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe OverrideDecisionService, type: :service do
   subject(:service) { described_class.new(application, form) }
 
-  let(:application) { create :application, :processed_state, outcome: 'full' }
+  let(:application) { create(:application, :processed_state, outcome: 'full') }
   let(:decision_override) { DecisionOverride.new(application: application) }
   let(:form) { Forms::Application::DecisionOverride.new(decision_override) }
 
@@ -16,7 +16,7 @@ RSpec.describe OverrideDecisionService, type: :service do
   end
 
   let(:reason) { 'foo reason bar' }
-  let(:user) { create :staff }
+  let(:user) { create(:staff) }
 
   it { is_expected.to be_a(described_class) }
 

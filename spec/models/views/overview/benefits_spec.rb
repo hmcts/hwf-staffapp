@@ -16,7 +16,7 @@ RSpec.describe Views::Overview::Benefits do
   describe '#on_benefits?' do
     subject { view.on_benefits? }
 
-    let(:application) { build_stubbed :application, benefits: benefits }
+    let(:application) { build_stubbed(:application, benefits: benefits) }
 
     [true, false].each do |value|
       context "when benefits is #{value}" do
@@ -45,7 +45,7 @@ RSpec.describe Views::Overview::Benefits do
     end
 
     context 'when user selected "no" to on benefits' do
-      let(:application) { build_stubbed :application, benefits: false }
+      let(:application) { build_stubbed(:application, benefits: false) }
 
       it { is_expected.to be_nil }
     end

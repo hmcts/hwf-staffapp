@@ -17,10 +17,10 @@ describe EvidenceCheckSelector do
     end
 
     context 'for a benefit application' do
-      let(:application) { create :application, :applicant_full }
+      let(:application) { create(:application, :applicant_full) }
 
       before do
-        create_list :application, 9
+        create_list(:application, 9)
       end
 
       it 'never selects the application for evidence_check' do
@@ -29,10 +29,10 @@ describe EvidenceCheckSelector do
     end
 
     context 'for an application without remission' do
-      let(:application) { create :application_no_remission, :no_benefits }
+      let(:application) { create(:application_no_remission, :no_benefits) }
 
       before do
-        create_list :application_no_remission, 9, :no_benefits
+        create_list(:application_no_remission, 9, :no_benefits)
       end
 
       it 'never selects the application for evidence_check' do
@@ -42,14 +42,14 @@ describe EvidenceCheckSelector do
 
     describe 'should skipp EV check' do
       let(:application) { instance_spy Application, :applicant_full, outcome: 'full', application_type: 'income' }
-      let(:detail) { build_stubbed :detail }
+      let(:detail) { build_stubbed(:detail) }
 
       before do
         allow(application).to receive(:detail).and_return detail
       end
 
       context 'if it is emergency' do
-        let(:detail) { build_stubbed :detail, emergency_reason: 'test' }
+        let(:detail) { build_stubbed(:detail, emergency_reason: 'test') }
 
         it do
           evidence_check_selector.decide!
@@ -58,7 +58,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if it is expired refund application' do
-        let(:detail) { build_stubbed :detail, :out_of_time_refund, discretion_applied: false }
+        let(:detail) { build_stubbed(:detail, :out_of_time_refund, discretion_applied: false) }
 
         it do
           evidence_check_selector.decide!
@@ -86,7 +86,7 @@ describe EvidenceCheckSelector do
 
       context 'if applicant is under 15' do
         let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant, id: 2 }
-        let(:applicant) { build :applicant_with_all_details, date_of_birth: dob }
+        let(:applicant) { build(:applicant_with_all_details, date_of_birth: dob) }
         let(:evidence_check_flag) { instance_double(EvidenceCheckFlag, active?: true) }
         before { allow(EvidenceCheckFlag).to receive(:where).and_return([evidence_check_flag]) }
 
@@ -117,12 +117,12 @@ describe EvidenceCheckSelector do
 
     context 'for a non-benefit remission application' do
       context 'for a non-refund application' do
-        let(:application) { create :application_full_remission, reference: 'XY55-22-3' }
+        let(:application) { create(:application_full_remission, reference: 'XY55-22-3') }
 
         context 'when the application is the 10th (10% gets checked)' do
           before do
-            create_list :application_full_remission, 9
-            create_list :application, 5
+            create_list(:application_full_remission, 9)
+            create_list(:application, 5)
           end
 
           it 'creates evidence_check record for the application' do
@@ -142,8 +142,8 @@ describe EvidenceCheckSelector do
 
         context 'when the application is not the 10th' do
           before do
-            create_list :application_full_remission, 4
-            create_list :application, 5
+            create_list(:application_full_remission, 4)
+            create_list(:application, 5)
           end
 
           it 'does not create evidence_check record for the application' do
@@ -153,12 +153,12 @@ describe EvidenceCheckSelector do
       end
 
       context 'for a refund application' do
-        let(:application) { create :application_full_remission, :refund }
+        let(:application) { create(:application_full_remission, :refund) }
 
         context 'when the application is the 2nd (50% gets checked)' do
           before do
-            create_list :application_full_remission, 3, :refund
-            create_list :application, 5
+            create_list(:application_full_remission, 3, :refund)
+            create_list(:application, 5)
           end
 
           it 'creates evidence_check record for the application' do
@@ -172,8 +172,8 @@ describe EvidenceCheckSelector do
 
         context 'when the application is not the 2nd' do
           before do
-            create_list :application_full_remission, 2, :refund
-            create_list :application, 3
+            create_list(:application_full_remission, 2, :refund)
+            create_list(:application, 3)
           end
 
           it 'does not create evidence_check record for the application' do
@@ -184,8 +184,8 @@ describe EvidenceCheckSelector do
 
       context 'when the application is flagged for failed evidence check' do
         describe 'with ni_number' do
-          let(:application) { create :application_full_remission, :applicant_full, ni_number: 'SN123456D', reference: 'XY55-22-3' }
-          before { create :evidence_check_flag, reg_number: 'SN123456D' }
+          let(:application) { create(:application_full_remission, :applicant_full, ni_number: 'SN123456D', reference: 'XY55-22-3') }
+          before { create(:evidence_check_flag, reg_number: 'SN123456D') }
 
           it { is_expected.to be_a(EvidenceCheck) }
 
@@ -195,8 +195,8 @@ describe EvidenceCheckSelector do
         end
 
         describe 'with ho_number' do
-          let(:application) { create :application_full_remission, :applicant_full, reference: 'L123456', ni_number: '', ho_number: 'L123456' }
-          before { create :evidence_check_flag, reg_number: applicant.ho_number }
+          let(:application) { create(:application_full_remission, :applicant_full, reference: 'L123456', ni_number: '', ho_number: 'L123456') }
+          before { create(:evidence_check_flag, reg_number: applicant.ho_number) }
 
           it { is_expected.to be_a(EvidenceCheck) }
 
@@ -242,7 +242,7 @@ describe EvidenceCheckSelector do
         }
 
         before do
-          create :evidence_check_flag, reg_number: applicant.ni_number, active: false
+          create(:evidence_check_flag, reg_number: applicant.ni_number, active: false)
           evidence_check
         end
 
@@ -287,11 +287,11 @@ describe EvidenceCheckSelector do
     end
 
     context 'CCMCC application frequency applies' do
-      let(:application) { create :application_full_remission, office: ccmcc_office }
+      let(:application) { create(:application_full_remission, office: ccmcc_office) }
       let(:query_type) { nil }
       let(:frequency) { 1 }
-      let(:ccmcc_office) { create :office, entity_code: 'DH403' }
-      let(:digital_office) { create :office, entity_code: 'dig' }
+      let(:ccmcc_office) { create(:office, entity_code: 'DH403') }
+      let(:digital_office) { create(:office, entity_code: 'dig') }
 
       before do
         @ccmcc = instance_double(CCMCCEvidenceCheckRules, clean_annotation_data: true)
@@ -309,11 +309,11 @@ describe EvidenceCheckSelector do
 
         context 'digital_office' do
           context 'just refund' do
-            let(:application) { create :application_full_remission, :refund, office: ccmcc_office }
+            let(:application) { create(:application_full_remission, :refund, office: ccmcc_office) }
 
             before do
-              create :application_full_remission, :refund, office: digital_office
-              create :application_full_remission, office: digital_office
+              create(:application_full_remission, :refund, office: digital_office)
+              create(:application_full_remission, office: digital_office)
             end
 
             let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
@@ -325,8 +325,8 @@ describe EvidenceCheckSelector do
 
           context 'just normal' do
             before do
-              create :application_full_remission, :refund, office: digital_office
-              create :application_full_remission, office: digital_office
+              create(:application_full_remission, :refund, office: digital_office)
+              create(:application_full_remission, office: digital_office)
             end
 
             let(:query_type) { nil }
@@ -339,8 +339,8 @@ describe EvidenceCheckSelector do
           context 'all' do
             let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
             before do
-              create_list :application_full_remission, 2, :refund, office: digital_office
-              create :application_full_remission, office: digital_office
+              create_list(:application_full_remission, 2, :refund, office: digital_office)
+              create(:application_full_remission, office: digital_office)
             end
 
             it 'creates evidence_check record for the application' do
@@ -355,9 +355,9 @@ describe EvidenceCheckSelector do
         let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
 
         before do
-          create :application_full_remission, :refund, office: ccmcc_office
-          create :application, office: ccmcc_office
-          create :application, office: digital_office
+          create(:application_full_remission, :refund, office: ccmcc_office)
+          create(:application, office: ccmcc_office)
+          create(:application, office: digital_office)
         end
 
         it 'creates evidence_check record for the application' do
@@ -370,7 +370,7 @@ describe EvidenceCheckSelector do
         let(:query_type) { CCMCCEvidenceCheckRules::QUERY_ALL }
 
         before do
-          create :application, office: ccmcc_office
+          create(:application, office: ccmcc_office)
         end
 
         it 'creates evidence_check record for the application' do
@@ -380,9 +380,9 @@ describe EvidenceCheckSelector do
 
       context 'query only non refund applications' do
         before do
-          create_list :application_full_remission, 4, office: ccmcc_office
-          create_list :application, 5, office: ccmcc_office
-          create :application, office: digital_office
+          create_list(:application_full_remission, 4, office: ccmcc_office)
+          create_list(:application, 5, office: ccmcc_office)
+          create(:application, office: digital_office)
         end
 
         it 'creates evidence_check record for the application' do
@@ -397,9 +397,9 @@ describe EvidenceCheckSelector do
       context 'query only refund applications' do
         let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
         before do
-          create_list :application_full_remission, 4, :refund, office: ccmcc_office
-          create_list :application, 5, office: ccmcc_office
-          create :application, :refund, office: digital_office
+          create_list(:application_full_remission, 4, :refund, office: ccmcc_office)
+          create_list(:application, 5, office: ccmcc_office)
+          create(:application, :refund, office: digital_office)
         end
 
         it 'creates evidence_check record for the application' do
@@ -421,8 +421,8 @@ describe EvidenceCheckSelector do
         let(:frequency) { 3 }
 
         before do
-          create_list :application_full_remission, 4, :refund, office: ccmcc_office
-          create_list :application, 5, office: ccmcc_office
+          create_list(:application_full_remission, 4, :refund, office: ccmcc_office)
+          create_list(:application, 5, office: ccmcc_office)
         end
 
         it 'cleans the ccmcc annotation data' do
@@ -433,7 +433,7 @@ describe EvidenceCheckSelector do
     end
 
     context 'HMRC check applies' do
-      let(:application) { create :application_full_remission, :applicant_full, married: married, office: office, medium: 'digital' }
+      let(:application) { create(:application_full_remission, :applicant_full, married: married, office: office, medium: 'digital') }
       before do
         ev_stub = instance_double(EvidenceCheckFlag, active?: true)
         allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
@@ -444,20 +444,20 @@ describe EvidenceCheckSelector do
         let(:married) { false }
 
         context 'office match' do
-          let(:office) { create :office, entity_code: 'dig' }
+          let(:office) { create(:office, entity_code: 'dig') }
 
           it 'is hmrc checked' do
             expect(decision.income_check_type).to eql 'hmrc'
           end
 
           context 'is not digital applicaiton' do
-            let(:application) { create :application_full_remission, :applicant_full, office: office, medium: 'paper' }
+            let(:application) { create(:application_full_remission, :applicant_full, office: office, medium: 'paper') }
             it { expect(decision.income_check_type).not_to eql 'hmrc' }
           end
         end
 
         context 'office does not match' do
-          let(:office) { create :office, entity_code: 'dig01' }
+          let(:office) { create(:office, entity_code: 'dig01') }
 
           it 'is paper checked' do
             expect(decision.income_check_type).to eql 'paper'
@@ -465,7 +465,7 @@ describe EvidenceCheckSelector do
         end
 
         context 'setting does not match' do
-          let(:office) { create :office, entity_code: 'dig' }
+          let(:office) { create(:office, entity_code: 'dig') }
           before { Settings.evidence_check.hmrc.office_entity_code = 'dug' }
 
           it 'is paper checked' do
@@ -478,7 +478,7 @@ describe EvidenceCheckSelector do
         let(:married) { true }
 
         context 'office match' do
-          let(:office) { create :office, entity_code: 'dig' }
+          let(:office) { create(:office, entity_code: 'dig') }
 
           it 'is paper checked' do
             expect(decision.income_check_type).to eql 'paper'
@@ -486,7 +486,7 @@ describe EvidenceCheckSelector do
         end
 
         context 'office does not match' do
-          let(:office) { create :office, entity_code: 'dig01' }
+          let(:office) { create(:office, entity_code: 'dig01') }
 
           it 'is paper checked' do
             expect(decision.income_check_type).to eql 'paper'

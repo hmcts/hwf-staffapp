@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.feature 'Evidence check', type: :feature do
+RSpec.feature 'Evidence check' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdiction) { create :jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:user) { create :user, office: office }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:user) { create(:user, office: office) }
 
   before do
     login_as user
     dwp_api_response ''
-    create_list :application_part_remission, 9
+    create_list(:application_part_remission, 9)
   end
 
   scenario 'Processing benefit based application' do
@@ -89,7 +89,7 @@ RSpec.feature 'Evidence check', type: :feature do
     end
 
     scenario 'no evidence check for 11th application' do
-      create :application_part_remission
+      create(:application_part_remission)
 
       visit home_index_url
 

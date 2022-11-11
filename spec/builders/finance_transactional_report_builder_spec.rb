@@ -15,13 +15,13 @@ RSpec.describe FinanceTransactionalReportBuilder do
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
 
-  let(:digital) { create :office, name: 'Digital' }
-  let(:jurisdiction1) { create :jurisdiction }
-  let(:jurisdiction2) { create :jurisdiction }
-  let(:business_entity1) { create :business_entity, sop_code: 'abc134', jurisdiction: jurisdiction1 }
-  let(:business_entity2) { create :business_entity, sop_code: 'efg142', jurisdiction: jurisdiction2 }
-  let(:business_entity3) { create :business_entity, sop_code: 'hjk122', jurisdiction: jurisdiction1 }
-  let(:business_entity4) { create :business_entity, sop_code: 'mop345', jurisdiction: jurisdiction2 }
+  let(:digital) { create(:office, name: 'Digital') }
+  let(:jurisdiction1) { create(:jurisdiction) }
+  let(:jurisdiction2) { create(:jurisdiction) }
+  let(:business_entity1) { create(:business_entity, sop_code: 'abc134', jurisdiction: jurisdiction1) }
+  let(:business_entity2) { create(:business_entity, sop_code: 'efg142', jurisdiction: jurisdiction2) }
+  let(:business_entity3) { create(:business_entity, sop_code: 'hjk122', jurisdiction: jurisdiction1) }
+  let(:business_entity4) { create(:business_entity, sop_code: 'mop345', jurisdiction: jurisdiction2) }
 
   describe '#to_csv' do
     subject do

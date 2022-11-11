@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.feature 'When part-payment applications are returned', type: :feature do
+RSpec.feature 'When part-payment applications are returned' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
-  let(:user) { create :user, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
 
-  let(:application1) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
-  let(:application2) { create :application_full_remission, :waiting_for_part_payment_state, office: office }
+  let(:application1) { create(:application_full_remission, :waiting_for_part_payment_state, office: office) }
+  let(:application2) { create(:application_full_remission, :waiting_for_part_payment_state, office: office) }
   before do
-    create :part_payment, application: application1
-    create :part_payment, application: application2
+    create(:part_payment, application: application1)
+    create(:part_payment, application: application2)
     login_as user
   end
 

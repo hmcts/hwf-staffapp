@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Api::SubmissionsController, type: :controller do
+RSpec.describe Api::SubmissionsController do
   let(:auth_token) { 'my-big-secret' }
-  let(:submitted) { attributes_for :public_app_submission }
+  let(:submitted) { attributes_for(:public_app_submission) }
   let(:locale) { 'en' }
 
   describe 'POST #create' do
@@ -27,7 +27,7 @@ RSpec.describe Api::SubmissionsController, type: :controller do
       describe 'when sent invalid data from the public' do
         subject(:result) { JSON.parse(returned.body)['result'] }
 
-        let(:submitted) { attributes_for :public_app_submission, postcode: nil }
+        let(:submitted) { attributes_for(:public_app_submission, postcode: nil) }
 
         it { is_expected.to be false }
       end

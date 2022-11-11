@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PublicMailer, type: :mailer do
+RSpec.describe PublicMailer do
   describe '#submission_confirmation' do
 
     let(:email) { 'foo@bar.com' }

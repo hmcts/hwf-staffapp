@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe OnlineApplicationsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe OnlineApplicationsController do
+  let(:user) { create(:user) }
   let(:online_application) { build_stubbed(:online_application, benefits: false) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
@@ -53,7 +53,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
       end
 
       context 'when the user does not have a default jurisdiction' do
-        let(:user) { create :user, jurisdiction_id: nil }
+        let(:user) { create(:user, jurisdiction_id: nil) }
 
         it 'sets the jurisdiction of the new object' do
           expect(assigns(:form).jurisdiction_id).to be_nil
@@ -83,7 +83,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
     let(:fee) { 500 }
     let(:dwp_state) { 'online' }
     let(:monitor) { instance_double(DwpMonitor) }
-    let(:dwp_warning) { create :dwp_warning, check_state: dwp_warning_state }
+    let(:dwp_warning) { create(:dwp_warning, check_state: dwp_warning_state) }
     let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
     let(:online_bc_runner) { instance_double(OnlineBenefitCheckRunner) }
     let(:online_bc) { instance_double(OnlineBenefitCheck, benefits_valid?: benefits_valid) }
@@ -371,7 +371,7 @@ RSpec.describe OnlineApplicationsController, type: :controller do
   end
 
   context 'after an application is completed' do
-    let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+    let(:online_application) { create(:online_application, :completed, :with_reference, convert_to_application: true) }
 
     describe 'when accessing the personal_details view' do
       before { get :edit, params: { id: online_application.id } }

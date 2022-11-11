@@ -16,7 +16,7 @@ describe PartPaymentBuilder do
     end
 
     context 'when application is a part payment' do
-      let(:application) { create :application_part_remission }
+      let(:application) { create(:application_part_remission) }
 
       it { is_expected.to be_a(PartPayment) }
 
@@ -26,8 +26,8 @@ describe PartPaymentBuilder do
     end
 
     context 'when application is a part payment but is not decided' do
-      let(:application) { create :application_part_remission }
-      let(:part_payment) { create :part_payment, application: application }
+      let(:application) { create(:application_part_remission) }
+      let(:part_payment) { create(:part_payment, application: application) }
 
       before do
         part_payment
@@ -40,7 +40,7 @@ describe PartPaymentBuilder do
 
     context 'for non-applicable application types' do
       describe 'full remission' do
-        let(:application) { create :application_full_remission }
+        let(:application) { create(:application_full_remission) }
 
         it 'does not create a payment record' do
           is_expected.to be_nil
@@ -48,7 +48,7 @@ describe PartPaymentBuilder do
       end
 
       describe 'no remission' do
-        let(:application) { create :application_no_remission }
+        let(:application) { create(:application_no_remission) }
 
         it 'does not create a payment record' do
           is_expected.to be_nil
@@ -56,7 +56,7 @@ describe PartPaymentBuilder do
       end
 
       describe 'part payment' do
-        let(:application) { create :application_part_remission }
+        let(:application) { create(:application_part_remission) }
         before { allow_message_expectations_on_nil }
 
         context 'and an evidence check has been created' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe EvidenceCheck, type: :model do
-  let(:application) { create :application }
+describe EvidenceCheck do
+  let(:application) { create(:application) }
 
   it { is_expected.to validate_presence_of(:application) }
 

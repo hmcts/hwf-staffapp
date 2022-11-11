@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Benefit results are processed', type: :feature do
+RSpec.feature 'Benefit results are processed' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
+  let(:user) { create(:user, office: office) }
   let(:applicant) { application.applicant }
-  let(:application) { create :application, :applicant_full, ni_number: ni_number, office: office, user: user, benefits: true }
+  let(:application) { create(:application, :applicant_full, ni_number: ni_number, office: office, user: user, benefits: true) }
 
   let(:dwp_result) { nil }
   let(:dwp_status) { 200 }

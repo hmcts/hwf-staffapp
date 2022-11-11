@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::IncomesController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::IncomesController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
