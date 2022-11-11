@@ -176,7 +176,8 @@ RSpec.describe Forms::Application::Applicant do
   describe 'when a Hash is passed in' do
     let(:hash) { attributes_for(:full_personal_information) }
     let(:form) { described_class.new(hash) }
-    most_attribs = params_list.except(:date_of_birth)
+
+    most_attribs = params_list - [:date_of_birth]
 
     most_attribs.each do |attr_name|
       next if attr_name.to_s =~ /day|month|year/

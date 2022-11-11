@@ -206,7 +206,7 @@ RSpec.describe HomeController do
     before do
       allow(Application).to receive(:find_by).with(reference: application.reference).and_return(application)
       allow(ApplicationSearch).to receive(:new).with(reference, user).and_return(search)
-      allow(search).to receive(:paginate_search_results).with(sort_by: 'first_name', sort_to: 'asc', page: '2').and_return(search)
+      allow(search).to receive(:paginate_search_results).with({ sort_by: 'first_name', sort_to: 'asc', page: '2' }).and_return(search)
 
       sign_in(user)
       get :completed_search, params: { completed_search: { reference: reference }, sort_to: 'asc', sort_by: 'first_name', page: 2 }
