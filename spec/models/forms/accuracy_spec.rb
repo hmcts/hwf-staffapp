@@ -5,8 +5,8 @@ RSpec.describe Forms::Accuracy do
 
   params_list = [:correct, :incorrect_reason, :incorrect_reason_category, :staff_error_details]
 
-  let(:evidence) { build_stubbed :evidence_check }
-  let(:application) { create :application }
+  let(:evidence) { build_stubbed(:evidence_check) }
+  let(:application) { create(:application) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -33,7 +33,7 @@ RSpec.describe Forms::Accuracy do
   describe '#save' do
     subject(:form_save) { form.save }
 
-    let(:evidence) { create :evidence_check, application: application }
+    let(:evidence) { create(:evidence_check, application: application) }
 
     before do
       form.update(params)

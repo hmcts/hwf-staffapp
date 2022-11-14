@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
-  let(:test_user) { create :user }
+RSpec.describe UsersController do
+  let(:test_user) { create(:user) }
 
   context 'logged out user' do
     describe 'GET #index' do

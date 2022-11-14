@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StaticController, type: :controller do
+RSpec.describe StaticController do
 
   context '400' do
     before { get '400' }

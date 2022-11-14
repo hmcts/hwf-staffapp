@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Domain redirection', type: :feature do
+RSpec.feature 'Domain redirection' do
 
   let(:domain_to_redirect) { 'trial.domain' }
   let(:domain) { 'production.domain' }

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe NotifyMailer, type: :mailer do
-  let(:application) { build :online_application_with_all_details, :with_reference, date_received: DateTime.parse('1 June 2021') }
-  let(:user) { build :user, name: 'John Jones' }
+RSpec.describe NotifyMailer do
+  let(:application) { build(:online_application_with_all_details, :with_reference, date_received: DateTime.parse('1 June 2021')) }
+  let(:user) { build(:user, name: 'John Jones') }
 
   describe '#password_reset' do
     let(:mail) { described_class.password_reset(user, 'http://reset_link') }

@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Part Payments flow', type: :feature do
+RSpec.feature 'Part Payments flow' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
-  let(:user) { create :user, office: office }
-  let(:application) { create :application_part_remission, user: user, amount_to_pay: 25, office: office }
-  let(:part_payment) { create :part_payment, application: application }
+  let(:office) { create(:office) }
+  let(:user) { create(:user, office: office) }
+  let(:application) { create(:application_part_remission, user: user, amount_to_pay: 25, office: office) }
+  let(:part_payment) { create(:part_payment, application: application) }
 
   before { login_as user }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OfficesController, type: :routing do
+RSpec.describe OfficesController do
   describe 'routing' do
 
     it 'routes to #index' do

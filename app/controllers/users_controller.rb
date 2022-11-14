@@ -16,11 +16,11 @@ class UsersController < ApplicationController
     @users = policy_scope(User).only_deleted.sorted_by_email
   end
 
-  def edit
+  def show
     authorize user
   end
 
-  def show
+  def edit
     authorize user
   end
 

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe EvidenceController, type: :controller do
+RSpec.describe EvidenceController do
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
+  let(:user) { create(:user, office: office) }
   let(:applicant) { application.applicant }
-  let(:application) { create :application, :applicant_full, :waiting_for_evidence_state, office: office }
+  let(:application) { create(:application, :applicant_full, :waiting_for_evidence_state, office: office) }
   let(:evidence) { application.evidence_check }
 
   let(:evidence_check_flagging_service) { double }
@@ -44,7 +44,7 @@ RSpec.describe EvidenceController, type: :controller do
       end
 
       context 'processed evidence' do
-        let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+        let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
 
         it 'should redirect to dashboard' do
           expect(response).to redirect_to(root_path)
@@ -330,7 +330,7 @@ RSpec.describe EvidenceController, type: :controller do
       it { expect(assigns(:form)).to be_an_instance_of(Forms::Application::DecisionOverride) }
 
       context 'processed evidence' do
-        let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+        let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
 
         it 'should not redirect to dashboard' do
           expect(response).not_to redirect_to(root_path)
@@ -364,7 +364,7 @@ RSpec.describe EvidenceController, type: :controller do
     end
 
     context 'processed evidence' do
-      let(:evidence) { create :evidence_check, :completed, application_id: application.id }
+      let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
 
       before do
         sign_in user

@@ -14,7 +14,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let(:application) { create :single_applicant_under_61 }
+    let(:application) { create(:single_applicant_under_61) }
 
     before do
       savings_investment_form.update(hash)
@@ -143,7 +143,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
       form.save
     end
 
-    let(:saving) { create :saving }
+    let(:saving) { create(:saving) }
 
     context 'when attributes are correct' do
       let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 3456 } }

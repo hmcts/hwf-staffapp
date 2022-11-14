@@ -5,13 +5,13 @@ require 'rails_helper'
 describe BusinessEntityService do
   subject { service }
 
-  let!(:office) { create :office }
+  let!(:office) { create(:office) }
   let!(:jurisdiction) { office.jurisdictions[0] }
   let(:service) { described_class.new(office, jurisdiction) }
-  let(:old_business_entity) { create :business_entity, office: office, jurisdiction: jurisdiction }
+  let(:old_business_entity) { create(:business_entity, office: office, jurisdiction: jurisdiction) }
 
   describe 'when initialized with the correct variables' do
-    it { is_expected.to be_a_kind_of described_class }
+    it { is_expected.to be_a described_class }
   end
 
   describe '#build_new' do
@@ -24,7 +24,7 @@ describe BusinessEntityService do
       let(:be_code) { nil }
       let(:sop_code) { '123456789' }
 
-      it { is_expected.to be_a_kind_of BusinessEntity }
+      it { is_expected.to be_a BusinessEntity }
 
       it 'does not persist the object' do
         expect(built_new.persisted?).to be false
@@ -63,7 +63,7 @@ describe BusinessEntityService do
       let(:be_code) { old_business_entity.be_code.reverse }
       let(:sop_code) { old_business_entity.sop_code }
 
-      it { is_expected.to be_a_kind_of BusinessEntity }
+      it { is_expected.to be_a BusinessEntity }
 
       it 'returns a new, non-persisted object' do
         expect(build_update.persisted?).to be true
@@ -83,7 +83,7 @@ describe BusinessEntityService do
       let(:be_code) { old_business_entity.be_code }
       let(:sop_code) { old_business_entity.sop_code.reverse }
 
-      it { is_expected.to be_a_kind_of BusinessEntity }
+      it { is_expected.to be_a BusinessEntity }
 
       it 'returns a new, non-persisted object' do
         expect(build_update.persisted?).to be false
@@ -103,7 +103,7 @@ describe BusinessEntityService do
       let(:be_code) { business_entity.be_code }
       let(:sop_code) { business_entity.sop_code }
 
-      it { is_expected.to be_a_kind_of BusinessEntity }
+      it { is_expected.to be_a BusinessEntity }
 
       it 'returns the existing persisted object' do
         expect(build_update.persisted?).to be true
@@ -138,7 +138,7 @@ describe BusinessEntityService do
 
     subject(:build_deactivate) { service.build_deactivate }
 
-    it { is_expected.to be_a_kind_of BusinessEntity }
+    it { is_expected.to be_a BusinessEntity }
 
     it 'returns a persisted object' do
       expect(build_deactivate.persisted?).to be true

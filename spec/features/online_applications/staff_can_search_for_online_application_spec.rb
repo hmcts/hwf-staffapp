@@ -1,17 +1,20 @@
 require 'rails_helper'
 
-RSpec.feature 'Staff can search for online application', type: :feature do
+# I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
+
+RSpec.feature 'Staff can search for online application' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :staff }
+  let(:user) { create(:staff) }
 
   before do
     login_as user
   end
 
-  let(:online_application) { create :online_application, :with_reference }
+  let(:online_application) { create(:online_application, :with_reference) }
 
   scenario 'User does not provide the reference number' do
     given_user_is_on_the_homepage
@@ -62,3 +65,4 @@ RSpec.feature 'Staff can search for online application', type: :feature do
     expect(page).to have_text(online_application.last_name)
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Online application processing Evidence check', type: :feature do
+RSpec.feature 'Online application processing Evidence check' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdiction) { create :jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:user) { create :user, office: office }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:user) { create(:user, office: office) }
   let(:online_application_1) do
     create(:online_application, :completed, :with_reference,
            married: false,
@@ -28,12 +28,12 @@ RSpec.feature 'Online application processing Evidence check', type: :feature do
            income: 1000,
            ni_number: online_application_1.ni_number)
   end
-  let(:old_application) { create :old_application, reference: online_application_1.reference }
+  let(:old_application) { create(:old_application, reference: online_application_1.reference) }
 
   before do
     login_as user
     dwp_api_response 'Yes'
-    create_list :application_part_remission, 9
+    create_list(:application_part_remission, 9)
   end
 
   scenario 'Processing income based application from online application' do

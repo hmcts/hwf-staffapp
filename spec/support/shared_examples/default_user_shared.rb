@@ -9,8 +9,8 @@ shared_examples 'a user regardless of role' do
 
   describe 'GET #edit' do
 
-    let(:office)  { create :office, jurisdictions: create_list(:jurisdiction, 3) }
-    let(:user)    { create :user, office: office }
+    let(:office)  { create(:office, jurisdictions: create_list(:jurisdiction, 3)) }
+    let(:user)    { create(:user, office: office) }
 
     before { sign_in user }
 

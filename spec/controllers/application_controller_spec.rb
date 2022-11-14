@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe ApplicationController do
+  let(:user) { create(:user) }
 
   before do
     sign_in user

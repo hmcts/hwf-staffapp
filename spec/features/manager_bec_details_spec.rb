@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'Show BEC in the jurisdiction radio buttons', type: :feature do
+RSpec.feature 'Show BEC in the jurisdiction radio buttons' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:jurisdictions) { create_list :jurisdiction, 3 }
+  let(:jurisdictions) { create_list(:jurisdiction, 3) }
   let(:office) { create(:office, jurisdictions: jurisdictions) }
   let(:manager) { create(:manager, jurisdiction_id: jurisdictions[1].id, office: office) }
 

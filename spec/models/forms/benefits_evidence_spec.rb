@@ -11,7 +11,7 @@ RSpec.describe Forms::BenefitsEvidence do
     end
   end
 
-  let(:benefit_override) { build_stubbed :benefit_override }
+  let(:benefit_override) { build_stubbed(:benefit_override) }
 
   describe 'validations' do
     subject { form.valid? }
@@ -45,8 +45,8 @@ RSpec.describe Forms::BenefitsEvidence do
   describe '#save' do
     subject { form.save }
 
-    let(:application) { create :application }
-    let(:benefit_override) { build :benefit_override, application: application }
+    let(:application) { create(:application) }
+    let(:benefit_override) { build(:benefit_override, application: application) }
     let(:updated_application) { subject && application.reload }
     let(:updated_benefit_override) { subject && benefit_override.reload }
 

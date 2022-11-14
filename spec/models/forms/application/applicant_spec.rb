@@ -6,7 +6,7 @@ RSpec.describe Forms::Application::Applicant do
   params_list = [:last_name, :date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
                  :married, :title, :first_name, :ni_number, :ho_number]
 
-  let(:personal_information) { attributes_for :personal_information }
+  let(:personal_information) { attributes_for(:personal_information) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -174,9 +174,10 @@ RSpec.describe Forms::Application::Applicant do
   end
 
   describe 'when a Hash is passed in' do
-    let(:hash) { attributes_for :full_personal_information }
+    let(:hash) { attributes_for(:full_personal_information) }
     let(:form) { described_class.new(hash) }
-    most_attribs = params_list.reject { |k, _| k == :date_of_birth }
+
+    most_attribs = params_list - [:date_of_birth]
 
     most_attribs.each do |attr_name|
       next if attr_name.to_s =~ /day|month|year/
@@ -203,7 +204,7 @@ RSpec.describe Forms::Application::Applicant do
     end
 
     let(:applicant) { application.applicant }
-    let(:application) { create :application, :applicant_full }
+    let(:application) { create(:application, :applicant_full) }
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }

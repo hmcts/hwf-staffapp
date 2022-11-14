@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature 'Prevent managers from downgrading themselves to user role', type: :feature do
+RSpec.feature 'Prevent managers from downgrading themselves to user role' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:manager) { create :manager }
-  let(:other_manager) { create :manager, office_id: manager.office_id }
+  let(:manager) { create(:manager) }
+  let(:other_manager) { create(:manager, office_id: manager.office_id) }
 
   before { login_as manager }
 

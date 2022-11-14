@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe PartPaymentsController, type: :controller do
-  let(:office) { create :office }
-  let(:user) { create :staff, office: office }
+RSpec.describe PartPaymentsController do
+  let(:office) { create(:office) }
+  let(:user) { create(:staff, office: office) }
   let(:application) { create(:application, office: office) }
   let(:part_payment) { create(:part_payment, application: application) }
 

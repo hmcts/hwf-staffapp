@@ -2,7 +2,7 @@ require 'rspec'
 
 describe UpdateMissingBusinessEntities do
 
-  let(:business_entity) { create :business_entity }
+  let(:business_entity) { create(:business_entity) }
   let(:shared_params) { { office: business_entity.office, jurisdiction: business_entity.jurisdiction } }
   let(:shared_params_with_business_entity) { { business_entity: business_entity, office: business_entity.office, jurisdiction: business_entity.jurisdiction } }
 

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe DwpFailedApplicationsController do
-  let(:office) { create :office }
-  let(:user) { create :staff, office: office }
+  let(:office) { create(:office) }
+  let(:user) { create(:staff, office: office) }
   let(:dwp_state) { DwpWarning::STATES[:online] }
 
   before do
@@ -42,14 +42,14 @@ RSpec.describe DwpFailedApplicationsController do
 
     describe 'authorize' do
       context 'admin' do
-        let(:user) { create :staff, office: office, role: 'admin' }
+        let(:user) { create(:staff, office: office, role: 'admin') }
 
         it 'does not redirect' do
           expect(response).to have_http_status(200)
         end
       end
       context 'mi' do
-        let(:user) { create :staff, office: office, role: 'mi' }
+        let(:user) { create(:staff, office: office, role: 'mi') }
 
         it 'redirect request' do
           expect(response).to have_http_status(302)

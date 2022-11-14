@@ -23,7 +23,7 @@ describe DwpMonitor do
 
       context 'when more than 50% of the last dwp_results are validation "Bad Request"' do
         before do
-          create_list :benefit_check, 10, dwp_result: 'BadRequest', error_message: 'entitlement_check_date is invalid'
+          create_list(:benefit_check, 10, dwp_result: 'BadRequest', error_message: 'entitlement_check_date is invalid')
         end
 
         it { is_expected.to eql 'online' }

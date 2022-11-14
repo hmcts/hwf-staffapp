@@ -30,14 +30,14 @@ RSpec.describe HomeHelper do
 
         context 'with hmrc but empty income' do
           before { hmrc_check }
-          let(:hmrc_check) { create :hmrc_check, evidence_check: evidence_check, income: nil }
+          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: nil) }
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
         end
 
         context 'with hmrc and income data' do
           before { hmrc_check }
           let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
-          let(:hmrc_check) { create :hmrc_check, evidence_check: evidence_check, income: income_hash }
+          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
         end
       end

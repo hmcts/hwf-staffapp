@@ -5,7 +5,7 @@ RSpec.describe Forms::FeeApproval do
 
   params_list = [:fee_manager_firstname, :fee_manager_lastname]
 
-  let(:online_application) { create :online_application }
+  let(:online_application) { create(:online_application) }
 
   describe '#permitted_attributes' do
     it 'returns a list of attributes' do

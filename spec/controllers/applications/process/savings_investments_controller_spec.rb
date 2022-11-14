@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::SavingsInvestmentsController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::SavingsInvestmentsController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
 
   let(:savings_investments_form) { instance_double(Forms::Application::SavingsInvestment) }

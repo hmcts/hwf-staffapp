@@ -4,7 +4,7 @@ class MockRelation < Array
   def paginate(_options); end
 end
 
-RSpec.describe ProcessedApplicationsController, type: :controller do
+RSpec.describe ProcessedApplicationsController do
   let(:user) { create(:user) }
 
   let(:application1) { build_stubbed(:application, office: user.office) }

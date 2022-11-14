@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::OverrideController, type: :controller do
-  let(:user)        { create :user }
+RSpec.describe Applications::Process::OverrideController do
+  let(:user)        { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:dwp_monitor) { instance_double(DwpMonitor) }
   let(:dwp_state)   { 'online' }

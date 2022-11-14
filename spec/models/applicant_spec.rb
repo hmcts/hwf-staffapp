@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Applicant, type: :model do
+RSpec.describe Applicant do
   let(:application) { build_stubbed(:application) }
-  let(:applicant) { build :applicant, application: application }
+  let(:applicant) { build(:applicant, application: application) }
 
   it { is_expected.to validate_presence_of(:application) }
 
@@ -11,7 +11,7 @@ RSpec.describe Applicant, type: :model do
       subject { applicant.ni_number }
 
       let(:expected_ni_number) { 'JN010203A' }
-      let(:applicant) { build :applicant, application: application, ni_number: ni_number }
+      let(:applicant) { build(:applicant, application: application, ni_number: ni_number) }
 
       before do
         applicant.valid?
@@ -53,7 +53,7 @@ RSpec.describe Applicant, type: :model do
     subject { applicant.valid? }
 
     let(:expected_ni_number) { 'JN010203A' }
-    let(:applicant) { build :applicant, application: application, ni_number: ni_number }
+    let(:applicant) { build(:applicant, application: application, ni_number: ni_number) }
 
     describe 'of ni_number' do
       context 'when nil' do
@@ -78,7 +78,7 @@ RSpec.describe Applicant, type: :model do
 
   context 'HO number' do
     let(:ho_number) { 'l1234567' }
-    let(:applicant) { build :applicant, application: application, ho_number: ho_number }
+    let(:applicant) { build(:applicant, application: application, ho_number: ho_number) }
 
     it { expect(applicant.valid?).to be true }
 
@@ -122,7 +122,7 @@ RSpec.describe Applicant, type: :model do
     subject { applicant.full_name }
 
     context 'when title, first_name and last_name are set' do
-      let(:applicant) { build :applicant, application: application, title: 't', first_name: 'f', last_name: 'l' }
+      let(:applicant) { build(:applicant, application: application, title: 't', first_name: 'f', last_name: 'l') }
 
       it 'returns all parts with spaces between' do
         is_expected.to eql('t f l')
@@ -130,7 +130,7 @@ RSpec.describe Applicant, type: :model do
     end
 
     context 'when only some of the name fields are set' do
-      let(:applicant) { build :applicant, application: application, title: 't', first_name: nil, last_name: 'l' }
+      let(:applicant) { build(:applicant, application: application, title: 't', first_name: nil, last_name: 'l') }
 
       it 'returns all only the set parts with spaces between' do
         is_expected.to eql('t l')
@@ -138,7 +138,7 @@ RSpec.describe Applicant, type: :model do
     end
 
     context 'when non of the name fields are set' do
-      let(:applicant) { build :applicant, application: application, title: nil, first_name: nil, last_name: nil }
+      let(:applicant) { build(:applicant, application: application, title: nil, first_name: nil, last_name: nil) }
 
       it 'returns an empty string' do
         is_expected.to eql('')
@@ -156,7 +156,7 @@ RSpec.describe Applicant, type: :model do
     let(:current_time) { Time.zone.parse('2016-03-04') }
     let(:dob_over) { Time.zone.parse('1955-03-01') }
     let(:dob_under) { Time.zone.parse('1965-03-01') }
-    let(:applicant) { build :applicant, application: application, date_of_birth: date_of_birth }
+    let(:applicant) { build(:applicant, application: application, date_of_birth: date_of_birth) }
 
     context 'when the applicant is over 61 years old' do
       let(:date_of_birth) { dob_over }
@@ -181,7 +181,7 @@ RSpec.describe Applicant, type: :model do
     let(:current_time) { Time.zone.parse('2020-09-11') }
     let(:dob_over) { Time.zone.parse('2004-9-10') }
     let(:dob_under) { Time.zone.parse('2005-09-12') }
-    let(:applicant) { build :applicant, application: application, date_of_birth: date_of_birth }
+    let(:applicant) { build(:applicant, application: application, date_of_birth: date_of_birth) }
 
     context 'when the applicant is over 15 years old' do
       let(:date_of_birth) { dob_over }

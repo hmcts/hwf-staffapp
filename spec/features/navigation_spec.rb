@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'Naviation links', type: :feature do
+RSpec.feature 'Naviation links' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:office) { create :office }
+  let(:office) { create(:office) }
 
   context 'User' do
-    let(:user) { create :user, office: office, name: 'Johny Mnemonic' }
+    let(:user) { create(:user, office: office, name: 'Johny Mnemonic') }
 
     scenario 'display navigation' do
       login_as(user)
@@ -24,7 +24,7 @@ RSpec.feature 'Naviation links', type: :feature do
   end
 
   context 'manager' do
-    let(:manager) { create :manager, office: office, name: 'Agent Smith' }
+    let(:manager) { create(:manager, office: office, name: 'Agent Smith') }
 
     scenario 'display navigation' do
       login_as(manager)

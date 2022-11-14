@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Users::InvitationsController, type: :controller do
+RSpec.describe Users::InvitationsController do
   render_views
 
-  let(:office) { create :office }
-  let(:admin_user) { create :admin_user, office: office }
-  let(:manager_user) { create :manager, office: office }
-  let(:user) { build :user }
+  let(:office) { create(:office) }
+  let(:admin_user) { create(:admin_user, office: office) }
+  let(:manager_user) { create(:manager, office: office) }
+  let(:user) { build(:user) }
   let(:user_email) { user.email }
 
   let(:invitation) do
@@ -53,7 +53,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
         let(:user_email) { user.email }
 
         before do
-          create :deleted_user, email: user_email, office: office
+          create(:deleted_user, email: user_email, office: office)
           post :create, params: { user: manager_invitation }
         end
 

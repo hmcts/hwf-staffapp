@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe OfficesController, type: :controller do
+RSpec.describe OfficesController do
   let(:office)      { create(:office, jurisdictions: []) }
-  let(:user)        { create :user, office: office }
+  let(:user)        { create(:user, office: office) }
 
-  let(:jurisdiction) { create :jurisdiction }
+  let(:jurisdiction) { create(:jurisdiction) }
   let(:valid_params) { attributes_for(:office).merge(jurisdiction_ids: [jurisdiction.id]) }
 
   before do
@@ -105,10 +105,10 @@ RSpec.describe OfficesController, type: :controller do
   describe 'GET #edit' do
     subject(:make_request) { get :edit, params: { id: office.id } }
 
-    let(:assigned_jurisdiction) { create :jurisdiction }
+    let(:assigned_jurisdiction) { create(:jurisdiction) }
 
     before do
-      create :business_entity, office: office, jurisdiction: assigned_jurisdiction
+      create(:business_entity, office: office, jurisdiction: assigned_jurisdiction)
       mock_authorize(office, authorized)
     end
 

@@ -263,7 +263,7 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when an application has had benefits overridden' do
-      before { build_stubbed :benefit_override, application: application, correct: evidence_correct }
+      before { build_stubbed(:benefit_override, application: application, correct: evidence_correct) }
 
       context 'and the correct evidence was provided' do
         let(:evidence_correct) { true }
@@ -307,16 +307,16 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'evidence_check' do
-      let(:evidence_check) { build :evidence_check, expires_at: '10 January 2022' }
-      let(:application) { build :application, state: :processed, evidence_check: evidence_check }
+      let(:evidence_check) { build(:evidence_check, expires_at: '10 January 2022') }
+      let(:application) { build(:application, state: :processed, evidence_check: evidence_check) }
 
       it { is_expected.to eql('10 January 2022') }
     end
 
     context 'part_payment' do
-      let(:evidence_check) { build :evidence_check, expires_at: '10 January 2022' }
-      let(:part_payment) { build :part_payment, expires_at: '11 January 2022' }
-      let(:application) { build :application, state: :waiting_for_part_payment, evidence_check: evidence_check, part_payment: part_payment }
+      let(:evidence_check) { build(:evidence_check, expires_at: '10 January 2022') }
+      let(:part_payment) { build(:part_payment, expires_at: '11 January 2022') }
+      let(:application) { build(:application, state: :waiting_for_part_payment, evidence_check: evidence_check, part_payment: part_payment) }
 
       it { is_expected.to eql('11 January 2022') }
     end

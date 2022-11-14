@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Forms::Evidence::HmrcCheck do
   subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-  let(:application) { build :application, created_at: '15.3.2021', children: children }
-  let(:evidence) { build :evidence_check, application: application }
+  let(:application) { build(:application, created_at: '15.3.2021', children: children) }
+  let(:evidence) { build(:evidence_check, application: application) }
   let(:children) { 0 }
   let(:params) {
     {

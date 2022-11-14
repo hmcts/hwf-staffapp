@@ -30,7 +30,7 @@ RSpec.shared_examples 'runs benefit check record' do
 
     describe 'has date_to_check set' do
       context 'when date_fee_paid is set on detail' do
-        let(:detail) { create :detail, date_fee_paid: 1.month.ago }
+        let(:detail) { create(:detail, date_fee_paid: 1.month.ago) }
 
         it 'equals the date_fee_paid' do
           expect(benefit_check.date_to_check).to eql(detail.date_fee_paid)
@@ -38,7 +38,7 @@ RSpec.shared_examples 'runs benefit check record' do
       end
 
       context 'when date_fee_paid is not set but date_received is set on detail' do
-        let(:detail) { create :detail, date_received: 1.month.ago }
+        let(:detail) { create(:detail, date_received: 1.month.ago) }
 
         it 'equals the date_received' do
           expect(benefit_check.date_to_check).to eql(detail.date_received)
@@ -122,13 +122,13 @@ RSpec.describe BenefitCheckRunner do
       context 'when benefit check has run before' do
         context 'when all the fields are exactly the same as before' do
           let(:existing_benefit_check) do
-            create :benefit_check,
+            create(:benefit_check,
                    :no_result,
                    application: application,
                    last_name: applicant.last_name,
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+                   date_to_check: detail.date_received)
           end
 
           it 'does not create a BenefitCheck record' do
@@ -138,13 +138,13 @@ RSpec.describe BenefitCheckRunner do
 
         context 'when there was an error before' do
           let(:existing_benefit_check) do
-            create :benefit_check,
+            create(:benefit_check,
                    :error_result,
                    application: application,
                    last_name: applicant.last_name,
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+                   date_to_check: detail.date_received)
           end
 
           include_examples 'runs benefit check record'
@@ -152,12 +152,12 @@ RSpec.describe BenefitCheckRunner do
 
         context 'when something has changed from before' do
           let(:existing_benefit_check) do
-            create :benefit_check,
+            create(:benefit_check,
                    application: application,
                    last_name: 'Different',
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
-                   date_to_check: detail.date_received
+                   date_to_check: detail.date_received)
           end
 
           include_examples 'runs benefit check record'
@@ -191,13 +191,13 @@ RSpec.describe BenefitCheckRunner do
 
     context 'when there is a benefit_check' do
       let(:existing_benefit_check) do
-        create :benefit_check,
+        create(:benefit_check,
                :yes_result,
                application: application,
                last_name: applicant.last_name,
                date_of_birth: applicant.date_of_birth,
                ni_number: applicant.ni_number,
-               date_to_check: detail.date_received
+               date_to_check: detail.date_received)
       end
 
       it 'sets outcome to last banefit check' do

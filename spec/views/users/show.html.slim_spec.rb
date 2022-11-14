@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'users/show', type: :view do
-  let(:user) { create :user }
+RSpec.describe 'users/show' do
+  let(:user) { create(:user) }
 
   describe 'when viewed' do
 
@@ -9,7 +9,7 @@ RSpec.describe 'users/show', type: :view do
 
     ['admin_user', 'manager'].each do |role|
 
-      let(:elevated) { create role.to_sym }
+      let(:elevated) { create(role.to_sym) }
 
       context "as a #{role}" do
         before do

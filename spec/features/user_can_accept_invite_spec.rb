@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User can accept invite', type: :feature do
+RSpec.feature 'User can accept invite' do
 
   include Warden::Test::Helpers
   Warden.test_mode!

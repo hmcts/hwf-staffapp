@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 # I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
 
-RSpec.feature 'Manager has to setup their preferences', type: :feature do
+RSpec.feature 'Manager has to setup their preferences' do
 
-  let(:jurisdictions) { create_list :jurisdiction, 3 }
+  let(:jurisdictions) { create_list(:jurisdiction, 3) }
   let(:office) { create(:office, jurisdictions: jurisdictions) }
 
   scenario 'Signing in for second time or later and is redirected to dashboard' do
@@ -27,11 +28,11 @@ RSpec.feature 'Manager has to setup their preferences', type: :feature do
   end
 
   def manager_has_signed_in_before
-    @manager = create :manager, sign_in_count: 2, jurisdiction_id: jurisdictions[1].id, office: office
+    @manager = create(:manager, sign_in_count: 2, jurisdiction_id: jurisdictions[1].id, office: office)
   end
 
   def manager_has_not_signed_in_before
-    @manager = create :manager, sign_in_count: 0, jurisdiction_id: jurisdictions[1].id, office: office
+    @manager = create(:manager, sign_in_count: 0, jurisdiction_id: jurisdictions[1].id, office: office)
   end
 
   def when_they_sign_in
@@ -55,3 +56,4 @@ RSpec.feature 'Manager has to setup their preferences', type: :feature do
     expect(page.current_path).to eql "/users/#{@manager.id}/edit"
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

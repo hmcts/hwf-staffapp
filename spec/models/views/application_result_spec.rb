@@ -47,14 +47,14 @@ RSpec.describe Views::ApplicationResult do
     end
 
     context 'when the application has evidence check' do
-      let(:evidence) { build_stubbed :evidence_check, amount_to_pay: amount }
-      let(:application) { build_stubbed :application, evidence_check: evidence, amount_to_pay: nil }
+      let(:evidence) { build_stubbed(:evidence_check, amount_to_pay: amount) }
+      let(:application) { build_stubbed(:application, evidence_check: evidence, amount_to_pay: nil) }
 
       include_examples 'amount_to_pay examples'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, amount_to_pay: amount }
+      let(:application) { build_stubbed(:application, amount_to_pay: amount) }
 
       include_examples 'amount_to_pay examples'
     end
@@ -80,21 +80,21 @@ RSpec.describe Views::ApplicationResult do
     end
 
     context 'when the application has evidence check' do
-      let(:evidence) { build_stubbed :evidence_check, outcome: outcome }
-      let(:application) { build_stubbed :application, evidence_check: evidence, outcome: nil }
+      let(:evidence) { build_stubbed(:evidence_check, outcome: outcome) }
+      let(:application) { build_stubbed(:application, evidence_check: evidence, outcome: nil) }
 
       include_examples 'result examples', 'evidence'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, outcome: outcome }
+      let(:application) { build_stubbed(:application, outcome: outcome) }
 
       include_examples 'result examples', 'application'
     end
 
     context 'when the application has a completed part-payment' do
-      let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
-      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', amount_to_pay: 200 }
+      let(:part_payment) { build_stubbed(:part_payment, outcome: 'part', correct: true) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, outcome: 'part', amount_to_pay: 200) }
 
       it { is_expected.to eq 'paid' }
 
@@ -104,9 +104,9 @@ RSpec.describe Views::ApplicationResult do
     end
 
     context 'when the application has a completed part-payment and evidence check' do
-      let(:part_payment) { build_stubbed :part_payment, outcome: 'part', correct: true }
-      let(:evidence) { build_stubbed :evidence_check, outcome: 'part', amount_to_pay: 123 }
-      let(:application) { build_stubbed :application, part_payment: part_payment, outcome: 'part', evidence_check: evidence, amount_to_pay: 222, fee: 310 }
+      let(:part_payment) { build_stubbed(:part_payment, outcome: 'part', correct: true) }
+      let(:evidence) { build_stubbed(:evidence_check, outcome: 'part', amount_to_pay: 123) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, outcome: 'part', evidence_check: evidence, amount_to_pay: 222, fee: 310) }
 
       it { is_expected.to eq 'paid' }
 
@@ -123,7 +123,7 @@ RSpec.describe Views::ApplicationResult do
       end
 
       context 'refund' do
-        let(:application) { build_stubbed :application, refund: true }
+        let(:application) { build_stubbed(:application, refund: true) }
 
         it 'returns refund true' do
           expect(view.refund).to be(true)
@@ -173,14 +173,14 @@ RSpec.describe Views::ApplicationResult do
     end
 
     context 'when the application has evidence check' do
-      let(:evidence) { build_stubbed :evidence_check, outcome: outcome }
-      let(:application) { build_stubbed :application, evidence_check: evidence, outcome: nil }
+      let(:evidence) { build_stubbed(:evidence_check, outcome: outcome) }
+      let(:application) { build_stubbed(:application, evidence_check: evidence, outcome: nil) }
 
       include_examples 'result examples', 'evidence'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, outcome: outcome }
+      let(:application) { build_stubbed(:application, outcome: outcome) }
 
       include_examples 'result examples', 'application'
     end
@@ -189,7 +189,7 @@ RSpec.describe Views::ApplicationResult do
   describe '#return_type' do
     subject { view.return_type }
 
-    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
+    let(:application) { build_stubbed(:application, decision_type: decision_type, outcome: 'none') }
 
     context 'when the application has no decision_type' do
       let(:decision_type) { nil }

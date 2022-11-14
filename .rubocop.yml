@@ -303,6 +303,9 @@ Rails/LexicallyScopedActionFilter:
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails

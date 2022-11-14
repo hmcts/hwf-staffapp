@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe BenefitCheck, type: :model do
-  let(:user)  { create :user }
-  let(:check) { build :benefit_check }
+RSpec.describe BenefitCheck do
+  let(:user)  { create(:user) }
+  let(:check) { build(:benefit_check) }
 
   it 'pass factory build' do
     expect(check).to be_valid
   end
 
   context 'scopes' do
-    let(:application) { build :application }
+    let(:application) { build(:application) }
     let(:digital) { create(:office, name: 'Digital') }
     let(:bristol) { create(:office, name: 'Bristol') }
 
@@ -78,19 +78,19 @@ RSpec.describe BenefitCheck, type: :model do
     subject { check.outcome }
 
     context 'when dwp_result is Yes' do
-      let(:check) { build :benefit_check, :yes_result }
+      let(:check) { build(:benefit_check, :yes_result) }
 
       it { is_expected.to eql 'full' }
     end
 
     context 'when dwp_result is No' do
-      let(:check) { build :benefit_check, :no_result }
+      let(:check) { build(:benefit_check, :no_result) }
 
       it { is_expected.to eql 'none' }
     end
 
     context 'when dwp_result is nil or anything else' do
-      let(:check) { build :benefit_check }
+      let(:check) { build(:benefit_check) }
 
       it { is_expected.to eql 'none' }
     end

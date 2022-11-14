@@ -46,7 +46,7 @@ RSpec.describe Forms::Application::Benefit do
     end
 
     let(:attributes) { { benefits: benefits } }
-    let(:application) { create :application, application_type: nil, dependents: false, benefits: nil, outcome: nil }
+    let(:application) { create(:application, application_type: nil, dependents: false, benefits: nil, outcome: nil) }
 
     context 'when the attributes are correct' do
       let(:benefits) { false }
@@ -78,7 +78,7 @@ RSpec.describe Forms::Application::Benefit do
           end
 
           context 'when benefit check has been done already' do
-            let(:benefit_check) { create :benefit_check, :yes_result, application: application }
+            let(:benefit_check) { create(:benefit_check, :yes_result, application: application) }
 
             it 'updates outcome based on the result' do
               expect(application.outcome).to eql 'full'

@@ -39,8 +39,8 @@ def drive_to_the_benefits_page
   benefits_page
 end
 
-RSpec.feature 'When benefits checker result is "Undetermined"', type: :feature do
-  let!(:jurisdictions)   { create_list :jurisdiction, 3 }
+RSpec.feature 'When benefits checker result is "Undetermined"' do
+  let!(:jurisdictions)   { create_list(:jurisdiction, 3) }
   let!(:office)          { create(:office, jurisdictions: jurisdictions) }
   let!(:user)            { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 

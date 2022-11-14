@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Report::OcmcController do
 
-  let(:admin)     { create :admin_user }
+  let(:admin)     { create(:admin_user) }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
   let(:date_to) { { day: "31", month: "12", year: "2015" } }
   let(:dates) {
@@ -15,8 +15,8 @@ RSpec.describe Report::OcmcController do
       entity_code: entity_code }
   }
   let(:entity_code) { office.id }
-  let(:office) { create :office, entity_code: 'GE401' }
-  let(:hmrc_office) { create :office, entity_code: Settings.evidence_check.hmrc.office_entity_code }
+  let(:office) { create(:office, entity_code: 'GE401') }
+  let(:hmrc_office) { create(:office, entity_code: Settings.evidence_check.hmrc.office_entity_code) }
 
   context 'as an admin' do
     before { sign_in admin }

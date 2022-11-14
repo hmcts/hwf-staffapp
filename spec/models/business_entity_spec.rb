@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BusinessEntity, type: :model do
+RSpec.describe BusinessEntity do
   it { is_expected.to belong_to(:office) }
   it { is_expected.to belong_to(:jurisdiction) }
 
@@ -16,7 +16,7 @@ RSpec.describe BusinessEntity, type: :model do
     describe 'valid_to' do
       subject { business_entity }
 
-      let(:business_entity) { build_stubbed :business_entity }
+      let(:business_entity) { build_stubbed(:business_entity) }
 
       before { business_entity.valid_from = Time.zone.today }
 
@@ -27,7 +27,7 @@ RSpec.describe BusinessEntity, type: :model do
     end
 
     describe 'sop_code valid in context' do
-      subject(:business_entity) { create :business_entity }
+      subject(:business_entity) { create(:business_entity) }
       let(:business_entity_2) { create(:business_entity, sop_code: business_entity.sop_code) }
 
       it "of office_id and name" do
@@ -53,13 +53,13 @@ RSpec.describe BusinessEntity, type: :model do
   context 'scopes' do
     before do
       hmcts = create(:office, name: 'HMCTS HQ Team ')
-      create :business_entity, office: hmcts
+      create(:business_entity, office: hmcts)
       digital = create(:office, name: 'Digital')
-      create :business_entity, office: digital
+      create(:business_entity, office: digital)
     end
 
     let!(:bristol) { create(:office, name: 'Bristol', business_entities: [business_entity]) }
-    let(:business_entity) { create :business_entity }
+    let(:business_entity) { create(:business_entity) }
 
     describe 'non_digital' do
       describe 'excludes HQ business entities' do
@@ -77,7 +77,7 @@ RSpec.describe BusinessEntity, type: :model do
   describe '#current_for' do
     subject { described_class.current_for(office, jurisdiction) }
 
-    let(:business_entity) { create :business_entity }
+    let(:business_entity) { create(:business_entity) }
 
     context 'when passed valid variables' do
       let(:office) { business_entity.office }
@@ -92,7 +92,7 @@ RSpec.describe BusinessEntity, type: :model do
       business_entity.code
     end
 
-    let(:business_entity) { build_stubbed :business_entity }
+    let(:business_entity) { build_stubbed(:business_entity) }
 
     context 'when called after the set date' do
       it { is_expected.to eql business_entity.sop_code }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EvidenceController, type: :routing do
+RSpec.describe EvidenceController do
   describe 'routing' do
     it 'routes to #show' do
       expect(get: '/evidence/1').to route_to('evidence#show', id: '1')

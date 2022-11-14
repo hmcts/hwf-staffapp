@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Confirmation page for remission', type: :feature do
+RSpec.feature 'Confirmation page for remission' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
+  let(:user) { create(:user, office: office) }
   let(:application) { create(:application_part_remission, office: office) }
 
   def visit_confirmation_page

@@ -16,7 +16,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
   describe '#min_threshold_exceeded' do
     subject { view.min_threshold_exceeded }
 
-    let(:saving) { build_stubbed :saving, min_threshold_exceeded: threshold_exceeded }
+    let(:saving) { build_stubbed(:saving, min_threshold_exceeded: threshold_exceeded) }
 
     [true, false].each do |value|
       context "when min_threshold_exceeded is #{value}" do
@@ -29,7 +29,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
   describe '#max_threshold_exceeded' do
     subject { view.max_threshold_exceeded }
 
-    let(:saving) { build_stubbed :saving, min_threshold_exceeded: true, max_threshold_exceeded: threshold_exceeded }
+    let(:saving) { build_stubbed(:saving, min_threshold_exceeded: true, max_threshold_exceeded: threshold_exceeded) }
 
     [true, false].each do |value|
       context "when max_threshold_exceeded is #{value}" do
@@ -42,7 +42,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
   describe '#amount' do
     subject { view.amount }
 
-    let(:saving) { build_stubbed :saving, amount: 3500 }
+    let(:saving) { build_stubbed(:saving, amount: 3500) }
 
     it { is_expected.to eql '£3500' }
   end

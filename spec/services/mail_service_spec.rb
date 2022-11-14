@@ -24,14 +24,14 @@ RSpec.describe MailService do
     end
 
     describe 'when initialised without a OnlineApplication' do
-      let(:source_data) { build :feedback }
+      let(:source_data) { build(:feedback) }
 
       it { is_expected.to be false }
 
     end
 
     describe 'when initialised with a OnlineApplication without a users email' do
-      let(:source_data) { build :online_application }
+      let(:source_data) { build(:online_application) }
 
       it { is_expected.to be false }
     end
@@ -42,7 +42,7 @@ RSpec.describe MailService do
       end
 
       context 'for refund application' do
-        let(:source_data) { build :online_application, :with_email, :with_refund }
+        let(:source_data) { build(:online_application, :with_email, :with_refund) }
 
         it 'delivers the e-mail later' do
           expect(refund_email).to have_received(:deliver_later)
@@ -58,7 +58,7 @@ RSpec.describe MailService do
       end
 
       context 'for non refund application' do
-        let(:source_data) { build :online_application, :with_email }
+        let(:source_data) { build(:online_application, :with_email) }
 
         it 'delivers the e-mail later' do
           expect(non_refund_email).to have_received(:deliver_later)

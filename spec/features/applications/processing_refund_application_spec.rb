@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Processing refund application with valid date received date', type: :feature do
+RSpec.feature 'Processing refund application with valid date received date' do
 
-  let(:jurisdiction) { create :jurisdiction }
-  let(:office) { create :office, jurisdictions: [jurisdiction] }
-  let(:user) { create :user, office: office }
+  let(:jurisdiction) { create(:jurisdiction) }
+  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  let(:user) { create(:user, office: office) }
 
   let(:online_application_1) do
     create(:online_application, :completed, :with_reference,
@@ -89,8 +89,8 @@ RSpec.feature 'Processing refund application with valid date received date', typ
   end
 
   context 'Postal refund application' do
-    let(:applicant) { build :applicant_with_all_details }
-    let(:application) { build :application, applicant: applicant }
+    let(:applicant) { build(:applicant_with_all_details) }
+    let(:application) { build(:application, applicant: applicant) }
 
     context 'with benefits' do
       it "valid date" do

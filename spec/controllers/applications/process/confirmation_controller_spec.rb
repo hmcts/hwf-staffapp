@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::ConfirmationController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::ConfirmationController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:dwp_monitor) { instance_double(DwpMonitor) }
   let(:dwp_state) { 'online' }
@@ -26,7 +26,7 @@ RSpec.describe Applications::Process::ConfirmationController, type: :controller 
     end
 
     it 'assigns confirm' do
-      expect(assigns(:confirm)).to be_a_kind_of(Views::Confirmation::Result)
+      expect(assigns(:confirm)).to be_a(Views::Confirmation::Result)
     end
 
     context 'evidence check' do

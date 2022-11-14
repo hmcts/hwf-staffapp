@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::BenefitsController, type: :controller do
-  let(:user)          { create :user }
+RSpec.describe Applications::Process::BenefitsController do
+  let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:benefit_form) { instance_double(Forms::Application::Benefit) }
   let(:dwp_monitor) { instance_double(DwpMonitor) }

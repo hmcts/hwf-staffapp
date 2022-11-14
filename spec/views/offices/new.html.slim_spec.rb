@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'offices/new', type: :view do
+RSpec.describe 'offices/new' do
   let(:manager) { create(:manager) }
   let!(:office) { assign(:office, Office.new) }
   let(:jurisdictions) { assign(:jurisdictions, office.jurisdictions) }

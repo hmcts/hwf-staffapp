@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
+RSpec.feature 'EV Skipped for All Benefit Application' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
   let(:dwp_result) { nil }
   let(:dwp_status) { 200 }
 
@@ -16,10 +16,10 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   context 'DWP outcome is Undetermined' do
     let(:dwp_result) { 'Undetermined' }
-    let(:application) { create :application_full_remission }
+    let(:application) { create(:application_full_remission) }
 
     before do
-      create_list :application_full_remission, 9
+      create_list(:application_full_remission, 9)
     end
 
     scenario 'Benefit application skipped from ev check when dwp is undertermined' do
@@ -42,10 +42,10 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   context 'DWP outcome is pass' do
     let(:dwp_result) { 'Yes' }
-    let(:application) { create :application_full_remission }
+    let(:application) { create(:application_full_remission) }
 
     before do
-      create_list :application_full_remission, 9
+      create_list(:application_full_remission, 9)
     end
 
     scenario 'Benefit application skipped from ev check when dwp is pass' do
@@ -66,10 +66,10 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   context 'DWP Outcome is pass and paper evidence is true' do
     let(:dwp_result) { 'Yes' }
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'Benefit application skipped from ev check when dwp is pass and paper evidence confirmed' do
@@ -89,10 +89,10 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   context 'DWP Outcome is ECONNREFUSED' do
     let(:dwp_result) { 'Server unavailable' }
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
@@ -115,10 +115,10 @@ RSpec.feature 'EV Skipped for All Benefit Application', type: :feature do
 
   context 'DWP Outcome is Yes for emergency application' do
     let(:dwp_result) { 'Yes' }
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'No evidence check on emergency applications' do

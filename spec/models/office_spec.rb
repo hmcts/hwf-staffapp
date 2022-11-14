@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Office, type: :model do
+RSpec.describe Office do
 
-  let(:office) { build :office }
+  let(:office) { build(:office) }
 
   it { is_expected.to have_many(:users) }
   it { is_expected.to have_many(:applications) }
@@ -31,12 +31,12 @@ RSpec.describe Office, type: :model do
   end
 
   describe 'managers' do
-    let(:office)      { create :office }
+    let(:office)      { create(:office) }
 
     it 'returns a list of user in the manager role' do
       User.delete_all
-      create_list :user, 3, office: office
-      create :manager, office: office
+      create_list(:user, 3, office: office)
+      create(:manager, office: office)
       expect(office.managers.count).to eq 1
     end
   end
@@ -44,9 +44,9 @@ RSpec.describe Office, type: :model do
   describe 'business_entities' do
     subject { office.business_entities.count }
 
-    let(:office) { create :office, business_entities: [be1, be2] }
-    let(:be1) { create :business_entity }
-    let(:be2) { create :business_entity }
+    let(:office) { create(:office, business_entities: [be1, be2]) }
+    let(:be1) { create(:business_entity) }
+    let(:be2) { create(:business_entity) }
 
     context 'before editing' do
       it { is_expected.to eq 2 }

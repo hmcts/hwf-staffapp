@@ -1,21 +1,21 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is not evidence check when income is above threshold', type: :feature do
+RSpec.feature 'Application is not evidence check when income is above threshold' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
 
   before do
     login_as user
   end
 
   context 'Non-refund application no evidence check for 10th application when income above threshold' do
-    let(:application) { create :application_full_remission }
+    let(:application) { create(:application_full_remission) }
 
     before do
-      create_list :application_full_remission, 9
+      create_list(:application_full_remission, 9)
     end
 
     scenario 'Every 10th application is not evidence check for application with income exceeding threshold' do
@@ -43,10 +43,10 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   end
 
   context 'Refund application' do
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'Every 2nd application is not evidence check for emergency application' do
@@ -74,7 +74,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
 
     context 'Duplicate NINO with previous evidence checked' do
 
-      let(:application) { create :application_full_remission }
+      let(:application) { create(:application_full_remission) }
 
       scenario 'No evidence check on duplicate NINO when income above threshold' do
         start_new_application

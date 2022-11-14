@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe PersonalDataPurgeJob, type: :job do
+RSpec.describe PersonalDataPurgeJob do
   let(:purge_class) { instance_double(PersonalDataPurge) }
   let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
   describe 'load data' do
-    let(:application1) { create :application }
-    let(:application2) { create :application }
-    let(:application3) { create :application, :deleted_state }
-    let(:application4) { create :application, :deleted_state, completed_at: 8.years.ago }
+    let(:application1) { create(:application) }
+    let(:application2) { create(:application) }
+    let(:application3) { create(:application, :deleted_state) }
+    let(:application4) { create(:application, :deleted_state, completed_at: 8.years.ago) }
 
     before do
       allow(PersonalDataPurge).to receive(:new).and_return purge_class
@@ -32,10 +32,10 @@ RSpec.describe PersonalDataPurgeJob, type: :job do
   end
 
   describe 'online applicaitons only' do
-    let(:application1) { create :application, online_application: online_application1, created_at: 3.years.ago }
-    let(:online_application1) { create :online_application_with_all_details, :with_reference, created_at: 8.years.ago }
-    let(:online_application2) { create :online_application_with_all_details, :with_reference, created_at: 8.years.ago }
-    let(:online_application3) { create :online_application_with_all_details, :with_reference, created_at: 3.years.ago }
+    let(:application1) { create(:application, online_application: online_application1, created_at: 3.years.ago) }
+    let(:online_application1) { create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago) }
+    let(:online_application2) { create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago) }
+    let(:online_application3) { create(:online_application_with_all_details, :with_reference, created_at: 3.years.ago) }
 
     before do
       allow(PersonalDataPurge).to receive(:new).and_return purge_class

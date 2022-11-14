@@ -10,10 +10,10 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
-  let(:application1) { create :application, :confirm }
-  let(:application2) { create :application, :confirm }
-  let(:application3) { create :application, :confirm, reference: '' }
-  let(:application4) { create :online_application, :with_reference, convert_to_application: true, purged: true }
+  let(:application1) { create(:application, :confirm) }
+  let(:application2) { create(:application, :confirm) }
+  let(:application3) { create(:application, :confirm, reference: '') }
+  let(:application4) { create(:online_application, :with_reference, convert_to_application: true, purged: true) }
 
   describe 'to_csv' do
     subject(:data) { audit_export.to_csv.split("\n") }

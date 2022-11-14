@@ -80,7 +80,7 @@ RSpec.describe Views::Overview::Application do
         let(:result) { 'no' }
         let!(:application) { create(:application, :benefit_type) }
 
-        before { create :decision_override, application: application }
+        before { create(:decision_override, application: application) }
 
         it { is_expected.to eql "✓ Passed (by manager's decision)" }
       end
@@ -186,7 +186,7 @@ RSpec.describe Views::Overview::Application do
   describe '#return_type' do
     subject { view.return_type }
 
-    let(:application) { build_stubbed :application, decision_type: decision_type, outcome: 'none' }
+    let(:application) { build_stubbed(:application, decision_type: decision_type, outcome: 'none') }
 
     context 'when the application has no decision_type' do
       let(:decision_type) { nil }
@@ -275,14 +275,14 @@ RSpec.describe Views::Overview::Application do
     end
 
     context 'when the application has evidence check' do
-      let(:evidence) { build_stubbed :evidence_check, amount_to_pay: amount }
-      let(:application) { build_stubbed :application, evidence_check: evidence, amount_to_pay: nil }
+      let(:evidence) { build_stubbed(:evidence_check, amount_to_pay: amount) }
+      let(:application) { build_stubbed(:application, evidence_check: evidence, amount_to_pay: nil) }
 
       include_examples 'amount_to_pay examples'
     end
 
     context 'when the application does not have evidence check' do
-      let(:application) { build_stubbed :application, amount_to_pay: amount }
+      let(:application) { build_stubbed(:application, amount_to_pay: amount) }
 
       include_examples 'amount_to_pay examples'
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'layouts/application', type: :view do
+RSpec.describe 'layouts/application' do
   describe 'menu' do
     describe 'notifications link' do
       context 'when logged out' do
@@ -18,7 +18,7 @@ RSpec.describe 'layouts/application', type: :view do
         end
 
         describe 'as admin' do
-          let(:user) { create :admin_user }
+          let(:user) { create(:admin_user) }
 
           it 'is visible' do
             expect(rendered).to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
@@ -26,7 +26,7 @@ RSpec.describe 'layouts/application', type: :view do
         end
 
         describe 'as user' do
-          let(:user) { create :user }
+          let(:user) { create(:user) }
 
           it 'is hidden' do
             expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
@@ -34,7 +34,7 @@ RSpec.describe 'layouts/application', type: :view do
         end
 
         describe 'as manager' do
-          let(:user) { create :manager }
+          let(:user) { create(:manager) }
 
           it 'is hidden' do
             expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")
@@ -42,7 +42,7 @@ RSpec.describe 'layouts/application', type: :view do
         end
 
         describe 'as mi' do
-          let(:user) { create :mi }
+          let(:user) { create(:mi) }
 
           it 'is hidden' do
             expect(rendered).not_to have_xpath("//a[contains(@href,'#{edit_notifications_path}')]")

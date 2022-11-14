@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.feature 'Password reset,', type: :feature do
+RSpec.feature 'Password reset,' do
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
 
   context 'User' do
     scenario 'reset password token expired' do

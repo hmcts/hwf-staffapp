@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationMailer, type: :mailer do
+RSpec.describe ApplicationMailer do
   describe '#dwp_is_down_notifier' do
 
     let(:email) { ['dan@test.com', 'petr@test.gov.uk'] }

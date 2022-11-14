@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Devise::Mailer, type: :mailer do
+RSpec.describe Devise::Mailer do
   describe '#confirmation_instructions' do
 
     let(:email) { 'foo@bar.com' }

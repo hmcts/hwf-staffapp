@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'users/index', type: :view do
+RSpec.describe 'users/index' do
   subject { rendered }
 
   let(:users) { create_list(:user, 2) }

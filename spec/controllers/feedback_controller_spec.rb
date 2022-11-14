@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FeedbackController, type: :controller do
+RSpec.describe FeedbackController do
   let(:office) { create(:office) }
-  let(:user)          { create :user, office: office }
-  let(:admin)         { create :admin_user, office: office }
+  let(:user)          { create(:user, office: office) }
+  let(:admin)         { create(:admin_user, office: office) }
 
   context 'as a signed out user' do
     describe 'GET #new' do
@@ -88,7 +88,7 @@ RSpec.describe FeedbackController, type: :controller do
       end
 
       context 'when there is feedback from a deleted user' do
-        let(:user) { create :deleted_user, office: create(:office) }
+        let(:user) { create(:deleted_user, office: create(:office)) }
         before { create(:feedback, ideas: 'None', user: user, office: user.office) }
 
         it 'renders the correct template' do

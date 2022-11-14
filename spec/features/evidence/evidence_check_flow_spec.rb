@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Evidence check flow', type: :feature do
+RSpec.feature 'Evidence check flow' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
   let(:office) { create(:office) }
-  let(:user) { create :user, office: office }
-  let(:application) { create :application_full_remission, user: user, office: office, state: state }
+  let(:user) { create(:user, office: office) }
+  let(:application) { create(:application_full_remission, user: user, office: office, state: state) }
   let(:outcome) { nil }
   let(:amount) { nil }
   let(:income) { nil }
   let(:state) { 3 }
-  let(:evidence) { create :evidence_check, application: application, outcome: outcome, amount_to_pay: amount, income: income }
+  let(:evidence) { create(:evidence_check, application: application, outcome: outcome, amount_to_pay: amount, income: income) }
 
   before { login_as user }
 
@@ -138,7 +138,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     before { visit summary_evidence_path(id: evidence.id) }
 
     context 'for an unsuccessful outcome' do
-      let(:evidence) { create :evidence_check_incorrect, application: application }
+      let(:evidence) { create(:evidence_check_incorrect, application: application) }
       let(:expected_fields) do
         [
           { title: 'Ready to process', value: 'No', url: accuracy_evidence_path(evidence) },
@@ -147,9 +147,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
         ]
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation('Not eligible for help with fees', expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       it 'clicking the Complete processing button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
@@ -158,7 +160,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a part remission outcome' do
-      let(:evidence) { create :evidence_check_part_outcome, application: application, amount_to_pay: 43.33 }
+      let(:evidence) { create(:evidence_check_part_outcome, application: application, amount_to_pay: 43.33) }
       let(:expected_fields) do
         [
           { title: 'Ready to process', value: 'Yes', url: accuracy_evidence_path(evidence) },
@@ -166,9 +168,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
         ]
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation("The applicant must pay £43.33 towards the fee", expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       context 'clicking the Complete processing button' do
         before { click_link_or_button 'Complete processing' }
@@ -184,7 +188,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
     end
 
     context 'for a full remission outcome' do
-      let(:evidence) { create :evidence_check_full_outcome, application: application }
+      let(:evidence) { create(:evidence_check_full_outcome, application: application) }
       let(:expected_fields) do
         [
           { title: 'Ready to process', value: 'Yes', url: accuracy_evidence_path(evidence) },
@@ -193,9 +197,11 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
       end
 
+      # rubocop:disable RSpec/NoExpectationExample
       it 'renders correct outcome' do
         page_expectation('Eligible for help with fees', expected_fields)
       end
+      # rubocop:enable RSpec/NoExpectationExample
 
       it 'clicking the Next button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
@@ -216,7 +222,7 @@ RSpec.feature 'Evidence check flow', type: :feature do
 
   context 'when on "Evidence confirmation" page' do
     before {
-      create :part_payment, application: evidence.application
+      create(:part_payment, application: evidence.application)
       visit confirmation_evidence_path(id: evidence.id)
     }
     let(:outcome) { 'full' }

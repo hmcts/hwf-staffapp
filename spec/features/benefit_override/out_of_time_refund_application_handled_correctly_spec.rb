@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Out of time refunds are correctly handled', type: :feature do
+RSpec.feature 'Out of time refunds are correctly handled' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let!(:jurisdictions) { create_list :jurisdiction, 3 }
+  let!(:jurisdictions) { create_list(:jurisdiction, 3) }
   let!(:office)        { create(:office, jurisdictions: jurisdictions) }
   let!(:user)          { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
   let!(:detail)         { create(:complete_detail, :out_of_time_refund) }

@@ -5,7 +5,7 @@ RSpec.describe ApplicationSearch do
 
   include Rails.application.routes.url_helpers
   let(:reference) { nil }
-  let(:user) { create :staff }
+  let(:user) { create(:staff) }
 
   it { is_expected.to respond_to :error_message }
 
@@ -57,7 +57,7 @@ RSpec.describe ApplicationSearch do
 
       context 'when the application has not been processed in the same office' do
         context 'staff user' do
-          let(:office) { create :office, name: 'ACDC Office' }
+          let(:office) { create(:office, name: 'ACDC Office') }
           let(:application) { create(:application, :processed_state, reference: reference, office: office) }
 
           it { expect(service_completed).to be_nil }

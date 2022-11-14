@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GuideController, type: :controller do
+RSpec.describe GuideController do
 
   describe 'as a signed out user' do
     context 'index' do

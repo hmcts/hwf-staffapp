@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe EvidenceCheckHelper do
-  let(:application) { build :application, :waiting_for_evidence_state, evidence_check: evidence, income: income1 }
-  let(:evidence) { build :evidence_check, income: income2 }
+  let(:application) { build(:application, :waiting_for_evidence_state, evidence_check: evidence, income: income1) }
+  let(:evidence) { build(:evidence_check, income: income2) }
   let(:income1) { nil }
   let(:income2) { nil }
 
@@ -42,7 +42,7 @@ RSpec.describe EvidenceCheckHelper do
   end
 
   describe 'display_evidence_section?' do
-    let(:application) { build :application, income_kind: income_kind }
+    let(:application) { build(:application, income_kind: income_kind) }
     let(:income_kind) { {} }
 
     context 'No match for income kind' do

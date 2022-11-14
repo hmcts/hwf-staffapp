@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'offices/edit', type: :view do
+RSpec.describe 'offices/edit' do
   let(:manager)       { create(:manager) }
   let(:admin)         { create(:admin_user) }
   let!(:office)        { assign(:office, create(:office)) }

@@ -12,13 +12,13 @@ class BusinessEntitiesController < ApplicationController
     authorize @business_entity
   end
 
+  def edit
+    authorize business_entity
+  end
+
   def create
     authorize business_entity_service.build_new(business_entity_params)
     persist_and_redirect(:new)
-  end
-
-  def edit
-    authorize business_entity
   end
 
   def update

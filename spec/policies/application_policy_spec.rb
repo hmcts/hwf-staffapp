@@ -100,9 +100,9 @@ RSpec.describe ApplicationPolicy, type: :policy do
     describe '#resolve' do
       subject { described_class.new(user, Application).resolve }
 
-      let(:office) { create :office }
-      let(:application1) { create :application }
-      let!(:application2) { create :application, office: office }
+      let(:office) { create(:office) }
+      let(:application1) { create(:application) }
+      let!(:application2) { create(:application, office: office) }
 
       context 'for a regular user' do
         let(:user) { create(:user, office: office) }

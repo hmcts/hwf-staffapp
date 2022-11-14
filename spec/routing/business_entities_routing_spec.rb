@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BusinessEntitiesController, type: :routing do
+RSpec.describe BusinessEntitiesController do
   describe 'routing' do
 
     it 'routes to #index' do

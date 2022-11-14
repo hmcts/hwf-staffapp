@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'feedback/new', type: :view do
-  let(:user)          { create :user }
-  let(:feedback)      { build :feedback }
+RSpec.describe 'feedback/new' do
+  let(:user)          { create(:user) }
+  let(:feedback)      { build(:feedback) }
 
   it 'contain the required fields' do
     sign_in user

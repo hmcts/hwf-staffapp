@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe OnlineApplication, type: :model do
+RSpec.describe OnlineApplication do
   subject(:online_application) { online_application }
-  let(:online_application) { build :online_application }
+  let(:online_application) { build(:online_application) }
 
   it { is_expected.to validate_presence_of(:date_of_birth) }
   it { is_expected.to validate_presence_of(:first_name) }
@@ -78,20 +78,20 @@ RSpec.describe OnlineApplication, type: :model do
     subject { online_application.processed? }
 
     context 'when an application exists that is linked to this online_application' do
-      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+      let(:online_application) { create(:online_application, :completed, :with_reference, convert_to_application: true) }
 
       it { is_expected.to be true }
     end
 
     context 'when no application exists that is linked to this online_application' do
-      let(:online_application) { create :online_application, :completed, :with_reference }
+      let(:online_application) { create(:online_application, :completed, :with_reference) }
 
       it { is_expected.to be false }
     end
 
     context 'when application exists but it is still in created mode' do
-      let(:application) { create :application, online_application: online_application }
-      let(:online_application) { create :online_application, :completed, :with_reference }
+      let(:application) { create(:application, online_application: online_application) }
+      let(:online_application) { create(:online_application, :completed, :with_reference) }
       before { application }
 
       it { is_expected.to be false }
@@ -103,19 +103,19 @@ RSpec.describe OnlineApplication, type: :model do
     subject(:linked_application) { online_application.linked_application }
 
     context 'when an application exists that is linked to this online_application' do
-      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+      let(:online_application) { create(:online_application, :completed, :with_reference, convert_to_application: true) }
 
       it { is_expected.to eql Application.find_by(reference: online_application.reference) }
     end
 
     context 'when no application exists that is linked to this online_application' do
-      let(:online_application) { create :online_application, :completed, :with_reference }
+      let(:online_application) { create(:online_application, :completed, :with_reference) }
 
       it { is_expected.to be_nil }
     end
 
     context 'when linked application is "purged"' do
-      let(:online_application) { create :online_application, :completed, :with_reference, convert_to_application: true }
+      let(:online_application) { create(:online_application, :completed, :with_reference, convert_to_application: true) }
 
       it "returns nil" do
         linked_application.update(purged: true)
@@ -141,10 +141,10 @@ RSpec.describe OnlineApplication, type: :model do
   end
 
   describe 'applicant' do
-    let(:online_application) { build :online_application, title: 'Mr', first_name: 'James', last_name: 'Grump' }
+    let(:online_application) { build(:online_application, title: 'Mr', first_name: 'James', last_name: 'Grump') }
 
     it 'is an Applicant model object' do
-      expect(online_application.applicant).to be_a_kind_of(Applicant)
+      expect(online_application.applicant).to be_a(Applicant)
     end
 
     it 'has correct data' do
@@ -158,14 +158,14 @@ RSpec.describe OnlineApplication, type: :model do
 
   describe 'purged application' do
     it {
-      create :online_application, purged: true
+      create(:online_application, purged: true)
       expect(described_class.count).to eq 0
     }
   end
 
   describe 'not purged application' do
     it {
-      create :online_application, purged: false
+      create(:online_application, purged: false)
       expect(described_class.count).to eq 1
     }
   end

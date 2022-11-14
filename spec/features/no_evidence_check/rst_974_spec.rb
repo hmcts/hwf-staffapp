@@ -1,21 +1,21 @@
 require 'rails_helper'
 
-RSpec.feature 'Application outside of 3 month limit is not evidence checked when discretion is no', type: :feature do
+RSpec.feature 'Application outside of 3 month limit is not evidence checked when discretion is no' do
 
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
 
   before do
     login_as user
   end
 
   context 'Refund application outside 3 month limit' do
-    let(:application) { create :application_full_remission, :refund }
+    let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list :application_full_remission, 1, :refund
+      create_list(:application_full_remission, 1, :refund)
     end
 
     scenario 'Every 2nd application is not evidence checked when outside 3 month limit' do
@@ -31,7 +31,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
 
     context 'Duplicate NINO with previous evidence checked' do
 
-      let(:application) { create :application_full_remission }
+      let(:application) { create(:application_full_remission) }
 
       scenario 'No evidence check on duplicate NINO when outside 3 month limit' do
 

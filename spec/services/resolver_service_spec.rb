@@ -249,7 +249,7 @@ describe ResolverService do
       end
 
       context 'when the evidence check does not have an outcome' do
-        let(:evidence_check) { create :evidence_check, application: application }
+        let(:evidence_check) { create(:evidence_check, application: application) }
 
         it 'raises an error' do
           expect { complete }.to raise_error(ResolverService::UndefinedOutcome)
@@ -257,7 +257,7 @@ describe ResolverService do
       end
 
       context 'when the application requires part payment' do
-        let(:evidence_check) { create :evidence_check_part_outcome, application: application }
+        let(:evidence_check) { create(:evidence_check_part_outcome, application: application) }
         let(:part_payment_decision) { true }
 
         include_examples 'application, evidence check or part payment completed', 'evidence_check', 'waiting_for_part_payment', false
@@ -265,7 +265,7 @@ describe ResolverService do
 
       context 'when the evidence check has outcome and application does not require part payment' do
         context 'for full outcome' do
-          let(:evidence_check) { create :evidence_check_full_outcome, application: application }
+          let(:evidence_check) { create(:evidence_check_full_outcome, application: application) }
 
           include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 350
 
@@ -276,7 +276,7 @@ describe ResolverService do
         end
 
         context 'for none outcome' do
-          let(:evidence_check) { create :evidence_check_incorrect, application: application }
+          let(:evidence_check) { create(:evidence_check_incorrect, application: application) }
 
           include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 0
 
@@ -288,7 +288,7 @@ describe ResolverService do
       end
 
       context 'when the application is part payment but a refund too' do
-        let(:evidence_check) { create :evidence_check_part_outcome, application: application }
+        let(:evidence_check) { create(:evidence_check_part_outcome, application: application) }
         let(:part_payment_decision) { true }
         let(:refund) { true }
 
@@ -314,7 +314,7 @@ describe ResolverService do
       let(:object) { part_payment }
 
       context 'when the part_payment does not have an outcome' do
-        let(:part_payment) { create :part_payment, application: application }
+        let(:part_payment) { create(:part_payment, application: application) }
 
         it 'raises an error' do
           expect { complete }.to raise_error(ResolverService::UndefinedOutcome)
@@ -323,7 +323,7 @@ describe ResolverService do
 
       context 'when the part payment has outcome' do
         context 'for a part outcome' do
-          let(:part_payment) { create :part_payment_part_outcome, application: application }
+          let(:part_payment) { create(:part_payment_part_outcome, application: application) }
 
           context 'when the application also was evidence checked' do
             before do
@@ -341,7 +341,7 @@ describe ResolverService do
         end
 
         context 'for a none outcome' do
-          let(:part_payment) { create :part_payment_none_outcome, application: application }
+          let(:part_payment) { create(:part_payment_none_outcome, application: application) }
 
           include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 0
         end
@@ -402,7 +402,7 @@ describe ResolverService do
     end
 
     context 'for EvidenceCheck' do
-      let(:evidence_check) { create :evidence_check, application: application }
+      let(:evidence_check) { create(:evidence_check, application: application) }
 
       let(:object) { evidence_check }
 
@@ -410,7 +410,7 @@ describe ResolverService do
     end
 
     context 'for PartPayment' do
-      let(:part_payment) { create :part_payment, application: application }
+      let(:part_payment) { create(:part_payment, application: application) }
 
       let(:object) { part_payment }
 
@@ -433,7 +433,7 @@ describe ResolverService do
         application.reload
       end
 
-      let(:application) { create :application, :processed_state, deleted_reason: 'I do not like it' }
+      let(:application) { create(:application, :processed_state, deleted_reason: 'I do not like it') }
 
       it 'moves the application to :deleted state' do
         expect(deleted_application).to be_deleted
@@ -449,7 +449,7 @@ describe ResolverService do
     end
 
     context 'when the application is not in :processed state' do
-      let(:application) { create :application, :waiting_for_evidence_state }
+      let(:application) { create(:application, :waiting_for_evidence_state) }
 
       it 'raises an error' do
         expect { delete }.to raise_error(ResolverService::NotDeletable)
@@ -457,7 +457,7 @@ describe ResolverService do
     end
 
     context 'when the :deleted_reason is missing' do
-      let(:application) { create :application, :processed_state, deleted_reason: nil }
+      let(:application) { create(:application, :processed_state, deleted_reason: nil) }
 
       it 'raises an error' do
         expect { delete }.to raise_error(ResolverService::NotDeletable)

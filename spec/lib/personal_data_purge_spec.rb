@@ -5,14 +5,14 @@ RSpec.describe PersonalDataPurge do
   describe 'settings for data range' do
     it { expect(Settings.personal_data_purge.years_ago).to be(7) }
   end
-  let(:benefit_check1) { build :benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1' }
-  let(:benefit_check2) { build :benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2' }
-  let(:online_benefit_check1) { build :online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1' }
-  let(:online_benefit_check2) { build :online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2' }
+  let(:benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
+  let(:benefit_check2) { build(:benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
+  let(:online_benefit_check1) { build(:online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
+  let(:online_benefit_check2) { build(:online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
 
   describe 'purge online_application only' do
     subject(:purge_object) { described_class.new([online_application]) }
-    let(:online_application) { create :online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2] }
+    let(:online_application) { create(:online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     before {
       purge_object.purge_online_only!
     }
@@ -41,11 +41,11 @@ RSpec.describe PersonalDataPurge do
     let(:hmrc_checks) {}
     # rubocop:enable Lint/EmptyBlock
     let(:application1) {
-      create :application, applicant_traits: [:ho_number],
+      create(:application, applicant_traits: [:ho_number],
                            benefit_checks: [benefit_check1, benefit_check2], detail_traits: [:probate], online_application: online_application,
-                           completed_at: 8.years.ago
+                           completed_at: 8.years.ago)
     }
-    let(:online_application) { create :online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2] }
+    let(:online_application) { create(:online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     let(:audit_data) { AuditPersonalDataPurge.last }
 
     before {
@@ -127,13 +127,13 @@ RSpec.describe PersonalDataPurge do
     end
 
     context 'hmrc_check' do
-      let(:hmrc_check1) { create :hmrc_check, evidence_check: application1.evidence_check }
-      let(:hmrc_check2) { create :hmrc_check, evidence_check: application1.evidence_check }
+      let(:hmrc_check1) { create(:hmrc_check, evidence_check: application1.evidence_check) }
+      let(:hmrc_check2) { create(:hmrc_check, evidence_check: application1.evidence_check) }
       let(:evidence_check) { application1.evidence_check }
       let(:application1) {
-        create :application, :waiting_for_evidence_state, completed_at: 8.years.ago
+        create(:application, :waiting_for_evidence_state, completed_at: 8.years.ago)
       }
-      let(:user) { create :user }
+      let(:user) { create(:user) }
       let(:keys) { [:address, :ni_number] }
       let(:hmrc_checks) {
         hmrc_check1

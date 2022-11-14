@@ -1,11 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'Staff are prevented from processing online applications', type: :feature do
+# I'm disabling this Rubocop check to allow writing readable scenarios
+# rubocop:disable RSpec/NoExpectationExample
+
+RSpec.feature 'Staff are prevented from processing online applications' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :staff }
-  let!(:online_application) { create :online_application, :with_reference, :invalid_income }
+  let(:user) { create(:staff) }
+  let!(:online_application) { create(:online_application, :with_reference, :invalid_income) }
 
   before do
     login_as user
@@ -30,3 +33,4 @@ RSpec.feature 'Staff are prevented from processing online applications', type: :
     expect(page).to have_content(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))
   end
 end
+# rubocop:enable RSpec/NoExpectationExample

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature 'List deleted applications', type: :feature do
+RSpec.feature 'List deleted applications' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:who_deleted) { create :user, name: 'Bob' }
+  let(:who_deleted) { create(:user, name: 'Bob') }
   let(:when_deleted) { Time.zone.parse('2016-05-19 10:10:01') }
-  let(:user) { create :user }
+  let(:user) { create(:user) }
 
   before do
     Settings.processed_deleted.per_page = 2
@@ -15,13 +15,13 @@ RSpec.feature 'List deleted applications', type: :feature do
   after { Settings.processed_deleted.per_page = ENV.fetch('PROCESSED_DELETED_PER_PAGE', nil) }
 
   let!(:application1) do
-    create :application_full_remission, :deleted_state,
-           office: user.office, deleted_at: when_deleted, deleted_by: who_deleted
+    create(:application_full_remission, :deleted_state,
+           office: user.office, deleted_at: when_deleted, deleted_by: who_deleted)
   end
-  let!(:application2) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-01') }
-  let(:application3) { create :application_part_remission, :processed_state, office: user.office }
-  let!(:application4) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-02') }
-  let!(:application5) { create :application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-03-11') }
+  let!(:application2) { create(:application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-01')) }
+  let(:application3) { create(:application_part_remission, :processed_state, office: user.office) }
+  let!(:application4) { create(:application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-04-02')) }
+  let!(:application5) { create(:application_part_remission, :deleted_state, office: user.office, deleted_at: Time.zone.parse('2016-03-11')) }
 
   scenario 'User lists all deleted applications with pagination' do
     visit '/'

@@ -7,7 +7,7 @@ FactoryBot.define do
     sequence(:name) { |n| "#{Faker::Company.name.delete("[,']")} #{n}" }
     sequence(:entity_code) { |n| "#{Faker::Commerce.color.chars.sample(2).join.upcase}#{n.to_s.rjust(3, '0')}" }
 
-    jurisdictions { build_list :jurisdiction, jurisdictions_count }
+    jurisdictions { build_list(:jurisdiction, jurisdictions_count) }
 
     factory :invalid_office do
       name { nil }

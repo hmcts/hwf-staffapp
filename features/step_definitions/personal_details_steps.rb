@@ -97,7 +97,7 @@ end
 Then("I see that I should look for a national insurance number") do
   expect(personal_details_page.content.guidance.guidance_header[1].text).to eq 'National Insurance number'
   expect(personal_details_page.content.guidance.guidance_sub_heading[2].text).to eq 'If NI number isn\'t provided:'
-  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don\'t process and contact applicant by phone to ask for their NI number"
+  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[3].text).to eq 'What to do if you’re unable to obtain the NI number'
   expect(personal_details_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#ni-number'
 end
@@ -110,7 +110,7 @@ end
 
 Then("I see that I should check the status of the applicant") do
   expect(personal_details_page.content.guidance.guidance_header[3].text).to eq 'Status'
-  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don\'t process and contact applicant by phone to ask for their NI number"
+  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[6].text).to eq "If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'."
   expect(personal_details_page.content.guidance.guidance_link[3]['href']).to end_with '/guide/process_application#status'
   expect(personal_details_page.content.guidance.guidance_link[4]['href']).to end_with '/guide'

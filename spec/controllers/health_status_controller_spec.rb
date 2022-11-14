@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HealthStatusController, type: :controller do
+RSpec.describe HealthStatusController do
 
   describe 'GET #ping' do
     before { get :ping }

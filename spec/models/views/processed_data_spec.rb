@@ -35,7 +35,7 @@ RSpec.describe Views::ProcessedData do
     subject(:application_override) { view.application_override }
 
     let(:application) { create(:application, :confirm, :processed_state) }
-    before { create :decision_override, application: application }
+    before { create(:decision_override, application: application) }
 
     it 'returns the override data' do
       expect(application_override).to eql(on: application.decision_override.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.decision_override.user.name, text: 'Reason granted: "My reasons"')
@@ -62,28 +62,28 @@ RSpec.describe Views::ProcessedData do
 
     describe 'when the application' do
 
-      let(:application) { build_stubbed :application, :waiting_for_evidence_state, evidence_check: evidence, amount_to_pay: nil }
+      let(:application) { build_stubbed(:application, :waiting_for_evidence_state, evidence_check: evidence, amount_to_pay: nil) }
 
       context 'has a pending evidence_check' do
-        let(:evidence) { build_stubbed :evidence_check }
+        let(:evidence) { build_stubbed(:evidence_check) }
 
         it { is_expected.to be_nil }
       end
 
       context 'has a completed evidence_check' do
-        let(:evidence) { build_stubbed :evidence_check_part_outcome, :completed }
+        let(:evidence) { build_stubbed(:evidence_check_part_outcome, :completed) }
 
         it { is_expected.to eql(on: evidence.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: evidence.completed_by.name, text: nil) }
       end
 
       context 'has a returned evidence_check' do
-        let(:evidence) { build_stubbed :evidence_check_incorrect, :completed }
+        let(:evidence) { build_stubbed(:evidence_check_incorrect, :completed) }
 
         it { is_expected.to eql(on: evidence.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: evidence.completed_by.name, text: 'Reason not processed: "SOME REASON"') }
       end
 
       context 'has a returned evidence_check with translated reason' do
-        let(:evidence) { build_stubbed :evidence_check_incorrect, :completed, incorrect_reason: "citizen_not_processing" }
+        let(:evidence) { build_stubbed(:evidence_check_incorrect, :completed, incorrect_reason: "citizen_not_processing") }
 
         it { is_expected.to eql(on: evidence.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: evidence.completed_by.name, text: 'Reason not processed: "citizen not proceeding"') }
       end
@@ -99,22 +99,22 @@ RSpec.describe Views::ProcessedData do
 
     describe 'when the application' do
 
-      let(:application) { build_stubbed :application, :waiting_for_evidence_state, part_payment: part_payment, amount_to_pay: nil }
+      let(:application) { build_stubbed(:application, :waiting_for_evidence_state, part_payment: part_payment, amount_to_pay: nil) }
 
       context 'has a pending part_payment' do
-        let(:part_payment) { build_stubbed :part_payment }
+        let(:part_payment) { build_stubbed(:part_payment) }
 
         it { is_expected.to be_nil }
       end
 
       context 'has a completed part_payment' do
-        let(:part_payment) { build_stubbed :part_payment_part_outcome, :completed }
+        let(:part_payment) { build_stubbed(:part_payment_part_outcome, :completed) }
 
         it { is_expected.to eql(on: part_payment.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: part_payment.completed_by.name, text: nil) }
       end
 
       context 'has a returned part_payment' do
-        let(:part_payment) { build_stubbed :part_payment_incorrect, :completed }
+        let(:part_payment) { build_stubbed(:part_payment_incorrect, :completed) }
 
         it { is_expected.to eql(on: part_payment.completed_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: part_payment.completed_by.name, text: 'Reason not processed: "SOME REASON"') }
       end

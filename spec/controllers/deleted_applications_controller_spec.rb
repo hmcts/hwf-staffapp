@@ -4,7 +4,7 @@ class MockRelation < Array
   def paginate(_options); end
 end
 
-RSpec.describe DeletedApplicationsController, type: :controller do
+RSpec.describe DeletedApplicationsController do
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
 

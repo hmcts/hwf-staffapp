@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Business entity management around SOP and BEC switchover', type: :feature do
-  let(:admin) { create :admin_user, office: office }
+RSpec.feature 'Business entity management around SOP and BEC switchover' do
+  let(:admin) { create(:admin_user, office: office) }
 
-  let(:office) { create :office }
-  let(:business_entity) { create :business_entity, office: office }
+  let(:office) { create(:office) }
+  let(:business_entity) { create(:business_entity, office: office) }
 
   before do
     login_as admin

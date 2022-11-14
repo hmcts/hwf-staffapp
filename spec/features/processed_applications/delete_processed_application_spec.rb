@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.feature 'Delete processed applications', type: :feature do
+RSpec.feature 'Delete processed applications' do
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  let(:user) { create :user }
+  let(:user) { create(:user) }
 
   before do
     login_as(user)
   end
 
-  let!(:application1) { create :application_full_remission, :processed_state, office: user.office }
-  let!(:application2) { create :application_part_remission, :processed_state, office: user.office }
-  let(:application3) { create :application_part_remission }
+  let!(:application1) { create(:application_full_remission, :processed_state, office: user.office) }
+  let!(:application2) { create(:application_part_remission, :processed_state, office: user.office) }
+  let(:application3) { create(:application_part_remission) }
 
   describe 'User deletes application' do
     before do

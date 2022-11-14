@@ -16,7 +16,7 @@ RSpec.describe Views::Overview::Income do
   describe '#children??' do
     subject { view.children? }
 
-    let(:application) { build_stubbed :application, dependents: dependents }
+    let(:application) { build_stubbed(:application, dependents: dependents) }
 
     [true, false].each do |value|
       context "when dependents is #{value}" do
@@ -30,7 +30,7 @@ RSpec.describe Views::Overview::Income do
   describe '#children' do
     subject { view.children }
 
-    let(:application) { build_stubbed :application, dependents: dependents, children: children }
+    let(:application) { build_stubbed(:application, dependents: dependents, children: children) }
 
     context 'when the applicant has dependants' do
       let(:dependents) { true }
@@ -59,7 +59,7 @@ RSpec.describe Views::Overview::Income do
   describe '#income' do
     subject { view.income }
 
-    let(:application) { build_stubbed :application, income: 300 }
+    let(:application) { build_stubbed(:application, income: 300) }
 
     it { is_expected.to eq '£300' }
   end
