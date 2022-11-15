@@ -116,12 +116,19 @@ class EvidenceCheckSelector
   end
 
   def income_check_type
-    return 'hmrc' if hmrc_office_match? && !@application.applicant.married && @application.digital?
+    return 'hmrc' if hmrc_office_match? && !@application.applicant.married &&
+                     @application.digital? && no_tax_credit_declared
     'paper'
   end
 
   def hmrc_office_match?
     @application.office.try(:entity_code) == Settings.evidence_check.hmrc.office_entity_code
+  end
+
+  def no_tax_credit_declared
+    return true if @application.income_kind.blank?
+    income_kind = @application.income_kind['applicant']&.join('')
+    !income_kind&.include?('Tax Credit')
   end
 
   def ccmcc_evidence_rules_check

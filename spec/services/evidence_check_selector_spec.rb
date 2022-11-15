@@ -85,7 +85,7 @@ describe EvidenceCheckSelector do
       end
 
       context 'if applicant is under 15' do
-        let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant, id: 2 }
+        let(:application) { instance_spy Application, outcome: 'full', application_type: 'income', applicant: applicant, id: 2, income_kind: nil }
         let(:applicant) { build(:applicant_with_all_details, date_of_birth: dob) }
         let(:evidence_check_flag) { instance_double(EvidenceCheckFlag, active?: true) }
         before { allow(EvidenceCheckFlag).to receive(:where).and_return([evidence_check_flag]) }
@@ -434,10 +434,14 @@ describe EvidenceCheckSelector do
 
     context 'HMRC check applies' do
       let(:application) { create(:application_full_remission, :applicant_full, married: married, office: office, medium: 'digital') }
+      let(:income_kind) { { "applicant" => ["Wages"] } }
+
       before do
         ev_stub = instance_double(EvidenceCheckFlag, active?: true)
         allow(EvidenceCheckFlag).to receive(:where).and_return [ev_stub]
         Settings.evidence_check.hmrc.office_entity_code = 'dig'
+        allow(application).to receive(:create_evidence_check).and_return true
+        decision
       end
 
       context 'single applicant' do
@@ -447,12 +451,53 @@ describe EvidenceCheckSelector do
           let(:office) { create(:office, entity_code: 'dig') }
 
           it 'is hmrc checked' do
-            expect(decision.income_check_type).to eql 'hmrc'
+            expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'hmrc'))
           end
 
           context 'is not digital applicaiton' do
-            let(:application) { create(:application_full_remission, :applicant_full, office: office, medium: 'paper') }
-            it { expect(decision.income_check_type).not_to eql 'hmrc' }
+            let(:application) {
+              build(:application, :applicant_full,
+                    office: office, medium: 'paper', application_type: 'income', income_kind: income_kind)
+            }
+            it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper')) }
+          end
+
+          context 'tax credit declared' do
+            let(:application) {
+              build(:application, :applicant_full,
+                    office: office, medium: 'digital', application_type: 'income', income_kind: income_kind)
+            }
+
+            describe 'working tax credit' do
+              let(:income_kind) { { "applicant" => ["Working Tax Credit"] } }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper')) }
+            end
+
+            describe 'child tax credit' do
+              let(:income_kind) { { "applicant" => ["Wages", "Child Tax Credit"] } }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper')) }
+            end
+
+            describe 'wages and tax credit' do
+              let(:income_kind) { { "applicant" => ["Wages", "Working Tax Credit"] } }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper')) }
+            end
+
+            describe 'wages' do
+              let(:income_kind) { { "applicant" => ["Wages"] } }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'hmrc')) }
+            end
+
+            describe 'income kind empty hash' do
+              let(:income_kind) { {} }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'hmrc')) }
+            end
+
+            describe 'income kind empty value' do
+              let(:income_kind) { { "applicant" => nil } }
+              it { expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'hmrc')) }
+            end
+
           end
         end
 
@@ -460,18 +505,10 @@ describe EvidenceCheckSelector do
           let(:office) { create(:office, entity_code: 'dig01') }
 
           it 'is paper checked' do
-            expect(decision.income_check_type).to eql 'paper'
+            expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper'))
           end
         end
 
-        context 'setting does not match' do
-          let(:office) { create(:office, entity_code: 'dig') }
-          before { Settings.evidence_check.hmrc.office_entity_code = 'dug' }
-
-          it 'is paper checked' do
-            expect(decision.income_check_type).to eql 'paper'
-          end
-        end
       end
 
       context 'married applicant' do
@@ -481,7 +518,7 @@ describe EvidenceCheckSelector do
           let(:office) { create(:office, entity_code: 'dig') }
 
           it 'is paper checked' do
-            expect(decision.income_check_type).to eql 'paper'
+            expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper'))
           end
         end
 
@@ -489,7 +526,7 @@ describe EvidenceCheckSelector do
           let(:office) { create(:office, entity_code: 'dig01') }
 
           it 'is paper checked' do
-            expect(decision.income_check_type).to eql 'paper'
+            expect(application).to have_received(:create_evidence_check).with(hash_including(income_check_type: 'paper'))
           end
         end
       end
