@@ -14,8 +14,12 @@ class EvidenceCheckSelector
 
   private
 
+  def skip_ev_check?
+    @application.skip_ev_check?
+  end
+
   def evidence_check_type
-    if evidence_check?
+    if random_evidence_check?
       'random'
     elsif flagged?
       'flag'
@@ -24,16 +28,26 @@ class EvidenceCheckSelector
     end
   end
 
-  def evidence_check?
-    if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
-      if ccmcc_evidence_rules?
-        outcome = ccmcc_evidence_rules_check
-        @ccmcc.clean_annotation_data unless outcome
-        outcome
-      else
-        @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
-      end
+  def random_evidence_check?
+    return unless checkable_application_exist?
+    if ccmcc_evidence_rules?
+      outcome = ccmcc_evidence_rules_check
+      @ccmcc.clean_annotation_data unless outcome
+      outcome
+    else
+      @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
+  end
+
+  def checkable_application_exist?
+    Query::EvidenceCheckable.new.find_all.exists?(@application.id)
+  end
+
+  def save_evidence_check(type)
+    ev_check_attributes = { expires_at: expires_at, check_type: type }
+    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
+    ev_check_attributes.merge!(income_check_type: income_check_type)
+    @application.create_evidence_check(ev_check_attributes)
   end
 
   def check_every_other_refund
@@ -100,35 +114,8 @@ class EvidenceCheckSelector
     prefix
   end
 
-  def skip_ev_check?
-    @application.detail.emergency_reason.present? ||
-      @application.outcome == 'none' ||
-      @application.application_type != 'income' ||
-      @application.detail.discretion_applied == false ||
-      @application.applicant.under_age?
-  end
-
-  def save_evidence_check(type)
-    ev_check_attributes = { expires_at: expires_at, check_type: type }
-    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
-    ev_check_attributes.merge!(income_check_type: income_check_type)
-    @application.create_evidence_check(ev_check_attributes)
-  end
-
   def income_check_type
-    return 'hmrc' if hmrc_office_match? && !@application.applicant.married &&
-                     @application.digital? && no_tax_credit_declared
-    'paper'
-  end
-
-  def hmrc_office_match?
-    @application.office.try(:entity_code) == Settings.evidence_check.hmrc.office_entity_code
-  end
-
-  def no_tax_credit_declared
-    return true if @application.income_kind.blank?
-    income_kind = @application.income_kind['applicant']&.join('')
-    !income_kind&.include?('Tax Credit')
+    @application.hmrc_check_type? ? 'hmrc' : 'paper'
   end
 
   def ccmcc_evidence_rules_check
@@ -151,4 +138,3 @@ class EvidenceCheckSelector
   end
 
 end
-
