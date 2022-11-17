@@ -23,13 +23,12 @@ class EvidenceCheckSelector
       'random'
     elsif flagged?
       'flag'
-    elsif pending_evidence_check_for_with_user?
+    elsif does_applicant_have_pending_evidence_check?
       'ni_exist'
     end
   end
 
   def random_evidence_check?
-    return unless checkable_application_exist?
     if ccmcc_evidence_rules?
       outcome = ccmcc_evidence_rules_check
       @ccmcc.clean_annotation_data unless outcome
@@ -37,10 +36,6 @@ class EvidenceCheckSelector
     else
       @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
-  end
-
-  def checkable_application_exist?
-    Query::EvidenceCheckable.new.find_all.exists?(@application.id)
   end
 
   def save_evidence_check(type)
@@ -68,11 +63,7 @@ class EvidenceCheckSelector
   end
 
   def application_position(refund)
-    Query::EvidenceCheckable.new.find_all.where(
-      'applications.id <= ? AND details.refund = ?',
-      @application.id,
-      refund
-    ).count
+    Query::EvidenceCheckable.new.position(@application.id, refund)
   end
 
   def expires_at
@@ -88,8 +79,7 @@ class EvidenceCheckSelector
   end
 
   def registration_number
-    return @application.applicant.ni_number if @application.applicant.ni_number.present?
-    @application.applicant.ho_number
+    @application.applicant.registration_number
   end
 
   def skip_ni_check_based_on_flag?
@@ -97,21 +87,10 @@ class EvidenceCheckSelector
     !evidence_check_flag.active?
   end
 
-  def pending_evidence_check_for_with_user?
+  def does_applicant_have_pending_evidence_check?
     applicant = @application.applicant
-    return false if applicant.ni_number.blank? && applicant.ho_number.blank?
     return false if skip_ni_check_based_on_flag?
-
-    prefix = pending_evidence_prefix(applicant)
-    applications = Application.send("with_evidence_check_for_#{prefix}_number", @number).
-                   where.not(id: @application.id)
-    applications.present?
-  end
-
-  def pending_evidence_prefix(applicant)
-    prefix = applicant.ni_number ? 'ni' : 'ho'
-    @number = applicant.send("#{prefix}_number")
-    prefix
+    applicant.pending_ev_checks?(@application)
   end
 
   def income_check_type

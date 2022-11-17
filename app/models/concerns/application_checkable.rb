@@ -1,4 +1,4 @@
-module EvidenceCheckable
+module ApplicationCheckable
   extend ActiveSupport::Concern
 
   def skip_ev_check?

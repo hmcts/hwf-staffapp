@@ -1,6 +1,8 @@
 class Applicant < ActiveRecord::Base
   belongs_to :application, optional: false
 
+  include ApplicantCheckable
+
   before_validation :format_ni_number, :format_ho_number
 
   validates :ni_number, format: {

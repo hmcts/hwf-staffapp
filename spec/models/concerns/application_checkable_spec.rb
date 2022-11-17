@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe EvidenceCheckable do
+describe ApplicationCheckable do
   subject(:application) { application }
 
   describe 'skipp EV check?' do

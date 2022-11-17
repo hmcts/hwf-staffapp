@@ -3,7 +3,7 @@ class Application < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
 
   include PgSearch::Model
-  include EvidenceCheckable
+  include ApplicationCheckable
 
   serialize :income_kind
 
