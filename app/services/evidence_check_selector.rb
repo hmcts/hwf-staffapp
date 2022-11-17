@@ -110,8 +110,8 @@ class EvidenceCheckSelector
 
   def save_evidence_check(type)
     ev_check_attributes = { expires_at: expires_at, check_type: type }
-    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
-    ev_check_attributes.merge!(income_check_type: income_check_type)
+    ev_check_attributes[:checks_annotation] = @ccmcc.check_type if @ccmcc.try(:check_type)
+    ev_check_attributes[:income_check_type] = income_check_type
     @application.create_evidence_check(ev_check_attributes)
   end
 

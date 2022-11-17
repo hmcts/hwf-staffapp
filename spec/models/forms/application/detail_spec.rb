@@ -38,7 +38,7 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { build_stubbed(:complete_detail) }
 
     params_list.each do |attr_name|
-      next if attr_name.to_s =~ /day|month|year|emergency/
+      next if /day|month|year|emergency/.match?(attr_name.to_s)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail.send(attr_name)
       end
@@ -49,7 +49,7 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { attributes_for(:complete_detail) }
 
     params_list.each do |attr_name|
-      next if attr_name.to_s =~ /day|month|year|emergency/
+      next if /day|month|year|emergency/.match?(attr_name.to_s)
 
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail[attr_name]
