@@ -14,26 +14,35 @@ class EvidenceCheckSelector
 
   private
 
+  def skip_ev_check?
+    @application.skip_ev_check?
+  end
+
   def evidence_check_type
-    if evidence_check?
+    if random_evidence_check?
       'random'
     elsif flagged?
       'flag'
-    elsif pending_evidence_check_for_with_user?
+    elsif does_applicant_have_pending_evidence_check?
       'ni_exist'
     end
   end
 
-  def evidence_check?
-    if Query::EvidenceCheckable.new.find_all.exists?(@application.id)
-      if ccmcc_evidence_rules?
-        outcome = ccmcc_evidence_rules_check
-        @ccmcc.clean_annotation_data unless outcome
-        outcome
-      else
-        @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
-      end
+  def random_evidence_check?
+    if ccmcc_evidence_rules?
+      outcome = ccmcc_evidence_rules_check
+      @ccmcc.clean_annotation_data unless outcome
+      outcome
+    else
+      @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
+  end
+
+  def save_evidence_check(type)
+    ev_check_attributes = { expires_at: expires_at, check_type: type }
+    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
+    ev_check_attributes.merge!(income_check_type: income_check_type)
+    @application.create_evidence_check(ev_check_attributes)
   end
 
   def check_every_other_refund
@@ -54,11 +63,7 @@ class EvidenceCheckSelector
   end
 
   def application_position(refund)
-    Query::EvidenceCheckable.new.find_all.where(
-      'applications.id <= ? AND details.refund = ?',
-      @application.id,
-      refund
-    ).count
+    Query::EvidenceCheckable.new.position(@application.id, refund)
   end
 
   def expires_at
@@ -74,8 +79,7 @@ class EvidenceCheckSelector
   end
 
   def registration_number
-    return @application.applicant.ni_number if @application.applicant.ni_number.present?
-    @application.applicant.ho_number
+    @application.applicant.registration_number
   end
 
   def skip_ni_check_based_on_flag?
@@ -83,45 +87,14 @@ class EvidenceCheckSelector
     !evidence_check_flag.active?
   end
 
-  def pending_evidence_check_for_with_user?
+  def does_applicant_have_pending_evidence_check?
     applicant = @application.applicant
-    return false if applicant.ni_number.blank? && applicant.ho_number.blank?
     return false if skip_ni_check_based_on_flag?
-
-    prefix = pending_evidence_prefix(applicant)
-    applications = Application.send("with_evidence_check_for_#{prefix}_number", @number).
-                   where.not(id: @application.id)
-    applications.present?
-  end
-
-  def pending_evidence_prefix(applicant)
-    prefix = applicant.ni_number ? 'ni' : 'ho'
-    @number = applicant.send("#{prefix}_number")
-    prefix
-  end
-
-  def skip_ev_check?
-    @application.detail.emergency_reason.present? ||
-      @application.outcome == 'none' ||
-      @application.application_type != 'income' ||
-      @application.detail.discretion_applied == false ||
-      @application.applicant.under_age?
-  end
-
-  def save_evidence_check(type)
-    ev_check_attributes = { expires_at: expires_at, check_type: type }
-    ev_check_attributes.merge!(checks_annotation: @ccmcc.check_type) if @ccmcc.try(:check_type)
-    ev_check_attributes.merge!(income_check_type: income_check_type)
-    @application.create_evidence_check(ev_check_attributes)
+    applicant.pending_ev_checks?(@application)
   end
 
   def income_check_type
-    return 'hmrc' if hmrc_office_match? && !@application.applicant.married && @application.digital?
-    'paper'
-  end
-
-  def hmrc_office_match?
-    @application.office.try(:entity_code) == Settings.evidence_check.hmrc.office_entity_code
+    @application.hmrc_check_type? ? 'hmrc' : 'paper'
   end
 
   def ccmcc_evidence_rules_check

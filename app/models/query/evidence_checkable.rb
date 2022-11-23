@@ -11,6 +11,13 @@ module Query
         where(where_condition)
     end
 
+    def position(id, refund)
+      find_all.where(
+        'applications.id <= ? AND details.refund = ?',
+        id, refund
+      ).count
+    end
+
     private
 
     def where_condition
