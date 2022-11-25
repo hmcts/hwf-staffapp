@@ -9,14 +9,14 @@ RSpec.describe HomeHelper do
   end
 
   describe '#path_for_application_based_on_state' do
-    let(:evidence_check) { create(:evidence_check, application: last_application, income_check_type: check_type) }
+    let(:evidence_check) { last_application.evidence_check }
     let(:part_payment) { create(:part_payment, application: last_application) }
     let(:check_type) { nil }
 
     context 'waiting_for_evidence' do
       context 'standard' do
         let(:last_application) { create(:application, :waiting_for_evidence_state) }
-        before { evidence_check }
+        before { evidence_check.update(income_check_type: check_type) }
 
         it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence/#{evidence_check.id}") }
       end
@@ -24,7 +24,7 @@ RSpec.describe HomeHelper do
       context 'hmrc check type' do
         let(:check_type) { 'hmrc' }
         let(:last_application) { create(:application, :waiting_for_evidence_state) }
-        before { evidence_check }
+        before { evidence_check.update(income_check_type: check_type) }
 
         it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
 

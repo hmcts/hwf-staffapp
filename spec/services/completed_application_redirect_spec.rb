@@ -24,14 +24,17 @@ describe CompletedApplicationRedirect do
 
     describe 'when initialised with an application awaiting evidence' do
       let(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
-      let!(:evidence) { create(:evidence_check, application: application) }
+      let!(:evidence) { application.evidence_check }
 
       it { is_expected.to eql evidence_path(evidence) }
 
       describe 'hmrc evidence check' do
-        let(:evidence) { create(:evidence_check, application: application, income_check_type: 'hmrc') }
+        let(:evidence) { application.evidence_check }
         let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence, income: income) }
-        before { hmrc_check }
+        before {
+          evidence.update(income_check_type: 'hmrc')
+          hmrc_check
+        }
 
         context 'no income' do
           let(:income) { nil }
@@ -70,7 +73,7 @@ describe CompletedApplicationRedirect do
 
     describe 'when initialised with an application awaiting evidence' do
       let(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
-      before { create(:evidence_check, application: application) }
+      before { application.evidence_check }
 
       it { is_expected.to eql 'This application is waiting for evidence. You can’t edit any details.' }
     end

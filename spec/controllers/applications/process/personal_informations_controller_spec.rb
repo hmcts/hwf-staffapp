@@ -102,7 +102,7 @@ RSpec.describe Applications::Process::PersonalInformationsController do
 
   context 'when an application is awaiting evidence' do
     let!(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
-    let!(:evidence) { create(:evidence_check, application: application) }
+    let!(:evidence) { application.evidence_check }
 
     describe 'when accessing the personal_details view' do
       before { get :index, params: { application_id: application.id } }

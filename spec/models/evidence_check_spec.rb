@@ -7,6 +7,14 @@ describe EvidenceCheck do
 
   it { is_expected.to validate_presence_of(:expires_at) }
 
+  describe 'uniqueness for application_id' do
+    it 'does not create 2 evidence_checks with same application id' do
+      create(:evidence_check, application: application)
+      duplicate = build(:evidence_check, application: application)
+      expect(duplicate.save).to be false
+    end
+  end
+
   describe 'clear reason' do
     let(:check_with_reason) { create(:evidence_check_incorrect, application: application) }
 

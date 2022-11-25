@@ -4,6 +4,7 @@ class EvidenceCheck < ActiveRecord::Base
   has_many :hmrc_checks, dependent: :destroy
 
   validates :expires_at, presence: true
+  validates :application_id, uniqueness: true
 
   serialize :incorrect_reason_category
 

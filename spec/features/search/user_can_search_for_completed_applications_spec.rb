@@ -19,7 +19,7 @@ RSpec.feature 'User can search for online application' do
   let(:application_part_payment) { create(:application_part_remission, :waiting_for_part_payment_state, office: office) }
 
   before do
-    create(:evidence_check, application: application_evidence_check)
+    application_evidence_check
     create(:part_payment, application: application_part_payment)
     login_as user
   end
