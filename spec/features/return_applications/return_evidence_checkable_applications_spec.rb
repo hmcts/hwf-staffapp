@@ -10,8 +10,8 @@ RSpec.feature 'When evidence checkable applications are returned' do
   let(:application1) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
   let(:application2) { create(:application_full_remission, :waiting_for_evidence_state, office: office) }
   before do
-    create(:evidence_check, application: application1)
-    create(:evidence_check, application: application2)
+    application1
+    application2
     login_as user
   end
 

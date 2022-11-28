@@ -26,25 +26,32 @@ RSpec.describe EvidenceController do
     end
 
     context 'as a signed in user' do
-      before do
-        sign_in user
-        get :show, params: { id: evidence.id }
-      end
 
-      it 'returns the correct status code' do
-        expect(response).to have_http_status(200)
-      end
+      context "success" do
+        before do
+          sign_in user
+          get :show, params: { id: evidence.id }
+        end
 
-      it 'renders the correct template' do
-        expect(response).to render_template('show')
-      end
+        it 'returns the correct status code' do
+          expect(response).to have_http_status(200)
+        end
 
-      it 'assigns the details model' do
-        expect(assigns(:details)).to be_a(Views::Overview::Details)
+        it 'renders the correct template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'assigns the details model' do
+          expect(assigns(:details)).to be_a(Views::Overview::Details)
+        end
       end
 
       context 'processed evidence' do
-        let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
+        before {
+          sign_in user
+          evidence.update(completed_at: Time.zone.yesterday, completed_by: user)
+          get :show, params: { id: evidence.id }
+        }
 
         it 'should redirect to dashboard' do
           expect(response).to redirect_to(root_path)
@@ -312,25 +319,31 @@ RSpec.describe EvidenceController do
     end
 
     context 'as a signed in user' do
-      before do
-        sign_in user
-        get :confirmation, params: { id: evidence }
-      end
+      context 'not completed' do
+        before do
+          sign_in user
+          get :confirmation, params: { id: evidence }
+        end
 
-      it 'returns the correct status code' do
-        expect(response).to have_http_status(200)
-      end
+        it 'returns the correct status code' do
+          expect(response).to have_http_status(200)
+        end
 
-      it 'renders the correct template' do
-        expect(response).to render_template('applications/process/confirmation/index')
-      end
+        it 'renders the correct template' do
+          expect(response).to render_template('applications/process/confirmation/index')
+        end
 
-      it { expect(assigns(:application)).to eql(evidence.application) }
-      it { expect(assigns(:confirm)).to be_an_instance_of(Views::Confirmation::Result) }
-      it { expect(assigns(:form)).to be_an_instance_of(Forms::Application::DecisionOverride) }
+        it { expect(assigns(:application)).to eql(evidence.application) }
+        it { expect(assigns(:confirm)).to be_an_instance_of(Views::Confirmation::Result) }
+        it { expect(assigns(:form)).to be_an_instance_of(Forms::Application::DecisionOverride) }
+      end
 
       context 'processed evidence' do
-        let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
+        before {
+          evidence.update(completed_at: Time.zone.yesterday, completed_by: user)
+          sign_in user
+          get :confirmation, params: { id: evidence }
+        }
 
         it 'should not redirect to dashboard' do
           expect(response).not_to redirect_to(root_path)
@@ -364,9 +377,8 @@ RSpec.describe EvidenceController do
     end
 
     context 'processed evidence' do
-      let(:evidence) { create(:evidence_check, :completed, application_id: application.id) }
-
       before do
+        evidence.update(completed_at: Time.zone.yesterday, completed_by: user)
         sign_in user
         get :return_letter, params: { id: evidence }
       end

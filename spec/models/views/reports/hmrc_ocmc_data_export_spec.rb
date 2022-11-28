@@ -41,7 +41,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         create(:application, :waiting_for_evidence_state,
                office: office, income_kind: income_kind)
       }
-      let(:evidence_check) { create(:evidence_check, application: application2) }
+      let(:evidence_check) { application2.evidence_check }
       let(:hmrc_check) {
         create(:hmrc_check, evidence_check: evidence_check,
                             created_at: 2.days.ago, income: nil, tax_credit: nil, request_params: date_range)
