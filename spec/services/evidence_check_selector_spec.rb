@@ -225,7 +225,6 @@ describe EvidenceCheckSelector do
         allow(@ccmcc).to receive(:frequency).and_return frequency
         allow(@ccmcc).to receive(:check_type).and_return '5k rule'
         allow(@ccmcc).to receive(:query_type).and_return query_type
-        allow(@ccmcc).to receive(:office_id).and_return ccmcc_office.id
       end
 
       context 'frequency is calculated against the ccmcc office only' do
