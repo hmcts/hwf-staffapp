@@ -22,7 +22,7 @@ class LogStuff
   end
 
   def self.log(severity = 'info', *args, &block)
-    return unless block_given?
+    return unless block
 
     if use_logstasher?
       return unless LogStasher.logger.send("#{severity}?")

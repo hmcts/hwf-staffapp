@@ -166,7 +166,7 @@ RSpec.describe Forms::Application::Applicant do
     let(:form) { described_class.new(applicant) }
 
     params_list.each do |attr_name|
-      next if attr_name.to_s =~ /day|month|year/
+      next if /day|month|year/.match?(attr_name.to_s)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq applicant.send(attr_name)
       end
@@ -180,7 +180,7 @@ RSpec.describe Forms::Application::Applicant do
     most_attribs = params_list - [:date_of_birth]
 
     most_attribs.each do |attr_name|
-      next if attr_name.to_s =~ /day|month|year/
+      next if /day|month|year/.match?(attr_name.to_s)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq hash[attr_name]
       end
@@ -233,7 +233,7 @@ RSpec.describe Forms::Application::Applicant do
 
       it 'saves the parameters in the applicant' do
         params.each do |key, value|
-          next if key.to_s =~ /day|month|year/
+          next if /day|month|year/.match?(key.to_s)
           expect(applicant.send(key)).to eql(value)
         end
       end
