@@ -91,10 +91,7 @@ class Application < ActiveRecord::Base
     bad_request? || benefit_check_unavailable?
   end
 
-  def bad_request?
-    last_benefit_check.dwp_result == 'BadRequest' &&
-      last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
-  end
+  delegate :bad_request?, to: :last_benefit_check
 
   def benefit_check_unavailable?
     return false if last_benefit_check.error_message.blank?

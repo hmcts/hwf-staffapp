@@ -364,7 +364,7 @@ def stub_dwp_response_as_bad_request
 end
 
 def stub_dwp_response_as_dwp_down_request
-  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_raise(RestClient::BadRequest.new({ error: "LSCBC959: Service unavailable." }.to_json))
+  RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_raise(RestClient::BadRequest.new({ error: "LSCBC998: Service unavailable." }.to_json))
 end
 
 def stub_dwp_response_as_ok_request

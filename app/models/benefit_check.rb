@@ -30,7 +30,7 @@ class BenefitCheck < ActiveRecord::Base
 
   def bad_request?
     dwp_result == 'BadRequest' &&
-      error_message.include?('LSCBC959: Service unavailable')
+      (error_message.include?('LSCBC') || error_message.include?('Service unavailable'))
   end
 
   def benefit_check_unavailable?

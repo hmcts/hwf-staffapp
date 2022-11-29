@@ -95,4 +95,39 @@ RSpec.describe BenefitCheck do
       it { is_expected.to eql 'none' }
     end
   end
+
+  describe '#bad_request?' do
+    subject { check.bad_request? }
+
+    context 'when dwp_result is BadRequest and LSCBC959 message' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when dwp_result is BadRequest and LSCBC998 message' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC998: Service unavailable') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when dwp_result is BadRequest and LSCBC message' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBCxxx') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when dwp_result is BadRequest and Service unavailable message' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'Service unavailable') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when dwp_result is BadRequest and random message' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'test') }
+
+      it { is_expected.to be false }
+    end
+
+  end
 end

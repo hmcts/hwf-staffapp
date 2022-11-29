@@ -3,7 +3,7 @@ module DwpSetup
   def build_dwp_checks_with_bad_requests(yes_response = 5, bad_requests = 5)
     teardown
     create_list(:benefit_check, yes_response, :yes_result)
-    create_list(:benefit_check, bad_requests, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable')
+    create_list(:benefit_check, bad_requests, dwp_result: 'BadRequest', error_message: 'LSCBC95: Service unavailable')
   end
 
   def build_dwp_checks_with_all_errors
