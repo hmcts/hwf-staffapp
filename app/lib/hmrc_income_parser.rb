@@ -45,7 +45,7 @@ module HmrcIncomeParser
 
     list = frequency_days(start_date, end_date, payment['frequency'])
 
-    list.select { |day_iteration| day_iteration >= from && day_iteration <= to }.count
+    list.count { |day_iteration| day_iteration >= from && day_iteration <= to }
   end
 
   def self.frequency_days(day, end_date, frequency)

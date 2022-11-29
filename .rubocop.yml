@@ -309,3 +309,5 @@ Rails/ActionControllerFlashBeforeRender:
 require:
   - rubocop-rspec
   - rubocop-rails
+  - rubocop-performance
+

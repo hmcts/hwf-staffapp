@@ -53,7 +53,7 @@ FactoryBot.define do
     end
 
     trait :with_reference do
-      sequence(:reference) { |n| "HWF-#{n.to_s.rjust(3, '0')}-#{SecureRandom.hex(3).upcase.chars.first(3).join}" }
+      sequence(:reference) { |n| "HWF-#{n.to_s.rjust(3, '0')}-#{SecureRandom.hex(3).upcase[0...3].chars.join}" }
       # reference "HWF-#{SecureRandom.hex(3).upcase.scan(/.{1,3}/).join('-')}"
     end
 
