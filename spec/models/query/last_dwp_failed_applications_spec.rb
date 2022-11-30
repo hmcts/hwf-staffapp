@@ -47,7 +47,7 @@ RSpec.describe Query::LastDwpFailedApplications do
     end
 
     it "contains applications with failed dwp benefit checks only" do
-      is_expected.to match_array([application5, application1])
+      is_expected.to match_array([application5, application1, application2])
     end
 
     context 'same office' do
@@ -55,7 +55,7 @@ RSpec.describe Query::LastDwpFailedApplications do
       subject(:query) { described_class.new(user2) }
 
       it 'loads applications for same office' do
-        expect(query.find).to match_array([application5, application1])
+        expect(query.find).to match_array([application5, application1, application2])
       end
     end
 
