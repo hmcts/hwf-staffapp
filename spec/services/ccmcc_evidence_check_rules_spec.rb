@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CCMCCEvidenceCheckRules do
   let(:ccmcc) { create(:office, name: 'ccmcc', entity_code: 'DH403') }
+  let(:ccbc) { create(:office, name: 'ccbc', entity_code: 'DH401') }
   let(:digital) { create(:office, name: 'digital', entity_code: 'dig') }
   let(:application) { create(:application, office: ccmcc, fee: 5000, amount_to_pay: 0) }
   let(:ccmcc_check_rules) { described_class.new(application) }
@@ -15,14 +16,21 @@ RSpec.describe CCMCCEvidenceCheckRules do
       it { expect(ccmcc_check_rules.rule_applies?).to be false }
     end
 
+    context 'ccbc application' do
+      before { ccbc }
+      let(:application) { build(:application, office: ccbc, fee: 5000, amount_to_pay: 0) }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
+    end
+
+    context 'digital application' do
+      let(:application) { build(:application, office: digital, fee: 5000, amount_to_pay: 0) }
+      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+    end
+
     context 'refund application' do
       let(:application) { create(:application, :refund, office: ccmcc, fee: 5000, amount_to_pay: 0) }
       it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
-  end
-
-  describe 'ccmcc office id' do
-    it { expect(ccmcc_check_rules.office_id).to eql(ccmcc.id) }
   end
 
   describe 'CCMCC clean_annotation_data' do

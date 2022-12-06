@@ -100,11 +100,11 @@ class EvidenceCheckSelector
   def ccmcc_evidence_rules_check
     if CCMCCEvidenceCheckRules::QUERY_ALL == @ccmcc.query_type
       query = 'applications.id <= ? AND applications.office_id = ?'
-      values = [@application.id, @ccmcc.office_id]
+      values = [@application.id, @application.office_id]
     else
       refund = CCMCCEvidenceCheckRules::QUERY_REFUND == @ccmcc.query_type
       query = 'applications.id <= ? AND applications.office_id = ? AND details.refund = ?'
-      values = [@application.id, @ccmcc.office_id, refund]
+      values = [@application.id, @application.office_id, refund]
     end
 
     position = Query::EvidenceCheckable.new.find_all.where([query, values].flatten).count
