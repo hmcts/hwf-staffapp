@@ -22,6 +22,7 @@ module Views
         reg_number: 'ho/ni number',
         children: 'children',
         married: 'married',
+        over_61: 'over 61',
         decision: 'decision',
         final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
@@ -72,6 +73,8 @@ module Views
         elsif [:date_received, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
+        elsif attr == :over_61
+          over_61?(row)
         else
           row.send(attr)
         end
@@ -93,7 +96,7 @@ module Views
           select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
                  'application_type', 'income', 'children', 'decision', 'amount_to_pay',
                  'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
-                 'income_max_threshold_exceeded').
+                 'income_max_threshold_exceeded', 'partner_over_61').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
@@ -162,6 +165,13 @@ module Views
       def income_threshold(row)
         return 'under' if row.income_min_threshold_exceeded
         return 'over' if row.income_max_threshold_exceeded
+      end
+
+      def over_61?(row)
+        return true if row.send(:partner_over_61) == true
+        dob = row.send(:date_of_birth)
+        received = row.send(:date_received)
+        (received - 61.years) > dob
       end
 
     end
