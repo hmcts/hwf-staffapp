@@ -591,6 +591,7 @@ en-GB:
               blank: 'Please enter an end date'
               after: 'Enter a date that is after the date from'
               not_a_date: 'Please enter a valid date'
+              date_after: 'Enter a date that is after the date from'
             entity_code:
               blank: "Please select a court name"
         forms/report/finance_transactional_report:

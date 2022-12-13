@@ -96,7 +96,7 @@ module Views
           select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
                  'application_type', 'income', 'children', 'decision', 'amount_to_pay',
                  'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
-                 'income_max_threshold_exceeded', 'partner_over_61').
+                 'income_max_threshold_exceeded').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
@@ -122,6 +122,7 @@ module Views
                ELSE ''
           END AS capital,
           savings.amount AS savings_amount,
+          savings.over_61 AS partner_over_61,
           details.case_number AS case_number,
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
@@ -168,10 +169,10 @@ module Views
       end
 
       def over_61?(row)
-        return true if row.send(:partner_over_61) == true
+        return 'Yes' if row.send(:partner_over_61) == true
         dob = row.send(:date_of_birth)
-        received = row.send(:date_received)
-        (received - 61.years) > dob
+        received_minus_age = row.send(:date_received) - 61.years
+        received_minus_age > dob ? 'Yes' : 'No'
       end
 
     end
