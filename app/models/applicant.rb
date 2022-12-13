@@ -19,7 +19,8 @@ class Applicant < ActiveRecord::Base
   end
 
   def over_61?
-    age >= 61
+    received_minus_age = application.detail.date_received - 61.years
+    received_minus_age >= date_of_birth
   end
 
   def under_age?
