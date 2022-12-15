@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Applicant do
-  let(:application) { build_stubbed(:application) }
+  let(:application) { build_stubbed(:application, date_received: date_received) }
   let(:applicant) { build(:applicant, application: application) }
+  let(:date_received) { Time.zone.today }
 
   it { is_expected.to validate_presence_of(:application) }
 
@@ -162,6 +163,11 @@ RSpec.describe Applicant do
       let(:date_of_birth) { dob_over }
 
       it { is_expected.to be true }
+
+      context 'but the application was received when he was not yet over' do
+        let(:date_received) { dob_over + 60.years }
+        it { is_expected.to be false }
+      end
     end
 
     context 'when the applicant is not over 61 years old' do

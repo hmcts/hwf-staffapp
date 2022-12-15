@@ -22,6 +22,7 @@ module Views
         reg_number: 'ho/ni number',
         children: 'children',
         married: 'married',
+        over_61: 'over 61',
         decision: 'decision',
         final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
@@ -72,6 +73,8 @@ module Views
         elsif [:date_received, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
+        elsif attr == :over_61
+          over_61?(row)
         else
           row.send(attr)
         end
@@ -119,6 +122,7 @@ module Views
                ELSE ''
           END AS capital,
           savings.amount AS savings_amount,
+          savings.over_61 AS partner_over_61,
           details.case_number AS case_number,
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
@@ -162,6 +166,13 @@ module Views
       def income_threshold(row)
         return 'under' if row.income_min_threshold_exceeded
         return 'over' if row.income_max_threshold_exceeded
+      end
+
+      def over_61?(row)
+        return 'Yes' if row.send(:partner_over_61) == true
+        dob = row.send(:date_of_birth)
+        received_minus_age = row.send(:date_received) - 61.years
+        received_minus_age > dob ? 'Yes' : 'No'
       end
 
     end
