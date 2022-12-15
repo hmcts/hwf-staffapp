@@ -25,9 +25,8 @@ Feature: Benefit checker
     Then I should see that the applicant passes on benefits
 
   Scenario: The applicant has provided the correct paper evidence for online application
-    Given I am signed in as a user and I see the benefit checker is down
-    When I start processing an online application
-    And I am on the benefits paper evidence page
+    Given I have looked up an online application
+    Then I processed the applications until benefit paper evidence page
     And the applicant has provided the correct paper evidence
     Then I should see that the applicant passes on benefits
 

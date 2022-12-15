@@ -49,6 +49,13 @@ When("I process the online application") do
   complete_processing
 end
 
+When("I processed the applications until benefit paper evidence page") do
+  expect(process_online_application_page.content).to have_application_details_header
+  process_online_application_page.content.group[1].jurisdiction[0].click
+  stub_dwp_response_as_dwp_down_request
+  process_online_application_page.click_next
+end
+
 Then("I see the applicant is not eligible for help with fees") do
   expect(process_online_application_page.content).to have_not_eligible_header
   expect(process_online_application_page.content.summary_row[0]).to have_text 'Savings and investments ✓ Passed'

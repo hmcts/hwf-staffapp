@@ -47,7 +47,7 @@ class OnlineApplication < ActiveRecord::Base
 
   def bad_request?
     last_benefit_check.dwp_result == 'BadRequest' &&
-      last_benefit_check.error_message.include?('LSCBC959: Service unavailable')
+      last_benefit_check.error_message.include?('LSCBC')
   end
 
   def benefit_check_unavailable?
