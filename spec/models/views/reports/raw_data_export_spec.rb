@@ -64,7 +64,9 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant3) { full_no_ec.applicant }
     let(:dob) { 30.years.ago }
     let(:date_received) { Time.zone.today }
+    let(:date_online_received) { Time.zone.today }
     let(:partner_over_61) { nil }
+    let(:online_application) { create(:online_application, created_at: date_online_received) }
 
     before {
       evidence_check_part
@@ -112,7 +114,8 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:none_ec) {
       create(:application_no_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
                                                                            amount_to_pay: 0, decision_cost: 0, fee: 300.34, children: 3,
-                                                                           income: 2000, income_max_threshold_exceeded: true, date_received: date_received)
+                                                                           income: 2000, income_max_threshold_exceeded: true,
+                                                                           online_application: online_application, date_received: date_received)
     }
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
@@ -181,7 +184,8 @@ RSpec.describe Views::Reports::RawDataExport do
 
         context 'date received' do
           let(:dob) { 60.years.ago }
-          let(:date_received) { 2.years.from_now }
+          let(:date_received) { 1.month.ago }
+          let(:date_online_received) { 2.years.from_now }
           it 'fills in estimated_cost based on fee and amount_to_pay' do
             none_ec
             export = data.to_csv

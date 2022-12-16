@@ -171,8 +171,12 @@ module Views
       def over_61?(row)
         return 'Yes' if row.send(:partner_over_61) == true
         dob = row.send(:date_of_birth)
-        received_minus_age = row.send(:date_received) - 61.years
+        received_minus_age = date_for_age_calculation(row) - 61.years
         received_minus_age > dob ? 'Yes' : 'No'
+      end
+
+      def date_for_age_calculation(row)
+        row.send(:date_submitted_online) || row.send(:date_received)
       end
 
     end
