@@ -24,6 +24,12 @@ Feature: Benefit checker
     And the applicant has provided the correct paper evidence
     Then I should see that the applicant passes on benefits
 
+  Scenario: The applicant has provided the correct paper evidence for online application
+    Given I have looked up an online application
+    Then I processed the applications until benefit paper evidence page
+    And the applicant has provided the correct paper evidence
+    Then I should see that the applicant passes on benefits
+
   Scenario: Benefit checker is now back online
     Given the benefit checker is down
     When an admin changes the DWP message to display DWP check is working message
