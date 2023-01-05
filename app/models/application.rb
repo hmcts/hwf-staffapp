@@ -26,7 +26,7 @@ class Application < ActiveRecord::Base
   belongs_to :office, optional: true
   belongs_to :business_entity, optional: true
   belongs_to :online_application, optional: true
-  has_many :benefit_checks, dependent: :destroy
+  has_many :benefit_checks, as: :applicationable, dependent: :destroy
   has_one :applicant, dependent: :destroy
   has_one :detail, inverse_of: :application, dependent: :destroy
   has_one :saving, inverse_of: :application, dependent: :destroy

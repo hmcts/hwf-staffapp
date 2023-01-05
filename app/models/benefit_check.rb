@@ -1,5 +1,5 @@
 class BenefitCheck < ActiveRecord::Base
-  belongs_to :application
+  belongs_to :applicationable, polymorphic: true
 
   include CommonScopes
 
