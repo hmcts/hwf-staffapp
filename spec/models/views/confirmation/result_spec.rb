@@ -140,7 +140,7 @@ RSpec.describe Views::Confirmation::Result do
 
     context 'when benefits is true' do
       context 'and benefit_check returned yes' do
-        let!(:benefit_check) { build_stubbed(:benefit_check, application: application, dwp_result: 'Yes') }
+        let!(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: 'Yes') }
         let!(:application) { build_stubbed(:application, :benefit_type) }
         before { allow(application).to receive(:last_benefit_check).and_return(benefit_check) }
 
@@ -149,7 +149,7 @@ RSpec.describe Views::Confirmation::Result do
 
       ['No', 'Undetermined'].each do |result|
         context "benefit_check returned #{result}" do
-          let(:benefit_check) { build_stubbed(:benefit_check, application: application, dwp_result: result) }
+          let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: result) }
           let(:application) { build_stubbed(:application, :benefit_type) }
           before { allow(application).to receive(:last_benefit_check).and_return(benefit_check) }
 

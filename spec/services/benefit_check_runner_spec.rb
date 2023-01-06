@@ -124,7 +124,7 @@ RSpec.describe BenefitCheckRunner do
           let(:existing_benefit_check) do
             create(:benefit_check,
                    :no_result,
-                   application: application,
+                   applicationable: application,
                    last_name: applicant.last_name,
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
@@ -140,7 +140,7 @@ RSpec.describe BenefitCheckRunner do
           let(:existing_benefit_check) do
             create(:benefit_check,
                    :error_result,
-                   application: application,
+                   applicationable: application,
                    last_name: applicant.last_name,
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
@@ -153,7 +153,7 @@ RSpec.describe BenefitCheckRunner do
         context 'when something has changed from before' do
           let(:existing_benefit_check) do
             create(:benefit_check,
-                   application: application,
+                   applicationable: application,
                    last_name: 'Different',
                    date_of_birth: applicant.date_of_birth,
                    ni_number: applicant.ni_number,
@@ -193,7 +193,7 @@ RSpec.describe BenefitCheckRunner do
       let(:existing_benefit_check) do
         create(:benefit_check,
                :yes_result,
-               application: application,
+               applicationable: application,
                last_name: applicant.last_name,
                date_of_birth: applicant.date_of_birth,
                ni_number: applicant.ni_number,

@@ -72,7 +72,7 @@ RSpec.describe OnlineBenefitCheckRunner do
                                          date_fee_paid: date_fee_paid, date_received: date_received, created_at: Time.zone.now, id: 2)
     }
     before {
-      allow(OnlineBenefitCheck).to receive(:create).and_return 'test'
+      allow(BenefitCheck).to receive(:create).and_return 'test'
       allow(BenefitCheckService).to receive(:new)
     }
 
@@ -99,10 +99,10 @@ RSpec.describe OnlineBenefitCheckRunner do
 
   describe 'online benefit check' do
     let(:online_application) { create(:online_application, date_fee_paid: 1.month.ago) }
-    let(:online_benefit_check) { instance_double(OnlineBenefitCheck) }
+    let(:online_benefit_check) { instance_double(BenefitCheck) }
 
     before {
-      allow(OnlineBenefitCheck).to receive(:create).and_return online_benefit_check
+      allow(BenefitCheck).to receive(:create).and_return online_benefit_check
       allow(BenefitCheckService).to receive(:new)
     }
 
@@ -122,7 +122,7 @@ RSpec.describe OnlineBenefitCheckRunner do
 
     let(:online_bc_params) {
       {
-        online_application: online_application,
+        applicationable: online_application,
         last_name: 'john',
         date_of_birth: '01/01/2000',
         ni_number: 'SN132465C',
@@ -131,11 +131,11 @@ RSpec.describe OnlineBenefitCheckRunner do
       }
     }
     before {
-      allow(OnlineBenefitCheck).to receive(:create)
+      allow(BenefitCheck).to receive(:create)
     }
     it {
       service.run
-      expect(OnlineBenefitCheck).to have_received(:create).with(hash_including(online_bc_params))
+      expect(BenefitCheck).to have_received(:create).with(hash_including(online_bc_params))
     }
   end
 end

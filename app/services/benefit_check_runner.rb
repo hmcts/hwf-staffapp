@@ -62,7 +62,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
 
   def benefit_check
     @benefit_check ||= BenefitCheck.create(
-      application: @application,
+      applicationable: @application,
       last_name: applicant.last_name,
       date_of_birth: applicant.date_of_birth,
       ni_number: applicant.ni_number,

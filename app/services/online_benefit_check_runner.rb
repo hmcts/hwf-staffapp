@@ -15,14 +15,13 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
     true
     # based on "paper" application logic online applications dont't take
     # notice of benefit_check data validity
-    # benefit_check_date > Time.zone.now - 3.months
   end
 
   private
 
   def benefit_check
-    @benefit_check ||= OnlineBenefitCheck.create(
-      online_application: @online_application,
+    @benefit_check ||= BenefitCheck.create(
+      applicationable: @online_application,
       last_name: @online_application.last_name,
       date_of_birth: @online_application.date_of_birth,
       ni_number: @online_application.ni_number,

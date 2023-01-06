@@ -114,8 +114,8 @@ RSpec.describe Application do
   end
 
   describe 'benefit checks' do
-    let(:be_check1) { create(:benefit_check, application: application, benefits_valid: true, dwp_result: 'Yes') }
-    let(:be_check2) { create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'No') }
+    let(:be_check1) { create(:benefit_check, applicationable: application, benefits_valid: true, dwp_result: 'Yes') }
+    let(:be_check2) { create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'No') }
 
     before do
       be_check1
@@ -127,7 +127,7 @@ RSpec.describe Application do
     end
 
     context 'empty check' do
-      let(:be_check3) { create(:benefit_check, application: application, benefits_valid: nil, dwp_result: nil) }
+      let(:be_check3) { create(:benefit_check, applicationable: application, benefits_valid: nil, dwp_result: nil) }
       before { be_check3 }
 
       it "last_benefit_check without empty checks" do
@@ -146,36 +146,36 @@ RSpec.describe Application do
 
   describe 'failed_because_dwp_error?' do
     before do
-      create(:benefit_check, application: application, benefits_valid: true, dwp_result: 'Yes')
+      create(:benefit_check, applicationable: application, benefits_valid: true, dwp_result: 'Yes')
     end
 
     it { expect(application.failed_because_dwp_error?).to be false }
 
     context 'failed response but not dwp down' do
       before do
-        create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'Unspecified error', error_message: 'Server broke connection')
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'Unspecified error', error_message: 'Server broke connection')
       end
       it { expect(application.failed_because_dwp_error?).to be false }
     end
 
     context 'failed response dwp down' do
       before do
-        create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable')
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable')
       end
       it { expect(application.failed_because_dwp_error?).to be true }
     end
 
     context 'failed response dwp down as Server unavailable' do
       before do
-        create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.')
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.')
       end
       it { expect(application.failed_because_dwp_error?).to be true }
     end
 
     context 'failed response dwp down in past' do
       before do
-        create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.')
-        create(:benefit_check, application: application, benefits_valid: false, dwp_result: 'Yes')
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.')
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'Yes')
       end
       it { expect(application.failed_because_dwp_error?).to be false }
     end

@@ -3,6 +3,7 @@ class BenefitCheckRerunJob < ApplicationJob
   DWP_ERROR_MESSAGES = ['500 Internal Server Error',
                         'Server broke connection',
                         'LSCBC959: Service unavailable.',
+                        'LSCBC958: Service unavailable.',
                         'The benefits checker is not available at the moment. Please check again later.'].freeze
 
   def perform(*_args)
@@ -15,15 +16,15 @@ class BenefitCheckRerunJob < ApplicationJob
 
   def rerun_failed_benefit_checks
     load_failed_checks.each do |check|
-      application = check.application
+      application = check.applicationable
       BenefitCheckRunner.new(application).run
     end
   end
 
   def load_failed_checks
-    BenefitCheck.where(error_message: DWP_ERROR_MESSAGES,
-                       created_at: 3.days.ago..Time.zone.now).
-      select('distinct(application_id)').limit(10)
+    list = BenefitCheck.where(error_message: DWP_ERROR_MESSAGES,
+                       created_at: 3.days.ago..Time.zone.now).limit(100)
+    list.uniq { |obj| [obj.applicationable_id, obj.applicationable_type] }[0..10]
   end
 
   def should_it_run?

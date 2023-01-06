@@ -7,19 +7,19 @@ RSpec.describe PersonalDataPurge do
   end
   let(:benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
   let(:benefit_check2) { build(:benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
-  let(:online_benefit_check1) { build(:online_benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
-  let(:online_benefit_check2) { build(:online_benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
+  let(:online_benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
+  let(:online_benefit_check2) { build(:benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
 
   describe 'purge online_application only' do
     subject(:purge_object) { described_class.new([online_application]) }
-    let(:online_application) { create(:online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2]) }
+    let(:online_application) { create(:online_application_with_all_details, benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     before {
       purge_object.purge_online_only!
     }
 
     it { expect(online_application.reload.purged).to be true }
 
-    context 'online_benefit_checks' do
+    context 'benefit_checks' do
       let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
       it {
         online_benefit_check1.reload
@@ -45,7 +45,7 @@ RSpec.describe PersonalDataPurge do
                            benefit_checks: [benefit_check1, benefit_check2], detail_traits: [:probate], online_application: online_application,
                            completed_at: 8.years.ago)
     }
-    let(:online_application) { create(:online_application_with_all_details, online_benefit_checks: [online_benefit_check1, online_benefit_check2]) }
+    let(:online_application) { create(:online_application_with_all_details, benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     let(:audit_data) { AuditPersonalDataPurge.last }
 
     before {
@@ -84,7 +84,7 @@ RSpec.describe PersonalDataPurge do
       }
     end
 
-    context 'online_benefit_checks' do
+    context 'benefit_checks' do
       let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
       it {
         online_benefit_check1.reload

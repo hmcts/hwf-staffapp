@@ -78,7 +78,7 @@ RSpec.describe Forms::Application::Benefit do
           end
 
           context 'when benefit check has been done already' do
-            let(:benefit_check) { create(:benefit_check, :yes_result, application: application) }
+            let(:benefit_check) { create(:benefit_check, :yes_result, applicationable: application) }
 
             it 'updates outcome based on the result' do
               expect(application.outcome).to eql 'full'

@@ -19,31 +19,31 @@ RSpec.describe Query::LastDwpFailedApplications do
 
     before do
       Timecop.freeze(3.months.ago + 1.day) do
-        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application5)
+        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application5)
       end
 
       Timecop.freeze(3.months.ago) do
-        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application6)
+        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application6)
       end
 
       Timecop.freeze(2.hours.ago) do
-        create(:benefit_check, :yes_result, application: application1, updated_at: 2.hours.ago)
-        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', application: application2)
+        create(:benefit_check, :yes_result, applicationable: application1, updated_at: 2.hours.ago)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application2)
       end
 
       Timecop.freeze(1.hour.ago) do
         # duplicating the call so we can test for duplication in final query
-        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', application: application1)
-        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', application: application1)
-        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application2)
-        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application2)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application1)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application1)
+        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application2)
+        create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application2)
       end
 
-      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application1)
-      create(:benefit_check, :yes_result, application: application2)
-      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application3)
+      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application1)
+      create(:benefit_check, :yes_result, applicationable: application2)
+      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application3)
       application4
-      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', application: application7)
+      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application7)
     end
 
     it "contains applications with failed dwp benefit checks only" do

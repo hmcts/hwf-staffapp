@@ -37,7 +37,7 @@ class OnlineApplication < ActiveRecord::Base
   end
 
   def last_benefit_check
-    online_benefit_checks.where.not(benefits_valid: nil).where.not(dwp_result: nil).order(:id).last
+    benefit_checks.where.not(benefits_valid: nil).where.not(dwp_result: nil).order(:id).last
   end
 
   def failed_because_dwp_error?

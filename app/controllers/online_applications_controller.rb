@@ -32,7 +32,6 @@ class OnlineApplicationsController < ApplicationController
 
   def complete
     application = linked_application
-
     if process_application(application) == false
       flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
       redirect_to_homepage
