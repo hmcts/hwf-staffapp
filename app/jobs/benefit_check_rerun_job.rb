@@ -23,7 +23,7 @@ class BenefitCheckRerunJob < ApplicationJob
 
   def load_failed_checks
     list = BenefitCheck.where(error_message: DWP_ERROR_MESSAGES,
-                       created_at: 3.days.ago..Time.zone.now).limit(100)
+                              created_at: 3.days.ago..Time.zone.now).limit(100)
     list.uniq { |obj| [obj.applicationable_id, obj.applicationable_type] }[0..10]
   end
 

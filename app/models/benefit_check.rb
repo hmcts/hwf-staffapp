@@ -9,8 +9,8 @@ class BenefitCheck < ActiveRecord::Base
   }
 
   scope :non_digital, lambda {
-    joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id')
-    .joins('LEFT JOIN offices ON applications.office_id = offices.id').
+    joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id').
+      joins('LEFT JOIN offices ON applications.office_id = offices.id').
       where.not(offices: { name: 'Digital' })
   }
 

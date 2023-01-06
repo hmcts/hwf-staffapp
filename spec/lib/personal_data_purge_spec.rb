@@ -84,7 +84,7 @@ RSpec.describe PersonalDataPurge do
       }
     end
 
-    context 'benefit_checks' do
+    context 'online benefit_checks' do
       let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
       it {
         online_benefit_check1.reload
