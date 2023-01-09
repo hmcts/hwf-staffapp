@@ -15,7 +15,7 @@ Then("I can view the Job Cards") do
 end
 
 Then("I can view the training course") do
-  expect(guide_page.content.training_course['href']).to eq 'https://mydevelopment.org.uk/mod/scorm/view.php?id=20170'
+  expect(guide_page.content.training_course['href']).to eq 'https://mydevelopment.org.uk/course/view.php?id=9824'
 end
 
 When("I can view key control checks guide") do

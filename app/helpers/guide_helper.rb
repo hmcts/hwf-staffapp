@@ -4,7 +4,7 @@ module GuideHelper
   end
 
   def training_course_url
-    'https://mydevelopment.org.uk/mod/scorm/view.php?id=20170'
+    'https://mydevelopment.org.uk/course/view.php?id=9824'
   end
 
   def how_to_url
