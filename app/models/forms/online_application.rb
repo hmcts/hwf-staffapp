@@ -3,6 +3,7 @@ module Forms
     include ActiveModel::Validations::Callbacks
     include DataFieldFormattable
 
+    # rubocop:disable Metrics/MethodLength
     def self.permitted_attributes
       { fee: Decimal,
         jurisdiction_id: Integer,
@@ -13,8 +14,10 @@ module Forms
         form_name: String,
         emergency: Boolean,
         emergency_reason: String,
-        benefits_override: Boolean }
+        benefits_override: Boolean,
+        user_id: Integer }
     end
+    # rubocop:enable Metrics/MethodLength
 
     define_attributes
 
@@ -74,7 +77,8 @@ module Forms
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
         form_name: form_name,
-        benefits_override: benefits_override
+        benefits_override: benefits_override,
+        user_id: user_id
       }
     end
   end

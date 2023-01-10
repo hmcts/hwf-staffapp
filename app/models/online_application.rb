@@ -4,6 +4,7 @@ class OnlineApplication < ActiveRecord::Base
   serialize :income_kind
 
   belongs_to :jurisdiction, optional: true
+  belongs_to :user, optional: true
   has_many :benefit_checks, as: :applicationable, dependent: :destroy
 
   validates :date_of_birth, :first_name, :last_name, :address,
