@@ -22,7 +22,9 @@ class ApplicationCalculation
 
   def benefits_check
     if online_application_check
-      BenefitCheckBuilder.new(@application).build
+      outcome = online_application_check.outcome
+      online_application_check.update(applicationable: @application)
+      @application.update(outcome: outcome, application_type: 'benefit')
     else
       BenefitCheckRunner.new(@application).run
     end

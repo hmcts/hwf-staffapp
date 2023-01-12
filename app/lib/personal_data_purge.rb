@@ -48,7 +48,7 @@ class PersonalDataPurge
 
   def online_application_purge!(online_application)
     return unless online_application
-    online_benefit_check_purge!(online_application)
+    benefit_check_purge!(online_application)
 
     online_application.update(purged: true, purged_at: Time.zone.now, case_number: PURGE_STRING,
                               deceased_name: PURGE_STRING, title: PURGE_STRING, first_name: PURGE_STRING,
@@ -73,11 +73,6 @@ class PersonalDataPurge
     benefit_checks.update_all(parameter_hash: nil, our_api_token: nil, last_name: nil, ni_number: nil)
   end
 
-  def online_benefit_check_purge!(online_application)
-    online_benefit_checks = online_application.online_benefit_checks
-    return unless online_benefit_checks
-    online_benefit_checks.update_all(parameter_hash: nil, our_api_token: nil, last_name: nil, ni_number: nil)
-  end
   # rubocop:enable Rails/SkipsModelValidations
 
   # Logging

@@ -86,7 +86,7 @@ RSpec.describe OnlineApplicationsController do
     let(:dwp_warning) { create(:dwp_warning, check_state: dwp_warning_state) }
     let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
     let(:online_bc_runner) { instance_double(OnlineBenefitCheckRunner) }
-    let(:online_bc) { instance_double(OnlineBenefitCheck, benefits_valid?: benefits_valid) }
+    let(:online_bc) { instance_double(BenefitCheck, benefits_valid?: benefits_valid) }
     let(:benefits_valid) { true }
 
     before do

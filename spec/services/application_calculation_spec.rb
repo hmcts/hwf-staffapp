@@ -4,16 +4,14 @@ RSpec.describe ApplicationCalculation do
   subject(:service) { described_class.new(application) }
 
   let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil) }
-  let(:benefit_check_builder) { instance_double(BenefitCheckBuilder, build: nil) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
-  let(:online_benefit_check) { build_stubbed(:online_benefit_check) }
+  let(:online_benefit_check) { build_stubbed(:benefit_check) }
   let(:online_application) { build_stubbed(:online_application) }
 
   describe '#run' do
     before do
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
       allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
-      allow(BenefitCheckBuilder).to receive(:new).with(application).and_return(benefit_check_builder)
     end
 
     context 'when the online application has not passed savings' do
@@ -35,7 +33,7 @@ RSpec.describe ApplicationCalculation do
       let(:saving) { build_stubbed(:saving, passed: true) }
 
       context 'when the user claims they are on benefits' do
-        context 'and there is no online_benefit check' do
+        context 'and there is online application has no benefit checks' do
           let(:application) { build_stubbed(:application, saving: saving, benefits: true, online_application: online_application) }
           let(:online_application) { create(:online_application) }
 
@@ -45,18 +43,20 @@ RSpec.describe ApplicationCalculation do
           end
         end
 
-        context 'and there is a online_benefit check' do
+        context 'and online application has a benefit check' do
           let(:application) { build_stubbed(:application, saving: saving, benefits: true, online_application: online_application) }
           let(:online_application) { create(:online_application) }
-          let(:online_benefit_check) { create(:online_benefit_check, online_application: online_application) }
+          let(:online_benefit_check) { create(:benefit_check, :yes_result, applicationable: online_application) }
 
           before {
+            allow(application).to receive(:update)
             online_benefit_check
             service.run
           }
 
           it { expect(benefit_check_runner).not_to have_received(:run) }
-          it { expect(benefit_check_builder).to have_received(:build) }
+          it { expect(application).to have_received(:update).with({ application_type: "benefit", outcome: "full" }) }
+          it { expect(online_benefit_check.reload).to eq(application.last_benefit_check) }
         end
       end
 
@@ -65,7 +65,6 @@ RSpec.describe ApplicationCalculation do
         before { service.run }
 
         it { expect(income_calculation_runner).to have_received(:run) }
-        it { expect(benefit_check_builder).not_to have_received(:build) }
       end
     end
   end

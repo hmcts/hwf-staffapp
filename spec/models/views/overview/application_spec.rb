@@ -57,7 +57,7 @@ RSpec.describe Views::Overview::Application do
     subject { view.benefits_result }
 
     context 'for benefit type application' do
-      let(:benefit_check) { build_stubbed(:benefit_check, application: application, dwp_result: result) }
+      let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: result) }
       let(:application) { build_stubbed(:application, :benefit_type) }
 
       before do

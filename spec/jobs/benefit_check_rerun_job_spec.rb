@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe BenefitCheckRerunJob do
   describe 'Re run benefit checks' do
     let(:application) { create(:application, :benefit_type) }
+    let(:online_application) { create(:online_application_with_all_details, :benefits) }
     let(:benefit_check) {
-      create(:benefit_check, application: application, dwp_result: dwp_result, error_message: dwp_message)
+      create(:benefit_check, applicationable: application, dwp_result: dwp_result, error_message: dwp_message)
     }
     let(:dwp_message) { 'LSCBC959: Service unavailable.' }
 
@@ -27,8 +28,11 @@ RSpec.describe BenefitCheckRerunJob do
           create_list(:benefit_check, 2, :yes_result)
           create(:benefit_check, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.')
           create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection')
-          create_list(:benefit_check, 2, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.')
-          create_list(:benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
+          create_list(:benefit_check, 1, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.')
+          create_list(:benefit_check, 1, dwp_result: 'BadRequest', error_message: 'LSCBC958: Service unavailable.')
+          create_list(:benefit_check, 1, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
+          create_list(:benefit_check, 2, applicationable: application, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
+          create_list(:benefit_check, 2, applicationable: online_application, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           Timecop.freeze(4.days.ago) do
             create_list(:benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           end
@@ -36,7 +40,7 @@ RSpec.describe BenefitCheckRerunJob do
 
         it 'with BadRequest results' do
           described_class.perform_now
-          expect(bc_runner).to have_received(:run).exactly(6).times
+          expect(bc_runner).to have_received(:run).exactly(7).times
         end
 
       end
@@ -52,7 +56,7 @@ RSpec.describe BenefitCheckRerunJob do
 
         it 'load the application from benefit check' do
           described_class.perform_now
-          expect(BenefitCheckRunner).to have_received(:new).with(benefit_check.application)
+          expect(BenefitCheckRunner).to have_received(:new).with(benefit_check.applicationable)
         end
       end
 
@@ -62,7 +66,6 @@ RSpec.describe BenefitCheckRerunJob do
         before { benefit_check }
 
         it 'for affected application' do
-
           described_class.perform_now
           expect(bc_runner).not_to have_received(:run)
         end

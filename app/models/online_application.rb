@@ -4,7 +4,7 @@ class OnlineApplication < ActiveRecord::Base
   serialize :income_kind
 
   belongs_to :jurisdiction, optional: true
-  has_many :online_benefit_checks, dependent: :destroy
+  has_many :benefit_checks, as: :applicationable, dependent: :destroy
 
   validates :date_of_birth, :first_name, :last_name, :address,
             :postcode, presence: true
@@ -37,7 +37,7 @@ class OnlineApplication < ActiveRecord::Base
   end
 
   def last_benefit_check
-    online_benefit_checks.where.not(benefits_valid: nil).where.not(dwp_result: nil).order(:id).last
+    benefit_checks.where.not(benefits_valid: nil).where.not(dwp_result: nil).order(:id).last
   end
 
   def failed_because_dwp_error?
