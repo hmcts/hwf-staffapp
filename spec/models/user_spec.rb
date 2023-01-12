@@ -11,6 +11,7 @@ describe User do
   let(:reader)        { build(:reader) }
 
   it { is_expected.to have_many(:applications) }
+  it { is_expected.to have_many(:benefit_checks) }
 
   it 'pass factory build' do
     expect(user).to be_valid

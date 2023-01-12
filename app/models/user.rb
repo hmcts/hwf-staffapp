@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :office
   belongs_to :jurisdiction, optional: true
   has_many :applications
+  has_many :benefit_checks
 
   ROLES = ['user', 'manager', 'admin', 'mi', 'reader'].freeze
 
