@@ -69,7 +69,8 @@ RSpec.describe OnlineBenefitCheckRunner do
   describe 'should run?' do
     let(:online_application) {
       instance_double(OnlineApplication, last_name: 'john', date_of_birth: '01/01/2000', ni_number: 'SN132465C',
-                                         date_fee_paid: date_fee_paid, date_received: date_received, created_at: Time.zone.now, id: 2)
+                                         date_fee_paid: date_fee_paid, date_received: date_received,
+                                         created_at: Time.zone.now, id: 2, user_id: 3)
     }
     before {
       allow(BenefitCheck).to receive(:create).and_return 'test'
@@ -115,8 +116,10 @@ RSpec.describe OnlineBenefitCheckRunner do
   describe 'online benefit params' do
     let(:online_application) {
       instance_double(OnlineApplication, last_name: 'john', date_of_birth: '01/01/2000', ni_number: 'SN132465C',
-                                         date_fee_paid: date_fee_paid, date_received: date_received, created_at: Date.parse('1/5/2022 00:00'), id: 2)
+                                         date_fee_paid: date_fee_paid, date_received: date_received,
+                                         created_at: Date.parse('1/5/2022 00:00'), id: 2, user_id: 4)
     }
+
     let(:date_fee_paid) { 1.month.ago }
     let(:date_received) { nil }
 
@@ -127,7 +130,8 @@ RSpec.describe OnlineBenefitCheckRunner do
         date_of_birth: '01/01/2000',
         ni_number: 'SN132465C',
         date_to_check: date_fee_paid,
-        our_api_token: 'john@220501000000.2'
+        our_api_token: 'john@220501000000.2',
+        user_id: 4
       }
     }
     before {

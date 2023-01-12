@@ -21,21 +21,21 @@ module Query
     end
 
     def failed_checks
-     BenefitCheck.where(dwp_result: 'BadRequest', user_id: office_users).
+      BenefitCheck.where(dwp_result: 'BadRequest', user_id: office_users).
         where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
         where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-        '%LSCBC%', '%Service unavailable%').
-        select('distinct on (applicationable_id, applicationable_type) *')
-        .order(:applicationable_id)
+              '%LSCBC%', '%Service unavailable%').
+        select('distinct on (applicationable_id, applicationable_type) *').
+        order(:applicationable_id)
     end
 
     def dwp_faild_for_admin
       BenefitCheck.where(dwp_result: 'BadRequest').
         where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
         where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-        '%LSCBC%', '%Service unavailable%').
-        select('distinct on (applicationable_id, applicationable_type) *')
-        .order(:applicationable_id)
+              '%LSCBC%', '%Service unavailable%').
+        select('distinct on (applicationable_id, applicationable_type) *').
+        order(:applicationable_id)
     end
 
     def office_users

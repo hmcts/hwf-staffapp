@@ -27,7 +27,8 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
       ni_number: @online_application.ni_number,
       date_to_check: benefit_check_date,
       our_api_token: generate_api_token,
-      parameter_hash: build_hash
+      parameter_hash: build_hash,
+      user_id: @online_application.user_id
     )
   end
 
