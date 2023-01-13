@@ -53,10 +53,7 @@ RSpec.describe HomeHelper do
     context 'dwp_failed' do
       context 'online application' do
         let(:online_application) { create(:online_application) }
-        let(:last_application) { create(:application, state: :created, online_application: online_application) }
-        before { last_application }
-
-        it { expect(path_for_application_based_on_state(last_application)).to eql("/online_applications/#{online_application.id}") }
+        it { expect(path_for_application_based_on_state(online_application)).to eql("/online_applications/#{online_application.id}/edit") }
       end
 
       context 'paper application' do

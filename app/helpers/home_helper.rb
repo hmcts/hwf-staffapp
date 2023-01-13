@@ -9,6 +9,7 @@ module HomeHelper
   }.freeze
 
   def path_for_application_based_on_state(application)
+    return edit_online_application_path(application) if application.is_a?(OnlineApplication)
     if application.state.to_sym == :waiting_for_evidence && application.evidence_check.hmrc?
       return hmrc_evidence_check_link(application)
     end
@@ -24,7 +25,7 @@ module HomeHelper
   end
 
   def formatted_results_count(results)
-    # I'm doing this manualy because will_paginate doesn't support the count with delimiter
+    # I'm doing this manually because will_paginate doesn't support the count with delimiter
     tag.b(number_with_delimiter(results.total_entries)) +
       tag.span(" result".pluralize(results.total_entries))
   end
