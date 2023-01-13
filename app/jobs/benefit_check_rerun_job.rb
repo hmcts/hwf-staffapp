@@ -17,14 +17,24 @@ class BenefitCheckRerunJob < ApplicationJob
   def rerun_failed_benefit_checks
     load_failed_checks.each do |check|
       application = check.applicationable
-      BenefitCheckRunner.new(application).run
+      next if application.is_a?(Application) && application.state != 'created'
+      rerun_online(application) if application.is_a?(OnlineApplication)
+      rerun_paper(application) if application.is_a?(Application)
     end
   end
 
+  def rerun_online(application)
+    OnlineBenefitCheckRunner.new(application).run
+  end
+
+  def rerun_paper(application)
+    BenefitCheckRunner.new(application).run
+  end
+
   def load_failed_checks
-    list = BenefitCheck.where(error_message: DWP_ERROR_MESSAGES,
-                              created_at: 3.days.ago..Time.zone.now).limit(100)
-    list.uniq { |obj| [obj.applicationable_id, obj.applicationable_type] }[0..10]
+    BenefitCheck.where('benefit_checks.created_at between ? AND ?', 3.days.ago, Time.zone.now).
+      where(error_message: DWP_ERROR_MESSAGES).
+      select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id).limit(100)
   end
 
   def should_it_run?
