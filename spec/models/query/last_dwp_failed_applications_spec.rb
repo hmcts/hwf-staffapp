@@ -41,7 +41,7 @@ RSpec.describe Query::LastDwpFailedApplications do
 
       create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application1, user: user)
       create(:benefit_check, :yes_result, applicationable: application2, user: user)
-      create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application3, user: user)
+      create(:benefit_check, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment.', applicationable: application3, user: user)
       application4
       create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application7, user: user)
     end
