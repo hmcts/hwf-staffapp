@@ -8,7 +8,7 @@ Feature: Unprocessed applications when DWP is down
     When I answer no and press Next
     Then I should be redirected to home page
     And I should see a message that the DWP Checker is not available
-    And I should not see 'Process when DWP is back online' section
+    And I should see 'Process when DWP is back online' section
 
   Scenario: Processing a paper-based benefit application when DWP Checker Service fails
     Given I am a staff member and I process a paper-based benefit application

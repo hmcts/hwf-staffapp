@@ -297,7 +297,7 @@ def ineligable_application(user)
                                                                                decision_cost: 0, user: user, office: user.office,
                                                                                reference: "#{reference_prefix}-000002", children: 0)
   application.applicant.update(first_name: 'John Christopher', last_name: 'Smith')
-  FactoryBot.create(:benefit_check, :yes_result, applicationable: application)
+  FactoryBot.create(:benefit_check, :yes_result, applicationable: application, user: user)
 end
 
 def create_multiple_applications(user)
@@ -355,7 +355,7 @@ end
 
 def create_application_with_bad_request_result_with(user)
   application = FactoryBot.create(:application, :applicant_full, ni_number: 'AB123456C', office: user.office, user: user)
-  FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application)
+  FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application, user: user)
   application.applicant
 end
 
