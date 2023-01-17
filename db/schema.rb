@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_10_144057) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_143105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -372,25 +372,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_144057) do
     t.integer "user_id"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
-  end
-
-  create_table "online_benefit_checks", force: :cascade do |t|
-    t.integer "online_application_id"
-    t.integer "user_id"
-    t.string "last_name"
-    t.date "date_of_birth"
-    t.string "ni_number"
-    t.date "date_to_check"
-    t.string "parameter_hash"
-    t.boolean "benefits_valid"
-    t.string "dwp_result"
-    t.string "error_message"
-    t.string "dwp_api_token"
-    t.string "our_api_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "api_response"
-    t.index ["online_application_id"], name: "index_online_benefit_checks_on_online_application_id"
   end
 
   create_table "online_failures", id: :serial, force: :cascade do |t|
