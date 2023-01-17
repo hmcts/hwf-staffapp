@@ -20,7 +20,7 @@ class OnlineApplicationsController < ApplicationController
 
   def update
     @form = Forms::OnlineApplication.new(online_application)
-    @form.update(update_params)
+    @form.update(update_params.merge('user_id' => current_user.id))
 
     if @form.save
       decide_next_step

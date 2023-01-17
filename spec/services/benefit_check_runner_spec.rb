@@ -28,6 +28,10 @@ RSpec.shared_examples 'runs benefit check record' do
       expect(benefit_check.ni_number).to eql(applicant.ni_number)
     end
 
+    it 'has user\'s id' do
+      expect(benefit_check.user_id).to eql(user.id)
+    end
+
     describe 'has date_to_check set' do
       context 'when date_fee_paid is set on detail' do
         let(:detail) { create(:detail, date_fee_paid: 1.month.ago) }
@@ -82,6 +86,7 @@ RSpec.describe BenefitCheckRunner do
   let(:detail) { build(:complete_detail) }
   let(:outcome) { nil }
   let(:application) { create(:application, applicant: applicant, detail: detail, income: nil, outcome: outcome) }
+  let(:user) { application.user }
 
   describe '#can_run?' do
     subject { service.can_run? }

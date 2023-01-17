@@ -6,28 +6,40 @@ module Query
 
     def find
       if @user.admin?
-        dwp_faild_for_admin
+        unprocessed_failed_checks(:dwp_failed_for_admin)
       else
-        apps_with_failed_checks
+        unprocessed_failed_checks(:failed_checks)
       end
     end
 
     private
 
-    def apps_with_failed_checks
-      @user.office.applications.where(benefits: true, state: 0).includes(:benefit_checks).
-        where('applications.created_at between ? AND ?', 3.months.ago, Time.zone.now).
-        where(benefit_checks: { dwp_result: 'BadRequest' }).
-        where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-              '%LSCBC%', '%Service unavailable%')
+    def unprocessed_failed_checks(checks_method)
+      method(checks_method).call.map(&:applicationable).select do |application|
+        (application.is_a?(Application) && application.state == 'created') || application.is_a?(OnlineApplication)
+      end
     end
 
-    def dwp_faild_for_admin
-      Application.joins(:benefit_checks).includes(:benefit_checks).distinct.
-        where('applications.created_at between ? AND ? AND applications.state = ?', 3.months.ago, Time.zone.now, 0).
-        where(benefit_checks: { dwp_result: 'BadRequest' }).
-        where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-              '%LSCBC%', '%Service unavailable%')
+    def failed_checks
+      list = all_failed_checks.where(benefit_checks: { user_id: office_users })
+      list.select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id)
+    end
+
+    def dwp_failed_for_admin
+      all_failed_checks.select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id)
+    end
+
+    # rubocop:disable Metrics/LineLength
+    def all_failed_checks
+      BenefitCheck.where("dwp_result = 'BadRequest' OR dwp_result = 'Server unavailable'").
+        where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
+        where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
+              '%LSCBC%', '%Service unavailable%', '%not available%')
+    end
+    # rubocop:enable Metrics/LineLength
+
+    def office_users
+      @user.office.users.ids
     end
   end
 end

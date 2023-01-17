@@ -115,7 +115,7 @@ RSpec.describe OnlineApplicationsController do
 
     context 'when an online application is found with the id' do
       let(:id) { online_application.id }
-      let(:params) { { fee: '100', jurisdiction_id: jurisdiction.id.to_s } }
+      let(:params) { { fee: '100', jurisdiction_id: jurisdiction.id.to_s, user_id: user.id } }
 
       context 'when the form can be saved' do
         let(:form_save) { true }
@@ -128,7 +128,7 @@ RSpec.describe OnlineApplicationsController do
 
         context 'when the fee is higher than £10,000' do
           let(:fee) { 15_000 }
-          let(:params) { { fee: fee.to_s } }
+          let(:params) { { fee: fee.to_s, user_id: user.id } }
 
           it 'redirects to the approval page' do
             expect(response).to redirect_to(approve_online_application_path(online_application))

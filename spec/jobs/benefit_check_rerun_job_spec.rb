@@ -11,13 +11,16 @@ RSpec.describe BenefitCheckRerunJob do
 
     context 'when DWP monitor status is' do
       let(:bc_runner) { instance_double(BenefitCheckRunner) }
+      let(:online_bc_runner) { instance_double(OnlineBenefitCheckRunner) }
       let(:benefit_checks) { class_double(BenefitCheck) }
       let(:bc_runner_job) { class_double(described_class) }
       let(:time_to_run) { 15.minutes.from_now }
 
       before do
         allow(BenefitCheckRunner).to receive(:new).and_return bc_runner
+        allow(OnlineBenefitCheckRunner).to receive(:new).and_return online_bc_runner
         allow(bc_runner).to receive(:run)
+        allow(online_bc_runner).to receive(:run)
         allow(described_class).to receive(:delay).and_return bc_runner_job
         allow(bc_runner_job).to receive(:perform_later)
       end
@@ -38,9 +41,14 @@ RSpec.describe BenefitCheckRerunJob do
           end
         end
 
-        it 'with BadRequest results' do
+        it 'BC runner runs' do
           described_class.perform_now
-          expect(bc_runner).to have_received(:run).exactly(7).times
+          expect(bc_runner).to have_received(:run).exactly(6).times
+        end
+
+        it 'Online BC runner runs' do
+          described_class.perform_now
+          expect(online_bc_runner).to have_received(:run).exactly(1).times
         end
 
       end
