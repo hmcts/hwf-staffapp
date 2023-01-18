@@ -56,7 +56,7 @@ gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 gem 'slim-rails', '~> 3.2'
 
-gem 'puma', '~> 5.6.4'
+gem 'puma', '~> 6.0', '>= 6.0.2'
 
 # Date validation
 gem 'date_validator', '0.12'
@@ -107,7 +107,7 @@ group :development, :test do
   gem 'parallel_tests'
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
+  gem 'rubocop', "1.41.0", require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
