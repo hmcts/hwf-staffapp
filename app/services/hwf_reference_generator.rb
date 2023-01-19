@@ -3,7 +3,7 @@ class HwfReferenceGenerator
 
   LENGTH = 6
 
-  def initialize(benefits: false)
+  def initialize(benefits = 'false')
     check_uniqueness_count
 
     @benefits = benefits
@@ -25,7 +25,7 @@ class HwfReferenceGenerator
 
   def reference_string
     ref = SecureRandom.alphanumeric(5).upcase.insert(2, '-')
-    @benefits ? "HWF-Z#{ref}" : "HWF-A#{ref}"
+    @benefits == 'true' ? "HWF-Z#{ref}" : "HWF-A#{ref}"
   end
 
   def prefix_is_unique(reference)

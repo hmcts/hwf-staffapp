@@ -45,14 +45,14 @@ RSpec.describe HwfReferenceGenerator, type: :service do
     # rubocop:enable RSpec/SubjectStub
 
     context 'when the application is benefits' do
-      subject(:generator) { described_class.new(true) }
+      subject(:generator) { described_class.new('true') }
       it 'keeps generating until there is no collision' do
         expect(attributes[:reference]).to include('HWF-Z')
       end
     end
 
     context 'when the application is not benefits' do
-      subject(:generator) { described_class.new(false) }
+      subject(:generator) { described_class.new('false') }
       it 'keeps generating until there is no collision' do
         expect(attributes[:reference]).to include('HWF-A')
       end

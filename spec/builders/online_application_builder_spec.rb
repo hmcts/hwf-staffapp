@@ -5,7 +5,7 @@ require 'rails_helper'
 describe OnlineApplicationBuilder do
 
   let(:current_time) { Time.zone.now }
-  let(:submission) { attributes_for(:public_app_submission, benefits: false) }
+  let(:submission) { attributes_for(:public_app_submission, benefits: 'false') }
 
   describe '#build' do
     subject(:build_submission) { described_class.new(submission).build }
@@ -23,7 +23,7 @@ describe OnlineApplicationBuilder do
     end
 
     describe 'it adds a reference number for benefits' do
-      let(:submission) { attributes_for(:public_app_submission, benefits: true) }
+      let(:submission) { attributes_for(:public_app_submission, benefits: 'true') }
       subject(:reference) { build_submission.reference }
 
       it { is_expected.not_to be_nil }
