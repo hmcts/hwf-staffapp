@@ -24,7 +24,8 @@ RSpec.describe HwfReferenceGenerator, type: :service do
     context 'when the generated reference number already exists' do
       before do
         create(:online_application, reference: 'hwf-collision')
-        allow(generator).to receive(:reference_string).and_return('hwf-collision', 'hwf-no-collision')
+        allow(generator).to receive(:reference_string).and_return('hwf-collision')
+        allow(generator).to receive(:reference_string).and_return('hwf-no-collision')
       end
 
       it 'keeps generating until there is no collision' do
@@ -42,5 +43,43 @@ RSpec.describe HwfReferenceGenerator, type: :service do
       end
     end
     # rubocop:enable RSpec/SubjectStub
+
+    context 'when the application is benefits' do
+      subject(:generator) { described_class.new('true') }
+      it 'keeps generating until there is no collision' do
+        expect(attributes[:reference]).to include('HWF-Z')
+      end
+    end
+
+    context 'when the application is not benefits' do
+      subject(:generator) { described_class.new('false') }
+      it 'keeps generating until there is no collision' do
+        expect(attributes[:reference]).to include('HWF-A')
+      end
+    end
+
+    describe 'raise error when there are too many references' do
+      let(:count_result_over) { instance_double(ActiveRecord::Relation, count: 1679617) }
+      let(:count_result_under) { instance_double(ActiveRecord::Relation, count: 1679615) }
+
+      context 'for normal application' do
+        before do
+          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-Z%').and_return(count_result_under)
+          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-A%').and_return(count_result_over)
+        end
+        it 'raise error' do
+          expect { generator }.to raise_error(HwfReferenceGenerator::HwfReferenceDuplicationWarning)
+        end
+      end
+      context 'for benefit application' do
+        before do
+          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-Z%').and_return(count_result_over)
+          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-A%').and_return(count_result_under)
+        end
+        it 'raise error' do
+          expect { generator }.to raise_error(HwfReferenceGenerator::HwfReferenceDuplicationWarning)
+        end
+      end
+    end
   end
 end
