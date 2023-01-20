@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 07e7a96b9a53d5f33023661a1bfe65a8160c9d66
-  tag: v0.2.4
+  revision: 4004315643db3fc74999c79b9f7c7b2ed36c1623
+  tag: v0.2.5
   specs:
     hwf_hmrc_api (0.1.0)
-      httparty (~> 0.20.0)
+      httparty (~> 0.21.0)
       rotp (~> 6.2.2)
       uuid (~> 2.3.9)
 
@@ -276,7 +276,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     formatador (1.1.0)
-    fugit (1.8.0)
+    fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     globalid (1.0.1)
@@ -309,8 +309,8 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    httparty (0.20.0)
-      mime-types (~> 3.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -449,7 +449,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.5.0)
       psych (>= 4.0.0)
-    regexp_parser (2.6.1)
+    regexp_parser (2.6.2)
     request_store (1.5.1)
       rack (>= 1.4)
     responders (3.0.1)
@@ -506,9 +506,9 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
-    rubocop-rspec (2.18.0)
+    rubocop-rspec (2.18.1)
       rubocop (~> 1.33)
-      rubocop-capybara
+      rubocop-capybara (~> 2.17)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.2)
     sass (3.7.4)
