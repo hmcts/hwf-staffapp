@@ -16,6 +16,7 @@ RSpec.describe BenefitCheck do
     describe 'non_digital' do
       let(:digital_application) { create(:application, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
+      let(:online_application) { create(:application, id: digital_application.id, user: user) }
 
       before do
         digital_application.benefit_checks.new
@@ -43,14 +44,18 @@ RSpec.describe BenefitCheck do
     end
 
     describe 'by_office' do
-      let(:digital_application) { create(:application, office: digital, user: user) }
+      let(:digital_application) { create(:application, id: 292, office: digital, user: user) }
       let(:bristol_application) { create(:application, office: bristol, user: user) }
+      let(:bristol_online_application) { create(:online_application, id: 292, user: user) }
 
       before do
         digital_application.benefit_checks.new
         bristol_application.benefit_checks.new
+        bristol_online_application.benefit_checks.new
+
         digital_application.save
         bristol_application.save
+        bristol_online_application.save
       end
 
       describe 'lists all the checks from the same office' do
@@ -61,10 +66,13 @@ RSpec.describe BenefitCheck do
 
     describe 'by_office_grouped_by_type' do
       let(:digital_application) { create(:application, office: digital, user: user) }
+      let(:online_application) { create(:online_application, id: digital_application.id, user: user) }
       before do
         digital_application.benefit_checks.new dwp_result: 'No'
         digital_application.benefit_checks.new dwp_result: 'Deceased'
         digital_application.save
+        online_application.benefit_checks.new dwp_result: 'Deceased'
+        online_application.save
       end
 
       describe 'lists checks by length of dwp_result' do
