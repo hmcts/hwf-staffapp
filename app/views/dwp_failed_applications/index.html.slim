@@ -28,7 +28,7 @@
               td.govuk-table__cell =record.applicant.full_name
               td.govuk-table__cell =record.updated_at
               td.govuk-table__cell =record.try(:user).try(:name)
-              td.govuk-table__cell =record.office.name if current_user.admin?
+              td.govuk-table__cell =dwp_pending_office(record) if current_user.admin?
               td.govuk-table__cell
                 - if @ready_to_process
                   =link_to t("dwp_failed_applications.index.table.ready_link"), path_for_application_based_on_state(record), {class: 'blue-info-text'}
