@@ -81,6 +81,10 @@ module HomeHelper
     end
   end
 
+  def dwp_pending_office(record)
+    record.try(:office) ? record.office.name : record.user.office.name
+  end
+
   private
 
   def sort_direction(sort_to)
