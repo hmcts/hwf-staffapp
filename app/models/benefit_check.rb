@@ -6,18 +6,18 @@ class BenefitCheck < ActiveRecord::Base
 
   scope :by_office, lambda { |office_id|
     joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id').
-      where(applications: { office_id: office_id })
+      where(applications: { office_id: office_id }, benefit_checks: { applicationable_type: 'Application' })
   }
 
   scope :non_digital, lambda {
     joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id').
       joins('LEFT JOIN offices ON applications.office_id = offices.id').
-      where.not(offices: { name: 'Digital' })
+      where.not(offices: { name: 'Digital' }).where(benefit_checks: { applicationable_type: 'Application' })
   }
 
   scope :by_office_grouped_by_type, lambda { |office_id|
     joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id').
-      where(applications: { office_id: office_id }).
+      where(applications: { office_id: office_id }, benefit_checks: { applicationable_type: 'Application' }).
       group(:dwp_result).
       order(Arel.sql('length(dwp_result)'))
   }
