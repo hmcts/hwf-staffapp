@@ -4,9 +4,11 @@ module Views
       attr_reader :result
       OUTCOMES = ['none', 'part', 'full'].freeze
 
-      def initialize(date_from, date_to)
-        @date_from = date_from
-        @date_to = date_to
+      def initialize(fy_start, fy_end)
+        # '2021-04-01 00:00'/
+        # '2023-03-31 23:59'
+        @date_from = fy_start
+        @date_to = fy_end
         @applicants = laod_applicants
         @jurisdictions = Jurisdiction.pluck(:name).sort
         hash_with_counts
@@ -60,7 +62,7 @@ module Views
              left join details d ON ap.id = d.application_id
              left join jurisdictions j ON j.id = d.jurisdiction_id
              WHERE ap.state = 3
-             AND ap.updated_at BETWEEN '2018-04-01 00:00' AND '2023-03-31 23:59'
+             AND ap.updated_at BETWEEN '#{@date_from}' AND '#{@date_to}'
          	ORDER BY a.first_name, a.last_name, a.date_of_birth"
 
         @applicants = ActiveRecord::Base.connection.execute(sql)
