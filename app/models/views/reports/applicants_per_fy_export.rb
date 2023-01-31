@@ -2,6 +2,7 @@ module Views
   module Reports
     class ApplicantsPerFyExport
       attr_reader :result
+
       OUTCOMES = ['none', 'part', 'full'].freeze
 
       def initialize(fy_start, fy_end)
@@ -14,31 +15,34 @@ module Views
         hash_with_counts
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_csv
         # CSV.open("applicants.csv", "wb") do |csv|
         CSV.generate do |csv|
-          csv << ["First Name", "Last Name", "Date of Birth", "Number of applications"] + @jurisdictions + OUTCOMES
+          csv << csv_headers
 
           @result.each do |key, value|
-            csv << [key.split("-")[0], key.split("-")[1], key.split("-")[2],
-                    value["count"],
+            csv << [key.split("-")[0], key.split("-")[1], key.split("-")[2], value["count"],
                     get_hash_values(@jurisdictions, value["jurisdiction"]),
-                    get_hash_values(OUTCOMES, value["decision"]),
-                    ].flatten
+                    get_hash_values(OUTCOMES, value["decision"])].flatten
           end
         end
       end
 
       private
 
+      def csv_headers
+        ["First Name", "Last Name", "Date of Birth", "Number of applications"] + @jurisdictions + OUTCOMES
+      end
+
       def get_hash_values(default_list, row)
-        default_list.map { |j| row.has_key?(j) ? row[j] : 0 }
+        default_list.map { |j| row.key?(j) ? row[j] : 0 }
       end
 
       def hash_with_counts
         @result = {}
         @applicants.each do |h|
-          key = [h["first_name"],h["last_name"],h["date_of_birth"]].join("-")
+          key = [h["first_name"], h["last_name"], h["date_of_birth"]].join("-")
           if @result[key].nil?
             @result[key] = Hash.new(0)
             @result[key]["jurisdiction"] = Hash.new(0)
@@ -52,7 +56,6 @@ module Views
             @result[key]["count"] += 1
           end
         end
-
       end
 
       def laod_applicants
@@ -67,7 +70,8 @@ module Views
 
         @applicants = ActiveRecord::Base.connection.execute(sql)
       end
+
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end
-

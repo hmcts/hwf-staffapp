@@ -14,11 +14,12 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
 
   describe '#to_csv' do
     it 'generates csv' do
+      allow(CSV).to receive(:generate)
       date_from = fy_start
       date_to = fy_end
       instance = described_class.new(date_from, date_to)
-      expect(CSV).to receive(:generate)
       instance.to_csv
+      expect(CSV).to have_received(:generate)
     end
   end
 
@@ -26,17 +27,17 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
     let(:results) { instance_double(PG::Result) }
     let(:list) { [application1, application2, application3] }
 
-    let(:application1) { create :application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1 }
-    let(:application2) { create :application, :applicant_full, :processed_state,  outcome: 'full', jurisdiction: jurisdiction1 }
-    let(:application3) { create :application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1 }
-    let(:application4) { create :application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction2 }
-    let(:jurisdiction1) { create :jurisdiction, name: 'Jurisdiction 1' }
-    let(:jurisdiction2) { create :jurisdiction, name: 'Jurisdiction 2' }
+    let(:application1) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1) }
+    let(:application2) { create(:application, :applicant_full, :processed_state,  outcome: 'full', jurisdiction: jurisdiction1) }
+    let(:application3) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1) }
+    let(:application4) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction2) }
+    let(:jurisdiction1) { create(:jurisdiction, name: 'Jurisdiction 1') }
+    let(:jurisdiction2) { create(:jurisdiction, name: 'Jurisdiction 2') }
     let(:fy_start) { DateTime.new(2019, 4, 1) }
     let(:fy_end) { DateTime.new(2020, 4, 1) }
 
     before {
-      Timecop.freeze(Time.local(2020, 1, 1, 12, 0, 0)) {
+      Timecop.freeze(Time.zone.local(2020, 1, 1, 12, 0, 0)) {
         application1.applicant.update(first_name: 'John', last_name: 'Doe', date_of_birth: '1980-01-01')
         application2.applicant.update(first_name: 'John', last_name: 'Mnemonic', date_of_birth: '1980-01-01')
         application3.applicant.update(first_name: 'John', last_name: 'Doe', date_of_birth: '1980-01-01')
