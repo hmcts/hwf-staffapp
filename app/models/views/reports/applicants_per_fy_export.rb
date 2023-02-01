@@ -1,23 +1,37 @@
 module Views
   module Reports
     class ApplicantsPerFyExport
+      require 'csv'
+      require 'zip'
+
       attr_reader :result
 
       OUTCOMES = ['none', 'part', 'full'].freeze
 
       def initialize(fy_start, fy_end)
-        # '2021-04-01 00:00'/
-        # '2023-03-31 23:59'
-        @date_from = fy_start
-        @date_to = fy_end
+        @date_from = "#{fy_start}-04-01 00:00"
+        @date_to = "#{fy_end}-03-31 23:59"
+        @csv_file_name = "applicants-#{fy_start}-#{fy_end}-fy.csv"
+        @zipfile_path = "applicants-#{fy_start}-#{fy_end}-fy.csv.zip"
+
         @applicants = laod_applicants
         @jurisdictions = Jurisdiction.pluck(:name).sort
         hash_with_counts
       end
 
+      def to_zip
+        @csv_data = to_csv
+        generate_file
+      end
+
+      def generate_file
+        Zip::File.open(@zipfile_path, Zip::File::CREATE) do |zipfile|
+          zipfile.get_output_stream(@csv_file_name) { |f| f.write @csv_data }
+        end
+      end
+
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_csv
-        # CSV.open("applicants.csv", "wb") do |csv|
         CSV.generate do |csv|
           csv << csv_headers
 

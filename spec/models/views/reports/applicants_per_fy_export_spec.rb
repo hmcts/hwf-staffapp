@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::ApplicantsPerFyExport do
-  let(:fy_start) { DateTime.new(2018, 4, 1) }
-  let(:fy_end) { DateTime.new(2019, 4, 1) }
+  let(:fy_start) { 2018 }
+  let(:fy_end) { 2019 }
   describe '#initialize' do
     it 'creates a hash with counts' do
       date_from = fy_start
@@ -33,8 +33,8 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
     let(:application4) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction2) }
     let(:jurisdiction1) { create(:jurisdiction, name: 'Jurisdiction 1') }
     let(:jurisdiction2) { create(:jurisdiction, name: 'Jurisdiction 2') }
-    let(:fy_start) { DateTime.new(2019, 4, 1) }
-    let(:fy_end) { DateTime.new(2020, 4, 1) }
+    let(:fy_start) { 2019 }
+    let(:fy_end) { 2020 }
 
     before {
       Timecop.freeze(Time.zone.local(2020, 1, 1, 12, 0, 0)) {
@@ -60,8 +60,8 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
     end
 
     it 'no results' do
-      date_from = DateTime.new(2018, 4, 1)
-      date_to = DateTime.new(2019, 4, 1)
+      date_from = 2018
+      date_to = 2019
       instance = described_class.new(date_from, date_to)
 
       expect(instance.result).to eq({})
