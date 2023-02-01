@@ -60,6 +60,15 @@ rake "user:create[user@hmcts.net, 123456789, admin, name]"
 ```
 __Note:__ the quotes around the task are important!
 
+#### Run an applicants report for a finacial year
+
+There is a rake task that creates the report
+
+```
+rake reports:applicants[2021, 2022]
+```
+this will genereate a zip file applicants-2021-2022-fy.csv.zip
+
 
 #### Run tests in parallel
 Follow the [official guides](https://github.com/grosser/parallel_tests#setup-environment-from-scratch-create-db-and-loads-schema-useful-for-ci) to setup your local env
