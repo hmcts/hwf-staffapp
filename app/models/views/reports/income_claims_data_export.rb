@@ -5,7 +5,6 @@ module Views
 
       FM_OFFICE_CODE = 'IE413'.freeze
 
-
       ENTITY_CODES = ['IE413', 'GE401', 'GE451', 'DH403', 'GE403',
                       'GC404', 'BXX', 'DG553', 'DH401'].freeze
 
@@ -16,7 +15,7 @@ module Views
         'DH403' => 'ccmcc',
         'GE403' => 'st-helens',
         'GC404' => 'manchester',
-        'BXX'   => 'birmingham',
+        'BXX' => 'birmingham',
         'DG553' => 'swrdu',
         'DH401' => 'ccbc'
       }.freeze
