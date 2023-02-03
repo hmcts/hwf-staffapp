@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   put 'reports/finance_report' => 'reports#finance_report_generator'
   put 'reports/finance_transactional_report' => 'reports#finance_transactional_report_generator'
   get 'letter_templates' => 'reports#letters'
-  get 'reports/raw_data' => 'reports#raw_data'
-  put 'reports/raw_data' => 'reports#raw_data_export'
 
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
@@ -22,6 +20,8 @@ Rails.application.routes.draw do
     put 'income_claims_data' => 'income_claims_data#data_export'
     get 'power_bi' => 'power_bi#show'
     put 'power_bi' => 'power_bi#data_export'
+    get 'raw_data' => 'raw_data#show'
+    put 'raw_data' => 'raw_data#data_export'
     get 'ocmc' => 'ocmc#show'
     put 'ocmc' => 'ocmc#data_export'
     get 'hmrc' => 'hmrc#show'

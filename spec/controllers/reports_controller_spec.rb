@@ -229,55 +229,5 @@ RSpec.describe ReportsController do
       it { is_expected.to render_template :letters }
     end
 
-    describe 'GET #raw_data' do
-      before { get :raw_data }
-
-      subject { response }
-
-      it { is_expected.to have_http_status(:success) }
-
-      it { is_expected.to render_template :raw_data }
-
-      describe 'assigns form object' do
-        subject { assigns(:form) }
-
-        it { is_expected.to be_a Forms::FinanceReport }
-      end
-    end
-
-    describe 'PUT #raw_data' do
-      subject { response }
-
-      context 'with invalid data - nil date from' do
-        let(:dates) {
-          { day_date_from: nil,
-            month_date_from: nil,
-            year_date_from: nil,
-            day_date_to: '31',
-            month_date_to: '12',
-            year_date_to: '2015' }
-        }
-
-        before { put :raw_data_export, params: { forms_finance_report: dates } }
-
-        it { is_expected.to have_http_status(:success) }
-
-        it { is_expected.to render_template :raw_data }
-      end
-
-      context 'with valid data - both from and to dates' do
-        before { put :raw_data_export, params: { forms_finance_report: dates } }
-
-        it { is_expected.to have_http_status(:success) }
-
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('help-with-fees-extract-')
-        end
-
-        it 'sets the file type' do
-          expect(response.headers['Content-Type']).to include('text/csv')
-        end
-      end
-    end
   end
 end
