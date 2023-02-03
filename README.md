@@ -65,9 +65,18 @@ __Note:__ the quotes around the task are important!
 There is a rake task that creates the report
 
 ```
-rake reports:applicants[2021, 2022]
+rake "reports:applicants[2021, 2022]"
 ```
-this will genereate a zip file applicants-2021-2022-fy.csv.zip
+this will generate a zip file applicants-2021-2022-fy.csv.zip
+
+#### Run raw data extract for longer timescale
+
+There is a rake task that creates the report
+
+```
+rake "reports:raw_data_extract[2021-01-01, 2022-12-31]"
+```
+this will generate a zip file raw_data-1-1-2021-31-12-2022.csv.zip
 
 
 #### Run tests in parallel
