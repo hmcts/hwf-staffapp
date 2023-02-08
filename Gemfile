@@ -6,7 +6,7 @@ gem 'dotenv-rails', groups: [:development, :test] # this has to be here because 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.4'
-gem 'sentry-rails', '~> 5.5'
+gem 'sentry-rails', '~> 5.8'
 # Use postgresql as the database for Active Record
 gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'

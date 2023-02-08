@@ -154,7 +154,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     config (4.1.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
@@ -528,10 +528,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-rails (5.7.0)
+    sentry-rails (5.8.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.7.0)
-    sentry-ruby (5.7.0)
+      sentry-ruby (~> 5.8.0)
+    sentry-ruby (5.8.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shellany (0.0.1)
     shoulda-matchers (5.3.0)
@@ -689,7 +689,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 5.1)
   sdoc (~> 1.1)
-  sentry-rails (~> 5.5)
+  sentry-rails (~> 5.8)
   shoulda-matchers
   simple_encryptable
   site_prism
