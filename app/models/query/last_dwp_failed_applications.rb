@@ -34,7 +34,7 @@ module Query
       BenefitCheck.where("dwp_result = 'BadRequest' OR dwp_result = 'Server unavailable'").
         where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
         where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-              '%LSCBC%', '%Service unavailable%', '%not available%')
+              '%LSCBC%', '%Service unavailable%', '%not available%').includes(:applicationable)
     end
     # rubocop:enable Metrics/LineLength
 
