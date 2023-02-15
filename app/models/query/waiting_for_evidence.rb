@@ -7,7 +7,7 @@ module Query
     def find(filter = {})
       list = @user.office.applications.waiting_for_evidence.
              order(:completed_at).
-             includes(:evidence_check, :user, :applicant)
+             includes(:evidence_check, :completed_by, :applicant)
       list = list.joins(:detail).where(details: filter) if filter && filter[:jurisdiction_id].present?
       list
     end
