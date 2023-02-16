@@ -18,7 +18,7 @@ module Views
       end
 
       def skip_change_link
-        ['refund_request']
+        ['refund_request', 'date_fee_paid']
       end
 
       def medium
