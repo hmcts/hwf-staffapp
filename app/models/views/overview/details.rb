@@ -17,6 +17,10 @@ module Views
         ]
       end
 
+      def skip_change_link
+        ['refund_request']
+      end
+
       def fee
         number_to_currency(detail.fee, precision: 2, unit: '£')
       end

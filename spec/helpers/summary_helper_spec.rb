@@ -12,12 +12,15 @@ RSpec.describe SummaryHelper do
     i18n_correct = "#{i18n_key}correct"
     i18n_income = "#{i18n_key}income"
     i18n_reason = "#{i18n_key}incorrect_reason_category"
+    i18n_test = "#{i18n_key}test"
     allow(I18n).to receive(:t).with(i18n_fee).and_return('Fee')
     allow(I18n).to receive(:t).with(i18n_name).and_return('Form name')
     allow(I18n).to receive(:t).with(i18n_date).and_return('Date received')
     allow(I18n).to receive(:t).with(i18n_correct).and_return('Correct')
     allow(I18n).to receive(:t).with(i18n_income).and_return('Income')
     allow(I18n).to receive(:t).with(i18n_reason).and_return('Reason')
+    allow(I18n).to receive(:t).with(i18n_test).and_return('Test')
+    allow(I18n).to receive(:transliterate).and_return('Section name')
   end
 
   it { expect(helper).to be_a described_class }
@@ -29,6 +32,19 @@ RSpec.describe SummaryHelper do
       it 'returns the correct html' do
         expected = '<h2 class="govuk-heading-m">section name</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Fee</dt><dd class="govuk-summary-list__value">£310</dd></div></dl>'
         expect(helper.build_section_with_defaults('section name', view)).to eq(expected)
+      end
+    end
+
+    context 'when skip test link' do
+      let(:view) { instance_double(Views::Overview::Details, fee: '£310', test: 'True', all_fields: ['fee', 'test'], skip_change_link: ['test']) }
+      it 'returns the correct html' do
+        expected_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Fee</span></a>'
+        without_link = '<dt class="govuk-summary-list__key">Test</dt><dd class="govuk-summary-list__value">True</dd>'
+
+        view_render = helper.build_section_with_defaults('section name', view, root_url)
+
+        expect(view_render).to include(expected_link)
+        expect(view_render).to include(without_link)
       end
     end
   end
