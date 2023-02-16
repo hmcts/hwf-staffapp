@@ -77,7 +77,7 @@ module SummaryHelper
     if value.present?
       rows = tag.dt(label, class: 'govuk-summary-list__key')
       rows << tag.dd(value, class: value_style(value))
-      rows << build_link(link_attributes, label) unless skip?(object, field)
+      rows << build_link(link_attributes, label) if display_link?(object, field)
 
       tag.div(class: 'govuk-summary-list__row') do
         rows
@@ -106,8 +106,9 @@ module SummaryHelper
     label
   end
 
-  def skip?(object, field)
-    return false unless object.respond_to?(:skip_change_link)
-    object.skip_change_link.try(:include?, field)
+  def display_link?(object, field)
+    return true if object.respond_to?(:medium) && object.medium == 'paper'
+    return true unless object.respond_to?(:skip_change_link)
+    !object.skip_change_link.try(:include?, field)
   end
 end

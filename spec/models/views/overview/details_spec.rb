@@ -30,6 +30,20 @@ RSpec.describe Views::Overview::Details do
     end
   end
 
+  describe '#medium' do
+    subject { view.medium }
+
+    context 'online application' do
+      let(:application) { build_stubbed(:online_application) }
+      it { is_expected.to eq 'digital' }
+    end
+    context 'paper application' do
+      let(:application) { build_stubbed(:application) }
+      it { is_expected.to eq 'paper' }
+    end
+
+  end
+
   describe '#date_received' do
     let(:detail) { build_stubbed(:detail, date_received: Time.zone.parse('2015-11-20')) }
     let(:application) { build_stubbed(:application, detail: detail) }

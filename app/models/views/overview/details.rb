@@ -21,6 +21,10 @@ module Views
         ['refund_request']
       end
 
+      def medium
+        @application.is_a?(OnlineApplication) ? 'digital' : 'paper'
+      end
+
       def fee
         number_to_currency(detail.fee, precision: 2, unit: '£')
       end

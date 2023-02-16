@@ -35,16 +35,28 @@ RSpec.describe SummaryHelper do
       end
     end
 
-    context 'when skip test link' do
-      let(:view) { instance_double(Views::Overview::Details, fee: '£310', test: 'True', all_fields: ['fee', 'test'], skip_change_link: ['test']) }
-      it 'returns the correct html' do
-        expected_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Fee</span></a>'
-        without_link = '<dt class="govuk-summary-list__key">Test</dt><dd class="govuk-summary-list__value">True</dd>'
+    context 'when application is digital' do
+      let(:view) { instance_double(Views::Overview::Details, fee: '£310', test: 'True', all_fields: ['fee', 'test'], skip_change_link: ['test'], medium: 'digital') }
+      it 'returns only relevant links' do
+        fee_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Fee</span></a>'
+        test_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Test</span></a>'
 
         view_render = helper.build_section_with_defaults('section name', view, root_url)
 
-        expect(view_render).to include(expected_link)
-        expect(view_render).to include(without_link)
+        expect(view_render).to include(fee_link)
+        expect(view_render).not_to include(test_link)
+      end
+    end
+
+    context 'when application is paper' do
+      let(:view) { instance_double(Views::Overview::Details, fee: '£310', test: 'True', all_fields: ['fee', 'test'], skip_change_link: ['test'], medium: 'paper') }
+      it 'ignore skip link' do
+        fee_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Fee</span></a>'
+        test_link = '<a class="govuk-link" data-section-name="section-name" href="http://test.host/">Change<span class="govuk-visually-hidden">Test</span></a>'
+
+        view_render = helper.build_section_with_defaults('section name', view, root_url)
+        expect(view_render).to include(fee_link)
+        expect(view_render).to include(test_link)
       end
     end
   end
