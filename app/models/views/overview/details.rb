@@ -17,6 +17,14 @@ module Views
         ]
       end
 
+      def skip_change_link
+        ['refund_request', 'date_fee_paid']
+      end
+
+      def medium
+        @application.is_a?(OnlineApplication) ? 'digital' : 'paper'
+      end
+
       def fee
         number_to_currency(detail.fee, precision: 2, unit: '£')
       end
