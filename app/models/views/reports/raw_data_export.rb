@@ -33,6 +33,7 @@ module Views
         evidence_checked: 'evidence checked?',
         capital: 'capital',
         savings_amount: 'savings and investments amount',
+        part_payment_returned: 'no part payment returned',
         case_number: 'case number',
         postcode: 'postcode',
         date_of_birth: 'date of birth',
@@ -141,6 +142,9 @@ module Views
                WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
                ELSE ''
           END AS capital,
+          CASE WHEN part_payments.outcome = 'return' THEN 'False'
+               WHEN part_payments.outcome = 'none' THEN 'True'
+               WHEN part_payments.outcome = 'part' THEN 'True' ELSE NULL END AS part_payment_returned,
           savings.amount AS savings_amount,
           savings.over_61 AS partner_over_61,
           details.case_number AS case_number,
