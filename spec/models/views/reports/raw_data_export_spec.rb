@@ -29,7 +29,7 @@ RSpec.describe Views::Reports::RawDataExport do
     it { is_expected.to be_a String }
   end
 
-  describe 'data returned should only include proccessed applications' do
+  describe 'data returned should only include processed applications' do
     subject { data.total_count }
 
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: Time.zone.now } }
@@ -134,6 +134,7 @@ RSpec.describe Views::Reports::RawDataExport do
         jurisdiction = part_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,NI number,3,true,No,part,50.0,250.0,paper"
         expect(export).to include(row)
+        expect(export).to include('True,JK123456A,,17/02/2003')
       end
 
       it 'part payment outcome is "return"' do
@@ -142,6 +143,7 @@ RSpec.describe Views::Reports::RawDataExport do
         jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,No,part,300.45,0.0,paper"
         expect(export).to include(row)
+        expect(export).to include('False,JK123456A,,17/02/2003')
       end
 
       it 'part payment outcome is "none"' do
@@ -150,6 +152,7 @@ RSpec.describe Views::Reports::RawDataExport do
         jurisdiction = part_no_ec_none_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,No,part,300.45,0.0,paper"
         expect(export).to include(row)
+        expect(export).to include('True,JK123456A,,17/02/2003')
       end
     end
 
@@ -258,7 +261,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"16,000 or more\",,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
+        row = "paper,false,false,\"16,000 or more\",,,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
         expect(export).to include(row)
       end
     end
@@ -270,7 +273,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"3,000 - 15,999\",,JK123456A,,25/11/2000,10/11/2020,,"
+        row = "paper,false,false,\"3,000 - 15,999\",,,JK123456A,,25/11/2000,10/11/2020,,"
         expect(export).to include(row)
       end
     end
@@ -282,7 +285,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'nil max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,3000 or more,,JK123456A,,25/11/2000,12/11/2020"
+        row = "paper,false,false,3000 or more,,,JK123456A,,25/11/2000,12/11/2020"
         expect(export).to include(row)
       end
     end
@@ -294,7 +297,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and nil max threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"0 - 2,999\",,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,\"0 - 2,999\",,,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
@@ -306,7 +309,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and false max threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"0 - 2,999\",,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,\"0 - 2,999\",,,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
