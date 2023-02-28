@@ -133,8 +133,9 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = part_no_ec.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.0,50.0,250.0,income,ABC123,,false,false,2000,,NI number,3,true,No,part,50.0,250.0,paper"
+        dob = part_no_ec.applicant.date_of_birth.to_fs
         expect(export).to include(row)
-        expect(export).to include('True,JK123456A,,17/02/2003')
+        expect(export).to include("True,JK123456A,,#{dob}")
       end
 
       it 'part payment outcome is "return"' do
@@ -142,8 +143,10 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,No,part,300.45,0.0,paper"
+        dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
+
         expect(export).to include(row)
-        expect(export).to include('False,JK123456A,,17/02/2003')
+        expect(export).to include("False,JK123456A,,#{dob}")
       end
 
       it 'part payment outcome is "none"' do
@@ -151,8 +154,9 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = part_no_ec_none_pp.detail.jurisdiction.name
         row = "#{jurisdiction},SD123,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,No,part,300.45,0.0,paper"
+        dob = part_no_ec_none_pp.applicant.date_of_birth.to_fs
         expect(export).to include(row)
-        expect(export).to include('True,JK123456A,,17/02/2003')
+        expect(export).to include("True,JK123456A,,#{dob}")
       end
     end
 

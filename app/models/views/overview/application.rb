@@ -63,6 +63,7 @@ module Views
       end
 
       def result
+        return @application.evidence_check.outcome if @application.evidence_check&.outcome
         @application.outcome
       end
 
@@ -89,6 +90,8 @@ module Views
       def amount_to_pay
         if evidence_or_application.amount_to_pay.present?
           "£#{parse_amount_to_pay(evidence_or_application.amount_to_pay)}"
+        elsif @application.amount_to_pay
+          "£#{parse_amount_to_pay(@application.amount_to_pay)}"
         end
       end
 
