@@ -12,9 +12,10 @@ module HmrcIncomeParser
 
   def self.tax_credit(tax_credit_hash, request_range)
     sum = tax_credit_hash.sum do |i|
-      i['payments'].sum do |payment|
+      payments = i['payments'].sum do |payment|
         tax_credit_amount(payment, request_range)
       end
+      apply_child_care(payments, i)
     end
     sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
@@ -49,6 +50,7 @@ module HmrcIncomeParser
   end
 
   def self.frequency_days(day, end_date, frequency)
+    return if frequency.zero?
     list = []
 
     while day < end_date
@@ -71,5 +73,19 @@ module HmrcIncomeParser
       return true if payment['amount'].to_i == 324
     end
     false
+  end
+
+  def self.apply_child_care(sum, tax_hash)
+    return sum if values_not_suitable(tax_hash)
+    total = tax_hash['totalEntitlement'].to_f
+    amount = tax_hash['childTaxCredit']['childCareAmount'].to_f
+
+    (sum.to_f * (1 - (amount / total))).round(2)
+  end
+
+  def self.values_not_suitable(tax_hash)
+    return true if tax_hash['totalEntitlement'].blank?
+    return true if tax_hash['childTaxCredit'].blank? || tax_hash['childTaxCredit']['childCareAmount'].blank?
+    return true if tax_hash['totalEntitlement'].to_f <= 0 || tax_hash['childTaxCredit']['childCareAmount'].to_f <= 0
   end
 end

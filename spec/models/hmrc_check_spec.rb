@@ -214,7 +214,7 @@ RSpec.describe HmrcCheck do
         hmrc_check.save
       }
 
-      it { expect(hmrc_check.child_tax_credit_income).to eq 253.16 }
+      it { expect(hmrc_check.child_tax_credit_income).to eq 240.6 }
       it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
 
     end
