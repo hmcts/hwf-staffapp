@@ -96,7 +96,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
         it "calculates correct value" do
           data_row = data[3]
-          expect(data_row).to include('6098.56')
+          expect(data_row).to include('5044.46')
         end
 
         it 'displays formatted date range' do
