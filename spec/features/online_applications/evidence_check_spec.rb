@@ -33,6 +33,7 @@ RSpec.feature 'Online application processing Evidence check' do
   before do
     login_as user
     dwp_api_response 'Yes'
+    create(:application_full_remission_ev)
     create_list(:application_part_remission, 9)
   end
 

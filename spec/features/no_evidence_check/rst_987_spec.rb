@@ -107,7 +107,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list(:application_full_remission, 1, :refund)
+      create(:application_full_remission_ev, :refund)
+      create(:application_full_remission, :refund)
     end
 
     scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
@@ -128,7 +129,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list(:application_full_remission, 1, :refund)
+      create(:application_full_remission_ev, :refund)
+      create(:application_full_remission, :refund)
     end
 
     scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
