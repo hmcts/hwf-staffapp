@@ -11,11 +11,11 @@ module Query
         where(where_condition)
     end
 
-    def position(id, refund)
-      find_all.where(
-        'applications.id <= ? AND details.refund = ?',
-        id, refund
-      ).count
+    def position(id, refund, frequency)
+      Application.joins(:detail).where(
+        {applications:{benefits: false, purged: false,
+                       application_type: 'income', outcome: ['part', 'full']},
+         details: {emergency_reason: nil, refund: refund}}).where('applications.id < ?', id).last(frequency)
     end
 
     private

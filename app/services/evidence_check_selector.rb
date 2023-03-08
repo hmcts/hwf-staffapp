@@ -54,7 +54,7 @@ class EvidenceCheckSelector
   end
 
   def get_evidence_check(frequency, refund)
-    position = application_position(refund)
+    position = application_position(refund, frequency)
     position_matching_frequency?(position, frequency)
   end
 
@@ -62,8 +62,15 @@ class EvidenceCheckSelector
     (position >= 1) && (position % frequency).zero?
   end
 
-  def application_position(refund)
-    Query::EvidenceCheckable.new.position(@application.id, refund)
+  def application_position(refund, frequency)
+    # get only as many last applications we need to check for the frequency
+    list = Query::EvidenceCheckable.new.position(@application.id, refund, frequency)
+
+    # edge case for test/staging/demo environments
+    return 1 if list.count < frequency
+    index = list.map { |a| a.evidence_check.try(:check_type) }.rindex('random').to_i
+
+    frequency - index
   end
 
   def expires_at
