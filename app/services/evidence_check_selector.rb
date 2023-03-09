@@ -66,6 +66,10 @@ class EvidenceCheckSelector
     # get only as many last applications we need to check for the frequency
     list = Query::EvidenceCheckable.new.list(@application.id, refund, frequency)
 
+    check_position_index(frequency, list)
+  end
+
+  def check_position_index(frequency, list)
     # edge case for test/staging/demo environments
     return 1 if list.count < frequency
     index = list.map { |a| a.evidence_check.try(:check_type) }.rindex('random').to_i
@@ -105,6 +109,12 @@ class EvidenceCheckSelector
   end
 
   def ccmcc_evidence_rules_check
+    position = check_position_index(@ccmcc.frequency, ccmcc_query)
+
+    position_matching_frequency?(position, @ccmcc.frequency)
+  end
+
+  def ccmcc_query
     if CCMCCEvidenceCheckRules::QUERY_ALL == @ccmcc.query_type
       query = 'applications.id <= ? AND applications.office_id = ?'
       values = [@application.id, @application.office_id]
@@ -114,8 +124,7 @@ class EvidenceCheckSelector
       values = [@application.id, @application.office_id, refund]
     end
 
-    position = Query::EvidenceCheckable.new.find_all.where([query, values].flatten).count
-    position_matching_frequency?(position, @ccmcc.frequency)
+    Query::EvidenceCheckable.new.find_all.where([query, values].flatten).last(@ccmcc.frequency)
   end
 
   def ccmcc_evidence_rules?

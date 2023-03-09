@@ -382,8 +382,9 @@ describe EvidenceCheckSelector do
         let(:frequency) { 3 }
 
         before do
-          create_list(:application_full_remission, 4, :refund, office: ccmcc_office)
-          create_list(:application, 5, office: ccmcc_office)
+          create(:application_full_remission, :refund, office: ccmcc_office)
+          create(:application_full_remission_ev, :refund, office: ccmcc_office)
+          create(:application_full_remission, :refund, office: ccmcc_office)
         end
 
         it 'cleans the ccmcc annotation data' do
