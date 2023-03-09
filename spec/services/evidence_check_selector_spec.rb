@@ -48,7 +48,7 @@ describe EvidenceCheckSelector do
 
           before do
             allow(Query::EvidenceCheckable).to receive(:new).and_return(query_checkeable)
-            allow(query_checkeable).to receive(:position).and_return list
+            allow(query_checkeable).to receive(:list).and_return list
           end
 
           let(:evidence) { instance_double(EvidenceCheck, check_type: 'random') }

@@ -16,5 +16,48 @@ RSpec.describe Query::EvidenceCheckable do
     it 'does not include emergency applications' do
       is_expected.not_to include emergency_application
     end
+
+  end
+
+  context 'list' do
+    let(:benefit_application) { create(:application, benefits: true) }
+
+    before do
+      full_outcome_1
+      full_outcome_2
+      part_outcome_1
+      part_outcome_2
+      benefit_application
+    end
+
+    context 'refund' do
+      let(:full_outcome_1) { create(:application_full_remission, :refund) }
+      let(:full_outcome_2) { create(:application_full_remission, :refund) }
+      let(:part_outcome_1) { create(:application_part_remission, :refund) }
+      let(:part_outcome_2) { create(:application_part_remission) }
+
+      it 'limits applications count to frequency' do
+        application = create(:application, benefits: false, refund: true)
+        create(:application, benefits: false, refund: true)
+        expect(described_class.new.list(application.id, true, 2)).to eq([full_outcome_2, part_outcome_1])
+      end
+    end
+
+    context 'non refund' do
+      let(:full_outcome_1) { create(:application_full_remission) }
+      let(:full_outcome_2) { create(:application_full_remission) }
+      let(:part_outcome_1) { create(:application_part_remission) }
+      let(:part_outcome_2) { create(:application_part_remission, :refund) }
+
+      it 'limits applications count to frequency' do
+        application = create(:application, benefits: false)
+        create(:application, benefits: false)
+        list = described_class.new.list(application.id, false, 2)
+        expect(list).to eq([full_outcome_2, part_outcome_1])
+        list = described_class.new.list(application.id, false, 3)
+        expect(list).to eq([full_outcome_1, full_outcome_2, part_outcome_1])
+      end
+    end
+
   end
 end

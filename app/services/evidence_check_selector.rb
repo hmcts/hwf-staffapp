@@ -64,7 +64,7 @@ class EvidenceCheckSelector
 
   def application_position(refund, frequency)
     # get only as many last applications we need to check for the frequency
-    list = Query::EvidenceCheckable.new.position(@application.id, refund, frequency)
+    list = Query::EvidenceCheckable.new.list(@application.id, refund, frequency)
 
     # edge case for test/staging/demo environments
     return 1 if list.count < frequency
