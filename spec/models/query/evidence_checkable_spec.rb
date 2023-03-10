@@ -37,8 +37,9 @@ RSpec.describe Query::EvidenceCheckable do
       let(:part_outcome_2) { create(:application_part_remission) }
 
       it 'limits applications count to frequency' do
-        application = create(:application, benefits: false, refund: true)
-        create(:application, benefits: false, refund: true)
+        application = create(:application_full_remission, :refund)
+        create(:application_full_remission, :refund)
+
         expect(described_class.new.list(application.id, true, 2)).to eq([full_outcome_2, part_outcome_1])
       end
     end
@@ -50,8 +51,8 @@ RSpec.describe Query::EvidenceCheckable do
       let(:part_outcome_2) { create(:application_part_remission, :refund) }
 
       it 'limits applications count to frequency' do
-        application = create(:application, benefits: false)
-        create(:application, benefits: false)
+        application = create(:application_full_remission)
+        create(:application_full_remission, :refund)
         list = described_class.new.list(application.id, false, 2)
         expect(list).to eq([full_outcome_2, part_outcome_1])
         list = described_class.new.list(application.id, false, 3)

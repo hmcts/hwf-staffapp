@@ -13,7 +13,7 @@ module Query
 
     def list(id, refund, frequency)
       find_all.where(
-        'applications.id <= ? AND details.refund = ?',
+        'applications.id < ? AND details.refund = ?',
         id, refund
       ).last(frequency)
     end
