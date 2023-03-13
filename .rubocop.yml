@@ -264,6 +264,9 @@ RSpec/Rails/HttpStatus:
 RSpec/RepeatedExample:
   Enabled: false
 
+RSpec/MatchArray:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 

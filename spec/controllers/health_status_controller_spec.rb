@@ -14,7 +14,7 @@ RSpec.describe HealthStatusController do
     end
 
     describe 'renders correct json' do
-      let(:json) { JSON.parse(response.body) }
+      let(:json) { response.parsed_body }
       let(:keys) do
         ["version_number",
          "build_date",
