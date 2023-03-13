@@ -4,6 +4,7 @@ FactoryBot.define do
     incorrect_reason { nil }
     outcome { nil }
     amount_to_pay { nil }
+    check_type { 'random' }
 
     factory :evidence_check_full_outcome do
       correct { true }

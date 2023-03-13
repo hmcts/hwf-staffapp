@@ -12,6 +12,7 @@ RSpec.feature 'Evidence check' do
   before do
     login_as user
     dwp_api_response ''
+    create(:application_full_remission_ev)
     create_list(:application_part_remission, 9)
   end
 
@@ -87,32 +88,13 @@ RSpec.feature 'Evidence check' do
 
       expect(has_evidence_check_flagged?).to be_truthy
     end
-
-    scenario 'no evidence check for 11th application' do
-      create(:application_part_remission)
-
-      visit home_index_url
-
-      within "#process-application" do
-        expect(page).to have_text('Process a paper application')
-        click_button "Start now"
-      end
-
-      fill_personal_details
-      fill_application_details
-      fill_saving_and_investment
-
-      fill_benefits(false)
-      fill_income(false)
-
-      expect(page).to have_text 'Check details'
-      click_button 'Complete processing'
-      expect(has_evidence_check?).to be_falsey
-    end
   end
 
   context 'Processing refund based application' do
-    before { create(:application, :refund, :income_type, benefits: false, outcome: 'part') }
+    before {
+      create(:application_full_remission_ev, :refund)
+      create(:application, :refund, :income_type, benefits: false, outcome: 'part')
+    }
 
     scenario 'evidence check ever 2nd application' do
       visit  home_index_url

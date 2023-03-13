@@ -162,6 +162,21 @@ FactoryBot.define do
       decision_date { Time.zone.today }
     end
 
+    factory :application_full_remission_ev do
+      applicant_factory { :applicant_with_all_details }
+      applicant_traits { [:married] }
+      evidence_check { association :evidence_check, application: instance }
+      reference { generate(:reference_number) }
+      fee { 410 }
+      benefits { false }
+      income { 10 }
+      dependents { true }
+      children { 1 }
+      outcome { 'full' }
+      application_type { 'income' }
+      decision_date { Time.zone.today }
+    end
+
     factory :application_full_remission_nino do
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [:married] }

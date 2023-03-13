@@ -11,11 +11,11 @@ module Query
         where(where_condition)
     end
 
-    def position(id, refund)
+    def list(id, refund, frequency)
       find_all.where(
-        'applications.id <= ? AND details.refund = ?',
+        'applications.id < ? AND details.refund = ?',
         id, refund
-      ).count
+      ).last(frequency)
     end
 
     private

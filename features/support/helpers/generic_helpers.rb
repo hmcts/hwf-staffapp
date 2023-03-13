@@ -342,11 +342,11 @@ def ho_applicant
   @applicant = application.applicant
 end
 
-def refund_application(user)
+def refund_application_with_waiting_evidence(user)
   detail = FactoryBot.create(:complete_detail, case_number: 'E71YX571', fee: 656.66, refund: true)
-  FactoryBot.create(:application, :processed_state, :income_type, benefits: false,
-                                                                  decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
-                                                                  reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: @applicant, detail: detail)
+  FactoryBot.create(:application, :waiting_for_evidence_state, :income_type, benefits: false,
+                                                                             decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
+                                                                             reference: "#{reference_prefix}-000001", children: nil, income: nil, applicant: @applicant, detail: detail)
 end
 
 def reference_prefix

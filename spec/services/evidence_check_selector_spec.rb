@@ -42,67 +42,104 @@ describe EvidenceCheckSelector do
 
     context 'for a non-benefit remission application' do
       context 'for a non-refund application' do
-        let(:application) { create(:application_full_remission, reference: 'XY55-22-3') }
 
-        context 'when the application is the 10th (10% gets checked)' do
+        context 'frequency test with stubs' do
+          let(:query_checkeable) { instance_double(Query::EvidenceCheckable) }
+
           before do
-            create_list(:application_full_remission, 9)
-            create_list(:application, 5)
+            allow(Query::EvidenceCheckable).to receive(:new).and_return(query_checkeable)
+            allow(query_checkeable).to receive(:list).and_return list
           end
 
-          it 'creates evidence_check record for the application' do
-            is_expected.to be_a(EvidenceCheck)
+          let(:evidence) { instance_double(EvidenceCheck, check_type: 'random') }
+          let(:app_ev_check) { instance_double(Application, evidence_check: evidence) }
+          let(:app_no_ev_check) { instance_double(Application, evidence_check: nil) }
+
+          context 'frequency 2' do
+            let(:application) { create(:application_full_remission, :refund) }
+
+            context '2nd' do
+              let(:list) { [app_ev_check, app_no_ev_check] }
+
+              it { is_expected.to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'random' }
+
+              it 'sets expiration on the evidence_check' do
+                expect(decision.expires_at).to eql(current_time + expires_in_days.days)
+              end
+
+              it 'does not saves the ccmcc check type' do
+                expect(decision.checks_annotation).to be_nil
+              end
+            end
+            context '1st' do
+              let(:list) { [app_no_ev_check, app_ev_check] }
+
+              it { is_expected.not_to be_a(EvidenceCheck) }
+            end
+            context 'no previous check' do
+              let(:list) { [app_no_ev_check, app_no_ev_check] }
+
+              it { is_expected.to be_a(EvidenceCheck) }
+            end
+            context 'empty list' do
+              let(:list) { [] }
+
+              it { is_expected.not_to be_a(EvidenceCheck) }
+            end
           end
 
-          it { expect(decision.check_type).to eql 'random' }
+          context 'frequency 10' do
+            let(:application) { create(:application_full_remission, :refund) }
 
-          it 'sets expiration on the evidence_check' do
-            expect(decision.expires_at).to eql(current_time + expires_in_days.days)
-          end
+            context '10th' do
+              let(:list) {
+                [app_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check,
+                 app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check]
+              }
 
-          it 'does not saves the ccmcc check type' do
-            expect(decision.checks_annotation).to be_nil
-          end
-        end
+              it { is_expected.to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'random' }
 
-        context 'when the application is not the 10th' do
-          before do
-            create_list(:application_full_remission, 4)
-            create_list(:application, 5)
-          end
+              it 'sets expiration on the evidence_check' do
+                expect(decision.expires_at).to eql(current_time + expires_in_days.days)
+              end
 
-          it 'does not create evidence_check record for the application' do
-            is_expected.to be_nil
-          end
-        end
-      end
+              it 'does not saves the ccmcc check type' do
+                expect(decision.checks_annotation).to be_nil
+              end
 
-      context 'for a refund application' do
-        let(:application) { create(:application_full_remission, :refund) }
+            end
+            context '8th' do
+              let(:list) {
+                [app_no_ev_check, app_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check,
+                 app_no_ev_check, app_no_ev_check, app_ev_check, app_no_ev_check]
+              }
 
-        context 'when the application is the 2nd (50% gets checked)' do
-          before do
-            create_list(:application_full_remission, 3, :refund)
-            create_list(:application, 5)
-          end
+              it { is_expected.not_to be_a(EvidenceCheck) }
+            end
+            context '1st' do
+              let(:list) {
+                [app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check,
+                 app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_ev_check]
+              }
 
-          it 'creates evidence_check record for the application' do
-            is_expected.to be_a(EvidenceCheck)
-          end
+              it { is_expected.not_to be_a(EvidenceCheck) }
+            end
+            context 'no previous check' do
+              let(:list) {
+                [app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check,
+                 app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check]
+              }
 
-          it 'sets expiration on the evidence_check' do
-            expect(decision.expires_at).to eql(current_time + expires_in_days.days)
-          end
-        end
+              it { is_expected.to be_a(EvidenceCheck) }
+            end
 
-        context 'when the application is not the 2nd' do
-          before do
-            create_list(:application_full_remission, 2, :refund)
-            create_list(:application, 3)
-          end
+            context 'empty list' do
+              let(:list) { [] }
 
-          it 'does not create evidence_check record for the application' do
-            is_expected.to be_nil
+              it { is_expected.not_to be_a(EvidenceCheck) }
+            end
           end
         end
       end
@@ -345,8 +382,9 @@ describe EvidenceCheckSelector do
         let(:frequency) { 3 }
 
         before do
-          create_list(:application_full_remission, 4, :refund, office: ccmcc_office)
-          create_list(:application, 5, office: ccmcc_office)
+          create(:application_full_remission, :refund, office: ccmcc_office)
+          create(:application_full_remission_ev, :refund, office: ccmcc_office)
+          create(:application_full_remission, :refund, office: ccmcc_office)
         end
 
         it 'cleans the ccmcc annotation data' do
