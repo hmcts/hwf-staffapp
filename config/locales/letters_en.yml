@@ -289,3 +289,67 @@ en-GB:
         <p>Please be advised that refund times may vary depending on original method of payment.</p>
         <p>From,</p>
         <p>%{user_name}</p>
+    appeal:
+      pre_appeal_html: |
+        <p>Good Afternoon,</p>
+        <p>Thank you for your email regarding your Help with Fees decision.</p>
+        <p>As you have documented that you have £<strong>&lt;income&gt;</strong> in income a month, this does not put you into the category of financial hardship immediately. Therefore, were not accepted on your claim for Help with Fees. </p>
+        <p>Under the hardship category, you are required to advise the court and provide evidence that not getting help with your Court fee will cause you exceptional hardship. Hardship is understood as having a significant impact on your day-to-day life. You won’t be considered at risk of exceptional hardship simply because of your status, for example if you’re unemployed, a seasonal or part-time worker, student or prisoner. Hardship is also considered as not having enough money within your account to pay for your day-to-day essentials, including having little or no savings to use when needed. You can find more information regarding Help with Fees applications and who is eligible within our policy guidance on the following link: <a href="https://www.gov.uk/government/publications/apply-for-help-with-court-and-tribunal-fees/how-to-apply-for-help-with-fees-ex160a#how-to-appeal" target="_blank">https://www.gov.uk/government/publications/apply-for-help-with-court-and-tribunal-fees/how-to-apply-for-help-with-fees-ex160a#how-to-appeal</a>.</p>
+        <p>If you are wishing to make an appeal to the decision of Help with Fees, then we will require the following in order to assess your situation further:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>A full bank statement for all accounts you hold (both sole, joint and savings accounts). As you have stated that you are 'Married or Living with someone and sharing an income' you will also need to provide your new partners bank statements for the full month <strong>&lt;insert relevant month&gt;</strong>.</li>
+          <li>A full wage slip for the month of <strong>&lt;insert relevant month&gt;</strong>. (This needs to be your wage slip if you’re in employment and your new partners wage slip)</li>
+          <li>A full breakdown of your Maintenance Payments as well as a signed agreement document showing this arrangement.</li>
+          <li>A breakdown of all income and outgoings from your account for a typical month.</li>
+          <li>A statement advising of the detrimental impact it would have on your finances by making the fee payment.</li>
+          <li>Evidence of any financial hardship you are currently in eg. Evidence of Loans, credit cards, other debts etc.</li>
+        </ul>
+        <p>Along with the above, the delivery manager needs to establish that every effort has been made to finance the court fee. Some examples of these are below:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Could you have looked into obtaining a loan to cover the costs for the divorce fee.</li>
+          <li>Could friends and family assist you with paying for the divorce fees and pay them back.<\li>
+          <li>Could you defer the application for divorce until you can fully pay the divorce fee.<\li>
+        </ul>
+        <p>If you have already looked into the above examples and are unable to defer your case/divorce until a later point, please provide us with information regarding these examples, and advising of the different methods that you have used in your approach to obtain these funds.</p>
+        <p>You must submit your response to the above matters within 14 days by(<strong>&lt;insert date&gt;</strong>) or your application will automatically be rejected.</p>
+      part_payment_appeal_html: |
+        <p>Thank you for your email requesting to appeal your Help with Fees.</p>
+        <p>As you have documented that you have £<strong>&lt;income&gt;</strong> in income a month, this does not put you into the category of financial hardship immediately for a full fee remission. Subsequently, you were awarded a part-payment of £<strong>&lt;part-payment amount&gt;</strong>.</p>
+        <p>Under the hardship category, you are required to advise the court and provide evidence that not getting help with your Court fee will cause you exceptional hardship. Hardship is understood as having a significant impact on your day-to-day life. You won’t be considered at risk of exceptional hardship simply because of your status, for example if you’re unemployed, a seasonal or part-time worker, student or prisoner. Hardship is also considered as not having enough money within your account to pay for your day-to-day essentials, including having little or no savings to use when needed. You can find more information regarding Help with Fees applications and who is eligible within our policy guidance on the following link: <a href="https://www.gov.uk/government/publications/apply-for-help-with-court-and-tribunal-fees/how-to-apply-for-help-with-fees-ex160a#how-to-appeal" target="_blank">https://www.gov.uk/government/publications/apply-for-help-with-court-and-tribunal-fees/how-to-apply-for-help-with-fees-ex160a#how-to-appeal</a>.</p>
+        <p>If you still wish to appeal this decision, we require evidence for the month prior to the divorce application. When assessing the evidence provided to us currently, this is not done for the month prior, therefore, we require the below evidence to show your current income:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>A full bank statement for all accounts you hold (both sole, joint and savings accounts) for the full month <strong>&lt;insert relevant month&gt;</strong>.</li>
+          <li>A full wage slip (s) for the month of <strong>&lt;insert relevant month&gt;</strong>.</li>
+          <li>A full breakdown statement showing your entitlement to Universal Credit. This needs to show the assessment period, your name, address, all payment calculations, deductions and take-home pay.</li>
+          <li>A breakdown of all income and outgoings from your account for a typical month.</li>
+          <li>A statement advising of the detrimental impact it would have on your finances by making the fee payment.</li>
+          <li>Evidence of any financial hardship you are currently in eg. Evidence of Loans, credit cards, other debts etc.</li>
+        </ul>
+        <p>Along with the above, the delivery manager needs to establish that every effort has been made to finance the court fee. Some examples of these are below:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Could you have looked into obtaining a loan to cover the costs for the divorce fee.</li>
+          <li>Could friends and family assist you with paying for the divorce fees and pay them back.</li>
+          <li>Could you defer the application for divorce until you can fully pay the divorce fee.</li>
+        </ul>
+        <p>If you have already looked into the above examples and are unable to defer your divorce until a later point, please provide us with information regarding these examples, and advising of the different methods that you have used in your approach to obtain these funds.</p>
+        <p>You must submit your response to the above matters within 14 days by(<strong>&lt;insert date&gt;</strong>) or your application will automatically be rejected.</p>
+
+      push_back_appeal_html: |
+        <p>Thank you for your email.</p>
+        <p>I am considering your appeal at Stage 1 Appeal under the financial Hardship category.</p>
+        <p>Under the hardship category, you are required to advise the court and provide evidence that not getting help with your Court fee will cause you exceptional hardship. Hardship is understood as having a significant impact on your day-to-day life. You won’t be considered at risk of exceptional hardship simply because of your status, for example if you’re unemployed, a seasonal or part-time worker, student or prisoner.</p>
+        <p>You have stated on your below email that you are in extreme financial hardship and are therefore seeking to appeal the Help with Fees decision. When a Help with Fees application is made, it is based on your gross income from paid employment, or income that you are in receipt of from any self-employment that you are in. This is also taken from other sources of income such as child benefit, benefits, and other financial support you receive regularly. The application does not take into consideration any outgoing expenses that you may have.</p>
+        <p>When reviewing your case and taking the above into consideration, we have noticed the following things and require further action/information from:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>You have documented on your application for Help with Fees that you are in receipt of only wages as your income. You have stated that your total monthly income is £<strong>&lt;income&gt;</strong> which would allow you a partial remission which we have advised you of. However, when reviewing your payslip, it appears that your monthly income is actually £<strong>&lt;insert relevant month&gt;</strong> This amount makes you ineligible for Help with Fees completely and a fee of £<strong>&lt;fee amount&gt;</strong> would be needed.</li>
+          <li>You have advised that after paying for rent (which is half of your take home salary) that all extra money goes towards other debts/loans that your currently have. However, on your expenditure spreadsheet that you have provided us with, you have indicated that you are paying for a lot of non-essential items eg. <strong>&lt;list items that apply&gt;</strong>. As you have documented that this is a monthly expense, we have had a look at your account to see the payments coming out. If an item is listed but no payment showing advise: If this is deducted from a different account, then we will require your bank account from where this is transacted.</li>
+          <li>You have documented also that you have monthly expenditure for loans/debts. When looking onto your account, we cannot see that this has been deducted each month. Therefore, if this is taken from a different account, we require the full bank statement for that account. As well as this, we require a statement from each of your debt companies advising of the amount of debt that you had for the month of <strong>&lt;insert relevant month&gt;</strong>. I have broken this down further below:</li>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Loan Repayment – We require a full breakdown of your loan letter advising us of the repayment plan in place and how much of a debt you are currently in.</li>
+            <li>Credit Card 1 (£<strong>&lt;debt per month&gt;</strong> a month) – We require a full breakdown statement for your credit card for the month of <strong>&lt;insert relevant month&gt;</strong>.</li>
+            <li>Credit Card 2 (£<strong>&lt;debt per month&gt;</strong> a month) – We require a full breakdown statement for your credit card for the month of <strong>&lt;insert relevant month&gt;</strong>.</li>
+          </ul>
+          <li>We have noticed on your account that you have been making high payment types to a business <strong>&lt;company name&gt;</strong> which equate to £<strong>&lt;company payment total&gt;</strong> a month. You have stated that you are only in receipt of your salary from paid employment, however, this shows that you are paying money into your own business. Therefore, you will be required to provide us with all business accounts which you hold. You will need to identify any transfers between your accounts to identify any drawings from business accounts and whether funds have been drawn from previous profits.</li>
+        </ul>
+        <p>Please provide the court with the above clarifications and evidence in order to further your application for Help with Fees.</p>
+        <p>You must submit your response to the above matters within 14 days by(<strong>&lt;insert date&gt;</strong>) or your application will automatically be rejected.</p>
