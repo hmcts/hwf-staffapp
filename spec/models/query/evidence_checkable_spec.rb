@@ -10,7 +10,7 @@ RSpec.describe Query::EvidenceCheckable do
     let!(:emergency_application) { create(:application_full_remission, emergency_reason: 'REASON') }
 
     it 'includes only part and full remission applications' do
-      is_expected.to match_array([application_1, application_2])
+      is_expected.to contain_exactly(application_1, application_2)
     end
 
     it 'does not include emergency applications' do

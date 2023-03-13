@@ -328,7 +328,7 @@ RSpec.describe UserPolicy, type: :policy do
         let(:user) { create(:manager, office: office) }
 
         it 'returns only users and managers from the same office' do
-          is_expected.to match_array([user, user1, user2, user7])
+          is_expected.to contain_exactly(user, user1, user2, user7)
         end
       end
 
@@ -336,7 +336,7 @@ RSpec.describe UserPolicy, type: :policy do
         let(:user) { create(:admin, office: office) }
 
         it 'returns all users' do
-          is_expected.to match_array([user, user1, user2, user3, user4, user5, user6, user7, user8])
+          is_expected.to contain_exactly(user, user1, user2, user3, user4, user5, user6, user7, user8)
         end
       end
 

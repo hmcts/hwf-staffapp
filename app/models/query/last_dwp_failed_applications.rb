@@ -29,14 +29,14 @@ module Query
       all_failed_checks.select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id)
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     def all_failed_checks
       BenefitCheck.where("dwp_result = 'BadRequest' OR dwp_result = 'Server unavailable'").
         where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
         where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
               '%LSCBC%', '%Service unavailable%', '%not available%').includes(:applicationable)
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
 
     def office_users
       @user.office.users.ids
