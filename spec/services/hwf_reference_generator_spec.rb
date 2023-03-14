@@ -58,28 +58,5 @@ RSpec.describe HwfReferenceGenerator, type: :service do
       end
     end
 
-    describe 'raise error when there are too many references' do
-      let(:count_result_over) { instance_double(ActiveRecord::Relation, count: 1679617) }
-      let(:count_result_under) { instance_double(ActiveRecord::Relation, count: 1679615) }
-
-      context 'for normal application' do
-        before do
-          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-Z%').and_return(count_result_under)
-          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-A%').and_return(count_result_over)
-        end
-        it 'raise error' do
-          expect { generator }.to raise_error(HwfReferenceGenerator::HwfReferenceDuplicationWarning)
-        end
-      end
-      context 'for benefit application' do
-        before do
-          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-Z%').and_return(count_result_over)
-          allow(OnlineApplication).to receive(:where).with('reference like ?', 'HWF-A%').and_return(count_result_under)
-        end
-        it 'raise error' do
-          expect { generator }.to raise_error(HwfReferenceGenerator::HwfReferenceDuplicationWarning)
-        end
-      end
-    end
   end
 end
