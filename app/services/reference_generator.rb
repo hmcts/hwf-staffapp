@@ -20,16 +20,13 @@ class ReferenceGenerator
   end
 
   def reference
-    next_sequence = (last_reference.try(:sequence) || 0) + 1
-    "#{reference_prefix}#{next_sequence.to_s.rjust(6, '0')}"
+    return last_reference.try(:reference).succ if last_reference.try(:reference)
+    "#{reference_prefix}#{1.to_s.rjust(6, '0')}"
   end
 
   def last_reference
     Application.uncached do
-      Application.
-        select("max(cast(replace(reference,'#{reference_prefix}','') as integer)) AS sequence").
-        where('reference LIKE ?', "#{reference_prefix}%").
-        take
+      Application.where('reference LIKE ?', "#{reference_prefix}%").last
     end
   end
 end
