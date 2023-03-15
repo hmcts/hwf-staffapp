@@ -1,11 +1,6 @@
 class HwfReferenceGenerator
-  class HwfReferenceDuplicationWarning < StandardError; end
-
-  LENGTH = 6
 
   def initialize(benefits = 'false')
-    check_uniqueness_count
-
     @benefits = benefits
   end
 
@@ -30,10 +25,5 @@ class HwfReferenceGenerator
 
   def prefix_is_unique(reference)
     reference.scan(/(HWF)+/i).count == 1
-  end
-
-  def check_uniqueness_count
-    raise HwfReferenceDuplicationWarning if OnlineApplication.where('reference like ?', 'HWF-Z%').count > 1679616
-    raise HwfReferenceDuplicationWarning if OnlineApplication.where('reference like ?', 'HWF-A%').count > 1679616
   end
 end
