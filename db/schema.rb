@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_143105) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_15_141711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -132,9 +132,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_143105) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "api_response"
-    t.bigint "applicationable_id"
+    t.integer "applicationable_id"
     t.string "applicationable_type"
     t.index ["application_id"], name: "index_benefit_checks_on_application_id"
+    t.index ["applicationable_id", "applicationable_type"], name: "index_bc_applicationable_id_type"
     t.index ["user_id"], name: "index_benefit_checks_on_user_id"
   end
 
