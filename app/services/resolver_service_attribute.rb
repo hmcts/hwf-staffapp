@@ -1,23 +1,27 @@
 module ResolverServiceAttribute
+  MAX_NUMBER_OF_ATTEMPTS = 10
 
   private
 
   def completed_application_attributes
     completed_attributes.tap do |attrs|
       attrs.merge! BusinessEntityGenerator.new(@calling_object).attributes
-      assign_new_reference_until_valid
+      reference_saved = nil
+      iterations = 0
+      next if @calling_object.reference.present?
+      until reference_saved == true || iterations > MAX_NUMBER_OF_ATTEMPTS
+        iterations += 1
+        reference_saved = assign_new_reference_until_valid
+      end
     end
   end
 
   def assign_new_reference_until_valid
-    if @calling_object.reference.blank?
-      generator = ReferenceGenerator.new(@calling_object)
-      @calling_object.reference = generator.attributes[:reference]
-
-      return if @calling_object.validate(:reference)
-
-      @calling_object.reference = generator.attributes[:reference] until @calling_object.validate(:reference)
-    end
+    generator = ReferenceGenerator.new(@calling_object)
+    @calling_object.reference = generator.attributes[:reference]
+    @calling_object.save
+  rescue ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid
+    false
   end
 
   def completed_attributes
