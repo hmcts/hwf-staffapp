@@ -223,17 +223,22 @@ describe ResolverService do
 
         include_examples 'application reference and business_entity'
       end
+    end
 
-      context 'duplicated reference' do
-        let(:application_outcome) { 'full' }
-        let(:reference) { 'ABC' }
-        before { create(:application, reference: reference) }
+    context 'Application duplicated reference' do
+      let(:object) { application }
+      let(:application_outcome) { 'full' }
+      let(:reference_prefix) { "PA#{Time.zone.now.strftime('%y')}-" }
+      before {
+        create(:application, reference: "#{reference_prefix}000003")
+        create(:application, reference: "#{reference_prefix}000002")
+        create(:application, reference: "#{reference_prefix}000001")
+      }
 
-        it "raise an error" do
-          expect { complete }.to raise_error(ActiveRecord::RecordInvalid)
-        end
+      it "generate another reference" do
+        complete
+        expect(application.reference).to eq("#{reference_prefix}000004")
       end
-
     end
 
     context 'for EvidenceCheck' do

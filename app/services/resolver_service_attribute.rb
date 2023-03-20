@@ -5,10 +5,18 @@ module ResolverServiceAttribute
   def completed_application_attributes
     completed_attributes.tap do |attrs|
       attrs.merge! BusinessEntityGenerator.new(@calling_object).attributes
-      if @calling_object.reference.blank?
-        generator = ReferenceGenerator.new(@calling_object)
-        attrs.merge!(generator.attributes)
-      end
+      assign_new_reference_until_valid
+    end
+  end
+
+  def assign_new_reference_until_valid
+    if @calling_object.reference.blank?
+      generator = ReferenceGenerator.new(@calling_object)
+      @calling_object.reference = generator.attributes[:reference]
+
+      return if @calling_object.validate(:reference)
+
+      @calling_object.reference = generator.attributes[:reference] until @calling_object.validate(:reference)
     end
   end
 
