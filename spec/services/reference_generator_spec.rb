@@ -32,8 +32,8 @@ RSpec.describe ReferenceGenerator, type: :service do
         let(:existing_application2) { create(:application, :processed_state, reference: 'PA16-000019') }
 
         before do
-          existing_application1
           existing_application2
+          existing_application1
           application
         end
 

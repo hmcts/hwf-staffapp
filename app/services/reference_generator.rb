@@ -20,13 +20,14 @@ class ReferenceGenerator
   end
 
   def reference
-    return last_reference.try(:reference).succ if last_reference.try(:reference)
+    return last_reference.succ if last_reference
     "#{reference_prefix}#{1.to_s.rjust(6, '0')}"
   end
 
   def last_reference
     Application.uncached do
-      Application.where('reference LIKE ?', "#{reference_prefix}%").last
+      @references = Application.where('reference LIKE ?', "#{reference_prefix}%").pluck(:reference)
     end
+    @references.max
   end
 end
