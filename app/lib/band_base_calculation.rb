@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class BandBaseCalculation
-  attr_reader :income, :fee, :saving_amount
+  attr_reader :income, :fee, :saving_amount, :children_age_band, :married, :dob, :part_remission
+  MIN_THRESHOLD = 1420
+  MAX_INCOME_THRESHOLD = 3000
+
+
   def initialize(application)
     @income = application.income
     @fee = application.detail.fee
     @saving_amount = application.saving.amount
-    # @children = application.children
-    # @married = application.applicant.married
-    # @dob = application.applicant.dob
+    @children_age_band = application.children_age_band || []
+    @married = application.applicant.married
+    @dob = application.applicant.date_of_birth
   end
 
   # -	Value of fee up to £1420: capital threshold = £4250,
@@ -22,15 +26,9 @@ class BandBaseCalculation
   # •	Where Savings & Investments Greater than Minimum threshold but Less than Maximum threshold THEN banding applies - see below
   # •	Where Savings & Investments Greater than Maximum threshold THEN Not Eligible for help with fees
 
-
-
-  # capital threshold calculation - savings
-  # If fee is under 1420 then the capital threshold is 4250 aka 3*1420
-  # If fee is between 1421 and 5000 then the capital threshold is  3*fee so max 15000
-  # If fee is between more then 5001 then the capital threshold is 16000
   def saving_threshold_exceeded?
     case fee
-    when 0..1420
+    when 0..MIN_THRESHOLD
       (saving_amount <= 4250) ? false : true
     when 1421..5000
       (saving_amount < (fee * 3)) ? false : true
@@ -39,104 +37,93 @@ class BandBaseCalculation
     end
   end
 
-  #
-  # def band_calculation(band, income)
-  #   case band
-  #   when 1
-  #     income * 0.5
-  #   when 2
-  #     inc = income - 1000
-  #     calc = 500
-  #     calc += inc * 0.7
-  #     calc
-  #   when 3
-  #     inc = income - 2000
-  #     calc = 500 + 700
-  #     calc += inc * 0.9
-  #     calc
-  #   end
-  # end
-  #
-  # # no premium
-  # def income_calc(income, fee)
-  #   min_threshold = 1420
-  #
-  #   case income
-  #   when 0..1420
-  #     return 0
-  #   when 1421..2420
-  #     sum = band_calculation(1,income - min_threshold)
-  #     round_down_to_nearest_10(sum)
-  #     sum
-  #   when 2421..3420
-  #     sum = band_calculation(2,income - min_threshold)
-  #     round_down_to_nearest_10(sum)
-  #   when 3421..4420
-  #     sum = band_calculation(3,income - min_threshold)
-  #     round_down_to_nearest_10(sum)
-  #   when 4421..Float::INFINITY
-  #     -1
-  #   end
-  # end
-  #
-  #
-  #
-  #
-  # def premiums(married,kids)
-  #   total = 0
-  #   total += 710 if married
-  #   total += kids.sum do |age|
-  #     case age
-  #     when 0..13
-  #       425
-  #     when 14..17
-  #       710
-  #     else
-  #       0
-  #     end
-  #   end
-  # end
-  #
-  #
-  # min_threshold = 1420
-  # max_threshold = 3000
-  #
-  # remissions(3200, 183, true, [10,15])
-  # remissions(6560, 1350, true, [16,17])
-  # remissions(5300, 1350, true, [10,13,15])
-  #
-  # remissions(1400, 232, true, [])
-  # remissions(5500, 250, true, [])
-  # remissions(4000, 2000, true, [])
-  # remissions(2000, 600, true, [])
-  #
-  # def remissions(income, fee, married, kids)
-  #   min_threshold = 1420
-  #   if kids.blank?
-  #     sum = income_calc(income, fee)
-  #     if sum == 0
-  #       puts "Eligible full fee"
-  #     elsif sum.negative?
-  #       puts "Not eligible"
-  #     end
-  #     sum
-  #   else
-  #     income_cap = min_threshold + premiums(married, kids)
-  #     income_to_use = income - income_cap
-  #     return "Eligible full fee" if income_to_use.negative?
-  #
-  #     case income_to_use
-  #     when 0..1420
-  #       sum = band_calculation(1,income_to_use)
-  #     when 1421..2420
-  #       sum = band_calculation(2,income_to_use)
-  #     when 2421..3420
-  #       sum = band_calculation(3,income_to_use)
-  #     end
-  #     sum = round_down_to_nearest_10(sum)
-  #   end
-  #   cost= fee - sum
-  #   puts "Not eligible" if cost.negative?
-  #   cost
-  # end
+  def round_down_to_nearest_10(amount)
+    return 0 if amount.negative?
+    rounded = amount.round(-1)
+    return rounded if rounded <= amount
+    rounded - 10
+  end
+
+  def income_calculation(band, income)
+    case band
+    when 1
+      income * 0.5
+    when 2
+      inc = income - 1000
+      calc = 500
+      calc += inc * 0.7
+      calc
+    when 3
+      inc = income - 2000
+      calc = 500 + 700
+      calc += inc * 0.9
+      calc
+    end
+  end
+
+  # no premium
+  def income_band(income)
+    case income
+    when 0..MIN_THRESHOLD
+      return 0
+    when 1421..2420
+      1
+    when 2421..3420
+      2
+    when 3421..4420
+      3
+    when 4421..Float::INFINITY
+      -1
+    end
+  end
+
+
+  def premiums
+    premium_bands = {1 => 425, 2 => 710}
+    total = 0
+    total += 710 if married
+    total += children_age_band.sum do |age|
+      case age
+      when 1, 2
+        premium_bands[age]
+      else
+        0
+      end
+    end
+    total
+  end
+
+  def remission
+    if dob <= 66.years.ago
+      return 'full' if saving_amount < 16000
+      return 'none' if saving_amount > 16000
+    end
+    return 'none' if saving_threshold_exceeded?
+    return 'full' if income <= MIN_THRESHOLD
+
+    if premiums > 0
+      income_cap = MIN_THRESHOLD + premiums
+      income_to_use = income - income_cap
+      return 'full' if income_to_use <= MIN_THRESHOLD || income_to_use.negative?
+      return 'none' if MAX_INCOME_THRESHOLD < income_to_use
+    else
+      band = income_band(income)
+      return 'none' if band == -1
+      income_to_use = income - MIN_THRESHOLD
+    end
+
+    case income_to_use
+    when 0..1420
+      sum = income_calculation(1,income_to_use)
+    when 1421..2420
+      sum = income_calculation(2,income_to_use)
+    when 2421..3420
+      sum = income_calculation(3,income_to_use)
+    else
+      sum = income
+    end
+    sum = round_down_to_nearest_10(sum)
+    @part_remission = fee - sum
+    'part'
+  end
 end
