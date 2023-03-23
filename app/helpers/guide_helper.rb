@@ -12,7 +12,7 @@ module GuideHelper
   end
 
   def key_control_checks_url
-    'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-key-control-checks.pdf'
+    'https://intranet.justice.gov.uk/documents/2017/02/help-with-fees-kccs.docx'
   end
 
   def fraud_awareness_url
