@@ -3,8 +3,6 @@
 require 'rspec'
 
 RSpec.describe BandBaseCalculation do
-  let(:application) { spy(Application, detail: detail, income: income,
-                                      applicant: applicant, saving: saving, children_age_band: children_age_band) }
   let(:applicant) { build(:applicant, date_of_birth: date_of_birth, married: married) }
   let(:detail) { build(:detail, fee: fee) }
   let(:saving) { build(:saving, amount: saving_amount) }
@@ -14,7 +12,16 @@ RSpec.describe BandBaseCalculation do
   let(:fee) { 100 }
   let(:date_of_birth) { 20.years.ago }
   let(:children_age_band) { [1] }
+
+  # rubocop:disable RSpec/VerifiedDoubles
+  # children_age_band is not present in the model yet
+  let(:application) {
+    spy(Application, detail: detail, income: income,
+                     applicant: applicant, saving: saving, children_age_band: children_age_band)
+  }
+
   before { allow(application).to receive(:children_age_band).and_return children_age_band }
+  # rubocop:enable RSpec/VerifiedDoubles
 
   subject(:band_calculation) { described_class.new(application) }
 
@@ -172,7 +179,7 @@ RSpec.describe BandBaseCalculation do
     end
 
     context "band 1, band 2, band 2 and married" do
-      let(:children_age_band) { [1,2,2]  }
+      let(:children_age_band) { [1, 2, 2] }
       let(:married) { true }
       it { expect(band_calculation.premiums).to eq(2555) }
     end
@@ -207,7 +214,7 @@ RSpec.describe BandBaseCalculation do
           let(:income) { 4000 }
           it {
             expect(band_calculation.remission).to eq('part')
-            expect(band_calculation.part_remission).to eq(280)
+            expect(band_calculation.part_remission_amount).to eq(280)
           }
         end
         context 'part 310' do
@@ -215,7 +222,7 @@ RSpec.describe BandBaseCalculation do
           let(:income) { 2000 }
           it {
             expect(band_calculation.remission).to eq('part')
-            expect(band_calculation.part_remission).to eq(310)
+            expect(band_calculation.part_remission_amount).to eq(310)
           }
         end
       end
@@ -233,11 +240,12 @@ RSpec.describe BandBaseCalculation do
           it { expect(band_calculation.remission).to eq('none') }
         end
 
-        # context 'over capital threshold ' do
-        #   let(:fee) { 1500 }
-        #   let(:saving_amount) { 10000 }
-        #   it { expect(band_calculation.remission).to eq('none') }
-        # end
+        context 'over capital threshold' do
+          let(:date_of_birth) { 40.years.ago }
+          let(:fee) { 1500 }
+          let(:saving_amount) { 10000 }
+          it { expect(band_calculation.remission).to eq('none') }
+        end
       end
 
       context 'premiums' do
@@ -245,26 +253,26 @@ RSpec.describe BandBaseCalculation do
         context 'children and married - full' do
           let(:fee) { 1421 }
           let(:income) { 4263 }
-          let(:children_age_band) { [1,2] }
+          let(:children_age_band) { [1, 2] }
           let(:married) { true }
           it { expect(band_calculation.remission).to eq('full') }
         end
         context 'children and married none - over max income cap' do
           let(:fee) { 1350 }
           let(:income) { 6560 }
-          let(:children_age_band) { [2,2] }
+          let(:children_age_band) { [2, 2] }
           let(:married) { true }
           it { expect(band_calculation.remission).to eq('none') }
         end
 
-        context 'children and married - part ' do
+        context 'children and married - part' do
           let(:fee) { 1350 }
           let(:income) { 5300 }
-          let(:children_age_band) { [1,1,2] }
+          let(:children_age_band) { [1, 1, 2] }
           let(:married) { true }
           it {
             expect(band_calculation.remission).to eq('part')
-            expect(band_calculation.part_remission).to eq(430)
+            expect(band_calculation.part_remission_amount).to eq(430)
           }
         end
       end
@@ -272,15 +280,3 @@ RSpec.describe BandBaseCalculation do
     end
   end
 end
-# min_threshold = 1420
-# max_threshold = 3000
-
-# remissions(income, fee, married, kids)
-# remissions(3200, 183, true, [10,15])
-# remissions(6560, 1350, true, [16,17])
-# remissions(5300, 1350, true, [10,13,15])
-#
-# remissions(1400, 232, true, [])
-# remissions(5500, 250, true, [])
-# remissions(4000, 2000, true, [])
-# remissions(2000, 600, true, [])

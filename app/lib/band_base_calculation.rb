@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BandBaseCalculation
-  attr_reader :income, :fee, :saving_amount, :children_age_band, :married, :dob, :part_remission
+  attr_reader :income, :fee, :saving_amount, :children_age_band, :married, :dob, :part_remission_amount
   MIN_THRESHOLD = 1420
   MAX_INCOME_THRESHOLD = 3000
 
@@ -14,17 +14,6 @@ class BandBaseCalculation
     @married = application.applicant.married
     @dob = application.applicant.date_of_birth
   end
-
-  # -	Value of fee up to £1420: capital threshold = £4250,
-  # -	Value of fee £1421 to £5000: capital threshold= 3x fee charged,
-  # -	Value of fee £5001 or over: capital threshold= £16000.
-
-  # Capital threshold
-  # •	Minimum threshold = Band 1 (£4,250)
-  # •	Maximum threshold = Band 3 (£16,00)
-  # •	Where Savings & Investments Equal to or Less than Minimum threshold THEN banding applies - see below
-  # •	Where Savings & Investments Greater than Minimum threshold but Less than Maximum threshold THEN banding applies - see below
-  # •	Where Savings & Investments Greater than Maximum threshold THEN Not Eligible for help with fees
 
   def saving_threshold_exceeded?
     case fee
@@ -123,7 +112,7 @@ class BandBaseCalculation
       sum = income
     end
     sum = round_down_to_nearest_10(sum)
-    @part_remission = fee - sum
+    @part_remission_amount = fee - sum
     'part'
   end
 end
