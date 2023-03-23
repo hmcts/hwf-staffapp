@@ -19,7 +19,7 @@ Then("I can view the training course") do
 end
 
 When("I can view key control checks guide") do
-  expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/10/help-with-fees-key-control-checks.pdf'
+  expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/02/help-with-fees-kccs.docx'
 end
 
 When("I can view staff guidance") do
