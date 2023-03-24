@@ -240,12 +240,36 @@ RSpec.describe BandBaseCalculation do
           it { expect(band_calculation.remission).to eq('none') }
         end
 
-        context 'over capital threshold' do
-          let(:date_of_birth) { 40.years.ago }
-          let(:fee) { 1500 }
-          let(:saving_amount) { 10000 }
-          it { expect(band_calculation.remission).to eq('none') }
+        context 'part payment with children' do
+          let(:children_age_band) { [2, 2, 2] }
+          let(:married) { true }
+          let(:fee) { 1750 }
+          let(:income) { 5800 }
+          let(:saving_amount) { 16000 }
+          it {
+            expect(band_calculation.remission).to eq('part')
+            expect(band_calculation.part_remission_amount).to eq(880)
+          }
         end
+
+        context 'part payment single no children' do
+          let(:children_age_band) { [] }
+          let(:married) { false }
+          let(:fee) { 800 }
+          let(:income) { 2500 }
+          let(:saving_amount) { 15800 }
+          it {
+            expect(band_calculation.remission).to eq('part')
+            expect(band_calculation.part_remission_amount).to eq(250)
+          }
+        end
+      end
+
+      context 'over capital threshold' do
+        let(:date_of_birth) { 40.years.ago }
+        let(:fee) { 1500 }
+        let(:saving_amount) { 10000 }
+        it { expect(band_calculation.remission).to eq('none') }
       end
 
       context 'premiums' do
