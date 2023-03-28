@@ -7,7 +7,7 @@ When("I process the online application to the check details page") do
   fill_in 'Reference', with: reference
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   stub_dwp_response_as_ok_request
   process_online_application_page.click_next
   expect(process_online_application_page.content).to have_check_details_header

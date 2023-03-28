@@ -1,5 +1,5 @@
 Given("I have looked up an online application") do
-  FactoryBot.create(:online_application, :with_reference, :completed)
+  FactoryBot.create(:online_application, :with_reference)
   sign_in_page.load_page
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
@@ -7,15 +7,17 @@ Given("I have looked up an online application") do
   dashboard_page.click_look_up
 end
 
+When('I fill in missing online application details') do
+  fill_in('How much is the court or tribunal fee?', with: ' 450.0')
+  process_online_application_page.content.form_input.set 'ABC123'
+  process_online_application_page.content.jurisdiction.click
+  process_online_application_page.fill_in_date_application_received
+end
+
 When("I see the application details") do
   expect(application_details_digital_page).to be_displayed
   expect(process_online_application_page.content).to have_application_details_header
   expect(process_online_application_page).to have_text 'Peter Smith'
-  expect(process_online_application_page.content.group[0].input[0].value).to eq '450.0'
-  expect(process_online_application_page.content.group[2].input[0].value).to eq Time.zone.yesterday.day.to_s
-  expect(process_online_application_page.content.group[2].input[1].value).to eq Time.zone.yesterday.month.to_s
-  expect(process_online_application_page.content.group[2].input[2].value).to eq Time.zone.yesterday.year.to_s
-  expect(process_online_application_page.content.group[3].input[0].value).to eq 'ABC123'
 end
 
 And("I click next without selecting a jurisdiction") do
@@ -27,7 +29,7 @@ Then("I should see that I must select a jurisdiction error message") do
 end
 
 Then("I add a jurisdiction") do
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
 end
 
 Then('I click next') do
@@ -40,7 +42,10 @@ end
 
 When("I process the online application") do
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  fill_in('How much is the court or tribunal fee?', with: '450.0')
+  process_online_application_page.content.form_input.set 'ABC123'
+  process_online_application_page.content.jurisdiction.click
+  process_online_application_page.fill_in_date_application_received
   stub_dwp_response_as_not_eligible_request
   process_online_application_page.click_next
   benefit_checker_page.content.no.click
@@ -51,7 +56,10 @@ end
 
 When("I processed the applications until benefit paper evidence page") do
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  fill_in('How much is the court or tribunal fee?', with: '450.0')
+  process_online_application_page.content.form_input.set 'ABC123'
+  process_online_application_page.content.jurisdiction.click
+  process_online_application_page.fill_in_date_application_received
   stub_dwp_response_as_dwp_down_request
   process_online_application_page.click_next
 end

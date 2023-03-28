@@ -21,7 +21,7 @@ module Forms
 
     define_attributes
 
-    before_validation :format_date_fields
+    before_validation :format_date_fields, :format_fee
 
     validates :fee, presence: true,
                     numericality: { allow_blank: true, less_than: 20_000 }
@@ -80,6 +80,10 @@ module Forms
         benefits_override: benefits_override,
         user_id: user_id
       }
+    end
+
+    def format_fee
+      @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
     end
   end
 end

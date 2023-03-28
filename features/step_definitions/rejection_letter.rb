@@ -35,7 +35,7 @@ end
 
 When("I process that application") do
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
