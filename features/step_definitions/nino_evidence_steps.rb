@@ -38,7 +38,7 @@ When("I create Application C") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -94,7 +94,7 @@ Then("I create Application D") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -128,7 +128,7 @@ Then("I create Application E") do
   dashboard_page.click_look_up
 
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -212,7 +212,7 @@ When("I create Application C with the same ho_number") do
   dashboard_page.click_look_up
 
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -231,7 +231,7 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
   dashboard_page.click_look_up
 
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -245,7 +245,7 @@ Then("I create Application D with the same ho_number") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end
@@ -282,7 +282,7 @@ Then("I create Application E with the same ho_number") do
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
-  process_online_application_page.content.group[1].jurisdiction[0].click
+  process_online_application_page.content.jurisdiction.click
   process_online_application_page.click_next
   complete_processing
 end

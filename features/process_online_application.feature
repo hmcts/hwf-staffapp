@@ -6,7 +6,7 @@ Feature: Process an online application
   Scenario: Application details
     When I see the application details
     And Benefit Check is ok
-    And I add a jurisdiction
+    When I fill in missing online application details
     And I click next
     Then I should be taken to the check details page
 
@@ -38,8 +38,8 @@ Feature: Process an online application
 
   Scenario: Select emergency and enter a reason
     When I see the application details
+    And I fill in missing online application details
     And Benefit Check is ok
-    And I add a jurisdiction
     And I click emergency checkbox
     And I click next after entering a reason
     Then I should be taken to the check details page

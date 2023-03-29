@@ -7,8 +7,9 @@ class ProcessOnlineApplicationPage < BasePage
     elements :last_application, '.govuk-table__row'
     sections :group, '.group-level' do
       elements :input, 'input'
-      elements :jurisdiction, '.govuk-radios__item'
     end
+    element :jurisdiction, '.govuk-radios__item'
+    element :form_input, '#online_application_form_name'
     element :error, '.error', text: 'You must select a jurisdiction'
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
     element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
@@ -20,4 +21,12 @@ class ProcessOnlineApplicationPage < BasePage
     content.wait_until_next_visible
     content.next.click
   end
+
+  def fill_in_date_application_received
+    date_received = Time.zone.yesterday
+    fill_in('Day', with: date_received.day)
+    fill_in('Month', with: date_received.month)
+    fill_in('Year', with: date_received.year)
+  end
+
 end
