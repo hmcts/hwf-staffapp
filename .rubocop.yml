@@ -21,6 +21,8 @@ AllCops:
     - 'features/support/env.rb'
     - 'script/cucumber'
     - 'lib/log_stuff.rb'
+    - 'tmp/**/*'
+    - 'log/**/*'
 
 # Allow long lines in specs, as it's almost impossible to fit RSpec's
 # expectations into 120 characters.
