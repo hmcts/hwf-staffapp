@@ -45,19 +45,25 @@ module HmrcIncomeParser
   end
 
   def self.multiplier_per_frequency(payment, request_range)
-    return payment['frequency'] if payment['frequency'] == 1
+    @from = Date.parse(request_range[:from])
+    @to = Date.parse(request_range[:to])
 
-    from = Date.parse(request_range[:from])
-    to = Date.parse(request_range[:to])
+    return frequency(payment) if payment['frequency'] == 1
+
     end_date = Date.parse(payment['endDate'])
     start_date = Date.parse(payment['startDate'])
 
     list = frequency_days(start_date, end_date, payment['frequency'])
 
     list.count do |day_iteration|
-      next if @last_payment && @last_payment < day_iteration
-      day_iteration >= from && day_iteration <= to
+      next if @last_payment && (@last_payment < day_iteration)
+      day_iteration >= @from && day_iteration <= @to
     end
+  end
+
+  def self.frequency(payment)
+    return payment['frequency'] if @last_payment.blank?
+    @last_payment < @to ? 0 : payment['frequency']
   end
 
   def self.frequency_days(day, end_date, frequency)

@@ -50,8 +50,8 @@ RSpec.describe HmrcIncomeParser do
             "babyAmount" => 100, "paidYTD" => 897634
           },
           "payments" => [
-            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "postedDate" => "1996-02-01", "amount" => amount_one },
-            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "postedDate" => "1996-04-01", "amount" => amount_two }
+            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => amount_one },
+            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => amount_two }
           ] },
         { "payProfCalcDate" => "2020-09-18",
           "totalEntitlement" => 1876523,
@@ -62,8 +62,8 @@ RSpec.describe HmrcIncomeParser do
             "babyAmount" => 100, "paidYTD" => 897634
           },
           "payments" => [
-            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "postedDate" => "1996-02-01", "amount" => 7034 },
-            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "postedDate" => "1996-04-01", "amount" => 5024 }
+            { "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => 7034 },
+            { "startDate" => "1996-03-01", "endDate" => "1996-04-01", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => 5024 }
           ] }
       ]
     }
@@ -176,6 +176,27 @@ RSpec.describe HmrcIncomeParser do
         let(:frequency) { 1 }
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(345.37) }
       end
+
+      context 'postedDate' do
+        let(:tax_credit_hash) {
+          [
+            { "payProfCalcDate" => "2020-09-18",
+              "totalEntitlement" => 1876523,
+              "workingTaxCredit" => {
+                "amount" => 73049,
+                "paidYTD" => 897634,
+                "childCareAmount" => 93098
+              },
+              "payments" => [
+                { "startDate" => '2021-06-24', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2023-03-15", "amount" => 17059 },
+                { "startDate" => '2021-05-06', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2023-03-15", "amount" => 17478 },
+                { "startDate" => '2021-05-06', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2021-03-15", "amount" => 17478 }
+              ] }
+          ]
+        }
+
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(345.37) }
+      end
     end
 
     context 'decimal point present' do
@@ -196,8 +217,8 @@ RSpec.describe HmrcIncomeParser do
               "babyAmount" => 100, "paidYTD" => 897634
             },
             "payments" => [
-              { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "1996-02-01", "amount" => 65.27 },
-              { "startDate" => "2022-09-01", "endDate" => "2022-09-10", "frequency" => 1, "postedDate" => "1996-04-01", "amount" => 326.00 }
+              { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => 65.27 },
+              { "startDate" => "2022-09-01", "endDate" => "2022-09-10", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => 326.00 }
             ] }
         ]
       }
@@ -219,8 +240,8 @@ RSpec.describe HmrcIncomeParser do
                 "babyAmount" => 100, "paidYTD" => 897634
               },
               "payments" => [
-                { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "1996-02-01", "amount" => 65.27 },
-                { "startDate" => "2022-11-01", "endDate" => "2022-11-20", "frequency" => 1, "postedDate" => "1996-04-01", "amount" => 324.00 }
+                { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => 65.27 },
+                { "startDate" => "2022-11-01", "endDate" => "2022-11-20", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => 324.00 }
               ] }
           ]
         }
