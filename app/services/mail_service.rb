@@ -24,7 +24,7 @@ class MailService
   def email_template
     return NotifyMailer.submission_confirmation_refund(@data_source, @locale) if @data_source.refund?
 
-    raise "applying_method is nil, application reference: #{@data_source.reference}" if @data_source.applying_method.blank?
+    raise "applying_method is nil, reference: #{@data_source.reference}" if @data_source.applying_method.blank?
 
     if @data_source.applying_method == 'online'
       NotifyMailer.submission_confirmation_online(@data_source, @locale)
