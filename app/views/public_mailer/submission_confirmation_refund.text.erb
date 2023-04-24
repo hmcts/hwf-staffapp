@@ -1,14 +1,10 @@
 <%= t('email.refund.greeting') %>
 
-<%= t('email.refund.template') %>
-
-<%= t('email.refund.reference', reference: @application.reference) %>
-<%= t('email.refund.completion', date_fee_paid: @application.date_fee_paid) %>
-<%= t('email.refund.close') %>
-<%= @application.full_name %>
-
-<%= t('email.refund.send_to') %>
-
-<%= t('email.refund.unsuccessful') %>
-
-<%= t('email.refund.warning') %>
+<%= t('email.refund.heading', reference: @application.reference) %>
+<%= t('email.refund.sub_heading') %>
+<%= t('email.refund.p_one') %>
+<%= t('email.refund.h3_one') %>
+<%= t('email.refund.p_two') %>
+<%= t('email.refund.p_three') %>
+<%= t('email.refund.h3_two') %>
+<%= t('email.refund.p_four') %>

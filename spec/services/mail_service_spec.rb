@@ -14,7 +14,7 @@ RSpec.describe MailService do
 
     before do
       allow(NotifyMailer).to receive(:submission_confirmation_refund).and_return(refund_email)
-      allow(NotifyMailer).to receive(:submission_confirmation).and_return(non_refund_email)
+      allow(NotifyMailer).to receive(:submission_confirmation_online).and_return(non_refund_email)
     end
 
     describe 'when initialised with nil' do
@@ -58,17 +58,17 @@ RSpec.describe MailService do
       end
 
       context 'for non refund application' do
-        let(:source_data) { build(:online_application, :with_email) }
+        let(:source_data) { build(:online_application, :with_email, :confirm_online) }
 
         it 'delivers the e-mail later' do
           expect(non_refund_email).to have_received(:deliver_later)
         end
 
-        it { expect(NotifyMailer).to have_received(:submission_confirmation).with(source_data, 'en') }
+        it { expect(NotifyMailer).to have_received(:submission_confirmation_online).with(source_data, 'en') }
 
         context 'welsh' do
           let(:locale) { 'cy' }
-          it { expect(NotifyMailer).to have_received(:submission_confirmation).with(source_data, 'cy') }
+          it { expect(NotifyMailer).to have_received(:submission_confirmation_online).with(source_data, 'cy') }
         end
       end
     end

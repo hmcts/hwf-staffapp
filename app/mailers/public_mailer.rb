@@ -1,9 +1,15 @@
 class PublicMailer < ApplicationMailer
 
-  def submission_confirmation(application)
+  def submission_confirmation_online(application)
     standard_attachments
     @application = application
-    mail_with_subject @application.email_address, t('email.confirmation.subject')
+    mail_with_subject @application.email_address, t('email.confirmation.online.subject')
+  end
+
+  def submission_confirmation_paper(application)
+    standard_attachments
+    @application = application
+    mail_with_subject @application.email_address, t('email.confirmation.paper.subject')
   end
 
   def submission_confirmation_refund(application)

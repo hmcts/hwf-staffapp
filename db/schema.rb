@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_15_141711) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_130329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -371,6 +371,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_141711) do
     t.boolean "purged", default: false
     t.date "purged_at"
     t.integer "user_id"
+    t.string "applying_method"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
