@@ -53,6 +53,7 @@ module Api
         :phone,
         :post_contact,
         :feedback_opt_in,
+        :applying_method,
         income_kind: { applicant: [], partner: [] }
       ).to_h
     end

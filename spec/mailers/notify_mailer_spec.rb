@@ -18,47 +18,32 @@ RSpec.describe NotifyMailer do
 
   end
 
-  describe '#submission_confirmation' do
-    let(:mail) { described_class.submission_confirmation(application, 'en') }
+  describe '#submission_confirmation_online' do
+    let(:mail) { described_class.submission_confirmation_online(application, 'en') }
 
-    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_TEMPLATE_ID', nil)
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID', nil)
 
     it 'has the right keys with form_name' do
       application.form_name = ''
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        form_name_case_number: '234567',
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith'
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it 'has the right keys with case number' do
       application.form_name = 'FGDH122'
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        form_name_case_number: 'FGDH122',
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith'
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it 'when case and form number is empty' do
       application.form_name = ''
       application.case_number = ''
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith',
-                                                        form_name_case_number: ' '
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
 
     context 'welsh' do
-      let(:mail) { described_class.submission_confirmation(application, 'cy') }
-      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_TEMPLATE_ID', nil)
+      let(:mail) { described_class.submission_confirmation_online(application, 'cy') }
+      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID', nil)
     end
 
   end
@@ -66,44 +51,29 @@ RSpec.describe NotifyMailer do
   describe '#submission_confirmation_refund' do
     let(:mail) { described_class.submission_confirmation_refund(application, 'en') }
 
-    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_REFUND_TEMPLATE_ID', nil)
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID', nil)
 
     it 'has the right keys with form_name' do
       application.form_name = ''
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        form_name_case_number: '234567',
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith'
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it 'has the right keys with case number' do
       application.form_name = 'FGDH122'
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        form_name_case_number: 'FGDH122',
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith'
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it 'when case and form number is empty' do
       application.form_name = ''
       application.case_number = ''
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        application_reference_code: application.reference,
-                                                        application_submitted_date: Time.zone.today.to_fs(:db),
-                                                        applicant_name: 'Peter Smith',
-                                                        form_name_case_number: ' '
-                                                      })
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
 
     context 'welsh' do
       let(:mail) { described_class.submission_confirmation_refund(application, 'cy') }
-      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_REFUND_TEMPLATE_ID', nil)
+      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID', nil)
     end
   end
 end

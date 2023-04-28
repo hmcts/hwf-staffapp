@@ -5,7 +5,8 @@ table cellpadding="0" cellspacing="0" border="0" width="600"
 
   tr
     td colspan="2"
-      p style="margin-bottom: 1.5em; margin-top: 0;" =t('email.refund.template')
+      h3 style="margin-bottom: 1.5em; margin-top: 0;" =t('email.refund.heading', reference: @application.reference)
+      h3 style="margin-bottom: 1.5em; margin-top: 0;" =t('email.refund.sub_heading')
 
   tr
     td colspan="2"
@@ -13,22 +14,14 @@ table cellpadding="0" cellspacing="0" border="0" width="600"
         tr
           td
             p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
-              =t('email.refund.reference', reference: @application.reference)
+              =t('email.refund.p_one')
+            h3 style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              =t('email.refund.h3_one')
             p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
-              =t('email.refund.completion', date_fee_paid: @application.date_fee_paid)
+              =t('email.refund.p_two')
             p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
-              =t('email.refund.close')
+              =t('email.refund.p_three')
+            h3 style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.refund.h3_two')
             p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
-              = @application.full_name
-
-  tr
-    td colspan="2"
-      p style="margin-bottom: 1.5em; margin-top: 1em;" = t('email.refund.send_to')
-      p style="margin-bottom: 1.5em; margin-top: 1em;" =t('email.refund.unsuccessful')
-
-  tr valign="top"
-    td width="45"
-      = image_tag attachments['icon-important.png'].url, style: 'float: left;'
-    td width="555"
-      p style="padding: 0 1em 0 0; margin-bottom: 1.5em; margin-top: 0;"
-        = t('email.refund.warning')
+              = t('email.refund.p_four')

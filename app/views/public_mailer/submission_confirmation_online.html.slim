@@ -1,0 +1,29 @@
+table cellpadding="0" cellspacing="0" border="0" width="600"
+  tr
+    td colspan="2"
+      h2.heading style="margin-bottom: 1.5em; margin-top: 2em;" =t('email.confirmation.online.greeting')
+
+  tr
+    td colspan="2"
+      h3 style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.online.heading', reference: @application.reference)
+      h3 style="margin-bottom: 1.5em; margin-top: 0;" =t('email.confirmation.online.sub_heading')
+
+  tr
+    td colspan="2"
+      table cellpadding="0" cellspacing="0" border="1" bordercolor="#000" width="598"
+        tr
+          td
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              =t('email.confirmation.online.p_one')
+            h3 style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.h3_one')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.p_two')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.p_three')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.p_four')
+            h3 style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.h3_two')
+            p style="padding: 0 1em 0 1em; margin-bottom: 1em;"
+              = t('email.confirmation.online.p_five')

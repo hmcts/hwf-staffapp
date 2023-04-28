@@ -129,6 +129,16 @@ FactoryBot.define do
       date_fee_paid { 2.months.ago }
     end
 
+    trait :confirm_online do
+      refund { false }
+      applying_method { 'online' }
+    end
+
+    trait :confirm_paper do
+      refund { false }
+      applying_method { 'paper' }
+    end
+
     trait :with_fee_manager_approval do
       fee { 14_000 }
       fee_manager_firstname { 'Jane' }

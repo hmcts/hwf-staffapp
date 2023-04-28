@@ -1,15 +1,19 @@
 class NotifyMailer < GovukNotifyRails::Mailer
 
-  def submission_confirmation(application, locale)
+  def submission_confirmation_online(application, locale)
     @application = application
-    set_template(template(locale, :completed_application))
+    set_template(template(locale, :completed_application_online))
 
-    set_personalisation(
-      application_reference_code: application.reference,
-      form_name_case_number: form_name_or_case_number,
-      application_submitted_date: Time.zone.today.to_fs(:db),
-      applicant_name: application.full_name
-    )
+    set_personalisation(application_reference_code: application.reference)
+
+    mail(to: application.email_address)
+  end
+
+  def submission_confirmation_paper(application, locale)
+    @application = application
+    set_template(template(locale, :completed_application_paper))
+
+    set_personalisation(application_reference_code: application.reference)
 
     mail(to: application.email_address)
   end
@@ -18,12 +22,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     @application = application
     set_template(template(locale, :completed_application_refund))
 
-    set_personalisation(
-      application_reference_code: application.reference,
-      application_submitted_date: Time.zone.today.to_fs(:db),
-      applicant_name: application.full_name,
-      form_name_case_number: form_name_or_case_number
-    )
+    set_personalisation(application_reference_code: application.reference)
 
     mail(to: application.email_address)
   end
