@@ -1,12 +1,15 @@
+EXCLUDE_PATHS = ['/ping', '/ping.json', '/health', '/health.json'].freeze
+
 Sentry.init do |config|
   config.dsn = Settings.sentry.dsn
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
 
   config.release = ENV.fetch('APPVERSION', 'unknown')
 
-  # Set traces_sample_rate to 1.0 to capture 100%
-  # of transactions for performance monitoring.
-  # We recommend adjusting this value in production.
-  config.traces_sample_rate = 1.0
+  config.traces_sampler = lambda do |sampling_context|
+    transaction_context = sampling_context[:transaction_context]
+    transaction_name = transaction_context[:name]
 
+    transaction_name.in?(EXCLUDE_PATHS) ? 0.0 : 0.01
+  end
 end
