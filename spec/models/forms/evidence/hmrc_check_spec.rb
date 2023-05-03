@@ -191,7 +191,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 87
+        expect(form.additional_income_amount).to eq 96
         expect(form.additional_income).to be true
       end
     end
@@ -201,7 +201,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 145
+        expect(form.additional_income_amount).to eq 159
         expect(form.additional_income).to be true
       end
     end
@@ -211,7 +211,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 375
+        expect(form.additional_income_amount).to eq 413
         expect(form.additional_income).to be true
       end
     end
