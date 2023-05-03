@@ -13,8 +13,10 @@ module HmrcIncomeParser
   def self.tax_credit(tax_credit_hash, request_range)
     sum = tax_credit_hash.sum do |i|
       payments = i['payments'].sum do |payment|
+        posted_date(payment)
         tax_credit_amount(payment, request_range)
       end
+
       apply_child_care(payments, i)
     end
     sum.is_a?(Numeric) ? sum : 0
@@ -24,9 +26,15 @@ module HmrcIncomeParser
 
   def self.tax_credit_amount(payment, request_range)
     return 0 if cost_of_living_credit(payment, request_range)
+
     amount = format_amount(payment['amount'].to_s)
     multiplier = multiplier_per_frequency(payment, request_range)
+
     multiplier * amount
+  end
+
+  def self.posted_date(payment)
+    @last_payment = payment.key?('postedDate') ? Date.parse(payment['postedDate']) : nil
   end
 
   def self.format_amount(amount)
@@ -37,22 +45,30 @@ module HmrcIncomeParser
   end
 
   def self.multiplier_per_frequency(payment, request_range)
-    return payment['frequency'] if payment['frequency'] == 1
+    @from = Date.parse(request_range[:from])
+    @to = Date.parse(request_range[:to])
 
-    from = Date.parse(request_range[:from])
-    to = Date.parse(request_range[:to])
+    return frequency(payment) if payment['frequency'] == 1
+
     end_date = Date.parse(payment['endDate'])
     start_date = Date.parse(payment['startDate'])
 
     list = frequency_days(start_date, end_date, payment['frequency'])
 
-    list.count { |day_iteration| day_iteration >= from && day_iteration <= to }
+    list.count do |day_iteration|
+      next if @last_payment && (@last_payment < day_iteration)
+      day_iteration >= @from && day_iteration <= @to
+    end
+  end
+
+  def self.frequency(payment)
+    return payment['frequency'] if @last_payment.blank?
+    @last_payment < @to ? 0 : payment['frequency']
   end
 
   def self.frequency_days(day, end_date, frequency)
     return if frequency.zero?
     list = []
-
     while day < end_date
       day += frequency
       list << day
