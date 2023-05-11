@@ -95,7 +95,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'better_errors'
+  gem 'better_errors', '2.9.1'
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'byebug'
