@@ -1,4 +1,5 @@
 module HmrcIncomeParser
+  extend HmrcCostOfLiving
 
   def self.paye(paye_hash)
     sum = paye_hash.sum do |i|
@@ -53,7 +54,7 @@ module HmrcIncomeParser
     end_date = Date.parse(payment['endDate'])
     start_date = Date.parse(payment['startDate'])
 
-    list = frequency_days(start_date, end_date, payment['frequency'])
+    list = frequency_days(start_date, end_date, payment)
 
     list.count do |day_iteration|
       next if @last_payment && (@last_payment < day_iteration)
@@ -66,29 +67,22 @@ module HmrcIncomeParser
     @last_payment < @to ? 0 : payment['frequency']
   end
 
-  def self.frequency_days(day, end_date, frequency)
+  def self.frequency_days(day, end_date, payment)
+    frequency = payment['frequency']
+
     return if frequency.zero?
     list = []
     while day < end_date
       day += frequency
       list << day
     end
-    list
+
+    list_parsed_by_may_cost_of_living(list, payment)
   end
 
   def self.pension(paye_hash)
     return 0 unless paye_hash.key?('employeePensionContribs')
     paye_hash['employeePensionContribs']["paid"] || 0
-  end
-
-  # RST-4697 for more info
-  def self.cost_of_living_credit(payment, request_range)
-    if request_range[:from] == "2022-09-01" && request_range[:to] == "2022-09-30"
-      return true if payment['amount'].to_i == 326
-    elsif request_range[:from] == "2022-11-01" && request_range[:to] == "2022-11-30"
-      return true if payment['amount'].to_i == 324
-    end
-    false
   end
 
   def self.apply_child_care(sum, tax_hash)
