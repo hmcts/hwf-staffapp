@@ -98,7 +98,7 @@ RSpec.describe UsersController do
         end
 
         describe 'redirects back to the user show view' do
-          it { expect(response.code).to eq '302' }
+          it { expect(response).to have_http_status 302 }
           it { expect(request).to redirect_to user_path }
         end
       end

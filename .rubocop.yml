@@ -228,7 +228,7 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/EmptyLineAfterSubject:
   Enabled: false
 
-RSpec/FactoryBot/AttributeDefinedStatically:
+FactoryBot/AttributeDefinedStatically:
   Enabled: false
 
 RSpec/ReceiveCounts:
@@ -257,7 +257,7 @@ RSpec/OverwritingSetup:
 RSpec/InstanceVariable:
   Enabled: false
 
-RSpec/FactoryBot/CreateList:
+FactoryBot/CreateList:
   Enabled: false
 
 RSpec/Rails/HttpStatus:
@@ -267,6 +267,9 @@ RSpec/RepeatedExample:
   Enabled: false
 
 RSpec/MatchArray:
+  Enabled: false
+
+RSpec/IndexedLet:
   Enabled: false
 
 Naming/VariableNumber:

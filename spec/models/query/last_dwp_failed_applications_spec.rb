@@ -64,7 +64,7 @@ RSpec.describe Query::LastDwpFailedApplications do
       subject(:query) { described_class.new(user2) }
 
       it 'loads applications for different office' do
-        expect(query.find).to match_array([])
+        expect(query.find).to be_empty
       end
 
       context 'admin user' do

@@ -26,7 +26,7 @@ gem 'bootsnap', require: false
 # authentication
 gem 'devise', '>= 4.7.3'
 gem 'devise_invitable', '>= 2.0.3'
-gem 'devise-security', '~> 0.15.0'
+gem 'devise-security', '>= 0.18.0'
 
 # authorisation
 gem 'pundit', '~> 2.1'
@@ -95,7 +95,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'better_errors'
+  gem 'better_errors', '2.9.1'
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'byebug'
