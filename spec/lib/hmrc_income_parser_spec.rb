@@ -216,16 +216,37 @@ RSpec.describe HmrcIncomeParser do
               "familyAmount" => 10049,
               "babyAmount" => 100, "paidYTD" => 897634
             },
-            "payments" => [
-              { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => 65.27 },
-              { "startDate" => "2022-09-01", "endDate" => "2022-09-10", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => 326.00 }
-            ] }
+            "payments" => payments }
+        ]
+      }
+
+      let(:payments) {
+        [
+          { "startDate" => "2022-04-19", "endDate" => "2023-04-04", "frequency" => 1, "postedDate" => "2023-02-01", "amount" => 65.27 },
+          { "startDate" => "2022-09-01", "endDate" => "2022-09-10", "frequency" => 1, "postedDate" => "2023-04-01", "amount" => 326.00 }
         ]
       }
 
       context 'September' do
         let(:request_range) { { from: "2022-09-01", to: "2022-09-30" } }
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(62.03) }
+      end
+
+      context 'May 2nd to 9th' do
+        let(:payments) {
+          [
+            { "startDate" => "2023-05-10", "endDate" => "2023-05-22", "frequency" => 1, "postedDate" => "2023-08-01", "amount" => 301.00 },
+            { "startDate" => "2023-05-01", "endDate" => "2023-05-03", "frequency" => 1, "postedDate" => "2023-08-01", "amount" => 31.00 },
+            { "startDate" => "2023-05-01", "endDate" => "2023-05-03", "frequency" => 1, "postedDate" => "2023-08-01", "amount" => 301.00 },
+            { "startDate" => "2023-04-25", "endDate" => "2023-05-16", "frequency" => 7, "postedDate" => "2023-08-01", "amount" => 301.00 },
+            { "startDate" => "2023-04-25", "endDate" => "2023-05-16", "frequency" => 7, "postedDate" => "2023-08-01", "amount" => 1.00 },
+            { "startDate" => "2023-04-26", "endDate" => "2023-05-16", "frequency" => 7, "postedDate" => "2023-08-01", "amount" => 301.00 }
+          ]
+        }
+
+        let(:request_range) { { from: "2023-05-01", to: "2023-05-31" } }
+
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1174.68) }
       end
 
       context 'November' do
