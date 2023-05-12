@@ -269,9 +269,6 @@ RSpec/RepeatedExample:
 RSpec/MatchArray:
   Enabled: false
 
-RSpec/IndexedLet:
-  Enabled: false
-
 Naming/VariableNumber:
   Enabled: false
 
