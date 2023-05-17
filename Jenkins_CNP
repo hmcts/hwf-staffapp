@@ -1,0 +1,10 @@
+#!groovy
+
+@Library("Infrastructure")
+
+def type = "ruby"
+def product = "help-with-fees"
+def component = "application"
+
+def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
