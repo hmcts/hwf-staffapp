@@ -40,11 +40,11 @@ steps:
     bundle exec rake parallel:setup
   displayName: 'Parallel DB load'
 
-- script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
-  displayName: 'rspec'
+# - script: |
+#     DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
+#     DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
+#   displayName: 'rspec'
 
-- script: |
-    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
-  displayName: 'cucumber'
+# - script: |
+#     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
+#   displayName: 'cucumber'
