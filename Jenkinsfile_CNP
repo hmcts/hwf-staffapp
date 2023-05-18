@@ -53,7 +53,7 @@ pipeline {
             steps {
                 echo 'Installing Dependencies...'
                 sh 'bundle install'
-                sh 'apt get install nodejs'
+                sh 'apt-get install nodejs'
                 sh 'npm install --production'
                 echo 'DB connection'
                 sh "psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres"
