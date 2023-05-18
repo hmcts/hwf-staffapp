@@ -44,7 +44,7 @@ pipeline {
     agent {
         docker {
             image 'ruby:3.1-buster'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
         }
     }
 
@@ -52,7 +52,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing Dependencies...'
-                sh 'yarn install --check-files'
+                sh 'apt-get install npm'
                 sh 'bundle install'
                 echo 'DB connection'
                 sh "psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres"
