@@ -8,3 +8,34 @@ def component = "application"
 
 def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
+
+withPipeline(type, product, component) {
+    env.RAILS_ENV = 'test'
+    env.RACK_ENV = 'test'
+    // random free port should probably be used instead
+    env.DATABASE_URL = 'postgres://postgres:mysecretpassword@localhost:5421/help-with-fees-test'
+    env.EXTERNAL_URL = 'mocked_in_tests'
+    env.GOVUK_NOTIFY_API_KEY = 'mocked_in_tests'
+
+    enableDbMigration(product)
+
+    before('build') {
+        yarnBuilder.runYarn("--mutex network install --frozen-lockfile")
+    }
+
+    // before('test') {
+    //     sh script:"""
+    //         docker stop tt-test-postgres && docker rm tt-test-postgres || echo 'Ignoring failure in stopping old postgres'
+    //         docker run --rm --name tt-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+    //     """, label: 'Start test postgres'
+
+    //     rubyBuilder.bundle("exec rake db:create")
+    //     rubyBuilder.bundle("exec rake db:schema:load")
+    // }
+
+    // after('test') {
+    //     sh script: "docker stop tt-test-postgres && docker rm tt-test-postgres || echo 'Ignoring failure in stopping postgres'",
+    //         label: "docker stop tt-test-postgres"
+    // }
+}
