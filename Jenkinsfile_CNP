@@ -52,7 +52,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing Dependencies...'
-                sh "curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - && apt-get install -y nodejs"
+                sh "curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs"
                 sh 'npm install --production'
                 sh 'bundle install'
                 echo 'DB connection'
