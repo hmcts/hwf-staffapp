@@ -46,7 +46,10 @@ pipeline {
     stages {
       stage('Test') {
           steps {
-            sh 'node --version'
+            sh 'bundle exec rubocop --fail-fast'
+            sh 'bundle exec rake db:create db:schema:load'
+            sh 'bundle exec rake parallel:setup'
+            sh 'bundle exec rake parallel:spec RAILS_ENV=test'
           }
       }
     }
