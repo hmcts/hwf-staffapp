@@ -41,23 +41,13 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 // }
 
 pipeline {
-    agent {
-        docker {
-            image 'ruby:3.1-buster'
-            reuseNode true
-        }
-    }
+    agent { dockerfile true }
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                echo 'Installing Dependencies...'
-                sh 'apt-get update'
-                sh 'apt-get install npm'
-                sh 'bundle install'
-                echo 'DB connection'
-                sh "psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres"
-            }
-        }
+      stage('Test') {
+          steps {
+            sh 'node --version'
+          }
+      }
     }
 }
