@@ -197,6 +197,40 @@ RSpec.describe HmrcIncomeParser do
 
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(345.37) }
       end
+
+      context 'Entitlement date' do
+        let(:tax_credit_hash) {
+          [
+            { "payProfCalcDate" => calc_date,
+              "totalEntitlement" => 1876523,
+              "workingTaxCredit" => {
+                "amount" => 73049,
+                "paidYTD" => 897634,
+                "childCareAmount" => 93098
+              },
+              "payments" => [
+                { "startDate" => '2021-06-24', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2023-03-15", "amount" => 17059 },
+                { "startDate" => '2021-05-06', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2023-03-15", "amount" => 17478 },
+                { "startDate" => '2021-05-06', "endDate" => '2022-03-31', "frequency" => 1, "postedDate" => "2021-03-15", "amount" => 17478 }
+              ] }
+          ]
+        }
+
+        context 'after date' do
+          let(:calc_date) { "2023-09-18" }
+
+          it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(345.37) }
+        end
+
+        context 'before end date' do
+          let(:calc_date) { "2022-02-18" }
+
+          it {
+            message = 'This application requires a paper evidence check due to issues with HMRC tax credit data.'
+            expect { described_class.check_tax_credit_calculation_date(tax_credit_hash, request_range) }.to raise_error(HmrcTaxCreditEntitlement, message)
+          }
+        end
+      end
     end
 
     context 'decimal point present' do

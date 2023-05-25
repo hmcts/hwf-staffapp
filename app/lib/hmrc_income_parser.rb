@@ -20,6 +20,7 @@ module HmrcIncomeParser
 
       apply_child_care(payments, i)
     end
+
     sum.is_a?(Numeric) ? sum : 0
   rescue NoMethodError, TypeError
     0
@@ -97,5 +98,12 @@ module HmrcIncomeParser
     return true if tax_hash['totalEntitlement'].blank?
     return true if tax_hash['childTaxCredit'].blank? || tax_hash['childTaxCredit']['childCareAmount'].blank?
     return true if tax_hash['totalEntitlement'].to_f <= 0 || tax_hash['childTaxCredit']['childCareAmount'].to_f <= 0
+  end
+
+  def self.check_tax_credit_calculation_date(tax_hash, date_range)
+    to_date = Date.parse(date_range[:to])
+    tax_hash.each do |item|
+      raise HmrcTaxCreditEntitlement.new( I18n.t('hmrc_summary.entitlement_date')) if Date.parse(item['payProfCalcDate']) > to_date
+    end
   end
 end
