@@ -65,6 +65,10 @@ module Evidence
       false
     end
 
+    def entitlement_check
+      @entitlement_check = @hmrc_check.tax_credit_entitlement_check
+    end
+
     def add_hmrc_check_error_message
       message = @hmrc_check.errors.full_messages.join(', ')
       @form.errors.add(:hmrc_check, message.to_s)
@@ -84,6 +88,8 @@ module Evidence
     end
 
     def check_hmrc_data
+      @hmrc_check.errors.add(:hmrc, @hmrc_check.error_response) unless entitlement_check
+
       return if @hmrc_check.total_income != 0
       message = I18n.t('hmrc_summary.no_income')
       @hmrc_check.errors.add(:income_calculation, message)

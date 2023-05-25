@@ -268,12 +268,11 @@ RSpec.describe HmrcCheck do
         context 'issue found' do
           before {
             allow(HmrcIncomeParser).to receive(:check_tax_credit_calculation_date).and_raise(HmrcTaxCreditEntitlement, "custom error")
-            allow(hmrc_check).to receive(:update)
           }
 
           it 'save the error to model' do
             hmrc_check.tax_credit_entitlement_check
-            expect(hmrc_check).to have_received(:update).with(error_response: "custom error")
+            expect(hmrc_check.error_response).to eq("custom error")
           end
 
           it { expect(hmrc_check.tax_credit_entitlement_check).to be false }

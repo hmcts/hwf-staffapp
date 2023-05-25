@@ -27,4 +27,12 @@ module HmrcCheckHelper
   def hmrc_income_kind_list(application)
     income_kind_list(application).try(:join, ', ')
   end
+
+  def hmrc_next_step_url(evidence, hmrc_check)
+    if hmrc_check.tax_credit_entitlement_check
+      evidence_check_hmrc_path(evidence, hmrc_check)
+    else
+      evidence_check_hmrc_skip_path(evidence)
+    end
+  end
 end

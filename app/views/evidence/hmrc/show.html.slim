@@ -48,7 +48,8 @@
 
 
   .govuk-grid-column-full
-    = form_for @form, as: :hmrc_check, url: evidence_check_hmrc_path(@evidence, @hmrc_check), method: :put, html: { autocomplete: 'off' } do |f|
+
+    = form_for @form, as: :hmrc_check, url: hmrc_next_step_url(@evidence, @hmrc_check) , method: :put, html: { autocomplete: 'off' } do |f|
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m

@@ -48,7 +48,7 @@ class HmrcCheck < ActiveRecord::Base
     HmrcIncomeParser.check_tax_credit_calculation_date(work_tax_credit, request_params[:date_range])
     true
   rescue HmrcTaxCreditEntitlement => e
-    self.update(error_response: e.message)
+    update(error_response: e.message)
     false
   end
 
@@ -57,7 +57,6 @@ class HmrcCheck < ActiveRecord::Base
   def tax_credit_income_calculation(income_source)
     return 0 if request_params.blank?
     HmrcIncomeParser.tax_credit(income_source, request_params[:date_range])
-
   end
 
   def update_evidence
