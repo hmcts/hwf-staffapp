@@ -102,11 +102,14 @@ module HmrcIncomeParser
 
   def self.check_tax_credit_calculation_date(tax_hash, date_range)
     to_date = Date.parse(date_range[:to])
+
     tax_hash.each do |item|
       if Date.parse(item['payProfCalcDate']) > to_date
         raise HmrcTaxCreditEntitlement,
               I18n.t('hmrc_summary.entitlement_date')
       end
     end
+  rescue NoMethodError, TypeError
+    return false
   end
 end
