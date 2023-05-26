@@ -233,17 +233,17 @@ RSpec.describe HmrcIncomeParser do
 
         context 'invalid hash' do
           context 'empty' do
-            let(:tax_credit_hash) {}
+            let(:tax_credit_hash) { {} }
             it { expect(described_class.check_tax_credit_calculation_date(tax_credit_hash, request_range)).to be false }
           end
 
           context 'just text' do
-            let(:tax_credit_hash) {['text']}
+            let(:tax_credit_hash) { ['text'] }
             it { expect(described_class.check_tax_credit_calculation_date(tax_credit_hash, request_range)).to be false }
           end
 
           context 'missing payProfCalcDate' do
-            let(:tax_credit_hash) {[{test: 'test'}]}
+            let(:tax_credit_hash) { [{ test: 'test' }] }
             it { expect(described_class.check_tax_credit_calculation_date(tax_credit_hash, request_range)).to be false }
           end
 

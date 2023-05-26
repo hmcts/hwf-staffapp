@@ -110,6 +110,6 @@ module HmrcIncomeParser
       end
     end
   rescue NoMethodError, TypeError
-    return false
+    false
   end
 end

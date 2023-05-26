@@ -5,6 +5,7 @@ class DatashareEvidencePage < BasePage
     element :check_income_details_header, 'h1', text: 'Check income details'
     element :application_complete_header, 'h1', text: 'Application complete'
     element :not_eligible_header, 'h2', text: 'Not eligible for help with fees'
+    element :entitlement_error, 'li', text: 'Hmrc This application requires a paper evidence check due to issues with HMRC tax credit data.'
 
     def click_submit
       content.wait_until_submit_visible
