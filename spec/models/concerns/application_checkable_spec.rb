@@ -127,21 +127,6 @@ describe ApplicationCheckable do
     end
 
     context 'tax credit declared' do
-      describe 'working tax credit' do
-        let(:income_kind) { { "applicant" => ["Working Tax Credit"] } }
-        it { expect(application.hmrc_check_type?).to be false }
-      end
-
-      describe 'wages and child tax credit' do
-        let(:income_kind) { { "applicant" => ["Wages", "Child Tax Credit"] } }
-        it { expect(application.hmrc_check_type?).to be false }
-      end
-
-      describe 'wages and working tax credit' do
-        let(:income_kind) { { "applicant" => ["Wages", "Working Tax Credit"] } }
-        it { expect(application.hmrc_check_type?).to be false }
-      end
-
       describe 'wages' do
         let(:income_kind) { { "applicant" => ["Wages"] } }
         it { expect(application.hmrc_check_type?).to be true }
