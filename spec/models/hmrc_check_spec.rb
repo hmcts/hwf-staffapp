@@ -256,6 +256,29 @@ RSpec.describe HmrcCheck do
         it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
         it { expect(hmrc_check.child_tax_credit_income).to eq 0 }
       end
+
+      context 'Tax credit entitlement date' do
+        context 'all good' do
+          before {
+            allow(HmrcIncomeParser).to receive(:check_tax_credit_calculation_date).and_return true
+          }
+          it { expect(hmrc_check.tax_credit_entitlement_check).to be true }
+        end
+
+        context 'issue found' do
+          before {
+            allow(HmrcIncomeParser).to receive(:check_tax_credit_calculation_date).and_raise(HmrcTaxCreditEntitlement, "custom error")
+          }
+
+          it 'save the error to model' do
+            hmrc_check.tax_credit_entitlement_check
+            expect(hmrc_check.error_response).to eq("custom error")
+          end
+
+          it { expect(hmrc_check.tax_credit_entitlement_check).to be false }
+        end
+      end
+
     end
 
   end
@@ -323,5 +346,6 @@ RSpec.describe HmrcCheck do
         it { expect(evidence_check.amount_to_pay).to eq(0) }
       end
     end
+
   end
 end

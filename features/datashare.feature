@@ -32,6 +32,14 @@ Feature: Datashare income checking
     And There is no additional income for the user
     Then I should see the result for that application
 
+  Scenario: Processing an application with recalculated entitlement date
+    Given I fill in the form details for an applicant with recalculated tax credit
+    When I press complete processing
+    And I check the income for the correct month
+    And There is an error message on income page
+    Then I should see the result for that application
+    And Evidence needs to be checked manualy
+
   Scenario: Processing an application with child tax credit
     Given I fill in the form details for an applicant with child tax credit
     When I press complete processing

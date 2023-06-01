@@ -21,6 +21,12 @@ And(/^There is no additional income for the user$/) do
   click_button('Complete processing')
 end
 
+And(/^There is an error message on income page$/) do
+  expect(datashare_evidence_page.content).to have_checked_header
+  expect(datashare_evidence_page.content).to have_entitlement_error
+  click_button('Next')
+end
+
 Then(/^I should see application complete$/) do
   expect(datashare_evidence_page.content).to have_application_complete_header
 end
@@ -54,8 +60,19 @@ Given(/^I fill in the form details for an applicant with working tax credit$/) d
   click_button('Next')
 end
 
+Given(/^I fill in the form details for an applicant with recalculated tax credit$/) do
+  expect(process_online_application_page.content).to have_application_details_header
+  process_online_application_page.content.jurisdiction.click
+  hmrc_recalculated_tax_credits
+  click_button('Next')
+end
+
 Then(/^I should see the result for that application$/) do
   expect(datashare_evidence_page.content).to have_text('Application complete')
+end
+
+Then(/^Evidence needs to be checked manualy$/) do
+  expect(datashare_evidence_page.content).to have_text('Evidence of income needs to be checked')
 end
 
 Given(/^I fill in the form details for an applicant with child tax credit$/) do

@@ -1,0 +1,2 @@
+class HmrcTaxCreditEntitlement < StandardError
+end
