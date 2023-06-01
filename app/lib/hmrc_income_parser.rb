@@ -101,6 +101,7 @@ module HmrcIncomeParser
   end
 
   def self.check_tax_credit_calculation_date(tax_hash, date_range)
+    return false if tax_hash.blank?
     to_date = Date.parse(date_range[:to])
 
     tax_hash.each do |item|
