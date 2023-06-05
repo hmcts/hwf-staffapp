@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        source_image: ${SOURCE_DOCKER_IMAGE}
+    links:
+      - db
+    environment:
+      DB_HOST: 'db'
+      DB_USERNAME: 'postgres'
+      RAILS_LOG_LEVEL: info
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+
+#     services:
+#       postgres: postgres
+#     variables:
+#       rubyVersion: '= 3.1.4'
+#       bundlerVersion: '2.3.10'
+#       aptDependencies: 'xvfb postgresql-client libpq-dev'
