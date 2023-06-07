@@ -26,4 +26,8 @@ module GuideHelper
   def job_cards_url
     'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
   end
+
+  def rrds_url
+    'https://www.gov.uk/government/publications/record-retention-and-disposition-schedules'
+  end
 end
