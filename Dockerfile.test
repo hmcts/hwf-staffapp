@@ -1,17 +1,49 @@
 ARG source_image
 FROM ${source_image}
 ENV RAILS_ENV=test
-COPY --chown=app:app ./spec /home/app/spec
-COPY --chown=app:app ./.rspec /home/app/.rspec
-COPY --chown=app:app ./.rspec_parallel /home/app/.rspec_parallel
-USER root
-RUN apt-get update -q && \
-    apt-get install -qy tzdata npm --no-install-recommends shared-mime-info && apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
-    truncate -s 0 /var/log/*log \
+ENV PHUSION true
 
-## Add the wait script to the image
+# # Adding argument support for ping.json
+ENV NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_PAPER_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID replace_this_at_build_time
+ARG DEBIAN_FRONTEND=noninteractive
 
 
-USER app
-CMD ["sh", "-c", "bundle exec rake db:create db:migrate && bundle exec rspec"]
+RUN mkdir -p /home/app
+WORKDIR /home/app
+
+COPY Gemfile /home/app
+COPY Gemfile.lock /home/app
+
+# fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
+
+RUN apk add --no-cache libc6-compat && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 && \
+    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn npm libpq-dev postgresql-client tzdata && \
+    cd /home/app/ && \
+    bundle install --no-cache --jobs=5 --retry=3 --without=development --with=production test --deployment
+
+
+
+# RUN gem install bundler -v 2.4.8
+
+# RUN bundle config set force_ruby_platform true
+# RUN bundle install
+
+# running app as a servive
+
+
+COPY . /home/app
+RUN npm install
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
+RUN chmod +x /wait
+
+CMD ["sh", "-c", "/wait && bundle exec rake db:setup && bundle exec rspec"]
+# RUN bash -c "bundle exec rspec spec/"
+
+# COPY run.sh /home/app/run
+# RUN chmod +x /home/app/run
+# CMD ["./run"]
