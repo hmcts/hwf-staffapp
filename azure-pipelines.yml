@@ -69,18 +69,18 @@ jobs:
           echo "combined is $GETDOCKERTAG1_DOCKER_TAG$GETDOCKERTAG2_DOCKER_TAG"
           echo "##vso[task.setvariable variable=DOCKER_TAG;isOutput=true]$GETDOCKERTAG1_DOCKER_TAG$GETDOCKERTAG2_DOCKER_TAG"
         name: 'getDockerTag'
-      - task: Docker@1
-        displayName: 'Build main image'
-        inputs:
-          imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
-          arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
-      - task: Docker@1
-        displayName: 'Tag main image'
-        inputs:
-          azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-          azureContainerRegistry: $(azure.container.registry)
-          command: 'Tag image'
-          imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+      # - task: Docker@1
+      #   displayName: 'Build main image'
+      #   inputs:
+      #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
+      #     arguments: '--build-arg APPVERSION=$(getDockerTag.DOCKER_TAG) --build-arg APP_BUILD_TAG=$(Build.SourceBranchName)-$(Build.SourceVersion) --build-arg APP_GIT_COMMIT=$(Build.SourceVersion)'
+      # - task: Docker@1
+      #   displayName: 'Tag main image'
+      #   inputs:
+      #     azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+      #     azureContainerRegistry: $(azure.container.registry)
+      #     command: 'Tag image'
+      #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
       - script: |
           mv .dockerignore .dockerignore.backup && \
           cp Dockerfile.test.dockerignore .dockerignore && \
