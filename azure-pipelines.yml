@@ -39,17 +39,17 @@ jobs:
       vmImage: 'Ubuntu-22.04'
     steps:
       - task: Docker@0
-      inputs:
-        azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
-        azureContainerRegistry: $(azure.container.registry)
-        command: login
-        dockerComposeFile: 'docker-compose-test.yml'
-        arguments: '-f docker-compose-test.yml up -d --build --remove-orphans'
-    - task: TestApplication@1
-      inputs:
-        testFramework: 'RSpec'
-        testLocation: 'spec/**/*_spec.rb'
-        filterExpressions: 'Pending'
+        inputs:
+          azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
+          azureContainerRegistry: $(azure.container.registry)
+          command: login
+          dockerComposeFile: 'docker-compose-test.yml'
+          arguments: '-f docker-compose-test.yml up -d --build --remove-orphans'
+      - task: TestApplication@1
+        inputs:
+          testFramework: 'RSpec'
+          testLocation: 'spec/**/*_spec.rb'
+          filterExpressions: 'Pending'
 
 
   # - job: BuildApplicaition
