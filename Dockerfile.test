@@ -4,14 +4,34 @@ ENV RAILS_ENV=test
 ENV PHUSION true
 
 # # Adding argument support for ping.json
-ENV NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID replace_this_at_build_time
-ENV NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID replace_this_at_build_time
-ENV NOTIFY_COMPLETED_PAPER_TEMPLATE_ID replace_this_at_build_time
-ENV NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID replace_this_at_build_time
-ENV NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID replace_this_at_build_time
-ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID replace_this_at_build_time
-ARG DEBIAN_FRONTEND=noninteractive
+ENV REDIRECTION_DOMAINS 'trial.domain:production.domain'
+ENV ACTIVE_JOB_ENABLED false
+ENV PROCESSED_DELETED_PER_PAGE 20
+ENV DWP_NOTIFICATION_ALERT_EMAILS ['dan@test.com', 'petr@test.gov.uk']
+ENV DWP_API_PROXY 'http://localhost:9292'
+ENV ENV 'test'
+ENV SAUCE_USERNAME 'saucelabs_username'
+ENV SAUCE_ACCESS_KEY 'saucelabs_auth_key'
+ENV HMRC_SECRET 'LIOAIHSDFSDFSDFIRSH'
+ENV HMRC_CLIENT_ID 'QwW73@omyZ6b6rw3g9z'
+ENV GOVUK_NOTIFY_API_KEY ''
 
+ENV NOTIFY_PASSWORD_RESET_TEMPLATE_ID ''
+ENV NOTIFY_COMPLETED_TEMPLATE_ID 'ab017b1b-0f5a-45df-b2c5-467f97a654654'
+ENV NOTIFY_COMPLETED_REFUND_ONLINE_TEMPLATE_ID '8fdc6d59-c072-45cd-8303-64528654654'
+ENV NOTIFY_COMPLETED_REFUND_PAPER_TEMPLATE_ID ''
+ENV NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID 'dbd72fa4-0232-4825-9460-b6f1d369b481'
+ENV NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID 'ab017b1b-0f5a-45df-b2c5-467f97a54828'
+ENV NOTIFY_COMPLETED_PAPER_TEMPLATE_ID '115e4918-ce48-4bfe-8784-1b8404237d4c'
+ENV NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID 'd92e6d1d-08b6-4124-84d3-a93bfb6b4c26'
+ENV NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID '61cb8166-c137-459b-b1c0-b0ca63c1da6e'
+ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID '9f52cb39-33bd-4df6-871c-e337c058972b'
+ENV NOTIFY_COMPLETED_CY_TEMPLATE_ID ''
+ENV NOTIFY_COMPLETED_CY_REFUND_ONLINE_TEMPLATE_ID ''
+ENV NOTIFY_COMPLETED_CY_REFUND_PAPER_TEMPLATE_ID ''
+
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir -p /home/app
 WORKDIR /home/app
@@ -23,17 +43,9 @@ COPY Gemfile.lock /home/app
 
 RUN apk add --no-cache libc6-compat && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 && \
     apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn npm libpq-dev postgresql-client tzdata && \
+    apk add --no-cache xvfb fluxbox x11vnc st chromium-chromedriver && \
     cd /home/app/ && \
-    bundle install --no-cache --jobs=5 --retry=3 --without=development --with=production test --deployment
-
-
-
-# RUN gem install bundler -v 2.4.8
-
-# RUN bundle config set force_ruby_platform true
-# RUN bundle install
-
-# running app as a servive
+    bundle install --no-cache --jobs=5 --retry=3
 
 
 COPY . /home/app
@@ -41,9 +53,8 @@ RUN npm install
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 
-CMD ["sh", "-c", "/wait && bundle exec rake db:setup && bundle exec rspec"]
-# RUN bash -c "bundle exec rspec spec/"
+CMD ["sh", "-c", "/wait && bundle exec rake db:create db:schema:load && bundle exec rake parallel:setup"]
+CMD ["sh", "-c", "bundle exec rake parallel:spec RAILS_ENV=test"]
 
-# COPY run.sh /home/app/run
-# RUN chmod +x /home/app/run
-# CMD ["./run"]
+
+
