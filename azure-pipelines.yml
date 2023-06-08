@@ -39,6 +39,7 @@ jobs:
       vmImage: 'Ubuntu-22.04'
     steps:
       - task: Docker@0
+        displayName: login
         inputs:
           azureSubscriptionEndpoint: '$(azure.subscription.endpoint)'
           azureContainerRegistry: $(azure.container.registry)
@@ -46,6 +47,7 @@ jobs:
           dockerComposeFile: 'docker-compose-test.yml'
           arguments: '-f docker-compose-test.yml up -d --build --remove-orphans'
       - task: TestApplication@1
+        displayName: 'Rspec run'
         inputs:
           testFramework: 'RSpec'
           testLocation: 'spec/**/*_spec.rb'
