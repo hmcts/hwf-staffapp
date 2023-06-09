@@ -6,8 +6,6 @@ tmp/**/*
 /public/assets
 /public/apply
 /node_modules
-/public/packs
-/public/packs-test
 /coverage
 /.bundle
 /.git
@@ -17,6 +15,4 @@ tmp/**/*
 /azure-pipelines.yml
 /docker-compose*
 /Dockerfile*
-/Vagrantfile
-yarn-error.log
-/docker
+

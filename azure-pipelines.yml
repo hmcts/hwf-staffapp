@@ -82,14 +82,18 @@ jobs:
       #     command: 'Tag image'
       #     imageName: '$(application.name):$(getDockerTag.DOCKER_TAG)'
       - script: |
+          echo "before run 1"
           mv .dockerignore .dockerignore.backup && \
           cp Dockerfile.test.dockerignore .dockerignore && \
           SOURCE_DOCKER_IMAGE="$(application.name):$(getDockerTag.DOCKER_TAG)" docker-compose -p $(Build.BuildId) -f docker-compose-test.yml run --rm test && \
           rm .dockerignore && \
           mv .dockerignore.backup .dockerignore
+          echo "after run 1"
         displayName: 'Run tests in docker'
       - script: |
+          echo "before run 2"
           docker-compose -p $(Build.BuildId) -f docker-compose-test.yml down --rmi local -v
+          echo "after run 2"
         condition: always()
         displayName: Cleanup
       - task: Docker@1
