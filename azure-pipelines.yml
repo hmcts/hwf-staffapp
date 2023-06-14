@@ -20,7 +20,6 @@ pr:
     include:
       - master
       - feature/*
-      - system/*
 
 variables:
   application.name: 'hwf-staff'
