@@ -11,9 +11,15 @@ steps:
 - script: |
     mv .dockerignore .dockerignore.backup
     cp Dockerfile.test.dockerignore .dockerignore
-    SOURCE_DOCKER_IMAGE="$(application.name):$(getDockerTag.DOCKER_TAG)" docker-compose -p $(Build.BuildId) -f docker-compose-test.yml run --rm test
+    docker-compose -f docker-compose-test.yml run --rm test
     rm .dockerignore
     mv .dockerignore.backup .dockerignore
-  displayName: 'Docker compose'
+  displayName: 'Docker compose tests'
 
+- script: |
+    bundle exec rubocop --fail-fast
+  displayName: 'rubocop'
 
+- script: |
+    bundle exec brakeman
+  displayName: 'brakeman'
