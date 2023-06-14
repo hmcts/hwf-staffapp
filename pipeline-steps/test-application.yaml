@@ -7,3 +7,11 @@ steps:
 - task: UseRubyVersion@0
   inputs:
     versionSpec: '$(rubyVersion)'
+
+- script: |
+  mv .dockerignore .dockerignore.backup && \
+  cp Dockerfile.test.dockerignore .dockerignore && \
+  SOURCE_DOCKER_IMAGE="$(application.name):$(getDockerTag.DOCKER_TAG)" docker-compose -p $(Build.BuildId) -f docker-compose-test.yml run --rm test && \
+  rm .dockerignore && \
+  mv .dockerignore.backup .dockerignore
+
