@@ -3,47 +3,20 @@ parameters:
   bundlerVersion: ''
 
 
+
 steps:
-- task: UseRubyVersion@0
-  inputs:
-    versionSpec: '$(rubyVersion)'
+# - task: UseRubyVersion@0
+#   inputs:
+#     versionSpec: '$(rubyVersion)'
 
 - script: |
-    gem install bundler -v $(bundlerVersion)
-  displayName: 'install bundler'
-
+  mv .dockerignore .dockerignore.backup && \
+  cp Dockerfile.test.dockerignore .dockerignore && \
+  SOURCE_DOCKER_IMAGE="$(application.name):$(getDockerTag.DOCKER_TAG)" docker-compose -p $(Build.BuildId) -f docker-compose-test.yml run --rm test && \
+  rm .dockerignore && \
+  mv .dockerignore.backup .dockerignore
+displayName: 'Run tests in docker'
 - script: |
-    bundle install --retry=3 --jobs=4
-  displayName: 'bundle install'
-
-- script: |
-    npm install --production
-  displayName: 'npm install'
-
-- script: |
-    psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
-  displayName: 'PG role setup'
-
-- script: |
-    bundle exec rubocop --fail-fast
-  displayName: 'rubocop'
-
-- script: |
-    bundle exec brakeman
-  displayName: 'brakeman'
-
-- script: |
-    bundle exec rake db:create db:schema:load
-  displayName: 'DB load'
-
-- script: |
-    bundle exec rake parallel:setup
-  displayName: 'Parallel DB load'
-
-- script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
-  displayName: 'rspec'
-
-- script: |
-    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
-  displayName: 'cucumber'
+  docker-compose -p $(Build.BuildId) -f docker-compose-test.yml down --rmi local -v
+condition: always()
+displayName: Cleanup

@@ -1,4 +1,4 @@
-FROM ruby:3.1-buster
+FROM ruby:3.1-alpine
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -20,10 +20,11 @@ ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID replace_this_at_build_time
 
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -q && \
-    apt-get install -qy tzdata npm --no-install-recommends shared-mime-info && apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
-    truncate -s 0 /var/log/*log
+
+RUN apk update && apk add --no-cache libc6-compat && \
+    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn npm libpq-dev postgresql-client tzdata && \
+    apk add --no-cache xvfb fluxbox x11vnc st
+
 
 ENV UNICORN_PORT 3000
 EXPOSE $UNICORN_PORT
@@ -44,9 +45,10 @@ ENV PHUSION true
 
 COPY . /home/app
 RUN npm install
-RUN bash -c "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah"
-RUN bash -c "bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah"
 
-COPY run.sh /home/app/run
-RUN chmod +x /home/app/run
-CMD ["./run"]
+CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
+     bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah && \
+     bundle exec rails server -b 0.0.0.0"]
+
+
+
