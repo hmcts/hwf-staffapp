@@ -38,6 +38,7 @@ WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
+COPY .rubocop.yml /home/app
 
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 
@@ -49,11 +50,15 @@ RUN apk add --no-cache libc6-compat && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-
 
 
 COPY . /home/app
+
 RUN npm install
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 
-CMD ["sh", "-c", "/wait && bundle exec rake db:create db:schema:load && bundle exec rake parallel:setup && bundle exec rake parallel:spec"]
+CMD ["sh", "-c", "/wait && bundle exec rubocop --fail-fast && \
+     bundle exec brakeman && \
+     bundle exec rake db:create db:schema:load && \
+     bundle exec rake parallel:setup && bundle exec rake parallel:spec"]
 
 
 
