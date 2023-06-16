@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :detail do
     factory :complete_detail do
-      association :jurisdiction
+      jurisdiction
       fee { 310 }
       date_received { Time.zone.today }
       refund { false }

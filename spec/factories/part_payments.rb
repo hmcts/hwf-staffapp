@@ -23,7 +23,7 @@ FactoryBot.define do
 
     trait :completed do
       completed_at { Time.zone.yesterday }
-      association :completed_by, factory: :user
+      completed_by factory: [:user]
     end
   end
 end

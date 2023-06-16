@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :decision_override do
-    association :user
+    user
     reason { "My reasons" }
 
     after(:build) do |override|
