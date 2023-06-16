@@ -242,7 +242,11 @@ RSpec/LetBeforeExamples:
 
 RSpec/HooksBeforeExamples:
   Enabled: false
+
 RSpec/Capybara/FeatureMethods:
+  Enabled: false
+
+RSpec/IndexedLet:
   Enabled: false
 
 Capybara/CurrentPathExpectation:

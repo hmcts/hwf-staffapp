@@ -110,7 +110,7 @@ module Views
 
     def incorect_reason_text(object)
       translation = I18n.t("evidence.#{object.incorrect_reason}")
-      if object.incorrect_reason.blank? || translation.include?('translation missing')
+      if object.incorrect_reason.blank? || translation.include?('Translation missing')
         return object.incorrect_reason
       end
       translation
