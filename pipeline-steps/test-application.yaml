@@ -4,10 +4,6 @@ parameters:
 
 
 steps:
-- task: UseRubyVersion@0
-  inputs:
-    versionSpec: '$(rubyVersion)'
-
 - script: |
     mv .dockerignore .dockerignore.backup
     cp Dockerfile.test.dockerignore .dockerignore
