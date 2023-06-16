@@ -9,7 +9,7 @@ RSpec.feature 'savings and investments partner over 61 checkbox' do
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
-  context 'as a signed in user with default jurisdiction', js: true do
+  context 'as a signed in user with default jurisdiction' do
     before do
       login_as user
       visit application_savings_investments_path(application)

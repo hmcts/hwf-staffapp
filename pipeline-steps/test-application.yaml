@@ -9,42 +9,9 @@ steps:
     versionSpec: '$(rubyVersion)'
 
 - script: |
-    gem install bundler -v $(bundlerVersion)
-  displayName: 'install bundler'
-
-- script: |
-    bundle install --retry=3 --jobs=4
-  displayName: 'bundle install'
-
-- script: |
-    npm install --production
-  displayName: 'npm install'
-
-- script: |
-    psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
-  displayName: 'PG role setup'
-
-- script: |
-    bundle exec rubocop --fail-fast
-  displayName: 'rubocop'
-
-- script: |
-    bundle exec brakeman
-  displayName: 'brakeman'
-
-- script: |
-    bundle exec rake db:create db:schema:load
-  displayName: 'DB load'
-
-- script: |
-    bundle exec rake parallel:setup
-  displayName: 'Parallel DB load'
-
-- script: |
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rake parallel:spec RAILS_ENV=test
-    DISPLAY=localhost:1.0 xvfb-run bundle exec rspec --only-failures
-  displayName: 'rspec'
-
-- script: |
-    CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
-  displayName: 'cucumber'
+    mv .dockerignore .dockerignore.backup
+    cp Dockerfile.test.dockerignore .dockerignore
+    docker-compose -f docker-compose-test.yml run --rm test
+    rm .dockerignore
+    mv .dockerignore.backup .dockerignore
+  displayName: 'Docker compose tests'

@@ -15,7 +15,7 @@ RSpec.feature 'Confirmation page for remission' do
     visit application_confirmation_path(application_id: application.id)
   end
 
-  context 'as a signed in user', js: true do
+  context 'as a signed in user' do
     before do
       dwp_api_response 'Yes'
       login_as user
