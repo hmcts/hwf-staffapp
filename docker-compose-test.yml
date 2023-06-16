@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        source_image: 'ruby:3.1-alpine'
+    depends_on:
+      - db
+    environment:
+      DB_HOST: 'db'
+      DB_USERNAME: 'postgres'
+      RAILS_LOG_LEVEL: info
+      SOURCE_DOCKER_IMAGE: 'ruby:3.1-alpine'
+      WAIT_HOSTS: db:5432
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
