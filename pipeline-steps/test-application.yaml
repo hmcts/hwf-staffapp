@@ -19,8 +19,8 @@ steps:
 - script: |
     gem install bundler -v $(bundlerVersion)
     bundle install --retry=3 --jobs=4
-    bundle exec rake db:setup
     psql -h localhost -c 'create role vsts login createdb superuser;' -U postgres
+    bundle exec rake db:setup
     bundle exec rake parallel:setup
     npm install --production
   displayName: 'cucumber setup'
