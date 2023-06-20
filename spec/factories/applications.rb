@@ -25,7 +25,7 @@ FactoryBot.define do
     children { 1 }
     income { 500 }
     threshold_exceeded { false }
-    association :user
+    user
     completed_by { user }
     completed_at { Time.zone.today }
 
@@ -46,11 +46,11 @@ FactoryBot.define do
     end
 
     trait :with_business_entity do
-      association :business_entity
+      business_entity
     end
 
     trait :with_office do
-      association :office
+      office
     end
 
     trait :with_reference do
@@ -114,7 +114,7 @@ FactoryBot.define do
       state { :deleted }
       deleted_reason { 'I did not like it' }
       deleted_at { Time.zone.now }
-      association :deleted_by, factory: :user
+      deleted_by factory: [:user]
     end
 
     # trait :applicant_full_detail do
