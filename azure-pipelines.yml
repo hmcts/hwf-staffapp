@@ -47,6 +47,14 @@ jobs:
     pool:
       vmImage: 'Ubuntu-22.04'
 
+    services:
+      postgres: postgres
+    variables:
+      rubyVersion: '= 3.1.4'
+      bundlerVersion: '2.3.10'
+      aptDependencies: 'xvfb postgresql-client libpq-dev'
+
+
     steps:
     - template: ./pipeline-steps/add-dependencies.yaml
     - template: ./pipeline-steps/test-application.yaml
