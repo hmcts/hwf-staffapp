@@ -1,0 +1,2 @@
+class FeatureSwitching < ApplicationRecord
+end

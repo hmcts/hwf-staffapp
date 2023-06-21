@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_130329) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_132908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -249,6 +249,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_130329) do
     t.string "checks_annotation"
     t.string "income_check_type"
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
+  end
+
+  create_table "feature_switchings", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.datetime "activation_time"
+    t.integer "office_id"
+    t.boolean "enabled", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_key"], name: "index_feature_switchings_on_feature_key", unique: true
   end
 
   create_table "feedbacks", id: :serial, force: :cascade do |t|
