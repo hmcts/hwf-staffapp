@@ -15,6 +15,12 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## Feature switching
+Model FeatureSwitching have following attributes:
+feature_key, activation_time, office_id, enabled. When apply you can "schedule" a feature to be active from a certain date or for
+specific office. Feature switching table is managed manually from a rails console for now.
+
+
 ## N+1 queries debugging
 There is a gem called Bullet. If you want to check N+1 queries in development mode, you can uncomment
 Bullet related lines in development.rb
