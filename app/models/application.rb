@@ -102,4 +102,8 @@ class Application < ActiveRecord::Base
   def digital?
     medium == 'digital'
   end
+
+  def children_age_band
+    # This needs some work
+  end
 end

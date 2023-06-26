@@ -9,9 +9,9 @@ class BandBaseCalculation
   PREMIUM_BANDS = { 1 => 425, 2 => 710 }.freeze
 
   def initialize(application)
-    @income = application.income
+    @income = application.income || 0
     @fee = application.detail.fee
-    @saving_amount = application.saving.amount
+    @saving_amount = application.saving.amount || 0
     @children_age_band = application.children_age_band || []
     @married = application.applicant.married
     @dob = application.applicant.date_of_birth

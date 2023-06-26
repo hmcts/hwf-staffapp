@@ -58,11 +58,20 @@ class OnlineApplicationsController < ApplicationController
   private
 
   def process_application(application)
-    SavingsPassFailService.new(application.saving).calculate!
-    ApplicationCalculation.new(application).run
-    return false if stop_processing?(application)
-    benefit_override(application) if online_application.benefits_override
-    ResolverService.new(application, current_user).complete
+    if FeatureSwitching.active?(:band_calculation)
+      outcome = BandBaseCalculation.new(application).remission
+      application.update(outcome: outcome)
+      return false if stop_processing?(application)
+      benefit_override(application) if online_application.benefits_override
+      ResolverService.new(application, current_user).complete
+      # process the outcome
+    else
+      SavingsPassFailService.new(application.saving).calculate!
+      ApplicationCalculation.new(application).run
+      return false if stop_processing?(application)
+      benefit_override(application) if online_application.benefits_override
+      ResolverService.new(application, current_user).complete
+    end
   end
 
   def benefit_override(application)
