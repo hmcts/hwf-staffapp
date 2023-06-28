@@ -13,7 +13,7 @@ Sentry.init do |config|
   end
 
   config.before_send = lambda do |event, hint|
-    # note: hint[:exception] would be a String if you use async callback
+    # NOTE: hint[:exception] would be a String if you use async callback
     if hint[:exception].is_a?(Puma::HttpParserError)
       nil
     else
