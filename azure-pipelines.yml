@@ -51,7 +51,7 @@ jobs:
       postgres: postgres
     variables:
       rubyVersion: '= 3.1.4'
-      bundlerVersion: '2.3.15'
+      bundlerVersion: '2.4.15'
       aptDependencies: 'xvfb postgresql-client libpq-dev'
 
 
