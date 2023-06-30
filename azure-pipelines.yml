@@ -56,7 +56,6 @@ jobs:
 
 
     steps:
-    - template: ./pipeline-steps/add-dependencies.yaml
     - template: ./pipeline-steps/test-application.yaml
     - template: ./pipeline-steps/publish-tests.yaml
 
