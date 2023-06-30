@@ -12,9 +12,9 @@ steps:
 #     mv .dockerignore.backup .dockerignore
 #   displayName: 'Docker compose tests'
 
-# - task: UseRubyVersion@0
-#   inputs:
-#     versionSpec: '$(rubyVersion)'
+- task: UseRubyVersion@0
+  inputs:
+    versionSpec: '$(rubyVersion)'
 
 - script: |
     sudo apt-get update
@@ -32,3 +32,4 @@ steps:
 - script: |
     CAPYBARA_SERVER_PORT=random bundle exec rake parallel:features
   displayName: 'cucumber test'
+
