@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 4004315643db3fc74999c79b9f7c7b2ed36c1623
-  tag: v0.2.5
+  revision: 0a9fbd2d6bb352619103b4b671f5be5b3277e0e2
+  tag: v0.2.6
   specs:
-    hwf_hmrc_api (0.1.0)
+    hwf_hmrc_api (0.2.6)
       httparty (~> 0.21.0)
       rotp (~> 6.2.2)
       uuid (~> 2.3.9)
@@ -713,4 +713,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   2.4.14
+   2.4.15
