@@ -575,7 +575,7 @@ en-GB:
         date_hint: For example, 04 10 2018
         date_received: Date received
         benefits_override_false: 'No'
-        benefits_override_true: 'Yes, the applicant has provided supporting evidence'
+        benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received, which is dated within 3 months of the fee being paid?
 
       forms/fee_approval:

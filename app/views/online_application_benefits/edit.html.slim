@@ -20,10 +20,10 @@
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
               = f.radio_button :benefits_override, 'false', { class: 'govuk-radios__input' }
-              = f.label t('benefits_override_false', scope: @form.i18n_scope), for: 'online_application_benefits_override_false', class: 'govuk-label govuk-radios__label'
+              = f.label :benefits_override_false, t('benefits_override_false', scope: @form.i18n_scope), for: 'online_application_benefits_override_false', class: 'govuk-label govuk-radios__label'
             .govuk-radios__item
               = f.radio_button :benefits_override, 'true', { class: 'govuk-radios__input' }
-              = f.label t('benefits_override_true', scope: @form.i18n_scope), for: 'online_application_benefits_override_true', class: 'govuk-label govuk-radios__label'
+              = f.label :benefits_override_true, t('benefits_override_true_html', scope: @form.i18n_scope), for: 'online_application_benefits_override_true', class: 'govuk-label govuk-radios__label'
 
       = f.submit 'Next', class: 'govuk-button'
 
