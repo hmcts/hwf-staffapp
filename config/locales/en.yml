@@ -569,6 +569,7 @@ en-GB:
         fee: How much is the court or tribunal fee?
         form_name: Form number
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
+        date_submitted: Date submitted by applicant
         day_date_received: Day
         month_date_received: Month
         year_date_received: Year

@@ -26,4 +26,8 @@ module ApplicationHelper
     return nil unless params['filter_applications']
     params['filter_applications']["jurisdiction_id"]
   end
+
+  def date_submitted(application)
+    application.created_at.strftime("%d %b %Y")
+  end
 end
