@@ -18,6 +18,9 @@ When("I see the application details") do
   expect(application_details_digital_page).to be_displayed
   expect(process_online_application_page.content).to have_application_details_header
   expect(process_online_application_page).to have_text 'Peter Smith'
+
+  expect(process_online_application_page).to have_text 'Date submitted by applicant'
+  expect(process_online_application_page).to have_text OnlineApplication.last.created_at.strftime("%d %b %Y")
 end
 
 And("I click next without selecting a jurisdiction") do

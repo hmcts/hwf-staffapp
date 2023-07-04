@@ -36,6 +36,10 @@
             = t('error_messages.jurisdictions.none_in_office')
 
       .govuk-form-group.group-level
+        p.util_mb-0 =t('date_submitted', scope: @form.i18n_scope)
+        p: strong= date_submitted(@online_application)
+
+      .govuk-form-group.group-level
         legend.govuk-fieldset__legend
           =t('date_received', scope: @form.i18n_scope)
 
