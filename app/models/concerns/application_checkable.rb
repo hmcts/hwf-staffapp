@@ -17,7 +17,7 @@ module ApplicationCheckable
   private
 
   def hmrc_office_match?
-    office.try(:entity_code) == Settings.evidence_check.hmrc.office_entity_code
+    Settings.evidence_check.hmrc.office_entity_code.include?(office.try(:entity_code))
   end
 
 end

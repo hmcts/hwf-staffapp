@@ -10,7 +10,7 @@ mail:
 evidence_check:
   expires_in_days: 14
   hmrc:
-    office_entity_code: <%= ENV['HMRC_OFFICE_CODE'] || 'dig' %>
+    office_entity_code: <%= ENV['HMRC_OFFICE_CODE'].try(:split) || ['dig'] %>
 part_payment:
   expires_in_days: 14
 submission:
