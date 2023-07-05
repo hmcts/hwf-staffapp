@@ -36,7 +36,7 @@ module Report
     end
 
     def ocmcc_court?
-      Office.find(court_id).entity_code == Settings.evidence_check.hmrc.office_entity_code
+      Settings.evidence_check.hmrc.office_entity_code.include?(Office.find(court_id).entity_code)
     end
 
     def export_file_prefix

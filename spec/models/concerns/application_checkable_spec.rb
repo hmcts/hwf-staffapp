@@ -103,7 +103,7 @@ describe ApplicationCheckable do
     let(:medium) { 'digital' }
 
     before do
-      Settings.evidence_check.hmrc.office_entity_code = 'dig'
+      Settings.evidence_check.hmrc.office_entity_code = ['dig']
     end
 
     context 'single applicant' do
