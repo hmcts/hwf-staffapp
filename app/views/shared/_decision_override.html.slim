@@ -11,6 +11,9 @@
         = form_for @form, as: :application, url: path, method: :put, html: { autocomplete: 'off', class: 'override-form' } do |f|
           .govuk-form-group
             fieldset.govuk-fieldset
+              div#changed-name-hint.govuk-hint = t('hint_html', scope: @form.i18n_scope)
+
+
               legend.visuallyhidden Reasons for granting help with fees
               = f.label :value, class: 'govuk-label'
               = f.label :value, @form.errors[:value].join(', '), class: 'govuk-error-message' if @form.errors[:value].present?
