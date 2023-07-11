@@ -123,7 +123,7 @@ describe ApplicationCheckable do
 
     context 'paper application' do
       let(:medium) { 'paper' }
-      it { expect(application.hmrc_check_type?).to be false }
+      it { expect(application.hmrc_check_type?).to be true }
     end
 
     context 'tax credit declared' do
