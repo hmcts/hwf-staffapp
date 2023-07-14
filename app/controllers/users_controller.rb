@@ -72,9 +72,12 @@ class UsersController < ApplicationController
   end
 
   def flash_notices_for_update(update_successful)
+    # rubocop:disable Rails/I18nLocaleTexts
+    flash[:notice] = ''
     flash[:notice] = I18n.t('users.notice.updated') if update_successful
     flash[:notice] += " #{email_confiration_message}" if new_email?
     flash[:notice] = user_transfer_notice if UserManagement.new(current_user, @user).transferred?
+    # rubocop:enable Rails/I18nLocaleTexts
   end
 
   def user_params

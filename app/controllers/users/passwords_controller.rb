@@ -36,7 +36,8 @@ module Users
     end
 
     def user
-      @user ||= User.find_by(email: params[:user][:email].strip)
+      email = params[:user][:email].strip.downcase
+      @user ||= User.find_by(email: email)
     end
 
     def reset_link
