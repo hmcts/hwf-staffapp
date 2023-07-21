@@ -23,6 +23,24 @@ describe PartPaymentBuilder do
       it 'sets expiration on the payment' do
         expect(decide.expires_at).to eql(current_time + expires_in_days.days)
       end
+
+      context 'when there is already a part payment' do
+        let(:application) { create(:application_part_remission) }
+        let(:part_payment) { create(:part_payment, application: application) }
+        before do
+          part_payment
+        end
+
+        it 'does not create another part payment' do
+          part_payments = PartPayment.where(application_id: application.id)
+          expect(part_payments.count).to be(1)
+
+          decide
+          part_payments = PartPayment.where(application_id: application.id)
+          expect(part_payments.count).to be(1)
+          expect(part_payment.id).to eql(part_payments.last.id)
+        end
+      end
     end
 
     context 'when application is a part payment but is not decided' do

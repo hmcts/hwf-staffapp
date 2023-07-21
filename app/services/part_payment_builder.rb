@@ -6,10 +6,15 @@ class PartPaymentBuilder
   end
 
   def decide!
-    @application.create_part_payment(expires_at: expires_at) if part_payment_needed?
+    create_part_payment if part_payment_needed?
   end
 
   private
+
+  def create_part_payment
+    return @application.part_payment if @application.part_payment
+    @application.create_part_payment(expires_at: expires_at)
+  end
 
   def load_application
     case @initiator
