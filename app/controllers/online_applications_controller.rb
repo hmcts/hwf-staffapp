@@ -58,31 +58,7 @@ class OnlineApplicationsController < ApplicationController
   private
 
   def process_application(application)
-    if FeatureSwitching.active?(:band_calculation)
-      outcome = BandBaseCalculation.new(application).remission
-      application.update(outcome: outcome)
-      return false if stop_processing?(application)
-      benefit_override(application) if online_application.benefits_override
-      ResolverService.new(application, current_user).complete
-      # process the outcome
-    else
-      SavingsPassFailService.new(application.saving).calculate!
-      ApplicationCalculation.new(application).run
-      return false if stop_processing?(application)
-      benefit_override(application) if online_application.benefits_override
-      ResolverService.new(application, current_user).complete
-    end
-  end
-
-  def benefit_override(application)
-    @benefit_override = BenefitOverride.find_or_initialize_by(application: application)
-    return unless authorize @benefit_override, :create?
-    @benefit_override.update(correct: true, completed_by: current_user)
-    application.update(outcome: 'full')
-  end
-
-  def stop_processing?(application)
-    application.failed_because_dwp_error? && !online_application.benefits_override
+    ProcessApplication.new(application, online_application, current_user).process
   end
 
   def authorize_online_application

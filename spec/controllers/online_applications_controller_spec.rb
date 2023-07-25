@@ -260,7 +260,8 @@ RSpec.describe OnlineApplicationsController do
   end
 
   describe 'POST #complete' do
-    let(:application) { build_stubbed(:application, office: user.office) }
+    let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+    let(:detail) { build_stubbed(:detail) }
     let(:application_builder) { instance_double(ApplicationBuilder, build_from: application) }
     let(:application_calculation) { instance_double(ApplicationCalculation, run: nil) }
     let(:resolver_service) { instance_double(ResolverService, complete: nil) }
@@ -278,6 +279,7 @@ RSpec.describe OnlineApplicationsController do
       allow(benefit_override).to receive(:update)
       allow(application).to receive(:update)
       allow(application).to receive(:failed_because_dwp_error?).and_return(dwp_error)
+      allow(detail).to receive(:update).and_return(true)
 
       post :complete, params: { id: id }
     end
@@ -303,6 +305,10 @@ RSpec.describe OnlineApplicationsController do
 
       it 'runs the resolver service' do
         expect(resolver_service).to have_received(:complete)
+      end
+
+      it 'store schema used for calulation' do
+        expect(detail).to have_received(:update).with(calculation_scheme: :prior_q4_23)
       end
 
       it 'runs the pass fail service' do
