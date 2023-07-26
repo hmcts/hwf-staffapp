@@ -17,7 +17,7 @@ RSpec.describe Views::Confirmation::Result do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?'] }
+    it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?', 'calculation_scheme'] }
   end
 
   describe '#discretion_applied?' do
