@@ -12,8 +12,11 @@ Capybara.configure do |config|
   config.visible_text_only = true
 end
 
+# Temporary fix for "Unable to find latest point release version for 115.0.5790." error
+Webdrivers::Chromedriver.required_version = "114.0.5735.90"
+
 Capybara.register_driver :headless do |app|
-  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu', '--disable-dev-shm-usage', 'window-size=1200,1100'])
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'disable-gpu'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
@@ -27,11 +30,6 @@ end
 
 Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
-end
-
-Capybara.register_driver :firefox do |app|
-  profile = Selenium::WebDriver::Firefox::Profile.new
-  Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
 end
 
 Capybara.register_driver :saucelabs do |app|
