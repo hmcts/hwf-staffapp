@@ -196,6 +196,16 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
+    context 'no child' do
+      let(:children) { nil }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq nil
+        expect(form.additional_income).to be false
+      end
+    end
+
     context '2 child' do
       let(:children) { 2 }
 

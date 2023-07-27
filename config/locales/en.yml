@@ -371,6 +371,7 @@ en-GB:
         income_part: 'Waiting for part-payment'
         income_evidence: 'Waiting for evidence'
         discretion_applied?: 'Delivery Manager Discretion'
+        calculation_scheme: HwF Scheme
       views/overview/application:
         savings: Savings and investments
         benefits: Benefits declared in application
@@ -383,6 +384,7 @@ en-GB:
         number_of_children: Number of children
         total_monthly_income: Total monthly income
         total_monthly_income_from_evidence: Total monthly income from Evidence
+        calculation_scheme: HwF Scheme
       views/overview/applicant:
         full_name: Full name
         date_of_birth: Date of birth
@@ -547,6 +549,9 @@ en-GB:
         benefits: Benefits
         income: Income
         children: Number of children
+        prior_q4_23: Prior to Q4 2023
+        q4_23: Revised Q4 2023
+
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:

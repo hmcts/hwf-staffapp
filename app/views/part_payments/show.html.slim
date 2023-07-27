@@ -19,7 +19,7 @@ h1.govuk-heading-xl #{@part_payment.application.reference} - Waiting for part-pa
 =build_section_with_defaults 'Application details', @details
 =build_section 'Benefits', @application_view, ['benefits']
 =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
-=build_section 'Result', @application_view, ['benefits_result', 'savings_result', 'income_result']
+=build_section 'Result', @application_view, ['benefits_result', 'savings_result', 'income_result', 'calculation_scheme']
 
 =render(partial: 'shared/remission_type', locals: { source: @application_view })
 

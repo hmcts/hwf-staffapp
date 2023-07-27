@@ -4,7 +4,7 @@ module Views
     class Result < Views::Overview::Base
 
       def all_fields
-        ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?']
+        ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?', 'calculation_scheme']
       end
 
       def initialize(application)
@@ -103,6 +103,15 @@ module Views
       def income
         return @application.evidence_check.income if @application.evidence_check.try(:income).try(:positive?)
         @application.income
+      end
+
+      def calculation_scheme
+        if @application.detail.calculation_scheme.blank?
+          I18n.t('activemodel.attributes.forms/application/summary.prior_q4_23')
+        else
+          scheme_value = @application.detail.calculation_scheme
+          I18n.t("activemodel.attributes.forms/application/summary.#{scheme_value}")
+        end
       end
 
       private
