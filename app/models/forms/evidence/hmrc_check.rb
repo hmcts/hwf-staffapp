@@ -50,7 +50,7 @@ module Forms
 
       def child_benefits_per_month
         children = @object.evidence_check.application.children
-        return 0 if children.zero?
+        return 0 if children.blank? || children.zero?
         children = 7 if children > 7
 
         Settings.child_benefits_per_month[children]
