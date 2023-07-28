@@ -18,6 +18,20 @@ RSpec.describe NotifyMailer do
 
   end
 
+  describe '#dwp_is_down_notifier' do
+    let(:mail) { described_class.dwp_is_down_notifier }
+
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_DWP_DOWN_TEMPLATE_ID', nil)
+
+    it 'has the right values' do
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        environment: 'test'
+                                                      })
+      expect(mail.to).to eq(['dan@test.com', 'petr@test.gov.uk'])
+    end
+
+  end
+
   describe '#submission_confirmation_online' do
     let(:mail) { described_class.submission_confirmation_online(application, 'en') }
 

@@ -107,24 +107,4 @@ Rails.application.configure do
   config.logstasher.logger_path = $stdout
   config.logstasher.source = 'logstasher'
 
-  config.after_initialize do
-    smtp_domain = ENV.fetch('SMTP_DOMAIN', 'localhost')
-
-    ActionMailer::Base.default_url_options = {
-      host: smtp_domain,
-      protocol: ENV.fetch('SMTP_PROTOCOL', 'http')
-    }
-    ActionMailer::Base.default from: Settings.mail.from
-    ActionMailer::Base.default reply_to: Settings.mail.reply_to
-    ActionMailer::Base.smtp_settings = {
-      address: ENV.fetch('SMTP_HOSTNAME', 'localhost'),
-      port: ENV.fetch('SMTP_PORT', 587),
-      domain: smtp_domain,
-      user_name: ENV.fetch('SMTP_USERNAME', ''),
-      password: ENV.fetch('SMTP_PASSWORD', ''),
-      authentication: :login,
-      enable_starttls_auto: true
-    }
-  end
-
 end

@@ -9,7 +9,7 @@ RSpec.describe DwpReportStatusJob do
       allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
       allow(app_insight).to receive(:track_event)
       allow(DwpMonitor).to receive(:new).and_return dwp_monitor
-      allow(ApplicationMailer).to receive(:dwp_is_down_notifier).and_return mailer
+      allow(NotifyMailer).to receive(:dwp_is_down_notifier).and_return mailer
       described_class.perform_now
     end
 

@@ -13,7 +13,7 @@ class DwpReportStatusJob < ApplicationJob
   end
 
   def send_email_notifications
-    ApplicationMailer.dwp_is_down_notifier.deliver_now
+    NotifyMailer.dwp_is_down_notifier.deliver_now
     log_notification
   end
 

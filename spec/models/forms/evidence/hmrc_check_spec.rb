@@ -201,7 +201,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq nil
+        expect(form.additional_income_amount).to be_nil
         expect(form.additional_income).to be false
       end
     end
