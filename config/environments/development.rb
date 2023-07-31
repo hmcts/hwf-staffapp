@@ -76,24 +76,4 @@ Rails.application.configure do
   # configure devise mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.after_initialize do
-    sending_host = ENV.fetch('SENDING_HOST', 'localhost')
-    ActionMailer::Base.delivery_method = :sendmail
-    ActionMailer::Base.default from: Settings.mail.from
-    ActionMailer::Base.default reply_to: Settings.mail.reply_to
-    ActionMailer::Base.default_url_options = { host: sending_host, protocol: 'http', port: '3000' }
-    ActionMailer::Base.smtp_settings = {
-      address: 'smtp.sendgrid.net',
-      port: '587',
-      authentication: :plain,
-      user_name: ENV.fetch('SENDGRID_USERNAME', nil),
-      password: ENV.fetch('SENDGRID_PASSWORD', nil),
-      domain: 'feeremissions.dsd.io',
-      enable_starttls_auto: true
-    }
-    # debugging N+1 queries
-    # Bullet.enable = true
-    # Bullet.rails_logger = true
-  end
-
 end
