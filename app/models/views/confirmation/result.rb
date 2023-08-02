@@ -4,7 +4,9 @@ module Views
     class Result < Views::Overview::Base
 
       def all_fields
-        ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?', 'calculation_scheme']
+        list = ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?']
+        list << 'calculation_scheme' if FeatureSwitching.active?(:band_calculation)
+        list
       end
 
       def initialize(application)

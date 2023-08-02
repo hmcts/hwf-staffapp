@@ -16,8 +16,15 @@ RSpec.describe Views::Confirmation::Result do
 
   describe '#all_fields' do
     subject { view.all_fields }
+    context 'band calculation not active' do
+      it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?'] }
+    end
 
-    it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?', 'calculation_scheme'] }
+    context 'band calculation active' do
+      before { allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true }
+      it { is_expected.to eql ['discretion_applied?', 'savings_passed?', 'benefits_passed?', 'income_passed?', 'calculation_scheme'] }
+    end
+
   end
 
   describe '#discretion_applied?' do
