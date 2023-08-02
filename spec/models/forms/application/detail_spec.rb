@@ -128,7 +128,7 @@ RSpec.describe Forms::Application::Detail do
 
             before { probate.valid? }
 
-            it { is_expected.to be_invalid }
+            it { is_expected.not_to be_valid }
 
             context 'it returns an error' do
               subject { probate.errors[:date_of_death] }
@@ -140,7 +140,7 @@ RSpec.describe Forms::Application::Detail do
           describe 'range' do
             let(:date_of_death) { Time.zone.tomorrow }
 
-            it { is_expected.to be_invalid }
+            it { is_expected.not_to be_valid }
           end
         end
 
@@ -149,7 +149,7 @@ RSpec.describe Forms::Application::Detail do
             let(:deceased_name) { nil }
             before { probate.valid? }
 
-            it { is_expected.to be_invalid }
+            it { is_expected.not_to be_valid }
 
             context 'it returns an error' do
               subject { probate.errors[:deceased_name] }
@@ -262,7 +262,7 @@ RSpec.describe Forms::Application::Detail do
             describe 'just outside' do
               let(:date_fee_paid) { Time.zone.local(2014, 11, 16, 13, 0, 0) }
 
-              it { is_expected.to be_invalid }
+              it { is_expected.not_to be_valid }
 
               it 'returns an error' do
                 refund.valid?

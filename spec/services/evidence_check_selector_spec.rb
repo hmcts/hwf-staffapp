@@ -258,10 +258,7 @@ describe EvidenceCheckSelector do
       before do
         @ccmcc = instance_double(CCMCCEvidenceCheckRules, clean_annotation_data: true)
         allow(CCMCCEvidenceCheckRules).to receive(:new).and_return @ccmcc
-        allow(@ccmcc).to receive(:rule_applies?).and_return true
-        allow(@ccmcc).to receive(:frequency).and_return frequency
-        allow(@ccmcc).to receive(:check_type).and_return '5k rule'
-        allow(@ccmcc).to receive(:query_type).and_return query_type
+        allow(@ccmcc).to receive_messages(rule_applies?: true, frequency: frequency, check_type: '5k rule', query_type: query_type)
       end
 
       context 'frequency is calculated against the ccmcc office only' do

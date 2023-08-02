@@ -22,7 +22,7 @@ RSpec.describe BusinessEntity do
 
       context 'when valid_to is before valid_from' do
         before { business_entity.valid_to = Time.zone.yesterday }
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
     end
 

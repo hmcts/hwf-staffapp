@@ -77,8 +77,7 @@ RSpec.describe Applications::Process::BenefitsController do
       allow(benefit_form).to receive(:update).with(expected_params)
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
-      allow(application).to receive(:failed_because_dwp_error?).and_return dwp_error?
-      allow(application).to receive(:benefit_override).and_return benefit_override
+      allow(application).to receive_messages(failed_because_dwp_error?: dwp_error?, benefit_override: benefit_override)
       allow(benefit_override).to receive(:destroy)
 
       post :create, params: { application_id: application.id, application: expected_params }

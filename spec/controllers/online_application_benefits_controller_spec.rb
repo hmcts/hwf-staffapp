@@ -33,9 +33,7 @@ RSpec.describe OnlineApplicationBenefitsController do
     before do
       allow(form).to receive(:update).with(params)
       allow(form).to receive(:save).and_return(form_save)
-      allow(online_application).to receive(:benefits_override).and_return(benefits_override)
-      allow(online_application).to receive(:update).and_return(true)
-      allow(online_application).to receive(:failed_because_dwp_error?).and_return(dwp_down)
+      allow(online_application).to receive_messages(benefits_override: benefits_override, update: true, failed_because_dwp_error?: dwp_down)
 
       put :update, params: { id: id, online_application: params }
     end

@@ -56,8 +56,7 @@ RSpec.describe Views::Confirmation::Result do
     context "is true" do
       before do
         allow(application).to receive(:saving).and_return(saving)
-        allow(saving).to receive(:passed?).and_return(true)
-        allow(saving).to receive(:passed).and_return(true)
+        allow(saving).to receive_messages(passed?: true, passed: true)
       end
 
       it { is_expected.to eq I18n.t(true.to_s, scope: scope) }
@@ -115,8 +114,7 @@ RSpec.describe Views::Confirmation::Result do
     context "is false" do
       before do
         allow(application).to receive(:saving).and_return(saving)
-        allow(saving).to receive(:passed?).and_return(false)
-        allow(saving).to receive(:passed).and_return(false)
+        allow(saving).to receive_messages(passed?: false, passed: false)
       end
 
       it { is_expected.to eq I18n.t(false.to_s, scope: scope) }

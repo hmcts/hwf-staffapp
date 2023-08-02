@@ -26,7 +26,7 @@ RSpec.describe Office do
     it 'must have a unique name' do
       original = create(:office)
       duplicate = build(:office, name: original.name)
-      expect(duplicate).to be_invalid
+      expect(duplicate).not_to be_valid
     end
   end
 

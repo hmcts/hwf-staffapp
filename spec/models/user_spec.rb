@@ -45,19 +45,19 @@ describe User do
     context 'email' do
       it 'require an email' do
         user.email = nil
-        expect(user).to be_invalid
+        expect(user).not_to be_valid
       end
 
       it 'require a valid email' do
         user.email = 'testemail'
-        expect(user).to be_invalid
+        expect(user).not_to be_valid
       end
 
       it 'require a unique email' do
         original = create(:user)
         duplicate = build(:user)
         duplicate.email = original.email
-        expect(duplicate).to be_invalid
+        expect(duplicate).not_to be_valid
       end
 
       context '(hmcts.gsi|digital.justice).gov.uk email addresses' do
@@ -88,7 +88,7 @@ describe User do
           error_message = I18n.t('activerecord.errors.models.user.attributes.email.invalid_email', email: Settings.mail.tech_support)
 
           it 'will not accept non white listed emails' do
-            expect(user).to be_invalid
+            expect(user).not_to be_valid
           end
 
           it 'has an informative error message for non white listed emails' do
@@ -101,12 +101,12 @@ describe User do
 
     it 'requires a name' do
       user.name = nil
-      expect(user).to be_invalid
+      expect(user).not_to be_valid
     end
 
     it 'require a minimum 8 character password' do
       user.password = 'aabbcc'
-      expect(user).to be_invalid
+      expect(user).not_to be_valid
     end
 
     describe 'require a non-nil role' do
@@ -115,7 +115,7 @@ describe User do
         user.valid?
       end
 
-      it { expect(user).to be_invalid }
+      it { expect(user).not_to be_valid }
       it { expect(user.errors[:role]).to eq ["can't be blank"] }
     end
 
@@ -125,7 +125,7 @@ describe User do
         user.valid?
       end
 
-      it { expect(user).to be_invalid }
+      it { expect(user).not_to be_valid }
       it { expect(user.errors[:role]).to eq ["student is not a valid role"] }
     end
 
@@ -136,7 +136,7 @@ describe User do
           user.valid?
         end
 
-        it { expect(user).to be_invalid }
+        it { expect(user).not_to be_valid }
         it { expect(user.errors[:jurisdiction]).to eq ["Jurisdiction must exist"] }
       end
 
