@@ -17,6 +17,7 @@ ENV NOTIFY_COMPLETED_PAPER_TEMPLATE_ID replace_this_at_build_time
 ENV NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID replace_this_at_build_time
 ENV NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID replace_this_at_build_time
 ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID replace_this_at_build_time
+ENV NOTIFY_DWP_DOWN_TEMPLATE_ID replace_this_at_build_time
 
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
