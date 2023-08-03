@@ -37,8 +37,7 @@ RSpec.describe ResultHelper do
 
     before do
       RSpec::Mocks.configuration.allow_message_expectations_on_nil
-      allow(application).to receive(:benefits).and_return benefits
-      allow(application).to receive(:benefit_checks).and_return [benefit_check]
+      allow(application).to receive_messages(benefits: benefits, benefit_checks: [benefit_check])
       allow(benefit_check).to receive(:benefits_valid?).and_return benefits_valid
     end
 

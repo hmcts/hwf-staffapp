@@ -13,8 +13,7 @@ RSpec.describe MailService do
     let(:et_email) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
 
     before do
-      allow(NotifyMailer).to receive(:submission_confirmation_refund).and_return(refund_email)
-      allow(NotifyMailer).to receive(:submission_confirmation_online).and_return(non_refund_email)
+      allow(NotifyMailer).to receive_messages(submission_confirmation_refund: refund_email, submission_confirmation_online: non_refund_email)
     end
 
     describe 'when initialised with nil' do

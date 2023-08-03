@@ -148,8 +148,7 @@ RSpec.describe OfficesController do
       let(:authorized) { true }
 
       before do
-        allow(new_office).to receive(:errors).and_return(saved ? [] : [double, double])
-        allow(new_office).to receive(:save).and_return(saved)
+        allow(new_office).to receive_messages(errors: saved ? [] : [double, double], save: saved)
         make_request
       end
 
@@ -203,8 +202,7 @@ RSpec.describe OfficesController do
       before do
         allow(ManagerSetup).to receive(:new).and_return(manager_setup)
         allow(ManagerSetup).to receive(:new).and_return(manager_setup)
-        allow(existing_office).to receive(:errors).and_return(saved ? [] : [double, double])
-        allow(existing_office).to receive(:save).and_return(saved)
+        allow(existing_office).to receive_messages(errors: saved ? [] : [double, double], save: saved)
         make_request
       end
 

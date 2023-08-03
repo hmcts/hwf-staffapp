@@ -68,8 +68,7 @@ describe HmrcApiService do
           context 'token did not changed' do
             before do
               allow(hmrc_token).to receive(:expired?).and_return false
-              allow(hmrc_api_authentication).to receive(:access_token).and_return '111333'
-              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              allow(hmrc_api_authentication).to receive_messages(access_token: '111333', expires_in: Time.zone.parse('01-03-2021 10:50'))
               service.match_user
             end
 
@@ -80,8 +79,7 @@ describe HmrcApiService do
           context 'token changed' do
             before do
               allow(hmrc_token).to receive(:expired?).and_return true
-              allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
-              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              allow(hmrc_api_authentication).to receive_messages(access_token: '123456', expires_in: Time.zone.parse('01-03-2021 10:50'))
               service.match_user
             end
 
@@ -93,8 +91,7 @@ describe HmrcApiService do
             before do
               allow(hmrc_token).to receive(:expired?).and_raise ActiveSupport::MessageEncryptor::InvalidMessage
               allow(hmrc_token).to receive(:destroy).and_return true
-              allow(hmrc_api_authentication).to receive(:access_token).and_return '123456'
-              allow(hmrc_api_authentication).to receive(:expires_in).and_return Time.zone.parse('01-03-2021 10:50')
+              allow(hmrc_api_authentication).to receive_messages(access_token: '123456', expires_in: Time.zone.parse('01-03-2021 10:50'))
               service.match_user
             end
 
@@ -144,9 +141,7 @@ describe HmrcApiService do
 
       context "income" do
         before do
-          allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
-          allow(hmrc_api).to receive(:child_tax_credits).and_return([{ "awards" => ['child test'] }])
-          allow(hmrc_api).to receive(:working_tax_credits).and_return([{ "awards" => ['work test'] }])
+          allow(hmrc_api).to receive_messages(paye: { 'income' => [{ paymentDate: "2019-01-01" }] }, child_tax_credits: [{ "awards" => ['child test'] }], working_tax_credits: [{ "awards" => ['work test'] }])
           allow(HmrcCall).to receive(:create).and_return hmrc_call
         end
 
@@ -223,9 +218,7 @@ describe HmrcApiService do
 
       context 'income' do
         before do
-          allow(hmrc_api).to receive(:paye).and_return('income' => [{ paymentDate: "2019-01-01" }])
-          allow(hmrc_api).to receive(:child_tax_credits).and_return([{ "awards" => ['child test'] }])
-          allow(hmrc_api).to receive(:working_tax_credits).and_return([{ "awards" => ['work test'] }])
+          allow(hmrc_api).to receive_messages(paye: { 'income' => [{ paymentDate: "2019-01-01" }] }, child_tax_credits: [{ "awards" => ['child test'] }], working_tax_credits: [{ "awards" => ['work test'] }])
           allow(HmrcCall).to receive(:create).and_return hmrc_call
           service.income('2020-02-28', '2020-03-30')
         end

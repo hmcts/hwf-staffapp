@@ -58,10 +58,9 @@ describe HmrcService do
     before {
       applicant
       allow(HmrcApiService).to receive(:new).and_return api_service
-      allow(api_service).to receive(:match_user).and_return api_service
+      allow(api_service).to receive_messages(match_user: api_service, hmrc_check: hmrc_check)
       allow(Forms::Evidence::HmrcCheck).to receive(:new).and_return form
       allow(api_service).to receive(:income)
-      allow(api_service).to receive(:hmrc_check).and_return hmrc_check
       allow(hmrc_check).to receive(:update)
       service.call
     }

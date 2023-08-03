@@ -91,16 +91,14 @@ RSpec.describe OnlineApplicationsController do
 
     before do
       allow(form).to receive(:update).with(params)
-      allow(form).to receive(:save).and_return(form_save)
-      allow(form).to receive(:fee).and_return(fee)
-      allow(online_application).to receive(:update).and_return(true)
+      allow(form).to receive_messages(save: form_save, fee: fee)
+      allow(online_application).to receive_messages(update: true, last_benefit_check: online_bc)
 
       allow(DwpMonitor).to receive(:new).and_return monitor
       allow(monitor).to receive(:state).and_return dwp_state
       allow(DwpWarning).to receive(:state).and_return dwp_warning_state
       allow(OnlineBenefitCheckRunner).to receive(:new).and_return online_bc_runner
       allow(online_bc_runner).to receive(:run)
-      allow(online_application).to receive(:last_benefit_check).and_return(online_bc)
 
       put :update, params: { id: id, online_application: params }
     end

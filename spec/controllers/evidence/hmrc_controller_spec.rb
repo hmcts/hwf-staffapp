@@ -128,13 +128,10 @@ RSpec.describe Evidence::HmrcController do
         let(:valid) { true }
         let(:valid_check) { true }
         before do
-          allow(form).to receive(:from_date).and_return '2001-01-03'
-          allow(form).to receive(:to_date).and_return '2002-01-03'
-          allow(form).to receive(:user_id).and_return 569
+          allow(form).to receive_messages(from_date: '2001-01-03', to_date: '2002-01-03', user_id: 569)
           allow(HmrcApiService).to receive(:new).and_return api_service
-          allow(api_service).to receive(:match_user).and_return api_service
+          allow(api_service).to receive_messages(match_user: api_service, hmrc_check: hmrc_check)
           allow(api_service).to receive(:income)
-          allow(api_service).to receive(:hmrc_check).and_return hmrc_check
           allow(hmrc_check).to receive(:valid?).and_return valid_check
         end
 
@@ -220,8 +217,7 @@ RSpec.describe Evidence::HmrcController do
         let(:errors) { instance_double(ActiveModel::Errors) }
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive(:total_income).and_return 0
-          allow(hmrc_check).to receive(:errors).and_return errors
+          allow(hmrc_check).to receive_messages(total_income: 0, errors: errors)
           allow(errors).to receive(:add)
           sign_in user
           get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }

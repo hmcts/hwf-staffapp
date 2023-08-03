@@ -30,17 +30,17 @@ RSpec.describe Jurisdiction do
   describe 'validation' do
     it 'enforces presence of name' do
       jurisdiction.name = nil
-      expect(jurisdiction).to be_invalid
+      expect(jurisdiction).not_to be_valid
     end
 
     it 'enforces unique name' do
       new = build(:jurisdiction, name: jurisdiction.name)
-      expect(new).to be_invalid
+      expect(new).not_to be_valid
     end
 
     it 'enforces unique abbreviation' do
       new = build(:jurisdiction, abbr: jurisdiction.abbr)
-      expect(new).to be_invalid
+      expect(new).not_to be_valid
     end
 
     describe 'allows multiple empty abbreviations' do

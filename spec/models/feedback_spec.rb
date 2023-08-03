@@ -11,17 +11,17 @@ RSpec.describe Feedback do
   context 'validations' do
     it 'requires a user to stored' do
       feedback.user = nil
-      expect(feedback).to be_invalid
+      expect(feedback).not_to be_valid
     end
 
     it 'requires an office to be stored' do
       feedback.office = nil
-      expect(feedback).to be_invalid
+      expect(feedback).not_to be_valid
     end
 
     it 'requires a rating' do
       feedback.rating = nil
-      expect(feedback).to be_invalid
+      expect(feedback).not_to be_valid
     end
   end
 

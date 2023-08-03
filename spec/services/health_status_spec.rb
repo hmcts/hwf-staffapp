@@ -24,9 +24,7 @@ describe HealthStatus do
         end
 
         before do
-          allow(described_class).to receive(:smtp).and_return(false)
-          allow(described_class).to receive(:database).and_return(false)
-          allow(described_class).to receive(:api).and_return(false)
+          allow(described_class).to receive_messages(smtp: false, database: false, api: false)
         end
 
         it { expect(described_class.current_status).to eq failure }
@@ -55,9 +53,7 @@ describe HealthStatus do
         end
 
         before do
-          allow(described_class).to receive(:smtp).and_return(true)
-          allow(described_class).to receive(:database).and_return(true)
-          allow(described_class).to receive(:api).and_return(true)
+          allow(described_class).to receive_messages(smtp: true, database: true, api: true)
         end
 
         it { expect(described_class.current_status).to eq success }

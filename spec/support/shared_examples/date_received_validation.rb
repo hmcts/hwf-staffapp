@@ -6,7 +6,7 @@ shared_examples 'date_received validation' do
     end
 
     it 'is required' do
-      expect(form).to be_invalid
+      expect(form).not_to be_valid
     end
 
     it 'returns an error message, if omitted' do
@@ -52,7 +52,7 @@ shared_examples 'date_received validation' do
           end
 
           it 'is 3 months' do
-            expect(form).to be_invalid
+            expect(form).not_to be_valid
           end
 
           it 'returns an error if exceeded' do
@@ -67,7 +67,7 @@ shared_examples 'date_received validation' do
           end
 
           it 'is today' do
-            expect(form).to be_invalid
+            expect(form).not_to be_valid
           end
 
           it 'returns an error if too low' do
