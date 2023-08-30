@@ -44,7 +44,7 @@ Rails.application.configure do
 
   config.ssl_options = {
     hsts: { expires: 1.year, preload: true },
-    redirect: { exclude: ->(request) { return true if /ping|submissions/.match?(request.path) } }
+    redirect: { exclude: ->(request) { return true if /submissions/.match?(request.path) } }
   }
   config.force_ssl = true
 
