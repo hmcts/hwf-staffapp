@@ -95,6 +95,8 @@ module Views
           decision_cost_calculation(row)
         when :final_amount_to_pay
           final_amount_to_pay(row)
+        when :created_at
+          row.send(:created_at).to_fs(:db)
         else
           row.send(attr)
         end

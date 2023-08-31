@@ -33,6 +33,7 @@ class PersonalDataPurge
   end
 
   def application_purge!(application)
+    # This method raising DEPRECATION WARNING: for Date#to_s this is because of paranoia gem (I think). Hopefully they will fix it soon
     application.update(purged: true, purged_at: Time.zone.now)
   end
 

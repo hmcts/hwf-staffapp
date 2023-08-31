@@ -90,7 +90,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         evidence_check_part
         export = data.to_csv
         reference = part_remission.reference
-        created_at = part_remission.created_at
+        created_at = part_remission.created_at.to_fs(:db)
         part_remission_row = "#{reference},#{created_at},410.0,100.0,310.0,part,100.3,309.7,user"
         expect(export).to include(part_remission_row)
       end
@@ -99,7 +99,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         part_remission_none
         export = data.to_csv
         reference = part_remission_none.reference
-        created_at = part_remission_none.created_at
+        created_at = part_remission_none.created_at.to_fs(:db)
         part_remission_row = "#{reference},#{created_at},410.35,220.0,190.35,part,410.35,0.0,user"
         expect(export).to include(part_remission_row)
       end
@@ -108,7 +108,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         part_remission_return
         export = data.to_csv
         reference = part_remission_return.reference
-        created_at = part_remission_return.created_at
+        created_at = part_remission_return.created_at.to_fs(:db)
         part_remission_row = "#{reference},#{created_at},410.35,220.0,190.35,part,410.35,0.0,user"
         expect(export).to include(part_remission_row)
       end
@@ -117,7 +117,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         part_remission_part
         export = data.to_csv
         reference = part_remission_part.reference
-        created_at = part_remission_part.created_at
+        created_at = part_remission_part.created_at.to_fs(:db)
         part_remission_row = "#{reference},#{created_at},410.35,220.0,190.35,part,220.0,190.35,user"
         expect(export).to include(part_remission_row)
       end
@@ -129,7 +129,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         evidence_check_full
         export = data.to_csv
         reference = full_remission.reference
-        created_at = full_remission.created_at
+        created_at = full_remission.created_at.to_fs(:db)
         full_remission_row = "#{reference},#{created_at},410.0,0.0,410.0,full,0.0,410.0,user"
         expect(export).to include(full_remission_row)
       end
@@ -140,7 +140,7 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
         evidence_check_none
         export = data.to_csv
         reference = no_remission.reference
-        created_at = no_remission.created_at
+        created_at = no_remission.created_at.to_fs(:db)
         full_remission_row = "#{reference},#{created_at},410.74,0.0,410.74,none,300.34,0.0,user"
         expect(export).to include(full_remission_row)
       end
