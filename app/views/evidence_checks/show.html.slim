@@ -26,7 +26,7 @@
     .confirmation-letter
 
       - if @application.income_kind.blank?
-        =t('letters.evidence.send_evidence.header_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+        =t('letters.evidence.send_evidence.header_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date.to_fs(:long))
         =t('letters.evidence.send_evidence.wages_html')
         =t('letters.evidence.send_evidence.child_maintenace_html')
         =t('letters.evidence.send_evidence.benefits_and_credits_html')
@@ -37,7 +37,7 @@
         =t('letters.evidence.send_evidence.other_monthly_income_html', reference: @application.reference)
         =t('letters.evidence.send_evidence.footer_html', user_name: current_user.name)
       -else
-        =t('letters.evidence.send_evidence.header_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date)
+        =t('letters.evidence.send_evidence.header_html', reference: @application.reference, full_name: @application.applicant.full_name, user_name: current_user.name, expiry_date: @evidence_check.expires_at.to_date.to_fs(:long))
         - if display_evidence_section?(@application, 'wages')
           =t('letters.evidence.send_evidence.wages_html')
         - if display_evidence_section?(@application, 'child_maintenace')

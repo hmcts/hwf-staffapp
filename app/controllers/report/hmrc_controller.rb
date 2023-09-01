@@ -31,7 +31,7 @@ module Report
 
     def build_and_send_data
       send_data hmrc_purged_data,
-                filename: "help-with-fees-#{@date_from.to_date}-to-#{@date_to.to_date}-hmrc-data-purged-history.csv",
+                filename: "help-with-fees-#{@date_from.to_date.to_fs(:iso8601)}-to-#{@date_to.to_date.to_fs(:iso8601)}-hmrc-data-purged-history.csv",
                 type: 'text/csv',
                 disposition: 'attachment'
     end

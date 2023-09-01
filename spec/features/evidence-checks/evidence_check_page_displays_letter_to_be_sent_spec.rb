@@ -22,7 +22,7 @@ RSpec.feature 'Evidence check page displays letter to be sent' do
       expect(page).to have_content(application.reference)
       expect(page).to have_content(application.applicant.full_name)
       expect(page).to have_content(user.name)
-      expect(page).to have_content(evidence_check.expires_at.to_date)
+      expect(page).to have_content(evidence_check.expires_at.to_date.to_fs(:long))
     end
   end
 end

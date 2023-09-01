@@ -23,7 +23,7 @@ table.govuk-table
       =@user.jurisdiction.name if @user.jurisdiction.present?
   tr.govuk-table__row
     th.govuk-table__header scope="row" Last logged in
-    td.govuk-table__cell =@user.current_sign_in_at
+    td.govuk-table__cell =@user.current_sign_in_at.try(:to_fs, :long)
 
 ul.govuk-list
   li= link_to 'Change details', edit_user_path(@user)

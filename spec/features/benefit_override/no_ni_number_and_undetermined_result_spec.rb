@@ -8,9 +8,9 @@ def personal_details_without_ni_number
   start_new_application
 
   fill_in 'application_last_name', with: 'Smith', wait: true
-  fill_in 'application_day_date_of_birth', with: dob
-  fill_in 'application_month_date_of_birth', with: dob
-  fill_in 'application_year_date_of_birth', with: dob
+  fill_in 'application_day_date_of_birth', with: dob.to_fs(:db)
+  fill_in 'application_month_date_of_birth', with: dob.to_fs(:db)
+  fill_in 'application_year_date_of_birth', with: dob.to_fs(:db)
   choose 'application_married_false'
   click_button 'Next'
 end
