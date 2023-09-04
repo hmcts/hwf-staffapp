@@ -8,11 +8,11 @@ RSpec.describe Views::Reports::RawDataExport do
   let(:office) { create(:office) }
   let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: Time.zone.now } }
   let(:business_entity) { create(:business_entity, sop_code: 135864) }
-  let(:start_date) { Time.zone.today.-1.month }
+  let(:start_date) { Time.zone.today - 1.month }
   let(:start_date_params) {
     { day: start_date.day, month: start_date.month, year: start_date.year }
   }
-  let(:end_date) { Time.zone.today.+1.month }
+  let(:end_date) { Time.zone.today + 1.month }
   let(:end_date_params) {
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }

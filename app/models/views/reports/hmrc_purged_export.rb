@@ -31,7 +31,7 @@ module Views
         line << row[3] # office
         line << row[4] # be code
         line << row[5] # user
-        line << row[1].try(:to_fs, :db)  # purged_at
+        line << row[1].try(:to_fs, :db) # purged_at
         line << row[2] # reference
         line << row[6] # dob
         line << date_range(row[7]) # date range

@@ -126,7 +126,7 @@ RSpec.describe Views::Confirmation::Result do
 
       before do
         allow(application).to receive(:saving).and_return(saving)
-        allow(saving).to receive(:passed).and_return(nil)
+        allow(saving).to receive(:passed).and_return(false)
         decision_override
       end
 

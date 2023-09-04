@@ -8,11 +8,11 @@ RSpec.describe Views::Reports::IncomeClaimsDataExport do
 
   let(:office) { create(:office, entity_code: 'IE413') }
   let(:digital_office) { create(:office, name: 'Digital') }
-  let(:start_date) { Time.zone.today.-1.month }
+  let(:start_date) { Time.zone.today - 1.month }
   let(:start_date_params) {
     { day: start_date.day, month: start_date.month, year: start_date.year }
   }
-  let(:end_date) { Time.zone.today.+1.month }
+  let(:end_date) { Time.zone.today + 1.month }
   let(:end_date_params) {
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }

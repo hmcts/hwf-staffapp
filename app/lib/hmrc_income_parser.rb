@@ -97,7 +97,7 @@ module HmrcIncomeParser
   def self.values_not_suitable(tax_hash)
     return true if tax_hash['totalEntitlement'].blank?
     return true if tax_hash['childTaxCredit'].blank? || tax_hash['childTaxCredit']['childCareAmount'].blank?
-    return true if tax_hash['totalEntitlement'].to_f <= 0 || tax_hash['childTaxCredit']['childCareAmount'].to_f <= 0
+    true if tax_hash['totalEntitlement'].to_f <= 0 || tax_hash['childTaxCredit']['childCareAmount'].to_f <= 0
   end
 
   def self.check_tax_credit_calculation_date(tax_hash, date_range)

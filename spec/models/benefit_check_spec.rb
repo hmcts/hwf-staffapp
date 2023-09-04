@@ -32,8 +32,8 @@ RSpec.describe BenefitCheck do
     end
 
     describe 'checks_by_day' do
-      let(:created_out_of_scope) { Time.zone.today.- 8.days }
-      let(:created_in_scope) { Time.zone.today.-5.days }
+      let(:created_out_of_scope) { Time.zone.today - 8.days }
+      let(:created_in_scope) { Time.zone.today - 5.days }
       before do
         create(:benefit_check, created_at: created_out_of_scope, applicationable: application)
         create(:benefit_check, created_at: created_in_scope, applicationable: application)

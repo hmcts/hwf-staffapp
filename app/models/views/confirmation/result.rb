@@ -15,11 +15,11 @@ module Views
 
       def savings_passed?
         passed = @application.saving.passed
-        return nil if passed.nil?
+        return false if passed.nil?
         if decision_overridden? && passed == false
           return I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         end
-        return nil if @application.detail.discretion_applied == false
+        return false if @application.detail.discretion_applied == false
         convert_to_pass_fail(@application.saving.passed?) if @application.saving
       end
 
@@ -39,7 +39,7 @@ module Views
       end
 
       def income_passed?
-        return unless application_type_is?('income')
+        return false unless application_type_is?('income')
         path = 'activemodel.attributes.views/confirmation/result'
 
         return I18n.t('income_evidence', scope: path) if @application.waiting_for_evidence?
