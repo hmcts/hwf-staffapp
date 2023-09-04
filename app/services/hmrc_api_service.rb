@@ -127,7 +127,7 @@ class HmrcApiService
   def hmrc_check_initialize
     hmrc_check
     @hmrc_check.ni_number = @application.applicant.ni_number
-    @hmrc_check.date_of_birth = @application.applicant.date_of_birth
+    @hmrc_check.date_of_birth = @application.applicant.date_of_birth.to_fs(:db)
     @hmrc_check.user_id = @user_id
     @hmrc_check.save
   end

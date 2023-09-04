@@ -31,7 +31,7 @@ RSpec.describe Forms::Report::FinanceTransactionalReport do
       end
 
       context 'when date_to is longer than two years' do
-        before { report.date_to = 3.years.from_now }
+        before { report.date_to = 3.years.from_now.to_fs(:db) }
 
         it { is_expected.not_to be_valid }
       end

@@ -201,9 +201,9 @@ RSpec.describe Forms::Application::Detail do
       subject(:refund) do
         params = { jurisdiction_id: 1,
                    fee: 500,
-                   date_received: date_received,
+                   date_received: date_received.try(:to_fs, :db),
                    refund: refund_status,
-                   date_fee_paid: date_fee_paid,
+                   date_fee_paid: date_fee_paid.try(:to_fs, :db),
                    form_name: 'ABC123' }
         described_class.new(params)
       end
@@ -454,7 +454,7 @@ RSpec.describe Forms::Application::Detail do
         { jurisdiction_id: jurisdiction.id,
           fee: 11.34,
           date_received: Time.zone.today,
-          date_fee_paid: 1.month.ago,
+          date_fee_paid: 1.month.ago.to_fs(:db),
           form_name: 'ABC123' }
       }
 
