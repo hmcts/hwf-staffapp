@@ -19,9 +19,12 @@ module Report
 
     private
 
-    def hmrc_purged_data
+    def hmrc_purged_date_range
       @date_from = 1.year.ago.beginning_of_day
       @date_to = Time.zone.now
+    end
+
+    def hmrc_purged_data
       Views::Reports::HmrcPurgedExport.new(@date_from, @date_to).to_csv
     end
 
@@ -30,6 +33,7 @@ module Report
     end
 
     def build_and_send_data
+      hmrc_purged_date_range
       from = @date_from.to_date.to_fs(:iso8601)
       to = @date_to.to_date.to_fs(:iso8601)
       send_data hmrc_purged_data,
