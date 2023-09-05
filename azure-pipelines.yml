@@ -54,6 +54,7 @@ jobs:
       rubyVersion: '= 3.1.4'
       bundlerVersion: '2.3.10'
       aptDependencies: 'xvfb postgresql-client libpq-dev'
+      source_image: 'ruby:3.2-alpine'
 
     steps:
     - task: Docker@2
