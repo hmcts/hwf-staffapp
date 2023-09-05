@@ -54,11 +54,30 @@ jobs:
       rubyVersion: '= 3.1.4'
       bundlerVersion: '2.3.10'
       aptDependencies: 'xvfb postgresql-client libpq-dev'
+      source_image: 'ruby:3.2-alpine'
 
 
-    steps:
-    - template: ./pipeline-steps/add-dependencies.yaml
-    - template: ./pipeline-steps/test-application.yaml
+    - task: Docker@2
+      inputs:
+        command: 'build'
+        Dockerfile: '**/Dockerfile.test'
+        tags: 'test-image'
+
+    - script: |
+        docker run --name test-container test-image
+      displayName: 'Run tests in Docker container'
+
+    - script: |
+        docker cp test-container:/home/app/test-results.xml .
+      displayName: 'Copy test results'
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test-results.xml'
+      condition: succeededOrFailed()
+
+
 
 
   - job: BuildAndPushImageCI
