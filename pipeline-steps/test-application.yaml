@@ -5,12 +5,27 @@ parameters:
 
 steps:
 - script: |
-    mv .dockerignore .dockerignore.backup
-    cp Dockerfile.test.dockerignore .dockerignore
-    docker-compose -f docker-compose-test.yml run --rm test
-    rm .dockerignore
-    mv .dockerignore.backup .dockerignore
-  displayName: 'Docker compose tests'
+    docker build -f Dockerfile.test -t $(dockerId)/hwf-staff:$BUILD_BUILDID .
+    docker run --name dotnetcoreapp --rm -d $(dockerId)/hwf-staff:$BUILD_BUILDID
+    docker cp hwf-staff:app/TestResults $(System.DefaultWorkingDirectory)
+    docker cp hwf-staff:app/out $(System.DefaultWorkingDirectory)
+    docker stop hwf-staff
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/test-*.xml'
+    testRunTitle: 'Publish Ruby tests'
+    failTaskOnFailedTests: true
+
+
+
+# - script: |
+#     mv .dockerignore .dockerignore.backup
+#     cp Dockerfile.test.dockerignore .dockerignore
+#     docker-compose -f docker-compose-test.yml run --rm test
+#     rm .dockerignore
+#     mv .dockerignore.backup .dockerignore
+#   displayName: 'Docker compose tests'
 
 # ISSUE with different version of ruby
 # need to find a way to run this in Docker
