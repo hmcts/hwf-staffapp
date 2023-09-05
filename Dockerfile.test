@@ -1,5 +1,5 @@
 ARG source_image
-FROM ${source_image}
+FROM 'ruby:3.2-alpine'
 ENV RAILS_ENV=test
 ENV PHUSION true
 
