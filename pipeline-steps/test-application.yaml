@@ -2,9 +2,6 @@ parameters:
   rubyVersion: ''
   bundlerVersion: ''
 
-variables:
-  source_image: 'ruby:3.2-alpine'
-
 steps:
 - script: |
     docker build -f Dockerfile.test -t $(dockerId)/hwf-staff:$BUILD_BUILDID .

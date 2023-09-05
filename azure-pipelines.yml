@@ -25,6 +25,7 @@ variables:
   application.name: 'hwf-staff'
   azure.subscription.endpoint: 'hmcts-pet'
   manual.branch.prefix: 'master'
+  source_image: 'ruby:3.2-alpine'
   GOVUK_NOTIFY_API_KEY: ''
   NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID: 'template1'
   NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID: 'template2'
