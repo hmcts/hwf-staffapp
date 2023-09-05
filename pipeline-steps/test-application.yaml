@@ -4,9 +4,11 @@ parameters:
 
 
 steps:
+  variables:
+    source_image: 'ruby:3.2-alpine'
 - script: |
     docker build -f Dockerfile.test -t $(dockerId)/hwf-staff:$BUILD_BUILDID .
-    docker run --name dotnetcoreapp --rm -d $(dockerId)/hwf-staff:$BUILD_BUILDID
+    docker run --name hwf-staff --rm -d $(dockerId)/hwf-staff:$BUILD_BUILDID
     docker cp hwf-staff:app/TestResults $(System.DefaultWorkingDirectory)
     docker cp hwf-staff:app/out $(System.DefaultWorkingDirectory)
     docker stop hwf-staff
