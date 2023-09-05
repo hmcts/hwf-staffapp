@@ -3,18 +3,27 @@ parameters:
   bundlerVersion: ''
 
 steps:
+
+
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/Dockerfile.test'
+    tags: 'test-image'
+
 - script: |
-    docker build -f Dockerfile.test -t $(dockerId)/hwf-staff:$BUILD_BUILDID .
-    docker run --name hwf-staff --rm -d $(dockerId)/hwf-staff:$BUILD_BUILDID
-    docker cp hwf-staff:app/TestResults $(System.DefaultWorkingDirectory)
-    docker cp hwf-staff:app/out $(System.DefaultWorkingDirectory)
-    docker stop hwf-staff
+    docker run --name test-container test-image
+  displayName: 'Run tests in Docker container'
+
+- script: |
+    docker cp test-container:/home/app/test-results.xml .
+  displayName: 'Copy test results'
 
 - task: PublishTestResults@2
   inputs:
-    testResultsFiles: '**/test-*.xml'
-    testRunTitle: 'Publish Ruby tests'
-    failTaskOnFailedTests: true
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-results.xml'
+  condition: succeededOrFailed()
 
 
 
