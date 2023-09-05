@@ -130,7 +130,7 @@ RSpec.describe Views::Confirmation::Result do
         decision_override
       end
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
 
   end

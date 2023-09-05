@@ -23,4 +23,4 @@ table.govuk-table.large-lists
         td.govuk-table__cell scope="row" =f.rating
         td.govuk-table__cell scope="row" =f.help
         td.govuk-table__cell scope="row" =f.office.name
-        td.govuk-table__cell scope="row" =f.created_at
+        td.govuk-table__cell scope="row" =f.created_at.to_fs(:db)

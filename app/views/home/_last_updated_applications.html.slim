@@ -24,6 +24,6 @@ h2.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
             td.govuk-table__cell =record.id
           = state_value(record)
           td.govuk-table__cell =record.applicant.full_name
-          td.govuk-table__cell =record.updated_at
+          td.govuk-table__cell =record.updated_at.to_fs(:db)
 - else
   p =t("#{type}.dashboard.no_records")

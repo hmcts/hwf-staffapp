@@ -36,18 +36,18 @@ shared_examples 'date_received validation' do
         after { Timecop.return }
 
         it 'allows today' do
-          form.date_received = Time.zone.local(2014, 10, 1)
+          form.date_received = Time.zone.local(2014, 10, 1).to_fs(:db)
           expect(form).to be_valid
         end
 
         it 'allows 3 months ago' do
-          form.date_received = Time.zone.local(2014, 7, 1, 0, 30)
+          form.date_received = Time.zone.local(2014, 7, 1, 0, 30).to_fs(:db)
           expect(form).to be_valid
         end
 
         describe 'maximum' do
           before do
-            form.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0)
+            form.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0).to_fs(:db)
             form.valid?
           end
 

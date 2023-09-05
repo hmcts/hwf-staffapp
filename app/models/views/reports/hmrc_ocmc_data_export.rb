@@ -127,6 +127,7 @@ module Views
 
       def process_row(row)
         csv_row = row
+        csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC total income'] = hmrc_total_income(row)
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])

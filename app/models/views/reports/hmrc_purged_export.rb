@@ -27,11 +27,11 @@ module Views
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def process_row(row)
         line = []
-        line << row[0] # 'hmrc_checks.created_at',
+        line << row[0].to_fs(:db) # 'hmrc_checks.created_at',
         line << row[3] # office
         line << row[4] # be code
         line << row[5] # user
-        line << row[1] # purged_at
+        line << row[1].try(:to_fs, :db) # purged_at
         line << row[2] # reference
         line << row[6] # dob
         line << date_range(row[7]) # date range

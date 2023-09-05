@@ -7,7 +7,7 @@ RSpec.describe Forms::Report::FinanceTransactionalReport do
 
   describe 'validations' do
     before do
-      report.date_from = Time.zone.today.-1.month
+      report.date_from = Time.zone.today - 1.month
       report.date_to = Time.zone.today
     end
 
@@ -25,13 +25,13 @@ RSpec.describe Forms::Report::FinanceTransactionalReport do
       it { is_expected.to validate_presence_of(:date_to) }
 
       context 'when date_to is before date_from' do
-        before { report.date_to = Time.zone.today.-1.year }
+        before { report.date_to = Time.zone.today - 1.year }
 
         it { is_expected.not_to be_valid }
       end
 
       context 'when date_to is longer than two years' do
-        before { report.date_to = 3.years.from_now }
+        before { report.date_to = 3.years.from_now.to_fs(:db) }
 
         it { is_expected.not_to be_valid }
       end

@@ -5,6 +5,6 @@ h1.govuk-heading-l Deactivate #{business_entity.name} for #{office.name}
 
 = form_for @business_entity, url: confirm_deactivate_office_business_entity_path, method: :post do |f|
 
-  p.important-notice = t('business_entities.deactivate_warning', office: office.name, today_date: Date.today)
+  p.important-notice = t('business_entities.deactivate_warning', office: office.name, today_date: Date.today.to_fs(:db))
 
   .actions = f.submit 'Deactivate', class: 'button'

@@ -4,7 +4,7 @@ RSpec.describe Forms::FinanceReport do
   subject { report }
 
   let(:report) { described_class.new }
-  let(:date_from) { Time.zone.today.-1.month }
+  let(:date_from) { Time.zone.today - 1.month }
   let(:date_to) { Time.zone.today }
   let(:entity_code) { nil }
 

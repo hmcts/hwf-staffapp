@@ -189,7 +189,7 @@ module Views
 
       def income_threshold(row)
         return 'under' if row.income_min_threshold_exceeded
-        return 'over' if row.income_max_threshold_exceeded
+        'over' if row.income_max_threshold_exceeded
       end
 
       def over_61?(row)

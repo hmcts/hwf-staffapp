@@ -32,11 +32,11 @@ RSpec.describe BenefitCheck do
     end
 
     describe 'checks_by_day' do
-      let(:created_out_of_scope) { Time.zone.today.- 8.days }
-      let(:created_in_scope) { Time.zone.today.-5.days }
+      let(:created_out_of_scope) { Time.zone.today - 8.days }
+      let(:created_in_scope) { Time.zone.today - 5.days }
       before do
-        create(:benefit_check, created_at: created_out_of_scope.to_s, applicationable: application)
-        create(:benefit_check, created_at: created_in_scope.to_s, applicationable: application)
+        create(:benefit_check, created_at: created_out_of_scope, applicationable: application)
+        create(:benefit_check, created_at: created_in_scope, applicationable: application)
       end
       it 'finds only checks for the past week' do
         expect(described_class.checks_by_day.count).to eq 1

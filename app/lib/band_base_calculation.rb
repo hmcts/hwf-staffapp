@@ -88,7 +88,7 @@ class BandBaseCalculation
 
     if premiums_total.positive?
       @outcome = 'full' if income_to_use_under_threshold?(income_to_use)
-      @outcome = 'none' if MAX_INCOME_THRESHOLD < income_to_use
+      @outcome = 'none' if income_to_use > MAX_INCOME_THRESHOLD
     else
       @band = income_band(income)
       @outcome = 'none' if @band == -1

@@ -53,8 +53,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
       day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
       month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
       year = find(:xpath, './/input[@id="online_application_year_date_received"]').value
-      date_received = "#{day}/#{month}/#{year}".to_date.to_s
-      expect(date_received).to eq(online_application_1.date_received.to_s)
+      date_received = "#{day}/#{month}/#{year}".to_date.to_fs(:db)
+      expect(date_received).to eq(online_application_1.date_received.to_fs(:db))
 
       click_button 'Next'
       expect(page).to have_content "Check details"
@@ -74,8 +74,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
       day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
       month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
       year = find(:xpath, './/input[@id="online_application_year_date_received"]').value
-      date_received = "#{day}/#{month}/#{year}".to_date.to_s
-      expect(date_received).to eq(online_application_2.date_received.to_s)
+      date_received = "#{day}/#{month}/#{year}".to_date.to_fs(:db)
+      expect(date_received).to eq(online_application_2.date_received.to_fs(:db))
 
       click_button 'Next'
       expect(page).to have_content "Check details"
@@ -103,9 +103,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
         complete_page_as 'application_details', application, false
         check "This is a refund case"
         date_fee_paid = 10.days.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
         click_button 'Next'
 
         choose 'Less than £3,000'
@@ -137,9 +137,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 10.days.ago
-          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
           click_button 'Next'
 
@@ -177,9 +177,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 4.months.ago
-          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
           click_button 'Next'
           expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
@@ -211,9 +211,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 4.months.ago
-          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
           click_button 'Next'
           expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
@@ -274,9 +274,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
         check "This is a refund case"
 
         date_fee_paid = 10.days.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
         click_button 'Next'
 
@@ -311,9 +311,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
         check "This is a refund case"
 
         date_fee_paid = 4.months.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
         click_button 'Next'
         expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
@@ -363,9 +363,9 @@ RSpec.feature 'Processing refund application with valid date received date' do
         check "This is a refund case"
 
         date_fee_paid = 4.months.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_s
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_s
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_s
+        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
         click_button 'Next'
         expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")

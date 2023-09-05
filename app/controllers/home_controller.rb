@@ -73,7 +73,7 @@ class HomeController < ApplicationController
   def ready_to_search?(form)
     return true if form.reference.present?
     form.errors.add(:reference, blank_search_params_message)
-    nil
+    false
   end
 
   def process_search(form)

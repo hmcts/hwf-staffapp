@@ -6,8 +6,8 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
   subject(:data) { described_class.new(business_entity, start_date, end_date) }
 
   let(:business_entity) { create(:business_entity) }
-  let(:start_date) { Time.zone.today.-1.month }
-  let(:end_date) { Time.zone.today.+1.month }
+  let(:start_date) { Time.zone.today - 1.month }
+  let(:end_date) { Time.zone.today + 1.month }
 
   describe 'attributes' do
     it { is_expected.to respond_to :office }

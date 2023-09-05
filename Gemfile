@@ -107,7 +107,7 @@ group :development, :test do
   gem 'parallel_tests'
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'rubocop', "1.41.0", require: false
+  gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
