@@ -69,8 +69,6 @@ jobs:
         inputs:
           command: 'build'
           Dockerfile: '**/Dockerfile.test'
-          containerRegistry: |
-                dockerRegistryEndpointName
           repository: 'hwf-staff'
           tags: |
             $(getDockerTag.DOCKER_TAG)
