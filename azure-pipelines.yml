@@ -74,7 +74,7 @@ jobs:
             $(getDockerTag.DOCKER_TAG)
 
       - script: |
-          docker run --network="host" --name hwf-staff -t hwf-staff:$(getDockerTag.DOCKER_TAG)
+          docker run --network="host" --name hwf-staff -e DB_HOST=postgres -e DB_USERNAME=postgres -t hwf-staff:$(getDockerTag.DOCKER_TAG)
         displayName: 'Run an test'
 
       - task: PublishTestResults@2
