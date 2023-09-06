@@ -61,14 +61,14 @@ jobs:
         displayName: 'Build an image'
         inputs:
           Dockerfile: '**/Dockerfile.test'
-          imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
+          imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'
           command: 'build'
 
       - task: Docker@1
         displayName: 'Run an image'
         inputs:
           Dockerfile: '**/Dockerfile.test'
-          imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
+          imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'
           command: 'run'
 
       - task: PublishTestResults@2
