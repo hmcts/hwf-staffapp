@@ -72,7 +72,7 @@ jobs:
           command: 'build'
 
       - task: Docker@1
-        displayName: 'Run an image'
+        displayName: 'Run an test'
         inputs:
           Dockerfile: '**/Dockerfile.test'
           imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'

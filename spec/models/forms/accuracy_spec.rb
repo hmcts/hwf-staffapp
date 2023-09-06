@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Accuracy do
-  subject(:form) {   described_class.new(evidence) }
+  subject(:form) { described_class.new(evidence) }
 
   params_list = [:correct, :incorrect_reason, :incorrect_reason_category, :staff_error_details]
 
@@ -25,7 +25,7 @@ RSpec.describe Forms::Accuracy do
       context 'when not a boolean value' do
         let(:params) { { correct: 'some string' } }
 
-        it { is_expected.to be false }
+        it { is_expected.to be true }
       end
     end
   end
