@@ -57,19 +57,19 @@ jobs:
       source_image: 'ruby:3.2-alpine'
 
     steps:
-    - task: Docker@1
-    displayName: 'Build an image'
-    inputs:
-      Dockerfile: '**/Dockerfile.test'
-      imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
-      command: 'Build an image'
+      - task: Docker@1
+        displayName: 'Build an image'
+        inputs:
+          Dockerfile: '**/Dockerfile.test'
+          imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
+          command: 'build'
 
-    - task: Docker@1
-    displayName: 'Run an image'
-    inputs:
-      Dockerfile: '**/Dockerfile.test'
-      imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
-      command: 'Run an image'
+      - task: Docker@1
+        displayName: 'Run an image'
+        inputs:
+          Dockerfile: '**/Dockerfile.test'
+          imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
+          command: 'run'
 
     # - script: |
     #     docker run --name test-container test-image
