@@ -64,20 +64,20 @@ jobs:
         displayName: 'Get Docker Tag'
         name: getDockerTag
 
-      - task: Docker@1
+      - task: Docker@2
         displayName: 'Build an image'
         inputs:
-          Dockerfile: '**/Dockerfile.test'
-          imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'
           command: 'build'
-
-      - task: Docker@1
-        displayName: 'Run an test'
-        inputs:
           Dockerfile: '**/Dockerfile.test'
-          imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'
-          command: 'run'
-          runInBackground: 'false'
+          containerRegistry: |
+                dockerRegistryEndpointName
+          repository: 'hwf-staff'
+          tags: |
+            $(getDockerTag.DOCKER_TAG)
+
+      - script: |
+        docker run --network="host" --name hwf-staff -t hwf-staff:$(getDockerTag.DOCKER_TAG)
+        displayName: 'Run an test'
 
       - task: PublishTestResults@2
         inputs:
