@@ -77,6 +77,7 @@ jobs:
           Dockerfile: '**/Dockerfile.test'
           imageName: 'hwf-staff:$(getDockerTag.DOCKER_TAG)'
           command: 'run'
+          runInBackground: 'false'
 
       - task: PublishTestResults@2
         inputs:
