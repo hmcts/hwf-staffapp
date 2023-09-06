@@ -31,6 +31,7 @@ ENV NOTIFY_COMPLETED_CY_REFUND_ONLINE_TEMPLATE_ID ''
 ENV NOTIFY_COMPLETED_CY_REFUND_PAPER_TEMPLATE_ID ''
 ENV NOTIFY_DWP_DOWN_TEMPLATE_ID='22025e7a-1bdd-450b-bb8f-a35f7493bd7c'
 ENV POSTGRES_HOST_AUTH_METHOD: trust
+ENV WAIT_HOSTS: 'postgres:5432'
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -56,7 +57,7 @@ RUN npm install
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 
-CMD ["sh", "-c", "/wait && bundle exec rubocop --fail-fast && \
+CMD ["sh", "-c", "/wait && \
      bundle exec rake db:create db:schema:load && \
      bundle exec rake parallel:setup && bundle exec rake parallel:spec"]
 

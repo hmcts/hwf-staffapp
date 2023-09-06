@@ -33,13 +33,18 @@ variables:
   NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID: 'template4'
   NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID: 'template5'
   NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID: 'template6'
+  DB_HOST: 'postgres'
+  DB_USERNAME: 'postgres'
+  WAIT_HOSTS: 'postgres:5432'
 
 resources:
   containers:
 
   - container: postgres
     image: postgres:11
-    env: { POSTGRES_HOST_AUTH_METHOD: trust }
+    env:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: $(DB_USERNAME)
     ports:
     - 5432:5432
 jobs:
@@ -74,7 +79,7 @@ jobs:
             $(getDockerTag.DOCKER_TAG)
 
       - script: |
-          docker run --network="host" --name hwf-staff -e DB_HOST=postgres -e DB_USERNAME=postgres -t hwf-staff:$(getDockerTag.DOCKER_TAG)
+          docker run --network="host" --name hwf-staff -e DB_HOST=$(DB_HOST) -e DB_USERNAME=$(DB_USERNAME) -t hwf-staff:$(getDockerTag.DOCKER_TAG)
         displayName: 'Run an test'
 
       - task: PublishTestResults@2
