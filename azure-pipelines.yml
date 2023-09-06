@@ -71,19 +71,11 @@ jobs:
           imageName: '${{ parameters.applicationName }}:$(getDockerTag.DOCKER_TAG)'
           command: 'run'
 
-    # - script: |
-    #     docker run --name test-container test-image
-    #   displayName: 'Run tests in Docker container'
-
-    # - script: |
-    #     docker cp test-container:/home/app/test-results.xml .
-    #   displayName: 'Copy test results'
-
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test-results.xml'
-      condition: succeededOrFailed()
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/test-results.xml'
+        condition: succeededOrFailed()
 
 
 
