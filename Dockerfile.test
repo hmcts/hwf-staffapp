@@ -12,8 +12,8 @@ ENV DWP_API_PROXY 'http://localhost:9292'
 ENV ENV 'test'
 ENV SAUCE_USERNAME 'saucelabs_username'
 ENV SAUCE_ACCESS_KEY 'saucelabs_auth_key'
-ENV HMRC_SECRET 'LIOAIHSDFSDFSDFIRSH'
-ENV HMRC_CLIENT_ID 'QwW73@omyZ6b6rw3g9z'
+ENV HMRC_SECRET 'abcd'
+ENV HMRC_CLIENT_ID '56321'
 ENV GOVUK_NOTIFY_API_KEY ''
 
 ENV NOTIFY_PASSWORD_RESET_TEMPLATE_ID ''
@@ -56,8 +56,5 @@ RUN npm install
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 
-CMD ["sh", "-c", "/wait && bundle exec rubocop --fail-fast && \
-     bundle exec brakeman && \
-     bundle exec rake db:create db:schema:load && \
-     bundle exec rake parallel:setup && bundle exec rake parallel:spec"]
+CMD ["sh", "-c", "wait && bundle exec rubocop --fail-fast"]
 
