@@ -63,7 +63,6 @@ jobs:
           echo "##vso[task.setvariable variable=DOCKER_TAG;isOutput=true]$(Build.SourceBranchName)-${docker_image_tag_sha}"
         displayName: 'Get Docker Tag'
         name: getDockerTag
-        id: getDockerTag
 
       - task: Docker@1
         displayName: 'Build an image'
