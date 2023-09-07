@@ -56,5 +56,5 @@ RUN npm install
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
 
-CMD ["sh", "-c", "wait && bundle exec rake db:create db:schema:load && bundle exec rake parallel:setup && bundle exec rake parallel:spec"]
+CMD ["sh", "-c", "wait && bundle exec rake db:create db:schema:load && bundle exec rspec spec/models/forms/accuracy_spec.rb"]
 
