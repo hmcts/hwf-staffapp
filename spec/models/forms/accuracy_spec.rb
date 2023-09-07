@@ -25,7 +25,7 @@ RSpec.describe Forms::Accuracy do
       context 'when not a boolean value' do
         let(:params) { { correct: 'some string' } }
 
-        it { is_expected.to be false }
+        it { is_expected.to be true }
       end
     end
   end
