@@ -56,9 +56,19 @@ jobs:
 
 
     steps:
-    - template: ./pipeline-steps/add-dependencies.yaml
-    - template: ./pipeline-steps/test-application.yaml
-    - template: ./pipeline-steps/publish-tests.yaml
+      - script: |
+          sudo apt-get update
+          sudo apt-get install -y $(aptDependencies)
+        displayName: 'add dependencies'
+
+      - script: |
+        mv .dockerignore .dockerignore.backup
+        cp Dockerfile.test.dockerignore .dockerignore
+        docker-compose -f docker-compose-test.yml run --rm test
+        rm .dockerignore
+        mv .dockerignore.backup .dockerignore
+      displayName: 'Docker compose tests'
+
 
   - job: BuildAndPushImageCI
 
