@@ -315,6 +315,9 @@ Rails/UniqueValidationWithoutIndex:
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
+Style/SpecialGlobalVars:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails

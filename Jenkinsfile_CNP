@@ -4,7 +4,33 @@
 
 def type = "ruby"
 def product = "help-with-fees"
-def component = "application"
+def component = "staffapp"
 
 def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
+withPipeline(type, product, component) {
+    env.RAILS_ENV = 'test'
+    env.DB_HOST = 'localhost'
+    env.DB_USER = 'postgres'
+    env.DB_PORT = '5421'
+    env.DB_PASSWORD = 'postgres'
+    env.TEST_BROWSER = 'chrome_local'
+    env.NODE_OPTIONS='--openssl-legacy-provider'
+    env.ENABLE_COVERAGE='true'
+
+    before('test') {
+        sh script:"""
+            npm install
+            docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
+            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+        """, label: 'Start test postgres'
+
+        rubyBuilder.bundle("exec rails db:create db:migrate assets:precompile webdrivers:chromedriver:update")
+    }
+
+    afterAlways('test') {
+        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
+            label: "docker stop hwf-test-postgres"
+    }
+}
