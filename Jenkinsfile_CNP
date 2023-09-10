@@ -20,17 +20,13 @@ withPipeline(type, product, component) {
     env.ENABLE_COVERAGE='true'
 
     before('test') {
-        sh script:"""
-            npm install
-            docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
-            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
-        """, label: 'Start test postgres'
+        sh script:"""npm install""", label: 'Start test postgres'
 
-        rubyBuilder.bundle("exec rails db:create db:migrate assets:precompile webdrivers:chromedriver:update")
+        rubyBuilder.bundle("exec rails db:create db:schema:load")
     }
 
-    afterAlways('test') {
-        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
-            label: "docker stop hwf-test-postgres"
-    }
+    // afterAlways('test') {
+    //     sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
+    //         label: "docker stop hwf-test-postgres"
+    // }
 }
