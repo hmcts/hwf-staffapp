@@ -13,7 +13,7 @@ withPipeline(type, product, component) {
     env.RAILS_ENV = 'test'
     env.DB_HOST = 'localhost'
     env.DB_USER = 'postgres'
-    env.DB_PORT = '5432'
+    env.DB_PORT = '5421'
     env.DB_PASSWORD = 'postgres'
     env.TEST_BROWSER = 'chrome_local'
     env.NODE_OPTIONS='--openssl-legacy-provider'
@@ -23,7 +23,7 @@ withPipeline(type, product, component) {
         sh script:"""
             yarn install
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
-            docker run --rm --name hwf-test-postgres --publish 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
         """, label: 'Start test postgres'
 
         rubyBuilder.bundle("exec rails db:create db:migrate")
