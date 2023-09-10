@@ -13,7 +13,7 @@ development:
 test: &test
   <<: *default
   database: <%= ENV.fetch('DB_NAME', 'fr-staffapp_test') %><%= ENV['TEST_ENV_NUMBER'] %>
-  port: <%= ENV['DB_PORT'] || '5421 %>
+  port: <%= ENV['DB_PORT'] || '5421' %>
 
 production:
   <<: *default
