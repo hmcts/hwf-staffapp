@@ -15,7 +15,7 @@
 /log/*.log
 /log/*.json
 
-# /tmp/*
+/tmp/*
 
 db_dump
 
