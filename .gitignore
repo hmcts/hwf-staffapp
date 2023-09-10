@@ -15,11 +15,7 @@
 /log/*.log
 /log/*.json
 
-/tmp/cache
-/tmp/parallel_runtime_cucumber.log
-tmp/parallel_runtime_rspec.log
-tmp/export.zip
-tmp/rspec_examples.txt
+# /tmp/*
 
 db_dump
 
