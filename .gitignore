@@ -14,7 +14,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /log/*.json
-/tmp
+
+/tmp/cache
+/tmp/parallel_runtime_cucumber.log
+
+db_dump
 
 # Ignore asdf config file
 .tool-versions

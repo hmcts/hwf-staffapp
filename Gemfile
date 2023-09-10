@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'application_insights', '~> 0.5.6'
@@ -98,6 +99,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
+  gem 'bundler-audit'
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'

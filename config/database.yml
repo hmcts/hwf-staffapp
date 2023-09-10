@@ -3,6 +3,7 @@ default: &default
   encoding: unicode
   user: <%= ENV.fetch('DB_USERNAME', nil) %>
   host: <%= ENV.fetch('DB_HOST', 'localhost') %>
+  password: '<%= ENV['DB_PASSWORD']  || '' %>'
   pool: 10
 
 development:
