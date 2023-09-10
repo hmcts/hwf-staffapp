@@ -19,10 +19,13 @@ withPipeline(type, product, component) {
     env.NODE_OPTIONS='--openssl-legacy-provider'
     env.ENABLE_COVERAGE='true'
 
-    before('test') {
-        sh script:"""npm install""", label: 'Start test postgres'
+      before('test') {
+        sh script:"""
+            yarn install
+            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+        """, label: 'Start test postgres'
 
-        rubyBuilder.bundle("exec rails db:create db:schema:load")
+        rubyBuilder.bundle("exec rails db:create db:migrate")
     }
 
     // afterAlways('test') {
