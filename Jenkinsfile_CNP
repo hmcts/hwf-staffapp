@@ -19,15 +19,15 @@ withPipeline(type, product, component) {
     env.NODE_OPTIONS='--openssl-legacy-provider'
     env.ENABLE_COVERAGE='true'
 
-    env.REDIRECTION_DOMAINS=trial.domain:production.domain
-    env.ACTIVE_JOB_ENABLED=false
-    env.PROCESSED_DELETED_PER_PAGE=20
+    env.REDIRECTION_DOMAINS='trial.domain:production.domain'
+    env.ACTIVE_JOB_ENABLED='false'
+    env.PROCESSED_DELETED_PER_PAGE='20'
     env.DWP_NOTIFICATION_ALERT_EMAILS=['dan@test.com', 'petr@test.gov.uk']
-    env.DWP_API_PROXY=http://localhost:9292
+    env.DWP_API_PROXY='http://localhost:9292'
 
     env.ENV='test'
-    env.SAUCE_USERNAME=saucelabs_username
-    env.SAUCE_ACCESS_KEY=saucelabs_auth_key
+    env.SAUCE_USERNAME='saucelabs_username'
+    env.SAUCE_ACCESS_KEY='saucelabs_auth_key'
     env.HMRC_SECRET='LIOAIHSDFSDFSDFIRSH'
     env.HMRC_CLIENT_ID='QwW73@omyZ6b6rw3g9z'
     env.GOVUK_NOTIFY_API_KEY=''
