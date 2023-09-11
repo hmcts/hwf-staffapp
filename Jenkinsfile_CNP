@@ -60,8 +60,8 @@ withPipeline(type, product, component) {
         rubyBuilder.bundle("exec rails db:create db:schema:load")
     }
 
-    // afterAlways('test') {
-    //     sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
-    //         label: "docker stop hwf-test-postgres"
-    // }
+    afterAlways('test') {
+        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
+            label: "docker stop hwf-test-postgres"
+    }
 }
