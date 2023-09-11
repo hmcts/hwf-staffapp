@@ -3,4 +3,8 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+puts "#{ENV['RAILS_ENV']} - rails env"
+puts "#{ENV['RACK_ENV']} - rails env"
+
+
 Rails.application.load_tasks
