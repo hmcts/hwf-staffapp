@@ -1,9 +1,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  user: <%= ENV.fetch('DB_USERNAME', nil) %>
+  username: <%= ENV.fetch('DB_USERNAME', 'postgres') %>
   host: <%= ENV.fetch('DB_HOST', 'localhost') %>
   password: '<%= ENV['DB_PASSWORD']  || '' %>'
+  port: <%= ENV['DB_PORT'] || '5432' %>
   pool: 10
 
 development:
@@ -16,11 +17,9 @@ test: &test
 
 production:
   <<: *default
-  host: <%= ENV['DB_HOST'] || 'localhost' %>
-  port: <%= ENV['DB_PORT'] || '5432' %>
-  username: <%= ENV['DB_USERNAME'] %>
   password: '<%= ENV['DB_PASSWORD'] %>'
   database: <%= ENV['DB_NAME'] || 'fr-staffapp' %>
-  pool: 15
+
 cucumber:
   <<: *test
+
