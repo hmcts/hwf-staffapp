@@ -14,4 +14,8 @@ class HealthStatusController < ApplicationController
     health = HealthStatus.current_status
     render json: health, status: health[:ok].equal?(true) ? 200 : 500
   end
+
+  def show
+    render json: { status: :ok }
+  end  
 end
