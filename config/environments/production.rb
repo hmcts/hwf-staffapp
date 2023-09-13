@@ -42,11 +42,11 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 
-  config.ssl_options = {
-    hsts: { expires: 1.year, preload: true },
-    redirect: { exclude: ->(request) { return true if /ping|submissions/.match?(request.path) } }
-  }
-  config.force_ssl = true
+  # config.ssl_options = {
+  #   hsts: { expires: 1.year, preload: true },
+  #   redirect: { exclude: ->(request) { return true if /ping|submissions/.match?(request.path) } }
+  # }
+  # config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).

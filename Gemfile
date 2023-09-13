@@ -113,6 +113,7 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
+  gem 'simplecov', '~> 0.21'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'

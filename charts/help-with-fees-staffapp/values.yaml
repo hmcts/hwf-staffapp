@@ -1,13 +1,11 @@
 base:
   applicationPort: 3000
-  readinessPath: /status
-  livenessPath: /status
-  startupPath: /status
   image: 'hmctspublic.azurecr.io/help-with-fees/hwf-staffapp:latest'
   ingressHost: hwf-staffapp.{{ .Values.global.environment }}.platform.hmcts.net
   aadIdentityName: help-with-fees
   environment:
     RAILS_ENV: 'production'
+    SECRETS_PATH: "/mnt/secrets/help-with-fees"
   keyVaults:
     help-with-fees:
       secrets:
@@ -17,6 +15,10 @@ base:
           alias: DATABASE_USERNAME
         - name: hwf-password
           alias: DATABASE_PASSWORD
+        - name: prod-hwf-public-secret-token
+          alias: prod-hwf-public-secret-token
+        - name: dev-hwf-public-secret-token
+          alias: SECRET_KEY_BASE  
 
 
 
