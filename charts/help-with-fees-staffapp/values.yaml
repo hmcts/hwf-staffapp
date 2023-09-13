@@ -1,6 +1,6 @@
 base:
   applicationPort: 3000
-  image: 'hmctspublic.azurecr.io/help-with-fees/hwf-staffapp:latest'
+  image: 'hmctspublic.azurecr.io/help-with-fees/staffapp:latest'
   ingressHost: hwf-staffapp.{{ .Values.global.environment }}.platform.hmcts.net
   aadIdentityName: help-with-fees
   environment:
