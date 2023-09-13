@@ -120,14 +120,14 @@ Rails.application.routes.draw do
   get 'guide/appeals' => 'guide#appeals'
   get 'guide/suspected_fraud' => 'guide#suspected_fraud'
 
-#  get 'ping' => 'health_status#ping'
-#  get 'healthcheck' => 'health_status#healthcheck'
+  #  get 'ping' => 'health_status#ping'
+  #  get 'healthcheck' => 'health_status#healthcheck'
   get 'raise_exception' => 'health_status#raise_exception'
- 
+
   get '/health' => 'health_status#show', defaults: { format: 'json' }
   get '/health/readiness' => 'health_status#show', defaults: { format: 'json' }
   get '/health/liveness' => 'health_status#show', defaults: { format: 'json' }
-  
+
   get 'feedback' => 'feedback#new'
   get 'feedback/display' => 'feedback#index'
 

@@ -2,10 +2,6 @@ class HealthStatusController < ApplicationController
   skip_before_action :authenticate_user!
   skip_after_action :verify_authorized
 
-  def ping
-    render json: Deployment.info
-  end
-
   def raise_exception
     raise "THIS IS A TEST EXCEPTION RAISED ON PURPOSE"
   end
@@ -17,5 +13,5 @@ class HealthStatusController < ApplicationController
 
   def show
     render json: { status: :ok }
-  end  
+  end
 end
