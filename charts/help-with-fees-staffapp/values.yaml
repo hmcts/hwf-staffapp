@@ -6,6 +6,28 @@ base:
   environment:
     RAILS_ENV: 'production'
     SECRETS_PATH: "/mnt/secrets/help-with-fees"
+    SERVICE_NOW_EMAIL: "DCD-HWFSupportServiceDeskDEV@HMCTS.NET"
+    RAILS_SERVE_STATIC_FILES: true
+    RACK_ENV: "production"
+    WEB_CONCURRENCY: 1
+    SENTRY_SSL_VERIFICATION: false
+    RAILS_LOG_TO_STDOUT: true
+    LOG_LEVEL: "info"
+    DOCKER_STATE: "migrate"
+    DB_PORT: 5432
+    SMTP_DOMAIN: "staff.demo.hwf.dsd.io"
+    SMTP_HOSTNAME: "smtp.sendgrid.net"
+    SMTP_PORT: 587
+    DWP_API_PROXY: "http://hwf-benefit-checker-api.helpwithfees:3000"
+    ACTIVE_JOB_ENABLED: true
+    NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID: "dbd72fa4-0232-4825-9460-b6f1d369b481"
+    NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID: "ab017b1b-0f5a-45df-b2c5-467f97a54828"
+    NOTIFY_COMPLETED_PAPER_TEMPLATE_ID: "115e4918-ce48-4bfe-8784-1b8404237d4c"
+    NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID: "d92e6d1d-08b6-4124-84d3-a93bfb6b4c26"
+    NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID: "61cb8166-c137-459b-b1c0-b0ca63c1da6e"
+    NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID: "9f52cb39-33bd-4df6-871c-e337c058972b"
+    NOTIFY_PASSWORD_RESET_TEMPLATE_ID: "fc94a9eb-99d1-47ad-a5d0-f47f16128766"
+    NOTIFY_DWP_DOWN_TEMPLATE_ID: "22025e7a-1bdd-450b-bb8f-a35f7493bd7c"
   keyVaults:
     help-with-fees:
       secrets:
@@ -19,7 +41,42 @@ base:
           alias: prod-hwf-public-secret-token
         - name: dev-hwf-public-secret-token
           alias: SECRET_KEY_BASE  
-
-
-
+        - name: hwf-staff-secret-token
+          alias: SECRET_TOKEN
+        - name: hwf-staff-submission-token
+          alias: SUBMISSION_TOKEN
+        - name: hwf-staff-appinsights-key
+          alias: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
+        - name: hwf-staff-sentry-dsn
+          alias: SENTRY_DSN
+        - name: hwf-staff-db-password
+          alias: DB_PASSWORD
+        - name: hwf-staff-db-host
+          alias: DB_HOST
+        - name: hwf-staff-db-user-name
+          alias: DB_USERNAME
+        - name: hwf-staff-db-name
+          alias: DB_NAME
+        - name: hwf-staff-smtp-username
+          alias: SMTP_USERNAME
+        - name: hwf-staff-smtp-password
+          alias: SMTP_PASSWORD
+        - name: hwf-staff-dwp-notification-alert-emails
+          alias: DWP_NOTIFICATION_ALERT_EMAILS
+        - name: hwf-staff-hmrc-ttp-secret
+          alias: HMRC_TTP_SECRET
+        - name: hwf-staff-hmrc-client-id
+          alias: HMRC_CLIENT_ID
+        - name: hwf-staff-hmrc-secret
+          alias: HMRC_SECRET
+        - name: hwf-staff-hmrc-api-url
+          alias: HMRC_API_URL
+        - name: hwf-staff-notify-api-key
+          alias: GOVUK_NOTIFY_API_KEY
+        - name: hwf-staff-hmrc-office-code
+          alias: HMRC_OFFICE_CODE
+        - name: hwf-staff-maintenance-enabled
+          alias: MAINTENANCE_ENABLED
+        - name: hwf-staff-maintenance-allowed-ips
+          alias: MAINTENANCE_ALLOWED_IPS
 
