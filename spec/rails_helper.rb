@@ -1,3 +1,16 @@
+require 'simplecov'
+require "simplecov_json_formatter"
+
+# This file is copied to spec/ when you run 'rails generate rspec:install'
+ENV['RAILS_ENV'] ||= 'test'
+ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
+
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+SimpleCov.start if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
+# allow Code Climate Test coverage reports to be sent
+
+
+
 
 if ENV['CODECLIMATE_REPO_TOKEN']
   require 'codeclimate-test-reporter'
@@ -5,9 +18,6 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   # allow Code Climate Test coverage reports to be sent
 end
 
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV['RAILS_ENV'] ||= 'test'
-ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'

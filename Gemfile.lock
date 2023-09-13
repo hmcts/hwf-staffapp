@@ -707,6 +707,7 @@ DEPENDENCIES
   sentry-rails (~> 5.8)
   shoulda-matchers
   simple_encryptable
+  simplecov (~> 0.21)
   site_prism
   slim-rails (~> 3.2)
   spring
