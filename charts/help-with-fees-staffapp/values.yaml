@@ -43,7 +43,7 @@ base:
           alias: DATABASE_PASSWORD
 #        - name: prod-hwf-public-secret-token
 #          alias: prod-hwf-public-secret-token
-        - name: dev-hwf-public-secret-token
+        - name: hwf-public-secret-token
           alias: SECRET_KEY_BASE  
         - name: hwf-staff-secret-token
           alias: SECRET_TOKEN
