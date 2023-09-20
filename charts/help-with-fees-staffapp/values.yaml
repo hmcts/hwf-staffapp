@@ -22,7 +22,7 @@ base:
     SMTP_DOMAIN: "staff.demo.hwf.dsd.io"
     SMTP_HOSTNAME: "smtp.sendgrid.net"
     SMTP_PORT: 587
-    DWP_API_PROXY: "http://hwf-benefit-checker-api.{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    DWP_API_PROXY: "http://help-with-fees-benefit-checker-api-base"
     ACTIVE_JOB_ENABLED: true
     NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID: "dbd72fa4-0232-4825-9460-b6f1d369b481"
     NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID: "ab017b1b-0f5a-45df-b2c5-467f97a54828"
