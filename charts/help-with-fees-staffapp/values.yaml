@@ -18,7 +18,7 @@ base:
     RAILS_LOG_TO_STDOUT: true
     LOG_LEVEL: "info"
     DOCKER_STATE: "migrate"
-    DATABASE_USERNAME: "pgadmin"
+    DB_USERNAME: "pgadmin"
     DB_NAME: "helpwithfees"
     DB_PORT: 5432
     SMTP_DOMAIN: "staff.demo.hwf.dsd.io"
