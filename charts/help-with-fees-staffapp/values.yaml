@@ -18,7 +18,7 @@ base:
     RAILS_LOG_TO_STDOUT: true
     LOG_LEVEL: "info"
     DOCKER_STATE: "migrate"
-    DATABASE_USERNAME: "pgadmin"
+    DB_USERNAME: "pgadmin"
     DB_NAME: "helpwithfees"
     DB_PORT: 5432
     SMTP_DOMAIN: "staff.demo.hwf.dsd.io"
@@ -40,8 +40,6 @@ base:
       secrets:
         - name: hwf-fqdn
           alias: DATABASE_HOST
-        - name: hwf-username
-          alias: DATABASE_USERNAME
         - name: hwf-password
           alias: DATABASE_PASSWORD
 #        - name: prod-hwf-public-secret-token
