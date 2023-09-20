@@ -257,6 +257,9 @@ RSpec/IndexedLet:
 Capybara/CurrentPathExpectation:
   Enabled: false
 
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: false
+
 RSpec/ExpectInHook:
   Enabled: false
 
