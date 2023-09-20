@@ -19,7 +19,7 @@ production:
   <<: *default
   password: '<%= ENV['DB_PASSWORD'] %>'
   database: <%= ENV['DB_NAME'] || 'fr-staffapp' %>
-
+  sslmode: '<%= ENV.fetch('DB_SSL_MODE', 'disable') %>'
 cucumber:
   <<: *test
 
