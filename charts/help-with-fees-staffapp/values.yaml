@@ -18,6 +18,8 @@ base:
     RAILS_LOG_TO_STDOUT: true
     LOG_LEVEL: "info"
     DOCKER_STATE: "migrate"
+    DATABASE_USERNAME: "pgadmin"
+    DB_NAME: "helpwithfees"
     DB_PORT: 5432
     SMTP_DOMAIN: "staff.demo.hwf.dsd.io"
     SMTP_HOSTNAME: "smtp.sendgrid.net"
@@ -54,14 +56,10 @@ base:
           alias: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
         - name: hwf-staff-sentry-dsn
           alias: SENTRY_DSN
-        - name: hwf-staff-db-password
+        - name: hwf-password
           alias: DB_PASSWORD
-        - name: hwf-staff-db-host
+        - name: hwf-fqdn
           alias: DB_HOST
-        - name: hwf-staff-db-user-name
-          alias: DB_USERNAME
-        - name: hwf-staff-db-name
-          alias: DB_NAME
         - name: hwf-staff-smtp-username
           alias: SMTP_USERNAME
         - name: hwf-staff-smtp-password
