@@ -40,8 +40,6 @@ base:
       secrets:
         - name: hwf-fqdn
           alias: DATABASE_HOST
-        - name: hwf-username
-          alias: DATABASE_USERNAME
         - name: hwf-password
           alias: DATABASE_PASSWORD
 #        - name: prod-hwf-public-secret-token
