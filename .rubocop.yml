@@ -54,8 +54,13 @@ RSpec/DescribeClass:
   Exclude:
     - spec/support/**/*
     - spec/views/**/*
-RSpec/FilePath:
+
+RSpec/SpecFilePathFormat:
   Enabled: false
+
+RSpec/SpecFilePathSuffix:
+  Enabled: false
+
 
 # private/protected/public
 Layout/AccessModifierIndentation:
