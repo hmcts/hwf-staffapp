@@ -94,7 +94,7 @@ class UsersController < ApplicationController
 
   def populate_lookups
     @roles = Pundit.policy(current_user, user).allowed_role
-    @offices = Office.all.order(:name)
+    @offices = Office.order(:name)
     @jurisdictions = user.office.jurisdictions
   end
 

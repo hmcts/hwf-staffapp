@@ -31,7 +31,7 @@ module Users
                else
                  ['user', 'manager', 'reader']
                end
-      @offices = Office.all.order(:name)
+      @offices = Office.order(:name)
     end
 
     def invite_params

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     where('current_sign_in_at < ? OR current_sign_in_at IS NULL', inactivate_date)
   end)
 
-  scope :sorted_by_email, -> { all.order(:email) }
+  scope :sorted_by_email, -> { order(:email) }
 
   scope :by_office, ->(office_id) { where(office_id: office_id) }
   email_regex = /\A([^@\s]+)@(((justice|hmcourts-service|hmcts)\.gsi|digital\.justice|justice)\.gov\.uk|hmcts\.net)\z/i
