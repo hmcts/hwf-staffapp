@@ -75,7 +75,7 @@ gem 'simple_encryptable'
 # Google tag Manager
 gem 'gtm_on_rails'
 
-gem 'chartkick', '~> 4.1.3'
+gem 'chartkick', '~> 4.2.0'
 gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'nokogiri'
