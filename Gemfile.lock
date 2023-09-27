@@ -142,7 +142,7 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
-    chartkick (4.2.1)
+    chartkick (5.0.4)
     ckeditor (5.1.1)
       orm_adapter (~> 0.5.0)
     climate_control (1.2.0)
@@ -649,7 +649,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-screenshot
-  chartkick (~> 4.2.0)
+  chartkick (~> 5.0.0)
   ckeditor (~> 5.1)
   climate_control
   codeclimate-test-reporter
