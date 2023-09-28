@@ -1,3 +1,5 @@
+# These tasks are needed by Jenkins pipeline
+
 task test: :environment do
   unless system("rspec -t ~smoke --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
@@ -9,10 +11,10 @@ end
 
 namespace :test do
   task smoke: :environment do
-    puts "No smoke tests yet"
+    system "bundle exec cucumber features/  --tags @smoke"
   end
 
   task functional: :environment do
-    puts "No functional tests yet"
+    system "bundle exec cucumber features/"
   end
 end
