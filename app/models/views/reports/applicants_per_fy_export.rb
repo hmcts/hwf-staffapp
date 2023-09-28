@@ -12,7 +12,7 @@ module Views
         @date_from = "#{fy_start}-04-01 00:00"
         @date_to = "#{fy_end}-03-31 23:59"
         @csv_file_name = "applicants-#{fy_start}-#{fy_end}-fy.csv"
-        @zipfile_path = "applicants-#{fy_start}-#{fy_end}-fy.csv.zip"
+        @zipfile_path = "tmp/applicants-#{fy_start}-#{fy_end}-fy.csv.zip"
 
         @applicants = laod_applicants
         @jurisdictions = Jurisdiction.pluck(:name).sort
