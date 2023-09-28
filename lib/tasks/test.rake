@@ -1,8 +1,10 @@
 task test: :environment do
-  # unless system("rspec -t ~smoke --format RspecJunitFormatter --out tmp/test/rspec.xml")
-  #   raise "Rspec testing failed #{$?}"
-  # end
-  system "bundle exec rubocop"
+  unless system("rspec -t ~smoke --format RspecJunitFormatter --out tmp/test/rspec.xml")
+    raise "Rspec testing failed #{$?}"
+  end
+  unless system "bundle exec rubocop"
+    raise "Rubocop failed"
+  end
 end
 
 namespace :test do
