@@ -48,7 +48,7 @@ base:
           alias: SECRET_TOKEN
         - name: hwf-staff-submission-token
           alias: SUBMISSION_TOKEN
-        - name: app-insights-instrumentation-key
+        - name: hwf-app-insights-instrumentation-key
           alias: AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY
         - name: hwf-staff-sentry-dsn
           alias: SENTRY_DSN
