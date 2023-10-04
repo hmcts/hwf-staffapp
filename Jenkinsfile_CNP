@@ -19,7 +19,6 @@ withPipeline(type, product, component) {
     env.TEST_BROWSER = 'chrome_local'
     env.NODE_OPTIONS='--openssl-legacy-provider'
     env.ENABLE_COVERAGE='true'
-    env.TEST_ENV_NUMBER='2'
 
     env.REDIRECTION_DOMAINS='trial.domain:production.domain'
     env.ACTIVE_JOB_ENABLED='false'
