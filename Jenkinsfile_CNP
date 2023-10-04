@@ -19,6 +19,7 @@ withPipeline(type, product, component) {
     env.TEST_BROWSER = 'chrome_local'
     env.NODE_OPTIONS='--openssl-legacy-provider'
     env.ENABLE_COVERAGE='true'
+    env.TEST_ENV_NUMBER='2'
 
     env.REDIRECTION_DOMAINS='trial.domain:production.domain'
     env.ACTIVE_JOB_ENABLED='false'
@@ -27,8 +28,6 @@ withPipeline(type, product, component) {
     env.DWP_API_PROXY='http://localhost:9292'
 
     env.ENV='test'
-    env.SAUCE_USERNAME='saucelabs_username'
-    env.SAUCE_ACCESS_KEY='saucelabs_auth_key'
     env.HMRC_SECRET='LIOAIHSDFSDFSDFIRSH'
     env.HMRC_CLIENT_ID='QwW73@omyZ6b6rw3g9z'
     env.GOVUK_NOTIFY_API_KEY=''
@@ -58,6 +57,7 @@ withPipeline(type, product, component) {
         """, label: 'Start test postgres'
 
         rubyBuilder.bundle("exec rails db:create db:schema:load")
+        rubyBuilder.bundle("exec rails parallel:setup")
     }
 
     afterAlways('test') {
