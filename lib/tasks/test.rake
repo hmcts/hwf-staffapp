@@ -1,21 +1,26 @@
 # These tasks are needed by Jenkins pipeline
 
 task test: :environment do
-  system "bundle exec cucumber features/  --tags @smoke"
-  # unless system("rake parallel:spec RAILS_ENV=test")
-  #   raise "Rspec testing failed #{$?}"
-  # end
+  unless system("rake parallel:spec RAILS_ENV=test")
+    raise "Rspec testing failed #{$?}"
+  end
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
+  end
+  unless system "bundle exec cucumber features/  --tags @smoke"
+    raise "Smoke tests failed"
+  end
+  unless system "rake parallel:features CAPYBARA_SERVER_PORT=random RAILS_ENV=test"
+    raise "Functional tests failed"
   end
 end
 
 namespace :test do
   task smoke: :environment do
-    system "bundle exec cucumber features/  --tags @smoke"
+    puts "Smoke tests run in normal test rake"
   end
 
   task functional: :environment do
-    system "bundle exec cucumber features/"
+    puts "Functional tests run in normal test rake"
   end
 end
