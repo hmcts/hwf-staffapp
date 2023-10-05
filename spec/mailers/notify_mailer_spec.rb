@@ -35,7 +35,7 @@ RSpec.describe NotifyMailer do
   describe '#user_invite' do
     let(:mail) { described_class.user_invite(user) }
 
-    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_USER_INVOTE_TEMPLATE_ID', nil)
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_USER_INVITE_TEMPLATE_ID', nil)
 
     it 'has the right values' do
       expect(mail.govuk_notify_personalisation).to eq({

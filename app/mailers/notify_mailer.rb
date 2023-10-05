@@ -45,7 +45,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def user_invite(user)
-    set_template(ENV.fetch('NOTIFY_USER_INVOTE_TEMPLATE_ID', nil))
+    set_template(ENV.fetch('NOTIFY_USER_INVITE_TEMPLATE_ID', nil))
     set_personalisation(
       name: user.name,
       invite_url: accept_user_invitation_url(invitation_token: user.raw_invitation_token)
