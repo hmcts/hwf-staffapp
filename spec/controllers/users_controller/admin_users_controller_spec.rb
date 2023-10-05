@@ -198,15 +198,23 @@ RSpec.describe UsersController do
     end
 
     describe 'PATCH #invite' do
+      let(:user_invite_mailer) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }
 
-      before { patch :invite, params: { id: user_not_on_admins_team.to_param } }
+      before {
+        allow(NotifyMailer).to receive_messages(user_invite: user_invite_mailer)
+        patch :invite, params: { id: user_not_on_admins_team.to_param }
+      }
 
       it 'returns a redirect code' do
         expect(response).to have_http_status(:redirect)
       end
 
       it 'returns a confirmation message' do
-        expect(flash[:notice]).to eq("An invitation was sent to #{user_not_on_admins_team.name}")
+        expect(flash[:notice]).to eq("An invitation email has been sent to #{user_not_on_admins_team.email}.")
+      end
+
+      it 'using notify to send invite' do
+        expect(NotifyMailer).to have_received(:user_invite).with(user_not_on_admins_team)
       end
     end
   end
