@@ -45,6 +45,7 @@ withPipeline(type, product, component) {
     env.NOTIFY_COMPLETED_CY_REFUND_ONLINE_TEMPLATE_ID=''
     env.NOTIFY_COMPLETED_CY_REFUND_PAPER_TEMPLATE_ID=''
     env.NOTIFY_DWP_DOWN_TEMPLATE_ID='22025e7a-1bdd-450b-bb8f-a35f7493bd7c'
+    env.NOTIFY_USER_INVITE_TEMPLATE_ID='9e7bb557-8512-4913-9f91-f181487f4fe3'
     env.SENTRY_DSN=''
     env.SENTRY_SSL_VERIFICATION=''
 
@@ -57,6 +58,7 @@ withPipeline(type, product, component) {
 
         rubyBuilder.bundle("exec rails db:create db:schema:load")
         rubyBuilder.bundle("exec rails parallel:setup")
+        rubyBuilder.bundle("install")
     }
 
     afterAlways('test') {

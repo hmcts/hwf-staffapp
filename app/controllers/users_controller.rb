@@ -51,13 +51,29 @@ class UsersController < ApplicationController
 
   def invite
     authorize user
-    user.invite!
+    reinvite_user
 
-    flash[:notice] = "An invitation was sent to #{user.name}"
     redirect_to users_path
   end
 
   protected
+
+  def reinvite_user
+    @user = User.invite!({ email: @user.email }, user) do |u|
+      u.skip_invitation = true
+    end
+
+    NotifyMailer.user_invite(@user).deliver_now
+    update_invitation_time
+  end
+
+  def update_invitation_time
+    if @user.update(invitation_sent_at: Time.zone.now)
+      flash[:notice] = t('devise.invitations.send_instructions', email: @user.email)
+    else
+      flash[:alert] = t('devise.invitations.invitation_failed')
+    end
+  end
 
   def user
     @user ||= User.find(params[:id])

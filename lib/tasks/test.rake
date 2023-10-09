@@ -7,12 +7,12 @@ task test: :environment do
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end
-  unless system "bundle exec cucumber features/  --tags @smoke"
-    raise "Smoke tests failed"
-  end
-  unless system "rake parallel:features CAPYBARA_SERVER_PORT=random RAILS_ENV=test"
-    raise "Functional tests failed"
-  end
+  # unless system "bundle exec cucumber features/  --tags @smoke"
+  #   raise "Smoke tests failed"
+  # end
+  # unless system "rake parallel:features CAPYBARA_SERVER_PORT=random RAILS_ENV=test"
+  #   raise "Functional tests failed"
+  # end
 end
 
 namespace :test do

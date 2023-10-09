@@ -19,11 +19,29 @@ module Users
         flash[:alert] = t('devise.invitations.user_exists', email: Settings.mail.tech_support)
         render :new
       else
-        super
+        new_user_invite
+
+        redirect_to users_path
       end
     end
 
     private
+
+    def new_user_invite
+      @user = User.invite!(invite_params, current_user) do |u|
+        u.skip_invitation = true
+      end
+      NotifyMailer.user_invite(@user).deliver_now
+      update_invitation_time
+    end
+
+    def update_invitation_time
+      if @user.update(invitation_sent_at: Time.zone.now)
+        flash[:notice] = t('devise.invitations.send_instructions', email: @user.email)
+      else
+        flash[:alert] = t('devise.invitations.invitation_failed')
+      end
+    end
 
     def build_invite_lookup_lists
       @roles = if current_user.admin?

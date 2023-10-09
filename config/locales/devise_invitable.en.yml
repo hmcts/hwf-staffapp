@@ -9,6 +9,7 @@ en-GB:
       updated: 'Your password was set successfully. You are now signed in.'
       no_invitations_remaining: "No invitations remaining"
       invitation_removed: 'Your invitation was removed.'
+      invitation_failed: "Something went wrong, please contact technical support."
       new:
         header: "Send invitation"
         submit_button: "Send an invitation"

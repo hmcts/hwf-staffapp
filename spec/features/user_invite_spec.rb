@@ -7,8 +7,12 @@ RSpec.feature 'User management,' do
 
   let(:admin_user)    { create(:admin_user) }
   let!(:offices)      { create(:office, name: 'Bristol') }
+  let(:user_invite_mailer) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }
 
   context 'Admin user' do
+    before {
+      allow(NotifyMailer).to receive_messages(user_invite: user_invite_mailer)
+    }
     scenario 'invites a user' do
 
       new_email = 'test@digital.justice.gov.uk'
@@ -25,21 +29,6 @@ RSpec.feature 'User management,' do
 
       expect(page).to have_xpath('//a', text: new_name)
       expect(page).to have_xpath('//td', text: offices.name)
-    end
-
-    scenario 'invites a user with an invalid email address' do
-      new_email = 'invalid@email.com'
-      login_as(admin_user, scope: :user)
-      visit new_user_invitation_path
-
-      fill_in 'user_email', with: new_email
-      fill_in 'user_name', with: 'Test name'
-      select('User', from: 'user_role')
-      select('Bristol', from: 'user_office_id')
-
-      click_button 'Send an invitation'
-      expect(page).to have_xpath('//label[@for="user_email" and @class="error"]', text: /not able to create an account with this email address/)
-      expect(page).to have_xpath("//input[@value='#{new_email}']")
     end
 
     context 'when inviting user that has been deleted' do

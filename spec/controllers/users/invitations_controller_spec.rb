@@ -23,8 +23,12 @@ RSpec.describe Users::InvitationsController do
   let(:admin_invitation) { invitation.merge(role: 'admin') }
 
   let(:invited_user) { User.where(email: user.email).first }
+  let(:user_invite_mailer) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }
 
-  before { request.env["devise.mapping"] = Devise.mappings[:user] }
+  before {
+    request.env["devise.mapping"] = Devise.mappings[:user]
+    allow(NotifyMailer).to receive_messages(user_invite: user_invite_mailer)
+  }
 
   context 'Manager user' do
     describe 'POST #create' do
@@ -92,6 +96,12 @@ RSpec.describe Users::InvitationsController do
 
           it { expect(invited_user['email']).to eq user.email }
           it { expect(invited_user['invited_by_id']).to eq admin_user.id }
+
+          it {
+            invited_user = User.last
+            allow(User).to receive(:invite!).and_return invited_user
+            expect(NotifyMailer).to have_received(:user_invite).with(invited_user)
+          }
         end
       end
     end
