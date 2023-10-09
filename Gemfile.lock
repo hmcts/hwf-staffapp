@@ -123,7 +123,7 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.0.1)
     builder (3.2.4)
-    bullet (7.1.0)
+    bullet (7.1.1)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     bundler-audit (0.9.1)
@@ -383,7 +383,7 @@ GEM
       activerecord (>= 6.1)
       request_store (~> 1.4)
     parallel (1.23.0)
-    parallel_tests (4.2.2)
+    parallel_tests (4.3.0)
       parallel
     paranoia (2.6.2)
       activerecord (>= 5.1, < 7.1)
