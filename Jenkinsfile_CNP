@@ -61,7 +61,24 @@ withPipeline(type, product, component) {
         rubyBuilder.bundle("install")
     }
 
+    before('smokeTest') {
+        sh script:"""
+            yarn install
+            docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
+            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+        """, label: 'Start test postgres'
+
+        rubyBuilder.bundle("exec rails db:create db:schema:load")
+        rubyBuilder.bundle("exec rails parallel:setup")
+        rubyBuilder.bundle("install")
+    }
+
     afterAlways('test') {
+        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
+            label: "docker stop hwf-test-postgres"
+    }
+
+    afterAlways('smokeTest') {
         sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
             label: "docker stop hwf-test-postgres"
     }
