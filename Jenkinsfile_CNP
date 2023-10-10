@@ -57,7 +57,6 @@ withPipeline(type, product, component) {
         """, label: 'Start test postgres'
 
         rubyBuilder.bundle("exec rails db:create db:schema:load")
-        rubyBuilder.bundle("exec rails parallel:setup")
         rubyBuilder.bundle("install")
     }
 
@@ -66,10 +65,9 @@ withPipeline(type, product, component) {
             yarn install
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
             docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
-        """, label: 'Start test postgres'
+        """, label: 'Start smoke test postgres'
 
         rubyBuilder.bundle("exec rails db:create db:schema:load")
-        rubyBuilder.bundle("exec rails parallel:setup")
         rubyBuilder.bundle("install")
     }
 
