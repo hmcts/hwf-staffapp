@@ -10,13 +10,15 @@ task test: :environment do
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end
+  unless system "bundle exec cucumber features/  --tags @smoke"
+    raise "Smoke tests failed"
+  end
+
 end
 
 namespace :test do
   task smoke: :environment do
-    unless system "bundle exec cucumber features/  --tags @smoke"
-      raise "Smoke tests failed"
-    end
+    puts "running smoke tests in main test rake"
   end
 
   task functional: :environment do
