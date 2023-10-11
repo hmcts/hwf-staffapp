@@ -7,21 +7,9 @@ task test: :environment do
   # unless system("rake parallel:spec RAILS_ENV=test")
   #   raise "Rspec testing failed #{$?}"
   # end
-  # unless system "bundle exec rubocop"
-  #   raise "Rubocop failed"
-  # end
-
-  # if system "bundle exec cucumber features/  --tags @smoke"
-  #   puts "Smoke test passed"
-  # else
-  #   raise "Smoke tests failed"
-  # end
-
-  # if system "bundle exec cucumber features/"
-  #   puts "Functional test passed"
-  # else
-  #   raise "Functional tests failed"
-  # end
+  unless system "bundle exec rubocop"
+    raise "Rubocop failed"
+  end
 
 end
 
@@ -35,6 +23,10 @@ namespace :test do
   end
 
   task functional: :environment do
-    puts "running functional tests in main test rake"
+    if system "bundle exec cucumber features/"
+      puts "Functional test passed"
+    else
+      raise "Functional tests failed"
+    end
   end
 end
