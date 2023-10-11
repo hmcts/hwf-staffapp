@@ -27,7 +27,11 @@ end
 
 namespace :test do
   task smoke: :environment do
-    puts "running smoke tests in main test rake"
+    if system "bundle exec cucumber features/  --tags @smoke"
+      puts "Smoke test passed"
+    else
+      raise "Smoke tests failed"
+    end
   end
 
   task functional: :environment do

@@ -79,7 +79,7 @@ And("back to start takes me to the homepage") do
 end
 
 And("I can see my processed application") do
-  expect(process_online_application_page.content.last_application[1].text).to have_content 'processed Peter Smiths'
+  expect(process_online_application_page.content.last_application[1].text).to have_content 'processed Peter Smith'
 end
 
 Then("I should see digital before you start advice") do
