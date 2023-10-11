@@ -11,16 +11,16 @@ task test: :environment do
     raise "Rubocop failed"
   end
 
-  unless system "bundle exec cucumber features/  --tags @smoke"
-    raise "Smoke tests failed"
-  else
+  if system "bundle exec cucumber features/  --tags @smoke"
     puts "Smoke test passed"
+  else
+    raise "Smoke tests failed"
   end
 
-  unless system "bundle exec cucumber features/"
-    raise "Smoke tests failed"
-  else
+  if system "bundle exec cucumber features/"
     puts "Functional test passed"
+  else
+    raise "Smoke tests failed"
   end
 
 end
