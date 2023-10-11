@@ -20,7 +20,7 @@ task test: :environment do
   if system "bundle exec cucumber features/"
     puts "Functional test passed"
   else
-    raise "Smoke tests failed"
+    raise "Functional tests failed"
   end
 
 end
