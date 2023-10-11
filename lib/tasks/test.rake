@@ -1,9 +1,9 @@
 # These tasks are needed by Jenkins pipeline
 
 task test: :environment do
-  # unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
-  #   raise "Rspec testing failed #{$?}"
-  # end
+  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
+    raise "Rspec testing failed #{$?}"
+  end
   # unless system("rake parallel:spec RAILS_ENV=test")
   #   raise "Rspec testing failed #{$?}"
   # end
@@ -11,11 +11,11 @@ task test: :environment do
   #   raise "Rubocop failed"
   # end
 
-  if system "bundle exec cucumber features/  --tags @smoke"
-    puts "Smoke test passed"
-  else
-    raise "Smoke tests failed"
-  end
+  # if system "bundle exec cucumber features/  --tags @smoke"
+  #   puts "Smoke test passed"
+  # else
+  #   raise "Smoke tests failed"
+  # end
 
   # if system "bundle exec cucumber features/"
   #   puts "Functional test passed"
