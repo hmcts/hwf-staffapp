@@ -112,4 +112,64 @@ RSpec.describe SavingsPassFailService do
       end
     end
   end
+
+  describe '#calculate_online_application' do
+    let(:min_threshold_exceeded) { false }
+    let(:max_threshold_exceeded) { false }
+    let(:over_61) { false }
+    let(:amount) { nil }
+    let(:fee) { 100 }
+
+    let(:online_application) {
+      build(:online_application,
+            min_threshold_exceeded: min_threshold_exceeded,
+            max_threshold_exceeded: max_threshold_exceeded,
+            amount: amount,
+            fee: fee,
+            over_61: over_61)
+    }
+
+    let(:service) { described_class.new(Saving.new) }
+
+    subject(:outcome) { service.calculate_online_application(online_application) }
+
+    context 'returns outcome' do
+
+      context 'when the fee is < £1000>' do
+        it { is_expected.to be true }
+      end
+
+      context 'when the saving is over max_threshold' do
+        let(:min_threshold_exceeded) { true }
+        let(:max_threshold_exceeded) { true }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when the saving is over min_threshold and high saving amount' do
+        let(:min_threshold_exceeded) { true }
+        let(:amount) { 5000 }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when the saving is over min_threshold' do
+        let(:min_threshold_exceeded) { true }
+        let(:amount) { 3900 }
+        let(:over_61) { true }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when the saving is over amount threshold' do
+        let(:min_threshold_exceeded) { true }
+        let(:amount) { 3000 }
+        let(:over_61) { false }
+
+        it { is_expected.to be false }
+      end
+
+    end
+
+  end
 end

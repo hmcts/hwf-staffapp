@@ -88,6 +88,8 @@ RSpec.describe OnlineApplicationsController do
     let(:online_bc_runner) { instance_double(OnlineBenefitCheckRunner) }
     let(:online_bc) { instance_double(BenefitCheck, benefits_valid?: benefits_valid) }
     let(:benefits_valid) { true }
+    let(:saving_outcome) { true }
+    let(:saving_service) { instance_double(SavingsPassFailService) }
 
     before do
       allow(form).to receive(:update).with(params)
@@ -99,6 +101,8 @@ RSpec.describe OnlineApplicationsController do
       allow(DwpWarning).to receive(:state).and_return dwp_warning_state
       allow(OnlineBenefitCheckRunner).to receive(:new).and_return online_bc_runner
       allow(online_bc_runner).to receive(:run)
+      allow(SavingsPassFailService).to receive(:new).and_return(saving_service)
+      allow(saving_service).to receive(:calculate_online_application).and_return(saving_outcome)
 
       put :update, params: { id: id, online_application: params }
     end
@@ -198,6 +202,24 @@ RSpec.describe OnlineApplicationsController do
 
             it 'renders the summary page' do
               expect(response).to redirect_to(online_application_path(online_application))
+            end
+          end
+
+          context 'saving fails' do
+            let(:dwp_state) { 'offline' }
+            let(:saving_outcome) { false }
+
+            it 'renders the summary page' do
+              expect(response).to redirect_to(online_application_path(online_application))
+            end
+          end
+
+          context 'saving pass' do
+            let(:dwp_state) { 'offline' }
+            let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+
+            it 'renders the summary page' do
+              expect(response).to redirect_to(benefits_online_application_path(online_application))
             end
           end
         end

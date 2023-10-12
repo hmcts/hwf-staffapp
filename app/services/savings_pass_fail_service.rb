@@ -11,6 +11,15 @@ class SavingsPassFailService
     @saving.save
   end
 
+  def calculate_online_application(online_application)
+    @saving.min_threshold_exceeded = online_application.min_threshold_exceeded
+    @saving.max_threshold_exceeded = online_application.max_threshold_exceeded
+    @saving.over_61 = online_application.over_61
+    @saving.amount = online_application.amount
+    @saving.fee_threshold = FeeThreshold.new(online_application.fee).band
+    @saving.passed = calculate_pass_fail
+  end
+
   private
 
   def calculate_pass_fail
