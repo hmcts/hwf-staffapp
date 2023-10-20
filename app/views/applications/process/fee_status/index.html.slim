@@ -1,0 +1,129 @@
+- content_for :page_title
+  = "Application details"
+
+= form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl Application Fee status
+
+      .govuk-form-group.group-level
+        = f.label :fee, class: 'govuk-label'
+        - if @form.errors[:fee].present?
+          span.govuk-error-message
+            = f.label :fee, @form.errors[:fee].join(', '), class: 'error'
+        .field-wrapper
+          span.prefix £
+          = f.text_field :fee, { value: "#{@form.fee.to_f if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
+
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            =t('date_received', scope: @form.i18n_scope)
+          div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+        - if @form.errors[:date_received].present?
+          span.govuk-error-message
+            = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error'
+        .govuk-date-input class="#{'error_dates' if @form.errors[:date_received].present?}"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-day
+              = f.label :day_date_received, class: 'govuk-label'
+              = f.text_field :day_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-month
+              = f.label :month_date_received, class: 'govuk-label'
+              = f.text_field :month_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+          .govuk-date-input__item
+            .govuk-form-group.govuk-form-group-year
+              = f.label :year_date_received, class: 'govuk-label'
+              = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.visuallyhidden Refund case details
+          .govuk-checkboxes.govuk-checkboxes--small
+            .govuk-checkboxes__item
+              = f.check_box :refund, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'refund' } }
+              = f.label t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_refund'
+
+          #refund-only.start-hidden
+            .panel-indent
+              .govuk-form-group.group-level
+                legend.govuk-fieldset__legend
+                  = t('date_fee_paid', scope: @form.i18n_scope)
+                div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+                - if @form.errors[:date_fee_paid].present?
+                  span.govuk-error-message
+                    = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error'
+                .govuk-date-input class="#{'error_dates' if @form.errors[:date_fee_paid].present?}"
+                  .govuk-date-input__item
+                    .govuk-form-group.govuk-form-group-day
+                      = f.label :day_date_fee_paid, class: 'govuk-label'
+                      = f.text_field :day_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+                  .govuk-date-input__item
+                    .govuk-form-group.govuk-form-group-month
+                      = f.label :month_date_fee_paid, class: 'govuk-label'
+                      = f.text_field :month_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+                  .govuk-date-input__item
+                    .govuk-form-group.govuk-form-group-year
+                      = f.label :year_date_fee_paid, class: 'govuk-label'
+                      = f.text_field :year_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+                fieldset.discretion_applied.start-hidden
+                  = f.label :discretion_applied, class: 'govuk-label'
+                  span.govuk-error-message
+                    = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
+                  .govuk-checkboxes.govuk-checkboxes--small
+                    .govuk-checkboxes__item
+                      = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
+                      = f.label t('discretion_applied_false', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_discretion_applied_false'
+                    .govuk-checkboxes__item
+                      = f.radio_button :discretion_applied, 'true', { class: 'govuk-checkboxes__input show-hide-section', data: { section: 'discretion-applied-yes', show: 'true'} }
+                      = f.label t('discretion_applied_true', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_discretion_applied_true'
+
+                  #discretion-applied-yes-only.start-hidden
+                    .panel-indent
+                      .govuk-form-group
+                        = f.label :discretion_manager_name, class: 'govuk-label'
+                        - if @form.errors[:discretion_manager_name].present?
+                          span.govuk-error-message
+                            = f.label :discretion_manager_name, @form.errors[:discretion_manager_name].join(', '), class: 'error'
+                        = f.text_field :discretion_manager_name, class: 'govuk-input govuk-input govuk-!-width-one-half'
+                      .govuk-form-group
+                        = f.label :discretion_reason, class: 'govuk-label'
+                        - if @form.errors[:discretion_reason].present?
+                          span.govuk-error-message
+                            = f.label :discretion_reason, @form.errors[:discretion_reason].join(', '), class: 'error'
+                        = f.text_area :discretion_reason, class: 'govuk-textarea'
+
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h3.govuk-heading-s Remember:
+        ul.govuk-list.govuk-list--bullet
+          li to enter the correct form number the application relates to
+          li to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case. You will also need to enter the appropriate date for refund and probate cases when prompted
+        h2.govuk-heading-m Refunds
+        h3.govuk-heading-s Check the refund:
+        ul.govuk-list.govuk-list--bullet
+          li is for a fee paid less than 3 months ago
+          li hasn't already been refunded
+        p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
+        h3.govuk-heading-m Emergency cases
+        p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.
+        h3.govuk-heading-s Example of emergency cases:
+        ul.govuk-list.govuk-list--bullet
+          li suspending an eviction
+          li debtor insolvency petition
+          li children or vulnerable adults
+          li domestic violence
+          li injunctions
+          li ‘out of hours’ provisions at the Royal Courts of Justice
+
+        p = link_to 'What to do if the application can’t be processed before the emergency application is heard', guide_process_application_path(anchor: 'emergency'), target: 'blank'
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

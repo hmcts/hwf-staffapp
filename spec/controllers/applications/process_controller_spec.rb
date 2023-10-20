@@ -16,10 +16,12 @@ RSpec.describe Applications::ProcessController do
 
   describe 'POST create' do
     let(:builder) { instance_double(ApplicationBuilder, build: application) }
+    let(:feature_switch_active) { false }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(builder)
       allow(application).to receive(:save)
+      allow(FeatureSwitching).to receive(:active?).and_return feature_switch_active
 
       post :create
     end
@@ -30,6 +32,14 @@ RSpec.describe Applications::ProcessController do
 
     it 'redirects to the personal information page for that application' do
       expect(response).to redirect_to(application_personal_informations_path(application))
+    end
+
+    context 'feature is on' do
+      let(:feature_switch_active) { true }
+
+      it 'redirects to fee status' do
+        expect(response).to redirect_to(application_fee_status_index_path(application))
+      end
     end
   end
 
