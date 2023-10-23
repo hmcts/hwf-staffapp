@@ -18,7 +18,7 @@ module Applications
 
     def first_page
       if FeatureSwitching.active?(:band_calculation)
-        application_fee_status_index_path(@application)
+        application_fee_status_path(@application)
       else
         application_personal_informations_path(@application)
       end

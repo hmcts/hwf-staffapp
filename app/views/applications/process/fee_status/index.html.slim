@@ -1,21 +1,11 @@
 - content_for :page_title
   = "Application details"
 
-= form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
+= form_for @form, as: :application, url: application_fee_status_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl Application Fee status
-
-      .govuk-form-group.group-level
-        = f.label :fee, class: 'govuk-label'
-        - if @form.errors[:fee].present?
-          span.govuk-error-message
-            = f.label :fee, @form.errors[:fee].join(', '), class: 'error'
-        .field-wrapper
-          span.prefix £
-          = f.text_field :fee, { value: "#{@form.fee.to_f if @form.fee}", class: 'govuk-input', type: 'number', step: '0.01' }
-
+      h1.govuk-heading-xl Date received and fee status page
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -42,11 +32,20 @@
 
       .govuk-form-group
         fieldset.govuk-fieldset
-          legend.visuallyhidden Refund case details
-          .govuk-checkboxes.govuk-checkboxes--small
-            .govuk-checkboxes__item
-              = f.check_box :refund, { class: 'govuk-checkboxes__input show-hide-checkbox', data: { section: 'refund' } }
-              = f.label t('refund', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_refund'
+          legend.visuallyhidden In quesion 4, has the fee already been paid?
+          legend.govuk-fieldset__legend
+            =t('refund', scope: @form.i18n_scope)
+          - if @form.errors[:refund].present?
+            span.govuk-error-message
+              = f.label :refund, @form.errors[:refund].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :refund, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('refund_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_refund_false'
+            .govuk-radios__item
+              = f.radio_button :refund, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'refund', show: 'true'} }
+              = f.label t('refund_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_refund_true'
+
 
           #refund-only.start-hidden
             .panel-indent

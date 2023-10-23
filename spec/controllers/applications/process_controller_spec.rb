@@ -38,7 +38,7 @@ RSpec.describe Applications::ProcessController do
       let(:feature_switch_active) { true }
 
       it 'redirects to fee status' do
-        expect(response).to redirect_to(application_fee_status_index_path(application))
+        expect(response).to redirect_to(application_fee_status_path(application))
       end
     end
   end
