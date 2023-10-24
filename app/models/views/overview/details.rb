@@ -12,15 +12,11 @@ module Views
       def all_fields
         if FeatureSwitching.active?(:band_calculation)
           [
-            'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
+            'fee', 'jurisdiction', 'form_name', 'case_number',
             'deceased_name', 'date_of_death', 'emergency_reason'
           ]
         else
-          [
-            'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-            'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
-            'discretion_manager_name', 'discretion_reason', 'emergency_reason'
-          ]
+          pre_ucd_change_fields
         end
       end
 
@@ -75,6 +71,14 @@ module Views
 
       def format_date(date)
         date&.to_fs(:gov_uk_long)
+      end
+
+      def pre_ucd_change_fields
+        [
+          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
+          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
+          'discretion_manager_name', 'discretion_reason', 'emergency_reason'
+        ]
       end
     end
   end
