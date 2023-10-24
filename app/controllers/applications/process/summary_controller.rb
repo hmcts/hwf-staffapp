@@ -4,6 +4,7 @@ module Applications
       before_action :authorize_application_update
 
       def index
+        @fee_status = Views::Overview::FeeStatus.new(application)
         @applicant = Views::Overview::Applicant.new(application)
         @details = Views::Overview::Details.new(application)
         @savings = Views::Overview::SavingsAndInvestments.new(application.saving)

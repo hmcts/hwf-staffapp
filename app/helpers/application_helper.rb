@@ -30,4 +30,10 @@ module ApplicationHelper
   def date_submitted(application)
     application.created_at.strftime("%d %b %Y")
   end
+
+  def show_refund_section?
+    !FeatureSwitching.active?(:band_calculation)
+  end
+  alias_method :show_received_section?, :show_refund_section?
+  alias_method :hide_fee_status?, :show_refund_section?
 end

@@ -356,6 +356,10 @@ en-GB:
         min_threshold_exceeded: "Less than £3,000"
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
+      views/overview/fee_status:
+        date_received: "Date received"
+        refund_request: "Refund request"
+        date_fee_paid: 'Date fee paid'
       views/overview/benefits:
         on_benefits?: Benefits declared in application
         override?: Correct evidence provided
@@ -459,6 +463,24 @@ en-GB:
         jurisdiction: Jurisdiction
         sop_code: SOP code
 
+      forms/application/fee_status:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        date_received: Date application received
+        day_date_received: Day
+        month_date_received: Month
+        year_date_received: Year
+        refund: In quesion 4, has the fee already been paid?
+        refund_true: 'Yes'
+        refund_false: 'No'
+        date_fee_paid: Date fee paid
+        day_date_fee_paid: Day
+        month_date_fee_paid: Month
+        year_date_fee_paid: Year
+        date_hint: For example, 04 10 2018
+        discretion_applied: Delivery Manager discretion applied?
+        discretion_applied_false: 'No'
+        discretion_applied_true: 'Yes'
+        discretion_manager_name: Delivery Manager name
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
@@ -612,6 +634,24 @@ en-GB:
               blank: 'Please enter an end date'
               after: 'Enter a date that is after the date from'
               not_a_date: Please enter a valid date
+        forms/application/fee_status:
+          attributes:
+            date_received:
+              blank: Enter the date
+              not_a_date: Enter the date in this format DD/MM/YYYY
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
+            date_fee_paid:
+              blank: Enter the date
+              not_a_date: Enter the date in this format DD/MM/YYYY
+              date_after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
+              date_before_or_equal_to: This date can’t be after the application was received
+            discretion_manager_name:
+              blank: Enter Delivery Manager name
+            discretion_reason:
+              blank: Enter Discretionary reason
+            refund:
+              inclusion: Enter if the fee has already been paid
         forms/application/applicant:
           attributes:
             last_name:
