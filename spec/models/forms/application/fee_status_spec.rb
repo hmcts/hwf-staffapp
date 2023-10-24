@@ -55,14 +55,13 @@ RSpec.describe Forms::Application::FeeStatus do
 
   describe 'validations' do
     let(:application_details) do
-      params = { refund: false, date_received: nil}
+      params = { refund: false, date_received: nil }
       described_class.new(params)
     end
 
     it 'invalidates the object' do
       expect(application_details.valid?).to be false
     end
-
 
     describe 'Date application received' do
       let(:application_details) do
@@ -237,7 +236,7 @@ RSpec.describe Forms::Application::FeeStatus do
 
           context 'when date_received is set and is a valid date' do
             it 'sets an error on date_received field' do
-              expect(refund.errors[:date_fee_paid]).to eq  ["Enter the date", "Enter the date in this format DD/MM/YYYY"]
+              expect(refund.errors[:date_fee_paid]).to eq ["Enter the date", "Enter the date in this format DD/MM/YYYY"]
             end
           end
         end
@@ -257,11 +256,13 @@ RSpec.describe Forms::Application::FeeStatus do
     let(:detail) { create(:detail) }
 
     context 'when attributes are correct' do
-      let(:params) { { refund: true, date_received: Date.today,
-        date_fee_paid: 4.months.ago.to_date,
-        discretion_applied: true,
-        discretion_manager_name: 'john',
-        discretion_reason: 'test' } }
+      let(:params) {
+        { refund: true, date_received: Time.zone.today,
+          date_fee_paid: 4.months.ago.to_date,
+          discretion_applied: true,
+          discretion_manager_name: 'john',
+          discretion_reason: 'test' }
+      }
 
       it { is_expected.to be true }
 

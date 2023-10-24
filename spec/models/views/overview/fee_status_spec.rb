@@ -44,7 +44,6 @@ RSpec.describe Views::Overview::FeeStatus do
     end
   end
 
-
   describe 'discretion_applied' do
     context 'online_application' do
       subject(:view) { described_class.new(online_application) }

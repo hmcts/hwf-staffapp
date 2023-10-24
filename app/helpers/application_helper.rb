@@ -34,6 +34,6 @@ module ApplicationHelper
   def show_refund_section?
     !FeatureSwitching.active?(:band_calculation)
   end
-  alias_method :show_received_section?, :show_refund_section?
-  alias_method :hide_fee_status?, :show_refund_section?
+  alias show_received_section? show_refund_section?
+  alias hide_fee_status? show_refund_section?
 end

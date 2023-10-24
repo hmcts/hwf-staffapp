@@ -22,7 +22,7 @@ module Forms
           discretion_applied: Boolean,
           discretion_manager_name: String,
           discretion_reason: String
-          }
+        }
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -34,7 +34,7 @@ module Forms
 
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
-      validates_inclusion_of :refund, in: [true, false]
+      validates :refund, inclusion: { in: [true, false] }
 
       validates :date_received, date: {
         after_or_equal_to: :min_date,
@@ -65,7 +65,6 @@ module Forms
       def tomorrow
         Time.zone.tomorrow
       end
-
 
       def persist!
         @object.update(fields_to_update)
