@@ -265,7 +265,7 @@ RSpec.describe Forms::Application::FeeStatus do
 
           context 'when date_received is set and is a valid date' do
             it 'sets an error on date_received field' do
-              expect(refund.errors[:date_fee_paid]).to eq ["Enter the date", "Enter the date in this format DD/MM/YYYY"]
+              expect(refund.errors[:date_fee_paid]).to eq  ["Enter the date", "Enter the date in this format DD/MM/YYYY"]
             end
           end
         end
