@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::FeeStatus do
-  subject(:form) { described_class.new(fee_status) }
+  subject(:form_repository) { ApplicationFormRepository.new(application, fee_status) }
 
   params_list = [:date_received, :day_date_received, :month_date_received, :year_date_received,
                  :refund, :date_fee_paid, :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid,
-                 :discretion_applied, :discretion_manager_name, :discretion_reason]
+                 :discretion_applied, :discretion_manager_name, :discretion_reason, :calculation_scheme]
 
   let(:fee_status) { attributes_for(:detail) }
+  let(:application) { build :application }
+  let(:form_detail) { form_repository.application.detail }
+  let(:form) { form_repository.process(:fee_status) }
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -16,73 +19,45 @@ RSpec.describe Forms::Application::FeeStatus do
   end
 
   context 'before validation callbacks' do
+    let(:date_received) { 1.day.ago.to_date }
+
     describe 'date applied' do
       before do
-        form.day_date_received = 1
-        form.month_date_received = 2
-        form.year_date_received = 2019
-        form.valid?
+        fee_status.merge!({
+          day_date_received: date_received.day,
+          month_date_received: date_received.month,
+          year_date_received: date_received.year
+        })
+        form
       end
 
       it 'saves the values to instance variable' do
-        expect(form.date_received.to_fs(:default)).to eq('01/02/2019')
+        expect(form_detail.date_received.to_fs(:default)).to eq(date_received.to_fs(:default))
       end
     end
   end
 
-  # describe 'when Detail object is passed in' do
-  #   let(:detail) { build_stubbed(:complete_detail) }
-
-  #   params_list.each do |attr_name|
-  #     next if /day|month|year|emergency/.match?(attr_name.to_s)
-  #     it "assigns #{attr_name}" do
-  #       expect(form.send(attr_name)).to eq detail.send(attr_name)
-  #     end
-  #   end
-  # end
-
-  # describe 'when a Hash is passed in' do
-  #   let(:detail) { attributes_for(:complete_detail) }
-
-  #   params_list.each do |attr_name|
-  #     next if /day|month|year|emergency/.match?(attr_name.to_s)
-
-  #     it "assigns #{attr_name}" do
-  #       expect(form.send(attr_name)).to eq detail[attr_name]
-  #     end
-  #   end
-  # end
-
   describe 'validations' do
-    let(:application_details) do
-      params = { refund: false, date_received: nil }
-      described_class.new(params)
+    before do
+      fee_status.merge!({ refund: false, date_received: nil })
     end
 
     it 'invalidates the object' do
-      expect(application_details.valid?).to be false
+      expect(form.valid?).to be false
     end
 
     describe 'Date application received' do
-      let(:application_details) do
-        params = { refund: false }
-        described_class.new(params)
-      end
-
-      include_examples 'date_received validation' do
-        let(:form) { application_details }
-      end
+      include_examples 'date_received validation'
     end
 
     describe 'refund' do
       subject(:refund) do
-        params = { jurisdiction_id: 1,
-                   fee: 500,
+        fee_status.merge!({
                    date_received: date_received.try(:to_fs, :db),
                    refund: refund_status,
-                   date_fee_paid: date_fee_paid.try(:to_fs, :db),
-                   form_name: 'ABC123' }
-        described_class.new(params)
+                   date_fee_paid: date_fee_paid.try(:to_fs, :db)
+                   })
+        form
       end
 
       let(:current_time) { Time.zone.local(2014, 12, 1, 12, 30, 0) }
