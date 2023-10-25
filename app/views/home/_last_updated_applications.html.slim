@@ -18,7 +18,7 @@ h2.govuk-heading-m.heading-icon.util_mt-medium.util_mb-0 *{class: "heading-icon-
         tr.govuk-table__row
           - if record.reference.blank?
             td.govuk-table__cell = t("#{type}.dashboard.table.missing_reference")
-            td.govuk-table__cell =link_to record.id, application_personal_informations_path(record)
+            td.govuk-table__cell =link_to record.id, path_to_first_page(record)
           - else
             td.govuk-table__cell = link_to record.reference, path_for_application_based_on_state(record)
             td.govuk-table__cell =record.id
