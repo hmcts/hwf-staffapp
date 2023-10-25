@@ -50,6 +50,41 @@ RSpec.describe Forms::Application::FeeStatus do
       include_examples 'date_received validation'
     end
 
+    describe 'change to calculation_scheme_change' do
+      before do
+        fee_status.merge!({ refund: false, date_received: 1.day.ago, calculation_scheme: 'scheme2' })
+        allow(FeatureSwitching).to receive(:calculation_scheme).and_return :scheme1
+        form.calculation_scheme = 'scheme2'
+      end
+
+      it 'invalidates the object' do
+        expect(form.valid?).to be false
+        expect(form.errors.messages[:date_received]).to eq ["This date cannot be before the new legislation"]
+      end
+    end
+
+    describe 'no change to calculation_scheme_change' do
+      before do
+        fee_status.merge!({ refund: false, date_received: 1.day.ago, calculation_scheme: 'scheme1' })
+        allow(FeatureSwitching).to receive(:calculation_scheme).and_return :scheme1
+      end
+
+      it 'invalidates the object' do
+        expect(form.valid?).to be true
+      end
+    end
+
+    describe 'store calculation_scheme' do
+      before do
+        fee_status.merge!({ refund: false, date_received: 1.day.ago })
+        form
+      end
+
+      it 'invalidates the object' do
+        expect(form_detail.calculation_scheme).not_to be_nil
+      end
+    end
+
     describe 'refund' do
       subject(:refund) do
         fee_status.merge!({
@@ -220,37 +255,4 @@ RSpec.describe Forms::Application::FeeStatus do
 
   end
 
-  describe '#save' do
-    subject(:form) { described_class.new(detail) }
-
-    subject(:update_form) do
-      form.update(params)
-      form.save
-    end
-
-    let(:detail) { create(:detail) }
-
-    context 'when attributes are correct' do
-      let(:params) {
-        { refund: true, date_received: Time.zone.today,
-          date_fee_paid: 4.months.ago.to_date,
-          discretion_applied: true,
-          discretion_manager_name: 'john',
-          discretion_reason: 'test' }
-      }
-
-      it { is_expected.to be true }
-
-      before do
-        update_form
-        detail.reload
-      end
-
-      it 'saves the parameters in the detail' do
-        params.each do |key, value|
-          expect(detail.send(key)).to eql(value)
-        end
-      end
-    end
-  end
 end

@@ -43,7 +43,7 @@ module Views
 
       def calculation_scheme
         if @application.detail.calculation_scheme.blank?
-          return format_locale(Detail::CALCULATION_SCHEMAS[0].to_s)
+          return format_locale(FeatureSwitching::CALCULATION_SCHEMAS[0].to_s)
         end
         format_locale(@application.detail.calculation_scheme.to_s)
       end

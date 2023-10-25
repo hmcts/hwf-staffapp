@@ -1,6 +1,4 @@
 class Detail < ActiveRecord::Base
-  CALCULATION_SCHEMAS = [:prior_q4_23, :q4_23].freeze
-
   belongs_to :application, optional: false, inverse_of: :detail
   belongs_to :jurisdiction, optional: true
 

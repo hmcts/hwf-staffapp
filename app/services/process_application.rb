@@ -25,13 +25,13 @@ class ProcessApplication
   def original_calculation_process(application)
     SavingsPassFailService.new(application.saving).calculate!
     ApplicationCalculation.new(application).run
-    application.detail.update(calculation_scheme: Detail::CALCULATION_SCHEMAS[0])
+    application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[0])
   end
 
   def band_calculation_process(application)
     outcome = BandBaseCalculation.new(application).remission
     application.update(outcome: outcome)
-    application.detail.update(calculation_scheme: Detail::CALCULATION_SCHEMAS[1])
+    application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
     # process the outcome
   end
 

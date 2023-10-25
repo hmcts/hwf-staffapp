@@ -21,7 +21,8 @@ module Forms
           year_date_fee_paid: Integer,
           discretion_applied: Boolean,
           discretion_manager_name: String,
-          discretion_reason: String
+          discretion_reason: String,
+          calculation_scheme: String
         }
       end
       # rubocop:enable Metrics/MethodLength
@@ -31,6 +32,7 @@ module Forms
       before_validation :format_date_fields
       after_validation :check_discretion
       after_validation :check_refund_values
+      after_validation :update_calculation_scheme
 
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
@@ -42,6 +44,7 @@ module Forms
       }
 
       validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund }
+      validate :calculation_scheme_change
 
       with_options if: :validate_date_fee_paid? do
         validates :date_fee_paid, date: {
@@ -57,6 +60,10 @@ module Forms
       end
 
       private
+
+      def update_calculation_scheme
+        self.calculation_scheme = FeatureSwitching.calculation_scheme(@object.application)
+      end
 
       def min_date
         3.months.ago.midnight
@@ -76,6 +83,18 @@ module Forms
         {}.tap do |fields|
           (self.class.permitted_attributes.keys - excluded_keys).each do |name|
             fields[name] = send(name)
+          end
+        end
+      end
+
+      def calculation_scheme_change
+        return if self.calculation_scheme.blank?
+
+        if FeatureSwitching.calculation_scheme(@object.application) != self.calculation_scheme.to_sym
+          if date_received != @object.date_received
+            errors.add(:date_received, 'This date cannot be before the new legislation')
+          elsif date_fee_paid != @object.date_fee_paid
+            errors.add(:date_fee_paid, 'This date cannot be on or after the new legislation')
           end
         end
       end
