@@ -8,7 +8,7 @@ RSpec.describe Forms::Application::FeeStatus do
                  :discretion_applied, :discretion_manager_name, :discretion_reason, :calculation_scheme]
 
   let(:fee_status) { attributes_for(:detail) }
-  let(:application) { build :application }
+  let(:application) { build(:application) }
   let(:form_detail) { form_repository.application.detail }
   let(:form) { form_repository.process(:fee_status) }
 
@@ -24,10 +24,10 @@ RSpec.describe Forms::Application::FeeStatus do
     describe 'date applied' do
       before do
         fee_status.merge!({
-          day_date_received: date_received.day,
-          month_date_received: date_received.month,
-          year_date_received: date_received.year
-        })
+                            day_date_received: date_received.day,
+                            month_date_received: date_received.month,
+                            year_date_received: date_received.year
+                          })
         form
       end
 
@@ -88,10 +88,10 @@ RSpec.describe Forms::Application::FeeStatus do
     describe 'refund' do
       subject(:refund) do
         fee_status.merge!({
-                   date_received: date_received.try(:to_fs, :db),
-                   refund: refund_status,
-                   date_fee_paid: date_fee_paid.try(:to_fs, :db)
-                   })
+                            date_received: date_received.try(:to_fs, :db),
+                            refund: refund_status,
+                            date_fee_paid: date_fee_paid.try(:to_fs, :db)
+                          })
         form
       end
 

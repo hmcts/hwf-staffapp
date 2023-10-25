@@ -25,7 +25,7 @@ class FeatureSwitching < ApplicationRecord
   end
 
   def self.calculation_scheme(application)
-    if self.subject_to_new_legislation?(application)
+    if subject_to_new_legislation?(application)
       FeatureSwitching::CALCULATION_SCHEMAS[1]
     else
       FeatureSwitching::CALCULATION_SCHEMAS[0]

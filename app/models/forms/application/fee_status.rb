@@ -88,9 +88,10 @@ module Forms
       end
 
       def calculation_scheme_change
-        return if self.calculation_scheme.blank?
+        return if @calculation_scheme.blank?
+        # binding.pry
 
-        if FeatureSwitching.calculation_scheme(@object.application) != self.calculation_scheme.to_sym
+        if FeatureSwitching.calculation_scheme(@object.application) != @calculation_scheme.to_sym
           if date_received != @object.date_received
             errors.add(:date_received, 'This date cannot be before the new legislation')
           elsif date_fee_paid != @object.date_fee_paid
