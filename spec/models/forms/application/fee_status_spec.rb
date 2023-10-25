@@ -56,6 +56,7 @@ RSpec.describe Forms::Application::FeeStatus do
   end
 
   describe 'validations' do
+    before do
       fee_status.merge!({ refund: false, date_received: nil })
     end
 
