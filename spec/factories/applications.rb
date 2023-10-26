@@ -18,6 +18,7 @@ FactoryBot.define do
       probate { nil }
       jurisdiction { nil }
       emergency_reason { nil }
+      representative { association :representative, application: instance }
     end
 
     benefits { true }

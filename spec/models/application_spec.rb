@@ -27,6 +27,7 @@ RSpec.describe Application do
   it { is_expected.to have_one(:saving).dependent(:destroy) }
   it { is_expected.to have_one(:benefit_override).dependent(:destroy) }
   it { is_expected.to have_one(:decision_override).dependent(:destroy) }
+  it { is_expected.to have_one(:representative).dependent(:destroy) }
 
   it { expect(application.purged).to be false }
 
