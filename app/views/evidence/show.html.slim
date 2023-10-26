@@ -16,7 +16,13 @@ h1.govuk-heading-xl #{@evidence.application.reference} - Waiting for evidence
       .govuk-details__text
         = link_to 'Return application', send("evidence_accuracy_failed_reason_path", @evidence), class: 'govuk-button'
 
-=build_section_with_defaults 'Personal details', @applicant
+
+-if hide_fee_status?
+  =build_section_with_defaults 'Personal details', @applicant
+-else
+   =build_section_with_defaults 'Date received and fee status', @fee_status
+   =build_section_with_defaults 'Personal details', @applicant
+
 =build_section_with_defaults 'Application details', @details
 =build_section 'Benefits', @application_view, ['benefits']
 =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']

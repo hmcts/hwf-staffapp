@@ -2,6 +2,7 @@ module ProcessedViewsHelper
   # rubocop:disable Rails/HelperInstanceVariable
   def assign_views
     @application = application
+    @fee_status = Views::Overview::FeeStatus.new(application)
     @applicant = Views::Overview::Applicant.new(application)
     @details = Views::Overview::Details.new(application)
     @application_view = Views::Overview::Application.new(application)

@@ -276,6 +276,8 @@ RSpec.describe EvidenceController do
       it 'renders the correct template' do
         expect(response).to render_template :summary
       end
+
+      it { expect(assigns(:fee_status)).to be_an_instance_of(Views::Overview::FeeStatus) }
     end
   end
 
