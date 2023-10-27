@@ -18,7 +18,7 @@ module Applications
 
         if @form.save
           IncomeCalculationRunner.new(application).run
-          redirect_to application_summary_path(application)
+          redirect_to application_declaration_path(application)
         else
           render :index
         end
