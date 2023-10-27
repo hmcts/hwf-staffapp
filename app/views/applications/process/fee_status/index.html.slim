@@ -32,7 +32,7 @@
 
       .govuk-form-group
         fieldset.govuk-fieldset
-          legend.visuallyhidden In quesion 4, has the fee already been paid?
+          legend.visuallyhidden =t('refund', scope: @form.i18n_scope)
           legend.govuk-fieldset__legend
             =t('refund', scope: @form.i18n_scope)
           - if @form.errors[:refund].present?

@@ -360,6 +360,9 @@ en-GB:
         date_received: "Date received"
         refund_request: "Refund request"
         date_fee_paid: 'Date fee paid'
+        discretion_applied: Delivery Manager discretion applied
+        discretion_manager_name: Delivery Manager name
+        discretion_reason: Discretion reasons
       views/overview/benefits:
         on_benefits?: Benefits declared in application
         override?: Correct evidence provided
@@ -469,7 +472,7 @@ en-GB:
         day_date_received: Day
         month_date_received: Month
         year_date_received: Year
-        refund: In quesion 4, has the fee already been paid?
+        refund: In question 4, has the fee already been paid?
         refund_true: 'Yes'
         refund_false: 'No'
         date_fee_paid: Date fee paid
