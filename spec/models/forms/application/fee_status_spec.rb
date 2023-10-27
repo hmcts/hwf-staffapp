@@ -241,6 +241,7 @@ RSpec.describe Forms::Application::FeeStatus do
 
         describe 'presence' do
           let(:date_fee_paid) { nil }
+          let(:refund_status) { true }
 
           before { refund.valid? }
 

@@ -15,7 +15,7 @@ class FeatureSwitching < ApplicationRecord
   end
 
   def self.subject_to_new_legislation?(received_and_refund_data)
-    return false if received_and_refund_data.blank? || received_and_refund_data[:date_received].blank?
+    return false if correct_dates(received_and_refund_data)
 
     if received_and_refund_data[:refund]
       received_and_refund_data[:date_fee_paid] >= NEW_BAND_CALCUATIONS_ACTIVE_DATE
@@ -30,5 +30,10 @@ class FeatureSwitching < ApplicationRecord
     else
       FeatureSwitching::CALCULATION_SCHEMAS[0]
     end
+  end
+
+  def self.correct_dates(data)
+    data[:date_received].blank? || !data[:date_received].is_a?(Date) ||
+      (data[:refund] && !data[:date_fee_paid].is_a?(Date))
   end
 end

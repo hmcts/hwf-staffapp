@@ -62,7 +62,7 @@ module Forms
       private
 
       def update_calculation_scheme
-        self.calculation_scheme = FeatureSwitching.calculation_scheme(@object.application)
+        self.calculation_scheme = FeatureSwitching.calculation_scheme(calculation_scheme_data)
       end
 
       def min_date
@@ -89,14 +89,25 @@ module Forms
 
       def calculation_scheme_change
         return if @calculation_scheme.blank?
-        # binding.pry
 
-        if FeatureSwitching.calculation_scheme(@object.application) != @calculation_scheme.to_sym
+        if FeatureSwitching.calculation_scheme(calculation_scheme_data) != @calculation_scheme.to_sym
           if date_received != @object.date_received
-            errors.add(:date_received, 'This date cannot be before the new legislation')
+            before_and_after_legislation_erorrs(date_received, :date_received)
           elsif date_fee_paid != @object.date_fee_paid
-            errors.add(:date_fee_paid, 'This date cannot be on or after the new legislation')
+            before_and_after_legislation_erorrs(date_fee_paid, :date_fee_paid)
           end
+        end
+      end
+
+      def calculation_scheme_data
+        { date_received: date_received, date_fee_paid: date_fee_paid, refund: refund }
+      end
+
+      def before_and_after_legislation_erorrs(date, field_name)
+        if date >= FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE
+          errors.add(field_name, 'This date cannot be on or after the new legislation')
+        else
+          errors.add(field_name, 'This date cannot be before the new legislation')
         end
       end
     end
