@@ -52,29 +52,29 @@ RSpec.describe FeatureSwitching do
   describe 'is subject_to_new_legislation?' do
     context 'no refund' do
       it 'date received after switch' do
-        application = build(:application, date_received: "27/11/2023")
-        expect(described_class.subject_to_new_legislation?(application)).to be true
+        received_and_refund_data = { date_received: "27/11/2023" }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be true
       end
 
       it 'date received before switch' do
-        application = build(:application, date_received: "26/11/2023")
-        expect(described_class.subject_to_new_legislation?(application)).to be false
+        received_and_refund_data = { date_received: "26/11/2023" }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
       end
     end
     context 'refund' do
       it 'date received and refunded after switch' do
-        application = build(:application, date_received: "1/12/2023", date_fee_paid: '27/11/2023', refund: true)
-        expect(described_class.subject_to_new_legislation?(application)).to be true
+        received_and_refund_data = { date_received: "1/12/2023", date_fee_paid: '27/11/2023', refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be true
       end
 
       it 'date received and refunded before switch' do
-        application = build(:application, date_received: "20/11/2023", date_fee_paid: '10/11/2023', refund: true)
-        expect(described_class.subject_to_new_legislation?(application)).to be false
+        received_and_refund_data = { date_received: "20/11/2023", date_fee_paid: '10/11/2023', refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
       end
 
       it 'date received after switch but refunded before' do
-        application = build(:application, date_received: "1/12/2023", date_fee_paid: '10/11/2023', refund: true)
-        expect(described_class.subject_to_new_legislation?(application)).to be false
+        received_and_refund_data = { date_received: "1/12/2023", date_fee_paid: '10/11/2023', refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
       end
     end
   end

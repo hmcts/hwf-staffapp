@@ -14,18 +14,18 @@ class FeatureSwitching < ApplicationRecord
     feature.present?
   end
 
-  def self.subject_to_new_legislation?(application)
-    return false if application.blank? || application.try(:detail).try(:date_received).blank?
+  def self.subject_to_new_legislation?(received_and_refund_data)
+    return false if received_and_refund_data.blank? || received_and_refund_data[:date_received].blank?
 
-    if application.detail.refund
-      application.detail.date_fee_paid >= NEW_BAND_CALCUATIONS_ACTIVE_DATE
+    if received_and_refund_data[:refund]
+      received_and_refund_data[:date_fee_paid] >= NEW_BAND_CALCUATIONS_ACTIVE_DATE
     else
-      application.detail.date_received >= NEW_BAND_CALCUATIONS_ACTIVE_DATE
+      received_and_refund_data[:date_received] >= NEW_BAND_CALCUATIONS_ACTIVE_DATE
     end
   end
 
-  def self.calculation_scheme(application)
-    if subject_to_new_legislation?(application)
+  def self.calculation_scheme(received_and_refund_data)
+    if subject_to_new_legislation?(received_and_refund_data)
       FeatureSwitching::CALCULATION_SCHEMAS[1]
     else
       FeatureSwitching::CALCULATION_SCHEMAS[0]
