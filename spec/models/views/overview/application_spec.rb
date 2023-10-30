@@ -345,5 +345,20 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to eql(75.to_f) }
     end
 
+    describe '#calculation_scheme' do
+      let(:application) { build_stubbed(:application, detail: detail) }
+      subject { view.calculation_scheme }
+
+      context 'present' do
+        let(:detail) { build_stubbed(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1]) }
+        it { is_expected.to eql('Revised Q4 2023') }
+      end
+
+      context 'blank' do
+        let(:detail) { build_stubbed(:detail, calculation_scheme: nil) }
+        it { is_expected.to eql('Prior to Q4 2023') }
+      end
+    end
+
   end
 end
