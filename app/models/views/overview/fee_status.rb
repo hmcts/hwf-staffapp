@@ -25,13 +25,13 @@ module Views
       end
 
       def refund_request
-        scope = 'activemodel.attributes.views/overview/details'
+        scope = 'activemodel.attributes.views/overview/fee_status'
         I18n.t(".refund_request_#{detail.refund}", scope: scope)
       end
 
       def discretion_applied
         return if @application.is_a?(OnlineApplication) || detail.discretion_applied.nil?
-        scope = 'activemodel.attributes.forms/application/detail'
+        scope = 'activemodel.attributes.forms/application/fee_status'
         I18n.t(".discretion_applied_#{detail.discretion_applied}", scope: scope)
       end
 

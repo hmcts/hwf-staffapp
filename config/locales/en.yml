@@ -363,6 +363,8 @@ en-GB:
         discretion_applied: Delivery Manager discretion applied
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
+        refund_request_false: 'No'
+        refund_request_true: 'Yes'
       views/overview/benefits:
         on_benefits?: Benefits declared in application
         override?: Correct evidence provided
