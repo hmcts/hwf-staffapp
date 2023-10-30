@@ -8,7 +8,6 @@ module Applications
       end
 
       def create
-        # binding.pry
         app_form_repository = ApplicationFormRepository.new(application, form_params(:declaration))
         @form = app_form_repository.process(:declaration)
 

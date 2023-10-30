@@ -419,6 +419,11 @@ en-GB:
         discretion_applied: Delivery Manager discretion applied
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
+      views/overview/declaration:
+        statement_signed_by: 'Declaration and statement of truth signed by'
+        applicant: Applicant
+        litigation_friend: Litigation friend
+        legal_representative: Legal representative
       views/evidence:
         correct: Ready to process
         incorrect_reason: The problem

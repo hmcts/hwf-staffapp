@@ -3,12 +3,11 @@
 
 h1.govuk-heading-xl Check details
 
--if hide_fee_status?
-  =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
--else
+-if show_ucd_changes?
   =build_section_with_defaults 'Date received and fee status', @fee_status, application_fee_status_path(@application)
   =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
-
+-else
+  =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
 
 
 =build_section_with_defaults 'Application details', @details, application_details_path(@application)
@@ -19,6 +18,11 @@ h1.govuk-heading-xl Check details
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
   -if !@application.benefits
     =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
+
+
+-if show_ucd_changes?
+  =build_section_with_defaults 'Declaration and statement of truth', @declaration, application_declaration_path(@application)
+
 
 = form_for @application, url: application_summary_path(@application), method: :post do |f|
   = f.submit 'Complete processing', class: 'govuk-button govuk-!-margin-top-1'

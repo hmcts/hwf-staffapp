@@ -10,6 +10,7 @@ module Applications
         @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
         @benefits = Views::Overview::Benefits.new(application)
         @income = Views::Overview::Income.new(application)
+        @declaration = Views::Overview::Declaration.new(application)
       end
 
       def create

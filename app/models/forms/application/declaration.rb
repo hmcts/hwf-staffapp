@@ -14,16 +14,10 @@ module Forms
 
       define_attributes
 
-      before_validation :check_values
       validates :statement_signed_by, presence: true
 
       private
 
-
-      def check_values
-        binding.pry
-        :a
-      end
 
       def persist!
         @object.update(fields_to_update)
