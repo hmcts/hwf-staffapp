@@ -571,6 +571,14 @@ en-GB:
         statement_signed_by_applicant: Applicant
         statement_signed_by_litigation_friend: Litigation friend
         statement_signed_by_legal_representative: Legal representative
+      forms/application/representative:
+        header: 'Representative details'
+        sub_header: Details of litigation friend or legal representative
+        first_name: First name
+        last_name: Last name
+        organisation: Organisation name
+        hint_organisation: If applicable, name or firm (legal representative only)
+        statement_signed_by_legal_representative: Legal representative
 
       forms/application/summary:
         passed: '✓ Passed'

@@ -12,12 +12,26 @@ module Applications
         @form = app_form_repository.process(:declaration)
 
         if app_form_repository.success?
-          redirect_to application_summary_path(application)
+          redirect_to path_to_next_page
         else
           render :index
         end
       end
 
+      private
+
+      def go_to_representative_page?
+        return false if application.detail.statement_signed_by.blank?
+        application.detail.statement_signed_by != 'applicant'
+      end
+
+      def path_to_next_page
+        if go_to_representative_page?
+          application_representative_path(application)
+        else
+          application_summary_path(application)
+        end
+      end
     end
   end
 end

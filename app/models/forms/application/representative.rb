@@ -1,17 +1,18 @@
 module Forms
   module Application
-    class Declaration < ::FormObject
-      include ActiveModel::Validations::Callbacks
-
+    class Representative < ::FormObject
       def self.permitted_attributes
         {
-          statement_signed_by: String,
-          discretion_applied: Boolean
+          first_name: String,
+          last_name: String,
+          organisation: String
         }
       end
+
       define_attributes
 
-      validates :statement_signed_by, presence: true
+      validates :first_name, presence: true
+      validates :last_name, presence: true
 
       private
 

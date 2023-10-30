@@ -49,6 +49,8 @@ Rails.application.routes.draw do
     post '/fee_status', to: 'applications/process/fee_status#create'
     get '/declaration', to: 'applications/process/declaration#index'
     post '/declaration', to: 'applications/process/declaration#create'
+    get '/representative', to: 'applications/process/representative#index'
+    post '/representative', to: 'applications/process/representative#create'
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'

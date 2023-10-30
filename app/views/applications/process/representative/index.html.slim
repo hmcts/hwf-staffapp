@@ -1,0 +1,42 @@
+- content_for :page_title
+  = t('header', scope: @form.i18n_scope)
+
+= form_for @form, as: :application, url: :application_representative, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.visuallyhidden =t('sub_header', scope: @form.i18n_scope)
+          legend.govuk-fieldset__legend
+            =t('sub_header', scope: @form.i18n_scope)
+
+          = f.label :first_name, class: 'govuk-label'
+            =t('first_name', scope: @form.i18n_scope)
+          - if @form.errors[:first_name].present?
+            span.govuk-error-message
+              = f.label :first_name, @form.errors[:first_name].join(', '), class: 'error'
+          = f.text_field :first_name, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
+        = f.label :last_name, class: 'govuk-label'
+        - if @form.errors[:last_name].present?
+          span.govuk-error-message
+            = f.label :last_name, @form.errors[:last_name].join(', '), class: 'error'
+        = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
+        = f.label :organisation, class: 'govuk-label'
+        - if @form.errors[:organisation].present?
+          span.govuk-error-message
+            = f.label :organisation, @form.errors[:organisation].join(', '), class: 'error'
+        = f.text_field :organisation, { class: 'govuk-input govuk-!-width-one-half' }
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

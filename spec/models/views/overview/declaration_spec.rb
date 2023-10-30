@@ -13,7 +13,6 @@ RSpec.describe Views::Overview::Declaration do
     it do
       is_expected.to eql(['statement_signed_by'])
     end
-
   end
 
   describe '#statement_signed_by' do
