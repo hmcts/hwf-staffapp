@@ -7,14 +7,22 @@ module Applications
     before_action :check_completed_redirect, except: [:create]
 
     def create
-      application = ApplicationBuilder.new(current_user).build
-      authorize application
+      @application = ApplicationBuilder.new(current_user).build
+      authorize @application
 
-      application.save
-      redirect_to application_personal_informations_path(application)
+      @application.save
+      redirect_to first_page
     end
 
     private
+
+    def first_page
+      if FeatureSwitching.active?(:band_calculation)
+        application_fee_status_path(@application)
+      else
+        application_personal_informations_path(@application)
+      end
+    end
 
     def authorize_application_update
       authorize application, :update?

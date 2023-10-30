@@ -233,6 +233,10 @@ def datashare_evidence_page
   @datashare_evidence_page ||= DatashareEvidencePage.new
 end
 
+def fee_status_page
+  @fee_status_page ||= FeeStatusPage.new
+end
+
 def complete_processing
   if base_page.content.has_complete_processing_button?
     base_page.content.complete_processing_button.click
@@ -388,4 +392,8 @@ def click_reference_link
   reference_link = "#{reference_prefix}-000001"
   expect(page).to have_link(reference_link)
   click_link reference_link
+end
+
+def enable_feature_switch(feature_name)
+  FeatureSwitching.create(feature_key: feature_name, enabled: true)
 end

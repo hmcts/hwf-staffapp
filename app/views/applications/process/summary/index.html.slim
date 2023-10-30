@@ -3,7 +3,14 @@
 
 h1.govuk-heading-xl Check details
 
-=build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+-if hide_fee_status?
+  =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+-else
+  =build_section_with_defaults 'Date received and fee status', @fee_status, application_fee_status_path(@application)
+  =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+
+
+
 =build_section_with_defaults 'Application details', @details, application_details_path(@application)
 - if display_savings?(@application)
   =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)

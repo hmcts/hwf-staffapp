@@ -1,42 +1,24 @@
 module Views
   module Overview
-    class Details
+    class FeeStatus
       include ActionView::Helpers::NumberHelper
-
-      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, to: :detail)
 
       def initialize(application)
         @application = application
       end
 
       def all_fields
-        if FeatureSwitching.active?(:band_calculation)
-          [
-            'fee', 'jurisdiction', 'form_name', 'case_number',
-            'deceased_name', 'date_of_death', 'emergency_reason'
-          ]
-        else
-          pre_ucd_change_fields
-        end
+        [
+          'date_received', 'refund_request', 'date_fee_paid', 'discretion_applied',
+          'discretion_manager_name', 'discretion_reason'
+        ]
       end
 
       def skip_change_link
-        ['refund_request', 'date_fee_paid']
+        ['refund_request', 'date_fee_paid'] if @application.is_a?(OnlineApplication)
       end
 
-      def medium
-        @application.is_a?(OnlineApplication) ? 'digital' : 'paper'
-      end
-
-      def fee
-        number_to_currency(detail.fee, precision: 2, unit: '£')
-      end
-
-      def jurisdiction
-        detail.jurisdiction.name
-      end
-
-      [:date_received, :date_of_death, :date_fee_paid].each do |method|
+      [:date_received, :date_fee_paid].each do |method|
         define_method(method) do
           format_date(detail.public_send(method))
         end
@@ -71,14 +53,6 @@ module Views
 
       def format_date(date)
         date&.to_fs(:gov_uk_long)
-      end
-
-      def pre_ucd_change_fields
-        [
-          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
-          'discretion_manager_name', 'discretion_reason', 'emergency_reason'
-        ]
       end
     end
   end

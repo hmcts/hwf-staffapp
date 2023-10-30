@@ -5,10 +5,12 @@ RSpec.describe Applications::Process::SummaryController do
   let(:application) { build_stubbed(:application, office: user.office) }
   let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
+  let(:fee_status) { instance_double(Views::Overview::FeeStatus) }
 
   before do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
+    allow(Views::Overview::FeeStatus).to receive(:new).with(application).and_return(fee_status)
     allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
   end
@@ -25,6 +27,10 @@ RSpec.describe Applications::Process::SummaryController do
 
       it 'renders the correct template' do
         expect(response).to render_template(:index)
+      end
+
+      it 'assigns fee_status' do
+        expect(assigns(:fee_status)).to eql(fee_status)
       end
 
       it 'assigns application' do

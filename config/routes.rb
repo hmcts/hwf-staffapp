@@ -45,6 +45,8 @@ Rails.application.routes.draw do
                               defaults: { type: 'paper' }
     put 'override', to: 'applications/process/override#update', as: :override
 
+    get '/fee_status', to: 'applications/process/fee_status#index'
+    post '/fee_status', to: 'applications/process/fee_status#create'
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
