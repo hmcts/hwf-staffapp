@@ -68,4 +68,33 @@ RSpec.describe ApplicationHelper do
       it { expect(helper.amount_value(amount)).to be_nil }
     end
   end
+
+  describe 'show_refund_section?' do
+    context 'feature is not active' do
+      it { expect(helper.show_refund_section?).to be true }
+    end
+
+    context 'feature is active' do
+      before {
+        allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true
+      }
+
+      it { expect(helper.show_refund_section?).to be false }
+    end
+  end
+
+  describe 'path_to_first_page' do
+    let(:application) { build(:application, id: 3) }
+    context 'feature is not active' do
+      it { expect(helper.path_to_first_page(application)).to eq '/applications/3/personal_informations' }
+    end
+
+    context 'feature is active' do
+      before {
+        allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true
+      }
+
+      it { expect(helper.path_to_first_page(application)).to eq '/applications/3/fee_status' }
+    end
+  end
 end
