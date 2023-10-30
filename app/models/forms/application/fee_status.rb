@@ -30,6 +30,7 @@ module Forms
       define_attributes
 
       before_validation :format_date_fields
+      before_validation :reset_discretion
       after_validation :check_discretion
       after_validation :check_refund_values
       after_validation :update_calculation_scheme
@@ -63,6 +64,14 @@ module Forms
 
       def update_calculation_scheme
         self.calculation_scheme = FeatureSwitching.calculation_scheme(calculation_scheme_data)
+      end
+
+      def reset_discretion
+        if @refund == false
+          @discretion_applied = nil
+          @discretion_manager_name = nil
+          @discretion_reason = nil
+        end
       end
 
       def min_date

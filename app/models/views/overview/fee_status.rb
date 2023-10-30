@@ -1,6 +1,6 @@
 module Views
   module Overview
-    class FeeStatus
+    class FeeStatus < Views::Overview::Details
       include ActionView::Helpers::NumberHelper
 
       def initialize(application)
@@ -35,25 +35,6 @@ module Views
         I18n.t(".discretion_applied_#{detail.discretion_applied}", scope: scope)
       end
 
-      def discretion_manager_name
-        return if discretion_applied.blank?
-        detail.discretion_manager_name
-      end
-
-      def discretion_reason
-        return if discretion_applied.blank?
-        detail.discretion_reason
-      end
-
-      private
-
-      def detail
-        @application.detail
-      end
-
-      def format_date(date)
-        date&.to_fs(:gov_uk_long)
-      end
     end
   end
 end

@@ -35,6 +35,24 @@ RSpec.describe Forms::Application::FeeStatus do
         expect(form_detail.date_received.to_fs(:default)).to eq(date_received.to_fs(:default))
       end
     end
+
+    describe 'reset discretion if no refund' do
+      before do
+        fee_status.merge!({
+                            refund: false,
+                            discretion_applied: true,
+                            discretion_manager_name: 'test1',
+                            discretion_reason: 'test2'
+                          })
+        form
+      end
+
+      it 'discretion is nil' do
+        expect(form_detail.discretion_applied).to be_nil
+        expect(form_detail.discretion_manager_name).to be_nil
+        expect(form_detail.discretion_manager_name).to be_nil
+      end
+    end
   end
 
   describe 'validations' do
