@@ -1,3 +1,3 @@
 RSpec.describe Representative do
-    it { should belong_to(:application) }
+  it { is_expected.to belong_to(:application) }
 end

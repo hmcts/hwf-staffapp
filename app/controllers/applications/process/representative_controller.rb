@@ -10,7 +10,6 @@ module Applications
 
       def create
         @form = Forms::Application::Representative.new(representative)
-
         @form.update(form_params(:representative))
 
         if @form.save

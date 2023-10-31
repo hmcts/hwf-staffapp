@@ -15,7 +15,7 @@ module Views
       end
 
       def full_name
-        "#{@representative.first_name} #{@representative.last_name}"
+        "#{@representative.first_name} #{@representative.last_name}".strip
       end
 
       def display_section?

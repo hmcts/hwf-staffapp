@@ -56,6 +56,14 @@ RSpec.describe Applications::Process::SummaryController do
       it 'assigns income' do
         expect(assigns(:income)).to be_a(Views::Overview::Income)
       end
+
+      it 'assigns declaration' do
+        expect(assigns(:declaration)).to be_a(Views::Overview::Declaration)
+      end
+
+      it 'assigns representative' do
+        expect(assigns(:representative)).to be_a(Views::Overview::Representative)
+      end
     end
   end
 
