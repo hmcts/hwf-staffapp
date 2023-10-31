@@ -28,6 +28,10 @@ class OnlineApplication < ActiveRecord::Base
     self
   end
 
+  def representative
+    # TODO: placeholder for upocoming changes
+  end
+
   def processed?
     linked_application.present? && !linked_application.created?
   end

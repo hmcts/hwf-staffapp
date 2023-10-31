@@ -18,10 +18,25 @@ module Applications
 
         if @form.save
           IncomeCalculationRunner.new(application).run
-          redirect_to application_declaration_path(application)
+          redirect_to path_to_next_page
         else
           render :index
         end
+      end
+
+      private
+
+      def path_to_next_page
+        if FeatureSwitching.subject_to_new_legislation?(received_and_refund_data)
+          application_declaration_path(application)
+        else
+          application_summary_path(application)
+        end
+      end
+
+      def received_and_refund_data
+        detail = application.detail
+        { date_received: detail.date_received, date_fee_paid: detail.date_fee_paid, refund: detail.refund }
       end
     end
   end
