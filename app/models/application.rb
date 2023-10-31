@@ -34,6 +34,7 @@ class Application < ActiveRecord::Base
   has_one :part_payment, required: false, dependent: :destroy
   has_one :benefit_override, required: false, dependent: :destroy
   has_one :decision_override, required: false, dependent: :destroy
+  has_one :representative, dependent: :destroy
 
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
     Application.where(state: states[:waiting_for_evidence]).

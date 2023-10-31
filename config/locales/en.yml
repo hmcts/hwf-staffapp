@@ -419,6 +419,14 @@ en-GB:
         discretion_applied: Delivery Manager discretion applied
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
+      views/overview/declaration:
+        statement_signed_by: 'Declaration and statement of truth signed by'
+        applicant: Applicant
+        litigation_friend: Litigation friend
+        legal_representative: Legal representative
+      views/overview/representative:
+        full_name: 'Full name'
+        organisation: Organisation
       views/evidence:
         correct: Ready to process
         incorrect_reason: The problem
@@ -467,7 +475,6 @@ en-GB:
         refund: Refund
         jurisdiction: Jurisdiction
         sop_code: SOP code
-
       forms/application/fee_status:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         date_received: Date application received
@@ -561,6 +568,21 @@ en-GB:
         children_hint: Add number given in questions 10 and 11 together
         income: Total monthly income
         income_hint: Rounded to the nearest £
+      forms/application/declaration:
+        header: 'Declaration and statement of truth'
+        statement_signed_by: 'Declaration and statement of truth signed by the:'
+        statement_signed_by_applicant: Applicant
+        statement_signed_by_litigation_friend: Litigation friend
+        statement_signed_by_legal_representative: Legal representative
+      forms/application/representative:
+        header: 'Representative details'
+        sub_header: Details of litigation friend or legal representative
+        first_name: First name
+        last_name: Last name
+        organisation: Organisation name
+        hint_organisation: If applicable, name or firm (legal representative only)
+        statement_signed_by_legal_representative: Legal representative
+
       forms/application/summary:
         passed: '✓ Passed'
         failed: '✗ Failed'

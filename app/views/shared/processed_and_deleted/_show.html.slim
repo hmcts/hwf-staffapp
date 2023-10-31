@@ -15,6 +15,13 @@ h1.govuk-heading-xl
 =build_section_with_defaults 'Application details', @details
 =build_section 'Benefits', @application_view, ['benefits', 'paper_evidence']
 =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'total_monthly_income_from_evidence', 'income_kind_applicant', 'income_kind_partner']
+
+-if show_ucd_changes?
+  =build_section_with_defaults 'Declaration and statement of truth', @declaration
+  - if @representative.display_section?
+    =build_section_with_defaults 'Representative details', @representative
+
+
 =build_section 'Result', @application_view, result_section_list
 
 =render(partial: 'shared/remission_type', locals: { source: @result })

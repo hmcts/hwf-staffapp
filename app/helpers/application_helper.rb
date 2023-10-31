@@ -37,6 +37,10 @@ module ApplicationHelper
   alias show_received_section? show_refund_section?
   alias hide_fee_status? show_refund_section?
 
+  def show_ucd_changes?
+    FeatureSwitching.active?(:band_calculation)
+  end
+
   def path_to_first_page(record)
     if FeatureSwitching.active?(:band_calculation)
       application_fee_status_path(record)

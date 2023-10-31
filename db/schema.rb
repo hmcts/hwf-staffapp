@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_26_150833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -212,6 +212,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
     t.string "calculation_scheme"
+    t.string "statement_signed_by"
     t.index ["application_id"], name: "index_details_on_application_id"
     t.index ["case_number"], name: "index_details_on_case_number"
     t.index ["fee"], name: "index_details_on_fee"
@@ -404,6 +405,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.integer "completed_by_id"
     t.string "outcome"
     t.index ["application_id"], name: "index_part_payments_on_application_id"
+  end
+
+  create_table "representatives", force: :cascade do |t|
+    t.integer "application_id", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "organisation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "savings", id: :serial, force: :cascade do |t|

@@ -5,8 +5,6 @@ module Forms
       include DataFieldFormattable
       include RefundValidatable
 
-      TIME_LIMIT_FOR_PROBATE = 20
-
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
