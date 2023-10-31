@@ -424,6 +424,9 @@ en-GB:
         applicant: Applicant
         litigation_friend: Litigation friend
         legal_representative: Legal representative
+      views/overview/representative:
+        full_name: 'Full name'
+        organisation: Organisation
       views/evidence:
         correct: Ready to process
         incorrect_reason: The problem

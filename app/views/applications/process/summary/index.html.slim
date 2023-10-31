@@ -22,6 +22,8 @@ h1.govuk-heading-xl Check details
 
 -if show_ucd_changes?
   =build_section_with_defaults 'Declaration and statement of truth', @declaration, application_declaration_path(@application)
+  - if @representative.display_section?
+    =build_section_with_defaults 'Representative details', @representative, application_representative_path(@application)
 
 
 = form_for @application, url: application_summary_path(@application), method: :post do |f|

@@ -1,3 +1,3 @@
 class Representative < ApplicationRecord
-  belongs_to :application, dependent: :destroy
+  belongs_to :application
 end

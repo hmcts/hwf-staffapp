@@ -21,10 +21,10 @@ module Applications
       end
 
       private
+
       def representative
         @representative ||= Representative.find_or_initialize_by(application: application)
       end
-
 
     end
   end
