@@ -16,7 +16,7 @@ h1.govuk-heading-xl
 =build_section 'Benefits', @application_view, ['benefits', 'paper_evidence']
 =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'total_monthly_income_from_evidence', 'income_kind_applicant', 'income_kind_partner']
 
--if show_ucd_changes?
+-if show_ucd_changes?(@application_view.calculation_scheme_value)
   =build_section_with_defaults 'Declaration and statement of truth', @declaration
   - if @representative.display_section?
     =build_section_with_defaults 'Representative details', @representative

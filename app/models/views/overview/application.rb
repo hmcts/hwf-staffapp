@@ -102,6 +102,10 @@ module Views
         end
       end
 
+      def calculation_scheme_value
+        @application.detail.calculation_scheme
+      end
+
       private
 
       def parse_amount_to_pay(amount_to_pay)

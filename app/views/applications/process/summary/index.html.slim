@@ -3,7 +3,7 @@
 
 h1.govuk-heading-xl Check details
 
--if show_ucd_changes?
+-if show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Date received and fee status', @fee_status, application_fee_status_path(@application)
   =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
 -else
@@ -20,7 +20,7 @@ h1.govuk-heading-xl Check details
     =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
 
 
--if show_ucd_changes?
+-if show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Declaration and statement of truth', @declaration, application_declaration_path(@application)
   - if @representative.display_section?
     =build_section_with_defaults 'Representative details', @representative, application_representative_path(@application)
