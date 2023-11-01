@@ -1,7 +1,7 @@
 class FeatureSwitching < ApplicationRecord
   # enabled attribute is false as default
 
-  NEW_BAND_CALCUATIONS_ACTIVE_DATE = DateTime.parse('27-11-2023').freeze
+  NEW_BAND_CALCUATIONS_ACTIVE_DATE = DateTime.parse(Settings.legislation_work.active_date).freeze
 
   CALCULATION_SCHEMAS = [:prior_q4_23, :q4_23].freeze
 

@@ -47,3 +47,5 @@ sentry:
   dsn: <%= ENV['SENTRY_DSN'] %>
 personal_data_purge:
   years_ago: 7
+legislation_work:
+  active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-10-2023' %>
