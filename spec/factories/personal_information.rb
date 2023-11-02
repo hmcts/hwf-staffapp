@@ -6,6 +6,9 @@ FactoryBot.define do
     year_date_of_birth { '1980' }
     married { false }
 
+    partner_last_name { 'Foo' }
+    partner_date_of_birth { '01/01/1980' }
+
     factory :full_personal_information do
       title { 'Mr' }
       ni_number { 'AA123456A' }

@@ -514,6 +514,21 @@ en-GB:
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
         under_age_true: 'Yes'
+      forms/application/partner:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        partners_details: "Partner's details"
+        partner_first_name: First and middle names
+        partner_last_name: 'Last name'
+        partner_last_name_hint: 'First 3 letters only'
+        partner_full_name: Full name
+        partner_ni_number: 'National Insurance number'
+        partner_ho_number: Home Office reference number
+        partner_ho_number_hint: Where provided, example L1234567 or L1234567/1 for a family member or 1111-2222-3333-4444 or 1111-2222-3333-4444/1 for a family member
+        partner_date_of_birth_hint: For example, 31 3 1980
+        partner_date_of_birth: 'Date of birth'
+        day_date_of_birth: 'Day'
+        month_date_of_birth: 'Month'
+        year_date_of_birth: 'Year'
       forms/application/detail:
         fee: How much is the court or tribunal fee?
         jurisdiction_id: Jurisdiction
@@ -695,6 +710,17 @@ en-GB:
               invalid: 'Enter a Home Office reference number in the correct format'
             married:
               inclusion: Select a marital status
+        forms/application/partner:
+          attributes:
+            partner_last_name:
+              blank: Enter the partner's last name
+              too_short: Last name is too short (minimum is 2 characters)
+            partner_date_of_birth:
+              too_young: "Partner's date of birth cannot be in the future"
+              too_old: "The partner can't be over %{maximum_age} years old"
+              not_a_date: 'Enter a valid date of birth'
+            partner_ni_number:
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
         forms/application/detail:
           attributes:
             fee:
