@@ -396,8 +396,11 @@ en-GB:
         calculation_scheme: HwF Scheme
       views/overview/applicant:
         full_name: Full name
+        partner_full_name: Partner's Full name
         date_of_birth: Date of birth
+        partner_date_of_birth: Partner's Date of birth
         ni_number: National Insurance number
+        partner_ni_number: Partner's National Insurance number
         ho_number: Home Office reference number
         under_age: 15 and under
         status: Status
