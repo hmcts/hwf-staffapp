@@ -496,6 +496,7 @@ en-GB:
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
+        applicants_details: "Applicant's details"
         first_name: First and middle names
         last_name: 'Last name'
         last_name_hint: 'First 3 letters only'
