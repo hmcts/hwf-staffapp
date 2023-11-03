@@ -13,6 +13,7 @@ module Forms
 
       validates :first_name, presence: true
       validates :last_name, presence: true
+      validate :special_characters_check
 
       private
 
@@ -27,6 +28,19 @@ module Forms
           end
         end
       end
+
+      def special_characters_check
+        self.class.permitted_attributes.each_key do |name|
+          next if contains_only_standard_characters?(instance_variable_get("@#{name}"))
+          errors.add(name, 'Must not contain special characters')
+        end
+      end
+
+      def contains_only_standard_characters?(string)
+        return true if string.blank?
+        /\A[\w\s]+\z/.match?(string)
+      end
+
     end
   end
 end

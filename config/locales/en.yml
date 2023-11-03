@@ -785,6 +785,16 @@ en-GB:
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/application/declaration:
+          attributes:
+            statement_signed_by:
+              blank: 'You must select who sign declaration and statement of truth'
+        forms/application/representative:
+          attributes:
+            first_name:
+              blank: Enter the first name
+            last_name:
+              blank: Enter the last name
         forms/application/delete:
           attributes:
             deleted_reason:

@@ -10,7 +10,7 @@
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.visuallyhidden =t('sub_header', scope: @form.i18n_scope)
-          legend.govuk-fieldset__legend
+          legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
             =t('sub_header', scope: @form.i18n_scope)
 
           = f.label :first_name, class: 'govuk-label'
@@ -28,6 +28,9 @@
         = f.text_field :last_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+            =t('hint_organisation', scope: @form.i18n_scope)
         = f.label :organisation, class: 'govuk-label'
         - if @form.errors[:organisation].present?
           span.govuk-error-message
