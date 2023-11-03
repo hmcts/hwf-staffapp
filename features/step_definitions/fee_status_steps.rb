@@ -2,6 +2,11 @@ Given('UCD changes are active') do
   enable_feature_switch('band_calculation')
 end
 
+Given('new legislation applies') do
+  # temporary solution to new UCD work
+  update_legislation_value
+end
+
 Given('I started to process paper application') do
   start_application
   click_on 'Start now', visible: false

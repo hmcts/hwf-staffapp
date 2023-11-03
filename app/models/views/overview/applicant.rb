@@ -2,7 +2,7 @@ module Views
   module Overview
     class Applicant
 
-      delegate(:full_name, to: :applicant)
+      delegate(:full_name, :partner_full_name, to: :applicant)
       delegate(:ho_number, to: :applicant)
 
       def initialize(application)
@@ -10,11 +10,16 @@ module Views
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status']
+        ['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
+         'partner_full_name', 'partner_date_of_birth', 'partner_ni_number']
       end
 
       def ni_number
         applicant.ni_number&.gsub(/(.{2})/, '\1 ')
+      end
+
+      def partner_ni_number
+        applicant.partner_ni_number&.gsub(/(.{2})/, '\1 ')
       end
 
       def status
@@ -24,6 +29,10 @@ module Views
 
       def date_of_birth
         format_date applicant.date_of_birth
+      end
+
+      def partner_date_of_birth
+        format_date applicant.partner_date_of_birth
       end
 
       def under_age

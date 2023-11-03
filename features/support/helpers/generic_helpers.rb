@@ -397,3 +397,8 @@ end
 def enable_feature_switch(feature_name)
   FeatureSwitching.create(feature_key: feature_name, enabled: true)
 end
+
+def update_legislation_value
+  id = current_url[%r{/(\d+)/}, 1]
+  Application.find(id).detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
+end

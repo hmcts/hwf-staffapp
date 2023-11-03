@@ -2,10 +2,24 @@
   = "Check details"
 
 h1.govuk-heading-xl Check details
+- change_applicant_link = { url: application_personal_informations_path(@application) }
+- change_partner_link = { url: application_partner_informations_path(@application) }
 
--if show_ucd_changes?
+-if show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Date received and fee status', @fee_status, application_fee_status_path(@application)
-  =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+  =build_section_with_custom_links 'Personal details', @applicant,
+  [ { key:'full_name', link_attributes: change_applicant_link },
+    { key:'date_of_birth', link_attributes: change_applicant_link },
+    { key:'under_age', link_attributes: change_applicant_link },
+    { key:'ni_number', link_attributes: change_applicant_link },
+    { key:'ho_number', link_attributes: change_applicant_link },
+    { key:'status', link_attributes: change_applicant_link },
+    { key:'partner_full_name', link_attributes: change_partner_link },
+    { key:'partner_date_of_birth', link_attributes: change_partner_link },
+    { key:'partner_ni_number', link_attributes: change_partner_link },
+    ]
+
+
 -else
   =build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
 
@@ -20,7 +34,7 @@ h1.govuk-heading-xl Check details
     =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
 
 
--if show_ucd_changes?
+-if show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Declaration and statement of truth', @declaration, application_declaration_path(@application)
   - if @representative.display_section?
     =build_section_with_defaults 'Representative details', @representative, application_representative_path(@application)

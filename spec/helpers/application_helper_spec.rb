@@ -97,4 +97,25 @@ RSpec.describe ApplicationHelper do
       it { expect(helper.path_to_first_page(application)).to eq '/applications/3/fee_status' }
     end
   end
+
+  describe 'show_ucd_changes?' do
+    before {
+      allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true
+    }
+
+    context 'feature is active with old legislation' do
+      let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
+      it { expect(helper.show_ucd_changes?(calculation_scheme)).to be false }
+    end
+
+    context 'feature is active with new legislation' do
+      let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1].to_s }
+      it { expect(helper.show_ucd_changes?(calculation_scheme)).to be true }
+    end
+
+    context 'feature is active with blank legislation' do
+      let(:calculation_scheme) { nil }
+      it { expect(helper.show_ucd_changes?(calculation_scheme)).to be true }
+    end
+  end
 end

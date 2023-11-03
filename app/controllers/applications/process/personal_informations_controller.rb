@@ -12,9 +12,19 @@ module Applications
         @form.update(form_params(:applicant))
 
         if @form.save
-          redirect_to application_details_path
+          redirect_to path_to_next_page
         else
           render :index
+        end
+      end
+
+      private
+
+      def path_to_next_page
+        if application.applicant.married?
+          application_partner_informations_path(application)
+        else
+          application_details_path(application)
         end
       end
     end

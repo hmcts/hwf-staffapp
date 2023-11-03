@@ -31,6 +31,7 @@ Feature: Fee status page
       When I answer no to the benefits question
       Then I should be taken to the incomes page
       When I answer no to does the applicant financially support any children
+      And new legislation applies
       And I submit the total monthly income
       Then I am on the summary page
       And I should see a fee status section
