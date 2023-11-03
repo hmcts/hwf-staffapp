@@ -33,6 +33,22 @@ RSpec.describe Applications::Process::DeclarationController do
     end
   end
 
+  describe 'POST #create with missing params' do
+    let(:app_form) do
+      instance_double(ApplicationFormRepository,
+                      success?: false,
+                      process: application_declaration_form)
+    end
+
+    it 'does not raise an error for missing application data in params' do
+      allow(ApplicationFormRepository).to receive(:new).with(application, {}).and_return app_form
+      allow(detail).to receive_messages(update: true, statement_signed_by: '')
+
+      post :create, params: { application_id: application.id }
+      expect(response).to render_template('applications/process/declaration/index')
+    end
+  end
+
   describe 'POST #create' do
     let(:success) { true }
     let(:app_form) do
