@@ -54,4 +54,9 @@ class FormObject
   def get_attribs(object)
     object.is_a?(ActiveRecord::Base) ? object.attributes : object
   end
+
+  def ucd_changes_apply?(scheme)
+    return false if scheme.blank?
+    scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+  end
 end

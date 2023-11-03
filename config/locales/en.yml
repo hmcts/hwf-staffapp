@@ -575,6 +575,11 @@ en-GB:
         over_61_true: 'Yes'
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
+        choice_less_than: Less than £4,250
+        choice_between: Between £4,250 and £15,999
+        choice_more_than: £16,000 or more
+        savings_amount: Total savings and investments
+        partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
         benefits_false: 'No'

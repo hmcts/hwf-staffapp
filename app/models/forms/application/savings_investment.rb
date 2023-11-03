@@ -2,6 +2,8 @@ module Forms
   module Application
     class SavingsInvestment < ::FormObject
 
+      include ActiveModel::Validations::Callbacks
+
       LOCALE = 'activemodel.errors.models.forms/application/savings_investment.attributes'.freeze
 
       def self.permitted_attributes
@@ -9,11 +11,18 @@ module Forms
           min_threshold_exceeded: Boolean,
           over_61: Boolean,
           max_threshold_exceeded: Boolean,
-          amount: Decimal
+          amount: Decimal,
+          choice: String
         }
       end
 
       define_attributes
+
+      before_validation :check_thresholds
+
+      validates :choice, inclusion: { in: ['less', 'between', 'more'] }, if: proc {
+        ucd_changes_apply?(@object.application.detail.calculation_scheme)
+      }
 
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
       validates :over_61, inclusion: { in: [true, false] }, if: :min_threshold_exceeded?
@@ -56,6 +65,21 @@ module Forms
       def maximum_threshold_required?
         min_threshold_exceeded? && over_61?
       end
+
+      def check_thresholds
+        return unless ucd_changes_apply?(@object.application.detail.calculation_scheme)
+        case @choice
+        when 'less'
+          @min_threshold_exceeded = false
+        when 'between'
+          @min_threshold_exceeded = true
+          @max_threshold_exceeded = false
+        when 'more'
+          @max_threshold_exceeded = true
+          @min_threshold_exceeded = true
+        end
+      end
+
     end
   end
 end

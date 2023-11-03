@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::SavingsInvestment do
-  subject(:savings_investment_form) { described_class.new(application) }
+  subject(:savings_investment_form) { described_class.new(application.saving) }
 
-  params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount]
+  params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount, :choice]
 
   let(:min_threshold) { Settings.savings_threshold.minimum_value }
 
@@ -18,6 +18,27 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
     before do
       savings_investment_form.update(hash)
+    end
+
+    context 'ucd changes' do
+      before {
+        allow(savings_investment_form).to receive(:ucd_changes_apply?).and_return true
+      }
+      context 'less' do
+        let(:hash) { { choice: 'less', min_threshold_exceeded: nil, amount: nil, over_61: nil, max_threshold_exceeded: nil } }
+        it { is_expected.to be_valid }
+      end
+
+      context 'between' do
+        let(:hash) { { choice: 'between', min_threshold_exceeded: nil, amount: 5000, over_61: false, max_threshold_exceeded: nil } }
+        it { is_expected.to be_valid }
+      end
+
+      context 'more' do
+        let(:hash) { { choice: 'more', min_threshold_exceeded: nil, amount: nil, over_61: true, max_threshold_exceeded: nil } }
+        it { is_expected.to be_valid }
+      end
+
     end
 
     describe 'min_threshold_exceeded' do
