@@ -10,7 +10,7 @@ module Views
       end
 
       def all_fields
-        if FeatureSwitching.active?(:band_calculation)
+        if show_ucd_changes?
           [
             'fee', 'jurisdiction', 'form_name', 'case_number',
             'deceased_name', 'date_of_death', 'emergency_reason'
@@ -80,6 +80,12 @@ module Views
           'discretion_manager_name', 'discretion_reason', 'emergency_reason'
         ]
       end
+
+      def show_ucd_changes?
+        return FeatureSwitching.active?(:band_calculation) if calculation_scheme.blank?
+        detail.calculation_scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+      end
+
     end
   end
 end

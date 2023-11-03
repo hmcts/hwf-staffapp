@@ -19,8 +19,9 @@
       .govuk-form-group
         fieldset.govuk-fieldset
           legend.visuallyhidden =t('applicants_details', scope: @form.i18n_scope)
-          legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
-            =t('applicants_details', scope: @form.i18n_scope)
+          -if show_ucd_changes?(@application.detail.calculation_scheme)
+            legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+              =t('applicants_details', scope: @form.i18n_scope)
 
           = f.label :first_name, class: 'govuk-label'
             =t('first_name', scope: @form.i18n_scope)
