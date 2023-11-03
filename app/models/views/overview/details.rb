@@ -82,8 +82,8 @@ module Views
       end
 
       def show_ucd_changes?
-        return FeatureSwitching.active?(:band_calculation) if calculation_scheme.blank?
-        detail.calculation_scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+        return FeatureSwitching.active?(:band_calculation) if detail.try(:calculation_scheme).blank?
+        detail.try(:calculation_scheme) == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
       end
 
     end
