@@ -45,7 +45,8 @@ module Forms
           over_61: over_61,
           max_threshold: Settings.savings_threshold.maximum_value,
           max_threshold_exceeded: max_threshold_exceeded,
-          amount: rounded_amount
+          amount: rounded_amount,
+          choice: choice
         }
       end
 
