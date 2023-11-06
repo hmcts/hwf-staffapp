@@ -356,6 +356,13 @@ en-GB:
         min_threshold_exceeded: "Less than £3,000"
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
+        over_66: '66 or older'
+        over_61_true: 'Yes'
+        over_61_false: 'No'
+        less_then: 'Less than £4,250'
+        between: 'Between £4,250 and £15,999'
+        more_then: 'More than £16,000'
+        amount_total: Savings and Investments total
       views/overview/fee_status:
         date_received: "Date received"
         refund_request: "Refund request"
