@@ -770,6 +770,8 @@ en-GB:
               inclusion: Please answer the savings question
             over_61:
               inclusion: Please confirm if the partner is 61 or over
+            over_66:
+              inclusion: Please confirm if the partner is 66 or over
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number

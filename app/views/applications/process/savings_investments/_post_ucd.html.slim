@@ -6,7 +6,6 @@
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.visuallyhidden Amount of savings
-          = @form.errors.messages
           = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
           span#changed-name-error_no_answer.govuk-error-message
             = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
@@ -24,7 +23,7 @@
                     legend.visuallyhidden Applicant's partner's age
                     = f.label :over_61, t('partner_over_66', scope: @form.i18n_scope), class: 'govuk-label'
                     span#changed-name-error.govuk-error-message
-                      = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                      = f.label :over_61, @form.errors[:over_61].join(', ').gsub('61','66'), class: 'error' if @form.errors[:over_61].present?
                     = f.hidden_field :over_61, value: nil
                     .govuk-radios.govuk-radios--small
                       .govuk-radios__item

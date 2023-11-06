@@ -22,7 +22,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
     context 'ucd changes' do
       before {
-        allow(savings_investment_form).to receive(:ucd_changes_apply?).and_return true
+        application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
       }
       context 'less' do
         let(:hash) { { choice: 'less', min_threshold_exceeded: nil, amount: nil, over_61: nil, max_threshold_exceeded: nil } }

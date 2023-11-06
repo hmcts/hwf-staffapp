@@ -59,7 +59,7 @@ module Forms
       end
 
       def amount_required?
-        min_threshold_exceeded? && !over_61?
+        min_threshold_exceeded? && !max_threshold_exceeded && !over_61?
       end
 
       def maximum_threshold_required?
@@ -70,14 +70,29 @@ module Forms
         return unless ucd_changes_apply?(@object.application.detail.calculation_scheme)
         case @choice
         when 'less'
-          @min_threshold_exceeded = false
+          less_fields_setup
         when 'between'
-          @min_threshold_exceeded = true
-          @max_threshold_exceeded = false
+          between_fields_setup
         when 'more'
-          @max_threshold_exceeded = true
-          @min_threshold_exceeded = true
+          more_fields_setup
         end
+      end
+
+      def less_fields_setup
+        @min_threshold_exceeded = false
+        @over_61 = false
+      end
+
+      def between_fields_setup
+        @min_threshold_exceeded = true
+        @max_threshold_exceeded = false
+      end
+
+      def more_fields_setup
+        @max_threshold_exceeded = true
+        @min_threshold_exceeded = true
+        @over_61 = false
+        @amount = nil
       end
 
     end
