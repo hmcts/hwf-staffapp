@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Income do
-  subject { described_class.new(hash) }
+  subject(:children_form) { described_class.new(application) }
+  let(:application) { build(:application, detail: detail) }
+  let(:detail) { build(:detail, calculation_scheme: calculation_scheme) }
+  let(:age_band) { nil }
+  let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
-  params_list = [:income, :dependents, :children]
+  params_list = [:children, :children_age_band, :children_age_band_one, :children_age_band_two, :dependents, :income]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -12,39 +16,33 @@ RSpec.describe Forms::Application::Income do
   end
 
   describe 'validation' do
-    let(:income) { described_class.new(hash) }
+    let(:children_form) { described_class.new(application) }
 
     describe 'income' do
-      let(:hash) { { income: 500, dependents: true, children: 1 } }
+      let(:application) { build(:application, detail: detail, income: 500, dependents: true, children: 1) }
 
       it { is_expected.to validate_presence_of(:income) }
       it { is_expected.to validate_numericality_of(:income) }
     end
 
     describe 'dependents' do
-      let(:hash) { { income: 500, dependents: dependents, children: 1 } }
+      let(:application) { build(:application, detail: detail, income: 500, dependents: dependents, children: 1) }
 
       context 'when true' do
         let(:dependents) { true }
 
-        it { expect(income.valid?).to be true }
+        it { expect(children_form.valid?).to be true }
       end
 
       context 'when false' do
         let(:dependents) { false }
 
-        it { expect(income.valid?).to be false }
-      end
-
-      context 'when not a boolean value' do
-        let(:dependents) { 'string' }
-
-        it { expect(income.valid?).to be false }
+        it { expect(children_form.valid?).to be false }
       end
     end
 
     describe 'children' do
-      let(:hash) { { income: 500, dependents: dependents, children: children } }
+      let(:application) { build(:application, detail: detail, income: 500, dependents: dependents, children: children) }
 
       context 'when there are dependents' do
         let(:dependents) { true }
@@ -52,13 +50,13 @@ RSpec.describe Forms::Application::Income do
         context 'and the number of children is valid' do
           let(:children) { 1 }
 
-          it { expect(income.valid?).to be true }
+          it { expect(children_form.valid?).to be true }
         end
 
         context 'and the number of children is invalid' do
           let(:children) { 0 }
 
-          it { expect(income.valid?).to be false }
+          it { expect(children_form.valid?).to be false }
         end
       end
 
@@ -68,13 +66,44 @@ RSpec.describe Forms::Application::Income do
         context 'and the number of children is bigger than zero' do
           let(:children) { 1 }
 
-          it { expect(income.valid?).to be false }
+          it { expect(children_form.valid?).to be false }
         end
 
         context 'and the number of children is zero' do
           let(:children) { 0 }
 
-          it { expect(income.valid?).to be true }
+          it { expect(children_form.valid?).to be true }
+        end
+      end
+
+      context 'UCD applies' do
+        let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+        let(:dependents) { true }
+        let(:children) { 0 }
+        context 'age band present' do
+          before {
+            children_form.children_age_band_one = 1
+          }
+
+          it { expect(children_form.valid?).to be true }
+        end
+
+        context 'age band missing' do
+          before {
+            children_form.children_age_band_one = 0
+            children_form.children_age_band_one = 0
+          }
+
+          it { expect(children_form.valid?).to be false }
+        end
+
+        context 'no validation for income' do
+          before {
+            children_form.income = nil
+            children_form.children_age_band_one = 1
+          }
+
+          it { expect(children_form.valid?).to be true }
         end
       end
     end
@@ -102,6 +131,46 @@ RSpec.describe Forms::Application::Income do
 
       it 'saves the parameters in the detail' do
         params.each do |key, value|
+          expect(application.send(key)).to eql(value)
+        end
+      end
+
+      it 'marks the application as income' do
+        expect(application.application_type).to eql('income')
+      end
+    end
+
+    context 'when attributes are incorrect' do
+      let(:params) { { dependents: nil } }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#save UCD applies' do
+    subject(:form) { described_class.new(application) }
+
+    subject(:update_form) do
+      form.update(params)
+      form.save
+    end
+
+    let(:application) { create(:application, detail: detail) }
+
+    context 'when attributes are correct' do
+      let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+      let(:params) { { income: nil, dependents: true, children_age_band_one: 1, children_age_band_two: 2 } }
+      let(:params_to_check) { { income: nil, dependents: true, children_age_band: { one: 1, two: 2 } } }
+
+      it { is_expected.to be true }
+
+      before do
+        update_form
+        application.reload
+      end
+
+      it 'saves the parameters in the detail' do
+        params_to_check.each do |key, value|
           expect(application.send(key)).to eql(value)
         end
       end

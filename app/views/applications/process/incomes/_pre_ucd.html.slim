@@ -1,0 +1,57 @@
+- content_for :page_title
+  = "Income"
+
+
+= form_for @form, as: :application, url: application_incomes_path, method: :post, html: { autocomplete: 'off' } do |f|
+
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl Income
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend = t('dependents', scope: @form.i18n_scope)
+          - if @form.errors[:dependents].present?
+            span.govuk-error-message
+              = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :dependents, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_false'
+            .govuk-radios__item
+              = f.radio_button :dependents, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'children', show: 'true' } }
+              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_true'
+
+          .panel-indent.util_mt-0.util_mb-0#children-only
+            .govuk-form-group
+              = f.label :children, class: 'govuk-label'
+              div.govuk-hint = t('children_hint', scope: @form.i18n_scope)
+              - if @form.errors[:children].present?
+                span.govuk-error-message
+                  = f.label :children, @form.errors[:children].join(', '), class: 'error'
+              = f.text_field :children, class: 'govuk-input govuk-input--width-3'
+          .panel-indent.util_mt-0#income-input
+            .govuk-form-group
+              = f.label :income, class: 'govuk-label'
+              - if @form.errors[:income].present?
+                span.govuk-error-message
+                  = f.label :income, @form.errors[:income].join(', '), class: 'error'
+              div#amount-hint.govuk-hint
+                = t('income_hint', scope: @form.i18n_scope)
+
+              .field-wrapper
+                span.prefix £
+                = f.text_field :income
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m.util_mt-medium Total monthly income
+        ul.govuk-list.govuk-list--bullet
+          li if the applicant is part of a couple they must have provided details of their partner’s income
+          li add the 2 monthly income amounts and enter the result
+          li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+        p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

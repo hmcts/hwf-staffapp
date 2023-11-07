@@ -10,7 +10,7 @@ module Views
         if show_ucd_changes?
           ['less_then', 'between', 'more_then', 'amount_total', 'over_66']
         else
-          ['min_threshold_exceeded', 'max_threshold_exceeded', 'amount', 'over_66']
+          ['min_threshold_exceeded', 'max_threshold_exceeded', 'amount']
         end
       end
 
@@ -42,7 +42,6 @@ module Views
       alias over_66 over_61
 
       def show_ucd_changes?
-        # binding.pry
         @saving.application.detail.calculation_scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
       end
     end
