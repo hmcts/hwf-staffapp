@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forms::Application::Income do
+RSpec.describe Forms::Application::Dependent do
   subject(:children_form) { described_class.new(application) }
   let(:application) { build(:application, detail: detail) }
   let(:detail) { build(:detail, calculation_scheme: calculation_scheme) }

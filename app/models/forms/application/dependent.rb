@@ -1,6 +1,6 @@
 module Forms
   module Application
-    class Income < ::FormObject
+    class Dependent < ::FormObject
 
       include ActiveModel::Validations::Callbacks
 

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Applications::Process::IncomesController do
+RSpec.describe Applications::Process::DependentsController do
   let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office) }
-  let(:income_form) { instance_double(Forms::Application::Income) }
+  let(:income_form) { instance_double(Forms::Application::Dependent) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
 
   before do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
-    allow(Forms::Application::Income).to receive(:new).with(application).and_return(income_form)
+    allow(Forms::Application::Dependent).to receive(:new).with(application).and_return(income_form)
     allow(IncomeCalculationRunner).to receive(:new).with(application).and_return(income_calculation_runner)
   end
 

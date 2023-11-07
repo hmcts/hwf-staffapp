@@ -135,14 +135,14 @@ RSpec.describe Applications::Process::BenefitsController do
         end
 
         it 'redirects to the income page' do
-          expect(response).to redirect_to(application_incomes_path(application))
+          expect(response).to redirect_to(application_dependents_path(application))
         end
 
         context "it's refund" do
           let(:detail) { build_stubbed(:detail, refund: true) }
 
           it "still goes to income page" do
-            expect(response).to redirect_to(application_incomes_path(application))
+            expect(response).to redirect_to(application_dependents_path(application))
           end
         end
 
@@ -153,7 +153,7 @@ RSpec.describe Applications::Process::BenefitsController do
           end
 
           it "still goes to income page" do
-            expect(response).to redirect_to(application_incomes_path(application))
+            expect(response).to redirect_to(application_dependents_path(application))
           end
         end
       end

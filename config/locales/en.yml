@@ -591,7 +591,7 @@ en-GB:
         benefits: Is the applicant receiving one of these benefits?
         benefits_false: 'No'
         benefits_true: 'Yes'
-      forms/application/income:
+      forms/application/dependent:
         dependents: In questions 10 and 11, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
@@ -794,7 +794,7 @@ en-GB:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
-        forms/application/income:
+        forms/application/dependent:
           attributes:
             dependents:
               inclusion: 'You must answer the dependent children question'

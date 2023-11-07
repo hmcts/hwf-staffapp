@@ -1,20 +1,20 @@
 module Applications
   module Process
-    class IncomesController < Applications::ProcessController
+    class DependentsController < Applications::ProcessController
       before_action :authorize_application_update
 
       def index
         if application.benefits?
           redirect_to application_summary_path(application)
         else
-          @form = Forms::Application::Income.new(application)
+          @form = Forms::Application::Dependent.new(application)
           render :index
         end
       end
 
       def create
-        @form = Forms::Application::Income.new(application)
-        @form.update(form_params(:income))
+        @form = Forms::Application::Dependent.new(application)
+        @form.update(form_params(:dependent))
 
         if @form.save
           IncomeCalculationRunner.new(application).run
