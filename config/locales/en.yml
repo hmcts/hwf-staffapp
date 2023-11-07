@@ -602,7 +602,11 @@ en-GB:
         children_age_band_one: Children aged 0 to 13 years
         children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
         children_age_band_two: Children aged 14+ years
-
+      forms/application/income:
+        income: In question 13, what income has been entered?
+        income_hint: Rounded to the nearest £
+        income_period_last_month: This is for the last calendar month
+        income_period_average: This is an average for the last three calendar months
 
       forms/application/declaration:
         header: 'Declaration and statement of truth'
@@ -808,6 +812,13 @@ en-GB:
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/application/income:
+          attributes:
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
+            income_period:
+              blank: Select last calendar month or average for the last three months
         forms/application/declaration:
           attributes:
             statement_signed_by:

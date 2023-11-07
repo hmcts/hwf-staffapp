@@ -1,20 +1,20 @@
 module Applications
   module Process
-    class DependentsController < Applications::ProcessController
+    class IncomesController < Applications::ProcessController
       before_action :authorize_application_update
 
       def index
         if application.benefits?
           redirect_to application_summary_path(application)
         else
-          @form = Forms::Application::Dependent.new(application)
+          @form = Forms::Application::Income.new(application)
           render :index
         end
       end
 
       def create
-        @form = Forms::Application::Dependent.new(application)
-        @form.update(form_params(:dependent))
+        @form = Forms::Application::Income.new(application)
+        @form.update(form_params(:income))
 
         if @form.save
           IncomeCalculationRunner.new(application).run
@@ -28,7 +28,7 @@ module Applications
 
       def path_to_next_page
         if FeatureSwitching.subject_to_new_legislation?(received_and_refund_data)
-          application_incomes_path(application)
+          application_declaration_path(application)
         else
           application_summary_path(application)
         end
