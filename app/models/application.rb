@@ -6,6 +6,7 @@ class Application < ActiveRecord::Base
   include ApplicationCheckable
 
   serialize :income_kind
+  serialize :children_age_band
 
   self.per_page = 25
 
@@ -104,7 +105,7 @@ class Application < ActiveRecord::Base
     medium == 'digital'
   end
 
-  def children_age_band
-    # This needs some work
-  end
+  # def children_age_band
+  #   # This needs some work
+  # end
 end
