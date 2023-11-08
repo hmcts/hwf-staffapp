@@ -17,7 +17,7 @@
         - if @form.errors[:income_kind_applicant].present?
           span.govuk-error-message
             = f.label :income_kind_applicant, @form.errors[:income_kind_applicant].join(', '), class: 'error'
-        / -binding.pry
+
         .govuk-checkboxes
           - income_kinds.each do |kind|
             .govuk-checkboxes__item

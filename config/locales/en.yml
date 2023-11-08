@@ -380,6 +380,15 @@ en-GB:
         children?: Applicant has children
         children: Number of children
         income: Total monthly income
+        income_new: Income
+        income_period: Income period
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
+        income_kind_applicant: Applicant's income type
+        income_kind_partner: Partner’s income type
+      views/overview/children:
+        dependents: Applicant has children living with them or that they are financially supporting
+        children_age_band: Number of children
       views/confirmation/result:
         savings_passed?: Savings and investments
         benefits_passed?: Benefits

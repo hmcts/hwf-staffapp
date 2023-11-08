@@ -10,6 +10,7 @@ module Applications
         @details = Views::Overview::Details.new(application)
         @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
         @benefits = Views::Overview::Benefits.new(application)
+        @children = Views::Overview::Children.new(application)
         @income = Views::Overview::Income.new(application)
         @declaration = Views::Overview::Declaration.new(application)
         @representative = Views::Overview::Representative.new(application.representative)
