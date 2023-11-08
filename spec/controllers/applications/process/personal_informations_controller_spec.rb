@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Applications::Process::PersonalInformationsController do
   let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
-  let(:detail) { build_stubbed(:detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
+  let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
   let(:personal_information_form) { instance_double(Forms::Application::Applicant) }
 
@@ -58,7 +59,14 @@ RSpec.describe Applications::Process::PersonalInformationsController do
       context 'married' do
         let(:married) { true }
         it 'redirects to application_details' do
-          expect(response).to redirect_to(application_partner_informations_path(application))
+          expect(response).to redirect_to(application_details_path(application))
+        end
+
+        context 'ucd changes applies' do
+          let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+          it 'redirects to application_details' do
+            expect(response).to redirect_to(application_partner_informations_path(application))
+          end
         end
       end
 
