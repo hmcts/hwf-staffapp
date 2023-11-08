@@ -12,7 +12,7 @@ en-GB:
         p_two: You now need to provide this reference number to the office, court or tribunal that will deal with the claim for which you want help with its fee.
         p_three: If you are applying to the court online, put your Help with Fees reference number onto their system when prompted.
         p_four: If you need to contact the court, please follow this link https://www.gov.uk/find-court-tribunal to find further contact details.
-        p_five: They will contact you to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
+        p_five: They will contact you within 21 days to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
       paper:
         subject: 'Application for help with fees'
         greeting: 'Complete your application for help with fees'
@@ -24,7 +24,7 @@ en-GB:
         p_two: You now need to provide this reference number to the office, court or tribunal that will deal with the claim for which you want help with its fee.
         p_three: Include the reference number in the help with fees section of the claim form. If the form does not have a Help with Fees section, write the reference number at the top of the claim form.
         p_four: If you need to contact the court, please follow this link https://www.gov.uk/find-court-tribunal to find further contact details.
-        p_five: They will contact you to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
+        p_five: They will contact you within 21 days to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
     refund:
       subject: 'Application for help with fees refund'
       greeting: 'Complete your application for help with fees refund'
@@ -35,7 +35,7 @@ en-GB:
       p_one: You have completed an application online for a Help with Fees refund and you have been provided with the above reference number for your application.
       p_two: You now need to provide this reference number to the office, court or tribunal to which you paid your fee who will process your application.
       p_three: If you need help trying to find the court email or postal address, please follow this link https://www.gov.uk/find-court-tribunal to find further contact details.
-      p_four: They will contact you to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
+      p_four: They will contact you within 21 days to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
     et:
       subject: 'Application for help with employment tribunal fees'
       greeting: 'Complete your application for help with fees'
