@@ -78,7 +78,7 @@ RSpec.describe Applications::Process::DependentsController do
       end
 
       it 'redirects to the summary page' do
-        expect(response).to redirect_to(application_incomes_path(application))
+        expect(response).to redirect_to(application_income_kind_applicants_path(application))
       end
     end
 

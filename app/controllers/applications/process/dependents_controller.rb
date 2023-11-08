@@ -28,7 +28,7 @@ module Applications
 
       def path_to_next_page
         if FeatureSwitching.subject_to_new_legislation?(received_and_refund_data)
-          application_incomes_path(application)
+          application_income_kind_applicants_path(application)
         else
           application_summary_path(application)
         end

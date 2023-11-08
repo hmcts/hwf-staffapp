@@ -607,6 +607,51 @@ en-GB:
         income_hint: Rounded to the nearest £
         income_period_last_month: This is for the last calendar month
         income_period_average: This is an average for the last three calendar months
+      forms/application/income_kind_applicant:
+        income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Rent from anyone living with the applicant
+          '12': Rent from other properties the applicant owns
+          '13': Rent from anyone living with the partner
+          '14': Rent from other properties the partner owns
+          '15': Cash gifts - include all one off payments
+          '16': Financial support from family - include all one off payments
+          '17': Loans
+          '18': Other income  - For example, income from online selling
+          '19': None of the above
+      forms/application/income_kind_partner:
+        income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Rent from anyone living with the applicant
+          '12': Rent from other properties the applicant owns
+          '13': Rent from anyone living with the partner
+          '14': Rent from other properties the partner owns
+          '15': Cash gifts - include all one off payments
+          '16': Financial support from family - include all one off payments
+          '17': Loans
+          '18': Other income  - For example, income from online selling
+          '19': None of the above
+
 
       forms/application/declaration:
         header: 'Declaration and statement of truth'
@@ -819,6 +864,14 @@ en-GB:
               not_a_number: Enter the total monthly income
             income_period:
               blank: Select last calendar month or average for the last three months
+        forms/application/income_kind_applicant:
+          attributes:
+            income_kind_applicant:
+              blank: Select at least one type of income the applicant received last month or over the last three months
+        forms/application/income_kind_partner:
+          attributes:
+            income_kind_partner:
+              blank: Select at least one type of income the partner received last month or over the last three months
         forms/application/declaration:
           attributes:
             statement_signed_by:
