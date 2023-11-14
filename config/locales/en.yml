@@ -849,6 +849,7 @@ en-GB:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number
               greater_than_or_equal_to: Value must be greater than or equal to 3000
+              greater_than_or_equal_to_ucd: Value must be greater than or equal to 4250 and smaller then 16000
             max_threshold_exceeded:
               inclusion: Please answer the savings question
         forms/application/benefit:

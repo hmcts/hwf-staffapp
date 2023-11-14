@@ -27,10 +27,8 @@ module Forms
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
       validates :over_61, inclusion: { in: [true, false] }, if: :min_threshold_exceeded?
       validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
-      validates :amount, presence: true,
-                         numericality: { greater_than_or_equal_to: Settings.savings_threshold.minimum_value,
-                                         allow_blank: true },
-                         if: :amount_required?
+      validates :amount, presence: true, if: :amount_required?
+      validate :numericality, if: :amount_required?
 
       private
 
@@ -94,6 +92,32 @@ module Forms
         @min_threshold_exceeded = true
         @over_61 = false
         @amount = nil
+      end
+
+      def saving_threshold_value
+        if ucd_changes_apply?(@object.application.detail.calculation_scheme)
+          @numericality_error_key = :greater_than_or_equal_to_ucd
+          @ucd_max = Settings.ucd_savings_threshold.maximum_value
+          Settings.ucd_savings_threshold.minimum_value
+        else
+          @ucd_max = 1000000
+          @numericality_error_key = :greater_than_or_equal_to
+          Settings.savings_threshold.minimum_value
+        end
+      end
+
+      def numericality
+        if @amount.present? && @amount.is_a?(Numeric)
+          amount_thresholds
+        else
+          errors.add(:amount, :not_a_number)
+        end
+      end
+
+      def amount_thresholds
+        if @amount < saving_threshold_value || @ucd_max < @amount
+          errors.add(:amount, @numericality_error_key)
+        end
       end
 
     end
