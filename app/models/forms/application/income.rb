@@ -13,7 +13,7 @@ module Forms
 
       define_attributes
 
-      validates :income, presence: true, unless: proc { ucd_changes_apply?(@object.detail.calculation_scheme) }
+      validates :income, presence: true
       validates :income, numericality: { allow_blank: true }
       validates :income_period, presence: true
 
