@@ -27,6 +27,11 @@ module Forms
       before_validation :strip_whitespace!
       before_validation :format_dob
 
+      validates :partner_last_name, presence: true, length: { minimum: 2, allow_blank: true }
+      validates :partner_date_of_birth, presence: true
+      validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
+      validate :dob_age_valid?
+
       def format_ni_number
         unless partner_ni_number.nil?
           partner_ni_number.upcase!
@@ -37,13 +42,13 @@ module Forms
       def format_dob
         @partner_date_of_birth = concat_dob_dates.to_date
       rescue StandardError
-        @partner_date_of_birth = concat_dob_dates
+        @partner_date_of_birth = nil
       end
 
       def concat_dob_dates
-        return nil if day_date_of_birth.blank? || month_date_of_birth.blank? ||
-                      month_date_of_birth.blank?
-        "#{day_date_of_birth}/#{month_date_of_birth}/#{year_date_of_birth}"
+        return nil if @day_date_of_birth.blank? || @month_date_of_birth.blank? ||
+                      @year_date_of_birth.blank?
+        "#{@day_date_of_birth}/#{@month_date_of_birth}/#{@year_date_of_birth}"
       end
 
       def day_date_of_birth
@@ -61,10 +66,6 @@ module Forms
         partner_date_of_birth&.year
       end
 
-      validates :partner_last_name, presence: true, length: { minimum: 2, allow_blank: true }
-      validate :dob_age_valid?
-      validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
-
       private
 
       def strip_whitespace!
@@ -73,8 +74,9 @@ module Forms
       end
 
       def dob_age_valid?
+        return false if errors.include?(:partner_date_of_birth)
         validate_dob
-        validate_dob_ranges unless errors.include?(:partner_date_of_birth)
+        validate_dob_ranges
       end
 
       def validate_dob

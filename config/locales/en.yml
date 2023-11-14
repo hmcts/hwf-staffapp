@@ -799,6 +799,7 @@ en-GB:
               too_young: "Partner's date of birth cannot be in the future"
               too_old: "The partner can't be over %{maximum_age} years old"
               not_a_date: 'Enter a valid date of birth'
+              blank: 'Enter a valid date of birth'
             partner_ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
         forms/application/detail:

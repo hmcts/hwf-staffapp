@@ -19,6 +19,33 @@ RSpec.describe Forms::Application::Partner do
     it { is_expected.to validate_length_of(:partner_last_name).is_at_least(2) }
 
     describe 'partner_date_of_birth' do
+      let(:day_date_of_birth) { 1 }
+      let(:month_date_of_birth) { 10 }
+      let(:year_date_of_birth) { 10.years.ago }
+
+      context 'partner_date_of_birth dates' do
+        before do
+          personal_information[:day_date_of_birth] = day_date_of_birth
+          personal_information[:month_date_of_birth] = month_date_of_birth
+          personal_information[:year_date_of_birth] = year_date_of_birth
+        end
+
+        context "day is blank" do
+          let(:day_date_of_birth) { nil }
+          it { expect(created_partner.valid?).not_to be true }
+        end
+
+        context "month is blank" do
+          let(:month_date_of_birth) { nil }
+          it { expect(created_partner.valid?).not_to be true }
+        end
+
+        context "year is blank" do
+          let(:year_date_of_birth) { nil }
+          it { expect(created_partner.valid?).not_to be true }
+        end
+
+      end
 
       context 'when the partner_date_of_birth is less than minimum age allowed' do
         let(:minimum_age) { Time.zone.today + 1.day }
