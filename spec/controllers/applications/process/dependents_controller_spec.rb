@@ -70,7 +70,7 @@ RSpec.describe Applications::Process::DependentsController do
       end
     end
 
-    context 'form can is saved and UCD applies' do
+    context 'form is saved and UCD applies' do
       let(:form_save) { true }
       let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
 
@@ -78,8 +78,8 @@ RSpec.describe Applications::Process::DependentsController do
         expect(income_calculation_runner).to have_received(:run)
       end
 
-      it 'redirects to the summary page' do
-        expect(response).to redirect_to(application_incomes_path(application))
+      it 'redirects to the income type page' do
+        expect(response).to redirect_to(application_income_kind_applicants_path(application))
       end
     end
 

@@ -32,6 +32,8 @@ Feature: Fee status page
       When I answer no to the benefits question
       Then I should be taken to the children page
       When I choose no chilren
+      Then I should be taken to the incomes type page
+      When I choose wages
       Then I should be taken to the incomes page
       And I submit the last month income
       Then I should be one the declaration page

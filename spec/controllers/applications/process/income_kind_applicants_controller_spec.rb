@@ -58,7 +58,7 @@ RSpec.describe Applications::Process::IncomeKindApplicantsController do
       let(:form_save) { true }
 
       it 'redirects to the summary page' do
-        expect(response).to redirect_to(application_summary_path(application))
+        expect(response).to redirect_to(application_incomes_path(application))
       end
 
       context 'married' do

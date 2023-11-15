@@ -28,7 +28,7 @@ module Applications
 
       def path_to_next_page
         if ucd_changes_apply?
-          application_incomes_path(application)
+          application_income_kind_applicants_path(application)
         else
           application_summary_path(application)
         end

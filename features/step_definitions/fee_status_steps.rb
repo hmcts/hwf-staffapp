@@ -95,3 +95,15 @@ end
 Then('I submit the last month income') do
   incomes_page.submit_incomes_1200_ucd
 end
+
+
+Then('I should be taken to the incomes type page') do
+  expect(income_kind_applicant_page.content).to have_header
+end
+
+When('I choose wages') do
+  # binding.pry
+  expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages')
+  income_kind_applicant_page.content.checkboxes[0].click
+  income_kind_applicant_page.content.next.click
+end

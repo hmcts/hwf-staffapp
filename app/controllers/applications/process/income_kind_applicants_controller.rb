@@ -30,7 +30,7 @@ module Applications
         if married?
           application_income_kind_partners_path(application)
         else
-          application_summary_path(application)
+          application_incomes_path(application)
         end
       end
 
