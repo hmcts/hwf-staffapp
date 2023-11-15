@@ -12,7 +12,7 @@ class BandBaseCalculation
     @income = application.income || 0
     @fee = application.detail.fee
     @saving_amount = application.saving.amount || 0
-    @children_age_band = application.children_age_band || []
+    @children_age_band = preformat_age_band(application)
     @married = application.applicant.married
     @dob = application.applicant.date_of_birth
   end
@@ -131,5 +131,13 @@ class BandBaseCalculation
     elsif income <= MIN_THRESHOLD
       @outcome = 'full'
     end
+  end
+
+  def preformat_age_band(application)
+    age_band = []
+    return age_band if application.children_age_band.blank?
+    application.children_age_band.fetch(:one, 0).times { age_band << 1 }
+    application.children_age_band.fetch(:two, 0).times { age_band << 2 }
+    age_band
   end
 end
