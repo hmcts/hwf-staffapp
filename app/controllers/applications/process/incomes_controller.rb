@@ -27,7 +27,7 @@ module Applications
       private
 
       def path_to_next_page
-        if FeatureSwitching.subject_to_new_legislation?(received_and_refund_data)
+        if ucd_changes_apply?
           application_declaration_path(application)
         else
           application_summary_path(application)
@@ -37,6 +37,10 @@ module Applications
       def received_and_refund_data
         detail = application.detail
         { date_received: detail.date_received, date_fee_paid: detail.date_fee_paid, refund: detail.refund }
+      end
+
+      def ucd_changes_apply?
+        FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
       end
     end
   end

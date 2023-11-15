@@ -5,6 +5,7 @@ class SavingsInvestmentsPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Savings and investments'
     element :less_than, 'label', text: 'Less than £3,000', visible: false
+    element :less_than_ucd, 'label', text: 'Less than £4,250', visible: false
     element :more_than, 'label', text: '£3,000 or more', visible: false
     element :savings_amount_label, 'label', text: 'How much do they have in savings and investments?'
     element :application_amount, '#application_amount'
@@ -18,6 +19,12 @@ class SavingsInvestmentsPage < BasePage
   def submit_less_than
     content.wait_until_less_than_visible
     content.less_than.click
+    click_next
+  end
+
+  def submit_less_than_ucd
+    content.wait_until_less_than_ucd_visible
+    content.less_than_ucd.click
     click_next
   end
 

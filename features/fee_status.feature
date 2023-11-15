@@ -21,18 +21,21 @@ Feature: Fee status page
       When I fill in date received
       And I will in refund within range
       Then I should be on personal page
+      And new legislation applies
       When I successfully submit my required personal details
       Then I should be taken to the application details page
       And I should not see fields from fee status page
       When I successfully submit my required application details post UCD
       Then I should be taken to savings and investments page
-      When I successfully submit less than £3000
+      When I successfully submit less than £4250
       Then I should be taken to the benefits page
       When I answer no to the benefits question
+      Then I should be taken to the children page
+      When I choose no chilren
       Then I should be taken to the incomes page
-      When I answer no to does the applicant financially support any children
-      And new legislation applies
-      And I submit the total monthly income
+      And I submit the last month income
+      Then I should be one the declaration page
+      When I choose applicant and submit
       Then I am on the summary page
       And I should see a fee status section
       When I click on change date received link
