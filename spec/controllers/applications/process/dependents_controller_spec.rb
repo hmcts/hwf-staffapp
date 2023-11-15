@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Applications::Process::DependentsController do
   let(:user)          { create(:user) }
-  let(:application) { build_stubbed(:application, office: user.office) }
+  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
   let(:income_form) { instance_double(Forms::Application::Dependent) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
+  let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
   before do
     sign_in user
@@ -47,12 +49,11 @@ RSpec.describe Applications::Process::DependentsController do
 
   describe 'PUT #income_save' do
     let(:expected_params) { { dependents: 'false' } }
-    let(:ucd_applies) { false }
+    let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
     before do
       allow(income_form).to receive(:update).with(expected_params)
       allow(income_form).to receive(:save).and_return(form_save)
-      allow(FeatureSwitching).to receive(:subject_to_new_legislation?).and_return ucd_applies
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -71,14 +72,14 @@ RSpec.describe Applications::Process::DependentsController do
 
     context 'form can is saved and UCD applies' do
       let(:form_save) { true }
-      let(:ucd_applies) { true }
+      let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
 
       it 'runs the income calculation on the application' do
         expect(income_calculation_runner).to have_received(:run)
       end
 
       it 'redirects to the summary page' do
-        expect(response).to redirect_to(application_income_kind_applicants_path(application))
+        expect(response).to redirect_to(application_incomes_path(application))
       end
     end
 
