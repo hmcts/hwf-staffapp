@@ -44,13 +44,12 @@ module Applications
       end
 
       def income_calculation
-        # if ucd_changes_apply?
-        #   binding.pry
-        #   outcome = BandBaseCalculation.new(application).remission
-        #   application.update(outcome: outcome)
-        # else
+        if ucd_changes_apply?
+          outcome = BandBaseCalculation.new(application).remission
+          application.update(outcome: outcome, application_type: 'income')
+        else
           IncomeCalculationRunner.new(application).run
-        # end
+        end
       end
 
     end
