@@ -15,6 +15,8 @@ RSpec.describe Forms::Application::Partner do
   end
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of(:partner_first_name) }
+    it { is_expected.to validate_length_of(:partner_first_name).is_at_least(2) }
     it { is_expected.to validate_presence_of(:partner_last_name) }
     it { is_expected.to validate_length_of(:partner_last_name).is_at_least(2) }
 

@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# rubocop:disable Metrics/AbcSize
+
 require 'rails_helper'
 
 def personal_details_without_ni_number
@@ -7,6 +9,7 @@ def personal_details_without_ni_number
   login_as user
   start_new_application
 
+  fill_in 'application_first_name', with: 'John', wait: true
   fill_in 'application_last_name', with: 'Smith', wait: true
   fill_in 'application_day_date_of_birth', with: dob.to_fs(:db)
   fill_in 'application_month_date_of_birth', with: dob.to_fs(:db)
@@ -110,3 +113,4 @@ RSpec.feature 'No NI number provided' do
     end
   end
 end
+# rubocop:enable Metrics/AbcSize

@@ -27,7 +27,8 @@ module Forms
       before_validation :strip_whitespace!
       before_validation :format_dob
 
-      validates :partner_last_name, presence: true, length: { minimum: 2, allow_blank: true }
+      validates :partner_first_name, presence: true, length: { minimum: 2 }
+      validates :partner_last_name, presence: true, length: { minimum: 2 }
       validates :partner_date_of_birth, presence: true
       validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validate :dob_age_valid?
