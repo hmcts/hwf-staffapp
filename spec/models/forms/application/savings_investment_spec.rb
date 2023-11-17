@@ -35,7 +35,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       context 'more' do
-        let(:hash) { { choice: 'more', min_threshold_exceeded: nil, amount: nil, over_61: true, max_threshold_exceeded: nil } }
+        let(:hash) { { choice: 'more', min_threshold_exceeded: nil, amount: nil, over_61: nil, max_threshold_exceeded: nil } }
         it { is_expected.to be_valid }
       end
 
