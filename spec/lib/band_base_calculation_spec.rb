@@ -14,8 +14,8 @@ RSpec.describe BandBaseCalculation do
   let(:children_age_band) { { one: 2, two: 3 } }
 
   let(:application) {
-    spy(Application, detail: detail, income: income,
-                     applicant: applicant, saving: saving, children_age_band: children_age_band)
+    instance_double(Application, detail: detail, income: income,
+                                 applicant: applicant, saving: saving, children_age_band: children_age_band)
   }
 
   subject(:band_calculation) { described_class.new(application) }
