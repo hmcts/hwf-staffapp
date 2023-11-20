@@ -101,7 +101,6 @@ Then('I should be taken to the incomes type page') do
 end
 
 When('I choose wages') do
-  # binding.pry
   expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages')
   income_kind_applicant_page.content.checkboxes[0].click
   income_kind_applicant_page.content.next.click

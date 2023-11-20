@@ -48,5 +48,8 @@ module Applications
       @application ||= Application.find(params[:application_id])
     end
 
+    def ucd_changes_apply?
+      FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 class BandBaseCalculation
   attr_reader :income, :fee, :saving_amount, :children_age_band,
-              :married, :dob, :part_remission_amount, :outcome
+              :married, :dob, :part_remission_amount, :amount_to_pay, :outcome
 
   MIN_THRESHOLD = 1420
   MAX_INCOME_THRESHOLD = 3000
@@ -70,13 +70,19 @@ class BandBaseCalculation
     end
   end
 
+  def saving_passed?
+    @saving == true
+  end
+
   def remission
     return outcome if savings_check.present?
+    @saving = true
 
     income_to_use = calculate_income_to_use
     return outcome if outcome.present?
+    @amount_to_pay = applicant_pays(income_to_use)
 
-    @part_remission_amount = fee - applicant_pays(income_to_use)
+    @part_remission_amount = fee - @amount_to_pay
     @outcome = 'part'
   end
 

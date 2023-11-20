@@ -28,7 +28,6 @@ class ProcessApplication
   end
 
   def band_calculation_process(application)
-    binding.pry
     outcome = BandBaseCalculation.new(application).remission
     application.update(outcome: outcome)
 
@@ -47,7 +46,6 @@ class ProcessApplication
   end
 
   def ucd_changes_apply?(application)
-    binding.pry
     FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
   end
 

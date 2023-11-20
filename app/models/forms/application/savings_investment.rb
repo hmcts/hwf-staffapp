@@ -95,7 +95,7 @@ module Forms
         @max_threshold_exceeded = true
         @min_threshold_exceeded = true
         @over_61 = nil
-        @amount = nil
+        @amount = 16000
       end
 
       def saving_threshold_value
