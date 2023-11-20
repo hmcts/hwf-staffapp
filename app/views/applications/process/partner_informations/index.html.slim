@@ -12,13 +12,13 @@
           legend.visuallyhidden =t('partners_details', scope: @form.i18n_scope)
           legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
             =t('partners_details', scope: @form.i18n_scope)
-
-          = f.label :partner_first_name, class: 'govuk-label'
-            =t('partner_first_name', scope: @form.i18n_scope)
-          - if @form.errors[:first_name].present?
-            span.govuk-error-message
-              = f.label :partner_first_name, @form.errors[:partner_first_name].join(', '), class: 'error'
-          = f.text_field :partner_first_name, { class: 'govuk-input govuk-!-width-one-half' }
+          .govuk-form-group.group-level
+            = f.label :partner_first_name, class: 'govuk-label'
+              =t('partner_first_name', scope: @form.i18n_scope)
+            - if @form.errors[:partner_first_name].present?
+              span.govuk-error-message
+                = f.label :partner_first_name, @form.errors[:partner_first_name].join(', '), class: 'error'
+            = f.text_field :partner_first_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         = f.label :partner_last_name, class: 'govuk-label'

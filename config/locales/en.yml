@@ -792,6 +792,9 @@ en-GB:
               inclusion: Select a marital status
         forms/application/partner:
           attributes:
+            partner_first_name:
+              blank: Enter the partner's first name
+              too_short: First name is too short (minimum is 2 characters)
             partner_last_name:
               blank: Enter the partner's last name
               too_short: Last name is too short (minimum is 2 characters)

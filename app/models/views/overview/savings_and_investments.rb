@@ -36,6 +36,7 @@ module Views
       end
 
       def over_61
+        return nil if @saving.over_61.blank?
         scope = 'activemodel.attributes.views/overview/savings_and_investments'
         I18n.t(".over_61_#{@saving.over_61}", scope: scope)
       end
