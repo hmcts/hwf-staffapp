@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Applications::Process::BenefitsController do
   let(:user)          { create(:user) }
-  let(:application) { build_stubbed(:application, office: user.office) }
+  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
   let(:benefit_form) { instance_double(Forms::Application::Benefit) }
   let(:dwp_monitor) { instance_double(DwpMonitor) }
   let(:dwp_state) { 'online' }
+  let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
 
   before do
     sign_in user
@@ -30,6 +32,15 @@ RSpec.describe Applications::Process::BenefitsController do
 
       it 'redirects to the summary' do
         expect(response).to redirect_to(application_summary_path(application))
+      end
+    end
+
+    context 'when UCD changes apply' do
+      let(:savings_valid) { false }
+      let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1].to_s }
+
+      it 'redirects to the summary' do
+        expect(response).to render_template(:index)
       end
     end
 

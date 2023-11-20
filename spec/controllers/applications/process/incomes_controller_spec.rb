@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Applications::Process::IncomesController do
   let(:user)          { create(:user) }
-  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+  let(:application) { build_stubbed(:application, office: user.office, detail: detail, saving: saving) }
   let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
+  let(:saving) { build_stubbed(:saving) }
   let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
   let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
@@ -91,12 +92,22 @@ RSpec.describe Applications::Process::IncomesController do
     before do
       allow(income_form).to receive(:update).with(expected_params)
       allow(income_form).to receive(:save).and_return(form_save)
+      allow(application).to receive(:update)
+      allow(saving).to receive(:update)
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
 
     it 'redirects to declaration page' do
       expect(response).to redirect_to(application_declaration_path(application))
+    end
+
+    it 'aplication update' do
+      expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: nil)
+    end
+
+    it 'saving update' do
+      expect(saving).to have_received(:update).with(passed: false)
     end
   end
 

@@ -5,7 +5,7 @@ module Applications
 
       def index
         @dwp_state = dwp_checker_state
-        if application.saving.passed?
+        if ucd_changes_apply? || application.saving.passed?
           @form = Forms::Application::Benefit.new(application)
           render :index
         else

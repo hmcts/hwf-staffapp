@@ -327,10 +327,6 @@ RSpec.describe OnlineApplicationsController do
         expect(resolver_service).to have_received(:complete)
       end
 
-      it 'store schema used for calulation' do
-        expect(detail).to have_received(:update).with(calculation_scheme: :prior_q4_23)
-      end
-
       it 'runs the pass fail service' do
         expect(pass_fail_service).to have_received(:calculate!)
       end

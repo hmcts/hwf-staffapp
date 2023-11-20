@@ -11,17 +11,12 @@ RSpec.describe BandBaseCalculation do
   let(:saving_amount) { nil }
   let(:fee) { 100 }
   let(:date_of_birth) { 20.years.ago }
-  let(:children_age_band) { [1] }
+  let(:children_age_band) { { one: 2, two: 3 } }
 
-  # rubocop:disable RSpec/VerifiedDoubles
-  # children_age_band is not present in the model yet
   let(:application) {
-    spy(Application, detail: detail, income: income,
-                     applicant: applicant, saving: saving, children_age_band: children_age_band)
+    instance_double(Application, detail: detail, income: income,
+                                 applicant: applicant, saving: saving, children_age_band: children_age_band)
   }
-
-  before { allow(application).to receive(:children_age_band).and_return children_age_band }
-  # rubocop:enable RSpec/VerifiedDoubles
 
   subject(:band_calculation) { described_class.new(application) }
 
@@ -155,13 +150,13 @@ RSpec.describe BandBaseCalculation do
     # child_band_2(14+): 710
 
     context "age band 1 single" do
-      let(:children_age_band) { [1] }
+      let(:children_age_band) { { one: 1 } }
       let(:married) { false }
       it { expect(band_calculation.premiums).to eq(425) }
     end
 
     context "age band 2 single" do
-      let(:children_age_band) { [2] }
+      let(:children_age_band) { { two: 1 } }
       let(:married) { false }
       it { expect(band_calculation.premiums).to eq(710) }
     end
@@ -179,7 +174,8 @@ RSpec.describe BandBaseCalculation do
     end
 
     context "band 1, band 2, band 2 and married" do
-      let(:children_age_band) { [1, 2, 2] }
+      let(:children_age_band) { { one: 1, two: 2 } }
+
       let(:married) { true }
       it { expect(band_calculation.premiums).to eq(2555) }
     end
@@ -241,7 +237,7 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'part payment with children' do
-          let(:children_age_band) { [2, 2, 2] }
+          let(:children_age_band) { { two: 3 } }
           let(:married) { true }
           let(:fee) { 1750 }
           let(:income) { 5800 }
@@ -253,7 +249,7 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'part payment single no children' do
-          let(:children_age_band) { [] }
+          let(:children_age_band) { {} }
           let(:married) { false }
           let(:fee) { 800 }
           let(:income) { 2500 }
@@ -277,14 +273,14 @@ RSpec.describe BandBaseCalculation do
         context 'children and married - full' do
           let(:fee) { 1421 }
           let(:income) { 4263 }
-          let(:children_age_band) { [1, 2] }
+          let(:children_age_band) { { one: 1, two: 1 } }
           let(:married) { true }
           it { expect(band_calculation.remission).to eq('full') }
         end
         context 'children and married none - over max income cap' do
           let(:fee) { 1350 }
           let(:income) { 6560 }
-          let(:children_age_band) { [2, 2] }
+          let(:children_age_band) { { two: 2 } }
           let(:married) { true }
           it { expect(band_calculation.remission).to eq('none') }
         end
@@ -292,7 +288,7 @@ RSpec.describe BandBaseCalculation do
         context 'children and married - part' do
           let(:fee) { 1350 }
           let(:income) { 5300 }
-          let(:children_age_band) { [1, 1, 2] }
+          let(:children_age_band) { { one: 2, two: 1 } }
           let(:married) { true }
           it {
             expect(band_calculation.remission).to eq('part')

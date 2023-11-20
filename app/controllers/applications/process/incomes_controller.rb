@@ -17,7 +17,7 @@ module Applications
         @form.update(form_params(:income))
 
         if @form.save
-          IncomeCalculationRunner.new(application).run
+          income_calculation
           redirect_to path_to_next_page
         else
           render :index
@@ -42,6 +42,21 @@ module Applications
       def ucd_changes_apply?
         FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
       end
+
+      def income_calculation
+        if ucd_changes_apply?
+          band_calculation
+        else
+          IncomeCalculationRunner.new(application).run
+        end
+      end
+
+      def band_calculation
+        band = BandBaseCalculation.new(application)
+        application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+        application.saving.update(passed: band.saving_passed?)
+      end
+
     end
   end
 end
