@@ -33,6 +33,13 @@ module Forms
       before_validation :strip_whitespace!
       before_validation :format_dob
 
+      validates :first_name, presence: true, length: { minimum: 2 }
+      validates :last_name, presence: true, length: { minimum: 2 }
+      validate :dob_age_valid?
+      validates :married, inclusion: { in: [true, false] }
+      validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
+      validates :ho_number, format: { with: HO_NUMBER_REGEXP }, allow_blank: true
+
       def format_ni_number
         unless ni_number.nil?
           ni_number.upcase!
@@ -73,12 +80,6 @@ module Forms
         return @year_date_of_birth if @year_date_of_birth
         date_of_birth&.year
       end
-
-      validates :last_name, presence: true, length: { minimum: 2, allow_blank: true }
-      validate :dob_age_valid?
-      validates :married, inclusion: { in: [true, false] }
-      validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
-      validates :ho_number, format: { with: HO_NUMBER_REGEXP }, allow_blank: true
 
       private
 

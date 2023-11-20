@@ -1,5 +1,8 @@
 .govuk-form-group.panel-indent.util-mt-0
-  = f.label :amount, t('amount', scope: @form.i18n_scope), class: 'govuk-label'
+  - if show_ucd_changes?(@application.detail.calculation_scheme)
+    = f.label :amount, t('savings_amount', scope: @form.i18n_scope), class: 'govuk-label'
+  -else
+    = f.label :amount, t('amount', scope: @form.i18n_scope), class: 'govuk-label'
   span#changed-name-error_no_number.govuk-error-message
     = f.label :amount, @form.errors[:amount].join(', '), class: 'error' if @form.errors[:amount].present?
   div#amount-hint.govuk-hint

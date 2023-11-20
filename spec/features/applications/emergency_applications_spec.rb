@@ -15,6 +15,7 @@ RSpec.feature 'Emergency application' do
     login_as user
     start_new_application
 
+    fill_in 'application_first_name', with: 'John', wait: true
     fill_in 'application_last_name', with: 'Smith', wait: true
     fill_in 'application_day_date_of_birth', with: dob.day
     fill_in 'application_month_date_of_birth', with: dob.month

@@ -24,6 +24,9 @@ analytics:
 savings_threshold:
   minimum_value: 3000
   maximum_value: 16000
+ucd_savings_threshold:
+  minimum_value: 4250
+  maximum_value: 15999
 processed_deleted:
   per_page: <%= ENV['PROCESSED_DELETED_PER_PAGE'] || 50 %>
 income:

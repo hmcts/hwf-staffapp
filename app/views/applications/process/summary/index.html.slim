@@ -4,6 +4,9 @@
 h1.govuk-heading-xl Check details
 - change_applicant_link = { url: application_personal_informations_path(@application) }
 - change_partner_link = { url: application_partner_informations_path(@application) }
+- change_income_link = { url: application_incomes_path(@application) }
+- change_income_kind_applicant_link = { url: application_income_kind_applicants_path(@application) }
+- change_income_kind_partner_link = { url: application_income_kind_partners_path(@application) }
 
 -if show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Date received and fee status', @fee_status, application_fee_status_path(@application)
@@ -31,7 +34,17 @@ h1.govuk-heading-xl Check details
 -if @application.saving.passed?
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
   -if !@application.benefits
-    =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
+
+    -if show_ucd_changes?(@details.calculation_scheme)
+      =build_section_with_defaults 'Children', @children, application_dependents_path(@application)
+      =build_section_with_custom_links 'Income', @income, [ { key:'income_new', link_attributes: change_income_link },
+        { key:'income_period', link_attributes: change_income_link },
+        { key:'income_kind_applicant', link_attributes: change_income_kind_applicant_link },
+        { key:'income_kind_partner', link_attributes: change_income_kind_partner_link } ]
+    - else
+      =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
+
+
 
 
 -if show_ucd_changes?(@details.calculation_scheme)

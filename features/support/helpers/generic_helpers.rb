@@ -237,6 +237,18 @@ def fee_status_page
   @fee_status_page ||= FeeStatusPage.new
 end
 
+def declaration_page
+  @declaration_page ||= DeclarationPage.new
+end
+
+def children_page
+  @children_page ||= ChildrenPage.new
+end
+
+def income_kind_applicant_page
+  @income_kind_applicant ||= IncomeKindApplicantPage.new
+end
+
 def complete_processing
   if base_page.content.has_complete_processing_button?
     base_page.content.complete_processing_button.click

@@ -56,7 +56,10 @@ Rails.application.routes.draw do
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
     resources :benefits, only: [:index, :create], module: 'applications/process'
+    resources :dependents, only: [:index, :create], module: 'applications/process'
     resources :incomes, only: [:index, :create], module: 'applications/process'
+    resources :income_kind_applicants, only: [:index, :create], module: 'applications/process'
+    resources :income_kind_partners, only: [:index, :create], module: 'applications/process'
     get 'summary', to: 'applications/process/summary#index'
     post 'summary', to: 'applications/process/summary#create'
 

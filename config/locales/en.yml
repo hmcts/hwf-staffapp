@@ -356,6 +356,13 @@ en-GB:
         min_threshold_exceeded: "Less than £3,000"
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
+        over_66: '66 or older'
+        over_61_true: 'Yes'
+        over_61_false: 'No'
+        less_then: 'Less than £4,250'
+        between: 'Between £4,250 and £15,999'
+        more_then: 'More than £16,000'
+        amount_total: Savings and Investments total
       views/overview/fee_status:
         date_received: "Date received"
         refund_request: "Refund request"
@@ -373,6 +380,15 @@ en-GB:
         children?: Applicant has children
         children: Number of children
         income: Total monthly income
+        income_new: Income
+        income_period: Income period
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
+        income_kind_applicant: Applicant's income type
+        income_kind_partner: Partner’s income type
+      views/overview/children:
+        dependents: Applicant has children living with them or that they are financially supporting
+        children_age_band: Number of children
       views/confirmation/result:
         savings_passed?: Savings and investments
         benefits_passed?: Benefits
@@ -575,11 +591,16 @@ en-GB:
         over_61_true: 'Yes'
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
+        choice_less_than: Less than £4,250
+        choice_between: Between £4,250 and £15,999
+        choice_more_than: £16,000 or more
+        savings_amount: Total savings and investments
+        partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
         benefits_false: 'No'
         benefits_true: 'Yes'
-      forms/application/income:
+      forms/application/dependent:
         dependents: In questions 10 and 11, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
@@ -587,6 +608,62 @@ en-GB:
         children_hint: Add number given in questions 10 and 11 together
         income: Total monthly income
         income_hint: Rounded to the nearest £
+        children_age_band_one: Children aged 0 to 13 years
+        children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
+        children_age_band_two: Children aged 14+ years
+      forms/application/income:
+        income: In question 13, what income has been entered?
+        income_hint: Rounded to the nearest £
+        income_period_last_month: This is for the last calendar month
+        income_period_average: This is an average for the last three calendar months
+      forms/application/income_kind_applicant:
+        income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Pension Credit (savings credit)
+          '12': Rent from anyone living with the applicant
+          '13': Rent from other properties the applicant owns
+          '14': Rent from anyone living with the partner
+          '15': Rent from other properties the partner owns
+          '16': Cash gifts - include all one off payments
+          '17': Financial support from family - include all one off payments
+          '18': Loans
+          '19': Other income  - For example, income from online selling
+          '20': None of the above
+      forms/application/income_kind_partner:
+        income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Pension Credit (savings credit)
+          '12': Rent from anyone living with the applicant
+          '13': Rent from other properties the applicant owns
+          '14': Rent from anyone living with the partner
+          '15': Rent from other properties the partner owns
+          '16': Cash gifts - include all one off payments
+          '17': Financial support from family - include all one off payments
+          '18': Loans
+          '19': Other income  - For example, income from online selling
+          '20': None of the above
+
+
       forms/application/declaration:
         header: 'Declaration and statement of truth'
         statement_signed_by: 'Declaration and statement of truth signed by the:'
@@ -715,6 +792,9 @@ en-GB:
               inclusion: Select a marital status
         forms/application/partner:
           attributes:
+            partner_first_name:
+              blank: Enter the partner's first name
+              too_short: First name is too short (minimum is 2 characters)
             partner_last_name:
               blank: Enter the partner's last name
               too_short: Last name is too short (minimum is 2 characters)
@@ -722,6 +802,7 @@ en-GB:
               too_young: "Partner's date of birth cannot be in the future"
               too_old: "The partner can't be over %{maximum_age} years old"
               not_a_date: 'Enter a valid date of birth'
+              blank: 'Enter a valid date of birth'
             partner_ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
         forms/application/detail:
@@ -765,26 +846,48 @@ en-GB:
               inclusion: Please answer the savings question
             over_61:
               inclusion: Please confirm if the partner is 61 or over
+            over_66:
+              inclusion: Please confirm if the partner is 66 or over
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number
               greater_than_or_equal_to: Value must be greater than or equal to 3000
+              greater_than_or_equal_to_ucd: Value must be greater than or equal to 4250 and smaller then 16000
             max_threshold_exceeded:
               inclusion: Please answer the savings question
         forms/application/benefit:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
-        forms/application/income:
+        forms/application/dependent:
           attributes:
             dependents:
               inclusion: 'You must answer the dependent children question'
             children:
               not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
+            children_age_band_one:
+              blank: Enter number of children in this band
+            children_age_band_two:
+              blank: Enter number of children in this band
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/application/income:
+          attributes:
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
+            income_period:
+              blank: Select last calendar month or average for the last three months
+        forms/application/income_kind_applicant:
+          attributes:
+            income_kind_applicant:
+              blank: Select at least one type of income the applicant received last month or over the last three months
+        forms/application/income_kind_partner:
+          attributes:
+            income_kind_partner:
+              blank: Select at least one type of income the partner received last month or over the last three months
         forms/application/declaration:
           attributes:
             statement_signed_by:

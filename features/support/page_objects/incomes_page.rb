@@ -4,10 +4,12 @@ class IncomesPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Income'
     element :question, 'legend', text: 'In questions 10 and 11, does the applicant financially support any children?'
+    element :question_ucd, 'label', text: 'In question 13, what income has been entered?'
     elements :radio, '.govuk-radios label'
     element :number_of_children_hint, '.govuk-hint', text: 'Add number given in questions 10 and 11 together'
     element :number_of_children_error, '.error', text: 'Enter number of children'
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
+    element :income_period_last_month, '#application_income_period_last_month', text: 'This is for the last calendar month'
     element :next, 'input[value="Next"]'
   end
 
@@ -26,6 +28,14 @@ class IncomesPage < BasePage
   def submit_incomes_1200
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('1200')
+    click_next
+  end
+
+  def submit_incomes_1200_ucd
+    incomes_page.content.wait_until_question_ucd_visible
+
+    find('#application_income', visible: false).set('1200')
+    find_field('This is for the last calendar month', visible: false).click
     click_next
   end
 

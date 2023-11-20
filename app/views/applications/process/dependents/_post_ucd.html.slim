@@ -1,0 +1,45 @@
+- content_for :page_title
+  = "Children"
+
+
+= form_for @form, as: :application, url: application_dependents_path, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl Children
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend = t('children_age_band', scope: @form.i18n_scope)
+          - if @form.errors[:dependents].present?
+            span.govuk-error-message
+              = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :dependents, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_false'
+            .govuk-radios__item
+              = f.radio_button :dependents, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'children', show: 'true' } }
+              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_true'
+
+          .panel-indent.util_mt-0.util_mb-0#children-only
+            .govuk-form-group
+              = f.label :children_age_band_one, class: 'govuk-label'
+              - if @form.errors[:children_age_band_one].present?
+                span.govuk-error-message
+                  = f.label :children_age_band_one, @form.errors[:children_age_band_one].join(', '), class: 'error'
+              = f.text_field :children_age_band_one, class: 'govuk-input govuk-input--width-3', value: age_band_value(:one, @application)
+
+            .govuk-form-group
+              = f.label :children_age_band_two, class: 'govuk-label'
+              - if @form.errors[:children_age_band_two].present?
+                span.govuk-error-message
+                  = f.label :children_age_band_two, @form.errors[:children_age_band_two].join(', '), class: 'error'
+              = f.text_field :children_age_band_two, class: 'govuk-input govuk-input--width-3', value: age_band_value(:two, @application)
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

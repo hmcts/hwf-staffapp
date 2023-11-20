@@ -97,6 +97,7 @@ class PersonalDetailsPage < BasePage
   end
 
   def submit_required_personal_details
+    fill_in 'First and middle names', with: 'John', visible: false
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.wait_until_status_single_visible
@@ -105,6 +106,7 @@ class PersonalDetailsPage < BasePage
   end
 
   def submit_required_personal_details_61
+    fill_in 'First and middle names', with: 'John', visible: false
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob_over
     content.wait_until_status_single_visible

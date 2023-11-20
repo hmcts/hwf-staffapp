@@ -75,3 +75,34 @@ end
 When('I click on change date received link') do
   summary_page.content.summary_section[0].change_date_received.click
 end
+
+Then('I should be one the declaration page') do
+  expect(declaration_page.content).to have_header
+end
+
+When('I choose applicant and submit') do
+  declaration_page.sign_by_applicant
+end
+
+Then('I should be taken to the children page') do
+  expect(children_page.content).to have_header
+end
+
+When('I choose no chilren') do
+  children_page.no_children
+end
+
+Then('I submit the last month income') do
+  incomes_page.submit_incomes_1200_ucd
+end
+
+Then('I should be taken to the incomes type page') do
+  expect(income_kind_applicant_page.content).to have_header
+end
+
+When('I choose wages') do
+  # binding.pry
+  expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages')
+  income_kind_applicant_page.content.checkboxes[0].click
+  income_kind_applicant_page.content.next.click
+end

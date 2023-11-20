@@ -1,0 +1,77 @@
+- content_for :page_title
+  = t('header', scope: @form.i18n_scope)
+
+= form_for @form, as: :application, url: application_savings_investments_path, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.visuallyhidden Amount of savings
+          = f.label :min_threshold_exceeded, t('explanation', scope: @form.i18n_scope), class: 'govuk-label'
+          span#changed-name-error_no_answer.govuk-error-message
+            = f.label :min_threshold_exceeded, @form.errors[:min_threshold_exceeded].join(', '), class: 'error' if @form.errors[:min_threshold_exceeded].present?
+          = f.hidden_field :min_threshold_exceeded, value: nil
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.label t('less_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_false'
+            .govuk-radios__item
+              = f.radio_button :min_threshold_exceeded, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
+              = f.label t('more_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_min_threshold_exceeded_true'
+
+        #threshold-exceeded-only.start-hidden
+          - if @application.applicant.over_61?
+            = f.hidden_field :over_61, value: 'true'
+            =render('shared/savings/max_threshold_exceeded', f: f)
+          -else
+            -if !@application.applicant.married?
+              =f.hidden_field :over_61, value: 'false'
+              =render('shared/savings/amount', f: f)
+            -elsif @application.applicant.married?
+              .govuk-form-group.panel-indent.util-mt-0
+                fieldset
+                  legend.visuallyhidden Applicant's partner's age
+                  = f.label :over_61, t('partner_over_61', scope: @form.i18n_scope), class: 'govuk-label'
+                  span#changed-name-error.govuk-error-message
+                    = f.label :over_61, @form.errors[:over_61].join(', '), class: 'error' if @form.errors[:over_61].present?
+                  = f.hidden_field :over_61, value: nil
+                  .govuk-radios.govuk-radios--small
+                    .govuk-radios__item
+                      = f.radio_button :over_61, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-under-61', show: 'true' } }
+                      = f.label t('over_61_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_false'
+                    #partner-under-61-only.start-hidden
+                      =render('shared/savings/amount', f: f)
+                    .govuk-radios__item
+                        = f.radio_button :over_61, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-over-61', show: 'true' } }
+                        = f.label t('over_61_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_61_true'
+                    #partner-over-61-only.start-hidden
+                      = render('shared/savings/max_threshold_exceeded', f: f)
+
+      = f.submit 'Next', :class => 'govuk-button'
+
+      details.govuk-details
+        summary.govuk-details__summary
+          span.govuk-details__summary-text Our calculation is based on this information
+
+        div.govuk-details__text class="govuk-!-margin-top-3"
+          dl.govuk-summary-list
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Age
+              dd.govuk-summary-list__value #{@application.applicant.age} years old
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Fee
+              dd.govuk-summary-list__value = number_to_currency(@application.detail.fee, precision: 2, unit: '£')
+            .govuk-summary-list__row
+              dt.govuk-summary-list__key Status
+              dd.govuk-summary-list__value = t("married_#{@application.applicant.married}", scope: @form.i18n_scope)
+
+
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        h2.govuk-heading-m Savings and investments
+        p = link_to 'Read about the maximum amounts of savings and investments allowed', guide_process_application_path(anchor: 'savings'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

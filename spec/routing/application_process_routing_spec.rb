@@ -35,11 +35,11 @@ RSpec.describe Applications::ProcessController do
     end
 
     it 'routes to #income' do
-      expect(get: '/applications/1/incomes').to route_to('applications/process/incomes#index', application_id: '1')
+      expect(get: '/applications/1/dependents').to route_to('applications/process/dependents#index', application_id: '1')
     end
 
     it 'routes to #income_save' do
-      expect(post: '/applications/1/incomes').to route_to('applications/process/incomes#create', application_id: '1')
+      expect(post: '/applications/1/dependents').to route_to('applications/process/dependents#create', application_id: '1')
     end
 
     it 'routes to #income_result' do

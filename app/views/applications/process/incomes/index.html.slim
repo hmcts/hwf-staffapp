@@ -1,46 +1,38 @@
 - content_for :page_title
   = "Income"
 
+
 = form_for @form, as: :application, url: application_incomes_path, method: :post, html: { autocomplete: 'off' } do |f|
+
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl Income
 
       .govuk-form-group
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend = t('dependents', scope: @form.i18n_scope)
-          - if @form.errors[:dependents].present?
-            span.govuk-error-message
-              = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error'
-          .govuk-radios.govuk-radios--small
-            .govuk-radios__item
-              = f.radio_button :dependents, 'false', { class: 'govuk-radios__input show-hide-section' }
-              = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_false'
-            .govuk-radios__item
-              = f.radio_button :dependents, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'children', show: 'true' } }
-              = f.label t('income_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_true'
+        = f.label :income, class: 'govuk-label'
+        - if @form.errors[:income].present?
+          span.govuk-error-message
+            = f.label :income, @form.errors[:income].join(', '), class: 'error'
+        div#amount-hint.govuk-hint
+          = t('income_hint', scope: @form.i18n_scope)
 
-          .panel-indent.util_mt-0.util_mb-0#children-only
-            .govuk-form-group
-              = f.label :children, class: 'govuk-label'
-              div.govuk-hint = t('children_hint', scope: @form.i18n_scope)
-              - if @form.errors[:children].present?
-                span.govuk-error-message
-                  = f.label :children, @form.errors[:children].join(', '), class: 'error'
-              = f.text_field :children, class: 'govuk-input govuk-input--width-3'
-          .panel-indent.util_mt-0#income-input
-            .govuk-form-group
-              = f.label :income, class: 'govuk-label'
-              - if @form.errors[:income].present?
-                span.govuk-error-message
-                  = f.label :income, @form.errors[:income].join(', '), class: 'error'
-              div#amount-hint.govuk-hint
-                = t('income_hint', scope: @form.i18n_scope)
+        .field-wrapper
+          span.prefix £
+          = f.text_field :income
 
-              .field-wrapper
-                span.prefix £
-                = f.text_field :income
+      .govuk-form-group
+        - if @form.errors[:income_period].present?
+          span.govuk-error-message
+            = f.label :income_period, @form.errors[:income_period].join(', '), class: 'error'
+        .govuk-radios.govuk-radios--small
+          .govuk-radios__item
+            = f.radio_button :income_period, 'last_month', { class: 'govuk-radios__input show-hide-section' }
+            = f.label t('income_period_last_month', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_income_period_last_month'
+          .govuk-radios__item
+            = f.radio_button :income_period, 'average', { class: 'govuk-radios__input show-hide-section' }
+            = f.label t('income_period_average', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_income_period_average'
+
 
       = f.submit 'Next', class: 'govuk-button'
 

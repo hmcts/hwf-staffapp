@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Forms::Application::Income do
-  subject { described_class.new(hash) }
+  subject(:income_form) { described_class.new(application) }
+  let(:application) { build(:application, detail: detail) }
+  let(:detail) { build(:detail, calculation_scheme: calculation_scheme) }
+  let(:age_band) { nil }
+  let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
-  params_list = [:income, :dependents, :children]
+  params_list = [:income, :income_period]
 
   describe '.permitted_attributes' do
     it 'returns a list of attributes' do
@@ -12,71 +16,14 @@ RSpec.describe Forms::Application::Income do
   end
 
   describe 'validation' do
-    let(:income) { described_class.new(hash) }
+    let(:income_form) { described_class.new(application) }
 
     describe 'income' do
-      let(:hash) { { income: 500, dependents: true, children: 1 } }
+      let(:application) { build(:application, detail: detail, income: 500, dependents: true, children: 1) }
 
       it { is_expected.to validate_presence_of(:income) }
+      it { is_expected.to validate_presence_of(:income_period) }
       it { is_expected.to validate_numericality_of(:income) }
-    end
-
-    describe 'dependents' do
-      let(:hash) { { income: 500, dependents: dependents, children: 1 } }
-
-      context 'when true' do
-        let(:dependents) { true }
-
-        it { expect(income.valid?).to be true }
-      end
-
-      context 'when false' do
-        let(:dependents) { false }
-
-        it { expect(income.valid?).to be false }
-      end
-
-      context 'when not a boolean value' do
-        let(:dependents) { 'string' }
-
-        it { expect(income.valid?).to be false }
-      end
-    end
-
-    describe 'children' do
-      let(:hash) { { income: 500, dependents: dependents, children: children } }
-
-      context 'when there are dependents' do
-        let(:dependents) { true }
-
-        context 'and the number of children is valid' do
-          let(:children) { 1 }
-
-          it { expect(income.valid?).to be true }
-        end
-
-        context 'and the number of children is invalid' do
-          let(:children) { 0 }
-
-          it { expect(income.valid?).to be false }
-        end
-      end
-
-      context 'when there are no dependents' do
-        let(:dependents) { false }
-
-        context 'and the number of children is bigger than zero' do
-          let(:children) { 1 }
-
-          it { expect(income.valid?).to be false }
-        end
-
-        context 'and the number of children is zero' do
-          let(:children) { 0 }
-
-          it { expect(income.valid?).to be true }
-        end
-      end
     end
   end
 
@@ -91,7 +38,7 @@ RSpec.describe Forms::Application::Income do
     let(:application) { create(:application) }
 
     context 'when attributes are correct' do
-      let(:params) { { income: 500, dependents: true, children: 2 } }
+      let(:params) { { income: 500, income_period: 'test' } }
 
       it { is_expected.to be true }
 
@@ -112,9 +59,10 @@ RSpec.describe Forms::Application::Income do
     end
 
     context 'when attributes are incorrect' do
-      let(:params) { { dependents: nil } }
+      let(:params) { { income: nil } }
 
       it { is_expected.to be false }
     end
   end
+
 end

@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Applications::Process::IncomesController do
   let(:user)          { create(:user) }
-  let(:application) { build_stubbed(:application, office: user.office) }
+  let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
+  let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
   let(:income_form) { instance_double(Forms::Application::Income) }
   let(:income_calculation_runner) { instance_double(IncomeCalculationRunner, run: nil) }
 
@@ -46,7 +48,7 @@ RSpec.describe Applications::Process::IncomesController do
   end
 
   describe 'PUT #income_save' do
-    let(:expected_params) { { dependents: 'false' } }
+    let(:expected_params) { { income: '500' } }
 
     before do
       allow(income_form).to receive(:update).with(expected_params)
@@ -65,6 +67,7 @@ RSpec.describe Applications::Process::IncomesController do
       it 'redirects to the summary page' do
         expect(response).to redirect_to(application_summary_path(application))
       end
+
     end
 
     context 'when the form can\'t be saved' do
@@ -77,6 +80,23 @@ RSpec.describe Applications::Process::IncomesController do
       it 'assigns the income form' do
         expect(assigns(:form)).to eql(income_form)
       end
+    end
+  end
+
+  describe 'PUT #income_save UCD' do
+    let(:expected_params) { { income: '500' } }
+    let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+    let(:form_save) { true }
+
+    before do
+      allow(income_form).to receive(:update).with(expected_params)
+      allow(income_form).to receive(:save).and_return(form_save)
+
+      post :create, params: { application_id: application.id, application: expected_params }
+    end
+
+    it 'redirects to declaration page' do
+      expect(response).to redirect_to(application_declaration_path(application))
     end
   end
 
