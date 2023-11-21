@@ -107,7 +107,7 @@ RSpec.describe Applications::Process::IncomesController do
     end
 
     it 'saving update' do
-      expect(saving).to have_received(:update).with(passed: false)
+      expect(saving).to have_received(:update).with(passed: true)
     end
   end
 

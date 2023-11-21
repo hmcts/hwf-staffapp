@@ -30,6 +30,7 @@ module Views
       end
 
       private
+
       def age_band_value(band_name)
         band = @application.children_age_band
 
@@ -37,7 +38,7 @@ module Views
         when 1
           (band[:one] || band['one'] || 0).to_i
         when 2
-          (band[:two] || band[:two] || 0).to_i
+          (band[:two] || band['two'] || 0).to_i
         end
       end
 

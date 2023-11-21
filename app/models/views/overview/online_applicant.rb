@@ -11,7 +11,6 @@ module Views
          'partner_full_name', 'partner_date_of_birth', 'partner_ni_number']
       end
 
-
       def partner_full_name
         [@application.partner_first_name, @application.partner_last_name].select(&:present?).join(' ')
       end
@@ -42,11 +41,13 @@ module Views
       end
 
       def partner_date_of_birth
+        # temporary fix for dob from partner - should be nil
+        return nil if @application.partner_first_name.nil?
         format_date @application.partner_date_of_birth
       end
 
       def under_age
-        return unless !@application.over_16?
+        return if @application.over_16.nil?
         locale_scope = 'activemodel.attributes.forms/application/applicant'
         I18n.t("under_age_true", scope: locale_scope)
       end
