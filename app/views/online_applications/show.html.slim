@@ -3,11 +3,23 @@
 
 h1.govuk-heading-xl Check details
 
-=build_section_with_defaults 'Personal details', @applicant
+-if show_ucd_changes?(@online_application.calculation_scheme)
+  =build_section_with_defaults 'Personal details', @online_applicant
+- else
+  =build_section_with_defaults 'Personal details', @applicant
+
+
 =build_section_with_defaults 'Application details', @details, edit_online_application_path(@online_application)
 =build_section 'Benefits', @application_view, ['benefits']
-=build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
+
+-if show_ucd_changes?(@online_application.calculation_scheme)
+  =build_section 'Children', @children, ['children', 'children_age_band']
+  =build_section 'Income', @application_view, ['total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
+- else
+  =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
+
+
+
 
 = form_for @online_application, url: complete_online_application_path(@online_application), method: :post do |f|
   = f.submit 'Complete processing', :class => 'govuk-button'
-
