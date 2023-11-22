@@ -5,4 +5,55 @@ h1.govuk-heading-xl See the guides
 
 p.govuk-body-l How to process an application, deal with evidence checks, part-payments, appeals, and fraud.
 
-=render('guide/pre_ucd')
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to how_to_url
+      span How to Guide
+      = image_tag("icon-how-to.png", alt: 'How to Guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to training_course_url
+      span HwF Training Course
+      = image_tag("icon-how-to.png", alt: 'HwF Training Course icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to key_control_checks_url
+      span Key Control Checks
+      = image_tag("checklist.jpg", alt: 'Key Control Checks guide icon', class: 'guidence-icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to guide_process_application_path
+      span Process application
+      = image_tag("icon-process.png", alt: 'Process application guide icon')
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to old_job_cards_url
+      span Job Cards old legislation
+      = image_tag("checklist.jpg", alt: 'Job Cards old legislation guide icon', class: 'guidence-icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to new_job_cards_url
+      span Job Cards new legislation
+      = image_tag("checklist.jpg", alt: 'Job Cards new legislation guide icon', class: 'guidence-icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to old_staff_guidance_url
+      span Staff guidance old legislation
+      = image_tag("icon-guidance.png", alt: 'Staff guidance old guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to new_staff_guidance_url
+      span Staff guidance new legislation
+      = image_tag("icon-guidance.png", alt: 'Staff guidance new guide icon')
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to fraud_awareness_url
+      span Fraud awareness
+      = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to rrds_url
+      span RRDS
+      = image_tag("icon-appeals.png", alt: 'RRDS guide icon')

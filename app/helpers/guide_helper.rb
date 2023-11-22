@@ -1,5 +1,9 @@
 module GuideHelper
-  def staff_guidance_url
+  def old_staff_guidance_url
+    'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf'
+  end
+
+  def new_staff_guidance_url
     'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf'
   end
 
@@ -23,7 +27,11 @@ module GuideHelper
     'https://intranet.justice.gov.uk/documents/2020/04/covid-19-guidance-for-help-with-fees-process.pdf'
   end
 
-  def job_cards_url
+  def old_job_cards_url
+    'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
+  end
+
+  def new_job_cards_url
     'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
   end
 
