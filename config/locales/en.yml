@@ -386,9 +386,20 @@ en-GB:
         income_period_average: Average income for last three calendar months
         income_kind_applicant: Applicant's income type
         income_kind_partner: Partner’s income type
+      views/overview/online_applicant:
+        partner_full_name: Partner's full name
+        partner_date_of_birth: Partner's date of birth
+        partner_ni_number: Partner's National Insurance number
+        full_name: Full name
+        date_of_birth: Date of birth
+        ni_number: National Insurance number
+        ho_number: Home Office reference number
+        under_age: 15 and under
+        status: Status
       views/overview/children:
         dependents: Applicant has children living with them or that they are financially supporting
         children_age_band: Number of children
+        children: Applicant has children living with them or that they are financially supporting
       views/confirmation/result:
         savings_passed?: Savings and investments
         benefits_passed?: Benefits

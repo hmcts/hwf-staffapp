@@ -2,17 +2,18 @@
 
 class BandBaseCalculation
   include BandCalculationHelper
+  include BandCalculationIncome
+
+  MIN_THRESHOLD = 1420
+  MAX_INCOME_THRESHOLD = 3000
+  PREMIUM_BANDS = { 1 => 425, 2 => 710 }.freeze
 
   attr_reader :income, :fee, :saving_amount, :children_age_band,
               :married, :dob, :part_remission_amount, :amount_to_pay, :outcome
 
   def initialize(application)
-    @income = application.income || 0
-    @fee = application.detail.fee
-    @saving_amount = application.saving.amount || 0
-    @children_age_band = preformat_age_band(application)
-    @married = application.applicant.married
-    @dob = application.applicant.date_of_birth
+    load_paper_application_values(application) if application.is_a?(Application)
+    load_online_application_values(application) if application.is_a?(OnlineApplication)
   end
 
   def premiums_total
@@ -33,6 +34,24 @@ class BandBaseCalculation
 
     @part_remission_amount = fee - @amount_to_pay
     @outcome = 'part'
+  end
+
+  def load_paper_application_values(application)
+    @income = application.income || 0
+    @fee = application.detail.fee
+    @saving_amount = application.saving.amount || 0
+    @children_age_band = preformat_age_band(application)
+    @married = application.applicant.married
+    @dob = application.applicant.date_of_birth
+  end
+
+  def load_online_application_values(application)
+    @income = application.income || 0
+    @fee = application.fee
+    @saving_amount = application.amount || 0
+    @children_age_band = preformat_age_band(application)
+    @married = application.married
+    @dob = application.date_of_birth
   end
 
 end

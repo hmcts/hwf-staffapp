@@ -2,6 +2,7 @@ class OnlineApplication < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
 
   serialize :income_kind
+  serialize :children_age_band
 
   belongs_to :jurisdiction, optional: true
   belongs_to :user, optional: true

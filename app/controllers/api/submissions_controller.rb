@@ -54,6 +54,23 @@ module Api
         :post_contact,
         :feedback_opt_in,
         :applying_method,
+        :partner_date_of_birth,
+        :partner_first_name,
+        :partner_last_name,
+        :calculation_scheme,
+        :applying_on_behalf,
+        :legal_representative,
+        :legal_representative_first_name,
+        :legal_representative_last_name,
+        :legal_representative_email,
+        :legal_representative_organisation_name,
+        :legal_representative_feedback_opt_in,
+        :legal_representative_street,
+        :legal_representative_postcode,
+        :legal_representative_town,
+        :legal_representative_address,
+        :over_16,
+        children_age_band: {},
         income_kind: { applicant: [], partner: [] }
       ).to_h
     end
