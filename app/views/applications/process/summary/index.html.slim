@@ -31,18 +31,18 @@ h1.govuk-heading-xl Check details
 - if display_savings?(@application)
   =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)
 
--if @application.saving.passed?
+-if @application.saving.passed? || show_ucd_changes?(@details.calculation_scheme)
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
-  -if !@application.benefits
 
-    -if show_ucd_changes?(@details.calculation_scheme)
-      =build_section_with_defaults 'Children', @children, application_dependents_path(@application)
-      =build_section_with_custom_links 'Income', @income, [ { key:'income_new', link_attributes: change_income_link },
-        { key:'income_period', link_attributes: change_income_link },
-        { key:'income_kind_applicant', link_attributes: change_income_kind_applicant_link },
-        { key:'income_kind_partner', link_attributes: change_income_kind_partner_link } ]
-    - else
-      =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
+
+-if show_ucd_changes?(@details.calculation_scheme)
+  =build_section_with_defaults 'Children', @children, application_dependents_path(@application)
+  =build_section_with_custom_links 'Income', @income, [ { key:'income_new', link_attributes: change_income_link },
+    { key:'income_period', link_attributes: change_income_link },
+    { key:'income_kind_applicant', link_attributes: change_income_kind_applicant_link },
+    { key:'income_kind_partner', link_attributes: change_income_kind_partner_link } ]
+- elsif @application.saving.passed?
+  =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
 
 
 
