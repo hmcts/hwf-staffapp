@@ -10,8 +10,8 @@ Then("I can view how to guide") do
   expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
-Then("I can view the Job Cards") do
-  expect(guide_page.content.job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/job-cards/'
+Then("I can view the old Job Cards") do
+  expect(guide_page.content.old_job_cards['href']).to end_with '/about-hmcts/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view the training course") do
@@ -22,8 +22,12 @@ When("I can view key control checks guide") do
   expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/02/help-with-fees-kccs.docx'
 end
 
-When("I can view staff guidance") do
-  expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
+When("I can view old staff guidance") do
+  expect(guide_page.content.old_staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
+end
+
+When("I can view new staff guidance") do
+  expect(guide_page.content.new_staff_guidance['href']).to end_with '/documents/2017/10/help-with-fees-policy-guide.pdf'
 end
 
 When("I click on process application") do
@@ -34,40 +38,8 @@ Then("I should be taken to the process application guide") do
   expect(process_application_guide_page).to have_header
 end
 
-When("I click on evidence checks") do
-  guide_page.content.evidence_checks.click
-end
-
-Then("I should be taken to the evidence checks guide") do
-  expect(evidence_checks_guide_page).to have_header
-end
-
-When("I click on part-payments") do
-  guide_page.content.part_payments.click
-end
-
-Then("I should be taken to the part-payments guide") do
-  expect(part_payments_guide_page).to have_header
-end
-
-When("I click on appeals") do
-  guide_page.content.appeals.click
-end
-
-Then("I should be taken to the appeals guide") do
-  expect(appeals_guide_page).to have_header
-end
-
 Then("I can view fraud awareness guide") do
   expect(guide_page.content.fraud_awareness['href']).to end_with '/documents/2018/05/help-with-fees-fraud-awareness-pdf.pdf'
-end
-
-When("I click on suspected fraud") do
-  guide_page.content.suspected_fraud.click
-end
-
-Then("I should be taken to the suspected fraud guide") do
-  expect(suspected_fraud_guide_page).to have_header
 end
 
 Then("I can view Staff guides link on footer") do
@@ -84,9 +56,14 @@ Then("I should be taken to the guide page") do
   expect(guide_page.content).to have_guide_header
 end
 
-Then("I will see a Job Cards link") do
-  expect(guide_page.content).to have_job_cards
-  expect(guide_page.content.job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
+Then("I will see old Job Cards link") do
+  expect(guide_page.content).to have_old_job_cards
+  expect(guide_page.content.old_job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
+end
+
+Then("I will see new Job Cards link") do
+  expect(guide_page.content).to have_new_job_cards
+  expect(guide_page.content.new_job_cards['href']).to eql 'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view guides by clicking on the link in the footer") do

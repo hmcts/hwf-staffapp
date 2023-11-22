@@ -6,15 +6,21 @@ Feature: Staff guides
     Scenario: See the guides
       Then I can view guides by clicking on the link in the footer
 
-  Scenario: Verify Job Cards on staff app guides page
-    Then I can view Staff guides link on footer
-    When I click on Staff guides link
-    Then I should be taken to the guide page
-    And I will see a Job Cards link
+    Scenario: Verify old Job Cards on staff app guides page
+      Then I can view Staff guides link on footer
+      When I click on Staff guides link
+      Then I should be taken to the guide page
+      And I will see old Job Cards link
+
+    Scenario: Verify new Job Cards on staff app guides page
+      Then I can view Staff guides link on footer
+      When I click on Staff guides link
+      Then I should be taken to the guide page
+      And I will see new Job Cards link
 
     Scenario: Verify Job Cards as a signed-in user
       And I am signed in on the guide page
-      Then I can view the Job Cards
+      Then I can view the old Job Cards
 
     Scenario: How to guide
       And I am signed in on the guide page
@@ -28,38 +34,22 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view key control checks guide
 
-    Scenario: Staff guidance
+    Scenario: Old staff guidance
       And I am signed in on the guide page
-      Then I can view staff guidance
+      Then I can view old staff guidance
+
+    Scenario: New staff guidance
+      And I am signed in on the guide page
+      Then I can view new staff guidance
 
     Scenario: Process application
       And I am signed in on the guide page
       When I click on process application
       Then I should be taken to the process application guide
 
-    Scenario: Evidence checks
-      And I am signed in on the guide page
-      When I click on evidence checks
-      Then I should be taken to the evidence checks guide
-
-    Scenario: Part-payments
-      And I am signed in on the guide page
-      When I click on part-payments
-      Then I should be taken to the part-payments guide
-
-    Scenario: Appeals
-      And I am signed in on the guide page
-      When I click on appeals
-      Then I should be taken to the appeals guide
-
     Scenario: Fraud awareness
       And I am signed in on the guide page
       Then I can view fraud awareness guide
-
-    Scenario: Suspected fraud
-      And I am signed in on the guide page
-      When I click on suspected fraud
-      Then I should be taken to the suspected fraud guide
 
     Scenario: Accessibility statement footer
       When I click on the accessibility link in the footer
