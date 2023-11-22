@@ -58,7 +58,9 @@
         li.govuk-header__navigation-item
           = link_to 'Feedback', feedback_link, {class: 'govuk-header__link'}
         li.govuk-header__navigation-item
-          = link_to 'Letter templates', letter_templates_path, {class: 'govuk-header__link'}
+          = link_to 'Old scheme templates', letter_templates_path, {class: 'govuk-header__link'}
+          li.govuk-header__navigation-item
+            = link_to 'New scheme templates', new_letter_templates_path, { class: 'govuk-header__link' }
         li.govuk-header__navigation-item
           = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
     - else
