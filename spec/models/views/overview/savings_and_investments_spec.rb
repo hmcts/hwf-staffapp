@@ -49,6 +49,23 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
     end
   end
 
+  describe '#more_then' do
+    subject { view.more_then }
+
+    let(:saving) { build_stubbed(:saving, min_threshold_exceeded: true, choice: choice_value) }
+
+    context "when choice is more_then" do
+      let(:choice_value) { 'more' }
+      it { is_expected.to eq 'Yes' }
+    end
+
+    context "when choise is not more then" do
+      let(:choice_value) { 'less_then' }
+      it { is_expected.to eq 'No' }
+    end
+
+  end
+
   describe '#amount' do
     subject { view.amount }
 
