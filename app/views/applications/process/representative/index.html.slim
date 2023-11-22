@@ -42,4 +42,8 @@
 
     aside.govuk-grid-column-one-third
       .guidance
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          h2.govuk-heading-m.util_mt-medium Representative details
+          ul.govuk-list.govuk-list--bullet
+            li If the application was completed by a legal representative/litigant friend, their personal details should be provided at the end of the paper form. If the form indicates it was completed by a representative/litigant friend but they have not completed their personal details, the paper form should be returned as incomplete
         p: strong = link_to 'See the guides', guide_path, target: 'blank'

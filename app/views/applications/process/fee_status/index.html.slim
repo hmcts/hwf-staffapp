@@ -103,7 +103,13 @@
 
     aside.govuk-grid-column-one-third
       .guidance
-        h2.govuk-heading-m Refunds
+        -if show_ucd_changes?(@application.detail.calculation_scheme)
+          h2.govuk-heading-m Date application received and fee status:
+          ul.govuk-list.govuk-list--bullet
+            li The remaining pages and details to be entered for processing the application will depend on the date application received date and fee status entered. If you enter this incorrectly, you will need to abandon the application and start again.
+        -else
+          h2.govuk-heading-m Refunds
+
         h3.govuk-heading-s Check the refund:
         ul.govuk-list.govuk-list--bullet
           li is for a fee paid less than 3 months ago

@@ -32,4 +32,8 @@
 
     aside.govuk-grid-column-one-third
       .guidance
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          h2.govuk-heading-m.util_mt-medium Statement of truth
+          ul.govuk-list.govuk-list--bullet
+            li tick the relevant box which has been entered on the form. Select the relevant tick box for the person who has completed the application as indicated on the EX160 paper form. If none of the tick boxes have been selected, the application should be returned as incomplete.
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
