@@ -1,0 +1,14 @@
+h1.govuk-heading-xl Check details
+
+=build_section_with_defaults 'Personal details', @applicant, application_personal_informations_path(@application)
+=build_section_with_defaults 'Application details', @details, application_details_path(@application)
+- if display_savings?(@application)
+  =build_section_with_defaults 'Savings and investments', @savings, application_savings_investments_path(@application)
+
+-if @application.saving.passed?
+  =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
+  -if !@application.benefits
+    =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
+
+= form_for @application, url: application_summary_path(@application), method: :post do |f|
+  = f.submit 'Complete processing', class: 'govuk-button govuk-!-margin-top-1'
