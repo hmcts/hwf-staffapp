@@ -35,7 +35,7 @@
        reference: @application_view.reference,
        full_name: @applicant.full_name,
        user_name: current_user.name,
-       evidence_due: '28 days'
+       evidence_due: '28 days')
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
