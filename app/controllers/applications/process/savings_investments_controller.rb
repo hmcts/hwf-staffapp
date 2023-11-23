@@ -12,10 +12,30 @@ module Applications
         @form.update(form_params(:savings_investments))
 
         if @form.save
-          SavingsPassFailService.new(application.saving).calculate!
-          redirect_to application_benefits_path(application)
+          redirect_to next_page_to_go
         else
           render :index
+        end
+      end
+
+      private
+
+      def saving_failed
+        band = BandBaseCalculation.new(application)
+
+        application.saving.update(passed: band.saving_passed?)
+        unless band.saving_passed?
+          application.update(outcome: band.remission, application_type: 'income', amount_to_pay: application.detail.fee)
+        end
+        !band.saving_passed?
+      end
+
+      def next_page_to_go
+        if ucd_changes_apply? && saving_failed
+          application_summary_path(application)
+        else
+          SavingsPassFailService.new(application.saving).calculate!
+          application_benefits_path(application)
         end
       end
 

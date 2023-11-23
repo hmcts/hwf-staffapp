@@ -29,15 +29,12 @@ h1.govuk-heading-xl Check details
 -if @application.saving.passed?
   =build_section_with_defaults 'Benefits', @benefits, application_benefits_path(@application)
 
-
-=build_section_with_defaults 'Children', @children, application_dependents_path(@application)
-=build_section_with_custom_links 'Income', @income, [ { key:'income_new', link_attributes: change_income_link },
-  { key:'income_period', link_attributes: change_income_link },
-  { key:'income_kind_applicant', link_attributes: change_income_kind_applicant_link },
-  { key:'income_kind_partner', link_attributes: change_income_kind_partner_link } ]
-
-
-
+-if @application.saving.passed?
+  =build_section_with_defaults 'Children', @children, application_dependents_path(@application)
+  =build_section_with_custom_links 'Income', @income, [ { key:'income_new', link_attributes: change_income_link },
+    { key:'income_period', link_attributes: change_income_link },
+    { key:'income_kind_applicant', link_attributes: change_income_kind_applicant_link },
+    { key:'income_kind_partner', link_attributes: change_income_kind_partner_link } ]
 
 
 =build_section_with_defaults 'Declaration and statement of truth', @declaration, application_declaration_path(@application)
