@@ -31,12 +31,11 @@
     p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
 
   .evidence-confirmation-letter
-    =t('letters.evidence.no_evidence_received_html',
+    =t('letters.new_letters.evidence_check_html',
        reference: @application_view.reference,
        full_name: @applicant.full_name,
        user_name: current_user.name,
-       expiry_date: @evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
-
+       evidence_due: '28 days'
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
