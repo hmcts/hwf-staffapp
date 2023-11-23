@@ -25,7 +25,7 @@ Feature: Admin navigation
       Then I can view feedback received
 
     Scenario: Letter templates
-      Then I can view old letter templates
+      Then I can view letter templates
 
     Scenario: Sign out
       When I sign out

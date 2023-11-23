@@ -141,8 +141,8 @@ def feedback_page
   @feedback_page ||= FeedbackPage.new
 end
 
-def old_letter_template_page
-  @old_letter_template_page ||= LetterTemplatePage.new
+def letter_template_page
+  @letter_template_page ||= LetterTemplatePage.new
 end
 
 def new_letter_template_page

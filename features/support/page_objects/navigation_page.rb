@@ -7,6 +7,7 @@ class NavigationPage < BasePage
     element :edit_banner, 'a', text: 'Edit banner'
     element :dwp_message, 'a', text: 'DWP message'
     element :staff_guides, 'a', text: 'Staff Guides'
+    element :letter_templates, 'a', text: 'Old scheme templates'
     element :old_letter_templates, 'a', text: 'Old scheme templates'
     element :new_letter_templates, 'a', text: 'New scheme templates'
     element :feedback, 'a', text: 'Feedback'

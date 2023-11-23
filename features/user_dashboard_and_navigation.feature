@@ -17,8 +17,8 @@ Feature: User dashboard and navigation
 
   Scenario: Old letter templates
     Given I successfully sign in as a user
-    When I click on old letter templates
-    Then I am taken to the old letter templates page
+    When I click on letter templates
+    Then I am taken to the letter templates page
 
   Scenario: New letter templates
     Given I successfully sign in as a user
