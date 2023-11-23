@@ -1,7 +1,7 @@
 - content_for :page_title
   = "Letters"
 
-h1.govuk-heading-m.util_mt-medium Old scheme letters
+h1.govuk-heading-m.util_mt-medium New scheme letters
 
 h2.govuk-heading-m Processed application results in part payment
 .confirmation-letter
@@ -116,3 +116,42 @@ h2.govuk-heading-m Application is eligible for full refund
     reference: '{AUTO: APPLICATION REFERENCE}',
     full_name: '{AUTO: APPLICANTS NAME}',
     user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Reference code received out of time
+.confirmation-letter
+  = t('letters.new_letters.reference_code_html',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          application_received: '{AUTO: DATE APPLICATION RECEIVED}',
+          user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Processed application results in evidence check (replaces current template)
+.confirmation-letter
+  = t('letters.new_letters.processed_application_html',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          evidence_due: '{AUTO: DATE EVIDENCE DUE}',
+          application_received: '{AUTO: DATE APPLICATION RECEIVED}',
+          user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Evidence check - requested, but not received (replaces current template)
+.confirmation-letter
+  = t('letters.new_letters.evidence_check_html',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          evidence_due: '{AUTO: DATE EVIDENCE DUE}',
+          user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Compulsory information missing from new application
+.confirmation-letter
+  = t('letters.new_letters.information_missing_html',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          application_received: '{AUTO: DATE APPLICATION RECEIVED}',
+          user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Application is eligible for full remission
+.confirmation-letter
+  = t('letters.new_letters.full_remission_html',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          user_name: '{AUTO: CURRENT USERS NAME}')

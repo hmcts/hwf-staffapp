@@ -20,7 +20,7 @@ dl.govuk-summary-list
       dd.govuk-summary-list__value Track public submission data
   - if policy(:report).letter?
     .govuk-summary-list__row
-      dt.govuk-summary-list__key =link_to 'Letters', letter_templates_path
+      dt.govuk-summary-list__key =link_to 'Old scheme templates', letter_templates_path
       dd.govuk-summary-list__value Display raw letters
   - if policy(:report).raw_data?
     .govuk-summary-list__row

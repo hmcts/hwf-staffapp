@@ -11,7 +11,7 @@ class ReportsPage < BasePage
     element :graphs_help, 'dd', text: '5 day graphs for benefit checks by business unit'
     element :public_submissions_link, 'a', text: 'Public submissions'
     element :public_submissions_help, 'dd', text: 'Track public submission data'
-    element :letters_link, 'a', text: 'Letters'
+    element :letters_link, 'a', text: 'Old scheme templates'
     element :letters_help, 'dd', text: 'Display raw letters'
     element :raw_data_extract_link, 'a', text: 'Raw data extract'
     element :raw_data_extract_help, 'dd', text: 'Extract raw data by date for Analytical Services'

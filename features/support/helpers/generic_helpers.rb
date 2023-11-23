@@ -145,6 +145,10 @@ def letter_template_page
   @letter_template_page ||= LetterTemplatePage.new
 end
 
+def new_letter_template_page
+  @old_letter_template_page ||= NewLetterTemplatePage.new
+end
+
 def reports_page
   @reports_page ||= ReportsPage.new
 end

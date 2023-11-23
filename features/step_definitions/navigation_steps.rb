@@ -23,6 +23,16 @@ Then("I can view letter templates") do
   expect(letter_template_page.content).to have_header
 end
 
+Then("I can view old letter templates") do
+  navigation_page.navigation_link.old_letter_templates.click
+  expect(old_letter_template_page.content).to have_header
+end
+
+Then("I can view new letter templates") do
+  navigation_page.navigation_link.new_letter_templates.click
+  expect(new_letter_template_page.content).to have_header
+end
+
 Then("I can view office details") do
   navigation_page.navigation_link.view_office.click
   expect(office_page.content).to have_header

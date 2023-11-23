@@ -49,6 +49,10 @@ Then("I should be taken to the letters page") do
   expect(letter_template_page.content).to have_header
 end
 
+Then("I should be taken to the old letters page") do
+  expect(old_letter_template_page.content).to have_header
+end
+
 When("I click on raw data extract") do
   expect(reports_page.content).to have_raw_data_extract_help
   reports_page.raw_data_extract

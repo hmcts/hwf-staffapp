@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   put 'reports/finance_report' => 'reports#finance_report_generator'
   put 'reports/finance_transactional_report' => 'reports#finance_transactional_report_generator'
   get 'letter_templates' => 'reports#letters'
+  get 'new_letter_templates' => 'reports#new_letters'
 
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
