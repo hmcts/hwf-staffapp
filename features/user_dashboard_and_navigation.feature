@@ -15,10 +15,15 @@ Feature: User dashboard and navigation
     When I click on feedback
     Then I am taken to the feedback page
 
-  Scenario: Letter templates
+  Scenario: Old letter templates
     Given I successfully sign in as a user
-    When I click on letter templates
-    Then I am taken to the letter templates page
+    When I click on old letter templates
+    Then I am taken to the old letter templates page
+
+  Scenario: New letter templates
+    Given I successfully sign in as a user
+    When I click on new letter templates
+    Then I am taken to the new letter templates page
 
   Scenario: Sign out
     Given I successfully sign in as a user

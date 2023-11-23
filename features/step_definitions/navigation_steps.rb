@@ -18,9 +18,14 @@ Then("I can view staff guides") do
   expect(guide_page.content).to have_guide_header
 end
 
-Then("I can view letter templates") do
-  navigation_page.navigation_link.letter_templates.click
-  expect(letter_template_page.content).to have_header
+Then("I can view old letter templates") do
+  navigation_page.navigation_link.old_letter_templates.click
+  expect(old_letter_template_page.content).to have_header
+end
+
+Then("I can view new letter templates") do
+  navigation_page.navigation_link.new_letter_templates.click
+  expect(new_letter_template_page.content).to have_header
 end
 
 Then("I can view office details") do

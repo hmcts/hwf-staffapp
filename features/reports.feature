@@ -24,7 +24,7 @@ Feature: Reports page
 
     Scenario: Letters
       When I click on letters
-      Then I should be taken to the letters page
+      Then I should be taken to the old letters page
 
     Scenario: Raw data extract
       When I click on raw data extract
