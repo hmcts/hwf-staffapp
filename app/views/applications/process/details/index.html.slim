@@ -194,7 +194,10 @@
       .guidance
         h3.govuk-heading-s Remember:
         ul.govuk-list.govuk-list--bullet
-          li to enter the correct form number the application relates to
+          - if show_ucd_changes?(@application.detail.calculation_scheme)
+            li To complete the form number the application relates to, you may need to correct the form number provided on the application
+          - else
+            li to enter the correct form number the application relates to
           li to tick the appropriate box under ‘case details’ if the application is for an emergency or probate case. You will also need to enter the appropriate date for  probate cases when prompted
         - if show_refund_section?
           h2.govuk-heading-m Refunds

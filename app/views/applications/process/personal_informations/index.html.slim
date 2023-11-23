@@ -105,6 +105,11 @@
           li a vexatious litigant, or bound by an order
           li a company, charity or not for profit organisation
         p = link_to 'What to do if the applicant is one of these', guide_process_application_path(anchor: 'check-applicant-is-not'), target: 'blank'
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          h3.govuk-heading-s Partner’s details:
+          ul.govuk-list.govuk-list--bullet
+            li Enter all of the partner information as provided on the EX160 paper form. If the applicant has declared they have a partner, but certain partner details are missing, you can continue without this information.
+
         h3.govuk-heading-s Check the fee:
         ul.govuk-list.govuk-list--bullet
           li was not processed through the money claim online (MCOL)
@@ -114,7 +119,10 @@
         h2.govuk-heading-m National Insurance number
         h3.govuk-heading-s If NI number isn't provided:
         ul.govuk-list.govuk-list--bullet
-          li check answer to question 9
+          - if show_ucd_changes?(@application.detail.calculation_scheme)
+            li check answer to question 10
+          - else
+            li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
 
