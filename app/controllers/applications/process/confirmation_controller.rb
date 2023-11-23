@@ -18,11 +18,15 @@ module Applications
 
       def hmrc_or_paper_path
         evidence_id = application.evidence_check.id
-        if application.evidence_check.income_check_type == 'hmrc'
+        if application.evidence_check.income_check_type == 'hmrc' && not_average_income
           new_evidence_check_hmrc_path(evidence_id)
         else
           evidence_check_path(evidence_id)
         end
+      end
+
+      def not_average_income
+        application.income_period != 'average'
       end
     end
   end
