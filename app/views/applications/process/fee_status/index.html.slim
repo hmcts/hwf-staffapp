@@ -1,11 +1,11 @@
 - content_for :page_title
-  = "Date received and fee status page"
+  = "Date received and fee status"
 
 = form_for @form, as: :application, url: application_fee_status_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl Date received and fee status page
+      h1.govuk-heading-xl Date received and fee status
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
