@@ -10,6 +10,7 @@
       = t('letters.refund.full_html',
         reference: application.reference,
         full_name: application.applicant.full_name,
+        legal_rep: representative.full_name,
         user_name: current_user.name)
 
   - elsif outcome.eql?('part')
@@ -24,6 +25,7 @@
       = t('letters.refund.part_html',
           reference: application.reference,
           full_name: application.applicant.full_name,
+          legal_rep: representative.full_name,
           user_name: current_user.name,
           fee: currency_format(application.detail.fee),
           amount_refunded: currency_format(amount_to_refund(application)),
@@ -39,4 +41,5 @@
       = t('letters.refund.not_eligible_html',
         reference: application.reference,
         full_name: application.applicant.full_name,
+        legal_rep: representative.full_name,
         user_name: current_user.name)
