@@ -171,6 +171,17 @@ RSpec.describe ApplicationBuilder do
         end
       end
 
+      context 'representative' do
+        let(:online_application) { build_stubbed(:online_application_with_all_details) }
+
+        it 'has the representative details' do
+          representative = built_application.representative
+          expect(representative.first_name).to eq 'John'
+          expect(representative.last_name).to eq 'Lawmen'
+          expect(representative.organisation).to eq 'Law and Co'
+        end
+      end
+
       describe 'has applicant record built' do
         it { expect(built_application.applicant).to be_a(Applicant) }
         it { expect(built_application.applicant).not_to be_persisted }
@@ -196,7 +207,7 @@ RSpec.describe ApplicationBuilder do
 
         [:fee, :jurisdiction, :date_received, :form_name, :case_number,
          :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid,
-         :emergency_reason, :fee_manager_firstname, :fee_manager_lastname].each do |column|
+         :emergency_reason, :fee_manager_firstname, :fee_manager_lastname, :statement_signed_by].each do |column|
           it "has #{column} assigned" do
             expect(built_detail.public_send(column)).to eql(online_application.public_send(column))
           end
@@ -206,6 +217,7 @@ RSpec.describe ApplicationBuilder do
       describe 'has savings record built' do
         it { expect(built_application.saving).to be_a(Saving) }
         it { expect(built_application.saving).not_to be_persisted }
+        it { expect(built_application.saving.choice).to eq online_application.income_period }
       end
 
       describe 'the saving' do

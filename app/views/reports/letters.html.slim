@@ -1,13 +1,14 @@
 - content_for :page_title
   = "Letters"
 
-h1.govuk-heading-m.util_mt-medium Letters
+h1.govuk-heading-m.util_mt-medium Old scheme letters
 
 h2.govuk-heading-m Processed application results in part payment
 .confirmation-letter
   = t('letters.part-payment.send_part_payment_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       full_fee: '£{AUTO: FULL FEE}',
@@ -21,6 +22,7 @@ h2.govuk-heading-m Evidence check - received, but not correct
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       expiry_date: '{AUTO: DATE EVIDENCE DUE}',
       amount_to_pay: '{AUTO: AMOUNT TO PAY}')
 
@@ -53,6 +55,7 @@ h2.govuk-heading-m Part payment - requested, but not received
   = t('letters.part-payment.no_part_payment_received_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
@@ -62,6 +65,7 @@ h2.govuk-heading-m Part payment - received, but not correct
   = t('letters.part-payment.part_payment_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application rejected because savings threshold exceeded
@@ -69,6 +73,7 @@ h2.govuk-heading-m Application rejected because savings threshold exceeded
   = t('letters.reject.reject_over_savings_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       fee_amount: '{AUTO: APPLICATION FEE}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       savings_threshold: '{AUTO: SAVINGS THRESHOLD}',
       savings_total: '{AUTO: SAVINGS TOTAL}',
       full_name: '{AUTO: APPLICANTS NAME}',
@@ -82,6 +87,7 @@ h2.govuk-heading-m Application rejected because income threshold exceeded
       income_total: '{AUTO: INCOME TOTAL}',
       expiry_date: '{AUTO: DATE FOR PAYMENT}',
       full_name: '{AUTO: APPLICANTS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application rejected because benefits not received
@@ -90,6 +96,7 @@ h2.govuk-heading-m Application rejected because benefits not received
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       amount_to_pay: '{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
@@ -98,6 +105,7 @@ h2.govuk-heading-m Application is not eligible for refund
   = t('letters.refund.not_eligible_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application is eligible for partial refund
@@ -106,6 +114,7 @@ h2.govuk-heading-m Application is eligible for partial refund
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
+      legal_rep: '{AUTO: THIRD PARTY NAME}',
       fee: '{AUTO: FEE AMOUNT}',
       amount_refunded: '{AUTO: PARTIAL REMISSION AMOUNT}',
       amount_to_pay: '{AUTO: REFUND AMOUNT}')
@@ -115,4 +124,5 @@ h2.govuk-heading-m Application is eligible for full refund
   = t('letters.refund.full_html',
     reference: '{AUTO: APPLICATION REFERENCE}',
     full_name: '{AUTO: APPLICANTS NAME}',
+    legal_rep: '{AUTO: THIRD PARTY NAME}',
     user_name: '{AUTO: CURRENT USERS NAME}')

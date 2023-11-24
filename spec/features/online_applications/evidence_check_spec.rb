@@ -46,6 +46,7 @@ RSpec.feature 'Online application processing Evidence check' do
     choose Jurisdiction.first.display_full.to_s
     click_button 'Next'
     click_button 'Complete processing'
+
     expect(page).to have_text 'Evidence of income needs to be checked'
     click_link 'Back to start'
 

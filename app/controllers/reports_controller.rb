@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters]
+  before_action :authorise_report_show, except: [:index, :graphs, :public, :letters, :new_letters]
 
   def index
     authorize :report
@@ -45,6 +45,10 @@ class ReportsController < ApplicationController
   end
 
   def letters
+    authorize :report, :letter?
+  end
+
+  def new_letters
     authorize :report, :letter?
   end
 

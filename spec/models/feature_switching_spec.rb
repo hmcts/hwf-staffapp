@@ -48,4 +48,37 @@ RSpec.describe FeatureSwitching do
       end
     end
   end
+
+  describe 'is subject_to_new_legislation?' do
+    let(:after_legislation) { FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE + 1.day }
+    let(:before_legislation) { FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE - 1.day }
+
+    context 'no refund' do
+      it 'date received after switch' do
+        received_and_refund_data = { date_received: after_legislation, date_fee_paid: nil, refund: false }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be true
+      end
+
+      it 'date received before switch' do
+        received_and_refund_data = { date_received: before_legislation, date_fee_paid: nil, refund: false }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
+      end
+    end
+    context 'refund' do
+      it 'date received and refunded after switch' do
+        received_and_refund_data = { date_received: after_legislation + 10.days, date_fee_paid: after_legislation, refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be true
+      end
+
+      it 'date received and refunded before switch' do
+        received_and_refund_data = { date_received: before_legislation, date_fee_paid: before_legislation - 1.day, refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
+      end
+
+      it 'date received after switch but refunded before' do
+        received_and_refund_data = { date_received: after_legislation, date_fee_paid: before_legislation, refund: true }
+        expect(described_class.subject_to_new_legislation?(received_and_refund_data)).to be false
+      end
+    end
+  end
 end

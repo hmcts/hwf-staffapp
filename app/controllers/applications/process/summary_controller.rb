@@ -3,13 +3,19 @@ module Applications
     class SummaryController < Applications::ProcessController
       before_action :authorize_application_update
 
+      # rubocop:disable Metrics/AbcSize
       def index
+        @fee_status = Views::Overview::FeeStatus.new(application)
         @applicant = Views::Overview::Applicant.new(application)
         @details = Views::Overview::Details.new(application)
         @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
         @benefits = Views::Overview::Benefits.new(application)
+        @children = Views::Overview::Children.new(application)
         @income = Views::Overview::Income.new(application)
+        @declaration = Views::Overview::Declaration.new(application)
+        @representative = Views::Overview::Representative.new(application.representative)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def create
         resolve_only_new_applications

@@ -5,7 +5,7 @@ module Applications
 
       def index
         @dwp_state = dwp_checker_state
-        if application.saving.passed?
+        if ucd_changes_apply? || application.saving.passed?
           @form = Forms::Application::Benefit.new(application)
           render :index
         else
@@ -38,7 +38,7 @@ module Applications
           redirect_to application_benefit_override_paper_evidence_path(application)
         else
           reset_benefit_override
-          redirect_to application_incomes_path(application)
+          redirect_to application_dependents_path(application)
         end
       end
 

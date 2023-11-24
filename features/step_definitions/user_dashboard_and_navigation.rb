@@ -26,8 +26,24 @@ When("I click on letter templates") do
   navigation_page.navigation_link.letter_templates.click
 end
 
+When("I click on old letter templates") do
+  navigation_page.navigation_link.old_letter_templates.click
+end
+
+When("I click on new letter templates") do
+  navigation_page.navigation_link.new_letter_templates.click
+end
+
 Then("I am taken to the letter templates page") do
   expect(letter_template_page.content).to have_header
+end
+
+Then("I am taken to the old letter templates page") do
+  expect(old_letter_template_page.content).to have_header
+end
+
+Then("I am taken to the new letter templates page") do
+  expect(new_letter_template_page.content).to have_header
 end
 
 When("I click on sign out") do

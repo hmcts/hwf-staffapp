@@ -1,0 +1,68 @@
+- content_for :page_title
+  = "Personal details"
+
+= form_for @form, as: :application, url: :application_partner_informations, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl Personal details
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.visuallyhidden =t('partners_details', scope: @form.i18n_scope)
+          legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+            =t('partners_details', scope: @form.i18n_scope)
+          .govuk-form-group.group-level
+            = f.label :partner_first_name, class: 'govuk-label'
+              =t('partner_first_name', scope: @form.i18n_scope)
+            - if @form.errors[:partner_first_name].present?
+              span.govuk-error-message
+                = f.label :partner_first_name, @form.errors[:partner_first_name].join(', '), class: 'error'
+            = f.text_field :partner_first_name, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
+        = f.label :partner_last_name, class: 'govuk-label'
+        - if @form.errors[:partner_last_name].present?
+          span.govuk-error-message
+            = f.label :lpartner_ast_name, @form.errors[:partner_last_name].join(', '), class: 'error'
+        = f.text_field :partner_last_name, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            = t('partner_date_of_birth', scope: @form.i18n_scope)
+          div.govuk-hint = t('partner_date_of_birth_hint', scope: @form.i18n_scope)
+          - if @form.errors[:partner_date_of_birth].present?
+            span.govuk-error-message
+              = f.label :partner_date_of_birth, @form.errors[:partner_date_of_birth].join(', '), class: 'error'
+          .govuk-date-input class="#{'error_dates' if @form.errors[:partner_date_of_birth].present?}"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-day
+                = f.label :day_date_of_birth, class: 'govuk-label'
+                = f.text_field :day_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-month
+                = f.label :month_date_of_birth, class: 'govuk-label'
+                = f.text_field :month_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "12"
+            .govuk-date-input__item
+              .govuk-form-group.govuk-form-group-year
+                = f.label :year_date_of_birth, class: 'govuk-label'
+                = f.text_field :year_date_of_birth, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+
+      .govuk-form-group.group-level
+        = f.label :partner_ni_number, class: 'govuk-label'
+          =t('partner_ni_number', scope: @form.i18n_scope)
+          span.hint =t('general.required_for_benefits').html_safe
+          - if @form.errors[:partner_ni_number].present?
+            span.govuk-error-message
+              = f.label :partner_ni_number, @form.errors[:partner_ni_number].join(', '), class: 'error'
+        = f.text_field :partner_ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

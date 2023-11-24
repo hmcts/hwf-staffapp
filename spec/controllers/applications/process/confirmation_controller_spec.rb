@@ -37,11 +37,29 @@ RSpec.describe Applications::Process::ConfirmationController do
       end
 
       context 'hmrc income check' do
-        let(:application) { build_stubbed(:application, :waiting_for_evidence_state, office: user.office, evidence_check: evidence_check, medium: 'digital') }
+        let(:application) {
+          build_stubbed(:application, :waiting_for_evidence_state,
+                        office: user.office, evidence_check: evidence_check, medium: 'digital', income_period: income_period)
+        }
         let(:evidence_check) { build_stubbed(:evidence_check, income_check_type: 'hmrc') }
+        let(:income_period) { nil }
 
         it 'redirects to the hmrc check page' do
           expect(response).to redirect_to(new_evidence_check_hmrc_path(application.evidence_check.id))
+        end
+
+        context 'average income period' do
+          let(:income_period) { 'average' }
+          it 'redirects to the hmrc check page' do
+            expect(response).to redirect_to(evidence_check_path(application.evidence_check.id))
+          end
+        end
+
+        context 'last month income period' do
+          let(:income_period) { 'last_month' }
+          it 'redirects to the hmrc check page' do
+            expect(response).to redirect_to(new_evidence_check_hmrc_path(application.evidence_check.id))
+          end
         end
       end
     end

@@ -10,7 +10,7 @@ module HomeHelper
 
   def path_for_application_based_on_state(application)
     return edit_online_application_path(application) if application.is_a?(OnlineApplication)
-    if application.state.to_sym == :waiting_for_evidence && application.evidence_check.hmrc?
+    if application.state.to_sym == :waiting_for_evidence && hmrc_check_link?(application)
       return hmrc_evidence_check_link(application)
     end
     send(APPLICATION_STATE_LINKS.fetch(application.state.to_sym), application)
@@ -63,7 +63,7 @@ module HomeHelper
       message = 'DWP'
       custom_class = ' red-warning-text'
     elsif record.state == 'waiting_for_evidence' && record.try(:evidence_check).try(:hmrc?)
-      message = 'waiting_for_evidence hmrc'
+      message = hmrc_check_link?(record) ? 'waiting_for_evidence hmrc' : 'waiting_for_evidence'
     else
       message = record.state
     end
@@ -109,5 +109,9 @@ module HomeHelper
     else
       new_evidence_check_hmrc_path(evidence_check)
     end
+  end
+
+  def hmrc_check_link?(application)
+    application.evidence_check.hmrc? && application.income_period != 'average'
   end
 end

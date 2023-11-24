@@ -93,7 +93,11 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def savings_exceeded
-    !SavingsPassFailService.new(Saving.new).calculate_online_application(online_application)
+    if ucd_changes_apply?
+      !band_saving_calculation_passed?
+    else
+      !SavingsPassFailService.new(Saving.new).calculate_online_application(online_application)
+    end
   end
 
   def reset_fee_manager_approval_fields
@@ -131,4 +135,15 @@ class OnlineApplicationsController < ApplicationController
     return false unless last_benefit_check
     last_benefit_check.benefits_valid?
   end
+
+  def ucd_changes_apply?
+    FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == online_application.calculation_scheme
+  end
+
+  def band_saving_calculation_passed?
+    band = BandBaseCalculation.new(online_application)
+    band.remission
+    band.saving_passed?
+  end
+
 end

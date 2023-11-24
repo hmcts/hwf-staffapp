@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   put 'reports/finance_report' => 'reports#finance_report_generator'
   put 'reports/finance_transactional_report' => 'reports#finance_transactional_report_generator'
   get 'letter_templates' => 'reports#letters'
+  get 'new_letter_templates' => 'reports#new_letters'
 
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
@@ -45,11 +46,21 @@ Rails.application.routes.draw do
                               defaults: { type: 'paper' }
     put 'override', to: 'applications/process/override#update', as: :override
 
+    get '/fee_status', to: 'applications/process/fee_status#index'
+    post '/fee_status', to: 'applications/process/fee_status#create'
+    get '/declaration', to: 'applications/process/declaration#index'
+    post '/declaration', to: 'applications/process/declaration#create'
+    get '/representative', to: 'applications/process/representative#index'
+    post '/representative', to: 'applications/process/representative#create'
     resources :personal_informations, only: [:index, :create], module: 'applications/process'
+    resources :partner_informations, only: [:index, :create], module: 'applications/process'
     resources :details, only: [:index, :create], module: 'applications/process'
     resources :savings_investments, only: [:index, :create], module: 'applications/process'
     resources :benefits, only: [:index, :create], module: 'applications/process'
+    resources :dependents, only: [:index, :create], module: 'applications/process'
     resources :incomes, only: [:index, :create], module: 'applications/process'
+    resources :income_kind_applicants, only: [:index, :create], module: 'applications/process'
+    resources :income_kind_partners, only: [:index, :create], module: 'applications/process'
     get 'summary', to: 'applications/process/summary#index'
     post 'summary', to: 'applications/process/summary#create'
 

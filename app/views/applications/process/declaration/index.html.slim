@@ -1,0 +1,39 @@
+- content_for :page_title
+  = t('header', scope: @form.i18n_scope)
+
+= form_for @form, as: :application, url: :application_declaration, method: :post, html: { autocomplete: 'off' } do |f|
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl =t('header', scope: @form.i18n_scope)
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.visuallyhidden =t('statement_signed_by', scope: @form.i18n_scope)
+          legend.govuk-fieldset__legend
+            =t('statement_signed_by', scope: @form.i18n_scope)
+          - if @form.errors[:statement_signed_by].present?
+            span.govuk-error-message
+              = f.label :statement_signed_by, @form.errors[:statement_signed_by].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :statement_signed_by, 'applicant', { class: 'govuk-radios__input' }
+              = f.label t('statement_signed_by_applicant', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_statement_signed_by_applicant'
+            .govuk-radios__item
+              = f.radio_button :statement_signed_by, 'litigation_friend', { class: 'govuk-radios__input' }
+              = f.label t('statement_signed_by_litigation_friend', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_statement_signed_by_litigation_friend'
+            .govuk-radios__item
+              = f.radio_button :statement_signed_by, 'legal_representative', { class: 'govuk-radios__input' }
+              = f.label t('statement_signed_by_legal_representative', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_statement_signed_by_legal_representative'
+
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          h2.govuk-heading-m.util_mt-medium Statement of truth
+          ul.govuk-list.govuk-list--bullet
+            li tick the relevant box which has been entered on the form. Select the relevant tick box for the person who has completed the application as indicated on the EX160 paper form. If none of the tick boxes have been selected, the application should be returned as incomplete.
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'

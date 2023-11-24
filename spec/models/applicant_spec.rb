@@ -207,4 +207,23 @@ RSpec.describe Applicant do
       it { is_expected.to be false }
     end
   end
+
+  describe 'remove partner info' do
+    let(:application) { build(:application, date_received: date_received) }
+    let(:applicant) { build(:applicant, application: application) }
+
+    it 'only when change from married to single' do
+      applicant = create(:applicant, application: application, married: true,
+                                     partner_date_of_birth: Time.zone.today,
+                                     partner_first_name: 'Jim',
+                                     partner_last_name: 'Jones',
+                                     partner_ni_number: 'sn798466c')
+
+      applicant.update(married: false)
+      expect(applicant.partner_date_of_birth).to be_nil
+      expect(applicant.partner_first_name).to be_nil
+      expect(applicant.partner_last_name).to be_nil
+      expect(applicant.partner_ni_number).to be_nil
+    end
+  end
 end

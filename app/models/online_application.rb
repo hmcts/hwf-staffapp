@@ -1,7 +1,9 @@
 class OnlineApplication < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
+  alias_attribute :over_66, :over_61
 
   serialize :income_kind
+  serialize :children_age_band
 
   belongs_to :jurisdiction, optional: true
   belongs_to :user, optional: true
@@ -13,7 +15,7 @@ class OnlineApplication < ActiveRecord::Base
             :phone_contact, :post_contact, :feedback_opt_in, inclusion: [true, false]
   validates :reference, uniqueness: true
 
-  validates :ni_number, presence: true, if: ->(app) { app.ho_number.blank? }
+  validates :ni_number, presence: true, if: ->(app) { !app.over_16 && app.ho_number.blank? }
 
   def full_name
     [title, first_name, last_name].compact.join(' ')
@@ -26,6 +28,10 @@ class OnlineApplication < ActiveRecord::Base
   # FIXME: This is here temporarily until we can refactor view models
   def detail
     self
+  end
+
+  def representative
+    # TODO: placeholder for upocoming changes
   end
 
   def processed?

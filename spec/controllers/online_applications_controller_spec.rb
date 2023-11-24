@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe OnlineApplicationsController do
   let(:user) { create(:user) }
-  let(:online_application) { build_stubbed(:online_application, benefits: false) }
+  let(:online_application) { build_stubbed(:online_application, benefits: false, calculation_scheme: calculation_scheme) }
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
+  let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
+  let(:band_calculation) { instance_double(BandBaseCalculation, remission: 'full', saving_passed?: saving_outcome, amount_to_pay: 0) }
 
   before do
     allow(OnlineApplication).to receive(:find).with(online_application.id.to_s).and_return(online_application)
@@ -103,6 +105,9 @@ RSpec.describe OnlineApplicationsController do
       allow(online_bc_runner).to receive(:run)
       allow(SavingsPassFailService).to receive(:new).and_return(saving_service)
       allow(saving_service).to receive(:calculate_online_application).and_return(saving_outcome)
+      allow(BandBaseCalculation).to receive(:new).and_return band_calculation
+      allow(band_calculation).to receive(:remission)
+      allow(band_calculation).to receive(:saving_passed?).and_return saving_outcome
 
       put :update, params: { id: id, online_application: params }
     end
@@ -138,7 +143,7 @@ RSpec.describe OnlineApplicationsController do
         end
 
         context 'when it is benefit application' do
-          let(:online_application) { build_stubbed(:online_application, benefits: true) }
+          let(:online_application) { build_stubbed(:online_application, benefits: true, calculation_scheme: calculation_scheme) }
 
           context 'dwp is down' do
             let(:dwp_state) { 'offline' }
@@ -205,21 +210,49 @@ RSpec.describe OnlineApplicationsController do
             end
           end
 
-          context 'saving fails' do
-            let(:dwp_state) { 'offline' }
-            let(:saving_outcome) { false }
+          describe 'savings' do
+            context 'saving fails' do
+              let(:dwp_state) { 'offline' }
+              let(:saving_outcome) { false }
 
-            it 'renders the summary page' do
-              expect(response).to redirect_to(online_application_path(online_application))
+              it 'renders the summary page' do
+                expect(response).to redirect_to(online_application_path(online_application))
+              end
             end
-          end
 
-          context 'saving pass' do
-            let(:dwp_state) { 'offline' }
-            let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+            context 'saving pass' do
+              let(:dwp_state) { 'offline' }
+              let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
 
-            it 'renders the summary page' do
-              expect(response).to redirect_to(benefits_online_application_path(online_application))
+              it 'renders the summary page' do
+                expect(response).to redirect_to(benefits_online_application_path(online_application))
+              end
+            end
+
+            context 'ucd' do
+              let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1].to_s }
+
+              context 'saving fails' do
+                let(:dwp_state) { 'offline' }
+                let(:saving_outcome) { false }
+
+                it 'renders the summary page' do
+                  expect(band_calculation).to have_received(:remission)
+                  expect(band_calculation).to have_received(:saving_passed?)
+                  expect(response).to redirect_to(online_application_path(online_application))
+                end
+              end
+
+              context 'saving pass' do
+                let(:dwp_state) { 'offline' }
+                let(:saving_outcome) { true }
+
+                it 'renders the summary page' do
+                  expect(band_calculation).to have_received(:remission)
+                  expect(band_calculation).to have_received(:saving_passed?)
+                  expect(response).to redirect_to(benefits_online_application_path(online_application))
+                end
+              end
             end
           end
         end
@@ -280,14 +313,16 @@ RSpec.describe OnlineApplicationsController do
   end
 
   describe 'POST #complete' do
-    let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
+    let(:application) { build_stubbed(:application, office: user.office, detail: detail, saving: saving) }
     let(:detail) { build_stubbed(:detail) }
+    let(:saving) { build_stubbed(:saving) }
     let(:application_builder) { instance_double(ApplicationBuilder, build_from: application) }
     let(:application_calculation) { instance_double(ApplicationCalculation, run: nil) }
     let(:resolver_service) { instance_double(ResolverService, complete: nil) }
     let(:pass_fail_service) { instance_double(SavingsPassFailService, calculate!: nil) }
     let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
     let(:dwp_error) { false }
+    let(:saving_outcome) { true }
 
     before do
       allow(ApplicationBuilder).to receive(:new).with(user).and_return(application_builder)
@@ -300,6 +335,8 @@ RSpec.describe OnlineApplicationsController do
       allow(application).to receive(:update)
       allow(application).to receive(:failed_because_dwp_error?).and_return(dwp_error)
       allow(detail).to receive(:update).and_return(true)
+      allow(saving).to receive(:update).and_return(true)
+      allow(BandBaseCalculation).to receive(:new).and_return band_calculation
 
       post :complete, params: { id: id }
     end
@@ -327,12 +364,31 @@ RSpec.describe OnlineApplicationsController do
         expect(resolver_service).to have_received(:complete)
       end
 
-      it 'store schema used for calulation' do
-        expect(detail).to have_received(:update).with(calculation_scheme: :prior_q4_23)
-      end
-
       it 'runs the pass fail service' do
         expect(pass_fail_service).to have_received(:calculate!)
+      end
+
+      context 'UCD' do
+        let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1].to_s }
+
+        it 'does not run old pass fail service' do
+          expect(pass_fail_service).not_to have_received(:calculate!)
+        end
+
+        it 'update application' do
+          expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: 0)
+        end
+
+        it 'update saving' do
+          expect(saving).to have_received(:update).with(passed: true)
+        end
+
+        it 'band_calculation is called' do
+          expect(band_calculation).to have_received(:remission)
+          expect(band_calculation).to have_received(:saving_passed?)
+          expect(band_calculation).to have_received(:amount_to_pay)
+        end
+
       end
 
       it 'redirects to the application confirmation page' do

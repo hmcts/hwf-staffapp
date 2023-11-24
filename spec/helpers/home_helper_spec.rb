@@ -12,6 +12,7 @@ RSpec.describe HomeHelper do
     let(:evidence_check) { last_application.evidence_check }
     let(:part_payment) { create(:part_payment, application: last_application) }
     let(:check_type) { nil }
+    let(:income_period) { nil }
 
     context 'waiting_for_evidence' do
       context 'standard' do
@@ -23,7 +24,7 @@ RSpec.describe HomeHelper do
 
       context 'hmrc check type' do
         let(:check_type) { 'hmrc' }
-        let(:last_application) { create(:application, :waiting_for_evidence_state) }
+        let(:last_application) { create(:application, :waiting_for_evidence_state, income_period: income_period) }
         before { evidence_check.update(income_check_type: check_type) }
 
         it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
@@ -38,6 +39,22 @@ RSpec.describe HomeHelper do
           before { hmrc_check }
           let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
           let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
+          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
+        end
+
+        context 'with hmrc but average income period' do
+          before { hmrc_check }
+          let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
+          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
+          let(:income_period) { 'average' }
+          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence/#{evidence_check.id}") }
+        end
+
+        context 'with hmrc but last_month income period' do
+          before { hmrc_check }
+          let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
+          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
+          let(:income_period) { 'last_month' }
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
         end
       end

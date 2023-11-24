@@ -1,0 +1,46 @@
+- content_for :page_title
+  = "Type of income the applicant is receiving"
+
+
+= form_for @form, as: :application, url: application_income_kind_applicants_path, method: :post, html: { autocomplete: 'off' } do |f|
+
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl Type of income the applicant is receiving
+
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend
+            =t('income_kind_applicant', scope: @form.i18n_scope)
+
+          - if @form.errors[:income_kind_applicant].present?
+            span.govuk-error-message
+              = f.label :income_kind_applicant, @form.errors[:income_kind_applicant].join(', '), class: 'error'
+
+          .govuk-checkboxes
+            - income_kinds.each do |kind|
+              .govuk-checkboxes__item
+                = f.check_box :income_kind_applicant, { multiple: true, class: 'govuk-checkboxes__input' }, kind, nil
+                label.govuk-label.govuk-checkboxes__label for='application_income_kind_applicant_#{kind}'
+                  = t(kind, scope: [@form.i18n_scope, 'kinds'])
+
+
+
+      = f.submit 'Next', class: 'govuk-button'
+
+    aside.govuk-grid-column-one-third
+      .guidance
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          h2.govuk-heading-m.util_mt-medium Income
+          ul.govuk-list.govuk-list--bullet
+            li tick all options for the applicant that have been selected on the EX160 paper form
+            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+        - else
+          h2.govuk-heading-m.util_mt-medium Total monthly income
+          ul.govuk-list.govuk-list--bullet
+            li if the applicant is part of a couple they must have provided details of their partner’s income
+            li add the 2 monthly income amounts and enter the result
+            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+        p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
+        p: strong= link_to 'See the guides', guide_path, target: 'blank'

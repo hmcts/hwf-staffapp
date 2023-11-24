@@ -10,7 +10,7 @@ class ProcessApplication
   end
 
   def process
-    if FeatureSwitching.active?(:band_calculation)
+    if ucd_changes_apply?
       band_calculation_process(application)
     else
       original_calculation_process(application)
@@ -25,14 +25,12 @@ class ProcessApplication
   def original_calculation_process(application)
     SavingsPassFailService.new(application.saving).calculate!
     ApplicationCalculation.new(application).run
-    application.detail.update(calculation_scheme: Detail::CALCULATION_SCHEMAS[0])
   end
 
   def band_calculation_process(application)
-    outcome = BandBaseCalculation.new(application).remission
-    application.update(outcome: outcome)
-    application.detail.update(calculation_scheme: Detail::CALCULATION_SCHEMAS[1])
-    # process the outcome
+    band = BandBaseCalculation.new(online_application)
+    application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+    application.saving.update(passed: band.saving_passed?)
   end
 
   def benefit_override(application)
@@ -44,6 +42,10 @@ class ProcessApplication
 
   def stop_processing?(application)
     application.failed_because_dwp_error? && !online_application.benefits_override
+  end
+
+  def ucd_changes_apply?
+    FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == online_application.calculation_scheme
   end
 
 end

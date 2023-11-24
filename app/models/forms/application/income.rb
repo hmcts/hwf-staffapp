@@ -1,11 +1,13 @@
 module Forms
   module Application
     class Income < ::FormObject
+
+      include ActiveModel::Validations::Callbacks
+
       def self.permitted_attributes
         {
           income: Integer,
-          dependents: Boolean,
-          children: Integer
+          income_period: String
         }
       end
 
@@ -13,25 +15,9 @@ module Forms
 
       validates :income, presence: true
       validates :income, numericality: { allow_blank: true }
-
-      validates :dependents, inclusion: { in: [true, false] }
-      validates :children, numericality: { greater_than: 0, only_integer: true }, if: :dependents?
-      validate :number_of_children_when_no_dependents
+      validates :income_period, presence: true
 
       private
-
-      def number_of_children_when_no_dependents
-        if children_declared_but_dependents_arent?
-          errors.add(
-            :children,
-            :cant_have_children_assigned
-          )
-        end
-      end
-
-      def children_declared_but_dependents_arent?
-        !dependents && children.to_i.positive?
-      end
 
       def persist!
         @object.update(fields_to_update)
@@ -40,9 +26,8 @@ module Forms
       def fields_to_update
         {
           income: income,
-          dependents: dependents,
-          children: children,
-          application_type: 'income'
+          application_type: 'income',
+          income_period: income_period
         }
       end
     end

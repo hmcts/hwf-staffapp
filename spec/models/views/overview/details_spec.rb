@@ -14,6 +14,15 @@ RSpec.describe Views::Overview::Details do
                           'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
                           'discretion_manager_name', 'discretion_reason', 'emergency_reason'])
     end
+
+    context 'band calculation change active' do
+      before { allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true }
+
+      it "returns relevant fields" do
+        is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
+                            'deceased_name', 'date_of_death', 'emergency_reason'])
+      end
+    end
   end
 
   describe '#fee' do

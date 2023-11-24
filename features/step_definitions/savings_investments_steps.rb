@@ -3,6 +3,10 @@ Given("I am on the savings and investments part of the application") do
   expect(savings_investments_page.content).to have_header
 end
 
+When("I successfully submit less than £4250") do
+  savings_investments_page.submit_less_than_ucd
+end
+
 When("I successfully submit less than £3000") do
   savings_investments_page.submit_less_than
 end

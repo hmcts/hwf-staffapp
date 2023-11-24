@@ -4,6 +4,7 @@ require 'rails_helper'
 
 def personal_details_page
   dob = Time.zone.today - 25.years
+  fill_in 'application_first_name', with: 'John', wait: true
   fill_in 'application_last_name', with: 'Smith', wait: true
   fill_in 'application_day_date_of_birth', with: dob.day
   fill_in 'application_month_date_of_birth', with: dob.month

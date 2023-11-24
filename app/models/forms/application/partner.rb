@@ -1,0 +1,126 @@
+module Forms
+  module Application
+    class Partner < ::FormObject
+
+      MINIMUM_AGE = 16
+      MAXIMUM_AGE = 120
+      # rubocop:disable Style/MutableConstant
+      NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
+      HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{7}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}.freeze
+      # rubocop:enable Style/MutableConstant
+      include ActiveModel::Validations::Callbacks
+
+      def self.permitted_attributes
+        {
+          partner_first_name: String,
+          partner_last_name: String,
+          partner_date_of_birth: Date,
+          day_date_of_birth: Integer,
+          month_date_of_birth: Integer,
+          year_date_of_birth: Integer,
+          partner_ni_number: String
+        }
+      end
+      define_attributes
+
+      before_validation :format_ni_number
+      before_validation :strip_whitespace!
+      before_validation :format_dob
+
+      validates :partner_first_name, presence: true, length: { minimum: 2 }
+      validates :partner_last_name, presence: true, length: { minimum: 2 }
+      validates :partner_date_of_birth, presence: true
+      validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
+      validate :dob_age_valid?
+
+      def format_ni_number
+        unless partner_ni_number.nil?
+          partner_ni_number.upcase!
+          partner_ni_number.delete!(' ')
+        end
+      end
+
+      def format_dob
+        @partner_date_of_birth = concat_dob_dates.to_date
+      rescue StandardError
+        @partner_date_of_birth = nil
+      end
+
+      def concat_dob_dates
+        return nil if @day_date_of_birth.blank? || @month_date_of_birth.blank? ||
+                      @year_date_of_birth.blank?
+        "#{@day_date_of_birth}/#{@month_date_of_birth}/#{@year_date_of_birth}"
+      end
+
+      def day_date_of_birth
+        return @day_date_of_birth if @day_date_of_birth
+        partner_date_of_birth&.day
+      end
+
+      def month_date_of_birth
+        return @month_date_of_birth if @month_date_of_birth
+        partner_date_of_birth&.month
+      end
+
+      def year_date_of_birth
+        return @year_date_of_birth if @year_date_of_birth
+        partner_date_of_birth&.year
+      end
+
+      private
+
+      def strip_whitespace!
+        partner_first_name&.strip!
+        partner_last_name&.strip!
+      end
+
+      def dob_age_valid?
+        return false if errors.include?(:partner_date_of_birth)
+        validate_dob
+        validate_dob_ranges
+      end
+
+      def validate_dob
+        if /[a-zA-Z]/.match?(partner_date_of_birth.try(:to_fs, :db))
+          errors.add(:partner_date_of_birth, "can't contain non numbers")
+        elsif !partner_date_of_birth.is_a?(Date)
+          errors.add(:partner_date_of_birth, :not_a_date)
+        end
+      end
+
+      def too_young?
+        partner_date_of_birth > Time.zone.today
+      end
+
+      def too_old?
+        partner_date_of_birth < (Time.zone.today - MAXIMUM_AGE.years)
+      end
+
+      def too_young_error
+        errors.add(:partner_date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
+      end
+
+      def too_old_error
+        errors.add(:partner_date_of_birth, :too_old, maximum_age: MAXIMUM_AGE)
+      end
+
+      def validate_dob_ranges
+        too_young_error if too_young?
+        too_old_error if too_old?
+      end
+
+      def persist!
+        @object.update(fields_to_update)
+      end
+
+      def fields_to_update
+        {
+          partner_last_name: partner_last_name,
+          partner_first_name: partner_first_name,
+          partner_date_of_birth: format_dob,
+          partner_ni_number: partner_ni_number
+        }
+      end
+    end
+  end
+end

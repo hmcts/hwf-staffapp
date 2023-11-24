@@ -3,18 +3,21 @@ module Views
     class Details
       include ActionView::Helpers::NumberHelper
 
-      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, to: :detail)
+      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, :calculation_scheme, to: :detail)
 
       def initialize(application)
         @application = application
       end
 
       def all_fields
-        [
-          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
-          'discretion_manager_name', 'discretion_reason', 'emergency_reason'
-        ]
+        if show_ucd_changes?
+          [
+            'fee', 'jurisdiction', 'form_name', 'case_number',
+            'deceased_name', 'date_of_death', 'emergency_reason'
+          ]
+        else
+          pre_ucd_change_fields
+        end
       end
 
       def skip_change_link
@@ -69,6 +72,20 @@ module Views
       def format_date(date)
         date&.to_fs(:gov_uk_long)
       end
+
+      def pre_ucd_change_fields
+        [
+          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
+          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
+          'discretion_manager_name', 'discretion_reason', 'emergency_reason'
+        ]
+      end
+
+      def show_ucd_changes?
+        return FeatureSwitching.active?(:band_calculation) if detail.try(:calculation_scheme).blank?
+        detail.try(:calculation_scheme) == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+      end
+
     end
   end
 end

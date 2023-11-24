@@ -11,6 +11,7 @@ RSpec.describe ProcessedApplicationsController do
   let(:application2) { build_stubbed(:application, office: user.office) }
 
   let(:applicant) { double }
+  let(:fee_status) { instance_double(Views::Overview::FeeStatus) }
   let(:details) { double }
   let(:application_view) { double }
   let(:result) { double }
@@ -21,6 +22,7 @@ RSpec.describe ProcessedApplicationsController do
     sign_in user
 
     allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
+    allow(Views::Overview::FeeStatus).to receive(:new).with(application1).and_return(fee_status)
     allow(Views::Overview::Applicant).to receive(:new).with(application1).and_return(applicant)
     allow(Views::Overview::Details).to receive(:new).with(application1).and_return(details)
     allow(Views::Overview::Application).to receive(:new).with(application1).and_return(application_view)
@@ -118,6 +120,10 @@ RSpec.describe ProcessedApplicationsController do
 
     it 'assigns the Application model' do
       expect(assigns(:application)).to eql(application1)
+    end
+
+    it 'assigns the FeeStatus view model' do
+      expect(assigns(:fee_status)).to eql(fee_status)
     end
 
     it 'assigns the Applicant view model' do

@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Applications::Process::PersonalInformationsController do
   let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
-  let(:detail) { build_stubbed(:detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: scheme) }
+  let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
   let(:personal_information_form) { instance_double(Forms::Application::Applicant) }
 
@@ -35,10 +36,13 @@ RSpec.describe Applications::Process::PersonalInformationsController do
 
   describe 'PUT #personal_information_save' do
     let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: 'false' } }
+    let(:married) { false }
 
     before do
       allow(personal_information_form).to receive(:update).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
+      allow(application).to receive(:applicant).and_return application.applicant
+      allow(application.applicant).to receive(:married?).and_return married
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -46,9 +50,26 @@ RSpec.describe Applications::Process::PersonalInformationsController do
     context 'when the form can be saved' do
       let(:form_save) { true }
 
-      it 'redirects to application_details' do
-        expect(response).to redirect_to(application_details_path(application))
+      context 'single' do
+        it 'redirects to application_details' do
+          expect(response).to redirect_to(application_details_path(application))
+        end
       end
+
+      context 'married' do
+        let(:married) { true }
+        it 'redirects to application_details' do
+          expect(response).to redirect_to(application_details_path(application))
+        end
+
+        context 'ucd changes applies' do
+          let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+          it 'redirects to application_details' do
+            expect(response).to redirect_to(application_partner_informations_path(application))
+          end
+        end
+      end
+
     end
 
     context 'when the form can not be saved' do
@@ -64,76 +85,78 @@ RSpec.describe Applications::Process::PersonalInformationsController do
     end
   end
 
-  context 'after an application is processed' do
-    let!(:application) { create(:application, :processed_state, office: user.office) }
+  describe 'Application controller related test' do
+    context 'after an application is processed' do
+      let!(:application) { create(:application, :processed_state, office: user.office) }
 
-    describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      describe 'when accessing the personal_details view' do
+        before { get :index, params: { application_id: application.id } }
 
-      subject { response }
+        subject { response }
 
-      it { is_expected.to have_http_status(:redirect) }
+        it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(processed_application_path(application)) }
+        it { is_expected.to redirect_to(processed_application_path(application)) }
 
-      it 'is expected to set the flash message' do
-        expect(flash[:alert]).to eql 'This application has been processed. You can’t edit any details.'
+        it 'is expected to set the flash message' do
+          expect(flash[:alert]).to eql 'This application has been processed. You can’t edit any details.'
+        end
       end
     end
-  end
 
-  context 'after an application is deleted' do
-    let!(:application) { create(:application, :deleted_state, office: user.office) }
+    context 'after an application is deleted' do
+      let!(:application) { create(:application, :deleted_state, office: user.office) }
 
-    describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      describe 'when accessing the personal_details view' do
+        before { get :index, params: { application_id: application.id } }
 
-      subject { response }
+        subject { response }
 
-      it { is_expected.to have_http_status(:redirect) }
+        it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(deleted_application_path(application)) }
+        it { is_expected.to redirect_to(deleted_application_path(application)) }
 
-      it 'is expected to set the flash message' do
-        expect(flash[:alert]).to eql 'This application has been deleted. You can’t edit any details.'
+        it 'is expected to set the flash message' do
+          expect(flash[:alert]).to eql 'This application has been deleted. You can’t edit any details.'
+        end
       end
     end
-  end
 
-  context 'when an application is awaiting evidence' do
-    let!(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
-    let!(:evidence) { application.evidence_check }
+    context 'when an application is awaiting evidence' do
+      let!(:application) { create(:application, :waiting_for_evidence_state, office: user.office) }
+      let!(:evidence) { application.evidence_check }
 
-    describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      describe 'when accessing the personal_details view' do
+        before { get :index, params: { application_id: application.id } }
 
-      subject { response }
+        subject { response }
 
-      it { is_expected.to have_http_status(:redirect) }
+        it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(evidence_path(evidence)) }
+        it { is_expected.to redirect_to(evidence_path(evidence)) }
 
-      it 'is expected to set the flash message' do
-        expect(flash[:alert]).to eql 'This application is waiting for evidence. You can’t edit any details.'
+        it 'is expected to set the flash message' do
+          expect(flash[:alert]).to eql 'This application is waiting for evidence. You can’t edit any details.'
+        end
       end
     end
-  end
 
-  context 'when an application is part_payment' do
-    let(:application) { create(:application, :waiting_for_part_payment_state, office: user.office) }
-    let!(:part_payment) { create(:part_payment, application: application) }
+    context 'when an application is part_payment' do
+      let(:application) { create(:application, :waiting_for_part_payment_state, office: user.office) }
+      let!(:part_payment) { create(:part_payment, application: application) }
 
-    describe 'when accessing the personal_details view' do
-      before { get :index, params: { application_id: application.id } }
+      describe 'when accessing the personal_details view' do
+        before { get :index, params: { application_id: application.id } }
 
-      subject { response }
+        subject { response }
 
-      it { is_expected.to have_http_status(:redirect) }
+        it { is_expected.to have_http_status(:redirect) }
 
-      it { is_expected.to redirect_to(part_payment_path(part_payment)) }
+        it { is_expected.to redirect_to(part_payment_path(part_payment)) }
 
-      it 'is expected to set the flash message' do
-        expect(flash[:alert]).to eql 'This application is waiting for part-payment. You can’t edit any details.'
+        it 'is expected to set the flash message' do
+          expect(flash[:alert]).to eql 'This application is waiting for part-payment. You can’t edit any details.'
+        end
       end
     end
   end

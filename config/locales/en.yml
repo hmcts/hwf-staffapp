@@ -356,6 +356,22 @@ en-GB:
         min_threshold_exceeded: "Less than £3,000"
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
+        over_66: '66 or older'
+        over_61_true: 'Yes'
+        over_61_false: 'No'
+        less_then: 'Less than £4,250'
+        between: 'Between £4,250 and £15,999'
+        more_then: 'More than £16,000'
+        amount_total: Savings and Investments total
+      views/overview/fee_status:
+        date_received: "Date received"
+        refund_request: "Refund request"
+        date_fee_paid: 'Date fee paid'
+        discretion_applied: Delivery Manager discretion applied
+        discretion_manager_name: Delivery Manager name
+        discretion_reason: Discretion reasons
+        refund_request_false: 'No'
+        refund_request_true: 'Yes'
       views/overview/benefits:
         on_benefits?: Benefits declared in application
         override?: Correct evidence provided
@@ -364,6 +380,26 @@ en-GB:
         children?: Applicant has children
         children: Number of children
         income: Total monthly income
+        income_new: Income
+        income_period: Income period
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
+        income_kind_applicant: Applicant's income type
+        income_kind_partner: Partner’s income type
+      views/overview/online_applicant:
+        partner_full_name: Partner's full name
+        partner_date_of_birth: Partner's date of birth
+        partner_ni_number: Partner's National Insurance number
+        full_name: Full name
+        date_of_birth: Date of birth
+        ni_number: National Insurance number
+        ho_number: Home Office reference number
+        under_age: 15 and under
+        status: Status
+      views/overview/children:
+        dependents: Applicant has children living with them or that they are financially supporting
+        children_age_band: Number of children
+        children: Applicant has children living with them or that they are financially supporting
       views/confirmation/result:
         savings_passed?: Savings and investments
         benefits_passed?: Benefits
@@ -387,8 +423,11 @@ en-GB:
         calculation_scheme: HwF Scheme
       views/overview/applicant:
         full_name: Full name
+        partner_full_name: Partner's full name
         date_of_birth: Date of birth
+        partner_date_of_birth: Partner's date of birth
         ni_number: National Insurance number
+        partner_ni_number: Partner's National Insurance number
         ho_number: Home Office reference number
         under_age: 15 and under
         status: Status
@@ -410,6 +449,14 @@ en-GB:
         discretion_applied: Delivery Manager discretion applied
         discretion_manager_name: Delivery Manager name
         discretion_reason: Discretion reasons
+      views/overview/declaration:
+        statement_signed_by: 'Declaration and statement of truth signed by'
+        applicant: Applicant
+        litigation_friend: Litigation friend
+        legal_representative: Legal representative
+      views/overview/representative:
+        full_name: 'Full name'
+        organisation: Organisation
       views/evidence:
         correct: Ready to process
         incorrect_reason: The problem
@@ -458,10 +505,28 @@ en-GB:
         refund: Refund
         jurisdiction: Jurisdiction
         sop_code: SOP code
-
+      forms/application/fee_status:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        date_received: Date application received
+        day_date_received: Day
+        month_date_received: Month
+        year_date_received: Year
+        refund: In question 4, has the fee already been paid?
+        refund_true: 'Yes'
+        refund_false: 'No'
+        date_fee_paid: Date fee paid
+        day_date_fee_paid: Day
+        month_date_fee_paid: Month
+        year_date_fee_paid: Year
+        date_hint: For example, 04 10 2018
+        discretion_applied: Delivery Manager discretion applied?
+        discretion_applied_false: 'No'
+        discretion_applied_true: 'Yes'
+        discretion_manager_name: Delivery Manager name
       forms/application/applicant:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         title: Title
+        applicants_details: "Applicant's details"
         first_name: First and middle names
         last_name: 'Last name'
         last_name_hint: 'First 3 letters only'
@@ -479,6 +544,21 @@ en-GB:
         married_true: Married or living with someone and sharing an income
         form_name_summary: Form number
         under_age_true: 'Yes'
+      forms/application/partner:
+        undetermined: 'The details you’ve entered are incorrect, check and try again'
+        partners_details: "Partner's details"
+        partner_first_name: First and middle names
+        partner_last_name: 'Last name'
+        partner_last_name_hint: 'First 3 letters only'
+        partner_full_name: Full name
+        partner_ni_number: 'National Insurance number'
+        partner_ho_number: Home Office reference number
+        partner_ho_number_hint: Where provided, example L1234567 or L1234567/1 for a family member or 1111-2222-3333-4444 or 1111-2222-3333-4444/1 for a family member
+        partner_date_of_birth_hint: For example, 31 3 1980
+        partner_date_of_birth: 'Date of birth'
+        day_date_of_birth: 'Day'
+        month_date_of_birth: 'Month'
+        year_date_of_birth: 'Year'
       forms/application/detail:
         fee: How much is the court or tribunal fee?
         jurisdiction_id: Jurisdiction
@@ -522,11 +602,16 @@ en-GB:
         over_61_true: 'Yes'
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
+        choice_less_than: Less than £4,250
+        choice_between: Between £4,250 and £15,999
+        choice_more_than: £16,000 or more
+        savings_amount: Total savings and investments
+        partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
         benefits_false: 'No'
         benefits_true: 'Yes'
-      forms/application/income:
+      forms/application/dependent:
         dependents: In questions 10 and 11, does the applicant financially support any children?
         income_false: 'No'
         income_true: 'Yes'
@@ -534,6 +619,77 @@ en-GB:
         children_hint: Add number given in questions 10 and 11 together
         income: Total monthly income
         income_hint: Rounded to the nearest £
+        children_age_band_one: Children aged 0 to 13 years
+        children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
+        children_age_band_two: Children aged 14+ years
+      forms/application/income:
+        income: In question 13, what income has been entered?
+        income_hint: Rounded to the nearest £
+        income_period_last_month: This is for the last calendar month
+        income_period_average: This is an average for the last three calendar months
+      forms/application/income_kind_applicant:
+        income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Pension Credit (savings credit)
+          '12': Rent from anyone living with the applicant
+          '13': Rent from other properties the applicant owns
+          '14': Rent from anyone living with the partner
+          '15': Rent from other properties the partner owns
+          '16': Cash gifts - include all one off payments
+          '17': Financial support from family - include all one off payments
+          '18': Loans
+          '19': Other income  - For example, income from online selling
+          '20': None of the above
+      forms/application/income_kind_partner:
+        income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
+        kinds:
+          '1': Wages
+          '2': Net profits from self employment
+          '3': Child benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private)
+          '11': Pension Credit (savings credit)
+          '12': Rent from anyone living with the applicant
+          '13': Rent from other properties the applicant owns
+          '14': Rent from anyone living with the partner
+          '15': Rent from other properties the partner owns
+          '16': Cash gifts - include all one off payments
+          '17': Financial support from family - include all one off payments
+          '18': Loans
+          '19': Other income  - For example, income from online selling
+          '20': None of the above
+
+
+      forms/application/declaration:
+        header: 'Declaration and statement of truth'
+        statement_signed_by: 'Declaration and statement of truth signed by the:'
+        statement_signed_by_applicant: Applicant
+        statement_signed_by_litigation_friend: Litigation friend
+        statement_signed_by_legal_representative: Legal representative
+      forms/application/representative:
+        header: 'Representative details'
+        sub_header: Details of litigation friend or legal representative
+        first_name: First name
+        last_name: Last name
+        organisation: Organisation name
+        hint_organisation: If applicable, name or firm (legal representative only)
+        statement_signed_by_legal_representative: Legal representative
+
       forms/application/summary:
         passed: '✓ Passed'
         failed: '✗ Failed'
@@ -612,6 +768,24 @@ en-GB:
               blank: 'Please enter an end date'
               after: 'Enter a date that is after the date from'
               not_a_date: Please enter a valid date
+        forms/application/fee_status:
+          attributes:
+            date_received:
+              blank: Enter the date
+              not_a_date: Enter the date in this format DD/MM/YYYY
+              date_after_or_equal_to: The application must have been made in the last 3 months
+              date_before: This date can't be in the future
+            date_fee_paid:
+              blank: Enter the date
+              not_a_date: Enter the date in this format DD/MM/YYYY
+              date_after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
+              date_before_or_equal_to: This date can’t be after the application was received
+            discretion_manager_name:
+              blank: Enter Delivery Manager name
+            discretion_reason:
+              blank: Enter Discretionary reason
+            refund:
+              inclusion: Enter if the fee has already been paid
         forms/application/applicant:
           attributes:
             last_name:
@@ -627,6 +801,21 @@ en-GB:
               invalid: 'Enter a Home Office reference number in the correct format'
             married:
               inclusion: Select a marital status
+        forms/application/partner:
+          attributes:
+            partner_first_name:
+              blank: Enter the partner's first name
+              too_short: First name is too short (minimum is 2 characters)
+            partner_last_name:
+              blank: Enter the partner's last name
+              too_short: Last name is too short (minimum is 2 characters)
+            partner_date_of_birth:
+              too_young: "Partner's date of birth cannot be in the future"
+              too_old: "The partner can't be over %{maximum_age} years old"
+              not_a_date: 'Enter a valid date of birth'
+              blank: 'Enter a valid date of birth'
+            partner_ni_number:
+              invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
         forms/application/detail:
           attributes:
             fee:
@@ -668,26 +857,58 @@ en-GB:
               inclusion: Please answer the savings question
             over_61:
               inclusion: Please confirm if the partner is 61 or over
+            over_66:
+              inclusion: Please confirm if the partner is 66 or over
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number
               greater_than_or_equal_to: Value must be greater than or equal to 3000
+              greater_than_or_equal_to_ucd: Value must be greater than or equal to 4250 and smaller then 16000
             max_threshold_exceeded:
               inclusion: Please answer the savings question
         forms/application/benefit:
           attributes:
             benefits:
               inclusion: You must answer the benefits question
-        forms/application/income:
+        forms/application/dependent:
           attributes:
             dependents:
               inclusion: 'You must answer the dependent children question'
             children:
               not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
+            children_age_band_one:
+              blank: Enter number of children in this band
+            children_age_band_two:
+              blank: Enter number of children in this band
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/application/income:
+          attributes:
+            income:
+              blank: Enter the total monthly income
+              not_a_number: Enter the total monthly income
+            income_period:
+              blank: Select last calendar month or average for the last three months
+        forms/application/income_kind_applicant:
+          attributes:
+            income_kind_applicant:
+              blank: Select at least one type of income the applicant received last month or over the last three months
+        forms/application/income_kind_partner:
+          attributes:
+            income_kind_partner:
+              blank: Select at least one type of income the partner received last month or over the last three months
+        forms/application/declaration:
+          attributes:
+            statement_signed_by:
+              blank: 'You must select who sign declaration and statement of truth'
+        forms/application/representative:
+          attributes:
+            first_name:
+              blank: Enter the first name
+            last_name:
+              blank: Enter the last name
         forms/application/delete:
           attributes:
             deleted_reason:

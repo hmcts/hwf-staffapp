@@ -6,6 +6,7 @@ class Application < ActiveRecord::Base
   include ApplicationCheckable
 
   serialize :income_kind
+  serialize :children_age_band
 
   self.per_page = 25
 
@@ -34,6 +35,7 @@ class Application < ActiveRecord::Base
   has_one :part_payment, required: false, dependent: :destroy
   has_one :benefit_override, required: false, dependent: :destroy
   has_one :decision_override, required: false, dependent: :destroy
+  has_one :representative, dependent: :destroy
 
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
     Application.where(state: states[:waiting_for_evidence]).
@@ -103,7 +105,4 @@ class Application < ActiveRecord::Base
     medium == 'digital'
   end
 
-  def children_age_band
-    # This needs some work
-  end
 end

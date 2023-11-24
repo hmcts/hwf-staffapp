@@ -145,6 +145,10 @@ def letter_template_page
   @letter_template_page ||= LetterTemplatePage.new
 end
 
+def new_letter_template_page
+  @old_letter_template_page ||= NewLetterTemplatePage.new
+end
+
 def reports_page
   @reports_page ||= ReportsPage.new
 end
@@ -231,6 +235,22 @@ end
 
 def datashare_evidence_page
   @datashare_evidence_page ||= DatashareEvidencePage.new
+end
+
+def fee_status_page
+  @fee_status_page ||= FeeStatusPage.new
+end
+
+def declaration_page
+  @declaration_page ||= DeclarationPage.new
+end
+
+def children_page
+  @children_page ||= ChildrenPage.new
+end
+
+def income_kind_applicant_page
+  @income_kind_applicant ||= IncomeKindApplicantPage.new
 end
 
 def complete_processing
@@ -388,4 +408,13 @@ def click_reference_link
   reference_link = "#{reference_prefix}-000001"
   expect(page).to have_link(reference_link)
   click_link reference_link
+end
+
+def enable_feature_switch(feature_name)
+  FeatureSwitching.create(feature_key: feature_name, enabled: true)
+end
+
+def update_legislation_value
+  id = current_url[%r{/(\d+)/}, 1]
+  Application.find(id).detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_101322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -55,6 +55,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "ho_number"
+    t.string "partner_first_name"
+    t.string "partner_last_name"
+    t.string "partner_ni_number"
+    t.date "partner_date_of_birth"
+    t.boolean "over_16"
     t.index ["application_id"], name: "index_applicants_on_application_id"
     t.index ["first_name"], name: "index_applicants_on_first_name"
     t.index ["last_name"], name: "index_applicants_on_last_name"
@@ -98,6 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.string "income_kind"
     t.boolean "purged", default: false
     t.date "purged_at"
+    t.text "children_age_band"
+    t.string "income_period"
     t.index ["business_entity_id"], name: "index_applications_on_business_entity_id"
     t.index ["created_at"], name: "index_applications_on_created_at"
     t.index ["decision_cost"], name: "index_applications_on_decision_cost"
@@ -212,6 +219,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
     t.string "calculation_scheme"
+    t.string "statement_signed_by"
     t.index ["application_id"], name: "index_details_on_application_id"
     t.index ["case_number"], name: "index_details_on_case_number"
     t.index ["fee"], name: "index_details_on_fee"
@@ -383,6 +391,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.date "purged_at"
     t.integer "user_id"
     t.string "applying_method"
+    t.string "partner_first_name"
+    t.string "partner_last_name"
+    t.date "partner_date_of_birth"
+    t.string "children_age_band"
+    t.string "calculation_scheme"
+    t.string "applying_on_behalf"
+    t.string "partner_ni_number"
+    t.boolean "legal_representative"
+    t.string "legal_representative_first_name"
+    t.string "legal_representative_last_name"
+    t.string "legal_representative_email"
+    t.string "legal_representative_organisation_name"
+    t.string "legal_representative_feedback_opt_in"
+    t.string "legal_representative_street"
+    t.string "legal_representative_postcode"
+    t.string "legal_representative_town"
+    t.string "legal_representative_address"
+    t.boolean "over_16"
+    t.string "statement_signed_by"
+    t.string "income_period"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
@@ -406,6 +434,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.index ["application_id"], name: "index_part_payments_on_application_id"
   end
 
+  create_table "representatives", force: :cascade do |t|
+    t.integer "application_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "organisation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "savings", id: :serial, force: :cascade do |t|
     t.integer "application_id", null: false
     t.decimal "min_threshold"
@@ -418,6 +455,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_090312) do
     t.boolean "over_61"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "choice"
     t.index ["application_id"], name: "index_savings_on_application_id"
   end
 
