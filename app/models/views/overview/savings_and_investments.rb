@@ -24,12 +24,19 @@ module Views
           convert_to_boolean(@saving.max_threshold_exceeded?)
         end
       end
-      alias more_then max_threshold_exceeded
+
+      def more_then
+        @saving.choice == 'more' ? 'Yes' : 'No'
+      end
 
       def amount
         "£#{@saving.amount.round}" if @saving.amount
       end
-      alias amount_total amount
+
+      def amount_total
+        return nil if @saving.choice == 'more'
+        "£#{@saving.amount.round}" if @saving.amount
+      end
 
       def between
         @saving.choice == 'between' ? 'Yes' : 'No'
