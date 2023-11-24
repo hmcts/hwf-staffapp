@@ -49,6 +49,16 @@ RSpec.describe OnlineApplication do
 
       it { is_expected.to be_valid }
     end
+
+    context 'over_16 when no NI and no HO' do
+      before do
+        online_application.ni_number = nil
+        online_application.ho_number = nil
+        online_application.over_16 = true
+      end
+
+      it { is_expected.to be_valid }
+    end
   end
 
   describe '#full_name' do

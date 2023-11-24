@@ -1,6 +1,6 @@
 module GuideHelper
   def staff_guidance_url
-    'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf'
+    'https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/staff-guidance/'
   end
 
   def training_course_url

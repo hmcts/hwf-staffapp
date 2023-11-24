@@ -15,7 +15,7 @@ class OnlineApplication < ActiveRecord::Base
             :phone_contact, :post_contact, :feedback_opt_in, inclusion: [true, false]
   validates :reference, uniqueness: true
 
-  validates :ni_number, presence: true, if: ->(app) {  app.ho_number.blank?  }
+  validates :ni_number, presence: true, if: ->(app) { !app.over_16 && app.ho_number.blank? }
 
   def full_name
     [title, first_name, last_name].compact.join(' ')

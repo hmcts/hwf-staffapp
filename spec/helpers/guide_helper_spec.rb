@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GuideHelper do
 
   describe '#staff_guidance_url' do
-    it { expect(helper.staff_guidance_url).to include('https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-policy-guide.pdf') }
+    it { expect(helper.staff_guidance_url).to include('https://intranet.justice.gov.uk/about-hmcts/my-work/help-with-fees/staff-guidance/') }
   end
 
   describe '#how_to_url' do
