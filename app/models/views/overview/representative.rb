@@ -15,6 +15,8 @@ module Views
       end
 
       def full_name
+        return if @representative.blank?
+
         "#{@representative.first_name} #{@representative.last_name}".strip
       end
 

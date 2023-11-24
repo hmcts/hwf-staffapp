@@ -26,7 +26,7 @@
     .confirmation-letter
 
       - if @application.income_kind.blank?
-        =t('letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @representative.full_name, evidence_due: '28 days')
+        =t('letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
         =t('letters.new_letters.processed_application.wages_html')
         =t('letters.new_letters.processed_application.child_maintenance_html')
         =t('letters.new_letters.processed_application.benefits_and_credits_html')
@@ -36,7 +36,7 @@
         =t('letters.new_letters.processed_application.other_income_header_html')
         =t('letters.new_letters.processed_application.footer_html', user_name: current_user.name, reference: @application.reference)
       -else
-        =t('letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @representative.full_name, evidence_due: '28 days')
+        =t('letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
         - if display_evidence_section?(@application, 'wages')
           =t('letters.new_letters.processed_application.wages_html')
         - if display_evidence_section?(@application, 'child_maintenace')
