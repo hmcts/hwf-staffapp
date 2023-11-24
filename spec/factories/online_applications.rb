@@ -39,6 +39,14 @@ FactoryBot.define do
       phone_contact { true }
       phone { '2345678' }
       post_contact { true }
+      applying_on_behalf { true }
+      legal_representative_first_name { 'John' }
+      legal_representative_last_name { 'Lawmen' }
+      legal_representative_organisation_name { 'Law and Co' }
+      over_16 { true }
+      statement_signed_by { 'applicant' }
+      income_period { 'average' }
+      children_age_band { { 'one' => '1', 'two' => '1' } }
     end
 
     trait :childandincome6065 do

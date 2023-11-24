@@ -63,7 +63,7 @@ module HomeHelper
       message = 'DWP'
       custom_class = ' red-warning-text'
     elsif record.state == 'waiting_for_evidence' && record.try(:evidence_check).try(:hmrc?)
-      message = 'waiting_for_evidence hmrc'
+      message = hmrc_check_link?(record) ? 'waiting_for_evidence hmrc' : 'waiting_for_evidence'
     else
       message = record.state
     end

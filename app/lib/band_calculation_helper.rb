@@ -26,7 +26,7 @@ module BandCalculationHelper
   end
 
   def savings_check
-    if dob <= 66.years.ago
+    if over_66
       @outcome = 'none' if saving_amount > 16000
     elsif saving_threshold_exceeded?
       @outcome = 'none'

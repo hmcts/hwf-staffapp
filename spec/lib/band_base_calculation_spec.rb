@@ -3,14 +3,14 @@
 require 'rspec'
 
 RSpec.describe BandBaseCalculation do
-  let(:applicant) { build(:applicant, date_of_birth: date_of_birth, married: married) }
+  let(:applicant) { build(:applicant, married: married) }
   let(:detail) { build(:detail, fee: fee) }
-  let(:saving) { build(:saving, amount: saving_amount) }
+  let(:saving) { build(:saving, amount: saving_amount, over_66: over_66) }
   let(:income) { 1000 }
   let(:married) { false }
   let(:saving_amount) { nil }
   let(:fee) { 100 }
-  let(:date_of_birth) { 20.years.ago }
+  let(:over_66) { false }
   let(:children_age_band) { { one: 2, two: 3 } }
 
   let(:application) {
@@ -20,7 +20,7 @@ RSpec.describe BandBaseCalculation do
 
   let(:online_application) {
     build(:online_application, fee: fee, income: income,
-                               married: married, date_of_birth: date_of_birth, amount: saving_amount, children_age_band: children_age_band)
+                               married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66)
   }
 
   describe 'Online application' do
@@ -69,7 +69,7 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'age cap over 66' do
-          let(:date_of_birth) { 67.years.ago }
+          let(:over_66) { true }
           context 'under threshold' do
             let(:fee) { 150 }
             let(:saving_amount) { 10000 }
@@ -353,7 +353,7 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'age cap over 66' do
-          let(:date_of_birth) { 67.years.ago }
+          let(:over_66) { true }
           context 'under threshold' do
             let(:fee) { 150 }
             let(:saving_amount) { 10000 }
@@ -391,7 +391,14 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'over capital threshold' do
-          let(:date_of_birth) { 40.years.ago }
+          let(:over_66) { false }
+          let(:fee) { 1500 }
+          let(:saving_amount) { 10000 }
+          it { expect(band_calculation.remission).to eq('none') }
+        end
+
+        context 'over capital threshold with no over_66 data' do
+          let(:over_66) { nil }
           let(:fee) { 1500 }
           let(:saving_amount) { 10000 }
           it { expect(band_calculation.remission).to eq('none') }

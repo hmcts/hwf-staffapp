@@ -1,5 +1,6 @@
 class OnlineApplication < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
+  alias_attribute :over_66, :over_61
 
   serialize :income_kind
   serialize :children_age_band

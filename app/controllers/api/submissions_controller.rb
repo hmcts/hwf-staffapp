@@ -70,6 +70,8 @@ module Api
         :legal_representative_town,
         :legal_representative_address,
         :over_16,
+        :statement_signed_by,
+        :income_period,
         children_age_band: {},
         income_kind: { applicant: [], partner: [] }
       ).to_h
