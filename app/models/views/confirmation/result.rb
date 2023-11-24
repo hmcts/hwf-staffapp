@@ -13,6 +13,16 @@ module Views
         @application = application
       end
 
+      def representative
+        @application.representative
+      end
+
+      def representative_full_name
+        return if representative.blank?
+
+        "#{representative.first_name} #{representative.last_name}".strip
+      end
+
       def savings_passed?
         passed = @application.saving.passed
         return false if passed.nil?
