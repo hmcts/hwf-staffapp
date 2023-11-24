@@ -18,6 +18,7 @@ module Views
         "#{@representative.first_name} #{@representative.last_name}".strip
       end
 
+      # TODO: not working for online appl
       def display_section?
         @representative.present?
       end

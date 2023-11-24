@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_134436) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_101322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_134436) do
     t.string "partner_last_name"
     t.string "partner_ni_number"
     t.date "partner_date_of_birth"
+    t.boolean "over_16"
     t.index ["application_id"], name: "index_applicants_on_application_id"
     t.index ["first_name"], name: "index_applicants_on_first_name"
     t.index ["last_name"], name: "index_applicants_on_last_name"
@@ -409,6 +410,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_134436) do
     t.string "legal_representative_address"
     t.boolean "over_16"
     t.string "statement_signed_by"
+    t.string "income_period"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
@@ -434,8 +436,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_134436) do
 
   create_table "representatives", force: :cascade do |t|
     t.integer "application_id", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.string "organisation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

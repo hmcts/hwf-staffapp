@@ -9,7 +9,7 @@ class BandBaseCalculation
   PREMIUM_BANDS = { 1 => 425, 2 => 710 }.freeze
 
   attr_reader :income, :fee, :saving_amount, :children_age_band,
-              :married, :dob, :part_remission_amount, :amount_to_pay, :outcome
+              :married, :over_66, :part_remission_amount, :amount_to_pay, :outcome
 
   def initialize(application)
     load_paper_application_values(application) if application.is_a?(Application)
@@ -42,7 +42,7 @@ class BandBaseCalculation
     @saving_amount = application.saving.amount || 0
     @children_age_band = preformat_age_band(application)
     @married = application.applicant.married
-    @dob = application.applicant.date_of_birth
+    @over_66 = application.saving.over_66
   end
 
   def load_online_application_values(application)
@@ -51,7 +51,7 @@ class BandBaseCalculation
     @saving_amount = application.amount || 0
     @children_age_band = preformat_age_band(application)
     @married = application.married
-    @dob = application.date_of_birth
+    @over_66 = application.over_66
   end
 
 end
