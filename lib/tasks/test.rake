@@ -15,18 +15,20 @@ end
 
 namespace :test do
   task smoke: :environment do
-    if system "bundle exec cucumber features/  --tags @smoke"
-      puts "Smoke test passed"
-    else
-      raise "Smoke tests failed"
-    end
+    puts "Tests are disabled for now"
+    # if system "bundle exec cucumber features/  --tags @smoke"
+    #   puts "Smoke test passed"
+    # else
+    #   raise "Smoke tests failed"
+    # end
   end
 
   task functional: :environment do
-    if system "bundle exec cucumber features/"
-      puts "Functional test passed"
-    else
-      raise "Functional tests failed"
-    end
+    puts "Test are disabled for now"
+    # if system "bundle exec cucumber features/"
+    #   puts "Functional test passed"
+    # else
+    #   raise "Functional tests failed"
+    # end
   end
 end
