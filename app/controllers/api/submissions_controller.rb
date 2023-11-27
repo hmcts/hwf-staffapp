@@ -9,7 +9,7 @@ module Api
 
     def create
       online_submission = OnlineApplicationBuilder.new(public_app_params).build
-      # binding.pry
+   
       if online_submission.save
         MailService.new(online_submission, public_app_locale).send_public_confirmation
         render(json: { result: true, message: online_submission.reference })
