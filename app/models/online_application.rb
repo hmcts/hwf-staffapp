@@ -15,7 +15,7 @@ class OnlineApplication < ActiveRecord::Base
             :phone_contact, :post_contact, :feedback_opt_in, inclusion: [true, false]
   validates :reference, uniqueness: true
 
-  validates :ni_number, presence: true, if: ->(app) { !app.over_16 && app.ho_number.blank? }
+  validates :ni_number, presence: true, if: :check_ni_validation
 
   def full_name
     [title, first_name, last_name].compact.join(' ')
@@ -68,6 +68,11 @@ class OnlineApplication < ActiveRecord::Base
   def online_applicant_attributes
     fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married]
     fields.index_with { |field| send(field) }.to_h
+  end
+
+  def check_ni_validation
+    return false if over_16 == false
+    ho_number.blank?
   end
 
 end
