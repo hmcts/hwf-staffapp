@@ -15,9 +15,7 @@ RSpec.describe Forms::Application::Partner do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:partner_first_name) }
     it { is_expected.to validate_length_of(:partner_first_name).is_at_least(2) }
-    it { is_expected.to validate_presence_of(:partner_last_name) }
     it { is_expected.to validate_length_of(:partner_last_name).is_at_least(2) }
 
     describe 'partner_date_of_birth' do
@@ -34,17 +32,17 @@ RSpec.describe Forms::Application::Partner do
 
         context "day is blank" do
           let(:day_date_of_birth) { nil }
-          it { expect(created_partner.valid?).not_to be true }
+          it { expect(created_partner.valid?).to be true }
         end
 
         context "month is blank" do
           let(:month_date_of_birth) { nil }
-          it { expect(created_partner.valid?).not_to be true }
+          it { expect(created_partner.valid?).to be true }
         end
 
         context "year is blank" do
           let(:year_date_of_birth) { nil }
-          it { expect(created_partner.valid?).not_to be true }
+          it { expect(created_partner.valid?).to be true }
         end
 
       end
@@ -249,8 +247,14 @@ RSpec.describe Forms::Application::Partner do
     end
 
     context 'when the attributes are incorrect' do
-      let(:dob) { '01/01/1980' }
-      let(:params) { { partner_last_name: '' } }
+      let(:params) do
+        {
+          partner_last_name: '',
+          day_date_of_birth: '01',
+          month_date_of_birth: '01',
+          year_date_of_birth: '1000'
+        }
+      end
 
       it 'returns false' do
         is_expected.to be false

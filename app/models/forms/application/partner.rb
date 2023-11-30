@@ -41,15 +41,20 @@ module Forms
       end
 
       def format_dob
-        @partner_date_of_birth = concat_dob_dates.to_date
-      rescue StandardError
         @partner_date_of_birth = nil
+        @partner_date_of_birth = concat_dob_dates.to_date unless check_dob_entered
+      rescue StandardError
+        errors.add(:partner_date_of_birth, :not_a_date)
       end
 
       def concat_dob_dates
-        return nil if @day_date_of_birth.blank? || @month_date_of_birth.blank? ||
-                      @year_date_of_birth.blank?
+        return nil if check_dob_entered
+
         "#{@day_date_of_birth}/#{@month_date_of_birth}/#{@year_date_of_birth}"
+      end
+
+      def check_dob_entered
+        @day_date_of_birth.blank? || @month_date_of_birth.blank? || @year_date_of_birth.blank?
       end
 
       def day_date_of_birth
