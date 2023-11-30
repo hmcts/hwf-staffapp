@@ -55,7 +55,7 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 4000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(280)
+              expect(band_calculation.amount_to_pay).to eq(280)
             }
           end
           context 'part 310' do
@@ -63,7 +63,7 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 2000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(310)
+              expect(band_calculation.amount_to_pay).to eq(310)
             }
           end
         end
@@ -89,7 +89,7 @@ RSpec.describe BandBaseCalculation do
             let(:saving_amount) { 16000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(880)
+              expect(band_calculation.amount_to_pay).to eq(880)
             }
           end
 
@@ -101,9 +101,36 @@ RSpec.describe BandBaseCalculation do
             let(:saving_amount) { 15800 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(250)
+              expect(band_calculation.amount_to_pay).to eq(250)
             }
           end
+
+        end
+
+        context 'negative part payment single no children income 2200' do
+          let(:over_66) { false }
+          let(:children_age_band) { {} }
+          let(:married) { false }
+          let(:fee) { 100 }
+          let(:income) { 2200 }
+          let(:saving_amount) { 0 }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(100)
+          }
+        end
+
+        context 'negative part payment single no children income 4800' do
+          let(:over_66) { false }
+          let(:children_age_band) { {} }
+          let(:married) { true }
+          let(:fee) { 205 }
+          let(:income) { 4800 }
+          let(:saving_amount) { 0 }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(205)
+          }
         end
 
         context 'over capital threshold' do
@@ -137,7 +164,7 @@ RSpec.describe BandBaseCalculation do
             let(:married) { true }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(430)
+              expect(band_calculation.amount_to_pay).to eq(430)
             }
           end
         end
@@ -339,7 +366,7 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 4000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(280)
+              expect(band_calculation.amount_to_pay).to eq(280)
             }
           end
           context 'part 310' do
@@ -347,7 +374,7 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 2000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(310)
+              expect(band_calculation.amount_to_pay).to eq(310)
             }
           end
         end
@@ -373,7 +400,7 @@ RSpec.describe BandBaseCalculation do
             let(:saving_amount) { 16000 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(880)
+              expect(band_calculation.amount_to_pay).to eq(880)
             }
           end
 
@@ -385,7 +412,7 @@ RSpec.describe BandBaseCalculation do
             let(:saving_amount) { 15800 }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(250)
+              expect(band_calculation.amount_to_pay).to eq(250)
             }
           end
         end
@@ -428,7 +455,7 @@ RSpec.describe BandBaseCalculation do
             let(:married) { true }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.part_remission_amount).to eq(430)
+              expect(band_calculation.amount_to_pay).to eq(430)
             }
           end
         end

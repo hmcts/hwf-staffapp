@@ -33,7 +33,13 @@ class BandBaseCalculation
     @amount_to_pay = applicant_pays(income_to_use)
 
     @part_remission_amount = fee - @amount_to_pay
-    @outcome = 'part'
+    if @part_remission_amount.positive?
+      @amount_to_pay = @part_remission_amount
+      @outcome = 'part'
+    else
+      @amount_to_pay = fee
+      @outcome = 'none'
+    end
   end
 
   def load_paper_application_values(application)
