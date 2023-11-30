@@ -27,9 +27,8 @@ module Forms
       before_validation :strip_whitespace!
       before_validation :format_dob
 
-      validates :partner_first_name, presence: true, length: { minimum: 2 }
-      validates :partner_last_name, presence: true, length: { minimum: 2 }
-      validates :partner_date_of_birth, presence: true
+      validates :partner_first_name, length: { minimum: 2 }, allow_blank: true
+      validates :partner_last_name, length: { minimum: 2 }, allow_blank: true
       validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validate :dob_age_valid?
 
@@ -41,15 +40,20 @@ module Forms
       end
 
       def format_dob
-        @partner_date_of_birth = concat_dob_dates.to_date
-      rescue StandardError
         @partner_date_of_birth = nil
+        @partner_date_of_birth = concat_dob_dates.to_date unless check_dob_entered
+      rescue StandardError
+        errors.add(:partner_date_of_birth, :not_a_date)
       end
 
       def concat_dob_dates
-        return nil if @day_date_of_birth.blank? || @month_date_of_birth.blank? ||
-                      @year_date_of_birth.blank?
+        return nil if check_dob_entered
+
         "#{@day_date_of_birth}/#{@month_date_of_birth}/#{@year_date_of_birth}"
+      end
+
+      def check_dob_entered
+        @day_date_of_birth.blank? || @month_date_of_birth.blank? || @year_date_of_birth.blank?
       end
 
       def day_date_of_birth
@@ -81,6 +85,8 @@ module Forms
       end
 
       def validate_dob
+        return if partner_date_of_birth.nil?
+
         if /[a-zA-Z]/.match?(partner_date_of_birth.try(:to_fs, :db))
           errors.add(:partner_date_of_birth, "can't contain non numbers")
         elsif !partner_date_of_birth.is_a?(Date)
@@ -89,10 +95,14 @@ module Forms
       end
 
       def too_young?
+        return false if partner_date_of_birth.nil?
+
         partner_date_of_birth > Time.zone.today
       end
 
       def too_old?
+        return false if partner_date_of_birth.nil?
+
         partner_date_of_birth < (Time.zone.today - MAXIMUM_AGE.years)
       end
 
