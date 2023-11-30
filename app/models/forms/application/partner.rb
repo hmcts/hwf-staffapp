@@ -27,9 +27,8 @@ module Forms
       before_validation :strip_whitespace!
       before_validation :format_dob
 
-      validates :partner_first_name, presence: true, length: { minimum: 2 }
-      validates :partner_last_name, presence: true, length: { minimum: 2 }
-      validates :partner_date_of_birth, presence: true
+      validates :partner_first_name, length: { minimum: 2 }, allow_blank: true
+      validates :partner_last_name, length: { minimum: 2 }, allow_blank: true
       validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validate :dob_age_valid?
 
@@ -81,6 +80,8 @@ module Forms
       end
 
       def validate_dob
+        return if partner_date_of_birth.nil?
+
         if /[a-zA-Z]/.match?(partner_date_of_birth.try(:to_fs, :db))
           errors.add(:partner_date_of_birth, "can't contain non numbers")
         elsif !partner_date_of_birth.is_a?(Date)
@@ -89,10 +90,14 @@ module Forms
       end
 
       def too_young?
+        return false if partner_date_of_birth.nil?
+
         partner_date_of_birth > Time.zone.today
       end
 
       def too_old?
+        return false if partner_date_of_birth.nil?
+
         partner_date_of_birth < (Time.zone.today - MAXIMUM_AGE.years)
       end
 
