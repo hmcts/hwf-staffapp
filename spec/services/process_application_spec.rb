@@ -3,28 +3,79 @@ require 'rails_helper'
 RSpec.describe ProcessApplication do
   subject(:process_application) { described_class.new(application, online_application, user) }
 
-  let(:online_application) { create(:online_application_with_all_details, benefits: true, calculation_scheme: scheme) }
-  let(:application) { build(:application, online_application: online_application) }
+  let(:online_application) { create(:online_application_with_all_details, benefits: benefits, calculation_scheme: scheme) }
+  let(:application) { build(:application, online_application: online_application, saving: Saving.new) }
+  let(:user) { create(:user) }
   let(:user) { create(:user) }
   let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
+  let(:dwp_result) { 'Yes' }
+  let(:benefits) { false }
+  let(:saving_passed) { true }
+  let(:band_calculation) { instance_double(BandBaseCalculation, saving_passed?: saving_passed, remission: remission_outcome, amount_to_pay: amount_to_pay) }
+  let(:remission_outcome) { 'none' }
+  let(:amount_to_pay) { 200 }
+
+  let(:stub_benefit_call) {
+    stub_request(:post, "http://localhost:9292/api/benefit_checks").to_return(status: 200, body: {
+      benefit_checker_status: dwp_result, confirmation_ref: '1234'}.to_json, headers: {})
+  }
 
   describe '#process' do
     before do
+      allow(BandBaseCalculation).to receive(:new).and_return band_calculation
+
+      stub_benefit_call
       process_application.process
     end
 
     context 'pre ucd' do
+      let(:saving_passed) { true }
       it 'save applicaiton with result' do
         expect(application.id).not_to be_nil
-        expect(application.outcome).to eq 'none'
+        expect(application.outcome).to eq 'full'
       end
     end
 
     context 'post ucd' do
       let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1].to_s }
-      it 'save applicaiton with result' do
-        expect(application.id).not_to be_nil
-        expect(application.outcome).to eq 'none'
+
+      context 'benefit application' do
+        let(:benefits) { true }
+
+        context 'failed saving' do
+          let(:saving_passed) { false }
+
+          it 'save applicaiton with result' do
+            expect(application.id).not_to be_nil
+            expect(application.saving.passed).to eq false
+            expect(application.outcome).to eq 'none'
+            expect(application.application_type).to eq 'benefit'
+
+          end
+        end
+
+        context 'Not valid benefit check' do
+          let(:dwp_result) { 'No' }
+
+          it 'save applicaiton with result' do
+            expect(application.id).not_to be_nil
+            expect(application.outcome).to eq 'none'
+            expect(application.application_type).to eq 'benefit'
+            expect(application.saving.passed).to eq true
+          end
+        end
+
+        context 'Valid benefit check' do
+          let(:dwp_result) { 'Yes' }
+          let(:remission_outcome) { 'full' }
+
+          it 'save applicaiton with result' do
+            expect(application.id).not_to be_nil
+            expect(application.outcome).to eq 'full'
+            expect(application.application_type).to eq 'benefit'
+            expect(application.saving.passed).to eq true
+          end
+        end
       end
     end
   end
