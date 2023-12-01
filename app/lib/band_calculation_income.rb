@@ -45,12 +45,13 @@ module BandCalculationIncome
   end
 
   def applicant_pays(income_to_use)
-    sum = if @band
-            income_calculation(@band, income_to_use)
-          else
-            income_premium_calculation(income_to_use)
-          end
+    income_sum = if @band
+                   income_calculation(@band, income_to_use)
+                 else
+                   income_premium_calculation(income_to_use)
+                 end
 
+    sum = income_sum || 0
     round_down_to_nearest_10(sum)
   end
 

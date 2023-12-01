@@ -371,12 +371,34 @@ RSpec.describe BandBaseCalculation do
           end
           context 'part 310' do
             let(:fee) { 600 }
+            let(:amount) { nil }
             let(:income) { 2000 }
             it {
               expect(band_calculation.remission).to eq('part')
               expect(band_calculation.amount_to_pay).to eq(310)
             }
           end
+
+          context "no children single over 66" do
+            let(:children_age_band) { nil }
+            let(:married) { false }
+            let(:fee) { 100 }
+            let(:over_66) { true }
+            let(:income) { 0 }
+            let(:saving_amount) { 0 }
+            it { expect(band_calculation.remission).to eq('part') }
+          end
+
+          context "no children married over 66" do
+            let(:children_age_band) { nil }
+            let(:married) { false }
+            let(:fee) { 0 }
+            let(:over_66) { true }
+            let(:income) { nil }
+            let(:saving_amount) { 0 }
+            it { expect(band_calculation.remission).to eq('none') }
+          end
+
         end
 
         context 'age cap over 66' do
