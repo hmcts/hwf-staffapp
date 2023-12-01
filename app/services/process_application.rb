@@ -29,8 +29,14 @@ class ProcessApplication
 
   def band_calculation_process(application)
     band = BandBaseCalculation.new(online_application)
-    application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+    band.remission
+
     application.saving.update(passed: band.saving_passed?)
+    if online_application.benefits == true && band.saving_passed?
+      BenefitProcessor.new(application).process!
+    else
+      application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+    end
   end
 
   def benefit_override(application)
