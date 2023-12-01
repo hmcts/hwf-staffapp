@@ -384,7 +384,7 @@ RSpec.describe OnlineApplicationsController do
         end
 
         it 'band_calculation is called' do
-          expect(band_calculation).to have_received(:remission)
+          expect(band_calculation).to have_received(:remission).twice
           expect(band_calculation).to have_received(:saving_passed?)
           expect(band_calculation).to have_received(:amount_to_pay)
         end
