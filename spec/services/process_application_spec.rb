@@ -17,7 +17,8 @@ RSpec.describe ProcessApplication do
 
   let(:stub_benefit_call) {
     stub_request(:post, "http://localhost:9292/api/benefit_checks").to_return(status: 200, body: {
-      benefit_checker_status: dwp_result, confirmation_ref: '1234'}.to_json, headers: {})
+      benefit_checker_status: dwp_result, confirmation_ref: '1234'
+    }.to_json, headers: {})
   }
 
   describe '#process' do
@@ -47,7 +48,7 @@ RSpec.describe ProcessApplication do
 
           it 'save applicaiton with result' do
             expect(application.id).not_to be_nil
-            expect(application.saving.passed).to eq false
+            expect(application.saving.passed).to be false
             expect(application.outcome).to eq 'none'
             expect(application.application_type).to eq 'benefit'
 
@@ -61,7 +62,7 @@ RSpec.describe ProcessApplication do
             expect(application.id).not_to be_nil
             expect(application.outcome).to eq 'none'
             expect(application.application_type).to eq 'benefit'
-            expect(application.saving.passed).to eq true
+            expect(application.saving.passed).to be true
           end
         end
 
@@ -73,7 +74,7 @@ RSpec.describe ProcessApplication do
             expect(application.id).not_to be_nil
             expect(application.outcome).to eq 'full'
             expect(application.application_type).to eq 'benefit'
-            expect(application.saving.passed).to eq true
+            expect(application.saving.passed).to be true
           end
         end
       end
