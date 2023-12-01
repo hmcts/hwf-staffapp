@@ -32,8 +32,7 @@ class BandBaseCalculation
     return outcome if outcome.present?
     @amount_to_pay = applicant_pays(income_to_use)
 
-    @part_remission_amount = fee - @amount_to_pay
-    @outcome = 'part'
+    decide_part_remission
   end
 
   def load_paper_application_values(application)
@@ -52,6 +51,25 @@ class BandBaseCalculation
     @children_age_band = preformat_age_band(application)
     @married = application.married
     @over_66 = application.over_66
+  end
+
+  def decide_part_remission
+    @part_remission_amount = fee - @amount_to_pay
+    if @part_remission_amount.positive?
+      set_part_remission
+    else
+      set_no_remission
+    end
+  end
+
+  def set_part_remission
+    @amount_to_pay = @part_remission_amount
+    @outcome = 'part'
+  end
+
+  def set_no_remission
+    @amount_to_pay = fee
+    @outcome = 'none'
   end
 
 end
