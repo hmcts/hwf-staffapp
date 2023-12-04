@@ -29,8 +29,15 @@ class ProcessApplication
 
   def band_calculation_process(application)
     band = BandBaseCalculation.new(online_application)
-    application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+    band.remission
+
     application.saving.update(passed: band.saving_passed?)
+
+    if online_application.benefits
+      process_benefit_application(band)
+    else
+      application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+    end
   end
 
   def benefit_override(application)
@@ -46,6 +53,14 @@ class ProcessApplication
 
   def ucd_changes_apply?
     FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == online_application.calculation_scheme
+  end
+
+  def process_benefit_application(band)
+    if band.saving_passed?
+      BenefitProcessor.new(application).process!
+    else
+      application.update(outcome: band.remission, application_type: 'benefit', amount_to_pay: band.amount_to_pay)
+    end
   end
 
 end
