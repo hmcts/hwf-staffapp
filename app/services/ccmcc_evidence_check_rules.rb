@@ -1,6 +1,6 @@
 class CCMCCEvidenceCheckRules
 
-  OFFICE_CODES = ['DH403', 'DH401', 'GE401'].freeze
+  OFFICE_CODES = ['DH403', 'DH401', 'GE401', 'IE413'].freeze
   FIVE_K_RULE_FREQUENCY = 1
   FIVE_K_RULE_ANNOTATION = '1 over 5 thousand'.freeze
   ONE_TO_5_K_RULE_FREQUENCY = 4
