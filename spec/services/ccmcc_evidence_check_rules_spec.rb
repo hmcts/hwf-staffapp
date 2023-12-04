@@ -5,6 +5,7 @@ RSpec.describe CCMCCEvidenceCheckRules do
   let(:ccbc) { create(:office, name: 'ccbc', entity_code: 'DH401') }
   let(:birkenhead) { create(:office, name: 'birkenhead', entity_code: 'GE401') }
   let(:digital) { create(:office, name: 'digital', entity_code: 'dig') }
+  let(:fees_office) { create(:office, name: 'fees_office', entity_code: 'IE413') }
   let(:application) { create(:application, office: ccmcc, fee: 5000, amount_to_pay: 0) }
   let(:ccmcc_check_rules) { described_class.new(application) }
 
@@ -26,6 +27,12 @@ RSpec.describe CCMCCEvidenceCheckRules do
     context 'birkenhead application' do
       before { birkenhead }
       let(:application) { build(:application, office: birkenhead, fee: 5000, amount_to_pay: 0) }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
+    end
+
+    context 'fees_office application' do
+      before { fees_office }
+      let(:application) { build(:application, office: fees_office, fee: 5000, amount_to_pay: 0) }
       it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
 
