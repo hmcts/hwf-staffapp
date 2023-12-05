@@ -18,6 +18,12 @@ RSpec.describe CCMCCEvidenceCheckRules do
       it { expect(ccmcc_check_rules.rule_applies?).to be false }
     end
 
+    context 'ccbc application with blank amount_to_pay' do
+      before { ccbc }
+      let(:application) { create(:application, office: ccbc, fee: 5000, amount_to_pay: nil) }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
+    end
+
     context 'ccbc application' do
       before { ccbc }
       let(:application) { build(:application, office: ccbc, fee: 5000, amount_to_pay: 0) }
