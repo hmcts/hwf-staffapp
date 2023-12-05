@@ -38,7 +38,7 @@ RSpec.describe Views::Overview::OnlineApplicant do
     context 'when the applicant is married' do
       let(:married) { true }
 
-      it { is_expected.to eql 'Married or living with someone and sharing an income' }
+      it { is_expected.to eql 'Married or living with someone' }
     end
 
     context 'when the applicant is single' do
