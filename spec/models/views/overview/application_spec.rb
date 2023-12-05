@@ -237,6 +237,17 @@ RSpec.describe Views::Overview::Application do
     end
   end
 
+  describe '#amount_to_refund' do
+    subject { view.amount_to_refund }
+    context 'returns nil if amount_to_pay is nil' do
+      let(:amount) { nil }
+
+      it 'returns nil' do
+        is_expected.to eq 310
+      end
+    end
+  end
+
   describe '#amount_to_pay' do
     subject { view.amount_to_pay }
 

@@ -66,7 +66,7 @@ module Views
       end
 
       def amount_to_refund
-        @application.detail.fee - @application.amount_to_pay
+        @application.detail.fee - (@application.amount_to_pay || 0)
       end
 
       def result
