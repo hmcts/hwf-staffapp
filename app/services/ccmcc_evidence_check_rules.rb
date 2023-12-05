@@ -51,7 +51,7 @@ class CCMCCEvidenceCheckRules
   private
 
   def amount_to_remit
-    @application.detail.fee - @application.amount_to_pay
+    @application.detail.fee - (@application.amount_to_pay || 0)
   end
 
   def same_office?
