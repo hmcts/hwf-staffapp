@@ -14,8 +14,6 @@ require "action_view/railtie"
 # require "action_cable/engine"
 # require "rails/test_unit/railtie"
 
-ENV['RAILS_DISABLE_DEPRECATED_TO_S_CONVERSION'] = 'true'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -29,6 +27,11 @@ module FrStaffapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(assets tasks))
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -37,14 +40,9 @@ module FrStaffapp
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join("lib")
 
-    ##### FROM RAILS 6.0 #####
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
-    config.autoload_paths << Rails.root.join('lib')
 
-    config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
+    # Don't generate system test files.
+    config.generators.system_tests = nil
     config.i18n.default_locale = 'en-GB'
 
     if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
@@ -64,7 +62,6 @@ module FrStaffapp
     config.active_record.legacy_connection_handling = false
     config.active_support.remove_deprecated_time_with_zone_name = true
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
-
   end
   WillPaginate.per_page = 20
 end
