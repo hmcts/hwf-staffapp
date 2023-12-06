@@ -37,13 +37,13 @@ class Application < ActiveRecord::Base
   has_one :decision_override, required: false, dependent: :destroy
   has_one :representative, dependent: :destroy
 
-  scope :with_evidence_check_for_ni_number, -> (ni_number) {
+  scope :with_evidence_check_for_ni_number, ->(ni_number) {
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
       joins(:applicant).where(applicants: { ni_number: ni_number })
   }
 
-  scope :with_evidence_check_for_ho_number, -> (ho_number) {
+  scope :with_evidence_check_for_ho_number, ->(ho_number) {
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
       joins(:applicant).where(applicants: { ho_number: ho_number })

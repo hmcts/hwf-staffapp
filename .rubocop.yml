@@ -186,6 +186,9 @@ Style/FormatStringToken:
 Style/Encoding:
   Enabled: false
 
+Style/Lambda:
+  Enabled: false
+
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
