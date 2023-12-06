@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
          :timeoutable,
          :session_limitable
 
-  scope :active, -> { where('current_sign_in_at >= ?', :inactivate_date) }
+  scope :active, -> { where('current_sign_in_at >= ?', User.inactivate_date) }
   scope :inactive, -> {
-    where('current_sign_in_at < ? OR current_sign_in_at IS NULL', :inactivate_date)
+    where('current_sign_in_at < ? OR current_sign_in_at IS NULL', User.inactivate_date)
   }
 
   scope :sorted_by_email, -> { order(:email) }
