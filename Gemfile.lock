@@ -680,9 +680,9 @@ DEPENDENCIES
   date_validator (= 0.12)
   delayed_cron_job
   delayed_job_active_record
-  devise (>= 4.9.2)
+  devise (>= 4.9.3)
   devise-security (~> 0.18.0)
-  devise_invitable (>= 2.0.8)
+  devise_invitable (>= 2.0.9)
   dotenv-rails
   factory_bot_rails
   faker
