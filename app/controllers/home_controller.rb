@@ -78,7 +78,7 @@ class HomeController < ApplicationController
 
   def process_search(form)
     @search = ApplicationSearch.new(form.reference, current_user)
-    results = (@search.call || (form.errors.add(:reference, @search.error_message) && nil))
+    results = @search.call || (form.errors.add(:reference, @search.error_message) && nil)
     paginate_search_results if results
   end
 

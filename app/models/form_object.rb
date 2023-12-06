@@ -32,7 +32,7 @@ class FormObject
   end
 
   def i18n_scope
-    "activemodel.attributes.#{self.class.name.underscore}".to_sym
+    :"activemodel.attributes.#{self.class.name.underscore}"
   end
 
   private

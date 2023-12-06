@@ -30,7 +30,7 @@ module FrStaffapp
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: ['assets', 'tasks'])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -39,7 +39,6 @@ module FrStaffapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join("lib")
-
 
     # Don't generate system test files.
     config.generators.system_tests = nil
@@ -59,7 +58,6 @@ module FrStaffapp
 
     #####
 
-    config.active_record.legacy_connection_handling = false
     config.active_support.remove_deprecated_time_with_zone_name = true
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
   end

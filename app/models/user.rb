@@ -22,9 +22,9 @@ class User < ActiveRecord::Base
          :session_limitable
 
   scope :active, -> { where('current_sign_in_at >= ?', inactivate_date) }
-  scope :inactive, (lambda do
+  scope :inactive, -> { lambda } do
     where('current_sign_in_at < ? OR current_sign_in_at IS NULL', inactivate_date)
-  end)
+  end
 
   scope :sorted_by_email, -> { order(:email) }
 

@@ -37,17 +37,17 @@ class Application < ActiveRecord::Base
   has_one :decision_override, required: false, dependent: :destroy
   has_one :representative, dependent: :destroy
 
-  scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
+  scope :with_evidence_check_for_ni_number, -> { lambda } do |ni_number|
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
       joins(:applicant).where(applicants: { ni_number: ni_number })
-  end)
+  end
 
-  scope :with_evidence_check_for_ho_number, (lambda do |ho_number|
+  scope :with_evidence_check_for_ho_number, -> { lambda } do |ho_number|
     Application.where(state: states[:waiting_for_evidence]).
       joins(:evidence_check).
       joins(:applicant).where(applicants: { ho_number: ho_number })
-  end)
+  end
 
   scope :except_created, -> { where.not(state: 0) }
   scope :given_office_only, lambda { |office_id|
