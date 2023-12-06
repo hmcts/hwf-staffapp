@@ -14,7 +14,7 @@ RSpec.describe Views::Overview::Application do
   describe '#income_result' do
     subject { view.income_result }
 
-    let(:application) { build_stubbed(:application, outcome: outcome) }
+    let(:application) { build_stubbed(:application, outcome: outcome, application_type: 'income') }
 
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }

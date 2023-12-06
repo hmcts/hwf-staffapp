@@ -23,7 +23,7 @@ module Views
       end
 
       def income_result
-        return if @application.income.blank?
+        return if @application.application_type != "income"
         format_locale(['full', 'part'].include?(result).to_s)
       end
 
