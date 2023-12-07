@@ -63,7 +63,6 @@ class BandBaseCalculation
   end
 
   def set_part_remission
-    @amount_to_pay = @part_remission_amount
     @outcome = 'part'
   end
 
