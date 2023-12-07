@@ -541,7 +541,7 @@ en-GB:
         married: Status
         date_of_birth_hint: For example, 31 3 1980
         married_false: Single
-        married_true: Married or living with someone and sharing an income
+        married_true: Married or living with someone
         form_name_summary: Form number
         under_age_true: 'Yes'
       forms/application/partner:
@@ -589,7 +589,8 @@ en-GB:
         discretion_manager_name: Delivery Manager name
       forms/application/savings_investment:
         header: Savings and investments
-        explanation: In question 7, how much do they have in savings and investments?
+        explanation: In question 7, how much do they have in savings and investments?w
+        explanation_ucd: In question 8, how much do they have in savings and investments?
         amount: How much do they have in savings and investments?
         amount_hint: Rounded to the nearest £
         less_than: Less than £3,000
@@ -705,8 +706,8 @@ en-GB:
         benefits: Benefits
         income: Income
         children: Number of children
-        prior_q4_23: Prior to Q4 2023
-        q4_23: Revised Q4 2023
+        prior_q4_23: Old HwF
+        q4_23: New HwF
 
       forms/application/delete:
         deleted_reason: Describe why the application needs to be deleted

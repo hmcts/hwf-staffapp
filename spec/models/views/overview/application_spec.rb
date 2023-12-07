@@ -362,12 +362,12 @@ RSpec.describe Views::Overview::Application do
 
       context 'present' do
         let(:detail) { build_stubbed(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1]) }
-        it { is_expected.to eql('Revised Q4 2023') }
+        it { is_expected.to eql('New HwF') }
       end
 
       context 'blank' do
         let(:detail) { build_stubbed(:detail, calculation_scheme: nil) }
-        it { is_expected.to eql('Prior to Q4 2023') }
+        it { is_expected.to eql('Old HwF') }
       end
     end
 
