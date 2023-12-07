@@ -12,6 +12,7 @@ class BandBaseCalculation
               :married, :over_66, :part_remission_amount, :amount_to_pay, :outcome
 
   def initialize(application)
+    @amount_to_pay = 0
     load_paper_application_values(application) if application.is_a?(Application)
     load_online_application_values(application) if application.is_a?(OnlineApplication)
   end

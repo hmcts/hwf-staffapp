@@ -32,8 +32,23 @@ module Forms
       end
 
       def income_calculation
-        IncomeCalculation.new(@object.application, formatted_income.to_i).calculate
+        if ucd_apply?
+          band_calculation
+        else
+          IncomeCalculation.new(@object.application, formatted_income.to_i).calculate
+        end
       end
+
+      def ucd_apply?
+        FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == @object.application.detail.calculation_scheme
+      end
+
+      def band_calculation
+        @object.application.income = formatted_income.to_i
+        band = BandBaseCalculation.new(@object.application)
+        { outcome: band.remission, amount_to_pay: band.amount_to_pay }
+      end
+
     end
   end
 end
