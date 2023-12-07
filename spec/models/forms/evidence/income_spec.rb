@@ -6,7 +6,8 @@ RSpec.describe Forms::Evidence::Income do
   params_list = [:income]
 
   let(:evidence) { build_stubbed(:evidence_check) }
-  let(:application) { create(:application) }
+  let(:application) { create(:application, detail: detail) }
+  let(:detail) { create(:detail) }
   let(:income) { '500' }
   let(:params) { { income: income } }
 
@@ -78,6 +79,42 @@ RSpec.describe Forms::Evidence::Income do
 
       it { expect(evidence.outcome).to eql(income_calculation_result[:outcome]) }
       it { expect(evidence.amount_to_pay).to eql(income_calculation_result[:amount_to_pay]) }
+    end
+  end
+
+  describe '#save post UCD' do
+    subject(:form_save) { form.save }
+
+    let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1], fee: 150) }
+
+    let(:evidence) { build(:evidence_check, application: application) }
+    let(:application) { create(:application, detail: detail, income: 100) }
+    let(:params) { { income: '1470' } }
+
+    before do
+      evidence.update(params)
+    end
+
+    it 'saves the income on the evidence in the correct format' do
+      form_save && evidence.reload
+
+      expect(evidence.income).to eq 1470
+    end
+
+    describe 'saves the income on the income calculation outputs' do
+      before { form_save && evidence.reload }
+
+      it { expect(evidence.outcome).to eql('part') }
+      it { expect(evidence.amount_to_pay).to eq(20) }
+    end
+
+    context 'same income' do
+      let(:params) { { income: '100' } }
+      before { form_save && evidence.reload }
+
+      it { expect(evidence.outcome).to eql('full') }
+      it { expect(evidence.amount_to_pay).to eq(0) }
+
     end
   end
 end

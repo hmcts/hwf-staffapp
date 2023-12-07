@@ -103,7 +103,7 @@ RSpec.describe Applications::Process::IncomesController do
     end
 
     it 'aplication update' do
-      expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: nil)
+      expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: 0)
     end
 
     it 'saving update' do
