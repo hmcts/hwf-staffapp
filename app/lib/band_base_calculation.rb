@@ -56,8 +56,11 @@ class BandBaseCalculation
 
   def decide_part_remission
     @part_remission_amount = fee - @amount_to_pay
-    if @part_remission_amount.positive?
+
+    if @part_remission_amount.positive? && @amount_to_pay.positive?
       set_part_remission
+    elsif @amount_to_pay.zero?
+      @outcome = 'full'
     else
       set_no_remission
     end

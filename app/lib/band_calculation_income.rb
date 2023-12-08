@@ -31,17 +31,19 @@ module BandCalculationIncome
     income_to_use = income - income_cap
 
     if premiums_total.positive?
-      @outcome = 'full' if income_to_use_under_threshold?(income_to_use)
-      @outcome = 'none' if income_to_use > BandBaseCalculation::MAX_INCOME_THRESHOLD
+      @outcome = 'full' if income_to_use.negative?
+      if income_to_use > BandBaseCalculation::MAX_INCOME_THRESHOLD
+        @amount_to_pay = fee
+        @outcome = 'none'
+      end
     else
       @band = income_band(income)
-      @outcome = 'none' if @band == -1
+      if @band == -1
+        @outcome = 'none'
+        @amount_to_pay = fee
+      end
     end
     income_to_use
-  end
-
-  def income_to_use_under_threshold?(income_to_use)
-    income_to_use <= BandBaseCalculation::MIN_THRESHOLD || income_to_use.negative?
   end
 
   def applicant_pays(income_to_use)
