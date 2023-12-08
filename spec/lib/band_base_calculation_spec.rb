@@ -6,12 +6,12 @@ RSpec.describe BandBaseCalculation do
   let(:applicant) { build(:applicant, married: married) }
   let(:detail) { build(:detail, fee: fee) }
   let(:saving) { build(:saving, amount: saving_amount, over_66: over_66) }
-  let(:income) { 1000 }
+  let(:income) { 0 }
   let(:married) { false }
   let(:saving_amount) { nil }
   let(:fee) { 100 }
   let(:over_66) { false }
-  let(:children_age_band) { { one: 2, two: 3 } }
+  let(:children_age_band) { [] }
 
   let(:application) {
     build(:application, detail: detail, income: income,
@@ -22,6 +22,258 @@ RSpec.describe BandBaseCalculation do
     build(:online_application, fee: fee, income: income,
                                married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66)
   }
+
+  # based on documents for band calculation tickets
+  describe 'amount to pay' do
+    subject(:band_calculation) { described_class.new(online_application) }
+
+    context 'part 490' do
+      let(:fee) { 1421 }
+      let(:income) { 4263 }
+      let(:children_age_band) { { 'one' => '1', 'two' => '1' } }
+      let(:saving_amount) { nil }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(490)
+      }
+    end
+
+    context 'part 1720' do
+      let(:fee) { 2000 }
+      let(:income) { 4000 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { nil }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(1720)
+      }
+    end
+
+    context 'part 290' do
+      let(:fee) { 600 }
+      let(:income) { 2000 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { nil }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(290)
+      }
+    end
+
+    context 'part 550' do
+      let(:fee) { 800 }
+      let(:income) { 2500 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 15800 }
+      let(:married) { false }
+      let(:over_66) { true }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(550)
+      }
+    end
+
+    context 'part 920' do
+      let(:fee) { 1350 }
+      let(:income) { 5300 }
+      let(:children_age_band) { { one: 2, two: 1 } }
+      let(:saving_amount) { nil }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(920)
+      }
+    end
+
+    context 'part 870' do
+      let(:fee) { 1750 }
+      let(:income) { 5800 }
+      let(:children_age_band) { { one: 0, two: 3 } }
+      let(:saving_amount) { 16000 }
+      let(:married) { true }
+      let(:over_66) { true }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(870)
+      }
+    end
+
+    context 'part 20' do
+      let(:fee) { 150 }
+      let(:income) { 1470 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(20)
+      }
+    end
+
+    context 'part 20 lower income' do
+      let(:fee) { 125 }
+      let(:income) { 1470 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(20)
+      }
+    end
+
+    context 'part 1740' do
+      let(:fee) { 2150 }
+      let(:income) { 5875 }
+      let(:children_age_band) { { one: 1, two: 1 } }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(1740)
+      }
+    end
+
+    context 'part 1740 lower income' do
+      let(:fee) { 2000 }
+      let(:income) { 5875 }
+      let(:children_age_band) { { one: 1, two: 1 } }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(1740)
+      }
+    end
+
+    context 'part 110' do
+      let(:fee) { 300 }
+      let(:income) { 3500 }
+      let(:children_age_band) { { one: 1, two: 1 } }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(110)
+      }
+    end
+
+    context 'part 270 fee 10k' do
+      let(:fee) { 10000 }
+      let(:income) { 1972 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { nil }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(270)
+      }
+    end
+
+    context 'children and married - part 490' do
+      let(:fee) { 1421 }
+      let(:income) { 4263 }
+      let(:children_age_band) { { one: 1, two: 1 } }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq 490
+      }
+    end
+
+    context 'single full 500' do
+      let(:fee) { 500 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+        expect(band_calculation.amount_to_pay).to eq 0
+      }
+    end
+
+    context 'single full 500 higher income' do
+      let(:fee) { 500 }
+      let(:income) { 1160 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+        expect(band_calculation.amount_to_pay).to eq 0
+      }
+    end
+
+    context 'married full 500' do
+      let(:fee) { 500 }
+      let(:income) { 1160 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+        expect(band_calculation.amount_to_pay).to eq 0
+      }
+    end
+
+    context 'married full 100' do
+      let(:fee) { 100 }
+      let(:income) { 1185 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { true }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+        expect(band_calculation.amount_to_pay).to eq 0
+      }
+    end
+
+    context 'single none 2150' do
+      let(:fee) { 2150 }
+      let(:income) { 5170 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 0 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.amount_to_pay).to eq 2150
+      }
+    end
+
+  end
 
   describe 'Online application' do
     subject(:band_calculation) { described_class.new(online_application) }
@@ -50,22 +302,6 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 5500 }
             it { expect(band_calculation.remission).to eq('none') }
           end
-          context 'part 1720' do
-            let(:fee) { 2000 }
-            let(:income) { 4000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(1720)
-            }
-          end
-          context 'part 310' do
-            let(:fee) { 600 }
-            let(:income) { 2000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(290)
-            }
-          end
         end
 
         context 'age cap over 66' do
@@ -73,60 +309,18 @@ RSpec.describe BandBaseCalculation do
           context 'under threshold' do
             let(:fee) { 150 }
             let(:saving_amount) { 10000 }
-            it { expect(band_calculation.remission).to eq('full') }
+            let(:children_age_band) { [] }
+            let(:married) { false }
+            let(:income) { nil }
+            it {
+              expect(band_calculation.remission).to eq('full')
+              expect(band_calculation.amount_to_pay).to eq 0
+            }
           end
           context 'over threshold' do
             let(:fee) { 232 }
             let(:saving_amount) { 16500 }
             it { expect(band_calculation.remission).to eq('none') }
-          end
-
-          context 'part payment with children' do
-            let(:children_age_band) { { 'two' => '3' } }
-            let(:married) { true }
-            let(:fee) { 1750 }
-            let(:income) { 5800 }
-            let(:saving_amount) { 16000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(870)
-            }
-          end
-
-          context 'part payment single no children' do
-            let(:children_age_band) { {} }
-            let(:married) { false }
-            let(:fee) { 800 }
-            let(:income) { 2500 }
-            let(:saving_amount) { 15800 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(550)
-            }
-          end
-
-          context 'part payment single no children fee 150' do
-            let(:children_age_band) { {} }
-            let(:married) { false }
-            let(:fee) { 150 }
-            let(:income) { 1470 }
-            let(:saving_amount) { 0 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(20)
-            }
-          end
-
-          context 'part payment married 2 children' do
-            let(:children_age_band) { { 'one' => '1', 'two' => '1' } }
-            let(:married) { true }
-            let(:fee) { 2150 }
-            let(:income) { 5875 }
-            let(:saving_amount) { 0 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(1740)
-            }
           end
 
         end
@@ -166,13 +360,6 @@ RSpec.describe BandBaseCalculation do
 
         context 'premiums' do
           let(:saving_amount) { 0 }
-          context 'children and married - full' do
-            let(:fee) { 1421 }
-            let(:income) { 4263 }
-            let(:children_age_band) { { 'one' => '1', 'two' => '1' } }
-            let(:married) { true }
-            it { expect(band_calculation.remission).to eq('full') }
-          end
           context 'children and married none - over max income cap' do
             let(:fee) { 1350 }
             let(:income) { 6560 }
@@ -385,51 +572,15 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 5500 }
             it { expect(band_calculation.remission).to eq('none') }
           end
-          context 'part 280' do
-            let(:fee) { 2000 }
-            let(:income) { 4000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(1720)
-            }
-          end
-          context 'part 290' do
-            let(:fee) { 600 }
-            let(:amount) { nil }
-            let(:income) { 2000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(290)
-            }
-          end
-          context 'part 270' do
-            let(:fee) { 10000 }
-            let(:amount) { nil }
-            let(:income) { 1972 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(270)
-            }
-          end
-
-          context "no children single over 66" do
-            let(:children_age_band) { nil }
-            let(:married) { false }
-            let(:fee) { 100 }
-            let(:over_66) { true }
-            let(:income) { 0 }
-            let(:saving_amount) { 0 }
-            it { expect(band_calculation.remission).to eq('part') }
-          end
 
           context "no children married over 66" do
             let(:children_age_band) { nil }
             let(:married) { false }
-            let(:fee) { 0 }
+            let(:fee) { 10 }
             let(:over_66) { true }
             let(:income) { nil }
             let(:saving_amount) { 0 }
-            it { expect(band_calculation.remission).to eq('none') }
+            it { expect(band_calculation.remission).to eq('full') }
           end
 
         end
@@ -447,29 +598,6 @@ RSpec.describe BandBaseCalculation do
             it { expect(band_calculation.remission).to eq('none') }
           end
 
-          context 'part payment with children' do
-            let(:children_age_band) { { two: 3 } }
-            let(:married) { true }
-            let(:fee) { 1750 }
-            let(:income) { 5800 }
-            let(:saving_amount) { 16000 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(870)
-            }
-          end
-
-          context 'part payment single no children' do
-            let(:children_age_band) { {} }
-            let(:married) { false }
-            let(:fee) { 800 }
-            let(:income) { 2500 }
-            let(:saving_amount) { 15800 }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(550)
-            }
-          end
         end
 
         context 'over capital threshold' do
@@ -487,14 +615,6 @@ RSpec.describe BandBaseCalculation do
         end
 
         context 'premiums' do
-          let(:saving_amount) { 0 }
-          context 'children and married - full' do
-            let(:fee) { 1421 }
-            let(:income) { 4263 }
-            let(:children_age_band) { { one: 1, two: 1 } }
-            let(:married) { true }
-            it { expect(band_calculation.remission).to eq('full') }
-          end
           context 'children and married none - over max income cap' do
             let(:fee) { 1350 }
             let(:income) { 6560 }
@@ -503,16 +623,6 @@ RSpec.describe BandBaseCalculation do
             it { expect(band_calculation.remission).to eq('none') }
           end
 
-          context 'children and married - part' do
-            let(:fee) { 1350 }
-            let(:income) { 5300 }
-            let(:children_age_band) { { one: 2, two: 1 } }
-            let(:married) { true }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(920)
-            }
-          end
         end
 
       end
