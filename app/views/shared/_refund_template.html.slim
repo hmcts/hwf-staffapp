@@ -7,7 +7,7 @@
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     .confirmation-letter
-      = t('letters.refund.full_html',
+      = t('new_letters.refund.full_html',
         reference: application.reference,
         full_name: application.applicant.full_name,
         legal_rep: @confirm.representative_full_name,
@@ -22,7 +22,7 @@
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     .confirmation-letter
-      = t('letters.refund.part_html',
+      = t('new_letters.refund.part_html',
           reference: application.reference,
           full_name: application.applicant.full_name,
           legal_rep: @confirm.representative_full_name,
@@ -38,7 +38,7 @@
     p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
     .confirmation-letter
-      = t('letters.refund.not_eligible_html',
+      = t('new_letters.refund.not_eligible_html',
         reference: application.reference,
         full_name: application.applicant.full_name,
         legal_rep: @confirm.representative_full_name,

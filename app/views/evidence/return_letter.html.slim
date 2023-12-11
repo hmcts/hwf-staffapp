@@ -31,7 +31,7 @@
     p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
 
   .evidence-confirmation-letter
-    =t('letters.new_letters.evidence_check_html',
+    =t('new_letters.new_letters.evidence_check_html',
        reference: @application_view.reference,
        full_name: @applicant.full_name,
        legal_rep: @representative.full_name,

@@ -54,7 +54,7 @@
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
         .confirmation-letter
-          = t('letters.reject.reject_over_savings_html',
+          = t('new_letters.reject.reject_over_savings_html',
               reference: @application.reference,
               full_name: @application.applicant.full_name,
               legal_rep: @confirm.representative_full_name,
@@ -71,7 +71,7 @@
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
         .confirmation-letter
-          = t('letters.reject.reject_over_income_html',
+          = t('new_letters.reject.reject_over_income_html',
               reference: @application.reference,
               full_name: @application.applicant.full_name,
               legal_rep: @confirm.representative_full_name,
@@ -89,7 +89,7 @@
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
         .confirmation-letter
-          = t('letters.reject.reject_no_benefits_html',
+          = t('new_letters.reject.reject_no_benefits_html',
               reference: @application.reference,
               full_name: @application.applicant.full_name,
               legal_rep: @confirm.representative_full_name,
@@ -113,7 +113,7 @@
       p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
       .confirmation-letter
-        = t('letters.part-payment.send_part_payment_html',
+        = t('new_letters.part-payment.send_part_payment_html',
             reference: @application.reference,
             full_name: @application.applicant.full_name,
             legal_rep: @confirm.representative_full_name,
