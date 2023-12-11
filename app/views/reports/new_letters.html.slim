@@ -5,7 +5,7 @@ h1.govuk-heading-m.util_mt-medium New scheme letters
 
 h2.govuk-heading-m Processed application results in part payment-representation
 .confirmation-letter
-  = t('letters.part-payment.send_part_payment_html',
+  = t('new_letters.part-payment.send_part_payment_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -18,7 +18,7 @@ h2.govuk-heading-m Processed application results in part payment-representation
 
 h2.govuk-heading-m Evidence check - received, but not correct-representation
 .confirmation-letter
-  = t('letters.evidence.evidence_incorrect_html',
+  = t('new_letters.evidence.evidence_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -28,7 +28,7 @@ h2.govuk-heading-m Evidence check - received, but not correct-representation
 
 h2.govuk-heading-m Part payment - requested, but not received-representation
 .confirmation-letter
-  = t('letters.part-payment.no_part_payment_received_html',
+  = t('new_letters.part-payment.no_part_payment_received_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -38,7 +38,7 @@ h2.govuk-heading-m Part payment - requested, but not received-representation
 
 h2.govuk-heading-m Part payment - received, but not correct-representation
 .confirmation-letter
-  = t('letters.part-payment.part_payment_incorrect_html',
+  = t('new_letters.part-payment.part_payment_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -46,7 +46,7 @@ h2.govuk-heading-m Part payment - received, but not correct-representation
 
 h2.govuk-heading-m Application rejected because savings threshold exceeded-representation
 .confirmation-letter
-  = t('letters.reject.reject_over_savings_html',
+  = t('new_letters.reject.reject_over_savings_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       fee_amount: '{AUTO: APPLICATION FEE}',
       savings_threshold: '{AUTO: SAVINGS THRESHOLD}',
@@ -57,7 +57,7 @@ h2.govuk-heading-m Application rejected because savings threshold exceeded-repre
 
 h2.govuk-heading-m Application rejected because income threshold exceeded-representation
 .confirmation-letter
-  = t('letters.reject.reject_over_income_html',
+  = t('new_letters.reject.reject_over_income_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       fee_amount: '{AUTO: APPLICATION FEE}',
       income_total: '{AUTO: INCOME TOTAL}',
@@ -68,7 +68,7 @@ h2.govuk-heading-m Application rejected because income threshold exceeded-repres
 
 h2.govuk-heading-m Application rejected because benefits not received-representation
 .confirmation-letter
-  = t('letters.reject.reject_no_benefits_html',
+  = t('new_letters.reject.reject_no_benefits_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -78,7 +78,7 @@ h2.govuk-heading-m Application rejected because benefits not received-representa
 
 h2.govuk-heading-m Application is not eligible for refund-representation
 .confirmation-letter
-  = t('letters.refund.not_eligible_html',
+  = t('new_letters.refund.not_eligible_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -86,7 +86,7 @@ h2.govuk-heading-m Application is not eligible for refund-representation
 
 h2.govuk-heading-m Application is eligible for partial refund-representation
 .confirmation-letter
-  = t('letters.refund.part_html',
+  = t('new_letters.refund.part_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -97,7 +97,7 @@ h2.govuk-heading-m Application is eligible for partial refund-representation
 
 h2.govuk-heading-m Application is eligible for full refund-representation
 .confirmation-letter
-  = t('letters.refund.full_html',
+  = t('new_letters.refund.full_html',
     reference: '{AUTO: APPLICATION REFERENCE}',
     full_name: '{AUTO: APPLICANTS NAME}',
     legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -105,7 +105,7 @@ h2.govuk-heading-m Application is eligible for full refund-representation
 
 h2.govuk-heading-m Reference code received out of time-representation
 .confirmation-letter
-  = t('letters.new_letters.reference_code_html',
+  = t('new_letters.new_letters.reference_code_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -114,23 +114,23 @@ h2.govuk-heading-m Reference code received out of time-representation
 
 h2.govuk-heading-m Processed application results in evidence check-representation
 .confirmation-letter
-  = t('letters.new_letters.processed_application.header_html',
+  = t('new_letters.new_letters.processed_application.header_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
           evidence_due: '{AUTO: DATE EVIDENCE DUE}')
-  = t('letters.new_letters.processed_application.wages_html')
-  = t('letters.new_letters.processed_application.child_maintenance_html')
-  = t('letters.new_letters.processed_application.benefits_and_credits_html')
-  = t('letters.new_letters.processed_application.rental_html')
-  = t('letters.new_letters.processed_application.goods_selling_html')
-  = t('letters.new_letters.processed_application.prisoner_income_html')
-  = t('letters.new_letters.processed_application.other_income_header_html')
-  = t('letters.new_letters.processed_application.footer_html', user_name: '{AUTO: CURRENT USERS NAME}', reference: '{AUTO: APPLICATION REFERENCE}')
+  = t('new_letters.new_letters.processed_application.wages_html')
+  = t('new_letters.new_letters.processed_application.child_maintenance_html')
+  = t('new_letters.new_letters.processed_application.benefits_and_credits_html')
+  = t('new_letters.new_letters.processed_application.rental_html')
+  = t('new_letters.new_letters.processed_application.goods_selling_html')
+  = t('new_letters.new_letters.processed_application.prisoner_income_html')
+  = t('new_letters.new_letters.processed_application.other_income_header_html')
+  = t('new_letters.new_letters.processed_application.footer_html', user_name: '{AUTO: CURRENT USERS NAME}', reference: '{AUTO: APPLICATION REFERENCE}')
 
 h2.govuk-heading-m Evidence check - requested, but not received-representation
 .confirmation-letter
-  = t('letters.new_letters.evidence_check_html',
+  = t('new_letters.new_letters.evidence_check_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
@@ -139,7 +139,7 @@ h2.govuk-heading-m Evidence check - requested, but not received-representation
 
 h2.govuk-heading-m Compulsory information missing from new application-representation
 .confirmation-letter
-  = t('letters.new_letters.information_missing_html',
+  = t('new_letters.new_letters.information_missing_html',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
@@ -147,7 +147,7 @@ h2.govuk-heading-m Compulsory information missing from new application-represent
 
 h2.govuk-heading-m Application is eligible for full remission-representation
 .confirmation-letter
-  = t('letters.new_letters.full_remission_html',
+  = t('new_letters.new_letters.full_remission_html',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
           reference: '{AUTO: APPLICATION REFERENCE}',

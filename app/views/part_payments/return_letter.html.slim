@@ -16,7 +16,7 @@
     p: strong= link_to 'See the guides', guide_path, target: 'blank'
 
     .evidence-confirmation-letter
-      =t('letters.part-payment.no_part_payment_received_html',
+      =t('new_letters.part-payment.no_part_payment_received_html',
          reference: @application_view.reference,
          full_name: @applicant.full_name,
          legal_rep: @representative.full_name,
