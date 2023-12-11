@@ -87,17 +87,13 @@ module Views
 
       # rubocop:disable Metrics/MethodLength
       def process_row(row, attr)
-        if attr == :estimated_cost
-          estimated_decision_cost_calculation(row)
-        elsif attr == :estimated_amount_to_pay
-          estimation_amount_to_pay(row)
-        elsif [:reg_number, :income_threshold, :final_amount_to_pay].include?(attr)
+        if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
+            :final_amount_to_pay].include?(attr)
           send(attr, row)
         elsif [:date_received, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
         elsif [:children_age_band_two, :children_age_band_one].include?(attr)
-          # binding.pry
           children_age_band(row, attr)
         elsif attr == :over_61
           over_61?(row)
@@ -123,15 +119,20 @@ module Views
 
       def build_data
         Application.
-          select('id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
-                 'details.statement_signed_by', 'application_type', 'income', 'children', 'decision',
-                 'amount_to_pay', 'decision_cost', 'applicants.married', 'applicants.partner_ni_number', 'applicants.partner_last_name',
-                 'income_min_threshold_exceeded', 'income_max_threshold_exceeded').
+          select(simple_columns).
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
           where("offices.name NOT IN ('Digital')").
           where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+      end
+
+      def simple_columns
+        ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate',
+         'details.refund', 'details.statement_signed_by', 'application_type', 'income',
+         'children', 'decision', 'amount_to_pay', 'decision_cost', 'applicants.married',
+         'applicants.partner_ni_number', 'applicants.partner_last_name',
+         'income_min_threshold_exceeded', 'income_max_threshold_exceeded']
       end
 
       def named_columns
@@ -183,11 +184,11 @@ module Views
         JOINS
       end
 
-      def estimated_decision_cost_calculation(row)
+      def estimated_cost(row)
         (row.fee - row.amount_to_pay.to_f) || 0
       end
 
-      def estimation_amount_to_pay(row)
+      def estimated_amount_to_pay(row)
         row.amount_to_pay || 0
       end
 

@@ -32,7 +32,8 @@ module Forms
           case_number: String,
           discretion_applied: Boolean,
           discretion_manager_name: String,
-          discretion_reason: String }
+          discretion_reason: String,
+          statement_signed_by: String }
       end
       # rubocop:enable Metrics/MethodLength
 
