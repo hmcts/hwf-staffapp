@@ -9,6 +9,7 @@ module Views
       FIELDS = {
         id: 'id',
         name: 'office',
+        reference: 'reference',
         jurisdiction: 'jurisdiction',
         sop_code: 'SOP code',
         fee: 'fee',
@@ -39,7 +40,8 @@ module Views
         date_of_birth: 'date of birth',
         date_received: 'date received',
         date_fee_paid: 'date paid',
-        date_submitted_online: 'date submitted online'
+        date_submitted_online: 'date submitted online',
+        statement_signed_by: 'statement signed by'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -114,9 +116,9 @@ module Views
 
       def build_data
         Application.
-          select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
-                 'application_type', 'income', 'children', 'decision', 'amount_to_pay',
-                 'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
+          select('id', 'reference', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
+                 'details.statement_signed_by', 'application_type', 'income', 'children', 'decision',
+                 'amount_to_pay', 'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
                  'income_max_threshold_exceeded').
           select(named_columns).
           joins(joins).
@@ -152,7 +154,8 @@ module Views
           applicants.date_of_birth AS date_of_birth,
           details.date_received AS date_received,
           details.date_fee_paid AS date_fee_paid,
-          oa.created_at AS date_submitted_online
+          oa.created_at AS date_submitted_online,
+          details.statement_signed_by AS statement_signed_by
         COLUMNS
       end
 

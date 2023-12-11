@@ -77,19 +77,26 @@ RSpec.describe Views::Reports::RawDataExport do
       applicant3.update(married: true, ni_number: nil, ho_number: nil)
     }
     let(:full_no_ec) {
-      create(:application_full_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                                             amount_to_pay: 0, decision_cost: 300.24, fee: 300.24, income_min_threshold_exceeded: true)
+      create(:application_full_remission, :processed_state, :applicant_full,
+             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             amount_to_pay: 0, decision_cost: 300.24, income_min_threshold_exceeded: true, detail: full_no_ec_detail)
     }
+    let(:full_no_ec_detail) { create(:complete_detail, :litigation_friend, case_number: 'JK123455B', fee: 300.24, jurisdiction: business_entity.jurisdiction) }
 
     let(:part_no_ec) {
-      create(:application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                            amount_to_pay: 50, decision_cost: 250, fee: 300, part_payment: part_payment_part)
+      create(:application_part_remission, :processed_state,
+             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             amount_to_pay: 50, decision_cost: 250, part_payment: part_payment_part, detail: part_no_ec_detail)
     }
+    let(:part_no_ec_detail) { create(:complete_detail, :legal_representative, case_number: 'JK123456C', fee: 300, jurisdiction: business_entity.jurisdiction) }
 
     let(:part_no_ec_return_pp) {
-      create(:application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
-                                                            amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_return)
+      create(:application_part_remission, :processed_state,
+             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             amount_to_pay: 50.6, decision_cost: 0, part_payment: part_payment_return, detail: part_no_ec_return_pp_detail)
     }
+
+    let(:part_no_ec_return_pp_detail) { create(:complete_detail, :applicant, case_number: 'JK123456F', fee: 300.45, jurisdiction: business_entity.jurisdiction) }
 
     let(:part_no_ec_none_pp) {
       create(:application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
@@ -122,8 +129,14 @@ RSpec.describe Views::Reports::RawDataExport do
         full_no_ec
         export = data.to_csv
         jurisdiction = full_no_ec.detail.jurisdiction.name
+        office = full_no_ec.office.name
+        dob = full_no_ec.applicant.date_of_birth.to_fs
+        date_received = full_no_ec.detail.date_received.to_fs
         row = "#{jurisdiction},135864,300.24,0.0,300.24,income,ABC123,,false,false,10,under,None,1,true,No,full,0.0,300.24,paper"
+
         expect(export).to include(row)
+        expect(export).to include("#{office},#{full_no_ec.reference}")
+        expect(export).to include("JK123455B,,#{dob},#{date_received},,,litigation_friend")
       end
     end
 
@@ -132,21 +145,24 @@ RSpec.describe Views::Reports::RawDataExport do
         part_no_ec
         export = data.to_csv
         jurisdiction = part_no_ec.detail.jurisdiction.name
+
         row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,,false,false,2000,,NI number,3,true,No,part,50.0,250.0,paper"
         dob = part_no_ec.applicant.date_of_birth.to_fs
+        date_received = part_no_ec.detail.date_received.to_fs
         expect(export).to include(row)
-        expect(export).to include("true,JK123456A,,#{dob}")
+        expect(export).to include("true,JK123456C,,#{dob},#{date_received},,,legal_representative")
       end
 
       it 'part payment outcome is "return"' do
         part_no_ec_return_pp
         export = data.to_csv
         jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
+        date_received = part_no_ec_return_pp.detail.date_received.to_fs
         row = "#{jurisdiction},135864,300.45,50.6,249.85,income,ABC123,,false,false,2000,,NI number,3,true,No,part,300.45,0.0,paper"
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,JK123456A,,#{dob}")
+        expect(export).to include("return,JK123456F,,#{dob},#{date_received},,,applicant")
       end
 
       it 'part payment outcome is "none"' do
