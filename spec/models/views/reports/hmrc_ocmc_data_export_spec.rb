@@ -13,13 +13,18 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:date_to) { Date.parse('1/2/2021') }
 
   describe 'to_csv' do
-    let(:application1) { create(:application, :processed_state, office: office, income_kind: {}) }
+    let(:application1) { create(:application, :processed_state, office: office, income_kind: {}, detail: app1_detail, children_age_band: { one: 7, two: 8 }) }
     let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
-    let(:application3) { create(:application, :waiting_for_part_payment_state, office: office) }
-    let(:application4) { create(:application, :deleted_state, office: office) }
+    let(:application3) { create(:application, :waiting_for_part_payment_state, office: office, detail: app3_detail, children_age_band: { one: 1, two: 1 }) }
+    let(:application4) { create(:application, :deleted_state, office: office, detail: app2_detail, children_age_band: { one: 0, two: 1 }) }
     let(:application5) { create(:application, office: office) }
     let(:application6) { create(:application, :processed_state, office: office) }
     let(:application7) { create(:application, :processed_state) }
+
+    let(:app1_detail) { create(:complete_detail, :legal_representative) }
+    let(:app2_detail) { create(:complete_detail, :litigation_friend) }
+    let(:app3_detail) { create(:complete_detail, :applicant) }
+
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
     before do
@@ -30,6 +35,9 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       Timecop.freeze(date_from + 5.days) { application5 }
       Timecop.freeze(date_from + 36.days) { application6 }
       Timecop.freeze(date_from + 6.days) { application7 }
+      application1.applicant.update(partner_ni_number: 'SN789654C')
+      application3.applicant.update(partner_ni_number: 'SN789654C', partner_last_name: 'Jones')
+      application4.applicant.update(partner_ni_number: '', partner_last_name: 'Jones')
     end
 
     it 'return 5 rows csv data' do
@@ -130,6 +138,33 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           data_row = data[3]
           expect(data_row).to include('Wages,Tax credit')
         end
+      end
+
+      context 'signed by values and partner data' do
+        it {
+          expect(data[4]).to include('legal_representative,true,false')
+        }
+
+        it {
+          expect(data[1]).to include('litigation_friend,false,true')
+        }
+
+        it {
+          expect(data[2]).to include('applicant,true,true')
+        }
+      end
+      context 'children age bands' do
+        it {
+          expect(data[4]).to include('500,1,7,8')
+        }
+
+        it {
+          expect(data[1]).to include('500,1,0,1')
+        }
+
+        it {
+          expect(data[2]).to include('500,1,1,1')
+        }
       end
 
     end
