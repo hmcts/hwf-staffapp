@@ -18,12 +18,19 @@ module Views
         CSV.generate do |csv|
           csv << data.first.keys
           data.each do |row|
-            csv << row.values
+            csv << process_row(row).values
           end
         end
       end
 
       private
+
+      def process_row(row)
+        csv_row = row
+        csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
+        csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
+        csv_row
+      end
 
       def data
         @data ||= build_data
@@ -44,6 +51,8 @@ module Views
         details.refund as \"Refund\",
         applications.income as \"Income\",
         applications.children as \"Children\",
+        applications.children_age_band as \"Age band under 14\",
+        applications.children_age_band as \"Age band 14+\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         applications.decision as \"Decision\",
         applications.amount_to_pay as \"Applicant pays estimate\",
@@ -63,7 +72,15 @@ module Views
         END AS \"Capital\",
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
-        details.date_received as \"Date received\"
+        details.date_received as \"Date received\",
+        details.statement_signed_by as \"Statement signed by\",
+        CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+             WHEN applicants.partner_ni_number = '' THEN 'false'
+             WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
+             END AS \"Partner NI entered\",
+        CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
+             WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
+             END AS \"Partner name entered\"
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id
@@ -75,6 +92,25 @@ module Views
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
       # rubocop:enable Metrics/MethodLength
+
+      def children_age_band(value, attr_key)
+        return nil if age_bands_blank?(value)
+        hash_value = YAML.safe_load(value, permitted_classes: [Symbol])
+        if attr_key == :children_age_band_one
+          (hash_value[:one] || hash_value['one'])
+        elsif attr_key == :children_age_band_two
+          (hash_value[:two] || hash_value['two'])
+        end
+      end
+
+      def age_bands_blank?(value)
+        return true if value.blank?
+
+        hash_value = YAML.safe_load(value, permitted_classes: [Symbol])
+        hash_value.keys.select do |key|
+          key.to_s == 'one' || key.to_s == 'two'
+        end.blank?
+      end
 
     end
   end
