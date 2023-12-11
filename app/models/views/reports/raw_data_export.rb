@@ -24,6 +24,8 @@ module Views
         income_threshold: 'income_threshold exceeded',
         reg_number: 'ho/ni number',
         children: 'children',
+        children_age_band_one: 'age band one',
+        children_age_band_two: 'age band two',
         married: 'married',
         over_61: 'over 61',
         decision: 'decision',
@@ -41,7 +43,9 @@ module Views
         date_received: 'date received',
         date_fee_paid: 'date paid',
         date_submitted_online: 'date submitted online',
-        statement_signed_by: 'statement signed by'
+        statement_signed_by: 'statement signed by',
+        partner_ni: 'partner ni entered',
+        partner_name: 'partner name entered'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -92,6 +96,9 @@ module Views
         elsif [:date_received, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
+        elsif [:children_age_band_two, :children_age_band_one].include?(attr)
+          # binding.pry
+          children_age_band(row, attr)
         elsif attr == :over_61
           over_61?(row)
         else
@@ -116,10 +123,10 @@ module Views
 
       def build_data
         Application.
-          select('id', 'reference', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
+          select('id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
                  'details.statement_signed_by', 'application_type', 'income', 'children', 'decision',
-                 'amount_to_pay', 'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
-                 'income_max_threshold_exceeded').
+                 'amount_to_pay', 'decision_cost', 'applicants.married', 'applicants.partner_ni_number', 'applicants.partner_last_name',
+                 'income_min_threshold_exceeded', 'income_max_threshold_exceeded').
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
@@ -155,7 +162,13 @@ module Views
           details.date_received AS date_received,
           details.date_fee_paid AS date_fee_paid,
           oa.created_at AS date_submitted_online,
-          details.statement_signed_by AS statement_signed_by
+          details.statement_signed_by AS statement_signed_by,
+          CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+               WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
+               END AS partner_ni,
+          CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
+               WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
+               END AS partner_name
         COLUMNS
       end
 
@@ -204,6 +217,24 @@ module Views
 
       def date_for_age_calculation(row)
         row.send(:date_submitted_online) || row.send(:date_received)
+      end
+
+      def children_age_band(row, attr_key)
+        return nil if age_bands_blank?(row)
+
+        if attr_key == :children_age_band_one
+          (row.children_age_band[:one] || row.children_age_band['one'])
+        elsif attr_key == :children_age_band_two
+          (row.children_age_band[:two] || row.children_age_band['two'])
+        end
+      end
+
+      def age_bands_blank?(row)
+        return true if row.children_age_band.blank?
+
+        row.children_age_band.keys.select do |key|
+          key.to_s == 'one' || key.to_s == 'two'
+        end.blank?
       end
 
     end
