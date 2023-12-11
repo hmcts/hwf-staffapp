@@ -165,6 +165,7 @@ module Views
           oa.created_at AS date_submitted_online,
           details.statement_signed_by AS statement_signed_by,
           CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+               WHEN applicants.partner_ni_number = '' THEN 'false'
                WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
                END AS partner_ni,
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
