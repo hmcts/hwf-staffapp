@@ -14,7 +14,7 @@ h1.govuk-heading-xl Check details
 
 -if show_ucd_changes?(@online_application.calculation_scheme)
   =build_section 'Children', @children, ['children', 'children_age_band']
-  =build_section 'Income', @application_view, ['total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
+  =build_section 'Income', @application_view, ['total_monthly_income', 'income_kind_applicant', 'income_kind_partner', 'income_period']
 - else
   =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']
 

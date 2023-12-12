@@ -421,6 +421,9 @@ en-GB:
         total_monthly_income: Total monthly income
         total_monthly_income_from_evidence: Total monthly income from Evidence
         calculation_scheme: HwF Scheme
+        income_period: Income period
+        income_period_last_month: This is for the last calendar month
+        income_period_average: This is an average for the last three calendar months
       views/overview/applicant:
         full_name: Full name
         partner_full_name: Partner's full name

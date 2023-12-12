@@ -37,6 +37,12 @@ module Views
         @application.income_kind[:partner].join(', ')
       end
 
+      def income_period
+        return if @application.income_period.nil?
+        scope = 'activemodel.attributes.views/overview/application'
+        I18n.t("income_period_#{@application.income_period}", scope: scope)
+      end
+
       def savings_result
         format_locale(@application.saving.passed?.to_s)
       end
