@@ -50,7 +50,7 @@ class ApplicationBuilder
 
   def online_application_attributes(online_application)
     fields = [
-      :benefits, :reference, :income, :income_kind,
+      :benefits, :reference, :income, :income_kind, :income_period,
       :income_min_threshold_exceeded, :income_max_threshold_exceeded
     ]
 
@@ -86,8 +86,7 @@ class ApplicationBuilder
     fields = [:min_threshold_exceeded, :max_threshold_exceeded, :over_61, :amount]
     {
       min_threshold: Settings.savings_threshold.minimum_value,
-      max_threshold: Settings.savings_threshold.maximum_value,
-      choice: online_application.income_period
+      max_threshold: Settings.savings_threshold.maximum_value
     }.merge(prepare_attributes(fields, online_application))
   end
 

@@ -70,7 +70,7 @@ RSpec.describe ApplicationBuilder do
 
     let(:online_application) {
       build_stubbed(:online_application_with_all_details,
-                    :with_reference, :completed, :with_fee_manager_approval, income_kind: { applicant: ['Wages'] })
+                    :with_reference, :completed, :with_fee_manager_approval, income_kind: { applicant: ['Wages'] }, income_period: 'average')
     }
 
     describe 'builds and returns non persisted Application' do
@@ -109,6 +109,10 @@ RSpec.describe ApplicationBuilder do
 
       it 'has the income_kind stored' do
         expect(built_application.income_kind).to eql(applicant: ['Wages'])
+      end
+
+      it 'has the income_period stored' do
+        expect(built_application.income_period).to eql('average')
       end
 
       [:benefits, :income].each do |column|
@@ -217,7 +221,6 @@ RSpec.describe ApplicationBuilder do
       describe 'has savings record built' do
         it { expect(built_application.saving).to be_a(Saving) }
         it { expect(built_application.saving).not_to be_persisted }
-        it { expect(built_application.saving.choice).to eq online_application.income_period }
       end
 
       describe 'the saving' do
