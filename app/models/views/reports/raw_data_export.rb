@@ -22,6 +22,7 @@ module Views
         emergency: 'emergency',
         income: 'income',
         income_threshold: 'income_threshold exceeded',
+        income_period: 'income period',
         reg_number: 'ho/ni number',
         children: 'children',
         children_age_band_one: 'age band under 14',
@@ -129,7 +130,7 @@ module Views
 
       def simple_columns
         ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate',
-         'details.refund', 'details.statement_signed_by', 'application_type', 'income',
+         'details.refund', 'details.statement_signed_by', 'application_type', 'income', 'income_period',
          'children', 'decision', 'amount_to_pay', 'decision_cost', 'applicants.married',
          'applicants.partner_ni_number', 'applicants.partner_last_name',
          'income_min_threshold_exceeded', 'income_max_threshold_exceeded']
