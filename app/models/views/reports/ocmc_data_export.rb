@@ -2,6 +2,7 @@ module Views
   module Reports
     class OcmcDataExport
       require 'csv'
+      include OcmcExportHelper
 
       def initialize(start_date, end_date, office_id)
         @date_from = format_dates(start_date)
@@ -18,19 +19,18 @@ module Views
         CSV.generate do |csv|
           csv << data.first.keys
           data.each do |row|
-            csv << row.values
+            csv << process_row(row).values
           end
         end
       end
 
       private
 
-      def data
-        @data ||= build_data
-      end
-
-      def build_data
-        ActiveRecord::Base.connection.execute(sql_query)
+      def process_row(row)
+        csv_row = row
+        csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
+        csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
+        csv_row
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -43,7 +43,10 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         applications.income as \"Income\",
+        applications.income_period as \"Income period\",
         applications.children as \"Children\",
+        applications.children_age_band as \"Age band under 14\",
+        applications.children_age_band as \"Age band 14+\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         applications.decision as \"Decision\",
         applications.amount_to_pay as \"Applicant pays estimate\",
@@ -63,7 +66,15 @@ module Views
         END AS \"Capital\",
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
-        details.date_received as \"Date received\"
+        details.date_received as \"Date received\",
+        details.statement_signed_by as \"Statement signed by\",
+        CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+             WHEN applicants.partner_ni_number = '' THEN 'false'
+             WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
+             END AS \"Partner NI entered\",
+        CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
+             WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
+             END AS \"Partner name entered\"
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id

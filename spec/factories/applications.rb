@@ -130,6 +130,7 @@ FactoryBot.define do
       income { 2000 }
       dependents { true }
       children { 3 }
+      children_age_band { { 'one' => '1', 'two' => '2' } }
       outcome { 'part' }
       application_type { 'income' }
       amount_to_pay { 100 }

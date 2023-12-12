@@ -8,12 +8,25 @@ FactoryBot.define do
       probate { nil }
       case_number { 'JK123456A' }
       form_name { 'ABC123' }
+      statement_signed_by { 'applicant' }
     end
 
     trait :probate do
       probate { true }
       deceased_name { 'John Smith' }
       date_of_death { Time.zone.yesterday }
+    end
+
+    trait :litigation_friend do
+      statement_signed_by { 'litigation_friend' }
+    end
+
+    trait :legal_representative do
+      statement_signed_by { 'legal_representative' }
+    end
+
+    trait :applicant do
+      statement_signed_by { 'applicant' }
     end
 
     trait :refund do

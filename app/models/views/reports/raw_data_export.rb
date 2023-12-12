@@ -9,6 +9,7 @@ module Views
       FIELDS = {
         id: 'id',
         name: 'office',
+        reference: 'reference',
         jurisdiction: 'jurisdiction',
         sop_code: 'SOP code',
         fee: 'fee',
@@ -21,8 +22,11 @@ module Views
         emergency: 'emergency',
         income: 'income',
         income_threshold: 'income_threshold exceeded',
+        income_period: 'income period',
         reg_number: 'ho/ni number',
         children: 'children',
+        children_age_band_one: 'age band under 14',
+        children_age_band_two: 'age band 14+',
         married: 'married',
         over_61: 'over 61',
         decision: 'decision',
@@ -39,7 +43,10 @@ module Views
         date_of_birth: 'date of birth',
         date_received: 'date received',
         date_fee_paid: 'date paid',
-        date_submitted_online: 'date submitted online'
+        date_submitted_online: 'date submitted online',
+        statement_signed_by: 'statement signed by',
+        partner_ni: 'partner ni entered',
+        partner_name: 'partner name entered'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -81,15 +88,14 @@ module Views
 
       # rubocop:disable Metrics/MethodLength
       def process_row(row, attr)
-        if attr == :estimated_cost
-          estimated_decision_cost_calculation(row)
-        elsif attr == :estimated_amount_to_pay
-          estimation_amount_to_pay(row)
-        elsif [:reg_number, :income_threshold, :final_amount_to_pay].include?(attr)
+        if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
+            :final_amount_to_pay].include?(attr)
           send(attr, row)
         elsif [:date_received, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
+        elsif [:children_age_band_two, :children_age_band_one].include?(attr)
+          children_age_band(row, attr)
         elsif attr == :over_61
           over_61?(row)
         else
@@ -114,15 +120,20 @@ module Views
 
       def build_data
         Application.
-          select('id', 'details.fee', 'details.form_name', 'details.probate', 'details.refund',
-                 'application_type', 'income', 'children', 'decision', 'amount_to_pay',
-                 'decision_cost', 'applicants.married', 'income_min_threshold_exceeded',
-                 'income_max_threshold_exceeded').
+          select(simple_columns).
           select(named_columns).
           joins(joins).
           joins(:applicant, :business_entity, detail: :jurisdiction).
           where("offices.name NOT IN ('Digital')").
           where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+      end
+
+      def simple_columns
+        ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate',
+         'details.refund', 'details.statement_signed_by', 'application_type', 'income', 'income_period',
+         'children', 'decision', 'amount_to_pay', 'decision_cost', 'applicants.married',
+         'applicants.partner_ni_number', 'applicants.partner_last_name',
+         'income_min_threshold_exceeded', 'income_max_threshold_exceeded']
       end
 
       def named_columns
@@ -152,7 +163,15 @@ module Views
           applicants.date_of_birth AS date_of_birth,
           details.date_received AS date_received,
           details.date_fee_paid AS date_fee_paid,
-          oa.created_at AS date_submitted_online
+          oa.created_at AS date_submitted_online,
+          details.statement_signed_by AS statement_signed_by,
+          CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+               WHEN applicants.partner_ni_number = '' THEN 'false'
+               WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
+               END AS partner_ni,
+          CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
+               WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
+               END AS partner_name
         COLUMNS
       end
 
@@ -167,11 +186,11 @@ module Views
         JOINS
       end
 
-      def estimated_decision_cost_calculation(row)
+      def estimated_cost(row)
         (row.fee - row.amount_to_pay.to_f) || 0
       end
 
-      def estimation_amount_to_pay(row)
+      def estimated_amount_to_pay(row)
         row.amount_to_pay || 0
       end
 
@@ -201,6 +220,24 @@ module Views
 
       def date_for_age_calculation(row)
         row.send(:date_submitted_online) || row.send(:date_received)
+      end
+
+      def children_age_band(row, attr_key)
+        return nil if age_bands_blank?(row)
+
+        if attr_key == :children_age_band_one
+          (row.children_age_band[:one] || row.children_age_band['one'])
+        elsif attr_key == :children_age_band_two
+          (row.children_age_band[:two] || row.children_age_band['two'])
+        end
+      end
+
+      def age_bands_blank?(row)
+        return true if row.children_age_band.blank?
+
+        row.children_age_band.keys.select do |key|
+          key.to_s == 'one' || key.to_s == 'two'
+        end.blank?
       end
 
     end

@@ -3,6 +3,7 @@ module Views
   module Reports
     class HmrcOcmcDataExport
       require 'csv'
+      include OcmcExportHelper
 
       def initialize(start_date, end_date, office_id)
         @date_from = format_dates(start_date)
@@ -26,14 +27,6 @@ module Views
 
       private
 
-      def data
-        @data ||= build_data
-      end
-
-      def build_data
-        ActiveRecord::Base.connection.execute(sql_query)
-      end
-
       # rubocop:disable Metrics/MethodLength
       def sql_query
         "SELECT
@@ -45,7 +38,10 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         applications.income as \"Income\",
+        applications.income_period as \"Income period\",
         applications.children as \"Children\",
+        applications.children_age_band as \"Age band under 14\",
+        applications.children_age_band as \"Age band 14+\",
         CASE WHEN ec.id IS NULL THEN applications.amount_to_pay ELSE ec.amount_to_pay END as \"Applicant pays\",
         details.fee - applications.amount_to_pay as \"Departmental cost estimate\",
         CASE WHEN ec.id IS NULL THEN details.fee - applications.amount_to_pay ELSE details.fee - ec.amount_to_pay
@@ -106,7 +102,16 @@ module Views
            ELSE NULL
         END as \"Income processed\",
         request_params as \"HMRC request date range\",
-        tax_credit
+        tax_credit,
+        details.statement_signed_by as \"Statement signed by\",
+        CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
+             WHEN applicants.partner_ni_number = '' THEN 'false'
+             WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
+             END AS \"Partner NI entered\",
+        CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
+             WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
+             END AS \"Partner name entered\"
+
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id
@@ -125,15 +130,19 @@ module Views
       end
       # rubocop:enable Metrics/MethodLength
 
+      # rubocop:disable Metrics/AbcSize
       def process_row(row)
         csv_row = row
         csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC total income'] = hmrc_total_income(row)
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
+        csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
+        csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
         csv_row['tax_credit'] = ''
         csv_row
       end
+      # rubocop:enable Metrics/AbcSize
 
       def income_kind(value)
         return unless value
@@ -180,6 +189,7 @@ module Views
         to = date_formatted(date_range)[:to]
         "#{from} - #{to}"
       end
+
     end
   end
 end
