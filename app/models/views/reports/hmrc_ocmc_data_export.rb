@@ -38,6 +38,7 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         applications.income as \"Income\",
+        applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
         applications.children_age_band as \"Age band 14+\",

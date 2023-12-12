@@ -13,9 +13,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:date_to) { Date.parse('1/2/2021') }
 
   describe 'to_csv' do
-    let(:application1) { create(:application, :processed_state, office: office, income_kind: {}, detail: app1_detail, children_age_band: { one: 7, two: 8 }) }
+    let(:application1) {
+      create(:application, :processed_state, office: office, income_kind: {},
+                                             detail: app1_detail, children_age_band: { one: 7, two: 8 }, income_period: 'last_month')
+    }
     let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
-    let(:application3) { create(:application, :waiting_for_part_payment_state, office: office, detail: app3_detail, children_age_band: { one: 1, two: 1 }) }
+    let(:application3) {
+      create(:application, :waiting_for_part_payment_state, office: office,
+                                                            detail: app3_detail, children_age_band: { one: 1, two: 1 }, income_period: 'average')
+    }
     let(:application4) { create(:application, :deleted_state, office: office, detail: app2_detail, children_age_band: { one: 0, two: 1 }) }
     let(:application5) { create(:application, office: office) }
     let(:application6) { create(:application, :processed_state, office: office) }
@@ -155,15 +161,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
       context 'children age bands' do
         it {
-          expect(data[4]).to include('500,1,7,8')
+          expect(data[4]).to include('500,last_month,1,7,8')
         }
 
         it {
-          expect(data[1]).to include('500,1,0,1')
+          expect(data[1]).to include('500,,1,0,1')
         }
 
         it {
-          expect(data[2]).to include('500,1,1,1')
+          expect(data[2]).to include('500,average,1,1,1')
         }
       end
 

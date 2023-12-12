@@ -13,9 +13,15 @@ RSpec.describe Views::Reports::OcmcDataExport do
   let(:date_to) { Date.parse('1/2/2021') }
 
   describe 'to_csv' do
-    let(:application1) { create(:application, :processed_state, office: office, detail: app1_detail, children_age_band: { one: 7, two: 8 }) }
+    let(:application1) {
+      create(:application, :processed_state, office: office, detail: app1_detail,
+                                             children_age_band: { one: 7, two: 8 }, income_period: 'last_month')
+    }
     let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
-    let(:application3) { create(:application, :waiting_for_part_payment_state, office: office, detail: app3_detail, children_age_band: { one: 1, two: 1 }) }
+    let(:application3) {
+      create(:application, :waiting_for_part_payment_state, office: office, detail: app3_detail,
+                                                            children_age_band: { one: 1, two: 1 }, income_period: 'average')
+    }
     let(:application4) { create(:application, :deleted_state, office: office, detail: app2_detail, children_age_band: { one: 0, two: 1 }) }
     let(:application5) { create(:application, office: office) }
     let(:application6) { create(:application, :processed_state, office: office) }
@@ -46,7 +52,7 @@ RSpec.describe Views::Reports::OcmcDataExport do
     end
 
     it 'first row are keys' do
-      keys = "Office,HwF reference number,Fee,Application type,Form,Refund,Income,Children,Age band under 14,Age band 14+,Married,Decision,Applicant pays estimate,Applicant pays,Departmental cost estimate,Departmental cost,Source,Granted?,Evidence checked?,Capital,Saving and Investments,Case number,Date received,Statement signed by,Partner NI entered,Partner name entered"
+      keys = "Office,HwF reference number,Fee,Application type,Form,Refund,Income,Income period,Children,Age band under 14,Age band 14+,Married,Decision,Applicant pays estimate,Applicant pays,Departmental cost estimate,Departmental cost,Source,Granted?,Evidence checked?,Capital,Saving and Investments,Case number,Date received,Statement signed by,Partner NI entered,Partner name entered"
 
       expect(data[0]).to eql(keys)
     end
@@ -81,15 +87,15 @@ RSpec.describe Views::Reports::OcmcDataExport do
     end
     context 'children age bands' do
       it {
-        expect(data[4]).to include('500,1,7,8')
+        expect(data[4]).to include('500,last_month,1,7,8')
       }
 
       it {
-        expect(data[1]).to include('500,1,0,1')
+        expect(data[1]).to include('500,,1,0,1')
       }
 
       it {
-        expect(data[2]).to include('500,1,1,1')
+        expect(data[2]).to include('500,average,1,1,1')
       }
     end
 
