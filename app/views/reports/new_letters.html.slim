@@ -9,6 +9,7 @@ h2.govuk-heading-m Processed application results in part payment-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       full_fee: '£{AUTO: FULL FEE}',
@@ -22,6 +23,7 @@ h2.govuk-heading-m Evidence check - received, but not correct-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       expiry_date: '{AUTO: DATE EVIDENCE DUE}',
       amount_to_pay: '{AUTO: AMOUNT TO PAY}')
@@ -32,6 +34,7 @@ h2.govuk-heading-m Part payment - requested, but not received-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
@@ -42,6 +45,7 @@ h2.govuk-heading-m Part payment - received, but not correct-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application rejected because savings threshold exceeded-representation
@@ -53,6 +57,7 @@ h2.govuk-heading-m Application rejected because savings threshold exceeded-repre
       savings_total: '{AUTO: SAVINGS TOTAL}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application rejected because income threshold exceeded-representation
@@ -64,6 +69,7 @@ h2.govuk-heading-m Application rejected because income threshold exceeded-repres
       expiry_date: '{AUTO: DATE FOR PAYMENT}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application rejected because benefits not received-representation
@@ -72,6 +78,7 @@ h2.govuk-heading-m Application rejected because benefits not received-representa
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       amount_to_pay: '{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
@@ -82,6 +89,7 @@ h2.govuk-heading-m Application is not eligible for refund-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Application is eligible for partial refund-representation
@@ -90,6 +98,7 @@ h2.govuk-heading-m Application is eligible for partial refund-representation
       reference: '{AUTO: APPLICATION REFERENCE}',
       full_name: '{AUTO: APPLICANTS NAME}',
       legal_rep: '{AUTO: THIRD PARTY NAME}',
+      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}',
       fee: '{AUTO: FEE AMOUNT}',
       amount_refunded: '{AUTO: PARTIAL REMISSION AMOUNT}',
@@ -101,6 +110,7 @@ h2.govuk-heading-m Application is eligible for full refund-representation
     reference: '{AUTO: APPLICATION REFERENCE}',
     full_name: '{AUTO: APPLICANTS NAME}',
     legal_rep: '{AUTO: THIRD PARTY NAME}',
+    greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
     user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Reference code received out of time-representation
@@ -109,6 +119,7 @@ h2.govuk-heading-m Reference code received out of time-representation
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
@@ -118,6 +129,7 @@ h2.govuk-heading-m Processed application results in evidence check-representatio
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           evidence_due: '{AUTO: DATE EVIDENCE DUE}')
   = t('new_letters.new_letters.processed_application.wages_html')
   = t('new_letters.new_letters.processed_application.child_maintenance_html')
@@ -134,6 +146,7 @@ h2.govuk-heading-m Evidence check - requested, but not received-representation
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           evidence_due: '{AUTO: DATE EVIDENCE DUE}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
@@ -142,6 +155,7 @@ h2.govuk-heading-m Compulsory information missing from new application-represent
   = t('new_letters.new_letters.information_missing_html',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
@@ -150,5 +164,6 @@ h2.govuk-heading-m Application is eligible for full remission-representation
   = t('new_letters.new_letters.full_remission_html',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           reference: '{AUTO: APPLICATION REFERENCE}',
           user_name: '{AUTO: CURRENT USERS NAME}')

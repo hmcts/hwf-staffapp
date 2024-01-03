@@ -26,7 +26,7 @@
     .confirmation-letter
 
       - if @application.income_kind.blank?
-        =t('new_letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
+        =t('new_letters.new_letters.processed_application.header_html', reference: @application.reference, greeting: @confirm.representative_full_name ? "#{@confirm.representative_full_name} regarding #{@application.applicant.full_name}" : @application.applicant.full_name, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
         =t('new_letters.new_letters.processed_application.wages_html')
         =t('new_letters.new_letters.processed_application.child_maintenance_html')
         =t('new_letters.new_letters.processed_application.benefits_and_credits_html')
@@ -36,7 +36,7 @@
         =t('new_letters.new_letters.processed_application.other_income_header_html')
         =t('new_letters.new_letters.processed_application.footer_html', user_name: current_user.name, reference: @application.reference)
       -else
-        =t('new_letters.new_letters.processed_application.header_html', reference: @application.reference, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
+        =t('new_letters.new_letters.processed_application.header_html', reference: @application.reference, greeting: @confirm.representative_full_name ? "#{@confirm.representative_full_name} regarding #{@application.applicant.full_name}" : @application.applicant.full_name, full_name: @application.applicant.full_name, legal_rep: @confirm.representative_full_name, evidence_due: '28 days')
         - if display_evidence_section?(@application, 'wages')
           =t('new_letters.new_letters.processed_application.wages_html')
         - if display_evidence_section?(@application, 'child_maintenace')

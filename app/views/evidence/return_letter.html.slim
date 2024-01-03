@@ -35,6 +35,7 @@
        reference: @application_view.reference,
        full_name: @applicant.full_name,
        legal_rep: @representative.full_name,
+       greeting: @representative.full_name ? "#{@representative.full_name} regarding #{@applicant.full_name}" : @applicant.full_name,
        user_name: current_user.name,
        evidence_due: '28 days')
 
