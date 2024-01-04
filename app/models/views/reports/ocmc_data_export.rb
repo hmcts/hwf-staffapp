@@ -74,7 +74,8 @@ module Views
              END AS \"Partner NI entered\",
         CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
              WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
-             END AS \"Partner name entered\"
+             END AS \"Partner name entered\",
+        details.calculation_scheme as \"HwF Scheme\"
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id

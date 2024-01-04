@@ -27,8 +27,8 @@ RSpec.describe Views::Reports::OcmcDataExport do
     let(:application6) { create(:application, :processed_state, office: office) }
     let(:application7) { create(:application, :processed_state) }
 
-    let(:app1_detail) { create(:complete_detail, :legal_representative) }
-    let(:app2_detail) { create(:complete_detail, :litigation_friend) }
+    let(:app1_detail) { create(:complete_detail, :legal_representative, calculation_scheme: 'post_ucd') }
+    let(:app2_detail) { create(:complete_detail, :litigation_friend, calculation_scheme: 'pre_ucd') }
     let(:app3_detail) { create(:complete_detail, :applicant) }
 
     subject(:data) { ocmc_export.to_csv.split("\n") }
@@ -52,9 +52,12 @@ RSpec.describe Views::Reports::OcmcDataExport do
     end
 
     it 'first row are keys' do
-      keys = "Office,HwF reference number,Fee,Application type,Form,Refund,Income,Income period,Children,Age band under 14,Age band 14+,Married,Decision,Applicant pays estimate,Applicant pays,Departmental cost estimate,Departmental cost,Source,Granted?,Evidence checked?,Capital,Saving and Investments,Case number,Date received,Statement signed by,Partner NI entered,Partner name entered"
+      keys = "Office,HwF reference number,Fee,Application type,Form,Refund,Income,Income period,Children,Age band under 14," \
+             "Age band 14+,Married,Decision,Applicant pays estimate,Applicant pays,Departmental cost estimate,Departmental cost," \
+             "Source,Granted?,Evidence checked?,Capital,Saving and Investments,Case number,Date received,Statement signed by," \
+             "Partner NI entered,Partner name entered,HwF Scheme"
 
-      expect(data[0]).to eql(keys)
+      expect(data[0]).to eq(keys)
     end
 
     context 'order by created at' do
@@ -74,11 +77,11 @@ RSpec.describe Views::Reports::OcmcDataExport do
 
     context 'signed by values and partner data' do
       it {
-        expect(data[4]).to include('legal_representative,true,false')
+        expect(data[4]).to include('legal_representative,true,false,post_ucd')
       }
 
       it {
-        expect(data[1]).to include('litigation_friend,false,true')
+        expect(data[1]).to include('litigation_friend,false,true,pre_ucd')
       }
 
       it {

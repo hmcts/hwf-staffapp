@@ -46,7 +46,8 @@ module Views
         date_submitted_online: 'date submitted online',
         statement_signed_by: 'statement signed by',
         partner_ni: 'partner ni entered',
-        partner_name: 'partner name entered'
+        partner_name: 'partner name entered',
+        calculation_scheme: 'HwF Scheme'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -165,6 +166,7 @@ module Views
           details.date_fee_paid AS date_fee_paid,
           oa.created_at AS date_submitted_online,
           details.statement_signed_by AS statement_signed_by,
+          details.calculation_scheme AS calculation_scheme,
           CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
                WHEN applicants.partner_ni_number = '' THEN 'false'
                WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'

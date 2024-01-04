@@ -27,8 +27,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     let(:application6) { create(:application, :processed_state, office: office) }
     let(:application7) { create(:application, :processed_state) }
 
-    let(:app1_detail) { create(:complete_detail, :legal_representative) }
-    let(:app2_detail) { create(:complete_detail, :litigation_friend) }
+    let(:app1_detail) { create(:complete_detail, :legal_representative, calculation_scheme: 'post_ucd') }
+    let(:app2_detail) { create(:complete_detail, :litigation_friend, calculation_scheme: 'pre_ucd') }
     let(:app3_detail) { create(:complete_detail, :applicant) }
 
     subject(:data) { ocmc_export.to_csv.split("\n") }
@@ -148,11 +148,11 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
       context 'signed by values and partner data' do
         it {
-          expect(data[4]).to include('legal_representative,true,false')
+          expect(data[4]).to include('legal_representative,true,false,post_ucd')
         }
 
         it {
-          expect(data[1]).to include('litigation_friend,false,true')
+          expect(data[1]).to include('litigation_friend,false,true,pre_ucd')
         }
 
         it {
