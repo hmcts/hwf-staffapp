@@ -28,7 +28,7 @@ module Views
         children_age_band_one: 'age band under 14',
         children_age_band_two: 'age band 14+',
         married: 'married',
-        over_61: 'over 61',
+        over_61: 'pension age',
         decision: 'decision',
         final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
@@ -158,7 +158,7 @@ module Views
                WHEN part_payments.outcome = 'none' THEN 'false'
                WHEN part_payments.outcome = 'part' THEN 'true' ELSE NULL END AS part_payment_outcome,
           savings.amount AS savings_amount,
-          savings.over_61 AS partner_over_61,
+          savings.over_61 AS over_61,
           details.case_number AS case_number,
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
@@ -214,10 +214,7 @@ module Views
       end
 
       def over_61?(row)
-        return 'Yes' if row.send(:partner_over_61) == true
-        dob = row.send(:date_of_birth)
-        received_minus_age = date_for_age_calculation(row) - 61.years
-        received_minus_age > dob ? 'Yes' : 'No'
+        row.send(:over_61) == true ? 'Yes' : 'No'
       end
 
       def date_for_age_calculation(row)
