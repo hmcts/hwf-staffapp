@@ -25,6 +25,10 @@ class BandBaseCalculation
     @saving == true
   end
 
+  def income_failed?
+    @saving == true && @outcome == 'none'
+  end
+
   def remission
     return outcome if savings_check.present?
     @saving = true

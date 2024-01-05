@@ -11,7 +11,11 @@ RSpec.describe ProcessApplication do
   let(:dwp_result) { 'Yes' }
   let(:benefits) { false }
   let(:saving_passed) { true }
-  let(:band_calculation) { instance_double(BandBaseCalculation, saving_passed?: saving_passed, remission: remission_outcome, amount_to_pay: amount_to_pay) }
+  let(:income_failed) { false }
+  let(:band_calculation) {
+    instance_double(BandBaseCalculation, saving_passed?: saving_passed, remission: remission_outcome,
+                                         amount_to_pay: amount_to_pay, income_failed?: income_failed)
+  }
   let(:remission_outcome) { 'none' }
   let(:amount_to_pay) { 200 }
 
@@ -51,7 +55,20 @@ RSpec.describe ProcessApplication do
             expect(application.saving.passed).to be false
             expect(application.outcome).to eq 'none'
             expect(application.application_type).to eq 'benefit'
+          end
+        end
 
+        context 'failed income no benefits' do
+          let(:saving_passed) { true }
+          let(:income_failed) { true }
+          let(:benefits) { false }
+
+          it 'save applicaiton with result' do
+            expect(application.id).not_to be_nil
+            expect(application.saving.passed).to be true
+            expect(application.income_max_threshold_exceeded).to be true
+            expect(application.outcome).to eq 'none'
+            expect(application.application_type).to eq 'income'
           end
         end
 
@@ -63,6 +80,7 @@ RSpec.describe ProcessApplication do
             expect(application.outcome).to eq 'none'
             expect(application.application_type).to eq 'benefit'
             expect(application.saving.passed).to be true
+            expect(application.income_max_threshold_exceeded).to be_nil
           end
         end
 
