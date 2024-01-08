@@ -61,7 +61,7 @@
               greeting: @confirm.representative_full_name ? "#{@confirm.representative_full_name} regarding #{@application.applicant.full_name}" : @application.applicant.full_name,
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
-              savings_threshold: currency_format(@application.saving.fee_threshold),
+              savings_threshold: currency_format(@application.saving.amount),
               savings_total: saving_value(@application))
 
       -elsif display_income_failed_letter?(@application)
