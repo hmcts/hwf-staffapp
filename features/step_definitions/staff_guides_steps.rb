@@ -7,7 +7,7 @@ When("I am signed in on the guide page") do
 end
 
 Then("I can view How to Guide") do
-  expect(guide_page.content.how_to_guide['href']).to end_with '/my-work/help-with-fees/staff-guidance/'
+  expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
 Then("I can view the training course") do
