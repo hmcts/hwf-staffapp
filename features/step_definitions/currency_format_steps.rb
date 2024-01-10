@@ -44,23 +44,23 @@ Then("I should be on the paper application confirmation page") do
 end
 
 Then("I should see amount to pay is an integer amount") do
-  expect(confirmation_page.content.fee_to_pay.text).not_to have_text '.00'
+  expect(confirmation_page.content.fee_to_pay.text).to have_no_text '.00'
 end
 
 Then("I should see total monthly income is an integer amount") do
-  expect(confirmation_page.content.total_income.text).not_to have_text '.00'
+  expect(confirmation_page.content.total_income.text).to have_no_text '.00'
 end
 
 Then("I should see maximum amount of savings and investments allowed is an integer amount") do
-  expect(confirmation_page.content.max_savings.text).not_to have_text '.00'
+  expect(confirmation_page.content.max_savings.text).to have_no_text '.00'
 end
 
 Then("I should see total savings is an integer amount") do
-  expect(confirmation_page.content.total_savings.text).not_to have_text '.00'
+  expect(confirmation_page.content.total_savings.text).to have_no_text '.00'
 end
 
 Then("I should see that all currency amounts are integers") do
-  expect(confirmation_page.content.part_payment_sentence.text).not_to have_text '.00'
+  expect(confirmation_page.content.part_payment_sentence.text).to have_no_text '.00'
 end
 
 Given("I have completed a part payment paper application") do

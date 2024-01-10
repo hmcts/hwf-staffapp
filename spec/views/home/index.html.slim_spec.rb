@@ -43,7 +43,7 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to generate reports' do
       it 'are not rendered' do
-        is_expected.not_to have_content 'Generate reports'
+        is_expected.to have_no_content 'Generate reports'
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to list offices' do
       it 'are not rendered' do
-        is_expected.not_to have_content 'View offices'
+        is_expected.to have_no_content 'View offices'
       end
     end
   end
@@ -89,8 +89,8 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to process application' do
       it 'is not rendered' do
-        is_expected.not_to have_text 'Process application'
-        is_expected.not_to have_link 'Start now'
+        is_expected.to have_no_text 'Process application'
+        is_expected.to have_no_link 'Start now'
       end
     end
   end
@@ -114,8 +114,8 @@ RSpec.describe "home/index" do
     end
     context 'when user does not have permissions to list applications' do
       it 'are not rendered' do
-        is_expected.not_to have_content 'Waiting for evidence'
-        is_expected.not_to have_content 'Waiting for part-payment'
+        is_expected.to have_no_content 'Waiting for evidence'
+        is_expected.to have_no_content 'Waiting for part-payment'
       end
     end
   end
@@ -133,9 +133,9 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to list applications' do
       it 'are not rendered' do
-        is_expected.not_to have_content 'Completed'
-        is_expected.not_to have_link 'Processed applications', href: processed_applications_path
-        is_expected.not_to have_link 'Deleted applications', href: deleted_applications_path
+        is_expected.to have_no_content 'Completed'
+        is_expected.to have_no_link 'Processed applications', href: processed_applications_path
+        is_expected.to have_no_link 'Deleted applications', href: deleted_applications_path
       end
     end
   end
@@ -151,7 +151,7 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to see the graphs' do
       it 'are not rendered' do
-        is_expected.not_to have_xpath('//h2', text: 'Total')
+        is_expected.to have_no_xpath('//h2', text: 'Total')
       end
     end
   end

@@ -10,5 +10,5 @@ Then("I can change the user to a user, manager, admin, mi, reader") do
 end
 
 Then("I can not change the users role") do
-  expect(page).not_to have_text 'User Manager Admin Mi Reader'
+  expect(page).to have_no_text 'User Manager Admin Mi Reader'
 end

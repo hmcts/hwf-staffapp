@@ -19,6 +19,17 @@ RSpec.describe Forms::Report::FinanceTransactionalReport do
 
         it { is_expected.not_to be_valid }
       end
+
+      context 'set from attributes' do
+        before {
+          report.day_date_from = 1
+          report.month_date_from = 2
+          report.year_date_from = 2024
+          report.valid?
+        }
+
+        it { expect(report.date_from).to eq('1/2/2024'.to_date) }
+      end
     end
 
     describe 'date_to' do
@@ -35,6 +46,18 @@ RSpec.describe Forms::Report::FinanceTransactionalReport do
 
         it { is_expected.not_to be_valid }
       end
+
+      context 'set from attributes' do
+        before {
+          report.day_date_to = 2
+          report.month_date_to = 12
+          report.year_date_to = 2023
+          report.valid?
+        }
+
+        it { expect(report.date_to).to eq('2/12/2023'.to_date) }
+      end
+
     end
 
     describe '#i18n_scope' do

@@ -25,7 +25,7 @@ RSpec.describe "offices/index" do
 
     context 'when user does not have permission to chang the office\'s details' do
       it 'is not rendered' do
-        is_expected.not_to have_xpath('//tbody/tr[2]/td[3]/a')
+        is_expected.to have_no_xpath('//tbody/tr[2]/td[3]/a')
       end
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe "offices/index" do
 
     context 'when user does not have permission to create new office' do
       it 'is not rendered' do
-        expect(rendered).not_to have_link('New Office')
+        expect(rendered).to have_no_link('New Office')
       end
     end
   end

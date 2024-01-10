@@ -14,7 +14,7 @@ RSpec.feature 'Business entity management around SOP and BEC switchover' do
   context 'after the switchover date' do
 
     scenario 'user cannot edit the be_code' do
-      expect(page).not_to have_xpath("//input[@name='business_entity[be_code]' and @value='#{business_entity.be_code}' and @disabled]")
+      expect(page).to have_no_xpath("//input[@name='business_entity[be_code]' and @value='#{business_entity.be_code}' and @disabled]")
     end
 
     scenario 'user can edit the sop_code' do

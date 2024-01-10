@@ -33,8 +33,8 @@ RSpec.describe 'users/show' do
 
       describe 'hides links to delete and view list' do
         it { expect(rendered).to have_xpath("//a[@href='#{edit_user_path(user)}']") }
-        it { expect(rendered).not_to have_xpath("//a[@href='#{user_path(user)}' and @data-method='delete']") }
-        it { expect(rendered).not_to have_xpath("//a[@href='#{users_path}']") }
+        it { expect(rendered).to have_no_xpath("//a[@href='#{user_path(user)}' and @data-method='delete']") }
+        it { expect(rendered).to have_no_xpath("//a[@href='#{users_path}']") }
       end
     end
   end

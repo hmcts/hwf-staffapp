@@ -39,15 +39,15 @@ RSpec.describe 'users/invitations/new' do
     describe 'renders new user invite form with three roles' do
       it { expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'Manager') }
       it { expect(rendered).to have_xpath("//select[@name='user[role]']/option", text: 'User') }
-      it { expect(rendered).not_to have_xpath("//select[@name='user[role]']/option", text: 'Admin') }
-      it { expect(rendered).not_to have_xpath("//select[@name='user[role]']/option", text: 'Mi') }
+      it { expect(rendered).to have_no_xpath("//select[@name='user[role]']/option", text: 'Admin') }
+      it { expect(rendered).to have_no_xpath("//select[@name='user[role]']/option", text: 'Mi') }
     end
     it 'does not render the office name' do
       expect(rendered).not_to include(manager.office.name)
     end
 
     describe 'adds a hidden field for office id' do
-      it { expect(rendered).not_to have_xpath("//select[@name='user[office_id]']") }
+      it { expect(rendered).to have_no_xpath("//select[@name='user[office_id]']") }
       it { expect(rendered).to have_xpath("//input[@name='user[office_id]' and @value='#{manager.office.id}']") }
     end
   end

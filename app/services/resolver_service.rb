@@ -14,7 +14,7 @@ class ResolverService
   def complete
     check_outcome!
     ActiveRecord::Base.transaction do
-      send("complete_#{derive_object(@calling_object)}", @calling_object)
+      send(:"complete_#{derive_object(@calling_object)}", @calling_object)
     end
   end
 

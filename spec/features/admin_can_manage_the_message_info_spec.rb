@@ -32,7 +32,7 @@ RSpec.feature 'Admin can manage message info' do
 
     scenario 'can view the message' do
       visit '/'
-      expect(page).not_to have_content 'Edit banner'
+      expect(page).to have_no_content 'Edit banner'
       expect(page).to have_content 'This is message from admin, hear, hear.'
     end
   end
