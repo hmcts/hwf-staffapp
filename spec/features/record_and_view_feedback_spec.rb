@@ -17,7 +17,7 @@ RSpec.feature 'Recording and viewing feedback' do
       within(:xpath, './/ul[@id="navigation"]') do
         click_link 'Feedback'
       end
-      expect(page).not_to have_text "Feedback received"
+      expect(page).to have_no_text "Feedback received"
 
       fill_in 'experience', with: 'Awesome user experience!'
       fill_in 'ideas', with: 'Needs more kitten'
@@ -43,7 +43,7 @@ RSpec.feature 'Recording and viewing feedback' do
         click_link 'Feedback'
       end
 
-      expect(page).not_to have_text "You don’t have permission to do this"
+      expect(page).to have_no_text "You don’t have permission to do this"
       expect(page).to have_text "Feedback received"
       expect(page).to have_text "It works fine"
     end

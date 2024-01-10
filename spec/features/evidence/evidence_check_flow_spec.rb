@@ -237,7 +237,7 @@ RSpec.feature 'Evidence check flow' do
       end
 
       scenario 'the remission register right hand guidance is not shown' do
-        expect(page).not_to have_content 'remission register'
+        expect(page).to have_no_content 'remission register'
       end
     end
 
@@ -245,7 +245,7 @@ RSpec.feature 'Evidence check flow' do
       context 'full' do
         let(:outcome) { 'full' }
 
-        it { expect(page).not_to have_content(/(not\ correct\|part-fee)/) }
+        it { expect(page).to have_no_content(/(not\ correct\|part-fee)/) }
       end
 
       context 'part' do
@@ -279,7 +279,7 @@ RSpec.feature 'Evidence check flow' do
 
         it { expect(page).to have_content "You need to pay the full fee amount of £#{amount} by #{paid_by}." }
 
-        it { expect(page).not_to have_content 'Maximum amount of income allowed: £5,490' }
+        it { expect(page).to have_no_content 'Maximum amount of income allowed: £5,490' }
 
       end
     end

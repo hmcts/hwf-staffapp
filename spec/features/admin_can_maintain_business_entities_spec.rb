@@ -22,7 +22,7 @@ RSpec.feature 'Business entity management:' do
       before { visit edit_office_path(office) }
 
       scenario 'is shown a link to edit business entities' do
-        expect(page).not_to have_content 'Edit the business entities'
+        expect(page).to have_no_content 'Edit the business entities'
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.feature 'Business entity management:' do
         end
 
         scenario 'no more jurisdictions can be deactivated' do
-          expect(page).not_to have_xpath('//a', text: 'Deactivate')
+          expect(page).to have_no_xpath('//a', text: 'Deactivate')
         end
       end
     end

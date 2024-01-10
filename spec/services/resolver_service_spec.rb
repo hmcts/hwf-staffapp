@@ -38,11 +38,11 @@ describe ResolverService do
 
     shared_examples 'application, evidence check or part payment completed' do |type, state, decided, cost|
       it 'sets completed_at for current time' do
-        expect(send("updated_#{type}").completed_at).to eql(current_time)
+        expect(send(:"updated_#{type}").completed_at).to eql(current_time)
       end
 
       it 'sets completed_by to be the user' do
-        expect(send("updated_#{type}").completed_by).to eql(user)
+        expect(send(:"updated_#{type}").completed_by).to eql(user)
       end
 
       it "sets state to be :#{state}" do
@@ -378,15 +378,15 @@ describe ResolverService do
 
     shared_examples 'application, evidence check or part payment returned' do |type|
       it 'sets completed_at for current time' do
-        expect(send("updated_#{type}").completed_at).to eql(current_time)
+        expect(send(:"updated_#{type}").completed_at).to eql(current_time)
       end
 
       it 'sets completed_by to be the user' do
-        expect(send("updated_#{type}").completed_by).to eql(user)
+        expect(send(:"updated_#{type}").completed_by).to eql(user)
       end
 
       it 'sets the outcome to be return' do
-        expect(send("updated_#{type}").outcome).to eql('return')
+        expect(send(:"updated_#{type}").outcome).to eql('return')
       end
 
       it 'sets state to be :processed' do

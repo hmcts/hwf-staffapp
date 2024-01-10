@@ -25,13 +25,13 @@ class LogStuff
     return unless block
 
     if use_logstasher?
-      return unless LogStasher.logger.send("#{severity}?")
+      return unless LogStasher.logger.send(:"#{severity}?")
 
       msg = yield
       event = build_event(*args, msg)
       LogStasher.logger << "#{event.to_json} \n"
     else
-      return unless Rails.logger.send("#{severity}?")
+      return unless Rails.logger.send(:"#{severity}?")
       Rails.logger.send(severity, &block)
     end
   end

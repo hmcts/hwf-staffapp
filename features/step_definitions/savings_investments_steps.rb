@@ -61,7 +61,7 @@ end
 
 When("I click next without selecting a savings and investments option") do
   expect(savings_investments_page.content).not_to have_savings_amount_label
-  expect(savings_investments_page).not_to have_text 'Rounded to the nearest £'
+  expect(savings_investments_page).to have_no_text 'Rounded to the nearest £'
   savings_investments_page.click_next
 end
 

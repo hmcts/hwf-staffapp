@@ -40,7 +40,7 @@ RSpec.describe "offices/show" do
 
     context 'when the user can not edit the office' do
       it 'is not rendered' do
-        is_expected.not_to have_link('Change details')
+        is_expected.to have_no_link('Change details')
       end
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe "offices/show" do
 
     context 'when the user can not list business entities' do
       it 'is not rendered' do
-        is_expected.not_to have_link('Edit the business entities')
+        is_expected.to have_no_link('Edit the business entities')
       end
     end
   end
@@ -72,7 +72,7 @@ RSpec.describe "offices/show" do
 
     context 'when the user can not list offices' do
       it 'is not rendered' do
-        is_expected.not_to have_link('Back to list of offices')
+        is_expected.to have_no_link('Back to list of offices')
       end
     end
   end

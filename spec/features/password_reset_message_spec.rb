@@ -22,7 +22,7 @@ RSpec.feature 'Password reset,' do
         fill_in :user_password_confirmation, with: '123456789'
         click_button 'Update password'
         expect(current_path).to eql(root_path)
-        expect(page).not_to have_text("Your password reset link has expired. Please request a new link using the reset password function and try again.")
+        expect(page).to have_no_text("Your password reset link has expired. Please request a new link using the reset password function and try again.")
         expect(page).to have_text("Your password has been changed successfully. You are now signed in.")
       end
     end

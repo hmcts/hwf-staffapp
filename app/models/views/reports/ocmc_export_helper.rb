@@ -14,9 +14,9 @@ module Views
         return nil if age_bands_blank?(value)
         hash_value = YAML.safe_load(value, permitted_classes: [Symbol])
         if attr_key == :children_age_band_one
-          (hash_value[:one] || hash_value['one'])
+          hash_value[:one] || hash_value['one']
         elsif attr_key == :children_age_band_two
-          (hash_value[:two] || hash_value['two'])
+          hash_value[:two] || hash_value['two']
         end
       end
 

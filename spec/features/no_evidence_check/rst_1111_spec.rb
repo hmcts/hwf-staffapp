@@ -33,7 +33,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
 
@@ -57,7 +57,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       fill_benefits(true)
 
       click_button 'Complete processing'
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
 
@@ -82,7 +82,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
@@ -106,7 +106,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✗   Not eligible for help with fees')
     end
 
@@ -131,7 +131,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
