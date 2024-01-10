@@ -63,7 +63,7 @@ RSpec.describe UsersController do
           end
 
           it 'does not show them the options to change their role' do
-            expect(response.body).not_to have_select('user[role]')
+            expect(response.body).to have_no_select('user[role]')
           end
         end
 

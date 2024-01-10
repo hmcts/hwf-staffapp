@@ -2,7 +2,7 @@ module ApplicationFormMacros
   include Warden::Test::Helpers
 
   def complete_page_as(page, application, submit)
-    send("complete_#{page}", application)
+    send(:"complete_#{page}", application)
 
     submit ||= false
     click_button 'Next' if submit

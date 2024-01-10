@@ -28,7 +28,7 @@ RSpec.feature 'Delete processed applications' do
       expect(page).to have_content('Processed applications')
       expect(page).to have_content('The application has been deleted')
       within 'table.processed-applications tbody' do
-        expect(page).not_to have_content(application1.applicant.full_name)
+        expect(page).to have_no_content(application1.applicant.full_name)
         expect(page).to have_content(application2.applicant.full_name)
       end
     end

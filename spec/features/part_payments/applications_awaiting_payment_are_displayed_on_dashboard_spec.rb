@@ -28,7 +28,7 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard' do
     within '.waiting-for-part_payment' do
       expect(page).to have_content(application1.reference)
       expect(page).to have_content(application2.reference)
-      expect(page).not_to have_content(other_application.reference)
+      expect(page).to have_no_content(other_application.reference)
     end
   end
 

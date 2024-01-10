@@ -26,6 +26,11 @@ RSpec.describe Forms::FinanceReport do
         let(:date_from) { date_to + 1.day }
 
         it { is_expected.not_to be_valid }
+
+        it {
+          report.valid?
+          expect(report.date_from).to eq(date_from)
+        }
       end
     end
 
@@ -36,6 +41,11 @@ RSpec.describe Forms::FinanceReport do
         let(:date_to) { date_from - 1.year }
 
         it { is_expected.not_to be_valid }
+
+        it {
+          report.valid?
+          expect(report.date_to).to eq(date_to)
+        }
       end
     end
 

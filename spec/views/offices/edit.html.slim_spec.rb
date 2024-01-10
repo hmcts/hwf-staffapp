@@ -27,7 +27,7 @@ RSpec.describe 'offices/edit' do
     it_behaves_like 'an elevated user'
 
     it 'does not render a link to the list' do
-      expect(rendered).not_to have_xpath("//a[@href='#{offices_path}']")
+      expect(rendered).to have_no_xpath("//a[@href='#{offices_path}']")
     end
   end
 

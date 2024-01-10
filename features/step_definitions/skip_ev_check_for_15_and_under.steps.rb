@@ -36,7 +36,7 @@ Then("I should see a row '15 and under' under the date of birth") do
 end
 
 Then("I should not see a row '15 and under' under the date of birth") do
-  expect(summary_page.content.summary_section[0].list_row[2].text).not_to have_content '15 and under Yes Change 15 and under'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to have_no_content '15 and under Yes Change 15 and under'
 end
 
 Then("the application will skip the evidence check") do

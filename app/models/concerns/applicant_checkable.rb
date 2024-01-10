@@ -9,7 +9,7 @@ module ApplicantCheckable
   def pending_ev_checks?(application)
     return false if ni_number.blank? && ho_number.blank?
     prefix = registration_number_prefix
-    applications = Application.send("with_evidence_check_for_#{prefix}_number", registration_number).
+    applications = Application.send(:"with_evidence_check_for_#{prefix}_number", registration_number).
                    where.not(id: application.id)
     applications.present?
   end

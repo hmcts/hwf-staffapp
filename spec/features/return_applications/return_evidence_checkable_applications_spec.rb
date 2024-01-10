@@ -44,7 +44,7 @@ RSpec.feature 'When evidence checkable applications are returned' do
       expect(page).to have_content 'Processing complete'
       click_button 'Back to start'
       expect(page).to have_button 'Start now'
-      expect(page).not_to have_content application1.reference
+      expect(page).to have_no_content application1.reference
     end
   end
 end

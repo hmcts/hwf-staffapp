@@ -37,7 +37,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked for this application')
+      expect(page).to have_no_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✗   Not eligible for help with fees')
     end
   end
@@ -57,7 +57,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
 
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked for this application')
+      expect(page).to have_no_content('Evidence of income needs to be checked for this application')
       expect(page).to have_content('✗   Not eligible for help with fees')
     end
 
@@ -86,7 +86,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
 
         click_button 'Complete processing'
 
-        expect(page).not_to have_content('Evidence of income needs to be checked for this application')
+        expect(page).to have_no_content('Evidence of income needs to be checked for this application')
         expect(page).to have_content('✗   Not eligible for help with fees')
 
       end

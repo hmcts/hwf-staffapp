@@ -56,8 +56,8 @@ end
 
 Then("I should see no letter template") do
   expect(return_letter_page.content).to have_header
-  expect(return_letter_page.content).not_to have_content('Next steps')
-  expect(return_letter_page.content).not_to have_content('Yours sincerely')
+  expect(return_letter_page.content).to have_no_content('Next steps')
+  expect(return_letter_page.content).to have_no_content('Yours sincerely')
 end
 
 When("I click on Back to start") do

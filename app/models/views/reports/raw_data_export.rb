@@ -226,9 +226,9 @@ module Views
         return nil if age_bands_blank?(row)
 
         if attr_key == :children_age_band_one
-          (row.children_age_band[:one] || row.children_age_band['one'])
+          row.children_age_band[:one] || row.children_age_band['one']
         elsif attr_key == :children_age_band_two
-          (row.children_age_band[:two] || row.children_age_band['two'])
+          row.children_age_band[:two] || row.children_age_band['two']
         end
       end
 

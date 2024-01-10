@@ -38,7 +38,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
       expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_content('✓ Eligible for help with fees')
 
       visit home_index_url
 
@@ -50,7 +50,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
       expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_content('✓ Eligible for help with fees')
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
 
       visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do
-        expect(page).not_to have_content(application1.reference)
+        expect(page).to have_no_content(application1.reference)
         expect(page).to have_content(application2.reference)
       end
 
@@ -102,7 +102,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
@@ -124,7 +124,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
 
       visit home_index_url
@@ -138,7 +138,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
       expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_content('✓ Eligible for help with fees')
 
       start_new_application
       fill_personal_details
@@ -148,7 +148,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
       expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).not_to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_content('✓ Eligible for help with fees')
     end
   end
 end

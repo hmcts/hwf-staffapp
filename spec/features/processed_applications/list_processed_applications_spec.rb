@@ -106,7 +106,7 @@ RSpec.feature 'List processed applications' do
 
       expect(page).to have_content('Processed application')
       expect(page).to have_text('Total monthly income£2,000')
-      expect(page).not_to have_text('Total monthly income from Evidence')
+      expect(page).to have_no_text('Total monthly income from Evidence')
     end
   end
 end

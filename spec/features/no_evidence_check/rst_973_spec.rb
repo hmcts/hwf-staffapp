@@ -27,7 +27,7 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
   end
@@ -50,7 +50,7 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).not_to have_content('Evidence of income needs to be checked')
+      expect(page).to have_no_content('Evidence of income needs to be checked')
       expect(page).to have_content('✓ Eligible for help with fees')
     end
 
@@ -81,7 +81,7 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
         fill_income(false)
         click_button 'Complete processing'
 
-        expect(page).not_to have_content('Evidence of income needs to be checked')
+        expect(page).to have_no_content('Evidence of income needs to be checked')
         expect(page).to have_content('✓ Eligible for help with fees')
 
       end
@@ -113,7 +113,7 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
         fill_income(false)
         click_button 'Complete processing'
 
-        expect(page).not_to have_content('Evidence of income needs to be checked')
+        expect(page).to have_no_content('Evidence of income needs to be checked')
         expect(page).to have_content('✓ Eligible for help with fees')
 
       end

@@ -27,7 +27,7 @@ RSpec.describe 'users/index' do
 
     context 'when user does not have permission to change the other user\'s details' do
       it 'is not rendered' do
-        is_expected.not_to have_xpath('//tbody/tr[2]/td[6]/a')
+        is_expected.to have_no_xpath('//tbody/tr[2]/td[6]/a')
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe 'users/index' do
 
     context 'when user does not have permission to create new users' do
       it 'is not rendered' do
-        expect(rendered).not_to have_link('Add staff')
+        expect(rendered).to have_no_link('Add staff')
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe 'users/index' do
 
     context 'when user does not have permission to list deleted users' do
       it 'is not rendered' do
-        expect(rendered).not_to have_link('Deleted staff')
+        expect(rendered).to have_no_link('Deleted staff')
       end
     end
   end
@@ -78,14 +78,14 @@ RSpec.describe 'users/index' do
         let(:users) { create_list(:user, 2, :invitation_sent, :invitation_accepted) }
 
         it 'is not rendered' do
-          expect(rendered).not_to have_link('Re-invite')
+          expect(rendered).to have_no_link('Re-invite')
         end
       end
     end
 
     context 'When staff does not have permission to re-invite user' do
       it 'is not rendered' do
-        expect(rendered).not_to have_link('Re-invite')
+        expect(rendered).to have_no_link('Re-invite')
       end
     end
   end

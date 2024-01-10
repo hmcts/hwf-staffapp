@@ -32,7 +32,7 @@ RSpec.feature 'User profile' do
 
       scenario 'only view their own profile' do
         visit user_path(another_user.id)
-        expect(page).not_to have_text another_user.email
+        expect(page).to have_no_text another_user.email
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.feature 'User profile' do
       end
 
       scenario 'their role should not be editable' do
-        expect(page).not_to have_select('user[role]', options: ['User', 'Manager'])
+        expect(page).to have_no_select('user[role]', options: ['User', 'Manager'])
       end
     end
 
@@ -131,9 +131,9 @@ RSpec.feature 'User profile' do
       end
 
       expect(current_path).to eql('/users')
-      expect(page).not_to have_xpath(".//h1[contains(.,'Staff details')]")
+      expect(page).to have_no_xpath(".//h1[contains(.,'Staff details')]")
       expect(page).to have_xpath(".//h1[contains(.,'Staff')]")
-      expect(page).not_to have_text('Jim Halpert')
+      expect(page).to have_no_text('Jim Halpert')
     end
   end
 end

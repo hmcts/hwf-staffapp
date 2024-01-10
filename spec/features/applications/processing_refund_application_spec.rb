@@ -191,13 +191,13 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
           expect(page).to have_content "Check details"
           expect(page).to have_content "Delivery Manager discretion appliedNo"
-          expect(page).not_to have_content "Savings and investments"
+          expect(page).to have_no_content "Savings and investments"
 
           click_button 'Complete processing'
 
           expect(page).to have_content 'Not eligible for help with fees'
           expect(page).to have_content 'Delivery Manager Discretion✗ Failed'
-          expect(page).not_to have_content 'Savings and investments'
+          expect(page).to have_no_content 'Savings and investments'
           expect(Application.last.application_type).not_to be_nil
         end
 
@@ -239,7 +239,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           expect(page).to have_content "Does the applicant receive benefits?"
           choose 'Yes'
           click_button 'Next'
-          expect(page).not_to have_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
+          expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
 
           expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?')
           choose('Yes, the applicant has provided supporting evidence')
@@ -249,7 +249,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
           expect(page).to have_content "Delivery Manager discretion appliedYes"
           expect(page).to have_content "Correct evidence providedYes"
-          expect(page).not_to have_content "Benefits letter checkedNo"
+          expect(page).to have_no_content "Benefits letter checkedNo"
           expect(page).to have_content "Savings and investments"
 
           click_button 'Complete processing'
@@ -391,7 +391,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
         expect(page).to have_content "Does the applicant receive benefits?"
         choose 'Yes'
         click_button 'Next'
-        expect(page).not_to have_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
+        expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
 
         expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?')
         choose('No')

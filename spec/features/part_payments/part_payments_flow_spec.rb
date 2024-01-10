@@ -63,7 +63,7 @@ RSpec.feature 'Part Payments flow' do
 
         scenario 'redirects to the confirmation page with the correct content' do
           expect(page).to have_content 'Processing complete'
-          expect(page).not_to have_content 'We have received your payment however it was not correct'
+          expect(page).to have_no_content 'We have received your payment however it was not correct'
         end
       end
     end
@@ -98,7 +98,7 @@ RSpec.feature 'Part Payments flow' do
         before { visit confirmation_part_payment_path(id: part_payment.id) }
 
         scenario 'the remission register right hand guidance is not shown' do
-          expect(page).not_to have_content 'remission register'
+          expect(page).to have_no_content 'remission register'
         end
       end
     end

@@ -65,7 +65,7 @@ class HomeController < ApplicationController
   end
 
   def search_and_return(type)
-    form = instance_variable_set("@#{type}_search_form", Forms::Search.new(search_params(type)))
+    form = instance_variable_set(:"@#{type}_search_form", Forms::Search.new(search_params(type)))
 
     process_search(form) if ready_to_search?(form)
   end
@@ -78,7 +78,7 @@ class HomeController < ApplicationController
 
   def process_search(form)
     @search = ApplicationSearch.new(form.reference, current_user)
-    results = (@search.call || (form.errors.add(:reference, @search.error_message) && nil))
+    results = @search.call || (form.errors.add(:reference, @search.error_message) && nil)
     paginate_search_results if results
   end
 

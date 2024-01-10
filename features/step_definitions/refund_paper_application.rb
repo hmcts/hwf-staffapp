@@ -108,9 +108,9 @@ When("I change the date fee paid to a valid date") do
 end
 
 Then("I should not see discretion information") do
-  expect(summary_page.content.summary_section[1].text).not_to have_content(/Delivery Manager name Test Name/)
-  expect(summary_page.content.summary_section[1].text).not_to have_content(/Discretion reasons Test Reason/)
-  expect(summary_page.content.summary_section[1].text).not_to have_content(/Delivery Manager discretion applied/)
+  expect(summary_page.content.summary_section[1].text).to have_no_content(/Delivery Manager name Test Name/)
+  expect(summary_page.content.summary_section[1].text).to have_no_content(/Discretion reasons Test Reason/)
+  expect(summary_page.content.summary_section[1].text).to have_no_content(/Delivery Manager discretion applied/)
 end
 
 Then("I see application is complete") do
