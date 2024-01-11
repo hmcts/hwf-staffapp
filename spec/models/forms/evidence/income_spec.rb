@@ -105,7 +105,7 @@ RSpec.describe Forms::Evidence::Income do
       before { form_save && evidence.reload }
 
       it { expect(evidence.outcome).to eql('part') }
-      it { expect(evidence.amount_to_pay).to eq(20) }
+      it { expect(evidence.amount_to_pay).to eq(25) }
     end
 
     context 'same income' do
