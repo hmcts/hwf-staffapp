@@ -139,7 +139,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(490)
+        expect(band_calculation.amount_to_pay).to eq(495)
       }
     end
 
@@ -153,7 +153,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(1720)
+        expect(band_calculation.amount_to_pay).to eq(1722)
       }
     end
 
@@ -181,7 +181,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(550)
+        expect(band_calculation.amount_to_pay).to eq(556)
       }
     end
 
@@ -195,7 +195,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(920)
+        expect(band_calculation.amount_to_pay).to eq(927)
       }
     end
 
@@ -209,7 +209,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(870)
+        expect(band_calculation.amount_to_pay).to eq(878)
       }
     end
 
@@ -223,7 +223,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(20)
+        expect(band_calculation.amount_to_pay).to eq(25)
       }
     end
 
@@ -237,7 +237,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(20)
+        expect(band_calculation.amount_to_pay).to eq(25)
       }
     end
 
@@ -251,7 +251,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(1740)
+        expect(band_calculation.amount_to_pay).to eq(1749)
       }
     end
 
@@ -265,7 +265,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(1740)
+        expect(band_calculation.amount_to_pay).to eq(1749)
       }
     end
 
@@ -279,7 +279,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(110)
+        expect(band_calculation.amount_to_pay).to eq(115)
       }
     end
 
@@ -293,7 +293,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq(270)
+        expect(band_calculation.amount_to_pay).to eq(275)
       }
     end
 
@@ -306,7 +306,7 @@ RSpec.describe BandBaseCalculation do
       let(:over_66) { false }
       it {
         expect(band_calculation.remission).to eq('part')
-        expect(band_calculation.amount_to_pay).to eq 490
+        expect(band_calculation.amount_to_pay).to eq 495
       }
     end
 
@@ -477,7 +477,7 @@ RSpec.describe BandBaseCalculation do
             let(:married) { true }
             it {
               expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(920)
+              expect(band_calculation.amount_to_pay).to eq(927)
             }
           end
         end
