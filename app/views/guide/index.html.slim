@@ -22,44 +22,42 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
       = image_tag("checklist.jpg", alt: 'Key Control Checks guide icon', class: 'guidence-icon')
 
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to job_cards_url
-      span Job Cards
-      = image_tag("checklist.jpg", alt: 'Job Cards guide icon', class: 'guidence-icon')
-
-.govuk-grid-row
-  .govuk-grid-column-one-quarter.guide-cols
     = link_to staff_guidance_url
       span Staff guidance
       = image_tag("icon-guidance.png", alt: 'Staff guidance guide icon')
 
+.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to guide_process_application_path
-      span Process application
-      = image_tag("icon-process.png", alt: 'Process application guide icon')
+    = link_to old_process_application_url
+      span Process Application - job card old legislation
+      = image_tag("icon-process.png", alt: 'Old process application guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to guide_evidence_checks_path
-      span Evidence checks
-      = image_tag("icon-evidence.png", alt: 'Evidence checks guide icon')
+    = link_to new_process_application_url
+      span Process Application - job card new legislation
+      = image_tag("icon-process.png", alt: 'New process application guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to guide_part_payments_path
-      span Part-payments
-      = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
+    = link_to old_evidence_checks_url
+      span Evidence checks - job card old legislation
+      = image_tag("icon-evidence.png", alt: 'Old evidence checks guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to new_evidence_checks_url
+      span Evidence checks - job card new legislation
+      = image_tag("icon-evidence.png", alt: 'New evidence checks guide icon')
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
-    = link_to guide_appeals_path
-      span Appeals
-      = image_tag("icon-appeals.png", alt: 'Appeals guide icon')
-  .govuk-grid-column-one-quarter.guide-cols
-    = link_to guide_suspected_fraud_path
-      span Suspected fraud
-      = image_tag("icon-fraud.png", alt: 'Suspected fraud guide icon')
+    = link_to part_payment_url
+      span Part-payments-job card
+      = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
+
   .govuk-grid-column-one-quarter.guide-cols
     = link_to fraud_awareness_url
       span Fraud awareness
       = image_tag("icon-fraud.png", alt: 'Fraud awareness guide icon')
+
   .govuk-grid-column-one-quarter.guide-cols
     = link_to rrds_url
       span RRDS
