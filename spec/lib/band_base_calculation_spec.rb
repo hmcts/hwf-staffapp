@@ -23,6 +23,108 @@ RSpec.describe BandBaseCalculation do
                                married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66)
   }
 
+  describe 'rounding rst-6179' do
+    subject(:band_calculation) { described_class.new(online_application) }
+
+    context 'part 1722' do
+      let(:fee) { 2000 }
+      let(:income) { 4000 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 1500 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(1722)
+      }
+    end
+
+    context 'part 556' do
+      let(:fee) { 800 }
+      let(:income) { 2500 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 1500 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(556)
+      }
+    end
+
+    context 'part 591' do
+      let(:fee) { 800 }
+      let(:income) { 2553 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 1500 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(591)
+      }
+    end
+
+    context 'part 934' do
+      let(:fee) { 1350 }
+      let(:income) { 5314 }
+      let(:children_age_band) { { 'one' => '2', 'two' => '1' } }
+      let(:saving_amount) { 2000 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(934)
+      }
+    end
+
+    context 'part 115' do
+      let(:fee) { 300 }
+      let(:income) { 3500 }
+      let(:children_age_band) { { 'one' => '1', 'two' => '1' } }
+      let(:saving_amount) { 1500 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(115)
+      }
+    end
+
+    context 'part 290' do
+      let(:fee) { 455 }
+      let(:income) { 2005 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 1500 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(290)
+      }
+    end
+
+    context 'part 885' do
+      let(:fee) { 1750 }
+      let(:income) { 5818 }
+      let(:children_age_band) { { 'one' => '0', 'two' => '3' } }
+      let(:saving_amount) { 2000 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('part')
+        expect(band_calculation.amount_to_pay).to eq(885)
+      }
+    end
+
+  end
   # based on documents for band calculation tickets
   describe 'amount to pay' do
     subject(:band_calculation) { described_class.new(online_application) }
