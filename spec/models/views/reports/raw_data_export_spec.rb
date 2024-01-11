@@ -63,6 +63,7 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant2) { none_ec.applicant }
     let(:applicant3) { full_no_ec.applicant }
     let(:dob) { 30.years.ago }
+    let(:over_61) { false }
     let(:date_received) { Time.zone.today }
     let(:date_online_received) { Time.zone.today }
     let(:partner_over_61) { nil }
@@ -82,14 +83,14 @@ RSpec.describe Views::Reports::RawDataExport do
              amount_to_pay: 0, decision_cost: 300.24, income_min_threshold_exceeded: true,
              detail: full_no_ec_detail, children_age_band: { one: 1, two: 0 }, income_period: 'last_month')
     }
-    let(:full_no_ec_detail) { create(:complete_detail, :litigation_friend, case_number: 'JK123455B', fee: 300.24, jurisdiction: business_entity.jurisdiction) }
+    let(:full_no_ec_detail) { create(:complete_detail, :litigation_friend, case_number: 'JK123455B', fee: 300.24, jurisdiction: business_entity.jurisdiction, calculation_scheme: 'post_ucd') }
 
     let(:part_no_ec) {
       create(:application_part_remission, :processed_state,
              decision_date: Time.zone.now, office: office, business_entity: business_entity,
              amount_to_pay: 50, decision_cost: 250, part_payment: part_payment_part, detail: part_no_ec_detail, income_period: 'average')
     }
-    let(:part_no_ec_detail) { create(:complete_detail, :legal_representative, case_number: 'JK123456C', fee: 300, jurisdiction: business_entity.jurisdiction) }
+    let(:part_no_ec_detail) { create(:complete_detail, :legal_representative, case_number: 'JK123456C', fee: 300, jurisdiction: business_entity.jurisdiction, calculation_scheme: 'pre_ucd') }
 
     let(:part_no_ec_return_pp) {
       create(:application_part_remission, :processed_state,
@@ -125,9 +126,10 @@ RSpec.describe Views::Reports::RawDataExport do
              decision_date: Time.zone.now, office: office, business_entity: business_entity,
              amount_to_pay: 0, decision_cost: 0, children: 3,
              income: 2000, income_max_threshold_exceeded: true, detail: none_ec_detail,
-             online_application: online_application, children_age_band: { one: 1, two: 2 })
+             online_application: online_application, children_age_band: { one: 1, two: 2 }, saving: none_ec_saving)
     }
     let(:none_ec_detail) { create(:complete_detail, :applicant, case_number: 'JK123555F', fee: 300.34, date_received: date_received, jurisdiction: business_entity.jurisdiction) }
+    let(:none_ec_saving) { create(:saving, over_61: over_61) }
 
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
@@ -141,7 +143,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,,#{dob},#{date_received},,,litigation_friend,true")
+        expect(export).to include("JK123455B,,#{dob},#{date_received},,,litigation_friend,true,false,post_ucd")
       end
     end
 
@@ -155,7 +157,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec.applicant.date_of_birth.to_fs
         date_received = part_no_ec.detail.date_received.to_fs
         expect(export).to include(row)
-        expect(export).to include("true,JK123456C,,#{dob},#{date_received},,,legal_representative,false")
+        expect(export).to include("true,JK123456C,,#{dob},#{date_received},,,legal_representative,false,false,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -207,7 +209,10 @@ RSpec.describe Views::Reports::RawDataExport do
       end
 
       context 'over_61' do
-        let(:dob) { 62.years.ago }
+        let(:over_61) { true }
+        # it matters what they choose not dob filled
+        let(:dob) { 60.years.ago }
+
         it 'fills in estimated_cost based on fee and amount_to_pay' do
           none_ec
           export = data.to_csv
@@ -217,22 +222,10 @@ RSpec.describe Views::Reports::RawDataExport do
         end
 
         context 'date received' do
-          let(:dob) { 60.years.ago }
           let(:date_received) { 1.month.ago }
           let(:date_online_received) { 2.years.from_now }
           it 'fills in estimated_cost based on fee and amount_to_pay' do
             none_ec
-            export = data.to_csv
-            jurisdiction = none_ec.detail.jurisdiction.name
-            row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
-            expect(export).to include(row)
-          end
-        end
-
-        context 'partner over 61' do
-          let(:dob) { 60.years.ago }
-          it 'fills in estimated_cost based on fee and amount_to_pay' do
-            none_ec.saving.update(over_61: true)
             export = data.to_csv
             jurisdiction = none_ec.detail.jurisdiction.name
             row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
