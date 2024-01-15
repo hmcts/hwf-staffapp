@@ -1,6 +1,6 @@
 module Views
   module Overview
-    class Application
+    class Application # rubocop:disable Metrics/ClassLength
 
       include ActionView::Helpers::NumberHelper
 
