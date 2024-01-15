@@ -25,8 +25,8 @@ gem 'config'
 gem 'bootsnap', require: false
 
 # authentication
-gem 'devise', '>= 4.9.2'
-gem 'devise_invitable', '>= 2.0.8'
+gem 'devise', '>= 4.9.3'
+gem 'devise_invitable', '>= 2.0.9'
 gem 'devise-security', '~> 0.18.0'
 
 # authorisation
