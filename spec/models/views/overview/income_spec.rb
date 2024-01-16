@@ -67,7 +67,7 @@ RSpec.describe Views::Overview::Income do
   context 'income kind applicant' do
     subject { view.income_kind_applicant }
 
-    let(:application) { build_stubbed(:application, income_kind: { applicant: [1, 2] }) }
+    let(:application) { build_stubbed(:application, income_kind: { applicant: ['Wages', 'Net profits from self employment'] }) }
 
     it { is_expected.to eq 'Wages, Net profits from self employment' }
   end
@@ -75,7 +75,7 @@ RSpec.describe Views::Overview::Income do
   context 'income kind partner' do
     subject { view.income_kind_partner }
 
-    let(:application) { build_stubbed(:application, income_kind: { applicant: [1, 2], partner: [3, 4] }) }
+    let(:application) { build_stubbed(:application, income_kind: { applicant: ['Wages', 'Net profits from self employment'], partner: ['Child benefit', 'Working Tax Credit'] }) }
 
     it { is_expected.to eq 'Child benefit, Working Tax Credit' }
   end

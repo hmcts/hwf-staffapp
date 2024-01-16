@@ -29,7 +29,14 @@ module Forms
       end
 
       def format_income_kind
-        @income_kind = { applicant: @income_kind_applicant, partner: income_kind_partner }
+        @income_kind = { applicant: income_kind_text_values(@income_kind_applicant), partner: income_kind_partner }
+      end
+
+      def income_kind_text_values(kinds)
+        scope = 'activemodel.attributes.forms/application/income_kind_applicant'
+        kinds.map do |kind|
+          I18n.t(kind, scope: [scope, 'kinds'])
+        end
       end
 
       def income_kind_partner
