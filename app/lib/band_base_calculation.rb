@@ -52,10 +52,15 @@ class BandBaseCalculation
   def load_online_application_values(application)
     @income = application.income || 0
     @fee = application.fee
-    @saving_amount = application.amount || 0
+    @saving_amount = online_saving_amount(application)
     @children_age_band = preformat_age_band(application)
     @married = application.married
     @over_66 = application.over_66
+  end
+
+  def online_saving_amount(application)
+    return Settings.savings_threshold.maximum_value if application.max_threshold_exceeded == true
+    application.amount || 0
   end
 
   def decide_part_remission
