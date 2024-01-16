@@ -320,6 +320,7 @@ RSpec.describe BandBaseCalculation do
       it {
         expect(band_calculation.remission).to eq('full')
         expect(band_calculation.amount_to_pay).to eq 0
+        expect(band_calculation.income_failed?).to be false
       }
     end
 
@@ -372,6 +373,7 @@ RSpec.describe BandBaseCalculation do
       it {
         expect(band_calculation.remission).to eq('none')
         expect(band_calculation.amount_to_pay).to eq 2150
+        expect(band_calculation.income_failed?).to be true
       }
     end
 
@@ -384,7 +386,12 @@ RSpec.describe BandBaseCalculation do
       context 'saving exceeded' do
         let(:fee) { 1421 }
         let(:saving_amount) { 4263 }
-        it { expect(band_calculation.remission).to eq('none') }
+        it {
+          expect(band_calculation.remission).to eq('none')
+          expect(band_calculation.saving_passed?).to be false
+          expect(band_calculation.income_failed?).to be false
+        }
+
       end
 
       context 'saving within range' do
@@ -402,7 +409,10 @@ RSpec.describe BandBaseCalculation do
           context 'not eligible' do
             let(:fee) { 250 }
             let(:income) { 5500 }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.income_failed?).to be true
+            }
           end
         end
 

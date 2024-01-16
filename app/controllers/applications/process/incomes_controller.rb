@@ -53,7 +53,9 @@ module Applications
 
       def band_calculation
         band = BandBaseCalculation.new(application)
-        application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+
+        application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay,
+                           income_max_threshold_exceeded: band.income_failed?)
         application.saving.update(passed: band.saving_passed?)
       end
 

@@ -6,7 +6,10 @@ RSpec.describe OnlineApplicationsController do
   let(:jurisdiction) { build_stubbed(:jurisdiction) }
   let(:form) { double }
   let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
-  let(:band_calculation) { instance_double(BandBaseCalculation, remission: 'full', saving_passed?: saving_outcome, amount_to_pay: 0) }
+  let(:band_calculation) {
+    instance_double(BandBaseCalculation, remission: 'full',
+                                         saving_passed?: saving_outcome, amount_to_pay: 0, income_failed?: false)
+  }
 
   before do
     allow(OnlineApplication).to receive(:find).with(online_application.id.to_s).and_return(online_application)
@@ -376,7 +379,7 @@ RSpec.describe OnlineApplicationsController do
         end
 
         it 'update application' do
-          expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: 0)
+          expect(application).to have_received(:update).with(outcome: 'full', application_type: 'income', amount_to_pay: 0, income_max_threshold_exceeded: false)
         end
 
         it 'update saving' do

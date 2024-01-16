@@ -20,6 +20,7 @@
          reference: @application_view.reference,
          full_name: @applicant.full_name,
          legal_rep: @representative.full_name,
+         greeting: greeting_condition2(@representative, @applicant),
          user_name: current_user.name,
          part_payment_amount: @application_view.amount_to_pay,
          date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))

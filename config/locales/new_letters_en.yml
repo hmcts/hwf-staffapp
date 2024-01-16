@@ -2,7 +2,7 @@ en-GB:
   new_letters:
     reject:
       reject_over_savings_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your application for help with fees. Unfortunately, you’re not eligible and will have to pay the full fee.</p>
         <p>This is because you have more than the maximum amount of savings and investments allowed.</p>
@@ -16,7 +16,7 @@ en-GB:
         <p>From,</p>
         <p>%{user_name}</p>
       reject_over_income_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
         <p>Your income total: %{income_total}</p>
@@ -65,7 +65,7 @@ en-GB:
         <p>From,</p>
         <p>%{user_name}</p>
       reject_no_benefits_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because the Department for Work and Pensions has no record of you receiving any of the benefits that make you automatically eligible for help with fees. See list of qualifying benefits below.</p>
         <p>If you’ve started receiving any of these qualifying benefits in the last seven days, or you receive them with your partner, return your application or relevant paperwork with a full breakdown letter from the Department for Work and Pensions dated within the last 3 months, confirming the benefit received. You and your partner (if applicable) must be clearly identifiable on all documents you send and there should be evidence that your partner shares your address. If you applied for Help with Fees using an online reference number, this number is no longer valid, you will need to provide a new Help with Fees reference to court alongside your evidence.</p>
@@ -183,7 +183,7 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       evidence_incorrect_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We’ve received from you the additional evidence for your help with fees application. There’s a problem with the documents you sent:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -211,7 +211,7 @@ en-GB:
         <p>%{user_name}</p>
     part-payment:
       send_part_payment_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. You’re eligible to get some money taken off the full fee of %{full_fee}.</p>
         <p><strong>How we worked this out:</strong></p>
@@ -234,7 +234,7 @@ en-GB:
         <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We wrote to you about your application for help with fees, asking that you make a part-payment of %{part_payment_amount} towards your fee by %{date_for_part_payment}.</p>
         <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
@@ -242,7 +242,7 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       part_payment_incorrect_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your part-payment towards your fee. However we are unable to accept it because:</p>
         <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT/OUT OF DATE/INCORRECT PAYEE DETAILS)</p>
@@ -252,7 +252,7 @@ en-GB:
         <p>%{user_name}</p>
     refund:
       not_eligible_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed and no remission has been granted meaning that you are not eligible for a refund of the fee paid.</p>
@@ -264,7 +264,7 @@ en-GB:
         <p>From,</p>
         <p>%{user_name}</p>
       part_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed for the fee of <strong>%{fee}</strong>. The amount that was required to be paid towards this fee was <strong>%{amount_to_pay}</strong>. Therefore, the amount to be refunded back to you is <strong>%{amount_refunded}</strong>.</<p>
@@ -278,7 +278,7 @@ en-GB:
         <p>From,</p>
         <p>%{user_name}</p>
       full_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed and has received a full remission of the court/tribunal fee in question.</p>
@@ -290,7 +290,7 @@ en-GB:
         <p>%{user_name}</p>
     new_letters:
       reference_code_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We received your help with fees reference code on %{application_received}. However, our records show that the code was generated more than 28 days ago.</p>
         <p>As we did not receive the help with fees reference code within the 28 days of it being generated, we’re unable to process your application. This is because your financial details need to be up-to-date upon submitting your application to the court or tribunal.</p>
@@ -300,7 +300,7 @@ en-GB:
         <p>%{user_name}</p>
       processed_application:
         header_html: |
-          <p>Dear %{legal_rep} regarding %{full_name}</p>
+          <p>Dear %{greeting}</p>
           <p><strong>Important Note: </strong>Our evidence request has recently changed in line with the updated scheme so please read the below carefully.</p>
           <p><strong>Your reference: %{reference}</strong></p>
           <p>We've received your application for help with fees. Before we can start work on your application, we need more information about your income.</p>
@@ -355,7 +355,7 @@ en-GB:
           <p>Yours sincerely,</p>
           <p>%{user_name}</p>
       evidence_check_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We wrote to you about your application for help with fees, asking for additional information by %{evidence_due}.</p>
         <p>As we haven’t received any information within 28 days of request, we’re unable to process your application. You have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
@@ -363,7 +363,7 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       information_missing_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p>We received your help with fees application on %{application_received}. However, the application is incomplete therefore we are unable to process this. </p>
         <p><strong>The following required information is missing:</strong></p>
         <ul class="govuk-list govuk-list--bullet">
@@ -377,7 +377,7 @@ en-GB:
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
       full_remission_html: |
-        <p>Dear %{legal_rep} regarding %{full_name}</p>
+        <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your Help with Fees application.</p>
         <p>We can confirm that the application has been processed and has received a full remission of the court/tribunal fee in question.</p>

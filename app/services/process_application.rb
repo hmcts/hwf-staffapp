@@ -36,7 +36,8 @@ class ProcessApplication
     if online_application.benefits
       process_benefit_application(band)
     else
-      application.update(outcome: band.remission, application_type: 'income', amount_to_pay: band.amount_to_pay)
+      application.update(outcome: band.remission, application_type: 'income',
+                         amount_to_pay: band.amount_to_pay, income_max_threshold_exceeded: band.income_failed?)
     end
   end
 

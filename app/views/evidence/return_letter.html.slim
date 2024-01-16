@@ -35,6 +35,7 @@
        reference: @application_view.reference,
        full_name: @applicant.full_name,
        legal_rep: @representative.full_name,
+       greeting: greeting_condition2(@representative, @applicant),
        user_name: current_user.name,
        evidence_due: '28 days')
 
