@@ -12,6 +12,7 @@ RSpec.describe BandBaseCalculation do
   let(:fee) { 100 }
   let(:over_66) { false }
   let(:children_age_band) { [] }
+  let(:max_threshold_exceeded) { nil }
 
   let(:application) {
     build(:application, detail: detail, income: income,
@@ -20,7 +21,7 @@ RSpec.describe BandBaseCalculation do
 
   let(:online_application) {
     build(:online_application, fee: fee, income: income,
-                               married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66)
+                               married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66, max_threshold_exceeded: max_threshold_exceeded)
   }
 
   describe 'rounding rst-6179' do
@@ -467,6 +468,14 @@ RSpec.describe BandBaseCalculation do
           let(:date_of_birth) { 40.years.ago }
           let(:fee) { 1500 }
           let(:saving_amount) { 10000 }
+          it { expect(band_calculation.remission).to eq('none') }
+        end
+
+        context 'amount emptu but max_threshold_exceeded' do
+          let(:date_of_birth) { 40.years.ago }
+          let(:fee) { 1500 }
+          let(:saving_amount) { 0 }
+          let(:max_threshold_exceeded) { true }
           it { expect(band_calculation.remission).to eq('none') }
         end
 
