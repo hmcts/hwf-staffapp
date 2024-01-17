@@ -307,14 +307,14 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#income_kind' do
-    let(:income_kind) { { applicant: ['Wages', 'Benefits'], partner: ['Wages2', 'Benefits2'] } }
+    let(:income_kind) { { applicant: ['Wages', 'Net profits from self employment'], partner: ['Child benefit', 'Working Tax Credit'] } }
     let(:application) { build_stubbed(:application, income_kind: income_kind) }
 
     context 'applicant' do
       subject { view.income_kind_applicant }
 
       it 'formats the applicant income kind' do
-        is_expected.to eq 'Wages, Benefits'
+        is_expected.to eq 'Wages, Net profits from self employment'
       end
     end
 
@@ -322,7 +322,7 @@ RSpec.describe Views::Overview::Application do
       subject { view.income_kind_partner }
 
       it 'formats the applicant income kind' do
-        is_expected.to eq 'Wages2, Benefits2'
+        is_expected.to eq 'Child benefit, Working Tax Credit'
       end
     end
 

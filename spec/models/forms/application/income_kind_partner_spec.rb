@@ -33,7 +33,7 @@ RSpec.describe Forms::Application::IncomeKindPartner do
     let(:application) { create(:application, income_kind: { applicant: ['test'], partner: ['test2'] }) }
 
     context 'when attributes are correct' do
-      let(:params) { { income_kind_partner: 'wages' } }
+      let(:params) { { income_kind_partner: [1] } }
 
       it { is_expected.to be true }
 
@@ -43,7 +43,7 @@ RSpec.describe Forms::Application::IncomeKindPartner do
       end
 
       it 'saves the parameters in the detail' do
-        expect(application.income_kind).to eq({ applicant: ['test'], partner: ['wages'] })
+        expect(application.income_kind).to eq({ applicant: ['test'], partner: ['Wages'] })
       end
     end
 

@@ -30,18 +30,12 @@ module Views
 
       def income_kind_applicant
         return if @application.income_kind.nil? || @application.income_kind[:applicant].blank?
-        scope = 'activemodel.attributes.forms/application/income_kind_applicant'
-        @application.income_kind[:applicant].map do |kind|
-          I18n.t(kind, scope: [scope, 'kinds'])
-        end.join(', ')
+        @application.income_kind[:applicant].join(', ')
       end
 
       def income_kind_partner
         return if @application.income_kind.nil? || @application.income_kind[:partner].blank?
-        scope = 'activemodel.attributes.forms/application/income_kind_partner'
-        @application.income_kind[:partner].map do |kind|
-          I18n.t(kind, scope: [scope, 'kinds'])
-        end.join(', ')
+        @application.income_kind[:partner].join(', ')
       end
 
       private
