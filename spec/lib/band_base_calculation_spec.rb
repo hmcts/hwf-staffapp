@@ -378,6 +378,20 @@ RSpec.describe BandBaseCalculation do
       }
     end
 
+    context 'saving over threshold' do
+      let(:fee) { 8250 }
+      let(:income) { 1985 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 16000 }
+      let(:married) { true }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.saving_passed?).to be false
+      }
+    end
+
   end
 
   describe 'Online application' do
@@ -559,7 +573,7 @@ RSpec.describe BandBaseCalculation do
         end
         context "equal to max savings" do
           let(:fee) { 6000 }
-          let(:saving_amount) { 16000 }
+          let(:saving_amount) { 15999 }
           it { expect(band_calculation.saving_threshold_exceeded?).to be false }
         end
         context "over threshold" do

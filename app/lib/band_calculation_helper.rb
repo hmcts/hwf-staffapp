@@ -7,7 +7,7 @@ module BandCalculationHelper
     when 1421..5000
       saving_amount >= (fee * 3)
     when 5001..Float::INFINITY
-      saving_amount > 16000
+      saving_amount > 15999
     end
   end
 
