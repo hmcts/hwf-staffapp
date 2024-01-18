@@ -19,11 +19,13 @@ module Views
       end
 
       def income
+        return unless @application.income
         "£#{@application.income.try(:round)}"
       end
       alias income_new income
 
       def income_period
+        return unless @application.income
         scope = 'activemodel.attributes.forms/application/income'
         I18n.t(".income_period_#{@application.income_period}", scope: scope)
       end

@@ -15,7 +15,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
   def run
     if can_run? && should_run?
       BenefitCheckService.new(benefit_check)
-      @application.update(application_type: 'benefit', outcome: benefit_check.outcome)
+      @application.update(application_type: 'benefit', outcome: benefit_check.outcome, amount_to_pay: amount_to_pay)
     elsif load_previous_check?
       @application.update(outcome: previous_check.outcome)
     elsif @application.outcome.blank?
@@ -85,6 +85,10 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
 
   def load_previous_check?
     @application.outcome.blank? && previous_check.present? && !previous_check.outcome.nil?
+  end
+
+  def amount_to_pay
+    benefit_check.outcome == 'full' ? nil : @application.amount_to_pay
   end
 
 end
