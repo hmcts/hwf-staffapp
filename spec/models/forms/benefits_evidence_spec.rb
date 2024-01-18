@@ -45,7 +45,7 @@ RSpec.describe Forms::BenefitsEvidence do
   describe '#save' do
     subject { form.save }
 
-    let(:application) { create(:application) }
+    let(:application) { create(:application, amount_to_pay: 1234) }
     let(:benefit_override) { build(:benefit_override, application: application) }
     let(:updated_application) { subject && application.reload }
     let(:updated_benefit_override) { subject && benefit_override.reload }
@@ -64,8 +64,9 @@ RSpec.describe Forms::BenefitsEvidence do
 
         it { is_expected.to be true }
 
-        it 'does set application outcome' do
+        it 'does set application attributes' do
           expect(updated_application.outcome).to eq 'none'
+          expect(updated_application.amount_to_pay).to eq 1234
         end
 
         it 'does not persist the benefit_override' do
@@ -78,8 +79,9 @@ RSpec.describe Forms::BenefitsEvidence do
 
         it { is_expected.to be true }
 
-        it 'sets application outcome to full' do
+        it 'sets application attributes for full benefit' do
           expect(updated_application.outcome).to eql('full')
+          expect(updated_application.amount_to_pay).to be_nil
         end
 
         describe 'does persists the benefit_override with correct values' do
