@@ -76,6 +76,31 @@ RSpec.shared_examples 'runs benefit check record' do
       expect(application.outcome).to eql('full')
     end
   end
+
+  describe 'application updates' do
+    let(:benefit_check) { instance_double(BenefitCheck, outcome: 'full') }
+    let(:application) { create(:application, applicant: applicant, detail: detail, income: nil, outcome: outcome, amount_to_pay: 1000) }
+
+    before do
+      allow(BenefitCheck).to receive(:create).and_return(benefit_check)
+      run
+      application.reload
+    end
+
+    it 'sets type of application to benefit' do
+      expect(application.application_type).to eql('benefit')
+      expect(application.amount_to_pay).to be_nil
+    end
+
+    context 'Outcome none' do
+      let(:benefit_check) { instance_double(BenefitCheck, outcome: 'none') }
+
+      it 'sets type of application to benefit' do
+        expect(application.application_type).to eql('benefit')
+        expect(application.amount_to_pay).to eq(1000)
+      end
+    end
+  end
 end
 
 RSpec.describe BenefitCheckRunner do
