@@ -150,7 +150,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           choose 'Yes'
           click_button 'Next'
 
-          expect(page).to have_content "Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?"
+          expect(page).to have_content "Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?"
           choose 'No'
           click_button 'Next'
 
@@ -241,7 +241,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           click_button 'Next'
           expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
 
-          expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?')
+          expect(page).to have_content('Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?')
           choose('Yes, the applicant has provided supporting evidence')
           click_button 'Next'
 
@@ -393,7 +393,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
         click_button 'Next'
         expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
 
-        expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received, which is dated within 3 months of the fee being paid?')
+        expect(page).to have_content('Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?')
         choose('No')
         click_button 'Next'
 
