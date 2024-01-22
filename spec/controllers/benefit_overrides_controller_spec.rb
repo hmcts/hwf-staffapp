@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe BenefitOverridesController do
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
-  let(:application) { build_stubbed(:application, office: office) }
+  let(:application) { build_stubbed(:application, office: office, detail: detail) }
+  let(:detail) { build_stubbed(:detail, calculation_scheme: calculation_scheme) }
   let(:benefit_override) { build_stubbed(:benefit_override, application: application) }
   let(:benefits_evidence_form) { double }
+  let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
   before do
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
@@ -49,8 +51,17 @@ RSpec.describe BenefitOverridesController do
 
       context 'when the DWP is down' do
         context 'and the answer is yes' do
-          it 'redirects to the summary page' do
-            expect(response).to redirect_to(application_declaration_path(application))
+          context 'PRE UCD' do
+            let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
+            it 'redirects to the summary page' do
+              expect(response).to redirect_to(application_summary_path(application))
+            end
+          end
+          context 'POST UCD' do
+            let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+            it 'redirects to the declaration page' do
+              expect(response).to redirect_to(application_declaration_path(application))
+            end
           end
         end
 
@@ -80,8 +91,17 @@ RSpec.describe BenefitOverridesController do
           context 'and DWP Warning is set to online' do
             let(:dwp_warning_state) { DwpWarning::STATES[:online] }
 
-            it 'redirects to the home page' do
-              expect(response).to redirect_to(application_declaration_path(application))
+            context 'PRE UCD' do
+              let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
+              it 'redirects to the summary page' do
+                expect(response).to redirect_to(application_summary_path(application))
+              end
+            end
+            context 'POST UCD' do
+              let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+              it 'redirects to the declaration page' do
+                expect(response).to redirect_to(application_declaration_path(application))
+              end
             end
           end
 
