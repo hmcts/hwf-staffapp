@@ -88,7 +88,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.assets.prefix = '/assets'
-  config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.js_compressor = :terser
 
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
