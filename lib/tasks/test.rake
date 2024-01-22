@@ -4,9 +4,7 @@ task test: :environment do
   unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
-  # unless system("rake parallel:spec RAILS_ENV=test")
-  #   raise "Rspec testing failed #{$?}"
-  # end
+
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end

@@ -6,7 +6,7 @@ gem 'application_insights', '~> 0.5.6'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.1.3'
 gem 'sentry-rails', '~> 5.8'
 # Use postgresql as the database for Active Record
 gem 'i18n', '>= 1.10'
@@ -25,8 +25,8 @@ gem 'config'
 gem 'bootsnap', require: false
 
 # authentication
-gem 'devise', '>= 4.9.2'
-gem 'devise_invitable', '>= 2.0.8'
+gem 'devise', '>= 4.9.3'
+gem 'devise_invitable', '>= 2.0.9'
 gem 'devise-security', '~> 0.18.0'
 
 # authorisation
@@ -38,8 +38,8 @@ gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4.2'
+
+gem 'terser'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
