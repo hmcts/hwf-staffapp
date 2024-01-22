@@ -50,7 +50,7 @@ RSpec.describe BenefitOverridesController do
       context 'when the DWP is down' do
         context 'and the answer is yes' do
           it 'redirects to the summary page' do
-            expect(response).to redirect_to(application_summary_path(application))
+            expect(response).to redirect_to(application_declaration_path(application))
           end
         end
 
@@ -81,7 +81,7 @@ RSpec.describe BenefitOverridesController do
             let(:dwp_warning_state) { DwpWarning::STATES[:online] }
 
             it 'redirects to the home page' do
-              expect(response).to redirect_to(application_summary_path(application))
+              expect(response).to redirect_to(application_declaration_path(application))
             end
           end
 
