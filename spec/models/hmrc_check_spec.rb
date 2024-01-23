@@ -286,12 +286,12 @@ RSpec.describe HmrcCheck do
   describe 'calculate_evidence_income!' do
     subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, request_params: date_range) }
     let(:evidence_check) { create(:evidence_check, income: nil, application: application) }
-    let(:application) { create(:single_applicant_under_61) }
+    let(:application) { create(:single_applicant_under_61, income: 0) }
     let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
 
     context 'no income data' do
       before { hmrc_check.calculate_evidence_income! }
-      it { expect(evidence_check.income).to be_nil }
+      it { expect(evidence_check.income).to eq 0 }
     end
 
     context 'income present' do
