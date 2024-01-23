@@ -40,7 +40,6 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def calculate_evidence_income!
-    return if total_income <= 0
     update_evidence
   end
 
