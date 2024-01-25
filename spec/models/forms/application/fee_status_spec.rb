@@ -191,7 +191,14 @@ RSpec.describe Forms::Application::FeeStatus do
               context 'discretion applied' do
                 it 'false' do
                   refund.discretion_applied = false
-                  expect(refund).to be_valid
+                  expect(refund).not_to be_valid
+                  expect(refund.errors[:discretion_applied]).to eq ['Delivery Manager discretion required to continue processing']
+                end
+
+                it 'nil discretion' do
+                  refund.discretion_applied = nil
+                  expect(refund.errors[:date_fee_paid]).to eq ['This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application']
+                  expect(refund).not_to be_valid
                 end
 
                 context 'is granted' do
@@ -216,11 +223,6 @@ RSpec.describe Forms::Application::FeeStatus do
 
                     expect(refund).not_to be_valid
                   end
-                end
-
-                it 'nil' do
-                  refund.discretion_applied = nil
-                  expect(refund).not_to be_valid
                 end
               end
 

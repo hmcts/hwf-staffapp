@@ -28,8 +28,7 @@ module Forms
       define_attributes
 
       before_validation :format_date_fields
-      before_validation :reset_discretion
-      after_validation :check_discretion
+      after_validation :reset_discretion
       after_validation :check_refund_values
       after_validation :update_calculation_scheme
 
@@ -42,7 +41,8 @@ module Forms
         before: :tomorrow
       }
 
-      validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund }
+      validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund && discretion_applied != true }
+      validates :discretion_applied, presence: true, if: proc { validate_discretion? }
       validate :calculation_scheme_change
 
       with_options if: :validate_date_fee_paid? do
@@ -62,14 +62,6 @@ module Forms
 
       def update_calculation_scheme
         self.calculation_scheme = FeatureSwitching.calculation_scheme(calculation_scheme_data)
-      end
-
-      def reset_discretion
-        if @refund == false
-          @discretion_applied = nil
-          @discretion_manager_name = nil
-          @discretion_reason = nil
-        end
       end
 
       def min_date
