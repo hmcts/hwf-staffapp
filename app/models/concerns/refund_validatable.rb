@@ -10,9 +10,21 @@ module RefundValidatable
       date_received.is_a?(Time)) && @discretion_applied.nil?
   end
 
+  def validate_discretion?
+    return false if date_fee_paid.blank?
+    refund && date_fee_paid < max_refund_date
+  end
+
+  # for pre UCD check in detail form
   def check_discretion
     return if discretion_applied.nil?
     if refund && date_fee_paid > max_refund_date
+      reset_discretion_values
+    end
+  end
+
+  def reset_discretion
+    if refund == false || !validate_discretion?
       reset_discretion_values
     end
   end
@@ -32,5 +44,4 @@ module RefundValidatable
     @discretion_manager_name = nil
     @discretion_reason = nil
   end
-
 end
