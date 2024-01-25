@@ -46,7 +46,7 @@ RSpec.describe Forms::Application::Benefit do
     end
 
     let(:attributes) { { benefits: benefits } }
-    let(:application) { create(:application, application_type: nil, dependents: false, benefits: nil, outcome: nil) }
+    let(:application) { create(:application, application_type: nil, dependents: false, benefits: nil, outcome: nil, income: '1000', income_kind: 'Wages', income_period: 'last month') }
 
     context 'when the attributes are correct' do
       let(:benefits) { false }
@@ -77,6 +77,12 @@ RSpec.describe Forms::Application::Benefit do
             expect(application.dependents).to be_nil
           end
 
+          it 'clears income attributes' do
+            expect(application.income).to be_nil
+            expect(application.income_period).to be_nil
+            expect(application.income_kind).to be_nil
+          end
+
           context 'when benefit check has been done already' do
             let(:benefit_check) { create(:benefit_check, :yes_result, applicationable: application) }
 
@@ -99,6 +105,12 @@ RSpec.describe Forms::Application::Benefit do
 
           it 'sets application type to income' do
             expect(application.application_type).to eql 'income'
+          end
+
+          it 'keeps the income attributes' do
+            expect(application.income).to be 1000
+            expect(application.income_period).to eql 'last month'
+            expect(application.income_kind).to eql 'Wages'
           end
         end
       end

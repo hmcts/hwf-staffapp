@@ -22,6 +22,10 @@ module Forms
           fields[:application_type] = benefits? ? 'benefit' : 'income'
           fields[:dependents] = nil if benefits?
           fields[:outcome] = benefit_check.present? ? benefit_check.outcome : nil
+          fields[:income_kind] = nil if benefits?
+          fields[:income] = nil if benefits?
+          fields[:income_period] = nil if benefits?
+
         end
       end
 
