@@ -37,7 +37,6 @@ module Forms
       validates :refund, inclusion: { in: [true, false] }
 
       validates :date_received, date: {
-        after_or_equal_to: :min_date,
         before: :tomorrow
       }
 
