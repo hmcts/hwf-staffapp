@@ -37,7 +37,7 @@ class BenefitOverridesController < ApplicationController
   def process_benefit_evidence
     @form.update(allowed_params)
     if @form.save
-      redirect_to application_summary_path(application)
+      redirect_to next_page_to_go
     else
       render :paper_evidence
     end
@@ -55,4 +55,13 @@ class BenefitOverridesController < ApplicationController
     flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
     redirect_to root_url
   end
+
+  def next_page_to_go
+    if ucd_changes_apply?(application)
+      application_declaration_path(application)
+    else
+      application_summary_path(application)
+    end
+  end
+
 end

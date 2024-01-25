@@ -88,7 +88,7 @@ RSpec.describe Applications::Process::SavingsInvestmentsController do
       let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
 
       it 'redirects to summary page if savings fail' do
-        expect(response).to redirect_to(application_summary_path(application))
+        expect(response).to redirect_to(application_declaration_path(application))
       end
 
       it 'update saving with result' do

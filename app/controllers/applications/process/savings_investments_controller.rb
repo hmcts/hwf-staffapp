@@ -32,7 +32,7 @@ module Applications
 
       def next_page_to_go
         if ucd_changes_apply? && saving_failed
-          application_summary_path(application)
+          application_declaration_path(application)
         else
           SavingsPassFailService.new(application.saving).calculate!
           application_benefits_path(application)
