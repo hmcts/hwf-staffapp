@@ -192,7 +192,7 @@ RSpec.describe Forms::Application::FeeStatus do
                 it 'false' do
                   refund.discretion_applied = false
                   expect(refund).not_to be_valid
-                  expect(refund.errors[:discretion_applied]).to eq ['Delivery Manager discretion required to continue processing']
+                  expect(refund.errors[:discretion_applied]).to eq ['This application cannot be processed unless Delivery Manager discretion is applied']
                 end
 
                 it 'nil discretion' do
