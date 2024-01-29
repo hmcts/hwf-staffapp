@@ -1,5 +1,5 @@
 class BenefitsPage < BasePage
-  set_url_matcher %r{/applications/[0-9]+/incomes}
+  set_url_matcher %r{/applications/[0-9]+/benefits}
 
   section :content, '#content' do
     element :header, 'h1', text: 'Benefits the applicant is receiving'

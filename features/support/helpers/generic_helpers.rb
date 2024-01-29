@@ -418,3 +418,11 @@ def update_legislation_value
   id = current_url[%r{/(\d+)/}, 1]
   Application.find(id).detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
 end
+
+def summary
+  if current_url.include?('part_payment')
+    part_payment_page
+  else
+    summary_page
+  end
+end
