@@ -9,7 +9,7 @@ class IncomesPage < BasePage
     element :number_of_children_hint, '.govuk-hint', text: 'Add number given in questions 10 and 11 together'
     element :number_of_children_error, '.error', text: 'Enter number of children'
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
-    element :income_period_last_month, '#application_income_period_last_month', text: 'This is for the last calendar month'
+    element :income_period_last_month, 'label', text: 'This is for the last calendar month', visible: false
     element :next, 'input[value="Next"]'
   end
 
@@ -45,9 +45,19 @@ class IncomesPage < BasePage
     click_next
   end
 
-  def submit_incomes(num)
+  def fill_income_post_ucd(num)
+    incomes_page.content.wait_until_question_ucd_visible
+
+    find_field('In question 13, what income has been entered?', visible: false).set(num)
+  end
+
+  def fill_income(num)
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set(num)
+  end
+
+  def submit_incomes(num)
+    fill_income(num)
     click_next
   end
 

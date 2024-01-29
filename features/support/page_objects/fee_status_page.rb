@@ -6,8 +6,8 @@ class FeeStatusPage < BasePage
     element :application_date_received_error, '.error', text: 'Enter the date in this format DD/MM/YYYY'
     element :application_refund_error, '.error', text: 'Enter if the fee has already been paid'
     element :application_refund_scope_error, '.error', text: 'This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application'
-    element :refund_false, '#application_refund_false'
-    element :refund_true, '#application_refund_true'
+    element :refund_false, '#application_refund_false', visible: false
+    element :refund_true, '#application_refund_true', visible: false
     element :next, 'input[value="Next"]'
   end
 
@@ -16,8 +16,8 @@ class FeeStatusPage < BasePage
     content.next.click
   end
 
-  def fill_in_date_received
-    date_received = Time.zone.today - 2.months
+  def fill_in_date_received(date_received = Time.zone.today)
+    date_received ||= Time.zone.today - 2.months
     fill_in('Day', with: date_received.day)
     fill_in('Month', with: date_received.month)
     fill_in('Year', with: date_received.year)

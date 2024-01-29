@@ -64,4 +64,8 @@ class DashboardPage < BasePage
     content.wait_until_look_up_button_visible
     content.look_up_button.click
   end
+
+  def open_my_last_application
+    content.last_application_link.click
+  end
 end
