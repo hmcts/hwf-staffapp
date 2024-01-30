@@ -188,6 +188,23 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to be_nil }
     end
 
+    context 'post UCD' do
+      let(:application) { build_stubbed(:application, children: 3, children_age_band: children_age_band) }
+
+      context 'when the children_age_band is set' do
+        let(:children_age_band) { { one: 2, two: 1 } }
+
+        it { is_expected.to eql "2 (aged 0-13) <br />\n         1 (aged 14+)" }
+      end
+
+      context 'when the number of children is set but not children_age_band' do
+        let(:children_age_band) { {} }
+
+        it { is_expected.to eq 3 }
+      end
+
+    end
+
   end
 
   describe '#return_type' do

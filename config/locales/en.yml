@@ -784,6 +784,8 @@ en-GB:
               not_a_date: Enter the date in this format DD/MM/YYYY
               date_after_or_equal_to: This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application
               date_before_or_equal_to: This date can’t be after the application was received
+            discretion_applied:
+              blank: This application cannot be processed unless Delivery Manager discretion is applied
             discretion_manager_name:
               blank: Enter Delivery Manager name
             discretion_reason:
@@ -906,7 +908,7 @@ en-GB:
         forms/application/declaration:
           attributes:
             statement_signed_by:
-              blank: 'You must select who sign declaration and statement of truth'
+              blank: 'You must select who signed declaration and statement of truth'
         forms/application/representative:
           attributes:
             first_name:

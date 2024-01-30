@@ -1,6 +1,7 @@
 module Views
   module Overview
     class Application
+      include OverviewHelper
 
       include ActionView::Helpers::NumberHelper
 
@@ -90,7 +91,11 @@ module Views
       end
 
       def number_of_children
-        @application.children
+        if @application.children_age_band.blank?
+          @application.children
+        else
+          children_age_band
+        end
       end
 
       def return_type
@@ -108,26 +113,10 @@ module Views
         end
       end
 
-      def calculation_scheme_value
-        @application.detail.calculation_scheme
-      end
-
       private
 
       def parse_amount_to_pay(amount_to_pay)
         (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
-      end
-
-      def format_threshold_income
-        if @application.income_min_threshold_exceeded == false
-          I18n.t('income.below_threshold', threshold: format_currency(thresholds.min_threshold))
-        elsif @application.income_max_threshold_exceeded
-          I18n.t('income.above_threshold', threshold: format_currency(thresholds.max_threshold))
-        end
-      end
-
-      def thresholds
-        IncomeThresholds.new(@application.applicant.married, @application.children)
       end
 
       def benefit_result

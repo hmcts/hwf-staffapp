@@ -51,4 +51,4 @@ sentry:
 personal_data_purge:
   years_ago: 7
 legislation_work:
-  active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-10-2023' %>
+  active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-11-2023' %>

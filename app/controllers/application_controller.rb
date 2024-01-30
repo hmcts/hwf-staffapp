@@ -75,4 +75,8 @@ class ApplicationController < ActionController::Base
 
     render 'static/maintenance', status: :ok
   end
+
+  def ucd_changes_apply?(application)
+    FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
+  end
 end

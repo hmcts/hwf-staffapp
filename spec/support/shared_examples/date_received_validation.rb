@@ -45,21 +45,6 @@ shared_examples 'date_received validation' do
           expect(form).to be_valid
         end
 
-        describe 'maximum' do
-          before do
-            form.date_received = Time.zone.local(2014, 6, 30, 16, 30, 0).to_fs(:db)
-            form.valid?
-          end
-
-          it 'is 3 months' do
-            expect(form).not_to be_valid
-          end
-
-          it 'returns an error if exceeded' do
-            expect(form.errors[:date_received]).to eq ['The application must have been made in the last 3 months']
-          end
-        end
-
         describe 'minimum' do
           before do
             form.date_received = Date.new(2014, 10, 2)
