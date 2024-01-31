@@ -1,10 +1,4 @@
 Given('I have started a paper application') do
-  # rubocop:disable Lint/ConstantDefinitionInBlock
-  # overriding default date for post UCD work
-  UcdSetting = Struct.new(:active_date)
-  Settings.legislation_work = UcdSetting.new('27/11/2023')
-  # rubocop:enable Lint/ConstantDefinitionInBlock
-
   sign_in_as_user
   enable_feature_switch('band_calculation')
   dashboard_page.process_application
