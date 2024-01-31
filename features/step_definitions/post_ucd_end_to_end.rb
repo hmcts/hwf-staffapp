@@ -179,7 +179,7 @@ Then('I should see Declaration statement to be applicant') do
 end
 
 When('I press Complete processing') do
-  summary_page.complete_processing
+  summary.complete_processing
 end
 
 Then('I should see {string} text') do |string|
@@ -216,29 +216,25 @@ end
 
 Then('press Start now') do
   part_payment_page.start_processing
-  save_and_open_page
 end
 
 Then('I am on part payment ready to process page') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(part_payment_ready_to_process_page).to be_displayed
 end
 
 When('I am choose Yes and press Next') do
-  pending # Write code here that turns the phrase above into concrete actions
+  part_payment_ready_to_process_page.ready_to_process_payment
 end
 
 Then('I am on check details pages for part payment process page') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('press Complete processing') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(part_payment_summary_page).to be_displayed
 end
 
 Then('I should see Processing complete') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(part_payment_confirmation_page).to be_displayed
+  expect(part_payment_confirmation_page.content).to have_processed_header
 end
 
 Then('I should see that my last application has processed status') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(dashboard_page.content.last_application[1]).to have_text 'processed'
 end
