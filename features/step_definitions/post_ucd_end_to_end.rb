@@ -1,6 +1,9 @@
 Given('I have started a paper application') do
+  # rubocop:disable Lint/ConstantDefinitionInBlock
   # overriding default date for post UCD work
-  Settings.legislation_work = OpenStruct.new(active_date: '27/11/2023')
+  UcdSetting = Struct.new(:active_date)
+  Settings.legislation_work = UcdSetting.new('27/11/2023')
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 
   sign_in_as_user
   enable_feature_switch('band_calculation')
@@ -8,7 +11,7 @@ Given('I have started a paper application') do
 end
 
 When('I fill in date fee received to today') do
-  fee_status_page.fill_in_date_received(Time.now)
+  fee_status_page.fill_in_date_received(Time.zone.now)
 end
 
 When('I choose no to a fee paid and press Next') do
@@ -22,7 +25,7 @@ When('I fill in name and date of birth of single applicant and submit') do
 end
 
 When('I fill in {int} fee and jurisdiction') do |int|
-  application_details_page.fill_in('How much is the court or tribunal fee?', with: '100')
+  application_details_page.fill_in('How much is the court or tribunal fee?', with: int)
   application_details_page.content.jurisdiction.click
 end
 
@@ -69,7 +72,7 @@ Then('I am on the income page') do
   expect(incomes_page).to be_displayed
 end
 
-When('I fill in {int} for income') do |int|
+When('I fill in {int} for income') do |_int|
   incomes_page.fill_income_post_ucd(1500)
 end
 
@@ -91,7 +94,7 @@ Then('I am on the check details page') do
 end
 
 Then('I should see today date received date') do
-  summary.date_received(Date.today)
+  summary.date_received(Time.zone.today)
 end
 
 Then('I should see no refund') do

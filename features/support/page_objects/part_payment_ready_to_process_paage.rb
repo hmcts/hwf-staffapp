@@ -30,5 +30,3 @@ class PartPaymentReadyToProcessPage < BasePage
   end
 
 end
-
-
