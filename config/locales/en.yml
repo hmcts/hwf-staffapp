@@ -422,8 +422,8 @@ en-GB:
         total_monthly_income_from_evidence: Total monthly income from Evidence
         calculation_scheme: HwF Scheme
         income_period: Income period
-        income_period_last_month: This is for the last calendar month
-        income_period_average: This is an average for the last three calendar months
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
       views/overview/applicant:
         full_name: Full name
         partner_full_name: Partner's full name
@@ -629,8 +629,8 @@ en-GB:
       forms/application/income:
         income: In question 13, what income has been entered?
         income_hint: Rounded to the nearest £
-        income_period_last_month: This is for the last calendar month
-        income_period_average: This is an average for the last three calendar months
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
       forms/application/income_kind_applicant:
         income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
         kinds:
