@@ -70,25 +70,25 @@ class PartPaymentSummaryPage < BasePage
     content.summary_section[3].has_text?("Form number #{value}")
   end
 
-  def saving_less(value)
+  def saving_less(_value)
     # not there yet - this is example of incomsistent data displayed
     # content.summary_section[3].has_text?("Less than £4,250 #{value}")
     true
   end
 
-  def saving_between(value)
+  def saving_between(_value)
     # not there yet - this is example of incomsistent data displayed
     # content.summary_section[3].has_text?("Between £4,250 and £15,999 #{value}")
     true
   end
 
-  def saving_more(value)
+  def saving_more(_value)
     # not there yet - this is example of incomsistent data displayed
     # content.summary_section[3].has_text?("More than £16,000 #{value}")
     true
   end
 
-  def benefits(value)
+  def benefits(_value)
     # inconsistency no benefits on this page
     # content.summary_section[3].has_text?("Benefits declared in application #{value}")
     true
@@ -97,7 +97,7 @@ class PartPaymentSummaryPage < BasePage
   def children(value)
     # inconsistency
     # content.summary_section[4].has_text?("Applicant has children living with them or that they are financially supporting #{value}")
-    text = (value == 'No') ? 0 : current_application.children
+    text = value == 'No' ? 0 : current_application.children
     content.summary_section[4].has_text?("Number of children #{text}")
   end
 
@@ -123,5 +123,3 @@ class PartPaymentSummaryPage < BasePage
   end
 
 end
-
-

@@ -432,9 +432,9 @@ def update_legislation_value
 end
 
 def summary
-  if current_url.match(/\/part_payments\/\d+\/summary/)
+  if current_url.match?(%r{/part_payments/\d+/summary})
     part_payment_summary_page
-  elsif current_url.match(/\/part_payments\/\d+/)
+  elsif current_url.match?(%r{/part_payments/\d+})
     part_payment_page
   else
     summary_page

@@ -8,5 +8,3 @@ class PartPaymentConfirmationPage < BasePage
   end
 
 end
-
-
