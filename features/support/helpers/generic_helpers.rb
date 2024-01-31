@@ -93,8 +93,20 @@ def part_payment_page
   @part_payment_page ||= PartPaymentPage.new
 end
 
+def part_payment_ready_to_process_page
+  @part_payment_ready_to_process_page ||= PartPaymentReadyToProcessPage.new
+end
+
+def part_payment_summary_page
+  @part_payment_summary_page ||= PartPaymentSummaryPage.new
+end
+
 def part_payment_return_letter_page
   @part_payment_return_letter_page ||= PartPaymentReturnLetterPage.new
+end
+
+def part_payment_confirmation_page
+  @part_payment_confirmation_page ||= PartPaymentConfirmationPage.new
 end
 
 def summary_page
@@ -420,7 +432,9 @@ def update_legislation_value
 end
 
 def summary
-  if current_url.include?('part_payment')
+  if current_url.match(/\/part_payments\/\d+\/summary/)
+    part_payment_summary_page
+  elsif current_url.match(/\/part_payments\/\d+/)
     part_payment_page
   else
     summary_page
