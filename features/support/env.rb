@@ -41,19 +41,11 @@ ActionController::Base.allow_rescue = false
 Capybara::Screenshot.autosave_on_failure = false
 Capybara::Screenshot.prune_strategy = :keep_last_run
 
+#
 After do |scenario|
   if scenario.failed?
-    add_screenshot
     add_browser_logs
   end
-end
-
-def add_screenshot
-  file_path = 'features/cucumber-report/screenshot.png'
-  page.driver.browser.save_screenshot(file_path)
-  image = open(file_path, 'rb', &:read)
-  encoded_image = Base64.encode64(image)
-  attach(encoded_image, 'image/png;base64')
 end
 
 def add_browser_logs
