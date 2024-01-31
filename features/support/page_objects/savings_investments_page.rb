@@ -23,6 +23,7 @@ class SavingsInvestmentsPage < BasePage
   end
 
   def submit_less_than_ucd
+    puts content.text
     content.wait_until_less_than_ucd_visible
     content.less_than_ucd.click
     click_next
