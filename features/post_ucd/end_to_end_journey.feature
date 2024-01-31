@@ -4,6 +4,7 @@ Feature: End to end journey
     Given I have started a paper application
     And I am on the fee status page
 
+    @smoke
     Scenario: Non refund income aplication single no children
       When I fill in date fee received to today
       And I choose no to a fee paid and press Next
