@@ -108,11 +108,10 @@ Feature: End to end journey
       And I should see Applicant income type to be wages and universal credit
       And I should see Declaration statement to be applicant
       And I should see "The applicant has paid £40 towards the fee" text
-      And press Complete processing
+      And I press Complete processing
       Then I should see Processing complete
       When I click Back to start
       Then I should see that my last application has processed status
-
 
 
 

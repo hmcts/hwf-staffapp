@@ -15,7 +15,7 @@ class SummaryPage < BasePage
       element :change_dob, 'a', text: 'Change Date of birth'
       element :change_date_received, 'a', text: 'Change Date received'
     end
-     element :complete, 'input[value="Complete processing"]'
+    element :complete, 'input[value="Complete processing"]'
   end
 
   def complete_processing
