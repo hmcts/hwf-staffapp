@@ -277,7 +277,7 @@ RSpec.describe Views::Reports::RawDataExport do
       applicant1.update(married: true, ho_number: 'L123456', ni_number: nil, date_of_birth: '25/11/2000')
     end
 
-    context 'more then 16' do
+    context 'more then 16 - High' do
       let(:date_received) { '10/11/2020' }
       let(:date_fee_paid) { '10/10/2020' }
       let(:min_threshold) { true }
@@ -285,55 +285,55 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"16,000 or more\",,,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
+        row = "paper,false,false,High,,,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
         expect(export).to include(row)
       end
     end
 
-    context 'between 3 and 16' do
+    context 'between 3 and 16 - Medium' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { true }
       let(:max_threshold) { false }
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"3,000 - 15,999\",,,JK123456A,,25/11/2000,10/11/2020,,"
+        row = "paper,false,false,Medium,,,JK123456A,,25/11/2000,10/11/2020,,"
         expect(export).to include(row)
       end
     end
 
-    context '3000 or more' do
+    context '3000 or more - High (pre-UCD)' do
       let(:date_received) { '12/11/2020' }
       let(:min_threshold) { true }
       let(:max_threshold) { nil }
 
       it 'nil max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,3000 or more,,,JK123456A,,25/11/2000,12/11/2020"
+        row = "paper,false,false,High,,,JK123456A,,25/11/2000,12/11/2020"
         expect(export).to include(row)
       end
     end
 
-    context 'under 3000' do
+    context 'under 3000 - Low (pre-UCD)' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { false }
       let(:max_threshold) { nil }
 
       it 'false min and nil max threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"0 - 2,999\",,,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,Low,,,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
 
-    context 'under 3000 max_threshold false' do
+    context 'under 3000 max_threshold false - Low' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { false }
       let(:max_threshold) { false }
 
       it 'false min and false max threshold' do
         export = data.to_csv
-        row = "paper,false,false,\"0 - 2,999\",,,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,Low,,,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
