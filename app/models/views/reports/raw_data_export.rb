@@ -151,7 +151,7 @@ module Views
                WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN 'Medium'
                WHEN savings.max_threshold_exceeded = FALSE THEN 'Low'
                WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN 'Low'
-               WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
+               WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN 'High'
                ELSE ''
           END AS capital,
           CASE WHEN part_payments.outcome = 'return' THEN 'return'
