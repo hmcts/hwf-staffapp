@@ -24,6 +24,7 @@ class SavingsInvestmentsPage < BasePage
 
   def submit_less_than_ucd
     puts content.text
+    puts FeatureSwitching.last.attributes
     content.wait_until_less_than_ucd_visible
     content.less_than_ucd.click
     click_next
