@@ -277,7 +277,7 @@ RSpec.describe Views::Reports::RawDataExport do
       applicant1.update(married: true, ho_number: 'L123456', ni_number: nil, date_of_birth: '25/11/2000')
     end
 
-    context 'more then 16 - High' do
+    context 'more then 16 - High (post-UCD)' do
       let(:date_received) { '10/11/2020' }
       let(:date_fee_paid) { '10/10/2020' }
       let(:min_threshold) { true }
@@ -290,7 +290,7 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
-    context 'between 3 and 16 - Medium' do
+    context 'between 3 and 16 - Medium (post-UCD)' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { true }
       let(:max_threshold) { false }
@@ -326,7 +326,7 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
-    context 'under 3000 max_threshold false - Low' do
+    context 'under 3000 max_threshold false - Low (post-UCD)' do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { false }
       let(:max_threshold) { false }
