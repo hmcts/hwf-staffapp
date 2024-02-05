@@ -36,7 +36,6 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    find_field('Title', visible: false).set('Mr')
     find_field('First and middle names', visible: false).set('John Christopher')
     find_field('Last name', visible: false).set('Smith')
   end
