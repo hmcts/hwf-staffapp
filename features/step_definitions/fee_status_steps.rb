@@ -50,7 +50,7 @@ end
 
 When('I will in refund within range') do
   fee_status_page.content.find_by_id('application_refund_true', visible: false).click
-  fee_status_page.fill_in_date_payed(3.months)
+  fee_status_page.fill_in_date_payed(1.month)
   fee_status_page.click_next
 end
 
