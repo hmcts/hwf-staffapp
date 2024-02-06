@@ -266,9 +266,7 @@ def income_kind_applicant_page
 end
 
 def complete_processing
-  if base_page.content.has_complete_processing_button?
-    base_page.content.complete_processing_button.click
-  end
+  summary_page.complete_processing
 end
 
 def start_application
