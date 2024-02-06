@@ -13,7 +13,7 @@ end
 
 namespace :test do
   task smoke: :environment do
-    if system "bundle exec cucumber features/  --tags @smoke"
+    if system "bundle exec cucumber features/"
       puts "Smoke test passed"
     else
       raise "Smoke tests failed"
