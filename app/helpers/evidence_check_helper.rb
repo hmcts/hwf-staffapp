@@ -1,15 +1,14 @@
 module EvidenceCheckHelper
   SECTION_TO_INCOME_KIND_MAPPING = {
-    'wages' => ["Wages"],
-    'child_maintenace' => ["Maintenance payments"],
-    'pensions' => ["Pensions (state, work, private)"],
-    'rental' => ["Rent from anyone living with you", "Rent from other properties you own"],
-    'benefits_and_credits' => ["Child Benefit", "Working Tax Credit", "Child Tax Credit",
+    'wages' => ["Wages", "Net profits from self employment", "Pensions (state, work, private)"],
+    'child_maintenance' => ["Maintenance payments"],
+    'rental' => ["Rent from anyone living with the applicant", "Rent from other properties the applicant owns",
+                 "Rent from anyone living with the partner", "Rent from other properties the partner owns"],
+    'benefits_and_credits' => ["Working Tax Credit", "Child Tax Credit",
                                "Contribution-based Jobseekers Allowance (JSA)",
-                               "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit"],
-    'goods_selling' => ["Other income"],
-    'prisoner_income' => ["Other income"],
-    'other_monthly_income' => ["Other income"]
+                               "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
+                               "Pensions (state, work, private)"],
+    'goods_selling' => ["Other income"]
   }.freeze
 
   def maximum_income_allowed(application)
@@ -34,9 +33,9 @@ module EvidenceCheckHelper
 
   def income_kind_list(application)
     return nil if application.income_kind.blank?
-    list = application.income_kind['applicant']
-    if application.income_kind.key?('partner')
-      list += application.income_kind.try(:[], 'partner')
+    list = application.income_kind[:applicant]
+    if application.income_kind.key?(:partner)
+      list += application.income_kind.try(:[], :partner)
     end
 
     list
