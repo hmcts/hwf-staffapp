@@ -24,7 +24,5 @@ RSpec.describe IncomePeriodHelper do
         it { is_expected.to eq 'average income for last three calendar months' }
       end
     end
-
-
   end
 end
