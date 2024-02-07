@@ -9,7 +9,7 @@ class IncomesPage < BasePage
     element :number_of_children_hint, '.govuk-hint', text: 'Add number given in questions 10 and 11 together'
     element :number_of_children_error, '.error', text: 'Enter number of children'
     element :total_monthly_income_error, '.error', text: 'Enter the total monthly income'
-    element :income_period_last_month, 'label', text: 'This is for the last calendar month', visible: false
+    element :income_period_last_month, 'label', text: 'Last calendar month', visible: false
     element :next, 'input[value="Next"]'
   end
 
