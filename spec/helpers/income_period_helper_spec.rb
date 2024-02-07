@@ -21,7 +21,7 @@ RSpec.describe IncomePeriodHelper do
       context 'and income period is average' do
         let(:application) { build_stubbed(:application, income_period: 'average') }
 
-        it { is_expected.to eq 'average income for last three calendar months' }
+        it { is_expected.to eq 'last three calendar months' }
       end
     end
   end
