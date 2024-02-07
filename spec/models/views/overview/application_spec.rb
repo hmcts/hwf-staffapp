@@ -15,7 +15,7 @@ RSpec.describe Views::Overview::Application do
     subject { view.income_period }
 
     let(:application) { build_stubbed(:application, income_period: 'last_month') }
-    it { is_expected.to eq 'This is for the last calendar month' }
+    it { is_expected.to eq 'Last calendar month' }
   end
 
   describe '#income_result' do
