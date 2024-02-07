@@ -10,5 +10,6 @@ h1.govuk-heading-xl Check details
   -if !@application.benefits
     =build_section_with_defaults 'Income', @income, application_incomes_path(@application)
 
+br
 = form_for @application, url: application_summary_path(@application), method: :post do |f|
   = f.submit 'Complete processing', class: 'govuk-button govuk-!-margin-top-1'
