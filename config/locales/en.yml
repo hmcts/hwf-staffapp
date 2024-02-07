@@ -378,7 +378,7 @@ en-GB:
         override_valid?: Benefits letter checked
       views/overview/income:
         children?: Applicant has children
-        children: Number of children
+        number_of_children: Number of children
         income: Total monthly income
         income_new: Income
         income_period: Income period
