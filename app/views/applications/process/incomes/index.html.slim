@@ -42,12 +42,12 @@
           h2.govuk-heading-m.util_mt-medium Income
           ul.govuk-list.govuk-list--bullet
             li enter the total amount provided on the EX160 paper form and tick the relevant last calendar month or three-month average option. If the income box and/or one of the tick boxes have not been completed, the application should be returned as incomplete
-            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', new_process_application_url, target: 'blank' }
         - else
           h2.govuk-heading-m.util_mt-medium Total monthly income
           ul.govuk-list.govuk-list--bullet
             li if the applicant is part of a couple they must have provided details of their partner’s income
             li add the 2 monthly income amounts and enter the result
-            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank' }
+            li some benefits shouldn't be included as income, eg Carer's Allowance, Housing Benefit or childcare element of Working Tax Credit, see the #{link_to 'full list of excluded benefits', how_to_url, target: 'blank' }
         p = link_to 'How is income calculated', guide_evidence_checks_path(anchor: 'calculate'), target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'

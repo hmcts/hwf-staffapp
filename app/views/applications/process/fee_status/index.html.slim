@@ -114,4 +114,7 @@
         ul.govuk-list.govuk-list--bullet
           li is for a fee paid less than 3 months ago
           li hasn't already been refunded
-        p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
+        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
+          p = link_to 'What to do if the fee was paid more than 3 months ago', new_process_application_url, target: 'blank'
+        - else
+          p = link_to 'What to do if the fee was paid more than 3 months ago', how_to_url, target: 'blank'

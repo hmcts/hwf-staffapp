@@ -114,7 +114,10 @@
         ul.govuk-list.govuk-list--bullet
           li was not processed through the money claim online (MCOL)
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
-        p = link_to 'What to do if the fee is one of these', guide_process_application_path(anchor: 'check-the-fee'), target: 'blank'
+          - if show_ucd_changes?(@application.detail.calculation_scheme)
+            p = link_to 'What to do if the fee is one of these', new_process_application_url, target: 'blank'
+          - else
+            p = link_to 'What to do if the fee is one of these', how_to_url, target: 'blank'
 
         h2.govuk-heading-m National Insurance number
         h3.govuk-heading-s If NI number isn't provided:
@@ -125,12 +128,17 @@
             li check answer to question 9
           li if 'No', continue to process without NI number
           li if 'Yes', don't process and contact applicant by phone to ask for their NI number
-
-        p = link_to 'What to do if you’re unable to obtain the NI number', guide_process_application_path(anchor: 'ni-number'), target: 'blank'
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          p = link_to 'What to do if you’re unable to obtain the NI number', new_process_application_url, target: 'blank'
+        - else
+          p = link_to 'What to do if you’re unable to obtain the NI number', how_to_url, target: 'blank'
         h2.govuk-heading-m Home Office reference number
         p A Home Office reference number may be provided if the applicant is subject to immigration control
         p An applicant can find their Home Office reference number on any correspondence received from the Home Office.
         h2.govuk-heading-m Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.
-        p = link_to 'Read more about status', guide_process_application_path(anchor: 'status'), target: 'blank'
+        - if show_ucd_changes?(@application.detail.calculation_scheme)
+          p = link_to 'Read more about status', new_process_application_url, target: 'blank'
+        - else
+          p = link_to 'Read more about status', how_to_url, target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
