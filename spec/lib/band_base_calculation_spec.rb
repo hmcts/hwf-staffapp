@@ -24,6 +24,23 @@ RSpec.describe BandBaseCalculation do
                                married: married, amount: saving_amount, children_age_band: children_age_band, over_66: over_66, max_threshold_exceeded: max_threshold_exceeded)
   }
 
+  describe 'threshold in decimal' do
+    subject(:band_calculation) { described_class.new(online_application) }
+    context 'saving exceeded' do
+      let(:fee) { 1420.99 }
+      let(:income) { 1000 }
+      let(:children_age_band) { {} }
+      let(:saving_amount) { 4270 }
+      let(:married) { false }
+      let(:over_66) { false }
+
+      it {
+        expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.saving_passed?).to be false
+      }
+    end
+  end
+
   describe 'rounding rst-6179' do
     subject(:band_calculation) { described_class.new(online_application) }
 

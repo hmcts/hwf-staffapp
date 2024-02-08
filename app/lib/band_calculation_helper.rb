@@ -4,7 +4,7 @@ module BandCalculationHelper
     case fee
     when 0..BandBaseCalculation::MIN_THRESHOLD
       saving_amount > 4250
-    when 1421..5000
+    when 1420..5000
       saving_amount >= (fee * 3)
     when 5001..Float::INFINITY
       saving_amount > 15999
