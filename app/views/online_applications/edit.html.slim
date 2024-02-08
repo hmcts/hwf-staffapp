@@ -101,10 +101,7 @@
         ul.govuk-list.govuk-list--bullet
           li was not processed through the money claim online (MCOL)
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
-        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
-          p = link_to 'What to do if the fee is one of these', new_process_application_url, target: 'blank'
-        - else
-          p = link_to 'What to do if the fee is one of these', how_to_url, target: 'blank'
+        p = link_to 'What to do if the fee is one of these', new_process_application_url, target: 'blank'
         h3.govuk-heading-s Remember:
         ul.govuk-list.govuk-list--bullet
           li to complete the form number the application relates to. You may need to amend the entry to reflect the correct form number entered by the applicant
@@ -122,8 +119,5 @@
           li injunctions
           li ‘out of hours’ provisions at the Royal Courts of Justice
 
-        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
-          p = link_to 'What to do if the application can’t be processed before the emergency application is heard', new_process_application_url, target: 'blank'
-        - else
-          p = link_to 'What to do if the application can’t be processed before the emergency application is heard', how_to_url, target: 'blank'
+        p = link_to 'What to do if the application can’t be processed before the emergency application is heard', new_process_application_url, target: 'blank'
 

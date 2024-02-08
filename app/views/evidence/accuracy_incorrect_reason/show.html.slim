@@ -42,10 +42,7 @@
     aside.govuk-grid-column-one-third
       .guidance
         h2.govuk-heading-m Evidence:
-        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
-          p = link_to 'How is income calculated', new_evidence_checks_url, target: 'blank'
-        - else
-          p = link_to 'How is income calculated', old_evidence_checks_url, target: 'blank'
+        p = link_to 'How is income calculated', new_evidence_checks_url, target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'
 
 

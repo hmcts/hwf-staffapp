@@ -26,8 +26,5 @@
           li subtract any #{link_to 'excluded benefits', guide_process_application_path(anchor: 'excluded-income'), target: 'blank'}
           li check the total against the bank statements
 
-        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
-          p = link_to 'How is income calculated', new_evidence_checks_url, target: 'blank'
-        - else
-          p = link_to 'How is income calculated', old_evidence_checks_url, target: 'blank'
+        p = link_to 'How is income calculated', new_evidence_checks_url, target: 'blank'
         p: strong= link_to 'See the guides', guide_path, target: 'blank'

@@ -217,8 +217,5 @@
         	li injunctions
         	li ‘out of hours’ provisions at the Royal Courts of Justice
 
-        - if show_ucd_changes?(@application&.detail&.calculation_scheme)
-          p = link_to 'What to do if the application can’t be processed before the emergency application is heard', new_process_application_url, target: 'blank'
-        - else
-          p = link_to 'What to do if the application can’t be processed before the emergency application is heard', how_to_url, target: 'blank'
+        p = link_to 'What to do if the application can’t be processed before the emergency application is heard', new_process_application_url, target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
