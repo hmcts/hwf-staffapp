@@ -13,7 +13,6 @@ require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 require 'base64'
 require 'webmock'
-require_relative './hooks'
 include WebMock::API
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
@@ -105,3 +104,6 @@ Before do
   DatabaseCleaner.clean
 end
 
+Before do
+  extend GuideHelper
+end
