@@ -70,7 +70,11 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def income_calculation
-    IncomeCalculation.new(evidence_check.application, income_for_calculation).calculate
+    if post_ucd?
+      band_calculation_result
+    else
+      IncomeCalculation.new(evidence_check.application, income_for_calculation).calculate
+    end
   end
 
   def income_for_calculation
@@ -80,5 +84,16 @@ class HmrcCheck < ActiveRecord::Base
 
   def application
     evidence_check.application
+  end
+
+  def post_ucd?
+    FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
+  end
+
+  def band_calculation_result
+    @application = application
+    @application.income = income_for_calculation
+    band = BandBaseCalculation.new(@application)
+    { outcome: band.remission, amount_to_pay: band.amount_to_pay }
   end
 end
