@@ -315,7 +315,7 @@ RSpec.describe HmrcCheck do
       context 'income present' do
         let(:income) { [{ "taxablePay" => 1.04 }] }
         let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
-        let(:applicant) { create(:applicant, married: true, application: application) }
+        let(:applicant) { create(:applicant, married: false, application: application) }
         let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1], fee: 1421) }
 
         subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
@@ -326,7 +326,7 @@ RSpec.describe HmrcCheck do
         }
         it { expect(evidence_check.income).to eq(4263) }
         it { expect(evidence_check.outcome).to eq('part') }
-        it { expect(evidence_check.amount_to_pay).to eq(495) }
+        it { expect(evidence_check.amount_to_pay).to eq(990) }
       end
     end
 
@@ -335,7 +335,7 @@ RSpec.describe HmrcCheck do
       context 'income present' do
         let(:income) { [{ "taxablePay" => 1.04 }] }
         let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
-        let(:applicant) { create(:applicant, married: true, application: application) }
+        let(:applicant) { create(:applicant, married: false, application: application) }
         let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[0], fee: 1421) }
 
         subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
@@ -347,7 +347,7 @@ RSpec.describe HmrcCheck do
 
         it { expect(evidence_check.income).to eq(4263) }
         it { expect(evidence_check.outcome).to eq('part') }
-        it { expect(evidence_check.amount_to_pay).to eq(1325) }
+        it { expect(evidence_check.amount_to_pay).to eq(1410) }
       end
     end
 
