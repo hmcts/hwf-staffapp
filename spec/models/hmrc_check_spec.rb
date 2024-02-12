@@ -310,6 +310,47 @@ RSpec.describe HmrcCheck do
       end
     end
 
+    context "post UCD" do
+
+      context 'income present' do
+        let(:income) { [{ "taxablePay" => 1.04 }] }
+        let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
+        let(:applicant) { create(:applicant, married: false, application: application) }
+        let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1], fee: 1421) }
+
+        subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
+
+        before {
+          applicant
+          hmrc_check.calculate_evidence_income!
+        }
+        it { expect(evidence_check.income).to eq(4263) }
+        it { expect(evidence_check.outcome).to eq('part') }
+        it { expect(evidence_check.amount_to_pay).to eq(990) }
+      end
+    end
+
+    context "pre UCD" do
+
+      context 'income present' do
+        let(:income) { [{ "taxablePay" => 1.04 }] }
+        let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
+        let(:applicant) { create(:applicant, married: false, application: application) }
+        let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[0], fee: 1421) }
+
+        subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
+
+        before {
+          applicant
+          hmrc_check.calculate_evidence_income!
+        }
+
+        it { expect(evidence_check.income).to eq(4263) }
+        it { expect(evidence_check.outcome).to eq('part') }
+        it { expect(evidence_check.amount_to_pay).to eq(1410) }
+      end
+    end
+
     context 'hmrc total income lower than aplication income' do
       let(:income) { [{ "taxablePay" => 1200.04 }] }
       let(:application) { create(:single_applicant_under_61, income: 15000) }
