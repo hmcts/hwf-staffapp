@@ -8,7 +8,7 @@ module EvidenceCheckHelper
                                "Contribution-based Jobseekers Allowance (JSA)",
                                "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
                                "Pensions (state, work, private)"],
-    'goods_selling' => ["Other income"]
+    'goods_selling' => ["Other income - For example, income from online selling"]
   }.freeze
 
   def maximum_income_allowed(application)
