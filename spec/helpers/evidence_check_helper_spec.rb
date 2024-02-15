@@ -55,7 +55,8 @@ RSpec.describe EvidenceCheckHelper do
       it { expect(display_evidence_section?(application, 'wage')).to be false }
     end
 
-    ["Wages", "Net profits from self employment", "Pensions (state, work, private)"].each do |income_kind_value|
+    ["Wages", "Net profits from self employment", "Pensions (state, work, private)",
+     "Pensions (state, work, private, pension credit (savings credit))"].each do |income_kind_value|
       context 'Wages' do
         let(:income_kind) { { applicant: [income_kind_value] } }
         it { expect(display_evidence_section?(application, 'wages')).to be true }
@@ -72,10 +73,9 @@ RSpec.describe EvidenceCheckHelper do
       it { expect(display_evidence_section?(application, 'child_maintenance')).to be true }
     end
 
-    ["Working Tax Credit", "Child Tax Credit",
-     "Contribution-based Jobseekers Allowance (JSA)",
-     "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
-     "Pensions (state, work, private)"].each do |income_kind_value|
+    ["Working Tax Credit", "Child Tax Credit", "Contribution-based Jobseekers Allowance (JSA)",
+     "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit", "Pensions (state, work, private)",
+     "Pensions (state, work, private, pension credit (savings credit))"].each do |income_kind_value|
       context income_kind_value.to_s do
         let(:income_kind) { { applicant: [income_kind_value] } }
         it { expect(display_evidence_section?(application, 'benefits_and_credits')).to be true }
@@ -83,16 +83,19 @@ RSpec.describe EvidenceCheckHelper do
     end
 
     ["Rent from anyone living with the applicant", "Rent from other properties the applicant owns",
-     "Rent from anyone living with the partner", "Rent from other properties the partner owns"].each do |income_kind_value|
+     "Rent from anyone living with the partner", "Rent from other properties the partner owns",
+     "Rent from anyone living with you", "Rent from other properties you own"].each do |income_kind_value|
       context income_kind_value.to_s do
         let(:income_kind) { { applicant: [income_kind_value] } }
         it { expect(display_evidence_section?(application, 'rental')).to be true }
       end
     end
 
-    context 'Other income' do
-      let(:income_kind) { { applicant: ["Other income - For example, income from online selling"] } }
-      it { expect(display_evidence_section?(application, 'goods_selling')).to be true }
+    ["Other income - For example, income from online selling", "Other income"].each do |income_kind_value|
+      context income_kind_value.to_s do
+        let(:income_kind) { { applicant: [income_kind_value] } }
+        it { expect(display_evidence_section?(application, 'goods_selling')).to be true }
+      end
     end
   end
 end

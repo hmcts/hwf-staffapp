@@ -1,14 +1,17 @@
 module EvidenceCheckHelper
   SECTION_TO_INCOME_KIND_MAPPING = {
-    'wages' => ["Wages", "Net profits from self employment", "Pensions (state, work, private)"],
+    'wages' => ["Wages", "Net profits from self employment", "Pensions (state, work, private)",
+                "Pensions (state, work, private, pension credit (savings credit))"],
     'child_maintenance' => ["Maintenance payments"],
     'rental' => ["Rent from anyone living with the applicant", "Rent from other properties the applicant owns",
-                 "Rent from anyone living with the partner", "Rent from other properties the partner owns"],
+                 "Rent from anyone living with the partner", "Rent from other properties the partner owns",
+                 "Rent from anyone living with you", "Rent from other properties you own"],
     'benefits_and_credits' => ["Working Tax Credit", "Child Tax Credit",
                                "Contribution-based Jobseekers Allowance (JSA)",
                                "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
-                               "Pensions (state, work, private)"],
-    'goods_selling' => ["Other income - For example, income from online selling"]
+                               "Pensions (state, work, private)",
+                               "Pensions (state, work, private, pension credit (savings credit))"],
+    'goods_selling' => ["Other income - For example, income from online selling", "Other income"]
   }.freeze
 
   def maximum_income_allowed(application)
