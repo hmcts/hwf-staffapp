@@ -62,7 +62,7 @@ rake user:create
 If you want to add any custom options, use the below as an example:
 
 ```
-rake "user:create[user@hmcts.net, 123456789, admin, name]"
+rake "user:create[user@hmcts.net, 12345678900, admin, name]"
 ```
 __Note:__ the quotes around the task are important!
 
