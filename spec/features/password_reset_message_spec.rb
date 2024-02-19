@@ -7,8 +7,8 @@ RSpec.feature 'Password reset,' do
   context 'User' do
     scenario 'reset password token expired' do
       visit edit_user_password_path(reset_password_token: 1)
-      fill_in :user_password, with: '123456789'
-      fill_in :user_password_confirmation, with: '123456789'
+      fill_in :user_password, with: '123456789aabb'
+      fill_in :user_password_confirmation, with: '123456789aabb'
       click_button 'Update password'
       expect(page).to have_text("Your password reset link has expired. Please request a new link using the reset password function and try again.")
     end
@@ -18,8 +18,8 @@ RSpec.feature 'Password reset,' do
 
       scenario 'reset password' do
         visit edit_user_password_path(reset_password_token: token)
-        fill_in :user_password, with: '123456789'
-        fill_in :user_password_confirmation, with: '123456789'
+        fill_in :user_password, with: '123456789aabb'
+        fill_in :user_password_confirmation, with: '123456789aabb'
         click_button 'Update password'
         expect(current_path).to eql(root_path)
         expect(page).to have_no_text("Your password reset link has expired. Please request a new link using the reset password function and try again.")
