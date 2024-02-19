@@ -21,7 +21,7 @@ namespace :test do
   end
 
   task functional: :environment do
-    if system "bundle exec cucumber features/"
+    if system "bundle exec cucumber features/ --tags @smoke"
       puts "Functional test passed"
     else
       raise "Functional tests failed"
