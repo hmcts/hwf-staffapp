@@ -31,7 +31,7 @@ module Forms
 
       def none_of_above_selected
         if income_kind_applicant.include?('20') && income_kind_applicant.count > 1
-          errors.add(:income_kind_applicant, :error_message)
+          errors.add(:income_kind_applicant, :invalid)
         end
       end
 

@@ -901,12 +901,12 @@ en-GB:
           attributes:
             income_kind_applicant:
               blank: Select at least one type of income the applicant received last month or over the last three months
-              error_message: Deselect 'None of the above' if you would like to select any of the other options
+              invalid: Deselect 'None of the above' if you would like to select any of the other options
         forms/application/income_kind_partner:
           attributes:
             income_kind_partner:
               blank: Select at least one type of income the partner received last month or over the last three months
-              error_message: Deselect 'None of the above' if you would like to select any of the other options
+              invalid: Deselect 'None of the above' if you would like to select any of the other options
         forms/application/declaration:
           attributes:
             statement_signed_by:
