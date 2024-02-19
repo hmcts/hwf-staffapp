@@ -20,6 +20,32 @@ RSpec.describe Forms::Application::IncomeKindApplicant do
 
       it { is_expected.to validate_presence_of(:income_kind_applicant) }
     end
+
+    describe '#none_of_above_selected' do
+      subject(:update_form) do
+        income_kind_form.update(params)
+        income_kind_form.valid?
+      end
+
+      let(:application) { build(:application) }
+
+      before do
+        update_form
+      end
+      context 'when attributes are correct' do
+        let(:params) { { income_kind_applicant: ['20'] } }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when user picks none of the above and more income kinds' do
+        let(:params) { { income_kind_applicant: ['1', '20'] } }
+
+        it { is_expected.to be false }
+
+        it { expect(income_kind_form.errors[:income_kind_applicant]).to include "Deselect 'None of the above' if you would like to select any of the other options" }
+      end
+    end
   end
 
   describe '#save' do

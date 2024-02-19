@@ -15,6 +15,7 @@ module Forms
 
       before_validation :format_income_kind
       validates :income_kind_partner, presence: true
+      validate :none_of_above_selected
 
       private
 
@@ -26,6 +27,12 @@ module Forms
         {
           income_kind: @income_kind
         }
+      end
+
+      def none_of_above_selected
+        if income_kind_partner.include?('20') && income_kind_partner.count > 1
+          errors.add(:income_kind_partner, :error_message)
+        end
       end
 
       def format_income_kind
