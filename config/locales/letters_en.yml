@@ -118,16 +118,17 @@ en-GB:
           </ol>
           <h3 class='govuk-heading-m'>Your documents</h3>
           <p>We need copies of your documents, not originals. If a document is only online, you can take screenshots and print them.</p>
-          <h3 class='govuk-heading-m'>Bank statements</h3>
-          <p>If you haven’t paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which received any income during the full calendar month before the Help with Fees application was made.</p>
-          <p>If you are self-employed, please be aware that our evidence requirements have recently changed in-line with updated policy guidance and we no longer accept HMRC self-assessment tax returns as adequate evidence. As explained above, you need to provide bank account statements for all accounts which received any income during the full calendar month before your application was made.</p>
-          <p>You will also need to identify any transfers between your accounts to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
-          <p>If you’ve already paid the fee, send bank statements for all your accounts including any business accounts for the full calendar month before you paid the fee.</p>
         wages_html: |
           <h3 class='govuk-heading-m'>Wages</h3>
-          <p>If you’re employed, send your pay slips covering the last full calendar month. If you have already paid the fee, your pay slips will need to cover the full calendar month before you paid.</p>
-
-        child_maintenace_html: |
+          <p>If you are employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If you are self employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
+        bank_statements_html: |
+          <h3 class='govuk-heading-m'>Bank statements</h3>
+          <p>If you haven’t paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made.</p>
+          <p>If you are self-employed, please be aware that our evidence requirements have recently changed in-line with updated policy guidance and we no longer accept HMRC self-assessment tax returns as adequate evidence. As explained above, you need to provide bank account statements for all accounts which received any income during the full calendar month before your application was made.</p>
+          <p>You will also need to identify any transfers between your accounts to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
+          <p>If you’ve already paid the fee, send bank statements for all your accounts including any business accounts for the %{wage_period} before you paid the fee.</p>
+        child_maintenance_html: |
           <h3 class='govuk-heading-m'>Child maintenance</h3>
           <p>You need to send documents showing how much you’re paid and how often, for example a:</p>
           <ul class="govuk-list govuk-list--bullet">
@@ -137,34 +138,29 @@ en-GB:
           </ul>
         benefits_and_credits_html: |
           <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
-          <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP). It must be dated in the last 3 months and include your name and address.</p>
+          <p>If you’re receiving contribution-based Jobseeker’s Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP) covering the time period for your application.</p>
           <p>If you’re receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). It must be dated in the last 3 months and include your name and address.</p>
-          <p>If you’re receiving Universal Credits and are earning more than £6,000 per year, you will need to provide a breakdown of your Universal Credit statement covering the assessment period alongside your pay slips. Your statement must include your name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments. </p>
-          <p>We’ll check your bank statements if you don’t have a Child Benefit Award Notice dated in the last 3 months.</p>
-        pensions_html: |
-          <h3 class='govuk-heading-m'>Pensions</h3>
-          <p>You need to send a letter or statement showing your state, work and private pension payments.</p>
+          <p>If you’re receiving Universal Credit and are earning more than £6,000 per year, you will need to provide a breakdown of your Universal Credit statement covering the assessment period alongside your pay slips. Your statement must include your name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
         rental_html: |
           <h3 class='govuk-heading-m'>Rental income</h3>
-          <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must be dated in the last month.</p>
+          <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming how much rent you’re paid and how often. It must cover the time period for your application.</p>
         other_income_header_html: |
           <h3 class='govuk-heading-m'>Other income</h3>
           <p>If any of the following 'other income' types cover your circumstances please provide the appropriate evidence requested: </p>
         goods_selling_html: |
           <h3 class='govuk-heading-m'>Income from selling goods</h3>
           <p>You need to send official documents showing how much you’ve received from public or private sales by what method and how often. This doesn’t include the sale of family heirlooms and other capital assets.</p>
-          <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account.</p>
+          <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account covering the time period for your application.</p>
         prisoner_income_html: |
           <h3 class='govuk-heading-m'>Prisoner’s income</h3>
-          <p>You need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+          <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you’re in a private prison, your statement needs to show earnings and private cash.</p>
+          <p><strong>Please note:</strong> If you did have other incomings in the relevant period not shown on your bank statements, you must provide evidence and/or an explanation of what these incomings are.</p>
+          <p>If you (and your partner if you have one) did not have any money coming in during the relevant period, you need to explain how you support yourself. If your income is solely made up of benefits the HwF scheme tells you to exclude from your income, please let us know.</p>
         other_monthly_income_html: |
           <h3 class='govuk-heading-m'>Any other income</h3>
-          <p>You must tell us about and send documents showing any other regular income you receive.</p>
-          <p><strong>Please note:</strong> If you do have any other regular incomings you must provide evidence and/or an explanation of what these incomings are. If you (or your partner) do not have regular incomings, you need to explain how you support yourself.</p>
-          <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
+          <p>You must tell us about and send documents showing any other income you receive including one-off payments covering the time period for your application.</p>
         footer_html: |
-          <h3 class='govuk-heading-m'>What happens next</h3>
-          <p>Once we receive your documents, we’ll check them. We’ll let you know the outcome of your application within 5 - 10 working days.</p>
+          <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
           <p>Yours sincerely,</p>
           <p>%{user_name}</p>
       citizen_not_processing_html: |

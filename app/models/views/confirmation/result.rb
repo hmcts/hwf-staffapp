@@ -105,7 +105,7 @@ module Views
       def expires_at
         if @application.waiting_for_part_payment?
           @application.part_payment.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
-        elsif @application.evidence_check && @application.processed?
+        elsif @application.evidence_check
           @application.evidence_check.expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
         else
           @application.payment_expires_at.try(:strftime, Date::DATE_FORMATS[:gov_uk_long])
