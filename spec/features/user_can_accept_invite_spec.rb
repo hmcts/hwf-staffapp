@@ -12,7 +12,7 @@ RSpec.feature 'User can accept invite' do
 
       visit accept_user_invitation_url(invitation_token: user.raw_invitation_token)
 
-      password = 'abcdefgh'
+      password = 'abcdefgh123456'
 
       fill_in 'user_password', with: password
       fill_in 'user_password_confirmation', with: password
