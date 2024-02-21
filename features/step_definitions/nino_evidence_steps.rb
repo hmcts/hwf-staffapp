@@ -9,7 +9,7 @@ And("I create an Application B that has correct evidence") do
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
@@ -29,7 +29,7 @@ When("I create Application C") do
   click_link 'Sign out', visible: false
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
   FactoryBot.create(:online_application, :with_reference, :income1000, ni_number: 'AB123456D')
@@ -49,7 +49,7 @@ When("I create an Application B and wrong evidence is provided") do
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
@@ -75,7 +75,7 @@ end
 And("I close application A") do
   click_link 'Sign out', visible: false
   fill_in 'Email', with: @user1.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
@@ -102,7 +102,7 @@ end
 When("Application C has correct evidence") do
   click_link 'Sign out', visible: false
   fill_in 'Email', with: @user3.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link2.click
@@ -136,7 +136,7 @@ end
 When("Application A has failed evidence") do
   click_link 'Sign out', visible: false
   fill_in 'Email', with: @user1.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.waiting_for_evidence_application_link.click
 
@@ -183,7 +183,7 @@ And("I create an Application B that has correct evidence with the same ho_number
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
@@ -202,7 +202,7 @@ When("I create Application C with the same ho_number") do
   click_link 'Sign out', visible: false
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'L1234567', ni_number: '')
@@ -221,7 +221,7 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
   click_link 'Sign out', visible: false
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
   FactoryBot.create(:online_application, :with_reference, :income1000, ho_number: 'l1234567', ni_number: '')
@@ -258,7 +258,7 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
 
   sign_in_page.load_page
   fill_in 'Email', with: @user2.email
-  fill_in 'Password', with: 'password'
+  fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
