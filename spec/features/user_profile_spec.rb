@@ -40,12 +40,12 @@ RSpec.feature 'User profile' do
       context 'after viewing the password change page' do
         before do
           visit edit_user_registration_path user.id
-          fill_in :user_current_password, with: 'password'
-          fill_in :user_password_confirmation, with: 'password1'
+          fill_in :user_current_password, with: 'password1234'
+          fill_in :user_password_confirmation, with: 'password12345'
         end
 
         scenario 'allow users to change their password' do
-          fill_in :user_password, with: 'password1'
+          fill_in :user_password, with: 'password12345'
           click_button 'Update password'
           expect(page).to have_text 'Your account has been updated successfully'
         end

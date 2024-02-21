@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user, aliases: [:staff] do
     role { 'user' }
     sequence(:email) { "#{Random.rand(10000)}user_#{Random.rand(10000)}@digital.justice.gov.uk" }
-    password { 'password' }
+    password { 'password1234' }
     name { 'user' }
     office
     jurisdiction

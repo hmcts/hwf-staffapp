@@ -652,7 +652,7 @@ en-GB:
           '16': Cash gifts - include all one off payments
           '17': Financial support from family - include all one off payments
           '18': Loans
-          '19': Other income  - For example, income from online selling
+          '19': Other income - For example, income from online selling
           '20': None of the above
       forms/application/income_kind_partner:
         income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
@@ -675,7 +675,7 @@ en-GB:
           '16': Cash gifts - include all one off payments
           '17': Financial support from family - include all one off payments
           '18': Loans
-          '19': Other income  - For example, income from online selling
+          '19': Other income - For example, income from online selling
           '20': None of the above
 
 
@@ -1055,7 +1055,7 @@ en-GB:
         current_password_hint: We need this to confirm your changes
         password: Password
         new_password: New password
-        new_password_hint: Use at least 8 numbers or letters for your password.
+        new_password_hint: Use at least 10 numbers or letters for your password.
         password_confirmation: Confirm new password
         reset_password_token: Your password reset link has expired. Please request a new link using the reset password function and try again.
         email_update_confirmation: We have sent an email with a confirmation link to %{new_email} address. Please allow 5-10 minutes for this message to arrive.
