@@ -8,6 +8,7 @@ en-GB:
         <p>This is because you have more than the maximum amount of savings and investments allowed.</p>
         <p>We’ve calculated this as follows:</p>
         <p>Fee to pay: %{fee_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
@@ -19,6 +20,8 @@ en-GB:
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
+        <p><strong>We’ve calculated this as follows:</strong></p>
+        <p>%{income_type}: %{total_income}</p>
         <p>Your income total: %{income_total}</p>
         <p>Fee to pay: %{fee_amount}</p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
@@ -215,9 +218,11 @@ en-GB:
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. You’re eligible to get some money taken off the full fee of %{full_fee}.</p>
         <p><strong>How we worked this out:</strong></p>
-        <p>Your total monthly income: %{total_income}</p>
-        <p>Number of children: %{children}</p>
+        <p>%{income_type}: %{total_income}</p>
+        <p>Number of children aged 0 to 13: %{children_young}</p>
+        <p>Number of children aged 14 and over: %{children_old}</p>
         <p>Amount you need to pay: %{part_payment_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <p><strong>What you need to do</strong></p>
         <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>You can pay by:</p>
@@ -268,6 +273,11 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application.</p>
         <p>The application has been processed for the fee of <strong>%{fee}</strong>. The amount that was required to be paid towards this fee was <strong>%{amount_to_pay}</strong>. Therefore, the amount to be refunded back to you is <strong>%{amount_refunded}</strong>.</<p>
+        <p><strong>How we worked this out:</strong></p>
+        <p>%{income_type}: %{total_income}</p>
+        <p>Number of children aged 0 to 13: %{children_young}</p>
+        <p>Number of children aged 14 and over: %{children_old}</p>
+        <p>Amount you need to pay: %{amount_to_pay}</p>
         <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
         <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the court/tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records.</p>

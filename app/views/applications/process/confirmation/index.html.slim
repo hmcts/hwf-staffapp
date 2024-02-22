@@ -79,6 +79,8 @@
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
+              income_type: income_duration_type(@application),
+              total_income: currency_format(@confirm.income),
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 
@@ -124,8 +126,10 @@
             user_name: current_user.name,
             full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
             part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
+            income_type: income_duration_type(@application),
             total_income: currency_format(@confirm.income),
-            children: @application.children.to_i,
+            children_young: age_band_value(:one, @application),
+            children_old: age_band_value(:two, @application),
             date_for_part_payment: @confirm.expires_at)
 
 
