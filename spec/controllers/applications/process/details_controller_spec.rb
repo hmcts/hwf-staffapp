@@ -12,6 +12,7 @@ RSpec.describe Applications::Process::DetailsController do
     sign_in user
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
     allow(Forms::Application::Detail).to receive(:new).with(application.detail).and_return(application_details_form)
+    allow(application_details_form).to receive(:emergency_reason).and_return(false)
   end
 
   describe 'GET #application_details' do
