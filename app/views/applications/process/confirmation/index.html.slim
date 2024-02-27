@@ -80,7 +80,6 @@
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
               income_type: income_duration_type(@application),
-              total_income: currency_format(@confirm.income),
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 

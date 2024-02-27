@@ -21,9 +21,9 @@ en-GB:
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
         <p><strong>We’ve calculated this as follows:</strong></p>
-        <p>%{income_type}: %{total_income}</p>
-        <p>Your income total: %{income_total}</p>
+        <p>%{income_type}: %{income_total}</p>
         <p>Fee to pay: %{fee_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
         <p>You need to pay the full fee amount of %{fee_amount} by %{expiry_date}.</p>
         <p>You can pay by:</p>
