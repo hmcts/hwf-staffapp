@@ -93,8 +93,20 @@ def part_payment_page
   @part_payment_page ||= PartPaymentPage.new
 end
 
+def part_payment_ready_to_process_page
+  @part_payment_ready_to_process_page ||= PartPaymentReadyToProcessPage.new
+end
+
+def part_payment_summary_page
+  @part_payment_summary_page ||= PartPaymentSummaryPage.new
+end
+
 def part_payment_return_letter_page
   @part_payment_return_letter_page ||= PartPaymentReturnLetterPage.new
+end
+
+def part_payment_confirmation_page
+  @part_payment_confirmation_page ||= PartPaymentConfirmationPage.new
 end
 
 def summary_page
@@ -254,9 +266,7 @@ def income_kind_applicant_page
 end
 
 def complete_processing
-  if base_page.content.has_complete_processing_button?
-    base_page.content.complete_processing_button.click
-  end
+  summary_page.complete_processing
 end
 
 def start_application
@@ -415,6 +425,16 @@ def enable_feature_switch(feature_name)
 end
 
 def update_legislation_value
-  id = current_url[%r{/(\d+)/}, 1]
-  Application.find(id).detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
+  # id = current_url[%r{/(\d+)/}, 1]
+  # Application.find(id).detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
+end
+
+def summary
+  if current_url.match?(%r{/part_payments/\d+/summary})
+    part_payment_summary_page
+  elsif current_url.match?(%r{/part_payments/\d+})
+    part_payment_page
+  else
+    summary_page
+  end
 end

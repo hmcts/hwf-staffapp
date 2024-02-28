@@ -65,4 +65,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.action_controller.raise_on_missing_callback_actions = false
+  config.action_view.automatically_disable_submit_tag = false
 end

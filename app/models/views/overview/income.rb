@@ -17,6 +17,7 @@ module Views
       def children
         @application.dependents? ? @application.children : 0
       end
+      alias number_of_children children
 
       def income
         return unless @application.income
@@ -43,7 +44,7 @@ module Views
       private
 
       def pre_ucd_change_fields
-        ['children?', 'children', 'income']
+        ['children?', 'number_of_children', 'income']
       end
 
       def detail

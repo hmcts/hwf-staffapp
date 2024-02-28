@@ -36,7 +36,6 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    find_field('Title', visible: false).set('Mr')
     find_field('First and middle names', visible: false).set('John Christopher')
     find_field('Last name', visible: false).set('Smith')
   end
@@ -96,12 +95,16 @@ class PersonalDetailsPage < BasePage
     content.application_ho_number.set 'L12345678/1'
   end
 
-  def submit_required_personal_details
+  def fill_in_single_applicant
     fill_in 'First and middle names', with: 'John', visible: false
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob
     content.wait_until_status_single_visible
     content.status_single.click
+  end
+
+  def submit_required_personal_details
+    fill_in_single_applicant
     click_next
   end
 

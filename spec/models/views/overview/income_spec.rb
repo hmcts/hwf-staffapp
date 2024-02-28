@@ -10,7 +10,7 @@ RSpec.describe Views::Overview::Income do
   describe '#all_fields' do
     subject { view.all_fields }
 
-    it { is_expected.to eql ['children?', 'children', 'income'] }
+    it { is_expected.to eql ['children?', 'number_of_children', 'income'] }
   end
 
   describe '#children??' do
@@ -28,7 +28,7 @@ RSpec.describe Views::Overview::Income do
   end
 
   describe '#children' do
-    subject { view.children }
+    subject { view.number_of_children }
 
     let(:application) { build_stubbed(:application, dependents: dependents, children: children) }
 

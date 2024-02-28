@@ -17,6 +17,7 @@ class ConfirmationPage < BasePage
     element :passed_by_manager, 'dd', text: '✓ Passed (by manager\'s decision)'
     element :granted_hwf, 'h2', text: '✓ Granted help with fees'
     element :next, 'a', text: 'Next'
+    element :back_to_start, 'a', text: 'Back to start'
     element :total_income, 'p', text: /Your total monthly income|Your income total/
     element :fee_to_pay, 'p', text: /Amount you need to pay|Fee to pay/
     element :total_savings, 'p', text: /Your savings and investments total/
@@ -39,5 +40,21 @@ class ConfirmationPage < BasePage
   def click_next
     content.wait_until_next_visible
     content.next.click
+  end
+
+  def savings_passed
+    content.has_text? "Savings and investments ✓ Passed"
+  end
+
+  def income_waiting_for_part_payment
+    content.has_text? "Income Waiting for part-payment"
+  end
+
+  def new_hwf_schema
+    content.has_text? "HwF Scheme New HwF"
+  end
+
+  def back_to_start
+    content.back_to_start.click
   end
 end
