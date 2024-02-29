@@ -14,7 +14,7 @@
 // libraries
 // = require jquery3
 // = require rails-ujs
-// = require govuk-frontend/govuk/all
+
 
 // module loader
 // = require module_loader
