@@ -127,8 +127,10 @@ h2.govuk-heading-m Processed application results in part payment-representation
       user_name: '{AUTO: CURRENT USERS NAME}',
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       full_fee: '£{AUTO: FULL FEE}',
+      income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
       total_income: '£{AUTO: APPLICANTS INCOME}',
-      children: '{AUTO: APPLICANTS CHILDREN}',
+      children_young: '{AUTO: APPLICANTS CHILDREN 0-13}',
+      children_old: '{AUTO: APPLICANTS CHILDREN 14+}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
 h2.govuk-heading-m Evidence check - received, but not correct-representation
@@ -179,6 +181,7 @@ h2.govuk-heading-m Application rejected because income threshold exceeded-repres
   = t('new_letters.reject.reject_over_income_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
       fee_amount: '{AUTO: APPLICATION FEE}',
+      income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
       income_total: '{AUTO: INCOME TOTAL}',
       expiry_date: '{AUTO: DATE FOR PAYMENT}',
       full_name: '{AUTO: APPLICANTS NAME}',
@@ -216,7 +219,11 @@ h2.govuk-heading-m Application is eligible for partial refund-representation
       user_name: '{AUTO: CURRENT USERS NAME}',
       fee: '{AUTO: FEE AMOUNT}',
       amount_refunded: '{AUTO: PARTIAL REMISSION AMOUNT}',
-      amount_to_pay: '{AUTO: REFUND AMOUNT}')
+      amount_to_pay: '{AUTO: REFUND AMOUNT}',
+      income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
+      total_income: '£{AUTO: APPLICANTS INCOME}',
+      children_young: '{AUTO: APPLICANTS CHILDREN 0-13}',
+      children_old: '{AUTO: APPLICANTS CHILDREN 14+}')
 
 h2.govuk-heading-m Application is eligible for full refund-representation
 .confirmation-letter

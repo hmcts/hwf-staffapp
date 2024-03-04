@@ -8,6 +8,7 @@ en-GB:
         <p>This is because you have more than the maximum amount of savings and investments allowed.</p>
         <p>We’ve calculated this as follows:</p>
         <p>Fee to pay: %{fee_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
         <p>Your savings and investments total: %{savings_total}</p>
         <p><strong>If you disagree with this decision</strong></p>
@@ -21,6 +22,7 @@ en-GB:
         <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
         <p>Your income total: %{income_total}</p>
         <p>Fee to pay: %{fee_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
         <p>You need to pay the full fee amount of %{fee_amount} by %{expiry_date}.</p>
         <p>You can pay by:</p>
@@ -214,6 +216,7 @@ en-GB:
         <p>Your total monthly income: %{total_income}</p>
         <p>Number of children: %{children}</p>
         <p>Amount you need to pay: %{part_payment_amount}</p>
+        <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <p><strong>What you need to do</strong></p>
         <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>You can pay by:</p>

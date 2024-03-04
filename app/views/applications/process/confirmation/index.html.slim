@@ -79,6 +79,7 @@
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
+              income_type: income_duration_type(@application),
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 
@@ -115,18 +116,32 @@
     -elsif @application.waiting_for_part_payment?
       p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
-      .confirmation-letter
-        = t('new_letters.part-payment.send_part_payment_html',
-            reference: @application.reference,
-            full_name: @application.applicant.full_name,
-            legal_rep: @confirm.representative_full_name,
-            greeting: greeting_condition(@confirm, @application),
-            user_name: current_user.name,
-            full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
-            part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
-            total_income: currency_format(@confirm.income),
-            children: @application.children.to_i,
-            date_for_part_payment: @confirm.expires_at)
+      -if show_ucd_changes?(@application.detail.calculation_scheme)
+        .confirmation-letter
+          = t('new_letters.part-payment.send_part_payment_html',
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              legal_rep: @confirm.representative_full_name,
+              greeting: greeting_condition(@confirm, @application),
+              user_name: current_user.name,
+              full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
+              part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
+              income_type: income_duration_type(@application),
+              total_income: currency_format(@confirm.income),
+              children_young: age_band_value(:one, @application),
+              children_old: age_band_value(:two, @application),
+              date_for_part_payment: @confirm.expires_at)
+      -else
+        .confirmation-letter
+          = t('letters.part-payment.send_part_payment_html',
+                  reference: @application.reference,
+                  full_name: @application.applicant.full_name,
+                  user_name: current_user.name,
+                  full_fee: currency_format(parse_amount_to_pay(@application.detail.fee)),
+                  part_payment_amount: currency_format(parse_amount_to_pay(@confirm.amount_to_pay)),
+                  total_income: currency_format(@confirm.income),
+                  children: @application.children.to_i,
+                  date_for_part_payment: @confirm.expires_at)
 
 
 
