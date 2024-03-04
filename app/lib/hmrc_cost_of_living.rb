@@ -6,6 +6,7 @@ module HmrcCostOfLiving
     return true if november_match?(request_range, payment)
     return true if may_match?(request_range, payment)
     return true if november_23_match?(request_range, payment)
+    return true if february_24_match?(request_range, payment)
     false
   end
 
@@ -22,6 +23,13 @@ module HmrcCostOfLiving
     list = [Date.parse(payment['startDate']), Date.parse(payment['endDate'])]
     parsed_list = list_parsed_by_november_23_cost_of_living(list, payment)
 
+    parsed_list.size != 2
+  end
+
+  # RST-6370 for more info
+  def included_in_february_24_date_range?(payment)
+    list = [Date.parse(payment['startDate']), Date.parse(payment['endDate'])]
+    parsed_list = list_parsed_by_february_24_cost_of_living(list, payment)
     parsed_list.size != 2
   end
 
@@ -47,6 +55,20 @@ module HmrcCostOfLiving
       case date
       when Date.parse('10 November 2023')..Date.parse('19 November 2023')
         next if payment['amount'].to_i == 300
+      else
+        parsed_list << date
+      end
+    end
+    parsed_list
+  end
+
+  def list_parsed_by_february_24_cost_of_living(list, payment)
+    parsed_list = []
+
+    list.each do |date|
+      case date
+      when Date.parse('6 February 2024')..Date.parse('22 February 2024')
+        next if payment['amount'].to_i == 299
       else
         parsed_list << date
       end
@@ -80,6 +102,13 @@ module HmrcCostOfLiving
       request_range[:to] == "2023-11-30" &&
       payment['frequency'] == 1 &&
       payment['amount'].to_i == 300 && included_in_november_23_date_range?(payment)
+  end
+
+  def february_24_match?(request_range, payment)
+    request_range[:from] == "2024-02-01" &&
+      request_range[:to] == "2024-02-29" &&
+      payment['frequency'] == 1 &&
+      payment['amount'].to_i == 299 && included_in_february_24_date_range?(payment)
   end
 
 end

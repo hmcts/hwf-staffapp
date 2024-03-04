@@ -315,6 +315,20 @@ RSpec.describe HmrcIncomeParser do
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1455.04) }
       end
 
+      context 'February 6 2024 until February 22 2024' do
+        let(:payments) {
+          [
+            { "startDate" => "2024-02-04", "endDate" => "2024-02-05", "frequency" => 1, "postedDate" => "2024-03-25", "amount" => 299.00 }, # in
+            { "startDate" => "2024-02-06", "endDate" => "2024-02-08", "frequency" => 1, "postedDate" => "2024-03-25", "amount" => 31.00 }, # in
+            { "startDate" => "2024-02-05", "endDate" => "2024-02-14", "frequency" => 1, "postedDate" => "2024-03-25", "amount" => 299.00 }, # out
+            { "startDate" => "2024-02-23", "endDate" => "2024-02-24", "frequency" => 7, "postedDate" => "2024-03-25", "amount" => 299.00 } # in
+          ]
+        }
+
+        let(:request_range) { { from: "2024-02-01", to: "2024-02-29" } }
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(313.63) }
+      end
+
       context 'November' do
         let(:tax_credit_hash) {
           [

@@ -5,6 +5,7 @@ module Applications
 
       def index
         @form = Forms::Application::Detail.new(application.detail)
+        @form.emergency = true if @form.emergency_reason.present?
         @jurisdictions = user_jurisdictions
       end
 
