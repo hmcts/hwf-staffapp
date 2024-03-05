@@ -57,13 +57,13 @@ module Views
         CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
         CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
         CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS \"Evidence checked?\",
-        CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
-             WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
-             WHEN savings.max_threshold_exceeded = FALSE THEN '0 - 2,999'
-             WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
-             WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
+        CASE WHEN savings.max_threshold_exceeded = TRUE then 'High'
+             WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN 'Medium'
+             WHEN savings.max_threshold_exceeded = FALSE THEN 'Low'
+             WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN 'Low'
+             WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN 'High'
              ELSE ''
-        END AS \"Capital\",
+        END AS \"Capital Band\",
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
         details.date_received as \"Date received\",
