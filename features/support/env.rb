@@ -104,3 +104,6 @@ Before do
   DatabaseCleaner.clean
 end
 
+Before do
+  extend GuideHelper
+end

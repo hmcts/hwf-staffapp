@@ -91,7 +91,7 @@ Then("I see that I should check the fee") do
   expect(personal_details_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
   expect(personal_details_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
   expect(personal_details_page.content.guidance.guidance_text[2].text).to eq 'What to do if the fee is one of these'
-  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to end_with '/guide/process_application#check-the-fee'
+  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to eq how_to_url
 end
 
 Then("I see that I should look for a national insurance number") do
@@ -99,7 +99,7 @@ Then("I see that I should look for a national insurance number") do
   expect(personal_details_page.content.guidance.guidance_sub_heading[2].text).to eq 'If NI number isn\'t provided:'
   expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[3].text).to eq 'What to do if you’re unable to obtain the NI number'
-  expect(personal_details_page.content.guidance.guidance_link[2]['href']).to end_with '/guide/process_application#ni-number'
+  expect(personal_details_page.content.guidance.guidance_link[2]['href']).to eq 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-how-to-guide.pdf'
 end
 
 Then("I see more information about home office numbers") do
@@ -112,7 +112,7 @@ Then("I see that I should check the status of the applicant") do
   expect(personal_details_page.content.guidance.guidance_header[3].text).to eq 'Status'
   expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[6].text).to eq "If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'."
-  expect(personal_details_page.content.guidance.guidance_link[3]['href']).to end_with '/guide/process_application#status'
+  expect(personal_details_page.content.guidance.guidance_link[3]['href']).to eq how_to_url
   expect(personal_details_page.content.guidance.guidance_link[4]['href']).to end_with '/guide'
 end
 
