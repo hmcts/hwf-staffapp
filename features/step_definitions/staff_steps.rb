@@ -59,6 +59,8 @@ end
 Then("I should see the jurisdiction has been updated") do
   user = User.find(current_path.match('\d+').to_s)
   jurisdiction = user.office.jurisdictions.first
+  staff_details_page.content.wait_until_header_visible
+
   expect(staff_details_page.content.table_row[4].text).to have_text "Main jurisdiction #{jurisdiction.name}"
 end
 
