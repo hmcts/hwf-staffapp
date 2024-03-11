@@ -7,12 +7,12 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: ab4d6a25aa4b6b2fadd65deb1a4bb465d16f5141
-  tag: v0.2.7
+  revision: 0a9fbd2d6bb352619103b4b671f5be5b3277e0e2
+  tag: v0.2.6
   specs:
-    hwf_hmrc_api (0.2.7)
+    hwf_hmrc_api (0.2.6)
       httparty (~> 0.21.0)
-      rotp (~> 6.3.0)
+      rotp (~> 6.2.2)
       uuid (~> 2.3.9)
 
 GIT
@@ -463,7 +463,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.6)
-    rotp (6.3.0)
+    rotp (6.2.2)
     rouge (4.2.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
