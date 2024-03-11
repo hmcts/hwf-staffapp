@@ -6,8 +6,10 @@ def type = "ruby"
 def product = "help-with-fees"
 def component = "staffapp"
 
-def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
+
+
 
 withPipeline(type, product, component) {
     env.RAILS_ENV = 'test'
