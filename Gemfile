@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby file: ".ruby-version"
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
