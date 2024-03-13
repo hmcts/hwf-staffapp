@@ -33,7 +33,7 @@ end
 
 When("I check the Other option") do
   confirmation_page.content.override.wait_until_other_option_visible
-  confirmation_page.content.override.other_option.click
+  find(:xpath, './/input[@id="application_value_other"]', visible: false).click
 end
 
 When("Click Update application without providing detail") do
