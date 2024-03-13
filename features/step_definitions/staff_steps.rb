@@ -50,6 +50,8 @@ end
 And("I change the jurisdiction") do
   user = User.find(current_path.match('\d+').to_s)
   jurisdiction = user.office.jurisdictions.first
+  change_user_details_page.content.wait_until_header_visible
+  # revisit this if the test keep failing - the params were missing jurisdiction id
   expect(change_user_details_page.content.radio[6].text).to have_content jurisdiction.name
   change_user_details_page.content.radio[6].click
   change_user_details_page.content.save_changes_button.click
@@ -58,9 +60,10 @@ end
 
 Then("I should see the jurisdiction has been updated") do
   user = User.find(current_path.match('\d+').to_s)
-  jurisdiction = user.office.jurisdictions.first
+  jurisdiction = user.jurisdiction
+  # fails faster if check the data first - for this case only
+  expect(user.jurisdiction&.name).to eql(user.office.jurisdictions.first.name)
   staff_details_page.content.wait_until_header_visible
-
   expect(staff_details_page.content.table_row[4].text).to have_text "Main jurisdiction #{jurisdiction.name}"
 end
 
