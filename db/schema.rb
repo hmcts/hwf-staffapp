@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_24_101322) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_19_133300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -260,6 +260,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_101322) do
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
   end
 
+  create_table "export_file_storages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feature_switchings", force: :cascade do |t|
     t.string "feature_key", null: false
     t.datetime "activation_time"
@@ -411,6 +417,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_101322) do
     t.boolean "over_16"
     t.string "statement_signed_by"
     t.string "income_period"
+    t.string "legal_representative_position"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
