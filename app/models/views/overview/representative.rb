@@ -2,7 +2,7 @@ module Views
   module Overview
     class Representative
       include ActionView::Helpers::NumberHelper
-      delegate(:first_name, :last_name, :organisation, to: :@representative)
+      delegate(:first_name, :last_name, :organisation, :position, to: :@representative)
 
       def initialize(representative)
         @representative = representative
@@ -10,7 +10,7 @@ module Views
 
       def all_fields
         [
-          'full_name', 'organisation'
+          'full_name', 'organisation', 'position'
         ]
       end
 

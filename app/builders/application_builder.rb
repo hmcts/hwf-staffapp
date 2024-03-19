@@ -95,7 +95,8 @@ class ApplicationBuilder
     {
       first_name: online_application.legal_representative_first_name,
       last_name: online_application.legal_representative_last_name,
-      organisation: online_application.legal_representative_organisation_name
+      organisation: online_application.legal_representative_organisation_name,
+      position: online_application.legal_representative_position
     }
   end
 

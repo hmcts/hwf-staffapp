@@ -183,6 +183,7 @@ RSpec.describe ApplicationBuilder do
           expect(representative.first_name).to eq 'John'
           expect(representative.last_name).to eq 'Lawmen'
           expect(representative.organisation).to eq 'Law and Co'
+          expect(representative.position).to eq 'assistant lawyer'
         end
       end
 
