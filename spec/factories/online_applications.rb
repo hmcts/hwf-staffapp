@@ -43,6 +43,7 @@ FactoryBot.define do
       legal_representative_first_name { 'John' }
       legal_representative_last_name { 'Lawmen' }
       legal_representative_organisation_name { 'Law and Co' }
+      legal_representative_position { 'assistant lawyer' }
       over_16 { true }
       statement_signed_by { 'applicant' }
       income_period { 'average' }

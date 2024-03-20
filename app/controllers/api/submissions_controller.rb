@@ -70,6 +70,7 @@ module Api
         :legal_representative_postcode,
         :legal_representative_town,
         :legal_representative_address,
+        :legal_representative_position,
         :over_16,
         :statement_signed_by,
         :income_period,

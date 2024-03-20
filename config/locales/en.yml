@@ -460,6 +460,7 @@ en-GB:
       views/overview/representative:
         full_name: 'Full name'
         organisation: Organisation
+        position: Position held at firm
       views/evidence:
         correct: Ready to process
         incorrect_reason: The problem

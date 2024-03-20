@@ -37,6 +37,8 @@ base:
     NOTIFY_USER_INVITE_TEMPLATE_ID: "9e7bb557-8512-4913-9f91-f181487f4fe3"
     TRIGGER: Base-1
     NEW_LEGISLATION_ACTIVE_DATE: '27-10-2023'
+    AZURE_STORAGE_CONTAINER: 'private'
+    AZURE_STORAGE_ACCOUNT: 'helpwithfeessademo'
   keyVaults:
     help-with-fees:
       secrets:
@@ -45,7 +47,7 @@ base:
         - name: hwf-password
           alias: DATABASE_PASSWORD
         - name: hwf-public-secret-token
-          alias: SECRET_KEY_BASE  
+          alias: SECRET_KEY_BASE
         - name: hwf-staff-secret-token
           alias: SECRET_TOKEN
         - name: hwf-staff-submission-token
@@ -80,4 +82,5 @@ base:
           alias: MAINTENANCE_ENABLED
         - name: hwf-staff-maintenance-allowed-ips
           alias: MAINTENANCE_ALLOWED_IPS
-
+        - name: hwf-storage-account-primary-access-key
+          alias: AZURE_STORAGE_ACCESS_KEY

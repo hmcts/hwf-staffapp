@@ -10,7 +10,7 @@ RSpec.describe Views::Overview::Representative do
     subject { view.all_fields }
 
     it do
-      is_expected.to eql(["full_name", "organisation"])
+      is_expected.to eql(["full_name", "organisation", "position"])
     end
   end
 
