@@ -29,7 +29,7 @@ class Applicant < ActiveRecord::Base
   end
 
   def under_age?
-    age <= 15
+    age < 16
   end
 
   private

@@ -432,7 +432,7 @@ en-GB:
         ni_number: National Insurance number
         partner_ni_number: Partner's National Insurance number
         ho_number: Home Office reference number
-        under_age: 15 and under
+        under_age: Applicant over 16
         status: Status
       views/overview/details:
         fee: Fee
