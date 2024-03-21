@@ -50,9 +50,14 @@ withPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2024'
 
-      before('test') {
+      before('build') {
         sh script:"""
             rvm install ruby-3.3.0
+        """, label: 'Ruby version install'
+      }
+
+      before('test') {
+        sh script:"""
             yarn install
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
             docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d postgres
