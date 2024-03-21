@@ -71,7 +71,7 @@ RSpec.describe Views::Overview::OnlineApplicant do
     context 'under 16' do
       let(:over_16) { false }
       it 'returns state correctly' do
-        expect(view.under_age).to eql 'Yes'
+        expect(view.under_age).to eql 'No'
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Views::Overview::OnlineApplicant do
 
     context 'online application' do
       context 'under 16' do
-        let(:dob) { 15.years.ago }
+        let(:over_16) { true }
         it 'returns state correctly' do
           expect(view.under_age).to eql 'Yes'
         end

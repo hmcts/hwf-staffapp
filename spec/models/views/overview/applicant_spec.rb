@@ -52,14 +52,14 @@ RSpec.describe Views::Overview::Applicant do
     context 'under 16' do
       let(:applicant) { build_stubbed(:applicant, date_of_birth: 15.years.ago) }
       it 'returns state correctly' do
-        expect(view.under_age).to eql 'Yes'
+        expect(view.under_age).to eql 'No'
       end
     end
 
     context 'over 16' do
       let(:applicant) { build_stubbed(:applicant, date_of_birth: 17.years.ago) }
       it 'returns state correctly' do
-        expect(view.under_age).to be_nil
+        expect(view.under_age).to eql 'Yes'
       end
     end
 
@@ -68,6 +68,13 @@ RSpec.describe Views::Overview::Applicant do
 
       context 'under 16' do
         let(:dob) { 15.years.ago }
+        it 'returns state correctly' do
+          expect(view.under_age).to eql 'No'
+        end
+      end
+
+      context 'over 16' do
+        let(:dob) { 16.years.ago }
         it 'returns state correctly' do
           expect(view.under_age).to eql 'Yes'
         end

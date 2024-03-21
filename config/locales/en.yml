@@ -394,7 +394,7 @@ en-GB:
         date_of_birth: Date of birth
         ni_number: National Insurance number
         ho_number: Home Office reference number
-        under_age: 15 and under
+        under_age: Applicant over 16
         status: Status
       views/overview/children:
         dependents: Applicant has children living with them or that they are financially supporting
@@ -432,7 +432,7 @@ en-GB:
         ni_number: National Insurance number
         partner_ni_number: Partner's National Insurance number
         ho_number: Home Office reference number
-        under_age: 15 and under
+        under_age: Applicant over 16
         status: Status
       views/overview/details:
         fee: Fee
@@ -547,7 +547,8 @@ en-GB:
         married_false: Single
         married_true: Married or living with someone
         form_name_summary: Form number
-        under_age_true: 'Yes'
+        over_16_true: 'Yes'
+        over_16_false: 'No'
       forms/application/partner:
         undetermined: 'The details you’ve entered are incorrect, check and try again'
         partners_details: "Partner's details"
