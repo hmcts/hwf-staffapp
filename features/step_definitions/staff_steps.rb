@@ -51,9 +51,8 @@ And("I change the jurisdiction") do
   user = User.find(current_path.match('\d+').to_s)
   jurisdiction = user.office.jurisdictions.first
   change_user_details_page.content.wait_until_header_visible
-  # revisit this if the test keep failing - the params were missing jurisdiction id
   expect(change_user_details_page.content.radio[6].text).to have_content jurisdiction.name
-  change_user_details_page.content.radio[6].click
+  find(:element, id: "user_jurisdiction_id_#{jurisdiction.id}", visible: false).click
   change_user_details_page.content.save_changes_button.click
   expect(staff_details_page.content).to have_header
 end
