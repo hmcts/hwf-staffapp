@@ -53,7 +53,7 @@ And("I change the jurisdiction") do
   change_user_details_page.content.wait_until_header_visible
   # revisit this if the test keep failing - the params were missing jurisdiction id
   expect(change_user_details_page.content.radio[6].text).to have_content jurisdiction.name
-  change_user_details_page.content.radio[6].click
+  change_user_details_page.content.find('label', text: jurisdiction.name).click
   change_user_details_page.content.save_changes_button.click
   expect(staff_details_page.content).to have_header
 end
