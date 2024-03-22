@@ -50,14 +50,6 @@ withPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2024'
 
-      before('build') {
-        sh script:"""#!/bin/bash -l
-            set +x
-            source /usr/local/rvm/scripts/rvm
-            rvm install ruby-3.3.0
-        """, label: 'Ruby version install'
-      }
-
       before('test') {
         sh script:"""
             yarn install
