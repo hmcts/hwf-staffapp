@@ -36,9 +36,14 @@ module Views
       end
 
       def under_age
-        return unless applicant.under_age?
+        return if applicant.under_age?.nil?
         locale_scope = 'activemodel.attributes.forms/application/applicant'
-        I18n.t("under_age_true", scope: locale_scope)
+
+        if applicant.under_age?
+          I18n.t("over_16_false", scope: locale_scope)
+        else
+          I18n.t("over_16_true", scope: locale_scope)
+        end
       end
 
       private

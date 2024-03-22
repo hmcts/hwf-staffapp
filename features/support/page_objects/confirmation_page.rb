@@ -17,7 +17,7 @@ class ConfirmationPage < BasePage
     element :passed_by_manager, 'dd', text: '✓ Passed (by manager\'s decision)'
     element :granted_hwf, 'h2', text: '✓ Granted help with fees'
     element :next, 'a', text: 'Next'
-    element :total_income, 'p', text: /Your total monthly income|Your average income for the last 3 months/
+    element :total_income, 'p', text: /Your income total|Your total monthly income|Your average income for the last 3 months/
     element :fee_to_pay, 'p', text: /Amount you need to pay|Fee to pay/
     element :total_savings, 'p', text: /Your savings and investments total/
     element :max_savings, 'p', text: /Maximum amount of savings and investments allowed/
