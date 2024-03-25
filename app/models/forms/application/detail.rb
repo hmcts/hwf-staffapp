@@ -5,8 +5,6 @@ module Forms
       include DataFieldFormattable
       include RefundValidatable
 
-      TIME_LIMIT_FOR_PROBATE = 20
-
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         { fee: Decimal,
@@ -63,7 +61,6 @@ module Forms
       with_options if: :probate? do
         validates :deceased_name, presence: true
         validates :date_of_death, date: {
-          after_or_equal_to: :min_probate,
           before: :tomorrow
         }
       end
@@ -83,10 +80,6 @@ module Forms
       end
 
       private
-
-      def min_probate
-        TIME_LIMIT_FOR_PROBATE.years.ago
-      end
 
       def min_date
         3.months.ago.midnight
