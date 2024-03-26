@@ -54,3 +54,6 @@ features/cucumber-report/screenshot.png
 
 # Ignore development env file
 .env.development
+
+# Ignore local storage
+storage/*
