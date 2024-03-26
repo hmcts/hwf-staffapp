@@ -12,7 +12,6 @@ module Report
       @form = form
       if @form.valid?
         delay_job_export
-        # send_file @raw_export.zipfile_path
       else
         render "reports/raw_data"
       end
@@ -24,7 +23,7 @@ module Report
       from_date = date_from(report_params)
       to_date = date_to(report_params)
       user_id = current_user.id
-      RawDataExportJob.new(from: from_date, to: to_date, user_id: user_id).perform_now
+      RawDataExportJob.new.perform(from: from_date, to: to_date, user_id: user_id)
     end
 
     def extract_raw_data
