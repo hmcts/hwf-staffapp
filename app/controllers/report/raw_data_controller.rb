@@ -11,14 +11,21 @@ module Report
       authorize :report, :raw_data?
       @form = form
       if @form.valid?
-        extract_raw_data
-        send_file @raw_export.zipfile_path
+        delay_job_export
+        # send_file @raw_export.zipfile_path
       else
         render "reports/raw_data"
       end
     end
 
     private
+
+    def delay_job_export
+      from_date = date_from(report_params)
+      to_date = date_to(report_params)
+      user_id = current_user.id
+      RawDataExportJob.new(from: from_date, to: to_date, user_id: user_id).perform_now
+    end
 
     def extract_raw_data
       @raw_export = Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params))

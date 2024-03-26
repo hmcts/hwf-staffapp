@@ -180,5 +180,6 @@ Rails.application.routes.draw do
   as :user do
     get 'users/:id/change_password' => 'users/registrations#edit', as: 'edit_user_registration'
     patch 'users/:id/change_password' => 'users/registrations#update', as: 'user_registration'
+    get 'users/:id/raw_data_file/:file_id/download' => 'users/file_download#show', as: 'user_file_download'
   end
 end

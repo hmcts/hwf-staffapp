@@ -53,6 +53,15 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
+  def raw_data_extract_ready(user, storage_id)
+    set_template(ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil))
+    set_personalisation(
+      name: user.name,
+      link_to_download_page: user_file_download_url(user.id, storage_id)
+    )
+    mail(to: user.email)
+  end
+
   private
 
   def template(locale, method_name)
