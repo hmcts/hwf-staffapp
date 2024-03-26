@@ -57,7 +57,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_template(ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil))
     set_personalisation(
       name: user.name,
-      link_to_download_page: user_file_download_url(user.id, storage_id)
+      link_to_download_page: user_raw_data_file_url(user.id, storage_id)
     )
     mail(to: user.email)
   end

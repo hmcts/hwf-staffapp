@@ -4,9 +4,15 @@ module Users
 
     def show
       authorize :user
-
-      @storage_record = ExportFileStorage.find(params[:file_id])
-      # check the user user_id: current_user.id,
+      @storage = ExportFileStorage.find(params[:file_id])
     end
+
+    def download
+      @storage_record = ExportFileStorage.find(params[:file_id])
+      authorize @storage_record
+
+      send_data @storage_record.export_file.download, filename: 'export.zip'
+    end
+
   end
 end
