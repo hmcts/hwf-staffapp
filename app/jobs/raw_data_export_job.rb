@@ -31,7 +31,6 @@ class RawDataExportJob < ApplicationJob
     @storage.save
   end
 
-
   def send_email_notifications
     NotifyMailer.raw_data_extract_ready(@user, @storage.id).deliver_now
     log_notification
