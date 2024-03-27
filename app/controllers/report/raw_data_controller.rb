@@ -23,19 +23,20 @@ module Report
       from_date = date_from(report_params)
       to_date = date_to(report_params)
       user_id = current_user.id
-      RawDataExportJob.new.perform(from: from_date, to: to_date, user_id: user_id)
+
+      RawDataExportJob.perform_later(from: from_date, to: to_date, user_id: user_id)
     end
 
-    def extract_raw_data
-      @raw_export = Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params))
-      @raw_export.to_zip
-    rescue StandardError => e
-      Sentry.with_scope do |scope|
-        scope.set_tags(task: "raw_data_export")
-        Sentry.capture_message(e.message)
-      end
-      Rails.logger.debug { "Error in raw_data export task: #{e.message}" }
-    end
+    # def extract_raw_data
+    #   @raw_export = Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params))
+    #   @raw_export.to_zip
+    # rescue StandardError => e
+    #   Sentry.with_scope do |scope|
+    #     scope.set_tags(task: "raw_data_export")
+    #     Sentry.capture_message(e.message)
+    #   end
+    #   Rails.logger.debug { "Error in raw_data export task: #{e.message}" }
+    # end
 
   end
 end
