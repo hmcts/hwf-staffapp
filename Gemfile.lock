@@ -199,7 +199,7 @@ GEM
       bigdecimal
     cucumber-gherkin (27.0.0)
       cucumber-messages (>= 19.1.4, < 23)
-    cucumber-html-formatter (21.3.0)
+    cucumber-html-formatter (21.3.1)
       cucumber-messages (> 19, < 25)
     cucumber-messages (22.0.0)
     cucumber-rails (3.0.0)
@@ -246,7 +246,7 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.12.0)
-    et-orbi (1.2.10)
+    et-orbi (1.2.11)
       tzinfo
     execjs (2.9.1)
     factory_bot (6.4.6)
@@ -254,7 +254,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faker (3.2.3)
+    faker (3.3.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     formatador (1.1.0)
@@ -351,7 +351,7 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.5.0)
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.1)
@@ -368,7 +368,7 @@ GEM
       activerecord (>= 6.1)
       request_store (~> 1.4)
     parallel (1.24.0)
-    parallel_tests (4.5.2)
+    parallel_tests (4.6.0)
       parallel
     paranoia (2.6.3)
       activerecord (>= 5.1, < 7.2)
@@ -449,7 +449,7 @@ GEM
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.0)
-    reline (0.4.3)
+    reline (0.5.0)
       io-console (~> 0.5)
     request_store (1.6.0)
       rack (>= 1.4)
@@ -507,7 +507,7 @@ GEM
     rubocop-performance (1.20.2)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
-    rubocop-rails (2.24.0)
+    rubocop-rails (2.24.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -717,4 +717,4 @@ RUBY VERSION
    ruby 3.3.0p0
 
 BUNDLED WITH
-   2.5.6
+   2.5.7
