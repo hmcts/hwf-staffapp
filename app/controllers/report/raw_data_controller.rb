@@ -12,6 +12,8 @@ module Report
       @form = form
       if @form.valid?
         delay_job_export
+        flash[:notice] = I18n.t('.forms/report/raw_data.notice')
+        redirect_to reports_path
       else
         render "reports/raw_data"
       end
@@ -26,17 +28,6 @@ module Report
 
       RawDataExportJob.perform_later(from: from_date, to: to_date, user_id: user_id)
     end
-
-    # def extract_raw_data
-    #   @raw_export = Views::Reports::RawDataExport.new(date_from(report_params), date_to(report_params))
-    #   @raw_export.to_zip
-    # rescue StandardError => e
-    #   Sentry.with_scope do |scope|
-    #     scope.set_tags(task: "raw_data_export")
-    #     Sentry.capture_message(e.message)
-    #   end
-    #   Rails.logger.debug { "Error in raw_data export task: #{e.message}" }
-    # end
 
   end
 end

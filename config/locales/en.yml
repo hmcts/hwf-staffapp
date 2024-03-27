@@ -1108,3 +1108,5 @@ en-GB:
         main_jurisdiction: Main jurisdiction
     notice:
       updated: 'User updated.'
+  forms/report/raw_data:
+    notice: 'RawData export succesfull. You should receive an email with a download link shortly.'
