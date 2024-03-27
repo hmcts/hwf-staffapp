@@ -3,15 +3,15 @@ module Users
     respond_to :html
 
     def show
-      authorize :user
+      authorize :report, :raw_data?
       @storage = ExportFileStorage.find(params[:file_id])
     end
 
     def download
-      @storage_record = ExportFileStorage.find(params[:file_id])
-      authorize @storage_record
+      @storage = ExportFileStorage.find(params[:file_id])
+      authorize @storage
 
-      send_data @storage_record.export_file.download, filename: 'export.zip'
+      send_data @storage.export_file.download, filename: 'export.zip'
     end
 
   end

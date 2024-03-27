@@ -104,4 +104,21 @@ RSpec.describe NotifyMailer do
       it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID', nil)
     end
   end
+
+  describe '#raw_data_extract_ready' do
+    let(:user) { create(:user) }
+    let(:mail) { described_class.raw_data_extract_ready(user, 1) }
+
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil)
+
+    it 'has the right values' do
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        name: user.name,
+                                                        link_to_download_page: user_raw_data_file_url(user.id, 1)
+                                                      })
+      expect(mail.to).to eq([user.email])
+    end
+
+  end
+
 end
