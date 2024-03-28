@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     put 'income_claims_data' => 'income_claims_data#data_export'
     get 'power_bi' => 'power_bi#show'
     put 'power_bi' => 'power_bi#data_export'
+    get 'raw_digital_data' => 'raw_digital_data#show'
+    put 'raw_digital_data' => 'raw_digital_data#data_export'
     get 'raw_data' => 'raw_data#show'
     put 'raw_data' => 'raw_data#data_export'
     get 'ocmc' => 'ocmc#show'
