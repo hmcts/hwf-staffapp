@@ -55,9 +55,10 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
   def raw_data_extract_ready(user, storage_id)
     set_template(ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil))
+    domain = ENV.fetch('URL_HELPER_DOMAIN', nil)
     set_personalisation(
       name: user.name,
-      link_to_download_page: user_raw_data_file_url(user.id, storage_id)
+      link_to_download_page: user_raw_data_file_url(user.id, storage_id, domain: domain)
     )
     mail(to: user.email)
   end
@@ -77,4 +78,5 @@ class NotifyMailer < GovukNotifyRails::Mailer
   def language(locale)
     locale == 'cy' ? :welsh : :english
   end
+
 end
