@@ -73,7 +73,10 @@ RSpec.describe Report::RawDataController do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :data_export, params: { forms_finance_report: dates } }
+        before {
+          allow(RawDataExportJob).to receive(:perform_later)
+          put :data_export, params: { forms_finance_report: dates }
+        }
 
         let(:dates) {
           { day_date_from: '01',
@@ -84,14 +87,13 @@ RSpec.describe Report::RawDataController do
             year_date_to: '2022' }
         }
 
-        it { is_expected.to have_http_status(:success) }
+        it { is_expected.to have_http_status(:redirect) }
+        it { expect(flash[:notice]).to eq('RawData export succesfull. You should receive an email with a download link shortly.') }
 
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('raw_data-01-01-2020-31-12-2022.csv.zip')
-        end
-
-        it 'sets the file type' do
-          expect(response.headers['Content-Type']).to include('application/zip')
+        it "run export in delayed job" do
+          from = { day: "01", month: "01", year: "2020" }
+          to = { day: "31", month: "12", year: "2022" }
+          expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id)
         end
       end
     end

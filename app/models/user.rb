@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   belongs_to :jurisdiction, optional: true
   has_many :applications
   has_many :benefit_checks
+  has_many :export_file_storages
 
   ROLES = ['user', 'manager', 'admin', 'mi', 'reader'].freeze
 
