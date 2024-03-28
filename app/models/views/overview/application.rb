@@ -77,7 +77,7 @@ module Views
       end
 
       def result
-        return @application.evidence_check.outcome if @application.evidence_check&.outcome
+        return @application.evidence_check.outcome if evidence_completed?
         @application.outcome
       end
 
@@ -114,6 +114,10 @@ module Views
       end
 
       private
+
+      def evidence_completed?
+        @application.evidence_check&.completed_at && @application.evidence_check&.outcome
+      end
 
       def parse_amount_to_pay(amount_to_pay)
         (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
