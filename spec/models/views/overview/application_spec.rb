@@ -259,6 +259,28 @@ RSpec.describe Views::Overview::Application do
 
       it { is_expected.to eq 'none' }
     end
+
+    context 'evidence_check is not processed but has outcome' do
+      let(:application) { build_stubbed(:application, outcome: outcome, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: 123, outcome: 'full', completed_at: nil) }
+
+      context 'when the application is a no remission' do
+        let(:outcome) { 'none' }
+
+        it { is_expected.to eq 'none' }
+      end
+    end
+
+    context 'evidence_check is processed' do
+      let(:application) { build_stubbed(:application, outcome: outcome, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: 123, outcome: 'full', completed_at: Time.zone.now) }
+
+      context 'when the application is a no remission' do
+        let(:outcome) { 'none' }
+
+        it { is_expected.to eq 'full' }
+      end
+    end
   end
 
   describe '#amount_to_refund' do
