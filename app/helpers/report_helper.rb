@@ -5,7 +5,7 @@ module ReportHelper
   end
 
   def ocmc_courts
-    Office.sorted
+    Office.sorted.non_digital
   end
 
   def preformat_average_time(averege_time)
