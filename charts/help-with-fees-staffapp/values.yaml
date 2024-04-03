@@ -3,7 +3,7 @@ base:
   image: 'hmctspublic.azurecr.io/help-with-fees/staffapp:latest'
   ingressHost: hwf-staffapp.{{ .Values.global.environment }}.platform.hmcts.net
   aadIdentityName: help-with-fees
-  memoryRequests: "512Mi"
+  memoryRequests: "1Gi"
   cpuRequests: "500m"
   memoryLimits: "2048Mi"
   cpuLimits: "1000m"
