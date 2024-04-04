@@ -329,6 +329,9 @@ Style/SpecialGlobalVars:
 Performance/StringIdentifierArgument:
   Enabled: false
 
+Bundler/OrderedGems:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails
