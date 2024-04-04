@@ -44,6 +44,10 @@ Runs 10 minutes past midnight
 Runs every day at 1am
 ```PersonalDataPurgeJob.delay(cron: '0 1 * * *').perform_now```
 
+## Delayed jobs for Abandoned Application data purge
+Runs every day at 1am
+```AbandonedApplicationPurgeJob.delay(cron: '0 1 * * *').perform_now```
+
 ## Pre-requisites
 You will need to install govuk-frontend library
 ```
