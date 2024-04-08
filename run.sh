@@ -60,15 +60,8 @@ case ${DOCKER_STATE} in
         bundle exec rake db:setup
         ;;
     esac
-        case ${ROLE1} in
-        worker)
-            echo "running worker"
-            bundle exec rake jobs:work
-            ;;
-        *)
-            echo "running app"
-            bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
-            ;;
-        esac
+    echo "running app"
+    nohup bundle exec rake jobs:work > tmp/nohup.log
+    bundle exec puma -p ${UNICORN_PORT:-8080} -C ./config/puma.rb -e ${RAILS_ENV:-production}
     ;;
 esac
