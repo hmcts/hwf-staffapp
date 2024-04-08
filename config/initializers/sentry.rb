@@ -2,6 +2,9 @@ EXCLUDE_PATHS = ['/ping', '/ping.json', '/health', '/health.json'].freeze
 
 Sentry.init do |config|
   config.dsn = Settings.sentry.dsn
+  config.traces_sample_rate = 1.0
+  config.profiles_sample_rate = 1.0
+
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
   config.release = ENV.fetch('APPVERSION', 'unknown')
 
