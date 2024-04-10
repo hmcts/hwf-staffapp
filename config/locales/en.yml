@@ -1108,6 +1108,9 @@ en-GB:
         main_jurisdiction: Main jurisdiction
     notice:
       updated: 'User updated.'
+    file_download:
+      raw_data: 'Raw Data'
+      finance_transactional: 'Finance transactional'
   forms/report/raw_data:
     notice: 'RawData export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.'
   forms/report/fi_transactional:
