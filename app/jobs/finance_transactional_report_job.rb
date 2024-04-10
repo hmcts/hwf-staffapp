@@ -1,4 +1,4 @@
-class FinanceTransactionalReportJob < ApplicationJob
+class FinanceTransactionalReportJob < ReportFileJob
   queue_as :default
 
   def perform(args)
@@ -6,9 +6,10 @@ class FinanceTransactionalReportJob < ApplicationJob
     @from_date = args[:from]
     @to_date = args[:to]
     @filters = args[:filters] || {}
-    log_task_run('start')
+    @task_name = 'Finance Transactional'
+    log_task_run('start', @task_name)
     extract_finance_transactional_report
-    log_task_run('end')
+    log_task_run('end', @task_name)
   end
 
   private
@@ -17,37 +18,10 @@ class FinanceTransactionalReportJob < ApplicationJob
     @export = FinanceTransactionalReportBuilder.new(@from_date, @to_date, @filters)
     @export.to_zip
 
-    store_zip_file
+    store_zip_file('finance_transactional')
     send_email_notifications
   rescue StandardError => e
-    Sentry.with_scope do |scope|
-      scope.set_tags(task: "financial_export")
-      Sentry.capture_message(e.message)
-    end
-    Rails.logger.debug { "Error in financial_export export task: #{e.message}" }
-  end
-
-  def store_zip_file
-    @storage = ExportFileStorage.new(user: @user, name: 'finance_transactional')
-    @storage.export_file.attach(io: File.open(@export.zipfile_path), filename: 'financial_export.zip')
-    @storage.save
-  end
-
-  def send_email_notifications
-    NotifyMailer.file_report_ready(@user, @storage.id).deliver_now
-    log_notification
-  end
-
-  def log_task_run(event)
-    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Running Finance Transactional #{event} at #{Time.zone.now.to_fs(:db)}")
-    tc.flush
-  end
-
-  def log_notification
-    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Sending Finance Transactional email notification at #{Time.zone.now.to_fs(:db)}")
-    tc.flush
+    report_error(e, 'financial_export')
   end
 
 end
