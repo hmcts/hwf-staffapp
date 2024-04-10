@@ -105,16 +105,16 @@ RSpec.describe NotifyMailer do
     end
   end
 
-  describe '#raw_data_extract_ready' do
+  describe '#file_report_ready' do
     let(:user) { create(:user) }
-    let(:mail) { described_class.raw_data_extract_ready(user, 1) }
+    let(:mail) { described_class.file_report_ready(user, 1) }
 
     it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil)
 
     it 'has the right values' do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         name: user.name,
-                                                        link_to_download_page: user_raw_data_file_url(user.id, 1)
+                                                        link_to_download_page: user_export_file_url(user.id, 1)
                                                       })
       expect(mail.to).to eq([user.email])
       mail.govuk_notify_personalisation[:link_to_download_page]
@@ -127,7 +127,7 @@ RSpec.describe NotifyMailer do
         and_return("testdomain")
 
       link = mail.govuk_notify_personalisation[:link_to_download_page]
-      expect(link).to eq("http://testdomain:3000/users/#{user.id}/raw_data_file/1")
+      expect(link).to eq("http://testdomain:3000/users/#{user.id}/export_file/1")
     end
 
   end

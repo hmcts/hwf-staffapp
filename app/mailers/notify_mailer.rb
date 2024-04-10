@@ -53,7 +53,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
-  def raw_data_extract_ready(user, storage_id)
+  def file_report_ready(user, storage_id)
     set_template(ENV.fetch('NOTIFY_RAW_DATA_READY_TEMPLATE_ID', nil))
 
     set_personalisation(
@@ -82,9 +82,9 @@ class NotifyMailer < GovukNotifyRails::Mailer
   def link_for_file_download(user_id, storage_id)
     host = ENV.fetch('URL_HELPER_DOMAIN', nil)
     if host
-      user_raw_data_file_url(user_id, storage_id, host: host)
+      user_export_file_url(user_id, storage_id, host: host)
     else
-      user_raw_data_file_url(user_id, storage_id)
+      user_export_file_url(user_id, storage_id)
     end
   end
 

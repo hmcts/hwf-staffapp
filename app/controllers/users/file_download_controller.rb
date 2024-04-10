@@ -11,7 +11,7 @@ module Users
       @storage = ExportFileStorage.find(params[:file_id])
       authorize @storage
 
-      send_data @storage.export_file.download, filename: 'export.zip'
+      send_data @storage.export_file.download, filename: "#{@storage.name}.zip"
     end
 
   end
