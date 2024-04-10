@@ -12,10 +12,9 @@ class ReportsController < ApplicationController
   def finance_transactional_report_generator
     @form = ftr_form
     if @form.valid?
-      build_and_return_data(
-        finance_transactional_report_builder.to_csv,
-        'finance-transactional-report'
-      )
+      finance_transactional_delay_job
+      flash[:notice] = I18n.t('.forms/report/fi_transactional.notice')
+      redirect_to reports_path
     else
       render :finance_transactional_report
     end
@@ -53,6 +52,14 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def finance_transactional_delay_job
+    from_date = date_from(ftr_params)
+    to_date = date_to(ftr_params)
+    user_id = current_user.id
+    FinanceTransactionalReportJob.perform_later(from: from_date, to: to_date, user_id: user_id,
+                                                filter: filters(ftr_params))
+  end
 
   def form
     Forms::FinanceReport.new(report_params)
@@ -106,13 +113,6 @@ class ReportsController < ApplicationController
     FinanceReportBuilder.new(
       date_from(report_params), date_to(report_params),
       filters(report_params)
-    )
-  end
-
-  def finance_transactional_report_builder
-    FinanceTransactionalReportBuilder.new(
-      date_from(ftr_params), date_to(ftr_params),
-      filters(ftr_params)
     )
   end
 

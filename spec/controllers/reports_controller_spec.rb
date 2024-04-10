@@ -145,28 +145,31 @@ RSpec.describe ReportsController do
       end
 
       context 'with valid data - both from and to dates' do
-        before { put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: dates } }
+        before {
+          allow(FinanceTransactionalReportJob).to receive(:perform_later)
+          put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: dates }
+        }
 
-        it { is_expected.to have_http_status(:success) }
+        it { is_expected.to have_http_status(:redirect) }
+        it { expect(flash[:notice]).to eq('Finance transactional export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.') }
 
-        it 'sets the filename' do
-          expect(response.headers['Content-Disposition']).to include('finance-transactional-report-')
-        end
-
-        it 'sets the file type' do
-          expect(response.headers['Content-Type']).to include('text/csv')
+        it "run export in delayed job" do
+          expect(FinanceTransactionalReportJob).to have_received(:perform_later).with(from: date_from, to: date_to, user_id: admin.id, filter: {})
         end
       end
 
       context 'filters' do
+        before {
+          allow(FinanceTransactionalReportJob).to receive(:perform_later)
+        }
+
         context 'with filters' do
           let(:filters) { { sop_code: 'ABC123', refund: 'true', application_type: 'income', jurisdiction_id: '1' } }
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, filters)
+            expect(FinanceTransactionalReportJob).to have_received(:perform_later).with(from: date_from, to: date_to, user_id: admin.id, filter: filters)
           end
         end
 
@@ -174,11 +177,10 @@ RSpec.describe ReportsController do
           let(:filters) { { jurisdiction_id: '1' } }
 
           it 'sends filter to DataReport' do
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
             report_params = dates.merge(filters)
 
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, jurisdiction_id: '1')
+            expect(FinanceTransactionalReportJob).to have_received(:perform_later).with(from: date_from, to: date_to, user_id: admin.id, filter: { jurisdiction_id: '1' })
           end
         end
 
@@ -187,9 +189,8 @@ RSpec.describe ReportsController do
 
           it 'sends filter to DataReport' do
             report_params = dates.merge(filters)
-            allow(FinanceTransactionalReportBuilder).to receive(:new).and_return ['report']
             put :finance_transactional_report_generator, params: { forms_report_finance_transactional_report: report_params }
-            expect(FinanceTransactionalReportBuilder).to have_received(:new).with(date_from, date_to, {})
+            expect(FinanceTransactionalReportJob).to have_received(:perform_later).with(from: date_from, to: date_to, user_id: admin.id, filter: {})
           end
         end
       end

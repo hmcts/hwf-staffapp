@@ -1,9 +1,9 @@
 - content_for :page_title
-  = "Raw data extract download"
+  = "#{download_file_page_header(@storage)} extract download"
 
-h1.govuk-heading-xl Raw data extract download
+h1.govuk-heading-xl ="#{download_file_page_header(@storage)} extract download"
 
-p.govuk-body You can download the raw data extract file by clicking the button below.
+p.govuk-body You can download the report file by clicking the button below.
 
 dl.govuk-summary-list
   .govuk-summary-list__row
@@ -14,4 +14,4 @@ dl.govuk-summary-list
     dd.govuk-summary-list__value = @storage.user.name
 
 
-= link_to 'Download raw data extract', user_raw_data_file_download_path(current_user, @storage.id), class: 'govuk-button'
+= link_to 'Download report file', user_export_file_download_path(current_user, @storage.id), class: 'govuk-button'

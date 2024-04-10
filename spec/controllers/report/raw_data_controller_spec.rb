@@ -88,7 +88,7 @@ RSpec.describe Report::RawDataController do
         }
 
         it { is_expected.to have_http_status(:redirect) }
-        it { expect(flash[:notice]).to eq('RawData export succesfull. You should receive an email with a download link shortly.') }
+        it { expect(flash[:notice]).to eq('RawData export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.') }
 
         it "run export in delayed job" do
           from = { day: "01", month: "01", year: "2020" }
