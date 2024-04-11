@@ -272,7 +272,7 @@ RSpec/InstanceVariable:
 FactoryBot/CreateList:
   Enabled: false
 
-RSpec/Rails/HttpStatus:
+RSpecRails/HttpStatus:
   Enabled: false
 
 RSpec/RepeatedExample:
@@ -332,9 +332,13 @@ Performance/StringIdentifierArgument:
 Bundler/OrderedGems:
   Enabled: false
 
+Style/MapIntoArray:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails
   - rubocop-performance
   - rubocop-capybara
   - rubocop-factory_bot
+  - rubocop-rspec_rails
