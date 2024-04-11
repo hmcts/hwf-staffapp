@@ -48,6 +48,10 @@ Runs every day at 1am
 Runs every day at 1am
 ```AbandonedApplicationPurgeJob.delay(cron: '0 1 * * *').perform_now```
 
+## Delayed jobs for Abandoned Application data purge
+Runs every day at 2am
+```OldFileExportPurgeJob.delay(cron: '0 2 * * *').perform_now```
+
 ## Pre-requisites
 You will need to install govuk-frontend library
 ```
