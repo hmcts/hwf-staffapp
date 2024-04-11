@@ -30,8 +30,8 @@ RSpec.describe AbandonedApplicationPurgeJob do
         expect(application3.reload).not_to be_nil
         expect(application4.reload).not_to be_nil
         expect(application5.reload).not_to be_nil
-        expect(app_insight).to have_received(:track_event).with("Running Abandoned application purge data script #{Time.zone.now.to_fs(:short)}")
-        expect(app_insight).to have_received(:track_event).with("Finished Abandoned application purge data script #{Time.zone.now.to_fs(:short)}")
+        expect(app_insight).to have_received(:track_event).with("Running Abandoned application purge data script #{Time.zone.today}")
+        expect(app_insight).to have_received(:track_event).with("Finished Abandoned application purge data script #{Time.zone.today}")
       }
     end
   end
