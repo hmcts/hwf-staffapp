@@ -3,9 +3,9 @@ base:
   image: 'hmctspublic.azurecr.io/help-with-fees/staffapp:latest'
   ingressHost: hwf-staffapp.{{ .Values.global.environment }}.platform.hmcts.net
   aadIdentityName: help-with-fees
-  memoryRequests: "1Gi"
+  memoryRequests: "2Gi"
   cpuRequests: "500m"
-  memoryLimits: "2048Mi"
+  memoryLimits: "3Gi"
   cpuLimits: "1000m"
   environment:
     RAILS_ENV: 'production'
