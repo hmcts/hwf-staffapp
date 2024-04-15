@@ -25,11 +25,22 @@ specific office. Feature switching table is managed manually from a rails consol
 There is a gem called Bullet. If you want to check N+1 queries in development mode, you can uncomment
 Bullet related lines in development.rb
 
-## Delayed jobs for BenefitChecks
+
+## Delayed CRON Jobs (delayed_cron_job)
 We need to keep an eye on the results of DWP checks. When the API is down the service will disable
 benefit related applications. Then we re-run failed checks in 10 minutes intervals to see if the
 API is back again. We are not using standard CRON table because Kubernetes have a bug. So we are using
-delayed job that has the schedule in DB table. To set it up (if there is no record in DB) run this in rails console:
+delayed cron job that has the schedule in DB table. These tasks are checked by
+
+```rake jobs:work```
+
+that needs to run on the background, currently set up in rub.sh :
+```rake jobs:work &```
+
+
+
+## Delayed jobs for BenefitChecks
+To set it up (if there is no record in DB) run this in rails console:
 ```BenefitCheckRerunJob.delay(cron: '*/10 * * * *').perform_now```
 
 ## Delayed jobs for DWP offline notification
@@ -48,7 +59,7 @@ Runs every day at 1am
 Runs every day at 1am
 ```AbandonedApplicationPurgeJob.delay(cron: '0 1 * * *').perform_now```
 
-## Delayed jobs for Abandoned Application data purge
+## Delayed jobs for Old export file data purge
 Runs every day at 2am
 ```OldFileExportPurgeJob.delay(cron: '0 2 * * *').perform_now```
 
