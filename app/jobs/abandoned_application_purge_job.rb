@@ -10,7 +10,14 @@ class AbandonedApplicationPurgeJob < ApplicationJob
   private
 
   def purge_abandoned_applications
-    abandoned_applications.each(&:really_destroy!)
+    abandoned_applications.each do |application|
+      application.really_destroy!
+    rescue StandardError => e
+      Sentry.capture_message(e.message,
+                             extra: { application_id: application.id, event: 'Purge abandoned applications' })
+      BenefitCheck.where(application_id: application.id, applicationable_id: nil,
+                         applicationable_type: nil).last.destroy
+    end
   end
 
   def abandoned_applications
@@ -19,7 +26,7 @@ class AbandonedApplicationPurgeJob < ApplicationJob
 
   def log_task_run(event)
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("#{event} Abandoned application purge data script #{Time.zone.now.to_fs(:short)}")
+    tc.track_event("#{event} Abandoned application purge data script #{Time.zone.today}")
     tc.flush
   end
 
