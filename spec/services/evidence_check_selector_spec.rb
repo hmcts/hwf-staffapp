@@ -71,6 +71,19 @@ describe EvidenceCheckSelector do
               it 'does not saves the ccmcc check type' do
                 expect(decision.checks_annotation).to be_nil
               end
+
+              context 'hmrc income check type' do
+                before { allow(application).to receive(:hmrc_check_type?).and_return true }
+
+                it { expect(decision.check_type).to eql 'random' }
+                it { expect(decision.income_check_type).to eql 'hmrc' }
+
+                context 'average income' do
+                  let(:application) { create(:application_full_remission, :refund, income_period: 'average') }
+                  it { expect(decision.income_check_type).to eql 'paper' }
+                end
+              end
+
             end
             context '1st' do
               let(:list) { [app_no_ev_check, app_ev_check] }
