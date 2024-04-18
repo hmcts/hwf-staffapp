@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 describe HmrcApiService do
-  subject(:service) { described_class.new(evidence_check.application, processing_user.id) }
+  subject(:service) { described_class.new(evidence_check.application, processing_user.id, check_type) }
+  let(:check_type) { 'applicant' }
   let(:application) { create(:application_part_remission) }
   let(:processing_user) { create(:user) }
   let(:evidence_check) { create(:evidence_check, application: application) }
@@ -13,7 +14,11 @@ describe HmrcApiService do
            ni_number: 'AB123456C',
            first_name: 'Jimmy',
            last_name: 'Conners',
-           application: application)
+           application: application,
+           partner_first_name: "Jane",
+           partner_last_name: "Conners",
+           partner_ni_number: "SN741258C",
+           partner_date_of_birth: DateTime.new(2000, 2, 2))
   }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:hmrc_api_authentication) { instance_double(HwfHmrcApi::Authentication, access_token: 1, expires_in: 1) }
@@ -132,6 +137,37 @@ describe HmrcApiService do
       end
     end
 
+    context 'match_user partner' do
+      let(:check_type) { 'partner' }
+      let(:partner_info) {
+        {
+          dob: "2000-02-02",
+          nino: 'SN741258C',
+          first_name: "Jane",
+          last_name: "Conners"
+        }
+      }
+
+      it "applicant params" do
+        allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+        allow(HmrcCall).to receive(:create).and_return hmrc_call
+        allow(hmrc_api).to receive(:match_user)
+        service.match_user
+        expect(hmrc_api).to have_received(:match_user).with(partner_info, correlation_id)
+      end
+
+      context 'hmrc_call' do
+        before do
+          allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
+          allow(hmrc_api).to receive(:match_user)
+          service.match_user
+        end
+
+        it { expect(HmrcCall.last.endpoint_name).to eq('match_user') }
+        it { expect(HmrcCall.last.call_params).to eq(partner_info) }
+      end
+    end
+
     context "Get data for" do
       before {
         allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
@@ -202,6 +238,21 @@ describe HmrcApiService do
         service.match_user
       }
 
+      context 'partner' do
+        let(:check_type) { 'partner' }
+        it 'ni_number' do
+          expect(service.hmrc_check.ni_number).to eql('SN741258C')
+        end
+
+        it 'date_of_birth' do
+          expect(service.hmrc_check.date_of_birth).to eql('2000-02-02')
+        end
+
+        it 'check_type' do
+          expect(service.hmrc_check.check_type).to eql('partner')
+        end
+      end
+
       context 'metadata' do
         it 'ni_number' do
           expect(service.hmrc_check.ni_number).to eql('AB123456C')
@@ -214,6 +265,11 @@ describe HmrcApiService do
         it 'user_id from initializer' do
           expect(service.hmrc_check.user_id).to eql(processing_user.id)
         end
+
+        it 'check_type' do
+          expect(service.hmrc_check.check_type).to eql('applicant')
+        end
+
       end
 
       context 'income' do

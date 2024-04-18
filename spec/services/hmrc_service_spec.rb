@@ -66,7 +66,33 @@ describe HmrcService do
     }
 
     it "calls service with application" do
-      expect(HmrcApiService).to have_received(:new).with(application, 256)
+      expect(HmrcApiService).to have_received(:new).with(application, 256, 'applicant')
+    end
+
+    context 'married' do
+      let(:applicant) {
+        create(:applicant,
+               date_of_birth: DateTime.new(1968, 2, 28),
+               ni_number: 'AB123456C',
+               first_name: 'Jimmy',
+               last_name: 'Conners',
+               application: application,
+               married: true,
+               partner_first_name: "Jane",
+               partner_last_name: "Conners",
+               partner_ni_number: "SN741258C",
+               partner_date_of_birth: DateTime.new(2000, 2, 2))
+      }
+
+      it { expect(HmrcApiService).to have_received(:new).with(application, 256, 'partner') }
+
+      it "load income" do
+        expect(api_service).to have_received(:income).with('from', 'to').twice
+      end
+
+      it "load hmrc_check" do
+        expect(api_service).to have_received(:hmrc_check).twice
+      end
     end
 
     it "calls match_user" do
@@ -74,11 +100,11 @@ describe HmrcService do
     end
 
     it "load income" do
-      expect(api_service).to have_received(:income).with('from', 'to')
+      expect(api_service).to have_received(:income).with('from', 'to').once
     end
 
     it "load hmrc_check" do
-      expect(api_service).to have_received(:hmrc_check)
+      expect(api_service).to have_received(:hmrc_check).once
     end
 
     context 'fail' do
