@@ -52,17 +52,19 @@ describe EvidenceCheck do
       it { expect(evidence_check.hmrc?).to be_falsey }
     end
 
-    describe 'return last hmrc check' do
+    describe 'return last hmrc check for applicant' do
       let(:evidence_check) { create(:evidence_check, application: application) }
       let(:hmrc_check_1) { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
       let(:hmrc_check_2) { create(:hmrc_check, evidence_check: evidence_check) }
+      let(:hmrc_check_3) { create(:hmrc_check, evidence_check: evidence_check, check_type: 'partner') }
 
       before {
         hmrc_check_1
         hmrc_check_2
+        hmrc_check_3
       }
       it { expect(evidence_check.hmrc_check).to eq(hmrc_check_2) }
-      it { expect(evidence_check.hmrc_checks).to eq([hmrc_check_1, hmrc_check_2]) }
+      it { expect(evidence_check.hmrc_checks).to eq([hmrc_check_1, hmrc_check_2, hmrc_check_3]) }
     end
   end
 end
