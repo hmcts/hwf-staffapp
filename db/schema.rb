@@ -314,6 +314,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_30_152321) do
     t.datetime "purged_at", precision: nil
     t.integer "additional_income", default: 0
     t.string "sa_income"
+    t.string "check_type", default: "applicant"
   end
 
   create_table "hmrc_tokens", force: :cascade do |t|
