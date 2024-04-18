@@ -25,6 +25,6 @@ class EvidenceCheck < ActiveRecord::Base
   end
 
   def hmrc_check
-    hmrc_checks.order('created_at asc').last
+    hmrc_checks.applicant.order('created_at asc').last
   end
 end
