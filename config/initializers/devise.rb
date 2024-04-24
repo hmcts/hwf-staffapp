@@ -15,7 +15,7 @@ Devise.setup do |config|
   config.mailer_sender = 'no-reply@helpwithcourtfees.service.gov.uk'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'NotifyMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
