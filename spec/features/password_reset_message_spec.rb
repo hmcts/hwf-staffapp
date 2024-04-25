@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.feature 'Password reset,' do
 
   let(:user) { create(:user) }
+  let(:mailer) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+  before {
+    allow(NotifyMailer).to receive(:reset_password_instructions).and_return mailer
+  }
 
   context 'User' do
     scenario 'reset password token expired' do

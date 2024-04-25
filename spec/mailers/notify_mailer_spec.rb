@@ -5,14 +5,15 @@ RSpec.describe NotifyMailer do
   let(:user) { build(:user, name: 'John Jones', invitation_token: '123456abcd', email: 'petr@test.gov.uk') }
 
   describe '#password_reset' do
-    let(:mail) { described_class.password_reset(user, 'http://reset_link') }
+    let(:mail) { described_class.reset_password_instructions(user, 'token134', []) }
+    let(:link) { edit_user_password_url(reset_password_token: 'token134') }
 
     it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil)
 
     it 'has the right values' do
       expect(mail.govuk_notify_personalisation).to eq({
                                                         name: 'John Jones',
-                                                        password_link: 'http://reset_link'
+                                                        password_link: 'http://localhost:3000/users/password/edit?reset_password_token=token134'
                                                       })
     end
 
@@ -128,6 +129,33 @@ RSpec.describe NotifyMailer do
 
       link = mail.govuk_notify_personalisation[:link_to_download_page]
       expect(link).to eq("http://testdomain:3000/users/#{user.id}/export_file/1")
+    end
+
+  end
+
+  describe '#confirmation_instructions' do
+    let(:user) { create(:user) }
+    let(:mail) { described_class.confirmation_instructions(user, 'token123') }
+
+    # it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_CONFIRMATION_EMAIL_TEMPLATE_ID', nil)
+
+    it 'has the right values' do
+      expect(mail.govuk_notify_personalisation).to eq({
+                                                        name: user.name,
+                                                        confirmation_link: user_confirmation_url(confirmation_token: 'token123')
+                                                      })
+      expect(mail.to).to eq([user.email])
+      mail.govuk_notify_personalisation[:link_to_download_page]
+    end
+
+    it 'has the right domain' do
+      allow(ENV).to receive(:fetch).with("NOTIFY_CONFIRMATION_EMAIL_TEMPLATE_ID", nil).
+        and_return("template")
+      allow(ENV).to receive(:fetch).with("URL_HELPER_DOMAIN", nil).
+        and_return("testdomain")
+
+      link = mail.govuk_notify_personalisation[:confirmation_link]
+      expect(link).to eq("http://testdomain:3000/users/confirmation?confirmation_token=token123")
     end
 
   end
