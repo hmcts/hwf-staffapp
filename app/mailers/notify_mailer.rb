@@ -54,7 +54,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
-  def confirmation_instructions(user, token)
+  def confirmation_instructions(user, token, *_args)
     set_template(ENV.fetch('NOTIFY_CONFIRMATION_EMAIL_TEMPLATE_ID', nil))
 
     set_personalisation(
