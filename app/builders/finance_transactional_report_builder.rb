@@ -79,11 +79,9 @@ class FinanceTransactionalReportBuilder
   end
 
   def generate
-    data = []
-    applications.each do |application|
-      data << Views::Reports::FinanceTransactionalReportDataRow.new(application)
+    applications.map do |application|
+      Views::Reports::FinanceTransactionalReportDataRow.new(application)
     end
-    data
   end
 
   def applications

@@ -58,11 +58,9 @@ class FinanceReportBuilder
   end
 
   def generate
-    data = []
-    distinct_offices_jurisdictions.each do |business_entity|
-      data << Views::Reports::FinanceReportDataRow.new(business_entity, @date_from, @date_to)
+    distinct_offices_jurisdictions.map do |business_entity|
+      Views::Reports::FinanceReportDataRow.new(business_entity, @date_from, @date_to)
     end
-    data
   end
 
   def distinct_offices_jurisdictions
