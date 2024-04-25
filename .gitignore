@@ -24,7 +24,7 @@ db_dump
 
 # Ignore debugger file
 .byebug_history
-notes.txt
+notes.rb
 
 # coverage files
 coverage
