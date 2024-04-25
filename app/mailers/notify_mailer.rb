@@ -27,15 +27,6 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: application.email_address)
   end
 
-  def password_reset(user, reset_link)
-    set_template(ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil))
-    set_personalisation(
-      name: user.name,
-      password_link: reset_link
-    )
-    mail(to: user.email)
-  end
-
   def dwp_is_down_notifier
     set_template(ENV.fetch('NOTIFY_DWP_DOWN_TEMPLATE_ID', nil))
     set_personalisation(
@@ -73,6 +64,16 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
+  def reset_password_instructions(user, token, *_args)
+    set_template(ENV.fetch('NOTIFY_PASSWORD_RESET_TEMPLATE_ID', nil))
+    set_personalisation(
+      name: user.name,
+      password_link: reset_link(token)
+    )
+
+    mail(to: user.email)
+  end
+
   private
 
   def template(locale, method_name)
@@ -106,6 +107,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
       user_confirmation_url(confirmation_token: token, host: url_host)
     else
       user_confirmation_url(confirmation_token: token)
+    end
+  end
+
+  def reset_link(token)
+    if url_host
+      edit_user_password_url(reset_password_token: token, host: url_host)
+    else
+      edit_user_password_url(reset_password_token: token)
     end
   end
 
