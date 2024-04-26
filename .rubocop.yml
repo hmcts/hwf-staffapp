@@ -272,7 +272,7 @@ RSpec/InstanceVariable:
 FactoryBot/CreateList:
   Enabled: false
 
-RSpec/Rails/HttpStatus:
+RSpecRails/HttpStatus:
   Enabled: false
 
 RSpec/RepeatedExample:
@@ -338,3 +338,4 @@ require:
   - rubocop-performance
   - rubocop-capybara
   - rubocop-factory_bot
+  - rubocop-rspec_rails
