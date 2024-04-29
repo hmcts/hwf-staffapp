@@ -408,7 +408,7 @@ GEM
       parallel
     paranoia (2.6.3)
       activerecord (>= 5.1, < 7.2)
-    parser (3.3.0.5)
+    parser (3.3.1.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.6)
