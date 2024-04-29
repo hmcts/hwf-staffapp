@@ -10,6 +10,7 @@ gem 'dotenv-rails', groups: [:development, :test] # this has to be here because 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.1.3'
+gem 'redis'
 # profiling in Sentry
 gem 'stackprof'
 gem 'sentry-rails', '~> 5.8'

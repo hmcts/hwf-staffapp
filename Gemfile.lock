@@ -487,6 +487,10 @@ GEM
       ffi (~> 1.0)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.1)
+      connection_pool
     regexp_parser (2.9.0)
     reline (0.5.5)
       io-console (~> 0.5)
@@ -732,6 +736,7 @@ DEPENDENCIES
   rails (~> 7.1.3)
   rails-controller-testing
   rails-i18n (~> 7.0.3)
+  redis
   rest-client
   rspec-rails
   rspec_junit_formatter
