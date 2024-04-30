@@ -185,13 +185,14 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   end
 
   context 'load_additional_income_from_benefits' do
+
     subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
     context '1 child' do
       let(:children) { 1 }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 96
+        expect(form.additional_income_amount).to eq 102
         expect(form.additional_income).to be true
       end
     end
@@ -211,7 +212,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 159
+        expect(form.additional_income_amount).to eq 169
         expect(form.additional_income).to be true
       end
     end
@@ -221,7 +222,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 413
+        expect(form.additional_income_amount).to eq 437
         expect(form.additional_income).to be true
       end
     end
