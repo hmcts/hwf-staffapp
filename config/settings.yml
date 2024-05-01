@@ -35,13 +35,13 @@ income:
   per_child_increment: 265
   married_supplement: 175
 child_benefits_per_month:
-  1: 96
-  2: 159
-  3: 223
-  4: 268
-  5: 350
-  6: 413
-  7: 413
+  1: 102
+  2: 169
+  3: 236
+  4: 303
+  5: 370
+  6: 437
+  7: 437
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
 fee_approval_threshold: 10000.01
