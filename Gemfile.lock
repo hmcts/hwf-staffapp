@@ -186,6 +186,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.0)
     cucumber (9.2.0)
       builder (~> 3.2)
       cucumber-ci-environment (> 9, < 11)
@@ -689,6 +690,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 5.0.0)
   config
+  csv
   cucumber
   cucumber-rails
   database_cleaner-active_record
