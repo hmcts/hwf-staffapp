@@ -1,9 +1,6 @@
 module Views
   module Reports
-    class ApplicantsPerFyExport
-      require 'csv'
-      require 'zip'
-
+    class ApplicantsPerFyExport < ReportBase
       attr_reader :result
 
       OUTCOMES = ['none', 'part', 'full'].freeze
@@ -17,17 +14,6 @@ module Views
         @applicants = laod_applicants
         @jurisdictions = Jurisdiction.pluck(:name).sort
         hash_with_counts
-      end
-
-      def to_zip
-        @csv_data = to_csv
-        generate_file
-      end
-
-      def generate_file
-        Zip::File.open(@zipfile_path, Zip::File::CREATE) do |zipfile|
-          zipfile.get_output_stream(@csv_file_name) { |f| f.write @csv_data }
-        end
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
