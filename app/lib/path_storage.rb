@@ -18,7 +18,7 @@ class PathStorage
     load_previous
   end
 
-  def clear_list
+  def clear!
     storage.set(@user_key, nil)
   end
 
@@ -46,8 +46,16 @@ class PathStorage
   end
 
   def load_previous
-    position = load_navigation_list.size - 2
-    return @navigation_list[position] if position > 0
+    case load_navigation_list.size
+    when 0..1
+      return ''
+    when 2
+      position = 0
+    else
+      position = load_navigation_list.size - 2
+    end
+
+    return @navigation_list[position]
     ''
   end
 

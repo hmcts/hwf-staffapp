@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     manager_setup_progress
     load_graphs_for_admin
     load_defaults
+    clear_path
   end
 
   def completed_search
