@@ -12,7 +12,7 @@ RSpec.describe Users::PasswordsController do
       before do
         allow(User).to receive(:find_by_email).and_return(user)
         allow(controller).to receive(:send_notification_and_redirect).and_call_original
-        allow(controller).to receive(:check_reset_timestamp).and_call_original
+        allow(controller).to receive(:check_and_update_password_timestamp).and_call_original
       end
 
       it "calls send_notification_and_redirect" do
@@ -20,9 +20,9 @@ RSpec.describe Users::PasswordsController do
         expect(controller).to have_received(:send_notification_and_redirect).with(no_args)
       end
 
-      it "calls check_reset_timestamp with user" do
+      it "calls check_and_update_password_timestamp with user" do
         post :create, params: { user: { email: user.email } }
-        expect(controller).to have_received(:check_reset_timestamp).with(user)
+        expect(controller).to have_received(:check_and_update_password_timestamp).with(user)
       end
     end
   end
