@@ -42,7 +42,7 @@ class PathStorage
   def remove_last_path_from_list
     path = @navigation_list.pop
     storage.set(@user_key, @navigation_list.to_json)
-    return path
+    path
   end
 
   def load_previous

@@ -1,5 +1,5 @@
 RSpec.describe PathStorage do
-  let(:storage_class) { described_class.new(user)}
+  let(:storage_class) { described_class.new(user) }
   let(:storage) { Redis.new }
   let(:user) { build(:user, id: 134) }
   let(:storage_key) { "application-path-134" }

@@ -50,7 +50,6 @@ module ApplicationHelper
     end
   end
 
-
   def previous_page_link
     return '' unless current_user
     path_storage = PathStorage.new(current_user)
