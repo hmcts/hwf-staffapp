@@ -30,7 +30,7 @@ RSpec.feature 'New Password,' do
       visit new_user_password_path
       fill_in :user_email, with: user.email
       click_button 'Get new password'
-      expect(current_path).to eql(new_user_password_path)
+      expect(current_path).to eql(new_user_session_path)
       expect(page).to have_text("You reached the limit of password resets. Please try again in 1 minute.")
     end
   end
