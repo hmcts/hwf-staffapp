@@ -7,6 +7,8 @@ class PathStorage
   def navigation(current_path)
     return if load_last == current_path
 
+    # TODO: - when going from summary page remove steps
+
     if load_previous == current_path
       remove_last_path_from_list
     else
@@ -55,8 +57,7 @@ class PathStorage
       position = load_navigation_list.size - 2
     end
 
-    return @navigation_list[position]
-    ''
+    @navigation_list[position]
   end
 
   def load_last

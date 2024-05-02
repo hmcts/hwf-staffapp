@@ -30,17 +30,47 @@ RSpec.describe PathStorage do
       end
     end
 
-    context 'step back' do
-      before do
-        list = ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3', '/path/to/page-4']
+    describe 'step back' do
+      let(:path_back) { storage_class.path_back }
+
+      before {
         storage.set(storage_key, list.to_json)
+      }
+
+      context 'step back 4 steps in' do
+        let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3', '/path/to/page-4'] }
+
+        it 'return step previous page' do
+          expect(path_back).to eql('/path/to/page-3')
+          expect(list_from_storage.size).to eq(4)
+        end
       end
 
-      it 'return step previous page' do
-        path_back = storage_class.path_back
+      context 'step back 1 steps in' do
+        let(:list) { ['/path/to/page-1'] }
 
-        expect(path_back).to eql('/path/to/page-3')
-        expect(list_from_storage.size).to eq(4)
+        it 'return step previous page' do
+          expect(path_back).to eql('')
+          expect(list_from_storage.size).to eq(1)
+        end
+      end
+
+      context 'step back 2 steps in' do
+        let(:list) { ['/path/to/page-1', '/path/to/page-2'] }
+
+        it 'return step previous page' do
+          expect(path_back).to eql('/path/to/page-1')
+          expect(list_from_storage.size).to eq(2)
+        end
+      end
+
+      context 'step back 3 steps in' do
+        let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3'] }
+
+        it 'return step previous page' do
+          expect(path_back).to eql('/path/to/page-2')
+          expect(list_from_storage.size).to eq(3)
+        end
       end
     end
 
