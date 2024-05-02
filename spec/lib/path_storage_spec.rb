@@ -7,6 +7,8 @@ RSpec.describe PathStorage do
 
   describe '#navigation' do
     let(:path) { '/path/to/page-2' }
+    let(:path_value) { list_from_storage.last }
+
     before { storage.set(storage_key, nil) }
 
     it 'add to list' do
@@ -17,16 +19,25 @@ RSpec.describe PathStorage do
 
     context 'remove from list' do
       before do
-        list = ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3']
         storage.set(storage_key, list.to_json)
+        storage_class.navigation(path)
       end
 
-      it do
-        storage_class.navigation(path)
+      context 'standard journey' do
+        let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3'] }
+        it 'ramove last step' do
+          path_value = list_from_storage.last
+          expect(path_value).to eql(path)
+          expect(list_from_storage).to eq(['/path/to/page-1', '/path/to/page-2'])
+        end
+      end
 
-        path_value = list_from_storage.last
-        expect(path_value).to eql(path)
-        expect(list_from_storage).to eq(['/path/to/page-1', '/path/to/page-2'])
+      context 'when going to random step' do
+        let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3', '/path/to/page-4', '/path/to/page-5'] }
+        it 'remove previous steps until current page' do
+          expect(path_value).to eql(path)
+          expect(list_from_storage).to eq(['/path/to/page-1', '/path/to/page-2'])
+        end
       end
     end
 

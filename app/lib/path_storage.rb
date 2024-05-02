@@ -5,14 +5,15 @@ class PathStorage
   end
 
   def navigation(current_path)
-    return if load_last == current_path
+    @current_path = current_path
+    return if load_last == @current_path
 
     # TODO: - when going from summary page remove steps
 
-    if load_previous == current_path
-      remove_last_path_from_list
+    if current_path_in_the_list
+      remove_path_from_list
     else
-      add_path_to_list(current_path)
+      add_path_to_list
     end
   end
 
@@ -36,15 +37,18 @@ class PathStorage
     @navigation_list = JSON.parse(list)
   end
 
-  def add_path_to_list(path)
-    @navigation_list << path
+  def add_path_to_list
+    @navigation_list << @current_path
     storage.set(@user_key, @navigation_list.to_json)
   end
 
-  def remove_last_path_from_list
-    path = @navigation_list.pop
+  def remove_path_from_list
+    @navigation_list.reverse_each do |path_in_the_list|
+      break if path_in_the_list == @current_path
+      @navigation_list.pop
+    end
+
     storage.set(@user_key, @navigation_list.to_json)
-    path
   end
 
   def load_previous
@@ -62,6 +66,10 @@ class PathStorage
 
   def load_last
     load_navigation_list.last
+  end
+
+  def current_path_in_the_list
+    load_navigation_list.include?(@current_path)
   end
 
 end
