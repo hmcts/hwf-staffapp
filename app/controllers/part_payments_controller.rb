@@ -6,6 +6,9 @@ class PartPaymentsController < ApplicationController
     track_application(application)
   end
 
+  before_action :store_path, except: [:accuracy_save, :income_save, :confirmation]
+  before_action :clear_path, only: :confirmation
+
   include SectionViewsHelper
   include FilterApplicationHelper
 
