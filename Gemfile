@@ -137,6 +137,7 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
+  gem 'mock_redis'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'

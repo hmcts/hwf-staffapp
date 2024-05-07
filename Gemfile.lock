@@ -374,6 +374,7 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.6)
     minitest (5.22.3)
+    mock_redis (0.44.0)
     msgpack (1.7.2)
     multi_test (1.1.0)
     multi_xml (0.7.1)
@@ -721,6 +722,7 @@ DEPENDENCIES
   launchy
   listen
   logstasher!
+  mock_redis
   nokogiri
   paper_trail
   parallel_tests

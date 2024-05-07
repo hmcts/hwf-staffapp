@@ -8,8 +8,6 @@ class PathStorage
     @current_path = current_path
     return if load_last == @current_path
 
-    # TODO: - when going from summary page remove steps
-
     if current_path_in_the_list
       remove_path_from_list
     else
