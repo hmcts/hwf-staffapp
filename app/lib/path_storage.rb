@@ -26,7 +26,8 @@ class PathStorage
   private
 
   def storage
-    @storage ||= Redis.new
+    # if REDIS_URL is nil it will use the default address
+    @storage ||= Redis.new(url: ENV.fetch("REDIS_URL", nil))
   end
 
   def load_navigation_list
