@@ -43,6 +43,8 @@ base:
   keyVaults:
     help-with-fees:
       secrets:
+        - name: hwf-redis-url
+          alias: REDIS_URL
         - name: hwf-fqdn
           alias: DATABASE_HOST
         - name: hwf-password
