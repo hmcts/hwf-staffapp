@@ -21,7 +21,7 @@ module SectionViewsHelper
   end
 
   def build_representative(build_from)
-    if ucd_changes_apply?
+    if ucd_changes_apply?(build_from)
       Representative.new(
         first_name: build_from.legal_representative_first_name,
         last_name: build_from.legal_representative_last_name,
