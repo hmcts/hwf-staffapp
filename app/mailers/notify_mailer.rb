@@ -61,7 +61,8 @@ class NotifyMailer < GovukNotifyRails::Mailer
       name: user.name,
       confirmation_link: link_for_user_confirmation(token)
     )
-    mail(to: user.email)
+
+    mail(to: user.unconfirmed_email)
   end
 
   def reset_password_instructions(user, token, *_args)
