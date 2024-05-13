@@ -77,6 +77,46 @@ RSpec.describe Forms::OnlineApplication do
       let(:online_application) { build_stubbed(:online_application, :completed) }
 
       include_examples 'date_received validation'
+
+      context 'received before submitted' do
+        before do
+          online_application
+          form.date_received = 1.month.ago
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'received same date as submitted' do
+        before do
+          online_application
+          form.date_received = Date.today
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'received after submitted' do
+        before do
+          Timecop.freeze(Time.now - 1.day) do
+            online_application
+          end
+          form.date_received = Time.now
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'received 3 months after submitted' do
+        before do
+          Timecop.freeze(Time.now - (6.months + 1.day)) do
+            online_application
+          end
+          form.date_received = Time.now
+        end
+
+        it { is_expected.to be_valid }
+      end
     end
 
     describe 'emergency' do
@@ -98,7 +138,7 @@ RSpec.describe Forms::OnlineApplication do
     end
 
     describe 'form_name' do
-      let(:online_application) { build_stubbed(:online_application, :completed, form_name: form_name) }
+      let(:online_application) { build_stubbed(:online_application, :completed, form_name: form_name, date_received: 1.minute.from_now) }
 
       context 'EX160' do
         let(:form_name) { 'EX160' }
@@ -135,7 +175,7 @@ RSpec.describe Forms::OnlineApplication do
         {
           fee: 100.23,
           jurisdiction_id: jurisdiction.id,
-          date_received: Time.zone.yesterday,
+          date_received: Time.zone.today,
           form_name: 'E45',
           emergency: true,
           emergency_reason: 'SOME REASON',

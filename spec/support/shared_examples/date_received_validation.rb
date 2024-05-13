@@ -40,11 +40,6 @@ shared_examples 'date_received validation' do
           expect(form).to be_valid
         end
 
-        it 'allows 3 months ago' do
-          form.date_received = Time.zone.local(2014, 7, 1, 0, 30).to_fs(:db)
-          expect(form).to be_valid
-        end
-
         describe 'minimum' do
           before do
             form.date_received = Date.new(2014, 10, 2)

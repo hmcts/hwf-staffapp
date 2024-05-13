@@ -31,7 +31,9 @@ module Forms
 
     validates :date_received, date: {
       after_or_equal_to: :min_date,
-      before: :tomorrow
+      before: :tomorrow,
+      after_or_equal_to: :received_date
+
     }
 
     validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
@@ -59,6 +61,10 @@ module Forms
 
     def tomorrow
       Time.zone.tomorrow
+    end
+
+    def received_date
+      @object.created_at.to_date
     end
 
     def persist!
