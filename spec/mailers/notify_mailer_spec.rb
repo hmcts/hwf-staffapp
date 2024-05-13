@@ -134,7 +134,7 @@ RSpec.describe NotifyMailer do
   end
 
   describe '#confirmation_instructions' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, unconfirmed_email: 'new_email@test.com') }
     let(:mail) { described_class.confirmation_instructions(user, 'token123') }
 
     # it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_CONFIRMATION_EMAIL_TEMPLATE_ID', nil)
@@ -144,7 +144,7 @@ RSpec.describe NotifyMailer do
                                                         name: user.name,
                                                         confirmation_link: user_confirmation_url(confirmation_token: 'token123')
                                                       })
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq(['new_email@test.com'])
       mail.govuk_notify_personalisation[:link_to_download_page]
     end
 
