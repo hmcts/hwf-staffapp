@@ -25,6 +25,10 @@ Model FeatureSwitching have following attributes:
 feature_key, activation_time, office_id, enabled. When apply you can "schedule" a feature to be active from a certain date or for
 specific office. Feature switching table is managed manually from a rails console for now.
 
+## Active Feature flag for post UCD changes
+Run this in your localhost to enable UCD changes:
+FeatureSwitching.create(feature_key: 'band_calculation', enabled: true)
+
 
 ## N+1 queries debugging
 There is a gem called Bullet. If you want to check N+1 queries in development mode, you can uncomment
