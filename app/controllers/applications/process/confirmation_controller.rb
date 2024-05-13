@@ -4,6 +4,7 @@ module Applications
       before_action :authorize_application_update
       skip_before_action :check_completed_redirect
       before_action :set_cache_headers
+      after_action :clear_path
 
       def index
         if application.evidence_check.present?

@@ -49,4 +49,10 @@ module ApplicationHelper
       application_personal_informations_path(record)
     end
   end
+
+  def previous_page_link
+    return '' unless current_user
+    path_storage = PathStorage.new(current_user)
+    path_storage.path_back
+  end
 end

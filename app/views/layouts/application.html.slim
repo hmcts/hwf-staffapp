@@ -16,6 +16,8 @@
             strong.dwp-tag DWP checker
             span
               =render("shared/dwp/#{@dwp_state}")
+
+    = link_to 'Back to previous page', previous_page_link, class: "govuk-back-link" if previous_page_link.present?
     .container
       section#content.cf
         /![if IE]><h1 class='heading-large ie-warning'>#{t('out_of_box.ie_warning')}</h1><![endif]

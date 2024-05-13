@@ -5,6 +5,7 @@ module Applications
       track_application(application, 'TBC')
     end
     before_action :check_completed_redirect, except: [:create]
+    before_action :store_path, except: [:create]
 
     def create
       @application = ApplicationBuilder.new(current_user).build

@@ -15,6 +15,11 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## Redis
+We are using Redis for step back navigation link. You will need to run a redis-server in order
+for the application to work correctly.
+We are using mock_redis in rspec to make it work it tests.
+
 ## Feature switching
 Model FeatureSwitching have following attributes:
 feature_key, activation_time, office_id, enabled. When apply you can "schedule" a feature to be active from a certain date or for
