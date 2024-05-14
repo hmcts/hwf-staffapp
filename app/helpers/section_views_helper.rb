@@ -21,15 +21,15 @@ module SectionViewsHelper
   end
 
   def build_representative(build_from)
-    if ucd_changes_apply?(build_from)
+    if build_from.is_a?(Application) || !ucd_changes_apply?(build_from)
+      build_from.representative
+    else
       Representative.new(
         first_name: build_from.legal_representative_first_name,
         last_name: build_from.legal_representative_last_name,
         organisation: build_from.legal_representative_organisation_name,
         position: build_from.legal_representative_position
       )
-    else
-      build_from.representative
     end
   end
 end
