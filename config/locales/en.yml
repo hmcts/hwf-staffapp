@@ -833,10 +833,11 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
+              blank: Enter the date in this format DD/MM/YYYY
               not_a_date: Enter the date in this format DD/MM/YYYY
               date_after_or_equal_to: The application must have been made in the last 3 months
               date_before: This date can't be in the future
+              before_submit: 'This need to be before subbmit'
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:

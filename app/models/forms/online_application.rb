@@ -2,6 +2,7 @@ module Forms
   class OnlineApplication < FormObject
     include ActiveModel::Validations::Callbacks
     include DataFieldFormattable
+    # include Validators::DateReceivedValidator
 
     # rubocop:disable Metrics/MethodLength
     def self.permitted_attributes
@@ -29,15 +30,11 @@ module Forms
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
 
-    validates :date_received, date: {
-      after_or_equal_to: :min_date,
-      before: :tomorrow,
-      after_or_equal_to: :received_date
-
-    }
 
     validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
     validates :form_name, presence: true
+
+    validates_with Validators::DateReceivedValidator
 
     def initialize(online_application)
       super(online_application)
@@ -53,19 +50,11 @@ module Forms
       format_dates(:date_received) if format_the_dates?(:date_received)
     end
 
+    def submitted_at
+      @object.created_at
+    end
+
     private
-
-    def min_date
-      3.months.ago.midnight
-    end
-
-    def tomorrow
-      Time.zone.tomorrow
-    end
-
-    def received_date
-      @object.created_at.to_date
-    end
 
     def persist!
       @object.update(fields_to_update)

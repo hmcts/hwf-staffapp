@@ -107,16 +107,53 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to be_valid }
       end
 
-      context 'received 3 months after submitted' do
+      context 'received more then 3 months after submitted' do
         before do
-          Timecop.freeze(Time.now - (6.months + 1.day)) do
+          Timecop.freeze(Time.now - (3.months)) do
             online_application
           end
           form.date_received = Time.now
         end
 
-        it { is_expected.to be_valid }
+        it { is_expected.not_to be_valid }
+
       end
+
+    #   context 'when the format is valid' do
+    #     describe 'range' do
+    #       context 'is enforced' do
+    #         # before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
+    #         # after { Timecop.return }
+
+    #         it 'allows today' do
+    #           form.date_received = Time.zone.local(2014, 10, 1).to_fs(:db)
+    #           expect(form).to be_valid
+    #         end
+
+    #         describe 'minimum' do
+    #           # before do
+    #           #   form.date_received = Date.new(2014, 10, 2)
+    #           #   form.valid?
+    #           # end
+
+    #           it 'is today' do
+    #             expect(form).not_to be_valid
+    #           end
+
+    #           it 'returns an error if too low' do
+    #             Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+    #               form.date_received = Time.zone.local(2014, 10, 3, 12, 30, 0)
+    #               binding.pry
+    #               form.valid?
+
+    #               expect(form.errors[:date_received]).to eq ["This date can't be in the future"]
+    #             end
+
+    #           end
+    #         end
+    #       end
+    #     end
+    #   end
     end
 
     describe 'emergency' do

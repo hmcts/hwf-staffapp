@@ -32,8 +32,6 @@ shared_examples 'date_received validation' do
   context 'when the format is valid' do
     describe 'range' do
       context 'is enforced' do
-        before { Timecop.freeze(Time.zone.local(2014, 10, 1, 12, 30, 0)) }
-        after { Timecop.return }
 
         it 'allows today' do
           form.date_received = Time.zone.local(2014, 10, 1).to_fs(:db)
@@ -41,17 +39,21 @@ shared_examples 'date_received validation' do
         end
 
         describe 'minimum' do
-          before do
-            form.date_received = Date.new(2014, 10, 2)
-            form.valid?
-          end
 
           it 'is today' do
-            expect(form).not_to be_valid
+            Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+              expect(form).not_to be_valid
+            end
           end
 
           it 'returns an error if too low' do
-            expect(form.errors[:date_received]).to eq ["This date can't be in the future"]
+            Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+              form.date_received = Time.zone.local(2014, 10, 3, 12, 30, 0)
+              form.valid?
+
+              expect(form.errors[:date_received]).to eq ["This date can't be in the future"]
+            end
+
           end
         end
       end
