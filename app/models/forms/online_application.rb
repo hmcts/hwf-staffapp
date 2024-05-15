@@ -30,7 +30,6 @@ module Forms
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
 
-
     validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
     validates :form_name, presence: true
 

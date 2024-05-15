@@ -26,7 +26,8 @@ RSpec.feature 'Online application processing Evidence check' do
            fee: 155,
            form_name: 'D11',
            income: 1000,
-           ni_number: online_application_1.ni_number)
+           ni_number: online_application_1.ni_number,
+           created_at: 2.months.ago)
   end
   let(:old_application) { create(:old_application, reference: online_application_1.reference) }
 

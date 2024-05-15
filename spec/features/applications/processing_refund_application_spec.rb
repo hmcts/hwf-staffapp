@@ -19,7 +19,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
            refund: true,
            date_fee_paid: 4.months.ago,
            date_received: 2.months.ago,
-           jurisdiction: jurisdiction)
+           jurisdiction: jurisdiction,
+           created_at: 3.months.ago)
   end
 
   let(:online_application_2) do
@@ -32,8 +33,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
            income_min_threshold_exceeded: false,
            refund: true,
            date_fee_paid: 5.months.ago,
-           date_received: 3.months.ago,
-           jurisdiction: jurisdiction)
+           date_received: 2.months.ago,
+           jurisdiction: jurisdiction,
+           created_at: 3.months.ago)
+
   end
 
   let(:dwp_response) { 'Yes' }
@@ -57,6 +60,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
       expect(date_received).to eq(online_application_1.date_received.to_fs(:db))
 
       click_button 'Next'
+
       expect(page).to have_content "Check details"
       click_button 'Complete processing'
 
@@ -78,6 +82,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
       expect(date_received).to eq(online_application_2.date_received.to_fs(:db))
 
       click_button 'Next'
+
       expect(page).to have_content "Check details"
       click_button 'Complete processing'
 

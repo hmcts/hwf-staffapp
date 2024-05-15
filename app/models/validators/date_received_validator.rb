@@ -1,54 +1,67 @@
-class Validators::DateReceivedValidator < ActiveModel::Validator
+module Validators
+  class DateReceivedValidator < ActiveModel::Validator
 
-  def validate(record)
-    @validate_record = record
-    received = record.date_received
+    def validate(record)
+      @validate_record = record
+      @date_received_value = record.date_received
 
-    if received.blank?
-      record.errors.add :date_received, I18n.t("#{translation_prefix}.blank")
-    elsif received.is_a?(String)
-      begin
-        Date.parse(received)
-      rescue
-        record.errors.add :date_received, I18n.t("#{translation_prefix}.not_a_date")
+      if @date_received_value.blank?
+        add_error(I18n.t("#{translation_prefix}.blank"))
+      elsif @date_received_value.is_a?(String)
+        parse_string_date
+      else
+        validate_ranges
       end
-    elsif after_or_equal_min_date(received)
-      record.errors.add :date_received, I18n.t("#{translation_prefix}.date_after_or_equal_to")
-    elsif before_tomorrow(received)
-      record.errors.add :date_received, I18n.t("#{translation_prefix}.date_before")
-    elsif before_or_equal_to_submitt_date(received)
-      record.errors.add :date_received, I18n.t("#{translation_prefix}.before_submit")
+    end
+
+    def validate_ranges
+      if after_or_equal_min_date
+        add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
+      elsif before_tomorrow
+        add_error(I18n.t("#{translation_prefix}.date_before"))
+      elsif before_or_equal_to_submitt_date
+        add_error(I18n.t("#{translation_prefix}.before_submit"))
+      end
+    end
+
+    def parse_string_date
+      Date.parse(@date_received_value)
+    rescue StandardError
+      add_error(I18n.t("#{translation_prefix}.not_a_date"))
+    end
+
+    def add_error(message)
+      @validate_record.errors.add(:date_received, message)
+    end
+
+    def min_date
+      3.months.ago.midnight
+    end
+
+    def tomorrow
+      Time.zone.tomorrow
+    end
+
+    def submitted_date
+      @validate_record.submitted_at.to_date
+    end
+
+    def after_or_equal_min_date
+      @date_received_value <= min_date
+    end
+
+    def before_tomorrow
+      tomorrow < @date_received_value
+    end
+
+    def before_or_equal_to_submitt_date
+      return true if @date_received_value < submitted_date
+      (@date_received_value - 3.months) >= submitted_date
+    end
+
+    def translation_prefix
+      '.activemodel.errors.models.forms/application/detail.attributes.date_received'
     end
 
   end
-
-  def min_date
-    3.months.ago.midnight
-  end
-
-  def tomorrow
-    Time.zone.tomorrow
-  end
-
-  def submitted_date
-    @validate_record.submitted_at.to_date
-  end
-
-  def after_or_equal_min_date(received)
-    received <= min_date
-  end
-
-  def before_tomorrow(received)
-    tomorrow < received
-  end
-
-  def before_or_equal_to_submitt_date(received)
-    return true if received < submitted_date
-    (received - 3.months) >= submitted_date
-  end
-
-  def translation_prefix
-    '.activemodel.errors.models.forms/application/detail.attributes.date_received'
-  end
-
 end
