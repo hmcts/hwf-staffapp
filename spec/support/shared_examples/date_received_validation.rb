@@ -35,6 +35,7 @@ shared_examples 'date_received validation' do
 
         it 'is yesterday' do
           Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+            form.date_received = Time.zone.yesterday
             expect(form).not_to be_valid
           end
         end
