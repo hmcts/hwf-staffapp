@@ -33,16 +33,15 @@ shared_examples 'date_received validation' do
     describe 'range' do
       describe 'date_received' do
 
-        it 'is yesterday' do
-          Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
-            form.date_received = Time.zone.yesterday
-            expect(form).not_to be_valid
-          end
-        end
-
         it 'is in the future' do
           Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
-            form.date_received = Time.zone.local(2014, 10, 3, 12, 30, 0)
+            received = Time.zone.local(2014, 10, 3, 12, 30, 0)
+
+            form.date_received = received
+            form.year_date_received = received.year
+            form.month_date_received = received.month
+            form.day_date_received = received.day
+
             form.valid?
 
             expect(form.errors[:date_received]).to eq ["This date can't be in the future"]

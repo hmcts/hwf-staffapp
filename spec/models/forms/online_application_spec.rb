@@ -116,7 +116,17 @@ RSpec.describe Forms::OnlineApplication do
         end
 
         it { is_expected.not_to be_valid }
+      end
 
+      context 'received yesterday' do
+        before do
+          Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+            online_application
+          end
+          form.date_received = Time.zone.yesterday
+        end
+
+        it { is_expected.not_to be_valid }
       end
 
     end
