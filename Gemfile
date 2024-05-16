@@ -44,7 +44,7 @@ gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1'
+gem 'sass-rails', '~> 6.0'
 
 gem 'terser'
 # Use CoffeeScript for .coffee assets and views
