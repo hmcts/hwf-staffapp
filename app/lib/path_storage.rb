@@ -40,7 +40,7 @@ class PathStorage
   def storage
     @storage ||= Redis.new(url: Settings.redis_url)
   rescue StandardError => e
-    Sentry.capture_message(e.message, extra: { type: 'storage', user_key: Settings.redis_url })
+    Sentry.capture_message(e.message, extra: { type: 'storage', redis_url: Settings.redis_url })
     ''
   end
 
