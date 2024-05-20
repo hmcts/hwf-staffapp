@@ -2,6 +2,9 @@ class PathStorage
 
   def initialize(user)
     @user_key = "application-path-#{user.id}"
+  rescue StandardError => e
+    Sentry.capture_message(e.message, extra: { type: 'initialize', user_key: @user_key })
+    ''
   end
 
   def navigation(current_path)
@@ -13,21 +16,32 @@ class PathStorage
     else
       add_path_to_list
     end
+  rescue StandardError => e
+    Sentry.capture_message(e.message, extra: { type: 'navigation', user_key: @user_key, current_path: @current_path })
+    ''
   end
 
   def path_back
     load_previous
+  rescue StandardError => e
+    Sentry.capture_message(e.message, extra: { type: 'path_back', user_key: @user_key, current_path: @current_path })
+    ''
   end
 
   def clear!
     storage.set(@user_key, nil)
+  rescue StandardError => e
+    Sentry.capture_message(e.message, extra: { type: 'clear', user_key: @user_key })
+    ''
   end
 
   private
 
   def storage
-    # if REDIS_URL is nil it will use the default address
-    @storage ||= Redis.new(url: ENV.fetch("REDIS_URL", nil))
+    @storage ||= Redis.new(url: Settings.redis_url)
+  rescue StandardError => e
+    Sentry.capture_message(e.message, extra: { type: 'storage', user_key: Settings.redis_url })
+    ''
   end
 
   def load_navigation_list
