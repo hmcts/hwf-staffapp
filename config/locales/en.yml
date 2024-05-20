@@ -833,10 +833,11 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
+              blank: Enter the date in this format DD/MM/YYYY
               not_a_date: Enter the date in this format DD/MM/YYYY
               date_after_or_equal_to: The application must have been made in the last 3 months
               date_before: This date can't be in the future
+              before_submit: 'This date need to be before submitted date.'
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
@@ -983,6 +984,10 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            date_received:
+              date_after_or_equal_to: "The application's date received cannot be before the date submitted."
+              not_a_date: 'Enter the date in this format DD/MM/YYYY'
+              date_before: This date can't be in the future
         forms/fee_approval:
           attributes:
             fee_manager_firstname:
