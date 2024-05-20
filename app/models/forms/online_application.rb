@@ -2,7 +2,6 @@ module Forms
   class OnlineApplication < FormObject
     include ActiveModel::Validations::Callbacks
     include DataFieldFormattable
-    # include Validators::DateReceivedValidator
 
     # rubocop:disable Metrics/MethodLength
     def self.permitted_attributes
