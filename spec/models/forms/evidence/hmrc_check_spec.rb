@@ -187,15 +187,6 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   context 'load_additional_income_from_benefits' do
 
     subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-    context '1 child' do
-      let(:children) { 1 }
-
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 102
-        expect(form.additional_income).to be true
-      end
-    end
 
     context 'no child' do
       let(:children) { nil }
@@ -207,22 +198,62 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
-    context '2 child' do
-      let(:children) { 2 }
+    context '1 child' do
+      let(:children) { 1 }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 169
+        expect(form.additional_income_amount).to eq 102
         expect(form.additional_income).to be true
       end
     end
 
-    context '8 child' do
+    context '2 children' do
+      let(:children) { 2 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 170
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '3 children' do
+      let(:children) { 3 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 238
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '4 children' do
+      let(:children) { 4 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 305
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '7 children' do
+      let(:children) { 7 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 509
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '8 children' do
       let(:children) { 8 }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 437
+        expect(form.additional_income_amount).to eq 577
         expect(form.additional_income).to be true
       end
     end
