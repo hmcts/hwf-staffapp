@@ -82,13 +82,13 @@ class ApplicationController < ActionController::Base
   end
 
   def store_path
-    # path_storage = PathStorage.new(current_user)
-    # path_storage.navigation(request.original_url)
+    path_storage = PathStorage.new(current_user)
+    path_storage.navigation(request.original_url)
   end
 
   def clear_path
-    # path_storage = PathStorage.new(current_user)
-    # path_storage.clear!
+    path_storage = PathStorage.new(current_user)
+    path_storage.clear!
   end
 
 end
