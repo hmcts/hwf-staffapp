@@ -93,7 +93,7 @@ class OnlineApplicationsController < ApplicationController
   end
 
   def savings_exceeded
-    if ucd_changes_apply?
+    if ucd_changes_apply?(online_application)
       !band_saving_calculation_passed?
     else
       !SavingsPassFailService.new(Saving.new).calculate_online_application(online_application)
@@ -136,7 +136,7 @@ class OnlineApplicationsController < ApplicationController
     last_benefit_check.benefits_valid?
   end
 
-  def ucd_changes_apply?
+  def ucd_changes_apply?(online_application)
     FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == online_application.calculation_scheme
   end
 

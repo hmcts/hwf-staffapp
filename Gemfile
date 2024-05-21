@@ -5,10 +5,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.1'
 
 gem 'application_insights', '~> 0.5.6'
+gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.1.3'
+gem 'redis'
 # profiling in Sentry
 gem 'stackprof'
 gem 'sentry-rails', '~> 5.8'
@@ -135,6 +137,7 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
+  gem 'mock_redis'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'

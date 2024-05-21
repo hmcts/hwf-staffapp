@@ -6,6 +6,8 @@ class EvidenceController < ApplicationController
   end
 
   before_action :only_non_processed_applications, except: [:confirmation]
+  before_action :store_path, except: [:accuracy_save, :income_save, :confirmation]
+  before_action :clear_path, only: :confirmation
 
   include SectionViewsHelper
 

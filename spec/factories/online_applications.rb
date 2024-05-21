@@ -53,7 +53,7 @@ FactoryBot.define do
     trait :childandincome6065 do
       fee { 100 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'AXEE122' }
       children { 4 }
       benefits { false }
@@ -69,21 +69,21 @@ FactoryBot.define do
     trait :emergency_completed do
       fee { 450 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       emergency_reason { 'EMERGENCY' }
     end
 
     trait :completed do
       fee { 450 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'ABC123' }
     end
 
     trait :big_saving do
       fee { 100 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'AXEE122' }
       min_threshold_exceeded { true }
       max_threshold_exceeded { true }
@@ -108,7 +108,7 @@ FactoryBot.define do
       income { 1000 }
       fee { 6000 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'ABC123' }
     end
 

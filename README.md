@@ -15,10 +15,19 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## Redis
+We are using Redis for step back navigation link. You will need to run a redis-server in order
+for the application to work correctly.
+We are using mock_redis in rspec to make it work it tests.
+
 ## Feature switching
 Model FeatureSwitching have following attributes:
 feature_key, activation_time, office_id, enabled. When apply you can "schedule" a feature to be active from a certain date or for
 specific office. Feature switching table is managed manually from a rails console for now.
+
+## Active Feature flag for post UCD changes
+Run this in your localhost to enable UCD changes:
+FeatureSwitching.create(feature_key: 'band_calculation', enabled: true)
 
 
 ## N+1 queries debugging
@@ -123,4 +132,4 @@ Cucumber report is enabled now. At the end of the test run you should see a link
 When you run tests in parallel it will generate report per process so if you want to see one report only you should
 run test directly without parallel functionality.
 
-Deployment versions trigger: 2
+Deployment versions trigger: 3

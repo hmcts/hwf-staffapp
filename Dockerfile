@@ -35,7 +35,7 @@ WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
-RUN gem install bundler -v 2.5.9
+RUN gem install bundler -v 2.5.10
 
 RUN bundle config set --local without 'test development'
 RUN bundle config set force_ruby_platform true

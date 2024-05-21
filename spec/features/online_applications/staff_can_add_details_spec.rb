@@ -22,6 +22,7 @@ RSpec.feature 'Staff can search for online application' do
 
   scenario 'User fills in all required fields and the application is saved' do
     Timecop.freeze(current_time) do
+      online_application
       given_user_is_editting_the_application
       when_they_fill_in_all_required_fields
       then_the_summary_page_is_displayed
@@ -43,7 +44,7 @@ RSpec.feature 'Staff can search for online application' do
   def when_they_fill_in_all_required_fields
     fill_in :online_application_fee, with: '200', wait: true
     choose "online_application_jurisdiction_id_#{jurisdictions.first.id}"
-    fill_in :online_application_day_date_received, with: '8'
+    fill_in :online_application_day_date_received, with: '10'
     fill_in :online_application_month_date_received, with: '10'
     fill_in :online_application_year_date_received, with: '2015'
     fill_in :online_application_form_name, with: 'E45'
@@ -55,7 +56,7 @@ RSpec.feature 'Staff can search for online application' do
   def then_the_summary_page_is_displayed
     expect(page).to have_content 'Check details'
     expect(page).to have_content 'Fee£200'
-    expect(page).to have_content 'Date received8 October 2015'
+    expect(page).to have_content 'Date received10 October 2015'
   end
 
   def when_they_do_not_fill_in_all_required_fields

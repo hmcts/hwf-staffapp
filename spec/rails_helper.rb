@@ -25,6 +25,7 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
 require 'capybara/apparition'
+require 'mock_redis'
 
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -123,6 +124,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+    mock_redis = MockRedis.new
+    allow(Redis).to receive(:new).and_return(mock_redis)
   end
 
   config.after(:each) do

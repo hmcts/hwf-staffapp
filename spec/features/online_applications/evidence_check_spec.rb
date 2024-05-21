@@ -26,7 +26,8 @@ RSpec.feature 'Online application processing Evidence check' do
            fee: 155,
            form_name: 'D11',
            income: 1000,
-           ni_number: online_application_1.ni_number)
+           ni_number: online_application_1.ni_number,
+           created_at: 2.months.ago)
   end
   let(:old_application) { create(:old_application, reference: online_application_1.reference) }
 
@@ -43,8 +44,14 @@ RSpec.feature 'Online application processing Evidence check' do
     fill_in 'online_search[reference]', with: online_application_1.reference
     click_button 'Look up'
 
+    fill_in :online_application_fee, with: '200', wait: true
     choose Jurisdiction.first.display_full.to_s
+    fill_in :online_application_day_date_received, with: Date.current.day
+    fill_in :online_application_month_date_received, with: Date.current.month
+    fill_in :online_application_year_date_received, with: Date.current.year
+    fill_in :online_application_form_name, with: 'E45'
     click_button 'Next'
+    expect(page).to have_text 'Check details'
     click_button 'Complete processing'
 
     expect(page).to have_text 'Evidence of income needs to be checked'

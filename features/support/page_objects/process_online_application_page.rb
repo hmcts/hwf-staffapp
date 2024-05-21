@@ -23,7 +23,7 @@ class ProcessOnlineApplicationPage < BasePage
   end
 
   def fill_in_date_application_received
-    date_received = Time.zone.yesterday
+    date_received = Time.zone.today
     fill_in('Day', with: date_received.day)
     fill_in('Month', with: date_received.month)
     fill_in('Year', with: date_received.year)

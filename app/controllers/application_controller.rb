@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :track_office_id, if: :user_signed_in?
   after_action :verify_authorized
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_invite_path_for(*)
@@ -79,4 +80,15 @@ class ApplicationController < ActionController::Base
   def ucd_changes_apply?(application)
     FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
   end
+
+  def store_path
+    path_storage = PathStorage.new(current_user)
+    path_storage.navigation(request.original_url)
+  end
+
+  def clear_path
+    path_storage = PathStorage.new(current_user)
+    path_storage.clear!
+  end
+
 end

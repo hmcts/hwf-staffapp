@@ -14,6 +14,7 @@ require 'capybara-screenshot/cucumber'
 require 'base64'
 require 'webmock'
 include WebMock::API
+require 'mock_redis'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -98,6 +99,8 @@ Capybara.raise_server_errors = false
 
 Before do
   stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
+  mock_redis = MockRedis.new
+  allow(Redis).to receive(:new).and_return(mock_redis)
 end
 
 Before do
