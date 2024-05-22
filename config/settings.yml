@@ -34,14 +34,10 @@ income:
   max_threshold_base: 5170
   per_child_increment: 265
   married_supplement: 175
-child_benefits_per_month:
-  1: 102
-  2: 169
-  3: 236
-  4: 303
-  5: 370
-  6: 437
-  7: 437
+child_benefits:
+  per_week: 25.6
+  additional_child: 16.95
+
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
 fee_approval_threshold: 10000.01
