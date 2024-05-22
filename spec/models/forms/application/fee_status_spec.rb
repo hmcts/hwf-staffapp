@@ -70,14 +70,17 @@ RSpec.describe Forms::Application::FeeStatus do
 
     describe 'change to calculation_scheme_change' do
       before do
-        fee_status.merge!({ refund: false, date_received: 1.day.ago, calculation_scheme: 'scheme2' })
+        received = FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE - 1.day
+        fee_status.merge!({ refund: false, date_received: received, calculation_scheme: 'scheme2' })
         allow(FeatureSwitching).to receive(:calculation_scheme).and_return :scheme1
         form.calculation_scheme = 'scheme2'
       end
 
       it 'invalidates the object' do
-        expect(form.valid?).to be false
-        expect(form.errors.messages[:date_received]).to eq ["This date cannot be before the new legislation"]
+        Timecop.freeze(FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE) do
+          expect(form.valid?).to be false
+          expect(form.errors.messages[:date_received]).to eq ["This date cannot be before the new legislation"]
+        end
       end
     end
 
