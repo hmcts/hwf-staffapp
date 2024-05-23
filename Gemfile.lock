@@ -580,7 +580,7 @@ GEM
       rake (>= 13.0.0)
     sassc-embedded (1.76.0)
       sass-embedded (~> 1.76)
-    sdoc (1.1.0)
+    sdoc (2.6.1)
       rdoc (>= 5.0)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -751,7 +751,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip
-  sdoc (~> 1.1)
+  sdoc (~> 2.0)
   sentry-rails (~> 5.8)
   shoulda-matchers
   simple_encryptable

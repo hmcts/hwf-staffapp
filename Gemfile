@@ -57,7 +57,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 1.1', group: :doc
+gem 'sdoc', '~> 2.0', group: :doc
 
 # template language
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
