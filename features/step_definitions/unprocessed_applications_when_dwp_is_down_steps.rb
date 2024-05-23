@@ -181,7 +181,7 @@ Then("On selecting the link I should see the paper-based application I was just 
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
   expect(dwp_failed_applications_rows[0]).to have_content('created')
-  expect(dwp_failed_applications_rows[0]).to have_content('Mr John Christopher Smith')
+  expect(dwp_failed_applications_rows[0]).to have_content('John Christopher Smith')
   expect(dwp_failed_applications_rows[0]).to have_content('Not ready to process')
 end
 
