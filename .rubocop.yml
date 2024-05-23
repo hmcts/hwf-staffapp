@@ -332,6 +332,9 @@ Performance/StringIdentifierArgument:
 Bundler/OrderedGems:
   Enabled: false
 
+Rails/WhereRange:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails

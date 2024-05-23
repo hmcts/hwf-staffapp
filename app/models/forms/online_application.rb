@@ -35,7 +35,7 @@ module Forms
     validates_with Validators::DateReceivedValidator
 
     def initialize(online_application)
-      super(online_application)
+      super
       self.emergency = true if emergency_reason.present?
     end
 
