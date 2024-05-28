@@ -11,10 +11,11 @@ module Views
 
       def all_fields
         if show_ucd_changes?
-          [
-            'fee', 'jurisdiction', 'form_name', 'case_number',
-            'deceased_name', 'date_of_death', 'emergency_reason'
-          ]
+          if @application.is_a?(OnlineApplication)
+            online_application_fields
+          else
+            paper_application_fields
+          end
         else
           pre_ucd_change_fields
         end
@@ -48,7 +49,7 @@ module Views
       end
 
       def discretion_applied
-        return if @application.is_a?(OnlineApplication) || detail.discretion_applied.nil?
+        return if detail.discretion_applied.nil?
         scope = 'activemodel.attributes.forms/application/detail'
         I18n.t(".discretion_applied_#{detail.discretion_applied}", scope: scope)
       end
@@ -75,8 +76,8 @@ module Views
 
       def pre_ucd_change_fields
         [
-          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
-          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
+          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number', 'deceased_name', 'date_of_death',
+          'refund_request', 'date_fee_paid', 'discretion_applied',
           'discretion_manager_name', 'discretion_reason', 'emergency_reason'
         ]
       end
@@ -84,6 +85,21 @@ module Views
       def show_ucd_changes?
         return FeatureSwitching.active?(:band_calculation) if detail.try(:calculation_scheme).blank?
         detail.try(:calculation_scheme) == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+      end
+
+      def online_application_fields
+        [
+          'fee', 'jurisdiction', 'form_name', 'case_number',
+          'discretion_applied', 'discretion_manager_name', 'discretion_reason',
+          'deceased_name', 'date_of_death', 'emergency_reason'
+        ]
+      end
+
+      def paper_application_fields
+        [
+          'fee', 'jurisdiction', 'form_name', 'case_number',
+          'deceased_name', 'date_of_death', 'emergency_reason'
+        ]
       end
 
     end
