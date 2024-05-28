@@ -4,7 +4,7 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id]
+                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :discretion_manager_name, :discretion_reason]
 
   let(:online_application) { build_stubbed(:online_application) }
 
@@ -116,6 +116,46 @@ RSpec.describe Forms::OnlineApplication do
         end
 
         it { is_expected.not_to be_valid }
+
+        context 'dicscretion applied' do
+          before do
+            form.discretion_applied = true
+            form.discretion_manager_name = 'john'
+            form.discretion_reason = 'test'
+          end
+
+          it { is_expected.to be_valid }
+        end
+
+        context 'dicscretion not applied' do
+          before do
+            form.discretion_applied = false
+            form.discretion_manager_name = 'john'
+            form.discretion_reason = 'test'
+          end
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context 'dicscretion applied but name not provided' do
+          before do
+            form.discretion_applied = true
+            form.discretion_manager_name = nil
+            form.discretion_reason = 'test'
+          end
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context 'dicscretion applied but reason not provided' do
+          before do
+            form.discretion_applied = true
+            form.discretion_manager_name = 'john'
+            form.discretion_reason = nil
+          end
+
+          it { is_expected.not_to be_valid }
+        end
       end
 
       context 'received yesterday' do

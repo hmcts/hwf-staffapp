@@ -21,6 +21,8 @@ module Validators
         add_error(I18n.t("#{translation_prefix}.date_before"))
       elsif before_or_equal_to_submitt_date
         add_error(I18n.t("#{translation_prefix}.before_submit"))
+      elsif three_months_check
+        add_error(I18n.t("#{translation_prefix}.three_months"))
       end
     end
 
@@ -55,12 +57,16 @@ module Validators
     end
 
     def before_or_equal_to_submitt_date
-      return true if @date_received_value < submitted_date
+      true if @date_received_value < submitted_date
+    end
+
+    def three_months_check
+      return false if @validate_record.discretion_applied
       (@date_received_value - 3.months) >= submitted_date
     end
 
     def translation_prefix
-      '.activemodel.errors.models.forms/application/detail.attributes.date_received'
+      '.activemodel.errors.models.forms/online_application.attributes.date_received'
     end
 
   end
