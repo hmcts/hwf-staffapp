@@ -277,7 +277,7 @@ en-GB:
         <p>%{income_type}: %{total_income}</p>
         <p>Number of children aged 0 to 13: %{children_young}</p>
         <p>Number of children aged 14 and over: %{children_old}</p>
-        <p>Amount to be refunded to you: %{amount_refunded}</p>
+        <p>Amount you need to pay: %{amount_to_pay}</p>
         <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
         <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the court/tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records.</p>
