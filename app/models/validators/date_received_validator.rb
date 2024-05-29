@@ -15,10 +15,10 @@ module Validators
     end
 
     def validate_ranges
-      if after_or_equal_min_date
-        add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
-      elsif before_tomorrow
+      if before_tomorrow
         add_error(I18n.t("#{translation_prefix}.date_before"))
+      elsif after_or_equal_min_date
+        add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
       elsif before_or_equal_to_submitt_date
         add_error(I18n.t("#{translation_prefix}.before_submit"))
       elsif three_months_check
@@ -53,7 +53,7 @@ module Validators
     end
 
     def before_tomorrow
-      tomorrow < @date_received_value
+      tomorrow <= @date_received_value
     end
 
     def before_or_equal_to_submitt_date

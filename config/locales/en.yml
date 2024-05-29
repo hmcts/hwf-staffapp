@@ -980,6 +980,7 @@ en-GB:
               date_after_or_equal_to: "The application's date received cannot be before the date submitted."
               not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
+              before_submit: This date can’t be before the application was received.
 
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
