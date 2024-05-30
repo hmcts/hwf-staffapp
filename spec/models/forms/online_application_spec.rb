@@ -96,6 +96,15 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to be_valid }
       end
 
+      context 'received tomorow' do
+        before do
+          online_application
+          form.date_received = Time.zone.tomorrow
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+
       context 'received after submitted' do
         before do
           Timecop.freeze(1.day.ago) do
