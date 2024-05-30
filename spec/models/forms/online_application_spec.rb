@@ -116,9 +116,20 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to be_valid }
       end
 
-      context 'received more then 3 months after submitted' do
+      context 'received exactly 3 months after submitted' do
         before do
           Timecop.freeze(3.months.ago) do
+            online_application
+          end
+          form.date_received = Time.zone.now
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'received more then 3 months after submitted' do
+        before do
+          Timecop.freeze(4.months.ago) do
             online_application
           end
           form.date_received = Time.zone.now

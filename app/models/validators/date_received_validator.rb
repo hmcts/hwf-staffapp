@@ -49,7 +49,7 @@ module Validators
     end
 
     def after_or_equal_min_date
-      @date_received_value <= min_date
+      @date_received_value < min_date
     end
 
     def before_tomorrow
@@ -62,7 +62,7 @@ module Validators
 
     def three_months_check
       return false if @validate_record.discretion_applied
-      (@date_received_value - 3.months) >= submitted_date
+      (@date_received_value - 3.months) > submitted_date
     end
 
     def translation_prefix
