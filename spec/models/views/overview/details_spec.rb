@@ -29,8 +29,7 @@ RSpec.describe Views::Overview::Details do
         let(:application) { build_stubbed(:online_application) }
         it "returns relevant fields" do
           is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
-                              "discretion_applied", "discretion_manager_name", "discretion_reason",
-                              'deceased_name', 'date_of_death', 'emergency_reason'])
+                              "discretion_applied", 'deceased_name', 'date_of_death', 'emergency_reason'])
         end
       end
     end

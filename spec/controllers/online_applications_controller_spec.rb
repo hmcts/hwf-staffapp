@@ -95,10 +95,13 @@ RSpec.describe OnlineApplicationsController do
     let(:benefits_valid) { true }
     let(:saving_outcome) { true }
     let(:saving_service) { instance_double(SavingsPassFailService) }
+    let(:discretion_applied) { nil }
 
     before do
       allow(form).to receive(:update).with(params)
       allow(form).to receive_messages(save: form_save, fee: fee)
+      allow(form).to receive_messages(discretion_applied: discretion_applied)
+      allow(form).to receive(:reset_date_received_data)
       allow(online_application).to receive_messages(update: true, last_benefit_check: online_bc)
 
       allow(DwpMonitor).to receive(:new).and_return monitor
@@ -262,6 +265,18 @@ RSpec.describe OnlineApplicationsController do
       end
 
       context 'when the form can not be saved' do
+        context 'discretion selected "No"' do
+          let(:discretion_applied) { false }
+          it { expect(response).to redirect_to(root_url) }
+          it { expect(form).to have_received(:reset_date_received_data) }
+        end
+
+        context 'discretion selected "Yes"' do
+          let(:discretion_applied) { true }
+          it { expect(response).not_to redirect_to(root_url) }
+          it { expect(form).not_to have_received(:reset_date_received_data) }
+        end
+
         it 'renders the edit template' do
           expect(response).to render_template(:edit)
         end

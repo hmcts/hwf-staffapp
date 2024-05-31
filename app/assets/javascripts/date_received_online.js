@@ -4,6 +4,7 @@ window.moj.Modules.DateReceivedOnlineModule = {
   init: function() {
     this.bindEvents();
     this.loadDateSubmitted();
+    this.loadDateReceived();
   },
 
   bindEvents: function() {
@@ -30,8 +31,6 @@ window.moj.Modules.DateReceivedOnlineModule = {
   },
 
   compareDates: function() {
-
-
     if(date_sumitted == 'Invalid Date' || Date.now() < received_date){
       // invalid date
       $('fieldset.discretion_applied').hide();

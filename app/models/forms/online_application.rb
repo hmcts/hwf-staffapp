@@ -16,9 +16,7 @@ module Forms
         emergency_reason: String,
         benefits_override: Boolean,
         user_id: Integer,
-        discretion_applied: Boolean,
-        discretion_manager_name: String,
-        discretion_reason: String }
+        discretion_applied: Boolean }
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -34,9 +32,6 @@ module Forms
 
     validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
     validates :form_name, presence: true
-
-    validates :discretion_manager_name,
-              :discretion_reason, presence: true, if: proc { |application| application.discretion_applied }
 
     validates_with Validators::DateReceivedValidator
 
@@ -58,6 +53,10 @@ module Forms
       @object.created_at
     end
 
+    def reset_date_received_data
+      @object.update(discretion_applied: nil, date_received: nil)
+    end
+
     private
 
     def persist!
@@ -70,7 +69,6 @@ module Forms
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
     def fixed_fields
       {
         fee: fee,
@@ -79,12 +77,9 @@ module Forms
         form_name: form_name,
         benefits_override: benefits_override,
         user_id: user_id,
-        discretion_applied: discretion_applied,
-        discretion_manager_name: discretion_manager_name,
-        discretion_reason: discretion_reason
+        discretion_applied: discretion_applied
       }
     end
-    # rubocop:enable Metrics/MethodLength
 
     def format_fee
       @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?

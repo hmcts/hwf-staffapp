@@ -285,6 +285,7 @@ en-GB:
     waiting_for_part_payment: 'This application is waiting for part-payment. You can’t edit any details.'
     waiting_for_evidence: 'This application is waiting for evidence. You can’t edit any details.'
     deleted: 'This application has been deleted. You can’t edit any details.'
+    discretion_not_applied: 'You decided not to continue processing the application received more then 3 months ago - %{reference}'
   business_entities:
     not_set:
       manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."
@@ -746,8 +747,8 @@ en-GB:
         benefits_override_false: 'No'
         benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?
-        discretion_applied_true: Yes
-        discretion_applied_false: No
+        discretion_applied_true: 'Yes'
+        discretion_applied_false: 'No'
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -976,7 +977,7 @@ en-GB:
               blank: You must select a jurisdiction
             date_received:
               blank: Enter the date in this format DD/MM/YYYY
-              three_months: The date received must be within 3 months of the application submitted date. Delivery Manager discretion required to continue processing.
+              three_months: This application was received more than 3 months ago, are you sure you want to continue?
               date_after_or_equal_to: "The application's date received cannot be before the date submitted."
               not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
@@ -989,12 +990,6 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
-            discretion_applied:
-              blank: This application cannot be processed unless Delivery Manager discretion is applied
-            discretion_manager_name:
-              blank: Enter delivery manager name
-            discretion_reason:
-              blank: Enter discretionary reason
 
         forms/fee_approval:
           attributes:

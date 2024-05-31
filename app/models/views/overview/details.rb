@@ -90,8 +90,7 @@ module Views
       def online_application_fields
         [
           'fee', 'jurisdiction', 'form_name', 'case_number',
-          'discretion_applied', 'discretion_manager_name', 'discretion_reason',
-          'deceased_name', 'date_of_death', 'emergency_reason'
+          'discretion_applied', 'deceased_name', 'date_of_death', 'emergency_reason'
         ]
       end
 

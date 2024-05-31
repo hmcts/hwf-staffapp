@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_28_115411) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_31_091401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -420,8 +420,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_28_115411) do
     t.string "income_period"
     t.string "legal_representative_position"
     t.boolean "discretion_applied"
-    t.string "discretion_manager_name"
-    t.string "discretion_reason"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end

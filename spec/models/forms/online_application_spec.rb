@@ -4,7 +4,7 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :discretion_manager_name, :discretion_reason]
+                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied]
 
   let(:online_application) { build_stubbed(:online_application) }
 
@@ -140,8 +140,6 @@ RSpec.describe Forms::OnlineApplication do
         context 'dicscretion applied' do
           before do
             form.discretion_applied = true
-            form.discretion_manager_name = 'john'
-            form.discretion_reason = 'test'
           end
 
           it { is_expected.to be_valid }
@@ -150,28 +148,6 @@ RSpec.describe Forms::OnlineApplication do
         context 'dicscretion not applied' do
           before do
             form.discretion_applied = false
-            form.discretion_manager_name = 'john'
-            form.discretion_reason = 'test'
-          end
-
-          it { is_expected.not_to be_valid }
-        end
-
-        context 'dicscretion applied but name not provided' do
-          before do
-            form.discretion_applied = true
-            form.discretion_manager_name = nil
-            form.discretion_reason = 'test'
-          end
-
-          it { is_expected.not_to be_valid }
-        end
-
-        context 'dicscretion applied but reason not provided' do
-          before do
-            form.discretion_applied = true
-            form.discretion_manager_name = 'john'
-            form.discretion_reason = nil
           end
 
           it { is_expected.not_to be_valid }
@@ -231,6 +207,19 @@ RSpec.describe Forms::OnlineApplication do
       end
     end
 
+  end
+
+  describe 'reset_date_received_data' do
+    let(:online_application) { create(:online_application, date_received: Time.zone.today, discretion_applied: true) }
+
+    it 'clears date received and discretion data' do
+      expect(online_application.date_received).not_to be_nil
+      expect(online_application.discretion_applied).not_to be_nil
+
+      form.reset_date_received_data
+      expect(online_application.date_received).to be_nil
+      expect(online_application.discretion_applied).to be_nil
+    end
   end
 
   describe '#save' do
