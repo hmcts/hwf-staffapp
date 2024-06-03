@@ -285,7 +285,7 @@ en-GB:
     waiting_for_part_payment: 'This application is waiting for part-payment. You can’t edit any details.'
     waiting_for_evidence: 'This application is waiting for evidence. You can’t edit any details.'
     deleted: 'This application has been deleted. You can’t edit any details.'
-    discretion_not_applied: 'You decided not to continue processing the application received more then 3 months ago - %{reference}'
+    discretion_not_applied: 'You decided not to continue processing the application received more than 3 months ago - %{reference}'
   business_entities:
     not_set:
       manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."
