@@ -4,7 +4,7 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id]
+                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied]
 
   let(:online_application) { build_stubbed(:online_application) }
 
@@ -96,6 +96,15 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to be_valid }
       end
 
+      context 'received tomorow' do
+        before do
+          online_application
+          form.date_received = Time.zone.tomorrow
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+
       context 'received after submitted' do
         before do
           Timecop.freeze(1.day.ago) do
@@ -107,7 +116,7 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.to be_valid }
       end
 
-      context 'received more then 3 months after submitted' do
+      context 'received exactly 3 months after submitted' do
         before do
           Timecop.freeze(3.months.ago) do
             online_application
@@ -115,7 +124,34 @@ RSpec.describe Forms::OnlineApplication do
           form.date_received = Time.zone.now
         end
 
+        it { is_expected.to be_valid }
+      end
+
+      context 'received more then 3 months after submitted' do
+        before do
+          Timecop.freeze(4.months.ago) do
+            online_application
+          end
+          form.date_received = Time.zone.now
+        end
+
         it { is_expected.not_to be_valid }
+
+        context 'dicscretion applied' do
+          before do
+            form.discretion_applied = true
+          end
+
+          it { is_expected.to be_valid }
+        end
+
+        context 'dicscretion not applied' do
+          before do
+            form.discretion_applied = false
+          end
+
+          it { is_expected.not_to be_valid }
+        end
       end
 
       context 'received yesterday' do
@@ -171,6 +207,19 @@ RSpec.describe Forms::OnlineApplication do
       end
     end
 
+  end
+
+  describe 'reset_date_received_data' do
+    let(:online_application) { create(:online_application, date_received: Time.zone.today, discretion_applied: true) }
+
+    it 'clears date received and discretion data' do
+      expect(online_application.date_received).not_to be_nil
+      expect(online_application.discretion_applied).not_to be_nil
+
+      form.reset_date_received_data
+      expect(online_application.date_received).to be_nil
+      expect(online_application.discretion_applied).to be_nil
+    end
   end
 
   describe '#save' do

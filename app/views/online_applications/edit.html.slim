@@ -37,7 +37,7 @@
 
       .govuk-form-group.group-level
         p.util_mb-0 =t('date_submitted', scope: @form.i18n_scope)
-        p: strong= date_submitted(@online_application)
+        p: strong.date_sumitted= date_submitted(@online_application)
 
       .govuk-form-group.group-level
         legend.govuk-fieldset__legend
@@ -59,6 +59,20 @@
             .govuk-form-group.govuk-form-group-year
               = f.label :year_date_received, class: 'govuk-label'
               = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
+
+        .govuk-form-group.group-level
+            fieldset.discretion_applied.start-hidden
+              .panel-indent
+                = f.label :discretion_applied, class: 'govuk-label'
+                span.govuk-error-message
+                  = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
+                .govuk-checkboxes.govuk-checkboxes--small
+                  .govuk-checkboxes__item
+                    = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
+                    = f.label t('discretion_applied_false', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_false'
+                  .govuk-checkboxes__item
+                    = f.radio_button :discretion_applied, 'true', { class: 'govuk-checkboxes__input show-hide-section', data: { section: 'discretion-applied-yes', show: 'true'} }
+                    = f.label t('discretion_applied_true', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_true'
 
 
       .govuk-form-group.group-level
