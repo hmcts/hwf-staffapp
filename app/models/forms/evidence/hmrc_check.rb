@@ -50,10 +50,18 @@ module Forms
 
       def child_benefits_per_month
         children = @object.evidence_check.application.children
-        return 0 if children.blank? || children.zero?
-        children = 7 if children > 7
 
-        Settings.child_benefits_per_month[children]
+        return 0 if children.blank? || children.zero?
+        child_benefits_per_week(children) * 4
+      end
+
+      def child_benefits_per_week(children)
+        basic_rate = Settings.child_benefits.per_week
+        additional_rate = Settings.child_benefits.additional_child
+        return basic_rate if children == 1
+        children_multiplier = children - 1
+
+        basic_rate + (children_multiplier * additional_rate)
       end
 
       private

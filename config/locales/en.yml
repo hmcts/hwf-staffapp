@@ -285,6 +285,7 @@ en-GB:
     waiting_for_part_payment: 'This application is waiting for part-payment. You can’t edit any details.'
     waiting_for_evidence: 'This application is waiting for evidence. You can’t edit any details.'
     deleted: 'This application has been deleted. You can’t edit any details.'
+    discretion_not_applied: 'You decided not to continue processing the application received more than 3 months ago - %{reference}'
   business_entities:
     not_set:
       manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."
@@ -741,6 +742,8 @@ en-GB:
         benefits_override_false: 'No'
         benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?
+        discretion_applied_true: 'Yes'
+        discretion_applied_false: 'No'
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -828,10 +831,11 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
+              blank: Enter the date in this format DD/MM/YYYY
               not_a_date: Enter the date in this format DD/MM/YYYY
               date_after_or_equal_to: The application must have been made in the last 3 months
               date_before: This date can't be in the future
+              before_submit: 'This date need to be before submitted date.'
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
@@ -967,10 +971,13 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
-              not_a_date: Enter the date in this format DD/MM/YYYY
-              date_after_or_equal_to: The application must have been made in the last 3 months
+              blank: Enter the date in this format DD/MM/YYYY
+              three_months: This application was received more than 3 months ago, are you sure you want to continue?
+              date_after_or_equal_to: "The application's date received cannot be before the date submitted."
+              not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
+              before_submit: This date can’t be before the application was received.
+
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -978,6 +985,7 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+
         forms/fee_approval:
           attributes:
             fee_manager_firstname:

@@ -17,6 +17,41 @@ RSpec.describe PathStorage do
       expect(path_value).to eql(path)
     end
 
+    context 'catch exception' do
+      let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3'] }
+
+      before {
+        allow(Redis).to receive(:new).and_raise(StandardError)
+        allow(Sentry).to receive(:capture_message)
+      }
+
+      it 'sent message to Sentry from storage method' do
+        storage_class.navigation(path)
+        expect(Sentry).to have_received(:capture_message).with('StandardError', extra: { type: "storage", redis_url: "redis://localhost:6379/1" })
+      end
+
+      it 'sent message to Sentry from navigation method' do
+        storage_class.navigation(path)
+        expect(Sentry).to have_received(:capture_message).with("undefined method `get' for an instance of String", extra: { type: "navigation", current_path: "/path/to/page-2", user_key: "application-path-134" })
+      end
+
+      it 'sent message to Sentry from path back method' do
+        storage_class.path_back
+        expect(Sentry).to have_received(:capture_message).with("undefined method `get' for an instance of String", extra: { type: "path_back", current_path: nil, user_key: "application-path-134" })
+      end
+
+      it 'sent message to Sentry from clear! method' do
+        storage_class.clear!
+        expect(Sentry).to have_received(:capture_message).with("undefined method `set' for an instance of String", extra: { type: "clear", user_key: "application-path-134" })
+      end
+
+      it 'sent message to Sentry from initialise method' do
+        described_class.new(nil)
+        expect(Sentry).to have_received(:capture_message).with("undefined method `id' for nil", extra: { type: "initialize", user_key: nil })
+      end
+
+    end
+
     context 'remove from list' do
       before do
         storage.set(storage_key, list.to_json)

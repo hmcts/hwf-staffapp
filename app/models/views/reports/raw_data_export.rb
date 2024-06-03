@@ -139,7 +139,9 @@ module Views
           CASE WHEN part_payments.outcome = 'return' THEN 'return'
                WHEN part_payments.outcome = 'none' THEN 'false'
                WHEN part_payments.outcome = 'part' THEN 'true' ELSE NULL END AS part_payment_outcome,
-          savings.amount AS savings_amount,
+          CASE WHEN savings.amount >= 16000 THEN NULL
+               ELSE savings.amount
+          END AS savings_amount,
           savings.over_61 AS over_61,
           details.case_number AS case_number,
           oa.postcode AS postcode,

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.1'
+ruby '3.3.2'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -24,7 +24,7 @@ gem 'rails-i18n', '~> 7.0.3'
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-storage-blob', '~> 2.0', '>= 2.0.3'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.8'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.9'
 
 # configuration
 gem 'config'
@@ -44,7 +44,7 @@ gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.1'
+gem "dartsass-sprockets", "~> 3.1"
 
 gem 'terser'
 # Use CoffeeScript for .coffee assets and views
@@ -57,7 +57,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 1.1', group: :doc
+gem 'sdoc', '>= 2', group: :doc
 
 # template language
 gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
