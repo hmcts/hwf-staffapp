@@ -32,4 +32,5 @@
 //= require gtm_track_timestamps
 //= require error_class_loader
 //= require refund
+//= require date_received_online
 

@@ -15,12 +15,14 @@ module Validators
     end
 
     def validate_ranges
-      if after_or_equal_min_date
-        add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
-      elsif before_tomorrow
+      if before_tomorrow
         add_error(I18n.t("#{translation_prefix}.date_before"))
+      elsif after_or_equal_min_date
+        add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
       elsif before_or_equal_to_submitt_date
         add_error(I18n.t("#{translation_prefix}.before_submit"))
+      elsif three_months_check
+        add_error(I18n.t("#{translation_prefix}.three_months"))
       end
     end
 
@@ -47,20 +49,24 @@ module Validators
     end
 
     def after_or_equal_min_date
-      @date_received_value <= min_date
+      @date_received_value < min_date
     end
 
     def before_tomorrow
-      tomorrow < @date_received_value
+      tomorrow <= @date_received_value
     end
 
     def before_or_equal_to_submitt_date
-      return true if @date_received_value < submitted_date
-      (@date_received_value - 3.months) >= submitted_date
+      true if @date_received_value < submitted_date
+    end
+
+    def three_months_check
+      return false if @validate_record.discretion_applied
+      (@date_received_value - 3.months) > submitted_date
     end
 
     def translation_prefix
-      '.activemodel.errors.models.forms/application/detail.attributes.date_received'
+      '.activemodel.errors.models.forms/online_application.attributes.date_received'
     end
 
   end

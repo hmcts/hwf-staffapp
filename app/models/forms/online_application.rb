@@ -15,7 +15,8 @@ module Forms
         emergency: Boolean,
         emergency_reason: String,
         benefits_override: Boolean,
-        user_id: Integer }
+        user_id: Integer,
+        discretion_applied: Boolean }
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -52,6 +53,10 @@ module Forms
       @object.created_at
     end
 
+    def reset_date_received_data
+      @object.update(discretion_applied: nil, date_received: nil)
+    end
+
     private
 
     def persist!
@@ -71,7 +76,8 @@ module Forms
         date_received: date_received,
         form_name: form_name,
         benefits_override: benefits_override,
-        user_id: user_id
+        user_id: user_id,
+        discretion_applied: discretion_applied
       }
     end
 
