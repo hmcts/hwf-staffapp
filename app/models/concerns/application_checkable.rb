@@ -10,7 +10,7 @@ module ApplicationCheckable
   end
 
   def hmrc_check_type?
-    hmrc_office_match? && !applicant.married
+    hmrc_office_match?
   end
 
   private

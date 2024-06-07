@@ -3,6 +3,9 @@ class HmrcCheck < ActiveRecord::Base
   belongs_to :user
   has_many :hmrc_calls, dependent: :destroy
 
+  scope :partner, -> { where(check_type: 'partner') }
+  scope :applicant, -> { where(check_type: 'applicant') }
+
   serialize :address
   serialize :employment
   serialize :income
