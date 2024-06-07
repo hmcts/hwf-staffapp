@@ -2,6 +2,7 @@ module Forms
   class OnlineApplication < FormObject
     include ActiveModel::Validations::Callbacks
     include DataFieldFormattable
+    attr_reader :created_at
 
     # rubocop:disable Metrics/MethodLength
     def self.permitted_attributes
@@ -37,6 +38,7 @@ module Forms
 
     def initialize(online_application)
       super
+      @created_at = online_application.created_at
       self.emergency = true if emergency_reason.present?
     end
 

@@ -49,7 +49,7 @@ module Validators
     end
 
     def after_or_equal_min_date
-      @date_received_value < min_date
+      @date_received_value < @validate_record.created_at.to_date
     end
 
     def before_tomorrow
