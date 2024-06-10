@@ -94,6 +94,19 @@ RSpec.describe Forms::OnlineApplication do
         end
 
         it { is_expected.to be_valid }
+
+      end
+
+      context 'when the application was created and received more the 3 months ago' do
+        before do
+          Timecop.freeze(5.months.ago) do
+            online_application
+          end
+
+          form.date_received = 5.months.ago
+        end
+
+        it { is_expected.to be_valid }
       end
 
       context 'received tomorow' do
