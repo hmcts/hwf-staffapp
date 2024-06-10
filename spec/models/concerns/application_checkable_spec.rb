@@ -97,7 +97,9 @@ describe ApplicationCheckable do
   context 'HMRC check applies' do
     let(:application) { build(:application, income_kind: income_kind, applicant: applicant, office: office, medium: medium) }
     let(:income_kind) { { "applicant" => ["Wages"] } }
-    let(:applicant) { build(:applicant, married: married) }
+    let(:applicant) { build(:applicant, married: married, ni_number: ni_number) }
+    let(:ni_number) { "AB123#{Random.rand(9)}#{Random.rand(9)}#{Random.rand(9)}C" }
+
     let(:married) { false }
     let(:office) { create(:office, entity_code: 'dig') }
     let(:medium) { 'digital' }
@@ -151,6 +153,11 @@ describe ApplicationCheckable do
     context 'office does match' do
       let(:office) { create(:office, entity_code: 'dig') }
       it { expect(application.hmrc_check_type?).to be true }
+    end
+
+    context 'applicant has no ni number' do
+      let(:ni_number) { '' }
+      it { expect(application.hmrc_check_type?).to be false }
     end
   end
 
