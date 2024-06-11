@@ -10,10 +10,14 @@ module ApplicationCheckable
   end
 
   def hmrc_check_type?
-    hmrc_office_match? && !applicant.married
+    hmrc_office_match? && applicant_valid_for_check?
   end
 
   private
+
+  def applicant_valid_for_check?
+    !applicant.married && applicant.ni_number.present?
+  end
 
   def hmrc_office_match?
     Settings.evidence_check.hmrc.office_entity_code.include?(office.try(:entity_code))
