@@ -248,7 +248,7 @@ RSpec/LetBeforeExamples:
 RSpec/HooksBeforeExamples:
   Enabled: false
 
-RSpec/Capybara/FeatureMethods:
+RSpec/Dialect:
   Enabled: false
 
 RSpec/IndexedLet:
