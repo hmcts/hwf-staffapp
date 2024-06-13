@@ -115,6 +115,18 @@ RSpec.describe Views::Overview::Details do
       end
     end
 
+    context 'online_application pre ucd' do
+      let(:online_application) { build_stubbed(:online_application, calculation_scheme: 'prior_q4_23', discretion_applied: true) }
+      subject(:view) { described_class.new(online_application) }
+      it "discretion_manager_name return nil" do
+        expect(view.discretion_manager_name).to be_nil
+      end
+
+      it "discretion_reason return nil" do
+        expect(view.discretion_reason).to be_nil
+      end
+    end
+
     context 'application' do
       let(:application) { build_stubbed(:application, detail: detail) }
       let(:detail) { build_stubbed(:detail, discretion_applied: true) }

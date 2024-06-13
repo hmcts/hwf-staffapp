@@ -56,12 +56,12 @@ module Views
 
       def discretion_manager_name
         return if discretion_applied.blank?
-        detail.discretion_manager_name
+        detail.try(:discretion_manager_name)
       end
 
       def discretion_reason
         return if discretion_applied.blank?
-        detail.discretion_reason
+        detail.try(:discretion_reason)
       end
 
       private
