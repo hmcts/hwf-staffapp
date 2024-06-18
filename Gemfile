@@ -4,6 +4,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.3.3'
 
+# needed by activemailer - it's her to fix issue with install under ruby 3.3.3
+gem "net-pop", require: false
+
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order

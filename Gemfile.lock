@@ -726,6 +726,7 @@ DEPENDENCIES
   listen
   logstasher!
   mock_redis
+  net-pop
   nokogiri
   paper_trail
   parallel_tests
