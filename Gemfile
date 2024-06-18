@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.3'
+ruby '3.3.2'
 
 # needed by activemailer - it's her to fix issue with install under ruby 3.3.3
 gem "net-pop", require: false
