@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.3'
+ruby '3.3.2'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -120,9 +120,6 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
-  gem 'rubocop-capybara'
-  gem 'rubocop-factory_bot'
-  gem 'rubocop-rspec_rails'
   gem 'simplecov', '~> 0.21'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
