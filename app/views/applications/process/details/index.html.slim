@@ -56,14 +56,49 @@
                 = f.label :year_date_received, class: 'govuk-label'
                 = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
-      .govuk-form-group.group-level
-        = f.label :form_name, class: 'govuk-label'
-          =t('form_name', scope: @form.i18n_scope)
-          span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
-        - if @form.errors[:form_name].present?
-          span.govuk-error-message
-            = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error'
-        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
+      .govuk-form-group
+        fieldset.govuk-fieldset
+          legend.visuallyhidden =t('form_type', scope: @form.i18n_scope)
+          legend.govuk-fieldset__legend
+            =t('form_type', scope: @form.i18n_scope)
+          - if @form.errors[:form_type].present?
+            span.govuk-error-message
+            = f.label :form_type, @form.errors[:form_type].join(', '), class: 'error'
+          .govuk-radios.govuk-radios--small
+            .govuk-radios__item
+              = f.radio_button :form_type, 'true', { class: 'govuk-radios__input show-hide-section' , data: { section: 'claim-type', show: 'true'} }
+              = f.label t('form_type_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_form_type_true'
+            .govuk-radios__item
+              = f.radio_button :form_type, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'form-name', show: 'true'} }
+              = f.label t('form_type_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_form_type_false'
+
+      #claim-type-only.start-hidden
+        .panel-indent
+          .govuk-form-group.group-level
+            - if @form.errors[:claim_type].present?
+              span.govuk-error-message
+                = f.label :claim_type, @form.errors[:claim_type].join(', '), class: 'error'
+            .govuk-radios.govuk-radios--small
+              .govuk-radios__item
+                = f.radio_button :claim_type, 'specified', { class: 'govuk-radios__input show-hide-section' }
+                = f.label t('claim_type_specified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application__specified'
+              .govuk-radios__item
+                = f.radio_button :claim_type, 'unspecified', { class: 'govuk-radios__input show-hide-section' }
+                = f.label t('claim_type_unspecified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_unspecified'
+              .govuk-radios__item
+                = f.radio_button :claim_type, 'personal_injury', { class: 'govuk-radios__input show-hide-section' }
+                = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_personal_injury'
+
+      #form-name-only.start-hidden
+        .panel-indent
+          .govuk-form-group.group-level
+            = f.label :form_name, class: 'govuk-label'
+              =t('form_name', scope: @form.i18n_scope)
+              span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
+            - if @form.errors[:form_name].present?
+              span.govuk-error-message
+                = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error'
+            = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         = f.label :case_number, class: 'govuk-label'

@@ -572,7 +572,13 @@ en-GB:
         day_date_received: Day
         month_date_received: Month
         year_date_received: Year
-        form_name: Form number
+        form_type: 'Is this application for a:'
+        form_type_true: N1 Part 7 claim
+        form_type_false: Other
+        claim_type_specified: Specified
+        claim_type_unspecified: Unspecified
+        claim_type_personal_injury: Personal Injury
+        form_name: Name of Form
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         case_number: Case number
         probate: This is a probate case
