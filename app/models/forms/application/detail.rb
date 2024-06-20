@@ -7,7 +7,8 @@ module Forms
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
-        { fee: Decimal,
+        {
+          fee: Decimal,
           jurisdiction_id: Integer,
           date_received: Date,
           day_date_received: Integer,
@@ -26,12 +27,15 @@ module Forms
           day_date_fee_paid: Integer,
           month_date_fee_paid: Integer,
           year_date_fee_paid: Integer,
+          form_type: String,
+          claim_type: String,
           form_name: String,
           case_number: String,
           discretion_applied: Boolean,
           discretion_manager_name: String,
           discretion_reason: String,
-          statement_signed_by: String }
+          statement_signed_by: String
+        }
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -42,27 +46,36 @@ module Forms
       after_validation :check_refund_values
 
       validates :fee, presence: true,
-                      numericality: { allow_blank: true, less_than: 20_000 }
+                numericality: { allow_blank: true, less_than: 20_000 }
       validates :fee, presence: true,
-                      numericality: { allow_blank: true, greater_than: 0 }
+                numericality: { allow_blank: true, greater_than: 0 }
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
-      validates :date_received, date: {
-        before: :tomorrow
-      }
+      validates :date_received, date: { before: :tomorrow }
+
+      validates :form_type, inclusion: { in: [
+        I18n.t('activemodel.attributes.forms/application/detail.form_type_n1'),
+        I18n.t('activemodel.attributes.forms/application/detail.form_type_other'),
+      ] }, allow_blank: true
+
+      validate :claim_type_presence, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1') }
+      validate :form_name_presence, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_other') }
+
+      validates :claim_type, inclusion: { in: [
+        I18n.t('activemodel.attributes.forms/application/detail.claim_type_specified'),
+        I18n.t('activemodel.attributes.forms/application/detail.claim_type_unspecified'),
+        I18n.t('activemodel.attributes.forms/application/detail.claim_type_personal_injury')
+      ] }, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1') }
 
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
-      validates :form_name, presence: true
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
-        validates :date_of_death, date: {
-          before: :tomorrow
-        }
+        validates :date_of_death, date: { before: :tomorrow }
       end
 
       with_options if: :validate_date_fee_paid? do
@@ -135,6 +148,14 @@ module Forms
             fields[name] = send(name)
           end
         end
+      end
+
+      def claim_type_presence
+        errors.add(:claim_type, :blank) if claim_type.blank?
+      end
+
+      def form_name_presence
+        errors.add(:form_name, :blank) if form_name.blank?
       end
     end
   end

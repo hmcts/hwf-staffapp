@@ -439,7 +439,9 @@ en-GB:
         fee: Fee
         jurisdiction: Jurisdiction
         date_received: Date received
-        form_name: Form number
+        form_name: Name of Form
+        form_type: Form type
+        claim_type: Claim Type
         case_number: Case number
         probate: This is a probate case
         deceased_name: Name of the deceased
@@ -573,8 +575,8 @@ en-GB:
         month_date_received: Month
         year_date_received: Year
         form_type: 'Is this application for a:'
-        form_type_true: N1 Part 7 claim
-        form_type_false: Other
+        form_type_n1: N1 Part 7 Claim
+        form_type_other: Other
         claim_type_specified: Specified
         claim_type_unspecified: Unspecified
         claim_type_personal_injury: Personal Injury
@@ -864,6 +866,9 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            claim_type:
+              inclusion: Select a valid N1 Part 7 reason
+              blank: Select a N1 Part 7 reason
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
