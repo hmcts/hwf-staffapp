@@ -13,6 +13,8 @@ module Views
         estimated_amount_to_pay: 'estimated applicant pay',
         estimated_cost: 'estimated cost',
         application_type: 'application type',
+        form_type: 'form type',
+        claim_type: 'claim type',
         form_name: 'form',
         probate: 'probate',
         refund: 'refund',
@@ -112,7 +114,8 @@ module Views
       end
 
       def simple_columns
-        ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name', 'details.probate',
+        ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name',
+         'details.form_type', 'details.claim_type', 'details.probate',
          'details.refund', 'details.statement_signed_by', 'application_type', 'income', 'income_period',
          'children', 'decision', 'amount_to_pay', 'decision_cost', 'applicants.married',
          'applicants.partner_ni_number', 'applicants.partner_last_name',
