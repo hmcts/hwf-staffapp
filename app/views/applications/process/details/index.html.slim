@@ -69,7 +69,7 @@
               = f.radio_button :form_type, t('form_type_n1', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' , data: { section: 'claim-type', show: 'true'} }
               = f.label t('form_type_n1', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_form_type_n1'
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', data: { section: 'form-name', show: 'true'} }
+              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', data: { section: 'name-of-form', show: 'true'} }
               = f.label t('form_type_other', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_form_type_other'
 
       #claim-type-only.start-hidden
@@ -89,7 +89,7 @@
                 = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
                 = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_personal_injury'
 
-      #form-name-only.start-hidden
+      #name-of-form-only.start-hidden
         .panel-indent
           .govuk-form-group.group-level
             = f.label :form_name, class: 'govuk-label'
