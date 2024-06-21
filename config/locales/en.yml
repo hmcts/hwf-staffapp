@@ -547,7 +547,7 @@ en-GB:
         date_of_birth_hint: For example, 31 3 1980
         married_false: Single
         married_true: Married or living with someone
-        form_name_summary: Form number
+        form_name_summary: Name of form
         over_16_true: 'Yes'
         over_16_false: 'No'
       forms/application/partner:
@@ -737,7 +737,7 @@ en-GB:
         reason: 'Other reason'
       forms/online_application:
         fee: How much is the court or tribunal fee?
-        form_name: Form number
+        form_name: Name of form
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         date_submitted: Date submitted by applicant
         day_date_received: Day
@@ -862,8 +862,8 @@ en-GB:
             discretion_reason:
               blank: Enter Discretionary reason
             form_name:
-              invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
-              blank: Enter a valid form number
+              invalid: You entered the help with fees name of form. Enter the number on the court or tribunal form.
+              blank: Enter a valid name of form
             claim_type:
               inclusion: Select a valid N1 Part 7 Claim or Other
               blank: Select a N1 Part 7 Claim or Other
@@ -992,8 +992,8 @@ en-GB:
               too_long: Enter the reason using less than 500 characters
               blank: Enter reason for emergency
             form_name:
-              invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
-              blank: Enter a valid form number
+              invalid: You entered the help with fees name of form. Enter the number on the court or tribunal form.
+              blank: Enter a valid name of form
 
         forms/fee_approval:
           attributes:

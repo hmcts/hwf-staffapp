@@ -103,7 +103,7 @@ end
 
 Then("I see Remember for the case details") do
   expect(application_details_digital_page.content.guidance.guidance_sub_heading[2].text).to eq 'Remember:'
-  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'to enter the correct form number the application relates to to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case. You will also need to enter the appropriate date for refund and probate cases when prompted'
+  expect(application_details_digital_page.content.guidance.guidance_list[2].text).to have_text 'to enter the correct name of form the application relates to to tick the appropriate box under ‘case details’ if the application is for a refund, emergency or probate case. You will also need to enter the appropriate date for refund and probate cases when prompted'
 end
 
 Then("I see digital Emergency advice") do

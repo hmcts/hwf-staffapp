@@ -19,7 +19,7 @@ def application_details
   fill_in 'application_day_date_received', with: date_received.day
   fill_in 'application_month_date_received', with: date_received.month
   fill_in 'application_year_date_received', with: date_received.year
-  fill_in 'Form number', with: 'ABC123'
+  fill_in 'Name of form', with: 'ABC123'
   click_button 'Next'
 end
 
