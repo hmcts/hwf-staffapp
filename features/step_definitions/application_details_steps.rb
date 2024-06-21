@@ -15,11 +15,8 @@ When(/^I submit the form without a name of form$/) do
   application_details_page.submit_without_form_number
 end
 
-Then(/^I should see enter a valid name of form error message$/) do
-  expect(application_details_page.content).to have_form_error_message
-end
-
 When(/^I submit the form with a help with fees name of form '(.+?)'$/) do |num|
+  application_details_page.content.form_type_other.click
   application_details_page.content.form_input.set num
   application_details_page.click_next
 end
