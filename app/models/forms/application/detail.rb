@@ -46,9 +46,9 @@ module Forms
       after_validation :check_refund_values
 
       validates :fee, presence: true,
-                numericality: { allow_blank: true, less_than: 20_000 }
+                      numericality: { allow_blank: true, less_than: 20_000 }
       validates :fee, presence: true,
-                numericality: { allow_blank: true, greater_than: 0 }
+                      numericality: { allow_blank: true, greater_than: 0 }
       validates :jurisdiction_id, presence: true
       validate :reason
       validate :emergency_reason_size
@@ -59,17 +59,23 @@ module Forms
 
       validates :form_type, inclusion: { in: [
         I18n.t('activemodel.attributes.forms/application/detail.form_type_n1'),
-        I18n.t('activemodel.attributes.forms/application/detail.form_type_other'),
+        I18n.t('activemodel.attributes.forms/application/detail.form_type_other')
       ] }, allow_blank: true
 
-      validate :claim_type_presence, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1') }
-      validate :form_name_presence, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_other') }
+      validate :claim_type_presence, if: proc { |detail|
+                                           detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1')
+                                         }
+      validate :form_name_presence, if: proc { |detail|
+                                          detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_other')
+                                        }
 
       validates :claim_type, inclusion: { in: [
         I18n.t('activemodel.attributes.forms/application/detail.claim_type_specified'),
         I18n.t('activemodel.attributes.forms/application/detail.claim_type_unspecified'),
         I18n.t('activemodel.attributes.forms/application/detail.claim_type_personal_injury')
-      ] }, if: proc { |detail| detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1') }
+      ] }, if: proc { |detail|
+                 detail.form_type == I18n.t('activemodel.attributes.forms/application/detail.form_type_n1')
+               }
 
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
 
