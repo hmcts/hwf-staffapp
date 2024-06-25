@@ -25,6 +25,7 @@ def fill_application_refund_details(court_fee = '1000')
   expect(page).to have_text 'Application details'
   fill_in 'application_fee', with: court_fee
   select_jurisdiction
+  select_other_application
   fill_in 'application_form_name', with: 'ABC123'
   fill_application_dates
 end
@@ -43,7 +44,7 @@ def fill_application_emergency_details
   fill_in 'application_fee', with: '1000'
   select_jurisdiction
   fill_in_date_received(Date.yesterday)
-
+  select_other_application
   fill_in 'application_form_name', with: 'ABC123'
   check 'This is an emergency case'
   fill_in 'Reason for emergency', with: 'Iam in a hurry'
@@ -145,6 +146,7 @@ end
 def fill_application_date_set_discretion_no
   fill_application_date_over_limit
   fill_in_date_fee_paid(4.months.ago.to_date)
+  select_other_application
   fill_in 'application_form_name', with: 'ABC123'
   click_button 'Next'
 
@@ -157,6 +159,7 @@ def fill_application_date_set_discretion_yes
   fill_in_date_fee_paid(4.months.ago.to_date)
   click_button 'Next'
 
+  select_other_application
   choose 'application_discretion_applied_true'
 
   within(:css, '#discretion-applied-yes-only') do

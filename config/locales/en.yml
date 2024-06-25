@@ -864,9 +864,10 @@ en-GB:
             form_name:
               invalid: You entered the help with fees name of form. Enter the number on the court or tribunal form.
               blank: Enter a valid name of form
+            form_type:
+              blank: Select the type of form
             claim_type:
-              inclusion: Select a valid N1 Part 7 Claim or Other
-              blank: Select a N1 Part 7 Claim or Other
+              blank: Select the type of claim
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:

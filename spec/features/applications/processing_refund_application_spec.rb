@@ -336,7 +336,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
           fill_in 'Discretion reason', with: 'Looks legit'
         end
         click_button 'Next'
-
         choose 'Less than £3,000'
         fill_in 'application_amount', with: 0
         click_button 'Next'

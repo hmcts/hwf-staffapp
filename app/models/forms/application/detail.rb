@@ -53,10 +53,8 @@ module Forms
 
       validates :date_received, date: { before: :tomorrow }
 
-      validates :form_type, inclusion: { in: :form_type_options }, allow_blank: true
-      validate :claim_type_presence, if: -> { form_type == form_type_n1 }
-      validate :form_name_presence, if: -> { form_type == form_type_other }
-      validates :claim_type, inclusion: { in: :claim_type_options }, if: -> { form_type == form_type_n1 }
+      validates :form_type, presence: true
+      validates :claim_type, presence: true, if: -> { form_type == form_type_n1 }
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
 
       with_options if: :probate? do
@@ -115,29 +113,6 @@ module Forms
         (self.class.permitted_attributes.keys - excluded_keys).index_with do |name|
           send(name)
         end
-      end
-
-      def claim_type_presence
-        errors.add(:claim_type, :blank) if claim_type.blank?
-      end
-
-      def form_name_presence
-        errors.add(:form_name, :blank) if form_name.blank?
-      end
-
-      def form_type_options
-        [
-          I18n.t('activemodel.attributes.forms/application/detail.form_type_n1'),
-          I18n.t('activemodel.attributes.forms/application/detail.form_type_other')
-        ]
-      end
-
-      def claim_type_options
-        [
-          I18n.t('activemodel.attributes.forms/application/detail.claim_type_specified'),
-          I18n.t('activemodel.attributes.forms/application/detail.claim_type_unspecified'),
-          I18n.t('activemodel.attributes.forms/application/detail.claim_type_personal_injury')
-        ]
       end
 
       def form_type_n1
