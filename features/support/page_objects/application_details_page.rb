@@ -166,6 +166,7 @@ class ApplicationDetailsPage < BasePage
   def submit_without_form_number
     fill_in('How much is the court or tribunal fee?', with: '300')
     content.jurisdiction.click
+    content.form_type_other.click
     date_application_received
     click_next
   end

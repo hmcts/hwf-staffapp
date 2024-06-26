@@ -7,7 +7,11 @@ Feature: Application details page
     Scenario: Successfully submit my required application details
       When I successfully submit my required application details
       Then I should be taken to savings and investments page
-    
+
+    Scenario: Leaving form number blank
+      When I submit the form without a name of form
+      Then I should see enter a valid name of form error message
+
     Scenario: Leaving fee blank
       When I submit the form without a fee amount
       Then I should see enter a fee error message

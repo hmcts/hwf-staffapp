@@ -196,7 +196,7 @@ RSpec.describe Forms::Application::Detail do
         let(:form_type) { 'Other' }
         let(:form_name) { '' }
 
-        it { is_expected.to be_valid }
+        it { is_expected.not_to be_valid }
       end
     end
 
@@ -214,7 +214,7 @@ RSpec.describe Forms::Application::Detail do
           build_stubbed(:complete_detail, form_name: nil)
         end
 
-        it { is_expected.to be_valid }
+        it { is_expected.not_to be_valid }
       end
 
       context 'when form_type is "N1 Part 7 Claim" and claim_type is nil' do
