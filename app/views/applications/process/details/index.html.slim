@@ -77,7 +77,7 @@
                   .govuk-radios.govuk-radios--small
                     .govuk-radios__item
                       = f.radio_button :claim_type, t('claim_type_specified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
-                      = f.label t('claim_type_specified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application__specified'
+                      = f.label t('claim_type_specified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_specified'
                     .govuk-radios__item
                       = f.radio_button :claim_type, t('claim_type_unspecified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
                       = f.label t('claim_type_unspecified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_unspecified'
