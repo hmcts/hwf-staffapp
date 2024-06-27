@@ -15,7 +15,7 @@ module Views
         application_type: 'application type',
         form_type: 'form type',
         claim_type: 'claim type',
-        form_name: 'form',
+        form_name: 'form name',
         probate: 'probate',
         refund: 'refund',
         emergency: 'emergency',
