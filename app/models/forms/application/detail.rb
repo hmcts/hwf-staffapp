@@ -56,7 +56,7 @@ module Forms
       validates :form_type, presence: true
       validates :claim_type, presence: true, if: -> { form_type == form_type_n1 }
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
-      validates :form_name, presence: true
+      validates :form_name, presence: true, if: -> { form_type == form_type_other }
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
