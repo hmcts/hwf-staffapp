@@ -62,7 +62,7 @@ RSpec.describe NotifyMailer do
       expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
-    it 'when case and form number is empty' do
+    it 'when case and name of form is empty' do
       application.form_name = ''
       application.case_number = ''
       expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
@@ -92,7 +92,7 @@ RSpec.describe NotifyMailer do
       expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
-    it 'when case and form number is empty' do
+    it 'when case and name of form is empty' do
       application.form_name = ''
       application.case_number = ''
       expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })

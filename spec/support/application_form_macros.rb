@@ -36,6 +36,7 @@ module ApplicationFormMacros
 
   def complete_application_details_optionals(detail)
     fill_in 'application_form_name', with: detail.form_name if detail.form_name.present?
+    choose 'Other'
     fill_in 'application_case_number', with: detail.case_number if detail.case_number.present?
   end
 
