@@ -91,9 +91,6 @@ gem 'rest-client'
 gem 'rubyzip'
 gem 'virtus'
 
-# To fix ruby 3.3.3 gemsepec file issue with this gem
-gem 'net-pop', github: 'ruby/net-pop'
-
 # GovUK Notify
 gem 'govuk_notify_rails'
 
