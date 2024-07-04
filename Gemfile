@@ -19,6 +19,8 @@ gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
+gem 'rack', '~> 3.1'
+
 gem 'rails-i18n', '~> 7.0.3'
 
 # Azure key vault secrets to ENV variables
@@ -99,7 +101,6 @@ gem 'govuk_notify_rails'
 
 group :development do
   # speed up local development via livereload
-  # gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'terminal-notifier-guard'
   gem 'web-console'
