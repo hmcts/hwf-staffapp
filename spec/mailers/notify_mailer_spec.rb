@@ -70,11 +70,49 @@ RSpec.describe NotifyMailer do
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
 
+    context 'litigation application' do
+      let(:application) { build(:online_application_with_all_details, :with_reference, legal_representative_email: 'tom@work.com') }
+      it { expect(mail.to).to eq(['tom@work.com']) }
+    end
+
     context 'welsh' do
       let(:mail) { described_class.submission_confirmation_online(application, 'cy') }
       it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID', nil)
     end
+  end
 
+  describe '#submission_confirmation_paper' do
+    let(:mail) { described_class.submission_confirmation_paper(application, 'en') }
+
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_PAPER_TEMPLATE_ID', nil)
+
+    it 'has the right keys with form_name' do
+      application.form_name = ''
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+    end
+
+    it 'has the right keys with case number' do
+      application.form_name = 'FGDH122'
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+    end
+
+    it 'when case and form number is empty' do
+      application.form_name = ''
+      application.case_number = ''
+      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+    end
+
+    it { expect(mail.to).to eq(['peter.smith@example.com']) }
+
+    context 'litigation application' do
+      let(:application) { build(:online_application_with_all_details, :with_reference, legal_representative_email: 'tom@work.com') }
+      it { expect(mail.to).to eq(['tom@work.com']) }
+    end
+
+    context 'welsh' do
+      let(:mail) { described_class.submission_confirmation_online(application, 'cy') }
+      it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID', nil)
+    end
   end
 
   describe '#submission_confirmation_refund' do
@@ -98,7 +136,14 @@ RSpec.describe NotifyMailer do
       expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
     end
 
-    it { expect(mail.to).to eq(['peter.smith@example.com']) }
+    context 'litigation application' do
+      let(:application) { build(:online_application_with_all_details, :with_reference, legal_representative_email: 'tom@work.com') }
+      it { expect(mail.to).to eq(['tom@work.com']) }
+    end
+
+    context 'applicant' do
+      it { expect(mail.to).to eq(['peter.smith@example.com']) }
+    end
 
     context 'welsh' do
       let(:mail) { described_class.submission_confirmation_refund(application, 'cy') }

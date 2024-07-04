@@ -6,7 +6,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(application_reference_code: application.reference)
 
-    mail(to: application.email_address)
+    mail(to: application.notification_email)
   end
 
   def submission_confirmation_paper(application, locale)
@@ -15,7 +15,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(application_reference_code: application.reference)
 
-    mail(to: application.email_address)
+    mail(to: application.notification_email)
   end
 
   def submission_confirmation_refund(application, locale)
@@ -23,8 +23,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_template(template(locale, :completed_application_refund))
 
     set_personalisation(application_reference_code: application.reference)
-
-    mail(to: application.email_address)
+    mail(to: application.notification_email)
   end
 
   def dwp_is_down_notifier
