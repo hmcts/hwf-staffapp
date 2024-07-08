@@ -14,7 +14,7 @@ class MailService
   private
 
   def source_is_valid_for_public_confirmation
-    source_is_valid && @data_source.is_a?(OnlineApplication) && @data_source.email_address.present?
+    source_is_valid && @data_source.is_a?(OnlineApplication) && @data_source.notification_email.present?
   end
 
   def source_is_valid
