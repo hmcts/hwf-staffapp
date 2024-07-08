@@ -179,4 +179,27 @@ RSpec.describe OnlineApplication do
       expect(described_class.count).to eq 1
     }
   end
+
+  describe '#notification_email' do
+    subject { online_application.notification_email }
+    let(:online_application) { build(:online_application, email_address: applicant_address, legal_representative_email: legal_representative_email) }
+    let(:applicant_address) { 'jane@home.com' }
+
+    context 'when no representative email' do
+      let(:legal_representative_email) { '' }
+
+      it "returns applicant's email" do
+        is_expected.to eql('jane@home.com')
+      end
+    end
+
+    context 'when epresentative email present' do
+      let(:legal_representative_email) { 'tom@work.com' }
+
+      it "returns legal representative's email" do
+        is_expected.to eql('tom@work.com')
+      end
+    end
+  end
+
 end
