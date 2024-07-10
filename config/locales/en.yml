@@ -613,6 +613,7 @@ en-GB:
         choice_between: Between £4,250 and £15,999
         choice_more_than: £16,000 or more
         savings_amount: Total savings and investments
+        over_66: "Is the applicant 66 years or over?"
         partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
@@ -628,6 +629,7 @@ en-GB:
         income_hint: Rounded to the nearest £
         children_age_band_one: Children aged 0 to 13 years
         children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
+        children_age_band_single: 'In question 11, does the applicant financially support any children?'
         children_age_band_two: Children aged 14+ years
       forms/application/income:
         income: In question 13, what income has been entered?
@@ -864,8 +866,11 @@ en-GB:
               inclusion: Please answer the savings question
             over_61:
               inclusion: Please confirm if the partner is 61 or over
+              not_over_66: Age selection does not match applicant Date of Birth entered
+              not_over_66_married: Age selection does not match applicant or partner Date of Birth entered
             over_66:
               inclusion: Please confirm if the partner is 66 or over
+              not_over_66: Age selection does not match applicant Date of Birth entered
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number

@@ -24,5 +24,13 @@ FactoryBot.define do
     trait :over_61 do
       date_of_birth { Time.zone.today - 65.years }
     end
+
+    trait :under_66 do
+      date_of_birth { Time.zone.today - 65.years }
+    end
+
+    trait :over_66 do
+      date_of_birth { Time.zone.today - 70.years }
+    end
   end
 end

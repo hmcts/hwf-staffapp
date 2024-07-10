@@ -29,6 +29,7 @@ module Forms
       validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
       validates :amount, presence: true, if: :amount_required?
       validate :numericality, if: :amount_required?
+      validate :over_66
 
       private
 
@@ -129,6 +130,21 @@ module Forms
         min_threshold_exceeded && !max_threshold_exceeded
       end
 
+      # rubocop:disable Metrics/AbcSize
+      def over_66
+        return false unless over_61?
+
+        details = @object.application.applicant
+        age_66 = Time.zone.today - 66.years
+        if details.married?
+          if details.date_of_birth > age_66 && details.partner_date_of_birth > age_66
+            errors.add(:over_61, :not_over_66_married)
+          end
+        elsif details.date_of_birth > age_66
+          errors.add(:over_61, :not_over_66)
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

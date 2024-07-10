@@ -69,6 +69,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
     describe 'max_threshold_exceeded' do
       let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_exceeded } }
+      let(:application) { create(:single_applicant_over_66) }
 
       describe 'is true' do
         let(:max_exceeded) { true }
@@ -133,6 +134,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
     describe 'when min_threshold_exceeded and partner over 61' do
       let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_threshold } }
+      let(:application) { create(:married_applicant_over_66) }
+
 
       describe 'max_threshold' do
         describe 'is true' do
@@ -157,7 +160,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe '#save' do
-    subject(:form) { described_class.new(saving) }
+    subject(:form) { described_class.new(application.saving) }
 
     subject(:update_form) do
       form.update(params)
@@ -165,9 +168,10 @@ RSpec.describe Forms::Application::SavingsInvestment do
     end
 
     let(:saving) { create(:saving) }
+    let(:application) { create(:single_applicant_over_66) }
 
     context 'when attributes are correct' do
-      let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 3456 } }
+      let(:params) { { min_threshold_exceeded: true, over_61: false, max_threshold_exceeded: false, amount: 3456 } }
 
       it { is_expected.to be true }
 
@@ -178,7 +182,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
       it 'saves the parameters in the detail' do
         params.each do |key, value|
-          expect(saving.send(key)).to eql(value)
+          expect(application.saving.send(key)).to eql(value)
         end
       end
     end
@@ -203,19 +207,19 @@ RSpec.describe Forms::Application::SavingsInvestment do
       context 'rounds down' do
         let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.23 } }
 
-        it { expect(saving.amount.to_i).to be 10 }
+        it { expect(application.saving.amount.to_i).to be 10 }
       end
 
       context 'rounds up' do
         let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.55 } }
 
-        it { expect(saving.amount.to_i).to be 11 }
+        it { expect(application.saving.amount.to_i).to be 11 }
       end
 
       context 'no rounding for nil value' do
         let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: nil } }
 
-        it { expect(saving.amount.to_i).to be 0 }
+        it { expect(application.saving.amount.to_i).to be 0 }
       end
     end
   end

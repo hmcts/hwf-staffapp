@@ -212,6 +212,16 @@ FactoryBot.define do
       applicant_traits { [:over_61] }
     end
 
+    factory :single_applicant_over_66 do
+      applicant_factory { :applicant_with_all_details }
+      applicant_traits { [:over_66] }
+    end
+
+    factory :married_applicant_over_66 do
+      applicant_factory { :applicant_with_all_details }
+      applicant_traits { [:over_66] }
+    end
+
     factory :applicant_under_61, aliases: [:married_applicant_under_61] do
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [:married, :under_61] }

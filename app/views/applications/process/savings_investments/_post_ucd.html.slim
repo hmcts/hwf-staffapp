@@ -21,7 +21,10 @@
                 .govuk-form-group.panel-indent.util-mt-0
                   fieldset
                     legend.visuallyhidden Applicant's partner's age
-                    = f.label :over_61, t('partner_over_66', scope: @form.i18n_scope), class: 'govuk-label'
+                    - if @application.applicant.married
+                      = f.label :over_61, t('partner_over_66', scope: @form.i18n_scope), class: 'govuk-label'
+                    -else
+                      = f.label :over_61, t('over_66', scope: @form.i18n_scope), class: 'govuk-label'
                     span#changed-name-error.govuk-error-message
                       = f.label :over_61, @form.errors[:over_61].join(', ').gsub('61','66'), class: 'error' if @form.errors[:over_61].present?
                     = f.hidden_field :over_61, value: nil
