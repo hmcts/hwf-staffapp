@@ -136,7 +136,6 @@ RSpec.describe Forms::Application::SavingsInvestment do
       let(:hash) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: max_threshold } }
       let(:application) { create(:married_applicant_over_66) }
 
-
       describe 'max_threshold' do
         describe 'is true' do
           let(:max_threshold) { true }
