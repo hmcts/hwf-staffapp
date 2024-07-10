@@ -25,7 +25,7 @@ module Views
         children_age_band_one: 'age band under 14',
         children_age_band_two: 'age band 14+',
         married: 'married',
-        over_61: 'pension age',
+        over_66: 'pension age',
         decision: 'decision',
         final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
@@ -79,8 +79,8 @@ module Views
           row.send(attr).to_fs(:default) if row.send(attr).present?
         elsif [:children_age_band_two, :children_age_band_one].include?(attr)
           children_age_band(row, attr)
-        elsif attr == :over_61
-          over_61?(row)
+        elsif attr == :over_66
+          over_66?(row)
         else
           row.send(attr)
         end
@@ -142,7 +142,7 @@ module Views
           CASE WHEN savings.amount >= 16000 THEN NULL
                ELSE savings.amount
           END AS savings_amount,
-          savings.over_61 AS over_61,
+          savings.over_66 AS over_66,
           details.case_number AS case_number,
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
@@ -197,8 +197,8 @@ module Views
         'over' if row.income_max_threshold_exceeded
       end
 
-      def over_61?(row)
-        row.send(:over_61) == true ? 'Yes' : 'No'
+      def over_66?(row)
+        row.send(:over_66) == true ? 'Yes' : 'No'
       end
 
       def date_for_age_calculation(row)

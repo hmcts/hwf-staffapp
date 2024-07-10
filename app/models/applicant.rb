@@ -23,8 +23,8 @@ class Applicant < ActiveRecord::Base
     [partner_first_name, partner_last_name].select(&:present?).join(' ')
   end
 
-  def over_61?
-    received_minus_age = application.detail.date_received - 61.years
+  def over_66?
+    received_minus_age = application.detail.date_received - 66.years
     received_minus_age >= date_of_birth
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_31_091401) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_093923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_091401) do
     t.integer "office_id"
     t.decimal "threshold"
     t.boolean "threshold_exceeded"
-    t.boolean "partner_over_61"
+    t.boolean "partner_over_66"
     t.boolean "benefits"
     t.integer "children"
     t.integer "income"
@@ -385,7 +385,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_091401) do
     t.boolean "feedback_opt_in", null: false
     t.date "date_received"
     t.boolean "max_threshold_exceeded"
-    t.boolean "over_61"
+    t.boolean "over_66"
     t.integer "amount"
     t.boolean "income_min_threshold_exceeded"
     t.boolean "income_max_threshold_exceeded"
@@ -462,7 +462,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_091401) do
     t.decimal "amount"
     t.boolean "passed"
     t.decimal "fee_threshold"
-    t.boolean "over_61"
+    t.boolean "over_66"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "choice"

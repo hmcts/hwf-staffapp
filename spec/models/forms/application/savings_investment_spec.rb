@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Forms::Application::SavingsInvestment do
   subject(:savings_investment_form) { described_class.new(application.saving) }
 
-  params_list = [:min_threshold_exceeded, :over_61, :max_threshold_exceeded, :amount, :choice]
+  params_list = [:min_threshold_exceeded, :over_66, :max_threshold_exceeded, :amount, :choice]
 
   let(:min_threshold) { Settings.savings_threshold.minimum_value }
 
@@ -14,7 +14,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
   end
 
   describe 'validations' do
-    let(:application) { create(:single_applicant_under_61) }
+    let(:application) { create(:single_applicant_under_66) }
 
     before do
       savings_investment_form.update(hash)
@@ -25,17 +25,17 @@ RSpec.describe Forms::Application::SavingsInvestment do
         application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
       }
       context 'less' do
-        let(:hash) { { choice: 'less', min_threshold_exceeded: nil, amount: nil, over_61: nil, max_threshold_exceeded: nil } }
+        let(:hash) { { choice: 'less', min_threshold_exceeded: nil, amount: nil, over_66: nil, max_threshold_exceeded: nil } }
         it { is_expected.to be_valid }
       end
 
       context 'between' do
-        let(:hash) { { choice: 'between', min_threshold_exceeded: nil, amount: 5000, over_61: false, max_threshold_exceeded: nil } }
+        let(:hash) { { choice: 'between', min_threshold_exceeded: nil, amount: 5000, over_66: false, max_threshold_exceeded: nil } }
         it { is_expected.to be_valid }
       end
 
       context 'more' do
-        let(:hash) { { choice: 'more', min_threshold_exceeded: nil, amount: nil, over_61: nil, max_threshold_exceeded: nil } }
+        let(:hash) { { choice: 'more', min_threshold_exceeded: nil, amount: nil, over_66: nil, max_threshold_exceeded: nil } }
         it { is_expected.to be_valid }
       end
 
@@ -49,26 +49,26 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       describe 'when true' do
-        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold, over_61: false } }
+        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold, over_66: false } }
 
         it { is_expected.to be_valid }
       end
 
       describe 'when true and under min threshold' do
-        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold - 1, over_61: false } }
+        let(:hash) { { min_threshold_exceeded: true, amount: min_threshold - 1, over_66: false } }
 
         it { is_expected.not_to be_valid }
       end
 
       describe 'when something other than true of false' do
-        let(:hash) { { min_threshold_exceeded: 'blah', over_61: false } }
+        let(:hash) { { min_threshold_exceeded: 'blah', over_66: false } }
 
         it { is_expected.not_to be_valid }
       end
     end
 
     describe 'max_threshold_exceeded' do
-      let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_exceeded } }
+      let(:hash) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: max_exceeded } }
       let(:application) { create(:single_applicant_over_66) }
 
       describe 'is true' do
@@ -90,14 +90,14 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
     end
 
-    describe 'when min_threshold_exceeded and over_61 not set' do
-      let(:hash) { { min_threshold_exceeded: true, over_61: nil, amount: 100 } }
+    describe 'when min_threshold_exceeded and over_66 not set' do
+      let(:hash) { { min_threshold_exceeded: true, over_66: nil, amount: 100 } }
 
       it { is_expected.not_to be_valid }
     end
 
-    describe 'when min_threshold_exceeded and neither party over 61' do
-      let(:hash) { { min_threshold_exceeded: true, over_61: false, amount: amount } }
+    describe 'when min_threshold_exceeded and neither party over 66' do
+      let(:hash) { { min_threshold_exceeded: true, over_66: false, amount: amount } }
 
       describe 'amount' do
         describe 'is set above min_threshold' do
@@ -132,8 +132,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
     end
 
-    describe 'when min_threshold_exceeded and partner over 61' do
-      let(:hash) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: max_threshold } }
+    describe 'when min_threshold_exceeded and partner over 66' do
+      let(:hash) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: max_threshold } }
       let(:application) { create(:married_applicant_over_66) }
 
 
@@ -171,7 +171,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     let(:application) { create(:single_applicant_over_66) }
 
     context 'when attributes are correct' do
-      let(:params) { { min_threshold_exceeded: true, over_61: false, max_threshold_exceeded: false, amount: 3456 } }
+      let(:params) { { min_threshold_exceeded: true, over_66: false, max_threshold_exceeded: false, amount: 3456 } }
 
       it { is_expected.to be true }
 
@@ -205,19 +205,19 @@ RSpec.describe Forms::Application::SavingsInvestment do
       end
 
       context 'rounds down' do
-        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.23 } }
+        let(:params) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: false, amount: 10.23 } }
 
         it { expect(application.saving.amount.to_i).to be 10 }
       end
 
       context 'rounds up' do
-        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: 10.55 } }
+        let(:params) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: false, amount: 10.55 } }
 
         it { expect(application.saving.amount.to_i).to be 11 }
       end
 
       context 'no rounding for nil value' do
-        let(:params) { { min_threshold_exceeded: true, over_61: true, max_threshold_exceeded: false, amount: nil } }
+        let(:params) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: false, amount: nil } }
 
         it { expect(application.saving.amount.to_i).to be 0 }
       end

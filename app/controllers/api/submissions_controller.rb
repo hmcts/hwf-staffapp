@@ -26,7 +26,7 @@ module Api
         :married,
         :min_threshold_exceeded,
         :max_threshold_exceeded,
-        :over_61,
+        :over_66,
         :amount,
         :benefits,
         :children,

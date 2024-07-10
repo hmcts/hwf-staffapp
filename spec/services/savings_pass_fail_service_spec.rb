@@ -7,7 +7,7 @@ RSpec.describe SavingsPassFailService do
   let(:min_threshold_exceeded) { false }
   let(:max_threshold_exceeded) { false }
   let(:amount) { nil }
-  let(:over_61) { false }
+  let(:over_66) { false }
 
   let!(:application) { create(:application, fee: fee) }
   let!(:saving) do
@@ -15,7 +15,7 @@ RSpec.describe SavingsPassFailService do
            min_threshold_exceeded: min_threshold_exceeded,
            max_threshold_exceeded: max_threshold_exceeded,
            amount: amount,
-           over_61: over_61,
+           over_66: over_66,
            application: application)
   end
 
@@ -79,8 +79,8 @@ RSpec.describe SavingsPassFailService do
             it { is_expected.to be false }
           end
 
-          context 'over_61 is true' do
-            let(:over_61) { true }
+          context 'over_66 is true' do
+            let(:over_66) { true }
 
             context 'maximum threshold is not true' do
               let(:max_threshold_exceeded) { false }
@@ -116,7 +116,7 @@ RSpec.describe SavingsPassFailService do
   describe '#calculate_online_application' do
     let(:min_threshold_exceeded) { false }
     let(:max_threshold_exceeded) { false }
-    let(:over_61) { false }
+    let(:over_66) { false }
     let(:amount) { nil }
     let(:fee) { 100 }
 
@@ -126,7 +126,7 @@ RSpec.describe SavingsPassFailService do
             max_threshold_exceeded: max_threshold_exceeded,
             amount: amount,
             fee: fee,
-            over_61: over_61)
+            over_66: over_66)
     }
 
     let(:service) { described_class.new(Saving.new) }
@@ -156,7 +156,7 @@ RSpec.describe SavingsPassFailService do
       context 'when the saving is over min_threshold' do
         let(:min_threshold_exceeded) { true }
         let(:amount) { 3900 }
-        let(:over_61) { true }
+        let(:over_66) { true }
 
         it { is_expected.to be true }
       end
@@ -164,7 +164,7 @@ RSpec.describe SavingsPassFailService do
       context 'when the saving is over amount threshold' do
         let(:min_threshold_exceeded) { true }
         let(:amount) { 3000 }
-        let(:over_61) { false }
+        let(:over_66) { false }
 
         it { is_expected.to be false }
       end
