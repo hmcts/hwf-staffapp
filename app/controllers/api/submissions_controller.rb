@@ -42,6 +42,7 @@ module Api
         :form_name,
         :ni_number,
         :ho_number,
+        :partner_ni_number,
         :date_of_birth,
         :title,
         :first_name,
