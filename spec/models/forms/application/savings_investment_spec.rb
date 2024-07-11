@@ -170,7 +170,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
     let(:application) { create(:single_applicant_over_66) }
 
     context 'when attributes are correct' do
-      let(:params) { { min_threshold_exceeded: true, over_66: false, max_threshold_exceeded: false, amount: 3456 } }
+      let(:params) { { min_threshold_exceeded: true, over_66: true, max_threshold_exceeded: false, amount: 3456 } }
 
       it { is_expected.to be true }
 
