@@ -147,19 +147,19 @@ RSpec.describe Applicant do
     end
   end
 
-  describe '#over_61?' do
+  describe '#over_66?' do
     subject do
       Timecop.freeze(current_time) do
-        applicant.over_61?
+        applicant.over_66?
       end
     end
 
     let(:current_time) { Time.zone.parse('2016-03-04') }
-    let(:dob_over) { Time.zone.parse('1955-03-01') }
+    let(:dob_over) { Time.zone.parse('1940-03-01') }
     let(:dob_under) { Time.zone.parse('1965-03-01') }
     let(:applicant) { build(:applicant, application: application, date_of_birth: date_of_birth) }
 
-    context 'when the applicant is over 61 years old' do
+    context 'when The applicant is over 66 years old' do
       let(:date_of_birth) { dob_over }
 
       it { is_expected.to be true }
@@ -170,7 +170,7 @@ RSpec.describe Applicant do
       end
     end
 
-    context 'when the applicant is not over 61 years old' do
+    context 'when the applicant is not over 66 years old' do
       let(:date_of_birth) { dob_under }
 
       it { is_expected.to be false }

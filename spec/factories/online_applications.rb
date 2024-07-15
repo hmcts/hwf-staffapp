@@ -8,7 +8,7 @@ FactoryBot.define do
     married { false }
     min_threshold_exceeded { false }
     max_threshold_exceeded { nil }
-    over_61 { false }
+    over_66 { false }
     amount { nil }
     benefits { true }
     children { 0 }

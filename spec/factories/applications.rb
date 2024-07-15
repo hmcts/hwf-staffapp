@@ -202,28 +202,28 @@ FactoryBot.define do
       application_type { 'income' }
     end
 
-    factory :single_applicant_under_61 do
+    factory :single_applicant_under_66 do
       applicant_factory { :applicant_with_all_details }
-      applicant_traits { [:under_61] }
+      applicant_traits { [:under_66] }
     end
 
-    factory :single_applicant_over_61 do
+    factory :single_applicant_over_66 do
       applicant_factory { :applicant_with_all_details }
-      applicant_traits { [:over_61] }
+      applicant_traits { [:over_66] }
     end
 
-    factory :applicant_under_61, aliases: [:married_applicant_under_61] do
+    factory :married_applicant_over_66 do
       applicant_factory { :applicant_with_all_details }
-      applicant_traits { [:married, :under_61] }
+      applicant_traits { [:married, :over_66] }
     end
 
-    factory :married_applicant_over_61 do
+    factory :applicant_under_66, aliases: [:married_applicant_under_66] do
       applicant_factory { :applicant_with_all_details }
-      applicant_traits { [:married, :over_61] }
+      applicant_traits { [:married, :under_66] }
     end
 
-    trait :partner_over_61 do
-      partner_over_61 { true }
+    trait :partner_over_66 do
+      partner_over_66 { true }
     end
 
     after(:build) do |application, evaluator|

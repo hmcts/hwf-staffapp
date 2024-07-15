@@ -57,7 +57,7 @@ def fill_saving_and_investment
   click_button 'Next'
 end
 
-def fill_saving_exceeded_over_61
+def fill_saving_exceeded_over_66
   expect(page).to have_text 'Savings and investments'
   choose 'application_min_threshold_exceeded_true'
 

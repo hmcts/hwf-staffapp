@@ -1,6 +1,5 @@
 class OnlineApplication < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
-  alias_attribute :over_66, :over_61
 
   serialize :income_kind
   serialize :children_age_band
@@ -61,6 +60,10 @@ class OnlineApplication < ActiveRecord::Base
     return false if last_benefit_check.error_message.blank?
     last_benefit_check.dwp_result == 'Server unavailable' &&
       last_benefit_check.error_message.include?('The benefits checker is not available at the moment')
+  end
+
+  def notification_email
+    legal_representative_email.presence || email_address
   end
 
   private

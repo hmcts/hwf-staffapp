@@ -42,12 +42,11 @@ module Views
         @saving.choice == 'between' ? 'Yes' : 'No'
       end
 
-      def over_61
-        return nil if @saving.over_61.blank?
+      def over_66
+        return nil if @saving.over_66.blank?
         scope = 'activemodel.attributes.views/overview/savings_and_investments'
-        I18n.t(".over_61_#{@saving.over_61}", scope: scope)
+        I18n.t(".over_66_#{@saving.over_66}", scope: scope)
       end
-      alias over_66 over_61
 
       def show_ucd_changes?
         @saving.application.detail.calculation_scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
