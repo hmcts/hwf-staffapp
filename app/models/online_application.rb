@@ -62,6 +62,10 @@ class OnlineApplication < ActiveRecord::Base
       last_benefit_check.error_message.include?('The benefits checker is not available at the moment')
   end
 
+  def notification_email
+    legal_representative_email.presence || email_address
+  end
+
   private
 
   def online_applicant_attributes

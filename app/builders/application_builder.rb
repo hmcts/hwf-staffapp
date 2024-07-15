@@ -69,7 +69,8 @@ class ApplicationBuilder
 
   def online_applicant_attributes(online_application)
     fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number,
-              :ho_number, :married, :partner_first_name, :partner_last_name, :partner_date_of_birth, :over_16]
+              :ho_number, :married, :partner_ni_number, :partner_first_name,
+              :partner_last_name, :partner_date_of_birth, :over_16]
     prepare_attributes(fields, online_application)
   end
 

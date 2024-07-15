@@ -29,7 +29,14 @@ RSpec.describe MailService do
 
     end
 
-    describe 'when initialised with a OnlineApplication without a users email' do
+    describe 'when initialised with a OnlineApplication with legal rep email' do
+      let(:source_data) { build(:online_application, :confirm_online, legal_representative_email: 'tom@work.com') }
+      before { email }
+
+      it { expect(NotifyMailer).to have_received(:submission_confirmation_online) }
+    end
+
+    describe 'when initialised with a OnlineApplication without a user or legal rep email' do
       let(:source_data) { build(:online_application) }
 
       it { is_expected.to be false }
