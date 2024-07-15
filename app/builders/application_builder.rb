@@ -84,7 +84,7 @@ class ApplicationBuilder
   end
 
   def online_saving_attributes(online_application)
-    fields = [:min_threshold_exceeded, :max_threshold_exceeded, :over_61, :amount]
+    fields = [:min_threshold_exceeded, :max_threshold_exceeded, :over_66, :amount]
     {
       min_threshold: Settings.savings_threshold.minimum_value,
       max_threshold: Settings.savings_threshold.maximum_value

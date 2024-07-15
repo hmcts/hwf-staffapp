@@ -7,7 +7,7 @@ FactoryBot.define do
     amount { 3500 }
     passed { true }
     fee_threshold { 4000 }
-    over_61 { false }
+    over_66 { false }
 
     factory :saving_blank do
       min_threshold { nil }
@@ -17,7 +17,7 @@ FactoryBot.define do
       amount { nil }
       passed { nil }
       fee_threshold { nil }
-      over_61 { nil }
+      over_66 { nil }
     end
 
     factory :saving_with_amount do

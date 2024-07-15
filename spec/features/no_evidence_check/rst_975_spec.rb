@@ -33,7 +33,7 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
       click_button 'Next'
 
       fill_application_details
-      fill_saving_exceeded_over_61
+      fill_saving_exceeded_over_66
 
       click_button 'Complete processing'
 

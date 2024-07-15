@@ -3,8 +3,8 @@ Given("As a staff who is processing HwF paper application on the staff app,") do
   dashboard_page.process_application
 end
 
-And("The applicant is over 61 years old") do
-  personal_details_page.submit_required_personal_details_61
+And("The applicant is over 66 years old") do
+  personal_details_page.submit_required_personal_details_66
   application_details_page.submit_fee_600
 end
 
@@ -18,7 +18,7 @@ Then("I should see the question {string} with options {string} and {string}") do
   expect(page).to have_text(string3)
 end
 
-And("The applicant is under 61 years old") do
+And("The applicant is under 66 years old") do
   personal_details_page.submit_required_personal_details
   application_details_page.submit_fee_600
 end

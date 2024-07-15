@@ -358,8 +358,8 @@ en-GB:
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
         over_66: '66 or older'
-        over_61_true: 'Yes'
-        over_61_false: 'No'
+        over_66_true: 'Yes'
+        over_66_false: 'No'
         less_then: 'Less than £4,250'
         between: 'Between £4,250 and £15,999'
         more_then: 'More than £16,000'
@@ -604,15 +604,15 @@ en-GB:
         less_than_max: Less than £16,000
         more_than_max: £16,000 or more
         max_threshold_exceeded: In question 8, how much do they have?
-        partner_over_61: "In question 8, is the applicant's partner 61 or over?"
-        over_61_false: 'No'
-        over_61_true: 'Yes'
+        over_66_false: 'No'
+        over_66_true: 'Yes'
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
         choice_less_than: Less than £4,250
         choice_between: Between £4,250 and £15,999
         choice_more_than: £16,000 or more
         savings_amount: Total savings and investments
+        over_66: "Is the applicant 66 years or over?"
         partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
@@ -628,6 +628,7 @@ en-GB:
         income_hint: Rounded to the nearest £
         children_age_band_one: Children aged 0 to 13 years
         children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
+        children_age_band_single: 'In question 11, does the applicant financially support any children?'
         children_age_band_two: Children aged 14+ years
       forms/application/income:
         income: In question 13, what income has been entered?
@@ -862,10 +863,10 @@ en-GB:
           attributes:
             min_threshold_exceeded:
               inclusion: Please answer the savings question
-            over_61:
-              inclusion: Please confirm if the partner is 61 or over
             over_66:
               inclusion: Please confirm if the partner is 66 or over
+              not_over_66: Age selection does not match applicant Date of Birth entered
+              not_over_66_married: Age selection does not match applicant or partner Date of Birth entered
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number

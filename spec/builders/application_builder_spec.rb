@@ -227,7 +227,7 @@ RSpec.describe ApplicationBuilder do
       describe 'the saving' do
         subject(:built_saving) { built_application.saving }
 
-        [:min_threshold_exceeded, :max_threshold_exceeded, :amount, :over_61].each do |column|
+        [:min_threshold_exceeded, :max_threshold_exceeded, :amount, :over_66].each do |column|
           it "has #{column} assigned" do
             expect(built_saving.public_send(column)).to eql(online_application.public_send(column))
           end

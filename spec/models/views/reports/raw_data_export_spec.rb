@@ -63,10 +63,10 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant2) { none_ec.applicant }
     let(:applicant3) { full_no_ec.applicant }
     let(:dob) { 30.years.ago }
-    let(:over_61) { false }
+    let(:over_66) { false }
     let(:date_received) { Time.zone.today }
     let(:date_online_received) { Time.zone.today }
-    let(:partner_over_61) { nil }
+    let(:partner_over_66) { nil }
     let(:online_application) { create(:online_application, created_at: date_online_received) }
 
     before {
@@ -129,7 +129,7 @@ RSpec.describe Views::Reports::RawDataExport do
              online_application: online_application, children_age_band: { one: 1, two: 2 }, saving: none_ec_saving)
     }
     let(:none_ec_detail) { create(:complete_detail, :applicant, case_number: 'JK123555F', fee: 300.34, date_received: date_received, jurisdiction: business_entity.jurisdiction) }
-    let(:none_ec_saving) { create(:saving, over_61: over_61) }
+    let(:none_ec_saving) { create(:saving, over_66: over_66) }
 
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
@@ -208,8 +208,8 @@ RSpec.describe Views::Reports::RawDataExport do
 
       end
 
-      context 'over_61' do
-        let(:over_61) { true }
+      context 'over_66' do
+        let(:over_66) { true }
         # it matters what they choose not dob filled
         let(:dob) { 60.years.ago }
 

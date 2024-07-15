@@ -17,12 +17,12 @@ FactoryBot.define do
       ho_number { 'L1234567/1' }
     end
 
-    trait :under_61 do
-      date_of_birth { Time.zone.today - 60.years }
+    trait :under_66 do
+      date_of_birth { Time.zone.today - 65.years }
     end
 
-    trait :over_61 do
-      date_of_birth { Time.zone.today - 65.years }
+    trait :over_66 do
+      date_of_birth { Time.zone.today - 70.years }
     end
   end
 end
