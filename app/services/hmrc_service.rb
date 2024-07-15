@@ -9,7 +9,6 @@ class HmrcService
   def call
     applicant_call = api_call
     partner_call = api_call('partner') if applicant_married?
-    binding.pry
     applicant_call || partner_call
   rescue HwfHmrcApiError => e
     process_standard_error(e)
@@ -48,7 +47,6 @@ class HmrcService
   def api_call(check_type = 'applicant')
     @hmrc_service = HmrcApiService.new(@application, @form.user_id, check_type)
     @hmrc_service.match_user
-    binding.pry
     @hmrc_service.income(@form.from_date, @form.to_date)
     @hmrc_check = @hmrc_service.hmrc_check
   end
