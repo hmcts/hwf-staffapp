@@ -90,8 +90,23 @@ module Evidence
     def check_hmrc_data
       @hmrc_check.errors.add(:hmrc, @hmrc_check.error_response) unless entitlement_check
 
-      return if @hmrc_check.total_income != 0
-      message = I18n.t('hmrc_summary.no_income')
+      applicant_data_check
+      partner_data_check
+    end
+
+    def applicant_data_check
+      applicant_check = @evidence.applicant_hmrc_check
+
+      return if applicant_check.total_income != 0
+      message = I18n.t('hmrc_summary.no_income_applicant')
+      @hmrc_check.errors.add(:income_calculation, message)
+    end
+
+    def partner_data_check
+      partner_check = @evidence.partner_hmrc_check
+      return if partner_check.blank? || partner_check.total_income != 0
+
+      message = I18n.t('hmrc_summary.no_income_partner')
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
