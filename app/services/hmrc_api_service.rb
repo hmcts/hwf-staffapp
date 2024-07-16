@@ -80,7 +80,7 @@ class HmrcApiService
   def store_response_data(type, data)
     @hmrc_check.send(:"#{type}=", data.send(:[], type))
     @hmrc_check.save
-    raise HwfHmrcApiError, "NO RESULT - No record found" if data.send(:[], type).blank?
+    raise_error_if_no_data(type, data)
   end
 
   # TODO: whitelist credentials from logs
@@ -112,6 +112,11 @@ class HmrcApiService
   def hmrc_call(call_params, endpoint)
     call = HmrcCall.create(call_params: call_params, endpoint_name: endpoint, hmrc_check: @hmrc_check)
     call.id
+  end
+
+  def raise_error_if_no_data(type, data)
+    return if @hmrc_check.check_type == 'partner'
+    raise HwfHmrcApiError, "NO RESULT - No record found" if data.send(:[], type).blank?
   end
 
 end
