@@ -27,4 +27,10 @@ class EvidenceCheck < ActiveRecord::Base
   def hmrc_check
     hmrc_checks.applicant.order('created_at asc').last
   end
+  alias applicant_hmrc_check hmrc_check
+
+  def partner_hmrc_check
+    hmrc_checks.partner.order('created_at asc').last
+  end
+
 end
