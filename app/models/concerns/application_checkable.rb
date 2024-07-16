@@ -16,7 +16,7 @@ module ApplicationCheckable
   private
 
   def applicant_valid_for_check?
-    !applicant.married && applicant.ni_number.present?
+    applicant.ni_number.present?
   end
 
   def hmrc_office_match?
