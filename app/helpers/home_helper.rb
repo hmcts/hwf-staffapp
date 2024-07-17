@@ -112,6 +112,6 @@ module HomeHelper
   end
 
   def hmrc_check_link?(application)
-    application.evidence_check.hmrc? && application.income_period != 'average'
+    application.evidence_check.hmrc?
   end
 end
