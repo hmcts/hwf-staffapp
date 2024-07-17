@@ -71,6 +71,6 @@ module OnlineApplicationHelper
   end
 
   def disable_claim_type?
-    current_user.jurisdiction.display.downcase != "county"
+    current_user.jurisdiction.display&.downcase != "county"
   end
 end
