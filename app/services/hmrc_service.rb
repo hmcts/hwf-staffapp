@@ -8,7 +8,7 @@ class HmrcService
 
   def call
     applicant_call = api_call
-    partner_call = api_call('partner') if applicant_married?
+    partner_call = api_call('partner') if applicant_married? && partner_valid_for_check?
     applicant_call || partner_call
   rescue HwfHmrcApiError => e
     process_standard_error(e)
@@ -82,6 +82,13 @@ class HmrcService
 
   def applicant_married?
     @application.applicant.married?
+  end
+
+  def partner_valid_for_check?
+    @application.applicant.partner_ni_number.present? &&
+      @application.applicant.partner_first_name.present? &&
+      @application.applicant.partner_last_name.present? &&
+      @application.applicant.partner_date_of_birth.present?
   end
 
 end

@@ -95,6 +95,78 @@ describe HmrcService do
       end
     end
 
+    context 'married without NINO' do
+      let(:applicant) {
+        build(:applicant,
+              date_of_birth: DateTime.new(1968, 2, 28),
+              ni_number: 'AB123456C',
+              first_name: 'Jimmy',
+              last_name: 'Conners',
+              application: application,
+              married: true,
+              partner_first_name: "Jane",
+              partner_last_name: "Conners",
+              partner_ni_number: "",
+              partner_date_of_birth: DateTime.new(2000, 2, 2))
+      }
+
+      it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+    end
+
+    context 'married without first name' do
+      let(:applicant) {
+        build(:applicant,
+              date_of_birth: DateTime.new(1968, 2, 28),
+              ni_number: 'AB123456C',
+              first_name: 'Jimmy',
+              last_name: 'Conners',
+              application: application,
+              married: true,
+              partner_first_name: "",
+              partner_last_name: "Conners",
+              partner_ni_number: "SN741258C",
+              partner_date_of_birth: DateTime.new(2000, 2, 2))
+      }
+
+      it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+    end
+
+    context 'married without last name' do
+      let(:applicant) {
+        build(:applicant,
+              date_of_birth: DateTime.new(1968, 2, 28),
+              ni_number: 'AB123456C',
+              first_name: 'Jimmy',
+              last_name: 'Conners',
+              application: application,
+              married: true,
+              partner_first_name: "Jane",
+              partner_last_name: "",
+              partner_ni_number: "SN741258C",
+              partner_date_of_birth: DateTime.new(2000, 2, 2))
+      }
+
+      it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+    end
+
+    context 'married without DOB' do
+      let(:applicant) {
+        build(:applicant,
+              date_of_birth: DateTime.new(1968, 2, 28),
+              ni_number: 'AB123456C',
+              first_name: 'Jimmy',
+              last_name: 'Conners',
+              application: application,
+              married: true,
+              partner_first_name: "Jane",
+              partner_last_name: "Conners",
+              partner_ni_number: "SN741258C",
+              partner_date_of_birth: nil)
+      }
+
+      it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+    end
+
     it "calls match_user" do
       expect(api_service).to have_received(:match_user)
     end
@@ -123,7 +195,6 @@ describe HmrcService do
       it 'saves the error' do
         expect(hmrc_check).to have_received(:update).with({ error_response: 'Error message' })
       end
-
     end
 
     context 'fail - timeout' do
