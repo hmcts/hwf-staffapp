@@ -18,8 +18,10 @@ describe HmrcApiService do
            partner_first_name: "Jane",
            partner_last_name: "Conners",
            partner_ni_number: "SN741258C",
-           partner_date_of_birth: DateTime.new(2000, 2, 2))
+           partner_date_of_birth: DateTime.new(2000, 2, 2),
+           married: married)
   }
+  let(:married) { false }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:hmrc_api_authentication) { instance_double(HwfHmrcApi::Authentication, access_token: 1, expires_in: 1) }
   let(:hmrc_call) { instance_double(HmrcCall, id: correlation_id) }
@@ -227,6 +229,16 @@ describe HmrcApiService do
         it 'employments' do
           allow(hmrc_api).to receive(:employments).and_return('employment' => [])
           expect { service.employment('2020-02-28', '2020-03-30') }.to raise_error(an_instance_of(HwfHmrcApiError))
+        end
+
+        context 'married' do
+          let(:married) { true }
+          it 'no error raised' do
+            allow(hmrc_api).to receive_messages(paye: { 'income' => [] }, child_tax_credits: { 'child_tax_credits' => [] }, working_tax_credits: { 'working_tax_credits' => [] })
+
+            service.income('2020-02-28', '2020-03-30')
+            expect(service.hmrc_check.income).to eq []
+          end
         end
       end
     end
