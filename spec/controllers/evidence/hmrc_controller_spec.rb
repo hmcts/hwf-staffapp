@@ -199,8 +199,8 @@ RSpec.describe Evidence::HmrcController do
 
       before do
         allow(evidence).to receive_messages(applicant_hmrc_check: applicant_hmrc_check, partner_hmrc_check: partner_hmrc_check)
-        allow(applicant_hmrc_check).to receive(:total_income).and_return applicant_income
-        allow(partner_hmrc_check).to receive(:total_income).and_return partner_income
+        allow(applicant_hmrc_check).to receive(:hmrc_income).and_return applicant_income
+        allow(partner_hmrc_check).to receive(:hmrc_income).and_return partner_income
       end
 
       context 'success' do
@@ -230,7 +230,7 @@ RSpec.describe Evidence::HmrcController do
 
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive_messages(total_income: 0, errors: errors)
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
 
           allow(errors).to receive(:add)
           sign_in user
@@ -258,7 +258,7 @@ RSpec.describe Evidence::HmrcController do
         let(:errors) { instance_double(ActiveModel::Errors) }
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive_messages(total_income: 0, errors: errors)
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
 
           allow(errors).to receive(:add)
           sign_in user
@@ -286,12 +286,12 @@ RSpec.describe Evidence::HmrcController do
         let(:errors) { instance_double(ActiveModel::Errors) }
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive_messages(total_income: 0, errors: errors)
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
 
           allow(evidence).to receive_messages(applicant_hmrc_check: applicant_hmrc_check, partner_hmrc_check: nil)
 
-          allow(applicant_hmrc_check).to receive(:total_income).and_return 100
-          allow(partner_hmrc_check).to receive(:total_income).and_return 0
+          allow(applicant_hmrc_check).to receive(:hmrc_income).and_return 100
+          allow(partner_hmrc_check).to receive(:hmrc_income).and_return 0
 
           allow(errors).to receive(:add)
           sign_in user
@@ -348,7 +348,7 @@ RSpec.describe Evidence::HmrcController do
           sign_in user
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
           allow(hmrc_check).to receive(:update).and_return update_return
-          allow(hmrc_check).to receive(:calculate_evidence_income!)
+          allow(evidence).to receive(:calculate_evidence_income!)
           put :update, params: put_params
         end
 
@@ -360,7 +360,7 @@ RSpec.describe Evidence::HmrcController do
           end
 
           it 'trigger calculate_evidence_income' do
-            expect(hmrc_check).to have_received(:calculate_evidence_income!)
+            expect(evidence).to have_received(:calculate_evidence_income!)
           end
 
           describe 'reset the value if the answer is no' do
@@ -377,7 +377,7 @@ RSpec.describe Evidence::HmrcController do
           it { expect(response).to render_template('show') }
 
           it 'do not trigger calculate_evidence_income' do
-            expect(hmrc_check).not_to have_received(:calculate_evidence_income!)
+            expect(evidence).not_to have_received(:calculate_evidence_income!)
           end
 
         end
