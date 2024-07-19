@@ -1,19 +1,6 @@
 module HmrcCheckHelper
   def total_income(evidence)
-    applicant_income = applicant_total_income(evidence)
-    partner_income = partner_total_income(evidence)
-
-    number_to_currency(applicant_income + partner_income, precision: 2).gsub('.00', '')
-  end
-
-  def applicant_total_income(evidence)
-    income = evidence.applicant_hmrc_check.try(:total_income)
-    income.presence || 0
-  end
-
-  def partner_total_income(evidence)
-    income = evidence.partner_hmrc_check.try(:total_income)
-    income.presence || 0
+    number_to_currency(evidence.total_income, precision: 2).gsub('.00', '')
   end
 
   def additional_income(hmrc_check)
