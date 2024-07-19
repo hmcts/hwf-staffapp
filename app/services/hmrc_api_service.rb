@@ -115,8 +115,13 @@ class HmrcApiService
   end
 
   def raise_error_if_no_data(type, data)
-    return if @hmrc_check.check_type == 'partner'
+    # don't fail if married
+    return if married?
     raise HwfHmrcApiError, "NO RESULT - No record found" if data.send(:[], type).blank?
+  end
+
+  def married?
+    @application.applicant.married
   end
 
 end
