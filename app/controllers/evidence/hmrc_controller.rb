@@ -30,7 +30,7 @@ module Evidence
       @form = Forms::Evidence::HmrcCheck.new(@hmrc_check)
       authorize evidence
       if additional_income_updated?
-        @hmrc_check.calculate_evidence_income!
+        @evidence.calculate_evidence_income!
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
         render :show
@@ -97,14 +97,14 @@ module Evidence
     def applicant_data_check
       applicant_check = @evidence.applicant_hmrc_check
 
-      return if applicant_check.total_income != 0
+      return if applicant_check.hmrc_income != 0
       message = I18n.t('hmrc_summary.no_income_applicant')
       @hmrc_check.errors.add(:income_calculation, message)
     end
 
     def partner_data_check
       partner_check = @evidence.partner_hmrc_check
-      return if partner_check.blank? || partner_check.total_income != 0
+      return if partner_check.blank? || partner_check.hmrc_income != 0
 
       message = I18n.t('hmrc_summary.no_income_partner')
       @hmrc_check.errors.add(:income_calculation, message)
