@@ -1,7 +1,7 @@
 module EvidenceCheckHelper
   SECTION_TO_INCOME_KIND_MAPPING = {
-    'wages' => ["Wages before tax and National Insurance are taken off", "Net profits from self employment", "Pensions (state, work, private)",
-                "Pensions (state, work, private, pension credit (savings credit))"],
+    'wages' => ["Wages before tax and National Insurance are taken off", "Net profits from self employment",
+                "Pensions (state, work, private)", "Pensions (state, work, private, pension credit (savings credit))"],
     'child_maintenance' => ["Maintenance payments"],
     'rental' => ["Rent from anyone living with the applicant", "Rent from other properties the applicant owns",
                  "Rent from anyone living with the partner", "Rent from other properties the partner owns",
