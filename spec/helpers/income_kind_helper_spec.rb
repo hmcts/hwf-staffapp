@@ -10,7 +10,7 @@ RSpec.describe IncomeKindHelper do
     end
 
     context 'when application has kind' do
-      let(:application) { build_stubbed(:application, income_kind: { applicant: ['Wages'] }) }
+      let(:application) { build_stubbed(:application, income_kind: { applicant: ['Wages before tax and National Insurance are taken off'] }) }
       let(:form) { Forms::Application::IncomeKindApplicant }
       let(:claimant) { :applicant }
       let(:kind) { 1 }
