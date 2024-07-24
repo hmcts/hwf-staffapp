@@ -638,7 +638,7 @@ en-GB:
       forms/application/income_kind_applicant:
         income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
         kinds:
-          '1': Wages
+          '1': Wages before tax and National Insurance are taken off
           '2': Net profits from self employment
           '3': Child benefit
           '4': Working Tax Credit
@@ -658,7 +658,7 @@ en-GB:
       forms/application/income_kind_partner:
         income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
         kinds:
-          '1': Wages
+          '1': Wages before tax and National Insurance are taken off
           '2': Net profits from self employment
           '3': Child benefit
           '4': Working Tax Credit
