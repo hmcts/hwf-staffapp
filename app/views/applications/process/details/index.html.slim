@@ -1,6 +1,8 @@
 - content_for :page_title
   = "Application details"
 
+- county_jurisdiction_id = @jurisdictions.find { |j| j.name == 'County' }.id
+
 = form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -25,7 +27,7 @@
               = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error'
           = f.hidden_field :jurisdiction_id, value: nil
           - if @jurisdictions.present?
-            .govuk-radios.govuk-radios--small
+            .govuk-radios.govuk-radios--small#jurisdiction_radios
               =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
                 .govuk-radios__item
                   = b.radio_button(data: @form.jurisdiction_id, class: 'govuk-radios__input')
@@ -66,7 +68,7 @@
               = f.label :form_type, @form.errors[:form_type].join(', '), class: 'error'
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_n1', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' , data: { section: 'claim-type', show: 'true'}, disabled: disable_claim_type? }
+              = f.radio_button :form_type, t('form_type_n1', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'form_type_n1_radio', data: { section: 'claim-type', show: 'true'} }
               = f.label "#{t('form_type_n1', scope: @form.i18n_scope)}", class: 'govuk-label govuk-radios__label', for: 'application_form_type_n1_part_7_claim'
             #claim-type-only.start-hidden
               .panel-indent
@@ -85,7 +87,7 @@
                       = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
                       = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_personal_injury'
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', data: { section: 'name-of-form', show: 'true'}, checked: disable_claim_type? }
+              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true'} }
               = f.label t('form_type_other', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_form_type_other'
 
       #name-of-form-only.start-hidden
@@ -253,3 +255,41 @@
 
         p = link_to 'What to do if the application can’t be processed before the emergency application is heard', new_process_application_url, target: 'blank'
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+javascript:
+    document.addEventListener('DOMContentLoaded', function () {
+        let countyJurisdictionId = #{county_jurisdiction_id};
+        const jurisdictionRadios = document.querySelectorAll('#jurisdiction_radios input[name="application[jurisdiction_id]"]');
+        const countyJurisdictionElement = document.querySelector(`#application_jurisdiction_id_${countyJurisdictionId}`);
+        const formTypeN1Radio = document.querySelector('#form_type_n1_radio');
+        const otherRadio = document.querySelector('#other_radio')
+        const applicationClaimTypeSpecified = document.querySelector('#application_claim_type_specified')
+        const applicationClaimTypeUnspecified = document.querySelector('#application_claim_type_unspecified')
+        const applicationClaimTypePersonalInjury = document.querySelector('#application_claim_type_personal_injury')
+
+        function toggleClaimType() {
+            if (countyJurisdictionElement.checked) {
+                formTypeN1Radio.disabled = false
+                otherRadio.checked = false
+                applicationClaimTypeSpecified.disabled = false
+                applicationClaimTypeUnspecified.disabled = false
+                applicationClaimTypePersonalInjury.disabled = false
+            } else {
+                formTypeN1Radio.disabled = true
+                otherRadio.checked = true
+                applicationClaimTypeSpecified.disabled = true
+                applicationClaimTypeUnspecified.disabled = true
+                applicationClaimTypePersonalInjury.disabled = true
+                applicationClaimTypeSpecified.checked = false
+                applicationClaimTypeUnspecified.checked = false
+                applicationClaimTypePersonalInjury.checked = false
+            }
+        }
+
+        jurisdictionRadios.forEach(function (radio) {
+            radio.addEventListener('change', toggleClaimType);
+        });
+
+        toggleClaimType(); // Initial check on page load
+    });
+
