@@ -69,8 +69,4 @@ module OnlineApplicationHelper
     flash[:alert] = t('application_redirect.discretion_not_applied', reference: online_application.reference)
     redirect_to root_url
   end
-
-  def disable_claim_type?
-    current_user.jurisdiction.display&.downcase != "county"
-  end
 end
