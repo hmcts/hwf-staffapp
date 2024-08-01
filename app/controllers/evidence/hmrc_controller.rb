@@ -7,6 +7,7 @@ module Evidence
       authorize evidence
       check_hmrc_data
       prepulated_additional_income
+      add_missing_partner_data_message if hmrc_service.display_partner_data_missing_for_check?
       render :show
     end
 
@@ -106,6 +107,11 @@ module Evidence
       partner_check = @evidence.partner_hmrc_check
       return if partner_check.blank? || partner_check.hmrc_income != 0
 
+      message = I18n.t('hmrc_summary.no_income_partner')
+      @hmrc_check.errors.add(:income_calculation, message)
+    end
+
+    def add_missing_partner_data_message
       message = I18n.t('hmrc_summary.no_income_partner')
       @hmrc_check.errors.add(:income_calculation, message)
     end
