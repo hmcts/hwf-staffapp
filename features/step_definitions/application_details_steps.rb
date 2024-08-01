@@ -20,7 +20,7 @@ Then(/^I should see enter a valid name of form error message$/) do
 end
 
 When(/^I submit the form with a help with fees name of form '(.+?)'$/) do |num|
-  application_details_page.content.form_type_other.click
+  choose('other_radio', allow_label_click: true)
   application_details_page.content.form_input.set num
   application_details_page.click_next
 end
