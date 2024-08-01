@@ -19,7 +19,7 @@ def application_details
   fill_in 'application_day_date_received', with: date_received.day
   fill_in 'application_month_date_received', with: date_received.month
   fill_in 'application_year_date_received', with: date_received.year
-  choose 'Other'
+  select_other_application
   fill_in 'application_form_name', with: 'ABC123'
   click_button 'Next'
 end
@@ -39,6 +39,10 @@ def drive_to_the_benefits_page
   application_details
   savings_and_investments
   benefits_page
+end
+
+def select_other_application
+  choose('other_radio')
 end
 
 RSpec.feature 'When benefits checker result is "Undetermined"' do

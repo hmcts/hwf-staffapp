@@ -186,5 +186,5 @@ def fill_in_date_fee_paid(date_fee_paid)
 end
 
 def select_other_application
-  choose "Other"
+  choose('other_radio')
 end

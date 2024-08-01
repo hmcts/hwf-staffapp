@@ -36,7 +36,7 @@ module ApplicationFormMacros
 
   def complete_application_details_optionals(detail)
     fill_in 'application_form_name', with: detail.form_name if detail.form_name.present?
-    choose 'Other'
+    select_other_application
     fill_in 'application_case_number', with: detail.case_number if detail.case_number.present?
   end
 
@@ -44,5 +44,9 @@ module ApplicationFormMacros
     fill_in 'Day', with: dob.day, id: 'application_day_date_of_birth'
     fill_in 'Month', with: dob.month, id: 'application_month_date_of_birth'
     fill_in 'Year', with: dob.year, id: 'application_year_date_of_birth'
+  end
+
+  def select_other_application
+    choose('other_radio')
   end
 end
