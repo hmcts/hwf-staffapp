@@ -204,8 +204,12 @@ RSpec.describe Evidence::HmrcController do
       end
 
       context 'success' do
+        let(:hmrc_service) { instance_double(HmrcService, display_partner_data_missing_for_check?: no_partner_check) }
+        let(:no_partner_check) { true }
+
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(HmrcService).to receive(:new).and_return hmrc_service
           sign_in user
           get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
         end
@@ -220,6 +224,21 @@ RSpec.describe Evidence::HmrcController do
 
         it 'load check' do
           expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
+
+        context 'unable to check partner data' do
+          it 'add error message' do
+            expect(hmrc_service).to have_received(:display_partner_data_missing_for_check?)
+            expect(assigns(:hmrc_check).errors.any?).to be true
+          end
+        end
+
+        context 'able to check partner data' do
+          let(:no_partner_check) { false }
+          it 'do not add error message' do
+            expect(hmrc_service).to have_received(:display_partner_data_missing_for_check?)
+            expect(assigns(:hmrc_check).errors.any?).to be false
+          end
         end
       end
 
