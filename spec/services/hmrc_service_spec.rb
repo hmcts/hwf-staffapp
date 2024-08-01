@@ -8,13 +8,15 @@ describe HmrcService do
   let(:evidence_check) { create(:evidence_check, application: application) }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to', user_id: 256) }
+  let(:married) { false }
   let(:applicant) {
     create(:applicant,
            date_of_birth: DateTime.new(1968, 2, 28),
            ni_number: 'AB123456C',
            first_name: 'Jimmy',
            last_name: 'Conners',
-           application: application)
+           application: application,
+           married: married)
   }
 
   let(:api_service) { instance_double(HmrcApiService) }
@@ -39,6 +41,11 @@ describe HmrcService do
       expect(form).to have_received(:to_date_day=).with(30)
       expect(form).to have_received(:to_date_month=).with(4)
       expect(form).to have_received(:to_date_year=).with(2021)
+    end
+
+    context 'single' do
+      before { applicant }
+      it { expect(service.display_partner_data_missing_for_check?).to be false }
     end
 
     context 'refund applicaiton' do
@@ -85,6 +92,7 @@ describe HmrcService do
       }
 
       it { expect(HmrcApiService).to have_received(:new).with(application, 256, 'partner') }
+      it { expect(service.display_partner_data_missing_for_check?).to be false }
 
       it "load income" do
         expect(api_service).to have_received(:income).with('from', 'to').twice
@@ -111,6 +119,7 @@ describe HmrcService do
       }
 
       it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+      it { expect(service.display_partner_data_missing_for_check?).to be true }
     end
 
     context 'married without first name' do
@@ -129,6 +138,7 @@ describe HmrcService do
       }
 
       it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+      it { expect(service.display_partner_data_missing_for_check?).to be true }
     end
 
     context 'married without last name' do
@@ -147,6 +157,7 @@ describe HmrcService do
       }
 
       it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+      it { expect(service.display_partner_data_missing_for_check?).to be true }
     end
 
     context 'married without DOB' do
@@ -165,6 +176,7 @@ describe HmrcService do
       }
 
       it { expect(HmrcApiService).not_to have_received(:new).with(application, 256, 'partner') }
+      it { expect(service.display_partner_data_missing_for_check?).to be true }
     end
 
     it "calls match_user" do

@@ -42,6 +42,10 @@ class HmrcService
     @form.save
   end
 
+  def display_partner_data_missing_for_check?
+    applicant_married? && !partner_valid_for_check?
+  end
+
   private
 
   def api_call(check_type = 'applicant')
