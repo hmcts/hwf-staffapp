@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/ClassLength
 class ApplicationDetailsPage < BasePage
   set_url_matcher %r{/applications/[0-9]+/details}
 
