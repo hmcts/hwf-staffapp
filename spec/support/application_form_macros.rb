@@ -26,7 +26,7 @@ module ApplicationFormMacros
   def complete_application_details(application)
     detail = application.detail
     fill_in 'application_fee', with: 300, wait: true
-    find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
+    find(:xpath, '(//input[starts-with(@id,"jurisdiction_")])[1]').click
     date_received = Time.zone.yesterday
     fill_in 'application_day_date_received', with: date_received.day
     fill_in 'application_month_date_received', with: date_received.month

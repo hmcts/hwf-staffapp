@@ -15,7 +15,7 @@ end
 def application_details
   date_received = Time.zone.today
   fill_in 'application_fee', with: 410, wait: true
-  find(:xpath, '(//input[starts-with(@id,"application_jurisdiction_id_")])[1]').click
+  find(:xpath, '(//input[starts-with(@id,"jurisdiction_")])[1]').click
   fill_in 'application_day_date_received', with: date_received.day
   fill_in 'application_month_date_received', with: date_received.month
   fill_in 'application_year_date_received', with: date_received.year
