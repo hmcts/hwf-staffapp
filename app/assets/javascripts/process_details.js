@@ -19,7 +19,7 @@ window.moj.Modules.JurisdictionModule = {
     },
 
     toggleClaimType: function() {
-        const countyJurisdictionElement = document.querySelector(`#application_jurisdiction_id_${this.countyJurisdictionId}`);
+        const countyJurisdictionElement = document.querySelector(`#jurisdiction_${this.countyJurisdictionId}`);
 
         const formTypeN1Radio = document.querySelector('#form_type_n1_radio');
         const otherRadio = document.querySelector('#other_radio');

@@ -94,7 +94,7 @@ class ApplicationDetailsPage < BasePage
     fill_in('How much is the court or tribunal fee?', with: '100')
     content.jurisdiction.click
     date_application_received
-    choose('other_radio', allow_label_click: true)
+    choose_other_radio_button
     content.form_input.set 'C100'
     click_next
   end
@@ -134,7 +134,7 @@ class ApplicationDetailsPage < BasePage
     fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
     content.jurisdiction.click
     date_application_received
-    choose('other_radio', allow_label_click: true)
+    choose_other_radio_button
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
     refund_case_with_valid_date
