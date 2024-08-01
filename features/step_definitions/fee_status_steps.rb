@@ -102,7 +102,7 @@ Then('I should be taken to the incomes type page') do
 end
 
 When('I choose wages') do
-  expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages')
+  expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages before tax and National Insurance are taken off')
   income_kind_applicant_page.content.checkboxes[0].click
   income_kind_applicant_page.content.next.click
 end
