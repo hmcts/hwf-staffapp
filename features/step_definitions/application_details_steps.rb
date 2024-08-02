@@ -16,6 +16,7 @@ When(/^I submit the form without a name of form$/) do
 end
 
 Then(/^I should see enter a valid name of form error message$/) do
+  application_details_page.choose_other_radio_button
   expect(application_details_page.content).to have_form_error_message
 end
 
