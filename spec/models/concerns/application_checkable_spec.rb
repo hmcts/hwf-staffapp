@@ -113,9 +113,9 @@ describe ApplicationCheckable do
       it { expect(application.hmrc_check_type?).to be true }
     end
 
-    context 'married applicant' do
+    context 'married applicant allowed for HMRC now' do
       let(:married) { true }
-      it { expect(application.hmrc_check_type?).to be false }
+      it { expect(application.hmrc_check_type?).to be true }
     end
 
     context 'digital application' do

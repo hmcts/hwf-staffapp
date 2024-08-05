@@ -40,6 +40,10 @@ module Views
         IncomeThresholds.new(@application.applicant.married, @application.children)
       end
 
+      def married?
+        @application.applicant.married
+      end
+
     end
   end
 end
