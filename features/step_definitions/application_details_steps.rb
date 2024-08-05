@@ -27,6 +27,7 @@ When(/^I submit the form with a help with fees name of form '(.+?)'$/) do |num|
 end
 
 Then(/^I should see you entered the help with fees name of form error message$/) do
+  application_details_page.choose_other_radio_button
   expect(application_details_page.content).to have_invalid_form_number_message
 end
 

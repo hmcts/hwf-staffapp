@@ -22,6 +22,7 @@ window.moj.Modules.JurisdictionModule = {
         const countyJurisdictionElement = document.querySelector(`#jurisdiction_${this.countyJurisdictionId}`);
 
         const formTypeN1Radio = document.querySelector('#form_type_n1_radio');
+        const otherRadioRadio = document.querySelector('#other_radio');
         const claimTypes = [
             document.querySelector('#application_claim_type_specified'),
             document.querySelector('#application_claim_type_unspecified'),
@@ -33,10 +34,9 @@ window.moj.Modules.JurisdictionModule = {
 
         claimTypes.forEach(claimType => {
             claimType.disabled = !isCountyJurisdiction;
-            if (!isCountyJurisdiction) {
-                claimType.checked = false;
-                formTypeN1Radio.checked = false;
-            }
+            claimType.checked = false;
         });
+        formTypeN1Radio.checked = false;
+        otherRadioRadio.checked = false;
     }
 };
