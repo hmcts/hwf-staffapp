@@ -33,7 +33,10 @@ window.moj.Modules.JurisdictionModule = {
 
         claimTypes.forEach(claimType => {
             claimType.disabled = !isCountyJurisdiction;
-            if (!isCountyJurisdiction) claimType.checked = false;
+            if (!isCountyJurisdiction) {
+                claimType.checked = false;
+                formTypeN1Radio.checked = false;
+            }
         });
     }
 };
