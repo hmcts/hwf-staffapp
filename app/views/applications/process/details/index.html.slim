@@ -66,7 +66,7 @@
               = f.label :form_type, @form.errors[:form_type].join(', '), class: 'error'
           .govuk-radios.govuk-radios--small
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_n1', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'form_type_n1_radio', data: { section: 'claim-type', show: 'true'} }
+              = f.radio_button :form_type, t('form_type_n1', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'form_type_n1_radio', data: { section: 'claim-type', show: 'true'}, checked: @form.form_type == t('form_type_n1', scope: @form.i18n_scope) }
               = f.label "#{t('form_type_n1', scope: @form.i18n_scope)}", class: 'govuk-label govuk-radios__label', for: 'form_type_n1_radio'
             #claim-type-only.start-hidden
               .panel-indent
@@ -76,16 +76,16 @@
                       = f.label :claim_type, @form.errors[:claim_type].join(', '), class: 'error'
                   .govuk-radios.govuk-radios--small
                     .govuk-radios__item
-                      = f.radio_button :claim_type, t('claim_type_specified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
+                      = f.radio_button :claim_type, t('claim_type_specified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', checked: @form.claim_type == t('claim_type_specified', scope: @form.i18n_scope) }
                       = f.label t('claim_type_specified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_specified'
                     .govuk-radios__item
-                      = f.radio_button :claim_type, t('claim_type_unspecified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
+                      = f.radio_button :claim_type, t('claim_type_unspecified', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', checked: @form.claim_type == t('claim_type_unspecified', scope: @form.i18n_scope) }
                       = f.label t('claim_type_unspecified', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_unspecified'
                     .govuk-radios__item
-                      = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section' }
+                      = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', checked: @form.claim_type == t('claim_type_personal_injury', scope: @form.i18n_scope) }
                       = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_personal_injury'
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true'} }
+              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true'}, checked: @form.form_type == t('form_type_other', scope: @form.i18n_scope) }
               = f.label t('form_type_other', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'other_radio'
 
       #name-of-form-only.start-hidden
