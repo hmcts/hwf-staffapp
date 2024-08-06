@@ -90,6 +90,11 @@ module Views
         format_currency(@application.evidence_check.income.try(:round))
       end
 
+      def evidence
+        return nil if @application.blank?
+        @application.evidence_check
+      end
+
       def number_of_children
         if @application.children_age_band.blank?
           @application.children
