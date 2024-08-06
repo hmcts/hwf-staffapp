@@ -13,6 +13,7 @@ module Forms
         month_date_received: Integer,
         year_date_received: Integer,
         form_name: String,
+        case_number: String,
         emergency: Boolean,
         emergency_reason: String,
         benefits_override: Boolean,
