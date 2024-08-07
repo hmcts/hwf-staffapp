@@ -78,6 +78,7 @@ module Forms
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
         form_name: form_name,
+        case_number: case_number,
         benefits_override: benefits_override,
         user_id: user_id,
         discretion_applied: discretion_applied
