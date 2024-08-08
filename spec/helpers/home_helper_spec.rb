@@ -47,7 +47,7 @@ RSpec.describe HomeHelper do
           let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
           let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
           let(:income_period) { 'average' }
-          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence/#{evidence_check.id}") }
+          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
         end
 
         context 'with hmrc but last_month income period' do

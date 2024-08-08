@@ -2,6 +2,7 @@ module Views
   module Overview
     class Application
       include OverviewHelper
+      include HmrcHelper
 
       include ActionView::Helpers::NumberHelper
 

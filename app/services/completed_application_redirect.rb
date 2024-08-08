@@ -28,7 +28,7 @@ class CompletedApplicationRedirect
     evidence_check = @application.evidence_check
     return evidence_path(evidence_check) unless evidence_check.hmrc?
 
-    if evidence_check.hmrc_check.try(:total_income).try(:positive?)
+    if evidence_check.total_income.try(:positive?)
       evidence_check_hmrc_path(evidence_check, evidence_check.hmrc_check)
     else
       new_evidence_check_hmrc_path(evidence_check)

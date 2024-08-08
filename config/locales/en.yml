@@ -327,7 +327,8 @@ en-GB:
 
   hmrc_summary:
     alert: "Undefined evidence check outcome, please contact support"
-    no_income: No income recorded for this applicant by HMRC for the selected period.
+    no_income_applicant: No data returned for applicant income. Compare declared income with HMRC checked income.
+    no_income_partner: No data returned for partner income. Compare declared income with HMRC checked income.
     entitlement_date: This application requires a paper evidence check due to issues with HMRC tax credit data.
 
   offices:

@@ -16,5 +16,13 @@ FactoryBot.define do
     date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65).to_fs(:db) }
     request_params { { date_range: { from: "1/2/2021", to: "1/3/2021" } } }
     user
+
+    trait :applicant do
+      check_type { 'applicant' }
+    end
+
+    trait :partner do
+      check_type { 'partner' }
+    end
   end
 end

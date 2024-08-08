@@ -1,14 +1,27 @@
 module HmrcCheckHelper
-  def total_income(hmrc_check)
-    number_to_currency(hmrc_check.total_income, precision: 2).gsub('.00', '')
+  def total_income(evidence)
+    number_to_currency(evidence.total_income, precision: 2).gsub('.00', '')
   end
 
   def additional_income(hmrc_check)
     number_to_currency(hmrc_check.additional_income, precision: 2).gsub('.00', '')
   end
 
-  def hmrc_income(hmrc_check)
-    number_to_currency(hmrc_check.hmrc_income, precision: 2).gsub('.00', '')
+  def hmrc_income(evidence)
+    applicant_income = applicant_hmrc_income(evidence)
+    partner_income = partner_hmrc_income(evidence)
+
+    number_to_currency(applicant_income + partner_income, precision: 2).gsub('.00', '')
+  end
+
+  def applicant_hmrc_income(evidence)
+    hmrc_income = evidence.applicant_hmrc_check.try(:hmrc_income)
+    hmrc_income.presence || 0
+  end
+
+  def partner_hmrc_income(evidence)
+    hmrc_income = evidence.partner_hmrc_check.try(:hmrc_income)
+    hmrc_income.presence || 0
   end
 
   def error_highlight?(form)
