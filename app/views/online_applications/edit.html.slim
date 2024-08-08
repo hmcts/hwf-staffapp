@@ -84,6 +84,14 @@
         = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
+        = f.label :case_number, class: 'govuk-label'
+          = t('case_number', scope: @form.i18n_scope)
+        - if @form.errors[:case_number].present?
+          span.govuk-error-message
+            = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error'
+        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
         .govuk-checkboxes.govuk-checkboxes--small
           fieldset.govuk-fieldset
             legend.visuallyhidden Emergency case details
