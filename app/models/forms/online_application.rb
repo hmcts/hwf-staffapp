@@ -13,6 +13,7 @@ module Forms
         month_date_received: Integer,
         year_date_received: Integer,
         form_name: String,
+        case_number: String,
         emergency: Boolean,
         emergency_reason: String,
         benefits_override: Boolean,
@@ -77,6 +78,7 @@ module Forms
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
         form_name: form_name,
+        case_number: case_number,
         benefits_override: benefits_override,
         user_id: user_id,
         discretion_applied: discretion_applied
