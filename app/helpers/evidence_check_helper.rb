@@ -31,7 +31,7 @@ module EvidenceCheckHelper
   def display_evidence_section?(application, section_name)
     list = income_kind_list(application)
     return false if list.blank? || !SECTION_TO_INCOME_KIND_MAPPING.key?(section_name)
-    (SECTION_TO_INCOME_KIND_MAPPING[section_name] & list).present?
+    SECTION_TO_INCOME_KIND_MAPPING[section_name].intersect?(list)
   end
 
   def income_kind_list(application)
