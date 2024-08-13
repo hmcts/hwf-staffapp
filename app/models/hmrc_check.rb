@@ -3,11 +3,11 @@ class HmrcCheck < ActiveRecord::Base
   belongs_to :user
   has_many :hmrc_calls, dependent: :destroy
 
-  serialize :address
-  serialize :employment
-  serialize :income
-  serialize :tax_credit
-  serialize :request_params
+  serialize :address, coder: YAML
+  serialize :employment, coder: YAML
+  serialize :income, coder: YAML
+  serialize :tax_credit, coder: YAML
+  serialize :request_params, coder: YAML
 
   validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
