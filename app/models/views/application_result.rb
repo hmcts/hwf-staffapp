@@ -47,7 +47,8 @@ module Views
     end
 
     def evidence
-      @application.present? && @application.evidence_check.present? && @application.evidence_check.incorrect_reason.present?
+      @application.present? && @application.evidence_check.present? &&
+        @application.evidence_check.incorrect_reason.present?
     end
 
     def amount_to_refund
