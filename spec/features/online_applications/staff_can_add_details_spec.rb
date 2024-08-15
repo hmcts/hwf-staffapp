@@ -47,9 +47,9 @@ RSpec.feature 'Staff can search for online application' do
     fill_in :online_application_day_date_received, with: '10'
     fill_in :online_application_month_date_received, with: '10'
     fill_in :online_application_year_date_received, with: '2015'
+    choose 'Other'
     fill_in :online_application_form_name, with: 'E45'
     check :online_application_emergency
-    choose 'Other'
     fill_in :online_application_emergency_reason, with: 'EMERGENCY REASON'
     click_button 'Next'
   end

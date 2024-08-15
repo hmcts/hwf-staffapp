@@ -65,10 +65,10 @@
                       = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', checked: @form.claim_type == t('claim_type_personal_injury', scope: @form.i18n_scope) }
                       = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_claim_type_personal_injury'
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true' }, checked: @form.form_type == t('form_type_other', scope: @form.i18n_scope) }
+              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true' }, checked: @form.form_name.present? }
               = f.label t('form_type_other', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'other_radio'
 
-        #name-of-form-only.start-hidden
+        #name-of-form-only
           .panel-indent
             .govuk-form-group.group-level
               = f.label :form_name, class: 'govuk-label'
@@ -76,7 +76,7 @@
                 span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
               - if @form.errors[:form_name].present?
                 span.govuk-error-message
-                  = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error'
+                  = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
               = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
@@ -119,13 +119,13 @@
                     = f.label t('discretion_applied_true', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_true'
 
 
-      .govuk-form-group.group-level
-        = f.label :form_name, class: 'govuk-label'
-          =t('form_name', scope: @form.i18n_scope)
-          span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
-        span.govuk-error-message
-          = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
-        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
+      / .govuk-form-group.group-level
+      /   = f.label :form_name, class: 'govuk-label'
+      /     =t('form_name', scope: @form.i18n_scope)
+      /     span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
+      /   span.govuk-error-message
+      /     = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
+      /   = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         = f.label :case_number, class: 'govuk-label'
