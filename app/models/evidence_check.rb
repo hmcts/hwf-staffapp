@@ -6,7 +6,7 @@ class EvidenceCheck < ActiveRecord::Base
   validates :expires_at, presence: true
   validates :application_id, uniqueness: true
 
-  serialize :incorrect_reason_category
+  serialize :incorrect_reason_category, coder: YAML
 
   def clear_incorrect_reason!
     self.incorrect_reason = nil

@@ -72,7 +72,7 @@ Runs every day at 1am
 Runs every day at 2am
 ```OldFileExportPurgeJob.delay(cron: '0 2 * * *').perform_now```
 
-## Pre-requisites
+## Front end library
 You will need to install govuk-frontend library
 ```
 npm install --save govuk-frontend

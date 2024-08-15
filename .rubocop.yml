@@ -2,7 +2,7 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.3
 
   NewCops: enable
   # Exclude anything that isn't really part of our code.
@@ -333,6 +333,9 @@ Bundler/OrderedGems:
   Enabled: false
 
 Rails/WhereRange:
+  Enabled: false
+
+Style/HashSyntax:
   Enabled: false
 
 require:

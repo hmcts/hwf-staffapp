@@ -5,8 +5,8 @@ class Application < ActiveRecord::Base
   include PgSearch::Model
   include ApplicationCheckable
 
-  serialize :income_kind
-  serialize :children_age_band
+  serialize :income_kind, coder: YAML
+  serialize :children_age_band, coder: YAML
 
   self.per_page = 25
 
@@ -54,7 +54,7 @@ class Application < ActiveRecord::Base
     where(office_id: office_id)
   }
 
-  enum state: {
+  enum :state, {
     created: 0,
     waiting_for_evidence: 1,
     waiting_for_part_payment: 2,
