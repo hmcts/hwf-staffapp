@@ -9,6 +9,8 @@ end
 
 When('I fill in missing online application details') do
   fill_in('How much is the court or tribunal fee?', with: ' 450.0')
+  choose('other_radio', allow_label_click: true)
+  process_online_application_page.content.form_input.set 'ABC123'
   process_online_application_page.content.form_input.set 'ABC123'
   process_online_application_page.content.jurisdiction.click
   process_online_application_page.fill_in_date_application_received
@@ -46,6 +48,7 @@ end
 When("I process the online application") do
   expect(process_online_application_page.content).to have_application_details_header
   fill_in('How much is the court or tribunal fee?', with: '450.0')
+  choose('other_radio', allow_label_click: true)
   process_online_application_page.content.form_input.set 'ABC123'
   process_online_application_page.content.jurisdiction.click
   process_online_application_page.fill_in_date_application_received
@@ -60,6 +63,7 @@ end
 When("I processed the applications until benefit paper evidence page") do
   expect(process_online_application_page.content).to have_application_details_header
   fill_in('How much is the court or tribunal fee?', with: '450.0')
+  choose('other_radio', allow_label_click: true)
   process_online_application_page.content.form_input.set 'ABC123'
   process_online_application_page.content.jurisdiction.click
   process_online_application_page.fill_in_date_application_received

@@ -738,6 +738,12 @@ en-GB:
         reason: 'Other reason'
       forms/online_application:
         fee: How much is the court or tribunal fee?
+        form_type: 'Is this application for a:'
+        form_type_n1: N1 Part 7 Claim
+        form_type_other: Other
+        claim_type_specified: Specified
+        claim_type_unspecified: Unspecified
+        claim_type_personal_injury: Personal Injury
         form_name: Name of form
         form_name_hint: You'll find this on the bottom of the form, for example C100 or ADM1A
         date_submitted: Date submitted by applicant
