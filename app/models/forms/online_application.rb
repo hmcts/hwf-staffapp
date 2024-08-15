@@ -15,6 +15,7 @@ module Forms
         form_type: String,
         claim_type: String,
         form_name: String,
+        case_number: String,
         emergency: Boolean,
         emergency_reason: String,
         benefits_override: Boolean,
@@ -83,6 +84,7 @@ module Forms
         form_type: form_type,
         claim_type: claim_type,
         form_name: form_name,
+        case_number: case_number,
         benefits_override: benefits_override,
         user_id: user_id,
         discretion_applied: discretion_applied

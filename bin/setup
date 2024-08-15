@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 require "fileutils"
 
-# path to your application root.
 APP_ROOT = File.expand_path("..", __dir__)
+# added in rails 7.2
+APP_NAME = "fr-staffapp"
 
 def system!(*args)
   system(*args, exception: true)
@@ -22,9 +23,6 @@ FileUtils.chdir APP_ROOT do
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
   # end
 
-  # Install JavaScript dependencies
-  # system! 'bin/yarn'
-
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare"
 
@@ -33,4 +31,8 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! "bin/rails restart"
+
+  # puts "\n== Configuring puma-dev =="
+  # system "ln -nfs #{APP_ROOT} ~/.puma-dev/#{APP_NAME}"
+  # system "curl -Is https://#{APP_NAME}.test/up | head -n 1"
 end

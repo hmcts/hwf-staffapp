@@ -46,6 +46,11 @@ module Views
       @application.detail.refund?
     end
 
+    def evidence
+      @application.present? && @application.evidence_check.present? &&
+        @application.evidence_check.incorrect_reason.present?
+    end
+
     def amount_to_refund
       @application.detail.fee - amount_to_pay_for_part_payment.to_f
     end

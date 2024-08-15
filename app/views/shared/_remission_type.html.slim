@@ -1,5 +1,7 @@
 #result.callout class="callout-#{source.result}"
-  - if source.try(:refund) && source.result != 'none'
+  - if source.try(:evidence)
+    h2.govuk-heading-l = t("remissions.#{source.result}_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)
+  - elsif source.try(:refund) && source.result != 'none'
     h2.govuk-heading-l =t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(source.amount_to_refund)}")
   - else
     h2.govuk-heading-l =t("remissions.#{source.result}_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)
