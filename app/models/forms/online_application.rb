@@ -80,10 +80,8 @@ module Forms
       {
         fee: fee,
         jurisdiction_id: jurisdiction_id,
-        date_received: date_received,
-        form_type: form_type,
-        claim_type: claim_type,
-        form_name: form_name,
+        date_received: date_received, form_type: form_type,
+        claim_type: claim_type, form_name: form_name,
         case_number: case_number,
         benefits_override: benefits_override,
         user_id: user_id,

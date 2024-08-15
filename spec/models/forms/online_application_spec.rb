@@ -232,7 +232,6 @@ RSpec.describe Forms::OnlineApplication do
       end
     end
 
-
     describe 'form_name' do
       let(:online_application) { build_stubbed(:online_application, :completed, form_name: form_name, date_received: 1.minute.from_now) }
 

@@ -46,7 +46,7 @@ module Views
 
       def form_name
         if detail.form_type == I18n.t("activemodel.attributes.forms/application/detail.form_type_n1")
-          "#{I18n.t("activemodel.attributes.forms/application/detail.form_type_n1")}: #{detail.claim_type}"
+          "#{I18n.t('activemodel.attributes.forms/application/detail.form_type_n1')}: #{detail.claim_type}"
         else
           detail.form_name.to_s
         end
