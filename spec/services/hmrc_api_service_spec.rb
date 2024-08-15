@@ -306,12 +306,12 @@ describe HmrcApiService do
         context 'tax_credit' do
           it "child" do
             expect(service.hmrc_check.child_tax_credit[0]['test']).to eq 'child test'
-            expect(service.hmrc_check.child_tax_credit[0]['id']).to eq 1
+            expect(service.hmrc_check.tax_credit[:id]).to eq 1
           end
 
           it "work" do
             expect(service.hmrc_check.work_tax_credit[0]['test']).to eq 'work test'
-            expect(service.hmrc_check.work_tax_credit[0]['id']).to eq 1
+            expect(service.hmrc_check.tax_credit[:id]).to eq 1
           end
 
           it "hmrc_call" do
