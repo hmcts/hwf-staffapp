@@ -193,12 +193,23 @@ RSpec.describe HmrcCheck do
             ] }
         ]
 
-        hmrc_check.tax_credit = { child: child_income, work: nil }
+        hmrc_check.tax_credit = { child: child_income, work: nil, id: 123 }
         hmrc_check.save
       }
 
       it { expect(hmrc_check.child_tax_credit_income).to eq 240.6 }
       it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
+      it { expect(hmrc_check.tax_credit_id).to eq 123 }
+
+      context 'hmrc income for partner' do
+        before {
+          hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 7.00 } }]
+          hmrc_check.save
+        }
+        it { expect(hmrc_check.hmrc_income).to eq 348.58 }
+        it { expect(hmrc_check.hmrc_income(123)).to eq 107.98 }
+        it { expect(hmrc_check.hmrc_income(124)).to eq 348.58 }
+      end
 
     end
 

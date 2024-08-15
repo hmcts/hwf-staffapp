@@ -14,8 +14,14 @@ class HmrcCheck < ActiveRecord::Base
 
   validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
-  def hmrc_income
-    paye_income + child_tax_credit_income + work_tax_credit_income
+  def hmrc_income(tax_id = nil)
+    @tax_id = tax_id
+    paye_income + tax_income
+  end
+
+  def tax_income
+    return 0 if same_tax_id?
+    child_tax_credit_income + work_tax_credit_income
   end
 
   def paye_income
@@ -46,6 +52,10 @@ class HmrcCheck < ActiveRecord::Base
     false
   end
 
+  def tax_credit_id
+    tax_credit.try(:[], :id)
+  end
+
   private
 
   def tax_credit_income_calculation(income_source)
@@ -59,6 +69,11 @@ class HmrcCheck < ActiveRecord::Base
 
   def post_ucd?
     FeatureSwitching::CALCULATION_SCHEMAS[1].to_s == application.detail.calculation_scheme
+  end
+
+  def same_tax_id?
+    return false if @tax_id.nil?
+    @tax_id == tax_credit.try(:[], :id)
   end
 
 end

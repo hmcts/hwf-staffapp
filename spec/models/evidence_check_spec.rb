@@ -135,6 +135,50 @@ describe EvidenceCheck do
 
         it { expect(evidence_check.total_income).to eq 100.04 }
       end
+
+      describe 'tax credits' do
+        let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, tax_credit: tax_credit_applicant, income: income) }
+        let(:partner_check) { create(:hmrc_check, :partner, evidence_check: evidence_check, tax_credit: tax_credit_partner) }
+        let(:income) { [{ "taxablePay" => 94.00, "employeePensionContribs" => { "paid" => 6.00 } }] }
+
+        let(:tax_credit_applicant) {
+          {
+            id: applicant_tax_id,
+            child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+            work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+          }
+        }
+        let(:tax_credit_partner) {
+          {
+            id: partner_tax_id,
+            child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+            work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+          }
+        }
+
+        context 'total income same tax credit id' do
+          let(:applicant_tax_id) { 123 }
+          let(:partner_tax_id) { 123 }
+          before {
+            partner_check
+            applicant_check
+          }
+
+          it { expect(evidence_check.total_income).to eq 120.00 }
+        end
+
+        context 'total income different tax credit id' do
+          let(:applicant_tax_id) { 234 }
+          let(:partner_tax_id) { 123 }
+          before {
+            partner_check
+            applicant_check
+          }
+
+          it { expect(evidence_check.total_income).to eq 140.00 }
+        end
+      end
+
     end
   end
 end

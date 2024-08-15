@@ -76,7 +76,8 @@ class EvidenceCheck < ActiveRecord::Base
   end
 
   def partner_hmrc_income
-    partner_hmrc_check.try(:hmrc_income) || 0
+    tax_id = applicant_hmrc_check.try(:tax_credit_id)
+    partner_hmrc_check.try(:hmrc_income, tax_id) || 0
   end
 
   def applicant_hmrc_income
