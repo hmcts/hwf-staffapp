@@ -338,6 +338,9 @@ Rails/WhereRange:
 Style/HashSyntax:
   Enabled: false
 
+Style/OptionalBooleanParameter:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails

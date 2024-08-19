@@ -31,6 +31,20 @@ RSpec.describe HmrcIncomeParser do
         expect(described_class.paye(paye_hash)).to eq(303.94)
       end
     end
+
+    describe 'average income' do
+      let(:paye_hash) {
+        [
+          { "payFrequency" => "M1", "paymentDate" => "2024-06-30", "taxablePay" => 765, "grossEarningsForNics" => { "inPayPeriod1" => 765 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-28", "taxablePay" => 449.88, "grossEarningsForNics" => { "inPayPeriod1" => 449.88 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-21", "taxablePay" => 559.69, "grossEarningsForNics" => { "inPayPeriod1" => 559.69 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-14", "taxablePay" => 114.05, "grossEarningsForNics" => { "inPayPeriod1" => 114.05 } },
+          { "payFrequency" => "M1", "paymentDate" => "2024-05-31", "taxablePay" => 1993.21, "grossEarningsForNics" => { "inPayPeriod1" => 1993.21 } },
+          { "payFrequency" => "M1", "paymentDate" => "2024-04-30", "taxablePay" => 1992.44, "grossEarningsForNics" => { "inPayPeriod1" => 1992.44 } }
+        ]
+      }
+      it { expect(described_class.paye(paye_hash, true).to_f).to eq(1958.09) }
+    end
   end
 
   describe 'child tax_credit' do
@@ -415,7 +429,6 @@ RSpec.describe HmrcIncomeParser do
         let(:frequency) { 28 }
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(328.24) }
       end
-
     end
   end
 end

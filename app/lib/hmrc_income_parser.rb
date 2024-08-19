@@ -1,14 +1,23 @@
 module HmrcIncomeParser
   extend HmrcCostOfLiving
 
-  def self.paye(paye_hash)
+  def self.paye(paye_hash, average_three_months = false)
     sum = paye_hash.sum do |i|
       taxable = i['taxablePay']
       taxable + pension(i)
     end
-    sum.is_a?(Numeric) ? sum : 0
+    total_paye(sum, average_three_months)
   rescue NoMethodError, TypeError
     0
+  end
+
+  def self.total_paye(sum, average_three_months)
+    if sum.is_a?(Numeric) && sum.positive?
+      return sum unless average_three_months
+      (sum / 3).round(2)
+    else
+      0
+    end
   end
 
   def self.tax_credit(tax_credit_hash, request_range)
