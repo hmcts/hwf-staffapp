@@ -29,34 +29,17 @@ RSpec.describe HomeHelper do
 
         it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
 
-        context 'with hmrc but empty income' do
-          before { hmrc_check }
-          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: nil) }
+        context 'with no hmrc' do
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new") }
         end
 
-        context 'with hmrc and income data' do
+        context 'with hmrc check' do
           before { hmrc_check }
-          let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
-          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
+
+          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check) }
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
         end
 
-        context 'with hmrc but average income period' do
-          before { hmrc_check }
-          let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
-          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
-          let(:income_period) { 'average' }
-          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
-        end
-
-        context 'with hmrc but last_month income period' do
-          before { hmrc_check }
-          let(:income_hash) { [{ "taxablePay" => 12000.04 }] }
-          let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, income: income_hash) }
-          let(:income_period) { 'last_month' }
-          it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
-        end
       end
     end
 
