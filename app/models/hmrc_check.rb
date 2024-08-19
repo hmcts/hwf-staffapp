@@ -25,7 +25,7 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def paye_income
-    HmrcIncomeParser.paye(income)
+    HmrcIncomeParser.paye(income, three_month_average?)
   end
 
   def work_tax_credit
@@ -74,6 +74,14 @@ class HmrcCheck < ActiveRecord::Base
   def same_tax_id?
     return false if @tax_id.nil?
     @tax_id == tax_credit.try(:[], :id)
+  end
+
+  def three_month_average?
+    return false unless request_params&.key?(:date_range)
+
+    from = Date.parse request_params[:date_range][:from]
+    to = Date.parse request_params[:date_range][:to]
+    from.end_of_month != to
   end
 
 end
