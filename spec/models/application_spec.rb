@@ -197,4 +197,24 @@ RSpec.describe Application do
     }
   end
 
+  describe 'income period' do
+    context 'last months' do
+      let(:application) { create :application, income_period: 'last_month' }
+      it { expect(application.income_period_three_months_average?).to be false }
+      it { expect(application.income_period_last_month?).to be true }
+    end
+
+    context 'three months average' do
+      let(:application) { create :application, income_period: 'average' }
+      it { expect(application.income_period_three_months_average?).to be true }
+      it { expect(application.income_period_last_month?).to be false }
+    end
+
+    context 'no income average' do
+      let(:application) { create :application, income_period: nil }
+      it { expect(application.income_period_three_months_average?).to be false }
+      it { expect(application.income_period_last_month?).to be false }
+    end
+  end
+
 end
