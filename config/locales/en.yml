@@ -804,6 +804,7 @@ en-GB:
               not_a_date: 'Enter a valid date of birth'
             ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+              duplicate: 'This National Insurance number has already been entered on another page. Enter another National Insurance number'
             ho_number:
               invalid: 'Enter a Home Office reference number in the correct format'
             married:
@@ -823,6 +824,7 @@ en-GB:
               blank: 'Enter a valid date of birth'
             partner_ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+              duplicate: 'This National Insurance number has already been entered on another page. Enter another National Insurance number'
         forms/application/detail:
           attributes:
             fee:

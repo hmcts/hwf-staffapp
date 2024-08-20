@@ -18,7 +18,8 @@ module Forms
           day_date_of_birth: Integer,
           month_date_of_birth: Integer,
           year_date_of_birth: Integer,
-          partner_ni_number: String
+          partner_ni_number: String,
+          ni_number: String
         }
       end
       define_attributes
@@ -31,11 +32,18 @@ module Forms
       validates :partner_last_name, length: { minimum: 2 }, allow_blank: true
       validates :partner_ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validate :dob_age_valid?
+      validate :ni_number_duplicate
 
       def format_ni_number
         unless partner_ni_number.nil?
           partner_ni_number.upcase!
           partner_ni_number.delete!(' ')
+        end
+      end
+
+      def ni_number_duplicate
+        if ni_number.present? && ni_number == partner_ni_number
+          errors.add(:partner_ni_number, :duplicate)
         end
       end
 
