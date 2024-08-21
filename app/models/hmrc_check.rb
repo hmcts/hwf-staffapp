@@ -12,8 +12,11 @@ class HmrcCheck < ActiveRecord::Base
   serialize :tax_credit, coder: YAML
   serialize :request_params, coder: YAML
 
-  validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  scope :partner, -> { where(check_type: 'partner') }
+  scope :applicant, -> { where(check_type: 'applicant') }
 
+  validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  
   def hmrc_income(tax_id = nil)
     @tax_id = tax_id
     paye_income + tax_income

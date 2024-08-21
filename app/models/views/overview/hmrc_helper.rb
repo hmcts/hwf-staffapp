@@ -11,7 +11,7 @@ module Views
         return total_monthly_income if @application.income_period_three_months_average?
         'N/A'
       end
-
+      
     end
   end
 end

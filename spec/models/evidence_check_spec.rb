@@ -80,6 +80,7 @@ describe EvidenceCheck do
       let(:application) { create(:application, detail: detail) }
       let(:evidence_check) { create(:evidence_check, application: application) }
       let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, income: [{ "taxablePay" => 120.04 }], additional_income: additional_income) }
+
       let(:partner_check) { create(:hmrc_check, :partner, evidence_check: evidence_check, income: [{ "taxablePay" => 100.04 }], additional_income: additional_income_partner) }
       let(:additional_income) { 0 }
       let(:additional_income_partner) { 0 }
@@ -186,7 +187,6 @@ describe EvidenceCheck do
           it { expect(evidence_check.total_income).to eq 140.00 }
         end
       end
-
     end
   end
 end
