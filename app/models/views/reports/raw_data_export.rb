@@ -114,8 +114,11 @@ module Views
       end
 
       def simple_columns
-        ['id', 'reference', 'children_age_band', 'details.fee', 'details.form_name',
-         'details.form_type', 'details.claim_type', 'details.probate',
+        ['id', 'reference', 'children_age_band', 'details.fee',
+         'CASE WHEN oa.form_name IS NOT NULL THEN oa.form_name ELSE details.form_name END AS form_name',
+         'CASE WHEN oa.form_type IS NOT NULL THEN oa.form_type ELSE details.form_type END AS form_type',
+         'CASE WHEN oa.claim_type IS NOT NULL THEN oa.claim_type ELSE details.claim_type END AS claim_type',
+         'details.probate',
          'details.refund', 'details.statement_signed_by', 'application_type', 'income', 'income_period',
          'children', 'decision', 'amount_to_pay', 'decision_cost', 'applicants.married',
          'applicants.partner_ni_number', 'applicants.partner_last_name',
