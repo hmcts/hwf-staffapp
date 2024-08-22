@@ -109,7 +109,7 @@ class EvidenceCheckSelector
   end
 
   def hmrc_income_check_type?
-    @application.hmrc_check_type? && @application.income_period != 'average'
+    @application.hmrc_check_type?
   end
 
   def ccmcc_evidence_rules_check
