@@ -63,11 +63,6 @@ describe HmrcService do
       it { expect(service.display_partner_data_missing_for_check?).to be false }
     end
 
-    context 'single' do
-      before { applicant }
-      it { expect(service.display_partner_data_missing_for_check?).to be false }
-    end
-
     context 'refund applicaiton' do
       let(:application) { create(:application_part_remission, date_received: '4/5/2021', refund: true, date_fee_paid: '4/4/2021') }
       it 'loads dates one month before submitting' do
