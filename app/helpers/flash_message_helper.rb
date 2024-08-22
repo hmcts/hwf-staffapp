@@ -9,7 +9,6 @@ module FlashMessageHelper
     end
   end
 
-  # rubocop:disable Style/OptionalBooleanParameter
   def format_managers_combined_contacts(managers, start_sentence = false)
     if managers.empty?
       start_sentence ? 'A manager' : 'a manager'
@@ -19,7 +18,6 @@ module FlashMessageHelper
       "<a href='mailto:#{managers.map(&:email).join(';')}'>#{link_text}</a>"
     end
   end
-  # rubocop:enable Style/OptionalBooleanParameter
 
   def devise_reset_token_error?
     resource && resource.errors.messages.key?(:reset_password_token)

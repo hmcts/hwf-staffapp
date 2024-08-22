@@ -20,16 +20,26 @@ class HmrcService
 
   # rubocop:disable Metrics/AbcSize
   def load_form_default_data_range
-    last_month = load_date_based_on_type - 1.month
-    @form.from_date_day = last_month.beginning_of_month.day
-    @form.from_date_month = last_month.month
-    @form.from_date_year = last_month.year
-    @form.to_date_day = last_month.end_of_month.day
-    @form.to_date_month = last_month.month
-    @form.to_date_year = last_month.year
+    from_date = range_start_based_on_income_period
+    to_date = load_date_based_on_type - 1.month
+
+    @form.from_date_day = from_date.beginning_of_month.day
+    @form.from_date_month = from_date.month
+    @form.from_date_year = from_date.year
+    @form.to_date_day = to_date.end_of_month.day
+    @form.to_date_month = to_date.month
+    @form.to_date_year = to_date.year
     @form
   end
   # rubocop:enable Metrics/AbcSize
+
+  def range_start_based_on_income_period
+    if @application.income_period_three_months_average?
+      load_date_based_on_type - 3.months
+    else
+      load_date_based_on_type - 1.month
+    end
+  end
 
   def load_date_based_on_type
     return @application.detail.date_fee_paid.to_date if @application.detail.refund

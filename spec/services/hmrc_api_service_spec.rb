@@ -286,7 +286,7 @@ describe HmrcApiService do
 
       context 'income' do
         before do
-          allow(hmrc_api).to receive_messages(paye: { 'income' => [{ paymentDate: "2019-01-01" }] }, child_tax_credits: [{ "awards" => ['child test'] }], working_tax_credits: [{ "awards" => ['work test'] }])
+          allow(hmrc_api).to receive_messages(paye: { 'income' => [{ paymentDate: "2019-01-01" }] }, child_tax_credits: [{ "id" => 1, "awards" => [{ 'test' => 'child test' }] }], working_tax_credits: [{ 'id' => 1, "awards" => [{ 'test' => 'work test' }] }])
           allow(HmrcCall).to receive(:create).and_return hmrc_call
           service.income('2020-02-28', '2020-03-30')
         end
@@ -305,11 +305,13 @@ describe HmrcApiService do
 
         context 'tax_credit' do
           it "child" do
-            expect(service.hmrc_check.child_tax_credit[0]).to eq 'child test'
+            expect(service.hmrc_check.child_tax_credit[0]['test']).to eq 'child test'
+            expect(service.hmrc_check.tax_credit[:id]).to eq 1
           end
 
           it "work" do
-            expect(service.hmrc_check.work_tax_credit[0]).to eq 'work test'
+            expect(service.hmrc_check.work_tax_credit[0]['test']).to eq 'work test'
+            expect(service.hmrc_check.tax_credit[:id]).to eq 1
           end
 
           it "hmrc_call" do

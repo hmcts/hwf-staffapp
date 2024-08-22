@@ -42,6 +42,31 @@ RSpec.describe HmrcCheck do
       it { expect(hmrc_check.income[:taxReturns][0][:taxYear]).to eql("2018-19") }
     end
 
+    context 'three month average' do
+      before {
+        hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 6.99 } }]
+        hmrc_check.save
+      }
+
+      context 'one month' do
+        let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
+
+        it { expect(hmrc_check.paye_income).to be(107.97) }
+      end
+
+      context 'three months' do
+        let(:date_range) { { date_range: { from: "2021-04-01", to: "2021-06-30" } } }
+
+        it { expect(hmrc_check.paye_income).to be(35.99) }
+      end
+
+      context 'no date range' do
+        let(:date_range) { nil }
+
+        it { expect(hmrc_check.paye_income).to be(107.97) }
+      end
+    end
+
     context 'tax_credit' do
       before {
         hmrc_check.tax_credit = [{ id: 7210565654, awards: [{ payProfCalcDate: "2020-11-18" }] }]
@@ -193,12 +218,23 @@ RSpec.describe HmrcCheck do
             ] }
         ]
 
-        hmrc_check.tax_credit = { child: child_income, work: nil }
+        hmrc_check.tax_credit = { child: child_income, work: nil, id: 123 }
         hmrc_check.save
       }
 
       it { expect(hmrc_check.child_tax_credit_income).to eq 240.6 }
       it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
+      it { expect(hmrc_check.tax_credit_id).to eq 123 }
+
+      context 'hmrc income for partner' do
+        before {
+          hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 7.00 } }]
+          hmrc_check.save
+        }
+        it { expect(hmrc_check.hmrc_income).to eq 348.58 }
+        it { expect(hmrc_check.hmrc_income(123)).to eq 107.98 }
+        it { expect(hmrc_check.hmrc_income(124)).to eq 348.58 }
+      end
 
     end
 

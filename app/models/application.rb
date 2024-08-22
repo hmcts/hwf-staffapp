@@ -5,6 +5,8 @@ class Application < ActiveRecord::Base
   include PgSearch::Model
   include ApplicationCheckable
 
+  INCOME_PERIOD = { last_month: 'last_month', average: 'average' }.freeze
+
   serialize :income_kind, coder: YAML
   serialize :children_age_band, coder: YAML
 
@@ -103,6 +105,14 @@ class Application < ActiveRecord::Base
 
   def digital?
     medium == 'digital'
+  end
+
+  def income_period_three_months_average?
+    income_period == INCOME_PERIOD[:average]
+  end
+
+  def income_period_last_month?
+    income_period == INCOME_PERIOD[:last_month]
   end
 
 end

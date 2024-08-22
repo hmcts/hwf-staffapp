@@ -50,18 +50,19 @@ class HmrcApiService
   def tax_credit(from, to)
     child = child_tax_credit(from, to)
     work = work_tax_credit(from, to)
-    @hmrc_check.tax_credit = { child: child, work: work }
+    # Tax credit id is same for work and child tax
+    @hmrc_check.tax_credit = { child: child, work: work, id: @tax_credit_id }
     @hmrc_check.save
   end
 
   def child_tax_credit(from, to)
     id = hmrc_call({ from: from, to: to }, :child_tax_credits)
-    @hwf.child_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+    tax_credit_data(@hwf.child_tax_credits(from, to, id))
   end
 
   def work_tax_credit(from, to)
     id = hmrc_call({ from: from, to: to }, :working_tax_credits)
-    @hwf.working_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+    tax_credit_data(@hwf.working_tax_credits(from, to, id))
   end
 
   def hmrc_api_innitialize
@@ -76,6 +77,13 @@ class HmrcApiService
   end
 
   private
+
+  def tax_credit_data(response)
+    data = response.try(:[], 0)
+    return nil unless data
+    @tax_credit_id ||= data.try(:[], 'id')
+    data.try(:[], 'awards')
+  end
 
   def store_response_data(type, data)
     @hmrc_check.send(:"#{type}=", data.send(:[], type))

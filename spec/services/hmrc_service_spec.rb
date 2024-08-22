@@ -5,6 +5,7 @@ require 'rails_helper'
 describe HmrcService do
   subject(:service) { described_class.new(application, form) }
   let(:application) { create(:application_part_remission) }
+  let(:income_period) { Application::INCOME_PERIOD[:last_month] }
   let(:evidence_check) { create(:evidence_check, application: application) }
   let(:hmrc_api) { instance_double(HwfHmrcApi::Connection) }
   let(:form) { instance_double(Forms::Evidence::HmrcCheck, from_date: 'from', to_date: 'to', user_id: 256) }
@@ -23,7 +24,7 @@ describe HmrcService do
   let(:hmrc_check) { instance_double(HmrcCheck) }
 
   describe 'load_form_default_data_range' do
-    let(:application) { create(:application_part_remission, date_received: '4/5/2021', refund: false) }
+    let(:application) { create(:application_part_remission, date_received: '4/5/2021', refund: false, income_period: income_period) }
     before {
       allow(form).to receive(:from_date_day=)
       allow(form).to receive(:from_date_month=)
@@ -34,13 +35,32 @@ describe HmrcService do
       service.load_form_default_data_range
     }
 
-    it 'loads dates one month before submitting' do
-      expect(form).to have_received(:from_date_day=).with(1)
-      expect(form).to have_received(:from_date_month=).with(4)
-      expect(form).to have_received(:from_date_year=).with(2021)
-      expect(form).to have_received(:to_date_day=).with(30)
-      expect(form).to have_received(:to_date_month=).with(4)
-      expect(form).to have_received(:to_date_year=).with(2021)
+    context 'last month income period' do
+      it 'loads dates one month before submitting' do
+        expect(form).to have_received(:from_date_day=).with(1)
+        expect(form).to have_received(:from_date_month=).with(4)
+        expect(form).to have_received(:from_date_year=).with(2021)
+        expect(form).to have_received(:to_date_day=).with(30)
+        expect(form).to have_received(:to_date_month=).with(4)
+        expect(form).to have_received(:to_date_year=).with(2021)
+      end
+    end
+
+    context '3 months average income period' do
+      let(:income_period) { Application::INCOME_PERIOD[:average] }
+      it 'loads dates one month before submitting' do
+        expect(form).to have_received(:from_date_day=).with(1)
+        expect(form).to have_received(:from_date_month=).with(2)
+        expect(form).to have_received(:from_date_year=).with(2021)
+        expect(form).to have_received(:to_date_day=).with(30)
+        expect(form).to have_received(:to_date_month=).with(4)
+        expect(form).to have_received(:to_date_year=).with(2021)
+      end
+    end
+
+    context 'single' do
+      before { applicant }
+      it { expect(service.display_partner_data_missing_for_check?).to be false }
     end
 
     context 'single' do
