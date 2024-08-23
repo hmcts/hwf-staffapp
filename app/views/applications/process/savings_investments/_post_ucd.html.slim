@@ -17,31 +17,33 @@
             .govuk-radios__item
               = f.radio_button :choice, 'between', { class: 'govuk-radios__input show-hide-section', data: { section: 'threshold-exceeded', show: 'true' } }
               = f.label t('choice_between', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_choice_between'
-              #threshold-exceeded-only.start-hidden
-                .govuk-form-group.panel-indent.util-mt-0
-                  fieldset
-                    legend.visuallyhidden Applicant's partner's age
-                    - if @application.applicant.married
-                      = f.label :over_66, t('partner_over_66', scope: @form.i18n_scope), class: 'govuk-label'
-                    -else
-                      = f.label :over_66, t('over_66', scope: @form.i18n_scope), class: 'govuk-label'
-                    span#changed-name-error.govuk-error-message
-                      = f.label :over_66, @form.errors[:over_66].join(', ').gsub('61','66'), class: 'error' if @form.errors[:over_66].present?
-                    = f.hidden_field :over_66, value: nil
-                    .govuk-radios.govuk-radios--small
-                      .govuk-radios__item
-                        = f.radio_button :over_66, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-under-66', show: 'true' } }
-                        = f.label t('over_66_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_66_false'
-                        #partner-under-66-only.start-hidden
-                          =render('shared/savings/amount', f: f)
-                    .govuk-radios.govuk-radios--small
-                      .govuk-radios__item
-                        = f.radio_button :over_66, 'true', { class: 'govuk-radios__input show-hide-section' }
-                        = f.label t('over_66_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_66_true'
 
-            .govuk-radios__item
-              = f.radio_button :choice, 'more', { class: 'govuk-radios__input show-hide-section', data: { section: 'max-threshold-exceeded', show: 'true' } }
-              = f.label t('choice_more_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_choice_more'
+        #threshold-exceeded-only.start-hidden
+          .govuk-form-group.panel-indent.util-mt-0
+            fieldset
+              legend.visuallyhidden Applicant's partner's age
+              - if @application.applicant.married
+                = f.label :over_66, t('partner_over_66', scope: @form.i18n_scope), class: 'govuk-label'
+              -else
+                = f.label :over_66, t('over_66', scope: @form.i18n_scope), class: 'govuk-label'
+              span#changed-name-error.govuk-error-message
+                = f.label :over_66, @form.errors[:over_66].join(', ').gsub('61','66'), class: 'error' if @form.errors[:over_66].present?
+              = f.hidden_field :over_66, value: nil
+              .govuk-radios.govuk-radios--small
+                .govuk-radios__item
+                  = f.radio_button :over_66, 'false', { class: 'govuk-radios__input show-hide-section', data: { section: 'partner-under-66', show: 'true' } }
+                  = f.label t('over_66_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_66_false'
+                #partner-under-66-only.start-hidden
+                  =render('shared/savings/amount', f: f)
+              .govuk-radios.govuk-radios--small
+                .govuk-radios__item
+                  = f.radio_button :over_66, 'true', { class: 'govuk-radios__input show-hide-section' }
+                  = f.label t('over_66_true', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_over_66_true'
+
+        .govuk-radios.govuk-radios--small
+          .govuk-radios__item
+            = f.radio_button :choice, 'more', { class: 'govuk-radios__input show-hide-section', data: { section: 'max-threshold-exceeded', show: 'true' } }
+            = f.label t('choice_more_than', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_choice_more'
 
 
 
