@@ -43,7 +43,7 @@ module FrStaffapp
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
+    config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
     config.i18n.default_locale = 'en-GB'
 
     if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
