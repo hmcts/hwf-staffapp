@@ -2,25 +2,27 @@ module HmrcIncomeParser
   extend HmrcCostOfLiving
 
   def self.paye(paye_hash, average_three_months = false)
+    @average_three_months = average_three_months
     sum = paye_hash.sum do |i|
       taxable = i['taxablePay']
       taxable + pension(i)
     end
-    total_paye(sum, average_three_months)
+    total_sum(sum)
   rescue NoMethodError, TypeError
     0
   end
 
-  def self.total_paye(sum, average_three_months)
+  def self.total_sum(sum)
     if sum.is_a?(Numeric) && sum.positive?
-      return sum unless average_three_months
+      return sum unless @average_three_months
       (sum / 3).round(2)
     else
       0
     end
   end
 
-  def self.tax_credit(tax_credit_hash, request_range)
+  def self.tax_credit(tax_credit_hash, request_range, average_three_months = false)
+    @average_three_months = average_three_months
     sum = tax_credit_hash.sum do |i|
       payments = i['payments'].sum do |payment|
         posted_date(payment)
@@ -30,7 +32,7 @@ module HmrcIncomeParser
       apply_child_care(payments, i)
     end
 
-    sum.is_a?(Numeric) ? sum : 0
+    total_sum(sum)
   rescue NoMethodError, TypeError
     0
   end
