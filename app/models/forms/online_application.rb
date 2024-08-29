@@ -73,6 +73,7 @@ module Forms
     def fields_to_update
       fixed_fields.tap do |fields|
         fields[:emergency_reason] = (emergency ? emergency_reason : nil)
+        fields[:claim_type] = (form_type == form_type_n1 ? claim_type : nil)
       end
     end
 
