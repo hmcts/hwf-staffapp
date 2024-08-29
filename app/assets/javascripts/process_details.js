@@ -32,6 +32,7 @@ window.moj.Modules.JurisdictionModule = {
         const countyJurisdictionElement = document.querySelector(`#jurisdiction_${this.countyJurisdictionId}`);
 
         const formTypeN1Radio = document.querySelector('#form_type_n1_radio');
+        const formTypeOther = document.querySelector('#other_radio');
         const claimTypes = [
             ...document.querySelectorAll('[id$="_claim_type_specified"]'),
             ...document.querySelectorAll('[id$="_claim_type_unspecified"]'),
@@ -39,7 +40,14 @@ window.moj.Modules.JurisdictionModule = {
         ].filter(el => el.id.match(/^(application|online_application)_claim_type/));
 
         const isCountyJurisdiction = countyJurisdictionElement?.checked;
+        // added to ensure the correct radio is selected on county change
+        if (!isCountyJurisdiction) {
+            formTypeOther.click();
+        } else {
+            formTypeN1Radio.click();
+        }
         formTypeN1Radio.disabled = !isCountyJurisdiction;
+        // claim_type should be deselected/reset when form_type or county changes
         claimTypes.forEach(claimType => {
             claimType.disabled = !isCountyJurisdiction;
             claimType.checked = false;

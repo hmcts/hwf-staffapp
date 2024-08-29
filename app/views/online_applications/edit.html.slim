@@ -65,7 +65,7 @@
                       = f.radio_button :claim_type, t('claim_type_personal_injury', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', checked: @form.claim_type == t('claim_type_personal_injury', scope: @form.i18n_scope) }
                       = f.label t('claim_type_personal_injury', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'online_application_claim_type_personal_injury'
             .govuk-radios__item
-              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true' }, checked: @form.form_name.present? }
+              = f.radio_button :form_type, t('form_type_other', scope: @form.i18n_scope), { class: 'govuk-radios__input show-hide-section', id: 'other_radio', data: { section: 'name-of-form', show: 'true' }, checked: @form.form_type == t('form_type_other', scope: @form.i18n_scope) }
               = f.label t('form_type_other', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'other_radio'
 
         #name-of-form-only
