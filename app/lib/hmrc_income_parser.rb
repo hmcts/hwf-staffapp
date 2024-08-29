@@ -86,7 +86,7 @@ module HmrcIncomeParser
     list = []
     while day < end_date
       day += frequency
-      list << day
+      list << day if day <= end_date
     end
 
     list_parsed_by_may_cost_of_living(list, payment)
