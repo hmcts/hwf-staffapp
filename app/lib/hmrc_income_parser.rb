@@ -1,5 +1,6 @@
 module HmrcIncomeParser
   extend HmrcCostOfLiving
+  extend HmrcFrequencyHelper
 
   def self.paye(paye_hash, average_three_months = false)
     @average_three_months = average_three_months
@@ -24,17 +25,20 @@ module HmrcIncomeParser
   def self.tax_credit(tax_credit_hash, request_range, average_three_months = false)
     @average_three_months = average_three_months
     sum = tax_credit_hash.sum do |i|
-      payments = i['payments'].sum do |payment|
-        posted_date(payment)
-        tax_credit_amount(payment, request_range)
-      end
-
+      payments = payments_summary(i, request_range)
       apply_child_care(payments, i)
     end
 
     total_sum(sum)
   rescue NoMethodError, TypeError
     0
+  end
+
+  def self.payments_summary(item, request_range)
+    item['payments'].sum do |payment|
+      posted_date(payment)
+      tax_credit_amount(payment, request_range)
+    end
   end
 
   def self.tax_credit_amount(payment, request_range)
@@ -55,41 +59,6 @@ module HmrcIncomeParser
     return amount.to_d if amount.include?('.')
     size = amount.length
     amount.insert(size - 2, '.').to_d
-  end
-
-  def self.multiplier_per_frequency(payment, request_range)
-    @from = Date.parse(request_range[:from])
-    @to = Date.parse(request_range[:to])
-
-    return frequency(payment) if payment['frequency'] == 1
-
-    end_date = Date.parse(payment['endDate'])
-    start_date = Date.parse(payment['startDate'])
-
-    list = frequency_days(start_date, end_date, payment)
-
-    list.count do |day_iteration|
-      next if @last_payment && (@last_payment < day_iteration)
-      day_iteration >= @from && day_iteration <= @to
-    end
-  end
-
-  def self.frequency(payment)
-    return payment['frequency'] if @last_payment.blank?
-    @last_payment < @to ? 0 : payment['frequency']
-  end
-
-  def self.frequency_days(day, end_date, payment)
-    frequency = payment['frequency']
-
-    return if frequency.zero?
-    list = []
-    while day < end_date
-      day += frequency
-      list << day if day <= end_date
-    end
-
-    list_parsed_by_may_cost_of_living(list, payment)
   end
 
   def self.pension(paye_hash)
