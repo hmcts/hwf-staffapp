@@ -994,7 +994,6 @@ en-GB:
               not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
               before_submit: This date can’t be before the application was received.
-
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -1002,6 +1001,10 @@ en-GB:
             form_name:
               invalid: You entered the help with fees name of form. Enter the number on the court or tribunal form.
               blank: Enter a valid name of form
+            form_type:
+              blank: Select the type of form
+            claim_type:
+              blank: Select the type of claim
 
         forms/fee_approval:
           attributes:
