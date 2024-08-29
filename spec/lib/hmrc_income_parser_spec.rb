@@ -212,24 +212,6 @@ RSpec.describe HmrcIncomeParser do
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(345.37) }
       end
 
-      context '3 months average' do
-        context 'all months apply' do
-          let(:request_range) { { from: "2024-01-01", to: "2024-03-31" } }
-          let(:tax_credit_hash) {
-            [{ "payProfCalcDate" => "2023-10-27",
-               "totalEntitlement" => 460.32,
-               "workingTaxCredit" => { "amount" => 0, "paidYTD" => 709.75 },
-               "childTaxCredit" => { "childCareAmount" => 0 },
-               "payments" =>
-              [{ "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 297.02 },
-               { "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 146.33 }] }]
-          }
-
-          it { expect(described_class.tax_credit(tax_credit_hash, request_range, true).to_f).to eq(443.35) }
-        end
-
-      end
-
       context 'Entitlement date' do
         let(:tax_credit_hash) {
           [
@@ -449,4 +431,43 @@ RSpec.describe HmrcIncomeParser do
       end
     end
   end
+
+  context 'Tax credits 3 months average' do
+    context 'work credit' do
+      let(:request_range) { { from: "2024-01-01", to: "2024-03-31" } }
+      let(:tax_credit_hash) {
+        [{ "payProfCalcDate" => "2023-10-27",
+           "totalEntitlement" => 460.32,
+           "workingTaxCredit" => { "amount" => 0, "paidYTD" => 709.75 },
+           "childTaxCredit" => { "childCareAmount" => 0 },
+           "payments" =>
+          [{ "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 297.02 },
+           { "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 146.33 }] }]
+      }
+
+      it { expect(described_class.tax_credit(tax_credit_hash, request_range, true).to_f).to eq(443.35) }
+    end
+
+    context 'child tax_credit' do
+      let(:request_range) { { from: "2024-01-01", to: "2024-03-31" } }
+      let(:tax_credit_hash) {
+        [
+          { "payProfCalcDate" => "2023-10-27",
+            "totalEntitlement" => 1000,
+            "childTaxCredit" => {
+              "childCareAmount" => 10,
+              "ctcChildAmount" => 1000,
+              "familyAmount" => 1000,
+              "babyAmount" => 100, "paidYTD" => 123
+            },
+            "payments" =>
+              [{ "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 297.02 },
+               { "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 146.33 }] }
+        ]
+      }
+      it { expect(described_class.tax_credit(tax_credit_hash, request_range, true).to_f).to eq(438.92) }
+    end
+
+  end
+
 end
