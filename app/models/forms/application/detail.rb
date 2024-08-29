@@ -42,6 +42,7 @@ module Forms
       define_attributes
 
       before_validation :format_date_fields
+      before_validation :reset_claim_type
       after_validation :check_discretion
       after_validation :check_refund_values
 
@@ -122,6 +123,10 @@ module Forms
 
       def form_type_other
         I18n.t('activemodel.attributes.forms/application/detail.form_type_other')
+      end
+
+      def reset_claim_type
+        self.claim_type = nil if form_type == form_type_other
       end
     end
   end

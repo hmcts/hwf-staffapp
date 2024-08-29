@@ -27,6 +27,7 @@ module Forms
     define_attributes
 
     before_validation :format_date_fields, :format_fee
+    before_validation :reset_claim_type
 
     validates :fee, presence: true,
                     numericality: { allow_blank: true, less_than: 20_000 }
@@ -73,7 +74,6 @@ module Forms
     def fields_to_update
       fixed_fields.tap do |fields|
         fields[:emergency_reason] = (emergency ? emergency_reason : nil)
-        fields[:claim_type] = (form_type == form_type_n1 ? claim_type : nil)
       end
     end
 
@@ -100,6 +100,10 @@ module Forms
 
     def form_type_other
       I18n.t('activemodel.attributes.forms/application/detail.form_type_other')
+    end
+
+    def reset_claim_type
+      self.claim_type = nil if form_type == form_type_other
     end
   end
 end
