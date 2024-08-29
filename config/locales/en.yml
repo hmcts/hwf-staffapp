@@ -668,15 +668,13 @@ en-GB:
           '8': Contribution-based Employment and Support Allowance (ESA)
           '9': Universal Credit
           '10': Pensions (state, work, private, pension credit (savings credit))
-          '11': Rent from anyone living with the applicant
-          '12': Rent from other properties the applicant owns
-          '13': Rent from anyone living with the partner
-          '14': Rent from other properties the partner owns
-          '15': Cash gifts - include all one off payments
-          '16': Financial support from family - include all one off payments
-          '17': Loans
-          '18': Other income - For example, income from online selling or from dividend or interest payments
-          '19': None of the above
+          '11': Rent from anyone living with the partner
+          '12': Rent from other properties the partner owns
+          '13': Cash gifts - include all one off payments
+          '14': Financial support from family - include all one off payments
+          '15': Loans
+          '16': Other income - For example, income from online selling or from dividend or interest payments
+          '17': None of the above
 
       forms/application/declaration:
         header: 'Declaration and statement of truth'

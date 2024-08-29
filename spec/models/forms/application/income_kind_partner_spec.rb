@@ -39,7 +39,7 @@ RSpec.describe Forms::Application::IncomeKindPartner do
       end
 
       context 'when user picks none of the above and more income kinds' do
-        let(:params) { { income_kind_partner: ['1', '20'] } }
+        let(:params) { { income_kind_partner: ['1', '18'] } }
 
         it { is_expected.to be false }
 

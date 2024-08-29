@@ -6,7 +6,7 @@ module IncomeKindHelper
 
   def income_kind_partners
     # just array for index iteration
-    (1..19).to_a
+    (1..17).to_a
   end
 
   def kind_checked(application, form, claimant, kind)

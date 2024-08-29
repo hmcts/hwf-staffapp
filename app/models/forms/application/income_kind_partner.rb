@@ -30,7 +30,7 @@ module Forms
       end
 
       def none_of_above_selected
-        if income_kind_partner.include?('20') && income_kind_partner.count > 1
+        if income_kind_partner.include?('18') && income_kind_partner.count > 1
           errors.add(:income_kind_partner, :invalid)
         end
       end
