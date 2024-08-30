@@ -132,8 +132,8 @@ RSpec.describe Applications::Process::BenefitsController do
         end
 
         context 'when the result can not be overridden' do
-          it 'redirects to the summary override page' do
-            expect(response).to redirect_to(application_summary_path(application))
+          it 'redirects to the declaration override page' do
+            expect(response).to redirect_to(application_declaration_path(application))
           end
         end
       end

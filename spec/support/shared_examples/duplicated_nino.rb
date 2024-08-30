@@ -32,6 +32,7 @@ RSpec.shared_examples "duplicated NINO for successfull DWP" do
     fill_application_refund_details
     fill_saving_and_investment
     fill_benefits(true)
+    fill_declaration
 
     click_button 'Complete processing'
     expect(page).to have_no_content('Evidence of income needs to be checked')

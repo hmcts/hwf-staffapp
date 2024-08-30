@@ -55,6 +55,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
+      fill_declaration
 
       click_button 'Complete processing'
       expect(page).to have_no_content('Evidence of income needs to be checked')
@@ -79,6 +80,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
+      fill_declaration
 
       click_button 'Complete processing'
 
@@ -128,6 +130,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       fill_application_emergency_details
       fill_saving_and_investment
       fill_benefits(true)
+      fill_declaration
 
       click_button 'Complete processing'
 
