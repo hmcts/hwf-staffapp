@@ -16,11 +16,11 @@ class Applicant < ActiveRecord::Base
   end
 
   def full_name
-    [title, first_name, last_name].select(&:present?).join(' ')
+    [title, first_name, last_name].compact_blank.join(' ')
   end
 
   def partner_full_name
-    [partner_first_name, partner_last_name].select(&:present?).join(' ')
+    [partner_first_name, partner_last_name].compact_blank.join(' ')
   end
 
   def over_66?
