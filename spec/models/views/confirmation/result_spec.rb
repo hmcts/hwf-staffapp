@@ -305,7 +305,7 @@ RSpec.describe Views::Confirmation::Result do
         view.expires_at
       }
     }
-    before { Settings.part_payment.expires_in_days = 1 }
+    before { Settings.payment.expires_in_days = 1 }
 
     context 'application' do
       it { is_expected.to eql('9 January 2022') }

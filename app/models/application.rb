@@ -84,7 +84,7 @@ class Application < ActiveRecord::Base
   end
 
   def payment_expires_at
-    days = Settings.part_payment.expires_in_days
+    days = Settings.payment.expires_in_days
     Time.zone.today + days
   end
 
