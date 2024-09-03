@@ -12,6 +12,8 @@ evidence_check:
   hmrc:
     office_entity_code: <%= ENV['HMRC_OFFICE_CODE'].try(:split) || ['dig'] %>
 part_payment:
+  expires_in_days: 28
+payment:
   expires_in_days: 14
 submission:
   token: <%= ENV['SUBMISSION_TOKEN'] %>
