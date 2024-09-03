@@ -26,7 +26,7 @@ gem 'rails-i18n', '~> 7.0.3'
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-storage-blob', '~> 2.0', '>= 2.0.3'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.10'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.9'
 
 # configuration
 gem 'config'
