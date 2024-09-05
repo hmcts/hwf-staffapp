@@ -115,7 +115,28 @@ describe ApplicationCheckable do
 
     context 'married applicant allowed for HMRC now' do
       let(:married) { true }
+      let(:partner) { { partner_first_name: 'john', partner_last_name: 'doe', partner_ni_number: 'SN798465C', partner_date_of_birth: '1/1/2000' } }
+      let(:applicant) { build(:applicant, married: married, ni_number: ni_number, **partner) }
       it { expect(application.hmrc_check_type?).to be true }
+
+      describe 'only with all partner data' do
+        context 'first_name' do
+          let(:partner) { { partner_first_name: '', partner_last_name: 'doe', partner_ni_number: 'SN798465C', partner_date_of_birth: '1/1/2000' } }
+          it { expect(application.hmrc_check_type?).to be false }
+        end
+        context 'last_name' do
+          let(:partner) { { partner_first_name: 'john', partner_last_name: '', partner_ni_number: 'SN798465C', partner_date_of_birth: '1/1/2000' } }
+          it { expect(application.hmrc_check_type?).to be false }
+        end
+        context 'dob_name' do
+          let(:partner) { { partner_first_name: 'john', partner_last_name: 'doe', partner_ni_number: 'SN798465C', partner_date_of_birth: '' } }
+          it { expect(application.hmrc_check_type?).to be false }
+        end
+        context 'ni_number' do
+          let(:partner) { { partner_first_name: 'john', partner_last_name: 'doe', partner_ni_number: '', partner_date_of_birth: '1/1/2000' } }
+          it { expect(application.hmrc_check_type?).to be false }
+        end
+      end
     end
 
     context 'digital application' do
