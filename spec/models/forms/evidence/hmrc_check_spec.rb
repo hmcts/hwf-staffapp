@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Forms::Evidence::HmrcCheck do
   subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-  let(:application) { build(:application, created_at: '15.3.2021', children: children) }
+  let(:application) { build(:application, created_at: '15.3.2021', children: children, income_period: income_period) }
   let(:evidence) { build(:evidence_check, application: application) }
+  let(:income_period) { Application::INCOME_PERIOD[:last_month] }
   let(:children) { 0 }
   let(:params) {
     {
@@ -178,6 +179,42 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       context 'day is not valid' do
         let(:to_date_day) { 'dd' }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'validate date based on income_period' do
+      context 'last_month' do
+        let(:income_period) { Application::INCOME_PERIOD[:last_month] }
+        it { is_expected.to be true }
+      end
+
+      context 'three_months not valid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        it { is_expected.to be false }
+      end
+
+      context 'three_months valid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2021' }
+        let(:to_date_day) { '30' }
+        let(:to_date_month) { '4' }
+        let(:to_date_year) { '2021' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'two monts imvalid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2021' }
+        let(:to_date_day) { '31' }
+        let(:to_date_month) { '3' }
+        let(:to_date_year) { '2021' }
 
         it { is_expected.to be false }
       end

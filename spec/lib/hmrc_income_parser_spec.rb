@@ -31,6 +31,20 @@ RSpec.describe HmrcIncomeParser do
         expect(described_class.paye(paye_hash)).to eq(303.94)
       end
     end
+
+    describe 'average income' do
+      let(:paye_hash) {
+        [
+          { "payFrequency" => "M1", "paymentDate" => "2024-06-30", "taxablePay" => 765, "grossEarningsForNics" => { "inPayPeriod1" => 765 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-28", "taxablePay" => 449.88, "grossEarningsForNics" => { "inPayPeriod1" => 449.88 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-21", "taxablePay" => 559.69, "grossEarningsForNics" => { "inPayPeriod1" => 559.69 } },
+          { "payFrequency" => "W1", "paymentDate" => "2024-06-14", "taxablePay" => 114.05, "grossEarningsForNics" => { "inPayPeriod1" => 114.05 } },
+          { "payFrequency" => "M1", "paymentDate" => "2024-05-31", "taxablePay" => 1993.21, "grossEarningsForNics" => { "inPayPeriod1" => 1993.21 } },
+          { "payFrequency" => "M1", "paymentDate" => "2024-04-30", "taxablePay" => 1992.44, "grossEarningsForNics" => { "inPayPeriod1" => 1992.44 } }
+        ]
+      }
+      it { expect(described_class.paye(paye_hash, true).to_f).to eq(1958.09) }
+    end
   end
 
   describe 'child tax_credit' do
@@ -298,7 +312,7 @@ RSpec.describe HmrcIncomeParser do
 
         let(:request_range) { { from: "2023-05-01", to: "2023-05-31" } }
 
-        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1174.68) }
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(888.61) }
       end
 
       context 'November 10 2023 until November 19 2023' do
@@ -312,7 +326,7 @@ RSpec.describe HmrcIncomeParser do
         }
 
         let(:request_range) { { from: "2023-11-01", to: "2023-11-30" } }
-        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1455.04) }
+        it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(1169.93) }
       end
 
       context 'February 6 2024 until February 22 2024' do
@@ -415,7 +429,45 @@ RSpec.describe HmrcIncomeParser do
         let(:frequency) { 28 }
         it { expect(described_class.tax_credit(tax_credit_hash, request_range).to_f).to eq(328.24) }
       end
-
     end
   end
+
+  context 'Tax credits 3 months average' do
+    context 'work credit' do
+      let(:request_range) { { from: "2024-01-01", to: "2024-03-31" } }
+      let(:tax_credit_hash) {
+        [{ "payProfCalcDate" => "2023-10-27",
+           "totalEntitlement" => 460.32,
+           "workingTaxCredit" => { "amount" => 0, "paidYTD" => 709.75 },
+           "childTaxCredit" => { "childCareAmount" => 0 },
+           "payments" =>
+          [{ "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 297.02 },
+           { "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 146.33 }] }]
+      }
+
+      it { expect(described_class.tax_credit(tax_credit_hash, request_range, true).to_f).to eq(443.35) }
+    end
+
+    context 'child tax_credit' do
+      let(:request_range) { { from: "2024-01-01", to: "2024-03-31" } }
+      let(:tax_credit_hash) {
+        [
+          { "payProfCalcDate" => "2023-10-27",
+            "totalEntitlement" => 1000,
+            "childTaxCredit" => {
+              "childCareAmount" => 10,
+              "ctcChildAmount" => 1000,
+              "familyAmount" => 1000,
+              "babyAmount" => 100, "paidYTD" => 123
+            },
+            "payments" =>
+              [{ "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 297.02 },
+               { "startDate" => "2023-09-18", "endDate" => "2024-04-01", "frequency" => 28, "tcType" => "ETC", "amount" => 146.33 }] }
+        ]
+      }
+      it { expect(described_class.tax_credit(tax_credit_hash, request_range, true).to_f).to eq(438.92) }
+    end
+
+  end
+
 end

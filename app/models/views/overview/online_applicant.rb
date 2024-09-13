@@ -12,11 +12,11 @@ module Views
       end
 
       def partner_full_name
-        [@application.partner_first_name, @application.partner_last_name].select(&:present?).join(' ')
+        [@application.partner_first_name, @application.partner_last_name].compact_blank.join(' ')
       end
 
       def full_name
-        [@application.first_name, @application.last_name].select(&:present?).join(' ')
+        [@application.first_name, @application.last_name].compact_blank.join(' ')
       end
 
       def ni_number
