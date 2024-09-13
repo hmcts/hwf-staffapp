@@ -80,7 +80,7 @@ describe EvidenceCheckSelector do
 
                 context 'average income' do
                   let(:application) { create(:application_full_remission, :refund, income_period: 'average') }
-                  it { expect(decision.income_check_type).to eql 'paper' }
+                  it { expect(decision.income_check_type).to eql 'hmrc' }
                 end
               end
 

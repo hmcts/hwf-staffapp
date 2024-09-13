@@ -51,7 +51,7 @@ RSpec.describe Applications::Process::ConfirmationController do
         context 'average income period' do
           let(:income_period) { 'average' }
           it 'redirects to the hmrc check page' do
-            expect(response).to redirect_to(evidence_check_path(application.evidence_check.id))
+            expect(response).to redirect_to(new_evidence_check_hmrc_path(application.evidence_check.id))
           end
         end
 

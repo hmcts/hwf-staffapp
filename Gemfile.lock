@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 1719e9c626f6d15bd52ff7b959e9bda4c49261ad
-  tag: v0.2.10
+  revision: b30309661a659cb0b45321001beed8d9438289d6
+  tag: v0.2.9
   specs:
-    hwf_hmrc_api (0.2.10)
+    hwf_hmrc_api (0.2.9)
       httparty (~> 0.22.0)
       rotp (~> 6.3.0)
       uuid (~> 2.3.9)
@@ -750,6 +750,7 @@ DEPENDENCIES
   rails-i18n (~> 7.0.3)
   redis
   rest-client
+  rexml (>= 3.3.6)
   rspec-rails
   rspec_junit_formatter
   rubocop
@@ -781,7 +782,7 @@ DEPENDENCIES
   will_paginate
 
 RUBY VERSION
-   ruby 3.3.4p94
+   ruby 3.3.2p78
 
 BUNDLED WITH
    2.5.17
