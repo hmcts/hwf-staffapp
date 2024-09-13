@@ -102,9 +102,6 @@ gem 'rexml', '>= 3.3.6'
 # GovUK Notify
 gem 'govuk_notify_rails'
 
-# Skip 3.3.5 which has a vulnerability
-gem 'rexml', '>= 3.3.6'
-
 group :development do
   # speed up local development via livereload
   gem 'rack-livereload'
