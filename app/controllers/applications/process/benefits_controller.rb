@@ -49,7 +49,7 @@ module Applications
         elsif benefit_check_runner.can_override?
           redirect_to application_benefit_override_paper_evidence_path(application)
         else
-          redirect_to application_summary_path(application)
+          redirect_to application_declaration_path(application)
         end
       end
 
