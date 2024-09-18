@@ -49,4 +49,27 @@ module ResultHelper
     number_to_currency(value, precision: 2).gsub('.00', '')
   end
 
+  def exceeds_saving_threshold?(application)
+    application.saving.over_66 ||
+      (application.saving.max_threshold_exceeded && application.detail.fee > 5001.0)
+  end
+
+  def exceeds_fee_threshold?(application)
+    application.detail.fee.between?(1421.0, 4999.0) && application.saving.amount > (3.0 * application.detail.fee)
+  end
+
+  def exceeds_lower_fee_threshold?(application)
+    application.saving.amount > 4250.0 && application.detail.fee < 1420.0
+  end
+
+  def display_threshold(application)
+    if exceeds_saving_threshold?(application)
+      currency_format("16000")
+    elsif exceeds_fee_threshold?(application)
+      currency_format((3.0 * application.detail.fee))
+    elsif exceeds_lower_fee_threshold?(application)
+      currency_format("4250")
+    end
+  end
+
 end
