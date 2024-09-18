@@ -50,8 +50,7 @@ module ResultHelper
   end
 
   def exceeds_saving_threshold?(application)
-    application.saving.over_66 ||
-      (application.saving.max_threshold_exceeded && application.detail.fee > 5001.0)
+    application.saving.over_66 || application.saving.max_threshold_exceeded
   end
 
   def exceeds_fee_threshold?(application)
