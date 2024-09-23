@@ -307,7 +307,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (4.27.3)
+    google-protobuf (4.28.2)
       bigdecimal
       rake (>= 13)
     govuk_notify_rails (3.0.0)
@@ -439,7 +439,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
