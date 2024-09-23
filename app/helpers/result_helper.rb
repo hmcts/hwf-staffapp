@@ -58,16 +58,16 @@ module ResultHelper
   end
 
   def exceeds_lower_fee_threshold?(application)
-    application.saving.amount > 4250.0 && application.detail.fee < 1420.0
+    application.saving.amount > Settings.ucd_savings_threshold.minimum_value && application.detail.fee < 1420.0
   end
 
   def display_threshold(application)
     if exceeds_saving_threshold?(application)
-      currency_format("16000")
+      currency_format(Settings.savings_threshold.maximum_value)
     elsif exceeds_fee_threshold?(application)
       currency_format((3.0 * application.detail.fee))
     elsif exceeds_lower_fee_threshold?(application)
-      currency_format("4250")
+      currency_format(Settings.ucd_savings_threshold.minimum_value)
     end
   end
 
