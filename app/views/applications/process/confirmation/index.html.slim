@@ -61,7 +61,7 @@
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
-              savings_threshold: currency_format(@application.saving.amount),
+              savings_threshold: display_threshold(@application),
               savings_total: saving_value(@application))
 
       -elsif display_income_failed_letter?(@application)
