@@ -40,6 +40,7 @@ gem 'devise-security', '~> 0.18.0'
 
 # authorisation
 gem 'pundit', '~> 2.1'
+gem 'ostruct'
 
 # background jobs and scheduling
 gem 'delayed_cron_job'
