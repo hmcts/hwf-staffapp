@@ -192,10 +192,24 @@ RSpec.describe Evidence::HmrcController do
     end
 
     context 'as a signed in user' do
+      let(:applicant_hmrc_check) { instance_double(HmrcCheck) }
+      let(:partner_hmrc_check) { instance_double(HmrcCheck) }
+      let(:applicant_income) { 100 }
+      let(:partner_income) { 100 }
+
+      before do
+        allow(evidence).to receive_messages(applicant_hmrc_check: applicant_hmrc_check, partner_hmrc_check: partner_hmrc_check)
+        allow(applicant_hmrc_check).to receive(:hmrc_income).and_return applicant_income
+        allow(partner_hmrc_check).to receive(:hmrc_income).and_return partner_income
+      end
+
       context 'success' do
+        let(:hmrc_service) { instance_double(HmrcService, display_partner_data_missing_for_check?: no_partner_check) }
+        let(:no_partner_check) { true }
+
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive(:total_income).and_return 100
+          allow(HmrcService).to receive(:new).and_return hmrc_service
           sign_in user
           get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
         end
@@ -211,20 +225,39 @@ RSpec.describe Evidence::HmrcController do
         it 'load check' do
           expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
         end
+
+        context 'unable to check partner data' do
+          it 'add error message' do
+            expect(hmrc_service).to have_received(:display_partner_data_missing_for_check?)
+            expect(assigns(:hmrc_check).errors.any?).to be true
+          end
+        end
+
+        context 'able to check partner data' do
+          let(:no_partner_check) { false }
+          it 'do not add error message' do
+            expect(hmrc_service).to have_received(:display_partner_data_missing_for_check?)
+            expect(assigns(:hmrc_check).errors.any?).to be false
+          end
+        end
       end
 
-      context 'data issue' do
+      context 'applicant data issue' do
         let(:errors) { instance_double(ActiveModel::Errors) }
+        let(:applicant_income) { 0 }
+        let(:partner_income) { 100 }
+
         before do
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
-          allow(hmrc_check).to receive_messages(total_income: 0, errors: errors)
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
+
           allow(errors).to receive(:add)
           sign_in user
           get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
         end
 
         it 'add error message' do
-          message = "No income recorded for this applicant by HMRC for the selected period."
+          message = "No data returned for applicant income. Compare declared income with HMRC checked income."
           expect(errors).to have_received(:add).with(:income_calculation, message)
         end
 
@@ -236,6 +269,67 @@ RSpec.describe Evidence::HmrcController do
           expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
         end
       end
+
+      context 'partner data issue' do
+        let(:applicant_income) { 100 }
+        let(:partner_income) { 0 }
+
+        let(:errors) { instance_double(ActiveModel::Errors) }
+        before do
+          allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
+
+          allow(errors).to receive(:add)
+          sign_in user
+          get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+        end
+
+        it 'add error message' do
+          message = "No data returned for partner income. Compare declared income with HMRC checked income."
+          expect(errors).to have_received(:add).with(:income_calculation, message)
+        end
+
+        it 'renders the correct template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'load check' do
+          expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
+      end
+
+      context 'no partner' do
+        let(:applicant_income) { 100 }
+        let(:partner_income) { nil }
+
+        let(:errors) { instance_double(ActiveModel::Errors) }
+        before do
+          allow(HmrcCheck).to receive(:find).and_return hmrc_check
+          allow(hmrc_check).to receive_messages(hmrc_income: 0, errors: errors)
+
+          allow(evidence).to receive_messages(applicant_hmrc_check: applicant_hmrc_check, partner_hmrc_check: nil)
+
+          allow(applicant_hmrc_check).to receive(:hmrc_income).and_return 100
+          allow(partner_hmrc_check).to receive(:hmrc_income).and_return 0
+
+          allow(errors).to receive(:add)
+          sign_in user
+          get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+        end
+
+        it 'no error message' do
+          expect(errors).not_to have_received(:add)
+        end
+
+        it 'renders the correct template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'load check' do
+          expect(HmrcCheck).to have_received(:find).with(hmrc_check.id.to_s)
+        end
+      end
+
     end
   end
 
@@ -273,7 +367,7 @@ RSpec.describe Evidence::HmrcController do
           sign_in user
           allow(HmrcCheck).to receive(:find).and_return hmrc_check
           allow(hmrc_check).to receive(:update).and_return update_return
-          allow(hmrc_check).to receive(:calculate_evidence_income!)
+          allow(evidence).to receive(:calculate_evidence_income!)
           put :update, params: put_params
         end
 
@@ -285,7 +379,7 @@ RSpec.describe Evidence::HmrcController do
           end
 
           it 'trigger calculate_evidence_income' do
-            expect(hmrc_check).to have_received(:calculate_evidence_income!)
+            expect(evidence).to have_received(:calculate_evidence_income!)
           end
 
           describe 'reset the value if the answer is no' do
@@ -302,7 +396,7 @@ RSpec.describe Evidence::HmrcController do
           it { expect(response).to render_template('show') }
 
           it 'do not trigger calculate_evidence_income' do
-            expect(hmrc_check).not_to have_received(:calculate_evidence_income!)
+            expect(evidence).not_to have_received(:calculate_evidence_income!)
           end
 
         end

@@ -121,6 +121,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
         choose 'Yes'
         click_button 'Next'
 
+        expect(page).to have_content "Declaration and statement of truth"
+        choose 'Applicant'
+        click_button 'Next'
+
         expect(page).to have_content "Check details"
         click_button 'Complete processing'
 

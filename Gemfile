@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.4'
+ruby '3.3.5'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -26,7 +26,7 @@ gem 'rails-i18n', '~> 7.0.3'
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-storage-blob', '~> 2.0', '>= 2.0.3'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.10'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.2.9'
 
 # configuration
 gem 'config'
@@ -40,6 +40,7 @@ gem 'devise-security', '~> 0.18.0'
 
 # authorisation
 gem 'pundit', '~> 2.1'
+gem 'ostruct'
 
 # background jobs and scheduling
 gem 'delayed_cron_job'
@@ -96,6 +97,9 @@ gem 'virtus'
 # To fix ruby 3.3.3 gemsepec file issue with this gem
 gem 'net-pop', github: 'ruby/net-pop'
 
+# To pass vulnerability in 3.3.5
+gem 'rexml', '>= 3.3.6'
+
 # GovUK Notify
 gem 'govuk_notify_rails'
 
@@ -127,7 +131,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '~> 0.21'
+  gem 'simplecov', '~> 0.22.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
@@ -138,7 +142,7 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'codeclimate-test-reporter'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'

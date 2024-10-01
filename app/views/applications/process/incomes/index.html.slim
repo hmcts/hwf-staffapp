@@ -27,10 +27,10 @@
             = f.label :income_period, @form.errors[:income_period].join(', '), class: 'error'
         .govuk-radios.govuk-radios--small
           .govuk-radios__item
-            = f.radio_button :income_period, 'last_month', { class: 'govuk-radios__input show-hide-section' }
+            = f.radio_button :income_period, Application::INCOME_PERIOD[:last_month], { class: 'govuk-radios__input show-hide-section' }
             = f.label t('income_period_last_month', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_income_period_last_month'
           .govuk-radios__item
-            = f.radio_button :income_period, 'average', { class: 'govuk-radios__input show-hide-section' }
+            = f.radio_button :income_period, Application::INCOME_PERIOD[:average], { class: 'govuk-radios__input show-hide-section' }
             = f.label t('income_period_average', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_income_period_average'
 
 
