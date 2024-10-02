@@ -83,7 +83,6 @@
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 
-
       -elsif display_benefit_failed_letter?(@application)
         p.govuk-body Write the reference number on the top right corner of the paper form.
         p.govuk-body Write to the applicant using the letter on this page.
@@ -101,7 +100,7 @@
               amount_to_pay: currency_format(@application.detail.fee),
               date_for_part_payment: @confirm.expires_at)
 
-      -else
+      -elsif display_evidence_failed_letter?(@application)
         p.govuk-body Write the reference number on the top right corner of the paper form
         p.govuk-body Copy the reference number into the case management system
         p.govuk-body Write to the applicant and send back all the documents
@@ -116,6 +115,12 @@
                   user_name: current_user.name,
                   expiry_date: @confirm.expires_at,
                   amount_to_pay: currency_format(@application.detail.fee))
+
+      -else
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body Write to the applicant and send back all the documents
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
 
 
