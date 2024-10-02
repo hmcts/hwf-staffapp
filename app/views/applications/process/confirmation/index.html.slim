@@ -107,6 +107,16 @@
         p.govuk-body Write to the applicant and send back all the documents
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
+        .confirmation-letter
+          = t('new_letters.evidence.evidence_incorrect_html',
+                  reference: @application.reference,
+                  full_name: @application.applicant.full_name,
+                  legal_rep: @confirm.representative_full_name,
+                  greeting: greeting_condition(@confirm, @application),
+                  user_name: current_user.name,
+                  expiry_date: @confirm.expires_at,
+                  amount_to_pay: currency_format(@application.detail.fee))
+
 
 
 
