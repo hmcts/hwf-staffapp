@@ -52,9 +52,9 @@ RSpec.describe Views::Reports::RawDataExport do
   end
 
   describe 'cost estimations' do
-    let(:evidence_check_part) { create(:evidence_check_part_outcome, amount_to_pay: 100, application: part_ec) }
-    let(:evidence_check_full) { create(:evidence_check_full_outcome, amount_to_pay: 0, application: full_ec) }
-    let(:evidence_check_none) { create(:evidence_check_incorrect, amount_to_pay: 300.34, application: none_ec) }
+    let(:evidence_check_part) { create(:evidence_check_part_outcome, amount_to_pay: 100, application: part_ec, income: 1005) }
+    let(:evidence_check_full) { create(:evidence_check_full_outcome, amount_to_pay: 0, application: full_ec, income: 222) }
+    let(:evidence_check_none) { create(:evidence_check_incorrect, amount_to_pay: 300.34, application: none_ec, income: 5555) }
     let(:part_payment_none) { create(:part_payment_none_outcome) }
     let(:part_payment_return) { create(:part_payment_return_outcome) }
     let(:part_payment_part) { create(:part_payment_part_outcome) }
@@ -139,7 +139,7 @@ RSpec.describe Views::Reports::RawDataExport do
         office = full_no_ec.office.name
         dob = full_no_ec.applicant.date_of_birth.to_fs
         date_received = full_no_ec.detail.date_received.to_fs
-        row = "#{jurisdiction},135864,300.24,0.0,300.24,income,ABC123,,false,false,10,under,last_month,None,1,1,0,true,No,full,0.0,300.24,paper"
+        row = "#{jurisdiction},135864,300.24,0.0,300.24,income,ABC123,,false,false,10,,under,last_month,None,1,1,0,true,No,full,0.0,300.24,paper"
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
@@ -153,9 +153,10 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = part_no_ec.detail.jurisdiction.name
 
-        row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,,false,false,2000,,average,NI number,3,1,2,true,No,part,50.0,250.0,paper"
+        row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,,false,false,2000,,,average,NI number,3,1,2,true,No,part,50.0,250.0,paper"
         dob = part_no_ec.applicant.date_of_birth.to_fs
         date_received = part_no_ec.detail.date_received.to_fs
+
         expect(export).to include(row)
         expect(export).to include("true,JK123456C,,#{dob},#{date_received},,,legal_representative,false,false,pre_ucd")
       end
@@ -165,7 +166,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         jurisdiction = part_no_ec_return_pp.detail.jurisdiction.name
         date_received = part_no_ec_return_pp.detail.date_received.to_fs
-        row = "#{jurisdiction},135864,300.45,50.6,249.85,income,ABC123,,false,false,2000,,,NI number,3,1,2,true,No,part,300.45,0.0,paper"
+        row = "#{jurisdiction},135864,300.45,50.6,249.85,income,ABC123,,false,false,2000,,,,NI number,3,1,2,true,No,part,300.45,0.0,paper"
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
@@ -176,8 +177,9 @@ RSpec.describe Views::Reports::RawDataExport do
         part_no_ec_none_pp
         export = data.to_csv
         jurisdiction = part_no_ec_none_pp.detail.jurisdiction.name
-        row = "#{jurisdiction},135864,300.45,50.6,249.85,income,ABC123,,false,false,2000,,,NI number,3,1,2,true,No,part,300.45,0.0,paper"
+        row = "#{jurisdiction},135864,300.45,50.6,249.85,income,ABC123,,false,false,2000,,,,NI number,3,1,2,true,No,part,300.45,0.0,paper"
         dob = part_no_ec_none_pp.applicant.date_of_birth.to_fs
+
         expect(export).to include(row)
         expect(export).to include("false,JK123456A,,#{dob}")
       end
@@ -188,7 +190,7 @@ RSpec.describe Views::Reports::RawDataExport do
         none_no_ec
         export = data.to_csv
         jurisdiction = none_no_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},135864,300.34,300.34,0.0,income,ABC123,,false,false,2000,,,Home Office number,3,1,2,true,No,none,300.34,0.0,paper"
+        row = "#{jurisdiction},135864,300.34,300.34,0.0,income,ABC123,,false,false,2000,,,,Home Office number,3,1,2,true,No,none,300.34,0.0,paper"
         expect(export).to include(row)
       end
     end
@@ -202,7 +204,8 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = none_ec.applicant.date_of_birth.to_fs
         postcode = none_ec.online_application.postcode
         online_date = none_ec.online_application.created_at.to_fs
-        row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,,NI number,3,1,2,true,No,none,300.34,0.0,paper"
+        row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,5555,over,,NI number,3,1,2,true,No,none,300.34,0.0,paper"
+
         expect(export).to include(row)
         expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},,#{online_date},applicant,false,false")
 
@@ -217,7 +220,7 @@ RSpec.describe Views::Reports::RawDataExport do
           none_ec
           export = data.to_csv
           jurisdiction = none_ec.detail.jurisdiction.name
-          row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
+          row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,5555,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
           expect(export).to include(row)
         end
 
@@ -228,7 +231,7 @@ RSpec.describe Views::Reports::RawDataExport do
             none_ec
             export = data.to_csv
             jurisdiction = none_ec.detail.jurisdiction.name
-            row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
+            row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,5555,over,,NI number,3,1,2,true,Yes,none,300.34,0.0,paper"
             expect(export).to include(row)
           end
         end
@@ -240,7 +243,7 @@ RSpec.describe Views::Reports::RawDataExport do
         full_ec
         export = data.to_csv
         jurisdiction = full_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},135864,300.0,0.0,300.0,income,ABC123,,false,false,10,,,NI number,1,,,true,No,full,0.0,300.0,paper"
+        row = "#{jurisdiction},135864,300.0,0.0,300.0,income,ABC123,,false,false,10,222,,,NI number,1,,,true,No,full,0.0,300.0,paper"
         expect(export).to include(row)
       end
     end
@@ -250,7 +253,7 @@ RSpec.describe Views::Reports::RawDataExport do
         part_ec
         export = data.to_csv
         jurisdiction = part_ec.detail.jurisdiction.name
-        row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,,false,false,2000,,,NI number,3,1,2,true,No,part,100.0,200.0,paper"
+        row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,,false,false,2000,1005,,,NI number,3,1,2,true,No,part,100.0,200.0,paper"
         expect(export).to include(row)
       end
     end
