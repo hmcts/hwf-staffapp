@@ -131,7 +131,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '~> 0.22.0'
+  gem 'simplecov', '~> 0.21'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
@@ -142,7 +142,7 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter'
+  gem 'codeclimate-test-reporter', require: nil
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
