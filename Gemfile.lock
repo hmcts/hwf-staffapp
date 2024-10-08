@@ -314,7 +314,7 @@ GEM
     govuk_notify_rails (3.0.0)
       notifications-ruby-client (~> 6.2)
       rails (>= 4.1.0)
-    groupdate (6.5.0)
+    groupdate (6.5.1)
       activesupport (>= 7)
     gtm_on_rails (0.2.2)
       puma
