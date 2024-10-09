@@ -76,7 +76,7 @@ module Forms
               errors.add(:date_received, "Please enter a valid date in the correct format DD/MM/YYYY")
             end
           rescue ArgumentError
-            errors.add(:date_received, "Invalid date entered. Please ensure the date is correct.")
+            # Error message is being handled by other validation
           end
         end
       end

@@ -10,7 +10,7 @@ shared_examples 'date_received validation' do
     end
 
     it 'returns an error message, if omitted' do
-      expect(form.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY, "Invalid date entered. Please ensure the date is correct.']
+      expect(form.errors[:date_received]).to eq ['Enter the date in this format DD/MM/YYYY']
     end
   end
 
