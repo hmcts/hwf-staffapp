@@ -24,6 +24,12 @@ module ResultHelper
     !checks.last.benefits_valid?
   end
 
+  def display_evidence_failed_letter?(application)
+    checks = application.evidence_check
+    return false if checks.blank?
+    checks.incorrect_reason_category.present? && checks.correct == false
+  end
+
   def income_value(application)
     return currency_format(application.evidence_check.income) if application.evidence_check&.income&.positive?
 
