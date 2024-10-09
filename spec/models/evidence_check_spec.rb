@@ -164,15 +164,67 @@ describe EvidenceCheck do
           }
         }
 
-        context 'total income same tax credit id' do
+        context 'same tax credit id' do
           let(:applicant_tax_id) { 123 }
           let(:partner_tax_id) { 123 }
+
           before {
             partner_check
             applicant_check
           }
 
-          it { expect(evidence_check.total_income).to eq 120.00 }
+          describe 'higher child tax is taken' do
+            let(:tax_credit_applicant) {
+              {
+                id: applicant_tax_id,
+                child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+            let(:tax_credit_partner) {
+              {
+                id: partner_tax_id,
+                child: [{ "payments" => [{ "amount" => 12.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+
+            it { expect(evidence_check.total_income).to eq 12.00 }
+          end
+
+          describe 'higher work tax is taken' do
+            let(:tax_credit_applicant) {
+              {
+                id: applicant_tax_id,
+                work: [{ "payments" => [{ "amount" => 13.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+            let(:tax_credit_partner) {
+              {
+                id: partner_tax_id,
+                work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+
+            it { expect(evidence_check.total_income).to eq 13.00 }
+          end
+
+          describe 'higher from each tax is taken' do
+            let(:tax_credit_applicant) {
+              {
+                id: applicant_tax_id,
+                work: [{ "payments" => [{ "amount" => 13.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+                child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+            let(:tax_credit_partner) {
+              {
+                id: partner_tax_id,
+                work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+                child: [{ "payments" => [{ "amount" => 12.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+              }
+            }
+
+            it { expect(evidence_check.total_income).to eq 25.00 }
+          end
         end
 
         context 'total income different tax credit id' do
@@ -184,6 +236,37 @@ describe EvidenceCheck do
           }
 
           it { expect(evidence_check.total_income).to eq 140.00 }
+        end
+
+        context 'total income no tax id' do
+          let(:applicant_tax_id) { nil }
+          let(:partner_tax_id) { nil }
+          before {
+            partner_check
+            applicant_check
+          }
+
+          it { expect(evidence_check.total_income).to eq 140.00 }
+        end
+
+        context 'total income no patner data' do
+          let(:applicant_tax_id) { nil }
+
+          before {
+            applicant_check
+          }
+
+          it { expect(evidence_check.total_income).to eq 120.00 }
+        end
+
+        context 'total income no applicant data' do
+          let(:partner_tax_id) { 132 }
+
+          before {
+            partner_check
+          }
+
+          it { expect(evidence_check.total_income).to eq 20.00 }
         end
       end
 
