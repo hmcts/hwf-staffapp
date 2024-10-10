@@ -3,24 +3,25 @@
 
 h1.govuk-heading-xl Feedback received
 
-table.govuk-table.large-lists
-  caption.govuk-table__caption.visuallyhidden List of feedbacks received from users
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header scope="col" User name
-      th.govuk-table__header scope="col" Experience so far
-      th.govuk-table__header scope="col" Ideas for improvement
-      th.govuk-table__header scope="col" Rating score
-      th.govuk-table__header scope="col" Help needed
-      th.govuk-table__header scope="col" Office
-      th.govuk-table__header scope="col" Created
-  tbody.govuk-table__body
-    -@feedback.each do |f|
+div.table-scrollable-container
+  table.govuk-table.large-lists
+    caption.govuk-table__caption.visuallyhidden List of feedbacks received from users
+    thead.govuk-table__head
       tr.govuk-table__row
-        td.govuk-table__cell scope="row" =mail_to f.user.email, f.user.name, target: 'blank'
-        td.govuk-table__cell scope="row" =f.experience
-        td.govuk-table__cell scope="row" =f.ideas
-        td.govuk-table__cell scope="row" =f.rating
-        td.govuk-table__cell scope="row" =f.help
-        td.govuk-table__cell scope="row" =f.office.name
-        td.govuk-table__cell scope="row" =f.created_at.to_fs(:db)
+        th.govuk-table__header scope="col" User name
+        th.govuk-table__header scope="col" Experience so far
+        th.govuk-table__header scope="col" Ideas for improvement
+        th.govuk-table__header scope="col" Rating score
+        th.govuk-table__header scope="col" Help needed
+        th.govuk-table__header scope="col" Office
+        th.govuk-table__header scope="col" Created
+    tbody.govuk-table__body
+      -@feedback.each do |f|
+        tr.govuk-table__row
+          td.govuk-table__cell scope="row" =mail_to f.user.email, f.user.name, target: 'blank'
+          td.govuk-table__cell scope="row" =f.experience
+          td.govuk-table__cell scope="row" =f.ideas
+          td.govuk-table__cell scope="row" =f.rating
+          td.govuk-table__cell scope="row" =f.help
+          td.govuk-table__cell scope="row" =f.office.name
+          td.govuk-table__cell scope="row" =f.created_at.to_fs(:db)

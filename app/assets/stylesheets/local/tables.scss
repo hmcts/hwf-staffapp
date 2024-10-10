@@ -120,3 +120,12 @@ table tr td.change-link {
     margin-right: 20px;
   }
 }
+
+.table-scrollable-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scrollable-container table {
+  min-width: 100%;
+}
