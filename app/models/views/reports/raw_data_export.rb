@@ -17,7 +17,8 @@ module Views
         probate: 'probate',
         refund: 'refund',
         emergency: 'emergency',
-        income: 'income',
+        income: 'pre evidence income',
+        check_income: 'post evidence income',
         income_threshold: 'income_threshold exceeded',
         income_period: 'income period',
         reg_number: 'ho/ni number',
@@ -151,6 +152,7 @@ module Views
           oa.created_at AS date_submitted_online,
           details.statement_signed_by AS statement_signed_by,
           details.calculation_scheme AS calculation_scheme,
+          ec.income AS check_income,
           CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
                WHEN applicants.partner_ni_number = '' THEN 'false'
                WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
