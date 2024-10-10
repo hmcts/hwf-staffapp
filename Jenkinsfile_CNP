@@ -51,16 +51,20 @@ withPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2024'
 
+    def rubyInstallationScript = """#!/bin/bash -l
+                set +x
+                source /usr/local/rvm/scripts/rvm
+                rvm install ruby-3.3.5
+    """
 
       before('build') {
-        sh script:"""#!/bin/bash -l
-            set +x
-            source /usr/local/rvm/scripts/rvm
-            rvm install ruby-3.3.5
-        """, label: 'Ruby version install'
+        sh script: rubyInstallationScript, label: 'Ruby version install'
       }
 
       before('test') {
+
+        sh script: rubyInstallationScript, label: 'Ruby version install'
+
         sh script:"""
             yarn install
             docker inspect hmctspublic.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctspublic.azurecr.io/imported/postgres:16-alpine
