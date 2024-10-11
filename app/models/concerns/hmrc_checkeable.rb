@@ -10,7 +10,11 @@ module HmrcCheckeable
   end
 
   def hmrc_income
-    applicant_hmrc_income + partner_hmrc_income
+    if same_tax_id?
+      child_tax_credit_income + work_tax_credit_income
+    else
+      applicant_hmrc_income + partner_hmrc_income
+    end
   end
 
   def additional_income

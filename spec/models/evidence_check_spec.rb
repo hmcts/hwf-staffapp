@@ -188,6 +188,22 @@ describe EvidenceCheck do
             }
 
             it { expect(evidence_check.total_income).to eq 12.00 }
+            it { expect(evidence_check.hmrc_income).to eq 12.00 }
+
+            context 'different id' do
+              let(:partner_tax_id) { 1234 }
+
+              it 'has diffenent incomes' do
+                expect(evidence_check.applicant_hmrc_check.paye_income).to eq 100
+                expect(evidence_check.applicant_hmrc_check.child_tax_credit_income).to eq 10
+                expect(evidence_check.partner_hmrc_check.paye_income).to eq 0
+                expect(evidence_check.partner_hmrc_check.child_tax_credit_income).to eq 12
+              end
+
+              it {
+                expect(evidence_check.hmrc_income).to eq 122.00
+              }
+            end
           end
 
           describe 'higher work tax is taken' do
