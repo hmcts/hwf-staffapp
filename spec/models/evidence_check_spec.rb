@@ -101,8 +101,10 @@ describe EvidenceCheck do
               work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
             }
           }
-          let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, income: [{ "taxablePay" => 120.04 }], additional_income: 0,
-            tax_credit: tax_credit_applicant) }
+          let(:applicant_check) {
+            create(:hmrc_check, :applicant, evidence_check: evidence_check, income: [{ "taxablePay" => 120.04 }], additional_income: 0,
+                                            tax_credit: tax_credit_applicant)
+          }
 
           it { expect(evidence_check.total_income).to eq 140.04 }
         end
