@@ -84,6 +84,30 @@ describe EvidenceCheck do
       let(:additional_income) { 0 }
       let(:additional_income_partner) { 0 }
 
+      context 'single applicant' do
+        before { applicant_check }
+
+        context 'paye only' do
+          let(:additional_income) { 0 }
+          it { expect(evidence_check.total_income).to eq 120.04 }
+        end
+
+        context 'paye and tax' do
+          let(:additional_income) { 0 }
+          let(:tax_credit_applicant) {
+            {
+              id: 5,
+              child: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }],
+              work: [{ "payments" => [{ "amount" => 10.00, "startDate" => "1996-01-01", "endDate" => "1996-02-01", "frequency" => 1 }] }]
+            }
+          }
+          let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, income: [{ "taxablePay" => 120.04 }], additional_income: 0,
+            tax_credit: tax_credit_applicant) }
+
+          it { expect(evidence_check.total_income).to eq 140.04 }
+        end
+      end
+
       context 'total income' do
         before {
           applicant_check
