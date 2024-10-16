@@ -11,7 +11,7 @@ module HmrcCheckeable
 
   def hmrc_income
     if same_tax_id?
-      child_tax_credit_income + work_tax_credit_income
+      child_tax_credit_income + work_tax_credit_income + pay_income
     else
       applicant_hmrc_income + partner_hmrc_income
     end
@@ -54,6 +54,10 @@ module HmrcCheckeable
   def same_tax_id?
     return false if applicant_tax_id.nil? || partner_tax_id.nil?
     applicant_tax_id == partner_tax_id
+  end
+
+  def pay_income
+    (applicant_hmrc_check.paye_income + partner_hmrc_check.paye_income) || 0
   end
 
 end

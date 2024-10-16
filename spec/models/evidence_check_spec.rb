@@ -214,7 +214,7 @@ describe EvidenceCheck do
             }
 
             it { expect(evidence_check.total_income).to eq 12.00 }
-            it { expect(evidence_check.hmrc_income).to eq 12.00 }
+            it { expect(evidence_check.hmrc_income).to eq 112.00 }
 
             context 'different id' do
               let(:partner_tax_id) { 1234 }
