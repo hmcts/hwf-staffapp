@@ -4,9 +4,12 @@ module HmrcIncomeParser
 
   def self.paye(paye_hash, average_three_months = false)
     @average_three_months = average_three_months
-    sum = paye_hash.sum do |i|
+
+    sum = 0
+    paye_hash.each do |i|
+      next if i.blank?
       taxable = i['taxablePay']
-      taxable + pension(i)
+      sum += taxable + pension(i)
     end
     total_sum(sum)
   rescue NoMethodError, TypeError
