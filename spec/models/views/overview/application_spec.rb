@@ -271,7 +271,7 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#result' do
-    subject { view.result }
+    subject(:view_result) { view.result }
 
     let(:application) { build_stubbed(:application, outcome: outcome) }
 
@@ -312,6 +312,16 @@ RSpec.describe Views::Overview::Application do
         let(:outcome) { 'none' }
 
         it { is_expected.to eq 'full' }
+      end
+    end
+
+    context 'no evidence check' do
+      let(:application) { build_stubbed(:application, outcome: outcome) }
+
+      context 'when the application is a no remission' do
+        let(:outcome) { 'none' }
+
+        it { expect { view_result }.not_to raise_error }
       end
     end
   end
