@@ -1,4 +1,6 @@
 class EvidenceCheck < ActiveRecord::Base
+  include HmrcCheckeable
+
   belongs_to :application, optional: false
   belongs_to :completed_by, -> { with_deleted }, class_name: 'User', optional: true
   has_many :hmrc_checks, dependent: :destroy
@@ -45,14 +47,6 @@ class EvidenceCheck < ActiveRecord::Base
     update(evidence_params)
   end
 
-  def total_income
-    applicant_hmrc_income + partner_hmrc_income + additional_income
-  end
-
-  def hmrc_income
-    applicant_hmrc_income + partner_hmrc_income
-  end
-
   private
 
   def income_calculation
@@ -73,21 +67,6 @@ class EvidenceCheck < ActiveRecord::Base
   def income_for_calculation
     return total_income.to_i if application.income.to_i < total_income.to_i
     application.income.to_i
-  end
-
-  def additional_income
-    applicant_additional_income = applicant_hmrc_check.try(:additional_income) || 0
-    partner_additional_income = partner_hmrc_check.try(:additional_income) || 0
-    [applicant_additional_income, partner_additional_income].max
-  end
-
-  def partner_hmrc_income
-    tax_id = applicant_hmrc_check.try(:tax_credit_id)
-    partner_hmrc_check.try(:hmrc_income, tax_id) || 0
-  end
-
-  def applicant_hmrc_income
-    applicant_hmrc_check.try(:hmrc_income) || 0
   end
 
   def post_ucd?
