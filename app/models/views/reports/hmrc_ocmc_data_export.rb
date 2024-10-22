@@ -145,7 +145,7 @@ module Views
       end
       # rubocop:enable Metrics/AbcSize
 
-      def income_kind(value)
+      def income_kind(value) # rubocop:disable Metrics/MethodLength
         return unless value
 
         income_kind_hash = YAML.parse(value).to_ruby
@@ -159,7 +159,7 @@ module Views
         [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         ""
-      end
+      end # rubocop:enable Metrics/MethodLength
 
       def hmrc_total_income(row)
         paye = hmrc_income(row['HMRC total income'])
