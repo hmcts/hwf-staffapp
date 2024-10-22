@@ -1,17 +1,20 @@
 module ProcessedViewsHelper
-  # rubocop:disable Rails/HelperInstanceVariable,Metrics/AbcSize
+  # rubocop:disable Rails/HelperInstanceVariable,Metrics/AbcSize,Metrics/MethodLength
   def assign_views
     @application = application
     @fee_status = Views::Overview::FeeStatus.new(application)
     @applicant = Views::Overview::Applicant.new(application)
     @details = Views::Overview::Details.new(application)
+    @savings = Views::Overview::SavingsAndInvestments.new(application.saving)
+    @children = Views::Overview::Children.new(application)
+    @income = Views::Overview::Income.new(application)
     @application_view = Views::Overview::Application.new(application)
     @result = Views::ApplicationResult.new(application)
     @declaration = Views::Overview::Declaration.new(application)
     @representative = Views::Overview::Representative.new(application.representative)
     @processing_details = Views::ProcessedData.new(application)
   end
-  # rubocop:enable Rails/HelperInstanceVariable,Metrics/AbcSize
+  # rubocop:enable Rails/HelperInstanceVariable,Metrics/AbcSize,Metrics/MethodLength
 
   def paginate(query)
     if per_page_is_all?
