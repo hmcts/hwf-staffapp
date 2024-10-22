@@ -61,7 +61,7 @@
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
-              savings_threshold: currency_format(@application.saving.amount),
+              savings_threshold: display_threshold(@application),
               savings_total: saving_value(@application))
 
       -elsif display_income_failed_letter?(@application)
@@ -100,6 +100,22 @@
               user_name: current_user.name,
               amount_to_pay: currency_format(@application.detail.fee),
               date_for_part_payment: @confirm.expires_at)
+
+      - elsif display_evidence_failed_letter?(@application)
+        p.govuk-body Write the reference number on the top right corner of the paper form
+        p.govuk-body Copy the reference number into the case management system
+        p.govuk-body Write to the applicant and send back all the documents
+        p: strong = link_to 'See the guides', guide_path, target: 'blank'
+
+        .confirmation-letter
+          = t('new_letters.evidence.evidence_incorrect_html',
+                  reference: @application.reference,
+                  full_name: @application.applicant.full_name,
+                  legal_rep: @confirm.representative_full_name,
+                  greeting: greeting_condition(@confirm, @application),
+                  user_name: current_user.name,
+                  expiry_date: @confirm.expires_at,
+                  amount_to_pay: currency_format(@application.detail.fee))
 
       -else
         p.govuk-body Write the reference number on the top right corner of the paper form

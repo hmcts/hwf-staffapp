@@ -24,6 +24,12 @@ module ResultHelper
     !checks.last.benefits_valid?
   end
 
+  def display_evidence_failed_letter?(application)
+    checks = application.evidence_check
+    return false if checks.blank?
+    checks.incorrect_reason_category.present? && checks.correct == false
+  end
+
   def income_value(application)
     return currency_format(application.evidence_check.income) if application.evidence_check&.income&.positive?
 
@@ -47,6 +53,28 @@ module ResultHelper
   def currency_format(value)
     return unless value
     number_to_currency(value, precision: 2).gsub('.00', '')
+  end
+
+  def exceeds_saving_threshold?(application)
+    application.saving.over_66 || application.saving.max_threshold_exceeded
+  end
+
+  def exceeds_fee_threshold?(application)
+    application.detail.fee.between?(1421.0, 4999.0) && application.saving.amount > (3.0 * application.detail.fee)
+  end
+
+  def exceeds_lower_fee_threshold?(application)
+    application.saving.amount > Settings.ucd_savings_threshold.minimum_value && application.detail.fee < 1420.0
+  end
+
+  def display_threshold(application)
+    if exceeds_saving_threshold?(application)
+      currency_format(Settings.savings_threshold.maximum_value)
+    elsif exceeds_fee_threshold?(application)
+      currency_format((3.0 * application.detail.fee))
+    elsif exceeds_lower_fee_threshold?(application)
+      currency_format(Settings.ucd_savings_threshold.minimum_value)
+    end
   end
 
 end

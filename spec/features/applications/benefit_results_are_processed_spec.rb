@@ -42,6 +42,8 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'yes' }
 
         scenario 'the summary page is rendered' do
+          choose 'Applicant'
+          click_button 'Next'
           expect(page).to have_xpath('//h1', text: 'Check details')
         end
       end
@@ -50,6 +52,8 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'deceased' }
 
         scenario 'the summary page is rendered' do
+          choose 'Applicant'
+          click_button 'Next'
           expect(page).to have_xpath('//h1', text: 'Check details')
         end
       end
@@ -76,6 +80,8 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'superseded' }
 
         scenario 'the summary page is rendered' do
+          choose 'Applicant'
+          click_button 'Next'
           expect(page).to have_xpath('//h1', text: 'Check details')
         end
       end

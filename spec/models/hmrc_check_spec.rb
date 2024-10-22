@@ -226,14 +226,14 @@ RSpec.describe HmrcCheck do
       it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
       it { expect(hmrc_check.tax_credit_id).to eq 123 }
 
-      context 'hmrc income for partner' do
+      context 'hmrc income for partner with tax id' do
         before {
           hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 7.00 } }]
           hmrc_check.save
         }
         it { expect(hmrc_check.hmrc_income).to eq 348.58 }
-        it { expect(hmrc_check.hmrc_income(123)).to eq 107.98 }
-        it { expect(hmrc_check.hmrc_income(124)).to eq 348.58 }
+        it { expect(hmrc_check.same_tax_id?(123)).to be true }
+        it { expect(hmrc_check.same_tax_id?(124)).to be false }
       end
 
     end

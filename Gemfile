@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.2'
+ruby '3.3.5'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 7.2.1.1'
 gem 'redis'
 # profiling in Sentry
 gem 'stackprof'
@@ -40,6 +40,7 @@ gem 'devise-security', '~> 0.18.0'
 
 # authorisation
 gem 'pundit', '~> 2.1'
+gem 'ostruct'
 
 # background jobs and scheduling
 gem 'delayed_cron_job'
@@ -130,7 +131,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '~> 0.21'
+  gem 'simplecov', '~> 0.22.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'timecop'
@@ -141,7 +142,7 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'codeclimate-test-reporter'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'

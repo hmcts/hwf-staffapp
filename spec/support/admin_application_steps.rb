@@ -180,3 +180,9 @@ def fill_in_date_fee_paid(date_fee_paid)
   fill_in 'application_month_date_fee_paid', with: date_fee_paid.month
   fill_in 'application_year_date_fee_paid', with: date_fee_paid.year
 end
+
+def fill_declaration
+  expect(page).to have_content('Declaration and statement of truth')
+  choose 'Applicant'
+  click_button 'Next'
+end
