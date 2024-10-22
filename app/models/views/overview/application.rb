@@ -32,8 +32,9 @@ module Views
       def income_kind_applicant # rubocop:disable Metrics/AbcSize
         return if @application.income_kind.nil? || @application.income_kind[:applicant].blank?
 
-        if @application.income_kind[:applicant].first.include?(' ') || # temp check for name value
-           @application.income_kind[:applicant].first.include?("Loans")
+        if @application.income_kind[:applicant].first.is_a? String || # temp check for name value
+            @application.income_kind[:applicant].first.include?(' ') ||
+            @application.income_kind[:applicant].first.include?("Loans")
           @application.income_kind[:applicant].join(', ')
         else
           @application.income_kind[:applicant].map do |kind|
@@ -45,8 +46,9 @@ module Views
       def income_kind_partner # rubocop:disable Metrics/AbcSize
         return if @application.income_kind.nil? || @application.income_kind[:partner].blank?
 
-        if @application.income_kind[:partner].first.include?(' ') || # temp check for name value
-           @application.income_kind[:partner].first.include?("Loans")
+        if @application.income_kind[:partner].first.is_a? String || # temp check for name value
+            @application.income_kind[:partner].first.include?(' ') ||
+            @application.income_kind[:partner].first.include?("Loans")
           @application.income_kind[:partner].join(', ')
         else
           @application.income_kind[:partner].map do |kind|
