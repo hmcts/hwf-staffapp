@@ -1,6 +1,6 @@
 module Views
   module Overview
-    class Application # rubocop:disable Metrics/ClassLength
+    class Application
       include OverviewHelper
       include HmrcHelper
 
@@ -155,4 +155,4 @@ module Views
       end
     end
   end
-end # rubocop:enable Metrics/ClassLength
+end
