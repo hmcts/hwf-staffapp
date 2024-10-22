@@ -29,33 +29,21 @@ module Views
         format_locale(['full', 'part'].include?(result).to_s)
       end
 
-      def income_kind_applicant # rubocop:disable Metrics/AbcSize
+      def income_kind_applicant
         return if @application.income_kind.nil? || @application.income_kind[:applicant].blank?
 
-        if @application.income_kind[:applicant].first.is_a?(String) || # temp check for name value
-           @application.income_kind[:applicant].first.include?(' ') ||
-           @application.income_kind[:applicant].first.include?("Loans")
-          @application.income_kind[:applicant].join(', ')
-        else
-          @application.income_kind[:applicant].map do |kind|
-            I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
-          end.join(', ')
-        end
-      end # rubocop:enable Metrics/AbcSize
+        @application.income_kind[:applicant].map do |kind|
+          I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
+        end.join(', ')
+      end
 
-      def income_kind_partner # rubocop:disable Metrics/AbcSize
+      def income_kind_partner
         return if @application.income_kind.nil? || @application.income_kind[:partner].blank?
 
-        if @application.income_kind[:partner].first.is_a?(String) || # temp check for name value
-           @application.income_kind[:partner].first.include?(' ') ||
-           @application.income_kind[:partner].first.include?("Loans")
-          @application.income_kind[:partner].join(', ')
-        else
-          @application.income_kind[:partner].map do |kind|
-            I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
-          end.join(', ')
-        end
-      end # rubocop:enable Metrics/AbcSize
+        @application.income_kind[:partner].map do |kind|
+          I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
+        end.join(', ')
+      end
 
       def income_period
         return if @application.income_period.nil?
