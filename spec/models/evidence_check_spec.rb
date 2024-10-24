@@ -138,6 +138,7 @@ describe EvidenceCheck do
             expect(evidence_check.income).to eq 520
             expect(evidence_check.outcome).to eq 'full'
             expect(evidence_check.amount_to_pay).to eq 0
+            expect(evidence_check.hmrc_income_used).to eq 220.08
           end
 
           context 'pre UCD' do
@@ -153,6 +154,8 @@ describe EvidenceCheck do
               expect(evidence_check.income).to eq 520
               expect(evidence_check.outcome).to eq 'none'
               expect(evidence_check.amount_to_pay).to eq 1
+              expect(evidence_check.hmrc_income).to eq 220.08
+              expect(evidence_check.hmrc_income_used).to eq evidence_check.hmrc_income
             end
           end
         end
