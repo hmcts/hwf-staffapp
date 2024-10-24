@@ -171,7 +171,7 @@ describe EvidenceCheck do
       end
 
       describe 'tax credits' do
-        let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, tax_credit: tax_credit_applicant, income: income) }
+        let(:applicant_check) { create(:hmrc_check, :applicant, evidence_check: evidence_check, tax_credit: tax_credit_applicant, income: income, additional_income: 1) }
         let(:partner_check) { create(:hmrc_check, :partner, evidence_check: evidence_check, tax_credit: tax_credit_partner, additional_income: 5) }
         let(:income) { [{ "taxablePay" => 94.00, "employeePensionContribs" => { "paid" => 6.00 } }] }
 
@@ -213,7 +213,7 @@ describe EvidenceCheck do
               }
             }
 
-            it { expect(evidence_check.total_income).to eq 117.00 }
+            it { expect(evidence_check.total_income).to eq 118.00 }
             it { expect(evidence_check.hmrc_income).to eq 112.00 }
 
             context 'different id' do
@@ -246,7 +246,7 @@ describe EvidenceCheck do
               }
             }
 
-            it { expect(evidence_check.total_income).to eq 118.00 }
+            it { expect(evidence_check.total_income).to eq 119.00 }
           end
 
           describe 'higher from each tax is taken' do
@@ -265,7 +265,7 @@ describe EvidenceCheck do
               }
             }
 
-            it { expect(evidence_check.total_income).to eq 130.00 }
+            it { expect(evidence_check.total_income).to eq 131.00 }
           end
         end
 
@@ -277,7 +277,7 @@ describe EvidenceCheck do
             applicant_check
           }
 
-          it { expect(evidence_check.total_income).to eq 145.00 }
+          it { expect(evidence_check.total_income).to eq 146.00 }
         end
 
         context 'total income no tax id' do
@@ -288,7 +288,7 @@ describe EvidenceCheck do
             applicant_check
           }
 
-          it { expect(evidence_check.total_income).to eq 145.00 }
+          it { expect(evidence_check.total_income).to eq 146.00 }
         end
 
         context 'total income no patner data' do
@@ -298,7 +298,7 @@ describe EvidenceCheck do
             applicant_check
           }
 
-          it { expect(evidence_check.total_income).to eq 120.00 }
+          it { expect(evidence_check.total_income).to eq 121.00 }
         end
 
         context 'total income no applicant data' do

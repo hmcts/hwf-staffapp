@@ -20,7 +20,7 @@ module HmrcCheckeable
   def additional_income
     applicant_additional_income = applicant_hmrc_check.try(:additional_income) || 0
     partner_additional_income = partner_hmrc_check.try(:additional_income) || 0
-    [applicant_additional_income, partner_additional_income].max
+    (applicant_additional_income + partner_additional_income) || 0
   end
 
   def child_tax_credit_income
