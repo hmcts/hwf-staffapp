@@ -9,7 +9,7 @@ gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.1.1'
+gem 'rails', '~> 7.2.0'
 gem 'redis'
 # profiling in Sentry
 gem 'stackprof'
