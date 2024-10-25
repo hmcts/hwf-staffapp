@@ -66,51 +66,25 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:tax_credit) { {} }
       let(:paye_income) { {} }
       let(:date_range) { { date_range: { from: "1/7/2022", to: "31/7/2022" } } }
+      let(:hmrc_income_used) { 123.56 }
 
-      before { hmrc_check }
+      before {
+        evidence_check.update(hmrc_income_used: hmrc_income_used)
+        hmrc_check
+      }
 
       context 'paye income' do
         let(:paye_income) { [{ "taxablePay" => 120.04 }] }
         it "calculates correct value" do
           data_row = data[3]
-          expect(data_row).to include('120.04')
+          expect(data_row).to include('123.56')
         end
       end
 
       context 'paye and tax credit income' do
-        let(:paye_income) { [{ "taxablePay" => 120.04 }] }
-        let(:tax_credit) {
-          {
-            child:
-            [
-              { "payProfCalcDate" => "2022-07-30",
-                "totalEntitlement" => 7432.23,
-                "childTaxCredit" => { "childCareAmount" => 1310.41, "ctcChildAmount" => 5321.05, "familyAmount" => 547.5, "babyAmount" => 0, "paidYTD" => 2634.71 },
-                "payments" =>
-               [{ "startDate" => "2022-07-05", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
-                { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
-                { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 147.74 },
-                { "startDate" => "2022-04-26", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.17 },
-                { "startDate" => "2022-05-10", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.2 }] }
-            ],
-            work:
-             [
-               { "payProfCalcDate" => "2022-07-30",
-                 "totalEntitlement" => 7432.23,
-                 "childTaxCredit" => { "childCareAmount" => 1310.41, "ctcChildAmount" => 5321.05, "familyAmount" => 547.5, "babyAmount" => 0, "paidYTD" => 2634.71 },
-                 "payments" =>
-                [{ "startDate" => "2022-07-05", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
-                 { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 165.26 },
-                 { "startDate" => "2022-04-19", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 147.74 },
-                 { "startDate" => "2022-04-26", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.17 },
-                 { "startDate" => "2022-05-10", "endDate" => "2022-08-30", "frequency" => 7, "tcType" => "ICC", "amount" => 155.2 }] }
-             ]
-          }
-        }
-
         it "calculates correct value" do
           data_row = data[3]
-          expect(data_row).to include('5044.46')
+          expect(data_row).to include('123.56')
         end
 
         it 'displays formatted date range' do
@@ -119,10 +93,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         end
 
         context 'no fail from tax_credit' do
-          let(:paye_income) { [{ "taxablePay" => 120.04 }] }
-          let(:tax_credit) {
-            { child: nil, work: [] }
-          }
+          let(:hmrc_income_used) { 120.04 }
+
           it "calculates correct value" do
             data_row = data[3]
             expect(data_row).to include('120.04')
