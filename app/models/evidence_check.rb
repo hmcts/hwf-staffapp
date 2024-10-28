@@ -41,7 +41,8 @@ class EvidenceCheck < ActiveRecord::Base
     evidence_params = {
       income: income_for_calculation,
       outcome: result[:outcome],
-      amount_to_pay: result[:amount_to_pay]
+      amount_to_pay: result[:amount_to_pay],
+      hmrc_income_used: hmrc_income
     }
 
     update(evidence_params)

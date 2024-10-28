@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_093923) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_24_124005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -257,6 +257,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_093923) do
     t.string "staff_error_details"
     t.string "checks_annotation"
     t.string "income_check_type"
+    t.decimal "hmrc_income_used", default: "0.0"
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
   end
 
