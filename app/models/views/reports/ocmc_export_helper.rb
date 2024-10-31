@@ -7,7 +7,17 @@ module Views
       end
 
       def build_data
-        ActiveRecord::Base.connection.execute(sql_query)
+        office_ids = Rails.application.config.datashare_office_ids
+        query = if @all_offices
+                  sql_query.
+                    sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
+                    sub("WHERE applications.office_id = #{@office_id}",
+                        "WHERE applications.office_id IN (#{office_ids.join(', ')})")
+                else
+                  sql_query
+                end
+
+        ActiveRecord::Base.connection.execute(query)
       end
 
       def children_age_band(value, attr_key)

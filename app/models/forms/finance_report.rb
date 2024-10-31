@@ -18,6 +18,7 @@ module Forms
     attribute :application_type, String
     attribute :jurisdiction_id, Integer
     attribute :entity_code, String
+    attribute :all_offices, Boolean
 
     validates :date_to, :date_from, presence: true
 
