@@ -10,7 +10,7 @@ module ApplicationCheckable
   end
 
   def hmrc_check_type?
-    hmrc_office_match? && applicant_valid_for_check? && partner_valid_for_check?
+    applicant_valid_for_check? && partner_valid_for_check?
   end
 
   private
@@ -26,9 +26,4 @@ module ApplicationCheckable
       applicant.partner_last_name.present? &&
       applicant.partner_date_of_birth.present?
   end
-
-  def hmrc_office_match?
-    Settings.evidence_check.hmrc.office_entity_code.include?(office.try(:entity_code))
-  end
-
 end

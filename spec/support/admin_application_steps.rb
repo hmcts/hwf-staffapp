@@ -11,6 +11,31 @@ def fill_personal_details(ni_number = 'SN123456C')
   click_button 'Next'
 end
 
+def fill_personal_details_no_ni
+  expect(page).to have_text 'Personal details'
+  fill_in 'Title', with: 'Mr.'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: '2000'
+  choose 'Single'
+  click_button 'Next'
+end
+
+def fill_personal_details_with_partner(ni_number = 'SN123456C')
+  expect(page).to have_text 'Personal details'
+  fill_in 'Title', with: 'Mr.'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: '2000'
+  fill_in 'National Insurance number', with: ni_number
+  choose 'Married or living with someone'
+  click_button 'Next'
+end
+
 def fill_application_details(court_fee = '1000')
   expect(page).to have_css('h1', text: 'Application details')
   fill_in 'application_fee', with: court_fee

@@ -166,9 +166,12 @@ describe ApplicationCheckable do
       end
     end
 
-    context 'office does not match' do
+    context 'all offices should match' do
       let(:office) { create(:office, entity_code: 'dig01') }
-      it { expect(application.hmrc_check_type?).to be false }
+      it {
+        expect(Settings.evidence_check.hmrc.office_entity_code.first).to eq('dig')
+        expect(application.hmrc_check_type?).to be true
+      }
     end
 
     context 'office does match' do
