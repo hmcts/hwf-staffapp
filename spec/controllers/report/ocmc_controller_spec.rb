@@ -102,8 +102,7 @@ RSpec.describe Report::OcmcController do
           month_date_to: '12',
           year_date_to: '2022',
           entity_code: office.id,
-          all_offices: true
-        }
+          all_offices: true }
       }
 
       it { expect(flash[:notice]).to eq('Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.') }
