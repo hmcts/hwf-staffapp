@@ -12,8 +12,8 @@ module Views
         @all_offices = all_offices
 
         @csv_file_name = "help-with-fees-datashare-applications-by-court-extract-" \
-                         "#{start_date[:day]}/#{start_date[:month]}/#{start_date[:year]}-" \
-                         "#{end_date[:day]}/#{end_date[:month]}/#{end_date[:year]}.csv"
+                         "#{start_date[:day]}-#{start_date[:month]}-#{start_date[:year]}-" \
+                         "#{end_date[:day]}-#{end_date[:month]}-#{end_date[:year]}.csv"
         @zipfile_path = "tmp/#{@csv_file_name}.zip"
       end
 
