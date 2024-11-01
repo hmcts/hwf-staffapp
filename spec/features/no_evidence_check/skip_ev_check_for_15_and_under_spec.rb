@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.feature 'Skip evidence check for 15 and under' do
 
   include Warden::Test::Helpers
@@ -51,7 +50,7 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     click_button 'Complete processing'
 
     expect(page).to have_content('For HMRC income checking')
-    expect(page).not_to have_content('✓ Eligible for help with fees')
+    expect(page).to have_no_content('✓ Eligible for help with fees')
   end
 
   scenario "If the applicant is over 16, 'Applicant over 16' is displayed on the Summary page" do
@@ -67,6 +66,6 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     click_button 'Complete processing'
 
     expect(page).to have_content('For HMRC income checking')
-    expect(page).not_to have_content('✓ Eligible for help with fees')
+    expect(page).to have_no_content('✓ Eligible for help with fees')
   end
 end
