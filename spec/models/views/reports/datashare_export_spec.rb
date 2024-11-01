@@ -71,7 +71,6 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
       it 'displays formatted date' do
         data_row = data[1]
-        puts data.inspect
         expect(data_row).to include('2021-01-01 00:00:00')
       end
 
