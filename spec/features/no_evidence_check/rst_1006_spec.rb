@@ -38,7 +38,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
+
+      expect(page).to have_content('- For HMRC income checking')
       expect(page).to have_no_content('✗   Not eligible for help with fees')
     end
   end
@@ -70,7 +71,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).to have_content('- For HMRC income checking')
       expect(page).to have_no_content('✗   Not eligible for help with fees')
     end
 
@@ -110,7 +111,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
         expect(page).to have_text 'Check details'
         click_button 'Complete processing'
 
-        expect(page).to have_content('Evidence of income needs to be checked')
+        expect(page).to have_content('- For HMRC income checking')
         expect(page).to have_no_content('✗   Not eligible for help with fees')
 
       end
