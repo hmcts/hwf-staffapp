@@ -40,7 +40,7 @@ module Views
         postcode: 'postcode',
         date_of_birth: 'date of birth',
         date_received: 'date received',
-        date_decision: 'decision date',
+        decision_date: 'decision date',
         date_fee_paid: 'date paid',
         date_submitted_online: 'date submitted online',
         statement_signed_by: 'statement signed by',
@@ -76,7 +76,7 @@ module Views
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
             :final_amount_to_pay].include?(attr)
           send(attr, row)
-        elsif [:date_received, :date_fee_paid, :date_of_birth,
+        elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
         elsif [:children_age_band_two, :children_age_band_one].include?(attr)
