@@ -8,7 +8,7 @@ class ProcessOnlineApplicationPage < BasePage
     sections :group, '.group-level' do
       elements :input, 'input'
     end
-    element :jurisdiction, '.govuk-radios__item'
+    element :jurisdiction, '.govuk-radios__item label.govuk-radios__label'
     element :form_input, '#online_application_form_name'
     element :error, '.error', text: 'You must select a jurisdiction'
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
