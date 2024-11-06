@@ -44,8 +44,8 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 After do |scenario|
   if scenario.failed?
-    add_screenshot
-    add_browser_logs
+    # add_screenshot
+    # add_browser_logs
   end
 end
 
