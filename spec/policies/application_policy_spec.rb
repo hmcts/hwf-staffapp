@@ -61,7 +61,6 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
-    it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
   end

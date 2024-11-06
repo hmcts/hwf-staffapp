@@ -91,24 +91,26 @@
         .govuk-grid-column-full.table_data
           = render('home/last_updated_applications', type: :updated_applications, list: @last_updated_applications)
 
-    .govuk-grid-row
-      .govuk-grid-column-full
+    - unless current_user.admin?
+      .govuk-grid-row
+        .govuk-grid-column-full
+          h2.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
+            =t("in_progress_applications.title")
+          table.in-progress-applications
+            tbody
+              tr
+                td
+                  = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence',
+                          id: 'waiting-for-evidence'
+              tr
+                td
+                  = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment',
+                          id: 'waiting-for-part-payment'
 
-        h2.govuk-heading-m.heading-icon *{class: "heading-icon-evidence"}
-          =t("in_progress_applications.title")
-        table.in-progress-applications
-          tbody
-            tr
-              td
-                = link_to t("evidence.dashboard.heading"), evidence_checks_path, class: 'waiting-for-evidence',
-                        id: 'waiting-for-evidence'
-            tr
-              td
-                = link_to t("part_payment.dashboard.heading"), part_payments_path, class: 'waiting-for-part_payment',
-                        id: 'waiting-for-part-payment'
-    .govuk-grid-row
-      .govuk-grid-column-full
-        = render('home/processed_and_deleted_aplications')
+    - unless current_user.admin?
+      .govuk-grid-row
+        .govuk-grid-column-full
+          = render('home/processed_and_deleted_aplications')
 
 - if policy(:report).index? || policy(:office).index?
   section aria-label="Reports"

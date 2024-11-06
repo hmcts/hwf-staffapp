@@ -53,6 +53,8 @@ RSpec.feature 'Evidence check' do
 
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
+      # HMRC page check - choosig paper way
+      click_button('Next')
       expect(has_evidence_check?).to be_truthy
     end
 
@@ -85,7 +87,8 @@ RSpec.feature 'Evidence check' do
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-
+      # HMRC page check - choosig paper way
+      click_button('Next')
       expect(has_evidence_check_flagged?).to be_truthy
     end
   end
@@ -113,6 +116,8 @@ RSpec.feature 'Evidence check' do
 
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
+      # HMRC page check - choosig paper way
+      click_button('Next')
       expect(has_evidence_check?).to be_truthy
     end
   end
@@ -135,6 +140,7 @@ RSpec.feature 'Evidence check' do
 
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
+      expect(page).to have_text "Eligible for help with fees"
       expect(has_evidence_check?).to be_falsey
     end
   end
@@ -157,6 +163,8 @@ RSpec.feature 'Evidence check' do
 
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
+      # HMRC page check - choosig paper way
+      click_button('Next')
       expect(has_evidence_check?).to be_truthy
 
       # Creating another application that should pick up the evidence check
@@ -176,6 +184,8 @@ RSpec.feature 'Evidence check' do
 
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
+      # HMRC page check - choosig paper way
+      click_button('Next')
       expect(has_evidence_check?).to be_truthy
     end
   end

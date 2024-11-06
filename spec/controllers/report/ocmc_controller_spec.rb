@@ -52,9 +52,9 @@ RSpec.describe Report::OcmcController do
             entity_code: office.id }
         }
         it 'does something' do
-          allow(Views::Reports::OcmcDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::OcmcDataExport).to have_received(:new).with(date_from, date_to, office.id.to_s)
+          expect(Views::Reports::HmrcOcmcDataExport).to have_received(:new).with(date_from, date_to, office.id.to_s)
         end
       end
 
@@ -70,7 +70,7 @@ RSpec.describe Report::OcmcController do
       end
       context 'with valid data - both from and to dates' do
         before {
-          allow(Views::Reports::OcmcDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
         }
 
