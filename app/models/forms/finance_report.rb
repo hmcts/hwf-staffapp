@@ -26,7 +26,7 @@ module Forms
       after: :date_from, allow_blank: true
     }
 
-    validates :entity_code, presence: true, unless: proc { |form| form.all_offices || form.entity_code.present? }
+    validates :entity_code, presence: true, unless: proc { |form| form.all_offices || form.entity_code.nil? }
 
     before_validation :format_dates
 
