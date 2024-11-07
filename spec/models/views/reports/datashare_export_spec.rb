@@ -8,7 +8,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
 
   let(:office) { create(:office, id: 164, name: 'test office') }
-  let(:office2) { create(:office, id: 167, name: 'no appear office') }
+  let(:office2) { create(:office, id: 167, name: 'appearing office') }
   let(:office3) { create(:office, id: 165, name: 'another working office') }
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
@@ -42,8 +42,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       application1.applicant.update(partner_ni_number: 'SN789654C')
     end
 
-    it 'return 2 rows csv data' do
-      expect(data.count).to be(3)
+    it 'return 4 rows csv data' do
+      expect(data.count).to be(4)
     end
 
     context 'data fields' do
@@ -57,16 +57,9 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         data_row = data[1]
         expect(data_row).to include('another working office')
         data_row = data[2]
+        expect(data_row).to include('appearing office')
+        data_row = data[3]
         expect(data_row).to include('test office')
-      end
-
-      it 'non-datashare office does not appear' do
-        data_row = data[1]
-        expect(data_row).not_to include('no appear office')
-        expect(data_row).not_to include('AB001-21-2')
-        data_row = data[2]
-        expect(data_row).not_to include('no appear office')
-        expect(data_row).not_to include('AB001-21-2')
       end
 
       it 'displays formatted date' do
@@ -78,6 +71,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         data_row = data[1]
         expect(data_row).to include('AB001-21-3')
         data_row = data[2]
+        expect(data_row).to include('AB001-21-2')
+        data_row = data[3]
         expect(data_row).to include('AB001-21-1')
       end
 
@@ -85,11 +80,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         data_row = data[1]
         expect(data_row).to include('805')
         data_row = data[2]
+        expect(data_row).to include('750')
+        data_row = data[3]
         expect(data_row).to include('500')
       end
 
       it 'has correct income period' do
         data_row = data[2]
+        expect(data_row).to include('last_year')
+        data_row = data[3]
         expect(data_row).to include('last_month')
       end
 
