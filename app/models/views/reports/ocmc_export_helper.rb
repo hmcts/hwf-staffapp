@@ -7,12 +7,11 @@ module Views
       end
 
       def build_data
-        office_ids = Rails.application.config.datashare_office_ids
         query = if @all_offices
                   sql_query.
                     sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
                     sub("WHERE applications.office_id = #{@office_id}",
-                        "WHERE applications.office_id IN (#{office_ids.join(', ')})")
+                        "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
                 else
                   sql_query
                 end
