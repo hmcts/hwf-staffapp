@@ -98,7 +98,7 @@ gem 'virtus'
 gem 'net-pop', github: 'ruby/net-pop'
 
 # To pass vulnerability in 3.3.5
-gem 'rexml', '>= 3.3.6'
+gem 'rexml', '>= 3.3.9'
 
 # GovUK Notify
 gem 'govuk_notify_rails'

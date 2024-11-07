@@ -6,7 +6,8 @@ RSpec.describe Views::Reports::RawDataExport do
   subject(:data) { described_class.new(start_date_params, end_date_params) }
 
   let(:office) { create(:office) }
-  let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: Time.zone.now } }
+  let(:decision_date) { Time.zone.now.freeze }
+  let(:shared_parameters) { { office: office, business_entity: business_entity, decision_date: } }
   let(:business_entity) { create(:business_entity, sop_code: 135864) }
   let(:start_date) { Time.zone.today - 1.month }
   let(:start_date_params) {
@@ -32,8 +33,8 @@ RSpec.describe Views::Reports::RawDataExport do
   describe 'data returned should only include processed applications' do
     subject { data.total_count }
 
-    let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: Time.zone.now } }
-    let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: Time.zone.now } }
+    let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: } }
+    let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: } }
     before do
       # include these
       create_list(:application_full_remission, 1, :processed_state, shared_parameters)
@@ -41,7 +42,7 @@ RSpec.describe Views::Reports::RawDataExport do
       create(:application_part_remission, :processed_state, shared_parameters)
       create(:application_no_remission, :processed_state, shared_parameters)
       # and exclude the following
-      create(:application_full_remission, :processed_state, business_entity: business_entity, decision_date: 2.months.ago)
+      create(:application_full_remission, :processed_state, business_entity: business_entity, decision_date: 2.months.ago.freeze)
       create(:application_full_remission, :processed_state, ignore_these_parameters)
       create(:application_full_remission, :waiting_for_evidence_state, shared_parameters)
       create(:application_full_remission, :waiting_for_part_payment_state, shared_parameters)
@@ -79,7 +80,7 @@ RSpec.describe Views::Reports::RawDataExport do
     }
     let(:full_no_ec) {
       create(:application_full_remission, :processed_state, :applicant_full,
-             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             decision_date:, office: office, business_entity: business_entity,
              amount_to_pay: 0, decision_cost: 300.24, income_min_threshold_exceeded: true,
              detail: full_no_ec_detail, children_age_band: { one: 1, two: 0 }, income_period: 'last_month')
     }
@@ -87,43 +88,43 @@ RSpec.describe Views::Reports::RawDataExport do
 
     let(:part_no_ec) {
       create(:application_part_remission, :processed_state,
-             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             decision_date:, office: office, business_entity: business_entity,
              amount_to_pay: 50, decision_cost: 250, part_payment: part_payment_part, detail: part_no_ec_detail, income_period: 'average')
     }
     let(:part_no_ec_detail) { create(:complete_detail, :legal_representative, case_number: 'JK123456C', fee: 300, jurisdiction: business_entity.jurisdiction, calculation_scheme: 'pre_ucd') }
 
     let(:part_no_ec_return_pp) {
       create(:application_part_remission, :processed_state,
-             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             decision_date:, office: office, business_entity: business_entity,
              amount_to_pay: 50.6, decision_cost: 0, part_payment: part_payment_return, detail: part_no_ec_return_pp_detail)
     }
 
     let(:part_no_ec_return_pp_detail) { create(:complete_detail, :applicant, case_number: 'JK123456F', fee: 300.45, jurisdiction: business_entity.jurisdiction) }
 
     let(:part_no_ec_none_pp) {
-      create(:application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create(:application_part_remission, :processed_state, decision_date:, office: office, business_entity: business_entity,
                                                             amount_to_pay: 50.6, decision_cost: 0, fee: 300.45, part_payment: part_payment_none)
     }
 
     let(:full_ec) {
-      create(:application_full_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create(:application_full_remission, :processed_state, decision_date:, office: office, business_entity: business_entity,
                                                             amount_to_pay: 0, decision_cost: 300, fee: 300)
     }
 
     let(:part_ec) {
-      create(:application_part_remission, :processed_state, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create(:application_part_remission, :processed_state, decision_date:, office: office, business_entity: business_entity,
                                                             amount_to_pay: 50, decision_cost: 200, fee: 300, children_age_band: { one: 1, two: 2 })
     }
 
     let(:none_no_ec) {
       create(:application_no_remission, :processed_state, :applicant_full,
-             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             decision_date:, office: office, business_entity: business_entity,
              amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, children: 3, income: 2000, children_age_band: { one: 1, two: 2 })
     }
 
     let(:none_ec) {
       create(:application_no_remission, :processed_state, :applicant_full,
-             decision_date: Time.zone.now, office: office, business_entity: business_entity,
+             decision_date:, office: office, business_entity: business_entity,
              amount_to_pay: 0, decision_cost: 0, children: 3,
              income: 2000, income_max_threshold_exceeded: true, detail: none_ec_detail,
              online_application: online_application, children_age_band: { one: 1, two: 2 }, saving: none_ec_saving)
@@ -143,7 +144,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,,#{dob},#{date_received},,,litigation_friend,true,false,post_ucd")
+        expect(export).to include("JK123455B,,#{dob},#{date_received},#{decision_date.to_fs},,,litigation_friend,true,false,post_ucd")
       end
     end
 
@@ -158,7 +159,7 @@ RSpec.describe Views::Reports::RawDataExport do
         date_received = part_no_ec.detail.date_received.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("true,JK123456C,,#{dob},#{date_received},,,legal_representative,false,false,pre_ucd")
+        expect(export).to include("true,JK123456C,,#{dob},#{date_received},#{decision_date.to_fs},,,legal_representative,false,false,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -170,7 +171,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,JK123456F,,#{dob},#{date_received},,,applicant")
+        expect(export).to include("return,JK123456F,,#{dob},#{date_received},#{decision_date.to_fs},,,applicant")
       end
 
       it 'part payment outcome is "none"' do
@@ -207,7 +208,7 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,,false,false,2000,5555,over,,NI number,3,1,2,true,No,none,300.34,0.0,paper"
 
         expect(export).to include(row)
-        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},,#{online_date},applicant,false,false")
+        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},,#{online_date},applicant,false,false")
 
       end
 
@@ -263,7 +264,7 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:date_fee_paid) { '' }
     subject { data.total_count }
     let(:application_no_remission) {
-      create(:application_no_remission, :processed_state, :applicant_full, decision_date: Time.zone.now, office: office, business_entity: business_entity,
+      create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office: office, business_entity: business_entity,
                                                                            amount_to_pay: 300.34, decision_cost: 0, fee: 300.34, children: 3, income: 2000,
                                                                            date_received: date_received, date_fee_paid: date_fee_paid)
     }
@@ -288,7 +289,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,High,,,JK123456A,,25/11/2000,10/11/2020,10/10/2020"
+        row = "paper,false,false,High,,,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs}"
         expect(export).to include(row)
       end
     end
@@ -300,7 +301,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,Medium,,,JK123456A,,25/11/2000,10/11/2020,,"
+        row = "paper,false,false,Medium,,,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs},"
         expect(export).to include(row)
       end
     end

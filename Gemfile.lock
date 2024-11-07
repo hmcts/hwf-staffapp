@@ -751,7 +751,7 @@ DEPENDENCIES
   rails-i18n (~> 7.0.3)
   redis
   rest-client
-  rexml (>= 3.3.6)
+  rexml (>= 3.3.9)
   rspec-rails
   rspec_junit_formatter
   rubocop
