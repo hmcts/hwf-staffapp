@@ -32,5 +32,6 @@ module DownloadHelpers
   def clear_downloads
     FileUtils.rm_f(downloads)
   end
-  module_function :downloads, :download, :download_content, :wait_for_download, :downloaded?, :downloading?, :clear_downloads
+
+  :downloads
 end
