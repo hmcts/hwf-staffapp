@@ -9,7 +9,7 @@ module Views
         @application = calling_object
       else
         @evidence_or_part_payment = calling_object
-        @application = calling_object.application
+        @application = calling_object&.application
       end
     end
 
