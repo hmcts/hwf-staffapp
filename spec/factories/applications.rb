@@ -113,6 +113,7 @@ FactoryBot.define do
       decision { outcome }
       decision_type { 'application' }
       state { :deleted }
+      deleted_reasons_list { 'Typo/spelling error' }
       deleted_reason { 'I did not like it' }
       deleted_at { Time.zone.now }
       deleted_by factory: [:user]

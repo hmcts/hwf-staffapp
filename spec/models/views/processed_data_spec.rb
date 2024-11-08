@@ -48,7 +48,7 @@ RSpec.describe Views::ProcessedData do
     let(:application) { build_stubbed(:application_full_remission, :processed_state, :deleted_state) }
 
     it 'returns the processed by data' do
-      expect(application_deleted).to eql(on: application.deleted_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.deleted_by.name, text: 'Reason for deletion: "I did not like it"')
+      expect(application_deleted).to eql(on: application.deleted_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: application.deleted_by.name, text: 'Reason for deletion: "Typo/spelling error: I did not like it"')
     end
 
   end

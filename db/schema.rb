@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_24_124005) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_102655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -105,6 +105,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_124005) do
     t.date "purged_at"
     t.text "children_age_band"
     t.string "income_period"
+    t.string "deleted_reasons_list"
     t.index ["business_entity_id"], name: "index_applications_on_business_entity_id"
     t.index ["created_at"], name: "index_applications_on_created_at"
     t.index ["decision_cost"], name: "index_applications_on_decision_cost"

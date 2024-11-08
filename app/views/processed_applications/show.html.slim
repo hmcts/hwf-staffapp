@@ -11,6 +11,11 @@
 
       = form_for @form, as: :application, url: processed_application_path, method: :put, html: { autocomplete: 'off', class: 'delete-form govuk-!-margin-top-3' } do |f|
         .govuk-form-group
+          = f.label :deleted_reasons_list, t('deleted_reasons_list', scope: @form.i18n_scope), class: 'govuk-label', for: 'application_deleted_reasons_list'
+          span.govuk-error-message
+            = f.label :deleted_reasons_list, @form.errors[:deleted_reasons_list].join(', ').html_safe, class: 'error' if @form.errors[:deleted_reasons_list].present?
+          = f.collection_select :deleted_reasons_list, @deleted_reasons, :to_s, :to_s, {}, { class: 'govuk-select' }
+        .govuk-form-group
           = f.label :deleted_reason, t('deleted_reason', scope: @form.i18n_scope), class: 'govuk-label', for: 'application_deleted_reason'
           span.govuk-error-message
             = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
