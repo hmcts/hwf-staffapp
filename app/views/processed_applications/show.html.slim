@@ -21,6 +21,7 @@
             = f.label :deleted_reason, @form.errors[:deleted_reason].join(','), class: 'error' if @form.errors[:deleted_reason].present?
           = f.text_field :deleted_reason, class: 'govuk-input'
 
+
         = f.submit 'Delete application', :class => 'govuk-button'
 
 - content_for(:javascripts)
