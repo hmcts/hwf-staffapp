@@ -438,7 +438,7 @@ describe ResolverService do
         application.reload
       end
 
-      let(:application) { create(:application, :processed_state, deleted_reason: 'I do not like it') }
+      let(:application) { create(:application, :processed_state, deleted_reasons_list: 'Typo/spelling error', deleted_reason: 'I do not like it') }
 
       it 'moves the application to :deleted state' do
         expect(deleted_application).to be_deleted

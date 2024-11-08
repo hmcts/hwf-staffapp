@@ -12,7 +12,7 @@ class ProcessedApplicationsController < ApplicationController
 
   def show
     authorize application
-
+    @deleted_reasons = delete_reasons
     @form = Forms::Application::Delete.new(application)
     assign_views
 
@@ -20,6 +20,7 @@ class ProcessedApplicationsController < ApplicationController
   end
 
   def update
+    @deleted_reasons = delete_reasons
     @form = Forms::Application::Delete.new(application)
     @form.update(delete_params)
     authorize application
@@ -40,6 +41,14 @@ class ProcessedApplicationsController < ApplicationController
 
   def delete_params
     params.require(:application).permit(*Forms::Application::Delete.permitted_attributes.keys).to_h
+  end
+
+  def delete_reasons
+    ['Incorrect application fee entered', 'Typo/spelling error',
+     'Duplicate application - should not have been processed', 'Evidence out of time and processed in error',
+     'Out of jurisdiction claim/wrong court', 'Other error made by office processing application',
+     'Multiple applicants for one court application', 'Unable to proceed with main court application',
+     'Issued in error - application should be for a refund', 'Customer error on completion of application']
   end
 
   def save_and_respond_on_update

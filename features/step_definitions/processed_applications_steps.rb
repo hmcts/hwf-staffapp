@@ -15,6 +15,10 @@ And("I click Delete application button without providing a reason") do
   processed_application_instance_page.content.delete_application_button.click
 end
 
+And("I select a reason with a mandatory description") do
+  processed_application_instance_page.content.delete_application_select.select 'Other error made by office processing application'
+end
+
 Then("I should see an Enter the reason error") do
   expect(processed_application_instance_page.content).to have_enter_the_reason_error
 end
