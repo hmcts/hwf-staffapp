@@ -15,7 +15,7 @@ RSpec.describe Report::OcmcController do
       entity_code: entity_code }
   }
   let(:entity_code) { office.id }
-  let(:office) { create(:office, entity_code: 'GE401') }
+  let(:office) { create(:office, entity_code: 'GE401', id: 164) }
   let(:hmrc_office) { create(:office, entity_code: Settings.evidence_check.hmrc.office_entity_code) }
 
   context 'as an admin' do
@@ -85,6 +85,32 @@ RSpec.describe Report::OcmcController do
         it 'sets the file type' do
           expect(response.headers['Content-Type']).to include('text/csv')
         end
+      end
+    end
+
+    context 'with valid data - both from and to dates' do
+      before {
+        allow(OcmcExportJob).to receive(:perform_later)
+        put :data_export, params: { forms_finance_report: dates }
+      }
+
+      let(:dates) {
+        { day_date_from: '01',
+          month_date_from: '01',
+          year_date_from: '2020',
+          day_date_to: '31',
+          month_date_to: '12',
+          year_date_to: '2022',
+          entity_code: office.id,
+          all_offices: true }
+      }
+
+      it { expect(flash[:notice]).to eq('Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.') }
+
+      it "run export in delayed job" do
+        from = { day: "01", month: "01", year: "2020" }
+        to = { day: "31", month: "12", year: "2022" }
+        expect(OcmcExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: office.id.to_s)
       end
     end
   end

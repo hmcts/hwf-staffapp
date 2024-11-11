@@ -60,6 +60,7 @@ module FrStaffapp
 
     config.active_support.remove_deprecated_time_with_zone_name = true
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
+
   end
   WillPaginate.per_page = 20
 end

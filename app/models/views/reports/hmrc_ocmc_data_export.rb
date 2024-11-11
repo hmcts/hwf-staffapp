@@ -1,14 +1,20 @@
 # rubocop:disable Metrics/ClassLength
 module Views
   module Reports
-    class HmrcOcmcDataExport
+    class HmrcOcmcDataExport < ReportBase
       require 'csv'
       include OcmcExportHelper
 
-      def initialize(start_date, end_date, office_id)
+      def initialize(start_date, end_date, office_id, all_offices: false)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
         @office_id = office_id
+        @all_offices = all_offices
+
+        @csv_file_name = "help-with-fees-datashare-applications-by-court-extract-" \
+                         "#{start_date[:day]}-#{start_date[:month]}-#{start_date[:year]}-" \
+                         "#{end_date[:day]}-#{end_date[:month]}-#{end_date[:year]}.csv"
+        @zipfile_path = "tmp/#{@csv_file_name}.zip"
       end
 
       def format_dates(date_attribute)

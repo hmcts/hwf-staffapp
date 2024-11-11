@@ -18,6 +18,7 @@ module Forms
     attribute :application_type, String
     attribute :jurisdiction_id, Integer
     attribute :entity_code, String
+    attribute :all_offices, Boolean
 
     validates :date_to, :date_from, presence: true
 
@@ -25,7 +26,7 @@ module Forms
       after: :date_from, allow_blank: true
     }
 
-    validates :entity_code, presence: true, unless: proc { |form| form.entity_code.nil? }
+    validates :entity_code, presence: true, unless: proc { |form| form.all_offices || form.entity_code.nil? }
 
     before_validation :format_dates
 
