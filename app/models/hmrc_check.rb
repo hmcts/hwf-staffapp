@@ -43,10 +43,10 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   def tax_credit_entitlement_check
-    HmrcIncomeParser.check_tax_credit_calculation_date(work_tax_credit, request_params[:date_range])
+    HmrcIncomeParser.check_tax_credit_calculation_date(work_tax_credit, request_date_range)
     true
-  rescue HmrcTaxCreditEntitlement => e
-    update(error_response: e.message)
+  rescue HmrcMissingData, HmrcTaxCreditEntitlement => e
+    update(error_response: e.message) if error_response.blank?
     false
   end
 
@@ -59,6 +59,11 @@ class HmrcCheck < ActiveRecord::Base
   end
 
   private
+
+  def request_date_range
+    raise HmrcMissingData, "Missing date request data" if request_params.nil?
+    request_params[:date_range]
+  end
 
   def tax_credit_income_calculation(income_source)
     return 0 if request_params.blank?

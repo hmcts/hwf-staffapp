@@ -115,6 +115,28 @@ RSpec.describe HmrcCheck do
 
       it { expect(hmrc_check.request_params[:date_range][:from]).to eql("2020-11-17") }
       it { expect(hmrc_check.request_params[:date_range][:to]).to eql("2020-11-18") }
+
+      context 'nil params' do
+        before {
+          hmrc_check.request_params = nil
+          hmrc_check.error_response = 'something is wrong'
+          hmrc_check.save
+        }
+        it { expect(hmrc_check.tax_credit_entitlement_check).to be false }
+
+        it 'do not update errro if present' do
+          hmrc_check.tax_credit_entitlement_check
+          expect(hmrc_check.error_response).to eq "something is wrong"
+        end
+
+        it 'saves error' do
+          hmrc_check.error_response = ''
+          hmrc_check.save
+
+          hmrc_check.tax_credit_entitlement_check
+          expect(hmrc_check.error_response).to eq "Missing date request data"
+        end
+      end
     end
 
     context 'hmrc income' do

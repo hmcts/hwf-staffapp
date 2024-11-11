@@ -1,0 +1,2 @@
+class HmrcMissingData < StandardError
+end
