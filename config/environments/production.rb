@@ -92,8 +92,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.assets.prefix = '/assets'
-  config.assets.js_compressor = :terser
+  # config.assets.prefix = '/assets'
+  # config.assets.js_compressor = :terser
 
   config.logstasher.enabled = true
   config.logstasher.suppress_app_log = true
