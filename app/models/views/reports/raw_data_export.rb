@@ -46,7 +46,8 @@ module Views
         statement_signed_by: 'statement signed by',
         partner_ni: 'partner ni entered',
         partner_name: 'partner name entered',
-        calculation_scheme: 'HwF Scheme'
+        calculation_scheme: 'HwF Scheme',
+        low_income_declared: 'low income declared'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -83,6 +84,8 @@ module Views
           children_age_band(row, attr)
         elsif attr == :over_66
           over_66?(row)
+        elsif attr == :low_income_declared
+          low_income_declared(row)
         else
           row.send(attr)
         end
@@ -161,7 +164,8 @@ module Views
                END AS partner_ni,
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
-               END AS partner_name
+               END AS partner_name,
+          CASE WHEN income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
         COLUMNS
       end
 
@@ -203,6 +207,12 @@ module Views
 
       def over_66?(row)
         row.send(:over_66) == true ? 'Yes' : 'No'
+      end
+
+      def low_income_declared(row)
+        return true if row.income < 101
+
+        false
       end
 
       def date_for_age_calculation(row)
