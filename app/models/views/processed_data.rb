@@ -75,7 +75,7 @@ module Views
       {
         on: prepare_date(@application.deleted_at),
         by: prepare_name(@application.deleted_by),
-        text: "Reason for deletion: \"#{@application.deleted_reason}\""
+        text: "Reason for deletion: \"#{@application.deleted_reasons_list}: #{@application.deleted_reason}\""
       }
     end
 

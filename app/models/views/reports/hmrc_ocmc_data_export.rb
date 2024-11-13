@@ -113,7 +113,9 @@ module Views
         CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
              WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
              END AS \"Partner name entered\",
-        details.calculation_scheme as \"HwF Scheme\"
+        details.calculation_scheme as \"HwF Scheme\",
+        applications.deleted_reasons_list as \"Deletion Reason\",
+        applications.deleted_reason as \"Reason Description\"
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id

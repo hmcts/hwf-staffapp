@@ -713,6 +713,7 @@ en-GB:
         q4_23: New HwF
 
       forms/application/delete:
+        deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
         evidence: 'Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?'
@@ -924,7 +925,7 @@ en-GB:
         forms/application/delete:
           attributes:
             deleted_reason:
-              blank: Enter the reason
+              blank: Enter the description
         forms/application/decision_override:
           attributes:
             value:
