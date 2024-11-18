@@ -19,23 +19,15 @@ class EvidenceCheckSelector
   end
 
   def evidence_check_type
-    if low_income_check?
-      'low_income'
-    elsif random_evidence_check?
+    if random_evidence_check?
       'random'
     elsif flagged?
       'flag'
+    elsif low_income_check?
+      'low_income'
     elsif does_applicant_have_pending_evidence_check?
       'ni_exist'
     end
-  end
-
-  def low_income_check?
-    return false unless low_income_rules?
-
-    outcome = low_income_rules_check
-    @low_income.clean_annotation_data unless outcome
-    outcome
   end
 
   def random_evidence_check?
@@ -52,7 +44,7 @@ class EvidenceCheckSelector
     ev_check_attributes = { expires_at: expires_at, check_type: type }
 
     if type == 'low_income'
-      ev_check_attributes[:checks_annotation] = @low_income.check_type if @low_income.try(:check_type)
+      ev_check_attributes[:checks_annotation] = @low_income&.annotation
     elsif @ccmcc.try(:check_type)
       ev_check_attributes[:checks_annotation] = @ccmcc.check_type
     end
@@ -151,20 +143,7 @@ class EvidenceCheckSelector
     @ccmcc.rule_applies?
   end
 
-  def low_income_rules_check
-    position = check_position_index(@low_income.frequency, low_income_query)
-
-    position_matching_frequency?(position, @low_income.frequency)
-  end
-
-  def low_income_query
-    query = 'applications.id <= ? AND applications.office_id = ?'
-    values = [@application.id, @application.office_id]
-
-    Query::EvidenceCheckable.new.find_all.where([query, values].flatten).last(@low_income.frequency)
-  end
-
-  def low_income_rules?
+  def low_income_check?
     @low_income = LowIncomeEvidenceCheckRules.new(@application)
     @low_income.rule_applies?
   end
