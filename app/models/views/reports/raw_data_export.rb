@@ -165,7 +165,7 @@ module Views
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
                END AS partner_name,
-          CASE WHEN income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
+          CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
         COLUMNS
       end
 
@@ -210,9 +210,7 @@ module Views
       end
 
       def low_income_declared(row)
-        return true if row.income < 101
-
-        false
+        row.income <= 101
       end
 
       def date_for_age_calculation(row)

@@ -132,6 +132,20 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:none_ec_detail) { create(:complete_detail, :applicant, case_number: 'JK123555F', fee: 300.34, date_received: date_received, jurisdiction: business_entity.jurisdiction) }
     let(:none_ec_saving) { create(:saving, over_66: over_66) }
 
+    let(:none_under_100) { create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office:, income: 100, business_entity: business_entity) }
+
+    context 'no_remission under 100' do
+      it do
+        id = none_under_100.id
+        reference = none_under_100.reference
+        export = data.to_csv.split("\n")
+        row = "#{id},#{office.name},#{reference}"
+        matching_row = export.find { |line| line.include?(row) }
+
+        expect(matching_row).to include('applicant,false,false,,true')
+      end
+    end
+
     context 'full_remission' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         full_no_ec
@@ -140,7 +154,7 @@ RSpec.describe Views::Reports::RawDataExport do
         office = full_no_ec.office.name
         dob = full_no_ec.applicant.date_of_birth.to_fs
         date_received = full_no_ec.detail.date_received.to_fs
-        row = "#{jurisdiction},135864,300.24,0.0,300.24,income,ABC123,,false,false,10,,under,last_month,None,1,1,0,true,No,full,0.0,300.24,paper"
+        row = "#{jurisdiction},135864,300.24,0.0,300.24,income,ABC123,,false,false,10,,under,last_month,None,1,1,0,true,No,full,0.0,300.24,paper,false"
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
