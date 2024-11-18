@@ -8,7 +8,7 @@ class LowIncomeEvidenceCheckRules
   end
 
   def rule_applies?
-    return false if filtered_office?
+    return false if filtered_office? || pre_ucd_scheme?
     low_income_applies?
   end
 
@@ -28,6 +28,10 @@ class LowIncomeEvidenceCheckRules
 
   def income_to_check
     @application.income.presence || 0
+  end
+
+  def pre_ucd_scheme?
+    FeatureSwitching::CALCULATION_SCHEMAS[0].to_s == @application.detail.calculation_scheme
   end
 
 end

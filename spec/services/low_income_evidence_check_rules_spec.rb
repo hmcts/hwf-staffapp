@@ -41,6 +41,18 @@ RSpec.describe LowIncomeEvidenceCheckRules do
         it { is_expected.to be true }
       end
     end
+
+    context 'pre ucd' do
+      before { application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1]) }
+      let(:office) { create(:office, entity_code: 'dig') }
+      it { is_expected.to be true }
+    end
+
+    context 'post ucd' do
+      before { application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[0]) }
+      let(:office) { create(:office, entity_code: 'dig') }
+      it { is_expected.to be false }
+    end
   end
 
   describe '#annotation' do
