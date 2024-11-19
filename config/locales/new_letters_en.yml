@@ -232,10 +232,12 @@ en-GB:
         </ul>
         <p>If you don’t use a debit card or cheques, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
         <p><strong>If you disagree with this decision</strong></p>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. Please resubmit your application to court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision. You can provide evidence to support your application for the Delivery Manager to consider. We will reply to you within 10 working days from receiving your application. </p>
+        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. If you have applied via paper, please resubmit your application to the court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision and providing supporting evidence. If you have applied online, your reference number is no longer valid and you will need to provide the court with a new online Help with Fees reference alongside reasons and evidence. We will reply to you within 10 working days from receiving your application. Please note that help with fees cannot take into account your expenditure. If you can demonstrate you are likely to experience exceptional hardship by paying the fee then you may qualify for exceptional remission. </p>
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful link<h3/>
-        <p>You can use the link below to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       no_part_payment_received_html: |
