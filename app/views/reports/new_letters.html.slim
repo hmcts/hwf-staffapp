@@ -44,8 +44,8 @@ h2.govuk-heading-m Processed application results in evidence check
   =t('letters.evidence.send_evidence.rental_html')
   =t('letters.evidence.send_evidence.goods_selling_html')
   =t('letters.evidence.send_evidence.other_monthly_income_html')
-  =t('letters.evidence.send_evidence.prisoner_income_html')
-  =t('letters.evidence.send_evidence.footer_html', reference: '{AUTO: APPLICATION REFERENCE}',user_name: '{AUTO: CURRENT USERS NAME}')
+  =t('letters.evidence.send_evidence.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+  =t('letters.evidence.send_evidence.footer_html', user_name: '{AUTO: CURRENT USERS NAME}')
 
 
 h2.govuk-heading-m Part payment - requested, but not received
@@ -257,8 +257,8 @@ h2.govuk-heading-m Processed application results in evidence check-representatio
   = t('new_letters.new_letters.processed_application.rental_html')
   = t('new_letters.new_letters.processed_application.goods_selling_html')
   = t('new_letters.new_letters.processed_application.other_income_header_html')
-  = t('new_letters.new_letters.processed_application.prisoner_income_html')
-  = t('new_letters.new_letters.processed_application.footer_html', user_name: '{AUTO: CURRENT USERS NAME}', reference: '{AUTO: APPLICATION REFERENCE}')
+  = t('new_letters.new_letters.processed_application.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+  = t('new_letters.new_letters.processed_application.footer_html', user_name: '{AUTO: CURRENT USERS NAME}')
 
 h2.govuk-heading-m Evidence check - requested, but not received-representation
 .confirmation-letter
