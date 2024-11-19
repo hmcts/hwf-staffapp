@@ -133,6 +133,7 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:none_ec_saving) { create(:saving, over_66: over_66) }
 
     let(:none_under_100) { create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office:, income: 100, business_entity: business_entity) }
+    let(:none_benefits) { create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office:, income: nil, business_entity: business_entity) }
 
     context 'no_remission under 100' do
       it do
@@ -143,6 +144,18 @@ RSpec.describe Views::Reports::RawDataExport do
         matching_row = export.find { |line| line.include?(row) }
 
         expect(matching_row).to include('applicant,false,false,,true')
+      end
+    end
+
+    context 'no_remission benfits no income' do
+      it do
+        id = none_benefits.id
+        reference = none_benefits.reference
+        export = data.to_csv.split("\n")
+        row = "#{id},#{office.name},#{reference}"
+        matching_row = export.find { |line| line.include?(row) }
+
+        expect(matching_row).to include('applicant,false,false,,false')
       end
     end
 

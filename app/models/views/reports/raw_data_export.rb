@@ -210,6 +210,7 @@ module Views
       end
 
       def low_income_declared(row)
+        return 'false' if row.income.blank?
         row.income <= 101
       end
 
