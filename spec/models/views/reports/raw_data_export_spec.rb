@@ -142,8 +142,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv.split("\n")
         row = "#{id},#{office.name},#{reference}"
         matching_row = export.find { |line| line.include?(row) }
-
-        expect(matching_row).to include('applicant,false,false,,true')
+        expect(matching_row).to include('Medium,3500.0,,true,JK123456A')
       end
     end
 
@@ -154,8 +153,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv.split("\n")
         row = "#{id},#{office.name},#{reference}"
         matching_row = export.find { |line| line.include?(row) }
-
-        expect(matching_row).to include('applicant,false,false,,false')
+        expect(matching_row).to include('Medium,3500.0,,false,JK123456A')
       end
     end
 
@@ -186,7 +184,7 @@ RSpec.describe Views::Reports::RawDataExport do
         date_received = part_no_ec.detail.date_received.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("true,JK123456C,,#{dob},#{date_received},#{decision_date.to_fs},,,legal_representative,false,false,pre_ucd")
+        expect(export).to include("true,false,JK123456C,,#{dob},#{date_received},#{decision_date.to_fs},,,legal_representative,false,false,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -198,7 +196,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,JK123456F,,#{dob},#{date_received},#{decision_date.to_fs},,,applicant")
+        expect(export).to include("return,false,JK123456F,,#{dob},#{date_received},#{decision_date.to_fs},,,applicant")
       end
 
       it 'part payment outcome is "none"' do
@@ -316,7 +314,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,High,,,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+        row = "paper,false,false,High,,,false,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs}"
         expect(export).to include(row)
       end
     end
@@ -328,7 +326,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,Medium,,,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs},"
+        row = "paper,false,false,Medium,,,false,JK123456A,,25/11/2000,10/11/2020,#{decision_date.to_fs},"
         expect(export).to include(row)
       end
     end
@@ -340,7 +338,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'nil max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,High,,,JK123456A,,25/11/2000,12/11/2020"
+        row = "paper,false,false,High,,,false,JK123456A,,25/11/2000,12/11/2020"
         expect(export).to include(row)
       end
     end
@@ -352,7 +350,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and nil max threshold' do
         export = data.to_csv
-        row = "paper,false,false,Low,,,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,Low,,,false,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
@@ -364,7 +362,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and false max threshold' do
         export = data.to_csv
-        row = "paper,false,false,Low,,,JK123456A,,25/11/2000,10/11/2020"
+        row = "paper,false,false,Low,,,false,JK123456A,,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end

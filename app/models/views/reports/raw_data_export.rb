@@ -36,6 +36,7 @@ module Views
         capital: 'capital band',
         savings_amount: 'savings and investments amount',
         part_payment_outcome: 'part payment outcome',
+        low_income_declared: 'low income declared',
         case_number: 'case number',
         postcode: 'postcode',
         date_of_birth: 'date of birth',
@@ -46,8 +47,7 @@ module Views
         statement_signed_by: 'statement signed by',
         partner_ni: 'partner ni entered',
         partner_name: 'partner name entered',
-        calculation_scheme: 'HwF Scheme',
-        low_income_declared: 'low income declared'
+        calculation_scheme: 'HwF Scheme'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -210,6 +210,7 @@ module Views
       end
 
       def low_income_declared(row)
+        # return "low_income_declared"
         return 'false' if row.income.blank?
         row.income <= 101
       end
