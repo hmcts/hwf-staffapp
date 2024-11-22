@@ -23,8 +23,7 @@ en-GB:
       reject_over_income_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
-        <p>We’ve received your application for help with fees. Unfortunately, you are not eligible for help with paying the fee and you will need to pay the full amount.  This is because you have more than the maximum amount of income allowed.</p>
-        <p><strong>We’ve calculated this as follows:</strong></p>
+        <p>We’ve received your application for help with fees. Unfortunately, we can’t help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
         <p>%{income_type}: %{income_total}</p>
         <p>Fee to pay: %{fee_amount}</p>
         <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
