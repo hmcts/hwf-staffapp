@@ -34,7 +34,12 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
 
   .govuk-grid-column-one-quarter.guide-cols
     = link_to new_process_application_url
-      span Process Application - job card new legislation
+      span Process a paper application job card – new Legislation
+      = image_tag("icon-process.png", alt: 'New process application guide icon')
+
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to new_online_process_application_url
+      span Process an online application job card – new Legislation
       = image_tag("icon-process.png", alt: 'New process application guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
@@ -42,12 +47,12 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
       span Evidence checks - job card old legislation
       = image_tag("icon-evidence.png", alt: 'Old evidence checks guide icon')
 
+.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to new_evidence_checks_url
       span Evidence checks - job card new legislation
       = image_tag("icon-evidence.png", alt: 'New evidence checks guide icon')
 
-.govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to part_payment_url
       span Part-payments-job card
@@ -62,3 +67,9 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
     = link_to rrds_url
       span RRDS
       = image_tag("icon-appeals.png", alt: 'RRDS guide icon')
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to datashare_url
+      span HMRC Datashare - job card demos
+      = image_tag("icon-appeals.png", alt: 'HMRC Datashare guide icon')

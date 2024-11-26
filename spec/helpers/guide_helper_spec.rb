@@ -23,7 +23,11 @@ RSpec.describe GuideHelper do
   end
 
   describe '#new_process_application_url' do
-    it { expect(helper.new_process_application_url).to include('https://intranet.justice.gov.uk/documents/2023/11/processing-a-help-with-fees-application-post-27th-november-23.docx') }
+    it { expect(helper.new_process_application_url).to include('https://intranet.justice.gov.uk/documents/2024/11/process-a-paper-help-with-fees-application.pdf/') }
+  end
+
+  describe '#new_online_process_application_url' do
+    it { expect(helper.new_online_process_application_url).to include('https://intranet.justice.gov.uk/documents/2024/11/processing-an-online-help-with-fees-application.pdf/') }
   end
 
   describe '#old_evidence_checks_url' do
@@ -31,11 +35,11 @@ RSpec.describe GuideHelper do
   end
 
   describe '#new_evidence_checks_url' do
-    it { expect(helper.new_evidence_checks_url).to include('https://intranet.justice.gov.uk/documents/2023/11/processing-evidence-post-27th-november-23.docx') }
+    it { expect(helper.new_evidence_checks_url).to include('https://intranet.justice.gov.uk/documents/2024/11/process-a-help-with-fees-evidence.pdf/') }
   end
 
   describe '#part_payment_url' do
-    it { expect(helper.part_payment_url).to include('https://intranet.justice.gov.uk/documents/2020/12/help-with-fees-processing-a-part-payment-job-card.pdf') }
+    it { expect(helper.part_payment_url).to include('https://intranet.justice.gov.uk/documents/2024/11/process-a-help-with-fees-part-payment.pdf/') }
   end
 
   describe '#fraud_awareness_url' do
@@ -44,5 +48,9 @@ RSpec.describe GuideHelper do
 
   describe '#rrds_url' do
     it { expect(helper.rrds_url).to include('https://www.gov.uk/government/publications/record-retention-and-disposition-schedules') }
+  end
+
+  describe '#datashare_url' do
+    it { expect(helper.datashare_url).to include('https://intranet.justice.gov.uk/my-work/help-with-fees/job-cards/') }
   end
 end

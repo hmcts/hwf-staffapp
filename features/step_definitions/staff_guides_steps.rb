@@ -27,7 +27,11 @@ Then("I can view old process application") do
 end
 
 Then("I can view new process application") do
-  expect(guide_page.content.new_process_application['href']).to end_with '/documents/2023/11/processing-a-help-with-fees-application-post-27th-november-23.docx'
+  expect(guide_page.content.new_process_application['href']).to end_with '/documents/2024/11/process-a-paper-help-with-fees-application.pdf/'
+end
+
+Then("I can view new online process application") do
+  expect(guide_page.content.new_online_process_application['href']).to end_with '/documents/2024/11/processing-an-online-help-with-fees-application.pdf/'
 end
 
 Then("I can view old evidence checks") do
@@ -35,11 +39,11 @@ Then("I can view old evidence checks") do
 end
 
 Then("I can view new evidence checks") do
-  expect(guide_page.content.new_evidence_checks['href']).to end_with '/documents/2023/11/processing-evidence-post-27th-november-23.docx'
+  expect(guide_page.content.new_evidence_checks['href']).to end_with '/documents/2024/11/process-a-help-with-fees-evidence.pdf/'
 end
 
 Then("I can view part payments") do
-  expect(guide_page.content.part_payments['href']).to end_with '/documents/2020/12/help-with-fees-processing-a-part-payment-job-card.pdf'
+  expect(guide_page.content.part_payments['href']).to end_with '/documents/2024/11/process-a-help-with-fees-part-payment.pdf/'
 end
 
 Then("I can view fraud awareness guide") do
@@ -48,6 +52,10 @@ end
 
 Then("I can view RRDS") do
   expect(guide_page.content.rrds['href']).to end_with '/publications/record-retention-and-disposition-schedules'
+end
+
+Then("I can view HMRC Datashare") do
+  expect(guide_page.content.hmrc_datashare['href']).to end_with '/my-work/help-with-fees/job-cards/'
 end
 
 Then("I can view Staff guides link on footer") do
