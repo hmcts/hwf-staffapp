@@ -5,7 +5,7 @@ task test: :environment do
     raise "Rubocop failed"
   end
 
-  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml --order random")
+  unless system("rspec --order random")
     raise "Rspec testing failed #{$?}"
   end
 end
