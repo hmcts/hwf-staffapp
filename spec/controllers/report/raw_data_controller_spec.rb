@@ -93,6 +93,7 @@ RSpec.describe Report::RawDataController do
           it "runs all offices export in delayed job" do
             from = { day: "01", month: "01", year: "2020" }
             to = { day: "31", month: "12", year: "2022" }
+
             expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: nil)
           end
         end
@@ -106,6 +107,7 @@ RSpec.describe Report::RawDataController do
           it "runs one office export in delayed job" do
             from = { day: "01", month: "01", year: "2020" }
             to = { day: "31", month: "12", year: "2022" }
+
             expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: '2')
           end
         end
