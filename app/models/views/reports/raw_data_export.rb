@@ -52,9 +52,10 @@ module Views
       HEADERS = FIELDS.values
       ATTRIBUTES = FIELDS.keys
 
-      def initialize(start_date, end_date)
+      def initialize(start_date, end_date, court_id = nil)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
+        @court_id = court_id
 
         @csv_file_name = "raw_data-#{start_date.values.join('-')}-#{end_date.values.join('-')}.csv"
         @zipfile_path = "tmp/#{@csv_file_name}.zip"
@@ -104,13 +105,16 @@ module Views
       end
 
       def build_data
-        Application.
-          select(simple_columns).
-          select(named_columns).
-          joins(joins).
-          joins(:applicant, :business_entity, detail: :jurisdiction).
-          where("offices.name NOT IN ('Digital')").
-          where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+        query = Application.
+                select(simple_columns).
+                select(named_columns).
+                joins(joins).
+                joins(:applicant, :business_entity, detail: :jurisdiction).
+                where("offices.name NOT IN ('Digital')").
+                where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+
+        query = query.where(offices: { id: @court_id }) if @court_id.present?
+        query
       end
 
       def simple_columns

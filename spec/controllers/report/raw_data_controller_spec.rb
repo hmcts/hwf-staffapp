@@ -73,10 +73,7 @@ RSpec.describe Report::RawDataController do
       end
 
       context 'with valid data - both from and to dates' do
-        before {
-          allow(RawDataExportJob).to receive(:perform_later)
-          put :data_export, params: { forms_finance_report: dates }
-        }
+        before { allow(RawDataExportJob).to receive(:perform_later) }
 
         let(:dates) {
           { day_date_from: '01',
@@ -87,13 +84,30 @@ RSpec.describe Report::RawDataController do
             year_date_to: '2022' }
         }
 
-        it { is_expected.to have_http_status(:redirect) }
-        it { expect(flash[:notice]).to eq('RawData export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.') }
+        context 'when exporting for all offices' do
+          before { put :data_export, params: { forms_finance_report: dates.merge(all_offices: true) } }
 
-        it "run export in delayed job" do
-          from = { day: "01", month: "01", year: "2020" }
-          to = { day: "31", month: "12", year: "2022" }
-          expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id)
+          it { is_expected.to have_http_status(:redirect) }
+          it { expect(flash[:notice]).to eq('Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.') }
+
+          it "runs all offices export in delayed job" do
+            from = { day: "01", month: "01", year: "2020" }
+            to = { day: "31", month: "12", year: "2022" }
+            expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: nil)
+          end
+        end
+
+        context 'when exporting for one office' do
+          before { put :data_export, params: { forms_finance_report: dates.merge(all_offices: false, entity_code: '2') } }
+
+          it { is_expected.to have_http_status(:redirect) }
+          it { expect(flash[:notice]).to eq('Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.') }
+
+          it "runs one office export in delayed job" do
+            from = { day: "01", month: "01", year: "2020" }
+            to = { day: "31", month: "12", year: "2022" }
+            expect(RawDataExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: '2')
+          end
         end
       end
     end

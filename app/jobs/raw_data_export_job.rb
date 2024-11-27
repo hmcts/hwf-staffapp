@@ -6,6 +6,7 @@ class RawDataExportJob < ReportFileJob
     @from_date = args[:from]
     @to_date = args[:to]
     @task_name = 'RawDataExport'
+    @court_id = args[:court_id]
     log_task_run('start', @task_name)
     extract_raw_data
     log_task_run('end', @task_name)

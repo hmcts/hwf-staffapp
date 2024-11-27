@@ -25,8 +25,9 @@ module Report
       from_date = date_from(report_params)
       to_date = date_to(report_params)
       user_id = current_user.id
+      court_id = @form.all_offices ? nil : report_params[:entity_code]
 
-      RawDataExportJob.perform_later(from: from_date, to: to_date, user_id: user_id)
+      RawDataExportJob.perform_later(from: from_date, to: to_date, user_id:, court_id:)
     end
 
   end
