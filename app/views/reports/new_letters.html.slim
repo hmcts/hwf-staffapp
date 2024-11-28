@@ -7,13 +7,15 @@ h2.govuk-heading-m Processed application results in part payment
 .confirmation-letter
   = t('new_letters.part-payment.send_part_payment_html',
           greeting: '{AUTO APPLICANTS NAME}',
+          income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}',
           part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
           full_fee: '£{AUTO: FULL FEE}',
           total_income: '£{AUTO: APPLICANTS INCOME}',
-          children: '{AUTO: APPLICANTS CHILDREN}',
+          children_young: '{AUTO: APPLICANTS CHILDREN 0-13}',
+          children_old: '{AUTO: APPLICANTS CHILDREN 14+}',
           date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
 h2.govuk-heading-m Evidence check - received, but not correct
@@ -82,6 +84,7 @@ h2.govuk-heading-m Application rejected because income threshold exceeded
   = t('new_letters.reject.reject_over_income_html',
           greeting: '{AUTO: APPLICANTS NAME}',
           reference: '{AUTO: APPLICATION REFERENCE}',
+          income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
           fee_amount: '{AUTO: APPLICATION FEE}',
           income_total: '{AUTO: INCOME TOTAL}',
           expiry_date: '{AUTO: DATE FOR PAYMENT}',
