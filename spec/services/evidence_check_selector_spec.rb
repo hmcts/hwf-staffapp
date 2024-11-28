@@ -56,7 +56,7 @@ describe EvidenceCheckSelector do
           let(:app_no_ev_check) { instance_double(Application, evidence_check: nil) }
 
           context 'frequency 2' do
-            let(:application) { create(:application_full_remission, :refund) }
+            let(:application) { create(:application_full_remission, :refund, income: 150) }
 
             context '2nd' do
               let(:list) { [app_ev_check, app_no_ev_check] }
@@ -103,7 +103,7 @@ describe EvidenceCheckSelector do
           end
 
           context 'frequency 10' do
-            let(:application) { create(:application_full_remission, :refund) }
+            let(:application) { create(:application_full_remission, :refund, income: 150) }
 
             context '10th' do
               let(:list) {
@@ -261,8 +261,40 @@ describe EvidenceCheckSelector do
       end
     end
 
+    context 'Zero or Low income applies' do
+      let(:application) { create(:application_full_remission, office: office, income: income) }
+      let(:query_type) { nil }
+      let(:frequency) { 1 }
+
+      context 'not excluded office' do
+        let(:office) { create(:office, entity_code: 'dig') }
+        context 'under 101' do
+          let(:income) { 50 }
+          it { is_expected.to be_a(EvidenceCheck) }
+          it { expect(decision.checks_annotation).to eq(LowIncomeEvidenceCheckRules::ANNOTATION) }
+        end
+        context 'equal 101' do
+          let(:income) { 101 }
+          it { is_expected.to be_a(EvidenceCheck) }
+        end
+        context 'under 102' do
+          let(:income) { 102 }
+          it { is_expected.not_to be_a(EvidenceCheck) }
+        end
+      end
+
+      context 'excluded office' do
+        let(:office) { create(:office, entity_code: 'TI122') }
+        context 'under 101' do
+          let(:income) { 11 }
+          it { is_expected.not_to be_a(EvidenceCheck) }
+          it { is_expected.not_to be_a(EvidenceCheck) }
+        end
+      end
+    end
+
     context 'CCMCC application frequency applies' do
-      let(:application) { create(:application_full_remission, office: ccmcc_office) }
+      let(:application) { create(:application_full_remission, office: ccmcc_office, income: 150) }
       let(:query_type) { nil }
       let(:frequency) { 1 }
       let(:ccmcc_office) { create(:office, entity_code: 'DH403') }
@@ -280,7 +312,7 @@ describe EvidenceCheckSelector do
 
         context 'digital_office' do
           context 'just refund' do
-            let(:application) { create(:application_full_remission, :refund, office: ccmcc_office) }
+            let(:application) { create(:application_full_remission, :refund, office: ccmcc_office, income: 150) }
 
             before do
               create(:application_full_remission, :refund, office: digital_office)

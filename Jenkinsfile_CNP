@@ -57,6 +57,7 @@ withPipeline(type, product, component) {
             set +x
             source /usr/local/rvm/scripts/rvm
             rvm install ruby-3.3.6
+            rvm use ruby-3.3.6 --default
         """, label: 'Ruby version install'
       }
 

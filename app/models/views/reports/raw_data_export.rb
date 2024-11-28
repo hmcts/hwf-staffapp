@@ -36,6 +36,7 @@ module Views
         capital: 'capital band',
         savings_amount: 'savings and investments amount',
         part_payment_outcome: 'part payment outcome',
+        low_income_declared: 'low income declared',
         case_number: 'case number',
         postcode: 'postcode',
         date_of_birth: 'date of birth',
@@ -83,6 +84,8 @@ module Views
           children_age_band(row, attr)
         elsif attr == :over_66
           over_66?(row)
+        elsif attr == :low_income_declared
+          low_income_declared(row)
         else
           row.send(attr)
         end
@@ -161,7 +164,8 @@ module Views
                END AS partner_ni,
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
-               END AS partner_name
+               END AS partner_name,
+          CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
         COLUMNS
       end
 
@@ -203,6 +207,12 @@ module Views
 
       def over_66?(row)
         row.send(:over_66) == true ? 'Yes' : 'No'
+      end
+
+      def low_income_declared(row)
+        # return "low_income_declared"
+        return 'false' if row.income.blank?
+        row.income <= 101
       end
 
       def date_for_age_calculation(row)
