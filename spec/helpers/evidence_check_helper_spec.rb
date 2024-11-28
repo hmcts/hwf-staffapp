@@ -91,7 +91,7 @@ RSpec.describe EvidenceCheckHelper do
       end
     end
 
-    ["Other income - For example, income from online selling", "Other income"].each do |income_kind_value|
+    ["Other income - For example, income from online selling or from dividend or interest payments", "Other income"].each do |income_kind_value|
       context income_kind_value.to_s do
         let(:income_kind) { { applicant: [income_kind_value] } }
         it { expect(display_evidence_section?(application, 'goods_selling')).to be true }

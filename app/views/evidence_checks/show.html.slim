@@ -34,8 +34,8 @@
         =t('new_letters.new_letters.processed_application.rental_html')
         =t('new_letters.new_letters.processed_application.goods_selling_html')
         =t('new_letters.new_letters.processed_application.other_income_header_html')
-        =t('new_letters.new_letters.processed_application.prisoner_income_html')
-        =t('new_letters.new_letters.processed_application.footer_html', user_name: current_user.name, reference: @application.reference)
+        =t('new_letters.new_letters.processed_application.prisoner_income_html', reference: @application.reference)
+        =t('new_letters.new_letters.processed_application.footer_html', user_name: current_user.name)
       -else
         =t('new_letters.new_letters.processed_application.header_html', reference: @application.reference, greeting: greeting_condition(@confirm, @application), evidence_due: @confirm.expires_at)
         - if display_evidence_section?(@application, 'wages')
@@ -50,7 +50,7 @@
         - if display_evidence_section?(@application, 'goods_selling')
           =t('new_letters.new_letters.processed_application.goods_selling_html')
         =t('new_letters.new_letters.processed_application.other_income_header_html')
-        =t('new_letters.new_letters.processed_application.prisoner_income_html')
-        =t('new_letters.new_letters.processed_application.footer_html', user_name: current_user.name, reference: @application.reference)
+        =t('new_letters.new_letters.processed_application.prisoner_income_html', reference: @application.reference)
+        =t('new_letters.new_letters.processed_application.footer_html', user_name: current_user.name)
 
     =link_to t('evidence_check.back_to_start'), root_path, class: 'govuk-button'
