@@ -113,7 +113,7 @@ module Views
                 where("offices.name NOT IN ('Digital')").
                 where(decision_date: @date_from..@date_to, state: Application.states[:processed])
 
-        query = query.where(offices: { id: @court_id }) if @court_id.present?
+        query = query.where(office_id: @court_id) if @court_id.present?
         query
       end
 

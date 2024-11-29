@@ -15,7 +15,7 @@ class RawDataExportJob < ReportFileJob
   private
 
   def extract_raw_data
-    @export = Views::Reports::RawDataExport.new(@from_date, @to_date)
+    @export = Views::Reports::RawDataExport.new(@from_date, @to_date, @court_id)
     @export.to_zip
 
     store_zip_file('raw_data')

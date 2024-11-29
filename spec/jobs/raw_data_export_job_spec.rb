@@ -19,7 +19,7 @@ RSpec.describe RawDataExportJob do
   describe '#perform' do
     it "run the export query" do
       described_class.perform_now(from: '1', to: '2', user_id: user.id)
-      expect(Views::Reports::RawDataExport).to have_received(:new).with('1', '2')
+      expect(Views::Reports::RawDataExport).to have_received(:new).with('1', '2', nil)
     end
 
     it "run the store file" do
