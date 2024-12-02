@@ -6,6 +6,7 @@ class RawDataExportJob < ReportFileJob
     @from_date = args[:from]
     @to_date = args[:to]
     @task_name = 'RawDataExport'
+    @court_id = args[:court_id]
     log_task_run('start', @task_name)
     extract_raw_data
     log_task_run('end', @task_name)
@@ -14,7 +15,7 @@ class RawDataExportJob < ReportFileJob
   private
 
   def extract_raw_data
-    @export = Views::Reports::RawDataExport.new(@from_date, @to_date)
+    @export = Views::Reports::RawDataExport.new(@from_date, @to_date, @court_id)
     @export.to_zip
 
     store_zip_file('raw_data')

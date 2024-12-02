@@ -1119,8 +1119,8 @@ en-GB:
       raw_data: 'Raw Data'
       finance_transactional: 'Finance transactional'
   forms/report/raw_data:
-    notice: 'RawData export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.'
+    notice: 'Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
   forms/report/fi_transactional:
-    notice: 'Finance transactional export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.'
+    notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
   forms/report/ocmc:
     notice: 'Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'

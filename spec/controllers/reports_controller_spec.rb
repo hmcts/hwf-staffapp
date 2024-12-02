@@ -151,7 +151,7 @@ RSpec.describe ReportsController do
         }
 
         it { is_expected.to have_http_status(:redirect) }
-        it { expect(flash[:notice]).to eq('Finance transactional export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.') }
+        it { expect(flash[:notice]).to eq('Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.') }
 
         it "run export in delayed job" do
           expect(FinanceTransactionalReportJob).to have_received(:perform_later).with(from: date_from, to: date_to, user_id: admin.id, filter: {})
