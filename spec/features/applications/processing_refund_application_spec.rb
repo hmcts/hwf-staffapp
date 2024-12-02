@@ -175,6 +175,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
       end
 
       context 'invalid date' do
+        let(:dwp_response) { nil }
 
         it "discretion denied" do
           visit '/'
@@ -248,7 +249,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           expect(page).to have_content "Does the applicant receive benefits?"
           choose 'Yes'
           click_button 'Next'
-          expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
+          expect(page).to have_no_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
 
           expect(page).to have_content('Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?')
           choose('Yes, the applicant has provided supporting evidence')
@@ -272,6 +273,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
     end
 
     context 'without benefits' do
+      let(:dwp_response) { nil }
       it "valid date" do
         visit '/'
         click_button 'Start now'
@@ -400,7 +402,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
         expect(page).to have_content "Does the applicant receive benefits?"
         choose 'Yes'
         click_button 'Next'
-        expect(page).to have_no_content('Fees paid more than 3 months ago can’t be checked with the DWP.')
 
         expect(page).to have_content('Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?')
         choose('No')

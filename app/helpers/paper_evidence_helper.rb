@@ -7,8 +7,10 @@ module PaperEvidenceHelper
   private
 
   def benefit_check_error_message(application)
-    if invalid_timing?(application)
-      'out_of_time'
+    if missing_data?(application)
+      'missing_details'
+    elsif no_dwp_outcome?(application)
+      'technical_error'
     elsif discretion_applied(application) == true
       nil
     else
@@ -16,13 +18,16 @@ module PaperEvidenceHelper
     end
   end
 
+  def missing_data?(application)
+    !BenefitCheckRunner.new(application).can_run?
+  end
+
   def last_benefit_check_result(application)
     application.last_benefit_check.try(:dwp_result).try(:downcase)
   end
 
-  def invalid_timing?(application)
-    !BenefitCheckRunner.new(application).benefit_check_date_valid? &&
-      discretion_applied(application).nil?
+  def no_dwp_outcome?(application)
+    application.last_benefit_check.try(:dwp_result).nil? && discretion_applied(application).nil?
   end
 
   def discretion_applied(application)
@@ -31,7 +36,7 @@ module PaperEvidenceHelper
 
   def last_benefit_check_result_partial(application)
     case last_benefit_check_result(application)
-    when nil, 'undetermined'
+    when 'undetermined'
       'missing_details'
     when 'server unavailable', 'unspecified error'
       'technical_error'
