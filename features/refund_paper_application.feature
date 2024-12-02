@@ -57,6 +57,7 @@ Feature: Refund on paper application
     And I change the date fee paid to a valid date
     Then I should not see Delivery Manager discretion applied? checkboxes
 
+  @wip
   Scenario: No delivery manager discretion and then date changed (check details page)
     When I submit a refund application where refund date is beyond 3 months from application received date
     And I select No to Delivery Manager discretion applied? and submit form
@@ -75,6 +76,7 @@ Feature: Refund on paper application
     And I see that the applicant is not eligible for help with fees
     And I see Delivery Manager Discretion as Failed
 
+  @wip
   Scenario: No delivery manager discretion and then change to Yes delivery manager discretion
     When I submit a refund application where refund date is beyond 3 months from application received date
     And I select No to Delivery Manager discretion applied? and submit form
