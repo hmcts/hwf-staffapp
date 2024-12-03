@@ -27,11 +27,6 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
     benefit_check.blank? || benefit_check.dwp_result.blank? || overridable_result?
   end
 
-  def benefit_check_date_valid?
-    return true if @application.online_application
-    benefit_check_date > 3.months.ago
-  end
-
   private
 
   def applicant
@@ -39,7 +34,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
   end
 
   def should_run?
-    benefit_check_date_valid? && (previous_check.nil? || !same_as_before? || was_error?)
+    previous_check.nil? || !same_as_before? || was_error?
   end
 
   def was_error?
