@@ -13,7 +13,7 @@ module GuideHelper
   end
 
   def staff_guidance_url
-    'https://intranet.justice.gov.uk/my-work/help-with-fees/staff-guidance/'
+    'https://intranet.justice.gov.uk/documents/2023/12/help-with-fees-policy-guide-for-applications-post-27th-november-23.pdf/'
   end
 
   def old_process_application_url

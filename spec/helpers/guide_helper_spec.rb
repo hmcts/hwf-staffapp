@@ -15,7 +15,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#staff_guidance_url' do
-    it { expect(helper.staff_guidance_url).to include('https://intranet.justice.gov.uk/my-work/help-with-fees/staff-guidance/') }
+    it { expect(helper.staff_guidance_url).to include('https://intranet.justice.gov.uk/documents/2023/12/help-with-fees-policy-guide-for-applications-post-27th-november-23.pdf/') }
   end
 
   describe '#old_process_application_url' do
