@@ -19,7 +19,7 @@ When("I can view key control checks guide") do
 end
 
 When("I can view staff guidance") do
-  expect(guide_page.content.staff_guidance['href']).to end_with '/my-work/help-with-fees/staff-guidance/'
+  expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2023/12/help-with-fees-policy-guide-for-applications-post-27th-november-23.pdf/'
 end
 
 Then("I can view old process application") do
