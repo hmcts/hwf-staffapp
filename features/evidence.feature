@@ -79,13 +79,6 @@ Feature: Waiting for evidence
     Then I should be taken back to my dashboard
     And the application should have the status of processed
 
-  @wip
-  Scenario: You cannot edit any details
-    And I have successfully processed the evidence
-    When I use the browser back button
-    Then I should be taken back to my dashboard
-    And I should see a message telling me that the application has been processed
-
   Scenario: Verify back to list button
     And I am on an application waiting for evidence
     When I have successfully submitted the evidence

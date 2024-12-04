@@ -24,8 +24,6 @@ Feature: Sign in page
       When I successfully sign in read only user
       Then I am taken to my read only user dashboard
 
-    # error message does not follow gds and needs improvement
-    @wip @manual
     Scenario: Invalid credentials
       When I attempt to sign in with invalid credentials
       Then I should see invalid email or password error message
