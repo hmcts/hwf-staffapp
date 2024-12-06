@@ -21,7 +21,7 @@ gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
 gem 'rack', '~> 3.1'
 
-gem 'rails-i18n', '~> 7.0.3'
+gem 'rails-i18n'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
