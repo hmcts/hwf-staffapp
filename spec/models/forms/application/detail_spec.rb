@@ -204,7 +204,8 @@ RSpec.describe Forms::Application::Detail do
                    date_received: date_received.try(:to_fs, :db),
                    refund: refund_status,
                    date_fee_paid: date_fee_paid.try(:to_fs, :db),
-                   form_name: 'ABC123' }
+                   form_name: 'ABC123',
+                   case_number: case_number }
         described_class.new(params)
       end
 
@@ -212,6 +213,7 @@ RSpec.describe Forms::Application::Detail do
       let(:date_received) { Time.zone.local(2014, 11, 15, 12, 30, 0) }
       let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
       let(:refund_status) { true }
+      let(:case_number) { 'ABC123' }
 
       before { Timecop.freeze(current_time) }
       after { Timecop.return }
@@ -234,6 +236,15 @@ RSpec.describe Forms::Application::Detail do
           end
 
         end
+      end
+
+      describe 'when refund checked and no case number' do
+        let(:case_number) { nil }
+        it { is_expected.not_to be_valid }
+      end
+
+      describe 'when refund checked and case number' do
+        it { is_expected.to be_valid }
       end
 
       describe 'date fee paid' do
