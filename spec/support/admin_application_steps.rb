@@ -63,6 +63,7 @@ def fill_application_refund_details(court_fee = '1000')
   fill_in 'application_fee', with: court_fee
   select_jurisdiction
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   fill_application_dates
 end
 
@@ -176,6 +177,7 @@ def fill_application_date_over_limit
   fill_in_date_received(Date.yesterday)
 
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   check 'This is a refund case'
 end
 
@@ -183,6 +185,7 @@ def fill_application_date_set_discretion_no
   fill_application_date_over_limit
   fill_in_date_fee_paid(4.months.ago.to_date)
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   click_button 'Next'
 
   choose 'application_discretion_applied_false'
