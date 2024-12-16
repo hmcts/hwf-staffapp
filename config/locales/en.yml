@@ -862,6 +862,8 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            case_number:
+              blank: Enter the case number
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
@@ -989,6 +991,8 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            case_number:
+              blank: Enter the case number
 
         forms/fee_approval:
           attributes:
