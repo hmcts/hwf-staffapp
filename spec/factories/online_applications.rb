@@ -121,6 +121,14 @@ FactoryBot.define do
       partner_ni_number { nil }
     end
 
+    trait :partner do
+      married { true }
+      partner_first_name { 'Jane' }
+      partner_last_name { 'Doe' }
+      partner_date_of_birth { '1/2/2000' }
+      partner_ni_number { 'SN741369A' }
+    end
+
     trait :income_6065 do
       benefits { false }
       income { 6065 }
