@@ -14,7 +14,7 @@ RSpec.feature 'Online application processing Evidence check' do
            children: 3,
            benefits: false,
            fee: 155,
-           form_name: 'D11',
+           form_name: 'ABC123',
            income_min_threshold_exceeded: false)
   end
 
@@ -25,6 +25,7 @@ RSpec.feature 'Online application processing Evidence check' do
            benefits: false,
            fee: 155,
            form_name: 'D11',
+           case_number: 'ABC123',
            income: 1000,
            ni_number: online_application_1.ni_number,
            created_at: 2.months.ago)

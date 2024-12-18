@@ -29,6 +29,7 @@ module Forms
     validates :fee, presence: true,
                     numericality: { allow_blank: true, less_than: 20_000 }
     validates :jurisdiction_id, presence: true
+    validates :case_number, presence: true, if: :refund?
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
 
@@ -87,6 +88,10 @@ module Forms
 
     def format_fee
       @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
+    end
+
+    def refund?
+      @object.refund?
     end
   end
 end

@@ -24,6 +24,7 @@ FactoryBot.define do
     phone_contact { false }
     post_contact { false }
     feedback_opt_in { true }
+    case_number { '234567' }
 
     factory :online_application_with_all_details do
       children { 2 }
