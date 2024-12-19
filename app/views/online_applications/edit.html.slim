@@ -10,6 +10,18 @@
       p.util_mb-0 Full name
       p: strong= @online_application.full_name
 
+      - if @online_application.partner_full_name.present?
+        p.util_mb-0 Partner's Full name
+        p = @online_application.partner_full_name
+
+      - if @online_application.partner_date_of_birth.present?
+        p.util_mb-0 Partner's date of birth
+        p = @online_application.formated_partner_date_of_birth
+
+      - if @online_application.partner_ni_number.present?
+        p.util_mb-0 Partner's National Insurance number
+        p =@online_application.formated_partner_ni_number
+
       .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
         span.govuk-error-message

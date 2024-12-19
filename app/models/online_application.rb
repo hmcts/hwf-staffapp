@@ -20,6 +20,10 @@ class OnlineApplication < ActiveRecord::Base
     [title, first_name, last_name].compact.join(' ')
   end
 
+  def partner_full_name
+    [partner_first_name, partner_last_name].compact_blank.join(' ')
+  end
+
   def applicant
     Applicant.new(online_applicant_attributes)
   end
@@ -64,6 +68,14 @@ class OnlineApplication < ActiveRecord::Base
 
   def notification_email
     legal_representative_email.presence || email_address
+  end
+
+  def formated_partner_date_of_birth
+    partner_date_of_birth&.to_fs(:gov_uk_long)
+  end
+
+  def formated_partner_ni_number
+    partner_ni_number&.gsub(/(.{2})/, '\1 ')
   end
 
   private
