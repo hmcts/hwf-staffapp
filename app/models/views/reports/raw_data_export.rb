@@ -237,7 +237,7 @@ module Views
         return true if row.children_age_band.blank?
 
         row.children_age_band.keys.select do |key|
-          key.to_s == 'one' || key.to_s == 'two'
+          ['one', 'two'].include?(key.to_s)
         end.blank?
       end
 

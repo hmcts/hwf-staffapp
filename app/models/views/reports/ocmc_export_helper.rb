@@ -35,7 +35,7 @@ module Views
 
         hash_value = YAML.safe_load(value, permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess])
         hash_value.keys.select do |key|
-          key.to_s == 'one' || key.to_s == 'two'
+          ['one', 'two'].include?(key.to_s)
         end.blank?
       end
 
