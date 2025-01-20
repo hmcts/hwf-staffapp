@@ -216,7 +216,7 @@ dl.govuk-summary-list
             = 'Change'
             span.govuk-visually-hidden=t('summary.between')
 
-  - if @savings.saving_match?('between')
+  - if @savings.saving_match?('more')
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.more_then')
       dd.govuk-summary-list__value =@savings.more_then

@@ -86,4 +86,22 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
       it { is_expected.to be false }
     end
   end
+
+  describe '#over_66' do
+    context 'value in nil' do
+      let(:saving) { build_stubbed(:saving, over_66: nil) }
+      subject { view.over_66 }
+      it { is_expected.to be false }
+    end
+    context 'value in true' do
+      let(:saving) { build_stubbed(:saving, over_66: true) }
+      subject { view.over_66 }
+      it { is_expected.to eq 'Yes' }
+    end
+    context 'value in false' do
+      let(:saving) { build_stubbed(:saving, over_66: false) }
+      subject { view.over_66 }
+      it { is_expected.to eq 'No' }
+    end
+  end
 end
