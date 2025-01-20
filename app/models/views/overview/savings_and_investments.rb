@@ -25,6 +25,10 @@ module Views
         end
       end
 
+      def saving_match?(saving)
+        @saving.choice == saving
+      end
+
       def more_then
         @saving.choice == 'more' ? 'Yes' : 'No'
       end

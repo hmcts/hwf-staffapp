@@ -106,6 +106,11 @@ module Views
         end
       end
 
+      def hmrc_checked?
+        return 'No' if @application.evidence_check.blank?
+        @application.evidence_check.check_type == 'hmrc' ? 'Yes' : 'No'
+      end
+
       private
 
       def evidence_completed?

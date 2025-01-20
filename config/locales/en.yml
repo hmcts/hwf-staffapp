@@ -111,6 +111,8 @@ en-GB:
     income: 'Income'
     total_income: 'Total income'
     income_from_evidence: 'Income from evidence'
+    check_income_total: Checked income total
+    hmrc_checked: HMRC evidence checked
 
   processed_applications:
     result:

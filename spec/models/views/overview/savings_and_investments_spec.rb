@@ -73,4 +73,17 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
 
     it { is_expected.to eql '£3500' }
   end
+
+  describe '#saving_match?' do
+    context 'choice matches' do
+      let(:saving) { build_stubbed(:saving, choice: 'between') }
+      subject { view.saving_match?('between') }
+      it { is_expected.to be true }
+    end
+    context 'choice does not matches' do
+      let(:saving) { build_stubbed(:saving, choice: 'between') }
+      subject { view.saving_match?('less') }
+      it { is_expected.to be false }
+    end
+  end
 end

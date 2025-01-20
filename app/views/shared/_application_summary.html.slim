@@ -196,33 +196,35 @@ dl.govuk-summary-list
 
 h2.govuk-heading-m Savings and investments
 dl.govuk-summary-list
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.less_then')
-    dd.govuk-summary-list__value =@savings.less_then
-    - if show_links
-      dd.govuk-summary-list__actions
-        =link_to application_savings_investments_path(@application) do
-          = 'Change'
-          span.govuk-visually-hidden=t('summary.less_then')
+  - if @savings.saving_match?('less')
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.less_then')
+      dd.govuk-summary-list__value =@savings.less_then
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_savings_investments_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.less_then')
 
+  - if @savings.saving_match?('between')
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.between')
+      dd.govuk-summary-list__value =@savings.between
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_savings_investments_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.between')
 
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.between')
-    dd.govuk-summary-list__value =@savings.between
-    - if show_links
-      dd.govuk-summary-list__actions
-        =link_to application_savings_investments_path(@application) do
-          = 'Change'
-          span.govuk-visually-hidden=t('summary.between')
-
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.more_then')
-    dd.govuk-summary-list__value =@savings.more_then
-    - if show_links
-      dd.govuk-summary-list__actions
-        =link_to application_savings_investments_path(@application) do
-          = 'Change'
-          span.govuk-visually-hidden=t('summary.more_then')
+  - if @savings.saving_match?('between')
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.more_then')
+      dd.govuk-summary-list__value =@savings.more_then
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_savings_investments_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.more_then')
 
   - if @savings.amount_total
     .govuk-summary-list__row
@@ -267,7 +269,6 @@ dl.govuk-summary-list
               = 'Change'
               span.govuk-visually-hidden=t('summary.override?')
 
-- if @application.children?
   h2.govuk-heading-m Children
   dl.govuk-summary-list
     .govuk-summary-list__row
