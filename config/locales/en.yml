@@ -113,6 +113,7 @@ en-GB:
     income_from_evidence: 'Income from evidence'
     check_income_total: Checked income total
     hmrc_checked: HMRC evidence checked
+    over_66: 66 years or older
 
   processed_applications:
     result:
