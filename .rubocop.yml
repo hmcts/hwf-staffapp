@@ -323,6 +323,9 @@ Rails/UniqueValidationWithoutIndex:
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
+Rails/StrongParametersExpect:
+  Enabled: false
+
 Style/SpecialGlobalVars:
   Enabled: false
 
