@@ -32,22 +32,22 @@ RSpec.describe PathStorage do
 
       it 'sent message to Sentry from navigation method' do
         storage_class.navigation(path)
-        expect(Sentry).to have_received(:capture_message).with("undefined method `get' for an instance of String", extra: { type: "navigation", current_path: "/path/to/page-2", user_key: "application-path-134" })
+        expect(Sentry).to have_received(:capture_message).with("undefined method 'get' for an instance of String", extra: { type: "navigation", current_path: "/path/to/page-2", user_key: "application-path-134" })
       end
 
       it 'sent message to Sentry from path back method' do
         storage_class.path_back
-        expect(Sentry).to have_received(:capture_message).with("undefined method `get' for an instance of String", extra: { type: "path_back", current_path: nil, user_key: "application-path-134" })
+        expect(Sentry).to have_received(:capture_message).with("undefined method 'get' for an instance of String", extra: { type: "path_back", current_path: nil, user_key: "application-path-134" })
       end
 
       it 'sent message to Sentry from clear! method' do
         storage_class.clear!
-        expect(Sentry).to have_received(:capture_message).with("undefined method `set' for an instance of String", extra: { type: "clear", user_key: "application-path-134" })
+        expect(Sentry).to have_received(:capture_message).with("undefined method 'set' for an instance of String", extra: { type: "clear", user_key: "application-path-134" })
       end
 
       it 'sent message to Sentry from initialise method' do
         described_class.new(nil)
-        expect(Sentry).to have_received(:capture_message).with("undefined method `id' for nil", extra: { type: "initialize", user_key: nil })
+        expect(Sentry).to have_received(:capture_message).with("undefined method 'id' for nil", extra: { type: "initialize", user_key: nil })
       end
 
     end
