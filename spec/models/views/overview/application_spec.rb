@@ -466,7 +466,7 @@ RSpec.describe Views::Overview::Application do
     let(:application) { create(:application) }
 
     context 'hmrc check type' do
-      let(:evidence_check) { build(:evidence_check, check_type: 'hmrc') }
+      let(:evidence_check) { build(:evidence_check, income_check_type: 'hmrc') }
       before {
         application.evidence_check = evidence_check
       }
@@ -474,7 +474,7 @@ RSpec.describe Views::Overview::Application do
     end
 
     context 'paper type' do
-      let(:evidence_check) { build(:evidence_check, check_type: 'paper]') }
+      let(:evidence_check) { build(:evidence_check, income_check_type: 'paper]') }
       before {
         application.evidence_check = evidence_check
       }

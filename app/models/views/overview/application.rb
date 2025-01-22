@@ -108,7 +108,7 @@ module Views
 
       def hmrc_checked?
         return 'No' if @application.evidence_check.blank?
-        @application.evidence_check.check_type == 'hmrc' ? 'Yes' : 'No'
+        @application.evidence_check.income_check_type == 'hmrc' ? 'Yes' : 'No'
       end
 
       private
