@@ -42,6 +42,31 @@ RSpec.describe HmrcCheck do
       it { expect(hmrc_check.income[:taxReturns][0][:taxYear]).to eql("2018-19") }
     end
 
+    context 'three month average' do
+      before {
+        hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 6.99 } }]
+        hmrc_check.save
+      }
+
+      context 'one month' do
+        let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
+
+        it { expect(hmrc_check.paye_income).to be(107.97) }
+      end
+
+      context 'three months' do
+        let(:date_range) { { date_range: { from: "2021-04-01", to: "2021-06-30" } } }
+
+        it { expect(hmrc_check.paye_income).to be(35.99) }
+      end
+
+      context 'no date range' do
+        let(:date_range) { nil }
+
+        it { expect(hmrc_check.paye_income).to be(107.97) }
+      end
+    end
+
     context 'tax_credit' do
       before {
         hmrc_check.tax_credit = [{ id: 7210565654, awards: [{ payProfCalcDate: "2020-11-18" }] }]
@@ -90,6 +115,28 @@ RSpec.describe HmrcCheck do
 
       it { expect(hmrc_check.request_params[:date_range][:from]).to eql("2020-11-17") }
       it { expect(hmrc_check.request_params[:date_range][:to]).to eql("2020-11-18") }
+
+      context 'nil params' do
+        before {
+          hmrc_check.request_params = nil
+          hmrc_check.error_response = 'something is wrong'
+          hmrc_check.save
+        }
+        it { expect(hmrc_check.tax_credit_entitlement_check).to be false }
+
+        it 'do not update errro if present' do
+          hmrc_check.tax_credit_entitlement_check
+          expect(hmrc_check.error_response).to eq "something is wrong"
+        end
+
+        it 'saves error' do
+          hmrc_check.error_response = ''
+          hmrc_check.save
+
+          hmrc_check.tax_credit_entitlement_check
+          expect(hmrc_check.error_response).to eq "Missing date request data"
+        end
+      end
     end
 
     context 'hmrc income' do
@@ -132,23 +179,6 @@ RSpec.describe HmrcCheck do
           hmrc_check.save
         end
         it { expect(hmrc_check.hmrc_income.to_f).to be 1467.97 }
-      end
-    end
-
-    context 'total income' do
-      before {
-        hmrc_check.income = [{ "taxablePay" => 12000.04 }]
-        hmrc_check.additional_income = 200
-        hmrc_check.save
-      }
-
-      it { expect(hmrc_check.total_income).to be 12200.04 }
-
-      describe 'without hmrc_income' do
-        it 'empty hash' do
-          hmrc_check.update(income: [{ "taxablePay" => '' }])
-          expect(hmrc_check.total_income).to be 200
-        end
       end
     end
 
@@ -210,12 +240,23 @@ RSpec.describe HmrcCheck do
             ] }
         ]
 
-        hmrc_check.tax_credit = { child: child_income, work: nil }
+        hmrc_check.tax_credit = { child: child_income, work: nil, id: 123 }
         hmrc_check.save
       }
 
       it { expect(hmrc_check.child_tax_credit_income).to eq 240.6 }
       it { expect(hmrc_check.work_tax_credit_income).to eq 0 }
+      it { expect(hmrc_check.tax_credit_id).to eq 123 }
+
+      context 'hmrc income for partner with tax id' do
+        before {
+          hmrc_check.income = [{ "taxablePay" => 100.98, "employeePensionContribs" => { "paid" => 7.00 } }]
+          hmrc_check.save
+        }
+        it { expect(hmrc_check.hmrc_income).to eq 348.58 }
+        it { expect(hmrc_check.same_tax_id?(123)).to be true }
+        it { expect(hmrc_check.same_tax_id?(124)).to be false }
+      end
 
     end
 
@@ -283,110 +324,4 @@ RSpec.describe HmrcCheck do
 
   end
 
-  describe 'calculate_evidence_income!' do
-    subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, request_params: date_range) }
-    let(:evidence_check) { create(:evidence_check, income: nil, application: application) }
-    let(:application) { create(:single_applicant_under_61, income: 0) }
-    let(:date_range) { { date_range: { from: "2021-12-01", to: "2021-12-31" } } }
-
-    context 'no income data' do
-      before { hmrc_check.calculate_evidence_income! }
-      it { expect(evidence_check.income).to eq 0 }
-    end
-
-    context 'income present' do
-      let(:income) { [{ "taxablePay" => 12000.04 }] }
-      subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
-
-      before { hmrc_check.calculate_evidence_income! }
-      it { expect(evidence_check.income).to eq(12000) }
-      it { expect(evidence_check.outcome).to eq('none') }
-      it { expect(evidence_check.amount_to_pay).to eq(310) }
-
-      context 'full payment' do
-        let(:income) { [{ "taxablePay" => 100.04 }] }
-        it { expect(evidence_check.outcome).to eq('full') }
-        it { expect(evidence_check.amount_to_pay).to eq(0) }
-      end
-    end
-
-    context "post UCD" do
-
-      context 'income present' do
-        let(:income) { [{ "taxablePay" => 1.04 }] }
-        let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
-        let(:applicant) { create(:applicant, married: false, application: application) }
-        let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1], fee: 1421) }
-
-        subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
-
-        before {
-          applicant
-          hmrc_check.calculate_evidence_income!
-        }
-        it { expect(evidence_check.income).to eq(4263) }
-        it { expect(evidence_check.outcome).to eq('part') }
-        it { expect(evidence_check.amount_to_pay).to eq(990) }
-      end
-    end
-
-    context "pre UCD" do
-
-      context 'income present' do
-        let(:income) { [{ "taxablePay" => 1.04 }] }
-        let(:application) { create(:application, income: 4263, detail: detail, children_age_band: { "one" => "1", "two" => "1" }) }
-        let(:applicant) { create(:applicant, married: false, application: application) }
-        let(:detail) { create(:detail, calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[0], fee: 1421) }
-
-        subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range) }
-
-        before {
-          applicant
-          hmrc_check.calculate_evidence_income!
-        }
-
-        it { expect(evidence_check.income).to eq(4263) }
-        it { expect(evidence_check.outcome).to eq('part') }
-        it { expect(evidence_check.amount_to_pay).to eq(1410) }
-      end
-    end
-
-    context 'hmrc total income lower than aplication income' do
-      let(:income) { [{ "taxablePay" => 1200.04 }] }
-      let(:application) { create(:single_applicant_under_61, income: 15000) }
-      let(:additional_income) { 0 }
-      subject(:hmrc_check) { described_class.new(evidence_check: evidence_check, income: income, request_params: date_range, additional_income: additional_income) }
-
-      before { hmrc_check.calculate_evidence_income! }
-      it { expect(evidence_check.income).to eq(15000) }
-      it { expect(evidence_check.outcome).to eq('none') }
-      it { expect(evidence_check.amount_to_pay).to eq(310) }
-
-      context 'full payment' do
-        let(:income) { [{ "taxablePay" => 100.04 }] }
-        let(:application) { create(:single_applicant_under_61, income: 120) }
-        it { expect(evidence_check.outcome).to eq('full') }
-        it { expect(evidence_check.amount_to_pay).to eq(0) }
-      end
-
-      context 'hmrc income + additional income higher than app income' do
-        let(:income) { [{ "taxablePay" => 100.04 }] }
-        let(:additional_income) { 21 }
-        let(:application) { create(:single_applicant_under_61, income: 120) }
-
-        it { expect(evidence_check.income).to eq(121) }
-        it { expect(evidence_check.amount_to_pay).to eq(0) }
-      end
-
-      context 'hmrc income + additional income lower than app income' do
-        let(:income) { [{ "taxablePay" => 100.04 }] }
-        let(:additional_income) { 11 }
-        let(:application) { create(:single_applicant_under_61, income: 120) }
-
-        it { expect(evidence_check.income).to eq(120) }
-        it { expect(evidence_check.amount_to_pay).to eq(0) }
-      end
-    end
-
-  end
 end

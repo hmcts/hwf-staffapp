@@ -9,11 +9,13 @@ class GuidePage < BasePage
     element :key_control_checks, 'a', text: 'Key Control Checks'
     element :staff_guidance, 'a', text: 'Staff guidance'
     element :old_process_application, 'a', text: 'Process Application - job card old legislation'
-    element :new_process_application, 'a', text: 'Process Application - job card new legislation'
+    element :new_process_application, 'a', text: 'Process a paper application job card – new Legislation'
+    element :new_online_process_application, 'a', text: 'Process an online application job card – new Legislation'
     element :old_evidence_checks, 'a', text: 'Evidence checks - job card old legislation'
     element :new_evidence_checks, 'a', text: 'Evidence checks - job card new legislation'
     element :part_payments, 'a', text: 'Part-payments-job card'
     element :fraud_awareness, 'a', text: 'Fraud awareness'
     element :rrds, 'a', text: 'RRDS'
+    element :hmrc_datashare, 'a', text: 'HMRC Datashare - job card demos'
   end
 end

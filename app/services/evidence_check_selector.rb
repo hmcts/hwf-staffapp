@@ -23,6 +23,8 @@ class EvidenceCheckSelector
       'random'
     elsif flagged?
       'flag'
+    elsif low_income_check?
+      'low_income'
     elsif does_applicant_have_pending_evidence_check?
       'ni_exist'
     end
@@ -40,7 +42,12 @@ class EvidenceCheckSelector
 
   def save_evidence_check(type)
     ev_check_attributes = { expires_at: expires_at, check_type: type }
-    ev_check_attributes[:checks_annotation] = @ccmcc.check_type if @ccmcc.try(:check_type)
+
+    if type == 'low_income'
+      ev_check_attributes[:checks_annotation] = @low_income&.annotation
+    elsif @ccmcc.try(:check_type)
+      ev_check_attributes[:checks_annotation] = @ccmcc.check_type
+    end
     ev_check_attributes[:income_check_type] = income_check_type
     @application.create_evidence_check(ev_check_attributes)
   end
@@ -105,7 +112,11 @@ class EvidenceCheckSelector
   end
 
   def income_check_type
-    @application.hmrc_check_type? ? 'hmrc' : 'paper'
+    hmrc_income_check_type? ? 'hmrc' : 'paper'
+  end
+
+  def hmrc_income_check_type?
+    @application.hmrc_check_type?
   end
 
   def ccmcc_evidence_rules_check
@@ -132,4 +143,8 @@ class EvidenceCheckSelector
     @ccmcc.rule_applies?
   end
 
+  def low_income_check?
+    @low_income = LowIncomeEvidenceCheckRules.new(@application)
+    @low_income.rule_applies?
+  end
 end

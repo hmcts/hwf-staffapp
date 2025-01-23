@@ -26,7 +26,7 @@ class ResolverService
   end
 
   def delete
-    raise NotDeletable unless @calling_object.processed? && @calling_object.deleted_reason.present?
+    raise NotDeletable unless @calling_object.processed? && @calling_object.deleted_reasons_list.present?
     ActiveRecord::Base.transaction do
       @calling_object.update(deleted_attributes)
     end

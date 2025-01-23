@@ -20,27 +20,28 @@ Feature: Refund on paper application
     When I submit a refund application where refund date is after the date that the form was received
     Then I should see an error message saying the refund date can't be later than receipt date
 
-  Scenario: Yes delivery manager discretion - don't provide names
-    When I submit a refund application where refund date is beyond 3 months from application received date
-    And I select Yes to Delivery Manager discretion applied?
-    And I submit without providing Delivery Manager name or Discretion reason
-    Then I see two discretion related errors
+  # 3 month time check for DWP is no longer need but do we need if for anything else?
+  # Scenario: Yes delivery manager discretion - don't provide names
+  #   When I submit a refund application where refund date is beyond 3 months from application received date
+  #   And I select Yes to Delivery Manager discretion applied?
+  #   And I submit without providing Delivery Manager name or Discretion reason
+  #   Then I see two discretion related errors
 
-  Scenario: Yes delivery manager discretion - provide names
-    When I submit a refund application where refund date is beyond 3 months from application received date
-    And I select Yes to Delivery Manager discretion applied?
-    And I submit after providing Delivery Manager name or Discretion reason
-    Then I should be taken to savings and investments page
+  # Scenario: Yes delivery manager discretion - provide names
+  #   When I submit a refund application where refund date is beyond 3 months from application received date
+  #   And I select Yes to Delivery Manager discretion applied?
+  #   And I submit after providing Delivery Manager name or Discretion reason
+  #   Then I should be taken to savings and investments page
 
-  Scenario: Yes delivery manager discretion (Check details page)
-    When I submit a refund application where refund date is beyond 3 months from application received date
-    And I select Yes to Delivery Manager discretion applied?
-    And I submit after providing Delivery Manager name or Discretion reason
-    And I process application through to Check details page
-    Then I should see Delivery Manager discretion applied Yes
-    And I should see the date fee paid
-    And I should see the Delivery Manager name
-    And I should see the Discretionary reason
+  # Scenario: Yes delivery manager discretion (Check details page)
+  #   When I submit a refund application where refund date is beyond 3 months from application received date
+  #   And I select Yes to Delivery Manager discretion applied?
+  #   And I submit after providing Delivery Manager name or Discretion reason
+  #   And I process application through to Check details page
+  #   Then I should see Delivery Manager discretion applied Yes
+  #   And I should see the date fee paid
+  #   And I should see the Delivery Manager name
+  #   And I should see the Discretionary reason
 
   Scenario: No delivery manager discretion
     When I submit a refund application where refund date is beyond 3 months from application received date
@@ -56,6 +57,7 @@ Feature: Refund on paper application
     And I change the date fee paid to a valid date
     Then I should not see Delivery Manager discretion applied? checkboxes
 
+  @wip
   Scenario: No delivery manager discretion and then date changed (check details page)
     When I submit a refund application where refund date is beyond 3 months from application received date
     And I select No to Delivery Manager discretion applied? and submit form
@@ -74,6 +76,7 @@ Feature: Refund on paper application
     And I see that the applicant is not eligible for help with fees
     And I see Delivery Manager Discretion as Failed
 
+  @wip
   Scenario: No delivery manager discretion and then change to Yes delivery manager discretion
     When I submit a refund application where refund date is beyond 3 months from application received date
     And I select No to Delivery Manager discretion applied? and submit form

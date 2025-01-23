@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_102655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.integer "office_id"
     t.decimal "threshold"
     t.boolean "threshold_exceeded"
-    t.boolean "partner_over_61"
+    t.boolean "partner_over_66"
     t.boolean "benefits"
     t.integer "children"
     t.integer "income"
@@ -105,6 +105,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.date "purged_at"
     t.text "children_age_band"
     t.string "income_period"
+    t.string "deleted_reasons_list"
     t.index ["business_entity_id"], name: "index_applications_on_business_entity_id"
     t.index ["created_at"], name: "index_applications_on_created_at"
     t.index ["decision_cost"], name: "index_applications_on_decision_cost"
@@ -257,6 +258,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.string "staff_error_details"
     t.string "checks_annotation"
     t.string "income_check_type"
+    t.decimal "hmrc_income_used", default: "0.0"
     t.index ["application_id"], name: "index_evidence_checks_on_application_id"
   end
 
@@ -314,6 +316,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.datetime "purged_at", precision: nil
     t.integer "additional_income", default: 0
     t.string "sa_income"
+    t.string "check_type", default: "applicant"
   end
 
   create_table "hmrc_tokens", force: :cascade do |t|
@@ -385,7 +388,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.boolean "feedback_opt_in", null: false
     t.date "date_received"
     t.boolean "max_threshold_exceeded"
-    t.boolean "over_61"
+    t.boolean "over_66"
     t.integer "amount"
     t.boolean "income_min_threshold_exceeded"
     t.boolean "income_max_threshold_exceeded"
@@ -419,6 +422,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.string "statement_signed_by"
     t.string "income_period"
     t.string "legal_representative_position"
+    t.boolean "discretion_applied"
     t.index ["jurisdiction_id"], name: "index_online_applications_on_jurisdiction_id"
     t.index ["reference"], name: "index_online_applications_on_reference", unique: true
   end
@@ -461,7 +465,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.decimal "amount"
     t.boolean "passed"
     t.decimal "fee_threshold"
-    t.boolean "over_61"
+    t.boolean "over_66"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "choice"
@@ -498,6 +502,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_141218) do
     t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.string "unique_session_id"
+    t.datetime "last_password_reset_check_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true

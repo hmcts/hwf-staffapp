@@ -2,7 +2,7 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.3.5
 
   NewCops: enable
   # Exclude anything that isn't really part of our code.
@@ -248,7 +248,7 @@ RSpec/LetBeforeExamples:
 RSpec/HooksBeforeExamples:
   Enabled: false
 
-RSpec/Capybara/FeatureMethods:
+RSpec/Dialect:
   Enabled: false
 
 RSpec/IndexedLet:
@@ -272,7 +272,7 @@ RSpec/InstanceVariable:
 FactoryBot/CreateList:
   Enabled: false
 
-RSpec/Rails/HttpStatus:
+RSpecRails/HttpStatus:
   Enabled: false
 
 RSpec/RepeatedExample:
@@ -323,6 +323,9 @@ Rails/UniqueValidationWithoutIndex:
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
+Rails/StrongParametersExpect:
+  Enabled: false
+
 Style/SpecialGlobalVars:
   Enabled: false
 
@@ -332,9 +335,22 @@ Performance/StringIdentifierArgument:
 Bundler/OrderedGems:
   Enabled: false
 
+Rails/WhereRange:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Performance/CollectionLiteralInLoop:
+  Enabled: false
+
 require:
   - rubocop-rspec
   - rubocop-rails
   - rubocop-performance
   - rubocop-capybara
   - rubocop-factory_bot
+  - rubocop-rspec_rails

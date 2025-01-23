@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Forms::Evidence::HmrcCheck do
   subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-  let(:application) { build(:application, created_at: '15.3.2021', children: children) }
+  let(:application) { build(:application, created_at: '15.3.2021', children: children, income_period: income_period) }
   let(:evidence) { build(:evidence_check, application: application) }
+  let(:income_period) { Application::INCOME_PERIOD[:last_month] }
   let(:children) { 0 }
   let(:params) {
     {
@@ -182,19 +183,47 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         it { is_expected.to be false }
       end
     end
+
+    context 'validate date based on income_period' do
+      context 'last_month' do
+        let(:income_period) { Application::INCOME_PERIOD[:last_month] }
+        it { is_expected.to be true }
+      end
+
+      context 'three_months not valid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        it { is_expected.to be false }
+      end
+
+      context 'three_months valid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2021' }
+        let(:to_date_day) { '30' }
+        let(:to_date_month) { '4' }
+        let(:to_date_year) { '2021' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'two monts imvalid' do
+        let(:income_period) { Application::INCOME_PERIOD[:average] }
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2021' }
+        let(:to_date_day) { '31' }
+        let(:to_date_month) { '3' }
+        let(:to_date_year) { '2021' }
+
+        it { is_expected.to be false }
+      end
+    end
   end
 
   context 'load_additional_income_from_benefits' do
-    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
-    context '1 child' do
-      let(:children) { 1 }
 
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 96
-        expect(form.additional_income).to be true
-      end
-    end
+    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
 
     context 'no child' do
       let(:children) { nil }
@@ -206,22 +235,62 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
-    context '2 child' do
-      let(:children) { 2 }
+    context '1 child' do
+      let(:children) { 1 }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 159
+        expect(form.additional_income_amount).to eq 102
         expect(form.additional_income).to be true
       end
     end
 
-    context '8 child' do
+    context '2 children' do
+      let(:children) { 2 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 170
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '3 children' do
+      let(:children) { 3 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 238
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '4 children' do
+      let(:children) { 4 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 305
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '7 children' do
+      let(:children) { 7 }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 509
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '8 children' do
       let(:children) { 8 }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 413
+        expect(form.additional_income_amount).to eq 577
         expect(form.additional_income).to be true
       end
     end

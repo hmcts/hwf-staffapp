@@ -39,6 +39,7 @@ module Forms
       validates :date_received, date: {
         before: :tomorrow
       }
+      validate :date_received_within_limit
 
       validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund && discretion_applied != true }
       validates :discretion_applied, presence: true, if: proc { validate_discretion? }
@@ -65,6 +66,19 @@ module Forms
 
       def min_date
         3.months.ago.midnight
+      end
+
+      def date_received_within_limit
+        if date_received.present?
+          begin
+            parsed_date = date_received.to_date
+            if parsed_date < 2.years.ago.to_date
+              errors.add(:date_received, "Please enter a valid date in the correct format DD/MM/YYYY")
+            end
+          rescue ArgumentError
+            # Error message is being handled by other validation
+          end
+        end
       end
 
       def tomorrow

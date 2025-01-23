@@ -25,7 +25,7 @@ end
 module FrStaffapp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -43,7 +43,7 @@ module FrStaffapp
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
+    config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
     config.i18n.default_locale = 'en-GB'
 
     if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
@@ -60,6 +60,7 @@ module FrStaffapp
 
     config.active_support.remove_deprecated_time_with_zone_name = true
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
+
   end
   WillPaginate.per_page = 20
 end

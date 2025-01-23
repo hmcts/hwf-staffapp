@@ -8,11 +8,11 @@ class ApplicationPolicy < BasePolicy
   end
 
   def index?
-    staff_or_manager? || reader?
+    staff_or_manager? || reader? || admin?
   end
 
   def show?
-    (staff_or_manager? || reader?) && same_office?
+    (staff_or_manager? || reader? || admin?) && same_office?
   end
 
   def update?

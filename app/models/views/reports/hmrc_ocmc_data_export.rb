@@ -1,14 +1,20 @@
 # rubocop:disable Metrics/ClassLength
 module Views
   module Reports
-    class HmrcOcmcDataExport
+    class HmrcOcmcDataExport < ReportBase
       require 'csv'
       include OcmcExportHelper
 
-      def initialize(start_date, end_date, office_id)
+      def initialize(start_date, end_date, office_id, all_offices: false)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
         @office_id = office_id
+        @all_offices = all_offices
+
+        @csv_file_name = "help-with-fees-datashare-applications-by-court-extract-" \
+                         "#{start_date[:day]}-#{start_date[:month]}-#{start_date[:year]}-" \
+                         "#{end_date[:day]}-#{end_date[:month]}-#{end_date[:year]}.csv"
+        @zipfile_path = "tmp/#{@csv_file_name}.zip"
       end
 
       def format_dates(date_attribute)
@@ -18,7 +24,7 @@ module Views
       def to_csv
         return "no results" unless data.first
         CSV.generate do |csv|
-          csv << (data.first.keys - ['tax_credit'])
+          csv << (data.first.keys)
           data.each do |row|
             csv << process_row(row).values
           end
@@ -65,6 +71,7 @@ module Views
         applications.income_kind as \"Declared income sources\",
         ec.check_type as \"DB evidence check type\",
         ec.income_check_type as \"DB income check type\",
+        ec.hmrc_income_used as \"HMRC total income\",
         CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NumberRule'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIFlag'
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIDuplicate'
@@ -86,10 +93,6 @@ module Views
            WHEN hc_id IS NOT NULL AND ec.completed_at IS NULL then 'No'
            ELSE ''
         END AS \"Complete processing?\",
-        CASE WHEN hc_income IS NULL then ''
-           WHEN hc_income IS NOT NULL then hc_income
-           ELSE ''
-        END as \"HMRC total income\",
         CASE WHEN additional_income IS NULL then NULL
            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
@@ -102,7 +105,6 @@ module Views
            ELSE NULL
         END as \"Income processed\",
         request_params as \"HMRC request date range\",
-        tax_credit,
         details.statement_signed_by as \"Statement signed by\",
         CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
              WHEN applicants.partner_ni_number = '' THEN 'false'
@@ -111,7 +113,9 @@ module Views
         CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
              WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
              END AS \"Partner name entered\",
-        details.calculation_scheme as \"HwF Scheme\"
+        details.calculation_scheme as \"HwF Scheme\",
+        applications.deleted_reasons_list as \"Deletion Reason\",
+        applications.deleted_reason as \"Reason Description\"
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -131,19 +135,15 @@ module Views
       end
       # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize
       def process_row(row)
         csv_row = row
         csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
-        csv_row['HMRC total income'] = hmrc_total_income(row)
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
         csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
-        csv_row['tax_credit'] = ''
         csv_row
       end
-      # rubocop:enable Metrics/AbcSize
 
       def income_kind(value)
         return unless value
@@ -154,28 +154,6 @@ module Views
         [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         ""
-      end
-
-      def hmrc_total_income(row)
-        paye = hmrc_income(row['HMRC total income'])
-        tax_credits = tax_credit(row['tax_credit'], row['HMRC request date range'])
-        total = paye + tax_credits
-        total.positive? ? total : ''
-      end
-
-      def hmrc_income(value)
-        return 0 if value.blank?
-        income_hash = YAML.parse(value).to_ruby
-        HmrcIncomeParser.paye(income_hash)
-      end
-
-      def tax_credit(value, date_range)
-        return 0 if value.blank?
-        date = date_formatted(date_range)
-        tax_credit_hash = YAML.parse(value).to_ruby
-        work = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :work), date)
-        child = HmrcIncomeParser.tax_credit(tax_credit_hash.try(:[], :child), date)
-        work + child
       end
 
       def date_formatted(date_range)

@@ -10,7 +10,10 @@
 
       .govuk-form-group
         fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend = t('children_age_band', scope: @form.i18n_scope)
+          - if @application.applicant.married
+            legend.govuk-fieldset__legend = t('children_age_band', scope: @form.i18n_scope)
+          - else
+            legend.govuk-fieldset__legend = t('children_age_band_single', scope: @form.i18n_scope)
           - if @form.errors[:dependents].present?
             span.govuk-error-message
               = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error'

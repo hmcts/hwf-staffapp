@@ -27,8 +27,8 @@ RSpec.describe PersonalDataPurgeJob do
 
     it { expect(purge_class).to have_received(:purge!) }
     it { expect(PersonalDataPurge).to have_received(:new).with([application1, application3]) }
-    it { expect(app_insight).to have_received(:track_event).with("Running Personal data purge script: #{Time.zone.now.to_fs(:db)}") }
-    it { expect(app_insight).to have_received(:track_event).with("Finished personal data purge script: #{Time.zone.now.to_fs(:db)}, applications affected: 2") }
+    it { expect(app_insight).to have_received(:track_event).with("Running personal data purge script: #{Time.zone.today.to_fs(:db)}") }
+    it { expect(app_insight).to have_received(:track_event).with("Finished personal data purge script: #{Time.zone.today.to_fs(:db)}, applications affected: 2") }
   end
 
   describe 'online applicaitons only' do

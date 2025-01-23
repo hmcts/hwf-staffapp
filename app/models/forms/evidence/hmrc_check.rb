@@ -50,10 +50,18 @@ module Forms
 
       def child_benefits_per_month
         children = @object.evidence_check.application.children
-        return 0 if children.blank? || children.zero?
-        children = 7 if children > 7
 
-        Settings.child_benefits_per_month[children]
+        return 0 if children.blank? || children.zero?
+        child_benefits_per_week(children) * 4
+      end
+
+      def child_benefits_per_week(children)
+        basic_rate = Settings.child_benefits.per_week
+        additional_rate = Settings.child_benefits.additional_child
+        return basic_rate if children == 1
+        children_multiplier = children - 1
+
+        basic_rate + (children_multiplier * additional_rate)
       end
 
       private
@@ -95,8 +103,22 @@ module Forms
 
       def validate_range
         return if errors.any?
+
+        if application.income_period_last_month?
+          one_month_validation
+        elsif application.income_period_three_months_average?
+          three_months_validation
+        end
+      end
+
+      def one_month_validation
         return if (@from_date + 1.month) - 1.day == @to_date
         errors.add(:date_range, "Enter a calendar month date range")
+      end
+
+      def three_months_validation
+        return if (@from_date + 3.months) - 1.day == @to_date
+        errors.add(:date_range, "Enter a 3 calendar months date range")
       end
 
       def additional_income_check
@@ -108,6 +130,10 @@ module Forms
       def income_step?
         return false if additional_income.nil?
         true
+      end
+
+      def application
+        @application ||= @object.evidence_check.application
       end
     end
   end

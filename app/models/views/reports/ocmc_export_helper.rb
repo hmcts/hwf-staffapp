@@ -7,7 +7,16 @@ module Views
       end
 
       def build_data
-        ActiveRecord::Base.connection.execute(sql_query)
+        query = if @all_offices
+                  sql_query.
+                    sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
+                    sub("WHERE applications.office_id = #{@office_id}",
+                        "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
+                else
+                  sql_query
+                end
+
+        ActiveRecord::Base.connection.execute(query)
       end
 
       def children_age_band(value, attr_key)
@@ -26,7 +35,7 @@ module Views
 
         hash_value = YAML.safe_load(value, permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess])
         hash_value.keys.select do |key|
-          key.to_s == 'one' || key.to_s == 'two'
+          ['one', 'two'].include?(key.to_s)
         end.blank?
       end
 

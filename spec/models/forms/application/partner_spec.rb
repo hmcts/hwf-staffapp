@@ -4,7 +4,7 @@ RSpec.describe Forms::Application::Partner do
   subject(:created_partner) { described_class.new(personal_information) }
 
   params_list = [:partner_last_name, :partner_date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
-                 :partner_first_name, :partner_ni_number]
+                 :partner_first_name, :partner_ni_number, :ni_number]
 
   let(:personal_information) { attributes_for(:personal_information) }
 
@@ -116,6 +116,16 @@ RSpec.describe Forms::Application::Partner do
 
         it 'passes validation' do
           expect(created_partner.valid?).to be true
+        end
+      end
+
+      context "when ni_number and partner_ni_number are the same" do
+        let(:personal_information) do
+          attributes_for(:personal_information, ni_number: 'AB123456C', partner_ni_number: 'AB123456C')
+        end
+
+        it "is not valid" do
+          expect(created_partner.valid?).to be false
         end
       end
 

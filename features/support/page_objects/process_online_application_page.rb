@@ -8,7 +8,7 @@ class ProcessOnlineApplicationPage < BasePage
     sections :group, '.group-level' do
       elements :input, 'input'
     end
-    element :jurisdiction, '.govuk-radios__item'
+    element :jurisdiction, '.govuk-radios__item label.govuk-radios__label'
     element :form_input, '#online_application_form_name'
     element :error, '.error', text: 'You must select a jurisdiction'
     element :reference_number_is, '.govuk-panel__body', text: 'Reference number'
@@ -23,7 +23,7 @@ class ProcessOnlineApplicationPage < BasePage
   end
 
   def fill_in_date_application_received
-    date_received = Time.zone.yesterday
+    date_received = Time.zone.today
     fill_in('Day', with: date_received.day)
     fill_in('Month', with: date_received.month)
     fill_in('Year', with: date_received.year)

@@ -6,7 +6,7 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
   end
 
   def run
-    if can_run? && benefit_check_date_valid?
+    if can_run?
       BenefitCheckService.new(benefit_check)
     end
   end

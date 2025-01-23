@@ -16,15 +16,15 @@ class Applicant < ActiveRecord::Base
   end
 
   def full_name
-    [title, first_name, last_name].select(&:present?).join(' ')
+    [title, first_name, last_name].compact_blank.join(' ')
   end
 
   def partner_full_name
-    [partner_first_name, partner_last_name].select(&:present?).join(' ')
+    [partner_first_name, partner_last_name].compact_blank.join(' ')
   end
 
-  def over_61?
-    received_minus_age = application.detail.date_received - 61.years
+  def over_66?
+    received_minus_age = application.detail.date_received - 66.years
     received_minus_age >= date_of_birth
   end
 

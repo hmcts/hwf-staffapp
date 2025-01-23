@@ -1,4 +1,4 @@
-FROM ruby:3.3.0-alpine3.18
+FROM ruby:3.4.1-alpine3.21
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -23,7 +23,7 @@ ENV NOTIFY_DWP_DOWN_TEMPLATE_ID replace_this_at_build_time
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apk update && apk add --no-cache libc6-compat && \
-    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn npm libpq-dev postgresql-client tzdata && \
+    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs npm libpq-dev postgresql-client tzdata && \
     apk add --no-cache xvfb fluxbox x11vnc st
 
 
@@ -35,7 +35,7 @@ WORKDIR /home/app
 
 COPY Gemfile /home/app
 COPY Gemfile.lock /home/app
-RUN gem install bundler -v 2.5.7
+RUN gem install bundler -v 2.6.2
 
 RUN bundle config set --local without 'test development'
 RUN bundle config set force_ruby_platform true

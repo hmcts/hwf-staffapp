@@ -21,14 +21,14 @@ class LogStuff
     Thread.current[NAMESPACE][name] = value.dup
   end
 
-  def self.log(severity = 'info', *args, &block)
+  def self.log(severity = 'info', *, &block)
     return unless block
 
     if use_logstasher?
       return unless LogStasher.logger.send("#{severity}?")
 
       msg = yield
-      event = build_event(*args, msg)
+      event = build_event(*, msg)
       LogStasher.logger << "#{event.to_json} \n"
     else
       return unless Rails.logger.send("#{severity}?")

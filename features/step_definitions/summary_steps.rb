@@ -39,7 +39,7 @@ end
 
 Then("I should see the personal details") do
   expect(summary_page.content).to have_personal_details_header
-  expect(summary_page.content.summary_section[0].list_row[0].text).to have_content 'Full name Mr John Christopher Smith Change Full name'
+  expect(summary_page.content.summary_section[0].list_row[0].text).to have_content 'Full name John Christopher Smith Change Full name'
   expect(summary_page.content.summary_section[0].list_row[1].text).to have_content 'Date of birth 10 February 1986 Change Date of birth'
   expect(summary_page.content.summary_section[0].list_row[2].text).to have_content 'Applicant over 16 Yes'
   expect(summary_page.content.summary_section[0].list_row[3].text).to have_content 'National Insurance number JR 05 40 08 D Change National Insurance number'

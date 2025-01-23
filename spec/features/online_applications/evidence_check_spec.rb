@@ -14,7 +14,7 @@ RSpec.feature 'Online application processing Evidence check' do
            children: 3,
            benefits: false,
            fee: 155,
-           form_name: 'D11',
+           form_name: 'ABC123',
            income_min_threshold_exceeded: false)
   end
 
@@ -25,8 +25,10 @@ RSpec.feature 'Online application processing Evidence check' do
            benefits: false,
            fee: 155,
            form_name: 'D11',
+           case_number: 'ABC123',
            income: 1000,
-           ni_number: online_application_1.ni_number)
+           ni_number: online_application_1.ni_number,
+           created_at: 2.months.ago)
   end
   let(:old_application) { create(:old_application, reference: online_application_1.reference) }
 
@@ -40,18 +42,27 @@ RSpec.feature 'Online application processing Evidence check' do
   scenario 'Processing income based application from online application' do
     visit  home_index_url
 
-    fill_in 'online_search[reference]', with: online_application_1.reference
+    reference = online_application_1.reference
+
+    fill_in 'online_search[reference]', with: reference
     click_button 'Look up'
 
+    fill_in :online_application_fee, with: '200', wait: true
     choose Jurisdiction.first.display_full.to_s
+    fill_in :online_application_day_date_received, with: Date.current.day
+    fill_in :online_application_month_date_received, with: Date.current.month
+    fill_in :online_application_year_date_received, with: Date.current.year
+    fill_in :online_application_form_name, with: 'E45'
     click_button 'Next'
+    expect(page).to have_text 'Check details'
     click_button 'Complete processing'
 
-    expect(page).to have_text 'Evidence of income needs to be checked'
+    expect(page).to have_text "#{reference} - For HMRC income checking"
+    click_button 'Next'
     click_link 'Back to start'
 
     click_link 'Waiting for evidence'
-    reference = Application.last.reference
+
     within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
       click_link reference
     end
@@ -73,19 +84,22 @@ RSpec.feature 'Online application processing Evidence check' do
 
     visit home_index_url
 
-    fill_in 'online_search[reference]', with: online_application_2.reference
+    reference2 = online_application_2.reference
+    fill_in 'online_search[reference]', with: reference2
     click_button 'Look up'
 
     choose Jurisdiction.first.display_full.to_s
     click_button 'Next'
     click_button 'Complete processing'
     # because there is a flag from previous check
-    expect(page).to have_text 'Evidence of income needs to be checked'
+    expect(page).to have_text "#{reference2} - For HMRC income checking"
+    click_button 'Next'
+
     click_link 'Back to start'
 
     click_link 'Waiting for evidence'
     within(:xpath, './/table[@class="govuk-table waiting-for-evidence"]') do
-      click_link Application.last.reference
+      click_link reference2
     end
     click_link 'Start now'
     choose 'Yes, the evidence is for the correct applicant and covers the correct time period'

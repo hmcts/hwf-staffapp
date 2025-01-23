@@ -26,13 +26,13 @@ RSpec.describe Views::Overview::Applicant do
     subject { view.status }
 
     context 'when the applicant is married' do
-      let(:application) { build_stubbed(:married_applicant_over_61) }
+      let(:application) { build_stubbed(:married_applicant_over_66) }
 
       it { is_expected.to eql 'Married or living with someone' }
     end
 
     context 'when the applicant is single' do
-      let(:application) { build_stubbed(:single_applicant_over_61) }
+      let(:application) { build_stubbed(:single_applicant_over_66) }
 
       it { is_expected.to eql 'Single' }
     end

@@ -2,6 +2,7 @@ module Views
   module Overview
     class Application
       include OverviewHelper
+      include HmrcHelper
 
       include ActionView::Helpers::NumberHelper
 
@@ -116,7 +117,7 @@ module Views
       private
 
       def evidence_completed?
-        @application.evidence_check&.completed_at && @application.evidence_check&.outcome
+        @application.evidence_check&.completed_at && @application.evidence_check.outcome
       end
 
       def parse_amount_to_pay(amount_to_pay)

@@ -1,7 +1,7 @@
 module EvidenceCheckHelper
   SECTION_TO_INCOME_KIND_MAPPING = {
-    'wages' => ["Wages", "Net profits from self employment", "Pensions (state, work, private)",
-                "Pensions (state, work, private, pension credit (savings credit))"],
+    'wages' => ["Wages before tax and National Insurance are taken off", "Net profits from self employment",
+                "Pensions (state, work, private)", "Pensions (state, work, private, pension credit (savings credit))"],
     'child_maintenance' => ["Maintenance payments"],
     'rental' => ["Rent from anyone living with the applicant", "Rent from other properties the applicant owns",
                  "Rent from anyone living with the partner", "Rent from other properties the partner owns",
@@ -11,7 +11,8 @@ module EvidenceCheckHelper
                                "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
                                "Pensions (state, work, private)",
                                "Pensions (state, work, private, pension credit (savings credit))"],
-    'goods_selling' => ["Other income - For example, income from online selling", "Other income"]
+    'goods_selling' => ["Other income - For example, income from online selling or from dividend or interest payments",
+                        "Other income"]
   }.freeze
 
   def maximum_income_allowed(application)
@@ -31,7 +32,7 @@ module EvidenceCheckHelper
   def display_evidence_section?(application, section_name)
     list = income_kind_list(application)
     return false if list.blank? || !SECTION_TO_INCOME_KIND_MAPPING.key?(section_name)
-    (SECTION_TO_INCOME_KIND_MAPPING[section_name] & list).present?
+    SECTION_TO_INCOME_KIND_MAPPING[section_name].intersect?(list)
   end
 
   def income_kind_list(application)

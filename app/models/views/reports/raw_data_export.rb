@@ -1,10 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 module Views
   module Reports
-    class RawDataExport
-      require 'csv'
-      require 'zip'
-      attr_reader :zipfile_path
+    class RawDataExport < ReportBase
 
       FIELDS = {
         id: 'id',
@@ -20,7 +17,8 @@ module Views
         probate: 'probate',
         refund: 'refund',
         emergency: 'emergency',
-        income: 'income',
+        income: 'pre evidence income',
+        check_income: 'post evidence income',
         income_threshold: 'income_threshold exceeded',
         income_period: 'income period',
         reg_number: 'ho/ni number',
@@ -28,7 +26,7 @@ module Views
         children_age_band_one: 'age band under 14',
         children_age_band_two: 'age band 14+',
         married: 'married',
-        over_61: 'pension age',
+        over_66: 'pension age',
         decision: 'decision',
         final_amount_to_pay: 'final applicant pays',
         decision_cost: 'departmental cost',
@@ -38,10 +36,12 @@ module Views
         capital: 'capital band',
         savings_amount: 'savings and investments amount',
         part_payment_outcome: 'part payment outcome',
+        low_income_declared: 'low income declared',
         case_number: 'case number',
         postcode: 'postcode',
         date_of_birth: 'date of birth',
         date_received: 'date received',
+        decision_date: 'decision date',
         date_fee_paid: 'date paid',
         date_submitted_online: 'date submitted online',
         statement_signed_by: 'statement signed by',
@@ -53,27 +53,13 @@ module Views
       HEADERS = FIELDS.values
       ATTRIBUTES = FIELDS.keys
 
-      def initialize(start_date, end_date)
+      def initialize(start_date, end_date, court_id = nil)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
+        @court_id = court_id
 
         @csv_file_name = "raw_data-#{start_date.values.join('-')}-#{end_date.values.join('-')}.csv"
         @zipfile_path = "tmp/#{@csv_file_name}.zip"
-      end
-
-      def format_dates(date_attribute)
-        DateTime.parse(date_attribute.values.join('/')).utc
-      end
-
-      def to_zip
-        @csv_data = to_csv
-        generate_file
-      end
-
-      def generate_file
-        Zip::File.open(@zipfile_path, Zip::File::CREATE) do |zipfile|
-          zipfile.get_output_stream(@csv_file_name) { |f| f.write @csv_data }
-        end
       end
 
       def to_csv
@@ -92,13 +78,15 @@ module Views
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
             :final_amount_to_pay].include?(attr)
           send(attr, row)
-        elsif [:date_received, :date_fee_paid, :date_of_birth,
+        elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
           row.send(attr).to_fs(:default) if row.send(attr).present?
         elsif [:children_age_band_two, :children_age_band_one].include?(attr)
           children_age_band(row, attr)
-        elsif attr == :over_61
-          over_61?(row)
+        elsif attr == :over_66
+          over_66?(row)
+        elsif attr == :low_income_declared
+          low_income_declared(row)
         else
           row.send(attr)
         end
@@ -120,13 +108,16 @@ module Views
       end
 
       def build_data
-        Application.
-          select(simple_columns).
-          select(named_columns).
-          joins(joins).
-          joins(:applicant, :business_entity, detail: :jurisdiction).
-          where("offices.name NOT IN ('Digital')").
-          where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+        query = Application.
+                select(simple_columns).
+                select(named_columns).
+                joins(joins).
+                joins(:applicant, :business_entity, detail: :jurisdiction).
+                where("offices.name NOT IN ('Digital')").
+                where(decision_date: @date_from..@date_to, state: Application.states[:processed])
+
+        query = query.where(office_id: @court_id) if @court_id.present?
+        query
       end
 
       def simple_columns
@@ -157,23 +148,28 @@ module Views
           CASE WHEN part_payments.outcome = 'return' THEN 'return'
                WHEN part_payments.outcome = 'none' THEN 'false'
                WHEN part_payments.outcome = 'part' THEN 'true' ELSE NULL END AS part_payment_outcome,
-          savings.amount AS savings_amount,
-          savings.over_61 AS over_61,
+          CASE WHEN savings.amount >= 16000 THEN NULL
+               ELSE savings.amount
+          END AS savings_amount,
+          savings.over_66 AS over_66,
           details.case_number AS case_number,
           oa.postcode AS postcode,
           applicants.date_of_birth AS date_of_birth,
           details.date_received AS date_received,
+          applications.decision_date AS decision_date,
           details.date_fee_paid AS date_fee_paid,
           oa.created_at AS date_submitted_online,
           details.statement_signed_by AS statement_signed_by,
           details.calculation_scheme AS calculation_scheme,
+          ec.income AS check_income,
           CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
                WHEN applicants.partner_ni_number = '' THEN 'false'
                WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
                END AS partner_ni,
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
-               END AS partner_name
+               END AS partner_name,
+          CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
         COLUMNS
       end
 
@@ -213,8 +209,14 @@ module Views
         'over' if row.income_max_threshold_exceeded
       end
 
-      def over_61?(row)
-        row.send(:over_61) == true ? 'Yes' : 'No'
+      def over_66?(row)
+        row.send(:over_66) == true ? 'Yes' : 'No'
+      end
+
+      def low_income_declared(row)
+        # return "low_income_declared"
+        return 'false' if row.income.blank?
+        row.income <= 101
       end
 
       def date_for_age_calculation(row)
@@ -235,7 +237,7 @@ module Views
         return true if row.children_age_band.blank?
 
         row.children_age_band.keys.select do |key|
-          key.to_s == 'one' || key.to_s == 'two'
+          ['one', 'two'].include?(key.to_s)
         end.blank?
       end
 

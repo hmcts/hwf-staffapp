@@ -6,7 +6,7 @@ class ApplicationDetailsPage < BasePage
   section :content, '#main-content' do
     element :header, 'h1', text: 'Application details'
     element :jurisdiction_label, 'label', text: 'Jurisdiction'
-    element :jurisdiction, '.govuk-radios__item'
+    element :jurisdiction, '.govuk-radios__item label.govuk-radios__label'
     element :jurisdiction_error, '.error', text: 'You must select a jurisdiction'
     element :date_received_label, 'label', text: 'Date application received'
     element :date_received_hint, '.hint', text: 'Use this format DD/MM/YYYY'

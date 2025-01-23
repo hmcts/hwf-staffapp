@@ -147,6 +147,39 @@ RSpec.describe Views::Overview::Application do
     end
   end
 
+  describe 'hmrc_view monthly income' do
+    subject { view.hmrc_view_total_monthly_income }
+    context 'when income period is last_month' do
+      let(:application) { build_stubbed(:application, income_period: 'last_month', income: 2000) }
+
+      it 'returns currency formatted income' do
+        is_expected.to eql('£2,000')
+      end
+    end
+    context 'when income period is average' do
+      let(:application) { build_stubbed(:application, income_period: 'average', income: 2000) }
+
+      it { is_expected.to eql('N/A') }
+    end
+  end
+
+  describe 'hmrc_view average income' do
+    subject { view.average_monthly_income }
+    context 'when income period is last_month' do
+      let(:application) { build_stubbed(:application, income_period: 'last_month', income: 2000) }
+
+      it { is_expected.to eql('N/A') }
+    end
+
+    context 'when income period is average' do
+      let(:application) { build_stubbed(:application, income_period: 'average', income: 2000) }
+
+      it 'returns currency formatted income' do
+        is_expected.to eql('£2,000')
+      end
+    end
+  end
+
   describe '#total_monthly_income_from_evidence' do
     subject { view.total_monthly_income_from_evidence }
 
@@ -238,7 +271,7 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#result' do
-    subject { view.result }
+    subject(:view_result) { view.result }
 
     let(:application) { build_stubbed(:application, outcome: outcome) }
 
@@ -279,6 +312,16 @@ RSpec.describe Views::Overview::Application do
         let(:outcome) { 'none' }
 
         it { is_expected.to eq 'full' }
+      end
+    end
+
+    context 'no evidence check' do
+      let(:application) { build_stubbed(:application, outcome: outcome) }
+
+      context 'when the application is a no remission' do
+        let(:outcome) { 'none' }
+
+        it { expect { view_result }.not_to raise_error }
       end
     end
   end

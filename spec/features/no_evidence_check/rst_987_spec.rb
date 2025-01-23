@@ -113,7 +113,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
     scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
       start_new_application
-      fill_personal_details
+      fill_personal_details_no_ni
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(false)
@@ -142,8 +142,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_income(false)
 
       click_button 'Complete processing'
-
-      expect(page).to have_content('Evidence of income needs to be checked')
+      expect(page).to have_content("- For HMRC income checking")
       expect(page).to have_no_content('✓ Eligible for help with fees')
     end
   end

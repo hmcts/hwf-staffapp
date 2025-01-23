@@ -36,7 +36,6 @@ class PersonalDetailsPage < BasePage
   end
 
   def full_name
-    find_field('Title', visible: false).set('Mr')
     find_field('First and middle names', visible: false).set('John Christopher')
     find_field('Last name', visible: false).set('Smith')
   end
@@ -58,7 +57,7 @@ class PersonalDetailsPage < BasePage
     now = Time.zone.now
     content.application_day_date_of_birth.set now.day
     content.application_month_date_of_birth.set now.month
-    content.application_year_date_of_birth.set now.year - 65
+    content.application_year_date_of_birth.set now.year - 67
   end
 
   def valid_dob_exactly_15
@@ -105,7 +104,7 @@ class PersonalDetailsPage < BasePage
     click_next
   end
 
-  def submit_required_personal_details_61
+  def submit_required_personal_details_66
     fill_in 'First and middle names', with: 'John', visible: false
     fill_in 'Last name', with: 'Smith', visible: false
     valid_dob_over

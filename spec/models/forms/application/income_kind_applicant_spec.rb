@@ -69,7 +69,7 @@ RSpec.describe Forms::Application::IncomeKindApplicant do
       end
 
       it 'saves the parameters in the detail' do
-        expect(application.income_kind).to eq({ applicant: ['Wages'], partner: ['test2'] })
+        expect(application.income_kind).to eq({ applicant: ['Wages before tax and National Insurance are taken off'], partner: ['test2'] })
       end
     end
 

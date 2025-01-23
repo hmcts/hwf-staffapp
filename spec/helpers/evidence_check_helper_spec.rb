@@ -55,7 +55,7 @@ RSpec.describe EvidenceCheckHelper do
       it { expect(display_evidence_section?(application, 'wage')).to be false }
     end
 
-    ["Wages", "Net profits from self employment", "Pensions (state, work, private)",
+    ["Wages before tax and National Insurance are taken off", "Net profits from self employment", "Pensions (state, work, private)",
      "Pensions (state, work, private, pension credit (savings credit))"].each do |income_kind_value|
       context 'Wages' do
         let(:income_kind) { { applicant: [income_kind_value] } }
@@ -91,7 +91,7 @@ RSpec.describe EvidenceCheckHelper do
       end
     end
 
-    ["Other income - For example, income from online selling", "Other income"].each do |income_kind_value|
+    ["Other income - For example, income from online selling or from dividend or interest payments", "Other income"].each do |income_kind_value|
       context income_kind_value.to_s do
         let(:income_kind) { { applicant: [income_kind_value] } }
         it { expect(display_evidence_section?(application, 'goods_selling')).to be true }

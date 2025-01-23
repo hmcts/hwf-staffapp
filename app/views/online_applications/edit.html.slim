@@ -10,6 +10,18 @@
       p.util_mb-0 Full name
       p: strong= @online_application.full_name
 
+      - if @online_application.partner_full_name.present?
+        p.util_mb-0 Partner's Full name
+        p = @online_application.partner_full_name
+
+      - if @online_application.partner_date_of_birth.present?
+        p.util_mb-0 Partner's date of birth
+        p = @online_application.formated_partner_date_of_birth
+
+      - if @online_application.partner_ni_number.present?
+        p.util_mb-0 Partner's National Insurance number
+        p =@online_application.formated_partner_ni_number
+
       .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
         span.govuk-error-message
@@ -37,7 +49,7 @@
 
       .govuk-form-group.group-level
         p.util_mb-0 =t('date_submitted', scope: @form.i18n_scope)
-        p: strong= date_submitted(@online_application)
+        p: strong.date_sumitted= date_submitted(@online_application)
 
       .govuk-form-group.group-level
         legend.govuk-fieldset__legend
@@ -60,6 +72,20 @@
               = f.label :year_date_received, class: 'govuk-label'
               = f.text_field :year_date_received, class: 'govuk-input govuk-date-input__input govuk-input--width-4', type:"number", pattern: "[0-9]*"
 
+        .govuk-form-group.group-level
+            fieldset.discretion_applied.start-hidden
+              .panel-indent
+                = f.label :discretion_applied, class: 'govuk-label'
+                span.govuk-error-message
+                  = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
+                .govuk-checkboxes.govuk-checkboxes--small
+                  .govuk-checkboxes__item
+                    = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
+                    = f.label t('discretion_applied_false', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_false'
+                  .govuk-checkboxes__item
+                    = f.radio_button :discretion_applied, 'true', { class: 'govuk-checkboxes__input show-hide-section', data: { section: 'discretion-applied-yes', show: 'true'} }
+                    = f.label t('discretion_applied_true', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_true'
+
 
       .govuk-form-group.group-level
         = f.label :form_name, class: 'govuk-label'
@@ -68,6 +94,14 @@
         span.govuk-error-message
           = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
         = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
+
+      .govuk-form-group.group-level
+        = f.label :case_number, class: 'govuk-label'
+          = t('case_number', scope: @form.i18n_scope)
+        - if @form.errors[:case_number].present?
+          span.govuk-error-message
+            = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error'
+        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half' }
 
       .govuk-form-group.group-level
         .govuk-checkboxes.govuk-checkboxes--small
@@ -104,6 +138,8 @@
         p = link_to 'What to do if the fee is one of these', new_process_application_url, target: 'blank'
         h3.govuk-heading-s Remember:
         ul.govuk-list.govuk-list--bullet
+          li If County is the jurisdiction for a new issue application, you will need to select which claim type the N1 form relates to from the drop-down list provided
+          li to complete the case number the application relates to if required. You may need to amend the entry to reflect the correct case number entered by the applicant
           li to complete the form number the application relates to. You may need to amend the entry to reflect the correct form number entered by the applicant
 
         h2.govuk-heading-m Emergency cases

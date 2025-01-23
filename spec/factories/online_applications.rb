@@ -8,7 +8,7 @@ FactoryBot.define do
     married { false }
     min_threshold_exceeded { false }
     max_threshold_exceeded { nil }
-    over_61 { false }
+    over_66 { false }
     amount { nil }
     benefits { true }
     children { 0 }
@@ -24,6 +24,7 @@ FactoryBot.define do
     phone_contact { false }
     post_contact { false }
     feedback_opt_in { true }
+    case_number { '234567' }
 
     factory :online_application_with_all_details do
       children { 2 }
@@ -53,7 +54,7 @@ FactoryBot.define do
     trait :childandincome6065 do
       fee { 100 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'AXEE122' }
       children { 4 }
       benefits { false }
@@ -69,21 +70,21 @@ FactoryBot.define do
     trait :emergency_completed do
       fee { 450 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       emergency_reason { 'EMERGENCY' }
     end
 
     trait :completed do
       fee { 450 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'ABC123' }
     end
 
     trait :big_saving do
       fee { 100 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'AXEE122' }
       min_threshold_exceeded { true }
       max_threshold_exceeded { true }
@@ -108,8 +109,24 @@ FactoryBot.define do
       income { 1000 }
       fee { 6000 }
       jurisdiction
-      date_received { Time.zone.yesterday }
+      date_received { Time.zone.today }
       form_name { 'ABC123' }
+    end
+
+    trait :partner_no_nino do
+      married { true }
+      partner_first_name { 'Jane' }
+      partner_last_name { 'Doe' }
+      partner_date_of_birth { '1/1/2000' }
+      partner_ni_number { nil }
+    end
+
+    trait :partner do
+      married { true }
+      partner_first_name { 'Jane' }
+      partner_last_name { 'Doe' }
+      partner_date_of_birth { '1/2/2000' }
+      partner_ni_number { 'SN741369A' }
     end
 
     trait :income_6065 do

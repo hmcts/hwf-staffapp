@@ -3,9 +3,9 @@ base:
   image: 'hmctspublic.azurecr.io/help-with-fees/staffapp:latest'
   ingressHost: hwf-staffapp.{{ .Values.global.environment }}.platform.hmcts.net
   aadIdentityName: help-with-fees
-  memoryRequests: "1Gi"
+  memoryRequests: "2Gi"
   cpuRequests: "500m"
-  memoryLimits: "2048Mi"
+  memoryLimits: "3Gi"
   cpuLimits: "1000m"
   environment:
     RAILS_ENV: 'production'
@@ -43,6 +43,8 @@ base:
   keyVaults:
     help-with-fees:
       secrets:
+        - name: hwf-redis-url
+          alias: REDIS_URL
         - name: hwf-fqdn
           alias: DATABASE_HOST
         - name: hwf-password
@@ -85,3 +87,5 @@ base:
           alias: MAINTENANCE_ALLOWED_IPS
         - name: hwf-storage-account-primary-access-key
           alias: AZURE_STORAGE_ACCESS_KEY
+        - name: test-loading-env-v1
+          alias: TEST_ENV_ID

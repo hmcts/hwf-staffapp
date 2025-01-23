@@ -285,6 +285,7 @@ en-GB:
     waiting_for_part_payment: 'This application is waiting for part-payment. You can’t edit any details.'
     waiting_for_evidence: 'This application is waiting for evidence. You can’t edit any details.'
     deleted: 'This application has been deleted. You can’t edit any details.'
+    discretion_not_applied: 'You decided not to continue processing the application received more than 3 months ago - %{reference}'
   business_entities:
     not_set:
       manager_html: "Email <a href='mailto:%{email}'>%{email}</a> to get jurisdictions and business entity codes (BEC) assigned. You'll then be able to select them from this page."
@@ -326,7 +327,8 @@ en-GB:
 
   hmrc_summary:
     alert: "Undefined evidence check outcome, please contact support"
-    no_income: No income recorded for this applicant by HMRC for the selected period.
+    no_income_applicant: No data returned for applicant income. Compare declared income with HMRC checked income.
+    no_income_partner: No data returned for partner income. Compare declared income with HMRC checked income.
     entitlement_date: This application requires a paper evidence check due to issues with HMRC tax credit data.
 
   offices:
@@ -357,8 +359,8 @@ en-GB:
         max_threshold_exceeded: "More than £16,000"
         amount: 'Savings amount'
         over_66: '66 or older'
-        over_61_true: 'Yes'
-        over_61_false: 'No'
+        over_66_true: 'Yes'
+        over_66_false: 'No'
         less_then: 'Less than £4,250'
         between: 'Between £4,250 and £15,999'
         more_then: 'More than £16,000'
@@ -603,15 +605,15 @@ en-GB:
         less_than_max: Less than £16,000
         more_than_max: £16,000 or more
         max_threshold_exceeded: In question 8, how much do they have?
-        partner_over_61: "In question 8, is the applicant's partner 61 or over?"
-        over_61_false: 'No'
-        over_61_true: 'Yes'
+        over_66_false: 'No'
+        over_66_true: 'Yes'
         married_false: 'Single'
         married_true: 'Married or living with someone and sharing an income'
         choice_less_than: Less than £4,250
         choice_between: Between £4,250 and £15,999
         choice_more_than: £16,000 or more
         savings_amount: Total savings and investments
+        over_66: "Is the applicant 66 years or over?"
         partner_over_66: "Is the applicant or partner 66 years or over?"
       forms/application/benefit:
         benefits: Is the applicant receiving one of these benefits?
@@ -627,6 +629,7 @@ en-GB:
         income_hint: Rounded to the nearest £
         children_age_band_one: Children aged 0 to 13 years
         children_age_band: 'In questions 11, does the applicant or partner financially support any children?'
+        children_age_band_single: 'In question 11, does the applicant financially support any children?'
         children_age_band_two: Children aged 14+ years
       forms/application/income:
         income: In question 13, what income has been entered?
@@ -636,7 +639,7 @@ en-GB:
       forms/application/income_kind_applicant:
         income_kind_applicant: 'In question 12, what types of income has the applicant received over the last three months?'
         kinds:
-          '1': Wages
+          '1': Wages before tax and National Insurance are taken off
           '2': Net profits from self employment
           '3': Child benefit
           '4': Working Tax Credit
@@ -645,21 +648,18 @@ en-GB:
           '7': Contribution-based Jobseekers Allowance (JSA)
           '8': Contribution-based Employment and Support Allowance (ESA)
           '9': Universal Credit
-          '10': Pensions (state, work, private)
-          '11': Pension Credit (savings credit)
-          '12': Rent from anyone living with the applicant
-          '13': Rent from other properties the applicant owns
-          '14': Rent from anyone living with the partner
-          '15': Rent from other properties the partner owns
-          '16': Cash gifts - include all one off payments
-          '17': Financial support from family - include all one off payments
-          '18': Loans
-          '19': Other income - For example, income from online selling
-          '20': None of the above
+          '10': Pensions (state, work, private, pension credit (savings credit))
+          '11': Rent from anyone living with the applicant
+          '12': Rent from other properties the applicant owns
+          '13': Cash gifts - include all one off payments
+          '14': Financial support from family - include all one off payments
+          '15': Loans
+          '16': Other income - For example, income from online selling or from dividend or interest payments
+          '17': None of the above
       forms/application/income_kind_partner:
         income_kind_partner: "In question 12, what types of income has the applicant's partner received over the last three months?"
         kinds:
-          '1': Wages
+          '1': Wages before tax and National Insurance are taken off
           '2': Net profits from self employment
           '3': Child benefit
           '4': Working Tax Credit
@@ -668,18 +668,16 @@ en-GB:
           '7': Contribution-based Jobseekers Allowance (JSA)
           '8': Contribution-based Employment and Support Allowance (ESA)
           '9': Universal Credit
-          '10': Pensions (state, work, private)
-          '11': Pension Credit (savings credit)
-          '12': Rent from anyone living with the applicant
-          '13': Rent from other properties the applicant owns
-          '14': Rent from anyone living with the partner
-          '15': Rent from other properties the partner owns
-          '16': Cash gifts - include all one off payments
-          '17': Financial support from family - include all one off payments
-          '18': Loans
-          '19': Other income - For example, income from online selling
-          '20': None of the above
-
+          '10': Pensions (state, work, private, pension credit (savings credit))
+          '11': Rent from anyone living with the applicant
+          '12': Rent from other properties the applicant owns
+          '13': Rent from anyone living with the partner
+          '14': Rent from other properties the partner owns
+          '15': Cash gifts - include all one off payments
+          '16': Financial support from family - include all one off payments
+          '17': Loans
+          '18': Other income - For example, income from online selling or from dividend or interest payments
+          '19': None of the above
 
       forms/application/declaration:
         header: 'Declaration and statement of truth'
@@ -715,6 +713,7 @@ en-GB:
         q4_23: New HwF
 
       forms/application/delete:
+        deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
         evidence: 'Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?'
@@ -746,6 +745,8 @@ en-GB:
         benefits_override_false: 'No'
         benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?
+        discretion_applied_true: 'Yes'
+        discretion_applied_false: 'No'
 
       forms/fee_approval:
         first_name: Manager's first name
@@ -824,6 +825,7 @@ en-GB:
               blank: 'Enter a valid date of birth'
             partner_ni_number:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
+              duplicate: 'This National Insurance number has already been entered on another page. Enter another National Insurance number'
         forms/application/detail:
           attributes:
             fee:
@@ -834,10 +836,11 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
+              blank: Enter the date in this format DD/MM/YYYY
               not_a_date: Enter the date in this format DD/MM/YYYY
               date_after_or_equal_to: The application must have been made in the last 3 months
               date_before: This date can't be in the future
+              before_submit: 'This date need to be before submitted date.'
             deceased_name:
               blank: "The deceased's name should be entered"
             date_fee_paid:
@@ -860,14 +863,16 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            case_number:
+              blank: Enter the case number
         forms/application/savings_investment:
           attributes:
             min_threshold_exceeded:
               inclusion: Please answer the savings question
-            over_61:
-              inclusion: Please confirm if the partner is 61 or over
             over_66:
               inclusion: Please confirm if the partner is 66 or over
+              not_over_66: Age selection does not match applicant Date of Birth entered
+              not_over_66_married: Age selection does not match applicant or partner Date of Birth entered
             amount:
               blank: Please enter the amount of savings and investments
               not_a_number: The value that you entered is not a number
@@ -923,7 +928,7 @@ en-GB:
         forms/application/delete:
           attributes:
             deleted_reason:
-              blank: Enter the reason
+              blank: Enter the description
         forms/application/decision_override:
           attributes:
             value:
@@ -973,10 +978,13 @@ en-GB:
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
-              blank: Enter the date
-              not_a_date: Enter the date in this format DD/MM/YYYY
-              date_after_or_equal_to: The application must have been made in the last 3 months
+              blank: Enter the date in this format DD/MM/YYYY
+              three_months: This application was received more than 3 months ago, are you sure you want to continue?
+              date_after_or_equal_to: "The application's date received cannot be before the date submitted."
+              not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
+              before_submit: This date can’t be before the application was received.
+
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"
               too_long: Enter the reason using less than 500 characters
@@ -984,6 +992,9 @@ en-GB:
             form_name:
               invalid: You entered the help with fees form number. Enter the number on the court or tribunal form.
               blank: Enter a valid form number
+            case_number:
+              blank: Enter the case number
+
         forms/fee_approval:
           attributes:
             fee_manager_firstname:
@@ -1113,6 +1124,8 @@ en-GB:
       raw_data: 'Raw Data'
       finance_transactional: 'Finance transactional'
   forms/report/raw_data:
-    notice: 'RawData export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.'
+    notice: 'Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
   forms/report/fi_transactional:
-    notice: 'Finance transactional export in progress. You should receive an email with a download link in few minutes. If not please contact technical support.'
+    notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
+  forms/report/ocmc:
+    notice: 'Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'

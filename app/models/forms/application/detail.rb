@@ -46,6 +46,7 @@ module Forms
       validates :fee, presence: true,
                       numericality: { allow_blank: true, greater_than: 0 }
       validates :jurisdiction_id, presence: true
+      validates :case_number, presence: true, if: proc { |detail| detail.refund? }
       validate :reason
       validate :emergency_reason_size
       validates :discretion_manager_name,

@@ -18,9 +18,19 @@ RSpec.describe Views::Overview::Details do
     context 'band calculation change active' do
       before { allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true }
 
-      it "returns relevant fields" do
-        is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
-                            'deceased_name', 'date_of_death', 'emergency_reason'])
+      context 'paper application' do
+        it "returns relevant fields" do
+          is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
+                              'deceased_name', 'date_of_death', 'emergency_reason'])
+        end
+      end
+
+      context 'digital application' do
+        let(:application) { build_stubbed(:online_application) }
+        it "returns relevant fields" do
+          is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
+                              "discretion_applied", 'deceased_name', 'date_of_death', 'emergency_reason'])
+        end
       end
     end
   end
@@ -102,6 +112,18 @@ RSpec.describe Views::Overview::Details do
       subject(:view) { described_class.new(online_application) }
       it "return nil" do
         expect(view.discretion_applied).to be_nil
+      end
+    end
+
+    context 'online_application pre ucd' do
+      let(:online_application) { build_stubbed(:online_application, calculation_scheme: 'prior_q4_23', discretion_applied: true) }
+      subject(:view) { described_class.new(online_application) }
+      it "discretion_manager_name return nil" do
+        expect(view.discretion_manager_name).to be_nil
+      end
+
+      it "discretion_reason return nil" do
+        expect(view.discretion_reason).to be_nil
       end
     end
 

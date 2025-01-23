@@ -34,12 +34,12 @@ class PersonalDataPurgeJob < ApplicationJob
 
   def app_insights_log
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
-    tc.track_event("Running Personal data purge script: #{Time.zone.now.to_fs(:db)}")
+    tc.track_event("Running personal data purge script: #{Time.zone.today.to_fs(:db)}")
     tc.flush
   end
 
   def app_insights_log_end(message)
-    time = Time.zone.now.to_fs(:db)
+    time = Time.zone.today.to_fs(:db)
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
     tc.track_event("Finished personal data purge script: #{time}, #{message}")
     tc.flush

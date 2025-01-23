@@ -6,7 +6,8 @@ class ProcessedApplicationInstancePage < BasePage
     element :result, '#result'
     element :delete_application_detail, 'span', text: 'Delete application'
     element :delete_application_button, '.govuk-button'
-    element :enter_the_reason_error, 'label', text: 'Enter the reason'
+    element :enter_the_reason_error, 'label', text: 'Enter the description'
     element :delete_application_textbox, '#application_deleted_reason'
+    element :delete_application_select, '#application_deleted_reasons_list'
   end
 end

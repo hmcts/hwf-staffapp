@@ -36,6 +36,10 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view new process application
 
+    Scenario: New Online Process application
+      And I am signed in on the guide page
+      Then I can view new online process application
+
     Scenario: Old Evidence Checks
       And I am signed in on the guide page
       Then I can view old evidence checks
@@ -55,6 +59,10 @@ Feature: Staff guides
     Scenario: RRDS
       And I am signed in on the guide page
       Then I can view RRDS
+
+    Scenario: HMRC Datashare
+      And I am signed in on the guide page
+      Then I can view HMRC Datashare
 
     Scenario: Accessibility statement footer
       When I click on the accessibility link in the footer

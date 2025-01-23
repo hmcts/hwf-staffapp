@@ -11,6 +11,44 @@ def fill_personal_details(ni_number = 'SN123456C')
   click_button 'Next'
 end
 
+def fill_personal_details_under_16(ni_number)
+  expect(page).to have_text 'Personal details'
+  fill_in 'Title', with: 'Mr.'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: 10.years.ago
+  fill_in 'National Insurance number', with: ni_number
+  choose 'Single'
+  click_button 'Next'
+end
+
+def fill_personal_details_no_ni
+  expect(page).to have_text 'Personal details'
+  fill_in 'Title', with: 'Mr.'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: '2000'
+  choose 'Single'
+  click_button 'Next'
+end
+
+def fill_personal_details_with_partner(ni_number = 'SN123456C')
+  expect(page).to have_text 'Personal details'
+  fill_in 'Title', with: 'Mr.'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: '2000'
+  fill_in 'National Insurance number', with: ni_number
+  choose 'Married or living with someone'
+  click_button 'Next'
+end
+
 def fill_application_details(court_fee = '1000')
   expect(page).to have_css('h1', text: 'Application details')
   fill_in 'application_fee', with: court_fee
@@ -25,6 +63,7 @@ def fill_application_refund_details(court_fee = '1000')
   fill_in 'application_fee', with: court_fee
   select_jurisdiction
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   fill_application_dates
 end
 
@@ -55,7 +94,7 @@ def fill_saving_and_investment
   click_button 'Next'
 end
 
-def fill_saving_exceeded_over_61
+def fill_saving_exceeded_over_66
   expect(page).to have_text 'Savings and investments'
   choose 'application_min_threshold_exceeded_true'
 
@@ -138,6 +177,7 @@ def fill_application_date_over_limit
   fill_in_date_received(Date.yesterday)
 
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   check 'This is a refund case'
 end
 
@@ -145,6 +185,7 @@ def fill_application_date_set_discretion_no
   fill_application_date_over_limit
   fill_in_date_fee_paid(4.months.ago.to_date)
   fill_in 'Form number', with: 'ABC123'
+  fill_in 'Case number', with: 'ABC123'
   click_button 'Next'
 
   choose 'application_discretion_applied_false'
@@ -179,4 +220,10 @@ def fill_in_date_fee_paid(date_fee_paid)
   fill_in 'application_day_date_fee_paid', with: date_fee_paid.day
   fill_in 'application_month_date_fee_paid', with: date_fee_paid.month
   fill_in 'application_year_date_fee_paid', with: date_fee_paid.year
+end
+
+def fill_declaration
+  expect(page).to have_content('Declaration and statement of truth')
+  choose 'Applicant'
+  click_button 'Next'
 end

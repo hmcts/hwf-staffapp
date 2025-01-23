@@ -179,4 +179,69 @@ RSpec.describe OnlineApplication do
       expect(described_class.count).to eq 1
     }
   end
+
+  describe '#notification_email' do
+    subject { online_application.notification_email }
+    let(:online_application) { build(:online_application, email_address: applicant_address, legal_representative_email: legal_representative_email) }
+    let(:applicant_address) { 'jane@home.com' }
+
+    context 'when no representative email' do
+      let(:legal_representative_email) { '' }
+
+      it "returns applicant's email" do
+        is_expected.to eql('jane@home.com')
+      end
+    end
+
+    context 'when epresentative email present' do
+      let(:legal_representative_email) { 'tom@work.com' }
+
+      it "returns legal representative's email" do
+        is_expected.to eql('tom@work.com')
+      end
+    end
+  end
+
+  context 'partner' do
+    let(:online_application) { build(:online_application, partner_first_name: 'John', partner_last_name: 'Doe', partner_date_of_birth: Date.new(2000, 2, 1), partner_ni_number: 'CD789012E') }
+
+    describe '#partner_full_name' do
+      it 'returns the full name of the partner' do
+        expect(online_application.partner_full_name).to eq('John Doe')
+      end
+
+      it 'returns nil if partner first name is nil' do
+        online_application.partner_first_name = nil
+        expect(online_application.partner_full_name).to eq('Doe')
+      end
+
+      it 'returns nil if partner last name is nil' do
+        online_application.partner_last_name = nil
+        expect(online_application.partner_full_name).to eq('John')
+      end
+    end
+
+    describe '#formated_partner_date_of_birth' do
+      it 'returns the formated date of birth of the partner' do
+        expect(online_application.formated_partner_date_of_birth).to eq('1 February 2000')
+      end
+
+      it 'returns nil if partner date of birth is nil' do
+        online_application.partner_date_of_birth = nil
+        expect(online_application.formated_partner_date_of_birth).to be_nil
+      end
+    end
+
+    describe '#formated_partner_ni_number' do
+      it 'returns the formatted NI number of the partner' do
+        expect(online_application.formated_partner_ni_number).to eq('CD 78 90 12 E')
+      end
+
+      it 'returns nil if partner NI number is nil' do
+        online_application.partner_ni_number = nil
+        expect(online_application.formated_partner_ni_number).to be_nil
+      end
+    end
+  end
+
 end

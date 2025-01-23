@@ -1,8 +1,11 @@
 class HmrcApiService
+  include HmrcPersonLoadable
+  include HmrcTokenable
 
-  def initialize(application, user_id)
+  def initialize(application, user_id, check_type = 'applicant')
     @application = application
     @user_id = user_id
+    @check_type = check_type
     hmrc_check_initialize
   end
 
@@ -47,18 +50,19 @@ class HmrcApiService
   def tax_credit(from, to)
     child = child_tax_credit(from, to)
     work = work_tax_credit(from, to)
-    @hmrc_check.tax_credit = { child: child, work: work }
+    # Tax credit id is same for work and child tax
+    @hmrc_check.tax_credit = { child: child, work: work, id: @tax_credit_id }
     @hmrc_check.save
   end
 
   def child_tax_credit(from, to)
     id = hmrc_call({ from: from, to: to }, :child_tax_credits)
-    @hwf.child_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+    tax_credit_data(@hwf.child_tax_credits(from, to, id))
   end
 
   def work_tax_credit(from, to)
     id = hmrc_call({ from: from, to: to }, :working_tax_credits)
-    @hwf.working_tax_credits(from, to, id).try(:[], 0).try(:[], 'awards')
+    tax_credit_data(@hwf.working_tax_credits(from, to, id))
   end
 
   def hmrc_api_innitialize
@@ -69,15 +73,22 @@ class HmrcApiService
   end
 
   def hmrc_check
-    @hmrc_check ||= HmrcCheck.new(evidence_check: @application.evidence_check)
+    @hmrc_check ||= HmrcCheck.new(evidence_check: @application.evidence_check, check_type: @check_type)
   end
 
   private
 
+  def tax_credit_data(response)
+    data = response.try(:[], 0)
+    return nil unless data
+    @tax_credit_id ||= data.try(:[], 'id')
+    data.try(:[], 'awards')
+  end
+
   def store_response_data(type, data)
     @hmrc_check.send(:"#{type}=", data.send(:[], type))
     @hmrc_check.save
-    raise HwfHmrcApiError, "NO RESULT - No record found" if data.send(:[], type).blank?
+    raise_error_if_no_data(type, data)
   end
 
   # TODO: whitelist credentials from logs
@@ -89,45 +100,10 @@ class HmrcApiService
     }.merge(hmrc_api_credentials)
   end
 
-  def user_params
-    applicant = @application.applicant
-    {
-      first_name: applicant.first_name,
-      last_name: applicant.last_name,
-      nino: applicant.ni_number,
-      dob: applicant.date_of_birth.strftime('%Y-%m-%d')
-    }
-  end
-
-  # load / store access_token and expires_in values
-  def hmrc_api_credentials
-    hrmc_token = HmrcToken.last
-    return {} if hrmc_token.nil? || hrmc_token.expired?
-    { access_token: hrmc_token.access_token, expires_in: hrmc_token.expires_in }
-  rescue ActiveSupport::MessageEncryptor::InvalidMessage
-    HmrcToken.last.destroy
-    {}
-  end
-
-  def update_hmrc_token(access_token, expires_in)
-    @hmrc_token = HmrcToken.last || HmrcToken.new
-    return if @hmrc_token.access_token == access_token
-    store_hmrc_token(access_token, expires_in)
-  rescue ActiveSupport::MessageEncryptor::InvalidMessage
-    HmrcToken.last.destroy
-    store_hmrc_token(access_token, expires_in)
-  end
-
-  def store_hmrc_token(access_token, expires_in)
-    @hmrc_token.access_token = access_token
-    @hmrc_token.expires_in = expires_in
-    @hmrc_token.save
-  end
-
   def hmrc_check_initialize
     hmrc_check
-    @hmrc_check.ni_number = @application.applicant.ni_number
-    @hmrc_check.date_of_birth = @application.applicant.date_of_birth.to_fs(:db)
+    @hmrc_check.ni_number = person_ni_number
+    @hmrc_check.date_of_birth = person_dob&.to_fs(:db)
     @hmrc_check.user_id = @user_id
     @hmrc_check.save
   end
@@ -144,6 +120,16 @@ class HmrcApiService
   def hmrc_call(call_params, endpoint)
     call = HmrcCall.create(call_params: call_params, endpoint_name: endpoint, hmrc_check: @hmrc_check)
     call.id
+  end
+
+  def raise_error_if_no_data(type, data)
+    # don't fail if married
+    return if married?
+    raise HwfHmrcApiError, "NO RESULT - No record found" if data.send(:[], type).blank?
+  end
+
+  def married?
+    @application.applicant.married
   end
 
 end

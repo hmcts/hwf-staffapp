@@ -1,9 +1,8 @@
 class OnlineApplication < ActiveRecord::Base
   acts_as_paranoid column: :purged, sentinel_value: false
-  alias_attribute :over_66, :over_61
 
-  serialize :income_kind
-  serialize :children_age_band
+  serialize :income_kind, coder: YAML
+  serialize :children_age_band, coder: YAML
 
   belongs_to :jurisdiction, optional: true
   belongs_to :user, optional: true
@@ -19,6 +18,10 @@ class OnlineApplication < ActiveRecord::Base
 
   def full_name
     [title, first_name, last_name].compact.join(' ')
+  end
+
+  def partner_full_name
+    [partner_first_name, partner_last_name].compact_blank.join(' ')
   end
 
   def applicant
@@ -61,6 +64,18 @@ class OnlineApplication < ActiveRecord::Base
     return false if last_benefit_check.error_message.blank?
     last_benefit_check.dwp_result == 'Server unavailable' &&
       last_benefit_check.error_message.include?('The benefits checker is not available at the moment')
+  end
+
+  def notification_email
+    legal_representative_email.presence || email_address
+  end
+
+  def formated_partner_date_of_birth
+    partner_date_of_birth&.to_fs(:gov_uk_long)
+  end
+
+  def formated_partner_ni_number
+    partner_ni_number&.gsub(/(.{2})/, '\1 ')
   end
 
   private

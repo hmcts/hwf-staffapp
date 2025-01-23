@@ -17,6 +17,7 @@ Feature: Processed applications
 
     Scenario: Delete a processed application (no reason)
       When I click the Delete application details element
+      And I select a reason with a mandatory description
       And I click Delete application button without providing a reason
       Then I should see an Enter the reason error
 

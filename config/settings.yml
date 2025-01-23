@@ -12,6 +12,8 @@ evidence_check:
   hmrc:
     office_entity_code: <%= ENV['HMRC_OFFICE_CODE'].try(:split) || ['dig'] %>
 part_payment:
+  expires_in_days: 28
+payment:
   expires_in_days: 14
 submission:
   token: <%= ENV['SUBMISSION_TOKEN'] %>
@@ -34,14 +36,10 @@ income:
   max_threshold_base: 5170
   per_child_increment: 265
   married_supplement: 175
-child_benefits_per_month:
-  1: 96
-  2: 159
-  3: 223
-  4: 268
-  5: 350
-  6: 413
-  7: 413
+child_benefits:
+  per_week: 25.6
+  additional_child: 16.95
+
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
 fee_approval_threshold: 10000.01
@@ -52,3 +50,4 @@ personal_data_purge:
   years_ago: 7
 legislation_work:
   active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-11-2023' %>
+redis_url: <%= ENV["REDIS_URL"] || "redis://localhost:6379/1" %>

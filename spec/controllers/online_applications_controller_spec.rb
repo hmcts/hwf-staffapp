@@ -95,10 +95,13 @@ RSpec.describe OnlineApplicationsController do
     let(:benefits_valid) { true }
     let(:saving_outcome) { true }
     let(:saving_service) { instance_double(SavingsPassFailService) }
+    let(:discretion_applied) { nil }
 
     before do
       allow(form).to receive(:update).with(params)
       allow(form).to receive_messages(save: form_save, fee: fee)
+      allow(form).to receive_messages(discretion_applied: discretion_applied)
+      allow(form).to receive(:reset_date_received_data)
       allow(online_application).to receive_messages(update: true, last_benefit_check: online_bc)
 
       allow(DwpMonitor).to receive(:new).and_return monitor
@@ -262,6 +265,18 @@ RSpec.describe OnlineApplicationsController do
       end
 
       context 'when the form can not be saved' do
+        context 'discretion selected "No"' do
+          let(:discretion_applied) { false }
+          it { expect(response).to redirect_to(root_url) }
+          it { expect(form).to have_received(:reset_date_received_data) }
+        end
+
+        context 'discretion selected "Yes"' do
+          let(:discretion_applied) { true }
+          it { expect(response).not_to redirect_to(root_url) }
+          it { expect(form).not_to have_received(:reset_date_received_data) }
+        end
+
         it 'renders the edit template' do
           expect(response).to render_template(:edit)
         end
@@ -525,4 +540,57 @@ RSpec.describe OnlineApplicationsController do
       end
     end
   end
+
+  describe 'section helper' do
+    describe '#build_sections' do
+      let(:representative) { build(:representative) }
+
+      before do
+        allow(Views::Overview::FeeStatus).to receive(:new)
+        allow(Views::Overview::Applicant).to receive(:new)
+        allow(Views::Overview::OnlineApplicant).to receive(:new)
+        allow(Views::Overview::Children).to receive(:new)
+        allow(Views::Overview::Application).to receive(:new)
+        allow(Views::Overview::Details).to receive(:new)
+        allow(Views::Overview::Declaration).to receive(:new)
+        allow(Views::Overview::Representative).to receive(:new)
+        allow(controller).to receive(:build_representative).and_return representative
+        get :show, params: { id: online_application.id }
+      end
+
+      it 'prepare decorators' do
+        expect(Views::Overview::FeeStatus).to have_received(:new).with(online_application)
+        expect(Views::Overview::Applicant).to have_received(:new).with(online_application)
+        expect(Views::Overview::OnlineApplicant).to have_received(:new).with(online_application)
+        expect(Views::Overview::Children).to have_received(:new).with(online_application)
+        expect(Views::Overview::Application).to have_received(:new).with(online_application)
+        expect(Views::Overview::Details).to have_received(:new).with(online_application)
+        expect(Views::Overview::Declaration).to have_received(:new).with(online_application)
+        expect(Views::Overview::Representative).to have_received(:new).with(representative)
+      end
+    end
+
+    describe '#build_representative' do
+      context 'online application' do
+        let(:application) {
+          build(:online_application,
+                legal_representative_first_name: 'Tom',
+                legal_representative_last_name: 'Jones',
+                legal_representative_organisation_name: 'LLC',
+                legal_representative_position: 'boss',
+                calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1].to_s)
+        }
+
+        it 'return representative' do
+          new_representative = controller.build_representative(application)
+
+          expect(new_representative.first_name).to eq('Tom')
+          expect(new_representative.last_name).to eq('Jones')
+          expect(new_representative.organisation).to eq('LLC')
+          expect(new_representative.position).to eq('boss')
+        end
+      end
+    end
+  end
+
 end

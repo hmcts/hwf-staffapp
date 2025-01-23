@@ -34,12 +34,13 @@ RSpec.feature 'Delete processed applications' do
     end
 
     scenario 'With reason not provided the application shows an error' do
+      select text: 'Other error made by office processing application', from: 'application_deleted_reasons_list'
       click_button 'Delete application', visible: false
 
       expect(page).to have_content('Processed application')
       expect(page).to have_content("Full name#{application1.applicant.full_name}")
       within '.delete-form' do
-        expect(page).to have_content('Enter the reason')
+        expect(page).to have_content('Enter the description')
       end
     end
   end

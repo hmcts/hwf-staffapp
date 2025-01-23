@@ -5,8 +5,10 @@ class Application < ActiveRecord::Base
   include PgSearch::Model
   include ApplicationCheckable
 
-  serialize :income_kind
-  serialize :children_age_band
+  INCOME_PERIOD = { last_month: 'last_month', average: 'average' }.freeze
+
+  serialize :income_kind, coder: YAML
+  serialize :children_age_band, coder: YAML
 
   self.per_page = 25
 
@@ -54,7 +56,7 @@ class Application < ActiveRecord::Base
     where(office_id: office_id)
   }
 
-  enum state: {
+  enum :state, {
     created: 0,
     waiting_for_evidence: 1,
     waiting_for_part_payment: 2,
@@ -84,7 +86,7 @@ class Application < ActiveRecord::Base
   end
 
   def payment_expires_at
-    days = Settings.part_payment.expires_in_days
+    days = Settings.payment.expires_in_days
     Time.zone.today + days
   end
 
@@ -103,6 +105,14 @@ class Application < ActiveRecord::Base
 
   def digital?
     medium == 'digital'
+  end
+
+  def income_period_three_months_average?
+    income_period == INCOME_PERIOD[:average]
+  end
+
+  def income_period_last_month?
+    income_period == INCOME_PERIOD[:last_month]
   end
 
 end

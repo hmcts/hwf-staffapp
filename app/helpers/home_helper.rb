@@ -104,7 +104,7 @@ module HomeHelper
   def hmrc_evidence_check_link(application)
     evidence_check = application.evidence_check
 
-    if evidence_check.hmrc_check.try(:total_income).try(:positive?)
+    if evidence_check.hmrc_check.present?
       evidence_check_hmrc_path(evidence_check, evidence_check.hmrc_check)
     else
       new_evidence_check_hmrc_path(evidence_check)
@@ -112,6 +112,6 @@ module HomeHelper
   end
 
   def hmrc_check_link?(application)
-    application.evidence_check.hmrc? && application.income_period != 'average'
+    application.evidence_check.hmrc?
   end
 end

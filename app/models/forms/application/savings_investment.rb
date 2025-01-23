@@ -9,7 +9,7 @@ module Forms
       def self.permitted_attributes
         {
           min_threshold_exceeded: Boolean,
-          over_61: Boolean,
+          over_66: Boolean,
           max_threshold_exceeded: Boolean,
           amount: Decimal,
           choice: String
@@ -25,10 +25,11 @@ module Forms
       }
 
       validates :min_threshold_exceeded, inclusion: { in: [true, false] }
-      validates :over_61, inclusion: { in: [true, false] }, if: proc { validate_over_61? }
+      validates :over_66, inclusion: { in: [true, false] }, if: proc { validate_over_66? }
       validates :max_threshold_exceeded, inclusion: { in: :maximum_threshold_array }
       validates :amount, presence: true, if: :amount_required?
       validate :numericality, if: :amount_required?
+      validate :applicant_partner_over_66
 
       private
 
@@ -40,7 +41,7 @@ module Forms
         {
           min_threshold: Settings.savings_threshold.minimum_value,
           min_threshold_exceeded: min_threshold_exceeded,
-          over_61: over_61,
+          over_66: over_66,
           max_threshold: Settings.savings_threshold.maximum_value,
           max_threshold_exceeded: max_threshold_exceeded,
           amount: rounded_amount,
@@ -59,14 +60,14 @@ module Forms
 
       def amount_required?
         if ucd_changes_apply?(@object.application.detail.calculation_scheme)
-          min_threshold_exceeded? && !max_threshold_exceeded && over_61? == false
+          min_threshold_exceeded? && !max_threshold_exceeded && over_66? == false
         else
-          min_threshold_exceeded? && !max_threshold_exceeded && !over_61?
+          min_threshold_exceeded? && !max_threshold_exceeded && !over_66?
         end
       end
 
       def maximum_threshold_required?
-        min_threshold_exceeded? && over_61?
+        min_threshold_exceeded? && over_66?
       end
 
       def check_thresholds
@@ -83,7 +84,7 @@ module Forms
 
       def less_fields_setup
         @min_threshold_exceeded = false
-        @over_61 = nil
+        @over_66 = nil
       end
 
       def between_fields_setup
@@ -94,7 +95,7 @@ module Forms
       def more_fields_setup
         @max_threshold_exceeded = true
         @min_threshold_exceeded = true
-        @over_61 = nil
+        @over_66 = nil
         @amount = 16000
       end
 
@@ -124,11 +125,26 @@ module Forms
         end
       end
 
-      def validate_over_61?
+      def validate_over_66?
         return false unless ucd_changes_apply?(@object.application.detail.calculation_scheme)
         min_threshold_exceeded && !max_threshold_exceeded
       end
 
+      # rubocop:disable Metrics/AbcSize
+      def applicant_partner_over_66
+        return false unless over_66?
+
+        details = @object.application.applicant
+        age_66 = Time.zone.today - 66.years
+        if details.married?
+          if details.date_of_birth > age_66 && details.partner_date_of_birth > age_66
+            errors.add(:over_66, :not_over_66_married)
+          end
+        elsif details.date_of_birth > age_66
+          errors.add(:over_66, :not_over_66)
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

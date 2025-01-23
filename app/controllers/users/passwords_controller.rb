@@ -6,8 +6,9 @@ module Users
       if user.blank?
         flash[:notice] = I18n.t('.devise.failure.email_not_found')
         redirect_to new_user_password_path
+      elsif !check_and_update_password_timestamp(user)
+        alert_password_limit_and_redirect
       else
-        set_reset_password_token
         send_notification_and_redirect
       end
     end
@@ -15,9 +16,7 @@ module Users
     private
 
     def send_notification_and_redirect
-      notify = NotifyMailer.password_reset(user, reset_link)
-
-      if send_email(notify)
+      if user.send_reset_password_instructions
         flash[:notice] = I18n.t('.devise.passwords.send_instructions')
         respond_with({}, location: after_sending_reset_password_instructions_path_for(:user))
       else
@@ -26,29 +25,21 @@ module Users
       end
     end
 
-    def set_reset_password_token
-      raw, enc = Devise.token_generator.generate(User, :reset_password_token)
-
-      user.reset_password_token   = enc
-      user.reset_password_sent_at = Time.now.utc
-      user.save(validate: false)
-      @token = raw
-    end
-
     def user
       email = params[:user][:email].strip.downcase
       @user ||= User.find_by(email: email)
     end
 
-    def reset_link
-      edit_user_password_url(reset_password_token: @token)
+    def check_and_update_password_timestamp(user)
+      last_check_timestamp = user&.last_password_reset_check_at
+      if last_check_timestamp.nil? || Time.now.utc - last_check_timestamp > 1.minute
+        user.update(last_password_reset_check_at: Time.now.utc)
+      end
     end
 
-    def send_email(notify)
-      notify.deliver
-    rescue StandardError
-      false
+    def alert_password_limit_and_redirect
+      flash[:notice] = I18n.t('.devise.passwords.password_limit_reset')
+      respond_with({}, location: after_sending_reset_password_instructions_path_for(:user))
     end
-
   end
 end

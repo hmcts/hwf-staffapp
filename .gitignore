@@ -12,9 +12,8 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
-/log/*.json
 
+/log/*
 /tmp/*
 
 db_dump
@@ -24,7 +23,7 @@ db_dump
 
 # Ignore debugger file
 .byebug_history
-notes.txt
+notes.rb
 
 # coverage files
 coverage

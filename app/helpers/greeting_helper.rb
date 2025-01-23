@@ -1,7 +1,7 @@
 module GreetingHelper
 
   def greeting_condition(confirm, application)
-    if confirm.representative_full_name
+    if confirm.representative_full_name.present?
       "#{confirm.representative_full_name} regarding #{application.applicant.full_name}"
     else
       application.applicant.full_name
