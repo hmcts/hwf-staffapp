@@ -25,6 +25,10 @@ module Views
         end
       end
 
+      def saving_match?(saving)
+        @saving.choice == saving
+      end
+
       def more_then
         @saving.choice == 'more' ? 'Yes' : 'No'
       end
@@ -43,7 +47,7 @@ module Views
       end
 
       def over_66
-        return nil if @saving.over_66.blank?
+        return false if @saving.over_66.nil?
         scope = 'activemodel.attributes.views/overview/savings_and_investments'
         I18n.t(".over_66_#{@saving.over_66}", scope: scope)
       end

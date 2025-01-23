@@ -459,6 +459,30 @@ RSpec.describe Views::Overview::Application do
         it { is_expected.to eql('Old HwF') }
       end
     end
+  end
 
+  describe '#hmrc_checked?' do
+    subject { view.hmrc_checked? }
+    let(:application) { create(:application) }
+
+    context 'hmrc check type' do
+      let(:evidence_check) { build(:evidence_check, income_check_type: 'hmrc') }
+      before {
+        application.evidence_check = evidence_check
+      }
+      it { is_expected.to eq 'Yes' }
+    end
+
+    context 'paper type' do
+      let(:evidence_check) { build(:evidence_check, income_check_type: 'paper]') }
+      before {
+        application.evidence_check = evidence_check
+      }
+      it { is_expected.to eq 'No' }
+    end
+
+    context 'no evidence check' do
+      it { is_expected.to eq 'No' }
+    end
   end
 end
