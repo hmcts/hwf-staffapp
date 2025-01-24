@@ -62,10 +62,11 @@ module Views
 
       def under_age
         locale_scope = 'activemodel.attributes.forms/application/applicant'
-        if @online_application.over_16
-          I18n.t("over_16_true", scope: locale_scope)
-        else
+
+        if @online_application.over_16 == false
           I18n.t("over_16_false", scope: locale_scope)
+        else
+          I18n.t("over_16_true", scope: locale_scope)
         end
       end
 
@@ -90,7 +91,7 @@ module Views
       end
 
       def children?
-        @online_application.children ? 'Yes' : 'No'
+        @online_application.children&.positive? ? 'Yes' : 'No'
       end
 
       def children_age_band
