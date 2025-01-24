@@ -11,6 +11,7 @@ RSpec.describe Views::Overview::OnlineApplicationView do
     allow(online_application).to receive(:partner_first_name).and_return('John')
     allow(online_application).to receive(:partner_first_name).and_return('John')
     allow(online_application).to receive_messages(date_received: Date.new(2023, 1, 1), refund?: true, date_fee_paid: Date.new(2023, 1, 2), partner_last_name: 'Doe', first_name: 'Jane', last_name: 'Smith', ni_number: 'AB123456C', ho_number: 'HO123456', partner_ni_number: 'CD789012E', married?: true, date_of_birth: Date.new(1990, 1, 1), partner_date_of_birth: Date.new(1992, 2, 2), over_16: under_age, over_66: nil)
+    allow(online_application).to receive(:children).and_return(2)
   end
 
   describe 'online savings' do
@@ -97,11 +98,41 @@ RSpec.describe Views::Overview::OnlineApplicationView do
         expect(online_app_view.under_age).to eq('Yes')
       end
     end
+
     context 'when over 16' do
       let(:under_age) { false }
       it 'returns the under age status' do
         expect(online_app_view.under_age).to eq('No')
       end
     end
+
+    context 'when nil (over 16)' do
+      let(:under_age) { nil }
+      it 'returns the under age status' do
+        expect(online_app_view.under_age).to eq('Yes')
+      end
+    end
   end
+
+  describe '#children' do
+    before do
+      allow(online_application).to receive(:children).and_return(children)
+    end
+
+    context 'children present' do
+      let(:children) { 2 }
+      it { expect(online_app_view.children?).to eq('Yes') }
+    end
+
+    context 'no children present' do
+      let(:children) { 0 }
+      it { expect(online_app_view.children?).to eq('No') }
+    end
+
+    context 'children are nil' do
+      let(:children) { nil }
+      it { expect(online_app_view.children?).to eq('No') }
+    end
+  end
+
 end

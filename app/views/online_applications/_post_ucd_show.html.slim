@@ -152,17 +152,17 @@ dl.govuk-summary-list
       dt.govuk-summary-list__key =t('summary.on_benefits?')
       dd.govuk-summary-list__value =@online_application_view.on_benefits?
 
-- if @online_application_view.children
-  h2.govuk-heading-m Children
-  dl.govuk-summary-list
-    .govuk-summary-list__row
-      dt.govuk-summary-list__key =t('summary.dependents')
-      dd.govuk-summary-list__value =@online_application_view.children?
 
-    - if @online_application_view.children
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key =t('summary.children_age_band')
-        dd.govuk-summary-list__value =@online_application_view.children_age_band
+h2.govuk-heading-m Children
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key =t('summary.dependents')
+    dd.govuk-summary-list__value =@online_application_view.children?
+
+  - if @online_application_view.children_age_band
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.children_age_band')
+      dd.govuk-summary-list__value =@online_application_view.children_age_band
 
 - if @online_application_view.income
   h2.govuk-heading-m Income
