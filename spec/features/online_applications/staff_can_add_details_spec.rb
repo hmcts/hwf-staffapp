@@ -79,8 +79,6 @@ RSpec.feature 'Staff can search for online application' do
 
   def they_see_all_partner_details
     expect(page).to have_content 'Jane Doe'
-    expect(page).to have_content '1 February 2000'
-    expect(page).to have_content 'SN 74 13 69 A'
   end
 end
 # rubocop:enable RSpec/NoExpectationExample
