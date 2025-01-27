@@ -18,7 +18,7 @@ $govuk-new-typography-scale: true;
 $govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
 $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 
-@import "govuk-frontend/dist/govuk/index";
+@import "govuk-frontend/dist/govuk/all";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
 /*local*/
@@ -30,6 +30,7 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/panels';
 @import 'local/banners';
 @import 'local/dwp-tags';
+
 
 // @import 'local/phase-banner';
 
