@@ -50,6 +50,7 @@ gem 'delayed_job_active_record'
 # gem "dartsass-sprockets", "~> 3.1"
 
 gem 'propshaft'
+gem 'cssbundling-rails'
 
 # gem 'terser'
 # Use CoffeeScript for .coffee assets and views
