@@ -8,7 +8,9 @@
   "engines": {
     "node": ">=0.18.x"
   },
-  "scripts": {},
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  },
   "engineStrict": true,
   "dependencies": {
     "accessible-autocomplete": "^3.0.0",
@@ -25,5 +27,8 @@
     "test": "tests"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.83.4"
+  }
 }
