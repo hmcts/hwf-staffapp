@@ -191,6 +191,8 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    cssbundling-rails (1.4.1)
+      railties (>= 6.0.0)
     csv (3.3.2)
     cucumber (9.2.1)
       builder (~> 3.2)
@@ -717,6 +719,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 5.0.0)
   config
+  cssbundling-rails
   csv
   cucumber
   cucumber-rails
