@@ -12,14 +12,14 @@
  *
  */
 
-$govuk-global-styles: true;
-$govuk-new-typography-scale: true;
+ $govuk-global-styles: true;
+ $govuk-new-typography-scale: true;
 
-$govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
-$govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
+ $govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
+ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 
-@import "govuk-frontend/dist/govuk/index";
-@import "accessible-autocomplete/dist/accessible-autocomplete.min";
+ @import "govuk-frontend/dist/govuk/all";
+ @import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
 @import "actiontext";
 
@@ -32,7 +32,6 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/panels';
 @import 'local/banners';
 @import 'local/dwp-tags';
-
 
 // @import 'local/phase-banner';
 
@@ -54,4 +53,3 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/lists';
 @import 'local/block-grid';
 @import 'local/utilities';
-
