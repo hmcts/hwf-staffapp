@@ -26,22 +26,22 @@ window.moj.Modules.DateReceivedOnlineModule = {
     var received_month = $('input[id="online_application_month_date_received"]').val();
     var received_year = $('input[id="online_application_year_date_received"]').val();
 
-    self.received_date = new Date(received_month + '/' + received_day + '/' + received_year)
+    this.received_date = new Date(received_month + '/' + received_day + '/' + received_year);
     this.compareDates();
   },
 
   compareDates: function() {
-    if(date_sumitted == 'Invalid Date' || Date.now() < received_date){
+    if(this.date_sumitted == 'Invalid Date' || Date.now() < this.received_date){
       // invalid date
       $('fieldset.discretion_applied').hide();
     } else {
-      received_date.setMonth(received_date.getMonth() - 3)
+      this.received_date.setMonth(this.received_date.getMonth() - 3);
       this.toggleDiscretionBlock();
     }
   },
 
   toggleDiscretionBlock: function() {
-    if(date_sumitted < received_date) {
+    if(this.date_sumitted < this.received_date) {
       $('fieldset.discretion_applied').show();
     } else {
       $('fieldset.discretion_applied').hide();
@@ -49,8 +49,6 @@ window.moj.Modules.DateReceivedOnlineModule = {
   },
 
   loadDateSubmitted: function() {
-    date_sumitted = new Date($('.date_sumitted').text());
+    this.date_sumitted = new Date($('.date_sumitted').text());
   },
-
-
 };
