@@ -1,5 +1,4 @@
 
-console.log('start');
 import { initAll } from 'govuk-frontend'
 initAll();
 
@@ -24,5 +23,3 @@ import './gtm_track_timestamps'
 import './error_class_loader'
 import './refund'
 import './date_received_online'
-
-console.log('end');

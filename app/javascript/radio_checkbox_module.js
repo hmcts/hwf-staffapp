@@ -2,10 +2,8 @@
 
 window.moj.Modules.RadioAndCheckboxModule = {
   init: function() {
-    console.log('radio');
     this.bindEvents();
     this.checkStateOnLoad();
-
   },
 
   bindEvents: function() {
