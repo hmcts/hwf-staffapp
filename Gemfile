@@ -51,6 +51,7 @@ gem 'delayed_job_active_record'
 
 gem 'propshaft'
 gem 'cssbundling-rails'
+gem 'jsbundling-rails'
 
 # gem 'terser'
 # Use CoffeeScript for .coffee assets and views
@@ -59,7 +60,7 @@ gem 'coffee-rails', '~> 5.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+# gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.

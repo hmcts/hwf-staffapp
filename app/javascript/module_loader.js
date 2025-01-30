@@ -1,5 +1,7 @@
 (function(){
   "use strict";
+  global.$ = require("jquery");
+  global.jQuery = global.$;
 
   var moj = {
 
