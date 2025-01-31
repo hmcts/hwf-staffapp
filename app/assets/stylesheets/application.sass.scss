@@ -9,7 +9,6 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import "govuk-frontend/dist/govuk/index";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
-
 /*local*/
 @import 'local/layout';
 @import 'local/conditionals';
@@ -39,3 +38,4 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/lists';
 @import 'local/block-grid';
 @import 'local/utilities';
+
