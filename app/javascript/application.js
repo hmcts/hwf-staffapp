@@ -2,6 +2,9 @@
 import { initAll } from 'govuk-frontend'
 initAll();
 
+import Rails from 'rails-ujs'
+Rails.start();
+
 import 'jquery'
 
 global.$ = require("jquery");
