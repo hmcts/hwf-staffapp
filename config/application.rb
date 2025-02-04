@@ -46,12 +46,6 @@ module FrStaffapp
     config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
     config.i18n.default_locale = 'en-GB'
 
-    if ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY'].present?
-      config.middleware.use(
-        ApplicationInsights::Rack::TrackRequest,
-        ENV['AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY']
-      )
-    end
     config.exceptions_app = routes
 
     config.maintenance_enabled = ENV.fetch('MAINTENANCE_ENABLED', 'false').casecmp('true').zero?
