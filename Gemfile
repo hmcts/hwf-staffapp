@@ -47,16 +47,20 @@ gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
-gem "dartsass-sprockets", "~> 3.1"
+# gem "dartsass-sprockets", "~> 3.1"
 
-gem 'terser'
+gem 'propshaft'
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+
+# gem 'terser'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+# gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
