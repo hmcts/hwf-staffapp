@@ -53,7 +53,6 @@
       .govuk-form-group.group-level
         = f.label :partner_ni_number, class: 'govuk-label'
           =t('partner_ni_number', scope: @form.i18n_scope)
-          span.hint =t('general.required_for_benefits').html_safe
           - if @form.errors[:partner_ni_number].present?
             = f.hidden_field :ni_number, value: @form[:ni_number]
             span.govuk-error-message
