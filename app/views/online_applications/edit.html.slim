@@ -20,7 +20,7 @@
           = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: "#{@form.fee.to_f if @form.fee}", class: 'govuk-input' }
+          = f.text_field :fee, { value: "#{@form.fee.to_f if @form.fee}", class: 'govuk-input', type: 'number'  }
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -85,7 +85,7 @@
           span.hint.block = t('form_name_hint', scope: @form.i18n_scope)
         span.govuk-error-message
           = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error' if @form.errors[:form_name].present?
-        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half' }
+        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9]+' }
 
       .govuk-form-group.group-level
         = f.label :case_number, class: 'govuk-label'
@@ -93,7 +93,7 @@
         - if @form.errors[:case_number].present?
           span.govuk-error-message
             = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error'
-        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half' }
+        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9]+' }
 
       .govuk-form-group.group-level
         .govuk-checkboxes.govuk-checkboxes--small
