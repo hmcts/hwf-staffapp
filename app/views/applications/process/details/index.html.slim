@@ -63,7 +63,7 @@
         - if @form.errors[:form_name].present?
           span.govuk-error-message
             = f.label :form_name, @form.errors[:form_name].join(', '), class: 'error'
-        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9]+' }
+        = f.text_field :form_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9 ]+' }
 
       .govuk-form-group.group-level
         = f.label :case_number, class: 'govuk-label'
@@ -71,7 +71,7 @@
         - if @form.errors[:case_number].present?
           span.govuk-error-message
             = f.label :case_number, @form.errors[:case_number].join(', '), class: 'error'
-        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9]+' }
+        = f.text_field :case_number, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9 ]+' }
 
       .govuk-form-group
         h2.govuk-fieldset__legend Case detail
@@ -89,7 +89,7 @@
                 - if @form.errors[:deceased_name].present?
                   span.govuk-error-message
                     = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error'
-                = f.text_field :deceased_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9]+' }
+                = f.text_field :deceased_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9 ]+' }
 
               .govuk-form-group.group-level
                 legend.govuk-fieldset__legend
