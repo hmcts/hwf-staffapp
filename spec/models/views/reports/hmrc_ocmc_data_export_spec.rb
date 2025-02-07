@@ -67,9 +67,10 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:paye_income) { {} }
       let(:date_range) { { date_range: { from: "1/7/2022", to: "31/7/2022" } } }
       let(:hmrc_income_used) { 123.56 }
+      let(:income_check_type) { 'hmrc' }
 
       before {
-        evidence_check.update(hmrc_income_used: hmrc_income_used)
+        evidence_check.update(hmrc_income_used: hmrc_income_used, income_check_type: income_check_type)
         hmrc_check
       }
 
@@ -145,7 +146,86 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         }
       end
 
+      describe 'income processed' do
+        before { evidence_check.update(income: ec_income, completed_at: 1.day.ago) }
+        let(:evidence_check) { application2.evidence_check }
+
+        context 'hmrc check present' do
+          let(:hmrc_check) {
+            create(:hmrc_check, evidence_check: evidence_check, created_at: 2.days.ago, tax_credit: nil, request_params: date_range)
+          }
+
+          context 'income check type hmrc' do
+            let(:ec_income) { 1536 }
+            it "from evidence check" do
+              reference = application2.reference
+              data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('HMRC NumberRule,Yes,,Yes,,1536')
+            end
+          end
+
+          context 'income check type paper' do
+            let(:income_check_type) { 'paper' }
+            let(:ec_income) { 1515 }
+
+            it "from evidence check" do
+              reference = application2.reference
+              data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('ManualAfterHMRC,Yes,,Yes,,1515')
+            end
+          end
+        end
+
+        context 'income check type paper and no hmrc check' do
+          let(:income_check_type) { 'paper' }
+          let(:ec_income) { 1578 }
+          before { evidence_check2.update(income: ec_income, completed_at: 1.day.ago) }
+          let(:evidence_check2) { create(:evidence_check, application: application1, income_check_type: 'paper') }
+
+          it "from evidence check" do
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('Manual NumberRule,,,,,1578')
+          end
+        end
+      end
     end
 
+    describe 'outcomes' do
+      let(:evidence_check) { create(:evidence_check, application: application1, outcome: 'part') }
+      let(:part_payment) { create(:part_payment, application: application1, outcome: 'full') }
+
+      context 'plain application' do
+        it {
+          application1.update(decision: 'full')
+          reference = application1.reference
+          data_row = data.find { |row| row.split(',')[1] == reference }
+          expect(data_row).to include('no,full,,,0.0')
+        }
+      end
+
+      context 'evidence check' do
+        it {
+          application1.update(decision: 'full')
+          evidence_check
+
+          reference = application1.reference
+          data_row = data.find { |row| row.split(',')[1] == reference }
+          expect(data_row).to include('no,full,part,,0.0')
+        }
+      end
+
+      context 'part payment check' do
+        it {
+          application1.update(decision: 'full')
+          evidence_check
+          part_payment
+
+          reference = application1.reference
+          data_row = data.find { |row| row.split(',')[1] == reference }
+          expect(data_row).to include('no,full,part,full,0.0')
+        }
+      end
+    end
   end
 end
