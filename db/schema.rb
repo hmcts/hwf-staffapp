@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_08_102655) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_06_110245) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
   enable_extension "tablefunc"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_102655) do
     t.boolean "dependents"
     t.string "application_type"
     t.string "outcome"
-    t.decimal "amount_to_pay"
+    t.decimal "amount_to_pay", default: "0.0"
     t.boolean "high_threshold_exceeded"
     t.string "reference"
     t.datetime "completed_at", precision: nil
@@ -249,7 +249,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_102655) do
     t.boolean "correct"
     t.integer "income"
     t.string "outcome"
-    t.decimal "amount_to_pay"
+    t.decimal "amount_to_pay", default: "0.0"
     t.datetime "completed_at", precision: nil
     t.integer "completed_by_id"
     t.string "incorrect_reason"
