@@ -101,8 +101,9 @@ module Views
             AND additional_income > 0 then additional_income
            ELSE NULL
         END as \"Additional income\",
-        CASE WHEN ec.completed_at IS NOT NULL then ec.income
-           ELSE NULL
+        CASE WHEN ec.income IS NULL then applications.income
+          WHEN ec.completed_at IS NOT NULL then ec.income
+          ELSE NULL
         END as \"Income processed\",
         request_params as \"HMRC request date range\",
         details.statement_signed_by as \"Statement signed by\",

@@ -147,6 +147,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       describe 'income processed' do
+        let(:ec_income) { 0 }
         before { evidence_check.update(income: ec_income, completed_at: 1.day.ago) }
         let(:evidence_check) { application2.evidence_check }
 
@@ -186,6 +187,17 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
             expect(data_row).to include('Manual NumberRule,,,,,1578')
+          end
+        end
+        context 'income loaded from application' do
+          let(:income_check_type) { 'paper' }
+          let(:income) { 1578 }
+          before { application1.update(income: income) }
+
+          it "from evidence check" do
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('1578,,legal_representative,true,false,post_ucd')
           end
         end
       end
