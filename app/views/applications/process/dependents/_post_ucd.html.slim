@@ -31,14 +31,14 @@
               - if @form.errors[:children_age_band_one].present?
                 span.govuk-error-message
                   = f.label :children_age_band_one, @form.errors[:children_age_band_one].join(', '), class: 'error'
-              = f.text_field :children_age_band_one, class: 'govuk-input govuk-input--width-3', value: age_band_value(:one, @application)
+              = f.text_field :children_age_band_one, class: 'govuk-input govuk-input--width-3', value: age_band_value(:one, @application), type: 'number'
 
             .govuk-form-group
               = f.label :children_age_band_two, class: 'govuk-label'
               - if @form.errors[:children_age_band_two].present?
                 span.govuk-error-message
                   = f.label :children_age_band_two, @form.errors[:children_age_band_two].join(', '), class: 'error'
-              = f.text_field :children_age_band_two, class: 'govuk-input govuk-input--width-3', value: age_band_value(:two, @application)
+              = f.text_field :children_age_band_two, class: 'govuk-input govuk-input--width-3', value: age_band_value(:two, @application), type: 'number'
 
 
       = f.submit 'Next', class: 'govuk-button'
