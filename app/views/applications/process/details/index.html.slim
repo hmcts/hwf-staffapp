@@ -89,7 +89,7 @@
                 - if @form.errors[:deceased_name].present?
                   span.govuk-error-message
                     = f.label :deceased_name, @form.errors[:deceased_name].join(', '), class: 'error'
-                = f.text_field :deceased_name, { class: 'govuk-input govuk-!-width-one-half', pattern: '[A-Za-z0-9 ]+' }
+                = f.text_field :deceased_name, { class: 'govuk-input govuk-!-width-one-half', pattern: "[A-Za-z0-9 ]+(-[A-Za-z0-9 ]+)*" }
 
               .govuk-form-group.group-level
                 legend.govuk-fieldset__legend
