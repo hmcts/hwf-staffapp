@@ -67,6 +67,8 @@ module Views
         details.date_received as \"Date received\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         applications.decision as \"Decision\",
+        ec.outcome as \"EV check outcome\",
+        pp.outcome as \"PP outcome\",
         applications.amount_to_pay as \"Applicant pays estimate\",
         applications.income_kind as \"Declared income sources\",
         ec.check_type as \"DB evidence check type\",
@@ -80,18 +82,18 @@ module Views
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
          WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
-           ELSE ''
+           ELSE NULL
         END AS \"Evidence check type\",
-        CASE WHEN hc_id IS NULL then ''
+        CASE WHEN hc_id IS NULL then NULL
            WHEN hc_id IS NOT NULL AND error_response IS NULL then 'Yes'
            WHEN hc_id IS NOT NULL AND error_response IS NOT NULL then 'No'
-           ELSE ''
+           ELSE NULL
         END AS \"HMRC response?\",
         error_response as \"HMRC errors\",
-        CASE WHEN hc_id IS NULL then ''
+        CASE WHEN hc_id IS NULL then NULL
            WHEN hc_id IS NOT NULL AND ec.completed_at IS NOT NULL then 'Yes'
            WHEN hc_id IS NOT NULL AND ec.completed_at IS NULL then 'No'
-           ELSE ''
+           ELSE NULL
         END AS \"Complete processing?\",
         CASE WHEN additional_income IS NULL then NULL
            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
@@ -99,10 +101,9 @@ module Views
             AND additional_income > 0 then additional_income
            ELSE NULL
         END as \"Additional income\",
-        CASE WHEN hc_id IS NULL then NULL
-           WHEN ec.income_check_type = 'paper' AND ec.completed_at IS NOT NULL then NULL
-           WHEN ec.income_check_type = 'hmrc' AND ec.completed_at IS NOT NULL then ec.income
-           ELSE NULL
+        CASE WHEN ec.income IS NULL then applications.income
+          WHEN ec.completed_at IS NOT NULL then ec.income
+          ELSE NULL
         END as \"Income processed\",
         request_params as \"HMRC request date range\",
         details.statement_signed_by as \"Statement signed by\",
@@ -119,6 +120,7 @@ module Views
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
+        LEFT JOIN part_payments pp ON pp.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
         LEFT JOIN (
