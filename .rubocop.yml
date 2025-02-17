@@ -347,10 +347,12 @@ Style/OptionalBooleanParameter:
 Performance/CollectionLiteralInLoop:
   Enabled: false
 
-require:
+plugins:
+  - rubocop-performance
   - rubocop-rspec
   - rubocop-rails
-  - rubocop-performance
+
+require:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec_rails

@@ -17,9 +17,7 @@ module Views
         ['benefits', 'dependants', 'number_of_children', 'total_monthly_income', 'savings']
       end
 
-      def state
-        @application.state
-      end
+      delegate :state, to: :@application
 
       def evidence_check_outcome
         @application.evidence_check.outcome

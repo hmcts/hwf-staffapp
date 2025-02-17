@@ -37,9 +37,7 @@ module Views
         @online_application.ni_number&.gsub(/(.{2})/, '\1 ')
       end
 
-      def ho_number
-        @online_application.ho_number
-      end
+      delegate :ho_number, to: :@online_application
 
       def partner_ni_number
         @online_application.partner_ni_number&.gsub(/(.{2})/, '\1 ')
