@@ -1,4 +1,6 @@
 class Notification < ActiveRecord::Base
+  has_rich_text :message
+
   validate :only_one_record_allowed, on: :create
   validates :show, inclusion: [true, false]
 

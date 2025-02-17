@@ -21,6 +21,8 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import "govuk-frontend/dist/govuk/all";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
+@import "actiontext";
+
 /*local*/
 @import 'local/layout';
 @import 'local/conditionals';
