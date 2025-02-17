@@ -13,9 +13,7 @@ module Views
         @application = application
       end
 
-      def representative
-        @application.representative
-      end
+      delegate :representative, to: :@application
 
       def representative_full_name
         return if representative.blank?
