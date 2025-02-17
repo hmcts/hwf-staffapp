@@ -4,7 +4,7 @@ class Applicant < ActiveRecord::Base
   include ApplicantCheckable
 
   before_validation :format_ni_number, :format_ho_number
-  before_validation :remove_partner_info, if: :married_changed?
+  before_validation :remove_partner_info
 
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
@@ -35,7 +35,7 @@ class Applicant < ActiveRecord::Base
   private
 
   def remove_partner_info
-    return if married == true
+    return if married == true && ni_number.present?
     self.partner_date_of_birth = nil
     self.partner_first_name = nil
     self.partner_last_name = nil

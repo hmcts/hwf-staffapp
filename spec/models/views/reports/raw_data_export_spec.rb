@@ -169,7 +169,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,,#{dob},#{date_received},#{decision_date.to_fs},,,litigation_friend,true,false,post_ucd")
+        expect(export).to include("JK123455B,,#{dob},#{date_received},#{decision_date.to_fs},,,litigation_friend,false,false,post_ucd")
       end
     end
 

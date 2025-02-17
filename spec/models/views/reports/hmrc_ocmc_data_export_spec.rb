@@ -41,9 +41,9 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       Timecop.freeze(date_from + 5.days) { application5 }
       Timecop.freeze(date_from + 36.days) { application6 }
       Timecop.freeze(date_from + 6.days) { application7 }
-      application1.applicant.update(partner_ni_number: 'SN789654C')
-      application3.applicant.update(partner_ni_number: 'SN789654C', partner_last_name: 'Jones')
-      application4.applicant.update(partner_ni_number: '', partner_last_name: 'Jones')
+      application1.applicant.update(partner_ni_number: 'SN789654C', married: true, ni_number: 'SN789654C')
+      application3.applicant.update(partner_ni_number: 'SN789654C', partner_last_name: 'Jones', married: true, ni_number: 'SN789654C')
+      application4.applicant.update(partner_ni_number: '', partner_last_name: 'Jones', married: true, ni_number: 'SN789654C')
     end
 
     it 'return 5 rows csv data' do
