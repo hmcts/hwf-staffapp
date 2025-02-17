@@ -76,7 +76,7 @@
           - if @form.errors[:ho_number].present?
             span.govuk-error-message
               = f.label :ho_number, @form.errors[:ho_number].join(', '), class: 'error'
-        = f.text_field :ho_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
+        = f.text_field :ho_number, { class: 'govuk-input transform-upper govuk-!-width-one-half', pattern: "^(?!.*[^a-zA-Z0-9\s][^a-zA-Z0-9\s]).*$" }
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
