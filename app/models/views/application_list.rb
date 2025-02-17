@@ -13,13 +13,9 @@ module Views
       end
     end
 
-    def id
-      @application.id
-    end
+    delegate :id, to: :@application
 
-    def reference
-      @application.reference
-    end
+    delegate :reference, to: :@application
 
     def applicant
       @application.applicant.full_name
