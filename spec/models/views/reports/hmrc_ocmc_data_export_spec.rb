@@ -210,6 +210,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'plain application' do
         it {
           application1.update(decision: 'full')
+          application1.applicant.update(married: false)
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
           expect(data_row).to include('no,full,,,0.0')
@@ -219,6 +220,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'evidence check' do
         it {
           application1.update(decision: 'full')
+          application1.applicant.update(married: false)
           evidence_check
 
           reference = application1.reference
@@ -230,6 +232,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'part payment check' do
         it {
           application1.update(decision: 'full')
+          application1.applicant.update(married: false)
           evidence_check
           part_payment
 
