@@ -356,7 +356,7 @@ dl.govuk-summary-list
           span.govuk-visually-hidden=t('summary.statement_signed_by')
 
 
-- if @application.representative && @application.representative.full_name.present?
+- if @application.representative && @application.representative.first_name.present?
   h2.govuk-heading-m Representative details
   dl.govuk-summary-list
     .govuk-summary-list__row
