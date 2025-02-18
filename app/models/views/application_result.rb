@@ -55,9 +55,7 @@ module Views
       @application.detail.fee - amount_to_pay_for_part_payment.to_f
     end
 
-    def state
-      @application.state
-    end
+    delegate :state, to: :@application
 
     def return_type
       {

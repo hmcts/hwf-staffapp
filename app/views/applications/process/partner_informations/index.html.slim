@@ -18,14 +18,14 @@
             - if @form.errors[:partner_first_name].present?
               span.govuk-error-message
                 = f.label :partner_first_name, @form.errors[:partner_first_name].join(', '), class: 'error'
-            = f.text_field :partner_first_name, { class: 'govuk-input govuk-!-width-one-half' }
+            = f.text_field :partner_first_name, { class: 'govuk-input govuk-!-width-one-half', pattern: "^(?!.*[^a-zA-Z0-9\s][^a-zA-Z0-9\s]).*$" }
 
       .govuk-form-group.group-level
         = f.label :partner_last_name, class: 'govuk-label'
         - if @form.errors[:partner_last_name].present?
           span.govuk-error-message
             = f.label :lpartner_ast_name, @form.errors[:partner_last_name].join(', '), class: 'error'
-        = f.text_field :partner_last_name, { class: 'govuk-input govuk-!-width-one-half' }
+        = f.text_field :partner_last_name, { class: 'govuk-input govuk-!-width-one-half', pattern: "^(?!.*[^a-zA-Z0-9\s][^a-zA-Z0-9\s]).*$" }
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -57,7 +57,7 @@
             = f.hidden_field :ni_number, value: @form[:ni_number]
             span.govuk-error-message
               = f.label :partner_ni_number, @form.errors[:partner_ni_number].join(', '), class: 'error'
-        = f.text_field :partner_ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half' }
+        = f.text_field :partner_ni_number, { class: 'govuk-input transform-upper govuk-!-width-one-half', pattern: "^(?!.*[^a-zA-Z0-9\s][^a-zA-Z0-9\s]).*$" }
 
 
       = f.submit 'Next', class: 'govuk-button'

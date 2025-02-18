@@ -70,7 +70,7 @@
                   = f.label :reference, @completed_search_form.errors[:reference].join('').html_safe, class: 'error'
 
             .govuk-grid-column-one-half
-              = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off' }
+              = f.text_field :reference, { class: 'govuk-input', autocomplete: 'off', pattern: "^(?!.*[^a-zA-Z0-9\s][^a-zA-Z0-9\s]).*$" }
             .govuk-grid-column-one-half
               = f.submit 'Search', class: 'govuk-button search-button'
 
