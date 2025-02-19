@@ -1,2 +1,3 @@
 #notification.govuk-body
-  .default-list.dwp-restored = @notification.message
+  - if @notification.message.present?
+    .default-list.dwp-restored = @notification.message
