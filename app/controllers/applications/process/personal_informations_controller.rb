@@ -21,7 +21,7 @@ module Applications
       private
 
       def path_to_next_page
-        if application.applicant.married? && ucd_changes_applies?
+        if application.applicant.married? && ucd_changes_applies? && application.applicant.ni_number.present?
           application_partner_informations_path(application)
         else
           application_details_path(application)
