@@ -2,6 +2,7 @@
 
 module Views
   class ProcessedData
+    delegate :evidence_check, to: :@application
 
     def initialize(application)
       @application = application
@@ -41,10 +42,6 @@ module Views
 
     def evidence_check_valid?
       evidence_check&.completed_at
-    end
-
-    def evidence_check
-      @application.evidence_check
     end
 
     def part_payment_valid?
