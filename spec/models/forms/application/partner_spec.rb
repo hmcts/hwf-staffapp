@@ -178,7 +178,7 @@ RSpec.describe Forms::Application::Partner do
   end
 
   describe 'when Applicant object is passed in' do
-    let(:applicant) { build(:applicant) }
+    let(:applicant) { build(:applicant, :married) }
     let(:form) { described_class.new(applicant) }
 
     params_list.each do |attr_name|
@@ -220,7 +220,7 @@ RSpec.describe Forms::Application::Partner do
     end
 
     let(:applicant) { application.applicant }
-    let(:application) { create(:application, :applicant_full) }
+    let(:application) { create(:application, :applicant_full, married: true) }
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }
@@ -268,6 +268,38 @@ RSpec.describe Forms::Application::Partner do
 
       it 'returns false' do
         is_expected.to be false
+      end
+    end
+
+    context 'when married is true but no applicant NI number' do
+      let(:application) { create(:application, :applicant_full, married: true, ni_number: nil) }
+      let(:params) { { partner_first_name: 'John', partner_last_name: 'Doe', partner_ni_number: 'AB123456C' } }
+
+      before do
+        form_save
+        applicant.reload
+      end
+
+      it 'clears partner details' do
+        expect(applicant.partner_first_name).to be_nil
+        expect(applicant.partner_last_name).to be_nil
+        expect(applicant.partner_ni_number).to be_nil
+      end
+    end
+
+    context 'when married is false but applicant provides an NI number' do
+      let(:application) { create(:application, :applicant_full, married: false, ni_number: 'AB123456C') }
+      let(:params) { { partner_first_name: 'John', partner_last_name: 'Doe', partner_ni_number: 'AB123456C' } }
+
+      before do
+        form_save
+        applicant.reload
+      end
+
+      it 'clears partner details' do
+        expect(applicant.partner_first_name).to be_nil
+        expect(applicant.partner_last_name).to be_nil
+        expect(applicant.partner_ni_number).to be_nil
       end
     end
   end

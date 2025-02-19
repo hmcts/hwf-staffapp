@@ -91,9 +91,8 @@ dl.govuk-summary-list
           span.govuk-visually-hidden=t('summary.status')
 
 
-
   - if @applicant.married
-    - if @applicant&.partner_full_name.present?
+    - if @applicant&.partner_full_name.present? && @applicant.ni_number.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_full_name')
         dd.govuk-summary-list__value =@applicant.partner_full_name
@@ -104,7 +103,7 @@ dl.govuk-summary-list
               span.govuk-visually-hidden=t('summary.partner_full_name')
 
 
-    - if @applicant.partner_date_of_birth.present?
+    - if @applicant.partner_date_of_birth.present? && @applicant.ni_number.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_date_of_birth')
         dd.govuk-summary-list__value =@applicant.partner_date_of_birth
@@ -114,7 +113,7 @@ dl.govuk-summary-list
               = 'Change'
               span.govuk-visually-hidden=t('summary.partner_date_of_birth')
 
-    - if @applicant.partner_ni_number.present?
+    - if @applicant.partner_ni_number.present? && @applicant.ni_number.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_ni_number')
         dd.govuk-summary-list__value =@applicant.partner_ni_number
@@ -356,7 +355,7 @@ dl.govuk-summary-list
           span.govuk-visually-hidden=t('summary.statement_signed_by')
 
 
-- if @application.representative
+- if @application.representative && @application.representative.first_name.present?
   h2.govuk-heading-m Representative details
   dl.govuk-summary-list
     .govuk-summary-list__row
@@ -368,15 +367,15 @@ dl.govuk-summary-list
             = 'Change'
             span.govuk-visually-hidden=t('summary.representative.full_name')
 
-
-    .govuk-summary-list__row
-      dt.govuk-summary-list__key =t('summary.representative.organisation')
-      dd.govuk-summary-list__value =@representative.organisation
-      - if show_links
-        dd.govuk-summary-list__actions
-          =link_to application_representative_path(@application) do
-            = 'Change'
-            span.govuk-visually-hidden=t('summary.representative.organisation')
+    - if @application.representative.organisation.present?
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key =t('summary.representative.organisation')
+        dd.govuk-summary-list__value =@representative.organisation
+        - if show_links
+          dd.govuk-summary-list__actions
+            =link_to application_representative_path(@application) do
+              = 'Change'
+              span.govuk-visually-hidden=t('summary.representative.organisation')
 
 - if @application.evidence_check.try(:completed_at)
   h2.govuk-heading-m Evidence checked
