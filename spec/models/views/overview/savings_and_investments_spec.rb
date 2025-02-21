@@ -6,7 +6,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
   subject(:view) { described_class.new(saving) }
 
   let(:saving) { build_stubbed(:saving, application: application) }
-  let(:application) { build(:application, detail: detail) }
+  let(:application) { build(:application, detail: detail, medium: 'paper') }
   let(:detail) { build(:detail, calculation_scheme: calculation_scheme) }
   let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
 
@@ -20,7 +20,7 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
     subject { view.all_fields }
     let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
 
-    it { is_expected.to eql ["less_then", "between", "more_then", "amount_total", "over_66"] }
+    it { is_expected.to eql ["choice_less_then", "between", "more_then", "amount_total", "over_66"] }
   end
 
   describe '#min_threshold_exceeded' do
@@ -49,10 +49,27 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
     end
   end
 
-  describe '#more_then' do
-    subject { view.more_then }
+  describe '#less' do
+    subject { view.choice_less_then }
 
-    let(:saving) { build_stubbed(:saving, min_threshold_exceeded: true, choice: choice_value) }
+    let(:saving) { build_stubbed(:saving, application: application, choice: choice_value) }
+
+    context "when choice is less then" do
+      let(:choice_value) { 'less' }
+      it { is_expected.to eq 'Yes' }
+    end
+
+    context "when choise is not less then" do
+      let(:choice_value) { 'between' }
+      it { is_expected.to be_nil }
+    end
+
+  end
+
+  describe '#more_then' do
+    subject { view.choice_more_then }
+
+    let(:saving) { build_stubbed(:saving, application: application, min_threshold_exceeded: true, choice: choice_value) }
 
     context "when choice is more_then" do
       let(:choice_value) { 'more' }
@@ -60,48 +77,123 @@ RSpec.describe Views::Overview::SavingsAndInvestments do
     end
 
     context "when choise is not more then" do
-      let(:choice_value) { 'less_then' }
-      it { is_expected.to eq 'No' }
+      let(:choice_value) { 'less' }
+      it { is_expected.to be_nil }
     end
 
   end
 
   describe '#amount' do
     subject { view.amount }
+    describe '#amount_total' do
+      subject { view.amount_total }
 
-    let(:saving) { build_stubbed(:saving, amount: 3500) }
+      context 'when choice is more' do
+        let(:saving) { build_stubbed(:saving, choice: 'more', amount: 3500) }
+        it { is_expected.to be_nil }
+      end
 
-    it { is_expected.to eql '£3500' }
-  end
-
-  describe '#saving_match?' do
-    context 'choice matches' do
-      let(:saving) { build_stubbed(:saving, choice: 'between') }
-      subject { view.saving_match?('between') }
-      it { is_expected.to be true }
-    end
-    context 'choice does not matches' do
-      let(:saving) { build_stubbed(:saving, choice: 'between') }
-      subject { view.saving_match?('less') }
-      it { is_expected.to be false }
+      context 'when choice is not more' do
+        let(:saving) { build_stubbed(:saving, choice: 'less', amount: 3500) }
+        it { is_expected.to eql '£3500' }
+      end
     end
   end
 
-  describe '#over_66' do
-    context 'value in nil' do
-      let(:saving) { build_stubbed(:saving, over_66: nil) }
-      subject { view.over_66 }
-      it { is_expected.to be false }
-    end
-    context 'value in true' do
-      let(:saving) { build_stubbed(:saving, over_66: true) }
-      subject { view.over_66 }
+  describe '#choice_between' do
+    subject { view.choice_between }
+
+    context 'when choice is between' do
+      let(:saving) { build_stubbed(:saving, choice: 'between', application: application) }
       it { is_expected.to eq 'Yes' }
     end
-    context 'value in false' do
-      let(:saving) { build_stubbed(:saving, over_66: false) }
-      subject { view.over_66 }
-      it { is_expected.to eq 'No' }
+
+    context 'when choice is not between' do
+      let(:saving) { build_stubbed(:saving, choice: 'less', application: application) }
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#online_application check' do
+    subject { view.online_application }
+
+    context 'when application medium is paper' do
+      let(:application) { build(:application, medium: 'paper') }
+      it { is_expected.to be false }
+    end
+
+    context 'when application medium is online' do
+      let(:online_application) { build(:online_application) }
+      let(:application) { build(:application, medium: 'online', online_application: online_application) }
+      it { is_expected.to eq online_application }
+    end
+  end
+
+  describe 'online_application saving check' do
+    let(:saving) { build_stubbed(:saving, application: application, choice: saving_choice) }
+    let(:saving_choice) { nil }
+
+    context 'when online_application is present' do
+      let(:online_application) { build(:online_application, min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold) }
+      let(:application) { build(:application, medium: 'online', online_application: online_application) }
+
+      context 'when saving_choice is less' do
+        subject { view.choice_less_then }
+
+        let(:min_threshold) { false }
+        let(:max_threshold) { false }
+
+        it { is_expected.to eq 'Yes' }
+      end
+
+      context 'when saving_choice is less but values are not' do
+        subject { view.choice_less_then }
+        let(:min_threshold) { true }
+        let(:max_threshold) { false }
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'when saving_choice is between' do
+        subject { view.choice_between }
+        let(:min_threshold) { true }
+        let(:max_threshold) { false }
+
+        it { is_expected.to eq 'Yes' }
+      end
+
+      context 'when saving_choice is between but values are not' do
+        subject { view.choice_between }
+        let(:min_threshold) { false }
+        let(:max_threshold) { false }
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'when saving_choice is more' do
+        subject { view.choice_more_then }
+        let(:min_threshold) { true }
+        let(:max_threshold) { true }
+
+        it { is_expected.to eq 'Yes' }
+      end
+
+      context 'when saving_choice is more but values are not' do
+        subject { view.choice_more_then }
+        let(:min_threshold) { false }
+        let(:max_threshold) { true }
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'when saving_choice is invalid' do
+        subject { view.choice_more_then }
+        let(:saving_choice) { 'test' }
+        let(:min_threshold) { false }
+        let(:max_threshold) { false }
+
+        it { is_expected.to be_nil }
+      end
     end
   end
 end

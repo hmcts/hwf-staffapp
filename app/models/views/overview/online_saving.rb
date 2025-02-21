@@ -7,19 +7,19 @@ module Views
 
       def less_then
         return 'Yes' if @online_application.min_threshold_exceeded == false
-        'No'
+        nil
       end
 
       def between
         return 'Yes' if @online_application.min_threshold_exceeded == true &&
                         @online_application.max_threshold_exceeded == false
-        'No'
+        nil
       end
 
       def more_then
         return 'Yes' if @online_application.min_threshold_exceeded == true &&
                         @online_application.max_threshold_exceeded == true
-        'No'
+        nil
       end
     end
   end

@@ -1,6 +1,7 @@
 module Views
   module Overview
     class SavingsAndInvestments < Views::Overview::Base
+      include OnlineSaving
 
       def initialize(saving)
         @saving = saving
@@ -8,7 +9,7 @@ module Views
 
       def all_fields
         if show_ucd_changes?
-          ['less_then', 'between', 'more_then', 'amount_total', 'over_66']
+          ['choice_less_then', 'between', 'more_then', 'amount_total', 'over_66']
         else
           ['min_threshold_exceeded', 'max_threshold_exceeded', 'amount']
         end
@@ -17,7 +18,6 @@ module Views
       def min_threshold_exceeded
         convert_to_boolean(!@saving.min_threshold_exceeded?)
       end
-      alias less_then min_threshold_exceeded
 
       def max_threshold_exceeded
         unless @saving.max_threshold_exceeded.nil?
@@ -25,12 +25,28 @@ module Views
         end
       end
 
-      def saving_match?(saving)
-        @saving.choice == saving
+      def choice_less_then
+        if online_application
+          less_then
+        else
+          @saving.choice == 'less' ? 'Yes' : nil
+        end
       end
 
-      def more_then
-        @saving.choice == 'more' ? 'Yes' : 'No'
+      def choice_more_then
+        if online_application
+          more_then
+        else
+          @saving.choice == 'more' ? 'Yes' : nil
+        end
+      end
+
+      def choice_between
+        if online_application
+          between
+        else
+          @saving.choice == 'between' ? 'Yes' : nil
+        end
       end
 
       def amount
@@ -42,10 +58,6 @@ module Views
         "£#{@saving.amount.round}" if @saving.amount
       end
 
-      def between
-        @saving.choice == 'between' ? 'Yes' : 'No'
-      end
-
       def over_66
         return false if @saving.over_66.nil?
         scope = 'activemodel.attributes.views/overview/savings_and_investments'
@@ -54,6 +66,11 @@ module Views
 
       def show_ucd_changes?
         @saving.application.detail.calculation_scheme == FeatureSwitching::CALCULATION_SCHEMAS[1].to_s
+      end
+
+      def online_application
+        return false if @saving.application.medium == 'paper'
+        @online_application ||= @saving.application.online_application
       end
     end
   end
