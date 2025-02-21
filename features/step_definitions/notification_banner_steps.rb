@@ -6,7 +6,7 @@ end
 
 When("I add a message") do
   expect(edit_banner_page.content).to have_input_box_label
-  edit_banner_page.fill_in_ckeditor '1_contents', with: 'This is a test staff notification message'
+  edit_banner_page.fill_in_editor with: 'This is a test staff notification message'
 end
 
 When("I check show on admin homepage") do
