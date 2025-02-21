@@ -28,9 +28,9 @@ RSpec.describe Views::Overview::OnlineSaving, type: :module do
       expect(dummy_class.less_then).to eq('Yes')
     end
 
-    it 'returns No if min threshold exceeded' do
+    it 'returns nil if min threshold exceeded' do
       allow(online_application).to receive(:min_threshold_exceeded).and_return(true)
-      expect(dummy_class.less_then).to eq('No')
+      expect(dummy_class.less_then).to be_nil
     end
   end
 
@@ -40,14 +40,14 @@ RSpec.describe Views::Overview::OnlineSaving, type: :module do
       expect(dummy_class.between).to eq('Yes')
     end
 
-    it 'returns No if min threshold not exceeded' do
+    it 'returns nil if min threshold not exceeded' do
       allow(online_application).to receive(:min_threshold_exceeded).and_return(false)
-      expect(dummy_class.between).to eq('No')
+      expect(dummy_class.between).to be_nil
     end
 
-    it 'returns No if max threshold exceeded' do
+    it 'returns nil if max threshold exceeded' do
       allow(online_application).to receive_messages(min_threshold_exceeded: true, max_threshold_exceeded: true)
-      expect(dummy_class.between).to eq('No')
+      expect(dummy_class.between).to be_nil
     end
   end
 
@@ -57,14 +57,14 @@ RSpec.describe Views::Overview::OnlineSaving, type: :module do
       expect(dummy_class.more_then).to eq('Yes')
     end
 
-    it 'returns No if min threshold not exceeded' do
+    it 'returns nil if min threshold not exceeded' do
       allow(online_application).to receive(:min_threshold_exceeded).and_return(false)
-      expect(dummy_class.more_then).to eq('No')
+      expect(dummy_class.more_then).to be_nil
     end
 
-    it 'returns No if max threshold not exceeded' do
+    it 'returns nil if max threshold not exceeded' do
       allow(online_application).to receive_messages(min_threshold_exceeded: true, max_threshold_exceeded: false)
-      expect(dummy_class.more_then).to eq('No')
+      expect(dummy_class.more_then).to be_nil
     end
   end
 end
