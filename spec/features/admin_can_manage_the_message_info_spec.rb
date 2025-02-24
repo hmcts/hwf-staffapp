@@ -12,10 +12,10 @@ RSpec.feature 'Admin can manage message info' do
   context 'admin' do
     before { login_as admin }
 
-    scenario 'can edit and view the message' do
+    scenario 'can edit and view the message', :js do
       visit '/'
       click_link 'Edit banner'
-      fill_in 'notification_message', with: 'This is message from admin, hear, hear.'
+      page.execute_script("document.querySelector('trix-editor').editor.loadHTML('This is message from admin, hear, hear.')")
       check 'Show on admin homepage'
       click_button 'Save changes'
       expect(page).to have_content 'Your changes have been saved'
