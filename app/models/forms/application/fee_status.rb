@@ -72,8 +72,8 @@ module Forms
         if date_received.present?
           begin
             parsed_date = date_received.to_date
-            if parsed_date < 2.years.ago.to_date
-              errors.add(:date_received, "Please enter a valid date in the correct format DD/MM/YYYY")
+            if parsed_date < 3.years.ago.to_date
+              errors.add(:date_received, "Enter a date from #{3.years.ago.strftime('%d/%m/%Y')} to today's date")
             end
           rescue ArgumentError
             # Error message is being handled by other validation
