@@ -75,7 +75,6 @@ module Forms
             if parsed_date < 3.years.ago.to_date
               errors.add(:date_received, "Enter a date from #{3.years.ago.strftime('%d/%m/%Y')} to today's date")
             end
-            validate_dob
           rescue ArgumentError
             # Error message is being handled by other validation
           end
