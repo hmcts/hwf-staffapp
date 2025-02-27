@@ -135,17 +135,25 @@ module Views
         AND (row_number = 1 OR row_number IS NULL)
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
       end
-      # rubocop:enable Metrics/MethodLength
 
+      # rubocop:disable Metrics/AbcSize
       def process_row(row)
         csv_row = row
+
         csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
         csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
+
+        row.each do |field, value|
+          csv_row[field] = (value.presence || "N/A")
+        end
+
         csv_row
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
       def income_kind(value)
         return unless value
@@ -155,7 +163,7 @@ module Views
         partner = income_kind_hash[:partner].try(:join, ',')
         [applicant, partner].compact_blank.join(", ")
       rescue TypeError
-        ""
+        "N/A"
       end
 
       def date_formatted(date_range)

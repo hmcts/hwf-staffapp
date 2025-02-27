@@ -85,7 +85,7 @@ RSpec.describe Views::Reports::FinanceReportDataRow do
     end
   end
 
-  describe 'data returned should only include proccesed applications' do
+  describe 'data returned should only include processed applications' do
     subject { data.total_count }
 
     let(:digital) { create(:office, name: 'Digital') }

@@ -29,9 +29,9 @@ module Views
         line = []
         line << row[0].to_fs(:db) # 'hmrc_checks.created_at',
         line << row[3] # office
-        line << row[4] # be code
+        line << check_empty(row[4]) # be code
         line << row[5] # user
-        line << row[1].try(:to_fs, :db) # purged_at
+        line << check_empty(row[1].try(:to_fs, :db)) # purged_at
         line << row[2] # reference
         line << row[6] # dob
         line << date_range(row[7]) # date range
@@ -61,11 +61,15 @@ module Views
         'empty'
       end
 
+      def check_empty(row)
+        row.presence || 'N/A'
+      end
+
       def date_range(value)
-        return nil if value.blank? || value[:date_range].blank?
+        return 'N/A' if value.blank? || value[:date_range].blank?
         "#{value[:date_range][:from]} to #{value[:date_range][:to]}"
       rescue NoMethodError
-        nil
+        'N/A'
       end
 
       def keys
