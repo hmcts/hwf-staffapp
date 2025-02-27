@@ -174,6 +174,7 @@ FactoryBot.define do
       benefits { false }
       income { 10 }
       dependents { true }
+      state { 1 }
       children { 1 }
       outcome { 'full' }
       application_type { 'income' }
