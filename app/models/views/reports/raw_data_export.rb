@@ -90,11 +90,8 @@ module Views
           over_66?(row)
         elsif attr == :low_income_declared
           low_income_declared(row)
-        elsif [:savings_amount, :probate, :check_income, :income_period, :calculation_scheme, :postcode,
-               :decision_cost, :income].include?(attr)
-          check_empty(attr, row)
         else
-          row.send(attr)
+          check_empty(attr, row)
         end
       end
       # rubocop:enable Metrics/MethodLength
@@ -252,7 +249,7 @@ module Views
       end
 
       def check_empty(attribute, row)
-        return 'N/A' if row.send(attribute).blank?
+        return 'N/A' if row.send(attribute).nil?
         row.send(attribute)
       end
     end

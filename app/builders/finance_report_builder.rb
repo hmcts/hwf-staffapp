@@ -39,7 +39,7 @@ class FinanceReportBuilder
       csv << FIELDS.values
 
       generate.each do |row|
-        csv << FIELDS.keys.map { |attr| row.send(attr) }
+        csv << FIELDS.keys.map { |attr| row.send(attr).presence || 'N/A' }
       end
     end
   end

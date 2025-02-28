@@ -42,10 +42,8 @@ class FinanceTransactionalReportBuilder < ReportBase
   def process_row(row, attr)
     if attr == :decision_date
       row.send(attr).present? ? row.send(attr).to_fs(:default) : 'N/A'
-    elsif attr == :remission_amount
-      check_empty(attr, row)
     else
-      row.send(attr)
+      check_empty(attr, row)
     end
   end
 
@@ -113,7 +111,7 @@ class FinanceTransactionalReportBuilder < ReportBase
   end
 
   def check_empty(attribute, row)
-    return 'N/A' if row.send(attribute).blank?
+    return 'N/A' if row.send(attribute).nil?
     row.send(attribute)
   end
 

@@ -97,10 +97,8 @@ module Views
           final_amount_to_pay(row)
         when :created_at
           row.send(:created_at).to_fs(:db)
-        when :reference, :checks_annotation, :check_type
-          check_empty(attr, row)
         else
-          row.send(attr)
+          check_empty(attr, row)
         end
       end
       # rubocop:enable Metrics/MethodLength
@@ -123,7 +121,7 @@ module Views
       end
 
       def check_empty(attribute, row)
-        return 'N/A' if row.send(attribute).blank?
+        return 'N/A' if row.send(attribute).nil?
         row.send(attribute)
       end
     end
