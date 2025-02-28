@@ -74,9 +74,6 @@ module Views
       end
 
       # rubocop:disable Metrics/MethodLength
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/CyclomaticComplexity
-      # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
             :final_amount_to_pay].include?(attr)
@@ -95,9 +92,6 @@ module Views
         end
       end
       # rubocop:enable Metrics/MethodLength
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/CyclomaticComplexity
-      # rubocop:enable Metrics/PerceivedComplexity
 
       def total_count
         data.size
