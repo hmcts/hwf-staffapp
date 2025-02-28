@@ -2,9 +2,10 @@
   fieldset.govuk-fieldset
     legend class='govuk-!-padding-top-7'
       h1.govuk-heading-xl Edit Notifications Message
+
     .govuk-form-group
       = f.label :message, class: 'govuk-label'
-      = f.text_area :message, class: 'ckeditor'
+      = f.rich_textarea :message
 
     .govuk-form-group
       .govuk-checkboxes.govuk-checkboxes--small

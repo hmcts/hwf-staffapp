@@ -123,24 +123,27 @@ dl.govuk-summary-list
 
 h2.govuk-heading-m Savings and investments
 dl.govuk-summary-list
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.less_then')
-    dd.govuk-summary-list__value =@online_application_view.less_then
+  - if @online_application_view.less_then
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.less_then')
+      dd.govuk-summary-list__value =@online_application_view.less_then
 
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.between')
-    dd.govuk-summary-list__value =@online_application_view.between
+  - if @online_application_view.between
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.between')
+      dd.govuk-summary-list__value =@online_application_view.between
 
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key =t('summary.more_then')
-    dd.govuk-summary-list__value =@online_application_view.more_then
+  - if @online_application_view.more_then
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.more_then')
+      dd.govuk-summary-list__value =@online_application_view.more_then
 
   - if @online_application_view.amount
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.amount_total')
       dd.govuk-summary-list__value =@online_application_view.saving_amount_total
 
-  - if @online_application_view.over_66
+  - unless @online_application_view.over_66.nil?
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.over_66')
       dd.govuk-summary-list__value =@online_application_view.saving_over_66
