@@ -62,7 +62,7 @@ module Views
       end
 
       def check_empty(row)
-        row.presence || 'N/A'
+        row.nil? ? 'N/A' : row
       end
 
       def date_range(value)
