@@ -161,8 +161,9 @@ module Views
         return 'N/A' if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
         partner = income_kind_hash[:partner].try(:join, ',')
-        [applicant, partner].compact_blank.join(", ")
-      rescue TypeError
+        result = [applicant, partner].compact_blank.join(", ")
+        result.presence || "N/A"
+      rescue StandardError
         "N/A"
       end
 
