@@ -173,7 +173,7 @@ module Views
       end
 
       def hmrc_date_range(date_range)
-        return unless date_formatted(date_range)
+        return 'N/A' unless date_formatted(date_range)
         from = date_formatted(date_range)[:from]
         to = date_formatted(date_range)[:to]
         "#{from} - #{to}"
