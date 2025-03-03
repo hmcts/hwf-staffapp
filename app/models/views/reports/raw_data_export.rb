@@ -74,6 +74,9 @@ module Views
       end
 
       # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
             :final_amount_to_pay].include?(attr)
@@ -87,11 +90,16 @@ module Views
           over_66?(row)
         elsif attr == :low_income_declared
           low_income_declared(row)
+        elsif [:case_number, :form_name].include?(attr)
+          row.send(attr).presence || 'N/A'
         else
           check_empty(attr, row)
         end
       end
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
 
       def total_count
         data.size
