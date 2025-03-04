@@ -31,10 +31,15 @@ h1.govuk-heading-xl Public application stats
                 th.govuk-table__header Court
                 th.govuk-table__header Number
             tbody.govuk-table__body
-              -@data.submission_all_time.each do |court|
+              - if @data.submission_all_time.present?
+                -@data.submission_all_time.each do |court|
+                  tr.govuk-table__row
+                    td.govuk-table__cell =court[0]
+                    td.govuk-table__cell =court[1]
+              - else
                 tr.govuk-table__row
-                  td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =court[1]
+                  td.govuk-table__cell N/A
+                  td.govuk-table__cell N/A
 
   .govuk-grid-column-one-half
     .util_pt-medium
@@ -48,10 +53,15 @@ h1.govuk-heading-xl Public application stats
                 th.govuk-table__header Court
                 th.govuk-table__header Number
             tbody
-              -@data.submission_seven_day.each do |court|
+              - if @data.submission_seven_day.present?
+                -@data.submission_seven_day.each do |court|
+                  tr.govuk-table__row
+                    td.govuk-table__cell =court[0]
+                    td.govuk-table__cell =court[1]
+              - else
                 tr.govuk-table__row
-                  td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =court[1]
+                  td.govuk-table__cell N/A
+                  td.govuk-table__cell N/A
 
 .govuk-grid-row.equal-heightboxes.util_mt-medium
   .govuk-grid-column-one-half
@@ -66,10 +76,15 @@ h1.govuk-heading-xl Public application stats
                 th.govuk-table__header Court
                 th.govuk-table__header Time (hh:mm:ss)
             tbody.govuk-table__body
-              -@data.submission_total_time_taken.each do |court|
+              - if @data.submission_total_time_taken.present?
+                -@data.submission_total_time_taken.each do |court|
+                  tr.govuk-table__row
+                    td.govuk-table__cell =court[0]
+                    td.govuk-table__cell =preformat_average_time(court[1])
+              - else
                 tr.govuk-table__row
-                  td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =preformat_average_time(court[1])
+                  td.govuk-table__cell N/A
+                  td.govuk-table__cell N/A
 
   .govuk-grid-column-one-half
     .util_pt-medium
@@ -83,7 +98,12 @@ h1.govuk-heading-xl Public application stats
                 th.govuk-table__header Court
                 th.govuk-table__header Time (hh:mm:ss)
             tbody.govuk-table__body
-              -@data.submission_seven_day_time_taken.each do |court|
+              - if @data.submission_seven_day_time_taken.present?
+                -@data.submission_seven_day_time_taken.each do |court|
+                  tr.govuk-table__row
+                    td.govuk-table__cell =court[0]
+                    td.govuk-table__cell =preformat_average_time(court[1])
+              - else
                 tr.govuk-table__row
-                  td.govuk-table__cell =court[0]
-                  td.govuk-table__cell =preformat_average_time(court[1])
+                  td.govuk-table__cell N/A
+                  td.govuk-table__cell N/A

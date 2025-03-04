@@ -98,7 +98,7 @@ module Views
         when :created_at
           row.send(:created_at).to_fs(:db)
         else
-          row.send(attr)
+          check_empty(attr, row)
         end
       end
       # rubocop:enable Metrics/MethodLength
@@ -120,6 +120,10 @@ module Views
         row.try(:ev_amount_to_pay) || row.amount_to_pay
       end
 
+      def check_empty(attribute, row)
+        return 'N/A' if row.send(attribute).nil?
+        row.send(attribute)
+      end
     end
   end
 end

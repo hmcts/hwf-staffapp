@@ -674,7 +674,7 @@ GEM
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uniform_notifier (1.16.0)
-    uri (1.0.2)
+    uri (1.0.3)
     useragent (0.16.11)
     uuid (2.3.9)
       macaddr (~> 1.0)
@@ -802,6 +802,7 @@ DEPENDENCIES
   terser
   test-prof (~> 1.0)
   timecop
+  uri (>= 1.0.3)
   virtus
   web-console
   webdrivers

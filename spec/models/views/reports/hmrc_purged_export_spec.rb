@@ -53,7 +53,7 @@ RSpec.describe Views::Reports::HmrcPurgedExport do
     context 'hmrc data' do
       let(:user) { hmrc_check1.evidence_check.application.user }
       let(:office) { hmrc_check1.evidence_check.application.office }
-      let(:expected_line) { "2021-01-02 00:00:00,#{office.name},,#{user.name},,AB001-21-1,01/01/1980,1/2/2018 to 1/3/2018,present,empty,present" }
+      let(:expected_line) { "2021-01-02 00:00:00,#{office.name},N/A,#{user.name},N/A,AB001-21-1,01/01/1980,1/2/2018 to 1/3/2018,present,empty,present" }
       it { expect(data[1]).to eq expected_line }
     end
 
@@ -67,7 +67,7 @@ RSpec.describe Views::Reports::HmrcPurgedExport do
       let(:application3) { create(:application, :with_office, :with_reference) }
       let(:user) { application3.user }
       let(:office) { application3.office }
-      let(:expected_line) { "2021-01-04 00:00:00,#{office.name},SOP123,#{user.name},,#{application3.reference},01/03/1982,,empty,empty,empty" }
+      let(:expected_line) { "2021-01-04 00:00:00,#{office.name},SOP123,#{user.name},N/A,#{application3.reference},01/03/1982,N/A,empty,empty,empty" }
       it { expect(data[2]).to eq expected_line }
     end
   end

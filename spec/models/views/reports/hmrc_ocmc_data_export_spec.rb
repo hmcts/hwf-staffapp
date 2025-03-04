@@ -138,7 +138,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         }
 
         it {
-          expect(data[1]).to include('500,,1,0,1')
+          expect(data[1]).to include('500,N/A,1,0,1')
         }
 
         it {
@@ -161,7 +161,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it "from evidence check" do
               reference = application2.reference
               data_row = data.find { |row| row.split(',')[1] == reference }
-              expect(data_row).to include('HMRC NumberRule,Yes,,Yes,,1536')
+              expect(data_row).to include('HMRC NumberRule,Yes,N/A,Yes,N/A,1536')
             end
           end
 
@@ -172,7 +172,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it "from evidence check" do
               reference = application2.reference
               data_row = data.find { |row| row.split(',')[1] == reference }
-              expect(data_row).to include('ManualAfterHMRC,Yes,,Yes,,1515')
+              expect(data_row).to include('ManualAfterHMRC,Yes,N/A,Yes,N/A,1515')
             end
           end
         end
@@ -186,7 +186,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('Manual NumberRule,,,,,1578')
+            expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
           end
         end
         context 'income loaded from application' do
@@ -197,7 +197,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('1578,,legal_representative,true,false,post_ucd')
+            expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd')
           end
         end
       end
@@ -213,7 +213,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.applicant.update(married: false)
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,,,0.0')
+          expect(data_row).to include('no,full,N/A,N/A,0.0')
         }
       end
 
@@ -225,7 +225,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,part,,0.0')
+          expect(data_row).to include('no,full,part,N/A,0.0')
         }
       end
 
