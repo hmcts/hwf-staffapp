@@ -46,7 +46,7 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
       let(:detail) { application3.detail }
 
       let(:expected_line) {
-        "#{application3.purged_at},\"\",purged,purged,purged,purged,purged,purged,purged,purged,purged,purged"
+        "#{application3.purged_at},N/A,purged,purged,purged,purged,purged,purged,purged,purged,purged,purged"
       }
       it { expect(data[1]).to eq expected_line }
     end

@@ -166,7 +166,7 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
-    chartkick (5.1.3)
+    chartkick (5.1.4)
     childprocess (5.1.0)
       logger (~> 1.5)
     climate_control (1.2.0)
@@ -368,7 +368,7 @@ GEM
     jwt (2.10.1)
       base64
     language_server-protocol (3.17.0.4)
-    launchy (3.1.0)
+    launchy (3.1.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
       logger (~> 1.6)
@@ -395,8 +395,8 @@ GEM
     mime-types (3.6.0)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0204)
-    mini_magick (5.1.2)
+    mime-types-data (3.2025.0220)
+    mini_magick (5.2.0)
       benchmark
       logger
     mini_mime (1.1.5)
@@ -435,7 +435,7 @@ GEM
       activerecord (>= 6.1)
       request_store (~> 1.4)
     parallel (1.26.3)
-    parallel_tests (4.9.0)
+    parallel_tests (4.9.1)
       parallel
     paranoia (3.0.1)
       activerecord (>= 6, < 8.1)
@@ -519,7 +519,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.12.0)
       psych (>= 4.0.0)
-    redis (5.3.0)
+    redis (5.4.0)
       redis-client (>= 0.22.0)
     redis-client (0.23.2)
       connection_pool
@@ -562,7 +562,7 @@ GEM
     rspec-support (3.13.2)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.72.1)
+    rubocop (1.72.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -583,7 +583,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails (2.30.1)
+    rubocop-rails (2.30.2)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -601,10 +601,10 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
-    sass-embedded (1.85.0)
+    sass-embedded (1.85.1)
       google-protobuf (~> 4.29)
       rake (>= 13)
-    sassc-embedded (1.80.2)
+    sassc-embedded (1.80.4)
       sass-embedded (~> 1.80)
     sdoc (2.6.1)
       rdoc (>= 5.0)
@@ -654,7 +654,7 @@ GEM
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     stackprof (0.2.27)
-    stringio (3.1.3)
+    stringio (3.1.5)
     sys-uname (1.3.1)
       ffi (~> 1.1)
     systemu (2.6.5)
@@ -674,7 +674,7 @@ GEM
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uniform_notifier (1.16.0)
-    uri (1.0.2)
+    uri (1.0.3)
     useragent (0.16.11)
     uuid (2.3.9)
       macaddr (~> 1.0)
@@ -705,7 +705,7 @@ GEM
     will_paginate (4.0.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.1)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   ruby
@@ -802,6 +802,7 @@ DEPENDENCIES
   terser
   test-prof (~> 1.0)
   timecop
+  uri (>= 1.0.3)
   virtus
   web-console
   webdrivers
@@ -812,4 +813,4 @@ RUBY VERSION
    ruby 3.4.2p28
 
 BUNDLED WITH
-   2.6.2
+   2.6.5

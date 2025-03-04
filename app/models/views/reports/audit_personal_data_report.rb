@@ -26,7 +26,11 @@ module Views
 
       def process_row(row)
         row.enum_for(:each_with_index).map do |record, index|
-          index == 1 ? record : (record || 'purged')
+          if index == 1
+            record.presence || 'N/A'
+          else
+            record || 'purged'
+          end
         end
       end
 
