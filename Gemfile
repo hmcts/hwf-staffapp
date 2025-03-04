@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.2'
+ruby '3.4.1'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -86,6 +86,7 @@ gem 'simple_encryptable'
 gem 'gtm_on_rails'
 
 gem 'chartkick'
+gem 'ckeditor', '~> 5.1'
 gem 'groupdate'
 gem 'nokogiri'
 gem 'pg_search'
@@ -156,5 +157,3 @@ group :test do
   gem 'webdrivers'
   gem 'webmock'
 end
-
-gem "image_processing", "~> 1.14"
