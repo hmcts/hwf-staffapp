@@ -11,7 +11,7 @@ module Views
         @csv_file_name = "applicants-#{fy_start}-#{fy_end}-fy.csv"
         @zipfile_path = "tmp/applicants-#{fy_start}-#{fy_end}-fy.csv.zip"
 
-        @applicants = laod_applicants
+        @applicants = load_applicants
         @jurisdictions = Jurisdiction.pluck(:name).sort
         hash_with_counts
       end
@@ -22,9 +22,14 @@ module Views
           csv << csv_headers
 
           @result.each do |key, value|
-            csv << [key.split("-")[0], key.split("-")[1], key.split("-")[2], value["count"],
-                    get_hash_values(@jurisdictions, value["jurisdiction"]),
-                    get_hash_values(OUTCOMES, value["decision"])].flatten
+            csv << [
+              key.split("-")[0],
+              key.split("-")[1],
+              key.split("-")[2],
+              value["count"] || "N/A",
+              get_hash_values(@jurisdictions, value["jurisdiction"]),
+              get_hash_values(OUTCOMES, value["decision"])
+            ].flatten.map { |v| v.nil? ? "N/A" : v }
           end
         end
       end
@@ -36,7 +41,7 @@ module Views
       end
 
       def get_hash_values(default_list, row)
-        default_list.map { |j| row.key?(j) ? row[j] : 0 }
+        default_list.map { |j| row.key?(j) ? row[j] || "N/A" : 0 }
       end
 
       def hash_with_counts
@@ -58,12 +63,12 @@ module Views
         end
       end
 
-      def laod_applicants
+      def load_applicants
         sql = "SELECT a.first_name, a.last_name, a.date_of_birth, j.name, a.application_id, ap.decision
              FROM applicants a
              INNER JOIN applications ap ON a.application_id = ap.id
-             left join details d ON ap.id = d.application_id
-             left join jurisdictions j ON j.id = d.jurisdiction_id
+             LEFT JOIN details d ON ap.id = d.application_id
+             LEFT JOIN jurisdictions j ON j.id = d.jurisdiction_id
              WHERE ap.state = 3
              AND ap.updated_at BETWEEN '#{@date_from}' AND '#{@date_to}'
          	ORDER BY a.first_name, a.last_name, a.date_of_birth"

@@ -20,7 +20,7 @@ module Views
       end
 
       def children_age_band(value, attr_key)
-        return nil if age_bands_blank?(value)
+        return 'N/A' if age_bands_blank?(value)
 
         hash_value = YAML.safe_load(value, permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess])
         if attr_key == :children_age_band_one

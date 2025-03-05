@@ -74,24 +74,32 @@ module Views
       end
 
       # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
             :final_amount_to_pay].include?(attr)
           send(attr, row)
         elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
                :date_submitted_online].include?(attr)
-          row.send(attr).to_fs(:default) if row.send(attr).present?
+          row.send(attr).present? ? row.send(attr).to_fs(:default) : 'N/A'
         elsif [:children_age_band_two, :children_age_band_one].include?(attr)
           children_age_band(row, attr)
         elsif attr == :over_66
           over_66?(row)
         elsif attr == :low_income_declared
           low_income_declared(row)
+        elsif [:case_number, :form_name].include?(attr)
+          row.send(attr).presence || 'N/A'
         else
-          row.send(attr)
+          check_empty(attr, row)
         end
       end
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
 
       def total_count
         data.size
@@ -143,11 +151,11 @@ module Views
                WHEN savings.max_threshold_exceeded = FALSE THEN 'Low'
                WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN 'Low'
                WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN 'High'
-               ELSE ''
+               ELSE 'N/A'
           END AS capital,
           CASE WHEN part_payments.outcome = 'return' THEN 'return'
                WHEN part_payments.outcome = 'none' THEN 'false'
-               WHEN part_payments.outcome = 'part' THEN 'true' ELSE NULL END AS part_payment_outcome,
+               WHEN part_payments.outcome = 'part' THEN 'true' ELSE 'N/A' END AS part_payment_outcome,
           CASE WHEN savings.amount >= 16000 THEN NULL
                ELSE savings.amount
           END AS savings_amount,
@@ -206,7 +214,8 @@ module Views
 
       def income_threshold(row)
         return 'under' if row.income_min_threshold_exceeded
-        'over' if row.income_max_threshold_exceeded
+        return 'over' if row.income_max_threshold_exceeded
+        'N/A'
       end
 
       def over_66?(row)
@@ -224,7 +233,7 @@ module Views
       end
 
       def children_age_band(row, attr_key)
-        return nil if age_bands_blank?(row)
+        return 'N/A' if age_bands_blank?(row)
 
         if attr_key == :children_age_band_one
           row.children_age_band[:one] || row.children_age_band['one']
@@ -241,6 +250,10 @@ module Views
         end.blank?
       end
 
+      def check_empty(attribute, row)
+        return 'N/A' if row.send(attribute).nil?
+        row.send(attribute)
+      end
     end
   end
 end

@@ -10,7 +10,7 @@
         h2.govuk-heading-l = t("remissions.none_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)
     - else
       #result.callout class="callout-full"
-        h2.govuk-heading-l = t("remissions.none_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)
+        h2.govuk-heading-l = t("remissions.full_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)
 
 - elsif source.state == 'waiting_for_part_payment'
   - if source.part_payment_outcome == 'none'

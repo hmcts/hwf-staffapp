@@ -41,9 +41,9 @@ class FinanceTransactionalReportBuilder < ReportBase
 
   def process_row(row, attr)
     if attr == :decision_date
-      row.send(attr).to_fs(:default) if row.send(attr).present?
+      row.send(attr).present? ? row.send(attr).to_fs(:default) : 'N/A'
     else
-      row.send(attr)
+      check_empty(attr, row)
     end
   end
 
@@ -108,6 +108,11 @@ class FinanceTransactionalReportBuilder < ReportBase
 
   def app_type_filter
     @filters[:application_type]
+  end
+
+  def check_empty(attribute, row)
+    return 'N/A' if row.send(attribute).nil?
+    row.send(attribute)
   end
 
 end
