@@ -14,6 +14,7 @@ record the decision, and collect statistics.
 - Rspec features, not cucumber
 - Slim templating language
 - JavaScript in preference to Coffeescript
+- Propshaft instead of Sprotckets = https://github.com/rails/propshaft?tab=readme-ov-file
 
 ## Data changes tracking
 Ww are using paper trail for detailed data chages tracking. But when we do one off data changes we need something simpler.
@@ -83,8 +84,18 @@ Runs every day at 2am
 ## Front end library
 You will need to install govuk-frontend library
 ```
-npm install --save govuk-frontend
+yarn install
 ```
+
+## CSS + JS updates
+We are now using propshaft, cssbundling-rails and jsbundling-rails. You will need to run
+```
+yarn build:css --watch
+yarn build --watch
+```
+to build your assets you localhost for the first time. Then everytime you are toding any changes to JS or CSS.
+
+
 Mimemagic gem has a dependency so you need to install this on your machine first
 ```brew install shared-mime-info.```
 
