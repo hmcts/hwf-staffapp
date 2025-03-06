@@ -3,13 +3,13 @@
 $govuk-global-styles: true;
 $govuk-new-typography-scale: true;
 
-$govuk-images-path: "govuk-frontend/dist/govuk/assets/images/";
-// $govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
-// $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
-$govuk-image-url-function: '/asds/';
+$govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
+$govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 
 @import "govuk-frontend/dist/govuk/index";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
+
+@import "actiontext";
 
 /*local*/
 @import 'local/layout';
@@ -40,4 +40,3 @@ $govuk-image-url-function: '/asds/';
 @import 'local/lists';
 @import 'local/block-grid';
 @import 'local/utilities';
-
