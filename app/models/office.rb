@@ -4,6 +4,7 @@ class Office < ActiveRecord::Base
   has_many :office_jurisdictions
   has_many :jurisdictions, through: :office_jurisdictions
   has_many :business_entities
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   scope :sorted, -> { order(:name) }
   scope :non_digital, -> { where.not(name: 'Digital') }

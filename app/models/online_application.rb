@@ -7,6 +7,7 @@ class OnlineApplication < ActiveRecord::Base
   belongs_to :jurisdiction, optional: true
   belongs_to :user, optional: true
   has_many :benefit_checks, as: :applicationable, dependent: :destroy
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   validates :date_of_birth, :first_name, :last_name, :address,
             :postcode, presence: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_17_094406) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_10_135503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -234,6 +234,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_094406) do
     t.index ["application_id"], name: "index_details_on_application_id"
     t.index ["case_number"], name: "index_details_on_case_number"
     t.index ["fee"], name: "index_details_on_fee"
+  end
+
+  create_table "dev_notes", force: :cascade do |t|
+    t.string "note"
+    t.string "notable_type", null: false
+    t.bigint "notable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notable_type", "notable_id"], name: "index_dev_notes_on_notable"
   end
 
   create_table "dwp_warnings", id: :serial, force: :cascade do |t|
