@@ -5,6 +5,7 @@ class Applicant < ActiveRecord::Base
 
   before_validation :format_ni_number, :format_ho_number
   before_validation :remove_partner_info
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   validates :ni_number, format: {
     with: /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/

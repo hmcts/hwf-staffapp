@@ -4,6 +4,7 @@ class EvidenceCheck < ActiveRecord::Base
   belongs_to :application, optional: false
   belongs_to :completed_by, -> { with_deleted }, class_name: 'User', optional: true
   has_many :hmrc_checks, dependent: :destroy
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   validates :expires_at, presence: true
   validates :application_id, uniqueness: true

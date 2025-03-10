@@ -15,6 +15,14 @@ record the decision, and collect statistics.
 - Slim templating language
 - JavaScript in preference to Coffeescript
 
+## Data changes tracking
+Ww are using paper trail for detailed data chages tracking. But when we do one off data changes we need something simpler.
+That's what is the DevNote model is for. When you make changes to date via script please make a relevant record in DevNote so we can
+track the changes in exports (like raw data). I.E.
+```
+Application.last.dev_notes.create(note: 're-generating reference numner - bug fix')
+```
+
 ## Redis
 We are using Redis for step back navigation link. You will need to run a redis-server in order
 for the application to work correctly.

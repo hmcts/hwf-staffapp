@@ -1,6 +1,7 @@
 class BenefitCheck < ActiveRecord::Base
   belongs_to :applicationable, polymorphic: true
   belongs_to :user, optional: true
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   include CommonScopes
 

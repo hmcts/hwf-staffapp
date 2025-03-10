@@ -2,6 +2,7 @@ class HmrcCheck < ActiveRecord::Base
   belongs_to :evidence_check, optional: false
   belongs_to :user
   has_many :hmrc_calls, dependent: :destroy
+  has_many :dev_notes, as: :notable, dependent: :destroy
 
   scope :partner, -> { where(check_type: 'partner') }
   scope :applicant, -> { where(check_type: 'applicant') }
