@@ -136,7 +136,8 @@ module Forms
 
         details = @object.application.applicant
         age_66 = Time.zone.today - 66.years
-        if details.married?
+
+        if details.married? && details.partner_date_of_birth.present?
           if details.date_of_birth > age_66 && details.partner_date_of_birth > age_66
             errors.add(:over_66, :not_over_66_married)
           end

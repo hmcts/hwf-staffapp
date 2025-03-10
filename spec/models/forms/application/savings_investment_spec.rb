@@ -39,6 +39,24 @@ RSpec.describe Forms::Application::SavingsInvestment do
         it { is_expected.to be_valid }
       end
 
+      describe 'applicant_partner_over_66' do
+        let(:application) { create(:applicant_under_66) }
+        let(:hash) { { choice: 'between', min_threshold_exceeded: true, amount: 5000, over_66: true, max_threshold_exceeded: nil } }
+
+        context 'blank' do
+          before { application.applicant.update(partner_date_of_birth: nil) }
+          it { is_expected.not_to be_valid }
+        end
+
+        context 'under 66' do
+          it { is_expected.not_to be_valid }
+        end
+
+        context 'over 66' do
+          before { application.applicant.update(partner_date_of_birth: 70.years.ago) }
+          it { is_expected.to be_valid }
+        end
+      end
     end
 
     describe 'min_threshold_exceeded' do
