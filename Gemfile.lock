@@ -435,7 +435,7 @@ GEM
       activerecord (>= 6.1)
       request_store (~> 1.4)
     parallel (1.26.3)
-    parallel_tests (5.0.0)
+    parallel_tests (5.1.0)
       parallel
     paranoia (3.0.1)
       activerecord (>= 6, < 8.1)
@@ -802,7 +802,6 @@ DEPENDENCIES
   terser
   test-prof (~> 1.0)
   timecop
-  uri (>= 1.0.3)
   virtus
   web-console
   webdrivers
