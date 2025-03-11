@@ -347,12 +347,13 @@ Style/OptionalBooleanParameter:
 Performance/CollectionLiteralInLoop:
   Enabled: false
 
+Capybara/NegationMatcherAfterVisit:
+  Enabled: false
+
 plugins:
   - rubocop-performance
   - rubocop-rspec
   - rubocop-rails
-
-require:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec_rails
