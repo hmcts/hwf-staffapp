@@ -8,12 +8,17 @@
   "engines": {
     "node": ">=0.18.x"
   },
-  "scripts": {},
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build": "webpack --config webpack.config.js"
+  },
   "engineStrict": true,
   "dependencies": {
     "@rails/actiontext": "^8.0.100",
     "accessible-autocomplete": "^3.0.0",
-    "govuk-frontend": "^5.7.1",
+    "govuk-frontend": "^5.8.0",
+    "jquery": "^3.7.1",
+    "rails-ujs": "^5.2.8-1",
     "trix": "^2.1.12"
   },
   "description": "[![Code Climate](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp) [![Test Coverage](https://codeclimate.com/github/ministryofjustice/fr-staffapp/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/fr-staffapp/coverage?sort=covered_percent&sort_direction=asc) [![Build Status](https://travis-ci.org/ministryofjustice/fr-staffapp.svg?branch=master)](https://travis-ci.org/ministryofjustice/fr-staffapp) [![Dependency Status](https://gemnasium.com/badges/github.com/ministryofjustice/fr-staffapp.svg)](https://gemnasium.com/github.com/ministryofjustice/fr-staffapp)",
@@ -27,5 +32,10 @@
     "test": "tests"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.83.4",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  }
 }

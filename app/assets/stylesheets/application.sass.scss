@@ -1,16 +1,4 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- */
+// Entry point for your Sass build
 
 $govuk-global-styles: true;
 $govuk-new-typography-scale: true;
@@ -18,7 +6,7 @@ $govuk-new-typography-scale: true;
 $govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
 $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 
-@import "govuk-frontend/dist/govuk/all";
+@import "govuk-frontend/dist/govuk/index";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
 
 @import "actiontext";
@@ -33,8 +21,6 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/banners';
 @import 'local/dwp-tags';
 
-
-// @import 'local/phase-banner';
 
 @import 'local/navigation';
 @import 'local/letters';
@@ -54,4 +40,3 @@ $govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 @import 'local/lists';
 @import 'local/block-grid';
 @import 'local/utilities';
-

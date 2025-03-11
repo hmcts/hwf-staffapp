@@ -15,7 +15,7 @@ p + h5 {
   min-height: 37px;
   padding-left: 45px;
   padding-top: 6px;
-  background-image: asset_url('icons-header-sprite.png');
+  background-image: url('icons-header-sprite.png');
   background-repeat: no-repeat;
 }
 
@@ -33,7 +33,7 @@ p + h5 {
   min-height: 37px;
   padding-left: 45px;
   padding-top: 6px;
-  background-image: asset_url('icon-sml-appeals.png');
+  background-image: url('icon-sml-appeals.png');
   background-size: 37px 37px;
   background-repeat: no-repeat;
 }
@@ -47,19 +47,19 @@ p + h5 {
   padding-top: 40px;
 
   &.guide-headline-appeals {
-    background-image: asset_url('icon-sml-appeals.png');
+    background-image: url('icon-sml-appeals.png');
   }
   &.guide-headline-evidence {
-    background-image: asset_url('icon-sml-evidence.png');
+    background-image: url('icon-sml-evidence.png');
   }
   &.guide-headline-fraud {
-    background-image: asset_url('icon-sml-fraud.png');
+    background-image: url('icon-sml-fraud.png');
   }
   &.guide-headline-part-fee {
-    background-image: asset_url('icon-sml-part-fee.png');
+    background-image: url('icon-sml-part-fee.png');
   }
   &.guide-headline-process {
-    background-image: asset_url('icon-sml-process.png');
+    background-image: url('icon-sml-process.png');
   }
 
   h1 {

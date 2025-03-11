@@ -23,7 +23,7 @@ ENV NOTIFY_DWP_DOWN_TEMPLATE_ID=replace_this_at_build_time
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apk update && apk add --no-cache libc6-compat && \
-    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs npm libpq-dev postgresql-client tzdata && \
+    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn libpq-dev postgresql-client tzdata && \
     apk add --no-cache xvfb fluxbox x11vnc st yaml-dev libffi-dev
 
 
@@ -45,7 +45,7 @@ RUN bundle install
 ENV PHUSION=true
 
 COPY . /home/app
-RUN npm install
+RUN yarn install --check-files
 
 CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
      bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah && \
