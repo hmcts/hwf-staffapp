@@ -10,10 +10,9 @@ module HmrcFrequencyHelper
     start_date = Date.parse(payment['startDate'])
 
     list = frequency_days(start_date, end_date, payment)
-
     list.count do |day_iteration|
       next if @last_payment && (@last_payment < day_iteration)
-      day_iteration >= @from && day_iteration <= @to
+      day_iteration.between?(@from, @to)
     end
   end
 
