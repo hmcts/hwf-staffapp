@@ -1,6 +1,7 @@
 - content_for :page_title
   = "Income"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
 
 = form_for @form, as: :application, url: application_dependents_path, method: :post, html: { autocomplete: 'off' } do |f|
 

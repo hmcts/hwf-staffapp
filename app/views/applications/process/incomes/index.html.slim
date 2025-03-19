@@ -1,6 +1,7 @@
 - content_for :page_title
   = "Income"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
 
 = form_for @form, as: :application, url: application_incomes_path, method: :post, html: { autocomplete: 'off' } do |f|
 
@@ -25,7 +26,7 @@
         - if @form.errors[:income_period].present?
           span.govuk-error-message
             = f.label :income_period, @form.errors[:income_period].join(', '), class: 'error'
-        .govuk-radios.govuk-radios--small
+        .govuk-radios.govuk-radios--small id='application_income_period'
           .govuk-radios__item
             = f.radio_button :income_period, Application::INCOME_PERIOD[:last_month], { class: 'govuk-radios__input show-hide-section' }
             = f.label t('income_period_last_month', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_income_period_last_month'

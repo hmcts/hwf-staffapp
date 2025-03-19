@@ -1,6 +1,8 @@
 - content_for :page_title
   = "Benefits"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: application_benefits_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -19,7 +21,7 @@
             span.govuk-error-message
               = f.label :benefits, @form.errors[:benefits].join(', '), class: 'error'
           = f.hidden_field :benefits, value: nil
-          .govuk-radios.govuk-radios--small
+          .govuk-radios.govuk-radios--small id='application_benefits'
             .govuk-radios__item
               = f.radio_button :benefits, 'false', class: 'govuk-radios__input'
               = f.label t('benefits_false', scope: @form.i18n_scope), for: 'application_benefits_false', class: 'govuk-label govuk-radios__label'
