@@ -42,9 +42,7 @@ module Forms
       after_validation :check_refund_values
 
       validates :fee, presence: true,
-                      numericality: { allow_blank: true, less_than: 20_000 }
-      validates :fee, presence: true,
-                      numericality: { allow_blank: true, greater_than: 0 }
+                      numericality: { allow_blank: true, less_than: 20_000, greater_than: 0 }
       validates :jurisdiction_id, presence: true
       validates :case_number, presence: true, if: proc { |detail| detail.refund? }
       validate :reason

@@ -1,6 +1,8 @@
 - content_for :page_title
   = "Application details"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -148,7 +150,7 @@
                     = f.label :discretion_applied, class: 'govuk-label'
                     span.govuk-error-message
                       = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
-                    .govuk-checkboxes.govuk-checkboxes--small
+                    .govuk-checkboxes.govuk-checkboxes--small id='application_discretion_applied'
                       .govuk-checkboxes__item
                         = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
                         = f.label t('discretion_applied_false', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_discretion_applied_false'

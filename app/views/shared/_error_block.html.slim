@@ -1,0 +1,8 @@
+div role="alert"
+  .govuk-error-summary tabindex="-1" data-module="govuk-error-summary"
+    h2.govuk-error-summary__title =t('error_block.heading')
+    .govuk-error-summary__body
+      ul.govuk-list.govuk-error-summary__list
+        - form.errors.each do |error|
+          li
+            = link_to error.message, "#application_#{error.attribute}", class: 'error-link', data: { id: "##{error.attribute}" }

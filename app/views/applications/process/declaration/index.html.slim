@@ -1,6 +1,8 @@
 - content_for :page_title
   = t('header', scope: @form.i18n_scope)
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: :application_declaration, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -15,7 +17,7 @@
           - if @form.errors[:statement_signed_by].present?
             span.govuk-error-message
               = f.label :statement_signed_by, @form.errors[:statement_signed_by].join(', '), class: 'error'
-          .govuk-radios.govuk-radios--small
+          .govuk-radios.govuk-radios--small id='application_statement_signed_by'
             .govuk-radios__item
               = f.radio_button :statement_signed_by, 'applicant', { class: 'govuk-radios__input' }
               = f.label t('statement_signed_by_applicant', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_statement_signed_by_applicant'
