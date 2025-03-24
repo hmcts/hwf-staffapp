@@ -34,11 +34,11 @@ module Forms
 
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
-      validates :refund, inclusion: { in: [true, false] }
 
       validates :date_received, date: {
         before: :tomorrow
       }
+      validates :refund, inclusion: { in: [true, false] }
       validate :date_received_within_limit
 
       validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund && discretion_applied != true }

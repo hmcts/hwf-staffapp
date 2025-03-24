@@ -102,7 +102,7 @@
                     = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error'
 
                 .govuk-date-input class="#{'error_dates' if @form.errors[:date_of_death].present?}"
-                  .govuk-date-input__item
+                  .govuk-date-input__item id='application_date_of_death'
                     .govuk-form-group.govuk-form-group-day
                       = f.label :day_date_of_death, class: 'govuk-label'
                       = f.text_field :day_date_of_death, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
@@ -133,7 +133,7 @@
                     span.govuk-error-message
                       = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error'
                   .govuk-date-input class="#{'error_dates' if @form.errors[:date_fee_paid].present?}"
-                    .govuk-date-input__item
+                    .govuk-date-input__item id='application_date_fee_paid'
                       .govuk-form-group.govuk-form-group-day
                         = f.label :day_date_fee_paid, class: 'govuk-label'
                         = f.text_field :day_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"

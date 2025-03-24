@@ -19,7 +19,7 @@
           span.govuk-error-message
             = f.label :income_kind_partner, @form.errors[:income_kind_partner].join(', '), class: 'error'
 
-        .govuk-checkboxes
+        .govuk-checkboxes id='application_income_kind_partner'
           - income_kind_partners.each do |kind|
             .govuk-checkboxes__item
               = f.check_box :income_kind_partner, { multiple: true, class: 'govuk-checkboxes__input', checked: kind_checked(@application, @form, :partner, kind) }, kind, nil

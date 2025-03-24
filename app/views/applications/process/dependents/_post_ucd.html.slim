@@ -28,7 +28,7 @@
 
           .panel-indent.util_mt-0.util_mb-0#children-only
             .govuk-form-group
-              = f.label :children_age_band_one, class: 'govuk-label'
+              = f.label :children_age_band_one, class: 'govuk-label', id: 'application_children'
               - if @form.errors[:children_age_band_one].present?
                 span.govuk-error-message
                   = f.label :children_age_band_one, @form.errors[:children_age_band_one].join(', '), class: 'error'

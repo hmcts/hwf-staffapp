@@ -27,7 +27,7 @@ module Forms
       validates :children, numericality: { greater_than: 0, only_integer: true }, if: proc { |obj| obj.dependents }
 
       # needed by pre ucd changes
-      validates :children, numericality: { greater_than: 0, only_integer: true }, if: :dependents?
+      validates :children, numericality: { only_integer: true }, if: :dependents?
       validate :number_of_children_when_no_dependents
 
       private
@@ -65,7 +65,7 @@ module Forms
         @children = band_one_value + band_two_value
         @children_age_band = { one: band_one_value, two: band_two_value }
 
-        if @children.zero?
+        if @children <= 0
           errors.add(:children_age_band_one, :blank)
           errors.add(:children_age_band_two, :blank)
         end

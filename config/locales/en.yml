@@ -992,6 +992,7 @@ en-GB:
             children:
               not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
+              greater_than: ' '
             children_age_band_one:
               blank: Enter number of children in this band
             children_age_band_two:
