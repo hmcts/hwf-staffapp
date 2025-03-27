@@ -3,7 +3,9 @@ class EvidenceChecksController < ApplicationController
   skip_after_action :verify_authorized, only: :index
 
   def index
-    @waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user, filter)
+    @waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user, filter, order)
+    @show_form_name = show_form_name
+    @show_court_fee = show_court_fee
   end
 
   def show
