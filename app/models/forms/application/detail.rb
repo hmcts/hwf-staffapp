@@ -42,13 +42,9 @@ module Forms
       after_validation :check_refund_values
 
       validates :fee, presence: true,
-                      numericality: { allow_blank: true, less_than: 20_000 }
-      validates :fee, presence: true,
-                      numericality: { allow_blank: true, greater_than: 0 }
+                      numericality: { allow_blank: true, less_than: 20_000, greater_than: 0 }
       validates :jurisdiction_id, presence: true
       validates :case_number, presence: true, if: proc { |detail| detail.refund? }
-      validate :reason
-      validate :emergency_reason_size
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
@@ -73,6 +69,9 @@ module Forms
           allow_blank: false
         }
       end
+
+      validate :reason
+      validate :emergency_reason_size
 
       def format_date_fields
         [:date_received, :date_of_death, :date_fee_paid].each do |key|

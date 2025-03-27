@@ -1,6 +1,8 @@
 - content_for :page_title
   = t('header', scope: @form.i18n_scope)
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: application_savings_investments_path, method: :post, html: { autocomplete: 'off' } do |f|
   - if show_ucd_changes?(@application.detail.calculation_scheme)
     =render('post_ucd', f: f)

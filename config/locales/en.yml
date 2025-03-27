@@ -430,6 +430,9 @@ en-GB:
       updated: 'Office was successfully updated'
     jurisdictions_warning: "If the office name or jurisdictions assigned to this office are incorrect and need to be changed, please contact the HwF support desk on helpwithfees@justice.gov.uk, confirming the change and the reasons for it. Please note these details should not change if you have moved office. Your assigned office can be changed via the 'View Profile' screen."
 
+  error_block:
+    heading: There is a problem
+
   activemodel:
     attributes:
       forms/evidence/hmrc_check:
@@ -893,6 +896,9 @@ en-GB:
             last_name:
               blank: Enter the applicant's last name
               too_short: Last name is too short (minimum is 2 characters)
+            first_name:
+              blank: Enter the applicant's first name
+              too_short: First name is too short (minimum is 2 characters)
             date_of_birth:
               too_young: "Applicant's date of birth cannot be in the future"
               too_old: "The applicant can't be over %{maximum_age} years old"
@@ -960,6 +966,8 @@ en-GB:
               blank: Enter the case number
         forms/application/savings_investment:
           attributes:
+            choice:
+              inclusion: ''
             min_threshold_exceeded:
               inclusion: Please answer the savings question
             over_66:
@@ -984,6 +992,7 @@ en-GB:
             children:
               not_a_number: Enter number of children
               cant_have_children_assigned: "You can't have number of children assigned when there are no dependants"
+              greater_than: ' '
             children_age_band_one:
               blank: Enter number of children in this band
             children_age_band_two:
