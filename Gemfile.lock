@@ -400,6 +400,7 @@ GEM
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     nenv (0.3.0)
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
@@ -742,6 +743,7 @@ DEPENDENCIES
   listen
   logstasher!
   mock_redis
+  mutex_m
   net-pop!
   nokogiri
   ostruct

@@ -4,6 +4,7 @@ RSpec.describe EvidenceChecksController do
   let(:office) { create(:office) }
   let(:user) { create(:staff, office: office) }
   let(:filter) { { jurisdiction_id: '' } }
+  let(:order) { {} }
 
   before do
     sign_in user
@@ -11,7 +12,7 @@ RSpec.describe EvidenceChecksController do
 
   describe 'GET #index' do
     before do
-      allow(LoadApplications).to receive(:waiting_for_evidence).with(user, filter).and_return ['waiting apps']
+      allow(LoadApplications).to receive(:waiting_for_evidence).with(user, filter, order).and_return ['waiting apps']
       get :index, params: { filter_applications: filter }
     end
 
@@ -32,7 +33,7 @@ RSpec.describe EvidenceChecksController do
     context 'filter' do
       let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(LoadApplications).to have_received(:waiting_for_evidence).with(user, filter)
+        expect(LoadApplications).to have_received(:waiting_for_evidence).with(user, filter, order)
       }
     end
   end

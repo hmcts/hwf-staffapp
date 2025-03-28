@@ -27,6 +27,11 @@ module ApplicationHelper
     params['filter_applications']["jurisdiction_id"]
   end
 
+  def selected_order
+    return nil unless params['filter_applications']
+    params['filter_applications']["order_choice"]
+  end
+
   def date_submitted(application)
     application.created_at.strftime("%d %b %Y")
   end

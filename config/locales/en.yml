@@ -236,9 +236,12 @@ en-GB:
       heading: Waiting for evidence
       caption: Applications that are waiting for evidence
       no_records: There are no applications waiting for evidence
+      filter: Filter
       table_header:
         reference: Reference
         applicant: Applicant
+        form_name: Form name
+        court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed
         status: Status
@@ -257,9 +260,12 @@ en-GB:
       heading: Waiting for part-payments
       caption: Applications that are waiting for part-payment
       no_records: There are no applications waiting for part-payment
+      filter: Filter
       table_header:
         reference: Reference
         applicant: Applicant
+        form_name: Form name
+        court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed
     result:
