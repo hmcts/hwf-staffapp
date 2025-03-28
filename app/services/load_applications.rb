@@ -7,8 +7,8 @@ module LoadApplications
     end
   end
 
-  def self.waiting_for_part_payment(user, filter = {})
-    waiting_for_part_payment_query = Query::WaitingForPartPayment.new(user).find(filter)
+  def self.waiting_for_part_payment(user, filter = {}, order = {})
+    waiting_for_part_payment_query = Query::WaitingForPartPayment.new(user).find(filter, order['order_choice'])
     waiting_for_part_payment_query.map do |application|
       Views::ApplicationList.new(application.part_payment)
     end
