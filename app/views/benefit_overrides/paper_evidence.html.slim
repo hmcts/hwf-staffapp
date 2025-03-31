@@ -1,6 +1,8 @@
 - content_for :page_title
   = "Benefits - supporting evidence"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -17,7 +19,7 @@
           - if @form.errors[:evidence].present?
             span.govuk-error-message
               = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error'
-          .govuk-radios.govuk-radios--small
+          .govuk-radios.govuk-radios--small id='application_benefit_override_evidence'
             .govuk-radios__item
               = f.radio_button :evidence, 'false', { class: 'govuk-radios__input show-hide-section' }
               = f.label t('evidence_false', scope: @form.i18n_scope), for: 'benefit_override_evidence_false', class: 'govuk-label govuk-radios__label'

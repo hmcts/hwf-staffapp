@@ -1,6 +1,8 @@
 - content_for :page_title
   = t('header', scope: @form.i18n_scope)
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: :application_representative, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row

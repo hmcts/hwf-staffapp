@@ -1,6 +1,8 @@
 - content_for :page_title
   = "Application details"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
+
 = form_for @form, as: :application, url: application_details_path, method: :post, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -100,7 +102,7 @@
                     = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error'
 
                 .govuk-date-input class="#{'error_dates' if @form.errors[:date_of_death].present?}"
-                  .govuk-date-input__item
+                  .govuk-date-input__item id='application_date_of_death'
                     .govuk-form-group.govuk-form-group-day
                       = f.label :day_date_of_death, class: 'govuk-label'
                       = f.text_field :day_date_of_death, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
@@ -131,7 +133,7 @@
                     span.govuk-error-message
                       = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error'
                   .govuk-date-input class="#{'error_dates' if @form.errors[:date_fee_paid].present?}"
-                    .govuk-date-input__item
+                    .govuk-date-input__item id='application_date_fee_paid'
                       .govuk-form-group.govuk-form-group-day
                         = f.label :day_date_fee_paid, class: 'govuk-label'
                         = f.text_field :day_date_fee_paid, class: 'govuk-input govuk-date-input__input govuk-input--width-2', type:"number", pattern: "[0-9]*", min: "0", max: "31"
@@ -148,7 +150,7 @@
                     = f.label :discretion_applied, class: 'govuk-label'
                     span.govuk-error-message
                       = f.label :discretion_applied, @form.errors[:discretion_applied].join(', '), class: 'error' if @form.errors[:discretion_applied].present?
-                    .govuk-checkboxes.govuk-checkboxes--small
+                    .govuk-checkboxes.govuk-checkboxes--small id='application_discretion_applied'
                       .govuk-checkboxes__item
                         = f.radio_button :discretion_applied, 'false', { class: 'govuk-checkboxes__input show-hide-section' }
                         = f.label t('discretion_applied_false', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'application_discretion_applied_false'

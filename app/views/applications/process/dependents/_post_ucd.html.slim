@@ -1,6 +1,7 @@
 - content_for :page_title
   = "Children"
 
+= render('shared/error_block', form: @form) if @form.errors.any?
 
 = form_for @form, as: :application, url: application_dependents_path, method: :post, html: { autocomplete: 'off' } do |f|
 
@@ -17,7 +18,7 @@
           - if @form.errors[:dependents].present?
             span.govuk-error-message
               = f.label :dependents, @form.errors[:dependents].join(', '), class: 'error'
-          .govuk-radios.govuk-radios--small
+          .govuk-radios.govuk-radios--small id='application_dependents'
             .govuk-radios__item
               = f.radio_button :dependents, 'false', { class: 'govuk-radios__input show-hide-section' }
               = f.label t('income_false', scope: @form.i18n_scope), class: 'govuk-label govuk-radios__label', for: 'application_dependents_false'
@@ -27,7 +28,7 @@
 
           .panel-indent.util_mt-0.util_mb-0#children-only
             .govuk-form-group
-              = f.label :children_age_band_one, class: 'govuk-label'
+              = f.label :children_age_band_one, class: 'govuk-label', id: 'application_children'
               - if @form.errors[:children_age_band_one].present?
                 span.govuk-error-message
                   = f.label :children_age_band_one, @form.errors[:children_age_band_one].join(', '), class: 'error'
