@@ -25,7 +25,7 @@ class EvidenceCheckSelector
       'flag'
     elsif low_income_check?
       'low_income'
-    elsif does_applicant_have_pending_evidence_check?
+    elsif applicant_have_pending_evidence_check?
       'ni_exist'
     end
   end
@@ -105,7 +105,7 @@ class EvidenceCheckSelector
     !evidence_check_flag.active?
   end
 
-  def does_applicant_have_pending_evidence_check?
+  def applicant_have_pending_evidence_check?
     applicant = @application.applicant
     return false if skip_ni_check_based_on_flag?
     applicant.pending_ev_checks?(@application)
