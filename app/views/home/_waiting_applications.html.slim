@@ -3,13 +3,32 @@
 
 h1.govuk-heading-xl =t("#{type}.dashboard.heading")
 
-.govuk-grid-row
-  = form_for :filter_applications, method: :get do |f|
+= form_for :filter_applications, method: :get do |f|
+
+  .govuk-grid-row
     .govuk-grid-column-one-third
-      .govuk-form-group
-        = f.label :jurisdiction_id, class: 'govuk-label'
-        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction}
-        = f.submit 'Filter', class: 'govuk-button govuk-!-margin-top-1'
+      details.govuk-details
+        summary.govuk-details__summary
+          span.govuk-details__summary-text
+            = 'Filter'
+        .govuk-details__text class='govuk-!-padding-bottom-1'
+          .govuk-form-group class='govuk-!-margin-bottom-3'
+            = f.collection_select :order_choice, %w[Descending Ascending], :to_s, :to_s, { class: 'govuk-select', selected: selected_order }
+          = 'Selected Filters'
+          .govuk-form-group class='govuk-!-margin-top-3'
+            .govuk-form-group class='govuk-!-margin-bottom-0'
+              = f.label :jurisdiction_id, class: 'govuk-label'
+              = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction }
+              fieldset.govuk-fieldset
+                .govuk-radios class='govuk-!-margin-bottom-3 govuk-!-margin-top-3'
+                  = f.label :application_details, class: 'govuk-label'
+                    .govuk-radios__item
+                      = f.radio_button :application_details, 'form_name', { class: 'govuk-radios__input' }
+                      = f.label t("#{type}.dashboard.table_header.form_name"), class: 'govuk-label govuk-radios__label', for: 'filter_applications_form_name_form_name'
+                    .govuk-radios__item
+                      = f.radio_button :application_details, 'court_fee', { class: 'govuk-radios__input' }
+                      = f.label t("#{type}.dashboard.table_header.court_fee"), class: 'govuk-label govuk-radios__label', for: 'filter_applications_court_fee_court_fee'
+              = f.submit t("#{type}.dashboard.filter"), class: 'govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0'
 
 
 
@@ -20,6 +39,10 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
       tr.govuk-table__row
         th.govuk-table__header =t("#{type}.dashboard.table_header.reference")
         th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
+        - if show_form_name
+          th.govuk-table__header =t("#{type}.dashboard.table_header.form_name")
+        - if show_court_fee
+          th.govuk-table__header =t("#{type}.dashboard.table_header.court_fee")
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_by")
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_on")
     tbody.govuk-table__body
@@ -27,6 +50,10 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
         tr.govuk-table__row
           td.govuk-table__cell =link_to(record.reference, path_for_application_based_on_state(record.application))
           td.govuk-table__cell =record.applicant
+          - if show_form_name
+            td.govuk-table__cell =record.form_name
+          - if show_court_fee
+            td.govuk-table__cell =record.fee
           td.govuk-table__cell =record.processed_by
           td.govuk-table__cell =record.processed_on
 - else

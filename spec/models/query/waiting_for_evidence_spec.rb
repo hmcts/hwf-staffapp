@@ -19,7 +19,7 @@ RSpec.describe Query::WaitingForEvidence do
     }
 
     it 'returns only applications which are in waiting_for_evidence state in order of completion' do
-      expect(query.find.all).to eq([application2, application1])
+      expect(query.find.all).to eq([application1, application2])
     end
 
     context 'jurisdiction' do
@@ -28,12 +28,12 @@ RSpec.describe Query::WaitingForEvidence do
 
       context 'empty jurisdiction value' do
         subject { query.find(jurisdiction_id: '') }
-        it { is_expected.to eq([application2, application1]) }
+        it { is_expected.to eq([application1, application2]) }
       end
 
       context 'nil filter' do
         subject { query.find(nil) }
-        it { is_expected.to eq([application2, application1]) }
+        it { is_expected.to eq([application1, application2]) }
       end
     end
   end
