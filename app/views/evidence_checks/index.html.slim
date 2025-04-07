@@ -1,4 +1,4 @@
-= render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, start_path: :evidence_path)
+= render('home/waiting_applications', type: :evidence, list: @waiting_for_evidence, show_form_name: @show_form_name, show_court_fee: @show_court_fee, start_path: :evidence_path)
 
 - content_for(:javascripts)
   javascript:

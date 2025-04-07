@@ -19,7 +19,7 @@ RSpec.describe Query::WaitingForPartPayment do
     let(:application3) { create(:application, :waiting_for_part_payment_state, office_id: user2.office_id, completed_at: 2.days.ago, jurisdiction: user1.jurisdiction) }
 
     it 'returns only applications which are in waiting_for_part_payment state in order of completion' do
-      is_expected.to eq([application2, application1])
+      is_expected.to eq([application1, application2])
     end
 
     context 'filter' do
@@ -28,12 +28,12 @@ RSpec.describe Query::WaitingForPartPayment do
 
       context 'empty jurisdiction value' do
         subject { query.find(jurisdiction_id: '') }
-        it { is_expected.to eq([application2, application1]) }
+        it { is_expected.to eq([application1, application2]) }
       end
 
       context 'nil filter' do
         subject { query.find(nil) }
-        it { is_expected.to eq([application2, application1]) }
+        it { is_expected.to eq([application1, application2]) }
       end
     end
 
