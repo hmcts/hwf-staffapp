@@ -115,7 +115,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'mutex_m'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
