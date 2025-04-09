@@ -67,11 +67,11 @@ module BandCalculationIncome
 
   def income_premium_calculation(income_to_use)
     case income_to_use
-    when 0..1420
+    when 0..1000
       income_calculation(1, income_to_use)
-    when 1421..2420
+    when 1001..2000
       income_calculation(2, income_to_use)
-    when 2421..3420
+    when 2001..3000
       income_calculation(3, income_to_use)
     else
       income
