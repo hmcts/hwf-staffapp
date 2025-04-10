@@ -19,7 +19,12 @@ module BandCalculationHelper
   end
 
   def premiums
-    @children_age_band << 2 if married
+    children_premium = children_premium_calculation
+    children_premium += BandBaseCalculation::PREMIUM_BAND_MARRIED if married
+    children_premium
+  end
+
+  def children_premium_calculation
     children_age_band.sum do |age|
       BandBaseCalculation::PREMIUM_BANDS[age]
     end

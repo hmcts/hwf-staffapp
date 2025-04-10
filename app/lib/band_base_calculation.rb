@@ -7,6 +7,7 @@ class BandBaseCalculation
   MIN_THRESHOLD = 1420
   MAX_INCOME_THRESHOLD = 3000
   PREMIUM_BANDS = { 1 => 425, 2 => 710 }.freeze
+  PREMIUM_BAND_MARRIED = 710
 
   attr_reader :income, :fee, :saving_amount, :children_age_band,
               :married, :over_66, :part_remission_amount, :amount_to_pay, :outcome

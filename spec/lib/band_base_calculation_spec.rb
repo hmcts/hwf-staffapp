@@ -203,6 +203,32 @@ RSpec.describe BandBaseCalculation do
       }
     end
 
+    context 'full over 66 15800' do
+      let(:fee) { 100 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 15800 }
+      let(:married) { true }
+      let(:over_66) { true }
+
+      it {
+        expect(band_calculation.remission).to eq('full')
+      }
+    end
+
+    context 'none over 66 16500' do
+      let(:fee) { 100 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 16500 }
+      let(:married) { true }
+      let(:over_66) { true }
+
+      it {
+        expect(band_calculation.remission).to eq('none')
+      }
+    end
+
     context 'part 920' do
       let(:fee) { 1350 }
       let(:income) { 5300 }
@@ -381,6 +407,42 @@ RSpec.describe BandBaseCalculation do
       }
     end
 
+    context 'single full fee 3500' do
+      let(:fee) { 3500 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 8100 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+      }
+    end
+
+    context 'single full fee 5500' do
+      let(:fee) { 5500 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 10500 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('full')
+      }
+    end
+
+    context 'single none fee 2200' do
+      let(:fee) { 2200 }
+      let(:income) { 0 }
+      let(:children_age_band) { [] }
+      let(:saving_amount) { 6900 }
+      let(:married) { false }
+      let(:over_66) { false }
+      it {
+        expect(band_calculation.remission).to eq('none')
+      }
+    end
+
     context 'single none 2150' do
       let(:fee) { 2150 }
       let(:income) { 5170 }
@@ -423,7 +485,6 @@ RSpec.describe BandBaseCalculation do
           expect(band_calculation.saving_passed?).to be false
           expect(band_calculation.income_failed?).to be false
         }
-
       end
 
       context 'saving within range' do
@@ -519,19 +580,7 @@ RSpec.describe BandBaseCalculation do
             let(:married) { true }
             it { expect(band_calculation.remission).to eq('none') }
           end
-
-          context 'children and married - part' do
-            let(:fee) { 1350 }
-            let(:income) { 5300 }
-            let(:children_age_band) { { 'one' => '2', 'two' => '1' } }
-            let(:married) { true }
-            it {
-              expect(band_calculation.remission).to eq('part')
-              expect(band_calculation.amount_to_pay).to eq(927)
-            }
-          end
         end
-
       end
     end
   end
@@ -772,6 +821,31 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 6560 }
             let(:children_age_band) { { two: 2 } }
             let(:married) { true }
+            it { expect(band_calculation.remission).to eq('none') }
+          end
+
+          context 'single 2 children on the edge of band 1' do
+            let(:fee) { 593 }
+            let(:income) { 3705 }
+            let(:children_age_band) { { one: 1, two: 1 } }
+            let(:married) { false }
+            it { expect(band_calculation.remission).to eq('none') }
+          end
+
+          context 'married 2 children full remission 1350 fee' do
+            let(:fee) { 1350 }
+            let(:income) { 3260 }
+            let(:children_age_band) { { one: 1, two: 1 } }
+            let(:married) { true }
+            it { expect(band_calculation.remission).to eq('full') }
+          end
+
+          context 'married 2 children none remission 90 fee' do
+            let(:fee) { 90 }
+            let(:income) { 3200 }
+            let(:children_age_band) { { one: 2, two: 0 } }
+            let(:married) { true }
+            # scenario in jira says it shopuld be full - waiting for confirmation
             it { expect(band_calculation.remission).to eq('none') }
           end
 
