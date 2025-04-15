@@ -56,15 +56,28 @@ module Forms
       end
 
       def child_benefits_per_week(children)
-        basic_rate = Settings.child_benefits.per_week
-        additional_rate = Settings.child_benefits.additional_child
-        return basic_rate if children == 1
+        load_benefit_rates
+        return @basic_rate if children == 1
         children_multiplier = children - 1
 
-        basic_rate + (children_multiplier * additional_rate)
+        @basic_rate + (children_multiplier * @additional_rate)
       end
 
       private
+
+      def load_benefit_rates
+        child_benefits_values = benefit_for_tax_year
+        @basic_rate = child_benefits_values.per_week
+        @additional_rate = child_benefits_values.additional_child
+      end
+
+      def benefit_for_tax_year
+        Settings.child_benefits.each do |benefit_rattes|
+          from = benefit_rattes['date_from']
+          to = benefit_rattes['date_to']
+          return benefit_rattes if from.to_date <= @from_date && to.to_date >= @to_date
+        end
+      end
 
       def persist!
         @object.update(fields_to_update)
