@@ -22,8 +22,17 @@ module Forms
       private
 
       def failed_application?(application)
-        application.outcome.eql?('none') &&
+        application_outcome_none(application) &&
           (application.decision_override.nil? || !application.decision_override.persisted?)
+      end
+
+      def application_outcome_none(application)
+        if application.part_payment&.completed_at.present?
+          application.part_payment.outcome.eql?('none') ||
+            application.part_payment.outcome.eql?('return')
+        else
+          application.outcome.eql?('none')
+        end
       end
 
       def reason_required?

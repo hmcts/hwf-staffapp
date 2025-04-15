@@ -64,6 +64,11 @@ module Views
       }[@application.decision_type] || nil
     end
 
+    def allow_override?
+      return false if @application.saving.passed == false && @application.online_application_id.blank?
+      true
+    end
+
     private
 
     def outcome

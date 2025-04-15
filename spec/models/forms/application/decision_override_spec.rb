@@ -92,6 +92,34 @@ RSpec.describe Forms::Application::DecisionOverride do
 
           it { is_expected.to be false }
         end
+
+        context 'with part payment' do
+          let(:application) { create(:application_no_remission, :processed_state, application_type: type, outcome: outcome, part_payment: part_payment) }
+          let(:part_payment) { create(:part_payment, outcome: pp_outcome, completed_at: completed_at) }
+          let(:completed_at) { Time.zone.now }
+          let(:outcome) { 'part' }
+
+          context 'blank part payment' do
+            let(:pp_outcome) { nil }
+            let(:completed_at) { nil }
+            it { is_expected.to be false }
+          end
+
+          context 'none for part payment outcome' do
+            let(:pp_outcome) { 'none' }
+            it { is_expected.to be true }
+          end
+
+          context 'return for part payment outcome' do
+            let(:pp_outcome) { 'return' }
+            it { is_expected.to be true }
+          end
+
+          context 'part for part payment outcome' do
+            let(:pp_outcome) { 'part' }
+            it { is_expected.to be false }
+          end
+        end
       end
 
       context 'that was benefits based' do

@@ -52,11 +52,13 @@ class PartPaymentsController < ApplicationController
   end
 
   def confirmation
+    @form = Forms::Application::DecisionOverride.new(application)
     assign_views
     @result = Views::PartPayment::Result.new(part_payment)
   end
 
   def return_letter
+    @form = Forms::Application::DecisionOverride.new(application)
     assign_views
   end
 

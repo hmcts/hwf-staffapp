@@ -17,6 +17,9 @@
 
     p: strong= link_to 'See the guides', guide_path, target: 'blank'
 
+    - if @result.allow_override?
+      =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+
     - if @result.callout == 'no'
       = render('failed_letter')
 

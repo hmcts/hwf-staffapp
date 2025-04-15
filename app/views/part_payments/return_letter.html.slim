@@ -15,6 +15,9 @@
 
     p: strong= link_to 'See the guides', guide_path, target: 'blank'
 
+    - if @result.allow_override?
+      =render('shared/decision_override', path: application_override_path(@application, anchor: 'override_panel'))
+
     .evidence-confirmation-letter
       =t('new_letters.part-payment.no_part_payment_received_html',
          reference: @application_view.reference,
