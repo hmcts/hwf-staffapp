@@ -225,8 +225,17 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
 
+    let(:additional_income_amount) { nil }
+    let(:additional_income) { nil }
+
+    before do
+      form.update(params)
+      form.valid?
+    end
+
     context 'no child' do
       let(:children) { nil }
+      let(:additional_income) { false }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -238,10 +247,27 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context '1 child' do
       let(:children) { 1 }
 
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 102
-        expect(form.additional_income).to be true
+      context 'before 25/26 financial yearI' do
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 102
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context 'only 25/26 financial year' do
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '5' }
+        let(:from_date_year) { '2025' }
+        let(:to_date_day) { '28' }
+        let(:to_date_month) { '5' }
+        let(:to_date_year) { '2025' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 80
+          expect(form.additional_income).to be true
+        end
       end
     end
 

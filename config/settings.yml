@@ -37,8 +37,14 @@ income:
   per_child_increment: 265
   married_supplement: 175
 child_benefits:
-  per_week: 25.6
-  additional_child: 16.95
+  - date_from: 2015-01-01
+    date_to: 2025-04-30
+    per_week: 25.6
+    additional_child: 16.95
+  - date_from: 2025-05-01
+    date_to: 2026-04-30
+    per_week: 20
+    additional_child: 10
 
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
