@@ -36,15 +36,23 @@ income:
   max_threshold_base: 5170
   per_child_increment: 265
   married_supplement: 175
+# RST-7015
 child_benefits:
   - date_from: 2015-01-01
-    date_to: 2025-04-30
+    date_to: 2024-04-05
+    per_week: 24
+    additional_child: 15.90
+    max_additional_children: 6
+  - date_from: 2024-04-06
+    date_to: 2025-04-05
     per_week: 25.6
     additional_child: 16.95
-  - date_from: 2025-05-01
-    date_to: 2026-04-30
-    per_week: 20
-    additional_child: 10
+    max_additional_children: 7
+  - date_from: 2025-04-06
+    date_to: 2026-04-05
+    per_week: 25.6
+    additional_child: 16.95
+    max_additional_children: 7
 
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>

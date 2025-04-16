@@ -21,11 +21,11 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   }
 
   let(:from_date_day) { '1' }
-  let(:from_date_month) { '2' }
-  let(:from_date_year) { '2021' }
-  let(:to_date_day) { '28' }
-  let(:to_date_month) { '2' }
-  let(:to_date_year) { '2021' }
+  let(:from_date_month) { '5' }
+  let(:from_date_year) { '2024' }
+  let(:to_date_day) { '31' }
+  let(:to_date_month) { '5' }
+  let(:to_date_year) { '2024' }
   let(:additional_income_amount) { 1 }
   let(:additional_income) { nil }
 
@@ -101,7 +101,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context 'from_date' do
       it "has correct format" do
         form.valid?
-        expect(form.from_date).to eql('2021-02-01')
+        expect(form.from_date).to eql('2024-05-01')
       end
 
       context 'year is not valid' do
@@ -144,7 +144,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context 'to_date' do
       it "has correct format" do
         form.valid?
-        expect(form.to_date).to eql('2021-02-28')
+        expect(form.to_date).to eql('2024-05-31')
       end
 
       context 'year is not valid' do
@@ -247,25 +247,47 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context '1 child' do
       let(:children) { 1 }
 
-      context 'before 25/26 financial yearI' do
+      context '23/24 financial year' do
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2024' }
+        let(:to_date_day) { '28' }
+        let(:to_date_month) { '2' }
+        let(:to_date_year) { '2024' }
+
         it 'additional_income' do
           form.load_additional_income_from_benefits
-          expect(form.additional_income_amount).to eq 102
+          expect(form.additional_income_amount).to eq 96
           expect(form.additional_income).to be true
         end
       end
 
-      context 'only 25/26 financial year' do
+      context '23/24 3 months average' do
         let(:from_date_day) { '1' }
-        let(:from_date_month) { '5' }
+        let(:from_date_month) { '1' }
+        let(:from_date_year) { '2024' }
+        let(:to_date_day) { '31' }
+        let(:to_date_month) { '3' }
+        let(:to_date_year) { '2024' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 96
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 financial year' do
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '6' }
         let(:from_date_year) { '2025' }
-        let(:to_date_day) { '28' }
-        let(:to_date_month) { '5' }
+        let(:to_date_day) { '30' }
+        let(:to_date_month) { '6' }
         let(:to_date_year) { '2025' }
 
         it 'additional_income' do
           form.load_additional_income_from_benefits
-          expect(form.additional_income_amount).to eq 80
+          expect(form.additional_income_amount).to eq 102
           expect(form.additional_income).to be true
         end
       end
@@ -274,10 +296,34 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context '2 children' do
       let(:children) { 2 }
 
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 170
-        expect(form.additional_income).to be true
+      context '24/25 financial year' do
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '6' }
+        let(:from_date_year) { '2025' }
+        let(:to_date_day) { '30' }
+        let(:to_date_month) { '6' }
+        let(:to_date_year) { '2025' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 170
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '23/24 financial year' do
+        let(:from_date_day) { '1' }
+        let(:from_date_month) { '2' }
+        let(:from_date_year) { '2024' }
+        let(:to_date_day) { '28' }
+        let(:to_date_month) { '2' }
+        let(:to_date_year) { '2024' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 159
+          expect(form.additional_income).to be true
+        end
       end
     end
 
@@ -303,6 +349,12 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     context '7 children' do
       let(:children) { 7 }
+      let(:from_date_day) { '1' }
+      let(:from_date_month) { '1' }
+      let(:from_date_year) { '2025' }
+      let(:to_date_day) { '31' }
+      let(:to_date_month) { '3' }
+      let(:to_date_year) { '2025' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -311,8 +363,30 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
-    context '8 children' do
+    context '8 children 23/24' do
       let(:children) { 8 }
+      let(:from_date_day) { '1' }
+      let(:from_date_month) { '1' }
+      let(:from_date_year) { '2024' }
+      let(:to_date_day) { '31' }
+      let(:to_date_month) { '3' }
+      let(:to_date_year) { '2024' }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 477
+        expect(form.additional_income).to be true
+      end
+    end
+
+    context '9 children 24/25' do
+      let(:children) { 9 }
+      let(:from_date_day) { '1' }
+      let(:from_date_month) { '1' }
+      let(:from_date_year) { '2025' }
+      let(:to_date_day) { '31' }
+      let(:to_date_month) { '3' }
+      let(:to_date_year) { '2025' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits

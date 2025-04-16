@@ -58,12 +58,17 @@ module Forms
       def child_benefits_per_week(children)
         load_benefit_rates
         return @basic_rate if children == 1
-        children_multiplier = children - 1
 
-        @basic_rate + (children_multiplier * @additional_rate)
+        @basic_rate + (children_multiplier(children) * @additional_rate)
       end
 
       private
+
+      def children_multiplier(children)
+        max_additional_children = benefit_for_tax_year['max_additional_children']
+
+        (children - 1 > max_additional_children) ? max_additional_children : (children - 1)
+      end
 
       def load_benefit_rates
         child_benefits_values = benefit_for_tax_year
