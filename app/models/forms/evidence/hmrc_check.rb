@@ -67,7 +67,7 @@ module Forms
       def children_multiplier(children)
         max_additional_children = benefit_for_tax_year['max_additional_children']
 
-        (children - 1 > max_additional_children) ? max_additional_children : (children - 1)
+        children - 1 > max_additional_children ? max_additional_children : (children - 1)
       end
 
       def load_benefit_rates
@@ -80,7 +80,7 @@ module Forms
         Settings.child_benefits.each do |benefit_rattes|
           from = benefit_rattes['date_from']
           to = benefit_rattes['date_to']
-          return benefit_rattes if from.to_date <= @from_date && to.to_date >= @to_date
+          return benefit_rattes if @from_date.between?(from.to_date, to.to_date)
         end
       end
 

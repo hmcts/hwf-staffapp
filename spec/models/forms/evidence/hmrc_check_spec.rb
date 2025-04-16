@@ -244,6 +244,38 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
+    context '1 child tax year overlap' do
+      let(:children) { 1 }
+      # FY 23/24 dates
+      # date_from: 2015-01-01
+      # date_to: 2024-04-05
+      let(:from_date_month) { '4' }
+      let(:from_date_year) { '2024' }
+      let(:to_date_day) { '30' }
+      let(:to_date_month) { '4' }
+      let(:to_date_year) { '2024' }
+
+      context '23/24 financial year' do
+        let(:from_date_day) { '5' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 96
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 financial year' do
+        let(:from_date_day) { '6' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 102
+          expect(form.additional_income).to be true
+        end
+      end
+    end
+
     context '1 child' do
       let(:children) { 1 }
 
