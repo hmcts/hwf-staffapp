@@ -120,7 +120,7 @@ def fill_benefits(benefits)
 end
 
 def fill_benefit_evidence(benefits_options)
-  expect(page).to have_text 'Has the applicant provided the correct evidence of benefits received for the period they have declared in the application?'
+  expect(page).to have_text 'Applicants may have provided supporting evidence to confirm they are receiving benefits'
   if benefits_options[:paper_provided]
     choose 'Yes, the applicant has provided supporting evidence'
   else
