@@ -1,15 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Query::WaitingForPartPayment do
-  subject(:query) { described_class.new(user1) }
-
   describe '#find' do
-    subject { query.find }
-    before {
-      application1
-      application2
-      application3
-    }
+    subject(:query) { described_class.new(user1) }
 
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
@@ -39,15 +32,20 @@ RSpec.describe Query::WaitingForPartPayment do
              detail: create(:detail, form_name: 'AA', fee: 200))
     end
 
+    before do
+      application1
+      application2
+      application3
+    end
+
     it 'returns applications in default (Descending) order by completed_at, then form_name, then fee' do
-      expect(subject).to eq([application2, application3, application1])
+      expect(query.find(nil)).to eq([application2, application3, application1])
     end
 
     context 'when order is Ascending' do
-      subject { query.find({}, 'Ascending') }
 
       it 'returns applications in ascending order by completed_at, then form_name, then fee' do
-        expect(subject).to eq([application1, application3, application2])
+        expect(query.find({}, 'Ascending')).to eq([application1, application3, application2])
       end
     end
   end
