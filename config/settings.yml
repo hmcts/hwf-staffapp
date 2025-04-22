@@ -42,17 +42,14 @@ child_benefits:
     date_to: 2024-04-05
     per_week: 24
     additional_child: 15.90
-    max_additional_children: 6
   - date_from: 2024-04-06
     date_to: 2025-04-05
     per_week: 25.6
     additional_child: 16.95
-    max_additional_children: 7
-  - date_from: 2025-04-06
-    date_to: 2026-04-05
-    per_week: 25.6
-    additional_child: 16.95
-    max_additional_children: 7
+  - date_from: 2025-04-01
+    date_to: 2026-03-31
+    per_week: 26.05
+    additional_child: 17.25
 
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>

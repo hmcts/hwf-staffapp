@@ -65,18 +65,16 @@ module Forms
       private
 
       def children_multiplier(children)
-        max_additional_children = benefit_for_tax_year['max_additional_children']
-
-        children - 1 > max_additional_children ? max_additional_children : (children - 1)
+        children - 1
       end
 
       def load_benefit_rates
-        child_benefits_values = benefit_for_tax_year
+        child_benefits_values = benefit_for_year
         @basic_rate = child_benefits_values.per_week
         @additional_rate = child_benefits_values.additional_child
       end
 
-      def benefit_for_tax_year
+      def benefit_for_year
         Settings.child_benefits.each do |benefit_rattes|
           from = benefit_rattes['date_from']
           to = benefit_rattes['date_to']
