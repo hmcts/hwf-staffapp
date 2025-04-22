@@ -12,9 +12,9 @@ module Query
 
       list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
       list.order(
-        Arel.sql("applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"),
-        Arel.sql('details.form_name DESC'),
-        Arel.sql('details.fee DESC')
+        "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}",
+        "details.form_name DESC",
+        "details.fee DESC"
       )
     end
   end
