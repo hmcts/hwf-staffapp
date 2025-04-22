@@ -5,35 +5,57 @@ RSpec.describe Query::WaitingForEvidence do
     subject(:query) { described_class.new(user1) }
 
     let(:user1) { create(:user) }
-    let(:user2) { create(:user) }
     let(:jurisdiction) { create(:jurisdiction) }
 
-    let(:application1) { create(:application, :waiting_for_evidence_state, office_id: user1.office_id, completed_at: 1.day.ago, jurisdiction: user1.jurisdiction) }
-    let(:application2) { create(:application, :waiting_for_evidence_state, office_id: user1.office_id, completed_at: 5.days.ago, jurisdiction: jurisdiction) }
-    let(:application3) { create(:application, :waiting_for_evidence_state, office_id: user2.office_id, completed_at: 2.days.ago, jurisdiction: jurisdiction) }
+    let(:application1) do
+      create(:application, :waiting_for_evidence_state,
+             office_id: user1.office_id,
+             completed_at: 3.days.ago,
+             jurisdiction: user1.jurisdiction,
+             detail: create(:detail, form_name: 'AA', fee: 100))
+    end
 
-    before {
+    let(:application2) do
+      create(:application, :waiting_for_evidence_state,
+             office_id: user1.office_id,
+             completed_at: 1.day.ago,
+             jurisdiction: user1.jurisdiction,
+             detail: create(:detail, form_name: 'BB', fee: 50))
+    end
+
+    let(:application3) do
+      create(:application, :waiting_for_evidence_state,
+             office_id: user1.office_id,
+             completed_at: 2.days.ago,
+             jurisdiction: user1.jurisdiction,
+             detail: create(:detail, form_name: 'AA', fee: 200))
+    end
+
+    before do
       application1
       application2
       application3
-    }
-
-    it 'returns only applications which are in waiting_for_evidence state in order of completion' do
-      expect(query.find.all).to eq([application1, application2])
     end
 
-    context 'jurisdiction' do
-      subject { query.find(jurisdiction_id: jurisdiction.id) }
-      it { is_expected.to eq([application2]) }
+    it 'returns applications in default (Descending) order by completed_at, then form_name, then fee' do
+      expect(query.find).to eq([application2, application3, application1])
+    end
 
-      context 'empty jurisdiction value' do
-        subject { query.find(jurisdiction_id: '') }
-        it { is_expected.to eq([application1, application2]) }
+    context 'when order is Ascending' do
+      it 'returns applications in ascending order by completed_at, then form_name, then fee' do
+        expect(query.find({}, 'Ascending')).to eq([application1, application3, application2])
       end
+    end
 
-      context 'nil filter' do
-        subject { query.find(nil) }
-        it { is_expected.to eq([application1, application2]) }
+    context 'empty jurisdiction value' do
+      it 'ignores the filter and returns all' do
+        expect(query.find(jurisdiction_id: '')).to eq([application2, application3, application1])
+      end
+    end
+
+    context 'nil filter' do
+      it 'returns all applications without filtering' do
+        expect(query.find(nil)).to eq([application2, application3, application1])
       end
     end
   end
