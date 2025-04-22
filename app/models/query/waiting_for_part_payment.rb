@@ -5,11 +5,17 @@ module Query
     end
 
     def find(filter = {}, order = {})
-      list = @user.office.applications.waiting_for_part_payment.
-             order(completed_at: order == "Ascending" ? :asc : :desc).
-             includes(:part_payment, :applicant, :completed_by)
-      list = list.joins(:detail).where(details: filter) if filter && filter[:jurisdiction_id].present?
-      list
+      list = @user.office.applications.
+             waiting_for_part_payment.
+             includes(:part_payment, :completed_by, :applicant).
+             joins(:detail)
+
+      list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
+      list.order(
+        Arel.sql("applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"),
+        Arel.sql('details.form_name DESC'),
+        Arel.sql('details.fee DESC')
+      )
     end
   end
 end
