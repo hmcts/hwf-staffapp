@@ -818,7 +818,7 @@ en-GB:
         deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
-        evidence: 'Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?'
+        evidence: 'Applicants may have provided supporting evidence to confirm they are receiving benefits'
         evidence_false: 'No'
         evidence_true: 'Yes, the applicant has provided supporting evidence'
         correct: 'Is the evidence for the correct applicant and dated within 3 months of the fee being paid?'
