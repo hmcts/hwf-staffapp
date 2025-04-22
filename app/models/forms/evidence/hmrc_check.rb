@@ -75,10 +75,11 @@ module Forms
       end
 
       def benefit_for_year
+        range_from = @object.request_params[:date_range][:from].to_date
         Settings.child_benefits.each do |benefit_rattes|
           from = benefit_rattes['date_from']
           to = benefit_rattes['date_to']
-          return benefit_rattes if @from_date.between?(from.to_date, to.to_date)
+          return benefit_rattes if range_from.between?(from.to_date, to.to_date)
         end
       end
 
