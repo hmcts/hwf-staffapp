@@ -13,8 +13,8 @@ module Query
       list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
       list.order(
         "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}",
-        "details.form_name DESC",
-        "details.fee DESC"
+        "detail.form_name DESC",
+        "detail.fee DESC"
       )
     end
   end
