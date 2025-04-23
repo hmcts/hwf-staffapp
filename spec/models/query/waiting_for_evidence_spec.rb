@@ -38,24 +38,24 @@ RSpec.describe Query::WaitingForEvidence do
     end
 
     it 'returns applications in default (Descending) order by completed_at, then form_name, then fee' do
-      expect(query.find).to eq([application2, application3, application1])
+      expect(query.find(false, false)).to eq([application2, application3, application1])
     end
 
     context 'when order is Ascending' do
       it 'returns applications in form_name, then fee then ascending order by completed_at' do
-        expect(query.find({}, 'Ascending')).to eq([application1, application3, application2])
+        expect(query.find(false, false,{}, 'Ascending')).to eq([application1, application3, application2])
       end
     end
 
     context 'empty jurisdiction value' do
       it 'ignores the filter and returns all' do
-        expect(query.find(jurisdiction_id: '')).to eq([application2, application3, application1])
+        expect(query.find(false, false, jurisdiction_id: '')).to eq([application2, application3, application1])
       end
     end
 
     context 'nil filter' do
       it 'returns all applications without filtering' do
-        expect(query.find(nil)).to eq([application2, application3, application1])
+        expect(query.find(false, false, nil)).to eq([application2, application3, application1])
       end
     end
   end
