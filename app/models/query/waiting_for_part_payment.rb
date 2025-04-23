@@ -4,7 +4,8 @@ module Query
       @user = user
     end
 
-    def find(filter = {}, order = {}, show_form_name = false, show_court_fee = false)
+    # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
+    def find(show_form_name, show_court_fee, filter = {}, order = {})
       list = @user.office.applications.
              waiting_for_part_payment.
              includes(:part_payment, :completed_by, :applicant).
@@ -25,5 +26,6 @@ module Query
         list.order("applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}")
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
   end
 end

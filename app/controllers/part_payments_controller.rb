@@ -13,7 +13,8 @@ class PartPaymentsController < ApplicationController
   include FilterApplicationHelper
 
   def index
-    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user, filter, order, show_form_name, show_court_fee)
+    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user, filter, order,
+                                                                          show_form_name, show_court_fee)
     @show_form_name = show_form_name
     @show_court_fee = show_court_fee
   end
