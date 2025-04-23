@@ -80,7 +80,7 @@ RSpec.describe Forms::Application::Detail do
         described_class.new(params)
       end
 
-      include_examples 'date_received validation' do
+      it_behaves_like 'date_received validation' do
         let(:form) { application_details }
       end
     end
