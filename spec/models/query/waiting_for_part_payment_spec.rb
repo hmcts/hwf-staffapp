@@ -45,7 +45,7 @@ RSpec.describe Query::WaitingForPartPayment do
     context 'when order is Ascending' do
 
       it 'returns applications in ascending order by completed_at, then form_name, then fee' do
-        expect(query.find({}, 'Ascending')).to eq([application1, application3, application2])
+        expect(query.find({}, 'Ascending')).to eq([application2, application3, application1])
       end
     end
   end

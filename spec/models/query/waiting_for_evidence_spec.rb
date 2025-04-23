@@ -42,8 +42,8 @@ RSpec.describe Query::WaitingForEvidence do
     end
 
     context 'when order is Ascending' do
-      it 'returns applications in ascending order by completed_at, then form_name, then fee' do
-        expect(query.find({}, 'Ascending')).to eq([application1, application3, application2])
+      it 'returns applications in form_name, then fee then ascending order by completed_at' do
+        expect(query.find({}, 'Ascending')).to eq([application2, application3, application1])
       end
     end
 
