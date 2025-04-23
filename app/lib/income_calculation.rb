@@ -90,7 +90,7 @@ class IncomeCalculation
   end
 
   def applicants_maximum_contribution
-    round_down_to_nearest_10((income - thresholds.min_threshold)) * 0.5
+    round_down_to_nearest_10(income - thresholds.min_threshold) * 0.5
   end
 
   def thresholds

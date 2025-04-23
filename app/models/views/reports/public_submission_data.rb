@@ -19,13 +19,13 @@ module Views
 
       def submission_seven_day_total
         @applications.
-          where('applications.created_at > ?', (Time.zone.today - 6.days)).
+          where('applications.created_at > ?', Time.zone.today - 6.days).
           count
       end
 
       def submission_seven_day
         @applications.
-          where('applications.created_at > ?', (Time.zone.today - 6.days)).
+          where('applications.created_at > ?', Time.zone.today - 6.days).
           group('offices.name').
           order('count_all DESC').
           count
@@ -44,7 +44,7 @@ module Views
       def submission_seven_day_time_taken
         @applications.
           joins(:online_application).
-          where('applications.created_at > ?', (Time.zone.today - 6.days)).
+          where('applications.created_at > ?', Time.zone.today - 6.days).
           group('offices.name').
           pluck(
             :name,
