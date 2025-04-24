@@ -11,7 +11,7 @@ module Query
              includes(:part_payment, :completed_by, :applicant).
              joins(:detail)
 
-      list = list.where(details: filter) if filter && filter[:jurisdiction_id].present?
+      list = list.where(detail: filter) if filter && filter[:jurisdiction_id].present?
       if show_form_name
         list.order(
           "detail.form_name DESC",
