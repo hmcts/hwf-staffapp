@@ -39,11 +39,7 @@ income:
 # RST-7015
 child_benefits:
   - date_from: 2015-01-01
-    date_to: 2024-04-05
-    per_week: 24
-    additional_child: 15.90
-  - date_from: 2024-04-06
-    date_to: 2025-04-05
+    date_to: 2025-03-31
     per_week: 25.6
     additional_child: 16.95
   - date_from: 2025-04-01

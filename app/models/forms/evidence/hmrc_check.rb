@@ -2,6 +2,7 @@ module Forms
   module Evidence
     class HmrcCheck < ::FormObject
       include ActiveModel::Validations::Callbacks
+      include AdditionalIncome
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
@@ -43,45 +44,7 @@ module Forms
         end
       end
 
-      def additional_income_value
-        return additional_income_amount if additional_income_amount.to_i.positive?
-        child_benefits_per_month
-      end
-
-      def child_benefits_per_month
-        children = @object.evidence_check.application.children
-
-        return 0 if children.blank? || children.zero?
-        child_benefits_per_week(children) * 4
-      end
-
-      def child_benefits_per_week(children)
-        load_benefit_rates
-        return @basic_rate if children == 1
-
-        @basic_rate + (children_multiplier(children) * @additional_rate)
-      end
-
       private
-
-      def children_multiplier(children)
-        children - 1
-      end
-
-      def load_benefit_rates
-        child_benefits_values = benefit_for_year
-        @basic_rate = child_benefits_values.per_week
-        @additional_rate = child_benefits_values.additional_child
-      end
-
-      def benefit_for_year
-        range_from = @object.request_params[:date_range][:from].to_date
-        Settings.child_benefits.each do |benefit_rattes|
-          from = benefit_rattes['date_from']
-          to = benefit_rattes['date_to']
-          return benefit_rattes if range_from.between?(from.to_date, to.to_date)
-        end
-      end
 
       def persist!
         @object.update(fields_to_update)
