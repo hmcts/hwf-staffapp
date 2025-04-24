@@ -4,7 +4,7 @@ module Query
       @user = user
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength,Metrics/AbcSize
     def find(show_form_name, show_court_fee, filter = {}, order = {})
       list = @user.office.applications.
              waiting_for_evidence.
@@ -14,18 +14,18 @@ module Query
       list = list.where(detail: filter) if filter && filter[:jurisdiction_id].present?
       if show_form_name
         list.order(
-          "detail.form_name DESC",
+          "detail.form_name #{order == 'Ascending' ? 'ASC' : 'DESC'}",
           "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"
         )
       elsif show_court_fee
         list.order(
-          "detail.fee DESC",
+          "detail.fee #{order == 'Ascending' ? 'ASC' : 'DESC'}",
           "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"
         )
       else
         list.order("applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}")
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength,Metrics/AbcSize
   end
 end

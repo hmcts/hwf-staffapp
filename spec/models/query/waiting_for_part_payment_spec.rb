@@ -48,8 +48,8 @@ RSpec.describe Query::WaitingForPartPayment do
         expect(query.find(true, false)).to eq([application2, application3, application1])
       end
 
-      it 'orders by form_name DESC then completed_at ASC' do
-        expect(query.find(true, false, {}, 'Ascending')).to eq([application2, application1, application3])
+      it 'orders by form_name ASC then completed_at ASC' do
+        expect(query.find(true, false, {}, 'Ascending')).to eq([application1, application3, application2])
       end
     end
 
@@ -58,8 +58,8 @@ RSpec.describe Query::WaitingForPartPayment do
         expect(query.find(false, true)).to eq([application3, application1, application2])
       end
 
-      it 'orders by fee DESC then completed_at ASC' do
-        expect(query.find(false, true, {}, 'Ascending')).to eq([application3, application1, application2])
+      it 'orders by fee ASC then completed_at ASC' do
+        expect(query.find(false, true, {}, 'Ascending')).to eq([application2, application1, application3])
       end
     end
 
