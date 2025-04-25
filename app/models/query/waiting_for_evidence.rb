@@ -1,10 +1,10 @@
 module Query
   class WaitingForEvidence
+    include FilterOrder
     def initialize(user)
       @user = user
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength,Metrics/AbcSize
     def find(show_form_name, show_court_fee, filter = {}, order = {})
       list = @user.office.applications.
              waiting_for_evidence.
@@ -12,20 +12,8 @@ module Query
              joins(:detail)
 
       list = list.where(detail: filter) if filter && filter[:jurisdiction_id].present?
-      if show_form_name
-        list.order(
-          "detail.form_name #{order == 'Ascending' ? 'ASC' : 'DESC'}",
-          "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"
-        )
-      elsif show_court_fee
-        list.order(
-          "detail.fee #{order == 'Ascending' ? 'ASC' : 'DESC'}",
-          "applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}"
-        )
-      else
-        list.order("applications.completed_at #{order == 'Ascending' ? 'ASC' : 'DESC'}")
-      end
+
+      select_order(list, show_form_name, show_court_fee, order)
     end
-    # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength,Metrics/AbcSize
   end
 end
