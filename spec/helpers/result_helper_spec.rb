@@ -221,4 +221,41 @@ RSpec.describe ResultHelper do
       it { expect(helper.currency_format(nil)).to be_nil }
     end
   end
+
+  describe '#display_threshold' do
+    let(:application) { instance_double(Application, saving: saving, detail: detail) }
+    let(:saving) { instance_double(Saving, amount: saving_amount, over_66: over_66, max_threshold_exceeded: max_threshold_exceeded) }
+    let(:detail) { instance_double(Detail, fee: fee) }
+    let(:saving_amount) { 0 }
+    let(:over_66) { false }
+    let(:max_threshold_exceeded) { false }
+    let(:fee) { 0 }
+
+    context 'when saving exceeds the maximum threshold' do
+      let(:over_66) { true }
+
+      it { expect(helper.display_threshold(application)).to eq "£16,000" }
+    end
+
+    context 'when saving exceeds three times the fee' do
+      let(:fee) { 1500 }
+      let(:saving_amount) { 5000 }
+
+      it { expect(helper.display_threshold(application)).to eq "£4,500" }
+    end
+
+    context 'when saving exceeds the lower fee threshold' do
+      let(:fee) { 1400 }
+      let(:saving_amount) { 4300 }
+
+      it { expect(helper.display_threshold(application)).to eq "£4,250" }
+    end
+
+    context 'when no thresholds are exceeded' do
+      let(:fee) { 1000 }
+      let(:saving_amount) { 2000 }
+
+      it { expect(helper.display_threshold(application)).to be_nil }
+    end
+  end
 end
