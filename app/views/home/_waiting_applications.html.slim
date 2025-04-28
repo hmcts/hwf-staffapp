@@ -39,10 +39,8 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
       tr.govuk-table__row
         th.govuk-table__header =t("#{type}.dashboard.table_header.reference")
         th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
-        - if show_form_name
-          th.govuk-table__header =t("#{type}.dashboard.table_header.form_name")
-        - if show_court_fee
-          th.govuk-table__header =t("#{type}.dashboard.table_header.court_fee")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.form_name")
+        th.govuk-table__header =t("#{type}.dashboard.table_header.court_fee")
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_by")
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_on")
     tbody.govuk-table__body
@@ -50,10 +48,8 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
         tr.govuk-table__row
           td.govuk-table__cell =link_to(record.reference, path_for_application_based_on_state(record.application))
           td.govuk-table__cell =record.applicant
-          - if show_form_name
-            td.govuk-table__cell =record.form_name
-          - if show_court_fee
-            td.govuk-table__cell =record.fee
+          td.govuk-table__cell =record.form_name
+          td.govuk-table__cell =record.fee
           td.govuk-table__cell =record.processed_by
           td.govuk-table__cell =record.processed_on
 - else
