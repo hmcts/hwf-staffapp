@@ -65,7 +65,7 @@ RSpec.describe Forms::Application::FeeStatus do
     end
 
     describe 'Date application received' do
-      include_examples 'date_received validation'
+      it_behaves_like 'date_received validation'
     end
 
     describe 'change to calculation_scheme_change' do

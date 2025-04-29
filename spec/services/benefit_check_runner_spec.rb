@@ -138,7 +138,7 @@ RSpec.describe BenefitCheckRunner do
 
     context 'when all required fields are present on the application' do
       context 'when benefit check has not yet run' do
-        include_examples 'runs benefit check record'
+        it_behaves_like 'runs benefit check record'
       end
 
       context 'when date_fee_paid is older then three months from today and date_received is blank' do
@@ -179,7 +179,7 @@ RSpec.describe BenefitCheckRunner do
                    date_to_check: detail.date_received)
           end
 
-          include_examples 'runs benefit check record'
+          it_behaves_like 'runs benefit check record'
         end
 
         context 'when something has changed from before' do
@@ -192,7 +192,7 @@ RSpec.describe BenefitCheckRunner do
                    date_to_check: detail.date_received)
           end
 
-          include_examples 'runs benefit check record'
+          it_behaves_like 'runs benefit check record'
         end
       end
     end

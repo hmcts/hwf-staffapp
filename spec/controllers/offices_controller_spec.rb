@@ -51,7 +51,7 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 
   describe 'GET #show' do
@@ -75,7 +75,7 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 
   describe 'GET #new' do
@@ -99,7 +99,7 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 
   describe 'GET #edit' do
@@ -130,7 +130,7 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 
   describe 'POST #create' do
@@ -181,7 +181,7 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 
   describe 'PUT #update' do
@@ -249,6 +249,6 @@ RSpec.describe OfficesController do
       end
     end
 
-    include_examples 'when not authorized'
+    it_behaves_like 'when not authorized'
   end
 end

@@ -76,7 +76,7 @@ RSpec.describe Forms::OnlineApplication do
     describe 'date_received' do
       let(:online_application) { build_stubbed(:online_application, :completed) }
 
-      include_examples 'date_received validation'
+      it_behaves_like 'date_received validation'
 
       context 'received before submitted' do
         before do

@@ -71,7 +71,7 @@ module ResultHelper
     if exceeds_saving_threshold?(application)
       currency_format(Settings.savings_threshold.maximum_value)
     elsif exceeds_fee_threshold?(application)
-      currency_format((3.0 * application.detail.fee))
+      currency_format(3.0 * application.detail.fee)
     elsif exceeds_lower_fee_threshold?(application)
       currency_format(Settings.ucd_savings_threshold.minimum_value)
     end

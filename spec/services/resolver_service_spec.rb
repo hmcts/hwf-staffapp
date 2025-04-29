@@ -124,9 +124,9 @@ describe ResolverService do
       context 'when the application needs evidence check' do
         let(:evidence_check_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
+        it_behaves_like 'application, evidence check or part payment completed', 'application', 'waiting_for_evidence', false
 
-        include_examples 'application reference and business_entity'
+        it_behaves_like 'application reference and business_entity'
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
@@ -136,9 +136,9 @@ describe ResolverService do
       context 'when the application needs part payment' do
         let(:part_payment_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
+        it_behaves_like 'application, evidence check or part payment completed', 'application', 'waiting_for_part_payment', false
 
-        include_examples 'application reference and business_entity'
+        it_behaves_like 'application reference and business_entity'
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
@@ -149,7 +149,7 @@ describe ResolverService do
         let(:part_payment_decision) { true }
         let(:refund) { true }
 
-        include_examples 'application reference and business_entity'
+        it_behaves_like 'application reference and business_entity'
 
         it 'stores the business entity used to generate the reference' do
           expect(updated_application.business_entity).to eql(business_entity)
@@ -168,13 +168,13 @@ describe ResolverService do
         context 'for a full outcome' do
           let(:application_outcome) { 'full' }
 
-          include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 350
+          it_behaves_like 'application, evidence check or part payment completed', 'application', 'processed', true, 350
         end
 
         context 'for a none outcome' do
           let(:application_outcome) { 'none' }
 
-          include_examples 'application, evidence check or part payment completed', 'application', 'processed', true, 0
+          it_behaves_like 'application, evidence check or part payment completed', 'application', 'processed', true, 0
         end
 
         context 'for discretion applied set to false' do
@@ -221,7 +221,7 @@ describe ResolverService do
           end
         end
 
-        include_examples 'application reference and business_entity'
+        it_behaves_like 'application reference and business_entity'
       end
     end
 
@@ -265,14 +265,14 @@ describe ResolverService do
         let(:evidence_check) { create(:evidence_check_part_outcome, application: application) }
         let(:part_payment_decision) { true }
 
-        include_examples 'application, evidence check or part payment completed', 'evidence_check', 'waiting_for_part_payment', false
+        it_behaves_like 'application, evidence check or part payment completed', 'evidence_check', 'waiting_for_part_payment', false
       end
 
       context 'when the evidence check has outcome and application does not require part payment' do
         context 'for full outcome' do
           let(:evidence_check) { create(:evidence_check_full_outcome, application: application) }
 
-          include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 350
+          it_behaves_like 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 350
 
           it 'updates amount_to_pay' do
             complete
@@ -283,7 +283,7 @@ describe ResolverService do
         context 'for none outcome' do
           let(:evidence_check) { create(:evidence_check_incorrect, application: application) }
 
-          include_examples 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 0
+          it_behaves_like 'application, evidence check or part payment completed', 'evidence_check', 'processed', true, 0
 
           it 'updates amount_to_pay' do
             complete
@@ -335,20 +335,20 @@ describe ResolverService do
               create(:evidence_check_part_outcome, :completed, application: application, amount_to_pay: 150)
             end
 
-            include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 200
+            it_behaves_like 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 200
           end
 
           context 'when the application was not evidence checked' do
             let(:amount_to_pay) { 50 }
 
-            include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 300
+            it_behaves_like 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 300
           end
         end
 
         context 'for a none outcome' do
           let(:part_payment) { create(:part_payment_none_outcome, application: application) }
 
-          include_examples 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 0
+          it_behaves_like 'application, evidence check or part payment completed', 'part_payment', 'processed', true, 0
         end
       end
     end
@@ -411,7 +411,7 @@ describe ResolverService do
 
       let(:object) { evidence_check }
 
-      include_examples 'application, evidence check or part payment returned', 'evidence_check'
+      it_behaves_like 'application, evidence check or part payment returned', 'evidence_check'
     end
 
     context 'for PartPayment' do
@@ -419,7 +419,7 @@ describe ResolverService do
 
       let(:object) { part_payment }
 
-      include_examples 'application, evidence check or part payment returned', 'part_payment'
+      it_behaves_like 'application, evidence check or part payment returned', 'part_payment'
     end
   end
 

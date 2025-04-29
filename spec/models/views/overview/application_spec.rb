@@ -378,13 +378,13 @@ RSpec.describe Views::Overview::Application do
       let(:evidence) { build_stubbed(:evidence_check, amount_to_pay: amount) }
       let(:application) { build_stubbed(:application, evidence_check: evidence, amount_to_pay: nil) }
 
-      include_examples 'amount_to_pay examples'
+      it_behaves_like 'amount_to_pay examples'
     end
 
     context 'when the application does not have evidence check' do
       let(:application) { build_stubbed(:application, amount_to_pay: amount) }
 
-      include_examples 'amount_to_pay examples'
+      it_behaves_like 'amount_to_pay examples'
     end
   end
 

@@ -156,7 +156,7 @@ RSpec.describe ProcessedApplicationsController do
       get :show, params: { id: application1.id }
     end
 
-    include_examples 'renders correctly and assigns required variables'
+    it_behaves_like 'renders correctly and assigns required variables'
   end
 
   describe 'PUT #update' do
@@ -190,7 +190,7 @@ RSpec.describe ProcessedApplicationsController do
     context 'when the form can not be saved' do
       let(:form_save) { false }
 
-      include_examples 'renders correctly and assigns required variables'
+      it_behaves_like 'renders correctly and assigns required variables'
     end
   end
 end
