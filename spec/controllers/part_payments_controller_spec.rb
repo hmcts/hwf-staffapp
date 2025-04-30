@@ -32,7 +32,7 @@ RSpec.describe PartPaymentsController do
 
   describe 'GET #index' do
     before do
-      allow(LoadApplications).to receive(:waiting_for_part_payment).with(user, filter, order).and_return ['waiting apps']
+      allow(LoadApplications).to receive(:waiting_for_part_payment).with(user, filter, order, false, false).and_return ['waiting apps']
       get :index, params: { filter_applications: filter }
     end
 
@@ -53,7 +53,7 @@ RSpec.describe PartPaymentsController do
     context 'filter' do
       let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(user, filter, order)
+        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(user, filter, order, false, false)
       }
     end
 

@@ -747,7 +747,7 @@ DEPENDENCIES
   mock_redis
   mutex_m
   net-pop!
-  nokogiri
+  nokogiri (~> 1.18.8)
   ostruct
   paper_trail
   parallel_tests
