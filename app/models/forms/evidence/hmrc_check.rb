@@ -2,6 +2,7 @@ module Forms
   module Evidence
     class HmrcCheck < ::FormObject
       include ActiveModel::Validations::Callbacks
+      include AdditionalIncome
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
@@ -41,27 +42,6 @@ module Forms
           self.additional_income = true
           self.additional_income_amount = additional_income_value
         end
-      end
-
-      def additional_income_value
-        return additional_income_amount if additional_income_amount.to_i.positive?
-        child_benefits_per_month
-      end
-
-      def child_benefits_per_month
-        children = @object.evidence_check.application.children
-
-        return 0 if children.blank? || children.zero?
-        child_benefits_per_week(children) * 4
-      end
-
-      def child_benefits_per_week(children)
-        basic_rate = Settings.child_benefits.per_week
-        additional_rate = Settings.child_benefits.additional_child
-        return basic_rate if children == 1
-        children_multiplier = children - 1
-
-        basic_rate + (children_multiplier * additional_rate)
       end
 
       private

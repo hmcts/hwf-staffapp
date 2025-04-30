@@ -21,11 +21,11 @@ RSpec.describe Forms::Evidence::HmrcCheck do
   }
 
   let(:from_date_day) { '1' }
-  let(:from_date_month) { '2' }
-  let(:from_date_year) { '2021' }
-  let(:to_date_day) { '28' }
-  let(:to_date_month) { '2' }
-  let(:to_date_year) { '2021' }
+  let(:from_date_month) { '5' }
+  let(:from_date_year) { '2024' }
+  let(:to_date_day) { '31' }
+  let(:to_date_month) { '5' }
+  let(:to_date_year) { '2024' }
   let(:additional_income_amount) { 1 }
   let(:additional_income) { nil }
 
@@ -101,7 +101,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context 'from_date' do
       it "has correct format" do
         form.valid?
-        expect(form.from_date).to eql('2021-02-01')
+        expect(form.from_date).to eql('2024-05-01')
       end
 
       context 'year is not valid' do
@@ -144,7 +144,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context 'to_date' do
       it "has correct format" do
         form.valid?
-        expect(form.to_date).to eql('2021-02-28')
+        expect(form.to_date).to eql('2024-05-31')
       end
 
       context 'year is not valid' do
@@ -223,10 +223,21 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
   context 'load_additional_income_from_benefits' do
 
-    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence)) }
+    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence, request_params: { date_range: { from: from_range, to: to_range } })) }
+
+    let(:additional_income_amount) { nil }
+    let(:additional_income) { nil }
+
+    before do
+      form.update(params)
+      form.valid?
+    end
 
     context 'no child' do
       let(:children) { nil }
+      let(:additional_income) { false }
+      let(:from_range) { '2024-02-01' }
+      let(:to_range) { '2024-02-28' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -238,25 +249,114 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     context '1 child' do
       let(:children) { 1 }
 
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 102
-        expect(form.additional_income).to be true
+      context '24/25 year' do
+        let(:from_range) { '2024-02-01' }
+        let(:to_range) { '2024-02-28' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 102
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '25/25 3 months average' do
+        let(:from_range) { '2024-01-01' }
+        let(:to_range) { '2024-03-31' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 102
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 and 25/26 3 months average - 1 month overlap' do
+        let(:from_range) { '2025-02-01' }
+        let(:to_range) { '2025-04-30' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 103
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 and 25/26 3 months average - 2 months overlap' do
+        let(:from_range) { '2025-03-01' }
+        let(:to_range) { '2025-05-31' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 103
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 financial year' do
+        let(:from_range) { '2025-06-01' }
+        let(:to_range) { '2025-06-30' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 104
+          expect(form.additional_income).to be true
+        end
       end
     end
 
     context '2 children' do
       let(:children) { 2 }
 
-      it 'additional_income' do
-        form.load_additional_income_from_benefits
-        expect(form.additional_income_amount).to eq 170
-        expect(form.additional_income).to be true
+      context '25/26 financial year' do
+        let(:from_range) { '2025-06-01' }
+        let(:to_range) { '2025-06-30' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 173
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 financial year' do
+        let(:from_range) { '2024-02-01' }
+        let(:to_range) { '2024-02-28' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 170
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 and 25/26 3 months average - 1 month overlap' do
+        let(:from_range) { '2025-02-01' }
+        let(:to_range) { '2025-04-30' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 171
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 and 25/26 3 months average - 2 months overlap' do
+        let(:from_range) { '2025-03-01' }
+        let(:to_range) { '2025-05-31' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 172
+          expect(form.additional_income).to be true
+        end
       end
     end
 
     context '3 children' do
       let(:children) { 3 }
+      let(:from_range) { '2025-02-01' }
+      let(:to_range) { '2025-02-28' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -267,6 +367,8 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     context '4 children' do
       let(:children) { 4 }
+      let(:from_range) { '2025-02-01' }
+      let(:to_range) { '2025-02-28' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -277,6 +379,8 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
     context '7 children' do
       let(:children) { 7 }
+      let(:from_range) { '2025-01-01' }
+      let(:to_range) { '2025-03-31' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -285,8 +389,10 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
-    context '8 children' do
+    context '8 children 24/25' do
       let(:children) { 8 }
+      let(:from_range) { '2024-01-01' }
+      let(:to_range) { '2024-03-31' }
 
       it 'additional_income' do
         form.load_additional_income_from_benefits
@@ -295,8 +401,45 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
+    context '9 children 24/25' do
+      let(:children) { 9 }
+      let(:from_range) { '2025-01-01' }
+      let(:to_range) { '2025-03-31' }
+
+      it 'additional_income' do
+        form.load_additional_income_from_benefits
+        expect(form.additional_income_amount).to eq 644
+        expect(form.additional_income).to be true
+      end
+
+      context '24/25 and 25/26 3 months average - 1 month overlap' do
+        let(:from_range) { '2025-02-01' }
+        let(:to_range) { '2025-04-30' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 648
+          expect(form.additional_income).to be true
+        end
+      end
+
+      context '24/25 and 25/26 3 months average - 2 months overlap' do
+        let(:from_range) { '2025-03-01' }
+        let(:to_range) { '2025-05-31' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 652
+          expect(form.additional_income).to be true
+        end
+      end
+
+    end
+
     context 'don not ovrride existing value' do
       let(:children) { 2 }
+      let(:from_range) { '2025-01-01' }
+      let(:to_range) { '2025-03-31' }
 
       it 'additional_income' do
         form.additional_income_amount = 10
