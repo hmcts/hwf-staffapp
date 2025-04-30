@@ -27,7 +27,7 @@ RSpec.describe HmrcCheckHelper do
         let(:to_range) { Date.new(2024, 12, 31) }
 
         it 'returns "year 24-25"' do
-          expect(helper.addition_income_year_rates(form)).to eq('rates for previous year')
+          expect(helper.addition_income_year_rates(form)).to eq('previous year')
         end
       end
 
@@ -36,7 +36,7 @@ RSpec.describe HmrcCheckHelper do
         let(:to_range) { Date.new(2025, 12, 31) }
 
         it 'returns "year 25-26"' do
-          expect(helper.addition_income_year_rates(form)).to eq('rates for current year')
+          expect(helper.addition_income_year_rates(form)).to eq('current year')
         end
       end
 
@@ -45,7 +45,7 @@ RSpec.describe HmrcCheckHelper do
         let(:to_range) { Date.new(2025, 12, 31) }
 
         it 'returns "year 24-25 and year 25-26"' do
-          expect(helper.addition_income_year_rates(form)).to eq('rates for current year and previous year')
+          expect(helper.addition_income_year_rates(form)).to eq('current year and previous year')
         end
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe HmrcCheckHelper do
         let(:to_range) { Date.new(2025, 3, 31) }
 
         it 'returns "year 24-25"' do
-          expect(helper.addition_income_year_rates(form)).to eq('rates for previous year')
+          expect(helper.addition_income_year_rates(form)).to eq('previous year')
         end
       end
 
@@ -67,7 +67,7 @@ RSpec.describe HmrcCheckHelper do
         let(:to_range) { Date.new(2025, 4, 30) }
 
         it 'returns "year 25-26"' do
-          expect(helper.addition_income_year_rates(form)).to eq('rates for current year')
+          expect(helper.addition_income_year_rates(form)).to eq('current year')
         end
       end
     end
