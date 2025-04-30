@@ -55,6 +55,11 @@
           td.govuk-table__cell scope="col" PAYE income, Working Tax Credit, Child Tax Credit
           td.govuk-table__cell scope="col" &nbsp;
 
+        - if show_benefit_line(@evidence)
+          tr.govuk-table__row
+            td.govuk-table__cell scope="col" Child benefits (rates for #{addition_income_year_rates(@form)})
+            td.govuk-table__cell scope="col" &nbsp;
+
 
   .govuk-grid-column-full
 

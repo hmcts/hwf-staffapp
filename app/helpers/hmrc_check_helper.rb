@@ -37,4 +37,32 @@ module HmrcCheckHelper
       evidence_check_hmrc_skip_path(evidence)
     end
   end
+
+  def show_benefit_line(evidence)
+    evidence.application&.children&.positive?
+  end
+
+  def addition_income_year_rates(form)
+    if form.three_months_range
+      three_months_year_rates(form)
+    else
+      return "year 24/25" if year_rate_check(form, Settings.child_benefits[0])
+      "year 25/26" if year_rate_check(form, Settings.child_benefits[1])
+    end
+  end
+
+  private
+
+  def year_rate_check(form, year_rate)
+    form.from_range.between?(year_rate.date_from, year_rate.date_to)
+  end
+
+  def three_months_year_rates(form)
+    range = []
+    range << 'year 24/25' if year_rate_check(form, Settings.child_benefits[0])
+    year_rate = Settings.child_benefits[1]
+    range << 'year 25/26' if form.to_range.between?(year_rate.date_from, year_rate.date_to)
+    range.join(' and ')
+  end
+
 end
