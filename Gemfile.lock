@@ -404,7 +404,7 @@ GEM
     nenv (0.3.0)
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
-    net-imap (0.5.6)
+    net-imap (0.5.7)
       date
       net-protocol
     net-protocol (0.2.2)
@@ -413,7 +413,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.18.7)
+    nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notiffany (0.1.3)
