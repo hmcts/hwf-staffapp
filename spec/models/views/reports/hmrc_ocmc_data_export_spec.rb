@@ -209,11 +209,12 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
       context 'plain application' do
         it {
-          application1.update(decision: 'full')
+          decision_date = Date.parse('2025-04-22')
+          application1.update(decision: 'full', decision_date:)
           application1.applicant.update(married: false)
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,N/A,N/A,0.0')
+          expect(data_row).to include('no,full,2025-04-22 00:00:00,N/A,N/A,N/A,N/A,0.0')
         }
       end
 
@@ -222,10 +223,12 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.update(decision: 'full')
           application1.applicant.update(married: false)
           evidence_check
+          completed_date = Date.parse('2025-04-22')
+          evidence_check.update(completed_at: completed_date, income_check_type: 'paper')
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,part,N/A,0.0')
+          expect(data_row).to include('no,full,N/A,2025-04-22 00:00:00,N/A,part,N/A,0.0')
         }
       end
 
@@ -235,10 +238,12 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.applicant.update(married: false)
           evidence_check
           part_payment
+          completed_date = Date.parse('2025-04-22')
+          part_payment.update(completed_at: completed_date)
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,part,full,0.0')
+          expect(data_row).to include("no,full,N/A,N/A,2025-04-22 00:00:00,part,full,0.0")
         }
       end
     end
