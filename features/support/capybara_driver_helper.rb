@@ -3,7 +3,7 @@ require 'webdrivers'
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :headless
+  driver = ENV['DRIVER']&.to_sym || :firefox
   config.default_driver = driver
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
@@ -30,6 +30,13 @@ end
 
 Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
+end
+
+Capybara.register_driver :firefox do |app|
+  options = Selenium::WebDriver::Firefox::Options.new
+  options.args << '--headless'
+  options.args << '--disable-gpu'
+  Capybara::Selenium::Driver.new(app, browser: :firefox, options: options)
 end
 
 Capybara.register_driver :saucelabs do |app|
