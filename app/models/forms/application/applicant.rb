@@ -1,6 +1,5 @@
 module Forms
   module Application
-    # rubocop:disable Metrics/ClassLength
     class Applicant < ::FormObject
 
       MINIMUM_AGE = 16
@@ -21,8 +20,7 @@ module Forms
           title: String,
           ni_number: String,
           ho_number: String,
-          first_name: String,
-          date_received: Date
+          first_name: String
         }
       end
       # rubocop:enable Metrics/MethodLength
@@ -113,10 +111,6 @@ module Forms
         date_of_birth < (Time.zone.today - MAXIMUM_AGE.years)
       end
 
-      def same_submit_date?
-        date_of_birth == date_received
-      end
-
       def too_young_error
         errors.add(:date_of_birth, :too_young, minimum_age: MINIMUM_AGE)
       end
@@ -125,14 +119,9 @@ module Forms
         errors.add(:date_of_birth, :too_old, maximum_age: MAXIMUM_AGE)
       end
 
-      def same_submit_date_error
-        errors.add(:date_of_birth, :same_submit_date)
-      end
-
       def validate_dob_ranges
         too_young_error if too_young?
         too_old_error if too_old?
-        same_submit_date_error if same_submit_date?
       end
 
       def persist!
@@ -151,6 +140,5 @@ module Forms
         }
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

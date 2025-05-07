@@ -4,7 +4,7 @@
 = render('shared/error_block', form: @form) if @form.errors.any?
 
 = form_for @form, as: :application, url: :application_personal_informations, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.hidden_field :date_received, value: @application.detail.date_received
+
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl Personal details
