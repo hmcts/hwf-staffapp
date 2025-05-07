@@ -1,4 +1,4 @@
-require 'webdrivers'
+require 'selenium/webdriver'
 
 Selenium::WebDriver.logger.level = :error
 
@@ -52,5 +52,3 @@ Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME
 Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
 Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
   ENV['CAPYBARA_SERVER_PORT'] == 'random'
-
-Webdrivers.install_dir = File.expand_path("~/.webdrivers/#{ENV.fetch('TEST_ENV_NUMBER', nil)}")
