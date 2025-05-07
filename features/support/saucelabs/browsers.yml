@@ -24,3 +24,18 @@ saucelabs:
       name: WIN_FIREFOX_LATEST
       platform: Windows 10
       version: latest
+    firefox_win_previous:
+      browserName: firefox
+      name: WIN_FIREFOX_PREVIOUS
+      platform: Windows 8.1
+      version: latest-1
+    firefox_mac_latest:
+      browserName: firefox
+      name: MAC_FIREFOX_LATEST
+      platform: OS X 10.12
+      version: latest
+    firefox_mac_previous:
+      browserName: firefox
+      name: MAC_FIREFOX_PREVIOUS
+      platform: OS X 10.11
+      version: latest-1
