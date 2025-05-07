@@ -214,7 +214,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.applicant.update(married: false)
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,2025-04-22 00:00:00,N/A,N/A,N/A,N/A,0.0')
+          expect(data_row).to include('no,full,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
         }
       end
 
@@ -228,7 +228,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,N/A,2025-04-22 00:00:00,N/A,part,N/A,0.0')
+          expect(data_row).to include('no,full,2021-01-02 00:00:00,2025-04-22 00:00:00,N/A,part,N/A,0.0')
         }
       end
 
@@ -243,7 +243,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,N/A,N/A,2025-04-22 00:00:00,part,full,0.0')
+          expect(data_row).to include('no,full,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full,0.0')
         }
       end
     end
