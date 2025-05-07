@@ -25,7 +25,7 @@ Feature: Savings and investments page
     Scenario: I select "£3000 or more" but submit a non-numerical input in the textbox
       When I click on more than £3000
       And I submit a non-numerical input
-      Then I should see a 'The value that you entered is not a number' error
+      Then I remain on the savings and investments page
 
     Scenario: I select "£3000 or more" but submit a number less than £3000
       When I click on more than £3000

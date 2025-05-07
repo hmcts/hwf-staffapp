@@ -243,7 +243,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include("no,full,N/A,N/A,2025-04-22 00:00:00,part,full,0.0")
+          expect(data_row).to include('no,full,N/A,N/A,2025-04-22 00:00:00,part,full,0.0')
         }
       end
     end
