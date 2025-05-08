@@ -391,9 +391,9 @@ buffer-from@^1.0.0:
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
 
 caniuse-lite@^1.0.30001688:
-  version "1.0.30001715"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001715.tgz#bd325a37ad366e3fe90827d74062807a34fbaeb2"
-  integrity sha512-7ptkFGMm2OAOgvZpwgA4yjQ5SQbrNVGdRjzH0pBdy1Fasvcr+KAeECmbCAECzTuDuoX0FCY8KzUxjf9+9kfZEw==
+  version "1.0.30001716"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001716.tgz#39220dfbc58c85d9d4519e7090b656aa11ca4b85"
+  integrity sha512-49/c1+x3Kwz7ZIWt+4DvK3aMJy9oYXXG6/97JKsnjdCk/6n9vVyWL8NAwVt95Lwt9eigI10Hl782kDfZUUlRXw==
 
 chokidar@^4.0.0:
   version "4.0.3"
@@ -445,7 +445,7 @@ detect-libc@^1.0.3:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
 
-dompurify@^3.2.3:
+dompurify@^3.2.5:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.5.tgz#11b108656a5fb72b24d916df17a1421663d7129c"
   integrity sha512-mLPd29uoRe9HpvwP2TxClGQBzGXeEC/we/q+bFlmPPmj2p2Ugl3r6ATu/UU1v77DXNcehiBg9zsr1dREyA/dJQ==
@@ -453,9 +453,9 @@ dompurify@^3.2.3:
     "@types/trusted-types" "^2.0.7"
 
 electron-to-chromium@^1.5.73:
-  version "1.5.144"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.144.tgz#9804fd6c342802e1d4b4fe57babbe8b64ca0b46c"
-  integrity sha512-eJIaMRKeAzxfBSxtjYnoIAw/tdD6VIH6tHBZepZnAbE3Gyqqs5mGN87DvcldPUbVkIljTK8pY0CMcUljP64lfQ==
+  version "1.5.148"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.148.tgz#afed6a5771ec18d41e26541f71ba2ccc65f102ac"
+  integrity sha512-8uc1QXwwqayD4mblcsQYZqoi+cOc97A2XmKSBOIRbEAvbp6vrqmSYs4dHD2qVygUgn7Mi0qdKgPaJ9WC8cv63A==
 
 enhanced-resolve@^5.17.1:
   version "5.18.1"
@@ -939,11 +939,11 @@ to-regex-range@^5.0.1:
     is-number "^7.0.0"
 
 trix@^2.1.13:
-  version "2.1.13"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.13.tgz#499a5f243eb05d44c92f00ee8fdda71f2ec9fad1"
-  integrity sha512-LTwj6HPo/CDL6KSclIwn41J+EwcqXHiUE43BBbg8Q/whaZcoUaODypHYoGIDd3M32KVXw98M5vC6zNCod9KB2w==
+  version "2.1.14"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.14.tgz#c123a8f1ef48e3acc2ef032b10a058e996deb794"
+  integrity sha512-2WaoD7rBkhsqPPpQ5yRaA4xByIHOqns0F4Qim9XytwG2YacwdbPNe4mXAxohMPgsgYpLl1oSFWaLlKUaILigjw==
   dependencies:
-    dompurify "^3.2.3"
+    dompurify "^3.2.5"
 
 undici-types@~6.21.0:
   version "6.21.0"
