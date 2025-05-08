@@ -40,6 +40,7 @@ module Views
         applications.reference as \"HwF reference number\",
         applications.created_at as \"Created at\",
         details.fee as \"Fee\",
+        jurisdictions.name AS \"Jurisdiction\",
         applications.application_type as \"Application type\",
         details.form_name as \"Form\",
         details.refund as \"Refund\",
@@ -67,6 +68,15 @@ module Views
         details.date_received as \"Date received\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         applications.decision as \"Decision\",
+        applications.completed_at as \"Application processed date\",
+        CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL
+        END as \"Manual evidence processed date\",
+        CASE
+          WHEN pp.completed_at IS NOT NULL THEN pp.completed_at
+          WHEN applications.decision_type = 'evidence_check'
+            AND applications.decision_date IS NOT NULL THEN applications.decision_date
+          ELSE NULL
+        END AS \"Processed date\",
         ec.outcome as \"EV check outcome\",
         pp.outcome as \"PP outcome\",
         applications.amount_to_pay as \"Applicant pays estimate\",
@@ -130,6 +140,7 @@ module Views
             as row_number from hmrc_checks) hc ON ec.id = hc.evidence_check_id
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
+        LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
         WHERE applications.office_id = #{@office_id}
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND (row_number = 1 OR row_number IS NULL)
@@ -141,6 +152,9 @@ module Views
         csv_row = row
 
         csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
+        csv_row['Application processed date'] = csv_row['Application processed date']&.to_fs(:db)
+        csv_row['Manual evidence processed date'] = csv_row['Manual evidence processed date']&.to_fs(:db)
+        csv_row['Processed date'] = csv_row['Processed date']&.to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)

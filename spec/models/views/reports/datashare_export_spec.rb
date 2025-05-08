@@ -50,7 +50,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
       it 'has headings' do
         data_row = data[0]
-        expect(data_row).to include('Office,HwF reference number,Created at,Fee,Application type')
+        expect(data_row).to include('Office,HwF reference number,Created at,Fee,Jurisdiction,Application type')
       end
 
       it 'uses the test offices' do

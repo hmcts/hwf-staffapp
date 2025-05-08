@@ -159,8 +159,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'site_prism'
   gem "test-prof", "~> 1.0"
-  gem 'webdrivers'
   gem 'webmock'
+  gem 'selenium-webdriver', '~> 4.14'
 end
 
 gem "image_processing", "~> 1.14"
