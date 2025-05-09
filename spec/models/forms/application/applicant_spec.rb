@@ -4,7 +4,7 @@ RSpec.describe Forms::Application::Applicant do
   subject(:created_applicant) { described_class.new(personal_information) }
 
   params_list = [:last_name, :date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
-                 :married, :title, :first_name, :ni_number, :ho_number]
+                 :married, :title, :first_name, :ni_number, :ho_number, :date_received]
 
   let(:personal_information) { attributes_for(:personal_information) }
 
@@ -73,6 +73,22 @@ RSpec.describe Forms::Application::Applicant do
         it 'returns an error message, if omitted' do
           created_applicant.valid?
           expect(created_applicant.errors[:date_of_birth]).to eq ['Enter a valid date of birth']
+        end
+      end
+
+      context 'when dob is equal to date_received' do
+        before do
+          personal_information[:day_date_of_birth] = 1
+          personal_information[:month_date_of_birth] = 11
+          personal_information[:year_date_of_birth] = 1980
+          personal_information[:date_received] = '1/11/1980'
+        end
+
+        it { expect(created_applicant.valid?).not_to be true }
+
+        it 'returns an error message, if omitted' do
+          created_applicant.valid?
+          expect(created_applicant.errors[:date_of_birth]).to eq ["Applicant's date of birth cannot be the same as date application received"]
         end
       end
     end
@@ -167,7 +183,9 @@ RSpec.describe Forms::Application::Applicant do
     let(:applicant) { build(:applicant) }
     let(:form) { described_class.new(applicant) }
 
-    params_list.each do |attr_name|
+    most_attribs = params_list - [:date_received]
+
+    most_attribs.each do |attr_name|
       next if /day|month|year/.match?(attr_name.to_s)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq applicant.send(attr_name)
@@ -179,7 +197,7 @@ RSpec.describe Forms::Application::Applicant do
     let(:hash) { attributes_for(:full_personal_information) }
     let(:form) { described_class.new(hash) }
 
-    most_attribs = params_list - [:date_of_birth]
+    most_attribs = params_list - [:date_of_birth, :date_received]
 
     most_attribs.each do |attr_name|
       next if /day|month|year/.match?(attr_name.to_s)
@@ -210,6 +228,8 @@ RSpec.describe Forms::Application::Applicant do
 
     context 'when the attributes are correct' do
       let(:dob) { '01/01/1980' }
+      let(:date_received) { '01/01/1979' }
+
       let(:married) { true }
 
       let(:params) do

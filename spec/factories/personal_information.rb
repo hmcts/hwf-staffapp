@@ -6,6 +6,7 @@ FactoryBot.define do
     month_date_of_birth { '01' }
     year_date_of_birth { '1980' }
     married { false }
+    date_received { '01/01/1979' }
 
     partner_first_name { 'Faa' }
     partner_last_name { 'Foo' }
