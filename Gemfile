@@ -91,7 +91,7 @@ gem 'gtm_on_rails'
 
 gem 'chartkick'
 gem 'groupdate'
-gem 'nokogiri', '~> 1.18.8'
+gem 'nokogiri'
 gem 'pg_search'
 gem 'rest-client'
 gem 'rubyzip'
