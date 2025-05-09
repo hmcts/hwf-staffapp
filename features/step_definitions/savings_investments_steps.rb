@@ -69,3 +69,7 @@ Then("I should see a 'Please answer the savings question' error") do
   expect(savings_investments_page.content).to have_header
   expect(savings_investments_page.content).to have_no_answer_error
 end
+
+Then("I remain on the savings and investments page") do
+  expect(savings_investments_page.content).to have_header
+end

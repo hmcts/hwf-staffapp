@@ -13,6 +13,7 @@ require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 require 'base64'
 require 'webmock'
+require 'selenium/webdriver'
 include WebMock::API
 require 'mock_redis'
 
