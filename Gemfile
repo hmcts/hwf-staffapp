@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.2'
+ruby '3.4.3'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -117,7 +117,6 @@ end
 group :development, :test do
   gem 'mutex_m'
   gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'bullet'
   gem 'bundler-audit'
   gem 'byebug'
