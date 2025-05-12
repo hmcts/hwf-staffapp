@@ -938,7 +938,7 @@ en-GB:
               blank: Enter a court or tribunal fee
               less_than: You need to enter an amount below £20,000
               not_a_number: The fee should be numeric
-              greater_than: You need to enter an amount greater than £0
+              greater_than_or_equal_to: Court fee value too low, minium value is £3
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
@@ -1084,6 +1084,7 @@ en-GB:
               blank: Enter a court or tribunal fee
               less_than: You need to enter an amount below £20,000
               not_a_number: The fee should be numeric
+              greater_than_or_equal_to: Court fee value too low, minium value is £3
             jurisdiction_id:
               blank: You must select a jurisdiction
             date_received:
