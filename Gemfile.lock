@@ -753,7 +753,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 6.3, >= 6.0.2)
   pundit (~> 2.1)
-  rack (~> 3.1)
+  rack (~> 3.1.14)
   rack-host-redirect
   rack-livereload
   rails (~> 8.0.0)
