@@ -27,7 +27,7 @@ module Forms
     before_validation :format_date_fields, :format_fee
 
     validates :fee, presence: true,
-                    numericality: { allow_blank: true, greater_than: 0, less_than: 20_000 }
+                    numericality: { allow_blank: true, greater_than_or_equal_to: 3, less_than: 20_000 }
     validates :jurisdiction_id, presence: true
     validates :case_number, presence: true, if: :refund?
     validates :emergency_reason, presence: true, if: :emergency?
