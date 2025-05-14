@@ -1019,6 +1019,7 @@ en-GB:
             income_kind_applicant:
               blank: Select at least one type of income the applicant received last month or over the last three months
               invalid: Deselect 'None of the above' if you would like to select any of the other options
+              child_benefit_without_children: No children declared on application therefore cannot select Child Benefit. Please return application for clarification
         forms/application/income_kind_partner:
           attributes:
             income_kind_partner:

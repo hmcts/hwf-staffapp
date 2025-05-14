@@ -16,6 +16,7 @@ module Forms
       before_validation :format_income_kind
       validates :income_kind_applicant, presence: true
       validate :none_of_above_selected
+      validate :child_benefit_without_children
 
       private
 
@@ -32,6 +33,12 @@ module Forms
       def none_of_above_selected
         if income_kind_applicant.include?('20') && income_kind_applicant.count > 1
           errors.add(:income_kind_applicant, :invalid)
+        end
+      end
+
+      def child_benefit_without_children
+        if income_kind_applicant.include?('3') && @object.children.to_i.zero?
+          errors.add(:income_kind_applicant, :child_benefit_without_children)
         end
       end
 

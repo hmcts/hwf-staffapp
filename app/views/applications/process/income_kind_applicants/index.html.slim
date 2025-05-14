@@ -10,7 +10,7 @@
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl Type of income the applicant is receiving
 
-      .govuk-form-group
+      .govuk-form-group class=('govuk-form-group--error' if @form.errors[:income_kind_applicant].present?)
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend
             =t('income_kind_applicant', scope: @form.i18n_scope)
