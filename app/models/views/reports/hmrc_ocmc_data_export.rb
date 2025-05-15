@@ -170,7 +170,7 @@ module Views
       # rubocop:enable Metrics/MethodLength
 
       def income_kind(value)
-        return 'N/A' unless value
+        return 'N/A' if value.nil?
         income_kind_hash = YAML.parse(value).to_ruby
         return 'N/A' if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
