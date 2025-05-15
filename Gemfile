@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.3'
+ruby '3.4.2'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -19,7 +19,7 @@ gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
 gem 'rack-host-redirect'
-gem 'rack', '~> 3.1.14'
+gem 'rack', '~> 3.1'
 
 gem 'rails-i18n'
 
@@ -117,6 +117,7 @@ end
 group :development, :test do
   gem 'mutex_m'
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'bullet'
   gem 'bundler-audit'
   gem 'byebug'
@@ -158,8 +159,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'site_prism'
   gem "test-prof", "~> 1.0"
+  gem 'webdrivers'
   gem 'webmock'
-  gem 'selenium-webdriver', '~> 4.14'
 end
 
 gem "image_processing", "~> 1.14"
