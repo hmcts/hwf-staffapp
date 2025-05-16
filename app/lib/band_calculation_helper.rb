@@ -32,9 +32,9 @@ module BandCalculationHelper
 
   def savings_check
     if over_66
-      @outcome = 'none' if saving_amount > 16000
+      none_outcome_full_amount_to_pay if saving_amount > 16000
     elsif saving_threshold_exceeded?
-      @outcome = 'none'
+      none_outcome_full_amount_to_pay
     elsif income <= BandBaseCalculation::MIN_THRESHOLD
       @outcome = 'full'
       @saving = true
@@ -62,5 +62,10 @@ module BandCalculationHelper
   def online_appplication_band(application)
     application.children_age_band.fetch('one', 0).to_i.times { @age_band << 1 }
     application.children_age_band.fetch('two', 0).to_i.times { @age_band << 2 }
+  end
+
+  def none_outcome_full_amount_to_pay
+    @outcome = 'none'
+    @amount_to_pay = fee
   end
 end
