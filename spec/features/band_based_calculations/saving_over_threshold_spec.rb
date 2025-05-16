@@ -46,7 +46,9 @@ RSpec.feature 'Application stores correct data' do
       fill_in 'application_form_name', with: 'ABC123'
       click_button 'Next'
 
-      choose 'application_choice_more'
+      expect(page).to have_text 'Savings and investments'
+      find_by_id('application_choice_more').click
+
       click_button 'Next'
       choose 'application_statement_signed_by_applicant'
       click_button 'Next'
@@ -77,7 +79,9 @@ RSpec.feature 'Application stores correct data' do
       fill_in 'application_form_name', with: 'ABC123'
       click_button 'Next'
 
-      choose 'application_choice_between'
+      expect(page).to have_text 'Savings and investments'
+      find_by_id('application_choice_between').click
+
       fill_in 'application_amount', with: '6900'
       choose 'application_over_66_false'
       click_button 'Next'
@@ -112,7 +116,8 @@ RSpec.feature 'Application stores correct data' do
       fill_in 'application_form_name', with: 'ABC123'
       click_button 'Next'
 
-      choose 'application_choice_less'
+      expect(page).to have_text 'Savings and investments'
+      find_by_id('application_choice_less').click
       click_button 'Next'
 
       choose 'application_benefits_false'
