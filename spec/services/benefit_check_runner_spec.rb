@@ -112,6 +112,7 @@ RSpec.describe BenefitCheckRunner do
   let(:outcome) { nil }
   let(:application) { create(:application, applicant: applicant, detail: detail, income: nil, outcome: outcome) }
   let(:user) { application.user }
+  let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
   describe '#can_run?' do
     subject { service.can_run? }
@@ -129,6 +130,8 @@ RSpec.describe BenefitCheckRunner do
 
   describe '#run' do
     before do
+      allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
+      allow(app_insight).to receive(:track_event)
       existing_benefit_check
     end
 
@@ -148,6 +151,7 @@ RSpec.describe BenefitCheckRunner do
           allow(BenefitCheckService).to receive(:new)
           run
           expect(BenefitCheckService).to have_received(:new)
+          expect(app_insight).to have_received(:track_event)
         end
       end
 

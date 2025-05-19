@@ -14,6 +14,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
 
   def run
     if can_run? && should_run?
+      log_benefit_call
       BenefitCheckService.new(benefit_check)
       @application.update(application_type: 'benefit', outcome: benefit_check.outcome, amount_to_pay: amount_to_pay)
     elsif load_previous_check?
@@ -86,4 +87,9 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
     benefit_check.outcome == 'full' ? nil : @application.amount_to_pay
   end
 
+  def log_benefit_call
+    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
+    tc.track_event("#{@application.id} Paper BenefitCheck call #{Time.zone.today}")
+    tc.flush
+  end
 end
