@@ -47,7 +47,8 @@ class DwpMonitor
   end
 
   def matching_error_message?(check)
-    ['LSCBC', 'Service unavailable', 'The benefits checker is not available at the moment'].select do |message|
+    ['LSCBC', 'Service unavailable', 'The benefits checker is not available at the moment',
+     'Timed out reading data from server', 'Connection reset by peer'].select do |message|
       dwp_message(check).include?(message)
     end
   end

@@ -78,9 +78,11 @@ RSpec.describe Applications::Process::BenefitsController do
   describe 'PUT #benefits_save' do
     let(:expected_params) { { benefits: 'false' } }
     let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
+    let(:dwp_warning) { instance_double(DwpWarning, check_state: dwp_warning_check_state) }
     let(:user_says_on_benefits) { false }
     let(:can_override) { false }
     let(:dwp_error?) { false }
+    let(:dwp_warning_check_state) { 'online' }
     let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil, can_override?: can_override) }
     let(:benefit_override) { nil }
 
@@ -90,6 +92,7 @@ RSpec.describe Applications::Process::BenefitsController do
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
       allow(application).to receive_messages(failed_because_dwp_error?: dwp_error?, benefit_override: benefit_override)
       allow(benefit_override).to receive(:destroy)
+      allow(DwpWarning).to receive(:last).and_return(dwp_warning)
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -102,6 +105,40 @@ RSpec.describe Applications::Process::BenefitsController do
 
         it 'runs the benefit check on the application' do
           expect(benefit_check_runner).to have_received(:run)
+        end
+
+        context 'when the dwp_warning_check_state is offline do not call benefit check' do
+          let(:can_override) { true }
+          let(:benefit_override) { instance_double(BenefitOverride) }
+          let(:dwp_warning_check_state) { 'offline' }
+
+          it 'does not run the benefit check on the application' do
+            expect(benefit_check_runner).not_to have_received(:run)
+          end
+
+          it 'redirects to the benefits override page' do
+            expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
+          end
+        end
+
+        context 'when the dwp_warning_check_state is online call benefit check' do
+          let(:can_override) { true }
+          let(:benefit_override) { instance_double(BenefitOverride) }
+          let(:dwp_warning_check_state) { 'online' }
+
+          it 'does not run the benefit check on the application' do
+            expect(benefit_check_runner).to have_received(:run)
+          end
+        end
+
+        context 'when the dwp_warning_check_state is default_checker call benefit check' do
+          let(:can_override) { true }
+          let(:benefit_override) { instance_double(BenefitOverride) }
+          let(:dwp_warning_check_state) { 'default_checker' }
+
+          it 'does not run the benefit check on the application' do
+            expect(benefit_check_runner).to have_received(:run)
+          end
         end
 
         context 'when the result can be overridden' do
