@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe OnlineBenefitCheckRunner do
   subject(:service) { described_class.new(online_application) }
+  let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
   before do
     allow(BenefitCheckService).to receive(:new)
+    allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
+    allow(app_insight).to receive(:track_event)
   end
 
   describe 'can_run?' do
@@ -25,7 +28,7 @@ RSpec.describe OnlineBenefitCheckRunner do
       end
 
       context 'all present' do
-        let(:online_application) { instance_double(OnlineApplication, last_name: 'john', date_of_birth: '01/01/2000', ni_number: 'SN132465C', date_fee_paid: 1.month.ago) }
+        let(:online_application) { instance_double(OnlineApplication, id: 3, last_name: 'john', date_of_birth: '01/01/2000', ni_number: 'SN132465C', date_fee_paid: 1.month.ago) }
         it { expect(service.can_run?).to be true }
       end
     end
@@ -140,6 +143,11 @@ RSpec.describe OnlineBenefitCheckRunner do
     it {
       service.run
       expect(BenefitCheck).to have_received(:create).with(hash_including(online_bc_params))
+    }
+
+    it {
+      service.run
+      expect(app_insight).to have_received(:track_event)
     }
   end
 end

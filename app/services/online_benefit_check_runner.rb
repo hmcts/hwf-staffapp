@@ -7,6 +7,7 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
 
   def run
     if can_run?
+      log_benefit_call
       BenefitCheckService.new(benefit_check)
     end
   end
@@ -35,6 +36,12 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
   def generate_api_token
     short_name = @online_application.last_name.delete(' ').downcase.truncate(27)
     "#{short_name}@#{@online_application.created_at.strftime('%y%m%d%H%M%S')}.#{@online_application.id}"
+  end
+
+  def log_benefit_call
+    tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
+    tc.track_event("#{@online_application.id} Online BenefitCheck call #{Time.zone.today}")
+    tc.flush
   end
 
 end
