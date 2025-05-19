@@ -31,8 +31,9 @@ module Applications
       end
 
       def benefit_check_and_redirect(benefits)
-        return determine_override if disable_befit_calls?
-        if benefits
+        if disable_befit_calls?
+          redirect_to_override_or_dependents
+        elsif benefits
           benefit_check_runner.run
           determine_override
         else
@@ -59,6 +60,15 @@ module Applications
 
       def disable_befit_calls?
         DwpWarning.last&.check_state == DwpWarning::STATES[:offline]
+      end
+
+      def redirect_to_override_or_dependents
+        if @form.benefits
+          redirect_to application_benefit_override_paper_evidence_path(application)
+        else
+          reset_benefit_override
+          redirect_to application_dependents_path(application)
+        end
       end
     end
   end

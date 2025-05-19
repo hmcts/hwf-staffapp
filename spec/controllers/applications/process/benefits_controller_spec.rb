@@ -121,6 +121,19 @@ RSpec.describe Applications::Process::BenefitsController do
           end
         end
 
+        context 'when benefit check is disabled and answer is no benefits' do
+          let(:user_says_on_benefits) { false }
+          let(:dwp_warning_check_state) { 'offline' }
+
+          it 'does not run the benefit check on the application' do
+            expect(benefit_check_runner).not_to have_received(:run)
+          end
+
+          it 'redirects to the dependets page' do
+            expect(response).to redirect_to(application_dependents_path(application))
+          end
+        end
+
         context 'when the dwp_warning_check_state is online call benefit check' do
           let(:can_override) { true }
           let(:benefit_override) { instance_double(BenefitOverride) }
