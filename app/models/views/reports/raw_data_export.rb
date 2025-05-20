@@ -32,6 +32,7 @@ module Views
         decision_cost: 'departmental cost',
         source: 'source',
         granted: 'granted?',
+        benefits_granted: 'benefits granted?',
         evidence_checked: 'evidence checked?',
         capital: 'capital band',
         savings_amount: 'savings and investments amount',
@@ -145,6 +146,7 @@ module Views
           part_payments.outcome AS pp_outcome,
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
+          CASE WHEN beo.id IS NULL THEN false ELSE true END AS benefits_granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
           CASE WHEN savings.max_threshold_exceeded = TRUE then 'High'
                WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN 'Medium'
@@ -185,6 +187,7 @@ module Views
         <<~JOINS
           LEFT JOIN offices ON offices.id = applications.office_id
           LEFT JOIN decision_overrides de ON de.application_id = applications.id
+          LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id
