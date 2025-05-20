@@ -161,7 +161,7 @@ module Views
         csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
 
         row.each do |field, value|
-          csv_row[field] = (value.presence || "N/A")
+          csv_row[field] = value.nil? ? 'N/A' : value
         end
 
         csv_row
