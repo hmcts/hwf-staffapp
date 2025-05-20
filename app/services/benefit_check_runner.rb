@@ -13,7 +13,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
   end
 
   def run
-    if can_run? && should_run?
+    if allow_benefit_check_call?
       log_benefit_call
       BenefitCheckService.new(benefit_check)
       @application.update(application_type: 'benefit', outcome: benefit_check.outcome, amount_to_pay: amount_to_pay)
@@ -91,5 +91,13 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
     tc = ApplicationInsights::TelemetryClient.new ENV.fetch('AZURE_APP_INSIGHTS_INSTRUMENTATION_KEY', nil)
     tc.track_event("#{@application.id} Paper BenefitCheck call #{Time.zone.today}")
     tc.flush
+  end
+
+  def checks_allowed?
+    DwpWarning.last&.check_state != DwpWarning::STATES[:offline]
+  end
+
+  def allow_benefit_check_call?
+    can_run? && should_run? && checks_allowed?
   end
 end
