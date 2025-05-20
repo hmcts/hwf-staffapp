@@ -277,4 +277,27 @@ RSpec.describe BenefitCheckRunner do
       end
     end
   end
+
+  describe '#checks_allowed?' do
+    before do
+      allow(DwpWarning).to receive(:last).and_return(dwp_warning)
+      allow(BenefitCheckService).to receive(:new)
+    end
+
+    context 'when DwpWarning is offline' do
+      let(:dwp_warning) { instance_double(DwpWarning, check_state: 'offline') }
+      it 'do not allow calls' do
+        service.run
+        expect(BenefitCheckService).not_to have_received(:new)
+      end
+    end
+
+    context 'when DwpWarning is online' do
+      let(:dwp_warning) { instance_double(DwpWarning, check_state: 'online') }
+      it 'allow calls' do
+        service.run
+        expect(BenefitCheckService).to have_received(:new)
+      end
+    end
+  end
 end
