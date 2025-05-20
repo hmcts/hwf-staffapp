@@ -74,18 +74,32 @@ RSpec.describe Views::Confirmation::Result do
     describe '#allow_override?' do
       subject { view.allow_override? }
       context 'online application' do
-        let(:application) { build_stubbed(:application, detail: detail, online_application_id: 3) }
+        let(:application) { build_stubbed(:application, detail: detail, online_application_id: 3, benefits: benefits) }
+        let(:benefits) { false }
         context 'saving failed' do
           before do
             allow(application).to receive(:saving).and_return(saving)
             allow(saving).to receive(:passed).and_return(false)
           end
           it { is_expected.to be true }
+
+          context 'not a benefit application' do
+            let(:benefits) { false }
+
+            it { is_expected.to be true }
+          end
+        end
+
+        context 'benefit application' do
+          let(:benefits) { true }
+          it { is_expected.to be false }
         end
 
       end
 
       context 'saving passed' do
+        let(:application) { build_stubbed(:application, detail: detail, online_application_id: 3, benefits: false) }
+
         before do
           allow(application).to receive(:saving).and_return(saving)
           allow(saving).to receive(:passed).and_return(true)
@@ -94,6 +108,7 @@ RSpec.describe Views::Confirmation::Result do
       end
 
       context 'no saving present' do
+        let(:application) { build_stubbed(:application, detail: detail, online_application_id: 3, benefits: false) }
         before do
           allow(application).to receive(:saving).and_return(saving)
           allow(saving).to receive(:passed).and_return(nil)

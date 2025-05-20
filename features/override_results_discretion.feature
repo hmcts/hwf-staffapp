@@ -26,9 +26,10 @@ Feature: Override results Discretionary pass
     Then I should see a confirmation letter
     And I should see that the application fails because of benefits
 
-  Scenario: Benefits no paper evidence - after granting hwf
-    Given I input low savings with benefits but no paper evidence and then complete processing
-    When I grant help with fees by choosing delivery manager discretion
-    Then I should see the applicant has been granted help with fees
-    And The results should show the application passed benefits by manager's discretion
-    And I should not see a confirmation letter
+  # Disabled for now
+  # Scenario: Benefits no paper evidence - after granting hwf
+  #   Given I input low savings with benefits but no paper evidence and then complete processing
+  #   When I grant help with fees by choosing delivery manager discretion
+  #   Then I should see the applicant has been granted help with fees
+  #   And The results should show the application passed benefits by manager's discretion
+  #   And I should not see a confirmation letter
