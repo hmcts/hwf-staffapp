@@ -55,6 +55,7 @@ module Views
           END as \"Departmental cost\",
         CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
         CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
+        CASE WHEN beo.id IS NULL THEN 'no' ELSE 'yes' END AS \"Benefits granted?\",
         CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS \"Evidence checked?\",
         CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
              WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
@@ -133,6 +134,7 @@ module Views
         LEFT JOIN part_payments pp ON pp.application_id = applications.id
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
+        LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
         LEFT JOIN (
          SELECT id as \"hc_id\", income as \"hc_income\", request_params, tax_credit, additional_income,
             error_response, evidence_check_id, created_at, row_number() over
