@@ -161,7 +161,7 @@ module Views
         csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
 
         row.each do |field, value|
-          csv_row[field] = (value.presence || "N/A")
+          csv_row[field] = value.nil? ? 'N/A' : value
         end
 
         csv_row
@@ -170,7 +170,7 @@ module Views
       # rubocop:enable Metrics/MethodLength
 
       def income_kind(value)
-        return 'N/A' unless value
+        return 'N/A' if value.nil?
         income_kind_hash = YAML.parse(value).to_ruby
         return 'N/A' if income_kind_hash.blank?
         applicant = income_kind_hash[:applicant].join(',')
