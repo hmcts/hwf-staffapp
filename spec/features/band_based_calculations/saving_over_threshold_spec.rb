@@ -47,7 +47,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find_by_id('application_choice_more').click
+      find_by_id('application_choice_more', wait: 2).click
 
       click_button 'Next'
       choose 'application_statement_signed_by_applicant'
@@ -80,7 +80,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find_by_id('application_choice_between').click
+      find_by_id('application_choice_between', wait: 2).click
 
       fill_in 'application_amount', with: '6900'
       choose 'application_over_66_false'
@@ -117,7 +117,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find_by_id('application_choice_less').click
+      find_by_id('application_choice_less', wait: 2).click
       click_button 'Next'
 
       choose 'application_benefits_false'
@@ -127,10 +127,10 @@ RSpec.feature 'Application stores correct data' do
       fill_in 'application_children_age_band_two', with: '2'
       click_button 'Next'
 
-      find_by_id('application_income_kind_applicant_5').click
+      find_by_id('application_income_kind_applicant_5', wait: 2).click
       click_button 'Next'
 
-      find_by_id('application_income_kind_partner_5').click
+      find_by_id('application_income_kind_partner_5', wait: 2).click
       click_button 'Next'
 
       fill_in 'application_income', with: 6560
