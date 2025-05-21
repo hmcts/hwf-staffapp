@@ -7,7 +7,7 @@ module Views
 
       include ActionView::Helpers::NumberHelper
 
-      delegate(:amount_to_pay, :reference, to: :@application)
+      delegate(:reference, to: :@application)
 
       def initialize(application)
         @application = application
