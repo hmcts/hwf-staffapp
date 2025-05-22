@@ -12,7 +12,7 @@ module Report
     def data_export
       @form = form
       if @form.valid?
-        if @form.all_offices
+        if @form.all_offices || @form.all_datashare_offices
           delay_job_export
           flash[:notice] = I18n.t('.forms/report/ocmc.notice')
           redirect_to reports_path
@@ -35,8 +35,11 @@ module Report
       from_date = date_from(report_params)
       to_date = date_to(report_params)
       user_id = current_user.id
+      all_offices = report_params[:all_offices]
+      all_datashare_offices = report_params[:all_datashare_offices]
 
-      OcmcExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:)
+      OcmcExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:, all_offices:,
+                                  all_datashare_offices:)
     end
 
     def authorise_ocmc_data

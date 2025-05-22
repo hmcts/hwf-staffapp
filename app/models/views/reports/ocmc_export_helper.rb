@@ -7,15 +7,7 @@ module Views
       end
 
       def build_data
-        query = if @all_offices
-                  sql_query.
-                    sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
-                    sub("WHERE applications.office_id = #{@office_id}",
-                        "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
-                else
-                  sql_query
-                end
-
+        query = build_query
         ActiveRecord::Base.connection.execute(query)
       end
 
@@ -39,6 +31,24 @@ module Views
         end.blank?
       end
 
+      private
+
+      # rubocop:disable Metrics/MethodLength
+      def build_query
+        if @all_datashare_offices
+          sql_query.
+            sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
+            sub("WHERE applications.office_id = #{@office_id}",
+                "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
+        elsif @all_offices
+          sql_query.
+            sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
+            sub("WHERE applications.office_id = #{@office_id}")
+        else
+          sql_query
+        end
+      end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end
