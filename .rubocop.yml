@@ -353,6 +353,9 @@ Performance/CollectionLiteralInLoop:
 Capybara/NegationMatcherAfterVisit:
   Enabled: false
 
+Capybara/SpecificFinders:
+  Enabled: false
+
 plugins:
   - rubocop-performance
   - rubocop-rspec
