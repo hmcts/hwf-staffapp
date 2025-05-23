@@ -57,10 +57,17 @@ h1.govuk-heading-xl = header
             = f.text_field :year_date_to, class: 'govuk-input govuk-date-input__input govuk-input--width-4', inputmode: "numeric", pattern: "[0-9]*"
 
         .govuk-checkboxes.govuk-checkboxes--small
-          .govuk-checkboxes__item
-            = f.check_box :all_offices, class: 'govuk-checkboxes__input'
-            = f.label :all_offices, class: 'govuk-label govuk-checkboxes__label' do
-              | #{checkbox_label}
+          - if checkbox_label.present?
+            .govuk-checkboxes__item
+              = f.check_box :all_datashare_offices, class: 'govuk-checkboxes__input'
+              = f.label :all_datashare_offices, class: 'govuk-label govuk-checkboxes__label' do
+                | #{checkbox_label}
+          - if checkbox_2_label.present?
+            .govuk-checkboxes__item
+              = f.check_box :all_offices, class: 'govuk-checkboxes__input'
+              = f.label :all_offices, class: 'govuk-label govuk-checkboxes__label' do
+                | #{checkbox_2_label}
+
 
   .govuk-form-group.group-level
     = f.submit 'Generate report', class: 'govuk-button'
