@@ -47,6 +47,12 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
+
+      url = current_url
+      match = url.match(%r{applications/(\d+)/savings_investments})
+      application_id = match[1] if match
+      expect(Application.find(application_id).detail.calculation_scheme).to eq('q4_23')
+
       find(:css, '#application_choice_more', visible: :all, wait: 2).click
 
       click_button 'Next'
