@@ -47,7 +47,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find(:css, '#application_choice_more', wait: 2).click
+      find(:css, '#application_choice_more', visible: :all, wait: 2).click
 
       click_button 'Next'
       choose 'application_statement_signed_by_applicant'
@@ -80,7 +80,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find(:css, '#application_choice_between', wait: 2).click
+      find(:css, '#application_choice_between', visible: :all, wait: 2).click
 
       fill_in 'application_amount', with: '6900'
       choose 'application_over_66_false'
@@ -117,7 +117,8 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       expect(page).to have_text 'Savings and investments'
-      find(:css, '#application_choice_less', wait: 2).click
+      expect(page).to have_text 'In question 8, how much do they have in savings and investments?'
+      find(:css, '#application_choice_less', visible: :all, wait: 2).click
 
       click_button 'Next'
 
