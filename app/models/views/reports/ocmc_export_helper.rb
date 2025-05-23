@@ -33,17 +33,25 @@ module Views
 
       private
 
+      def selected?(value)
+        value == true || value.to_s == '1'
+      end
+
       # rubocop:disable Metrics/MethodLength
       def build_query
-        if @all_datashare_offices
-          sql_query.
-            sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
-            sub("WHERE applications.office_id = #{@office_id}",
-                "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
-        elsif @all_offices
-          sql_query.
-            sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
-            sub("WHERE applications.office_id = #{@office_id}")
+        base_query = sql_query.sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC")
+
+        if selected?(@all_offices)
+          base_query.sub("WHERE applications.office_id = #{@office_id}",
+                         "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
+        elsif selected?(@all_datashare_offices)
+          codes = ENV['HMRC_OFFICE_CODE']&.split
+          office_ids = Office.where(entity_code: codes).pluck(:id)
+
+          base_query.sub(
+            "WHERE applications.office_id = #{@office_id}",
+            "WHERE applications.office_id IN (#{office_ids.join(', ')})"
+          )
         else
           sql_query
         end
