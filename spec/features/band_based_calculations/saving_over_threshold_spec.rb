@@ -26,6 +26,7 @@ RSpec.feature 'Application stores correct data' do
   context 'Amount to pay checks' do
     before do
       FeatureSwitching.create(feature_key: :band_calculation, enabled: true)
+      allow(FeatureSwitching).to receive(:calculation_scheme).and_return('q4_23')
     end
 
     scenario 'Saving failed for over 66' do
