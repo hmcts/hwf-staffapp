@@ -45,7 +45,7 @@ module Views
           base_query.sub("WHERE applications.office_id = #{@office_id}",
                          "WHERE applications.office_id IN (#{Office.pluck(:id).join(', ')})")
         elsif selected?(@all_datashare_offices)
-          codes = ENV['HMRC_OFFICE_CODE']&.split
+          codes = Settings.evidence_check.hmrc.office_entity_code
           office_ids = Office.where(entity_code: codes).pluck(:id)
 
           base_query.sub(

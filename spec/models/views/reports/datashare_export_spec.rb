@@ -33,6 +33,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
                                              created_at: date_from, reference: 'AB001-21-3', income: 805)
     }
 
+    let(:entity_codes) { ['ABC123', 'ABC456'] }
+
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
     before do
@@ -40,7 +42,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       Timecop.freeze(date_from + 2.days) { application2 }
       Timecop.freeze(date_from + 3.days) { application3 }
       application1.applicant.update(partner_ni_number: 'SN789654C')
-      ENV['HMRC_OFFICE_CODE'] = 'ABC123 ABC456'
+      allow(Settings.evidence_check.hmrc).to receive(:office_entity_code).and_return(entity_codes)
       office.update!(entity_code: 'ABC123')
       office2.update!(entity_code: 'ABC123')
       office3.update!(entity_code: 'ABC456')
