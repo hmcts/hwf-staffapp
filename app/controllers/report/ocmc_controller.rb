@@ -14,7 +14,9 @@ module Report
       if @form.valid?
         if @form.all_offices || @form.all_datashare_offices
           delay_job_export
-          flash[:notice] = I18n.t('.forms/report/ocmc.notice')
+
+          flash[:notice] = flash_message
+
           redirect_to reports_path
         else
           build_and_return_data(extract_ocmc_data, export_file_prefix)
@@ -54,5 +56,12 @@ module Report
       "help-with-fees-#{court_id}-applications-by-court-extract"
     end
 
+    def flash_message
+      if @form.all_datashare_offices
+        I18n.t('.forms/report/ocmc.datashare_notice')
+      else
+        I18n.t('.forms/report/ocmc.notice')
+      end
+    end
   end
 end
