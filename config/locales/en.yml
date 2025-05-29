@@ -1240,4 +1240,4 @@ en-GB:
     notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
   forms/report/ocmc:
     notice: 'Applications for all offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
-    datashare_notice: 'Applications for all datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
+    datashare_notice: 'Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
