@@ -102,15 +102,16 @@ RSpec.describe Report::OcmcController do
           month_date_to: '12',
           year_date_to: '2022',
           entity_code: office.id,
-          all_offices: true }
+          all_offices: true,
+          all_datashare_offices: false }
       }
 
-      it { expect(flash[:notice]).to eq('Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.') }
+      it { expect(flash[:notice]).to eq('Applications for all offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.') }
 
       it "run export in delayed job" do
         from = { day: "01", month: "01", year: "2020" }
         to = { day: "31", month: "12", year: "2022" }
-        expect(OcmcExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: office.id.to_s)
+        expect(OcmcExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: office.id.to_s, all_datashare_offices: "false", all_offices: "true")
       end
     end
   end
