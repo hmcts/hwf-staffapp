@@ -55,10 +55,10 @@ RSpec.describe Views::Reports::RawDataExport do
   describe 'cost estimations' do
     let(:evidence_check_part) { create(:evidence_check_part_outcome, amount_to_pay: 100, application: part_ec, income: 1005) }
     let(:evidence_check_full) { create(:evidence_check_full_outcome, amount_to_pay: 0, application: full_ec, income: 222) }
-    let(:evidence_check_none) { create(:evidence_check_incorrect, amount_to_pay: 300.34, application: none_ec, income: 5555) }
+    let(:evidence_check_none) { create(:evidence_check_incorrect, amount_to_pay: 300.34, application: none_ec, income: 5555, income_check_type: 'paper', completed_at: Date.parse('2025/1/1')) }
     let(:part_payment_none) { create(:part_payment_none_outcome) }
     let(:part_payment_return) { create(:part_payment_return_outcome) }
-    let(:part_payment_part) { create(:part_payment_part_outcome) }
+    let(:part_payment_part) { create(:part_payment_part_outcome, completed_at: Date.parse('1/3/2025')) }
 
     let(:applicant1) { none_no_ec.applicant }
     let(:applicant2) { none_ec.applicant }
@@ -125,7 +125,7 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:none_ec) {
       create(:application_no_remission, :processed_state, :applicant_full,
              decision_date:, office: office, business_entity: business_entity,
-             amount_to_pay: 0, decision_cost: 0, children: 3,
+             amount_to_pay: 0, decision_cost: 0, children: 3, decision_type: none_decision_type,
              income: 2000, income_max_threshold_exceeded: true, detail: none_ec_detail,
              online_application: online_application, children_age_band: { one: 1, two: 2 }, saving: none_ec_saving)
     }
@@ -134,6 +134,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
     let(:none_under_100) { create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office:, income: 100, business_entity: business_entity) }
     let(:none_benefits) { create(:application_no_remission, :processed_state, :applicant_full, decision_date:, office:, income: nil, business_entity: business_entity) }
+    let(:none_decision_type) { 'application' }
 
     context 'no_remission under 100' do
       it do
@@ -169,7 +170,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,litigation_friend,false,false,post_ucd")
+        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,litigation_friend,false,false,post_ucd")
       end
     end
 
@@ -181,9 +182,10 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,N/A,false,false,2000,N/A,N/A,average,NI number,3,1,2,true,No,part,50.0,250.0,paper"
         dob = part_no_ec.applicant.date_of_birth.to_fs
         date_received = part_no_ec.detail.date_received.to_fs
+        completed_at = part_payment_part.completed_at.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,legal_representative,true,true,pre_ucd")
+        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,#{completed_at},N/A,legal_representative,true,true,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -195,7 +197,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,applicant")
+        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,applicant")
       end
 
       it 'part payment outcome is "none"' do
@@ -221,6 +223,8 @@ RSpec.describe Views::Reports::RawDataExport do
     end
 
     context 'no_remission with evidence check' do
+      let(:none_decision_type) { 'evidence_check' }
+
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         none_ec
         export = data.to_csv
@@ -229,11 +233,11 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = none_ec.applicant.date_of_birth.to_fs
         postcode = none_ec.online_application.postcode
         online_date = none_ec.online_application.created_at.to_fs
+        date_completed_ec = none_ec.evidence_check.completed_at.to_fs
         row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,N/A,false,false,2000,5555,over,N/A,NI number,3,1,2,true,No,none,300.34,0.0,paper"
 
         expect(export).to include(row)
-        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{online_date},applicant,false,false")
-
+        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{date_completed_ec},#{decision_date.to_fs},#{online_date},applicant,false,false")
       end
 
       context 'over_66' do
