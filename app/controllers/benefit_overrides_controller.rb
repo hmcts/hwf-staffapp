@@ -7,11 +7,11 @@ class BenefitOverridesController < ApplicationController
 
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
-    if dwp_is_down && no_paper_evidence?
-      take_user_home
-    else
-      process_benefit_evidence
-    end
+    # if dwp_is_down && no_paper_evidence?
+    #   take_user_home
+    # else
+    process_benefit_evidence
+    # end
   end
 
   private

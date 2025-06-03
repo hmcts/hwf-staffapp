@@ -68,25 +68,38 @@ RSpec.describe BenefitOverridesController do
         context 'and the answer is no' do
           let(:dwp_state) { 'offline' }
 
-          it 'redirects to the home page' do
-            expect(response).to redirect_to(root_path)
-          end
-
-          it 'sets the alert flash message' do
-            expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
-          end
-
-          it 'Does not create save the form' do
-            expect(benefits_evidence_form).not_to have_received(:save)
-          end
-
-          context 'and DWP Warning is set to default_checker' do
-            let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
-
-            it 'redirects to the home page' do
-              expect(response).to redirect_to(root_path)
+          context 'PRE UCD' do
+            let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
+            it 'redirects to the summary page' do
+              expect(response).to redirect_to(application_summary_path(application))
             end
           end
+          context 'POST UCD' do
+            let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+            it 'redirects to the declaration page' do
+              expect(response).to redirect_to(application_declaration_path(application))
+            end
+          end
+
+          # it 'redirects to the home page' do
+          #   expect(response).to redirect_to(root_path)
+          # end
+
+          # it 'sets the alert flash message' do
+          #   expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+          # end
+
+          # it 'Does not create save the form' do
+          #   expect(benefits_evidence_form).not_to have_received(:save)
+          # end
+
+          # context 'and DWP Warning is set to default_checker' do
+          #   let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
+
+          #   it 'redirects to the home page' do
+          #     expect(response).to redirect_to(root_path)
+          #   end
+          # end
 
           context 'and DWP Warning is set to online' do
             let(:dwp_warning_state) { DwpWarning::STATES[:online] }
@@ -105,13 +118,13 @@ RSpec.describe BenefitOverridesController do
             end
           end
 
-          context 'and DWP Warning is set to offline' do
-            let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+          # context 'and DWP Warning is set to offline' do
+          #   let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
 
-            it 'redirects to the home page' do
-              expect(response).to redirect_to(root_path)
-            end
-          end
+          #   it 'redirects to the home page' do
+          #     expect(response).to redirect_to(root_path)
+          #   end
+          # end
 
         end
       end
