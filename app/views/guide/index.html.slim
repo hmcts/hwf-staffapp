@@ -1,6 +1,16 @@
 - content_for :page_title
   = "See the guides"
 
+div.govuk-notification-banner
+  .govuk-notification-banner__header
+    h2.govuk-notification-banner__title
+      = "Important note for Managers"
+  .govuk-notification-banner__content
+    p.govuk-notification-banner__heading
+      = "Please ensure you notify the HwF service team at "
+      = mail_to 'helpwithfees@justice.gov.uk', class: 'govuk-notification-banner__link'
+      = " if you receive any subject access or freedom of information requests in relation to Help with Fees. We may be able to provide some of the data requested."
+
 h1.govuk-heading-xl See the guides
 
 p.govuk-body-l How to process an application, deal with evidence checks, part-payments, appeals, and fraud.
