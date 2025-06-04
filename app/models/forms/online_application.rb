@@ -18,7 +18,8 @@ module Forms
         emergency_reason: String,
         benefits_override: Boolean,
         user_id: Integer,
-        discretion_applied: Boolean }
+        discretion_applied: Boolean,
+        dwp_manual_decision: Boolean }
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -73,6 +74,7 @@ module Forms
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def fixed_fields
       {
         fee: fee,
@@ -82,9 +84,11 @@ module Forms
         case_number: case_number,
         benefits_override: benefits_override,
         user_id: user_id,
-        discretion_applied: discretion_applied
+        discretion_applied: discretion_applied,
+        dwp_manual_decision: dwp_manual_decision
       }
     end
+    # rubocop:enable Metrics/MethodLength
 
     def format_fee
       @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?

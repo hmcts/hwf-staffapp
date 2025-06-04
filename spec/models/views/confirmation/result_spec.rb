@@ -194,6 +194,15 @@ RSpec.describe Views::Confirmation::Result do
       end
     end
 
+    context 'when a benefit_override does not exist' do
+      describe 'and the application is online which failed the manual benefit check' do
+        let(:online_application) { build_stubbed(:online_application, dwp_manual_decision: false, id: 654654) }
+        let(:application) { build_stubbed(:application, :benefit_type, benefits: true, online_application_id: 654654, online_application: online_application) }
+
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence') }
+      end
+    end
+
     context 'when a decision override exists' do
       let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: id) }
       before { decision_override }

@@ -40,6 +40,8 @@ module Views
       def benefits_passed?
         if decision_overridden? && @application.benefits
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        elsif online_and_failed_on_benefits?
+          I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence')
         elsif benefits_have_been_overridden?
           convert_to_pass_fail(applicant_is_on_benefits)
         elsif !benefit_overridden?
@@ -171,6 +173,9 @@ module Views
         @application.income_max_threshold_exceeded == true
       end
 
+      def online_and_failed_on_benefits?
+        @application.online_application_id.present? && @application.online_application.dwp_manual_decision == false
+      end
     end
   end
 end

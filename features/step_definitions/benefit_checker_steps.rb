@@ -56,6 +56,8 @@ end
 When("the applicant has not provided the correct paper evidence") do
   benefit_checker_page.content.no.click
   benefit_checker_page.click_next
+  expect(summary_page.content).to have_header
+  complete_processing
 end
 
 When("the applicant has provided the correct paper evidence") do
@@ -133,4 +135,16 @@ end
 
 Then("I should see DWP checker is up") do
   expect(benefit_checker_page).to have_dwp_banner_online
+end
+
+When("the benefit checker is set to offline") do
+  DwpWarning.create(check_state: "offline")
+  dwp = instance_double('DwpMonitor', state: 'offline')
+  DwpMonitor.stub(:new).and_return dwp
+end
+
+Then('I should see that the application fails on benefits') do
+  expect(confirmation_page.content).to have_reference_number_is
+  expect(confirmation_page.content).to have_ineligible
+  expect(confirmation_page.content).to have_failed_benefits
 end
