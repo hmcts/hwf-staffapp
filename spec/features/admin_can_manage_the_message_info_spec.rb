@@ -15,7 +15,8 @@ RSpec.feature 'Admin can manage message info' do
     scenario 'can edit and view the message', :js do
       visit '/'
       click_link 'Edit banner'
-      page.execute_script("document.querySelector('trix-editor').editor.loadHTML('This is message from admin, hear, hear.')")
+      expect(page).to have_content 'Edit Notifications Message'
+      page.find(:css, 'trix-editor#notification_message').set('This is message from admin, hear, hear.')
       check 'Show on admin homepage'
       click_button 'Save changes'
       expect(page).to have_content 'Your changes have been saved'

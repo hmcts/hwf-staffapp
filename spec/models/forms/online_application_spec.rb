@@ -4,7 +4,7 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received, :case_number,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied]
+                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :dwp_manual_decision]
 
   let(:online_application) { build_stubbed(:online_application) }
 

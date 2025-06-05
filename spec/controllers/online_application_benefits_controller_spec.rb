@@ -28,7 +28,7 @@ RSpec.describe OnlineApplicationBenefitsController do
   end
 
   describe 'PUT #update' do
-    let(:params) { { benefits_override: benefits_override.to_s } }
+    let(:params) { { benefits_override: benefits_override.to_s, dwp_manual_decision: benefits_override.to_s } }
 
     before do
       allow(form).to receive(:update).with(params)
@@ -53,12 +53,16 @@ RSpec.describe OnlineApplicationBenefitsController do
         let(:dwp_down) { true }
         let(:benefits_override) { false }
 
-        it 'redirects to the home page' do
-          expect(response).to redirect_to(root_path)
-        end
+        # it 'redirects to the home page' do
+        #   expect(response).to redirect_to(root_path)
+        # end
 
-        it 'sets the alert flash message' do
-          expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+        # it 'sets the alert flash message' do
+        #   expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+        # end
+
+        it 'redirects to the summary page' do
+          expect(response).to redirect_to(online_application_path(online_application))
         end
 
         context 'benefits_override' do
