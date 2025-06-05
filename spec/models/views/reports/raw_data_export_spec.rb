@@ -383,4 +383,27 @@ RSpec.describe Views::Reports::RawDataExport do
 
   end
 
+  describe 'HMRC check data' do
+    let(:date_fee_paid) { '' }
+    let(:application2) { create(:application, :processed_state, office: office, decision_date: decision_date, business_entity: business_entity) }
+    let(:date_range) { { date_range: { from: "1/7/2022", to: "31/7/2022" } } }
+    let(:evidence_check) {
+      create(:evidence_check_incorrect, amount_to_pay: 300.34, application: application2, income: 5555, hmrc_income_used: 512.10,
+                                        check_type: 'flag', income_check_type: 'hmrc', completed_at: Date.parse('2025/1/1'))
+    }
+    let(:hmrc_check) {
+      create(:hmrc_check, evidence_check: evidence_check,
+                          created_at: 2.days.ago, income: nil, tax_credit: nil, request_params: date_range, additional_income: 100)
+    }
+
+    context 'part_remission with evidence check' do
+      it 'fills in estimated_cost based on fee and amount_to_pay' do
+        hmrc_check
+        export = data.to_csv
+        application2.detail.jurisdiction.name
+        row = "flag,hmrc,512.1,HMRC NIFlag,Yes,N/A,Yes,100,1/7/2022 - 31/7/2022"
+        expect(export).to include(row)
+      end
+    end
+  end
 end

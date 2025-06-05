@@ -50,7 +50,16 @@ module Views
         statement_signed_by: 'statement signed by',
         partner_ni: 'partner ni entered',
         partner_name: 'partner name entered',
-        calculation_scheme: 'HwF Scheme'
+        calculation_scheme: 'HwF Scheme',
+        db_evidence_check_type: 'DB evidence check type',
+        db_income_check_type: 'DB income check type',
+        hmrc_total_income: 'HMRC total income',
+        evidence_check_type: 'evidence check type',
+        hmrc_response: 'HMRC response?',
+        hmrc_errors: 'HMRC errors',
+        complete_processing: 'complete processing?',
+        additional_income: 'additional income',
+        hmrc_request_date_range: 'HMRC request date range'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -95,6 +104,8 @@ module Views
           low_income_declared(row)
         elsif [:case_number, :form_name].include?(attr)
           row.send(attr).presence || 'N/A'
+        elsif [:hmrc_request_date_range].include?(attr)
+          hmrc_date_range(row.send(attr)) || 'N/A'
         else
           check_empty(attr, row)
         end
@@ -186,7 +197,38 @@ module Views
           CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
                END AS partner_name,
-          CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared
+          CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+          ec.check_type as db_evidence_check_type,
+          ec.income_check_type as db_income_check_type,
+          ec.hmrc_income_used as hmrc_total_income,
+          CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NumberRule'
+          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIFlag'
+          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIDuplicate'
+          WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' then 'HMRC NumberRule'
+          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' then 'HMRC NIFlag'
+          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
+          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
+          WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
+            ELSE NULL
+          END AS evidence_check_type,
+          CASE WHEN hc_id IS NULL then NULL
+            WHEN hc_id IS NOT NULL AND error_response IS NULL then 'Yes'
+            WHEN hc_id IS NOT NULL AND error_response IS NOT NULL then 'No'
+            ELSE NULL
+          END AS hmrc_response,
+          error_response as hmrc_errors,
+          CASE WHEN hc_id IS NULL then NULL
+            WHEN hc_id IS NOT NULL AND ec.completed_at IS NOT NULL then 'Yes'
+            WHEN hc_id IS NOT NULL AND ec.completed_at IS NULL then 'No'
+            ELSE NULL
+          END AS complete_processing,
+          CASE WHEN additional_income IS NULL then NULL
+            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
+            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
+              AND additional_income > 0 then additional_income
+            ELSE NULL
+          END as additional_income,
+          request_params as hmrc_request_date_range
         COLUMNS
       end
 
@@ -199,6 +241,11 @@ module Views
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id
           LEFT JOIN part_payments ON part_payments.application_id = applications.id
+          LEFT JOIN (
+            SELECT id as hc_id, income as hc_income, request_params, tax_credit, additional_income,
+            error_response, evidence_check_id, created_at, row_number() over
+            (partition by evidence_check_id order by created_at desc)
+            as row_number from hmrc_checks) hc ON ec.id = hc.evidence_check_id
         JOINS
       end
 
@@ -264,6 +311,20 @@ module Views
         return 'N/A' if row.send(attribute).nil?
         row.send(attribute)
       end
+
+      def date_formatted(date_range)
+        return nil if date_range.blank?
+        request_params_hash = YAML.parse(date_range).to_ruby
+        request_params_hash[:date_range]
+      end
+
+      def hmrc_date_range(date_range)
+        return 'N/A' unless date_formatted(date_range)
+        from = date_formatted(date_range)[:from]
+        to = date_formatted(date_range)[:to]
+        "#{from} - #{to}"
+      end
+
     end
   end
 end
