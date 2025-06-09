@@ -189,6 +189,9 @@ Style/Encoding:
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
+Naming/PredicateMethod:
+  Enabled: false
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - "spec/**/*"
