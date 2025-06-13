@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_04_102650) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_13_093259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -81,8 +81,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_102650) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "user_id"
     t.integer "office_id"
-    t.decimal "threshold"
-    t.boolean "threshold_exceeded"
     t.boolean "partner_over_66"
     t.boolean "benefits"
     t.integer "children"
@@ -91,7 +89,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_102650) do
     t.string "application_type"
     t.string "outcome"
     t.decimal "amount_to_pay", default: "0.0"
-    t.boolean "high_threshold_exceeded"
     t.string "reference"
     t.datetime "completed_at", precision: nil
     t.integer "completed_by_id"

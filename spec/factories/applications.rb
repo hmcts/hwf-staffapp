@@ -25,7 +25,6 @@ FactoryBot.define do
     dependents { true }
     children { 1 }
     income { 500 }
-    threshold_exceeded { false }
     user
     completed_by { user }
     completed_at { Time.zone.today }
