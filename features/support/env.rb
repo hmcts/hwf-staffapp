@@ -102,6 +102,10 @@ Before do
   stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
   mock_redis = MockRedis.new
   allow(Redis).to receive(:new).and_return(mock_redis)
+
+  app_insight = instance_double(ApplicationInsights::TelemetryClient, flush: '')
+  allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
+  allow(app_insight).to receive(:track_event)
 end
 
 Before do
