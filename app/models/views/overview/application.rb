@@ -109,6 +109,18 @@ module Views
         @application.evidence_check.income_check_type == 'hmrc' ? 'Yes' : 'No'
       end
 
+      def display_benefits?
+        @application.benefits
+      end
+
+      def display_income?
+        !@application.benefits && @application.saving.passed
+      end
+
+      def display_savings?
+        !@application.benefits
+      end
+
       private
 
       def evidence_completed?
