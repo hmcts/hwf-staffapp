@@ -405,5 +405,15 @@ RSpec.describe Views::Reports::RawDataExport do
         expect(export).to include(row)
       end
     end
+
+    context 'avoid multiple checks for the same application' do
+      before {
+        create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago, income: { "taxablePay" => 1536 }, tax_credit: nil, request_params: date_range)
+        create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago, income: { "taxablePay" => 1534 }, tax_credit: nil, request_params: date_range)
+        create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago, income: { "taxablePay" => 1533 }, tax_credit: nil, request_params: date_range)
+      }
+      it { expect(data.total_count).to eq 1 }
+    end
+
   end
 end

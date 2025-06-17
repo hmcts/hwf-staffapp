@@ -136,6 +136,7 @@ module Views
                 joins(joins).
                 joins(:applicant, :business_entity, detail: :jurisdiction).
                 where("offices.name NOT IN ('Digital')").
+                where("row_number = 1 OR row_number IS NULL").
                 where(decision_date: @date_from..@date_to, state: Application.states[:processed])
 
         query = query.where(office_id: @court_id) if @court_id.present?
