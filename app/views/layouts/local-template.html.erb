@@ -10,7 +10,10 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<%= asset_url 'favicon.ico'%>" type="image/x-icon" />
+    <% image_base_path = NewBrandingSwitch.changes_apply? ? 'govuk-frontend/dist/govuk/assets/rebrand/images' : 'govuk-frontend/dist/govuk/assets/images' %>
+
+    <link rel="icon" sizes="48x48" href="<%= asset_path "#{image_base_path}/favicon.ico" %>" />
+    <link rel="icon" sizes="any" href="<%= asset_path "#{image_base_path}/favicon.svg" %>" type="image/svg+xml">
     <link rel="mask-icon" href="<%= asset_url 'govuk-mask-icon.svg'%>" color="#0b0c0c">
     <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_url 'govuk-apple-touch-icon-180x180.png'%>">
     <link rel="apple-touch-icon" sizes="167x167" href="<%= asset_url 'govuk-apple-touch-icon-167x167.png'%>">
