@@ -1,7 +1,7 @@
 Feature: Fee status page
 
   Background: Personal details page
-    Given UCD changes are active
+#    Given UCD changes are active
     And I started to process paper application
     And I am on the fee status page
 
