@@ -12,6 +12,10 @@ RSpec.feature 'List processed applications' do
 
   before do
     Settings.processed_deleted.per_page = 2
+
+    FeatureSwitching.create(feature_key: :band_calculation, enabled: true)
+    allow(FeatureSwitching).to receive(:calculation_scheme).and_return('q4_23')
+
     create(:application_part_remission)
     create(:part_payment, outcome: 'part', correct: true, application: application5)
     login_as(user)
@@ -90,8 +94,8 @@ RSpec.feature 'List processed applications' do
       click_link application5.reference
 
       expect(page).to have_content('Processed application')
-      expect(page).to have_text('Total monthly income£2,000')
-      expect(page).to have_text('Total monthly income from Evidence£100')
+      expect(page).to have_text('Total income£2000')
+      expect(page).to have_text('Income from evidence£100')
     end
   end
 
@@ -105,8 +109,8 @@ RSpec.feature 'List processed applications' do
       click_link application5.reference
 
       expect(page).to have_content('Processed application')
-      expect(page).to have_text('Total monthly income£2,000')
-      expect(page).to have_no_text('Total monthly income from Evidence')
+      expect(page).to have_text('Total income£2000')
+      expect(page).to have_no_text('Income from Evidence')
     end
   end
 end

@@ -33,7 +33,7 @@ end
 
 Then("I should see my reason on the part payments summary page") do
   expect(summary_page.content).to have_header
-  expect(summary_page.content.summary_section[0].list_row[0].text).to have_text 'Part payment No Change Part payment'
+  expect(summary_page.content.summary_section[0].list_row[0].text).to have_text 'Part payment Failed Change Part payment'
   expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Reason No signature on cheque Change Reason'
 end
 

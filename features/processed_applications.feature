@@ -8,7 +8,7 @@ Feature: Processed applications
       Then I should be taken to that application
 
     Scenario: Displays benefit information
-      Then I should see declared benefits in this application
+      Then I should see declared benefits in this processed application
 
     Scenario: Result
       When I look at the result on the processed application page

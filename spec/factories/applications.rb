@@ -119,10 +119,6 @@ FactoryBot.define do
       deleted_by factory: [:user]
     end
 
-    # trait :applicant_full_detail do
-    #   applicant_factory { :applicant_with_all_details }
-    # end
-
     factory :application_part_remission do
       applicant_factory { :applicant_with_all_details }
       applicant_traits { [:married] }
@@ -135,6 +131,7 @@ FactoryBot.define do
       outcome { 'part' }
       application_type { 'income' }
       amount_to_pay { 100 }
+      income_period { Application::INCOME_PERIOD[:last_month] }
     end
 
     factory :application_part_refund do
@@ -149,6 +146,7 @@ FactoryBot.define do
       application_type { 'income' }
       amount_to_pay { 100 }
       refund { true }
+      income_period { Application::INCOME_PERIOD[:last_month] }
     end
 
     factory :application_full_remission do
@@ -163,6 +161,7 @@ FactoryBot.define do
       outcome { 'full' }
       application_type { 'income' }
       decision_date { Time.zone.today }
+      income_period { Application::INCOME_PERIOD[:last_month] }
     end
 
     factory :application_full_remission_ev do
@@ -179,6 +178,7 @@ FactoryBot.define do
       outcome { 'full' }
       application_type { 'income' }
       decision_date { Time.zone.today }
+      income_period { Application::INCOME_PERIOD[:last_month] }
     end
 
     factory :application_full_remission_nino do
@@ -192,6 +192,7 @@ FactoryBot.define do
       outcome { 'full' }
       application_type { 'income' }
       decision_date { Time.zone.today }
+      income_period { Application::INCOME_PERIOD[:last_month] }
     end
 
     factory :application_no_remission do

@@ -30,6 +30,11 @@ When("I see benefit summary") do
   expect(application_page.content).to have_benefits_header
 end
 
+Then("I should see declared benefits in this processed application") do
+  expect(application_page.content.summary_section[2]).to have_benefits_question
+  expect(application_page.content.summary_section[2]).to have_answer_yes
+end
+
 Then("I should see declared benefits in this application") do
   expect(application_page.content.summary_section[3]).to have_benefits_question
   expect(application_page.content.summary_section[3]).to have_answer_yes

@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::HmrcOcmcDataExport do
-  subject(:ocmc_export) { described_class.new(from_date, to_date, 164, all_offices: false, all_datashare_offices: true) }
+  subject(:ocmc_export) { described_class.new(from_date, to_date, office.id, all_offices: false, all_datashare_offices: true) }
   let(:from_date) { { day: date_from.day, month: date_from.month, year: date_from.year } }
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
 
-  let(:office) { create(:office, id: 164, name: 'test office') }
-  let(:office2) { create(:office, id: 167, name: 'appearing office') }
-  let(:office3) { create(:office, id: 165, name: 'another working office') }
+  let(:office) { create(:office, name: 'test office') }
+  let(:office2) { create(:office, name: 'appearing office') }
+  let(:office3) { create(:office, name: 'another working office') }
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
