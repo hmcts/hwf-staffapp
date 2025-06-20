@@ -38,14 +38,21 @@ module Applications
       end
 
       def next_page_to_go
-        if ucd_changes_apply? && saving_failed
-          application_declaration_path(application)
+        if ucd_changes_apply?
+          saving_outcome_path
         else
           SavingsPassFailService.new(application.saving).calculate!
           application_benefits_path(application)
         end
       end
 
+      def saving_outcome_path
+        if saving_failed
+          application_declaration_path(application)
+        else
+          application_benefits_path(application)
+        end
+      end
     end
   end
 end
