@@ -26,6 +26,8 @@ import './gtm_track_timestamps'
 import './error_class_loader'
 import './refund'
 import './date_received_online'
+import './freg'
+import './fee_codes'
 
 import "trix"
 import "@rails/actiontext"
