@@ -3,7 +3,7 @@ namespace :user do
   desc 'Create an admin user with given email, password and role.'
   task :create, [:email, :password, :role, :name] => :environment do |_t, args|
 
-    Rake::Task["db:seed"].execute if Office.count.zero?
+    Rake::Task["db:seed"].execute if Office.none?
 
     args.with_defaults(email: 'admin@hmcts.gsi.gov.uk',
                        name: 'Admin User',
