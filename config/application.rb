@@ -56,7 +56,7 @@ module FrStaffapp
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
 
     # Enable Gzip compression to improve performance of CSS & JS files.
-    config.middleware.use Rack::Deflater
+    # config.middleware.use Rack::Deflater
 
   end
   WillPaginate.per_page = 20
