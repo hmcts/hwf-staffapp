@@ -24,6 +24,6 @@ class HwfReferenceGenerator
   end
 
   def prefix_is_unique(reference)
-    reference.scan(/(HWF)+/i).count == 1
+    reference.scan(/(HWF)+/i).one?
   end
 end
