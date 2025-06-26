@@ -10,6 +10,18 @@
       h1.govuk-heading-xl Application details
 
       .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          = f.label :fee_search, 'Fee search (Fee amount, jurisdiction, service type, event type)',class: 'govuk-label'
+          = text_field_tag :fee_search, nil, class: 'govuk-input govuk-input--width-10'
+          p.govuk-body
+            | Search results:
+            span.search_result_count 0
+
+      .fee-search-results-block.govuk-inset-text.govuk-visually-hidden style="max-height: 150px; overflow-y: auto;"
+        ul#fee-search-results.govuk-list.govuk-list--bullet
+          li= 'no records'
+
+      .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
         - if @form.errors[:fee].present?
           span.govuk-error-message
