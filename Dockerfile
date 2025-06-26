@@ -29,7 +29,7 @@ RUN apk update && apk add --no-cache libc6-compat && \
 
 ENV UNICORN_PORT=3000
 EXPOSE $UNICORN_PORT
-
+RUN mkdir -p /.cache/yarn && chmod 777 /.cache/yarn
 RUN mkdir -p /home/app
 WORKDIR /home/app
 
