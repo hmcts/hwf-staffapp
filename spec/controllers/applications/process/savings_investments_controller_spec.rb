@@ -107,6 +107,10 @@ RSpec.describe Applications::Process::SavingsInvestmentsController do
         it 'not update to application it saving passes' do
           expect(application).not_to have_received(:update)
         end
+
+        it 'not run saving pass service' do
+          expect(SavingsPassFailService).not_to have_received(:new)
+        end
       end
 
     end
