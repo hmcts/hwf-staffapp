@@ -555,10 +555,10 @@ glob-to-regexp@^0.4.1:
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
   integrity sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==
 
-govuk-frontend@5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.9.0.tgz#4064ac692019e60f030d6311c49330a6454a5689"
-  integrity sha512-8NzmyoDtRFYyHs413DfNPR8Zo6qw6Q02Mruxml/Yfy+EueaOI/JZ4gVM8d0pqzJmTiMcJuHhvxqYEgBRmqeoyA==
+govuk-frontend@5.11.0:
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.11.0.tgz#01364ca98e4f5f86102dcb93f7d811d5387d2fec"
+  integrity sha512-RYZDEF1J6nVw5XauQGH+91qplExgHUXfXII7dtIme6I4u3eSvU59yZ0/EFKEwRgTslSqlhJODOnAi5rnQFU5Gw==
 
 graceful-fs@^4.1.2, graceful-fs@^4.2.11, graceful-fs@^4.2.4:
   version "4.2.11"
