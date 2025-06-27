@@ -67,6 +67,19 @@ RSpec.describe ApplicationSearch do
             expect(service.error_message).to eq("This application has been processed by ACDC Office")
           end
         end
+
+        context 'admin user' do
+          let(:user) { create(:admin_user) }
+          let(:office) { create(:office, name: 'ACDC Office') }
+          let(:application) { create(:application, :processed_state, reference: reference, office: office) }
+
+          it { expect(service_completed).to eq([application]) }
+
+          it 'return error about different office processing this application' do
+            service_completed
+            expect(service.error_message).not_to eq("This application has been processed by ACDC Office")
+          end
+        end
       end
 
       context 'when the application has not yet been completed' do
