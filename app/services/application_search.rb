@@ -84,10 +84,14 @@ class ApplicationSearch
   end
 
   def processed_by_check(result)
-    if result.present? && result.last.office_id != @current_user.office_id
+    if result.present? && !allowed_to_view?(result)
       @processed_by = result.last.office.name
     end
     result
+  end
+
+  def allowed_to_view?(result)
+    result.last.office_id == @current_user.office_id || @current_user.admin?
   end
 
   def paginate_results(page)
