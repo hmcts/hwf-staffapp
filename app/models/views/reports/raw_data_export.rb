@@ -160,7 +160,10 @@ module Views
           part_payments.outcome AS pp_outcome,
           CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
           CASE WHEN de.id IS NULL THEN false ELSE true END AS granted,
-          CASE WHEN beo.id IS NULL THEN false ELSE true END AS benefits_granted,
+          CASE WHEN beo.id IS NULL THEN 'N/A'
+               WHEN beo.correct = TRUE THEN 'Yes'
+               WHEN beo.correct = FALSE THEN 'No'
+          END AS benefits_granted,
           CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
           CASE WHEN savings.max_threshold_exceeded = TRUE then 'High'
                WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN 'Medium'
