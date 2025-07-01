@@ -52,7 +52,7 @@ RSpec.feature 'Part Payments flow' do
 
       scenario 'it redirects to the summary page and displays correct details' do
         expect(page).to have_content 'Check details'
-        expect(page).to have_content 'Part paymentYes'
+        expect(page).to have_content 'Part paymentPassed'
         expect(page).to have_content 'The applicant has paid £25 towards the fee'
       end
 
@@ -77,7 +77,7 @@ RSpec.feature 'Part Payments flow' do
 
       scenario 'it redirects to the summary page and displays correct details' do
         expect(page).to have_content 'Check details'
-        expect(page).to have_content 'Part paymentNo'
+        expect(page).to have_content 'Part paymentFailed'
         expect(page).to have_content 'ReasonREASON'
         expect(page).to have_content 'The applicant will need to make a new application'
       end

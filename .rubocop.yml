@@ -2,7 +2,7 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 3.3.5
+  TargetRubyVersion: 3.4.4
 
   NewCops: enable
   # Exclude anything that isn't really part of our code.
@@ -354,6 +354,9 @@ Capybara/NegationMatcherAfterVisit:
   Enabled: false
 
 Capybara/SpecificFinders:
+  Enabled: false
+
+Style/CollectionQuerying:
   Enabled: false
 
 plugins:

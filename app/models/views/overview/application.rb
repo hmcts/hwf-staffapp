@@ -4,6 +4,7 @@ module Views
       include OverviewHelper
       include HmrcHelper
       include IncomeHelper
+      include BenefitHelper
 
       include ActionView::Helpers::NumberHelper
 
@@ -27,14 +28,6 @@ module Views
         @application.part_payment&.outcome
       end
 
-      def benefits_result
-        if type.eql?('benefit')
-          return format_locale('passed_by_override') if @application.decision_override.present?
-          return format_locale('passed_with_evidence') if benefit_override?
-          format_locale(benefit_result) if @application.last_benefit_check
-        end
-      end
-
       def savings_result
         format_locale(@application.saving.passed?.to_s)
       end
@@ -44,10 +37,6 @@ module Views
           return format_locale(FeatureSwitching::CALCULATION_SCHEMAS[0].to_s)
         end
         format_locale(@application.detail.calculation_scheme.to_s)
-      end
-
-      def benefits
-        convert_to_boolean(@application.benefits?)
       end
 
       def paper_evidence
@@ -109,6 +98,18 @@ module Views
         @application.evidence_check.income_check_type == 'hmrc' ? 'Yes' : 'No'
       end
 
+      def display_benefits?
+        @application.benefits == true
+      end
+
+      def display_income?
+        !@application.benefits && @application.saving.passed
+      end
+
+      def display_savings?
+        !@application.benefits
+      end
+
       private
 
       def evidence_completed?
@@ -117,14 +118,6 @@ module Views
 
       def parse_amount_to_pay(amount_to_pay)
         (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
-      end
-
-      def benefit_result
-        @application.last_benefit_check.dwp_result.eql?('Yes').to_s
-      end
-
-      def benefit_override?
-        BenefitOverride.exists?(application_id: @application.id, correct: true)
       end
 
       def evidence_or_application

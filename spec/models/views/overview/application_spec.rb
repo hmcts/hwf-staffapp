@@ -26,19 +26,19 @@ RSpec.describe Views::Overview::Application do
     context 'when the application is a full remission' do
       let(:outcome) { 'full' }
 
-      it { is_expected.to eq 'Yes' }
+      it { is_expected.to eq 'Passed' }
     end
 
     context 'when the application is a part remission' do
       let(:outcome) { 'part' }
 
-      it { is_expected.to eq 'Yes' }
+      it { is_expected.to eq 'Passed' }
     end
 
     context 'when the application is a non remission' do
       let(:outcome) { 'none' }
 
-      it { is_expected.to eq 'No' }
+      it { is_expected.to eq 'Failed' }
     end
   end
 
@@ -50,13 +50,13 @@ RSpec.describe Views::Overview::Application do
     context 'when the application has valid savings and investments' do
       let(:result) { true }
 
-      it { is_expected.to eq 'Yes' }
+      it { is_expected.to eq 'Passed' }
     end
 
     context 'when the application does not have valid savings and investments' do
       let(:result) { false }
 
-      it { is_expected.to eq 'No' }
+      it { is_expected.to eq 'Failed' }
     end
   end
 
@@ -74,13 +74,13 @@ RSpec.describe Views::Overview::Application do
       context 'when the dwp_result is Yes' do
         let(:result) { 'Yes' }
 
-        it { is_expected.to eq 'Yes' }
+        it { is_expected.to eq 'Passed' }
       end
 
       context 'when the dwp_result is No' do
         let(:result) { 'No' }
 
-        it { is_expected.to eq 'No' }
+        it { is_expected.to eq 'Failed' }
       end
 
       context 'when a decision_overide exists' do
@@ -94,10 +94,24 @@ RSpec.describe Views::Overview::Application do
     end
 
     context 'for an income type application' do
-      let(:application) { build_stubbed(:application, :income_type) }
+      let(:application) { create(:application, :benefit_type) }
+      let(:benefit_override) { create(:benefit_override, application: application, correct: correct_override) }
+      before { benefit_override }
 
-      it { is_expected.to be_nil }
+      context 'when a valid benefit override exists' do
+        let(:correct_override) { true }
+
+        it { is_expected.to eql "✓ Passed (paper evidence checked)" }
+      end
+
+      context 'when a failed benefit override exists' do
+        let(:correct_override) { false }
+
+        it { is_expected.to eql "Failed" }
+      end
+
     end
+
   end
 
   describe '#total_monthly_income' do
@@ -485,4 +499,59 @@ RSpec.describe Views::Overview::Application do
       it { is_expected.to eq 'No' }
     end
   end
+
+  describe 'display income' do
+    context 'benefit application' do
+      let(:application) { build_stubbed(:application, benefits: true) }
+      let(:saving) { build_stubbed(:saving, passed: true) }
+      it { expect(view.display_income?).to be false }
+    end
+
+    context 'saving failed' do
+      let(:application) { build_stubbed(:application, benefits: false, saving: saving) }
+      let(:saving) { build_stubbed(:saving, passed: false) }
+      it { expect(view.display_income?).to be false }
+    end
+
+    context 'saving passed and not a benefit application' do
+      let(:application) { build_stubbed(:application, benefits: false, saving: saving) }
+      let(:saving) { build_stubbed(:saving, passed: true) }
+      it { expect(view.display_income?).to be true }
+    end
+  end
+
+  describe 'display benefits' do
+    context 'benefit true' do
+      let(:application) { build_stubbed(:application, benefits: true) }
+      it { expect(view.display_benefits?).to be true }
+    end
+
+    context 'false benefits' do
+      let(:application) { build_stubbed(:application, benefits: false) }
+      it { expect(view.display_benefits?).to be false }
+    end
+
+    context 'nil benefits' do
+      let(:application) { build_stubbed(:application, benefits: nil) }
+      it { expect(view.display_benefits?).to be false }
+    end
+  end
+
+  describe 'display saving' do
+    context 'benefit true' do
+      let(:application) { build_stubbed(:application, benefits: true) }
+      it { expect(view.display_savings?).to be false }
+    end
+
+    context 'false benefits' do
+      let(:application) { build_stubbed(:application, benefits: false) }
+      it { expect(view.display_savings?).to be true }
+    end
+
+    context 'nil benefits' do
+      let(:application) { build_stubbed(:application, benefits: nil) }
+      it { expect(view.display_savings?).to be true }
+    end
+  end
+
 end
