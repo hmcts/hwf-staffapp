@@ -12,7 +12,8 @@ class ApplicationPolicy < BasePolicy
   end
 
   def show?
-    (staff_or_manager? || reader? || admin?) && same_office?
+    return true if admin?
+    (staff_or_manager? || reader?) && same_office?
   end
 
   def update?
