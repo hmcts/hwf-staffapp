@@ -1,0 +1,13 @@
+cy:
+  email:
+    confirmation:
+      none: 'N/A'
+      false: 'Nac ydw'
+      true: 'Ydw'
+      statement_signed_by_applicant: Fi yw’r ceisydd neu’r cyfaill cyfreitha sy’n cwblhau’r cais hwn.
+      statement_signed_by_representative: Fi yw’r cynrychiolydd cyfreithiol sy’n cwblhau’r cais hwn.
+      benefits_false: Ddim yn derbyn budd-daliadau cymwys
+      online:
+        applying_method: Online service
+      paper:
+        applying_method: Paper

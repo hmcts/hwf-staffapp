@@ -1,7 +1,14 @@
 en-GB:
   email:
     confirmation:
+      none: 'N/A'
+      false: 'No'
+      true: 'Yes'
+      statement_signed_by_applicant: I am the applicant or litigation friend completing this application.
+      statement_signed_by_representative: I am the legal representative completing this application.
+      benefits_false: 'Not receiving eligible benefits'
       online:
+        applying_method: Online service
         subject: 'Application for help with fees'
         greeting: 'Complete your application for help with fees'
         heading: Your Help with Fees reference number is %{reference}
@@ -14,6 +21,7 @@ en-GB:
         p_four: If you need to contact the court, please follow this link https://www.gov.uk/find-court-tribunal to find further contact details.
         p_five: They will contact you within 21 days to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
       paper:
+        applying_method: Paper
         subject: 'Application for help with fees'
         greeting: 'Complete your application for help with fees'
         heading: Your Help with Fees reference number is %{reference}
