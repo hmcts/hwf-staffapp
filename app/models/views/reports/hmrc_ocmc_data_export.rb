@@ -57,7 +57,10 @@ module Views
           END as \"Departmental cost\",
         CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
         CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
-        CASE WHEN beo.id IS NULL THEN 'no' ELSE 'yes' END AS \"Benefits granted?\",
+        CASE WHEN beo.id IS NULL THEN 'N/A'
+               WHEN beo.correct = TRUE THEN 'Yes'
+               WHEN beo.correct = FALSE THEN 'No'
+          END AS \"Benefits granted?\",
         CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS \"Evidence checked?\",
         CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
              WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
