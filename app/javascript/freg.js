@@ -40,7 +40,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
           $('span.search_result_count').text(fees.length)
           if (fee === fees[0]) resultsList.innerHTML = ''; // Clear only once at the start
             const li = document.createElement('li');
-            li.textContent = `${fee.code}, £ ${fee.current_version.flat_amount.amount}, Description: ${fee.current_version.description}`;
+            fee.service_type.name.toUpperCase()
+            li.textContent = `${fee.service_type.name.toUpperCase()} - ${fee.code} - £ ${fee.current_version.flat_amount.amount}, Description: ${fee.current_version.description}`;
             li.style.cursor = 'pointer';
             li.setAttribute('data-amount', fee.current_version.flat_amount.amount);
             li.classList.add('govuk-link');
