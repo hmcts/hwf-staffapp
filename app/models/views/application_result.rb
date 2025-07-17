@@ -69,7 +69,7 @@ module Views
     def outcome
       case outcome_from.class.name
       when 'EvidenceCheck'
-        outcome_from.outcome
+        outcome_from.outcome || outcome_from_application
       when 'PartPayment', 'Application'
         outcome_from_application
       end

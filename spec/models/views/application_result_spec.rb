@@ -179,6 +179,13 @@ RSpec.describe Views::ApplicationResult do
       it_behaves_like 'result examples', 'evidence'
     end
 
+    context 'when the application has evidence check but evidence check has no outcome' do
+      let(:evidence) { build_stubbed(:evidence_check, outcome: nil) }
+      let(:application) { build_stubbed(:application, evidence_check: evidence, outcome: 'none') }
+
+      it { expect(view.result).to eq 'none' }
+    end
+
     context 'when the application does not have evidence check' do
       let(:application) { build_stubbed(:application, outcome: outcome) }
 
