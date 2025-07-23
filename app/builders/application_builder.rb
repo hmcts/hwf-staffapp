@@ -27,7 +27,8 @@ class ApplicationBuilder
       detail: Detail.new(online_detail_attributes(online_application)),
       saving: Saving.new(online_saving_attributes(online_application)),
       representative: Representative.new(online_representative_attributes(online_application)),
-      medium: 'digital'
+      medium: 'digital',
+      application_type: application_type(online_application)
     }.merge(online_application_attributes(online_application))
 
     Application.new(attributes)
@@ -103,5 +104,9 @@ class ApplicationBuilder
 
   def prepare_attributes(fields, online_application)
     fields.index_with { |field| online_application.send(field) }.to_h
+  end
+
+  def application_type(online_application)
+    online_application.benefits ? 'benefit' : 'income'
   end
 end
