@@ -17,6 +17,15 @@ window.moj.Modules.JsonSearcherModule = (function() {
         var searchTerm = $(event.target).val();
         self.findMatches(searchTerm);
       });
+      $('#application_fee')
+        .prop('disabled', true)
+        .attr('aria-disabled', 'true')
+        .css({
+          'background-color': '#e0e0e0',
+          'color': '#000000',
+          'font-weight': 'bold'
+        })
+
     },
 
     // Temorary solution for search to proove the concept
