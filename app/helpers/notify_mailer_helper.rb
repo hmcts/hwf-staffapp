@@ -6,8 +6,8 @@ module NotifyMailerHelper
   def to_h(application)
     {
       application_reference_code: format_opt(application.reference), # same x
-      application_form_name: format(application.form_name), # user input x
-      application_fee_paid: format(application.refund), # boolean x
+      application_form_name: format_false(application.form_name), # user input x
+      application_fee_paid: format_false(application.refund), # boolean x
       application_ni_number: format_opt(application.ni_number), # user input x
       application_status: married_status_text(application), # we set x
       application_savings_and_investments: format_opt(savings_text(application)), # we set x
@@ -16,8 +16,8 @@ module NotifyMailerHelper
       application_income_amount: format_opt(income_amount_text(application)), # user input x
       application_income_period: format_opt(income_period(application)&.capitalize), # we set x
       application_income_type: format_opt(income_kind_text(application)), # kinds - we set x
-      application_probate: format(application.probate), # boolean x
-      application_claim_number: format(application.case_number), # user input x
+      application_probate: format_false(application.probate), # boolean x
+      application_claim_number: format_false(application.case_number), # user input x
       application_date_of_birth: format_opt(dob_text(application)), # user input x
       application_first_name: format_opt(application.first_name), # user input x
       application_last_name: format_opt(application.last_name), # user input x
@@ -57,7 +57,7 @@ module NotifyMailerHelper
   end
 
   def children_text(application)
-    application.children&.zero? ? I18n.t('email.confirmation.false') : format(application.children)
+    application.children&.zero? ? I18n.t('email.confirmation.false') : format_false(application.children)
   end
 
   def income_amount_text(application)
@@ -95,7 +95,7 @@ module NotifyMailerHelper
     end
   end
 
-  def format(value)
+  def format_false(value)
     value || I18n.t('email.confirmation.false')
   end
 
