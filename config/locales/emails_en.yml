@@ -1,5 +1,34 @@
 en-GB:
   email:
+    general:
+      married_true: Single
+      married_false: Married or living with someone
+      saving_and_investments:
+        less_than: 'Less than £4,250'
+        between: 'Between £4,250 and £15,999'
+        more_than: 'More than £16,000'
+      income_period:
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
+      income_kind:
+        kinds:
+          '1': Wages before tax and National Insurance are taken off
+          '2': Net profits from self employment
+          '3': Child Benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private, pension credit (savings credit))
+          '11': Rent from anyone living with you
+          '12': Rent from other properties you own
+          '13': Cash gifts
+          '14': Financial support from others
+          '15': Loans
+          '16': Other income
+          '17': None of the above
     confirmation:
       none: 'N/A'
       false: 'No'

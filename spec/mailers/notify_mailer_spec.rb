@@ -54,18 +54,18 @@ RSpec.describe NotifyMailer do
 
     it 'has the right keys with form_name' do
       application.form_name = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'has the right keys with case number' do
       application.form_name = 'FGDH122'
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'when case and form number is empty' do
       application.form_name = ''
       application.case_number = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
@@ -88,18 +88,18 @@ RSpec.describe NotifyMailer do
 
     it 'has the right keys with form_name' do
       application.form_name = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'has the right keys with case number' do
       application.form_name = 'FGDH122'
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'when case and form number is empty' do
       application.form_name = ''
       application.case_number = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it { expect(mail.to).to eq(['peter.smith@example.com']) }
@@ -122,18 +122,18 @@ RSpec.describe NotifyMailer do
 
     it 'has the right keys with form_name' do
       application.form_name = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'has the right keys with case number' do
       application.form_name = 'FGDH122'
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     it 'when case and form number is empty' do
       application.form_name = ''
       application.case_number = ''
-      expect(mail.govuk_notify_personalisation).to eq({ application_reference_code: application.reference })
+      expect(mail.govuk_notify_personalisation).to include({ application_reference_code: application.reference })
     end
 
     context 'litigation application' do
