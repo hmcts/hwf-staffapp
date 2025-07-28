@@ -24,6 +24,24 @@ def fill_personal_details_under_16(ni_number)
   click_button 'Next'
 end
 
+def fill_personal_details_over_66_post_ucd
+  expect(page).to have_text 'Personal details'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: 70.years.ago
+end
+
+def fill_personal_details_under_66_post_ucd
+  expect(page).to have_text 'Personal details'
+  fill_in 'First and middle names', with: 'Johny'
+  fill_in 'Last name', with: 'Mnemonick'
+  fill_in 'application_day_date_of_birth', with: '01'
+  fill_in 'application_month_date_of_birth', with: '01'
+  fill_in 'application_year_date_of_birth', with: 30.years.ago
+end
+
 def fill_personal_details_no_ni
   expect(page).to have_text 'Personal details'
   fill_in 'Title', with: 'Mr.'

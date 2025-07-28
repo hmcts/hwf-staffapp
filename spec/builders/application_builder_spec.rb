@@ -115,6 +115,15 @@ RSpec.describe ApplicationBuilder do
         expect(built_application.income_period).to eql('average')
       end
 
+      it 'has the application type stored' do
+        expect(built_application.application_type).to eql('benefit')
+      end
+
+      context 'income application type' do
+        before { online_application.benefits = false }
+        it { expect(built_application.application_type).to eql('income') }
+      end
+
       [:benefits, :income].each do |column|
         it "has #{column} assigned" do
           expect(built_application.public_send(column)).to eql(online_application.public_send(column))

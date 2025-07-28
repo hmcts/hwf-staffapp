@@ -317,7 +317,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+        row = "paper,false,N/A,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
         expect(export).to include(row)
       end
     end
@@ -329,7 +329,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,false,Medium,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs},"
+        row = "paper,false,N/A,false,Medium,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs},"
         expect(export).to include(row)
       end
     end
@@ -341,7 +341,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'nil max true min threshold' do
         export = data.to_csv
-        row = "paper,false,false,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,12/11/2020"
+        row = "paper,false,N/A,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,12/11/2020"
         expect(export).to include(row)
       end
     end
@@ -353,7 +353,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and nil max threshold' do
         export = data.to_csv
-        row = "paper,false,false,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,false,N/A,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
@@ -362,12 +362,13 @@ RSpec.describe Views::Reports::RawDataExport do
       let(:date_received) { '10/11/2020' }
       let(:min_threshold) { false }
       let(:max_threshold) { false }
-      let(:benefit_overrides) { create(:benefit_override, application: application_no_remission) }
+      let(:benefit_overrides) { create(:benefit_override, application: application_no_remission, correct: correct_override) }
       let(:decision_overrides) { create(:decision_override, application: application_no_remission) }
+      let(:correct_override) { true }
 
       it 'false min and false max threshold' do
         export = data.to_csv
-        row = "paper,false,false,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,false,N/A,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
 
@@ -376,7 +377,29 @@ RSpec.describe Views::Reports::RawDataExport do
         decision_overrides
 
         export = data.to_csv
-        row = "paper,true,true,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,true,Yes,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        expect(export).to include(row)
+      end
+
+      context 'benefit override is false' do
+        let(:correct_override) { false }
+
+        it 'with override details' do
+          benefit_overrides
+          decision_overrides
+
+          export = data.to_csv
+          row = "paper,true,No,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+          expect(export).to include(row)
+        end
+      end
+
+      it 'benefit override is correct - paper evidence provided' do
+        benefit_overrides
+        decision_overrides
+
+        export = data.to_csv
+        row = "paper,true,Yes,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
