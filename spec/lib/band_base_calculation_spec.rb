@@ -226,6 +226,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.amount_to_pay).to eq(100)
       }
     end
 
@@ -440,6 +441,7 @@ RSpec.describe BandBaseCalculation do
       let(:over_66) { false }
       it {
         expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.amount_to_pay).to eq(2200)
       }
     end
 
@@ -467,6 +469,7 @@ RSpec.describe BandBaseCalculation do
 
       it {
         expect(band_calculation.remission).to eq('none')
+        expect(band_calculation.amount_to_pay).to eq(8250)
         expect(band_calculation.saving_passed?).to be false
       }
     end
@@ -482,6 +485,7 @@ RSpec.describe BandBaseCalculation do
         let(:saving_amount) { 4263 }
         it {
           expect(band_calculation.remission).to eq('none')
+          expect(band_calculation.amount_to_pay).to eq(1421)
           expect(band_calculation.saving_passed?).to be false
           expect(band_calculation.income_failed?).to be false
         }
@@ -504,6 +508,7 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 5500 }
             it {
               expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(250)
               expect(band_calculation.income_failed?).to be true
             }
           end
@@ -525,7 +530,10 @@ RSpec.describe BandBaseCalculation do
           context 'over threshold' do
             let(:fee) { 232 }
             let(:saving_amount) { 16500 }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(232)
+            }
           end
 
         end
@@ -560,7 +568,10 @@ RSpec.describe BandBaseCalculation do
           let(:date_of_birth) { 40.years.ago }
           let(:fee) { 1500 }
           let(:saving_amount) { 10000 }
-          it { expect(band_calculation.remission).to eq('none') }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(1500)
+          }
         end
 
         context 'amount emptu but max_threshold_exceeded' do
@@ -568,7 +579,10 @@ RSpec.describe BandBaseCalculation do
           let(:fee) { 1500 }
           let(:saving_amount) { 0 }
           let(:max_threshold_exceeded) { true }
-          it { expect(band_calculation.remission).to eq('none') }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(1500)
+          }
         end
 
         context 'premiums' do
@@ -578,7 +592,10 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 6560 }
             let(:children_age_band) { { 'two' => '2' } }
             let(:married) { true }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(1350)
+            }
           end
         end
       end
@@ -627,6 +644,7 @@ RSpec.describe BandBaseCalculation do
       end
       # If fee is between more then 5001 then the capital threshold is 16000
       context 'Fee band 3' do
+        before { band_calculation.remission }
         context "1421 fee and 2 saving" do
           let(:fee) { 5001 }
           let(:saving_amount) { 10000 }
@@ -645,7 +663,10 @@ RSpec.describe BandBaseCalculation do
         context "over threshold" do
           let(:fee) { 6000 }
           let(:saving_amount) { 16001 }
-          it { expect(band_calculation.saving_threshold_exceeded?).to be true }
+          it {
+            expect(band_calculation.saving_threshold_exceeded?).to be true
+            expect(band_calculation.amount_to_pay).to eq(6000)
+          }
         end
       end
     end
@@ -753,7 +774,10 @@ RSpec.describe BandBaseCalculation do
       context 'saving exceeded' do
         let(:fee) { 1421 }
         let(:saving_amount) { 4263 }
-        it { expect(band_calculation.remission).to eq('none') }
+        it {
+          expect(band_calculation.remission).to eq('none')
+          expect(band_calculation.amount_to_pay).to eq(1421)
+        }
       end
 
       context 'saving within range' do
@@ -771,7 +795,10 @@ RSpec.describe BandBaseCalculation do
           context 'not eligible' do
             let(:fee) { 250 }
             let(:income) { 5500 }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(250)
+            }
           end
 
           context "no children married over 66" do
@@ -781,7 +808,10 @@ RSpec.describe BandBaseCalculation do
             let(:over_66) { true }
             let(:income) { nil }
             let(:saving_amount) { 0 }
-            it { expect(band_calculation.remission).to eq('full') }
+            it {
+              expect(band_calculation.remission).to eq('full')
+              expect(band_calculation.amount_to_pay).to eq(0)
+            }
           end
 
         end
@@ -791,12 +821,18 @@ RSpec.describe BandBaseCalculation do
           context 'under threshold' do
             let(:fee) { 150 }
             let(:saving_amount) { 10000 }
-            it { expect(band_calculation.remission).to eq('full') }
+            it {
+              expect(band_calculation.remission).to eq('full')
+              expect(band_calculation.amount_to_pay).to eq(0)
+            }
           end
           context 'over threshold' do
             let(:fee) { 232 }
             let(:saving_amount) { 16500 }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(232)
+            }
           end
 
         end
@@ -805,14 +841,20 @@ RSpec.describe BandBaseCalculation do
           let(:over_66) { false }
           let(:fee) { 1500 }
           let(:saving_amount) { 10000 }
-          it { expect(band_calculation.remission).to eq('none') }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(1500)
+          }
         end
 
         context 'over capital threshold with no over_66 data' do
           let(:over_66) { nil }
           let(:fee) { 1500 }
           let(:saving_amount) { 10000 }
-          it { expect(band_calculation.remission).to eq('none') }
+          it {
+            expect(band_calculation.remission).to eq('none')
+            expect(band_calculation.amount_to_pay).to eq(1500)
+          }
         end
 
         context 'premiums' do
@@ -821,7 +863,10 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 6560 }
             let(:children_age_band) { { two: 2 } }
             let(:married) { true }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(1350)
+            }
           end
 
           context 'single 2 children on the edge of band 1' do
@@ -829,7 +874,10 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 3705 }
             let(:children_age_band) { { one: 1, two: 1 } }
             let(:married) { false }
-            it { expect(band_calculation.remission).to eq('none') }
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(593)
+            }
           end
 
           context 'married 2 children full remission 1350 fee' do
@@ -837,7 +885,10 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 3260 }
             let(:children_age_band) { { one: 1, two: 1 } }
             let(:married) { true }
-            it { expect(band_calculation.remission).to eq('full') }
+            it {
+              expect(band_calculation.remission).to eq('full')
+              expect(band_calculation.amount_to_pay).to eq(0)
+            }
           end
 
           context 'married 2 children none remission 90 fee' do
@@ -845,8 +896,11 @@ RSpec.describe BandBaseCalculation do
             let(:income) { 3200 }
             let(:children_age_band) { { one: 2, two: 0 } }
             let(:married) { true }
-            # scenario in jira says it shopuld be full - waiting for confirmation
-            it { expect(band_calculation.remission).to eq('none') }
+
+            it {
+              expect(band_calculation.remission).to eq('none')
+              expect(band_calculation.amount_to_pay).to eq(90)
+            }
           end
 
         end

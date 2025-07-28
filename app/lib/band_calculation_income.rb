@@ -40,17 +40,13 @@ module BandCalculationIncome
 
   def no_premiums(income)
     @band = income_band(income)
-    if @band == -1
-      @outcome = 'none'
-      @amount_to_pay = fee
-    end
+    none_outcome_full_amount_to_pay if @band == -1
   end
 
   def apply_premiums(income_to_use)
     @outcome = 'full' if income_to_use.negative?
     if income_to_use > BandBaseCalculation::MAX_INCOME_THRESHOLD
-      @amount_to_pay = fee
-      @outcome = 'none'
+      none_outcome_full_amount_to_pay
     end
   end
 

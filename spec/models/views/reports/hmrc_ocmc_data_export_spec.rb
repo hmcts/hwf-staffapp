@@ -30,8 +30,9 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     let(:app1_detail) { create(:complete_detail, :legal_representative, calculation_scheme: 'post_ucd') }
     let(:app2_detail) { create(:complete_detail, :litigation_friend, calculation_scheme: 'pre_ucd') }
     let(:app3_detail) { create(:complete_detail, :applicant) }
-    let(:benefit_overrides) { create(:benefit_override, application: application1) }
+    let(:benefit_overrides) { create(:benefit_override, application: application1, correct: benefits_override_correct) }
     let(:decision_overrides) { create(:decision_override, application: application1) }
+    let(:benefits_override_correct) { true }
 
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
@@ -247,7 +248,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
           expect(data_row).to include('no,full,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full,0.0')
-          expect(data_row).to include('paper,no,no,yes,')
+          expect(data_row).to include('paper,no,N/A,yes,')
         }
 
         it {
@@ -257,8 +258,22 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
           # application source, decision granted, benefits granted, evidence checked
-          expect(data_row).to include('paper,yes,yes,yes,')
+          expect(data_row).to include('paper,yes,Yes,yes,')
         }
+
+        context 'with incorrect override' do
+          let(:benefits_override_correct) { false }
+
+          it {
+            benefit_overrides
+            decision_overrides
+
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            # application source, decision granted, benefits granted, evidence checked
+            expect(data_row).to include('paper,yes,No,yes,')
+          }
+        end
       end
     end
   end

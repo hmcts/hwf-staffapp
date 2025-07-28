@@ -46,8 +46,6 @@ child_benefits:
     date_to: 2026-03-31
     per_week: 26.05
     additional_child: 17.25
-new_branding:
-  new_branding_date: <%= ENV['NEW_BRANDING_DATE'] || '2025-06-25' %>
 
 reference:
   date: <%= ENV['FIRST_SOP_REFERENCE_DATE'] || '2017-01-01' %>
