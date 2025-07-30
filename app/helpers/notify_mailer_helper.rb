@@ -73,12 +73,11 @@ module NotifyMailerHelper
       application&.income_kind&.[](:partner)
     ].compact.flatten
 
-    kinds.map do |text|
+    kinds.filter_map do |text|
       key = reverse_lookup[text]
       I18n.t(key.to_s, scope: ['email.general.income_kind.kinds']) if key
-    end.compact
+    end
   end
-
 
   def dob_text(application)
     application.date_of_birth.to_fs(:default)
@@ -109,6 +108,7 @@ module NotifyMailerHelper
   def format_yes_no(value)
     value ? I18n.t('email.confirmation.true') : I18n.t('email.confirmation.false')
   end
+
   def format_opt(value)
     value || I18n.t('email.confirmation.none')
   end
