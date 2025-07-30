@@ -7,7 +7,7 @@ module NotifyMailerHelper
     {
       application_reference_code: format_opt(application.reference), # same x
       application_form_name: format_false(application.form_name), # user input x
-      application_fee_paid: format_false(application.refund), # boolean x
+      application_fee_paid: format_yes_no(application.refund), # boolean x
       application_ni_number: format_opt(application.ni_number), # user input x
       application_status: married_status_text(application), # we set x
       application_savings_and_investments: format_opt(savings_text(application)), # we set x
@@ -16,7 +16,7 @@ module NotifyMailerHelper
       application_income_amount: format_opt(income_amount_text(application)), # user input x
       application_income_period: format_opt(income_period(application)&.capitalize), # we set x
       application_income_type: format_opt(income_kind_text(application)), # kinds - we set x
-      application_probate: format_false(application.probate), # boolean x
+      application_probate: format_yes_no(application.probate), # boolean x
       application_claim_number: format_false(application.case_number), # user input x
       application_date_of_birth: format_opt(dob_text(application)), # user input x
       application_first_name: format_opt(application.first_name), # user input x
@@ -65,13 +65,20 @@ module NotifyMailerHelper
   end
 
   def income_kind_text(application)
-    [
+    en_kinds = I18n.t('email.general.income_kind.kinds', locale: :en)
+    reverse_lookup = en_kinds.invert
+
+    kinds = [
       application&.income_kind&.[](:applicant),
       application&.income_kind&.[](:partner)
-    ].compact.flatten.map do |kind|
-      I18n.t(kind, scope: ['email.general.income_kind.kinds'])
-    end
+    ].compact.flatten
+
+    kinds.map do |text|
+      key = reverse_lookup[text]
+      I18n.t(key.to_s, scope: ['email.general.income_kind.kinds']) if key
+    end.compact
   end
+
 
   def dob_text(application)
     application.date_of_birth.to_fs(:default)
@@ -99,6 +106,9 @@ module NotifyMailerHelper
     value || I18n.t('email.confirmation.false')
   end
 
+  def format_yes_no(value)
+    value ? I18n.t('email.confirmation.true') : I18n.t('email.confirmation.false')
+  end
   def format_opt(value)
     value || I18n.t('email.confirmation.none')
   end
