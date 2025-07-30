@@ -65,7 +65,7 @@ module NotifyMailerHelper
   end
 
   def income_kind_text(application)
-    en_kinds = I18n.t('email.general.income_kind.kinds', locale: :en)
+    en_kinds = I18n.t('email.general.income_kind.kinds', locale: 'en-GB')
     reverse_lookup = en_kinds.invert
 
     kinds = [
