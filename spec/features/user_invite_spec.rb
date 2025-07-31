@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'User management,' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:admin_user)    { create(:admin_user) }

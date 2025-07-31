@@ -38,6 +38,7 @@ end
 RSpec.feature 'Allow override when DWP checker says "NO"' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let!(:jurisdictions) { create_list(:jurisdiction, 3) }

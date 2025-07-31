@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.feature 'Benefit results are processed' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:office) { create(:office) }

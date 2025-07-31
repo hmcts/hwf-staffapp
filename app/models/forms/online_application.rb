@@ -2,6 +2,7 @@ module Forms
   class OnlineApplication < FormObject
     include ActiveModel::Validations::Callbacks
     include DataFieldFormattable
+
     attr_reader :created_at
 
     # rubocop:disable Metrics/MethodLength

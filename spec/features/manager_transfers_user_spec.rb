@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Manager transfers user' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   context 'Manager' do

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Skip evidence check for 15 and under' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }

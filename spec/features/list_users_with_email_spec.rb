@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'User list shows emails' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:admin) { create(:admin_user) }

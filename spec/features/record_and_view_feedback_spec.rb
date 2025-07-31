@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Recording and viewing feedback' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user, office: create(:office)) }

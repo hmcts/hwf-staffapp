@@ -46,6 +46,7 @@ RSpec.feature 'When benefits checker result is "Undetermined"' do
   let!(:user)            { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   before do

@@ -1,6 +1,7 @@
 module Query
   class WaitingForPartPayment
     include FilterOrder
+
     def initialize(user)
       @user = user
     end

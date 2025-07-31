@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Applications awaiting payment are displayed on dashboard' do
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:office) { create(:office) }

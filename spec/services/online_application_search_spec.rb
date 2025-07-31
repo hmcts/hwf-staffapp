@@ -4,6 +4,7 @@ RSpec.describe OnlineApplicationSearch do
   subject(:service) { described_class.new(reference, user) }
 
   include Rails.application.routes.url_helpers
+
   let(:reference) { nil }
   let(:user) { create(:staff) }
 

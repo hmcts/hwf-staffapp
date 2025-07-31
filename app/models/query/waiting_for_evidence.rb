@@ -1,6 +1,7 @@
 module Query
   class WaitingForEvidence
     include FilterOrder
+
     def initialize(user)
       @user = user
     end

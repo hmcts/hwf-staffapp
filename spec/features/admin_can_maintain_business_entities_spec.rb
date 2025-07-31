@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Business entity management:' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let!(:office) { create(:office, business_entities: [business_entity]) }

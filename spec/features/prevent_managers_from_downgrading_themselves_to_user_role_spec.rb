@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Prevent managers from downgrading themselves to user role' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:manager) { create(:manager) }

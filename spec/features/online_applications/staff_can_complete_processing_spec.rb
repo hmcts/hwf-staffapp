@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.feature 'Staff can complete processing of an online application' do
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:threshold_exceeded) { create(:online_application, :with_reference, :threshold_exceeded, :completed, jurisdiction: user.office.jurisdictions.first) }

@@ -42,6 +42,7 @@ end
 RSpec.feature 'No NI number provided' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:jurisdictions) { create_list(:jurisdiction, 3) }

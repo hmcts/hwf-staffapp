@@ -1,5 +1,6 @@
 class SignInPage < BasePage
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   set_url '/users/sign_in'

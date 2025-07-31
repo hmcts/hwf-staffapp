@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'List deleted applications' do
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:who_deleted) { create(:user, name: 'Bob') }

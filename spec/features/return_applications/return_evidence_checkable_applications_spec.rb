@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'When evidence checkable applications are returned' do
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:office) { create(:office) }

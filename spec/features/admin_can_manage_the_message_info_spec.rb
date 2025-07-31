@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Admin can manage message info' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let!(:office) { create(:office) }

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Online application processing Evidence check' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:jurisdiction) { create(:jurisdiction) }

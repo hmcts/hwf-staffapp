@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Application stores correct data' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }

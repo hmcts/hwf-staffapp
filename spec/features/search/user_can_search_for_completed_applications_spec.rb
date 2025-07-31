@@ -6,6 +6,7 @@ require 'rails_helper'
 RSpec.feature 'User can search for online application' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:office) { create(:office) }
