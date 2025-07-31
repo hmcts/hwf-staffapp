@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Part payment application with evidence check for refund' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:jurisdiction) { create(:jurisdiction) }

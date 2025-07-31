@@ -1,5 +1,6 @@
 class OnlineApplicationSearch
   include Rails.application.routes.url_helpers
+
   attr_reader :error_message
 
   def initialize(query, current_user)

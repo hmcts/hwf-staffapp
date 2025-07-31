@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Application outside of 3 month limit is not evidence checked when discretion is no' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }

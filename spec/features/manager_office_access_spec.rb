@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'When showing offices, managers' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:jurisdictions) { create_list(:jurisdiction, 3) }

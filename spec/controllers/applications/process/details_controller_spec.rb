@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Applications::Process::DetailsController do
   include Rails.application.routes.url_helpers
+
   let(:user)          { create(:user) }
   let(:application) { build_stubbed(:application, office: user.office, detail: detail) }
   let(:detail) { build_stubbed(:detail) }

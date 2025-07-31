@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.feature 'Staff are prevented from processing online applications' do
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:staff) }

@@ -1,5 +1,6 @@
 class EvidenceChecksController < ApplicationController
   include FilterApplicationHelper
+
   skip_after_action :verify_authorized, only: :index
 
   def index

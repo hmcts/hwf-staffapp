@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'EV Skipped for All Benefit Application' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }

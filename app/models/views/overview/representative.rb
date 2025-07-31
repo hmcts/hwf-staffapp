@@ -2,6 +2,7 @@ module Views
   module Overview
     class Representative
       include ActionView::Helpers::NumberHelper
+
       delegate(:first_name, :last_name, :organisation, :position, to: :@representative)
 
       def initialize(representative)

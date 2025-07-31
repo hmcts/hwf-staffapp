@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Application is not evidence check when an emergency app' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }

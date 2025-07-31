@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'User profile' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user, name: 'Jim Halpert', office: office) }

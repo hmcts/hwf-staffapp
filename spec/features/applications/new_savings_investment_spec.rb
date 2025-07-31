@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'savings and investments partner over 66 checkbox' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let!(:jurisdictions) { create_list(:jurisdiction, 3) }

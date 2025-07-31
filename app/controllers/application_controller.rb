@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :show_maintenance_page
 
   include Pundit::Authorization
+
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
   before_action :track_office_id, if: :user_signed_in?

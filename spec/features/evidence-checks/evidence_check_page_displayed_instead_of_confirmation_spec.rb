@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Evidence check page displayed instead of confirmation' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:jurisdiction) { create(:jurisdiction) }

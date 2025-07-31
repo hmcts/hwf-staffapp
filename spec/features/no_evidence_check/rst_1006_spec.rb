@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Application is not evidence check when income is above threshold' do
 
   include Warden::Test::Helpers
+
   Warden.test_mode!
 
   let(:user) { create(:user) }
